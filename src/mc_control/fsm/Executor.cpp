@@ -205,7 +205,11 @@ void Executor::next(Controller & ctl)
     }
     for(const auto & s : transition_map_.transitions(next_state_))
     {
-      gui->addElement(category_, mc_rtc::gui::Button("Force transition to " + s, [this, s]() { this->resume(s); }));
+      std::string buttonText = "Force transition to " + s;
+      if(!gui->hasElement(category_, buttonText))
+      {
+        gui->addElement(category_, mc_rtc::gui::Button(buttonText, [this, s]() { this->resume(s); }));
+      }
     }
   }
   curr_state_ = next_state_;

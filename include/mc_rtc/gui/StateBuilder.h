@@ -89,6 +89,15 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
   template<typename T, typename... Args>
   void addElement(const std::vector<std::string> & category, ElementsStacking stacking, T element, Args... args);
 
+  /** Checks if an element is already in the GUI
+   *
+   * \param category Category of the element
+   * \param name Name of the element
+   *
+   * \return True if the element is already in the gui
+   */
+  bool hasElement(const std::vector<std::string> & category, const std::string & name);
+
   /** Remove all elements */
   void reset();
 

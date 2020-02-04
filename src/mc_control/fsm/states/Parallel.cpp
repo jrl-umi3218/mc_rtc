@@ -49,6 +49,17 @@ void ParallelState::DelayedState::createState(Controller & ctl)
 void ParallelState::configure(const mc_rtc::Configuration & config)
 {
   config_.load(config);
+
+  config("outputStates", outputStates_);
+  if(outputStates_.empty())
+  {
+    std::string state = config_("outputStates", std::string{""});
+    if(!state.empty())
+    {
+      outputStates_.clear();
+      outputStates_.push_back(state);
+    }
+  }
 }
 
 void ParallelState::start(Controller & ctl)
@@ -78,6 +89,7 @@ void ParallelState::start(Controller & ctl)
 bool ParallelState::run(Controller & ctl)
 {
   bool ret = true;
+  std::string out = "";
   for(auto & s : states_)
   {
     ret = s.run(ctl, time_) && ret;
@@ -85,8 +97,30 @@ bool ParallelState::run(Controller & ctl)
   time_ += ctl.solver().dt();
   if(ret)
   {
-    output(states_.back().state()->output());
+    if(outputStates_.empty())
+    {
+      out = states_.back().state()->output();
+    }
+    else
+    {
+      for(auto & s : states_)
+      {
+        if(std::find(std::begin(outputStates_), std::end(outputStates_), s.name()) != std::end(outputStates_))
+        {
+          if(out.size())
+          {
+            out += " | ";
+          }
+          out += s.name() + ": (" + s.state()->output() + ")";
+        }
+      }
+    }
   }
+  if(out.empty())
+  {
+    out = "OK";
+  }
+  output(out);
   return ret;
 }
 

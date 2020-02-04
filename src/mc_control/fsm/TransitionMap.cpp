@@ -16,6 +16,10 @@ std::pair<bool, Transition> TransitionMap::transition(const std::string & state,
   {
     return {true, map_.at({state, output})};
   }
+  else if(map_.count({state, "DEFAULT"}))
+  {
+    return {true, map_.at({state, "DEFAULT"})};
+  }
   return {false, {}};
 }
 

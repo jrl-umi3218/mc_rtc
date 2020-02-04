@@ -86,6 +86,14 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
   }
 }
 
+bool StateBuilder::hasElement(const std::vector<std::string> & category, const std::string & name)
+{
+  const Category & cat = getCategory(category);
+  auto it = std::find_if(cat.elements.begin(), cat.elements.end(),
+                         [&name](const ElementStore & el) { return el().name() == name; });
+  return it != cat.elements.end();
+}
+
 void StateBuilder::removeElement(const std::vector<std::string> & category, const std::string & name)
 {
   bool found;

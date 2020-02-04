@@ -28,6 +28,7 @@ void MetaTasksState::configure(const mc_rtc::Configuration & config)
     std::string critTask = config("outputCriteriaTasks", std::string{""});
     if(!critTask.empty())
     {
+      outputCrit_.clear();
       outputCrit_.push_back(critTask);
     }
   }
