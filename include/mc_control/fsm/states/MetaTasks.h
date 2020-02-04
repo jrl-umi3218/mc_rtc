@@ -111,6 +111,7 @@ protected:
   std::vector<mc_tasks::MetaTaskPtr> tasks_;
   std::vector<std::pair<size_t, mc_control::CompletionCriteria>> criterias_;
   bool finished_first_ = false;
+  std::vector<std::string> outputCrit_;
 };
 
 } // namespace fsm

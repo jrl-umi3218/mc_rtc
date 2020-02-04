@@ -5,6 +5,7 @@
 #include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/states/MetaTasks.h>
 #include <mc_tasks/MetaTaskLoader.h>
+#include <algorithm>
 
 namespace mc_control
 {
@@ -20,6 +21,15 @@ void MetaTasksState::configure(const mc_rtc::Configuration & config)
     const auto & tName = e.first;
     const auto & tConfig = e.second;
     tasks_configs_[tName].load(tConfig);
+  }
+  config("outputCriteriaTasks", outputCrit_);
+  if(outputCrit_.empty())
+  {
+    std::string critTask = config("outputCriteriaTasks", std::string{""});
+    if(!critTask.empty())
+    {
+      outputCrit_.push_back(critTask);
+    }
   }
 }
 
@@ -51,6 +61,7 @@ void MetaTasksState::start(Controller & ctl)
 bool MetaTasksState::run(Controller &)
 {
   bool finished = true;
+  std::string out = "";
   for(auto & c : criterias_)
   {
     auto & crit = c.second;
@@ -66,10 +77,25 @@ bool MetaTasksState::run(Controller &)
       {
         auto & crit = c.second;
         const auto & t = *tasks_[c.first];
+        if(std::find(outputCrit_.begin(), outputCrit_.end(), t.name()) != std::end(outputCrit_))
+        {
+          if(out.size())
+          {
+            out += " | ";
+          }
+          out += t.name() + "=" + crit.output();
+        }
         LOG_INFO("Completed " << t.name() << " (" << crit.output() << ")")
       }
     }
-    output("OK");
+    if(outputCrit_.size() && out.size())
+    {
+      output(out);
+    }
+    else
+    {
+      output("OK");
+    }
     return true;
   }
   return false;

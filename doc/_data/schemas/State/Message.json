@@ -1,12 +1,11 @@
 {
-  "title": "fsm::Parallel",
-  "description": "Play multiple states in parallel<br/>The state is completed when all the states it's running are completed<br/>The state's output is the output of the last state it's running",
+  "title": "fsm::Message",
+  "description": "Prints a message to the terminal",
   "type": "object",
   "properties":
   {
-    "states": { "type": "array", "items": { "type": "string" }, "description": "List of states run by this state" },
-    "delays": { "type": "object", "description": "Delay the start of specified states (in seconds)" },
-    "configs": { "type": "object", "description": "Override configuration for the state running inside this FSM" },
+    "message": { "type": "string", "description": "Message to display" },
+    "type": { "enum": ["info", "success", "warning", "error"], "type": "string" },
     "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
                      "description": "Add the specified contacts during the state's start"  },
     "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },

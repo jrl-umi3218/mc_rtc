@@ -247,6 +247,9 @@
           }
         }
       },
+      // When this list contains tasks names, these
+      // tasks' completion criteria will be used to generate an output string for the state
+      "outputCriteriaTasks": ["MoveFoot"],
       "RemoveContacts":
       [
         {
@@ -260,7 +263,7 @@
     "MoveRightFootCoM":
     {
       "base": "Parallel",
-      "states": ["MoveRightFoot", "LeftCoM", "HalfSitting"]
+      "states": ["LeftCoM", "HalfSitting", "MoveRightFoot"]
     },
     "HeadUp":
     {
@@ -305,6 +308,18 @@
         }
       }
     },
+    "MessageMoveRightFootEval":
+    {
+      "base": "Message",
+      "message": "Move Right Foot state completed with eval completion criteria",
+      "type": "success"
+    },
+    "MessageMoveRightFootTimeout":
+    {
+      "base": "Message",
+      "message": "Move Right Foot state completed with timeout completion criteria",
+      "type": "success"
+    },
     "WalkTwoSteps":
     {
       "base": "Meta",
@@ -314,7 +329,13 @@
       [
         ["PauseHalfSitting", "OK", "LeftCoM"],
         ["LeftCoM", "OK", "MoveRightFootCoM"],
-        ["MoveRightFootCoM", "OK", "AddRightFootCoM"],
+
+        // Demonstrate branching ability based on tasks completion criteria
+        ["MoveRightFootCoM", "MoveFoot=eval", "MessageMoveRightFootEval"],
+        ["MoveRightFootCoM", "MoveFoot=timeout AND speed", "MessageMoveRightFootTimeout"],
+        ["MessageMoveRightFootEval", "OK", "AddRightFootCoM"],
+        ["MessageMoveRightFootTimeout", "OK", "AddRightFootCoM"],
+
         ["AddRightFootCoM", "OK", "RightCoM"],
         ["RightCoM", "OK", "MoveLeftFootCoM"],
         ["MoveLeftFootCoM", "OK", "AddLeftFootCoM"],

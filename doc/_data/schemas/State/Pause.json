@@ -1,5 +1,5 @@
 {
-  "title": "fsm::PauseState",
+  "title": "fsm::Pause",
   "description": "Pause for a given duration",
   "type": "object",
   "properties":
