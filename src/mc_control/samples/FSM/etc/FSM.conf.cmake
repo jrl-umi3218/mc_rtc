@@ -2,7 +2,7 @@
   // If true, the FSM transitions are managed by an external tool
   "Managed": false,
   // If true and the FSM is self-managed, transitions should be triggered
-  "StepByStep": true,
+  "StepByStep": false,
   // Change idle behaviour, if true the state is kept until transition,
   // otherwise the FSM holds the last state until transition
   "IdleKeepState": false,
@@ -121,6 +121,19 @@
         }
       }
     },
+    "PauseHalfSitting":
+    {
+      "base": "GoHalfSitting",
+      "states": ["HalfSitting", "MiddleCoM", "Pause"],
+      "configs":
+      {
+        "Pause":
+        {
+          "duration": 3,
+          "completion": 0.5
+        }
+      }
+    },
     "LeftCoM":
     {
       "base": "CoM",
@@ -157,6 +170,7 @@
     "AddLeftFoot":
     {
       "base": "AddContact",
+      "useCoM": false,
       "contact":
       {
         "r1Surface": "LeftFoot",
@@ -172,6 +186,7 @@
     "AddRightFoot":
     {
       "base": "AddContact",
+      "useCoM": false,
       "contact":
       {
         "r1Surface": "RightFoot",
@@ -293,14 +308,13 @@
       "StepByStep": false,
       "transitions":
       [
-        ["Pause", "OK", "LeftCoM", "Strict"],
+        ["PauseHalfSitting", "OK", "LeftCoM"],
         ["LeftCoM", "OK", "MoveRightFootCoM"],
         ["MoveRightFootCoM", "OK", "AddRightFootCoM"],
         ["AddRightFootCoM", "OK", "RightCoM"],
         ["RightCoM", "OK", "MoveLeftFootCoM"],
         ["MoveLeftFootCoM", "OK", "AddLeftFootCoM"],
-        ["AddLeftFootCoM", "OK", "GoHalfSitting"],
-        ["GoHalfSitting", "OK", "Pause"]
+        ["AddLeftFootCoM", "OK", "PauseHalfSitting"]
       ]
     },
     "HeadFSM":
@@ -323,8 +337,8 @@
   // Transitions map
   "transitions":
   [
-    ["Pause", "OK", "FullFSM", "Strict" ]
+    ["FullFSM", "OK", "FullFSM", "Strict" ]
   ],
   // Initial state
-  "init": "Pause"
+  "init": "FullFSM"
 }

@@ -55,11 +55,11 @@ switch_com_sources:
         // in the reset function
         if(comDown)
         {
-          com->com(comZero - Eigen::Vector3d{0, 0, 0.2});
+          comTask->com(comZero - Eigen::Vector3d{0, 0, 0.2});
         }
         else
         {
-          com->com(comZero);
+          comTask->com(comZero);
         }
         comDown = !comDown;
       }

@@ -4,8 +4,17 @@
 
 #include <mc_control/GlobalPluginMacros.h>
 
+#include <mc_tasks/LookAtTFTask.h>
+
 namespace mc_plugin
 {
+
+// This is useless but ensure we bring in LookAtTFTask into the library
+void ROSPlugin::build(mc_control::MCGlobalController & controller)
+{
+  mc_tasks::LookAtTFTask task("body", Eigen::Vector3d::UnitZ(), "source", "target", controller.controller().robots(),
+                              0);
+}
 
 void ROSPlugin::init(mc_control::MCGlobalController & controller, const mc_rtc::Configuration & config)
 {

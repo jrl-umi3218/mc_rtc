@@ -11,6 +11,7 @@
 # If the library is found, then you can use the nanomsg target
 #
 
+if(NOT TARGET nanomsg)
 find_package(nanomsg QUIET)
 if(NOT ${nanomsg_FOUND} OR NOT TARGET nanomsg)
   include(FindPkgConfig)
@@ -33,4 +34,5 @@ if(NOT ${nanomsg_FOUND} OR NOT TARGET nanomsg)
     )
     message("-- Found nanomsg include directories: ${NANOMSG_INCLUDE_DIRS}")
   endif()
+endif()
 endif()

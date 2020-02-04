@@ -49,7 +49,9 @@ public:
    *
    * \param bodyName Name of the body to control
    *
-   * \param point3d Equal to (point2d[0], point2d[1], depthEstimate)
+   * \param point3d Equal to (point2d[0], point2d[1], depthEstimate).
+   * Depth estimate must be >0, the constructor will throw otherwise as this
+   * would result in a division by zero.
    *
    * \param X_b_gaze Transformation between the camera link and the parent body
    *
@@ -60,6 +62,8 @@ public:
    * \param stiffness Task stiffness
    *
    * \param weight Task weight
+   *
+   * \throws std::logic_error if point3d.z() <= 0
    *
    */
   GazeTask(const std::string & bodyName,

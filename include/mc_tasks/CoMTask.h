@@ -16,6 +16,8 @@ namespace mc_tasks
  */
 struct MC_TASKS_DLLAPI CoMTask : public TrajectoryTaskGeneric<tasks::qp::CoMTask>
 {
+  using TrajectoryBase = TrajectoryTaskGeneric<tasks::qp::CoMTask>;
+
 public:
   /*! \brief Constructor
    *
@@ -51,6 +53,9 @@ public:
    * \returns The current CoM target
    */
   Eigen::Vector3d com();
+
+  /*! \brief Load from configuration */
+  void load(mc_solver::QPSolver &, const mc_rtc::Configuration & config) override;
 
 protected:
   void addToGUI(mc_rtc::gui::StateBuilder &) override;

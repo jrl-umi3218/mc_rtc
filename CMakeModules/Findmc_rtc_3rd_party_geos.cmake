@@ -14,8 +14,9 @@
 # This module will use GEOS_PREFIX as an hint to find either the geos-config
 # executable or the geos library
 
+if(NOT TARGET GEOS::geos)
 find_package(geos QUIET)
-if(NOT ${geos_FOUND} OR NOT TARGET GEOS::geos)
+if(NOT ${geos_FOUND})
   if(NOT DEFINED GEOS_PREFIX)
     set(GEOS_PREFIX ${CMAKE_INSTALL_PREFIX})
   endif()
@@ -56,4 +57,5 @@ if(NOT ${geos_FOUND} OR NOT TARGET GEOS::geos)
     INTERFACE_INCLUDE_DIRECTORIES ${GEOS_INSTALL_PREFIX}/include
     INTERFACE_LINK_LIBRARIES ${GEOS_LIBRARY}
   )
+endif()
 endif()

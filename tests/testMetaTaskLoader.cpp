@@ -373,7 +373,14 @@ struct TaskTester<mc_tasks::GazeTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto ret = std::make_shared<mc_tasks::GazeTask>("NECK_P_S", Eigen::Vector3d::Zero(), X_b_gaze, *robots, 0,
+    // If the last element of the point3d is Zero, this would cause a division
+    // by zero. Checks that the constructor prevents it by throwing an
+    // exception.
+    BOOST_CHECK_THROW(std::make_shared<mc_tasks::GazeTask>("NECK_P_S", Eigen::Vector3d::Zero(), X_b_gaze, *robots, 0,
+                                                           stiffness, weight),
+                      std::logic_error);
+
+    auto ret = std::make_shared<mc_tasks::GazeTask>("NECK_P_S", Eigen::Vector3d{0, 0, 1}, X_b_gaze, *robots, 0,
                                                     stiffness, weight);
     return ret;
   }

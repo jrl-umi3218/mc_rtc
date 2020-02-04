@@ -31,15 +31,4 @@ set_target_properties(mc_control_fsm PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_
 target_link_libraries(mc_control_fsm PUBLIC mc_control)
 install_mc_rtc_lib(mc_control_fsm)
 
-add_controller("fsm" "lib.cpp" "")
-set_target_properties("fsm" PROPERTIES FOLDER controllers/fsm)
-target_link_libraries(fsm PUBLIC mc_control_fsm)
-
-set(AROBASE "@")
-configure_file(etc/FSM.conf.cmake ${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf)
-unset(AROBASE)
-
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf
-  DESTINATION ${MC_CONTROLLER_INSTALL_PREFIX}/etc/)
-
 add_subdirectory(states)

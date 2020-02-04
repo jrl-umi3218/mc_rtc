@@ -56,35 +56,23 @@ void AddRemoveContactStateImplHelper<mc_tasks::force::ComplianceTask>::make_run_
 struct AddRemoveContactStateImpl
 {
   mc_rtc::Configuration config_;
-  std::shared_ptr<mc_tasks::MetaTask> task_;
-  std::shared_ptr<mc_tasks::CoMTask> com_task_;
+  std::shared_ptr<mc_tasks::MetaTask> task_ = nullptr;
+  std::shared_ptr<mc_tasks::CoMTask> com_task_ = nullptr;
+  bool useCoM_ = true;
   std::function<bool(AddRemoveContactStateImpl &, Controller &)> run_ = [](AddRemoveContactStateImpl &, Controller &) {
     return true;
   };
   void start(Controller & ctl)
   {
     auto contact = mc_rbdyn::Contact::load(ctl.robots(), config_("contact"));
-    com_task_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), contact.r1Index());
-    if(config_.has("com"))
+    config_("useCoM", useCoM_);
+    if(useCoM_)
     {
-      auto com_c = config_("com");
-      if(com_c.has("weight"))
+      com_task_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), contact.r1Index());
+      com_task_->reset();
+      if(config_.has("com"))
       {
-        com_task_->weight(com_c("weight"));
-      }
-      if(com_c.has("stiffness"))
-      {
-        double s = com_c("stiffness");
-        com_task_->stiffness(s);
-      }
-      if(com_c.has("com"))
-      {
-        com_task_->com(com_c("com"));
-      }
-      if(com_c.has("offset"))
-      {
-        Eigen::Vector3d offset = com_c("offset");
-        com_task_->com(com_task_->com() + offset);
+        com_task_->load(ctl.solver(), config_("com"));
       }
     }
     std::string type = config_("type");
@@ -149,8 +137,11 @@ struct AddRemoveContactStateImpl
       {
         name = "AddContact_" + name;
       }
-      com_task_->name(name);
-      ctl.solver().addTask(com_task_);
+      if(useCoM_)
+      {
+        com_task_->name(name);
+        ctl.solver().addTask(com_task_);
+      }
     }
     else
     {
@@ -310,7 +301,10 @@ void AddRemoveContactState::teardown(Controller & ctl)
   if(impl_->task_)
   {
     ctl.solver().removeTask(impl_->task_);
-    ctl.solver().removeTask(impl_->com_task_);
+    if(impl_->useCoM_)
+    {
+      ctl.solver().removeTask(impl_->com_task_);
+    }
   }
 }
 

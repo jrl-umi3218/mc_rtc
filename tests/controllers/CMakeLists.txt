@@ -140,6 +140,42 @@ set(UPDATE_OBSERVERS "\"Encoder\"")
 # mc_observer test controllers
 controller_test_run(TestObserverController 2001)
 
+# Test run of sample controllers
+macro(controller_sample_test_run NAME PATH_SUFFIX NRITER)
+  set(TEST_CONTROLLER_NAME ${NAME})
+  set(OBSERVER_MODULE_PATH "${CMAKE_BINARY_DIR}/src/mc_observers")
+  set(PYTHON_CONTROLLER_PATH "${CMAKE_BINARY_DIR}/src/mc_control/python")
+  set(ROBOT_MODULE_PATH "${CMAKE_BINARY_DIR}/src/mc_robots")
+  set(TEST_CONTROLLER_PATH "${CMAKE_BINARY_DIR}/src/mc_control/samples/${NAME}${PATH_SUFFIX}")
+  if(CMAKE_CONFIGURATION_TYPES)
+    set(OBSERVER_MODULE_PATH "${OBSERVER_MODULE_PATH}/$<CONFIGURATION>")
+    set(PYTHON_CONTROLLER_PATH "${PYTHON_CONTROLLER_PATH}/$<CONFIGURATION>")
+    set(ROBOT_MODULE_PATH "${ROBOT_MODULE_PATH}/$<CONFIGURATION>")
+    set(TEST_CONTROLLER_PATH "${TEST_CONTROLLER_PATH}/$<CONFIGURATION>")
+  endif()
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf)
+  # Adding a project configuration file (for MSVC only)
+  generate_msvc_dot_user_file(${NAME})
+
+  if(CMAKE_CONFIGURATION_TYPES)
+    set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIGURATION>/mc_rtc-${NAME}.conf")
+    file(GENERATE
+       OUTPUT ${CONFIG_OUT}
+       INPUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf)
+  else()
+    set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf")
+  endif()
+  add_test(NAME "TestSampleController_${NAME}" COMMAND test_controller_ticker --run_test=RUN -- ${CONFIG_OUT} ${NRITER})
+endmacro()
+
+controller_sample_test_run(CoM "" 1000)
+controller_sample_test_run(Body6d "" 1000)
+controller_sample_test_run(Posture "" 1000)
+controller_sample_test_run(Text "" 1000)
+
+# Test sample FSM controller
+controller_sample_test_run(FSM "/src" 8000)
+
 set(ENABLED_OBSERVERS "")
 set(RUN_OBSERVERS "")
 set(UPDATE_OBSERVERS "")

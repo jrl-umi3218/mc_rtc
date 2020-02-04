@@ -315,7 +315,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
     else
     {
-      throw Configuration::Exception("Stored Json vaule is not an array or its size is incorrect");
+      throw Configuration::Exception("Stored Json value is not an array or its size is incorrect");
     }
   }
 

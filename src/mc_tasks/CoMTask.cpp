@@ -31,6 +31,37 @@ void CoMTask::reset()
   errorT->com(cur_com_);
 }
 
+void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+{
+  TrajectoryBase::load(solver, config);
+  if(config.has("com"))
+  {
+    this->com(config("com"));
+  }
+  if(config.has("move_com"))
+  {
+    this->move_com(config("move_com"));
+  }
+  if(config.has("above"))
+  {
+    std::vector<std::string> surfaces = config("above");
+    auto com = this->com();
+    Eigen::Vector3d target = Eigen::Vector3d::Zero();
+    auto & robot = solver.robot(config("robotIndex"));
+    for(const auto & s : surfaces)
+    {
+      target += robot.surface(s).X_0_s(robot).translation();
+    }
+    target /= static_cast<double>(surfaces.size());
+    this->com({target.x(), target.y(), com.z()});
+  }
+  if(config.has("offset"))
+  {
+    Eigen::Vector3d offset = config("offset", Eigen::Vector3d::Zero().eval());
+    this->com(this->com() + offset);
+  }
+}
+
 void CoMTask::move_com(const Eigen::Vector3d & com)
 {
   cur_com_ += com;
@@ -80,32 +111,6 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "com",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t = std::make_shared<mc_tasks::CoMTask>(solver.robots(), config("robotIndex"));
-      if(config.has("com"))
-      {
-        t->com(config("com"));
-      }
-      if(config.has("move_com"))
-      {
-        t->move_com(config("move_com"));
-      }
-      if(config.has("above"))
-      {
-        std::vector<std::string> surfaces = config("above");
-        auto com = t->com();
-        Eigen::Vector3d target = Eigen::Vector3d::Zero();
-        auto & robot = solver.robot(config("robotIndex"));
-        for(const auto & s : surfaces)
-        {
-          target += robot.surface(s).X_0_s(robot).translation();
-        }
-        target /= static_cast<double>(surfaces.size());
-        t->com({target.x(), target.y(), com.z()});
-      }
-      if(config.has("offset"))
-      {
-        Eigen::Vector3d offset = config("offset", Eigen::Vector3d::Zero().eval());
-        t->com(t->com() + offset);
-      }
       t->load(solver, config);
       return t;
     });
