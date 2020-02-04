@@ -402,7 +402,7 @@ bfs::path conf_or_yaml(bfs::path in)
 /** Load configurations */
 void load_configs(const std::string & desc,
                   const std::vector<std::string> & names,
-                  const bfs::path & default_path,
+                  const std::vector<std::string> & search_path,
                   const bfs::path & user_path,
                   std::unordered_map<std::string, mc_rtc::Configuration> & configs,
                   const mc_rtc::Configuration & default_config = {})
@@ -411,11 +411,14 @@ void load_configs(const std::string & desc,
   {
     mc_rtc::Configuration c;
     c.load(default_config);
-    bfs::path global = conf_or_yaml(default_path / (name + ".conf"));
-    if(bfs::exists(global))
+    for(const auto & p : search_path)
     {
-      LOG_INFO("Loading additional " << desc << " configuration: " << global)
-      c.load(global.string());
+      bfs::path global = bfs::path(p) / "etc" / (name + ".conf");
+      if(bfs::exists(global))
+      {
+        LOG_INFO("Loading additional " << desc << " configuration: " << global)
+        c.load(global.string());
+      }
     }
     bfs::path local = conf_or_yaml(user_path / (name + ".conf"));
     if(bfs::exists(local))
@@ -432,7 +435,7 @@ void load_configs(const std::string & desc,
 void MCGlobalController::GlobalConfiguration::load_controllers_configs()
 {
   // Load controller-specific configuration
-  load_configs("controller", enabled_controllers, bfs::path(mc_rtc::MC_CONTROLLER_INSTALL_PREFIX) / "etc",
+  load_configs("controller", enabled_controllers, controller_module_paths,
 #ifndef WIN32
                bfs::path(std::getenv("HOME")) / ".config/mc_rtc/controllers",
 #else
@@ -444,7 +447,7 @@ void MCGlobalController::GlobalConfiguration::load_controllers_configs()
 void MCGlobalController::GlobalConfiguration::load_plugin_configs()
 {
   // Load plugins configurations
-  load_configs("plugin", global_plugins, bfs::path(mc_rtc::MC_PLUGINS_INSTALL_PREFIX) / "etc",
+  load_configs("plugin", global_plugins, global_plugin_paths,
 #ifndef WIN32
                bfs::path(std::getenv("HOME")) / ".config/mc_rtc/plugins",
 #else
