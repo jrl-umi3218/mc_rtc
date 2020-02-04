@@ -507,12 +507,9 @@ then
       wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
       sudo apt-get update
       sudo apt-get install -y ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ${ROS_APT_DEPENDENCIES}
-    else
-      echo "Please install ROS and the required dependencies (${ROS_APT_DEPENDENCIES}) before continuing your installation or disable ROS support"
-      exit 1
     fi
   fi
-  if $NOT_CLONE_ONLY
+  if [ -e /opt/ros/${ROS_DISTRO}/setup.bash ] && $NOT_CLONE_ONLY
   then
     . /opt/ros/${ROS_DISTRO}/setup.bash
   fi
@@ -690,7 +687,7 @@ fi
 
 echo "Installation finished, please add the following lines to your .bashrc/.zshrc"
 echo ""
-if [ ${OS} = Darwin ]
+if [[ $OSTYPE == "darwin"* ]]
 then
   echo """
   export PATH=$INSTALL_PREFIX/bin:\$PATH
