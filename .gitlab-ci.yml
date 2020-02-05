@@ -12,6 +12,7 @@ variables:
 before_script:
   - git submodule update --quiet --init --recursive
   - add-apt-repository ppa:pierre-gergondet+ppa/multi-contact-unstable && apt-get update && apt-get upgrade cmake libeigen3-dev -qq
+  - rm -rf debian
 
 clang-format:
   stage: clang-format
@@ -26,6 +27,7 @@ build_debian:
   before_script: []
   script:
     - git submodule update --quiet --init --recursive
+    - rm -rf debian
     - apt-get update && apt-get install -qq wget python-pip
     - wget --quiet https://cmake.org/files/v3.5/cmake-3.5.2-Linux-i386.sh && chmod +x cmake-3.5.2-Linux-i386.sh && ./cmake-3.5.2-Linux-i386.sh --prefix=/usr --skip-license
     - pip install --upgrade cython numpy coverage nose
