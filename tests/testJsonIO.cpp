@@ -489,7 +489,11 @@ BOOST_AUTO_TEST_CASE(TestRobotModuleAltSave)
   auto rm = make_ref<mc_rbdyn::RobotModule>();
   mc_rtc::Configuration config;
   config.add("rm", rm, false);
-  std::vector<mc_rbdyn::RobotModule, Eigen::aligned_allocator<mc_rbdyn::RobotModule>> rmV = {rm, rm, rm};
+  std::vector<mc_rbdyn::RobotModule, Eigen::aligned_allocator<mc_rbdyn::RobotModule>> rmV;
+  for(size_t i = 0; i < 3; ++i)
+  {
+    rmV.push_back(rm);
+  }
   config.add("rmV", rmV, false, std::vector<std::string>{}, true);
   std::array<mc_rbdyn::RobotModule, 2> rmA = {{rm, rm}};
   config.add("rmA", rmA, false, std::vector<std::string>{"RARM_LINK6", "LARM_LINK6"});
