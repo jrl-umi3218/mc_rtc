@@ -236,6 +236,7 @@ set(mc_solver_HDR
 ../include/mc_solver/msg/Contact.h
 ../include/mc_solver/msg/QPResult.h
 ../include/mc_solver/msg/Robot.h
+../include/mc_solver/utils/Constraint.h
 ../include/mc_solver/utils/ContactWrenchMatrixToLambdaMatrix.h
 ../include/mc_solver/utils/Update.h
 ../include/mc_solver/utils/UpdateNrVars.h
@@ -253,6 +254,8 @@ set(mc_solver_HDR
 ../include/mc_solver/KinematicsConstraint.h
 ../include/mc_solver/GenericLoader.h
 ../include/mc_solver/GenericLoader.hpp
+../include/mc_solver/GenInequalityConstraint.h
+../include/mc_solver/InequalityConstraint.h
 ../include/mc_solver/QPSolver.h
 ../include/mc_tasks/MetaTask.h
 )
