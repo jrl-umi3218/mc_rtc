@@ -86,7 +86,7 @@ struct EqualityConstraint : public Constraint<tasks::qp::Equality, UpdateT>
  * - `const Eigen::VectorXd & bEq() const override;` returns \f$b\f$
  *
  */
-struct MC_SOLVER_DLLAPI EqualityConstraintRobot : public utils::EqualityConstraint<utils::UpdateRobot>
+struct EqualityConstraintRobot : public utils::EqualityConstraint<utils::UpdateRobot>
 {
   explicit EqualityConstraintRobot(unsigned int rIndex) : utils::EqualityConstraint<utils::UpdateRobot>(rIndex) {}
 };
@@ -114,7 +114,7 @@ struct MC_SOLVER_DLLAPI EqualityConstraintRobot : public utils::EqualityConstrai
  *   \f$b\f$
  *
  */
-struct MC_SOLVER_DLLAPI EqualityConstraintLambda : public utils::EqualityConstraint<utils::UpdateLambda>
+struct EqualityConstraintLambda : public utils::EqualityConstraint<utils::UpdateLambda>
 {
   explicit EqualityConstraintLambda(const tasks::qp::ContactId & cid)
   : utils::EqualityConstraint<utils::UpdateLambda>(cid)
@@ -139,7 +139,7 @@ struct MC_SOLVER_DLLAPI EqualityConstraintLambda : public utils::EqualityConstra
  * - `const Eigen::VectorXd & bEq() const override;` returns \f$b\f$
  *
  */
-struct MC_SOLVER_DLLAPI EqualityConstraintForce : public utils::EqualityConstraint<utils::UpdateForce>
+struct EqualityConstraintForce : public utils::EqualityConstraint<utils::UpdateForce>
 {
   EqualityConstraintForce(const mc_solver::QPSolver & solver, const tasks::qp::ContactId & cid)
   : utils::EqualityConstraint<utils::UpdateForce>(solver, cid)

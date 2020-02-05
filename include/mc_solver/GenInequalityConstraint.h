@@ -88,7 +88,7 @@ struct GenInequalityConstraint : public Constraint<tasks::qp::GenInequality, Upd
  * - `const Eigen::VectorXd & UpperGenInEq() const override;` returns the upper bound \f$U\f$
  *
  */
-struct MC_SOLVER_DLLAPI GenInequalityConstraintRobot : public utils::GenInequalityConstraint<utils::UpdateRobot>
+struct GenInequalityConstraintRobot : public utils::GenInequalityConstraint<utils::UpdateRobot>
 {
   explicit GenInequalityConstraintRobot(unsigned int rIndex)
   : utils::GenInequalityConstraint<utils::UpdateRobot>(rIndex)
@@ -122,7 +122,7 @@ struct MC_SOLVER_DLLAPI GenInequalityConstraintRobot : public utils::GenInequali
  *   returns the upper bound \f$U\f$
  *
  */
-struct MC_SOLVER_DLLAPI GenInequalityConstraintLambda : public utils::GenInequalityConstraint<utils::UpdateLambda>
+struct GenInequalityConstraintLambda : public utils::GenInequalityConstraint<utils::UpdateLambda>
 {
   explicit GenInequalityConstraintLambda(const tasks::qp::ContactId & cid)
   : utils::GenInequalityConstraint<utils::UpdateLambda>(cid)
@@ -148,7 +148,7 @@ struct MC_SOLVER_DLLAPI GenInequalityConstraintLambda : public utils::GenInequal
  * - `const Eigen::VectorXd & UpperGenInEq() const override;` returns the upper bound \f$U\f$
  *
  */
-struct MC_SOLVER_DLLAPI GenInequalityConstraintForce : public utils::GenInequalityConstraint<utils::UpdateForce>
+struct GenInequalityConstraintForce : public utils::GenInequalityConstraint<utils::UpdateForce>
 {
   GenInequalityConstraintForce(const mc_solver::QPSolver & solver, const tasks::qp::ContactId & cid)
   : utils::GenInequalityConstraint<utils::UpdateForce>(solver, cid)

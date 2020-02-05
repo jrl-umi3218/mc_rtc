@@ -86,7 +86,7 @@ struct InequalityConstraint : public Constraint<tasks::qp::Inequality, UpdateT>
  * - `const Eigen::VectorXd & bInEq() const override;` returns \f$b\f$
  *
  */
-struct MC_SOLVER_DLLAPI InequalityConstraintRobot : public utils::InequalityConstraint<utils::UpdateRobot>
+struct InequalityConstraintRobot : public utils::InequalityConstraint<utils::UpdateRobot>
 {
   explicit InequalityConstraintRobot(unsigned int rIndex) : utils::InequalityConstraint<utils::UpdateRobot>(rIndex) {}
 };
@@ -115,7 +115,7 @@ struct MC_SOLVER_DLLAPI InequalityConstraintRobot : public utils::InequalityCons
  *   \f$b\f$
  *
  */
-struct MC_SOLVER_DLLAPI InequalityConstraintLambda : public utils::InequalityConstraint<utils::UpdateLambda>
+struct InequalityConstraintLambda : public utils::InequalityConstraint<utils::UpdateLambda>
 {
   explicit InequalityConstraintLambda(const tasks::qp::ContactId & cid)
   : utils::InequalityConstraint<utils::UpdateLambda>(cid)
@@ -140,7 +140,7 @@ struct MC_SOLVER_DLLAPI InequalityConstraintLambda : public utils::InequalityCon
  * - `const Eigen::VectorXd & bInEq() const override;` returns \f$b\f$
  *
  */
-struct MC_SOLVER_DLLAPI InequalityConstraintForce : public utils::InequalityConstraint<utils::UpdateForce>
+struct InequalityConstraintForce : public utils::InequalityConstraint<utils::UpdateForce>
 {
   InequalityConstraintForce(const mc_solver::QPSolver & solver, const tasks::qp::ContactId & cid)
   : utils::InequalityConstraint<utils::UpdateForce>(solver, cid)
