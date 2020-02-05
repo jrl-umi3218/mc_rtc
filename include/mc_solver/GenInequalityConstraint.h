@@ -83,7 +83,7 @@ struct GenInequalityConstraint : public Constraint<tasks::qp::GenInequality, Upd
  * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, alphaD.size())
  * - `void compute() override;` update constraint matrix and bounds
  * - `int maxGenInEq() const override;` number of inequality lines
- * - `std::string nameGenInEq() const override;` desriptive name of the constraint
+ * - `std::string nameGenInEq() const override;` descriptive name of the constraint
  * - `const Eigen::VectorXd & LowerGenInEq() const override;` returns the lower bound \f$L\f$
  * - `const Eigen::VectorXd & UpperGenInEq() const override;` returns the upper bound \f$U\f$
  *
@@ -114,7 +114,7 @@ struct MC_SOLVER_DLLAPI GenInequalityConstraintRobot : public utils::GenInequali
  *   bounds
  * - `int maxGenInEq() const override;` number of inequality
  *   lines
- * - `std::string nameGenInEq() const override;` desriptive
+ * - `std::string nameGenInEq() const override;` descriptive
  *   name of the constraint
  * - `const Eigen::VectorXd & LowerGenInEq() const override;`
  *   returns the lower bound \f$L\f$
@@ -143,7 +143,7 @@ struct MC_SOLVER_DLLAPI GenInequalityConstraintLambda : public utils::GenInequal
  * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, 6)
  * - `void compute() override;` update constraint matrix and bounds
  * - `int maxGenInEq() const override;` number of inequality lines
- * - `std::string nameGenInEq() const override;` desriptive name of the constraint
+ * - `std::string nameGenInEq() const override;` descriptive name of the constraint
  * - `const Eigen::VectorXd & LowerGenInEq() const override;` returns the lower bound \f$L\f$
  * - `const Eigen::VectorXd & UpperGenInEq() const override;` returns the upper bound \f$U\f$
  *

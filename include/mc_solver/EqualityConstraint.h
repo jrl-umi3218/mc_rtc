@@ -82,7 +82,7 @@ struct EqualityConstraint : public Constraint<tasks::qp::Equality, UpdateT>
  * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, alphaD.size())
  * - `void compute() override;` update constraint matrix and bounds
  * - `int maxEq() const override;` number of equality lines
- * - `std::string nameEq() const override;` desriptive name of the constraint
+ * - `std::string nameEq() const override;` descriptive name of the constraint
  * - `const Eigen::VectorXd & bEq() const override;` returns \f$b\f$
  *
  */
@@ -108,7 +108,7 @@ struct MC_SOLVER_DLLAPI EqualityConstraintRobot : public utils::EqualityConstrai
  * - `void compute() override;` update constraint matrix and
  *   bounds
  * - `int maxEq() const override;` number of equality lines
- * - `std::string nameEq() const override;` desriptive name
+ * - `std::string nameEq() const override;` descriptive name
  *   of the constraint
  * - `const Eigen::VectorXd & bEq() const override;` returns
  *   \f$b\f$
@@ -135,7 +135,7 @@ struct MC_SOLVER_DLLAPI EqualityConstraintLambda : public utils::EqualityConstra
  * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, 6)
  * - `void compute() override;` update constraint matrix and bounds
  * - `int maxEq() const override;` number of equality lines
- * - `std::string nameEq() const override;` desriptive name of the constraint
+ * - `std::string nameEq() const override;` descriptive name of the constraint
  * - `const Eigen::VectorXd & bEq() const override;` returns \f$b\f$
  *
  */

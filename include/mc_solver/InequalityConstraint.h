@@ -82,7 +82,7 @@ struct InequalityConstraint : public Constraint<tasks::qp::Inequality, UpdateT>
  * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, alphaD.size())
  * - `void compute() override;` update constraint matrix and bounds
  * - `int maxInEq() const override;` number of inequality lines
- * - `std::string nameInEq() const override;` desriptive name of the constraint
+ * - `std::string nameInEq() const override;` descriptive name of the constraint
  * - `const Eigen::VectorXd & bInEq() const override;` returns \f$b\f$
  *
  */
@@ -109,7 +109,7 @@ struct MC_SOLVER_DLLAPI InequalityConstraintRobot : public utils::InequalityCons
  *   bounds
  * - `int maxInEq() const override;` number of inequality
  *   lines
- * - `std::string nameInEq() const override;` desriptive name
+ * - `std::string nameInEq() const override;` descriptive name
  *   of the constraint
  * - `const Eigen::VectorXd & bInEq() const override;` returns
  *   \f$b\f$
@@ -136,7 +136,7 @@ struct MC_SOLVER_DLLAPI InequalityConstraintLambda : public utils::InequalityCon
  * - `const Eigen::MatrixXd & A() const override;` returns \f$A\f$, must be of size (nrLines, 6)
  * - `void compute() override;` update constraint matrix and bounds
  * - `int maxInEq() const override;` number of inequality lines
- * - `std::string nameInEq() const override;` desriptive name of the constraint
+ * - `std::string nameInEq() const override;` descriptive name of the constraint
  * - `const Eigen::VectorXd & bInEq() const override;` returns \f$b\f$
  *
  */
