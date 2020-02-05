@@ -11,7 +11,7 @@ var searchData=
   ['global_5fplugin_5fpaths',['global_plugin_paths',['../a01923.html#a66adac4c10fc9599308e15741a15f0a6',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['global_5fplugins',['global_plugins',['../a01923.html#a9b7cb460139df0aa576f76bfb45e4bc2',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['goal_5f',['goal_',['../a01891.html#aabaccc34e1562ea3f396dc2105274b44',1,'mc_control::fsm::PauseState']]],
-  ['gravity',['gravity',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html#a0f275f9fe70453bfd32a67b113850e3e',1,'rbd::MultiBodyConfig::gravity()'],['../a00686.html#a168de7234976be363c8c8d4e9dc2f7c2',1,'mc_rbdyn::constants::gravity()'],['../a00686.html#a8fa57e20c005da2ca8c0d4c31afbdb13',1,'mc_rbdyn::constants::GRAVITY()']]],
+  ['gravity',['gravity',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html#a0f275f9fe70453bfd32a67b113850e3e',1,'rbd::MultiBodyConfig::gravity()'],['../a00686.html#a8fa57e20c005da2ca8c0d4c31afbdb13',1,'mc_rbdyn::constants::GRAVITY()'],['../a00686.html#a168de7234976be363c8c8d4e9dc2f7c2',1,'mc_rbdyn::constants::gravity()']]],
   ['gray',['Gray',['../a02383.html#a4f74e46e6c7c8bcc08298e143ffeb25d',1,'mc_rtc::gui::Color']]],
   ['green',['Green',['../a02383.html#abdba78af0ed851bf27d15fed39883f8f',1,'mc_rtc::gui::Color']]],
   ['grippers',['grippers',['../a01943.html#af22b7ebf2d129819c82af474067b3766',1,'mc_control::MCController']]],

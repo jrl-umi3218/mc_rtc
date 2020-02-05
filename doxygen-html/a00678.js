@@ -12,7 +12,7 @@ var a00678 =
     [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "a02067.html", "a02067" ],
     [ "ConfigurationLoader< mc_rbdyn::RobotModule >", "a02015.html", "a02015" ],
     [ "ConfigurationLoader< mc_rbdyn::RobotModulePtr >", "a02019.html", "a02019" ],
-    [ "ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "a02655.html", "a02655" ],
+    [ "ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "a02691.html", "a02691" ],
     [ "ConfigurationLoader< void >", "a02139.html", "a02139" ],
     [ "Loader", "a02423.html", "a02423" ],
     [ "LoaderException", "a02415.html", "a02415" ],

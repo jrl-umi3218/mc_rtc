@@ -1,17 +1,13 @@
 var a02719 =
 [
-    [ "VectorOrientationTask", "a02719.html#ac24b6093fa849811dd07a0ab2ace17c0", null ],
-    [ "VectorOrientationTask", "a02719.html#a60f2e467ea49160a0037f8aa2470bdbc", null ],
-    [ "actual", "a02719.html#a0755b43ee0cbc12ba4fccd7008098ecf", null ],
-    [ "addToGUI", "a02719.html#aef3c3a8b836ba15e7bd062d841399ad4", null ],
-    [ "addToLogger", "a02719.html#ae2ea06fdeee5903edcbfb8da2bd55af4", null ],
-    [ "body", "a02719.html#a9531e6144e6dd8823951374d95397d27", null ],
-    [ "bodyVector", "a02719.html#ae066b3584e94bfca4abe3f93e2d826c4", null ],
-    [ "bodyVector", "a02719.html#a92edeb5ec1b0291f9909f98e8522c37e", null ],
-    [ "removeFromLogger", "a02719.html#a077b7176cf69a042e7c31b7dd5a76490", null ],
-    [ "reset", "a02719.html#a04b7aba6c4e4d4abd746c19e12c650e6", null ],
-    [ "targetVector", "a02719.html#a8a2c67e86c6867c837129bb81834ccf4", null ],
-    [ "targetVector", "a02719.html#a9773f23cd1f91fa767b7c3ae49b6cb3d", null ],
-    [ "bIndex", "a02719.html#a59e4464e07872bfd5e5cbe19cb6b2948", null ],
-    [ "bodyName", "a02719.html#aff910f1c3ed3b698c50408dfb66eb7c0", null ]
+    [ "OrientationTask", "a02719.html#aed570ad6882e85529777864cc33d58ed", null ],
+    [ "addToGUI", "a02719.html#ac5953577c61c0b6943106f08851f562c", null ],
+    [ "addToLogger", "a02719.html#ae0f93ea2baa6813562b79f74658bf561", null ],
+    [ "orientation", "a02719.html#a8b10f7f275eec4a245cf826c90f9aca7", null ],
+    [ "orientation", "a02719.html#ada80fbd5aaf53369618630495e92a175", null ],
+    [ "removeFromLogger", "a02719.html#a05e73e60e317fb0d0e0fa7a9149b5be1", null ],
+    [ "reset", "a02719.html#a3230ff70e491adbeea990dc62bf0d069", null ],
+    [ "EndEffectorTask", "a02719.html#ab333c1b08462c2014c404b1b2b886246", null ],
+    [ "bIndex", "a02719.html#abfd25888b1dc814b280d5443506fe258", null ],
+    [ "bodyName", "a02719.html#a97da00bdf087f04a99473553efaa6390", null ]
 ];

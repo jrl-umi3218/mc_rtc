@@ -87,7 +87,7 @@ Inheritance diagram for mc_solver::CoMIncPlaneConstr:</div>
  <div class="center">
   <img src="a02491.png" usemap="#mc_5Fsolver::CoMIncPlaneConstr_map" alt=""/>
   <map id="mc_5Fsolver::CoMIncPlaneConstr_map" name="mc_5Fsolver::CoMIncPlaneConstr_map">
-<area href="a02511.html" title="This class is a basis to wrap Constraint functions from Tasks. " alt="mc_solver::ConstraintSet" shape="rect" coords="0,0,189,24"/>
+<area href="a02507.html" title="This class is a basis to wrap Constraint functions from Tasks. " alt="mc_solver::ConstraintSet" shape="rect" coords="0,0,189,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -96,17 +96,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a36c14d8513aede45203f3113bca8866f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02491.html#a36c14d8513aede45203f3113bca8866f">CoMIncPlaneConstr</a> (const <a class="el" href="a02123.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int robotIndex, double dt)</td></tr>
 <tr class="separator:a36c14d8513aede45203f3113bca8866f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fe287ede6acc66b93ebc6e1a8f54882"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02491.html#a7fe287ede6acc66b93ebc6e1a8f54882">addToSolver</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;mbs, <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01063.html">tasks::qp::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:a7fe287ede6acc66b93ebc6e1a8f54882"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called by <a class="el" href="a02567.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02567.html#a37580a89d1a0d1a862dfb6b7240e6dd0" title="Add a constraint set. ">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr:  <a href="#a7fe287ede6acc66b93ebc6e1a8f54882">More...</a><br /></td></tr>
+<tr class="memdesc:a7fe287ede6acc66b93ebc6e1a8f54882"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called by <a class="el" href="a02599.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02599.html#a37580a89d1a0d1a862dfb6b7240e6dd0" title="Add a constraint set. ">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr:  <a href="#a7fe287ede6acc66b93ebc6e1a8f54882">More...</a><br /></td></tr>
 <tr class="separator:a7fe287ede6acc66b93ebc6e1a8f54882"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6901fd29799bb8f88e639be2e2e06ac"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02491.html#aa6901fd29799bb8f88e639be2e2e06ac">removeFromSolver</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01063.html">tasks::qp::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:aa6901fd29799bb8f88e639be2e2e06ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called by <a class="el" href="a02567.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02567.html#a2d48a1aa9f88ea1c6873000df4299a1d" title="Remove a constraint set. ">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call:  <a href="#aa6901fd29799bb8f88e639be2e2e06ac">More...</a><br /></td></tr>
+<tr class="memdesc:aa6901fd29799bb8f88e639be2e2e06ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called by <a class="el" href="a02599.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02599.html#a2d48a1aa9f88ea1c6873000df4299a1d" title="Remove a constraint set. ">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call:  <a href="#aa6901fd29799bb8f88e639be2e2e06ac">More...</a><br /></td></tr>
 <tr class="separator:aa6901fd29799bb8f88e639be2e2e06ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae037f758b45e836e2ef33edbda90c58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02491.html#aae037f758b45e836e2ef33edbda90c58">set_planes</a> (<a class="el" href="a02567.html">QPSolver</a> &amp;solver, const std::vector&lt; <a class="el" href="a02083.html">mc_rbdyn::Plane</a> &gt; &amp;planes, const std::vector&lt; Eigen::Vector3d &gt; &amp;speeds={}, const std::vector&lt; Eigen::Vector3d &gt; &amp;normalsDots={}, double iDist=0.05, double sDist=0.01, double damping=0.1, double dampingOff=0.)</td></tr>
+<tr class="memitem:aae037f758b45e836e2ef33edbda90c58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02491.html#aae037f758b45e836e2ef33edbda90c58">set_planes</a> (<a class="el" href="a02599.html">QPSolver</a> &amp;solver, const std::vector&lt; <a class="el" href="a02083.html">mc_rbdyn::Plane</a> &gt; &amp;planes, const std::vector&lt; Eigen::Vector3d &gt; &amp;speeds={}, const std::vector&lt; Eigen::Vector3d &gt; &amp;normalsDots={}, double iDist=0.05, double sDist=0.01, double damping=0.1, double dampingOff=0.)</td></tr>
 <tr class="separator:aae037f758b45e836e2ef33edbda90c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a02511"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02511')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02511.html">mc_solver::ConstraintSet</a></td></tr>
-<tr class="memitem:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_a02511"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02511.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a> ()</td></tr>
-<tr class="memdesc:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_a02511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="a02511.html#ad979bb11e0faeba2c10d36d5a4c46e00">More...</a><br /></td></tr>
-<tr class="separator:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_a02511"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a02507"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02507')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02507.html">mc_solver::ConstraintSet</a></td></tr>
+<tr class="memitem:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_a02507"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02507.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a> ()</td></tr>
+<tr class="memdesc:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_a02507"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="a02507.html#ad979bb11e0faeba2c10d36d5a4c46e00">More...</a><br /></td></tr>
+<tr class="separator:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_a02507"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wrapper around <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00943.html">tasks::qp::CoMIncPlaneConstr</a>. </p>
@@ -180,17 +180,17 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>This function is called by <a class="el" href="a02567.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02567.html#a37580a89d1a0d1a862dfb6b7240e6dd0" title="Add a constraint set. ">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr: </p>
+<p>This function is called by <a class="el" href="a02599.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02599.html#a37580a89d1a0d1a862dfb6b7240e6dd0" title="Add a constraint set. ">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr: </p>
 <pre class="fragment">&lt;wrapped-type&gt;::addToSolver(mbs, solver)
 </pre> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">mbs</td><td>The MultiBody vector controlled by the invoking <a class="el" href="a02567.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
-    <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="a02567.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
+    <tr><td class="paramname">mbs</td><td>The MultiBody vector controlled by the invoking <a class="el" href="a02599.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
+    <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="a02599.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="a02511.html#a8b2739907caaeb5d49ccaedc1665e3ca">mc_solver::ConstraintSet</a>.</p>
+<p>Implements <a class="el" href="a02507.html#a8b2739907caaeb5d49ccaedc1665e3ca">mc_solver::ConstraintSet</a>.</p>
 
 </div>
 </div>
@@ -218,16 +218,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>This function is called by <a class="el" href="a02567.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02567.html#a2d48a1aa9f88ea1c6873000df4299a1d" title="Remove a constraint set. ">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call: </p>
+<p>This function is called by <a class="el" href="a02599.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02599.html#a2d48a1aa9f88ea1c6873000df4299a1d" title="Remove a constraint set. ">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call: </p>
 <pre class="fragment">&lt;wrapped-type&gt;::removeFromSolver(solver)
 </pre> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="a02567.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
+    <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="a02599.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="a02511.html#aa7a3302adccb4d3183e829fd2754b75a">mc_solver::ConstraintSet</a>.</p>
+<p>Implements <a class="el" href="a02507.html#aa7a3302adccb4d3183e829fd2754b75a">mc_solver::ConstraintSet</a>.</p>
 
 </div>
 </div>
@@ -240,7 +240,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void mc_solver::CoMIncPlaneConstr::set_planes </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a02567.html">QPSolver</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02599.html">QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em>, </td>
         </tr>
         <tr>
@@ -302,7 +302,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00687.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02491.html">CoMIncPlaneConstr</a></li>
-    <li class="footer">Generated on Tue Feb 4 2020 10:50:21 for mc_rtc by
+    <li class="footer">Generated on Wed Feb 5 2020 04:20:56 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -6,7 +6,7 @@ var searchData=
   ['elements_2eh',['elements.h',['../a00245.html',1,'']]],
   ['encoderobserver_2eh',['EncoderObserver.h',['../a00116.html',1,'']]],
   ['endeffectortask_2eh',['EndEffectorTask.h',['../a00425.html',1,'']]],
-  ['equalityconstraint_2eh',['EqualityConstraint.h',['../a00371.html',1,'']]],
+  ['equalityconstraint_2eh',['EqualityConstraint.h',['../a00368.html',1,'']]],
   ['eulerintegration_2eh',['EulerIntegration.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00329.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00329.html',1,'(Global Namespace)']]],
   ['exactcubic_2eh',['ExactCubic.h',['../a00482.html',1,'']]],
   ['exactcubictrajectorytask_2eh',['ExactCubicTrajectoryTask.h',['../a00428.html',1,'']]],

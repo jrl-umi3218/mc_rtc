@@ -122,7 +122,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a153432b8c6ebfc4f9484deb1439ca3ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01919.html#a153432b8c6ebfc4f9484deb1439ca3ee">run</a> ()</td></tr>
 <tr class="memdesc:a153432b8c6ebfc4f9484deb1439ca3ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs one step of the controller.  <a href="#a153432b8c6ebfc4f9484deb1439ca3ee">More...</a><br /></td></tr>
 <tr class="separator:a153432b8c6ebfc4f9484deb1439ca3ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d8ba93ec28be3eed4d6d8bfa58c80cf"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02555.html">mc_solver::QPResultMsg</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01919.html#a2d8ba93ec28be3eed4d6d8bfa58c80cf">send</a> (const double &amp;t)</td></tr>
+<tr class="memitem:a2d8ba93ec28be3eed4d6d8bfa58c80cf"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02587.html">mc_solver::QPResultMsg</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01919.html#a2d8ba93ec28be3eed4d6d8bfa58c80cf">send</a> (const double &amp;t)</td></tr>
 <tr class="memdesc:a2d8ba93ec28be3eed4d6d8bfa58c80cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the result of the latest run.  <a href="#a2d8ba93ec28be3eed4d6d8bfa58c80cf">More...</a><br /></td></tr>
 <tr class="separator:a2d8ba93ec28be3eed4d6d8bfa58c80cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9874f934eb7c0408a19eb50e673b8d52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01943.html">MCController</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01919.html#a9874f934eb7c0408a19eb50e673b8d52">controller</a> ()</td></tr>
@@ -310,12 +310,12 @@ Public Attributes</h2></td></tr>
 <li>a global configuration file read from $HOME/.config/mc_rtc/mc_rtc.conf</li>
 </ul>
 <p>The configuration provided overrides settings in the local configuration which overrides settings in the global configuration</p>
-<p><a class="el" href="a02739.html" title="This interface must be implemented by each global plugin. ">Global</a> settings include the controller timestep, the main robot, publication and logging options.</p>
+<p><a class="el" href="a02775.html" title="This interface must be implemented by each global plugin. ">Global</a> settings include the controller timestep, the main robot, publication and logging options.</p>
 <p>For each controller a specific setting file will be loaded from:</p><ul>
 <li>$CONTROLLER_INSTALL_PREFIX/etc/$CONTROLLER_NAME.conf</li>
 <li>$HOME/.config/mc_rtc/controllers/$CONTROLLER_NAME.conf</li>
 </ul>
-<p><a class="el" href="a02739.html" title="This interface must be implemented by each global plugin. ">Global</a> settings found in controller-specific configuration files will be discarded.</p>
+<p><a class="el" href="a02775.html" title="This interface must be implemented by each global plugin. ">Global</a> settings found in controller-specific configuration files will be discarded.</p>
 <dl class="section note"><dt>Note</dt><dd>On Windows, user configuration files are retrieved from $APPDATA/mc_rtc</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -938,7 +938,7 @@ Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="a02555.html">mc_solver::QPResultMsg</a>&amp; mc_control::MCGlobalController::send </td>
+          <td class="memname">const <a class="el" href="a02587.html">mc_solver::QPResultMsg</a>&amp; mc_control::MCGlobalController::send </td>
           <td>(</td>
           <td class="paramtype">const double &amp;&#160;</td>
           <td class="paramname"><em>t</em></td><td>)</td>
@@ -1681,7 +1681,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00676.html">mc_control</a></li><li class="navelem"><a class="el" href="a01919.html">MCGlobalController</a></li>
-    <li class="footer">Generated on Tue Feb 4 2020 10:50:20 for mc_rtc by
+    <li class="footer">Generated on Wed Feb 5 2020 04:20:55 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

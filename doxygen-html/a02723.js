@@ -1,10 +1,9 @@
 var a02723 =
 [
-    [ "bezier_curve_t", "a02723.html#a58fe236423f0abd51af3cdcb50017a47", null ],
-    [ "waypoints_t", "a02723.html#ada383daeac50ae7ac8b720c6096289f5", null ],
-    [ "BSpline", "a02723.html#a905828c45debcac32ddbd35718a138a1", null ],
-    [ "addToGUI", "a02723.html#a206f674c4f9e666083f9aa96b27b7628", null ],
-    [ "sampleTrajectory", "a02723.html#ac34c7879cd2d0a941a6b303c366d16f4", null ],
-    [ "splev", "a02723.html#ae72e0f0db1744ff5a1e7ea8c8a832d5a", null ],
-    [ "update", "a02723.html#ab70108d4c7af3ce67b487bcbe11cab5d", null ]
+    [ "PositionBasedVisServoTask", "a02723.html#ae2cab369aedb3678ebd9b4687faa8ba9", null ],
+    [ "PositionBasedVisServoTask", "a02723.html#ab210ce2c552242965b7bd04b02d91517", null ],
+    [ "addToLogger", "a02723.html#a1c5a2a63cff774edab49e058c63344d6", null ],
+    [ "error", "a02723.html#aa2e8c33c6432ee68e91a59ed396fdd2a", null ],
+    [ "removeFromLogger", "a02723.html#adb31cd43854da32f63e4b26fbe11b78b", null ],
+    [ "reset", "a02723.html#a8c041b0993d362a21630ba766aac3218", null ]
 ];

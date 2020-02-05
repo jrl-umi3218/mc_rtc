@@ -1,5 +1,6 @@
 var a02591 =
 [
-    [ "ABegin_", "a02591.html#ac7940f913dbc5037ed042609f685bfaa", null ],
-    [ "nrVars_", "a02591.html#a3c4a15ad329aedecdfd932aaffe4ff76", null ]
+    [ "alphaDVec", "a02591.html#a006a571037b605b0b5c9e749fac3e06c", null ],
+    [ "alphaVec", "a02591.html#ab4e17120478e2a800aa790e32be96e84", null ],
+    [ "q", "a02591.html#a2266d5ca2aace35d45464180feda1768", null ]
 ];

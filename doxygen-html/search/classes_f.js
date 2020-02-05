@@ -11,7 +11,7 @@ var searchData=
   ['observerloader',['ObserverLoader',['../a01991.html',1,'mc_observers']]],
   ['ordinate',['Ordinate',['../a02303.html',1,'mc_rtc::gui::plot::impl']]],
   ['ordinatewithcolor',['OrdinateWithColor',['../a02307.html',1,'mc_rtc::gui::plot::impl']]],
-  ['orientationtask',['OrientationTask',['../a02683.html',1,'mc_tasks::OrientationTask'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01175.html',1,'tasks::qp::OrientationTask'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01247.html',1,'tasks::OrientationTask']]],
+  ['orientationtask',['OrientationTask',['../a02719.html',1,'mc_tasks::OrientationTask'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01175.html',1,'tasks::qp::OrientationTask'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01247.html',1,'tasks::OrientationTask']]],
   ['orientationtrackingtask',['OrientationTrackingTask',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01299.html',1,'tasks::OrientationTrackingTask'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01231.html',1,'tasks::qp::OrientationTrackingTask']]],
   ['oserializer',['oserializer',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00702.html',1,'boost::archive::detail']]]
 ];

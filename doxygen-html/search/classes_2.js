@@ -9,7 +9,7 @@ var searchData=
   ['bound',['Bound',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01087.html',1,'tasks::qp']]],
   ['boundedspeedconstr',['BoundedSpeedConstr',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00959.html',1,'tasks::qp::BoundedSpeedConstr'],['../a02479.html',1,'mc_solver::BoundedSpeedConstr']]],
   ['box',['Box',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00653.html',1,'mc_rbdyn_urdf::Geometry']]],
-  ['bspline',['BSpline',['../a02723.html',1,'mc_trajectory']]],
-  ['bsplinetrajectorytask',['BSplineTrajectoryTask',['../a02619.html',1,'mc_tasks']]],
+  ['bspline',['BSpline',['../a02759.html',1,'mc_trajectory']]],
+  ['bsplinetrajectorytask',['BSplineTrajectoryTask',['../a02655.html',1,'mc_tasks']]],
   ['buttonimpl',['ButtonImpl',['../a02191.html',1,'mc_rtc::gui']]]
 ];

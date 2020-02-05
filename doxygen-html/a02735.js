@@ -1,20 +1,10 @@
 var a02735 =
 [
-    [ "Spline", "a02735.html#afe26e8f1495983c2e3f9917b8ef20e76", null ],
-    [ "samplingPoints", "a02735.html#a65aa9924d2dffdf77e6b393514287aee", null ],
-    [ "samplingPoints", "a02735.html#ab65b7eb21021b049516c60e986a4ee88", null ],
-    [ "start", "a02735.html#a8378e992bf3e1bbad575ce977e3f73ab", null ],
-    [ "start", "a02735.html#a2ff62b0a83ab31052558810918ed950c", null ],
-    [ "target", "a02735.html#a45494f7a53e0aca7460a61422267a6e3", null ],
-    [ "target", "a02735.html#ac9d0e0942c1fbfaeade4bc6350221f6e", null ],
-    [ "update", "a02735.html#a824b339123da0e9aa52b431aef4f768b", null ],
-    [ "waypoints", "a02735.html#aa6f82c833829bc385839b1ec94542417", null ],
-    [ "waypoints", "a02735.html#a12881d75288abe5b0539601a7038fb02", null ],
-    [ "duration_", "a02735.html#ad1c51f62601c8adaf5e25ff4df9ce969", null ],
-    [ "needsUpdate_", "a02735.html#a431372cc08984a2a6b37be089b90cbb8", null ],
-    [ "samples_", "a02735.html#a98f852018150c074fd1f367f8435dcb4", null ],
-    [ "samplingPoints_", "a02735.html#a1031ee75323cacfec14d8cde228a9684", null ],
-    [ "start_", "a02735.html#a161c31b1e093a1e57fc5671039efb942", null ],
-    [ "target_", "a02735.html#a02ba52495ba023e463cd553403881343", null ],
-    [ "waypoints_", "a02735.html#a0eccc7db9edfd9fe6691b380ae4b3f1c", null ]
+    [ "RelativeEndEffectorTask", "a02735.html#a0158f37c233bf4855f02a8fdacd90729", null ],
+    [ "RelativeEndEffectorTask", "a02735.html#a8ebaa7565ec3bdd72adfa57cff39702a", null ],
+    [ "add_ef_pose", "a02735.html#a203a2b5099b8a34f2182560ce5ca1e64", null ],
+    [ "addToGUI", "a02735.html#a7bf4110ad02234504fb7e89ff8c9301b", null ],
+    [ "get_ef_pose", "a02735.html#a7037b03d6b2cd7b5c50b49577216ec39", null ],
+    [ "reset", "a02735.html#a18753486034464f63692f0e818302900", null ],
+    [ "set_ef_pose", "a02735.html#a8130a99d7ea7d7e1d064021df41e2de2", null ]
 ];

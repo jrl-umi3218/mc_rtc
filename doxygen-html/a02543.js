@@ -1,9 +1,10 @@
 var a02543 =
 [
-    [ "Base", "a02543.html#a4277c74f4ac9b28a55fdccaf91137f31", null ],
-    [ "InequalityConstraint", "a02543.html#a396973b39928f00efc75d3b4675b8a6c", null ],
-    [ "InequalityConstraint", "a02543.html#a7528ec839bc4af381a86f7a411f7fee1", null ],
-    [ "InequalityConstraint", "a02543.html#a69f71165591bf027c7e0a820981504d1", null ],
-    [ "AInEq", "a02543.html#abf1e2d923935ffae132bdca1e44266f8", null ],
-    [ "descInEq", "a02543.html#a3f7a4de47b50cad89e547f3a1e827e8f", null ]
+    [ "Handle", "a02543.html#a38ff1a03e3d23844851fbb6945052b6e", null ],
+    [ "Handle", "a02543.html#a3abf3568270608f66c2f3d8f42b158c5", null ],
+    [ "~Handle", "a02543.html#acb9b93dfdd948310129a694363b1d018", null ],
+    [ "Handle", "a02543.html#ad1354d6ec1298c55743594d5f7e959d7", null ],
+    [ "Handle", "a02543.html#a8d34eedd99c2441236c01717b2ec7291", null ],
+    [ "operator=", "a02543.html#a7bcd67bfff206e0063212e99dca891bc", null ],
+    [ "operator=", "a02543.html#a1002f0272ae3957fe636d3b06dc34148", null ]
 ];
