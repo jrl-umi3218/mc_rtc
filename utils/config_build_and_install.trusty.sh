@@ -18,7 +18,7 @@ mc_rtc_extra_steps()
       cd $SOURCE_DIR/yaml-cpp
       git checkout yaml-cpp-0.5.3
       cd build
-      cmake ../ -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DYAML_BUILD_SHARED_LIBS:BOOL=ON
+      cmake ../ -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_SHARED_LIBS:BOOL=ON -DYAML_BUILD_SHARED_LIBS:BOOL=ON
       make -j${BUILD_CORE}
       sudo make install
     fi
