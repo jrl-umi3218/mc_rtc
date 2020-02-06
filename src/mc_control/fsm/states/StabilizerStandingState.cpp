@@ -157,8 +157,8 @@ bool StabilizerStandingState::run(Controller & ctl)
 
   Eigen::Vector3d comdd = K_ * (comTarget_ - com_) - D_ * comd_;
   Eigen::Vector3d n = mc_rbdyn::constants::vertical;
-  double lambda = n.dot(comdd - constants::gravity) / n.dot(com_ - copTarget_);
-  Eigen::Vector3d zmp = com_ + (constants::gravity - comdd) / lambda;
+  double lambda = n.dot(comdd + constants::gravity) / n.dot(com_ - copTarget_);
+  Eigen::Vector3d zmp = com_ - (constants::gravity + comdd) / lambda;
 
   pendulum_.integrateIPM(zmp, lambda, ctl.timeStep);
 

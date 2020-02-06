@@ -105,7 +105,7 @@ void StabilizerTask::reset()
   pelvisTask->reset();
   torsoTask->reset();
 
-  Eigen::Vector3d staticForce = -mass_ * constants::gravity;
+  Eigen::Vector3d staticForce = mass_ * constants::gravity;
 
   dcmAverageError_ = Eigen::Vector3d::Zero();
   dcmError_ = Eigen::Vector3d::Zero();
@@ -120,7 +120,7 @@ void StabilizerTask::reset()
   dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
 
-  omega_ = std::sqrt(-constants::gravity.z() / robot().com().z());
+  omega_ = std::sqrt(constants::gravity.z() / robot().com().z());
 }
 
 void StabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
@@ -879,7 +879,7 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
   comdTarget_ = comd;
   comddTarget_ = comdd;
   zmpTarget_ = zmp;
-  omega_ = std::sqrt(-constants::gravity.z() / comTarget_.z());
+  omega_ = std::sqrt(constants::gravity.z() / comTarget_.z());
   dcmTarget_ = comTarget_ + comdTarget_ / omega_;
 }
 
@@ -961,7 +961,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   desiredCoMAccel += omega_ * (c_.dcmPropGain * dcmError_ + comdError);
   desiredCoMAccel += omega_ * c_.dcmIntegralGain * dcmAverageError_;
   desiredCoMAccel += omega_ * c_.dcmDerivGain * dcmVelError_;
-  auto desiredForce = mass_ * (desiredCoMAccel - constants::gravity);
+  auto desiredForce = mass_ * (desiredCoMAccel + constants::gravity);
 
   // Previous implementation (up to v1.3):
   // return {pendulum_.com().cross(desiredForce), desiredForce};
