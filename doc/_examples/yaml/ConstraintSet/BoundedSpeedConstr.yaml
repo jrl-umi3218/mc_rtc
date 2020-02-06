@@ -1,5 +1,5 @@
 type: boundedSpeed
-robotIndex: 0,
+robotIndex: 0
 constraints:
   - body: body0
     speed: [0, 0, 0.1]
