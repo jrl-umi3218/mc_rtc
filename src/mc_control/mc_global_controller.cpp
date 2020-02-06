@@ -133,7 +133,15 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   }
   for(const auto & plugin : config.global_plugins)
   {
-    plugins_.emplace_back(plugin, plugin_loader->create_unique_object(plugin));
+    try
+    {
+      plugins_.emplace_back(plugin, plugin_loader->create_unique_object(plugin));
+    }
+    catch(mc_rtc::LoaderException & exc)
+    {
+      LOG_ERROR("Global plugin " << plugin
+                                 << " failed to load, functions provided by this plugin will not be available")
+    }
   }
 
   // Loading controller modules
