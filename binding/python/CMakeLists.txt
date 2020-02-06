@@ -20,7 +20,7 @@ endif()
 
 add_cython_bindings(mc_rtc
   TARGETS ${BINDINGS_LIBRARIES}
-  VERSION 1.0.0
+  VERSION ${PROJECT_VERSION}
   MODULES mc_control.mc_control
           mc_control.fsm.fsm
           mc_rbdyn.mc_rbdyn
