@@ -413,7 +413,7 @@ void load_configs(const std::string & desc,
     c.load(default_config);
     for(const auto & p : search_path)
     {
-      bfs::path global = bfs::path(p) / "etc" / (name + ".conf");
+      bfs::path global = conf_or_yaml(bfs::path(p) / "etc" / (name + ".conf"));
       if(bfs::exists(global))
       {
         LOG_INFO("Loading additional " << desc << " configuration: " << global)
