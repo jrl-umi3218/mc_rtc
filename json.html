@@ -75256,7 +75256,7 @@ orientation: [1.0, 0.0, 0.0,
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">boundedSpeed</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="s">0,</span>
+<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">constraints</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="na">body</span><span class="pi">:</span> <span class="s">body0</span>
     <span class="na">speed</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">]</span>
@@ -75269,7 +75269,7 @@ orientation: [1.0, 0.0, 0.0,
 
   
   <pre id="ConstraintSet_BoundedSpeedConstr_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: boundedSpeed
-robotIndex: 0,
+robotIndex: 0
 constraints:
   - body: body0
     speed: [0, 0, 0.1]
@@ -76203,14 +76203,14 @@ robotIndex: 0</pre>
   </span><span class="nl">"collisions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"body1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b1"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"body2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"b2"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"body2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"iDist"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
       </span><span class="nl">"sDist"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
       </span><span class="nl">"damping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"body1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"body2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"b3"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"body2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b3"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"iDist"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
       </span><span class="nl">"sDist"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
       </span><span class="nl">"damping"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
@@ -76229,14 +76229,14 @@ robotIndex: 0</pre>
   "collisions": [
     {
       "body1": "b1",
-      "body2", "b2",
+      "body2": "b2",
       "iDist": 0.05,
       "sDist": 0.01,
       "damping": 0
     },
     {
       "body1": "b2",
-      "body2", "b3",
+      "body2": "b3",
       "iDist": 0.05,
       "sDist": 0.01,
       "damping": 0
@@ -76261,12 +76261,12 @@ robotIndex: 0</pre>
 <span class="na">r2Index</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">collisions</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="na">body1</span><span class="pi">:</span> <span class="s">b1</span>
-    <span class="s">body2, b2</span>
+    <span class="na">body2</span><span class="pi">:</span> <span class="s">b2</span>
     <span class="na">iDist</span><span class="pi">:</span> <span class="m">0.05</span>
     <span class="na">sDist</span><span class="pi">:</span> <span class="m">0.01</span>
     <span class="na">damping</span><span class="pi">:</span> <span class="m">0</span>
   <span class="pi">-</span> <span class="na">body1</span><span class="pi">:</span> <span class="s">b2</span>
-    <span class="s">body2, b3</span>
+    <span class="na">body2</span><span class="pi">:</span> <span class="s">b3</span>
     <span class="na">iDist</span><span class="pi">:</span> <span class="m">0.05</span>
     <span class="na">sDist</span><span class="pi">:</span> <span class="m">0.01</span>
     <span class="na">damping</span><span class="pi">:</span> <span class="s">0</span></code></pre></figure>
@@ -76280,12 +76280,12 @@ r1Index: 0
 r2Index: 0
 collisions:
   - body1: b1
-    body2, b2
+    body2: b2
     iDist: 0.05
     sDist: 0.01
     damping: 0
   - body1: b2
-    body2, b3
+    body2: b3
     iDist: 0.05
     sDist: 0.01
     damping: 0</pre>

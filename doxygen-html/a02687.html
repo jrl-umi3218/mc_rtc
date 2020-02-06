@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_tasks::lipm_stabilizer::internal::Contact Struct Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02687.html','');});
+$(document).ready(function(){initNavTree('a02690.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,689 +69,111 @@ $(document).ready(function(){initNavTree('a02687.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a02684.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_tasks::lipm_stabilizer::internal::Contact Struct Reference</div>  </div>
+<div class="title">mc_tasks::ExactCubicTrajectoryTask Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This class wraps information about contact surfaces used by the stabilizer.  
- <a href="a02687.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_tasks/lipm_stabilizer/Contact.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a65934b1c7c1f5ba59139c2b2d4351971"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a65934b1c7c1f5ba59139c2b2d4351971">Contact</a> (const <a class="el" href="a02095.html">mc_rbdyn::Robot</a> &amp;robot, const std::string &amp;<a class="el" href="a02687.html#a88df6c5efb4bf9e601ab5f3d82933cca">surfaceName</a>, double friction)</td></tr>
-<tr class="memdesc:a65934b1c7c1f5ba59139c2b2d4351971"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a contact from a surface attached to the ankle frame of a robot.  <a href="#a65934b1c7c1f5ba59139c2b2d4351971">More...</a><br /></td></tr>
-<tr class="separator:a65934b1c7c1f5ba59139c2b2d4351971"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a326db6cb41cb9ee4d824d52a8ddbe0e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a326db6cb41cb9ee4d824d52a8ddbe0e1">Contact</a> (const <a class="el" href="a02095.html">mc_rbdyn::Robot</a> &amp;robot, const std::string &amp;<a class="el" href="a02687.html#a88df6c5efb4bf9e601ab5f3d82933cca">surfaceName</a>, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;<a class="el" href="a02687.html#a1c494354335f7d7aa16f0202b637ea98">surfacePose</a>, double friction)</td></tr>
-<tr class="memdesc:a326db6cb41cb9ee4d824d52a8ddbe0e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="a02687.html" title="This class wraps information about contact surfaces used by the stabilizer. ">Contact</a> with user-specified surface pose.  <a href="#a326db6cb41cb9ee4d824d52a8ddbe0e1">More...</a><br /></td></tr>
-<tr class="separator:a326db6cb41cb9ee4d824d52a8ddbe0e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f5506ed9550e264f73e26e6178b30e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00680.html#af644950088ef46324f20a7214021a824">HrepXd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a8f5506ed9550e264f73e26e6178b30e0">hrep</a> (const Eigen::Vector3d &amp;<a class="el" href="a02687.html#a58a17b848f5db25d422c17d56c82f6b0">vertical</a>) const</td></tr>
-<tr class="memdesc:a8f5506ed9550e264f73e26e6178b30e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Halfspace representation of contact area in world frame.  <a href="#a8f5506ed9550e264f73e26e6178b30e0">More...</a><br /></td></tr>
-<tr class="separator:a8f5506ed9550e264f73e26e6178b30e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aced5d5b44832c71dcdde1ebfe46f7c32"><td class="memItemLeft" align="right" valign="top">const Eigen::Matrix&lt; double, 16, 6 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#aced5d5b44832c71dcdde1ebfe46f7c32">wrenchFaceMatrix</a> () const</td></tr>
-<tr class="memdesc:aced5d5b44832c71dcdde1ebfe46f7c32"><td class="mdescLeft">&#160;</td><td class="mdescRight">H-representation of contact wrench cones.  <a href="#aced5d5b44832c71dcdde1ebfe46f7c32">More...</a><br /></td></tr>
-<tr class="separator:aced5d5b44832c71dcdde1ebfe46f7c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a335b37445d20098b896931675aaedc34"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a335b37445d20098b896931675aaedc34">sagittal</a> () const</td></tr>
-<tr class="memdesc:a335b37445d20098b896931675aaedc34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sagittal unit vector of the contact frame.  <a href="#a335b37445d20098b896931675aaedc34">More...</a><br /></td></tr>
-<tr class="separator:a335b37445d20098b896931675aaedc34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a221647a888696d4d1837961e1b7a6d"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a1a221647a888696d4d1837961e1b7a6d">lateral</a> () const</td></tr>
-<tr class="memdesc:a1a221647a888696d4d1837961e1b7a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lateral unit vector of the contact frame.  <a href="#a1a221647a888696d4d1837961e1b7a6d">More...</a><br /></td></tr>
-<tr class="separator:a1a221647a888696d4d1837961e1b7a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f40394e257213822ca9b73a581b2c10"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a5f40394e257213822ca9b73a581b2c10">normal</a> () const</td></tr>
-<tr class="memdesc:a5f40394e257213822ca9b73a581b2c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normal unit vector of the contact frame.  <a href="#a5f40394e257213822ca9b73a581b2c10">More...</a><br /></td></tr>
-<tr class="separator:a5f40394e257213822ca9b73a581b2c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1b330e62ef0cb3d0d1b4db0a8e886fb"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#ab1b330e62ef0cb3d0d1b4db0a8e886fb">position</a> () const</td></tr>
-<tr class="memdesc:ab1b330e62ef0cb3d0d1b4db0a8e886fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for position.  <a href="#ab1b330e62ef0cb3d0d1b4db0a8e886fb">More...</a><br /></td></tr>
-<tr class="separator:ab1b330e62ef0cb3d0d1b4db0a8e886fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9eaefdf3407007a4c8f3dab5220d45c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#ad9eaefdf3407007a4c8f3dab5220d45c">halfWidth</a> () const</td></tr>
-<tr class="separator:ad9eaefdf3407007a4c8f3dab5220d45c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2778ca298df3670ee48b9c2fb269e44c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a2778ca298df3670ee48b9c2fb269e44c">halfLength</a> () const</td></tr>
-<tr class="separator:a2778ca298df3670ee48b9c2fb269e44c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ebec093bad160567aca2d5ea46dc679"><td class="memItemLeft" align="right" valign="top">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a1ebec093bad160567aca2d5ea46dc679">anklePose</a> () const</td></tr>
-<tr class="memdesc:a1ebec093bad160567aca2d5ea46dc679"><td class="mdescLeft">&#160;</td><td class="mdescRight">World position of projected ankle frame into surface frame.  <a href="#a1ebec093bad160567aca2d5ea46dc679">More...</a><br /></td></tr>
-<tr class="separator:a1ebec093bad160567aca2d5ea46dc679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7880a19753e73389edd2b9ed0c120d8"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#ac7880a19753e73389edd2b9ed0c120d8">sagital</a> ()</td></tr>
-<tr class="separator:ac7880a19753e73389edd2b9ed0c120d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e213b8f4786b25e7f84eb78132a3d4a"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a8e213b8f4786b25e7f84eb78132a3d4a">lateral</a> ()</td></tr>
-<tr class="separator:a8e213b8f4786b25e7f84eb78132a3d4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58a17b848f5db25d422c17d56c82f6b0"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a58a17b848f5db25d422c17d56c82f6b0">vertical</a> ()</td></tr>
-<tr class="separator:a58a17b848f5db25d422c17d56c82f6b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88df6c5efb4bf9e601ab5f3d82933cca"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a88df6c5efb4bf9e601ab5f3d82933cca">surfaceName</a> () const</td></tr>
-<tr class="separator:a88df6c5efb4bf9e601ab5f3d82933cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c494354335f7d7aa16f0202b637ea98"><td class="memItemLeft" align="right" valign="top">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a1c494354335f7d7aa16f0202b637ea98">surfacePose</a> () const</td></tr>
-<tr class="separator:a1c494354335f7d7aa16f0202b637ea98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b6cfbb78cfb49c05589e1f861355853"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; Eigen::Vector3d &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a5b6cfbb78cfb49c05589e1f861355853">polygon</a> () const</td></tr>
-<tr class="memdesc:a5b6cfbb78cfb49c05589e1f861355853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the contact polygon defined by the 4 vertices of the min/max coordinates along the surface's sagital and normal direction.  <a href="#a5b6cfbb78cfb49c05589e1f861355853">More...</a><br /></td></tr>
-<tr class="separator:a5b6cfbb78cfb49c05589e1f861355853"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c628b2b87c83e06392028092bd89107"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a2c628b2b87c83e06392028092bd89107">xmin</a> () const</td></tr>
-<tr class="memdesc:a2c628b2b87c83e06392028092bd89107"><td class="mdescLeft">&#160;</td><td class="mdescRight">World coordinates of the point furthest back in the surface's sagital direction.  <a href="#a2c628b2b87c83e06392028092bd89107">More...</a><br /></td></tr>
-<tr class="separator:a2c628b2b87c83e06392028092bd89107"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adee46fe7d5c7596d13f2288c92a7a0c8"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#adee46fe7d5c7596d13f2288c92a7a0c8">xmax</a> () const</td></tr>
-<tr class="memdesc:adee46fe7d5c7596d13f2288c92a7a0c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">World coordinates of the point furthest front in the surface's sagital direction.  <a href="#adee46fe7d5c7596d13f2288c92a7a0c8">More...</a><br /></td></tr>
-<tr class="separator:adee46fe7d5c7596d13f2288c92a7a0c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16f8c6cb34189692495e7afafb0b2ced"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a16f8c6cb34189692495e7afafb0b2ced">ymin</a> () const</td></tr>
-<tr class="memdesc:a16f8c6cb34189692495e7afafb0b2ced"><td class="mdescLeft">&#160;</td><td class="mdescRight">World coordinates of the point furthest right in the surface's lateral direction.  <a href="#a16f8c6cb34189692495e7afafb0b2ced">More...</a><br /></td></tr>
-<tr class="separator:a16f8c6cb34189692495e7afafb0b2ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ce5eeed46427c049da3050580e1456f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02687.html#a1ce5eeed46427c049da3050580e1456f">ymax</a> () const</td></tr>
-<tr class="memdesc:a1ce5eeed46427c049da3050580e1456f"><td class="mdescLeft">&#160;</td><td class="mdescRight">World coordinates of the point furthest left in the surface's lateral direction.  <a href="#a1ce5eeed46427c049da3050580e1456f">More...</a><br /></td></tr>
-<tr class="separator:a1ce5eeed46427c049da3050580e1456f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class wraps information about contact surfaces used by the stabilizer. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a65934b1c7c1f5ba59139c2b2d4351971"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65934b1c7c1f5ba59139c2b2d4351971">&#9670;&nbsp;</a></span>Contact() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_tasks::lipm_stabilizer::internal::Contact::Contact </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02095.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
-          <td class="paramname"><em>robot</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>surfaceName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>friction</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructs a contact from a surface attached to the ankle frame of a robot. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">robot</td><td>Robot from which to create the contact </td></tr>
-    <tr><td class="paramname">surfaceName</td><td>Name of surface attached to the robot's ankle. It is assumed that the surface frame is defined as follows:<ul>
-<li>z axis going from the environment towards the robot</li>
-<li>x aligned with the sagital direction</li>
-<li>y axis aligned with the lateral direction</li>
-</ul>
-</td></tr>
-    <tr><td class="paramname">friction</td><td>sole friction </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a326db6cb41cb9ee4d824d52a8ddbe0e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a326db6cb41cb9ee4d824d52a8ddbe0e1">&#9670;&nbsp;</a></span>Contact() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_tasks::lipm_stabilizer::internal::Contact::Contact </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02095.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
-          <td class="paramname"><em>robot</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>surfaceName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td>
-          <td class="paramname"><em>surfacePose</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>friction</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructs a <a class="el" href="a02687.html" title="This class wraps information about contact surfaces used by the stabilizer. ">Contact</a> with user-specified surface pose. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">surfacePose</td><td>Pose of the contact surface frame</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02687.html#a65934b1c7c1f5ba59139c2b2d4351971" title="Constructs a contact from a surface attached to the ankle frame of a robot. ">Contact(const mc_rbdyn::Robot&amp;, const std::string &amp;, double)</a>; </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1ebec093bad160567aca2d5ea46dc679"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ebec093bad160567aca2d5ea46dc679">&#9670;&nbsp;</a></span>anklePose()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&amp; mc_tasks::lipm_stabilizer::internal::Contact::anklePose </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>World position of projected ankle frame into surface frame. </p>
-<p>Orientation is that of the target contact frame. </p>
-
-</div>
-</div>
-<a id="a2778ca298df3670ee48b9c2fb269e44c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2778ca298df3670ee48b9c2fb269e44c">&#9670;&nbsp;</a></span>halfLength()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::halfLength </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad9eaefdf3407007a4c8f3dab5220d45c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9eaefdf3407007a4c8f3dab5220d45c">&#9670;&nbsp;</a></span>halfWidth()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::halfWidth </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8f5506ed9550e264f73e26e6178b30e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f5506ed9550e264f73e26e6178b30e0">&#9670;&nbsp;</a></span>hrep()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00680.html#af644950088ef46324f20a7214021a824">HrepXd</a> mc_tasks::lipm_stabilizer::internal::Contact::hrep </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>vertical</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Halfspace representation of contact area in world frame. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">vertical</td><td>Normalized vector parallel to gravity </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a1a221647a888696d4d1837961e1b7a6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a221647a888696d4d1837961e1b7a6d">&#9670;&nbsp;</a></span>lateral() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::lateral </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Lateral unit vector of the contact frame. </p>
-
-</div>
-</div>
-<a id="a8e213b8f4786b25e7f84eb78132a3d4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e213b8f4786b25e7f84eb78132a3d4a">&#9670;&nbsp;</a></span>lateral() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::lateral </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5f40394e257213822ca9b73a581b2c10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f40394e257213822ca9b73a581b2c10">&#9670;&nbsp;</a></span>normal()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::normal </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Normal unit vector of the contact frame. </p>
-
-</div>
-</div>
-<a id="a5b6cfbb78cfb49c05589e1f861355853"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b6cfbb78cfb49c05589e1f861355853">&#9670;&nbsp;</a></span>polygon()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::vector&lt;Eigen::Vector3d&gt;&amp; mc_tasks::lipm_stabilizer::internal::Contact::polygon </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns the contact polygon defined by the 4 vertices of the min/max coordinates along the surface's sagital and normal direction. </p>
-
-</div>
-</div>
-<a id="ab1b330e62ef0cb3d0d1b4db0a8e886fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1b330e62ef0cb3d0d1b4db0a8e886fb">&#9670;&nbsp;</a></span>position()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::Vector3d&amp; mc_tasks::lipm_stabilizer::internal::Contact::position </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Shorthand for position. </p>
-
-</div>
-</div>
-<a id="ac7880a19753e73389edd2b9ed0c120d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7880a19753e73389edd2b9ed0c120d8">&#9670;&nbsp;</a></span>sagital()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::sagital </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a335b37445d20098b896931675aaedc34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a335b37445d20098b896931675aaedc34">&#9670;&nbsp;</a></span>sagittal()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::sagittal </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Sagittal unit vector of the contact frame. </p>
-
-</div>
-</div>
-<a id="a88df6c5efb4bf9e601ab5f3d82933cca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88df6c5efb4bf9e601ab5f3d82933cca">&#9670;&nbsp;</a></span>surfaceName()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string&amp; mc_tasks::lipm_stabilizer::internal::Contact::surfaceName </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1c494354335f7d7aa16f0202b637ea98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c494354335f7d7aa16f0202b637ea98">&#9670;&nbsp;</a></span>surfacePose()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&amp; mc_tasks::lipm_stabilizer::internal::Contact::surfacePose </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a58a17b848f5db25d422c17d56c82f6b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a58a17b848f5db25d422c17d56c82f6b0">&#9670;&nbsp;</a></span>vertical()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::vertical </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aced5d5b44832c71dcdde1ebfe46f7c32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aced5d5b44832c71dcdde1ebfe46f7c32">&#9670;&nbsp;</a></span>wrenchFaceMatrix()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::Matrix&lt;double, 16, 6&gt;&amp; mc_tasks::lipm_stabilizer::internal::Contact::wrenchFaceMatrix </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>H-representation of contact wrench cones. </p>
-<p>See <a href="https://hal.archives-ouvertes.fr/hal-02108449/document">https://hal.archives-ouvertes.fr/hal-02108449/document</a> for technical details on the derivation of this formula.</p>
-<dl class="section note"><dt>Note</dt><dd>Uses halfLength_, halfWidth_ computed from the surface points in findSurfaceBoundaries(), friction_: sole friction </dd></dl>
-
-</div>
-</div>
-<a id="adee46fe7d5c7596d13f2288c92a7a0c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adee46fe7d5c7596d13f2288c92a7a0c8">&#9670;&nbsp;</a></span>xmax()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::xmax </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>World coordinates of the point furthest front in the surface's sagital direction. </p>
-
-</div>
-</div>
-<a id="a2c628b2b87c83e06392028092bd89107"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c628b2b87c83e06392028092bd89107">&#9670;&nbsp;</a></span>xmin()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::xmin </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>World coordinates of the point furthest back in the surface's sagital direction. </p>
-
-</div>
-</div>
-<a id="a1ce5eeed46427c049da3050580e1456f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ce5eeed46427c049da3050580e1456f">&#9670;&nbsp;</a></span>ymax()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::ymax </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>World coordinates of the point furthest left in the surface's lateral direction. </p>
-
-</div>
-</div>
-<a id="a16f8c6cb34189692495e7afafb0b2ced"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16f8c6cb34189692495e7afafb0b2ced">&#9670;&nbsp;</a></span>ymin()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::ymin </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>World coordinates of the point furthest right in the surface's lateral direction. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a02690.html#a1f68add7b8b70b9b6878bb0d72c0c6e7">addToGUI</a>(mc_rtc::gui::StateBuilder &amp;gui) override</td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02722.html#a73ce0e373c9cf7f5b8db6745c46c3ef4">mc_tasks::MetaTask::addToGUI</a>(MetaTask &amp;t, mc_rtc::gui::StateBuilder &amp;gui)</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#aa7147dba544550aa616caa164a40209a">addToLogger</a>(mc_rtc::Logger &amp;logger) override</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02722.html#ac29af31e9eb526d06b6d4ec1d2f3d5bb">mc_tasks::MetaTask::addToLogger</a>(MetaTask &amp;t, mc_rtc::Logger &amp;logger)</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a95d2b8b64b8f57fd92bbe82f98a4ec8e">addToSolver</a>(mc_solver::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02722.html#a6f753630a5e0aca76308b4d652e62277">mc_tasks::MetaTask::addToSolver</a>(MetaTask &amp;t, mc_solver::QPSolver &amp;solver)</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02690.html#a825212a1055ad43955b8284562905f13">bspline</a></td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#a552e7c8b7ef80649a462476c30ef6cc6">buildCompletionCriteria</a>(double dt, const mc_rtc::Configuration &amp;config) const override</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02690.html#a14e12359f28675ec224ec009ae75b174">constraints</a>(const Eigen::Vector3d &amp;init_vel, const Eigen::Vector3d &amp;init_acc, const Eigen::Vector3d &amp;end_vel, const Eigen::Vector3d &amp;end_acc)</td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#a848034873f24f9e38dcc12d657e04741">controlPoints</a>()</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a221a83c509eb1b24df8a96a6eb4ac7da">currTime_</a></td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a82155cafc3a49ae1218ebd02e45c08b2">damping</a>(double damping)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a0c4ccf6b3221b8b5f3de002b2eaf663b">damping</a>(const Eigen::VectorXd &amp;damping)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a6c2aaa9a80d595b564c0bf982662ee72">damping</a>() const</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a7d35bbf3041054f4cd69aa772c2f5d9b">dimDamping</a>() const</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a869ba83dfc87a3f4d29625d84231d804">dimStiffness</a>() const</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#aa8050ca9492c78eb14d0ab1750b90421">dimWeight</a>(const Eigen::VectorXd &amp;dimW) override</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#a501a30432b64fcb91f8cd5eeb1881d39">dimWeight</a>() const override</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a49b467df085bf4289a5c90276be9e9d9">displaySamples</a>(unsigned s)</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#ab6c7b78884488afa4df3bc6e7db18353">displaySamples</a>() const</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a47c76bbfd6ed1275bfada4c8b238af4d">duration_</a></td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a89a472bd695ceec1bbbe1b932ec014fa">errorT</a></td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a46526962a3e24819c84aa77182abdb7f">eval</a>() const override</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#ae456950d2eafdbc888d0a92b0d87f66a">evalTracking</a>() const</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02690.html#ad27477a0f30c373765213f5e8288963e">ExactCubicTrajectoryTask</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, const std::string &amp;surfaceName, double duration, double stiffness, double weight, const sva::PTransformd &amp;target, const std::vector&lt; std::pair&lt; double, Eigen::Vector3d &gt;&gt; &amp;posWp={}, const Eigen::Vector3d &amp;init_vel=Eigen::Vector3d::Zero(), const Eigen::Vector3d &amp;init_acc=Eigen::Vector3d::Zero(), const Eigen::Vector3d &amp;end_vel=Eigen::Vector3d::Zero(), const Eigen::Vector3d &amp;end_acc=Eigen::Vector3d::Zero(), const std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt;&gt; &amp;oriWp={})</td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a57652be181ca173ac4a7fa8e8fa33509">finalize</a>(Args &amp;&amp;... args)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02690.html#a7468619f2b047add1ee8a018daafb4f5">initialPose_</a></td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#ab58684bba10bad5cbcbe7414e04fb6f1">inSolver_</a></td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a446992512e198c8292d758d5ec6c044b">jac</a>() const</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a8de1586c9761e5f14d1d66c7e6a09fbf">load</a>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config) override</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02722.html#aa98468771424ad14d60915a6b52e927b">name</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02722.html#a94831a7f067fdd5b05e03e83bfc4166b">name</a>() const</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02722.html#a6e55f0bff9a3d49ba0b92e0a4dff9a6f">name_</a></td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a1cbf0f303b3ece9dc97cfe33cef66045">normalAcc</a>() const</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a99908fd6b6923222cd523025bd2e1c23">oriSpline_</a></td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#ae50ea72643de837337187120c989c42b">oriWaypoints</a>(const std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt;&gt; &amp;oriWp)</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a8bc85c80baae71fc2dcc41a577edb1d1">oriWp_</a></td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02690.html#ad8ed139887005e36a8ae46295ebecf60">posWaypoints</a>(const std::vector&lt; std::pair&lt; double, Eigen::Vector3d &gt;&gt; &amp;posWp)</td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a161a905db0c9a784de4e11ff07d5b064">refAccel</a>(const Eigen::VectorXd &amp;accel)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a834542365fd040ef9b29142329d9b573">refAccel</a>() const</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a597121365d28a8e2ff4f8c550a5ac81c">refAccel_</a></td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#a6d3a61eea75bf5fa5125564e9d5752e2">refPose</a>(const sva::PTransformd &amp;pose)</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a3b6ce55a9a60ddf211b8221be9507603">refPose</a>() const</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a4f8873db735f6c3cbb37761999059cdc">refVel</a>(const Eigen::VectorXd &amp;vel)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a2f59cefb29eab9e55ceb6295e105de1b">refVel</a>() const</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a9ceb455c41f015c22deaec76b8bd928e">refVel_</a></td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02722.html#a44d85f3f65abc8a5f8965efec40ebe7d">removeFromGUI</a>(mc_rtc::gui::StateBuilder &amp;)</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02722.html#a780d496b8148d863b2aa0462abcba525">removeFromGUI</a>(MetaTask &amp;t, mc_rtc::gui::StateBuilder &amp;gui)</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a415719c2bcc08727bbaa09b5c3172188">removeFromLogger</a>(mc_rtc::Logger &amp;logger) override</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02722.html#a256b3b8d5c00bc81ef7726f536f79bfb">mc_tasks::MetaTask::removeFromLogger</a>(MetaTask &amp;t, mc_rtc::Logger &amp;logger)</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02722.html#af374c0658624a4cb7a6a9f900ab9f69a">mc_tasks::MetaTask::removeFromSolver</a>(MetaTask &amp;t, mc_solver::QPSolver &amp;solver)</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a400018484b0f1d1799e02a1af09b8167">reset</a>() override</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a28bd17d1de6e94cc16c84ec4057f763f">resetJointsSelector</a>()</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">resetJointsSelector</a>(mc_solver::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a3c68bc924e1df10c374363d0aaaa15ca">rIndex</a></td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#ab5848b8fafba3f0791e5286718cce390">rIndex_</a></td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a77260d6774cb69d24d22e53890e7fa16">robots</a></td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#a55ddc08175e2c18024ba3aba28c9caa7">samples_</a></td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a7462f19868c7cfbe4ccdefb3fb2e08cb">selectActiveJoints</a>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a401e0e9e9dc4acade920f05779540078">selectActiveJoints</a>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a291491e212dbe63935aee5828a72d0d8">selectUnactiveJoints</a>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#aad2277ab64458789c4b2e278cf7ff6c7">selectUnactiveJoints</a>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a418d47e753fc31eb16454bd4e3d8fd2d">setGains</a>(double stiffness, double damping)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a67e5b618af03d13ba68512d2e0b9bc0e">setGains</a>(const Eigen::VectorXd &amp;stiffness, const Eigen::VectorXd &amp;damping)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#aee6254ed615e98f3b2d96a76fac08166">speed</a>() const override</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02690.html#a9e72a177388b55ed2773d1906bd28f9e">spline</a>() const</td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02690.html#a1aa0b41fae9369d28c6d1b7240a5df6f">spline</a>()</td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02690.html#adc53d700518e4c9bf22a193cd0115a2a">SplineTrajectoryBase</a> typedef</td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a24faf75e67bb09033e53d780455257f2">SplineTrajectoryTask</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, const std::string &amp;surfaceName, double duration, double stiffness, double weight, const Eigen::Matrix3d &amp;target, const std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt;&gt; &amp;oriWp={})</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02690.html#a9bf87cb2f5679ce3181d696adad0a9d6">SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">friend</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>(double stiffness)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#ae901348ef6b40b04af30f6796714b4ff">stiffness</a>(const Eigen::VectorXd &amp;stiffness)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#abb15c105235008d7c43b813f581c1c92">stiffness</a>() const</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#abc56ce5c0be70edcccba265b5a94284c">surfaceName_</a></td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02690.html#ad67859df04ed0798685ebac9fbe56f95">target</a>(const Eigen::Vector3d &amp;target)</td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02690.html#a75a88ee3535fe98bd5206d8c4a7a4f54">target</a>() const</td><td class="entry"><a class="el" href="a02690.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a2f94ae2cfc7521582ffd1b5720bda580">SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;::target</a>(const sva::PTransformd &amp;target)</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#a0f4207fc91c4eedd0617759dd4c92ab8">timeElapsed</a>() const</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02754.html#a2efc437fba8274cbbdc46fce7f9e6856">timeStep_</a></td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#a477fb8de593f7ccaaea505e9e11229f7">TrajectoryBase</a> typedef</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a779f644750cc4acd6692681dd255ea06">trajectoryT_</a></td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#a8a14f83ca09f800540bae6ce5b29c376">TrajectoryTask</a> typedef</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a3b341ee69d33864500eb7e0f68ffe599">TrajectoryTaskGeneric</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness, double weight)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02722.html#ac090b29eae1954585e32572d40731ca1">type</a>() const</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02722.html#addf8dbe10befa2b37c8e7ea386561775">type_</a></td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02754.html#a6b58c786b84e0d4f82f6e434589c0e80">update</a>(mc_solver::QPSolver &amp;) override</td><td class="entry"><a class="el" href="a02754.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02722.html#a570ef153c01abad5d5642b7a16f44d79">mc_tasks::MetaTask::update</a>(MetaTask &amp;t, mc_solver::QPSolver &amp;solver)</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02762.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>(double w)</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#addeac3a07caaeef74f6f62c7509767c9">weight</a>() const</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02722.html#aea3e513dfe137830b38272336451b8cc">~MetaTask</a>()</td><td class="entry"><a class="el" href="a02722.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02762.html#a723271227584b9a8af649ce887d9c947">~TrajectoryTaskGeneric</a>()</td><td class="entry"><a class="el" href="a02762.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00679.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00680.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a00706.html">internal</a></li><li class="navelem"><a class="el" href="a02687.html">Contact</a></li>
-    <li class="footer">Generated on Thu Feb 6 2020 07:57:46 for mc_rtc by
+    <li class="footer">Generated on Thu Feb 6 2020 08:16:25 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

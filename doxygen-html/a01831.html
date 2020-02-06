@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_control::ControllerServer Struct Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01831.html','');});
+$(document).ready(function(){initNavTree('a01834.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,158 +69,30 @@ $(document).ready(function(){initNavTree('a01831.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a01828.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_control::ControllerServer Struct Reference</div>  </div>
+<div class="title">mc_control::ElementId Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Serves data and allow interaction with the controllers.  
- <a href="a01831.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_control/ControllerServer.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:ac13be9e36cf38cb6bdde4cc8b4b19250"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01831.html#ac13be9e36cf38cb6bdde4cc8b4b19250">ControllerServer</a> (double dt, double server_dt, const std::vector&lt; std::string &gt; &amp;pub_bind_uri, const std::vector&lt; std::string &gt; &amp;pull_bind_uri)</td></tr>
-<tr class="memdesc:ac13be9e36cf38cb6bdde4cc8b4b19250"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac13be9e36cf38cb6bdde4cc8b4b19250">More...</a><br /></td></tr>
-<tr class="separator:ac13be9e36cf38cb6bdde4cc8b4b19250"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4ef79cfb9afe739ee67b64b66969f97"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01831.html#aa4ef79cfb9afe739ee67b64b66969f97">~ControllerServer</a> ()</td></tr>
-<tr class="separator:aa4ef79cfb9afe739ee67b64b66969f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a734ffb48f73a37374b9b51c4c7655507"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01831.html#a734ffb48f73a37374b9b51c4c7655507">handle_requests</a> (<a class="el" href="a02355.html">mc_rtc::gui::StateBuilder</a> &amp;gui_builder)</td></tr>
-<tr class="memdesc:a734ffb48f73a37374b9b51c4c7655507"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle requests made by the GUI users.  <a href="#a734ffb48f73a37374b9b51c4c7655507">More...</a><br /></td></tr>
-<tr class="separator:a734ffb48f73a37374b9b51c4c7655507"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38c2d4255f3f4db5c9315f3c7468b87f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01831.html#a38c2d4255f3f4db5c9315f3c7468b87f">publish</a> (<a class="el" href="a02355.html">mc_rtc::gui::StateBuilder</a> &amp;gui_builder)</td></tr>
-<tr class="memdesc:a38c2d4255f3f4db5c9315f3c7468b87f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publish the current GUI state.  <a href="#a38c2d4255f3f4db5c9315f3c7468b87f">More...</a><br /></td></tr>
-<tr class="separator:a38c2d4255f3f4db5c9315f3c7468b87f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Serves data and allow interaction with the controllers. </p>
-<ul>
-<li>Uses a PUB socket to send the data stream</li>
-<li>Uses a PULL socket to handle requests </li>
-</ul>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac13be9e36cf38cb6bdde4cc8b4b19250"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac13be9e36cf38cb6bdde4cc8b4b19250">&#9670;&nbsp;</a></span>ControllerServer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_control::ControllerServer::ControllerServer </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>server_dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>pub_bind_uri</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>pull_bind_uri</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dt</td><td>Controller timestep</td></tr>
-    <tr><td class="paramname">server_dt</td><td>Publication timestep</td></tr>
-    <tr><td class="paramname">pub_bind_uri</td><td>List of URI the PUB socket should bind to</td></tr>
-    <tr><td class="paramname">pull_bind_uri</td><td>List of URI the PULL socket should bind to</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Check nanomsg documentation for supported protocols </p>
-
-</div>
-</div>
-<a id="aa4ef79cfb9afe739ee67b64b66969f97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4ef79cfb9afe739ee67b64b66969f97">&#9670;&nbsp;</a></span>~ControllerServer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_control::ControllerServer::~ControllerServer </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a734ffb48f73a37374b9b51c4c7655507"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a734ffb48f73a37374b9b51c4c7655507">&#9670;&nbsp;</a></span>handle_requests()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::ControllerServer::handle_requests </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02355.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
-          <td class="paramname"><em>gui_builder</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Handle requests made by the GUI users. </p>
-
-</div>
-</div>
-<a id="a38c2d4255f3f4db5c9315f3c7468b87f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38c2d4255f3f4db5c9315f3c7468b87f">&#9670;&nbsp;</a></span>publish()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::ControllerServer::publish </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02355.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
-          <td class="paramname"><em>gui_builder</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Publish the current GUI state. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a01834.html">mc_control::ElementId</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a01834.html#a72f672dd6379b02c13838974b2b04f50">category</a></td><td class="entry"><a class="el" href="a01834.html">mc_control::ElementId</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01834.html#a17c9c3f1700bd2f02814ca219844c934">ElementId</a>()=default</td><td class="entry"><a class="el" href="a01834.html">mc_control::ElementId</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01834.html#a84ad794dcfc845476f05d2cb1c283351">ElementId</a>(const ElementId &amp;)=default</td><td class="entry"><a class="el" href="a01834.html">mc_control::ElementId</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01834.html#a566ba8033fa8a7f50b016947ac5002d3">ElementId</a>(ElementId &amp;&amp;)=default</td><td class="entry"><a class="el" href="a01834.html">mc_control::ElementId</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01834.html#a232678c79a8f6faa8923330bd50ec053">ElementId</a>(const std::vector&lt; std::string &gt; &amp;category, const std::string &amp;name, int sid)</td><td class="entry"><a class="el" href="a01834.html">mc_control::ElementId</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01834.html#a200df31dd4025e687962b95ec3f7810d">ElementId</a>(const std::vector&lt; std::string &gt; &amp;category, const std::string &amp;name)</td><td class="entry"><a class="el" href="a01834.html">mc_control::ElementId</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01834.html#afa0ea7e8ec08b383d992e9a8b408a879">name</a></td><td class="entry"><a class="el" href="a01834.html">mc_control::ElementId</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01834.html#a781c1eac4041ede096f3fae9b0c775b2">operator=</a>(const ElementId &amp;)=default</td><td class="entry"><a class="el" href="a01834.html">mc_control::ElementId</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01834.html#a24f027cf01658b8e6c701bab7d33f728">operator=</a>(ElementId &amp;&amp;)=default</td><td class="entry"><a class="el" href="a01834.html">mc_control::ElementId</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01834.html#a5753e9c679e8109c6bce7c9a02dd5c37">sid</a></td><td class="entry"><a class="el" href="a01834.html">mc_control::ElementId</a></td><td class="entry"></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00676.html">mc_control</a></li><li class="navelem"><a class="el" href="a01831.html">ControllerServer</a></li>
-    <li class="footer">Generated on Thu Feb 6 2020 07:57:45 for mc_rtc by
+    <li class="footer">Generated on Thu Feb 6 2020 08:16:24 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

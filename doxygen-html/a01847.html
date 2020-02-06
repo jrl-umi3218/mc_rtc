@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_control::fsm::Executor Class Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01847.html','');});
+$(document).ready(function(){initNavTree('a01850.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,504 +69,85 @@ $(document).ready(function(){initNavTree('a01847.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a01844.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_control::fsm::Executor Class Reference</div>  </div>
+<div class="title">mc_control::fsm::Controller Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>of executing an FSM  
- <a href="a01847.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_control/fsm/Executor.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a87b8dd1aa78d6d57ece49c9f0782a07f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#a87b8dd1aa78d6d57ece49c9f0782a07f">init</a> (<a class="el" href="a01839.html">Controller</a> &amp;ctl, const <a class="el" href="a02159.html">mc_rtc::Configuration</a> &amp;config, const std::string &amp;name=&quot;&quot;, const std::vector&lt; std::string &gt; &amp;category={})</td></tr>
-<tr class="memdesc:a87b8dd1aa78d6d57ece49c9f0782a07f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the executor.  <a href="#a87b8dd1aa78d6d57ece49c9f0782a07f">More...</a><br /></td></tr>
-<tr class="separator:a87b8dd1aa78d6d57ece49c9f0782a07f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2002091bc35441bfbacbd3b4cbf3631"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#ac2002091bc35441bfbacbd3b4cbf3631">run</a> (<a class="el" href="a01839.html">Controller</a> &amp;ctl, bool keep_state)</td></tr>
-<tr class="memdesc:ac2002091bc35441bfbacbd3b4cbf3631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the current state.  <a href="#ac2002091bc35441bfbacbd3b4cbf3631">More...</a><br /></td></tr>
-<tr class="separator:ac2002091bc35441bfbacbd3b4cbf3631"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade28e68814e850c8a9dc8028b36d1fdd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#ade28e68814e850c8a9dc8028b36d1fdd">stop</a> (<a class="el" href="a01839.html">Controller</a> &amp;ctl)</td></tr>
-<tr class="memdesc:ade28e68814e850c8a9dc8028b36d1fdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the current stat eif necessary.  <a href="#ade28e68814e850c8a9dc8028b36d1fdd">More...</a><br /></td></tr>
-<tr class="separator:ade28e68814e850c8a9dc8028b36d1fdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6418feaa36246f3f192b6d358b8f1f7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#a6418feaa36246f3f192b6d358b8f1f7e">teardown</a> (<a class="el" href="a01839.html">Controller</a> &amp;ctl)</td></tr>
-<tr class="memdesc:a6418feaa36246f3f192b6d358b8f1f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Teardown the current state if necessary.  <a href="#a6418feaa36246f3f192b6d358b8f1f7e">More...</a><br /></td></tr>
-<tr class="separator:a6418feaa36246f3f192b6d358b8f1f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadfab91a3042bf4f737c0089e51c86d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#aadfab91a3042bf4f737c0089e51c86d3">interrupt</a> ()</td></tr>
-<tr class="memdesc:aadfab91a3042bf4f737c0089e51c86d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger an interruption.  <a href="#aadfab91a3042bf4f737c0089e51c86d3">More...</a><br /></td></tr>
-<tr class="separator:aadfab91a3042bf4f737c0089e51c86d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af860589b02d979cbaf762b9e266790eb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#af860589b02d979cbaf762b9e266790eb">running</a> () const</td></tr>
-<tr class="memdesc:af860589b02d979cbaf762b9e266790eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the state is active.  <a href="#af860589b02d979cbaf762b9e266790eb">More...</a><br /></td></tr>
-<tr class="separator:af860589b02d979cbaf762b9e266790eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fa9ca4d2397e28f48175b815a4cb2a2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#a6fa9ca4d2397e28f48175b815a4cb2a2">ready</a> () const</td></tr>
-<tr class="memdesc:a6fa9ca4d2397e28f48175b815a4cb2a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the executor is ready for next transition.  <a href="#a6fa9ca4d2397e28f48175b815a4cb2a2">More...</a><br /></td></tr>
-<tr class="separator:a6fa9ca4d2397e28f48175b815a4cb2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0151d38264e4c6536c37d1d8164ae11"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#aa0151d38264e4c6536c37d1d8164ae11">complete</a> () const</td></tr>
-<tr class="memdesc:aa0151d38264e4c6536c37d1d8164ae11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the executor reached the end of transition map.  <a href="#aa0151d38264e4c6536c37d1d8164ae11">More...</a><br /></td></tr>
-<tr class="separator:aa0151d38264e4c6536c37d1d8164ae11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb08422ac00c95dee1d5296eb386d71d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#acb08422ac00c95dee1d5296eb386d71d">resume</a> (const std::string &amp;<a class="el" href="a01847.html#ac630ca09d2a1aa216f840e6f9a9bf10c">state</a>)</td></tr>
-<tr class="memdesc:acb08422ac00c95dee1d5296eb386d71d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume execution to a given state.  <a href="#acb08422ac00c95dee1d5296eb386d71d">More...</a><br /></td></tr>
-<tr class="separator:acb08422ac00c95dee1d5296eb386d71d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75548e1c101ea1bb41fa7c9a2d7e7fc4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#a75548e1c101ea1bb41fa7c9a2d7e7fc4">next</a> ()</td></tr>
-<tr class="memdesc:a75548e1c101ea1bb41fa7c9a2d7e7fc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger next state.  <a href="#a75548e1c101ea1bb41fa7c9a2d7e7fc4">More...</a><br /></td></tr>
-<tr class="separator:a75548e1c101ea1bb41fa7c9a2d7e7fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac630ca09d2a1aa216f840e6f9a9bf10c"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#ac630ca09d2a1aa216f840e6f9a9bf10c">state</a> () const</td></tr>
-<tr class="memdesc:ac630ca09d2a1aa216f840e6f9a9bf10c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current state's name.  <a href="#ac630ca09d2a1aa216f840e6f9a9bf10c">More...</a><br /></td></tr>
-<tr class="separator:ac630ca09d2a1aa216f840e6f9a9bf10c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6b37334d736a1b7fdec12bc2fbad29c"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#ab6b37334d736a1b7fdec12bc2fbad29c">output</a> () const</td></tr>
-<tr class="memdesc:ab6b37334d736a1b7fdec12bc2fbad29c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the latest state's output.  <a href="#ab6b37334d736a1b7fdec12bc2fbad29c">More...</a><br /></td></tr>
-<tr class="separator:ab6b37334d736a1b7fdec12bc2fbad29c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf24cd63af49e17bfb957bf8c45a8372"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#aaf24cd63af49e17bfb957bf8c45a8372">next_state</a> () const</td></tr>
-<tr class="memdesc:aaf24cd63af49e17bfb957bf8c45a8372"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the next state's name.  <a href="#aaf24cd63af49e17bfb957bf8c45a8372">More...</a><br /></td></tr>
-<tr class="separator:aaf24cd63af49e17bfb957bf8c45a8372"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a314a27acff2ed21f0dad648c51f459ac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#a314a27acff2ed21f0dad648c51f459ac">read_msg</a> (std::string &amp;msg)</td></tr>
-<tr class="memdesc:a314a27acff2ed21f0dad648c51f459ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pass message to current state (read-only)  <a href="#a314a27acff2ed21f0dad648c51f459ac">More...</a><br /></td></tr>
-<tr class="separator:a314a27acff2ed21f0dad648c51f459ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ec5fe1a873d140b6ceb633ce4ae911e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01847.html#a4ec5fe1a873d140b6ceb633ce4ae911e">read_write_msg</a> (std::string &amp;msg, std::string &amp;out)</td></tr>
-<tr class="memdesc:a4ec5fe1a873d140b6ceb633ce4ae911e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pass message to current state (read-write)  <a href="#a4ec5fe1a873d140b6ceb633ce4ae911e">More...</a><br /></td></tr>
-<tr class="separator:a4ec5fe1a873d140b6ceb633ce4ae911e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>of executing an FSM </p>
-<p>The executor can works in two ways:</p>
-<ul>
-<li>managed: handles transitions through an external trigger</li>
-<li>self-managed: handles transitions thanks to a <a class="el" href="a01907.html" title="This class takes care of reading a transition map from a configuration entry and makes sure it&#39;s cohe...">TransitionMap</a> </li>
-</ul>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa0151d38264e4c6536c37d1d8164ae11"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0151d38264e4c6536c37d1d8164ae11">&#9670;&nbsp;</a></span>complete()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::Executor::complete </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns true if the executor reached the end of transition map. </p>
-
-</div>
-</div>
-<a id="a87b8dd1aa78d6d57ece49c9f0782a07f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87b8dd1aa78d6d57ece49c9f0782a07f">&#9670;&nbsp;</a></span>init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::fsm::Executor::init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01839.html">Controller</a> &amp;&#160;</td>
-          <td class="paramname"><em>ctl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a02159.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em> = <code>&quot;&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>category</em> = <code>{}</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initialize the executor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ctl</td><td><a class="el" href="a01839.html" title="This controller implements a finite-state machine to handle complex scenarios in a generic fashion...">Controller</a> using this executor</td></tr>
-    <tr><td class="paramname">config</td><td>Configuration of the executor</td></tr>
-    <tr><td class="paramname">name</td><td>Name of the executor, empty for the main executor</td></tr>
-    <tr><td class="paramname">category</td><td>Categry under which the executor will appear in the GUI, defaults to {"FSM"} for the main executor and {"FSM", name} for other executors </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aadfab91a3042bf4f737c0089e51c86d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aadfab91a3042bf4f737c0089e51c86d3">&#9670;&nbsp;</a></span>interrupt()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::fsm::Executor::interrupt </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Trigger an interruption. </p>
-
-</div>
-</div>
-<a id="a75548e1c101ea1bb41fa7c9a2d7e7fc4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75548e1c101ea1bb41fa7c9a2d7e7fc4">&#9670;&nbsp;</a></span>next()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::Executor::next </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Trigger next state. </p>
-<dl class="section return"><dt>Returns</dt><dd>False if the FSM is not ready for next state </dd></dl>
-
-</div>
-</div>
-<a id="aaf24cd63af49e17bfb957bf8c45a8372"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf24cd63af49e17bfb957bf8c45a8372">&#9670;&nbsp;</a></span>next_state()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string&amp; mc_control::fsm::Executor::next_state </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns the next state's name. </p>
-
-</div>
-</div>
-<a id="ab6b37334d736a1b7fdec12bc2fbad29c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6b37334d736a1b7fdec12bc2fbad29c">&#9670;&nbsp;</a></span>output()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string&amp; mc_control::fsm::Executor::output </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns the latest state's output. </p>
-
-</div>
-</div>
-<a id="a314a27acff2ed21f0dad648c51f459ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a314a27acff2ed21f0dad648c51f459ac">&#9670;&nbsp;</a></span>read_msg()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::Executor::read_msg </td>
-          <td>(</td>
-          <td class="paramtype">std::string &amp;&#160;</td>
-          <td class="paramname"><em>msg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Pass message to current state (read-only) </p>
-
-</div>
-</div>
-<a id="a4ec5fe1a873d140b6ceb633ce4ae911e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ec5fe1a873d140b6ceb633ce4ae911e">&#9670;&nbsp;</a></span>read_write_msg()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::Executor::read_write_msg </td>
-          <td>(</td>
-          <td class="paramtype">std::string &amp;&#160;</td>
-          <td class="paramname"><em>msg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::string &amp;&#160;</td>
-          <td class="paramname"><em>out</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Pass message to current state (read-write) </p>
-
-</div>
-</div>
-<a id="a6fa9ca4d2397e28f48175b815a4cb2a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fa9ca4d2397e28f48175b815a4cb2a2">&#9670;&nbsp;</a></span>ready()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::Executor::ready </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns true if the executor is ready for next transition. </p>
-
-</div>
-</div>
-<a id="acb08422ac00c95dee1d5296eb386d71d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb08422ac00c95dee1d5296eb386d71d">&#9670;&nbsp;</a></span>resume()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::Executor::resume </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>state</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Resume execution to a given state. </p>
-<p>Interrupt current state execution if needed </p>
-
-</div>
-</div>
-<a id="ac2002091bc35441bfbacbd3b4cbf3631"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2002091bc35441bfbacbd3b4cbf3631">&#9670;&nbsp;</a></span>run()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::Executor::run </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01839.html">Controller</a> &amp;&#160;</td>
-          <td class="paramname"><em>ctl</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>keep_state</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Run the current state. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ctl</td><td><a class="el" href="a01839.html" title="This controller implements a finite-state machine to handle complex scenarios in a generic fashion...">Controller</a> using this executor</td></tr>
-    <tr><td class="paramname">keep_state</td><td>If true, keep the state when it finishes its run</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the execution is complete </dd></dl>
-
-</div>
-</div>
-<a id="af860589b02d979cbaf762b9e266790eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af860589b02d979cbaf762b9e266790eb">&#9670;&nbsp;</a></span>running()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::Executor::running </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns true if the state is active. </p>
-
-</div>
-</div>
-<a id="ac630ca09d2a1aa216f840e6f9a9bf10c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac630ca09d2a1aa216f840e6f9a9bf10c">&#9670;&nbsp;</a></span>state()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string&amp; mc_control::fsm::Executor::state </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns the current state's name. </p>
-
-</div>
-</div>
-<a id="ade28e68814e850c8a9dc8028b36d1fdd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade28e68814e850c8a9dc8028b36d1fdd">&#9670;&nbsp;</a></span>stop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::fsm::Executor::stop </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01839.html">Controller</a> &amp;&#160;</td>
-          <td class="paramname"><em>ctl</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Stop the current stat eif necessary. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ctl</td><td><a class="el" href="a01839.html" title="This controller implements a finite-state machine to handle complex scenarios in a generic fashion...">Controller</a> using this executor </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a6418feaa36246f3f192b6d358b8f1f7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6418feaa36246f3f192b6d358b8f1f7e">&#9670;&nbsp;</a></span>teardown()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::fsm::Executor::teardown </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01839.html">Controller</a> &amp;&#160;</td>
-          <td class="paramname"><em>ctl</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Teardown the current state if necessary. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ctl</td><td><a class="el" href="a01839.html" title="This controller implements a finite-state machine to handle complex scenarios in a generic fashion...">Controller</a> using this executor </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a01850.html">mc_control::fsm::Controller</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#a93448016e3467364e352d87cdb0dae89">addCollisions</a>(const std::string &amp;r1, const std::string &amp;r2, const std::vector&lt; mc_rbdyn::Collision &gt; &amp;collisions)</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01850.html#afc21d62af737dc80c7b62b1fbc9c742e">addContact</a>(const Contact &amp;c)</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#add975f1d97594fd8b85d9ba49ab8fad4">anchorFrame</a>() const</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a8c2810fd99da6bafc8c82d946a9f60e5">anchorFrame</a>(const sva::PTransformd &amp;anchor)</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a37153bb1201c0a4f703cccc2a9c614b8">anchorFrame_</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a919b06efb009d290381fff69bdd04995">anchorFrameReal</a>() const</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a83a923627684cc278f6f9952b285655a">anchorFrameReal</a>(const sva::PTransformd &amp;anchor)</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a2f23380680eb2069f82ac2f4b58d75c6">anchorFrameReal_</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#a904c563ef54b89f211e75d545f60db01">config</a>()</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01850.html#afc0ff4e1c1bec2352684291698b467dd">contactConstraint</a>()</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a765929daba315c7ec7d455486f2817b3">mc_control::MCController::contactConstraint</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01850.html#a95a11b1d9a3ca77f322d1ec1b7819e08">contacts</a>() const</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#a5e0523baab1c8ec0905f7715115d41c6">Controller</a>(std::shared_ptr&lt; mc_rbdyn::RobotModule &gt; rm, double dt, const mc_rtc::Configuration &amp;config)</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a828b8724c182053e6d0aed8a28f368bf">dynamicsConstraint</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a94eed9012e3dab581b9ad63a4e525343">env</a>() const</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a589dbcbbd52d3218012802800834926d">env</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#abde1658ded2ac75f5466b223e73135d9">Executor</a></td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"><span class="mlabel">friend</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01850.html#acf6e4968c19820c0928e459dd42d0d64">factory</a>()</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#ab5db53d98290f650552bcb57a42353b5">getPostureTask</a>(const std::string &amp;robot)</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#af22b7ebf2d129819c82af474067b3766">grippers</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#abb942edc92a7d47993ea5d1ad78e58e9">gui</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a5761e783caf225454e03628b2533fc13">gui_</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#a7a64b59e262c533dc2eeb5e9aea0e7d3">hasContact</a>(const Contact &amp;c) const</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01850.html#a3efb2acf6c10576d5deb7001f9b4fdc9">hasRobot</a>(const std::string &amp;robot) const</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#a79c045371408e4adfaa31d6f7563fef5">interrupt</a>()</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#af77baae76ef5af0d4ca6bec07172a3a4">kinematicsConstraint</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a3110512ea26812d8a58d3945e739c751">loadRobot</a>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name)</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#ac9542a86bbb7baaf4d40c879b01a4073">logger</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a5de6a08cbbe04ccc032bc4ebbd2773dc">logger_</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a0a5a9b4670e467fa2eabd8f2342e0846">MCController</a>(std::shared_ptr&lt; mc_rbdyn::RobotModule &gt; robot, double dt)</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a1ac3cbc244e98473e90b06e4c187aec0">MCController</a>(const std::vector&lt; std::shared_ptr&lt; mc_rbdyn::RobotModule &gt;&gt; &amp;robot_modules, double dt)</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#ac131a31714e368146f4d9f1e04d7fdf1">observers_</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#aa863c3c2ff400e0e0a4de1c9a1568d57">pipelineObservers_</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a3d17bb7e20af4d312617d7d5f6288889">postureTask</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a4523facc71906c6622227d0fa2597963">qpsolver</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#ada71de0674724e0136ec360054d3b702">real_robots</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#ab491ba1a03ccfd4b3fe37079ed4f03b1">realRobot</a>() const</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a545cbd53e4486c535a4e4ffcd2ad0d6e">realRobot</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a1443aed08b26c319294465b1caa1e221">realRobots</a>() const</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a47636696fa5be9a4e8c0d10d6dae1a20">realRobots</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#aee84dbf2540fda3182f7eb8ef31b89fa">realRobots</a>(std::shared_ptr&lt; mc_rbdyn::Robots &gt; realRobots)</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01850.html#a6553b3c43b65224a8aaca76784d7e9e8">removeCollisions</a>(const std::string &amp;r1, const std::string &amp;r2, const std::vector&lt; mc_rbdyn::Collision &gt; &amp;collisions)</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#a470d82a6de92ac6a42d13e13a351f738">removeCollisions</a>(const std::string &amp;r1, const std::string &amp;r2)</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01850.html#aa5141b7ae41b4378c29758a69515c7b4">removeContact</a>(const Contact &amp;c)</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#af8027a5c80b5f9b0d45616517299f3c3">reset</a>(const ControllerResetData &amp;data) override</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#aac5a69bf551c7acc2230058c6929b0b3">resetObservers</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#a8aa919380e8d3cb3105b899f5f386052">resume</a>(const std::string &amp;state)</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01850.html#aa80d2de4cc6e092e1659db0135d7d6f3">robot</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a3d0a5351228f1b62ad1268339020d230">mc_control::MCController::robot</a>() const</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a01afa1d8da9cc41b34f8119023102f65">mc_control::MCController::robot</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#adc557ecb7d64eb2d8be551f7cf6678cd">robots</a>() const</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#aef59bf32cd83b177201962e7a7325928">robots</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01850.html#af87858917b432bbd4a9c728a4e344d1e">run</a>() override</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01850.html#a95a622b78163a77aa4d11d44101bc292">run</a>(mc_solver::FeedbackType fType)</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a2e823bc69796964a6868ee5c30f0e382">runClosedLoop</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01850.html#a59903f739677ea9f89b0cc8f0cdc051d">running</a>()</td><td class="entry"><a class="el" href="a01850.html">mc_control::fsm::Controller</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#afb7a2057852e29a82fa8c2a6a2d5df0f">runObservers</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#ad67e0621398628a6b8f4f700a7455b67">selfCollisionConstraint</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a18dee7f61bad6646fe684c0e4ae424cb">send</a>(const double &amp;t)</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#aa6a9b2cd350ec94a1f1bda12c3133c28">solver</a>() const</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#abc7651033ec24b18d662797fc3bb48fa">solver</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#a94ad5bc971729e691d57c711f6fac88f">stop</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#a22ae41d5d06f23a8012cd99518549ef5">supported_robots</a>() const</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01954.html#ae5f48849d9e4d7ed3a1f02a1380a7fee">timeStep</a></td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01954.html#adbb448aeae9565e56d32cf50067dc9ee">~MCController</a>()</td><td class="entry"><a class="el" href="a01954.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00676.html">mc_control</a></li><li class="navelem"><a class="el" href="a00677.html">fsm</a></li><li class="navelem"><a class="el" href="a01847.html">Executor</a></li>
-    <li class="footer">Generated on Thu Feb 6 2020 07:57:45 for mc_rtc by
+    <li class="footer">Generated on Thu Feb 6 2020 08:16:24 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
