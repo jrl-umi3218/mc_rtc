@@ -1005,20 +1005,19 @@ if $WITH_ROS_SUPPORT
 then
   echo_log "-- Building mc_rtc ROS tools"
   build_catkin_git_dependency jrl-umi3218/mc_rtc_ros $CATKIN_WORKSPACE
+  echo_log "-- [OK] Successfully built $repo"
 fi
-echo_log "-- [OK] Successfully built $repo"
 
 ################################
 #  --  Build extra modules  -- #
 ################################
 echo_log "-- Building extra modules (robots, etc)"
 if $WITH_HRP2
-echo_log "-- Installing with HRP2 robot support"
 then
+  echo_log "-- Installing with HRP2 robot support"
   if $WITH_ROS_SUPPORT
   then
     build_catkin_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc $CATKIN_DATA_WORKSPACE
-    . $CATKIN_DATA_WORKSPACE/devel/setup.bash
     echo_log "-- [OK] Successfully built the robot description $git_dep (catkin)"
   else
     build_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc
@@ -1029,12 +1028,11 @@ then
 fi
 
 if $WITH_HRP4
-echo_log "-- Installing with HRP4 robot support"
 then
+  echo_log "-- Installing with HRP4 robot support"
   if $WITH_ROS_SUPPORT
   then
     build_catkin_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4 $CATKIN_DATA_WORKSPACE
-    . $CATKIN_DATA_WORKSPACE/devel/setup.bash
     echo_log "-- [OK] Successfully built the robot description $git_dep (catkin)"
   else
     build_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4
@@ -1045,8 +1043,8 @@ then
 fi
 
 if $WITH_HRP5
-echo_log "-- Installing with HRP5 robot support"
 then
+  echo_log "-- Installing with HRP5 robot support"
   if $WITH_ROS_SUPPORT
   then
     build_catkin_git_dependency git@gite.lirmm.fr:mc-hrp5/hrp5_p_description $CATKIN_DATA_WORKSPACE
