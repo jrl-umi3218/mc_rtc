@@ -58,6 +58,7 @@ exec_log()
 {
   echo "+ $* (pwd: `pwd`)"
   $* 2>&1 | $TEE -a $BUILD_LOGFILE
+  return ${PIPESTATUS[0]}
 }
 
 exit_failure()
@@ -828,7 +829,7 @@ build_git_dependency()
   if $BUILD_TESTING
   then
     build_git_dependency_configure_and_build $1
-    ctest -C ${BUILD_TYPE}
+    exec_log ctest -C ${BUILD_TYPE}
     exit_if_error "-- [ERROR] Testing failed for $git_dep"
   else
     build_git_dependency_no_test $1
@@ -952,7 +953,7 @@ exit_if_error "CMake configuration failed for mc_rtc"
 build_project mc_rtc
 if $BUILD_TESTING
 then
-  ctest -C ${BUILD_TYPE}
+  exec_log ctest -C ${BUILD_TYPE}
 fi
 if [ $? -ne 0 ]
 then
@@ -961,25 +962,25 @@ then
     echo_log "mc_rtc testing failed, asssuming you need to rebuild your Python bindings"
     if [ "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON ]
     then
-      make force-mc_rtc-python2-bindings
-      make force-mc_rtc-python3-bindings
+      exec_log cmake --build . --config ${BUILD_TYPE} --target force-mc_rtc-python2-bindings
+      exec_log cmake --build . --config ${BUILD_TYPE} --target force-mc_rtc-python3-bindings
     elif [ "x$PYTHON_FORCE_PYTHON2" == xON ]
     then
-      make force-mc_rtc-python2-bindings
+      exec_log cmake --build . --config ${BUILD_TYPE} --target force-mc_rtc-python2-bindings
     elif [ "x$PYTHON_FORCE_PYTHON3" == xON ]
     then
-      make force-mc_rtc-python3-bindings
+      exec_log cmake --build . --config ${BUILD_TYPE} --target force-mc_rtc-python3-bindings
     else
-      make force-mc_rtc-python-bindings
+      exec_log cmake --build . --config ${BUILD_TYPE} --target force-mc_rtc-python-bindings
     fi
-    ${SUDO_CMD} make install
+    exec_log ${SUDO_CMD} make install
     if [ $? -ne 0 ]
     then
       echo_log "mc_rtc failed to install"
     else
       echo_log "mc_rtc successfully installed"
     fi
-    make test
+    exec_log ctest -C ${BUILD_TYPE}
     if [ $? -ne 0 ]
     then
       echo_log "mc_rtc is still failing"
