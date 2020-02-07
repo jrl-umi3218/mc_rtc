@@ -904,7 +904,7 @@ then
     fi
   fi
 fi
-if $SKIP_UPDATE
+if ! $SKIP_UPDATE
 then
   git submodule sync || true
   git submodule update --init
