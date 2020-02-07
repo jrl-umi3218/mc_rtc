@@ -44,9 +44,11 @@ mc_rtc_extra_steps()
       tar xjf qwt-6.1.4.tar.bz2
       rm -f qwt-6.1.4.tar.bz2
     fi
-    if [ ! -d /usr/local/include/qwt-6.1.4 ]
+    if [ ! -d /usr/local/include/qwt ]
     then
       cd $SOURCE_DIR/qwt-6.1.4
+      sed -i -e's@QWT_INSTALL_PREFIX    = /usr/local/qwt-$$QWT_VERSION@QWT_INSTALL_PREFIX = /usr/local@' qwtconfig.pri
+      sed -i -e's@QWT_INSTALL_HEADERS   = $${QWT_INSTALL_PREFIX}/include@QWT_INSTALL_HEADERS = $${QWT_INSTALL_PREFIX}/include/qwt@' qwtconfig.pri
       qmake
       make -j`nproc`
       sudo make install
