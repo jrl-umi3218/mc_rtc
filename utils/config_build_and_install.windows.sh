@@ -1,5 +1,5 @@
 export ROS_DISTRO=
-export PIP_DEPENDENCIES="Cython coverage nose numpy"
+export PIP_DEPENDENCIES="Cython coverage nose numpy matplotlib"
 export WITH_ROS_SUPPORT="false"
 export INSTALL_PREFIX=/c/devel/install
 
