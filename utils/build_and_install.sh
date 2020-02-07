@@ -111,7 +111,7 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --install-system-dependencies      {true, false} : whether to install system packages            (default $INSTALL_APT_DEPENDENCIES)
     --clone-only                       {true, false} : only perform cloning                          (default $CLONE_ONLY)
     --skip-update                      {true, false} : skip git update                               (default $SKIP_UPDATE)
-    --skip-dirty-update                {true, false} : skip git update if dirty repository           (default ${SKIP_DIRTY_UPDATE}, recommended=false)
+    --skip-dirty-update                {true, false} : skip git update if dirty repository           (default ${SKIP_DIRTY_UPDATE})
     --user-input                       {true, false} : ask the user confirmation                     (default ${ASK_USER_INPUT})
 "
 #helper for parsing
@@ -193,12 +193,6 @@ do
         check_true_false --with-hrp5 "$WITH_HRP5"
         ;;
 
-        --with-mc_udp)
-        i=$(($i+1))
-        WITH_MC_UDP="${!i}"
-        check_true_false --with-mc_udp "$WITH_MC_UDP"
-        ;;
-
         --build-type)
         i=$(($i+1))
         BUILD_TYPE="${!i}"
@@ -237,7 +231,7 @@ do
         --user-input)
         i=$(($i+1))
         ASK_USER_INPUT="${!i}"
-        check_true_false --ASK_USER_INPUT "$ASK_USER_INPUT"
+        check_true_false --user-input "$ASK_USER_INPUT"
         ;;
 
         -j|--build-core)
@@ -342,19 +336,18 @@ export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:$PYTHO
 
 touch $BUILD_LOGFILE
 exit_if_error "-- [ERROR] Could not create log file $BUILD_LOGFILE"
-ln -s $BUILD_LOGFILE "$LOG_PATH/build_and_install_warnings-latest.log"
+ln -sf $BUILD_LOGFILE "$LOG_PATH/build_and_install_warnings-latest.log"
 
 echo_log ""
 echo_log "========================================"
 echo_log "== mc_rtc build_and_install.sh script =="
 echo_log "========================================"
-echo_log
+echo_log ""
 echo_log "-- Build and install log for mc_rtc generated on `date +%Y-%m-%d-%H:%M:%S`"
 echo "-- Log file will be written to $BUILD_LOGFILE "
 echo_log "-- Building with the following options:"
 echo_log "   INSTALL_PREFIX=$INSTALL_PREFIX"
 echo_log "   WITH_ROS_SUPPORT=$WITH_ROS_SUPPORT"
-echo_log "   WITH_PYTHON_SUPPORT=$WITH_PYTHON_SUPPORT"
 echo_log "   WITH_PYTHON_SUPPORT=$WITH_PYTHON_SUPPORT"
 echo_log "   PYTHON_FORCE_PYTHON2=$PYTHON_FORCE_PYTHON2"
 echo_log "   PYTHON_FORCE_PYTHON3=$PYTHON_FORCE_PYTHON3"
@@ -376,9 +369,9 @@ echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
 #  --  APT/Brew dependencies  --  #
 ###################################
 echo_log ""
-echo_log "================================="
-echo_log "== Installing APT dependencies =="
-echo_log "================================="
+echo_log "===================================="
+echo_log "== Installing system dependencies =="
+echo_log "===================================="
 echo_log
 if [[ $OSTYPE == "darwin"* ]]
 then
@@ -439,8 +432,20 @@ else
 fi
 
 echo_log ""
-echo_log "-- [SUCCESS] Successfully installed APT dependencies"
+echo_log "-- [SUCCESS] Successfully installed system dependencies"
 echo_log ""
+
+echo_log ""
+echo_log "========================"
+echo_log "== System information =="
+echo_log "========================"
+echo_log ""
+if [ $OS = Ubuntu ]
+then
+  lsb_release -a 2>&1 | tee -a $BUILD_LOGFILE
+fi
+cmake --version 2>&1 | tee -a $BUILD_LOGFILE
+python --version 2>&1 | tee -a $BUILD_LOGFILE
 
 ########################
 ##  -- Install ROS --  #
@@ -513,12 +518,12 @@ echo_log ""
 echo_log "==================================================="
 echo_log "== Checking/updating/cloning local repositories  =="
 echo_log "==================================================="
-echo_log
-echo "The script will ensure that already cloned local repository:"
+echo_log ""
+echo "The script will ensure that you have clean repositories, i.e.:"
 echo "- You have unstaged changes"
 echo "- Your index contains uncommited changes"
 echo "- You are not on expected branch"
-echo
+echo ""
 
 git_dependency_parsing()
 {
@@ -765,17 +770,17 @@ restore_path()
 
 build_project()
 {
-  cmake --build . --config ${BUILD_TYPE}
+  cmake --build . --config ${BUILD_TYPE} 2>&1 | tee -a $BUILD_LOGFILE
   exit_if_error "[ERROR] Build failed for $1"
   if [ -f install_manifest.txt ]
   then
-    ${SUDO_CMD} cmake --build . --target uninstall --config ${BUILD_TYPE}
+    ${SUDO_CMD} cmake --build . --target uninstall --config ${BUILD_TYPE} 2>&1 | tee -a $BUILD_LOGFILE
     if [ $? -ne 0 ]
     then
       echo_log "-- [WARNING] Uninstallation failed for $1"
     fi
   fi
-  ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE}
+  ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE} 2>&1 | tee -a $BUILD_LOGFILE
   exit_if_error "-- [ERROR] Installation failed for $1"
 }
 
@@ -797,7 +802,7 @@ build_git_dependency_configure_and_build()
            -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
            -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
            -DBUILD_PYTHON_INTERFACE:BOOL=OFF \
-           ${CMAKE_ADDITIONAL_OPTIONS}
+           ${CMAKE_ADDITIONAL_OPTIONS} 2>&1 | tee -a $BUILD_LOGFILE
   exit_if_error "-- [ERROR] CMake configuration failed for $git_dep"
   build_project $git_dep
   if [[ $OS == "Windows" ]]
@@ -838,7 +843,8 @@ build_catkin_git_dependency()
   fi
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
   cd $2
-  catkin_make || (echo "catkin build failed for $git_dep" && exit_failure)
+  catkin_make 2>&1 | tee -a $BUILD_LOGFILE
+  exit_if_error "catkin_build failed for $git_dep"
 }
 
 
@@ -928,7 +934,7 @@ then
             -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
             -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
             -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
-            ${CMAKE_ADDITIONAL_OPTIONS}
+            ${CMAKE_ADDITIONAL_OPTIONS} 2>&1 | tee -a $BUILD_LOGFILE
 else
   cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
             -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
@@ -939,7 +945,7 @@ else
             -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
             -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
             ${CMAKE_ADDITIONAL_OPTIONS} \
-            -DDISABLE_ROS=ON
+            -DDISABLE_ROS=ON 2>&1 | tee -a $BUILD_LOGFILE
 fi
 exit_if_error "CMake configuration failed for mc_rtc"
 build_project mc_rtc
@@ -1079,7 +1085,6 @@ else
 
   if $WITH_ROS_SUPPORT
   then
-    echo_log "source $CATKIN_DATA_WORKSPACE/devel/setup.bash"
     echo_log "source $CATKIN_WORKSPACE/devel/setup.bash"
     echo_log ""
     echo_log "If you are running zsh, replace setup.bash with setup.zsh in that last lines"
