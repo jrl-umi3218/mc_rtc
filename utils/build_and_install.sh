@@ -845,18 +845,17 @@ build_git_dependency_no_test()
   export CMAKE_ADDITIONAL_OPTIONS="${OLD_CMAKE_OPTIONS}"
 }
 
-build_catkin_git_dependency()
+build_catkin_workspace()
 {
-  echo_log "-- Building catkin git dependency $1"
-  clone_git_dependency $1 "$2/src"
   if $CLONE_ONLY
   then
     return
   fi
-  echo "--> Compiling $git_dep (branch $git_dep_branch)"
-  cd $2
+  echo_log "-- Building catkin workspace $1"
+  cd $1
   exec_log catkin_make
   exit_if_error "catkin_build failed for $git_dep"
+  echo_log "-- [OK] Successfully built $1"
 }
 
 
@@ -884,8 +883,7 @@ build_git_dependency jrl-umi3218/mc_rbdyn_urdf
 
 if $WITH_ROS_SUPPORT
 then
-  build_catkin_git_dependency jrl-umi3218/mc_rtc_data $CATKIN_DATA_WORKSPACE
-  build_catkin_git_dependency jrl-umi3218/mc_rtc_msgs $CATKIN_DATA_WORKSPACE
+  build_catkin_workspace $CATKIN_DATA_WORKSPACE
 else
   build_git_dependency jrl-umi3218/mc_rtc_data
 fi
@@ -1005,9 +1003,7 @@ echo_log ""
 
 if $WITH_ROS_SUPPORT
 then
-  echo_log "-- Building mc_rtc ROS tools"
-  build_catkin_git_dependency jrl-umi3218/mc_rtc_ros $CATKIN_WORKSPACE
-  echo_log "-- [OK] Successfully built $repo"
+  build_catkin_workspace $CATKIN_WORKSPACE
 fi
 
 ################################
@@ -1017,11 +1013,8 @@ echo_log "-- Building extra modules (robots, etc)"
 if $WITH_HRP2
 then
   echo_log "-- Installing with HRP2 robot support"
-  if $WITH_ROS_SUPPORT
+  if ! $WITH_ROS_SUPPORT
   then
-    build_catkin_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc $CATKIN_DATA_WORKSPACE
-    echo_log "-- [OK] Successfully built the robot description $git_dep (catkin)"
-  else
     build_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc
     echo_log "-- [OK] Successfully built the robot description $git_dep (no catkin)"
   fi
@@ -1032,11 +1025,8 @@ fi
 if $WITH_HRP4
 then
   echo_log "-- Installing with HRP4 robot support"
-  if $WITH_ROS_SUPPORT
+  if ! $WITH_ROS_SUPPORT
   then
-    build_catkin_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4 $CATKIN_DATA_WORKSPACE
-    echo_log "-- [OK] Successfully built the robot description $git_dep (catkin)"
-  else
     build_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4
     echo_log "-- [OK] Successfully built the robot description $git_dep (no catkin)"
   fi
@@ -1047,12 +1037,8 @@ fi
 if $WITH_HRP5
 then
   echo_log "-- Installing with HRP5 robot support"
-  if $WITH_ROS_SUPPORT
+  if ! $WITH_ROS_SUPPORT
   then
-    build_catkin_git_dependency git@gite.lirmm.fr:mc-hrp5/hrp5_p_description $CATKIN_DATA_WORKSPACE
-    . $CATKIN_DATA_WORKSPACE/devel/setup.bash
-    echo_log "-- [OK] Successfully built the robot description $git_dep (catkin)"
-  else
     build_git_dependency git@gite.lirmm.fr:mc-hrp5/hrp5_p_description
     echo_log "-- [OK] Successfully built the robot description $git_dep (no catkin)"
   fi
@@ -1087,6 +1073,6 @@ else
   then
     echo_log "source $CATKIN_WORKSPACE/devel/setup.bash"
     echo_log ""
-    echo_log "If you are running zsh, replace setup.bash with setup.zsh in that last lines"
+    echo_log "If you are running zsh, replace setup.bash with setup.zsh in that last line"
   fi
 fi
