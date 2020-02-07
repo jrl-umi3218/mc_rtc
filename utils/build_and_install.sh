@@ -54,6 +54,12 @@ echo_log()
   echo $1 | $TEE -a $BUILD_LOGFILE
 }
 
+exec_log()
+{
+  echo "+ $* (pwd: `pwd`)"
+  $* 2>&1 | $TEE -a $BUILD_LOGFILE
+}
+
 exit_failure()
 {
   echo_log "Installation failed."
@@ -311,7 +317,7 @@ else
   readonly NOT_CLONE_ONLY=true
 fi
 
-readonly ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
+ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz ros-${ROS_DISTRO}-tf2-ros"
 
 alias git_clone="git clone --recursive"
 git_update()
@@ -366,6 +372,9 @@ echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
 echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
 echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
 echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
+echo_log "   ROS_DISTRO=$ROS_DISTRO"
+echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
+echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
 
 ###################################
 #  --  APT/Brew dependencies  --  #
@@ -444,10 +453,10 @@ echo_log "========================"
 echo_log ""
 if [ $OS = Ubuntu ]
 then
-  lsb_release -a 2>&1 | $TEE -a $BUILD_LOGFILE
+  exec_log lsb_release -a
 fi
-cmake --version 2>&1 | $TEE -a $BUILD_LOGFILE
-python --version 2>&1 | $TEE -a $BUILD_LOGFILE
+exec_log cmake --version
+exec_log python --version
 
 ########################
 ##  -- Install ROS --  #
@@ -522,9 +531,9 @@ echo_log "== Checking/updating/cloning local repositories  =="
 echo_log "==================================================="
 echo_log ""
 echo "The script will ensure that you have clean repositories, i.e.:"
-echo "- You have unstaged changes"
-echo "- Your index contains uncommited changes"
-echo "- You are not on expected branch"
+echo "- You don't have unstaged changes"
+echo "- Your index doesn't contain uncommited changes"
+echo "- You are not on an unexpected branch"
 echo ""
 
 git_dependency_parsing()
@@ -772,17 +781,17 @@ restore_path()
 
 build_project()
 {
-  cmake --build . --config ${BUILD_TYPE} 2>&1 | $TEE -a $BUILD_LOGFILE
+  exec_log cmake --build . --config ${BUILD_TYPE}
   exit_if_error "[ERROR] Build failed for $1"
   if [ -f install_manifest.txt ]
   then
-    ${SUDO_CMD} cmake --build . --target uninstall --config ${BUILD_TYPE} 2>&1 | $TEE -a $BUILD_LOGFILE
+    exec_log ${SUDO_CMD} cmake --build . --target uninstall --config ${BUILD_TYPE}
     if [ $? -ne 0 ]
     then
       echo_log "-- [WARNING] Uninstallation failed for $1"
     fi
   fi
-  ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE} 2>&1 | $TEE -a $BUILD_LOGFILE
+  exec_log ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE}
   exit_if_error "-- [ERROR] Installation failed for $1"
 }
 
@@ -796,15 +805,15 @@ build_git_dependency_configure_and_build()
   then
     hide_sh
   fi
-  cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
-           -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
-           -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
-           -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
-           -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
-           -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
-           -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
-           -DBUILD_PYTHON_INTERFACE:BOOL=OFF \
-           ${CMAKE_ADDITIONAL_OPTIONS} 2>&1 | $TEE -a $BUILD_LOGFILE
+  exec_log cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
+                    -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
+                    -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
+                    -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
+                    -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
+                    -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
+                    -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+                    -DBUILD_PYTHON_INTERFACE:BOOL=OFF \
+                    ${CMAKE_ADDITIONAL_OPTIONS}
   exit_if_error "-- [ERROR] CMake configuration failed for $git_dep"
   build_project $git_dep
   if [[ $OS == "Windows" ]]
@@ -845,7 +854,7 @@ build_catkin_git_dependency()
   fi
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
   cd $2
-  catkin_make 2>&1 | $TEE -a $BUILD_LOGFILE
+  exec_log catkin_make
   exit_if_error "catkin_build failed for $git_dep"
 }
 
@@ -926,29 +935,19 @@ then
 else
   BUILD_TESTING_OPTION=OFF
 fi
-if $WITH_ROS_SUPPORT
+if ! $WITH_ROS_SUPPORT
 then
-  cmake ../ -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
-            -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
-            -DBUILD_TESTING:BOOL=${BUILD_TESTING_OPTION} \
-            -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
-            -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
-            -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
-            -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
-            -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
-            ${CMAKE_ADDITIONAL_OPTIONS} 2>&1 | $TEE -a $BUILD_LOGFILE
-else
-  cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
-            -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
-            -DBUILD_TESTING:BOOL=${BUILD_TESTING_OPTION} \
-            -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
-            -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
-            -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
-            -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
-            -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
-            ${CMAKE_ADDITIONAL_OPTIONS} \
-            -DDISABLE_ROS=ON 2>&1 | $TEE -a $BUILD_LOGFILE
+  CMAKE_ADDITIONAL_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS} -DDISABLE_ROS=ON"
 fi
+exec_log cmake ../ -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+                   -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
+                   -DBUILD_TESTING:BOOL=${BUILD_TESTING_OPTION} \
+                   -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
+                   -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
+                   -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
+                   -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
+                   -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
+                   ${CMAKE_ADDITIONAL_OPTIONS}
 exit_if_error "CMake configuration failed for mc_rtc"
 build_project mc_rtc
 if $BUILD_TESTING
