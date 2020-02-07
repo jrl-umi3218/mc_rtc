@@ -379,12 +379,11 @@ echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
 
 install_apt()
 {
-  PACKAGES=`dpkg -l | grep "^i" | awk '{print $2}'`
   TO_INSTALL=
   for pkg in $*
   do
-    has_package=`echo $PACKAGES | grep "^$pkg$" | wc -l`
-    if [ $has_package -ge 1 ]
+    has_package=`dpkg -l ${pkg} 2> /dev/null |grep "^ii" > /dev/null`
+    if [ $? -ne 0 ]
     then
       TO_INSTALL="$TO_INSTALL $pkg"
     fi
