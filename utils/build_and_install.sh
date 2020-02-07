@@ -318,7 +318,7 @@ else
   readonly NOT_CLONE_ONLY=true
 fi
 
-ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz ros-${ROS_DISTRO}-tf2-ros"
+ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
 
 alias git_clone="git clone --recursive"
 git_update()
@@ -377,6 +377,25 @@ echo_log "   ROS_DISTRO=$ROS_DISTRO"
 echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
 echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
 
+install_apt()
+{
+  PACKAGES=`dpkg -l | grep "^i" | awk '{print $2}'`
+  TO_INSTALL=
+  for pkg in $*
+  do
+    has_package=`echo $PACKAGES | grep "^$pkg$" | wc -l`
+    if [ $has_package -ge 1 ]
+    then
+      TO_INSTALL="$TO_INSTALL $pkg"
+    fi
+  done
+  if [ "${TO_INSTALL}" != "" ]
+  then
+    exec_log sudo apt-get update
+    exec_log sudo apt-get -y install ${TO_INSTALL}
+  fi
+}
+
 ###################################
 #  --  APT/Brew dependencies  --  #
 ###################################
@@ -425,8 +444,7 @@ then
   then
     if $INSTALL_APT_DEPENDENCIES && $NOT_CLONE_ONLY
     then
-      sudo apt-get update
-      sudo apt-get -y install ${APT_DEPENDENCIES}
+      install_apt ${APT_DEPENDENCIES}
       mc_rtc_extra_steps
     else
       echo_log "-- Skip installation of system dependencies"
@@ -475,12 +493,14 @@ then
       sudo mkdir -p /etc/apt/sources.list.d/
       sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -c -s` main" > /etc/apt/sources.list.d/ros-latest.list'
       wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
-      sudo apt-get update
-      sudo apt-get install -y ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ${ROS_APT_DEPENDENCIES}
     else
       echo_log "Please install ROS and the required dependencies (${ROS_APT_DEPENDENCIES}) before continuing your installation or disable ROS support"
       exit_failure
     fi
+  fi
+  if [ $OS = Ubuntu ]
+  then
+    install_apt $ROS_APT_DEPENDENCIES
   fi
   if $NOT_CLONE_ONLY
   then
