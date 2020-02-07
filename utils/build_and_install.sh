@@ -47,9 +47,11 @@ LOG_PATH="/tmp"
 BUILD_LOGFILE="$LOG_PATH/build_and_install_warnings-`date +%Y-%m-%d-%H-%M-%S`.log"
 ASK_USER_INPUT="true"
 
+readonly TEE=`which tee`
+
 echo_log()
 {
-  echo $1 | tee -a $BUILD_LOGFILE
+  echo $1 | $TEE -a $BUILD_LOGFILE
 }
 
 exit_failure()
@@ -442,10 +444,10 @@ echo_log "========================"
 echo_log ""
 if [ $OS = Ubuntu ]
 then
-  lsb_release -a 2>&1 | tee -a $BUILD_LOGFILE
+  lsb_release -a 2>&1 | $TEE -a $BUILD_LOGFILE
 fi
-cmake --version 2>&1 | tee -a $BUILD_LOGFILE
-python --version 2>&1 | tee -a $BUILD_LOGFILE
+cmake --version 2>&1 | $TEE -a $BUILD_LOGFILE
+python --version 2>&1 | $TEE -a $BUILD_LOGFILE
 
 ########################
 ##  -- Install ROS --  #
@@ -770,17 +772,17 @@ restore_path()
 
 build_project()
 {
-  cmake --build . --config ${BUILD_TYPE} 2>&1 | tee -a $BUILD_LOGFILE
+  cmake --build . --config ${BUILD_TYPE} 2>&1 | $TEE -a $BUILD_LOGFILE
   exit_if_error "[ERROR] Build failed for $1"
   if [ -f install_manifest.txt ]
   then
-    ${SUDO_CMD} cmake --build . --target uninstall --config ${BUILD_TYPE} 2>&1 | tee -a $BUILD_LOGFILE
+    ${SUDO_CMD} cmake --build . --target uninstall --config ${BUILD_TYPE} 2>&1 | $TEE -a $BUILD_LOGFILE
     if [ $? -ne 0 ]
     then
       echo_log "-- [WARNING] Uninstallation failed for $1"
     fi
   fi
-  ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE} 2>&1 | tee -a $BUILD_LOGFILE
+  ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE} 2>&1 | $TEE -a $BUILD_LOGFILE
   exit_if_error "-- [ERROR] Installation failed for $1"
 }
 
@@ -802,7 +804,7 @@ build_git_dependency_configure_and_build()
            -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
            -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
            -DBUILD_PYTHON_INTERFACE:BOOL=OFF \
-           ${CMAKE_ADDITIONAL_OPTIONS} 2>&1 | tee -a $BUILD_LOGFILE
+           ${CMAKE_ADDITIONAL_OPTIONS} 2>&1 | $TEE -a $BUILD_LOGFILE
   exit_if_error "-- [ERROR] CMake configuration failed for $git_dep"
   build_project $git_dep
   if [[ $OS == "Windows" ]]
@@ -843,7 +845,7 @@ build_catkin_git_dependency()
   fi
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
   cd $2
-  catkin_make 2>&1 | tee -a $BUILD_LOGFILE
+  catkin_make 2>&1 | $TEE -a $BUILD_LOGFILE
   exit_if_error "catkin_build failed for $git_dep"
 }
 
@@ -934,7 +936,7 @@ then
             -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
             -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
             -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
-            ${CMAKE_ADDITIONAL_OPTIONS} 2>&1 | tee -a $BUILD_LOGFILE
+            ${CMAKE_ADDITIONAL_OPTIONS} 2>&1 | $TEE -a $BUILD_LOGFILE
 else
   cmake ../ -DCMAKE_BUILD_TYPE:STRING="'$BUILD_TYPE'" \
             -DCMAKE_INSTALL_PREFIX:STRING="'$INSTALL_PREFIX'" \
@@ -945,7 +947,7 @@ else
             -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
             -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
             ${CMAKE_ADDITIONAL_OPTIONS} \
-            -DDISABLE_ROS=ON 2>&1 | tee -a $BUILD_LOGFILE
+            -DDISABLE_ROS=ON 2>&1 | $TEE -a $BUILD_LOGFILE
 fi
 exit_if_error "CMake configuration failed for mc_rtc"
 build_project mc_rtc
