@@ -816,6 +816,40 @@ build_project()
   exit_if_error "-- [ERROR] Installation failed for $1"
 }
 
+test_project()
+{
+  exec_log ctest -C ${BUILD_TYPE}
+  if [ $? -ne 0 ]
+  then
+    if [ ! -z $2 ]
+    then
+      echo_log "$1 testing failed, assuming you need to rebuild your Python bindings"
+      if [ "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON ]
+      then
+        exec_log cmake --build . --config ${BUILD_TYPE} --target force-$2-python2-bindings
+        exec_log cmake --build . --config ${BUILD_TYPE} --target force-$2-python3-bindings
+      elif [ "x$PYTHON_FORCE_PYTHON2" == xON ]
+      then
+        exec_log cmake --build . --config ${BUILD_TYPE} --target force-$2-python2-bindings
+      elif [ "x$PYTHON_FORCE_PYTHON3" == xON ]
+      then
+        exec_log cmake --build . --config ${BUILD_TYPE} --target force-$2-python3-bindings
+      else
+        exec_log cmake --build . --config ${BUILD_TYPE} --target force-$2-python-bindings
+      fi
+      exec_log cmake --build . --config ${BUILD_TYPE}
+      exec_log ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE}
+      exit_if_error "[ERROR] Build failed for $1"
+      exit_if_error "-- [ERROR] Installation failed for $1"
+      exec_log ctest -C ${BUILD_TYPE}
+      exit_if_error "-- [ERROR] Testing is still failing for $1, please investigate deeper"
+    else
+      echo_log "-- [ERROR] Testing failed for $1"
+      exit_failure
+    fi
+  fi
+}
+
 build_git_dependency_configure_and_build()
 {
   git_dependency_parsing $1
@@ -849,8 +883,7 @@ build_git_dependency()
   if $BUILD_TESTING
   then
     build_git_dependency_configure_and_build $1
-    exec_log ctest -C ${BUILD_TYPE}
-    exit_if_error "-- [ERROR] Testing failed for $git_dep"
+    test_project $1 $2
   else
     build_git_dependency_no_test $1
   fi
@@ -887,19 +920,19 @@ build_catkin_workspace()
 build_git_dependency_no_test humanoid-path-planner/hpp-spline#v4.7.0
 if [ "x$WITH_PYTHON_SUPPORT" == xON ]
 then
-  build_git_dependency jrl-umi3218/Eigen3ToPython
+  build_git_dependency jrl-umi3218/Eigen3ToPython eigen
 fi
-build_git_dependency jrl-umi3218/SpaceVecAlg
+build_git_dependency jrl-umi3218/SpaceVecAlg sva
 build_git_dependency jrl-umi3218/sch-core
 if [ "x$WITH_PYTHON_SUPPORT" == xON ]
 then
-  build_git_dependency jrl-umi3218/sch-core-python
+  build_git_dependency jrl-umi3218/sch-core-python sch
 fi
-build_git_dependency jrl-umi3218/RBDyn
-build_git_dependency jrl-umi3218/eigen-qld
+build_git_dependency jrl-umi3218/RBDyn rbdyn
+build_git_dependency jrl-umi3218/eigen-qld eigen_qld
 build_git_dependency jrl-umi3218/eigen-quadprog
-build_git_dependency jrl-umi3218/Tasks
-build_git_dependency jrl-umi3218/mc_rbdyn_urdf
+build_git_dependency jrl-umi3218/Tasks tasks
+build_git_dependency jrl-umi3218/mc_rbdyn_urdf mc_rbdyn_urdf
 
 if $WITH_ROS_SUPPORT
 then
@@ -971,43 +1004,7 @@ exit_if_error "CMake configuration failed for mc_rtc"
 build_project mc_rtc
 if $BUILD_TESTING
 then
-  exec_log ctest -C ${BUILD_TYPE}
-fi
-if [ $? -ne 0 ]
-then
-  if [ "x$WITH_PYTHON_SUPPORT" == xON ]
-  then
-    echo_log "mc_rtc testing failed, asssuming you need to rebuild your Python bindings"
-    if [ "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON ]
-    then
-      exec_log cmake --build . --config ${BUILD_TYPE} --target force-mc_rtc-python2-bindings
-      exec_log cmake --build . --config ${BUILD_TYPE} --target force-mc_rtc-python3-bindings
-    elif [ "x$PYTHON_FORCE_PYTHON2" == xON ]
-    then
-      exec_log cmake --build . --config ${BUILD_TYPE} --target force-mc_rtc-python2-bindings
-    elif [ "x$PYTHON_FORCE_PYTHON3" == xON ]
-    then
-      exec_log cmake --build . --config ${BUILD_TYPE} --target force-mc_rtc-python3-bindings
-    else
-      exec_log cmake --build . --config ${BUILD_TYPE} --target force-mc_rtc-python-bindings
-    fi
-    exec_log ${SUDO_CMD} make install
-    if [ $? -ne 0 ]
-    then
-      echo_log "mc_rtc failed to install"
-    else
-      echo_log "mc_rtc successfully installed"
-    fi
-    exec_log ctest -C ${BUILD_TYPE}
-    if [ $? -ne 0 ]
-    then
-      echo_log "mc_rtc is still failing"
-      exit_failure
-    fi
-  else
-    echo_log "Testing failed for mc_rtc"
-    exit_failure
-  fi
+  test_project mc_rtc mc_rtc
 fi
 
 echo_log "-- [SUCCESS] Successfully built mc_rtc"
