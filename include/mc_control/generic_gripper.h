@@ -118,6 +118,8 @@ public:
   std::vector<double> openP;
   /*! Maximum velocity of active joints in the gripper */
   std::vector<double> vmax;
+  /*! Percentage of max velocity of active joints in the gripper */
+  double percentVMAX;
   /*! Controller timestep */
   double timeStep;
   /*! Current opening percentage */

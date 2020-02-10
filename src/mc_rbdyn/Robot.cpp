@@ -221,7 +221,12 @@ Robot::Robot(Robots & robots,
     bfs::path calib_file = bfs::path(module_.calib_dir) / std::string("calib_data." + fs.name());
     if(bfs::exists(calib_file))
     {
-      fs.loadCalibrator(calib_file.string(), mbc().gravity);
+      LOG_WARNING("Attempt to load calib data " << calib_file.string() << " for " << fs.name())
+      fs.loadCalibrator(calib_file.string(), -mbc().gravity);
+    }
+    else
+    {
+      LOG_WARNING("Your calibration files should be here: " << module_.calib_dir)
     }
   }
   for(size_t i = 0; i < forceSensors_.size(); ++i)

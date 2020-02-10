@@ -30,7 +30,10 @@ void MCGlobalController::initGUI()
           mc_rtc::gui::Button("Close", [this, gname]() { this->setGripperOpenPercent(gname, 0); }),
           mc_rtc::gui::NumberInput("Opening percentage",
                                    [this, gname]() { return this->controller().grippers.at(gname)->opening(); },
-                                   [this, gname](double op) { this->setGripperOpenPercent(gname, op); }));
+                                   [this, gname](double op) { this->setGripperOpenPercent(gname, op); }),
+           mc_rtc::gui::NumberInput("Percentage VMAX",
+                                   [this, gname]() { return this->controller().grippers.at(gname)->percentVMAX; },
+                                   [this, gname](double op) { this->controller().grippers.at(gname)->percentVMAX = op; }));
     };
     for(const auto & g : controller().grippers)
     {

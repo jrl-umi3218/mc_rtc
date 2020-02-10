@@ -52,7 +52,7 @@ struct MC_CONTROL_FSM_STATE_DLLAPI Grippers : State
 
   bool run(Controller &) override;
 
-  void teardown(Controller &) override {}
+  void teardown(Controller &) override;
 
 protected:
   mc_rtc::Configuration config_;

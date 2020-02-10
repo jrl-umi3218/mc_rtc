@@ -29,6 +29,22 @@ void Grippers::start(Controller & ctl)
         continue;
       }
       auto gripper = ctl.grippers[g];
+      if(grippers(g).has("percentVMAX"))
+      {
+        gripper->percentVMAX = grippers(g)("percentVMAX");
+      }
+      else
+      {
+        gripper->percentVMAX = 0.25;
+      }
+      if(grippers(g).has("actualCommandDiffTrigger"))
+      {
+        gripper->actualCommandDiffTrigger = static_cast<double>(grippers(g)("actualCommandDiffTrigger")) * M_PI / 180;
+      }
+      else
+      {
+        gripper->actualCommandDiffTrigger = 8 * M_PI / 180;
+      }
       if(grippers(g).has("opening"))
       {
         double open = grippers(g)("opening");
@@ -66,6 +82,19 @@ bool Grippers::run(Controller & ctl)
     return true;
   }
   return false;
+}
+
+void Grippers::teardown(Controller & ctl)
+{
+  if(config_.has("grippers"))
+  {
+    auto grippers = config_("grippers");
+    for(const auto & g : grippers.keys())
+    {
+      auto gripper = ctl.grippers[g];
+      gripper->percentVMAX = 0.25;
+    }
+  }
 }
 
 } // namespace fsm

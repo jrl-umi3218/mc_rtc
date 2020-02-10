@@ -69,6 +69,7 @@ public:
     X_f_ds_ = mc_rbdyn::rpyToPT(X.segment<3>(1));
     X_p_vb_ = sva::PTransformd(Eigen::Matrix3d::Identity(), X.segment<3>(4));
     offset_ = sva::ForceVecd(X.segment<6>(7));
+    LOG_SUCCESS("Successfully load calib data file " << filename)
   }
 
   /** Return the gravity wrench applied on the force sensor in the sensor

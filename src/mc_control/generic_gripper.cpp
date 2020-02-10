@@ -100,7 +100,8 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
                  const std::vector<double> & currentQ,
                  double timeStep,
                  bool reverseLimits)
-: overCommandLimitIter(0), overCommandLimitIterN(5), actualQ(currentQ),
+: percentVMAX(0.25),
+  overCommandLimitIter(0), overCommandLimitIterN(5), actualQ(currentQ),
   actualCommandDiffTrigger(8 * M_PI / 180) /* 8 degress of difference */
 {
   active_joints = jointNames;
@@ -122,7 +123,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
         closeP.push_back(robot.qu()[jointIndex][0]);
         openP.push_back(robot.ql()[jointIndex][0]);
       }
-      vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0]) / 4);
+      vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0]));
       _q.push_back(currentQ[i]);
     }
     else
@@ -248,11 +249,11 @@ const std::vector<double> & Gripper::q()
       {
         if(targetQIn[i] > cur[i])
         {
-          percentOpen[i] += std::min(vmax[i] * timeStep, targetQIn[i] - cur[i]) / (openP[i] - closeP[i]);
+          percentOpen[i] += std::min(vmax[i] * percentVMAX * timeStep, targetQIn[i] - cur[i]) / (openP[i] - closeP[i]);
         }
         else
         {
-          percentOpen[i] += std::max(-vmax[i] * timeStep, targetQIn[i] - cur[i]) / (openP[i] - closeP[i]);
+          percentOpen[i] += std::max(-vmax[i] * percentVMAX * timeStep, targetQIn[i] - cur[i]) / (openP[i] - closeP[i]);
         }
       }
       reached = reached && i_reached;
