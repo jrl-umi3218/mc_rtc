@@ -4,6 +4,10 @@ MainRobot: JVRC1
 # Enabled controllers
 Enabled: [CoM]
 
+## Initialize robot attitude from a bodysensor or the robot module (default)
+# InitAttitudeFromSensor: true
+# InitAttitudeSensor: FloatingBase
+
 # Load and run state observers.
 # Order matters here, estimators will be run after each other.
 

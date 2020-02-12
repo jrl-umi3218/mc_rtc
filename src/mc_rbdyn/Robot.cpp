@@ -256,7 +256,12 @@ Robot::Robot(Robots & robots,
     if(hasJoint(jN))
     {
       auto jIndex = mb().jointIndexByName(jN);
-      refJointIndexToMBCIndex_[i] = mb().joint(jIndex).dof() != 0 ? jIndex : -1;
+      const auto & joint = mb().joint(jIndex);
+      refJointIndexToMBCIndex_[i] = joint.dof() != 0 ? jIndex : -1;
+      if(mb().joint(jIndex).type() != rbd::Joint::Type::Free)
+      {
+        nrActuatedDof_ += mb().joint(jIndex).dof();
+      }
     }
     else
     {
@@ -723,6 +728,11 @@ void Robot::jointTorques(const std::vector<double> & jointTorques)
 const std::vector<std::string> & Robot::refJointOrder() const
 {
   return refJointOrder_;
+}
+
+size_t Robot::nrActuatedDof() const
+{
+  return nrActuatedDof_;
 }
 
 bool Robot::hasForceSensor(const std::string & name) const

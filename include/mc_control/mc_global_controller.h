@@ -98,22 +98,24 @@ public:
 
   /*! \brief Initialize the default controller with the given configuration
    *
-   * In this version, the robot's initial attitude is provided by
-   * mc_rbdyn::RobotModule
+   * - The initial joint configuration provided as the initq argument.
+   * - The initial floating base attitude is set from body sensors or the robot module
+   * depending on your controller's configuration (default: robot module)
    *
-   * \param initq Initial joint configuration
+   * \code{.yaml}
+   * InitAttitudeFromSensor: true,
+   * InitAttitudeSensor: FloatingBase
+   * \endcode
    *
+   * \param initq initial joints configuration
+   *
+   * \note When implementing an interface, the sensors must be set prior to
+   * calling this method.
+   *
+   * \throws logical_exception if the bodysensor does not exist or the joint
+   * configuration does not have the same DoFs as the robot
    */
   void init(const std::vector<double> & initq);
-
-  /*! \brief Initialize the default controller with the given configuration and attitude
-   *
-   * \param initq Initial joint configuration
-   *
-   * \param initAttitude Initial attitude (qw, qx, qy, qz, tx, ty, tz)
-   *
-   */
-  void init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude);
 
   /** @name Sensing
    *
@@ -412,6 +414,9 @@ public:
     bool use_sandbox = false;
 
     bool verbose_loader = true;
+
+    bool init_attitude_from_sensor = false;
+    std::string init_attitude_sensor = "";
 
     std::vector<std::string> robot_module_paths = {};
     std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
