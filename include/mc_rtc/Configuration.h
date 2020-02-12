@@ -654,7 +654,8 @@ struct MC_RTC_UTILS_DLLAPI Configuration
   }
 
   /**
-   * @brief Overload for the retrive and store operator for rotation elements.
+   * @brief Retrive rotation elements while keeping unspecified DoFs unchanged.
+   *
    * Attempts to retrived the value stored within the configuration as a
    * Matrix3d.
    * - If the element exists and is a valid matrix representation (see \ref
@@ -668,13 +669,11 @@ struct MC_RTC_UTILS_DLLAPI Configuration
    *   In this case, only the specified axes will be overwritten from configuration and the other axes will remain
    * unaffected.
    *
-   * \ref retrieve_and_store_template
-   *
    * @param key The key used to store the value
-   * @param rotation The rotation to retrieve. Allows for overwritting only specific RPY axes as well as a full
-   * rotation.
+   * @param rotation The rotation to modify. Only the DoFs specified in the
+   * configuration will be overwritten, other DoFs will remain unchanged.
    */
-  void operator()(const std::string & key, Eigen::Matrix3d & rotation) const
+  void partialRotation(const std::string & key, Eigen::Matrix3d & rotation) const
   {
     auto c = (*this)(key);
     if(c.has("roll") || c.has("pitch") || c.has("yaw"))
