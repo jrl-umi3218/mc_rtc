@@ -242,14 +242,6 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    */
   sva::PTransformd anchorFrameReal() const;
 
-  /** ZMP target after force distribution.
-   *
-   */
-  Eigen::Vector3d zmp() const
-  {
-    return distribZMP_;
-  }
-
   /** Provides a static target to the stabilizer.
    * - CoM target : user-provided
    * - CoM velocity target: zero (static)
@@ -490,7 +482,6 @@ protected:
   Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero();
   sva::ForceVecd measuredNetWrench_ = sva::ForceVecd::Zero();
   Eigen::Vector3d zmpError_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d distribZMP_ = Eigen::Vector3d::Zero();
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */

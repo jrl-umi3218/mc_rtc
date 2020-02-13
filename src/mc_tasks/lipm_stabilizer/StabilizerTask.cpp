@@ -555,7 +555,6 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
   gui.addElement(
       {"Tasks", name_, "Markers", "Net wrench"},
-      Point3D("Stabilizer_ZMP", PointConfig(Color::Magenta, 0.02), [this]() { return this->zmp(); }),
       Point3D("Measured_ZMP", PointConfig(Color::Red, 0.02), [this]() -> Eigen::Vector3d { return measuredZMP_; }),
       Arrow("Measured_ZMPForce", netWrenchForceArrowConfig, [this]() -> Eigen::Vector3d { return measuredZMP_; },
             [this, FORCE_SCALE]() -> Eigen::Vector3d {
