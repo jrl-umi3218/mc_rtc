@@ -161,6 +161,16 @@ void ControllerClient::send_request(const ElementId & id)
   send_request(id, mc_rtc::Configuration{});
 }
 
+void ControllerClient::timeout(double t)
+{
+  timeout_ = t;
+}
+
+double ControllerClient::timeout()
+{
+  return timeout_;
+}
+
 void ControllerClient::handle_gui_state(mc_rtc::Configuration state)
 {
   if(!state.size())

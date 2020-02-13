@@ -89,7 +89,10 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
   void send_request(const ElementId & id);
 
   /** Set the timeout of the SUB socket */
-  double timeout(double t);
+  void timeout(double t);
+
+  /** Get the current timeout */
+  double timeout();
 
 protected:
   /** Should be called when the client is ready to receive data */
