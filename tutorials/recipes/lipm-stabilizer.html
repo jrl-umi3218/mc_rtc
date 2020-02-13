@@ -424,16 +424,16 @@ See <a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/
 <p>To create a stabilizer task within your own controller, you simply need to instanciate the <code class="highlighter-rouge">mc_tasks::lipm_stabilizer::StabilizerTask</code>, and</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load default configuration from robot module</span>
-<span class="k">auto</span> <span class="n">StabiConf</span> <span class="o">=</span> <span class="n">robot</span><span class="p">.</span><span class="n">module</span><span class="p">().</span><span class="n">defaultLIPMStabilizerConfiguration</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">stabiConf</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">module</span><span class="p">().</span><span class="n">defaultLIPMStabilizerConfiguration</span><span class="p">();</span>
 <span class="c1">// Create the stabilizer task</span>
 <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">lipm_stabilizer</span><span class="o">::</span><span class="n">StabilizerTask</span><span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">solver</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span>
-          <span class="n">solver</span><span class="p">.</span><span class="n">realRobots</span><span class="p">(),</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">robots</span><span class="p">(),</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">realRobots</span><span class="p">(),</span>
           <span class="n">robotIndex</span><span class="p">,</span>
           <span class="n">stabiConf</span><span class="p">.</span><span class="n">leftFootSurface</span><span class="p">,</span>
           <span class="n">stabiConf</span><span class="p">.</span><span class="n">rightFootSurface</span><span class="p">,</span>
           <span class="n">stabiConf</span><span class="p">.</span><span class="n">torsoBodyName</span><span class="p">,</span>
-          <span class="n">solver</span><span class="p">.</span><span class="n">dt</span><span class="p">());</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">dt</span><span class="p">());</span>
 <span class="c1">// Reset the task targets and default configuration</span>
 <span class="n">t</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
 <span class="c1">// Apply stabilizer configuration (optional, if not provided the default configuration from the RobotModule will be used)</span>
@@ -445,20 +445,20 @@ See <a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/
 <p>Additionally, you may load additional configuration settings and targets from an <code class="highlighter-rouge">mc_rtc::Configuration</code> object:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load default configuration from robot module</span>
-<span class="k">auto</span> <span class="n">StabiConf</span> <span class="o">=</span> <span class="n">robot</span><span class="p">.</span><span class="n">module</span><span class="p">().</span><span class="n">defaultLIPMStabilizerConfiguration</span><span class="p">();</span>
+<span class="k">auto</span> <span class="n">stabiConf</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">module</span><span class="p">().</span><span class="n">defaultLIPMStabilizerConfiguration</span><span class="p">();</span>
 <span class="c1">// mc_rtc::Configuration object containing valid stabilizer configuration (see JSON schema documentation)</span>
 <span class="k">auto</span> <span class="n">conf</span> <span class="o">=</span> <span class="p">...</span>
 <span class="c1">// Optional: Load additional configuration from an mc_rtc::Configuration object</span>
 <span class="n">stabiConf</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
 <span class="c1">// Create the stabilizer task</span>
 <span class="k">auto</span> <span class="n">t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">lipm_stabilizer</span><span class="o">::</span><span class="n">StabilizerTask</span><span class="o">&gt;</span><span class="p">(</span>
-          <span class="n">solver</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span>
-          <span class="n">solver</span><span class="p">.</span><span class="n">realRobots</span><span class="p">(),</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">robots</span><span class="p">(),</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">realRobots</span><span class="p">(),</span>
           <span class="n">robotIndex</span><span class="p">,</span>
           <span class="n">stabiConf</span><span class="p">.</span><span class="n">leftFootSurface</span><span class="p">,</span>
           <span class="n">stabiConf</span><span class="p">.</span><span class="n">rightFootSurface</span><span class="p">,</span>
           <span class="n">stabiConf</span><span class="p">.</span><span class="n">torsoBodyName</span><span class="p">,</span>
-          <span class="n">solver</span><span class="p">.</span><span class="n">dt</span><span class="p">());</span>
+          <span class="n">solver</span><span class="p">().</span><span class="n">dt</span><span class="p">());</span>
 <span class="c1">// Reset the task</span>
 <span class="n">t</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
 <span class="c1">// Apply stabilizer configuration</span>

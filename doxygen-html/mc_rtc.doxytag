@@ -24194,13 +24194,6 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
-      <type>Eigen::Vector3d</type>
-      <name>zmp</name>
-      <anchorfile>a02731.html</anchorfile>
-      <anchor>a1089646e2579b1d88ece1a3d3a472c2a</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
       <type>void</type>
       <name>staticTarget</name>
       <anchorfile>a02731.html</anchorfile>
@@ -24632,13 +24625,6 @@
       <name>zmpError_</name>
       <anchorfile>a02731.html</anchorfile>
       <anchor>a1a1be4b382b22e64d6c10a0a25ac2eb9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>Eigen::Vector3d</type>
-      <name>distribZMP_</name>
-      <anchorfile>a02731.html</anchorfile>
-      <anchor>a1debc60c12375bc8ebb3dad18a4bf3a6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">

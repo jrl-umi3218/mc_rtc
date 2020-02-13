@@ -162,13 +162,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af8bf27488a2f076443dce128a71d8fe1"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02731.html#af8bf27488a2f076443dce128a71d8fe1">anchorFrameReal</a> () const</td></tr>
 <tr class="memdesc:af8bf27488a2f076443dce128a71d8fe1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the anchor frame computed from real robot.  <a href="#af8bf27488a2f076443dce128a71d8fe1">More...</a><br /></td></tr>
 <tr class="separator:af8bf27488a2f076443dce128a71d8fe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1089646e2579b1d88ece1a3d3a472c2a"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02731.html#a1089646e2579b1d88ece1a3d3a472c2a">zmp</a> () const</td></tr>
-<tr class="memdesc:a1089646e2579b1d88ece1a3d3a472c2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ZMP target after force distribution.  <a href="#a1089646e2579b1d88ece1a3d3a472c2a">More...</a><br /></td></tr>
-<tr class="separator:a1089646e2579b1d88ece1a3d3a472c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeca8ec3501161284eebe42d34b7433d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02731.html#aeca8ec3501161284eebe42d34b7433d3">staticTarget</a> (const Eigen::Vector3d &amp;com, double zmpHeight=0)</td></tr>
 <tr class="memdesc:aeca8ec3501161284eebe42d34b7433d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a static target to the stabilizer.  <a href="#aeca8ec3501161284eebe42d34b7433d3">More...</a><br /></td></tr>
 <tr class="separator:aeca8ec3501161284eebe42d34b7433d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbe9f9871a4c131a6c2176eeaf0a5dc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02731.html#acbe9f9871a4c131a6c2176eeaf0a5dc4">target</a> (const Eigen::Vector3d &amp;com, const Eigen::Vector3d &amp;comd, const Eigen::Vector3d &amp;comdd, const Eigen::Vector3d &amp;<a class="el" href="a02731.html#a1089646e2579b1d88ece1a3d3a472c2a">zmp</a>)</td></tr>
+<tr class="memitem:acbe9f9871a4c131a6c2176eeaf0a5dc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02731.html#acbe9f9871a4c131a6c2176eeaf0a5dc4">target</a> (const Eigen::Vector3d &amp;com, const Eigen::Vector3d &amp;comd, const Eigen::Vector3d &amp;comdd, const Eigen::Vector3d &amp;zmp)</td></tr>
 <tr class="memdesc:acbe9f9871a4c131a6c2176eeaf0a5dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a dynamic target to the stabilizer.  <a href="#acbe9f9871a4c131a6c2176eeaf0a5dc4">More...</a><br /></td></tr>
 <tr class="separator:acbe9f9871a4c131a6c2176eeaf0a5dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8701a57a809d6623b80306bd6cc9609a"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02731.html#a8701a57a809d6623b80306bd6cc9609a">measuredDCM</a> ()</td></tr>
@@ -343,8 +340,6 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a1d3d079514e89bcafe3d35b1ea2c1018"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a1be4b382b22e64d6c10a0a25ac2eb9"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02731.html#a1a1be4b382b22e64d6c10a0a25ac2eb9">zmpError_</a> = Eigen::Vector3d::Zero()</td></tr>
 <tr class="separator:a1a1be4b382b22e64d6c10a0a25ac2eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1debc60c12375bc8ebb3dad18a4bf3a6"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02731.html#a1debc60c12375bc8ebb3dad18a4bf3a6">distribZMP_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:a1debc60c12375bc8ebb3dad18a4bf3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe50c92ded00ad8f22e9da9433dee655"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01987.html">mc_filter::ExponentialMovingAverage</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02731.html#abe50c92ded00ad8f22e9da9433dee655">dcmIntegrator_</a></td></tr>
 <tr class="separator:abe50c92ded00ad8f22e9da9433dee655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0238d047704d0cdaca32fe09153e4688"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02003.html">mc_filter::StationaryOffset</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02731.html#a0238d047704d0cdaca32fe09153e4688">dcmDerivator_</a></td></tr>
@@ -1511,33 +1506,6 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a1089646e2579b1d88ece1a3d3a472c2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1089646e2579b1d88ece1a3d3a472c2a">&#9670;&nbsp;</a></span>zmp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::zmp </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>ZMP target after force distribution. </p>
-
-</div>
-</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="af0aa6726e77f2dc1d7f371980426fdef"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af0aa6726e77f2dc1d7f371980426fdef">&#9670;&nbsp;</a></span>addContacts_</h2>
@@ -1935,28 +1903,6 @@ Additional Inherited Members</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a> mc_tasks::lipm_stabilizer::StabilizerTask::distribWrench_ = <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00627.html#aaeb95999d383653c0c848fc57e47c913">sva::ForceVecd::Zero</a>()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1debc60c12375bc8ebb3dad18a4bf3a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1debc60c12375bc8ebb3dad18a4bf3a6">&#9670;&nbsp;</a></span>distribZMP_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::distribZMP_ = Eigen::Vector3d::Zero()</td>
         </tr>
       </table>
   </td>
@@ -2902,7 +2848,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00679.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00680.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a02731.html">StabilizerTask</a></li>
-    <li class="footer">Generated on Thu Feb 13 2020 10:02:44 for mc_rtc by
+    <li class="footer">Generated on Thu Feb 13 2020 12:30:25 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
