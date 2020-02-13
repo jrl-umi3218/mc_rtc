@@ -171,16 +171,16 @@ To create a stabilizer task within your own controller, you simply need to insta
 
 ```cpp
 // Load default configuration from robot module
-auto StabiConf = robot.module().defaultLIPMStabilizerConfiguration();
+auto stabiConf = robot().module().defaultLIPMStabilizerConfiguration();
 // Create the stabilizer task
 auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
-          solver.robots(),
-          solver.realRobots(),
+          solver().robots(),
+          solver().realRobots(),
           robotIndex,
           stabiConf.leftFootSurface,
           stabiConf.rightFootSurface,
           stabiConf.torsoBodyName,
-          solver.dt());
+          solver().dt());
 // Reset the task targets and default configuration
 t->reset();
 // Apply stabilizer configuration (optional, if not provided the default configuration from the RobotModule will be used)
@@ -193,20 +193,20 @@ Additionally, you may load additional configuration settings and targets from an
 
 ```cpp
 // Load default configuration from robot module
-auto StabiConf = robot.module().defaultLIPMStabilizerConfiguration();
+auto stabiConf = robot().module().defaultLIPMStabilizerConfiguration();
 // mc_rtc::Configuration object containing valid stabilizer configuration (see JSON schema documentation)
 auto conf = ...
 // Optional: Load additional configuration from an mc_rtc::Configuration object
 stabiConf.load(config);
 // Create the stabilizer task
 auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
-          solver.robots(),
-          solver.realRobots(),
+          solver().robots(),
+          solver().realRobots(),
           robotIndex,
           stabiConf.leftFootSurface,
           stabiConf.rightFootSurface,
           stabiConf.torsoBodyName,
-          solver.dt());
+          solver().dt());
 // Reset the task
 t->reset();
 // Apply stabilizer configuration
