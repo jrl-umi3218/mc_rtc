@@ -414,7 +414,7 @@ bool QPSolver::runClosedLoop()
   for(size_t i = 0; i < robots().size(); ++i)
   {
     auto & robot = robots().robot(i);
-    const auto & realRobot = realRobots().robot();
+    const auto & realRobot = realRobots().robot(i);
 
     // Save old integrator state
     control_q_[i] = robot.mbc().q;
