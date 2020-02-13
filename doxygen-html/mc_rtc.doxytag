@@ -9021,11 +9021,18 @@
       <arglist>(const ElementId &amp;id)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>timeout</name>
+      <anchorfile>a01863.html</anchorfile>
+      <anchor>acfbf74c5219464896a5645a8a9c71418</anchor>
+      <arglist>(double t)</arglist>
+    </member>
+    <member kind="function">
       <type>double</type>
       <name>timeout</name>
       <anchorfile>a01863.html</anchorfile>
-      <anchor>a0c65a03b40c48fdd031164180c09c2a1</anchor>
-      <arglist>(double t)</arglist>
+      <anchor>abd6834ef752be33759988b9b204fccc7</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
