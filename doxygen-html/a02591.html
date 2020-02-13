@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_solver::GenInequalityConstraintLambda Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02594.html','');});
+$(document).ready(function(){initNavTree('a02591.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,30 +69,160 @@ $(document).ready(function(){initNavTree('a02594.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="a02588.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::ContactMsg Member List</div>  </div>
+<div class="title">mc_solver::GenInequalityConstraintLambda Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02594.html">mc_solver::ContactMsg</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02594.html#a9e1941c9323f825326c7f8d64fac14ac">mu</a></td><td class="entry"><a class="el" href="a02594.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02594.html#a5c34937b82f901be184a1de7ae8d1dd9">nr_generators</a></td><td class="entry"><a class="el" href="a02594.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02594.html#ad8c4a5aae685b15b8dffeddcb01aa9f7">r1_body</a></td><td class="entry"><a class="el" href="a02594.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02594.html#a91f4355799d2e97441538f28adf25071">r1_index</a></td><td class="entry"><a class="el" href="a02594.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02594.html#a7ffb13c3e88fdefbdf8ad51aab184c16">r1_points</a></td><td class="entry"><a class="el" href="a02594.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02594.html#a7af4dca57bbecf5e3397e7ea4f11a360">r1_surface</a></td><td class="entry"><a class="el" href="a02594.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02594.html#a30084dbbeaca445a811e2b169344919d">r2_body</a></td><td class="entry"><a class="el" href="a02594.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02594.html#aaaa28b666db138b8073c87f0367408ea">r2_index</a></td><td class="entry"><a class="el" href="a02594.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02594.html#a7d179ea79ffefc9a499c3300b4fba396">r2_surface</a></td><td class="entry"><a class="el" href="a02594.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02594.html#a0c97419447f414150d56fb8cc8ea791e">X_b1_b2</a></td><td class="entry"><a class="el" href="a02594.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>Helper class to write a general inequality constraint for Tasks.  
+ <a href="a02591.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_solver/GenInequalityConstraint.h&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mc_solver::GenInequalityConstraintLambda:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="a02591.png" usemap="#mc_5Fsolver::GenInequalityConstraintLambda_map" alt=""/>
+  <map id="mc_5Fsolver::GenInequalityConstraintLambda_map" name="mc_5Fsolver::GenInequalityConstraintLambda_map">
+<area href="a02583.html" alt="mc_solver::utils::GenInequalityConstraint&lt; utils::UpdateLambda &gt;" shape="rect" coords="333,224,767,248"/>
+<area href="a02639.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::GenInequality, utils::UpdateLambda &gt;" shape="rect" coords="333,168,767,192"/>
+<area doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html" alt="tasks::qp::ConstraintFunction&lt; tasks::qp::GenInequality &gt;" shape="rect" coords="0,112,434,136"/>
+<area href="a02651.html" alt="mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;" shape="rect" coords="666,112,1100,136"/>
+<area doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01073.html" alt="tasks::qp::Constraint" shape="rect" coords="0,56,434,80"/>
+<area href="a02671.html" title="This struct provides an implement for updateNrVars for a lambda-based constraint. ..." alt="mc_solver::utils::UpdateNrVarsLambda" shape="rect" coords="444,56,878,80"/>
+<area href="a02647.html" alt="mc_solver::utils::UpdateTag" shape="rect" coords="888,56,1322,80"/>
+<area href="a02663.html" title="This struct provides common data for UpdateNrVars* classes. " alt="mc_solver::utils::UpdateNrVarsData" shape="rect" coords="444,0,878,24"/>
+</map>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a42ad6d2e1a60aadcd98ee19529d68f17"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02591.html#a42ad6d2e1a60aadcd98ee19529d68f17">GenInequalityConstraintLambda</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
+<tr class="separator:a42ad6d2e1a60aadcd98ee19529d68f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a02583"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02583')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02583.html">mc_solver::utils::GenInequalityConstraint&lt; utils::UpdateLambda &gt;</a></td></tr>
+<tr class="memitem:ac5df683b56271a2bdbdd26487b6cc026 inherit pub_methods_a02583"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02583.html#ac5df683b56271a2bdbdd26487b6cc026">GenInequalityConstraint</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:ac5df683b56271a2bdbdd26487b6cc026 inherit pub_methods_a02583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d193fcd6f294807a5e1182f223304a6 inherit pub_methods_a02583"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02583.html#a7d193fcd6f294807a5e1182f223304a6">GenInequalityConstraint</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
+<tr class="separator:a7d193fcd6f294807a5e1182f223304a6 inherit pub_methods_a02583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab606fd78c1a99c26a63a78f41519bb89 inherit pub_methods_a02583"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02583.html#ab606fd78c1a99c26a63a78f41519bb89">GenInequalityConstraint</a> (const <a class="el" href="a02635.html">mc_solver::QPSolver</a> &amp;solver, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
+<tr class="separator:ab606fd78c1a99c26a63a78f41519bb89 inherit pub_methods_a02583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ffdce8cb16cfd75fb337488cc44160 inherit pub_methods_a02583"><td class="memItemLeft" align="right" valign="top">const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02583.html#a72ffdce8cb16cfd75fb337488cc44160">AGenInEq</a> () const override</td></tr>
+<tr class="separator:a72ffdce8cb16cfd75fb337488cc44160 inherit pub_methods_a02583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac87906b16a1bdd6be59c7d630461a2b4 inherit pub_methods_a02583"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02583.html#ac87906b16a1bdd6be59c7d630461a2b4">descGenInEq</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;, int i) override</td></tr>
+<tr class="separator:ac87906b16a1bdd6be59c7d630461a2b4 inherit pub_methods_a02583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a01077"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a01077')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html">tasks::qp::ConstraintFunction&lt; tasks::qp::GenInequality &gt;</a></td></tr>
+<tr class="memitem:ad668fbb366458056c27a466578c26b94 inherit pub_methods_a01077"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html#ad668fbb366458056c27a466578c26b94">~ConstraintFunction</a> () override</td></tr>
+<tr class="separator:ad668fbb366458056c27a466578c26b94 inherit pub_methods_a01077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff67c3cdc38c098ddcd8a2b47bc55946 inherit pub_methods_a01077"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html#aff67c3cdc38c098ddcd8a2b47bc55946">addToSolver</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">QPSolver</a> &amp;sol)</td></tr>
+<tr class="separator:aff67c3cdc38c098ddcd8a2b47bc55946 inherit pub_methods_a01077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1156de5e1b49d1d91319fd96cb936b7a inherit pub_methods_a01077"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html#a1156de5e1b49d1d91319fd96cb936b7a">addToSolver</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;mbs, <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">QPSolver</a> &amp;sol)</td></tr>
+<tr class="separator:a1156de5e1b49d1d91319fd96cb936b7a inherit pub_methods_a01077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a454bf752ccf215aa991d036eaf1c3223 inherit pub_methods_a01077"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html#a454bf752ccf215aa991d036eaf1c3223">removeFromSolver</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">QPSolver</a> &amp;sol)</td></tr>
+<tr class="separator:a454bf752ccf215aa991d036eaf1c3223 inherit pub_methods_a01077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_types_a02583"><td colspan="2" onclick="javascript:toggleInherit('pub_types_a02583')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="a02583.html">mc_solver::utils::GenInequalityConstraint&lt; utils::UpdateLambda &gt;</a></td></tr>
+<tr class="memitem:a647a3478f1ace415da2dfe9cbd9705e4 inherit pub_types_a02583"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02583.html#a647a3478f1ace415da2dfe9cbd9705e4">Base</a> = <a class="el" href="a02639.html">Constraint</a>&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01089.html">tasks::qp::GenInequality</a>, <a class="el" href="a00703.html#a51609ca39a4099935af3983ff08a0c50">utils::UpdateLambda</a> &gt;</td></tr>
+<tr class="separator:a647a3478f1ace415da2dfe9cbd9705e4 inherit pub_types_a02583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02639"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02639')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02639.html">mc_solver::utils::Constraint&lt; tasks::qp::GenInequality, utils::UpdateLambda &gt;</a></td></tr>
+<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73 inherit pro_methods_a02639"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02639.html#adcc2b9ec9fbd3b47e0183ef0ce034c73">Constraint</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:adcc2b9ec9fbd3b47e0183ef0ce034c73 inherit pro_methods_a02639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e inherit pro_methods_a02639"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02639.html#ae5a2073ed0b8b0432593221fec955e4e">Constraint</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
+<tr class="separator:ae5a2073ed0b8b0432593221fec955e4e inherit pro_methods_a02639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca inherit pro_methods_a02639"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02639.html#aab0cc49bca85557519c9a110b54c65ca">Constraint</a> (const <a class="el" href="a02635.html">mc_solver::QPSolver</a> &amp;solver, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
+<tr class="separator:aab0cc49bca85557519c9a110b54c65ca inherit pro_methods_a02639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02639"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02639.html#a819dd76da2909a4c88efcca1cb9aaf69">~Constraint</a> ()</td></tr>
+<tr class="memdesc:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02639"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="a02639.html#a819dd76da2909a4c88efcca1cb9aaf69">More...</a><br /></td></tr>
+<tr class="separator:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab383394a69ab62c4fab23378e64868de inherit pro_methods_a02639"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02639.html#ab383394a69ab62c4fab23378e64868de">updateNrVars</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;mbs, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01121.html">tasks::qp::SolverData</a> &amp;data) override</td></tr>
+<tr class="separator:ab383394a69ab62c4fab23378e64868de inherit pro_methods_a02639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7693804807033e3718c4ba01a58d3a58 inherit pro_methods_a02639"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02639.html#a7693804807033e3718c4ba01a58d3a58">update</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;mbs, const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a> &gt; &amp;mbcs, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01121.html">tasks::qp::SolverData</a> &amp;data) override</td></tr>
+<tr class="separator:a7693804807033e3718c4ba01a58d3a58 inherit pro_methods_a02639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02651"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02651')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02651.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td></tr>
+<tr class="memitem:ad172325243564a16279d9392bd86efa5 inherit pro_methods_a02651"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02651.html#ad172325243564a16279d9392bd86efa5">Update</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:ad172325243564a16279d9392bd86efa5 inherit pro_methods_a02651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a806d3dc017b28e570dfa268a32a55600 inherit pro_methods_a02651"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02651.html#a806d3dc017b28e570dfa268a32a55600">Update</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
+<tr class="separator:a806d3dc017b28e570dfa268a32a55600 inherit pro_methods_a02651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8ad71dd3414ee8bccc766c7bc8b4dc3 inherit pro_methods_a02651"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02651.html#ab8ad71dd3414ee8bccc766c7bc8b4dc3">~Update</a> ()</td></tr>
+<tr class="separator:ab8ad71dd3414ee8bccc766c7bc8b4dc3 inherit pro_methods_a02651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02651"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02651.html#a8f658eb01d91768ab6a4e9b095a894de">compute</a> ()=0</td></tr>
+<tr class="memdesc:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should be overriden to update the constraint matrix and vector(s)  <a href="a02651.html#a8f658eb01d91768ab6a4e9b095a894de">More...</a><br /></td></tr>
+<tr class="separator:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02651"><td class="memItemLeft" align="right" valign="top">virtual const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02651.html#adcc1dc8dc0563b2e14f962f26afbfa5f">A</a> () const=0</td></tr>
+<tr class="memdesc:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should be overriden to provide A in the desired operation space.  <a href="a02651.html#adcc1dc8dc0563b2e14f962f26afbfa5f">More...</a><br /></td></tr>
+<tr class="separator:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab889dcd5361a420fe976146c40f56533 inherit pro_methods_a02651"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02651.html#ab889dcd5361a420fe976146c40f56533">updateImpl</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;, const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a> &gt; &amp;, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01121.html">tasks::qp::SolverData</a> &amp;)</td></tr>
+<tr class="separator:ab889dcd5361a420fe976146c40f56533 inherit pro_methods_a02651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02671"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02671')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02671.html">mc_solver::utils::UpdateNrVarsLambda</a></td></tr>
+<tr class="memitem:a9d6f46e4b6e93b51903495758aecd406 inherit pro_methods_a02671"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02671.html#a9d6f46e4b6e93b51903495758aecd406">UpdateNrVarsLambda</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
+<tr class="separator:a9d6f46e4b6e93b51903495758aecd406 inherit pro_methods_a02671"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c7ce960742e1844186550b503af6207 inherit pro_methods_a02671"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02671.html#a3c7ce960742e1844186550b503af6207">updateNrVarsImpl</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;mbs, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01121.html">tasks::qp::SolverData</a> &amp;data)</td></tr>
+<tr class="separator:a3c7ce960742e1844186550b503af6207 inherit pro_methods_a02671"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02651"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02651')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02651.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td></tr>
+<tr class="memitem:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02651"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02651.html#a6ba3138c342b7e4efa2328ac11930706">AFull_</a></td></tr>
+<tr class="memdesc:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the full size matrix.  <a href="a02651.html#a6ba3138c342b7e4efa2328ac11930706">More...</a><br /></td></tr>
+<tr class="separator:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02671"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02671')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02671.html">mc_solver::utils::UpdateNrVarsLambda</a></td></tr>
+<tr class="memitem:a855dd9e41399b5a6271e9b4e02576b23 inherit pro_attribs_a02671"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02671.html#a855dd9e41399b5a6271e9b4e02576b23">cid_</a></td></tr>
+<tr class="separator:a855dd9e41399b5a6271e9b4e02576b23 inherit pro_attribs_a02671"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02663"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02663')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02663.html">mc_solver::utils::UpdateNrVarsData</a></td></tr>
+<tr class="memitem:a3c4a15ad329aedecdfd932aaffe4ff76 inherit pro_attribs_a02663"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02663.html#a3c4a15ad329aedecdfd932aaffe4ff76">nrVars_</a></td></tr>
+<tr class="separator:a3c4a15ad329aedecdfd932aaffe4ff76 inherit pro_attribs_a02663"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7940f913dbc5037ed042609f685bfaa inherit pro_attribs_a02663"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02663.html#ac7940f913dbc5037ed042609f685bfaa">ABegin_</a></td></tr>
+<tr class="separator:ac7940f913dbc5037ed042609f685bfaa inherit pro_attribs_a02663"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Helper class to write a general inequality constraint for Tasks. </p>
+<p>This constraint applies to the vector of positive multipliers (lambda) associated with a given contact</p>
+<p>This implements \(L \le A * \lambda_{cI} \le U\)</p>
+<p>Where \(cI\) is the contact id you provide at construction.</p>
+<p>You must implement the following functions:</p><ul>
+<li><code>const Eigen::MatrixXd &amp; <a class="el" href="a02651.html#adcc1dc8dc0563b2e14f962f26afbfa5f" title="Should be overriden to provide A in the desired operation space. ">A() const </a>override;</code> returns \(A\), must be of size (nrLines, nrLambda)</li>
+<li><code>void <a class="el" href="a02651.html#a8f658eb01d91768ab6a4e9b095a894de" title="Should be overriden to update the constraint matrix and vector(s) ">compute()</a> override;</code> update constraint matrix and bounds</li>
+<li><code>int maxGenInEq() const override;</code> number of inequality lines</li>
+<li><code>std::string nameGenInEq() const override;</code> descriptive name of the constraint</li>
+<li><code>const Eigen::VectorXd &amp; LowerGenInEq() const override;</code> returns the lower bound \(L\)</li>
+<li><code>const Eigen::VectorXd &amp; UpperGenInEq() const override;</code> returns the upper bound \(U\) </li>
+</ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a42ad6d2e1a60aadcd98ee19529d68f17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42ad6d2e1a60aadcd98ee19529d68f17">&#9670;&nbsp;</a></span>GenInequalityConstraintLambda()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_solver::GenInequalityConstraintLambda::GenInequalityConstraintLambda </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;&#160;</td>
+          <td class="paramname"><em>cid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Feb 8 2020 05:05:59 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00687.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02591.html">GenInequalityConstraintLambda</a></li>
+    <li class="footer">Generated on Thu Feb 13 2020 08:36:43 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

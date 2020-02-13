@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_rbdyn::RobotLoader Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02150.html','');});
+$(document).ready(function(){initNavTree('a02147.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,22 +69,324 @@ $(document).ready(function(){initNavTree('a02150.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="a02144.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::ConfigurationLoader&lt; void &gt; Member List</div>  </div>
+<div class="title">mc_rbdyn::RobotLoader Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02150.html">mc_rtc::ConfigurationLoader&lt; void &gt;</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02150.html#a8b405815d2c463e01efa6394cca1dc54">load</a>(const mc_rtc::Configuration &amp;)</td><td class="entry"><a class="el" href="a02150.html">mc_rtc::ConfigurationLoader&lt; void &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02150.html#a6d4adb3f20c993a424538d38241da5de">save</a>()</td><td class="entry"><a class="el" href="a02150.html">mc_rtc::ConfigurationLoader&lt; void &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">static</span></td></tr>
-</table></div><!-- contents -->
+<p>Load <a class="el" href="a02151.html">RobotModule</a> instances from shared libraries.  
+ <a href="a02147.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_rbdyn/RobotLoader.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="a00681.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02147.html#ad660aedc7dbf7cd0cd0e60da5fffe4c2">get_robot_module</a> (const std::string &amp;name, const Args &amp;... args)</td></tr>
+<tr class="memdesc:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a <a class="el" href="a02151.html">RobotModule</a> constructed with the provided Args.  <a href="#ad660aedc7dbf7cd0cd0e60da5fffe4c2">More...</a><br /></td></tr>
+<tr class="separator:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48f1ada05ff7db2152a00da892183c8b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02147.html#a48f1ada05ff7db2152a00da892183c8b">update_robot_module_path</a> (const std::vector&lt; std::string &gt; &amp;paths)</td></tr>
+<tr class="memdesc:a48f1ada05ff7db2152a00da892183c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add additional directories to the robot module path.  <a href="#a48f1ada05ff7db2152a00da892183c8b">More...</a><br /></td></tr>
+<tr class="separator:a48f1ada05ff7db2152a00da892183c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86f7b35ed2a4b3d37508f51aa2b29a38"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02147.html#a86f7b35ed2a4b3d37508f51aa2b29a38">clear</a> ()</td></tr>
+<tr class="memdesc:a86f7b35ed2a4b3d37508f51aa2b29a38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all loaded libraries.  <a href="#a86f7b35ed2a4b3d37508f51aa2b29a38">More...</a><br /></td></tr>
+<tr class="separator:a86f7b35ed2a4b3d37508f51aa2b29a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3edda7983edda591b3664eef5c450144"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02147.html#a3edda7983edda591b3664eef5c450144">has_robot</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a3edda7983edda591b3664eef5c450144"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a robot is available.  <a href="#a3edda7983edda591b3664eef5c450144">More...</a><br /></td></tr>
+<tr class="separator:a3edda7983edda591b3664eef5c450144"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a730c3f67a0bc12f73633c42b121b219e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02147.html#a730c3f67a0bc12f73633c42b121b219e">enable_sandboxing</a> (bool enable_sandbox)</td></tr>
+<tr class="memdesc:a730c3f67a0bc12f73633c42b121b219e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable robot's creation sandboxing.  <a href="#a730c3f67a0bc12f73633c42b121b219e">More...</a><br /></td></tr>
+<tr class="separator:a730c3f67a0bc12f73633c42b121b219e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6126ced85ec52c8445755948d1060a6f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02147.html#a6126ced85ec52c8445755948d1060a6f">set_verbosity</a> (bool verbose)</td></tr>
+<tr class="separator:a6126ced85ec52c8445755948d1060a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5fb8baa5acee06c3af0dd976808a2f"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02147.html#aae5fb8baa5acee06c3af0dd976808a2f">available_robots</a> ()</td></tr>
+<tr class="memdesc:aae5fb8baa5acee06c3af0dd976808a2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of available robots.  <a href="#aae5fb8baa5acee06c3af0dd976808a2f">More...</a><br /></td></tr>
+<tr class="separator:aae5fb8baa5acee06c3af0dd976808a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6286734468abc8c146eaad6902dbdd01"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02147.html#a6286734468abc8c146eaad6902dbdd01">load_aliases</a> (const std::string &amp;fname)</td></tr>
+<tr class="memdesc:a6286734468abc8c146eaad6902dbdd01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load aliases.  <a href="#a6286734468abc8c146eaad6902dbdd01">More...</a><br /></td></tr>
+<tr class="separator:a6286734468abc8c146eaad6902dbdd01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Load <a class="el" href="a02151.html">RobotModule</a> instances from shared libraries. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aae5fb8baa5acee06c3af0dd976808a2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae5fb8baa5acee06c3af0dd976808a2f">&#9670;&nbsp;</a></span>available_robots()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::vector&lt;std::string&gt; mc_rbdyn::RobotLoader::available_robots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a list of available robots. </p>
+
+</div>
+</div>
+<a id="a86f7b35ed2a4b3d37508f51aa2b29a38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86f7b35ed2a4b3d37508f51aa2b29a38">&#9670;&nbsp;</a></span>clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void mc_rbdyn::RobotLoader::clear </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove all loaded libraries. </p>
+
+</div>
+</div>
+<a id="a730c3f67a0bc12f73633c42b121b219e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a730c3f67a0bc12f73633c42b121b219e">&#9670;&nbsp;</a></span>enable_sandboxing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void mc_rbdyn::RobotLoader::enable_sandboxing </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable_sandbox</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable robot's creation sandboxing. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enable_sandbox</td><td>If true, robot's create call are sandboxed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad660aedc7dbf7cd0cd0e60da5fffe4c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad660aedc7dbf7cd0cd0e60da5fffe4c2">&#9670;&nbsp;</a></span>get_robot_module()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00681.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> mc_rbdyn::RobotLoader::get_robot_module </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Args &amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return a <a class="el" href="a02151.html">RobotModule</a> constructed with the provided Args. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The module name </td></tr>
+    <tr><td class="paramname">args</td><td>The arguments provided to the module creation function </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>It is the responsability of the caller to make sure that the signature of the module creation fits that declared by the module </dd></dl>
+
+<p class="reference">References <a class="el" href="a00335.html#ac6c926a2075cbaa39c4e9d12a2cac7e2">LOG_ERROR</a>, <a class="el" href="a00335.html#ae0e43eaf4d638a83e59084a107b3b62f">LOG_ERROR_AND_THROW</a>, and <a class="el" href="a00692.html#a71fcd7fe46e75452f9c6302bb1c40412">mc_rbdyn::details::to_string()</a>.</p>
+
+</div>
+</div>
+<a id="a3edda7983edda591b3664eef5c450144"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3edda7983edda591b3664eef5c450144">&#9670;&nbsp;</a></span>has_robot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool mc_rbdyn::RobotLoader::has_robot </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Check if a robot is available. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td><a class="el" href="a02131.html">Robot</a> name </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6286734468abc8c146eaad6902dbdd01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6286734468abc8c146eaad6902dbdd01">&#9670;&nbsp;</a></span>load_aliases()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void mc_rbdyn::RobotLoader::load_aliases </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fname</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Load aliases. </p>
+<p>An aliases file should be a map of alias to param vector</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>A JSON or YAML containing aliases </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6126ced85ec52c8445755948d1060a6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6126ced85ec52c8445755948d1060a6f">&#9670;&nbsp;</a></span>set_verbosity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void mc_rbdyn::RobotLoader::set_verbosity </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a48f1ada05ff7db2152a00da892183c8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48f1ada05ff7db2152a00da892183c8b">&#9670;&nbsp;</a></span>update_robot_module_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void mc_rbdyn::RobotLoader::update_robot_module_path </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>paths</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add additional directories to the robot module path. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">paths</td><td>Directories to be added to the module path </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Feb 8 2020 05:05:59 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00681.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02147.html">RobotLoader</a></li>
+    <li class="footer">Generated on Thu Feb 13 2020 08:36:43 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

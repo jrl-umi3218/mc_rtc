@@ -1,9 +1,9 @@
 var a00688 =
 [
-    [ "callback_is_serializable", "a02462.html", "a02462" ],
-    [ "FlatLog", "a02434.html", "a02434" ],
-    [ "GetLogType", "a02450.html", "a02450" ],
-    [ "GetLogType< std::vector< double, A > >", "a02454.html", "a02454" ],
-    [ "is_serializable", "a02458.html", "a02458" ],
-    [ "LogWriter", "a02466.html", "a02466" ]
+    [ "callback_is_serializable", "a02487.html", "a02487" ],
+    [ "FlatLog", "a02459.html", "a02459" ],
+    [ "GetLogType", "a02475.html", "a02475" ],
+    [ "GetLogType< std::vector< double, A > >", "a02479.html", "a02479" ],
+    [ "is_serializable", "a02483.html", "a02483" ],
+    [ "LogWriter", "a02491.html", "a02491" ]
 ];

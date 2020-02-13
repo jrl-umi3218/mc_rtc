@@ -1,6 +1,7 @@
 var searchData=
 [
   ['qld_2eh',['QLD.h',['/usr/local/share/doc/eigen-qld/doxygen-html/a00014.html',1,'']]],
+  ['qlddirect_2eh',['QLDDirect.h',['/usr/local/share/doc/eigen-qld/doxygen-html/a00017.html',1,'']]],
   ['qldqpsolver_2eh',['QLDQPSolver.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00029.html',1,'']]],
   ['qpconstr_2eh',['QPConstr.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00038.html',1,'']]],
   ['qpcontactconstr_2eh',['QPContactConstr.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00041.html',1,'']]],

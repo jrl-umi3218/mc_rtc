@@ -1,7 +1,7 @@
 var a00683 =
 [
-    [ "_has_configuration_load_object", "a02142.html", "a02142" ],
-    [ "_has_configuration_save_object", "a02150.html", "a02150" ],
-    [ "has_configuration_load_object", "a02146.html", null ],
-    [ "has_configuration_save_object", "a02154.html", null ]
+    [ "_has_configuration_load_object", "a02167.html", "a02167" ],
+    [ "_has_configuration_save_object", "a02175.html", "a02175" ],
+    [ "has_configuration_load_object", "a02171.html", null ],
+    [ "has_configuration_save_object", "a02179.html", null ]
 ];

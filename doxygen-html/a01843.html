@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_control::CompletionCriteria Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01846.html','');});
+$(document).ready(function(){initNavTree('a01843.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,31 +69,125 @@ $(document).ready(function(){initNavTree('a01846.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="a01840.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_control::fsm::Contact Member List</div>  </div>
+<div class="title">mc_control::CompletionCriteria Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01846.html">mc_control::fsm::Contact</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01846.html#a6637fcb7f8ac4a04f730f5ffed87cc55">Contact</a>(const std::string &amp;r1, const std::string &amp;r2, const std::string &amp;r1Surface, const std::string &amp;r2Surface, const Eigen::Vector6d &amp;dof=Eigen::Vector6d::Ones())</td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01846.html#a46d54c4d75fe306846531e8c436fa6f7">Contact</a>()=default</td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01846.html#abf05b8825daf19dd4cff5630b7268e7e">dof</a></td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">mutable</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01846.html#a6936e7692e199d18b9c7906c70414313">from_mc_rbdyn</a>(const Controller &amp;, const mc_rbdyn::Contact &amp;)</td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01846.html#a770914b6bd76f3cd0b4c42c950073328">operator!=</a>(const Contact &amp;rhs) const</td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01846.html#a63027fea5b27ea98fb1c39aa78c56fed">operator&lt;</a>(const Contact &amp;rhs) const</td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01846.html#a19a8a477e8c16ad944a32c12401ceb25">operator==</a>(const Contact &amp;rhs) const</td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01846.html#a9984ba81a2a54cc3216911a4a7c23bb7">r1</a></td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01846.html#ac21f685a8adc12fb0a3015851023ae08">r1Surface</a></td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01846.html#a426b803fa1191501cc273d05b2f4d7e7">r2</a></td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01846.html#a19bb1febaf343d980f6de167b004d8bb">r2Surface</a></td><td class="entry"><a class="el" href="a01846.html">mc_control::fsm::Contact</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>A generic MetaTask completion criteria.  
+ <a href="a01843.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_control/CompletionCriteria.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a6b2c61033f0f8d2d7f45aeb6e8fb028e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01843.html#a6b2c61033f0f8d2d7f45aeb6e8fb028e">completed</a> (const <a class="el" href="a02735.html">mc_tasks::MetaTask</a> &amp;task)</td></tr>
+<tr class="memdesc:a6b2c61033f0f8d2d7f45aeb6e8fb028e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a task returns true if that task fits the completion criteria.  <a href="#a6b2c61033f0f8d2d7f45aeb6e8fb028e">More...</a><br /></td></tr>
+<tr class="separator:a6b2c61033f0f8d2d7f45aeb6e8fb028e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cf119e44a4a74ad734dc2fe34f2fff6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01843.html#a7cf119e44a4a74ad734dc2fe34f2fff6">configure</a> (const <a class="el" href="a02735.html">mc_tasks::MetaTask</a> &amp;task, double dt, const <a class="el" href="a02183.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="memdesc:a7cf119e44a4a74ad734dc2fe34f2fff6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a MetaTask and a Configuration, generate the criteria.  <a href="#a7cf119e44a4a74ad734dc2fe34f2fff6">More...</a><br /></td></tr>
+<tr class="separator:a7cf119e44a4a74ad734dc2fe34f2fff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2485b806e905c84cd087fb47287f2240"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01843.html#a2485b806e905c84cd087fb47287f2240">output</a> () const</td></tr>
+<tr class="memdesc:a2485b806e905c84cd087fb47287f2240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the criteria that achieved the completion.  <a href="#a2485b806e905c84cd087fb47287f2240">More...</a><br /></td></tr>
+<tr class="separator:a2485b806e905c84cd087fb47287f2240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A generic MetaTask completion criteria. </p>
+<p>Possible criteria:</p><ul>
+<li>eval() norm is below a certain threshold</li>
+<li>speed() norm is below a certain threshold</li>
+<li>a given timeout (provided in seconds) has elapsed since the start</li>
+</ul>
+<p>The default criteria is always satisfied (i.e. no criteria)</p>
+<p>These criteria can be combined with AND and OR</p>
+<p>Example:</p>
+<div class="fragment"><div class="line"># 5 seconds timeout</div><div class="line">{</div><div class="line">  &quot;timeout&quot;: 5.0</div><div class="line">}</div><div class="line"># eval().norm() &lt; 1e-3 || timeout 20s</div><div class="line">{</div><div class="line">  &quot;OR&quot;: [</div><div class="line">   { &quot;eval&quot;: 1e-3 },</div><div class="line">   { &quot;timeout&quot;: 20.0 }</div><div class="line">  ]</div><div class="line">}</div><div class="line"># ( eval().norm() &lt; 1e-3 &amp;&amp; speed().norm() &lt; 1e-6 ) || timeout 30s</div><div class="line">{</div><div class="line">  &quot;OR&quot;: [</div><div class="line">   {</div><div class="line">     &quot;AND&quot;: [</div><div class="line">       { &quot;eval&quot;: 1e-3 },</div><div class="line">       { &quot;speed&quot;: 1e-6 }</div><div class="line">     ]</div><div class="line">   },</div><div class="line">   { &quot;timeout&quot;: 30.0 }</div><div class="line">  ]</div><div class="line">}</div></div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6b2c61033f0f8d2d7f45aeb6e8fb028e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b2c61033f0f8d2d7f45aeb6e8fb028e">&#9670;&nbsp;</a></span>completed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::CompletionCriteria::completed </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02735.html">mc_tasks::MetaTask</a> &amp;&#160;</td>
+          <td class="paramname"><em>task</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given a task returns true if that task fits the completion criteria. </p>
+
+</div>
+</div>
+<a id="a7cf119e44a4a74ad734dc2fe34f2fff6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7cf119e44a4a74ad734dc2fe34f2fff6">&#9670;&nbsp;</a></span>configure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_control::CompletionCriteria::configure </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02735.html">mc_tasks::MetaTask</a> &amp;&#160;</td>
+          <td class="paramname"><em>task</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02183.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given a MetaTask and a Configuration, generate the criteria. </p>
+
+</div>
+</div>
+<a id="a2485b806e905c84cd087fb47287f2240"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2485b806e905c84cd087fb47287f2240">&#9670;&nbsp;</a></span>output()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string&amp; mc_control::CompletionCriteria::output </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the criteria that achieved the completion. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Feb 8 2020 05:05:59 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00664.html">mc_control</a></li><li class="navelem"><a class="el" href="a01843.html">CompletionCriteria</a></li>
+    <li class="footer">Generated on Thu Feb 13 2020 08:34:13 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
