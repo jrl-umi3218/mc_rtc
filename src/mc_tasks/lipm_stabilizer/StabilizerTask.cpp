@@ -209,6 +209,7 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
     // Remove previous contacts
     for(const auto contactT : contactTasks)
     {
+      LOG_INFO(name() + ": Removing contact " << contactT->surface());
       MetaTask::removeFromLogger(*contactT, *solver.logger());
       MetaTask::removeFromSolver(*contactT, solver);
     }
@@ -218,6 +219,7 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
     for(const auto contactState : addContacts_)
     {
       auto footTask = footTasks[contactState];
+      LOG_INFO(name() + ": Adding contact " << footTask->surface());
       MetaTask::addToSolver(*footTask, solver);
       MetaTask::addToLogger(*footTask, *solver.logger());
       contactTasks.push_back(footTask);
@@ -744,6 +746,7 @@ void StabilizerTask::setContacts(const std::vector<std::pair<ContactState, Conta
     LOG_ERROR_AND_THROW(std::runtime_error, "[StabilizerTask] Cannot set contacts from an empty list, the stabilizer "
                                             "requires at least one contact to be set.");
   }
+  contacts_.clear();
 
   // Reset support area boundaries
   supportMin_ = std::numeric_limits<double>::max() * Eigen::Vector2d::Ones();
@@ -761,7 +764,6 @@ void StabilizerTask::addContact(ContactState contactState, const Contact & conta
   auto footTask = footTasks[contactState];
   // Use real robot's surface pose as contact
   contacts_.emplace(std::make_pair(contactState, contact));
-  contactTasks.push_back(footTask);
 
   supportMin_.x() = std::min(contact.xmin(), supportMin_.x());
   supportMin_.y() = std::min(contact.ymin(), supportMin_.y());
