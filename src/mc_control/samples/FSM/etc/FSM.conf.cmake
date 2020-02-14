@@ -31,6 +31,10 @@
       "type": "dynamics",
       "robotIndex": 0,
       "damper": [0.1, 0.01, 0.5]
+    },
+    {
+      "type": "compoundJoint",
+      "robotIndex": 0
     }
   ],
   // Collision constraint
