@@ -104,6 +104,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   kinematicsConstraint = mc_solver::KinematicsConstraint(robots(), 0, timeStep, damper, 0.5);
   selfCollisionConstraint = mc_solver::CollisionsConstraint(robots(), 0, 0, timeStep);
   selfCollisionConstraint.addCollisions(solver(), robots_modules[0]->minimalSelfCollisions());
+  compoundJointConstraint.reset(new mc_solver::CompoundJointConstraint(robots(), 0, timeStep));
   postureTask = std::make_shared<mc_tasks::PostureTask>(solver(), 0, 10.0, 5.0);
   LOG_INFO("MCController(base) ready")
 }

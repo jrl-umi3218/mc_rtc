@@ -22,6 +22,7 @@ MCPostureController::MCPostureController(std::shared_ptr<mc_rbdyn::RobotModule> 
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(kinematicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
+  qpsolver->addConstraintSet(*compoundJointConstraint);
   qpsolver->addTask(postureTask.get());
   qpsolver->setContacts({});
 

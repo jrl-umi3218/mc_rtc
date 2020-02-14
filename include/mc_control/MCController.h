@@ -15,6 +15,7 @@
 #include <mc_rtc/log/Logger.h>
 
 #include <mc_solver/CollisionsConstraint.h>
+#include <mc_solver/CompoundJointConstraint.h>
 #include <mc_solver/ContactConstraint.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/KinematicsConstraint.h>
@@ -324,6 +325,8 @@ public:
   mc_solver::KinematicsConstraint kinematicsConstraint;
   /** Self collisions constraint for the main robot */
   mc_solver::CollisionsConstraint selfCollisionConstraint;
+  /** Compound joint constraint for the main robot */
+  std::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<mc_tasks::PostureTask> postureTask;
 };

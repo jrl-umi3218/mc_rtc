@@ -20,6 +20,7 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(dynamicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
+  qpsolver->addConstraintSet(*compoundJointConstraint);
   qpsolver->addTask(postureTask);
 
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));

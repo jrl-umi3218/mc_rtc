@@ -21,6 +21,7 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(dynamicsConstraint);
   solver().addConstraintSet(selfCollisionConstraint);
+  solver().addConstraintSet(*compoundJointConstraint);
   solver().addTask(postureTask.get());
   if(robot().hasSurface("LFullSole") && robot().hasSurface("RFullSole"))
   {
