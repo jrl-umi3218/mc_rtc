@@ -103,6 +103,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a660e8b095ba2c72efa862309570bc472"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02031.html#a660e8b095ba2c72efa862309570bc472">reset</a> (double lambda, const Eigen::Vector3d &amp;<a class="el" href="a02031.html#a66ae8e3c44f2638fb41b3ac8271813b4">com</a>, const Eigen::Vector3d &amp;<a class="el" href="a02031.html#a296b78296de195be1aababf0cc94440d">comd</a>=Eigen::Vector3d::Zero(), const Eigen::Vector3d &amp;<a class="el" href="a02031.html#a5fdfd2b8b636b5587ed286daf3a8c5f9">comdd</a>=Eigen::Vector3d::Zero())</td></tr>
 <tr class="memdesc:a660e8b095ba2c72efa862309570bc472"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset to a new state from CoM position and its derivatives.  <a href="#a660e8b095ba2c72efa862309570bc472">More...</a><br /></td></tr>
 <tr class="separator:a660e8b095ba2c72efa862309570bc472"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb92b295cc1929aadab22278e8107d8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02031.html#afb92b295cc1929aadab22278e8107d8b">resetCoMHeight</a> (double height, const Eigen::Vector3d &amp;p, const Eigen::Vector3d &amp;n)</td></tr>
+<tr class="memdesc:afb92b295cc1929aadab22278e8107d8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset CoM height above a given contact plane.  <a href="#afb92b295cc1929aadab22278e8107d8b">More...</a><br /></td></tr>
+<tr class="separator:afb92b295cc1929aadab22278e8107d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66ae8e3c44f2638fb41b3ac8271813b4"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02031.html#a66ae8e3c44f2638fb41b3ac8271813b4">com</a> () const</td></tr>
 <tr class="memdesc:a66ae8e3c44f2638fb41b3ac8271813b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">CoM position in the world frame.  <a href="#a66ae8e3c44f2638fb41b3ac8271813b4">More...</a><br /></td></tr>
 <tr class="separator:a66ae8e3c44f2638fb41b3ac8271813b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -529,6 +532,49 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="afb92b295cc1929aadab22278e8107d8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb92b295cc1929aadab22278e8107d8b">&#9670;&nbsp;</a></span>resetCoMHeight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_planning::Pendulum::resetCoMHeight </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset CoM height above a given contact plane. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">height</td><td>CoM height above contact plane. </td></tr>
+    <tr><td class="paramname">(p,n)</td><td>Contact plane defined by a point on the surface and its normal </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af966f2d7b34a360547a7d19f27fc4c0b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af966f2d7b34a360547a7d19f27fc4c0b">&#9670;&nbsp;</a></span>zmp()</h2>
 
@@ -760,7 +806,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00685.html">mc_planning</a></li><li class="navelem"><a class="el" href="a02031.html">Pendulum</a></li>
-    <li class="footer">Generated on Fri Feb 14 2020 09:13:45 for mc_rtc by
+    <li class="footer">Generated on Fri Feb 14 2020 09:36:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -11,6 +11,7 @@ var a02031 =
     [ "integrateIPM", "a02031.html#a2cc0137e4e3e6cfc5390f55e4b00bd71", null ],
     [ "omega", "a02031.html#aac99dd2365ccea15652f7fe8f5e95d04", null ],
     [ "reset", "a02031.html#a660e8b095ba2c72efa862309570bc472", null ],
+    [ "resetCoMHeight", "a02031.html#afb92b295cc1929aadab22278e8107d8b", null ],
     [ "zmp", "a02031.html#af966f2d7b34a360547a7d19f27fc4c0b", null ],
     [ "zmpd", "a02031.html#a2b6c323003ef905cb0655c08a09f77b0", null ],
     [ "com_", "a02031.html#ae4b2565ec3cbea0520108495f93a5a69", null ],

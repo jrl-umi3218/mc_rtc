@@ -17680,6 +17680,13 @@
       <arglist>(double lambda, const Eigen::Vector3d &amp;com, const Eigen::Vector3d &amp;comd=Eigen::Vector3d::Zero(), const Eigen::Vector3d &amp;comdd=Eigen::Vector3d::Zero())</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>resetCoMHeight</name>
+      <anchorfile>a02031.html</anchorfile>
+      <anchor>afb92b295cc1929aadab22278e8107d8b</anchor>
+      <arglist>(double height, const Eigen::Vector3d &amp;p, const Eigen::Vector3d &amp;n)</arglist>
+    </member>
+    <member kind="function">
       <type>const Eigen::Vector3d &amp;</type>
       <name>com</name>
       <anchorfile>a02031.html</anchorfile>
