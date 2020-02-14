@@ -29,6 +29,15 @@ void Pendulum::reset(double lambda,
   zmpd_ = comd_ - comddd_ / lambda;
 }
 
+void Pendulum::resetCoMHeight(double height, const Eigen::Vector3d & p, const Eigen::Vector3d & n)
+{
+  com_ += (height + n.dot(p - com_)) * n;
+  comd_ -= n.dot(comd_) * n;
+  comdd_ -= n.dot(comdd_) * n;
+  comddd_ -= n.dot(comddd_) * n;
+  omega_ = std::sqrt(mc_rbdyn::constants::GRAVITY / height);
+}
+
 void Pendulum::integrateIPM(Eigen::Vector3d zmp, double lambda, double dt)
 {
   Eigen::Vector3d com_prev = com_;

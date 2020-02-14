@@ -76,6 +76,13 @@ struct MC_PLANNING_DLLAPI Pendulum
              const Eigen::Vector3d & comd = Eigen::Vector3d::Zero(),
              const Eigen::Vector3d & comdd = Eigen::Vector3d::Zero());
 
+  /** Reset CoM height above a given contact plane.
+   *
+   * \param height CoM height above contact plane.
+   * \param (p, n) Contact plane defined by a point on the surface and its normal
+   */
+  void resetCoMHeight(double height, const Eigen::Vector3d & p, const Eigen::Vector3d & n);
+
   /** CoM position in the world frame. */
   const Eigen::Vector3d & com() const
   {
