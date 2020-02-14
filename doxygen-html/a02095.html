@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt; Struct Template Reference</title>
+<title>mc_rbdyn::lipm_stabilizer::FDQPWeights Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,33 +70,40 @@ $(document).ready(function(){initNavTree('a02095.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a02092.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_rbdyn::lipm_stabilizer::FDQPWeights Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Read force distribution QP weights from configuration.  
+<p>Weights for force distribution quadratic program (FDQP).  
  <a href="a02095.html#details">More...</a></p>
 
 <p><code>#include &lt;mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af6bc9c479eb0cbd067ea314e165fe451"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02091.html">mc_rbdyn::lipm_stabilizer::FDQPWeights</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02095.html#af6bc9c479eb0cbd067ea314e165fe451">load</a> (const <a class="el" href="a02195.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
-<tr class="separator:af6bc9c479eb0cbd067ea314e165fe451"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9445788bc08d4b66c5a82c8fc4e35df"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02195.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02095.html#af9445788bc08d4b66c5a82c8fc4e35df">save</a> (const <a class="el" href="a02091.html">mc_rbdyn::lipm_stabilizer::FDQPWeights</a> &amp;weights)</td></tr>
-<tr class="separator:af9445788bc08d4b66c5a82c8fc4e35df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aba4a576e4d7853321ccf5890465a1b89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02095.html#aba4a576e4d7853321ccf5890465a1b89">FDQPWeights</a> ()</td></tr>
+<tr class="separator:aba4a576e4d7853321ccf5890465a1b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d926ba6ea4f799ff815395dca3d9912"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02095.html#a6d926ba6ea4f799ff815395dca3d9912">FDQPWeights</a> (double netWrench, double ankleTorque, double pressure)</td></tr>
+<tr class="separator:a6d926ba6ea4f799ff815395dca3d9912"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:afb817ae2c1c643510fdaf15dc911cdd4"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02095.html#afb817ae2c1c643510fdaf15dc911cdd4">ankleTorqueSqrt</a></td></tr>
+<tr class="separator:afb817ae2c1c643510fdaf15dc911cdd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a982bc88cbf52ea49e182df9a81a6eb00"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02095.html#a982bc88cbf52ea49e182df9a81a6eb00">netWrenchSqrt</a></td></tr>
+<tr class="separator:a982bc88cbf52ea49e182df9a81a6eb00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2faca452947045f6c8f40e1947ac86a1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02095.html#a2faca452947045f6c8f40e1947ac86a1">pressureSqrt</a></td></tr>
+<tr class="separator:a2faca452947045f6c8f40e1947ac86a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;&gt;<br />
-struct mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;</h3>
-
-<p>Read force distribution QP weights from configuration. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="af6bc9c479eb0cbd067ea314e165fe451"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6bc9c479eb0cbd067ea314e165fe451">&#9670;&nbsp;</a></span>load()</h2>
+<div class="textblock"><p>Weights for force distribution quadratic program (FDQP). </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aba4a576e4d7853321ccf5890465a1b89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba4a576e4d7853321ccf5890465a1b89">&#9670;&nbsp;</a></span>FDQPWeights() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -105,26 +112,25 @@ struct mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &g
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a02091.html">mc_rbdyn::lipm_stabilizer::FDQPWeights</a> <a class="el" href="a02171.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a02091.html">mc_rbdyn::lipm_stabilizer::FDQPWeights</a> &gt;::load </td>
+          <td class="memname">mc_rbdyn::lipm_stabilizer::FDQPWeights::FDQPWeights </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02195.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="reference">References <a class="el" href="a02091.html#afb817ae2c1c643510fdaf15dc911cdd4">mc_rbdyn::lipm_stabilizer::FDQPWeights::ankleTorqueSqrt</a>, <a class="el" href="a02091.html#a982bc88cbf52ea49e182df9a81a6eb00">mc_rbdyn::lipm_stabilizer::FDQPWeights::netWrenchSqrt</a>, and <a class="el" href="a02091.html#a2faca452947045f6c8f40e1947ac86a1">mc_rbdyn::lipm_stabilizer::FDQPWeights::pressureSqrt</a>.</p>
+<p class="reference">References <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00070.html#a1bd0cdea56a8740a2d3279f11685cb79">sqrt()</a>.</p>
 
 </div>
 </div>
-<a id="af9445788bc08d4b66c5a82c8fc4e35df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9445788bc08d4b66c5a82c8fc4e35df">&#9670;&nbsp;</a></span>save()</h2>
+<a id="a6d926ba6ea4f799ff815395dca3d9912"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d926ba6ea4f799ff815395dca3d9912">&#9670;&nbsp;</a></span>FDQPWeights() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,21 +139,86 @@ struct mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &g
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a02195.html">mc_rtc::Configuration</a> <a class="el" href="a02171.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a02091.html">mc_rbdyn::lipm_stabilizer::FDQPWeights</a> &gt;::save </td>
+          <td class="memname">mc_rbdyn::lipm_stabilizer::FDQPWeights::FDQPWeights </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02091.html">mc_rbdyn::lipm_stabilizer::FDQPWeights</a> &amp;&#160;</td>
-          <td class="paramname"><em>weights</em></td><td>)</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>netWrench</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ankleTorque</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>pressure</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="reference">References <a class="el" href="a02195.html#a6a28ad4e71394b56e27687e9d64a8cda">mc_rtc::Configuration::add()</a>, <a class="el" href="a02091.html#afb817ae2c1c643510fdaf15dc911cdd4">mc_rbdyn::lipm_stabilizer::FDQPWeights::ankleTorqueSqrt</a>, <a class="el" href="a02091.html#a982bc88cbf52ea49e182df9a81a6eb00">mc_rbdyn::lipm_stabilizer::FDQPWeights::netWrenchSqrt</a>, and <a class="el" href="a02091.html#a2faca452947045f6c8f40e1947ac86a1">mc_rbdyn::lipm_stabilizer::FDQPWeights::pressureSqrt</a>.</p>
+<p class="reference">References <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00070.html#a1bd0cdea56a8740a2d3279f11685cb79">sqrt()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="afb817ae2c1c643510fdaf15dc911cdd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb817ae2c1c643510fdaf15dc911cdd4">&#9670;&nbsp;</a></span>ankleTorqueSqrt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_rbdyn::lipm_stabilizer::FDQPWeights::ankleTorqueSqrt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a02099.html#af6bc9c479eb0cbd067ea314e165fe451">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;::load()</a>, and <a class="el" href="a02099.html#af9445788bc08d4b66c5a82c8fc4e35df">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;::save()</a>.</p>
+
+</div>
+</div>
+<a id="a982bc88cbf52ea49e182df9a81a6eb00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a982bc88cbf52ea49e182df9a81a6eb00">&#9670;&nbsp;</a></span>netWrenchSqrt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_rbdyn::lipm_stabilizer::FDQPWeights::netWrenchSqrt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a02099.html#af6bc9c479eb0cbd067ea314e165fe451">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;::load()</a>, and <a class="el" href="a02099.html#af9445788bc08d4b66c5a82c8fc4e35df">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;::save()</a>.</p>
+
+</div>
+</div>
+<a id="a2faca452947045f6c8f40e1947ac86a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2faca452947045f6c8f40e1947ac86a1">&#9670;&nbsp;</a></span>pressureSqrt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_rbdyn::lipm_stabilizer::FDQPWeights::pressureSqrt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a02099.html#af6bc9c479eb0cbd067ea314e165fe451">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;::load()</a>, and <a class="el" href="a02099.html#af9445788bc08d4b66c5a82c8fc4e35df">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;::save()</a>.</p>
 
 </div>
 </div>
@@ -157,8 +228,8 @@ struct mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &g
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00678.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02095.html">ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;</a></li>
-    <li class="footer">Generated on Thu Feb 13 2020 12:30:24 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00681.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00689.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a02095.html">FDQPWeights</a></li>
+    <li class="footer">Generated on Fri Feb 14 2020 09:13:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

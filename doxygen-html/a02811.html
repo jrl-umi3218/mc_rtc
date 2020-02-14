@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Global Class Reference</title>
+<title>mc_trajectory::Spline&lt; T, WaypointsT &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -69,24 +69,518 @@ $(document).ready(function(){initNavTree('a02811.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="a02808.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Global Class Reference</div>  </div>
+<div class="title">mc_trajectory::Spline&lt; T, WaypointsT &gt; Struct Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This interface must be implemented by each global plugin.  
- <a href="a02811.html#details">More...</a></p>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This interface must be implemented by each global plugin. </p>
-<p>A global plugin is loaded by an instance of <a class="el" href="a01955.html">mc_control::MCGlobalController</a> and performs operations before and/or after <a class="el" href="a01955.html#a153432b8c6ebfc4f9484deb1439ca3ee">mc_control::MCGlobalController::run()</a> </p>
-</div></div><!-- contents -->
+<p><code>#include &lt;mc_trajectory/Spline.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:afe26e8f1495983c2e3f9917b8ef20e76"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#afe26e8f1495983c2e3f9917b8ef20e76">Spline</a> (double duration, const T &amp;<a class="el" href="a02811.html#a8378e992bf3e1bbad575ce977e3f73ab">start</a>, const T &amp;<a class="el" href="a02811.html#a45494f7a53e0aca7460a61422267a6e3">target</a>, const WaypointsT &amp;<a class="el" href="a02811.html#aa6f82c833829bc385839b1ec94542417">waypoints</a>={})</td></tr>
+<tr class="separator:afe26e8f1495983c2e3f9917b8ef20e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6f82c833829bc385839b1ec94542417"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#aa6f82c833829bc385839b1ec94542417">waypoints</a> (const WaypointsT &amp;waypoints)</td></tr>
+<tr class="memdesc:aa6f82c833829bc385839b1ec94542417"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines waypoints.  <a href="#aa6f82c833829bc385839b1ec94542417">More...</a><br /></td></tr>
+<tr class="separator:aa6f82c833829bc385839b1ec94542417"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12881d75288abe5b0539601a7038fb02"><td class="memItemLeft" align="right" valign="top">const WaypointsT &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a12881d75288abe5b0539601a7038fb02">waypoints</a> () const</td></tr>
+<tr class="memdesc:a12881d75288abe5b0539601a7038fb02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns waypoints.  <a href="#a12881d75288abe5b0539601a7038fb02">More...</a><br /></td></tr>
+<tr class="separator:a12881d75288abe5b0539601a7038fb02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8378e992bf3e1bbad575ce977e3f73ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a8378e992bf3e1bbad575ce977e3f73ab">start</a> (const T &amp;start)</td></tr>
+<tr class="memdesc:a8378e992bf3e1bbad575ce977e3f73ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starting point for the trajectory at time t=0.  <a href="#a8378e992bf3e1bbad575ce977e3f73ab">More...</a><br /></td></tr>
+<tr class="separator:a8378e992bf3e1bbad575ce977e3f73ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ff62b0a83ab31052558810918ed950c"><td class="memItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a2ff62b0a83ab31052558810918ed950c">start</a> () const</td></tr>
+<tr class="memdesc:a2ff62b0a83ab31052558810918ed950c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starting point at time t=0.  <a href="#a2ff62b0a83ab31052558810918ed950c">More...</a><br /></td></tr>
+<tr class="separator:a2ff62b0a83ab31052558810918ed950c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45494f7a53e0aca7460a61422267a6e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a45494f7a53e0aca7460a61422267a6e3">target</a> (const T &amp;target)</td></tr>
+<tr class="memdesc:a45494f7a53e0aca7460a61422267a6e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the spline target.  <a href="#a45494f7a53e0aca7460a61422267a6e3">More...</a><br /></td></tr>
+<tr class="separator:a45494f7a53e0aca7460a61422267a6e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9d0e0942c1fbfaeade4bc6350221f6e"><td class="memItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#ac9d0e0942c1fbfaeade4bc6350221f6e">target</a> () const</td></tr>
+<tr class="memdesc:ac9d0e0942c1fbfaeade4bc6350221f6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the spline target position.  <a href="#ac9d0e0942c1fbfaeade4bc6350221f6e">More...</a><br /></td></tr>
+<tr class="separator:ac9d0e0942c1fbfaeade4bc6350221f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65aa9924d2dffdf77e6b393514287aee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a65aa9924d2dffdf77e6b393514287aee">samplingPoints</a> (unsigned s)</td></tr>
+<tr class="memdesc:a65aa9924d2dffdf77e6b393514287aee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of sampling points for the trajectory visualization.  <a href="#a65aa9924d2dffdf77e6b393514287aee">More...</a><br /></td></tr>
+<tr class="separator:a65aa9924d2dffdf77e6b393514287aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab65b7eb21021b049516c60e986a4ee88"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#ab65b7eb21021b049516c60e986a4ee88">samplingPoints</a> () const</td></tr>
+<tr class="memdesc:ab65b7eb21021b049516c60e986a4ee88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets number of samples.  <a href="#ab65b7eb21021b049516c60e986a4ee88">More...</a><br /></td></tr>
+<tr class="separator:ab65b7eb21021b049516c60e986a4ee88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a824b339123da0e9aa52b431aef4f768b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a824b339123da0e9aa52b431aef4f768b">update</a> ()=0</td></tr>
+<tr class="memdesc:a824b339123da0e9aa52b431aef4f768b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggers recreation of the curve. Will only occur if the curve parameters were modified (waypoints, target), or the sampling size has changed.  <a href="#a824b339123da0e9aa52b431aef4f768b">More...</a><br /></td></tr>
+<tr class="separator:a824b339123da0e9aa52b431aef4f768b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ad1c51f62601c8adaf5e25ff4df9ce969"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#ad1c51f62601c8adaf5e25ff4df9ce969">duration_</a></td></tr>
+<tr class="separator:ad1c51f62601c8adaf5e25ff4df9ce969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a161c31b1e093a1e57fc5671039efb942"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a161c31b1e093a1e57fc5671039efb942">start_</a></td></tr>
+<tr class="separator:a161c31b1e093a1e57fc5671039efb942"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02ba52495ba023e463cd553403881343"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a02ba52495ba023e463cd553403881343">target_</a></td></tr>
+<tr class="separator:a02ba52495ba023e463cd553403881343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eccc7db9edfd9fe6691b380ae4b3f1c"><td class="memItemLeft" align="right" valign="top">WaypointsT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a0eccc7db9edfd9fe6691b380ae4b3f1c">waypoints_</a></td></tr>
+<tr class="separator:a0eccc7db9edfd9fe6691b380ae4b3f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1031ee75323cacfec14d8cde228a9684"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a1031ee75323cacfec14d8cde228a9684">samplingPoints_</a> = 10</td></tr>
+<tr class="separator:a1031ee75323cacfec14d8cde228a9684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98f852018150c074fd1f367f8435dcb4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a98f852018150c074fd1f367f8435dcb4">samples_</a></td></tr>
+<tr class="separator:a98f852018150c074fd1f367f8435dcb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a431372cc08984a2a6b37be089b90cbb8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02811.html#a431372cc08984a2a6b37be089b90cbb8">needsUpdate_</a> = false</td></tr>
+<tr class="separator:a431372cc08984a2a6b37be089b90cbb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="afe26e8f1495983c2e3f9917b8ef20e76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe26e8f1495983c2e3f9917b8ef20e76">&#9670;&nbsp;</a></span>Spline()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::<a class="el" href="a02811.html">Spline</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>duration</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const WaypointsT &amp;&#160;</td>
+          <td class="paramname"><em>waypoints</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a65aa9924d2dffdf77e6b393514287aee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65aa9924d2dffdf77e6b393514287aee">&#9670;&nbsp;</a></span>samplingPoints() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::samplingPoints </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Number of sampling points for the trajectory visualization. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>Number of sampling points. If the number of samples is different from the one previously specified, this will trigger a curve recomputation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab65b7eb21021b049516c60e986a4ee88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab65b7eb21021b049516c60e986a4ee88">&#9670;&nbsp;</a></span>samplingPoints() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::samplingPoints </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets number of samples. </p>
+<dl class="section return"><dt>Returns</dt><dd>number of samples </dd></dl>
+
+</div>
+</div>
+<a id="a8378e992bf3e1bbad575ce977e3f73ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8378e992bf3e1bbad575ce977e3f73ab">&#9670;&nbsp;</a></span>start() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::start </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>start</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starting point for the trajectory at time t=0. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>starting point </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2ff62b0a83ab31052558810918ed950c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ff62b0a83ab31052558810918ed950c">&#9670;&nbsp;</a></span>start() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">const T&amp; <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starting point at time t=0. </p>
+<dl class="section return"><dt>Returns</dt><dd>starting point </dd></dl>
+
+</div>
+</div>
+<a id="a45494f7a53e0aca7460a61422267a6e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45494f7a53e0aca7460a61422267a6e3">&#9670;&nbsp;</a></span>target() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::target </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>target</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the spline target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>final target for the spline </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac9d0e0942c1fbfaeade4bc6350221f6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9d0e0942c1fbfaeade4bc6350221f6e">&#9670;&nbsp;</a></span>target() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">const T&amp; <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::target </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the spline target position. </p>
+<dl class="section return"><dt>Returns</dt><dd>The spline target position </dd></dl>
+
+</div>
+</div>
+<a id="a824b339123da0e9aa52b431aef4f768b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a824b339123da0e9aa52b431aef4f768b">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Triggers recreation of the curve. Will only occur if the curve parameters were modified (waypoints, target), or the sampling size has changed. </p>
+
+<p>Implemented in <a class="el" href="a02803.html#a22a9af98b0a796589d8c25037b7cdb60">mc_trajectory::ExactCubic</a>, <a class="el" href="a02799.html#ab70108d4c7af3ce67b487bcbe11cab5d">mc_trajectory::BSpline</a>, and <a class="el" href="a02807.html#a00b27ba3e5f5c5028a5c3f1b18552617">mc_trajectory::InterpolatedRotation</a>.</p>
+
+</div>
+</div>
+<a id="aa6f82c833829bc385839b1ec94542417"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6f82c833829bc385839b1ec94542417">&#9670;&nbsp;</a></span>waypoints() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::waypoints </td>
+          <td>(</td>
+          <td class="paramtype">const WaypointsT &amp;&#160;</td>
+          <td class="paramname"><em>waypoints</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines waypoints. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">waypoints</td><td>Waypoints. Shouldn't include starting and target orientation (use <a class="el" href="a02811.html#a8378e992bf3e1bbad575ce977e3f73ab" title="Starting point for the trajectory at time t=0. ">start()</a> and <a class="el" href="a02811.html#a45494f7a53e0aca7460a61422267a6e3" title="Sets the spline target. ">target()</a> instead). Time should be 0&lt;time&lt;duration. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a12881d75288abe5b0539601a7038fb02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12881d75288abe5b0539601a7038fb02">&#9670;&nbsp;</a></span>waypoints() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">const WaypointsT&amp; <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::waypoints </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns waypoints. </p>
+<dl class="section return"><dt>Returns</dt><dd>Waypoints. Doesn't include starting and target orienation (use <a class="el" href="a02811.html#a8378e992bf3e1bbad575ce977e3f73ab" title="Starting point for the trajectory at time t=0. ">start()</a> and <a class="el" href="a02811.html#a45494f7a53e0aca7460a61422267a6e3" title="Sets the spline target. ">target()</a> instead). </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ad1c51f62601c8adaf5e25ff4df9ce969"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1c51f62601c8adaf5e25ff4df9ce969">&#9670;&nbsp;</a></span>duration_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::duration_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a431372cc08984a2a6b37be089b90cbb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a431372cc08984a2a6b37be089b90cbb8">&#9670;&nbsp;</a></span>needsUpdate_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::needsUpdate_ = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a98f852018150c074fd1f367f8435dcb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98f852018150c074fd1f367f8435dcb4">&#9670;&nbsp;</a></span>samples_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;T&gt; <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::samples_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1031ee75323cacfec14d8cde228a9684"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1031ee75323cacfec14d8cde228a9684">&#9670;&nbsp;</a></span>samplingPoints_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::samplingPoints_ = 10</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a161c31b1e093a1e57fc5671039efb942"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a161c31b1e093a1e57fc5671039efb942">&#9670;&nbsp;</a></span>start_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::start_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a02ba52495ba023e463cd553403881343"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02ba52495ba023e463cd553403881343">&#9670;&nbsp;</a></span>target_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::target_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0eccc7db9edfd9fe6691b380ae4b3f1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0eccc7db9edfd9fe6691b380ae4b3f1c">&#9670;&nbsp;</a></span>waypoints_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename WaypointsT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">WaypointsT <a class="el" href="a02811.html">mc_trajectory::Spline</a>&lt; T, WaypointsT &gt;::waypoints_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a02811.html">Global</a></li>
-    <li class="footer">Generated on Thu Feb 13 2020 12:30:23 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00707.html">mc_trajectory</a></li><li class="navelem"><a class="el" href="a02811.html">Spline</a></li>
+    <li class="footer">Generated on Fri Feb 14 2020 09:13:46 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

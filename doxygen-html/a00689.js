@@ -1,5 +1,5 @@
 var a00689 =
 [
-    [ "FDQPWeights", "a02091.html", "a02091" ],
-    [ "StabilizerConfiguration", "a02099.html", "a02099" ]
+    [ "FDQPWeights", "a02095.html", "a02095" ],
+    [ "StabilizerConfiguration", "a02103.html", "a02103" ]
 ];

@@ -1,6 +1,10 @@
 var a02463 =
 [
-    [ "ObjectDeleter", "a02463.html#ad9d8c7bebf11fd046f3264f25d73f56d", null ],
-    [ "ObjectDeleter", "a02463.html#a3527e6200ab7ef9bf24606c987072039", null ],
-    [ "operator()", "a02463.html#a7cd3bbddec0b057af90444eb5794ad80", null ]
+    [ "callback_t", "a02463.html#ae88a2f28e5fa458257316949fd08a539", null ],
+    [ "handle_map_t", "a02463.html#a9c2401890571dbbde00eda2fb1e87710", null ],
+    [ "close", "a02463.html#a63ca4850e72fbb0ea10d1362c5402a51", null ],
+    [ "init", "a02463.html#a2d478e04efaa0d71d340ed45577b478a", null ],
+    [ "load_libraries", "a02463.html#a9611f8c05257ffd4651e68ea2f4f7e68", null ],
+    [ "ObjectLoader", "a02463.html#a0b9f840f1f1352debe8e77115e2454b1", null ],
+    [ "default_cb", "a02463.html#a2569410b656743e1d955a9aafc7ee793", null ]
 ];

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::Loader Class Reference</title>
+<title>mc_rtc::LTDLHandle Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,160 +70,59 @@ $(document).ready(function(){initNavTree('a02459.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
-<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
-<a href="#friends">Friends</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a02456.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::Loader Class Reference</div>  </div>
+<div class="title">mc_rtc::LTDLHandle Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>General wrapper for ltdl functionnalities.  
+<p>Wrapper around lt_dlhandle.  
  <a href="a02459.html#details">More...</a></p>
 
 <p><code>#include &lt;mc_rtc/loader.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a9c2401890571dbbde00eda2fb1e87710"><td class="memItemLeft" align="right" valign="top">typedef std::map&lt; std::string, <a class="el" href="a00678.html#a04f4430d990b320f494b3a21112c7e3a">LTDLHandlePtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#a9c2401890571dbbde00eda2fb1e87710">handle_map_t</a></td></tr>
-<tr class="separator:a9c2401890571dbbde00eda2fb1e87710"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae88a2f28e5fa458257316949fd08a539"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(const std::string &amp;, <a class="el" href="a02455.html">LTDLHandle</a> &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#ae88a2f28e5fa458257316949fd08a539">callback_t</a></td></tr>
-<tr class="separator:ae88a2f28e5fa458257316949fd08a539"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:a2569410b656743e1d955a9aafc7ee793"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02459.html#ae88a2f28e5fa458257316949fd08a539">callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#a2569410b656743e1d955a9aafc7ee793">default_cb</a></td></tr>
-<tr class="separator:a2569410b656743e1d955a9aafc7ee793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-methods"></a>
-Static Protected Member Functions</h2></td></tr>
-<tr class="memitem:a2d478e04efaa0d71d340ed45577b478a"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#a2d478e04efaa0d71d340ed45577b478a">init</a> ()</td></tr>
-<tr class="memdesc:a2d478e04efaa0d71d340ed45577b478a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize ltdl.  <a href="#a2d478e04efaa0d71d340ed45577b478a">More...</a><br /></td></tr>
-<tr class="separator:a2d478e04efaa0d71d340ed45577b478a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63ca4850e72fbb0ea10d1362c5402a51"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#a63ca4850e72fbb0ea10d1362c5402a51">close</a> ()</td></tr>
-<tr class="memdesc:a63ca4850e72fbb0ea10d1362c5402a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close ltdl. Does nothing until the last call.  <a href="#a63ca4850e72fbb0ea10d1362c5402a51">More...</a><br /></td></tr>
-<tr class="separator:a63ca4850e72fbb0ea10d1362c5402a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9611f8c05257ffd4651e68ea2f4f7e68"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#a9611f8c05257ffd4651e68ea2f4f7e68">load_libraries</a> (const std::string &amp;class_name, const std::vector&lt; std::string &gt; &amp;paths, <a class="el" href="a02459.html#a9c2401890571dbbde00eda2fb1e87710">handle_map_t</a> &amp;out, bool verbose, <a class="el" href="a02459.html#ae88a2f28e5fa458257316949fd08a539">callback_t</a> cb)</td></tr>
-<tr class="memdesc:a9611f8c05257ffd4651e68ea2f4f7e68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide libraries handles for the libraries in paths.  <a href="#a9611f8c05257ffd4651e68ea2f4f7e68">More...</a><br /></td></tr>
-<tr class="separator:a9611f8c05257ffd4651e68ea2f4f7e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
-Friends</h2></td></tr>
-<tr class="memitem:a0b9f840f1f1352debe8e77115e2454b1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a0b9f840f1f1352debe8e77115e2454b1"><td class="memTemplItemLeft" align="right" valign="top">struct&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02459.html#a0b9f840f1f1352debe8e77115e2454b1">ObjectLoader</a></td></tr>
-<tr class="separator:a0b9f840f1f1352debe8e77115e2454b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a1d2ebbcff7e52decbb18a9dc96b7671b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#a1d2ebbcff7e52decbb18a9dc96b7671b">LTDLHandle</a> (const std::string &amp;class_name, const std::string &amp;<a class="el" href="a02459.html#aab506987ae59f5623e4875126b3ad06b">path</a>, const std::string &amp;rpath, bool verbose)</td></tr>
+<tr class="memdesc:a1d2ebbcff7e52decbb18a9dc96b7671b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the handle wrapper.  <a href="#a1d2ebbcff7e52decbb18a9dc96b7671b">More...</a><br /></td></tr>
+<tr class="separator:a1d2ebbcff7e52decbb18a9dc96b7671b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3f676e1ef23ac13767069ebf1018af7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#ac3f676e1ef23ac13767069ebf1018af7">~LTDLHandle</a> ()</td></tr>
+<tr class="separator:ac3f676e1ef23ac13767069ebf1018af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb254d88dad0c357ba003eb2ef458556"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#aeb254d88dad0c357ba003eb2ef458556">LTDLHandle</a> (const <a class="el" href="a02459.html">LTDLHandle</a> &amp;)=delete</td></tr>
+<tr class="separator:aeb254d88dad0c357ba003eb2ef458556"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5ad49d16629787bd61589dbf4924c4e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02459.html">LTDLHandle</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#ab5ad49d16629787bd61589dbf4924c4e">operator=</a> (const <a class="el" href="a02459.html">LTDLHandle</a> &amp;)=delete</td></tr>
+<tr class="separator:ab5ad49d16629787bd61589dbf4924c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9e807398c51fe641aa12610ee1d35fc"><td class="memTemplParams" colspan="2">template&lt;typename SymT &gt; </td></tr>
+<tr class="memitem:ac9e807398c51fe641aa12610ee1d35fc"><td class="memTemplItemLeft" align="right" valign="top">SymT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02459.html#ac9e807398c51fe641aa12610ee1d35fc">get_symbol</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:ac9e807398c51fe641aa12610ee1d35fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a symbol, returns nullptr if the symbol is not found.  <a href="#ac9e807398c51fe641aa12610ee1d35fc">More...</a><br /></td></tr>
+<tr class="separator:ac9e807398c51fe641aa12610ee1d35fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad84c0ae1a67095338adf0205ee6cbfe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#aad84c0ae1a67095338adf0205ee6cbfe">valid</a> () const</td></tr>
+<tr class="memdesc:aad84c0ae1a67095338adf0205ee6cbfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the library is valid.  <a href="#aad84c0ae1a67095338adf0205ee6cbfe">More...</a><br /></td></tr>
+<tr class="separator:aad84c0ae1a67095338adf0205ee6cbfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5027f7059635b26c598d8547787c70da"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#a5027f7059635b26c598d8547787c70da">classes</a> () const</td></tr>
+<tr class="memdesc:a5027f7059635b26c598d8547787c70da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of available classes provided by this library.  <a href="#a5027f7059635b26c598d8547787c70da">More...</a><br /></td></tr>
+<tr class="separator:a5027f7059635b26c598d8547787c70da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab506987ae59f5623e4875126b3ad06b"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02459.html#aab506987ae59f5623e4875126b3ad06b">path</a> () const</td></tr>
+<tr class="memdesc:aab506987ae59f5623e4875126b3ad06b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the path to the library.  <a href="#aab506987ae59f5623e4875126b3ad06b">More...</a><br /></td></tr>
+<tr class="separator:aab506987ae59f5623e4875126b3ad06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>General wrapper for ltdl functionnalities. </p>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="ae88a2f28e5fa458257316949fd08a539"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae88a2f28e5fa458257316949fd08a539">&#9670;&nbsp;</a></span>callback_t</h2>
+<div class="textblock"><p>Wrapper around lt_dlhandle. </p>
+<p>On creation it will load the library to check:</p><ul>
+<li>if a provided symbol is defined in the library</li>
+<li>if it should be loaded globally</li>
+</ul>
+<p>After that the library will be closed and opened when symbols are requested by the user </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a1d2ebbcff7e52decbb18a9dc96b7671b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d2ebbcff7e52decbb18a9dc96b7671b">&#9670;&nbsp;</a></span>LTDLHandle() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::function&lt;void(const std::string &amp;, <a class="el" href="a02455.html">LTDLHandle</a> &amp;)&gt; <a class="el" href="a02459.html#ae88a2f28e5fa458257316949fd08a539">mc_rtc::Loader::callback_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9c2401890571dbbde00eda2fb1e87710"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c2401890571dbbde00eda2fb1e87710">&#9670;&nbsp;</a></span>handle_map_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::map&lt;std::string, <a class="el" href="a00678.html#a04f4430d990b320f494b3a21112c7e3a">LTDLHandlePtr</a>&gt; <a class="el" href="a02459.html#a9c2401890571dbbde00eda2fb1e87710">mc_rtc::Loader::handle_map_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a63ca4850e72fbb0ea10d1362c5402a51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63ca4850e72fbb0ea10d1362c5402a51">&#9670;&nbsp;</a></span>close()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool mc_rtc::Loader::close </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Close ltdl. Does nothing until the last call. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="a02451.html" title="Exception thrown by loader interface. ">LoaderException</a></td><td>on failure </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a2d478e04efaa0d71d340ed45577b478a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d478e04efaa0d71d340ed45577b478a">&#9670;&nbsp;</a></span>init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool mc_rtc::Loader::init </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Initialize ltdl. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="a02451.html" title="Exception thrown by loader interface. ">LoaderException</a></td><td>if ltdl fails to init </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a9611f8c05257ffd4651e68ea2f4f7e68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9611f8c05257ffd4651e68ea2f4f7e68">&#9670;&nbsp;</a></span>load_libraries()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void mc_rtc::Loader::load_libraries </td>
+          <td class="memname">mc_rtc::LTDLHandle::LTDLHandle </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>class_name</em>, </td>
@@ -231,26 +130,20 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>paths</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a02459.html#a9c2401890571dbbde00eda2fb1e87710">handle_map_t</a> &amp;&#160;</td>
-          <td class="paramname"><em>out</em>, </td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>rpath</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>verbose</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a02459.html#ae88a2f28e5fa458257316949fd08a539">callback_t</a>&#160;</td>
-          <td class="paramname"><em>cb</em>&#160;</td>
+          <td class="paramname"><em>verbose</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -258,56 +151,122 @@ Friends</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+<p>Create the handle wrapper. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">class_name</td><td>Symbol that should be checked for</td></tr>
+    <tr><td class="paramname">path</td><td>Path to the library</td></tr>
+    <tr><td class="paramname">rpath</td><td>Path(s) used to search for libraries, this is only used on Windows, on Linux/macOS one is advised to use RPATH capabilties</td></tr>
+    <tr><td class="paramname">verbose</td><td>If true, output debug information </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac3f676e1ef23ac13767069ebf1018af7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3f676e1ef23ac13767069ebf1018af7">&#9670;&nbsp;</a></span>~LTDLHandle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::LTDLHandle::~LTDLHandle </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aeb254d88dad0c357ba003eb2ef458556"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb254d88dad0c357ba003eb2ef458556">&#9670;&nbsp;</a></span>LTDLHandle() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::LTDLHandle::LTDLHandle </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02459.html">LTDLHandle</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Provide libraries handles for the libraries in paths. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">class_name</td><td>The loader will filter out libraries that do not provide a class_name function that returns the object's name, this allows to filter the loaded libraries</td></tr>
-    <tr><td class="paramname">paths</td><td>a list of the directories searched by the function</td></tr>
-    <tr><td class="paramname">out</td><td>a map (string, handle_type) updated by the function</td></tr>
-    <tr><td class="paramname">verbose</td><td>If true, output some warning information</td></tr>
-    <tr><td class="paramname">cb</td><td>User-provided callback when a new class is discovered</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><a class="anchor" id="loader_load_libraries_doc"></a></p>
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5027f7059635b26c598d8547787c70da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5027f7059635b26c598d8547787c70da">&#9670;&nbsp;</a></span>classes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;std::string&gt;&amp; mc_rtc::LTDLHandle::classes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a list of available classes provided by this library. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a id="a0b9f840f1f1352debe8e77115e2454b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b9f840f1f1352debe8e77115e2454b1">&#9670;&nbsp;</a></span>ObjectLoader</h2>
+<a id="ac9e807398c51fe641aa12610ee1d35fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9e807398c51fe641aa12610ee1d35fc">&#9670;&nbsp;</a></span>get_symbol()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
+template&lt;typename SymT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">friend struct <a class="el" href="a02447.html">ObjectLoader</a></td>
+          <td class="memname">SymT mc_rtc::LTDLHandle::get_symbol </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Get a symbol, returns nullptr if the symbol is not found. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the symbol to get </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a2569410b656743e1d955a9aafc7ee793"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2569410b656743e1d955a9aafc7ee793">&#9670;&nbsp;</a></span>default_cb</h2>
+<a id="ab5ad49d16629787bd61589dbf4924c4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5ad49d16629787bd61589dbf4924c4e">&#9670;&nbsp;</a></span>operator=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -316,15 +275,73 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02459.html#ae88a2f28e5fa458257316949fd08a539">callback_t</a> mc_rtc::Loader::default_cb</td>
+          <td class="memname"><a class="el" href="a02459.html">LTDLHandle</a>&amp; mc_rtc::LTDLHandle::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02459.html">LTDLHandle</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="aab506987ae59f5623e4875126b3ad06b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab506987ae59f5623e4875126b3ad06b">&#9670;&nbsp;</a></span>path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string&amp; mc_rtc::LTDLHandle::path </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Access the path to the library. </p>
+
+</div>
+</div>
+<a id="aad84c0ae1a67095338adf0205ee6cbfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad84c0ae1a67095338adf0205ee6cbfe">&#9670;&nbsp;</a></span>valid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::LTDLHandle::valid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>True if the library is valid. </p>
 
 </div>
 </div>
@@ -334,8 +351,8 @@ template&lt;typename T &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00678.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02459.html">Loader</a></li>
-    <li class="footer">Generated on Thu Feb 13 2020 12:30:24 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00678.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02459.html">LTDLHandle</a></li>
+    <li class="footer">Generated on Fri Feb 14 2020 09:13:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

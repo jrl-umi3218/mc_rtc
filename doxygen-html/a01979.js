@@ -35,6 +35,7 @@ var a01979 =
     [ "MCGlobalController", "a01979.html#a3e2b38b036ecf0354d551a491d342a85", null ],
     [ "anchorFrame_", "a01979.html#a37153bb1201c0a4f703cccc2a9c614b8", null ],
     [ "anchorFrameReal_", "a01979.html#a2f23380680eb2069f82ac2f4b58d75c6", null ],
+    [ "compoundJointConstraint", "a01979.html#af4240035b16cca7624e712eb86795951", null ],
     [ "contactConstraint", "a01979.html#a765929daba315c7ec7d455486f2817b3", null ],
     [ "dynamicsConstraint", "a01979.html#a828b8724c182053e6d0aed8a28f368bf", null ],
     [ "grippers", "a01979.html#af22b7ebf2d129819c82af474067b3766", null ],

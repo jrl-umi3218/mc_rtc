@@ -1,11 +1,14 @@
 var a02555 =
 [
-    [ "DynamicsConstraint", "a02555.html#a0f1097a536c65e610735d3314e86a4e3", null ],
-    [ "DynamicsConstraint", "a02555.html#a330391bd86278523ae70830fc2d7e9f9", null ],
-    [ "DynamicsConstraint", "a02555.html#a2adb5f59889ad682361cbdd940e7d527", null ],
-    [ "addToSolver", "a02555.html#a08413ca37fc394ed2b3f692f2bcc8e44", null ],
-    [ "inSolver", "a02555.html#ad1eea623f5d96d9d75043108d4251911", null ],
-    [ "removeFromSolver", "a02555.html#ac37f401f997c13db2b3a3cf080f0bd4b", null ],
-    [ "robotIndex", "a02555.html#af226f3dc547957b5700408bcc6688f7a", null ],
-    [ "motionConstr", "a02555.html#a888094b65574aed3b2bb86a67a744a44", null ]
+    [ "ContactType", "a02555.html#aa1038fc325c517503d2f68a3feec1c30", [
+      [ "Acceleration", "a02555.html#aa1038fc325c517503d2f68a3feec1c30acbc392a30777e1fa953eea2c011ea2c3", null ],
+      [ "Velocity", "a02555.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652", null ],
+      [ "Position", "a02555.html#aa1038fc325c517503d2f68a3feec1c30a75ced229938828d7cf205928657fd137", null ]
+    ] ],
+    [ "ContactConstraint", "a02555.html#a2226b4449ee6faeb3f6d70cfdfb13b4f", null ],
+    [ "ContactConstraint", "a02555.html#ad4a4d2baaacb8b1d914d66a0110c99ab", null ],
+    [ "addToSolver", "a02555.html#a3e94d3c790da36671345692cbf14e81d", null ],
+    [ "removeFromSolver", "a02555.html#af72efeda2c9cd6af2e4626f32ab7583d", null ],
+    [ "contactConstr", "a02555.html#ad8b6359d4d1a771db2fd8bad433acf1f", null ],
+    [ "posLambdaConstr", "a02555.html#a4456741f8ae0b07c199415fda9b9aecf", null ]
 ];

@@ -1,6 +1,6 @@
 var a02467 =
 [
-    [ "complete", "a02467.html#aecb02006f5f0cd5aeabf7965973d3542", null ],
-    [ "fn", "a02467.html#adf4719d80846e018c3de0290164048ac", null ],
-    [ "ret", "a02467.html#a0bd1edac4d08d70b609b18efb6942d44", null ]
+    [ "ObjectDeleter", "a02467.html#ad9d8c7bebf11fd046f3264f25d73f56d", null ],
+    [ "ObjectDeleter", "a02467.html#a3527e6200ab7ef9bf24606c987072039", null ],
+    [ "operator()", "a02467.html#a7cd3bbddec0b057af90444eb5794ad80", null ]
 ];

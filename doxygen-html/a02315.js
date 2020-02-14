@@ -1,6 +1,6 @@
 var a02315 =
 [
-    [ "LabelImpl", "a02315.html#a8d875328b3e6dcc3d22287cdc7b65d9f", null ],
-    [ "LabelImpl", "a02315.html#aa27962fafec53add87be74c45388891a", null ],
-    [ "type", "a02315.html#a4701d75e61153ae03eb9137a254e603f", null ]
+    [ "IntegerInputImpl", "a02315.html#abb43e816875fdb07339135c65fa7982e", null ],
+    [ "IntegerInputImpl", "a02315.html#a5b3e150b460bd7c5b4fc426a1d08e370", null ],
+    [ "type", "a02315.html#ad03092ac48c1ea07ce3ee119e000229b", null ]
 ];

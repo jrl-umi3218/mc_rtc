@@ -1,8 +1,11 @@
 var a02439 =
 [
-    [ "XYThetaROImpl", "a02439.html#ac0153847ff6a36d76c47cae5292be192", null ],
-    [ "XYThetaROImpl", "a02439.html#a17aa4be99cbd7e12a198638912b80726", null ],
-    [ "write", "a02439.html#a2a9635b525b47f997fffcf697ae4b2f5", null ],
-    [ "write_size", "a02439.html#a10d9c0c5738157dac5fdb0e5dec24c21", null ],
-    [ "type", "a02439.html#aff70a2c515c79366813abd70e1d09996", null ]
+    [ "PointConfig", "a02439.html#a1561d8ebb70e3cb79de4ccab8c1d9f39", null ],
+    [ "PointConfig", "a02439.html#a292175258d872208e99632ac1552700b", null ],
+    [ "PointConfig", "a02439.html#a8277e9a9b0552925512c2c5bf13e27af", null ],
+    [ "load", "a02439.html#ac42a2a7dbe68b518029a300b5ed6ff2d", null ],
+    [ "write", "a02439.html#a21cfe22ca3c76493be3f27788a18c0bf", null ],
+    [ "write_size", "a02439.html#aceab827e57173288e6abee5abf7cf368", null ],
+    [ "color", "a02439.html#a322a868c95c738f131da19c405ca0fd3", null ],
+    [ "scale", "a02439.html#aec3bebebe03aa2f57a8e9dfab49e55a2", null ]
 ];

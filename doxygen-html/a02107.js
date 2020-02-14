@@ -1,7 +1,5 @@
 var a02107 =
 [
-    [ "joint", "a02107.html#a4d23695d0cbacd0471313e1323d9e4b1", null ],
-    [ "multiplier", "a02107.html#acae914e7c2302757339b3f4624394c11", null ],
-    [ "name", "a02107.html#a461c2efe0da4d17cc75ce43837a0503f", null ],
-    [ "offset", "a02107.html#a07938e029fb7d951388c0b1ad64642b5", null ]
+    [ "load", "a02107.html#a6f8a65b949b2129b60545644f984db59", null ],
+    [ "save", "a02107.html#a4e91cd76b79b671e4049c8444cf1e3f4", null ]
 ];

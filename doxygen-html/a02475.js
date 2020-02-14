@@ -1,12 +1,21 @@
 var a02475 =
 [
-    [ "unique_void_ptr", "a02475.html#a4e556fb8cf1154c39f535f18bbbbf2a0", null ],
-    [ "record", "a02475.html#a1189082dce7ec759c42e551534f5b158", null ],
-    [ "record", "a02475.html#a687a3142850022473bc2724a024a2597", null ],
-    [ "record", "a02475.html#ad2377ca354cb3b3d61500c1eee451d69", null ],
-    [ "record", "a02475.html#afb9458b8f743e9f2e8ce8ee0911e38c8", null ],
-    [ "operator=", "a02475.html#a447e5c16c3e286bb51a0a90b0f4ef182", null ],
-    [ "operator=", "a02475.html#af03a9665af14ae1a3a0545ea86d94804", null ],
-    [ "data", "a02475.html#a74d58f27e34799a1650342340dc35d0a", null ],
-    [ "type", "a02475.html#a0796a1bb292299608b539563b87a8610", null ]
+    [ "entry", "a02483.html", "a02483" ],
+    [ "record", "a02479.html", "a02479" ],
+    [ "FlatLog", "a02475.html#a904ba6cf9174416a99863f91d6e221df", null ],
+    [ "FlatLog", "a02475.html#a16c024635d4ff9c7a817ace5507a75d4", null ],
+    [ "FlatLog", "a02475.html#ac636557632a2142945a24f276b179162", null ],
+    [ "append", "a02475.html#a712bdde57ac85de8725792a6040bd9e9", null ],
+    [ "entries", "a02475.html#a97f532a89ddd0bf098b8aac153109c7d", null ],
+    [ "get", "a02475.html#a2916d448d9bf2a1369b20cbc5566375e", null ],
+    [ "get", "a02475.html#a84715eb2284b398ea0fbe5de1b919179", null ],
+    [ "get", "a02475.html#af5fdf4f990d3bb351252dc0bcbe5cd5d", null ],
+    [ "getRaw", "a02475.html#a13a0da9b94bfeffbdd9f4966a0a38697", null ],
+    [ "getRaw", "a02475.html#a956945a4e75e5814a1910b5b560e9283", null ],
+    [ "has", "a02475.html#a92e0893128fd656707b37b31c26dd9e9", null ],
+    [ "load", "a02475.html#aaab239b6569c991b55472d3811e2360b", null ],
+    [ "operator=", "a02475.html#a6ce88d6a3e1430c270cef304996f6a30", null ],
+    [ "size", "a02475.html#aff1cabef4b8d49e0c8736aa3985ea458", null ],
+    [ "type", "a02475.html#adce27a288263487f7d87a6ed76db3f48", null ],
+    [ "types", "a02475.html#a92db42485fe91e0df8355298a344280d", null ]
 ];

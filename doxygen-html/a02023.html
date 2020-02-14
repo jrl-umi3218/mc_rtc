@@ -97,7 +97,7 @@ Inheritance diagram for mc_observers::Observer:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0f9f2d8b07a93f2fe3b55e48406835d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#a0f9f2d8b07a93f2fe3b55e48406835d3">Observer</a> (const std::string &amp;<a class="el" href="a02023.html#a5faf70047c2be78645564f90a8053bff">name</a>, double <a class="el" href="a02023.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>, const <a class="el" href="a02195.html">mc_rtc::Configuration</a> &amp;config={})</td></tr>
+<tr class="memitem:a0f9f2d8b07a93f2fe3b55e48406835d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#a0f9f2d8b07a93f2fe3b55e48406835d3">Observer</a> (const std::string &amp;<a class="el" href="a02023.html#a5faf70047c2be78645564f90a8053bff">name</a>, double <a class="el" href="a02023.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>, const <a class="el" href="a02199.html">mc_rtc::Configuration</a> &amp;config={})</td></tr>
 <tr class="separator:a0f9f2d8b07a93f2fe3b55e48406835d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe80cec7744a72c627f17990a74e890b"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#afe80cec7744a72c627f17990a74e890b">~Observer</a> ()</td></tr>
 <tr class="separator:afe80cec7744a72c627f17990a74e890b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -111,19 +111,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4805153c7a65f4f5ff444fdfd6528d73"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#a4805153c7a65f4f5ff444fdfd6528d73">run</a> (const <a class="el" href="a01979.html">mc_control::MCController</a> &amp;ctl)=0</td></tr>
 <tr class="memdesc:a4805153c7a65f4f5ff444fdfd6528d73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute observer state.  <a href="#a4805153c7a65f4f5ff444fdfd6528d73">More...</a><br /></td></tr>
 <tr class="separator:a4805153c7a65f4f5ff444fdfd6528d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c2325f9b7cc610db1f7f459198217ee"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#a7c2325f9b7cc610db1f7f459198217ee">updateRobots</a> (const <a class="el" href="a01979.html">mc_control::MCController</a> &amp;ctl, <a class="el" href="a02159.html">mc_rbdyn::Robots</a> &amp;realRobots)=0</td></tr>
+<tr class="memitem:a7c2325f9b7cc610db1f7f459198217ee"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#a7c2325f9b7cc610db1f7f459198217ee">updateRobots</a> (const <a class="el" href="a01979.html">mc_control::MCController</a> &amp;ctl, <a class="el" href="a02163.html">mc_rbdyn::Robots</a> &amp;realRobots)=0</td></tr>
 <tr class="memdesc:a7c2325f9b7cc610db1f7f459198217ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the real robot state from the observed state.  <a href="#a7c2325f9b7cc610db1f7f459198217ee">More...</a><br /></td></tr>
 <tr class="separator:a7c2325f9b7cc610db1f7f459198217ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1a2253dad0a8adcb7eb376dc0861af0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#aa1a2253dad0a8adcb7eb376dc0861af0">addToLogger</a> (const <a class="el" href="a01979.html">mc_control::MCController</a> &amp;, <a class="el" href="a02483.html">mc_rtc::Logger</a> &amp;)</td></tr>
+<tr class="memitem:aa1a2253dad0a8adcb7eb376dc0861af0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#aa1a2253dad0a8adcb7eb376dc0861af0">addToLogger</a> (const <a class="el" href="a01979.html">mc_control::MCController</a> &amp;, <a class="el" href="a02487.html">mc_rtc::Logger</a> &amp;)</td></tr>
 <tr class="memdesc:aa1a2253dad0a8adcb7eb376dc0861af0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add observer to the logger.  <a href="#aa1a2253dad0a8adcb7eb376dc0861af0">More...</a><br /></td></tr>
 <tr class="separator:aa1a2253dad0a8adcb7eb376dc0861af0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac81467221a6c73328b0ee45fa7327eb3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#ac81467221a6c73328b0ee45fa7327eb3">removeFromLogger</a> (<a class="el" href="a02483.html">mc_rtc::Logger</a> &amp;)</td></tr>
+<tr class="memitem:ac81467221a6c73328b0ee45fa7327eb3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#ac81467221a6c73328b0ee45fa7327eb3">removeFromLogger</a> (<a class="el" href="a02487.html">mc_rtc::Logger</a> &amp;)</td></tr>
 <tr class="memdesc:ac81467221a6c73328b0ee45fa7327eb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove observer from logger.  <a href="#ac81467221a6c73328b0ee45fa7327eb3">More...</a><br /></td></tr>
 <tr class="separator:ac81467221a6c73328b0ee45fa7327eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0957402752e8564b876c86f305ebbe2f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#a0957402752e8564b876c86f305ebbe2f">addToGUI</a> (const <a class="el" href="a01979.html">mc_control::MCController</a> &amp;, <a class="el" href="a02391.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
+<tr class="memitem:a0957402752e8564b876c86f305ebbe2f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#a0957402752e8564b876c86f305ebbe2f">addToGUI</a> (const <a class="el" href="a01979.html">mc_control::MCController</a> &amp;, <a class="el" href="a02395.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
 <tr class="memdesc:a0957402752e8564b876c86f305ebbe2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add observer information the GUI.  <a href="#a0957402752e8564b876c86f305ebbe2f">More...</a><br /></td></tr>
 <tr class="separator:a0957402752e8564b876c86f305ebbe2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a261f51b20ca1d1a57500ae40b6e4093b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#a261f51b20ca1d1a57500ae40b6e4093b">removeFromGUI</a> (<a class="el" href="a02391.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
+<tr class="memitem:a261f51b20ca1d1a57500ae40b6e4093b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#a261f51b20ca1d1a57500ae40b6e4093b">removeFromGUI</a> (<a class="el" href="a02395.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
 <tr class="memdesc:a261f51b20ca1d1a57500ae40b6e4093b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove observer from gui.  <a href="#a261f51b20ca1d1a57500ae40b6e4093b">More...</a><br /></td></tr>
 <tr class="separator:a261f51b20ca1d1a57500ae40b6e4093b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae17bf0ca1911dea768788e63bf0d45b0"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02023.html#ae17bf0ca1911dea768788e63bf0d45b0">desc</a> () const</td></tr>
@@ -164,7 +164,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a02195.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="a02199.html">mc_rtc::Configuration</a> &amp;&#160;</td>
           <td class="paramname"><em>config</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
@@ -221,7 +221,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a02391.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02395.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -262,7 +262,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a02483.html">mc_rtc::Logger</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02487.html">mc_rtc::Logger</a> &amp;&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -369,7 +369,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">virtual void mc_observers::Observer::removeFromGUI </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a02391.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02395.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -400,7 +400,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">virtual void mc_observers::Observer::removeFromLogger </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a02483.html">mc_rtc::Logger</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02487.html">mc_rtc::Logger</a> &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -509,7 +509,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a02159.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02163.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
           <td class="paramname"><em>realRobots</em>&#160;</td>
         </tr>
         <tr>
@@ -612,7 +612,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00684.html">mc_observers</a></li><li class="navelem"><a class="el" href="a02023.html">Observer</a></li>
-    <li class="footer">Generated on Thu Feb 13 2020 12:30:23 for mc_rtc by
+    <li class="footer">Generated on Fri Feb 14 2020 09:13:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

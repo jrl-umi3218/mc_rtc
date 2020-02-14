@@ -1,5 +1,5 @@
 var a02683 =
 [
-    [ "RemoveContactTask", "a02683.html#a274115fd4536da0f415486e67b4c9764", null ],
-    [ "RemoveContactTask", "a02683.html#ab2245c87f4c2af0f7e1a84f407fa124e", null ]
+    [ "AddContactTask", "a02683.html#ae885f5a1cee241dd40b788d40654ef6b", null ],
+    [ "AddContactTask", "a02683.html#a2875c53a7f7c8bd2f1eeabd21ff920c1", null ]
 ];

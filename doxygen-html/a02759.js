@@ -1,9 +1,13 @@
 var a02759 =
 [
-    [ "PositionBasedVisServoTask", "a02759.html#ae2cab369aedb3678ebd9b4687faa8ba9", null ],
-    [ "PositionBasedVisServoTask", "a02759.html#ab210ce2c552242965b7bd04b02d91517", null ],
-    [ "addToLogger", "a02759.html#a1c5a2a63cff774edab49e058c63344d6", null ],
-    [ "error", "a02759.html#aa2e8c33c6432ee68e91a59ed396fdd2a", null ],
-    [ "removeFromLogger", "a02759.html#adb31cd43854da32f63e4b26fbe11b78b", null ],
-    [ "reset", "a02759.html#a8c041b0993d362a21630ba766aac3218", null ]
+    [ "OrientationTask", "a02759.html#aed570ad6882e85529777864cc33d58ed", null ],
+    [ "addToGUI", "a02759.html#ac5953577c61c0b6943106f08851f562c", null ],
+    [ "addToLogger", "a02759.html#ae0f93ea2baa6813562b79f74658bf561", null ],
+    [ "orientation", "a02759.html#a8b10f7f275eec4a245cf826c90f9aca7", null ],
+    [ "orientation", "a02759.html#ada80fbd5aaf53369618630495e92a175", null ],
+    [ "removeFromLogger", "a02759.html#a05e73e60e317fb0d0e0fa7a9149b5be1", null ],
+    [ "reset", "a02759.html#a3230ff70e491adbeea990dc62bf0d069", null ],
+    [ "EndEffectorTask", "a02759.html#ab333c1b08462c2014c404b1b2b886246", null ],
+    [ "bIndex", "a02759.html#abfd25888b1dc814b280d5443506fe258", null ],
+    [ "bodyName", "a02759.html#a97da00bdf087f04a99473553efaa6390", null ]
 ];

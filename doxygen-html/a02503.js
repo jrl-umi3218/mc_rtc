@@ -1,4 +1,6 @@
 var a02503 =
 [
-    [ "write", "a02503.html#ac76dfb54b68fb04d65d6fcb1cb6e061d", null ]
+    [ "base_type", "a02503.html#a36029a9801c5ca972f21e626ea554174", null ],
+    [ "ret_type", "a02503.html#a38207f8c1014c4e1b2ebb310e3ceb551", null ],
+    [ "value", "a02503.html#aad0ab42aac325e0fa19a1a82d853288b", null ]
 ];

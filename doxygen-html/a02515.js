@@ -1,11 +1,15 @@
 var a02515 =
 [
-    [ "BoundedSpeedConstr", "a02515.html#a43af0872dd664d13d864053d3ecfda18", null ],
-    [ "addBoundedSpeed", "a02515.html#abcd47fff771a0c7357bd5b682398b3df", null ],
-    [ "addBoundedSpeed", "a02515.html#aff11f05b8b3f2139db8ae2d95ce4afee", null ],
-    [ "addToSolver", "a02515.html#a54adcdc90cc41a64a9723b693f8beb1b", null ],
-    [ "nrBoundedSpeeds", "a02515.html#a70c84d6defba583690d9175ca4cf192d", null ],
-    [ "removeBoundedSpeed", "a02515.html#a5b85799a5bb8df9c5344cd9d3f630708", null ],
-    [ "removeFromSolver", "a02515.html#a0214a46d2452e2dcf610bbf44f863019", null ],
-    [ "reset", "a02515.html#ab0fffcd8e01c61ced64cf5371999acb7", null ]
+    [ "RobotEnvCollisionsConstraint", "a02515.html#a39287b8c789b11ede7208c03a199ca74", null ],
+    [ "addEnvCollision", "a02515.html#afbce8ca7f72ce83dd61060a2b1526237", null ],
+    [ "addSelfCollision", "a02515.html#abf0d85d3b3c319dc2482f67c05d22968", null ],
+    [ "addToSolver", "a02515.html#a958e2813a9368f8e2628e367aac46449", null ],
+    [ "removeEnvCollision", "a02515.html#ae1da1cc998ffcad31638d384cd6e09c5", null ],
+    [ "removeEnvCollisionByBody", "a02515.html#a618ee70816991cf1c4911a4ce5631dc7", null ],
+    [ "removeFromSolver", "a02515.html#a1c44940f9826474f5b4c894c1014a610", null ],
+    [ "removeSelfCollision", "a02515.html#a1a2afa771fb34c646081db42ea78f549", null ],
+    [ "setEnvCollisions", "a02515.html#aa8ec417a8fe966ff8fd516ee32c2e029", null ],
+    [ "setSelfCollisions", "a02515.html#a7da0970955748569829288d534c7d6c4", null ],
+    [ "envCollConstrMng", "a02515.html#a8a12fce61aaa56f6d8d698ab7c925b6d", null ],
+    [ "selfCollConstrMng", "a02515.html#af4e19d19f4f444ec1597600ea3fb43ea", null ]
 ];

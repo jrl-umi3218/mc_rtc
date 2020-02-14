@@ -1,10 +1,11 @@
 var a02459 =
 [
-    [ "callback_t", "a02459.html#ae88a2f28e5fa458257316949fd08a539", null ],
-    [ "handle_map_t", "a02459.html#a9c2401890571dbbde00eda2fb1e87710", null ],
-    [ "close", "a02459.html#a63ca4850e72fbb0ea10d1362c5402a51", null ],
-    [ "init", "a02459.html#a2d478e04efaa0d71d340ed45577b478a", null ],
-    [ "load_libraries", "a02459.html#a9611f8c05257ffd4651e68ea2f4f7e68", null ],
-    [ "ObjectLoader", "a02459.html#a0b9f840f1f1352debe8e77115e2454b1", null ],
-    [ "default_cb", "a02459.html#a2569410b656743e1d955a9aafc7ee793", null ]
+    [ "LTDLHandle", "a02459.html#a1d2ebbcff7e52decbb18a9dc96b7671b", null ],
+    [ "~LTDLHandle", "a02459.html#ac3f676e1ef23ac13767069ebf1018af7", null ],
+    [ "LTDLHandle", "a02459.html#aeb254d88dad0c357ba003eb2ef458556", null ],
+    [ "classes", "a02459.html#a5027f7059635b26c598d8547787c70da", null ],
+    [ "get_symbol", "a02459.html#ac9e807398c51fe641aa12610ee1d35fc", null ],
+    [ "operator=", "a02459.html#ab5ad49d16629787bd61589dbf4924c4e", null ],
+    [ "path", "a02459.html#aab506987ae59f5623e4875126b3ad06b", null ],
+    [ "valid", "a02459.html#aad84c0ae1a67095338adf0205ee6cbfe", null ]
 ];
