@@ -30,7 +30,42 @@ bool is_valid_hash(std::size_t h)
   return is_valid_hash<T>(h) || is_valid_hash<U, Args...>(h);
 }
 
-/** A generic data store */
+/**
+ * @brief Generic data store
+ *
+ * This class allows to store and retrieve C++ objects. It is intended to be
+ * used as a way to share arbitrary data between various parts of the framework
+ * (states, plugins, observers, etc...)
+ *
+ * \code{cpp}
+ * DataStore store;
+ * // Creates a vector of 4 double with value 42 on the datastore
+ * store.make<std::vector<double>>("Data", 4, 42);
+ * ...
+ * auto & data = store.get<std::vector<double>>("Data");
+ * // Use the object
+ * data[3] = 0;
+ * ...
+ * // Get another reference to the object
+ * auto & data2 = store.get<std::vector<double>>("Data");
+ * data2.push_back(0);
+ * // vector now has size 5
+ * LOG_INFO(data.size());
+ * \endcode
+ *
+ * When retrieving an object using get<Type>, checks are performed to ensure that
+ * the stored type and Type are compatible.
+ *
+ * To handle inheritance, you need to explicitely provide the class hierarchy:
+ * \code{cpp}
+ * struct A {};
+ * struct B : public A {};
+ * // Creating an inherited object and checking virtual inheritance
+ * store.make<B, A>("data");
+ * auto & base = store.get<A>("data");
+ * auto & derived = store.get<B>("data");
+ * \endcode
+ */
 struct MC_RTC_UTILS_DLLAPI DataStore
 {
   DataStore() = default;
@@ -39,28 +74,26 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   DataStore(DataStore &&) = default;
   DataStore & operator=(DataStore &&) = default;
 
+  /**
+   * @brief Checks if an object is in the datastore
+   *
+   * @param name Name of the stored object
+   *
+   * @return true if the object is in the datastore
+   */
   bool has(const std::string & name) const
   {
     return datas_.find(name) != datas_.end();
   }
 
-  template<typename T>
-  const T & get(const std::string & name) const
-  {
-    auto it = datas_.find(name);
-    if(it == datas_.end())
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\" in data store");
-    }
-    auto & data = it->second;
-    if(!data.same(typeid(T).hash_code()))
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Object for key \"" << name
-                                                  << "\" does not have the same type as the stored type");
-    }
-    return *(reinterpret_cast<const T *>(data.buffer.get()));
-  }
-
+  /**
+   * @brief Get a reference to an object on the datastore
+   * @param name Name of the stored oject
+   * @return Reference to the stored object
+   *
+   * \note T must have the same type as defined when creating the object using
+   * \ref make
+   */
   template<typename T>
   T & get(const std::string & name)
   {
@@ -78,51 +111,101 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     return *(reinterpret_cast<T *>(data.buffer.get()));
   }
 
+  /** @brief const variant of \ref get */
+  template<typename T>
+  const T & get(const std::string & name) const
+  {
+    return get<T>(name);
+  }
+
+  /**
+   * @brief Creates an object on the datastore and returns a reference to it
+   *
+   * @param name Name of the stored object.
+   * @param args Parameters to be passed to the object's constructor
+   *
+   * @return A reference to the constructed object
+   *
+   * \anchor make
+   */
   template<typename T, typename... ArgsT, typename... Args>
-  void make(const std::string & name, Args &&... args)
+  T & make(const std::string & name, Args &&... args)
   {
     auto & data = datas_[name];
     if(data.buffer)
     {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] An object named " << name
+                                                  << " already existed on the datastore and would be overridden. If "
+                                                     "that's the intent, use remove() first.");
       data.destroy(data);
     }
     data.buffer.reset(new uint8_t[sizeof(T)]);
     new(data.buffer.get()) T(std::forward<Args>(args)...);
     data.same = &is_valid_hash<T, ArgsT...>;
     data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
+    return *(reinterpret_cast<T *>(data.buffer.get()));
   }
 
+  /**
+   * @brief Creates an object on the datastore using initializer_list
+   * initialization and returns a reference to it
+   *
+   * @param name Name of the stored object.
+   * @param args Parameters to be passed to the object's using initializer_list
+   * initialization.
+   *
+   * @return A reference to the constructed object
+   */
+  template<typename T, typename... ArgsT, typename... Args>
+  T & make_initializer(const std::string & name, Args &&... args)
+  {
+    auto & data = datas_[name];
+    if(data.buffer)
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] An object named " << name
+                                                  << " already existed on the datastore and would be overridden. If "
+                                                     "that's the intent, use remove() first.");
+      data.destroy(data);
+    }
+    data.buffer.reset(new uint8_t[sizeof(T)]);
+    new(data.buffer.get()) T{std::forward<Args>(args)...};
+    data.same = &is_valid_hash<T, ArgsT...>;
+    data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
+    return *(reinterpret_cast<T *>(data.buffer.get()));
+  }
+
+  /**
+   * @brief Removes an object from the datastore
+   * @param name Name of the stored object
+   */
   void remove(const std::string & name)
   {
     auto it = datas_.find(name);
     if(it == datas_.end())
     {
-      LOG_ERROR_AND_THROW(std::runtime_error,
-                          "[" << name_ << "] Failed to remove element \"" << name << "\" (element does not exist)");
+      LOG_ERROR("[" << name_ << "] Failed to remove element \"" << name << "\" (element does not exist)");
       return;
+    }
+    if(it->second.buffer)
+    {
+      it->second.destroy(it->second);
     }
     datas_.erase(it);
   }
 
-  template<typename T>
-  T & make_or_assign(const std::string & name, const T & value)
-  {
-    if(has(name))
-    {
-      get<T>(name) = value;
-    }
-    else
-    {
-      make<T, T>(name, value);
-      return get<T>(name);
-    }
-  }
-
+  /**
+   * @brief Name of this datastore
+   */
   const std::string & name() const
   {
     return name_;
   }
 
+  /**
+   * @brief Sets this datastore's name
+   *
+   * @param name Name for the datastore
+   */
   void name(const std::string & name)
   {
     name_ = name;
