@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
 
   // Check creating object of a different type with same name
   store.remove("Test");
-  store.make_initializer<std::vector<double>>("Test", 1, 2);
+  store.make_initializer<std::vector<double>>("Test", 1., 2.);
   auto & v = store.get<std::vector<double>>("Test");
   BOOST_REQUIRE(v.size() == 2);
   BOOST_REQUIRE(v[0] == 1);
@@ -114,6 +114,26 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
   BOOST_REQUIRE(value == 42);
   store.assign("TestAssignNonExisting", value);
   BOOST_REQUIRE(value == 42);
+
+  // Test make_or_assign
+  {
+    store.make_or_assign<std::vector<double>>("MakeOrAssign", 2, 42.);
+    BOOST_CHECK(store.has("MakeOrAssign"));
+    auto & data = store.get<std::vector<double>>("MakeOrAssign");
+    BOOST_REQUIRE(data.size() == 2);
+    BOOST_REQUIRE(data[0] == 42);
+    BOOST_REQUIRE(data[1] == 42);
+    // Make or assign on existing object
+    store.make_or_assign<std::vector<double>>("MakeOrAssign", 2, 12.);
+    BOOST_REQUIRE(data.size() == 2);
+    BOOST_REQUIRE(data[0] == 12);
+    BOOST_REQUIRE(data[1] == 12);
+    // Make or assign on existing object
+    store.make_initializer_or_assign<std::vector<double>>("MakeOrAssign", 4., 12.);
+    BOOST_REQUIRE(data.size() == 2);
+    BOOST_REQUIRE(data[0] == 4);
+    BOOST_REQUIRE(data[1] == 12);
+  }
 }
 
 BOOST_AUTO_TEST_CASE(TestRobotDataStore)

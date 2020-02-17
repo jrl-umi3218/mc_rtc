@@ -151,10 +151,9 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     auto & data = datas_[name];
     if(data.buffer)
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] An object named " << name
-                                                  << " already existed on the datastore and would be overridden. If "
-                                                     "that's the intent, use remove() first.");
       data.destroy(data);
+      LOG_ERROR_AND_THROW(std::runtime_error,
+                          "[" << name_ << "] An object named " << name << " already exists on the datastore.");
     }
     data.buffer.reset(new uint8_t[sizeof(T)]);
     new(data.buffer.get()) T(std::forward<Args>(args)...);
@@ -179,16 +178,68 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     auto & data = datas_[name];
     if(data.buffer)
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] An object named " << name
-                                                  << " already existed on the datastore and would be overridden. If "
-                                                     "that's the intent, use remove() first.");
       data.destroy(data);
+      LOG_ERROR_AND_THROW(std::runtime_error,
+                          "[" << name_ << "] An object named " << name << " already exists on the datastore.");
     }
     data.buffer.reset(new uint8_t[sizeof(T)]);
     new(data.buffer.get()) T{std::forward<Args>(args)...};
     data.same = &is_valid_hash<T, ArgsT...>;
     data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
     return *(reinterpret_cast<T *>(data.buffer.get()));
+  }
+
+  /**
+   * @brief Convenience function that creates an object on the datastore if it
+   * does not already exist, or assign the passed values
+   *
+   * @param name Name of the stored object to create or modify
+   * @param args Arguments passed for creation of the object
+   *
+   * @return The assigned object
+   *
+   * \anchor make_or_assign
+   */
+  template<typename T, typename... ArgsT, typename... Args>
+  T & make_or_assign(const std::string & name, const Args &&... args)
+  {
+    if(has(name))
+    {
+      auto & data = get<T>(name);
+      data = T(args...);
+      return data;
+    }
+    else
+    {
+      return make<T>(name, args...);
+    }
+  }
+
+  /**
+   * @brief Convenience function that creates or assigns an object on the
+   * datastore using list initialization.
+   *
+   * @param name Name of the stored object to create or modify
+   * @param args Arguments passed for creation of the object. The object is
+   * constructed using list initialization.
+   *
+   * @return The assigned object
+   *
+   * \see make_or_assign
+   */
+  template<typename T, typename... ArgsT, typename... Args>
+  T & make_initializer_or_assign(const std::string & name, const Args &&... args)
+  {
+    if(has(name))
+    {
+      auto & data = get<T>(name);
+      data = T{args...};
+      return data;
+    }
+    else
+    {
+      return make_initializer<T>(name, args...);
+    }
   }
 
   /**
