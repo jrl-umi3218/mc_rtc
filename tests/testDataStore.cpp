@@ -106,6 +106,14 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
   BOOST_REQUIRE(v.size() == 2);
   BOOST_REQUIRE(v[0] == 1);
   BOOST_REQUIRE(v[1] == 2);
+
+  // Test operators
+  store.make<double>("TestAssign", 42);
+  double value = 0;
+  store.assign("TestAssign", value);
+  BOOST_REQUIRE(value == 42);
+  store.assign("TestAssignNonExisting", value);
+  BOOST_REQUIRE(value == 42);
 }
 
 BOOST_AUTO_TEST_CASE(TestRobotDataStore)

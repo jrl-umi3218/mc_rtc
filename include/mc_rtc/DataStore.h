@@ -119,6 +119,23 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   }
 
   /**
+   * @brief Assign value from the datastore if it exists, leave value unchanged
+   * otherwise
+   *
+   * @param name Name of the stored data
+   * @param data External object to modify if there is stored data in the
+   * datastore
+   */
+  template<typename T>
+  void assign(const std::string & name, T & data)
+  {
+    if(has(name))
+    {
+      data = get<T>(name);
+    }
+  }
+
+  /**
    * @brief Creates an object on the datastore and returns a reference to it
    *
    * @param name Name of the stored object.
