@@ -288,9 +288,15 @@ bool Gripper::complete() const
     res = true;
     for(size_t i = 0; i < actualQ.size(); ++i)
     {
+      LOG_INFO("Gripper::Complete::OverCommand: " << overCommandLimit[i])
       res = res && overCommandLimit[i];
     }
   }
+  else
+  {
+    LOG_INFO("Gripper::Complete::ResTargetQ: " << res)
+  }
+  LOG_INFO("Gripper::Complete::Res: " << res)
   return res;
 }
 

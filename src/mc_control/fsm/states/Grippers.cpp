@@ -75,9 +75,11 @@ void Grippers::start(Controller & ctl)
 
 bool Grippers::run(Controller & ctl)
 {
+  LOG_ERROR("Grippers::State::Run")
   if(std::all_of(grippers_.begin(), grippers_.end(),
-                 [&ctl](const std::string & g) { return ctl.grippers[g]->targetQ == nullptr; }))
+                 [&ctl](const std::string & g) { return ctl.grippers[g]->complete(); }))
   {
+    LOG_SUCCESS("OK")
     output("OK");
     return true;
   }
