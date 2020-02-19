@@ -12,7 +12,7 @@ shopt -s expand_aliases
 
 readonly this_dir=`cd $(dirname $0); pwd`
 readonly mc_rtc_dir=`cd $this_dir/..; pwd`
-readonly SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
+SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
 
 readonly PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
 
@@ -24,12 +24,13 @@ PYTHON_USER_INSTALL="false"
 PYTHON_FORCE_PYTHON2="false"
 PYTHON_FORCE_PYTHON3="false"
 PYTHON_BUILD_PYTHON2_AND_PYTHON3="false"
+WITH_LSSOL="false"
 WITH_HRP2="false"
 WITH_HRP4="false"
 WITH_HRP5="false"
 BUILD_TYPE="RelWithDebInfo"
 BUILD_TESTING="true"
-INSTALL_APT_DEPENDENCIES="true"
+INSTALL_SYSTEM_DEPENDENCIES="true"
 CLONE_ONLY="false"
 SKIP_UPDATE="false"
 # This configuration option lets the script choose what to do when local git repositories are in
@@ -104,9 +105,11 @@ fi
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --help                     (-h)               : print this help
     --install-prefix           (-i) PATH          : the directory used to install everything         (default $INSTALL_PREFIX)
+    --source-dir               (-s) PATH          : the directory used to clone everything           (default $SOURCE_DIR)
     --build-type                    Type          : the build type to use                            (default $BUILD_TYPE)
     --build-testing                 {true, false} : whether to build and run unit tests              (default $BUILD_TESTING)
     --build-core               (-j) N             : number of cores used for building                (default $BUILD_CORE)
+    --with-lssol                                  : enable LSSOL (requires eigen-lssol access)       (default $WITH_LSSOL)
     --with-hrp2                                   : enable HRP2 (requires mc-hrp2 group access)      (default $WITH_HRP2)
     --with-hrp4                                   : enable HRP4 (requires mc-hrp4 group access)      (default $WITH_HRP4)
     --with-hrp5                                   : enable HRP5 (requires mc-hrp5 group access)      (default $WITH_HRP5)
@@ -117,7 +120,7 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --python-build-2-and-3          {true, false} : whether to build both Python 2 and Python 3      (default $PYTHON_BUILD_PYTHON2_AND_PYTHON3)
     --with-ros-support              {true, false} : whether to build with ROS support                (default $WITH_ROS_SUPPORT)
     --ros-distro                    NAME          : the ros distro to use                            (default $ROS_DISTRO)
-    --install-system-dependencies      {true, false} : whether to install system packages            (default $INSTALL_APT_DEPENDENCIES)
+    --install-system-dependencies      {true, false} : whether to install system packages            (default $INSTALL_SYSTEM_DEPENDENCIES)
     --clone-only                       {true, false} : only perform cloning                          (default $CLONE_ONLY)
     --skip-update                      {true, false} : skip git update                               (default $SKIP_UPDATE)
     --skip-dirty-update                {true, false} : skip git update if dirty repository           (default ${SKIP_DIRTY_UPDATE})
@@ -146,6 +149,11 @@ do
         -i|--install-prefix)
         i=$(($i+1))
         INSTALL_PREFIX="${!i}"
+        ;;
+
+        -s|--source-dir)
+        i=$(($i+1))
+        SOURCE_DIR="${!i}"
         ;;
 
         --with-ros-support)
@@ -184,6 +192,12 @@ do
         check_true_false --python-build-2-and-3 "$PYTHON_BUILD_PYTHON2_AND_PYTHON3"
         ;;
 
+        --with-lssol)
+          i=$(($i+1))
+          WITH_LSSOL="${!i}"
+          check_true_false --with-hrp2 "$WITH_LSSOL"
+          ;;
+
         --with-hrp2)
           i=$(($i+1))
           WITH_HRP2="${!i}"
@@ -213,10 +227,10 @@ do
         check_true_false --build-testing "$BUILD_TESTING"
         ;;
 
-        --install-apt-dependencies)
+        --install-system-dependencies)
         i=$(($i+1))
-        INSTALL_APT_DEPENDENCIES="${!i}"
-        check_true_false --install-apt-dependencies "$INSTALL_APT_DEPENDENCIES"
+        INSTALL_SYSTEM_DEPENDENCIES="${!i}"
+        check_true_false --install-system-dependencies "$INSTALL_SYSTEM_DEPENDENCIES"
         ;;
 
         --clone-only)
@@ -293,6 +307,7 @@ else
 fi
 #make settings readonly
 readonly INSTALL_PREFIX
+readonly SOURCE_DIR
 readonly WITH_ROS_SUPPORT
 readonly WITH_PYTHON_SUPPORT
 readonly WITH_PYTHON_SUPPORT
@@ -300,10 +315,11 @@ readonly PYTHON_FORCE_PYTHON2
 readonly PYTHON_FORCE_PYTHON3
 readonly PYTHON_BUILD_PYTHON2_AND_PYTHON3
 readonly BUILD_TYPE
-readonly INSTALL_APT_DEPENDENCIES
+readonly INSTALL_SYSTEM_DEPENDENCIES
 readonly BUILD_CORE
 readonly BUILD_TESTING
 readonly CLONE_ONLY
+readonly WITH_LSSOL
 readonly WITH_HRP2
 readonly WITH_HRP4
 readonly WITH_HRP5
@@ -336,6 +352,10 @@ then
   SUDO_CMD=
   PYTHON_USER_INSTALL=ON
 fi
+if [ ! -d $SOURCE_DIR ]
+then
+  mkdir -p $SOURCE_DIR
+fi
 
 export PATH=$INSTALL_PREFIX/bin:$PATH
 export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH
@@ -356,16 +376,19 @@ echo_log "-- Build and install log for mc_rtc generated on `date +%Y-%m-%d-%H:%M
 echo "-- Log file will be written to $BUILD_LOGFILE "
 echo_log "-- Building with the following options:"
 echo_log "   INSTALL_PREFIX=$INSTALL_PREFIX"
+echo_log "   SOURCE_DIR=$SOURCE_DIR"
 echo_log "   WITH_ROS_SUPPORT=$WITH_ROS_SUPPORT"
 echo_log "   WITH_PYTHON_SUPPORT=$WITH_PYTHON_SUPPORT"
 echo_log "   PYTHON_FORCE_PYTHON2=$PYTHON_FORCE_PYTHON2"
 echo_log "   PYTHON_FORCE_PYTHON3=$PYTHON_FORCE_PYTHON3"
 echo_log "   PYTHON_BUILD_PYTHON2_AND_PYTHON3=$PYTHON_BUILD_PYTHON2_AND_PYTHON3"
 echo_log "   BUILD_TYPE=$BUILD_TYPE"
-echo_log "   INSTALL_APT_DEPENDENCIES=$INSTALL_APT_DEPENDENCIES"
+echo_log "   INSTALL_SYSTEM_DEPENDENCIES=$INSTALL_SYSTEM_DEPENDENCIES"
 echo_log "   BUILD_CORE=$BUILD_CORE"
 echo_log "   BUILD_TESTING=$BUILD_TESTING"
 echo_log "   CLONE_ONLY=$CLONE_ONLY"
+echo_log "   BUILD_ONLY=$BUILD_ONLY"
+echo_log "   WITH_LSSOL=$WITH_LSSOL"
 echo_log "   WITH_HRP2=$WITH_HRP2"
 echo_log "   WITH_HRP4=$WITH_HRP4"
 echo_log "   WITH_HRP5=$WITH_HRP5"
@@ -407,7 +430,7 @@ if [[ $OSTYPE == "darwin"* ]]
 then
   export OS=macOS
   # Install brew on the system
-  if $INSTALL_APT_DEPENDENCIES && $NOT_CLONE_ONLY
+  if $INSTALL_SYSTEM_DEPENDENCIES && $NOT_CLONE_ONLY
   then
     if ! command -v brew
     then
@@ -441,7 +464,7 @@ then
   export OS=$(lsb_release -si)
   if [ $OS = Ubuntu ]
   then
-    if $INSTALL_APT_DEPENDENCIES && $NOT_CLONE_ONLY
+    if $INSTALL_SYSTEM_DEPENDENCIES && $NOT_CLONE_ONLY
     then
       install_apt ${APT_DEPENDENCIES}
       mc_rtc_extra_steps
@@ -721,6 +744,12 @@ echo_log "-- [OK] All manadatory repositories successfuly cloned or updated"
 ################################
 #  --  Fetch extra modules  -- #
 ################################
+if $WITH_LSSOL
+then
+  check_and_clone_git_dependency git@gite.lirmm.fr:multi-contact/eigen-lssol $SOURCE_DIR
+  echo_log "-- [OK] Successfully cloned and updated $git_dep to $repo_dir"
+fi
+
 if $WITH_HRP2
 then
   if $WITH_ROS_SUPPORT
@@ -930,6 +959,13 @@ fi
 build_git_dependency jrl-umi3218/RBDyn rbdyn
 build_git_dependency jrl-umi3218/eigen-qld eigen_qld
 build_git_dependency jrl-umi3218/eigen-quadprog
+if $WITH_LSSOL
+then
+  echo_log "-- Building with eigen-lssol support (WITH_LSSOL=true)"
+  build_git_dependency git@gite.lirmm.fr:multi-contact/eigen-lssol
+  echo_log "-- [OK] Successfully cloned and updated $git_dep to $repo_dir"
+fi
+
 build_git_dependency jrl-umi3218/Tasks tasks
 build_git_dependency jrl-umi3218/mc_rbdyn_urdf mc_rbdyn_urdf
 
@@ -1026,6 +1062,7 @@ fi
 #  --  Build extra modules  -- #
 ################################
 echo_log "-- Building extra modules (robots, etc)"
+
 if $WITH_HRP2
 then
   echo_log "-- Installing with HRP2 robot support"
