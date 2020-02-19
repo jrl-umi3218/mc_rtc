@@ -8,10 +8,12 @@ namespace mc_solver
 namespace details
 {
 
-CompoundJointConstraint::CompoundJointConstraint(const mc_rbdyn::Robots & robots,
-                                                 unsigned int rIndex,
-                                                 double dt,
-                                                 const std::vector<CompoundJointConstraintDescription> & desc)
+CompoundJointConstraint::CompoundJointConstraint(
+    const mc_rbdyn::Robots & robots,
+    unsigned int rIndex,
+    double dt,
+    const std::vector<CompoundJointConstraintDescription,
+                      Eigen::aligned_allocator<CompoundJointConstraintDescription>> & desc)
 : rIndex_(rIndex), name_("CompoundJointConstraint_" + robots.robot(rIndex).name()), dt_(dt)
 {
   for(const auto & d : desc)
