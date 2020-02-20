@@ -82,6 +82,9 @@
       id: derived-fsm
       title: Deriving the FSM controller
     -
+      id: datastore
+      title: "DataStore: Sharing Objects"
+    -
       id: observers
       title: Using the observers pipeline
     -
