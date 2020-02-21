@@ -153,9 +153,9 @@ void StabilizerStandingState::targetCoM(const Eigen::Vector3d & com)
 bool StabilizerStandingState::run(Controller & ctl)
 {
   // Configure from the datastore if available
-  ctl.datastore().assign("StabilizerStandingState::com", comTarget_);
-  ctl.datastore().assign("StabilizerStandingState::stiffness", K_);
-  ctl.datastore().assign("StabilizerStandingState::damping", D_);
+  ctl.datastore().get("StabilizerStandingState::com", comTarget_);
+  ctl.datastore().get("StabilizerStandingState::stiffness", K_);
+  ctl.datastore().get("StabilizerStandingState::damping", D_);
 
   const Eigen::Vector3d & com_ = pendulum_.com();
   const Eigen::Vector3d & comd_ = pendulum_.comd();

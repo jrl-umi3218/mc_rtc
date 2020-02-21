@@ -123,11 +123,10 @@ struct MC_RTC_UTILS_DLLAPI DataStore
    * otherwise
    *
    * @param name Name of the stored data
-   * @param data External object to modify if there is stored data in the
-   * datastore
+   * @param data Reference to the external object to assign with the stored data
    */
   template<typename T>
-  void assign(const std::string & name, T & data)
+  void get(const std::string & name, T & data)
   {
     if(has(name))
     {
@@ -239,6 +238,45 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     else
     {
       return make_initializer<T>(name, args...);
+    }
+  }
+
+  /**
+   * @brief Convenience function that creates an object on the datastore if it
+   * does not already exist, or assign its value from the provided argument
+   *
+   * @param name Name of the stored object
+   * @param arg Data to be copied to the datastore
+   *
+   * \note This function creates a copy of the provided argument. Thus,
+   * modifying the original object afterwards will not affect the datastore's
+   * value
+   *
+   * \code{cpp}
+   * Eigen::Vector3d vec{1,2,3};
+   * auto & data = store.make_or_assign<Eigen::Vector3d>("EigenVector", vec);
+   * vec.x() = 2;
+   * // The datastore object is a copy of vec, so modifying vec will not modify
+   * // the datastore's value
+   * data.isApprox(Eigen::Vector3d{2,2,3}); // false
+   *
+   * // But modifying the datastore object must modify the value
+   * store.get<Eigen::Vector3d>("EigenVector").x() = 2;
+   * data.isApprox(Eigen::Vector3d{2,2,3}); // true
+   * \endcode
+   */
+  template<typename T>
+  T & make_or_assign(const std::string & name, const T & arg)
+  {
+    if(has(name))
+    {
+      auto & data = get<T>(name);
+      data = arg;
+      return data;
+    }
+    else
+    {
+      return make<T>(name, arg);
     }
   }
 

@@ -7,6 +7,7 @@
 #include <mc_rtc/DataStore.h>
 #include <boost/test/unit_test.hpp>
 #include "utils.h"
+#include <Eigen/Core>
 
 using DataStore = mc_rtc::datastore::DataStore;
 
@@ -110,9 +111,9 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
   // Test operators
   store.make<double>("TestAssign", 42);
   double value = 0;
-  store.assign("TestAssign", value);
+  store.get("TestAssign", value);
   BOOST_REQUIRE(value == 42);
-  store.assign("TestAssignNonExisting", value);
+  store.get("TestAssignNonExisting", value);
   BOOST_REQUIRE(value == 42);
 
   // Test make_or_assign
@@ -133,6 +134,22 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
     BOOST_REQUIRE(data.size() == 2);
     BOOST_REQUIRE(data[0] == 4);
     BOOST_REQUIRE(data[1] == 12);
+    Eigen::Vector3d vec{1, 2, 3};
+    store.make_or_assign<Eigen::Vector3d>("EigenVector", vec);
+    BOOST_CHECK(store.has("EigenVector"));
+    BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVector").isApprox(Eigen::Vector3d{1, 2, 3}, 1e-10));
+    // The datastore object is a copy of vec, so modifying vec will not modify
+    // the datastore's value
+    vec.x() = 2;
+    BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVector").isApprox(Eigen::Vector3d{1, 2, 3}, 1e-10));
+    // But modifying the datastore object must modify the value
+    store.get<Eigen::Vector3d>("EigenVector").x() = 2;
+    BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVector").isApprox(Eigen::Vector3d{2, 2, 3}, 1e-10));
+    {
+      Eigen::Vector3d vec{1, 2, 3};
+      store.make_or_assign<Eigen::Vector3d>("EigenVectorScope", vec);
+    }
+    BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVectorScope").isApprox(Eigen::Vector3d{1, 2, 3}, 1e-10));
   }
 }
 
