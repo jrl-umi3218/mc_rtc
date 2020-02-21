@@ -55,17 +55,12 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
   BOOST_CHECK_THROW(store.get<double>("data"), std::runtime_error);
   BOOST_CHECK_THROW(store.get<std::vector<int>>("data"), std::runtime_error);
   BOOST_CHECK_THROW(store.get<std::vector<double>>("non-existing key"), std::runtime_error);
-  std::cout << "data.size() " << data.size() << "\n";
-  for(const auto & d : data)
-  {
-    std::cout << "- " << d << "\n";
-  }
 
   data.resize(100);
-  std::cout << "data.size() " << data.size() << "\n";
   auto & data2 = store.get<std::vector<double>>("data");
   BOOST_REQUIRE(data2.size() == data.size());
-  std::cout << "data2.size() " << data2.size() << "\n";
+  const auto & constData = store.get<std::vector<double>>("data");
+  BOOST_REQUIRE(data2.size() == constData.size());
 
   // Creating an inherited object and checking virtual inheritance
   store.make<B, A>("b", "World");

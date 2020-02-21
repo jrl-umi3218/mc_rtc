@@ -97,25 +97,14 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   template<typename T>
   T & get(const std::string & name)
   {
-    auto it = datas_.find(name);
-    if(it == datas_.end())
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\"");
-    }
-    auto & data = it->second;
-    if(!data.same(typeid(T).hash_code()))
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Object for key \"" << name
-                                                  << "\" does not have the same type as the stored type");
-    }
-    return *(reinterpret_cast<T *>(data.buffer.get()));
+    return const_cast<T &>(get_<T>(name));
   }
 
   /** @brief const variant of \ref get */
   template<typename T>
   const T & get(const std::string & name) const
   {
-    return get<T>(name);
+    return get_<T>(name);
   }
 
   /**
@@ -315,6 +304,25 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   void name(const std::string & name)
   {
     name_ = name;
+  }
+
+private:
+  /** @brief const variant of \ref get */
+  template<typename T>
+  const T & get_(const std::string & name) const
+  {
+    const auto it = datas_.find(name);
+    if(it == datas_.end())
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\"");
+    }
+    const auto & data = it->second;
+    if(!data.same(typeid(T).hash_code()))
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Object for key \"" << name
+                                                  << "\" does not have the same type as the stored type");
+    }
+    return *(reinterpret_cast<T *>(data.buffer.get()));
   }
 
 private:

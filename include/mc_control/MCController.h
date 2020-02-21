@@ -238,6 +238,11 @@ public:
     return datastore_;
   }
 
+  const mc_rtc::datastore::DataStore & datastore() const
+  {
+    return datastore_;
+  }
+
   /** Return the mc_rbdyn::Robots real robots instance
    * \anchor mc_controller_real_robots_const_doc
    */
