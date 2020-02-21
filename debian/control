@@ -98,7 +98,7 @@ Depends: libmc-rtc1 (= ${binary:Version}),
          python-git,
          python-mc-rtc,
          python-matplotlib,
-         python-pyside,
+         python-pyqt5,
          ${shlibs:Depends},
          ${misc:Depends}
 Description: mc-rtc - Utilities
