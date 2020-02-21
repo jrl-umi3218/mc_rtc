@@ -5,16 +5,15 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PySide import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 
-from PySide.QtGui import QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
 import copy
 import math
 import matplotlib
 import numpy as np
-matplotlib.use('Qt4Agg')
-matplotlib.rcParams['backend.qt4'] = 'PySide'
+matplotlib.use('Qt5Agg')
 import matplotlib.pyplot
 
 from matplotlib.figure import Figure
@@ -467,59 +466,59 @@ class PlotFigure(object):
   def style_right(self, y, styleIn = None):
     return self._style(self.axes2_plots, y, styleIn)
 
-class SimpleAxesDialog(QtGui.QDialog):
+class SimpleAxesDialog(QtWidgets.QDialog):
   def __init__(self, parent):
-    QtGui.QDialog.__init__(self, parent)
+    QtWidgets.QDialog.__init__(self, parent)
     self.setWindowTitle('Edit axes limits')
     self.setModal(True)
-    self.layout = QtGui.QGridLayout(self)
-    self.layout.addWidget(QtGui.QLabel("Min"), 0, 1)
-    self.layout.addWidget(QtGui.QLabel("Max"), 0, 2)
+    self.layout = QtWidgets.QGridLayout(self)
+    self.layout.addWidget(QtWidgets.QLabel("Min"), 0, 1)
+    self.layout.addWidget(QtWidgets.QLabel("Max"), 0, 2)
 
-    self.layout.addWidget(QtGui.QLabel("X"), 1, 0)
+    self.layout.addWidget(QtWidgets.QLabel("X"), 1, 0)
     x_limits = parent.x_limits
     if x_limits is None:
       x_limits = parent.axes.get_xlim()
-    self.x_min = QtGui.QLineEdit(str(x_limits[0]))
-    self.x_min.setValidator(QtGui.QDoubleValidator())
+    self.x_min = QtWidgets.QLineEdit(str(x_limits[0]))
+    self.x_min.setValidator(QtWidgets.QDoubleValidator())
     self.layout.addWidget(self.x_min, 1, 1)
-    self.x_max = QtGui.QLineEdit(str(x_limits[1]))
-    self.x_max.setValidator(QtGui.QDoubleValidator())
+    self.x_max = QtWidgets.QLineEdit(str(x_limits[1]))
+    self.x_max.setValidator(QtWidgets.QDoubleValidator())
     self.x_init = [float(self.x_min.text()), float(self.x_max.text())]
     self.layout.addWidget(self.x_max, 1, 2)
 
-    self.layout.addWidget(QtGui.QLabel("Y1"), 2, 0)
+    self.layout.addWidget(QtWidgets.QLabel("Y1"), 2, 0)
     y1_limits = parent.y1_limits
     if y1_limits is None:
       y1_limits = parent.axes.get_ylim()
-    self.y1_min = QtGui.QLineEdit(str(y1_limits[0]))
-    self.y1_min.setValidator(QtGui.QDoubleValidator())
+    self.y1_min = QtWidgets.QLineEdit(str(y1_limits[0]))
+    self.y1_min.setValidator(QtWidgets.QDoubleValidator())
     self.layout.addWidget(self.y1_min, 2, 1)
-    self.y1_max = QtGui.QLineEdit(str(y1_limits[1]))
-    self.y1_max.setValidator(QtGui.QDoubleValidator())
+    self.y1_max = QtWidgets.QLineEdit(str(y1_limits[1]))
+    self.y1_max.setValidator(QtWidgets.QDoubleValidator())
     self.y1_init = [float(self.y1_min.text()), float(self.y1_max.text())]
     self.layout.addWidget(self.y1_max, 2, 2)
 
-    self.layout.addWidget(QtGui.QLabel("Y2"), 3, 0)
+    self.layout.addWidget(QtWidgets.QLabel("Y2"), 3, 0)
     y2_limits = parent.y2_limits
     if y2_limits is None:
       y2_limits = parent.axes2.get_ylim()
-    self.y2_min = QtGui.QLineEdit(str(y2_limits[0]))
-    self.y2_min.setValidator(QtGui.QDoubleValidator())
+    self.y2_min = QtWidgets.QLineEdit(str(y2_limits[0]))
+    self.y2_min.setValidator(QtWidgets.QDoubleValidator())
     self.layout.addWidget(self.y2_min, 3, 1)
-    self.y2_max = QtGui.QLineEdit(str(y2_limits[1]))
-    self.y2_max.setValidator(QtGui.QDoubleValidator())
+    self.y2_max = QtWidgets.QLineEdit(str(y2_limits[1]))
+    self.y2_max.setValidator(QtWidgets.QDoubleValidator())
     self.y2_init = [float(self.y2_min.text()), float(self.y2_max.text())]
     self.layout.addWidget(self.y2_max, 3, 2)
 
-    confirmLayout = QtGui.QHBoxLayout()
-    okButton = QtGui.QPushButton("Ok", self)
+    confirmLayout = QtWidgets.QHBoxLayout()
+    okButton = QtWidgets.QPushButton("Ok", self)
     confirmLayout.addWidget(okButton)
     okButton.clicked.connect(self.accept)
-    applyButton = QtGui.QPushButton("Apply", self)
+    applyButton = QtWidgets.QPushButton("Apply", self)
     confirmLayout.addWidget(applyButton)
     applyButton.clicked.connect(self.apply)
-    cancelButton = QtGui.QPushButton("Cancel", self)
+    cancelButton = QtWidgets.QPushButton("Cancel", self)
     confirmLayout.addWidget(cancelButton)
     cancelButton.clicked.connect(self.reject)
     self.layout.addLayout(confirmLayout, 4, 0, 1, 3)
@@ -545,7 +544,7 @@ class SimpleAxesDialog(QtGui.QDialog):
       self.parent().draw()
 
   def accept(self):
-    QtGui.QDialog.accept(self)
+    QtWidgets.QDialog.accept(self)
     self.apply()
 
 class PlotCanvasWithToolbar(PlotFigure, QWidget):
@@ -563,19 +562,19 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.setLayout(vbox)
 
   def setupLockButtons(self, layout):
-    self.x_locked = QtGui.QPushButton(u"🔒X", self)
+    self.x_locked = QtWidgets.QPushButton(u"🔒X", self)
     self.x_locked.setCheckable(True)
     layout.addWidget(self.x_locked)
     self.x_locked.toggled.connect(self.x_locked_changed)
     self.x_limits = None
 
-    self.y1_locked = QtGui.QPushButton(u"🔒 Y1", self)
+    self.y1_locked = QtWidgets.QPushButton(u"🔒 Y1", self)
     self.y1_locked.setCheckable(True)
     layout.addWidget(self.y1_locked)
     self.y1_locked.toggled.connect(self.y1_locked_changed)
     self.y1_limits = None
 
-    self.y2_locked = QtGui.QPushButton(u"🔒 Y2", self)
+    self.y2_locked = QtWidgets.QPushButton(u"🔒 Y2", self)
     self.y2_locked.setCheckable(True)
     layout.addWidget(self.y2_locked)
     self.y2_locked.toggled.connect(self.y2_locked_changed)

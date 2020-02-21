@@ -4,7 +4,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PySide import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 
 import ui
 from mc_log_types import LineStyle
@@ -15,7 +15,7 @@ from functools import partial
 import copy
 import re
 
-class MCLogTreeWidgetItem(QtGui.QTreeWidgetItem):
+class MCLogTreeWidgetItem(QtWidgets.QTreeWidgetItem):
   def __init__(self, parent, displayText, actualText, hasData):
     super(MCLogTreeWidgetItem, self).__init__(parent, [displayText])
     self._displayText = displayText
@@ -82,7 +82,7 @@ class TreeView(object):
   def select(self, name, ySelector, idx, fullName = ""):
     if name == fullName:
       selection = ySelector.selectionModel()
-      selection.select(self.modelIdxs[idx], QtGui.QItemSelectionModel.Select)
+      selection.select(self.modelIdxs[idx], QtCore.QItemSelectionModel.Select)
       ySelector.setSelectionModel(selection)
       parent = self.parent
       while parent is not None and idx < len(parent.widgets):
@@ -181,11 +181,11 @@ class SpecialPlot(object):
   def plot(self):
     self.__plot()
 
-class RemoveSpecialPlotButton(SpecialPlot, QtGui.QPushButton):
+class RemoveSpecialPlotButton(SpecialPlot, QtWidgets.QPushButton):
   def __init__(self, name, logtab, idx, special_id):
     self.logtab = logtab
     SpecialPlot.__init__(self, name, logtab.ui.canvas, idx, special_id)
-    QtGui.QPushButton.__init__(self, u"Remove {} {} plot".format(name, special_id), logtab)
+    QtWidgets.QPushButton.__init__(self, u"Remove {} {} plot".format(name, special_id), logtab)
     self.clicked.connect(self.on_clicked)
     if idx == 0:
       self.layout = logtab.ui.y1SelectorLayout
@@ -206,7 +206,7 @@ class RemoveSpecialPlotButton(SpecialPlot, QtGui.QPushButton):
     del self.logtab.specials["{}_{}".format(self.name, self.id)]
     self.deleteLater()
 
-class MCLogTab(QtGui.QWidget):
+class MCLogTab(QtWidgets.QWidget):
   canvas_need_update = QtCore.Signal()
   def __init__(self, parent = None):
     super(MCLogTab, self).__init__(parent)
@@ -218,7 +218,7 @@ class MCLogTab(QtGui.QWidget):
       self.ui.canvas.grid2 = parent.gridStyles['right']
     def setupSelector(ySelector):
       ySelector.setHeaderLabels(["Data"])
-      ySelector.header().setResizeMode(QtGui.QHeaderView.ResizeMode.Fixed)
+      ySelector.header().setSectionResizeMode(QtWidgets.QHeaderView.Fixed)
       ySelector.viewport().installEventFilter(FilterRightClick(ySelector))
     setupSelector(self.ui.y1Selector)
     setupSelector(self.ui.y2Selector)
@@ -249,10 +249,10 @@ class MCLogTab(QtGui.QWidget):
     if self.rm is None:
       return
     def setQNames(ySelector):
-      qList = ySelector.findItems("q", QtCore.Qt.MatchFlag.MatchStartsWith)
-      qList += ySelector.findItems("alpha", QtCore.Qt.MatchFlag.MatchStartsWith)
-      qList += ySelector.findItems("error", QtCore.Qt.MatchFlag.MatchStartsWith)
-      qList += ySelector.findItems("tau", QtCore.Qt.MatchFlag.MatchStartsWith)
+      qList = ySelector.findItems("q", QtCore.Qt.MatchStartsWith)
+      qList += ySelector.findItems("alpha", QtCore.Qt.MatchStartsWith)
+      qList += ySelector.findItems("error", QtCore.Qt.MatchStartsWith)
+      qList += ySelector.findItems("tau", QtCore.Qt.MatchStartsWith)
       def update_child_display(items):
         for itm in items:
           cCount = itm.childCount()
@@ -295,11 +295,11 @@ class MCLogTab(QtGui.QWidget):
     for _,s in self.specials.iteritems():
       s.plot()
 
-  @QtCore.Slot(QtGui.QTreeWidgetItem, int)
+  @QtCore.Slot(QtWidgets.QTreeWidgetItem, int)
   def on_y1Selector_itemClicked(self, item, col):
     self.y1Selected = self.itemSelectionChanged(self.ui.y1Selector, self.y1Selected, 0)
 
-  @QtCore.Slot(QtGui.QTreeWidgetItem, int)
+  @QtCore.Slot(QtWidgets.QTreeWidgetItem, int)
   def on_y2Selector_itemClicked(self, item, col):
     self.y2Selected = self.itemSelectionChanged(self.ui.y2Selector, self.y2Selected, 1)
 
@@ -327,9 +327,11 @@ class MCLogTab(QtGui.QWidget):
       return re.match("{}($|_.*$)".format(s[0]), x) is not None
     selected = sorted(filter(lambda x: any([is_selected(s, x) for s in selected_items]), self.data.keys()))
     def find_item(s):
-      for itm in [it.value() for it in QtGui.QTreeWidgetItemIterator(ySelector)]:
-        if itm.actualText == s:
-          return itm
+      itm = QtWidgets.QTreeWidgetItemIterator(ySelector)
+      while itm:
+        if itm.value().actualText == s:
+          return itm.value()
+        itm += 1
       return None
     legends = [itm.actualText.replace(itm.originalText, itm.displayText) for itm in [ find_item(s) for s in selected ] ]
     for s,l in zip(selected, legends):
@@ -367,16 +369,16 @@ class MCLogTab(QtGui.QWidget):
     item = ySelector.itemAt(point)
     if item is None:
       return
-    menu = QtGui.QMenu(ySelector)
+    menu = QtWidgets.QMenu(ySelector)
     addedAction = False
-    action = QtGui.QAction(u"Plot diff".format(item.actualText), menu)
+    action = QtWidgets.QAction(u"Plot diff".format(item.actualText), menu)
     action.triggered.connect(lambda: RemoveSpecialPlotButton(item.actualText, self, idx, "diff"))
     menu.addAction(action)
     s = re.match('^(.*)_q?[wxyz]$', item.actualText)
     if s is not None:
       for item_label, axis_label in [("RPY angles", "rpy"), ("ROLL angle", "r"), ("PITCH angle", "p"), ("YAW angle", "y")]:
-        action = QtGui.QAction(u"Plot {}".format(item_label, item.actualText), menu)
-        action.triggered.connect(lambda label=axis_label: RemoveSpecialPlotButton(s.group(1), self, idx, label))
+        action = QtWidgets.QAction(u"Plot {}".format(item_label, item.actualText), menu)
+        action.triggered.connect(lambda checked, label=axis_label: RemoveSpecialPlotButton(s.group(1), self, idx, label))
         menu.addAction(action)
     else:
       quat_childs = filter(lambda x: x is not None, [ re.match('{}((_.+)*)_q?w$'.format(item.actualText), x) for x in self.data.keys() ])
@@ -386,9 +388,9 @@ class MCLogTab(QtGui.QWidget):
             action_text = u"Plot {} {}".format(qc.group(1)[1:], item_label)
           else:
             action_text = u"Plot {}".format(item_label)
-          action = QtGui.QAction(action_text, menu)
+          action = QtWidgets.QAction(action_text, menu)
           plot_name = item.actualText + qc.group(1)
-          action.triggered.connect(lambda name=plot_name, label=axis_label: RemoveSpecialPlotButton(name, self, idx, label))
+          action.triggered.connect(lambda checked, name=plot_name, label=axis_label: RemoveSpecialPlotButton(name, self, idx, label))
           menu.addAction(action)
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
