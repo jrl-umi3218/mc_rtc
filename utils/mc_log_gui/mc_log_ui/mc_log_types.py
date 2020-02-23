@@ -4,8 +4,14 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
+from enum import Enum
+
+class PlotSide(Enum):
+  LEFT = 0
+  RIGHT = 1
+
 class LineStyle(object):
-  def __init__(self, color = 'black', linestyle = '--', linewidth = 0.5, visible = False, label = ""):
+  def __init__(self, color = 'black', linestyle = '-', linewidth = 0.5, visible = False, label = ""):
     self.color = color
     self.linestyle = linestyle
     self.linewidth = linewidth

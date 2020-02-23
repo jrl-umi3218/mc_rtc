@@ -5,7 +5,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
@@ -17,13 +17,13 @@ matplotlib.use('Qt5Agg')
 import matplotlib.pyplot
 
 from matplotlib.figure import Figure
-from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas,\
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas,\
                                                NavigationToolbar2QT as NavigationToolbar
 
 from collections import OrderedDict
 from math import asin, atan2
 
-from mc_log_types import LineStyle
+from mc_log_types import LineStyle, PlotSide
 
 
 def rpyFromMat(E):
@@ -39,37 +39,223 @@ def rpyFromQuat(quat):
     import eigen
     return rpyFromMat(list(eigen.Quaterniond(*quat).toRotationMatrix()))
 
+class PlotYAxis(object):
+  def __init__(self, parent, x_axis = None):
+    self.figure = parent
+    if x_axis is None:
+      self.is_left = True
+      self._axis = parent.fig.add_subplot(111)
+      self._axis.autoscale(enable = True, axis = 'both', tight = False)
+      self._x_axis = self._axis
+    else:
+      self.is_left = False
+      self._axis = x_axis.twinx()
+      self._x_axis = x_axis
+    self._axis.autoscale_view(False,True,True)
+    self._axis.format_coord = parent.format_coord
+    self.grid = LineStyle(linestyle = '--')
+    self.plots = OrderedDict()
+    self._label_fontsize = 10
+    self._legend_ncol = 3
+
+  def __len__(self):
+    return len(self.plots)
+
+  def _data(self):
+    return self.figure.data
+
+  def _legend_fontsize(self):
+    return self.figure._legend_fontsize
+
+  def _labelpad(self):
+    return self.figure._labelpad
+
+  def _x_label_fontsize(self):
+    return self.figure._x_label_fontsize
+
+  def axis(self):
+    return self._axis
+
+  def drawGrid(self):
+    if len(self.plots):
+      self._axis.grid(color = self.grid.color, linestyle = self.grid.linestyle, linewidth = self.grid.linewidth, visible = self.grid.visible, which = 'both')
+
+  def legend(self):
+    if not len(self.plots):
+      return
+    if self.is_left:
+      loc = 3
+      top_anchor = 1.02
+    else:
+      loc = 2
+      top_anchor = -0.125
+      if len(self.figure.x_label()):
+        top_anchor = -0.175
+    self._axis.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=loc, ncol=self._legend_ncol, mode="expand", borderaxespad=0.5, fontsize=self._legend_fontsize())
+
+  def legendNCol(self, n = None):
+    if n is None:
+      return self._legend_ncol
+    self._legend_ncol = n
+    self.legend()
+
+  def legendRows(self):
+    return math.ceil(len(self.plots) / float(self._legend_ncol))
+
+  def legendOffset(self, offset, sign):
+    if self.legendRows() > 3:
+      offset = offset + sign * 0.015 * (self.legendRows() - 3)
+    return offset
+
+  # If this axis is empty but the other is not, fix my own limits, in the
+  # opposite condition call the opposite function
+  def fixLimits(self, axis):
+    self._axis.get_yaxis().set_visible(len(self) != 0)
+    axis._axis.get_yaxis().set_visible(len(axis) != 0)
+    if len(axis) != 0 and len(self) == 0:
+      point = (axis.axis().dataLim.get_points()[1] + axis.axis().dataLim.get_points()[0])/2
+      plt, = self._axis.plot([point[0]], [point[1]], visible = False)
+      plt.remove()
+      del plt
+      self._axis.relim()
+    elif len(self) != 0 and len(axis) == 0:
+      axis.fixLimits(self)
+
+  def setLimits(self, xlim = None, ylim = None):
+    if not len(self):
+      return xlim
+    dataLim = self._axis.dataLim.get_points()
+    if xlim is not None:
+      x_min = xlim[0]
+      x_max = xlim[1]
+    else:
+      dataLim = self._axis.dataLim.get_points()
+      x_range = dataLim[1][0] - dataLim[0][0]
+      x_min = dataLim[0][0] - x_range*0.01
+      x_max = dataLim[1][0] + x_range*0.01
+    self._x_axis.set_xlim([x_min, x_max])
+    if ylim is None:
+      y_range = dataLim[1][1] - dataLim[0][1]
+      self._axis.set_ylim([dataLim[0][1] - y_range*0.01, dataLim[1][1] + y_range*0.01])
+    else:
+      self._axis.set_ylim(ylim)
+    return x_min, x_max
+
+  def _label(self, get_label, set_label, l, size):
+    if l is None:
+      l = get_label()
+    set_label(l, fontsize = size, labelpad = self._labelpad())
+
+  def _label_property(self, get_label, set_label, l = None):
+    if l is None:
+      return get_label()
+    set_label(l)
+
+  def _x_label(self, l = None):
+    self._label(self.x_label, self._x_axis.set_xlabel, l, self._x_label_fontsize())
+
+  def x_label(self, l = None):
+    return self._label_property(self._x_axis.get_xlabel, self._x_label, l)
+
+  def _y_label(self, l = None):
+    self._label(self.y_label, self._axis.set_ylabel, l, self._label_fontsize)
+
+  def y_label(self, l = None):
+    return self._label_property(self._axis.get_ylabel, self._y_label, l)
+
+  def y_label_fontsize(self, fontsize = None):
+    if fontsize is None:
+      return self._label_fontsize
+    self._label_fontsize = fontsize
+    self._y_label()
+
+  def _plot(self, x, y, y_label, style = None):
+    if style is None:
+      return self._plot(x, y, y_label, LineStyle(color = self.figure._next_color()))
+    if y_label in self.plots:
+      return False
+    self.plots[y_label] = self._axis.plot(x, y, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+    self.legend()
+    return True
+
+  def add_plot(self, x, y, y_label, style = None):
+    return self._plot(self._data()[x], self._data()[y], y_label, style)
+
+  def add_diff_plot(self, x, y, y_label):
+    dt = self._data()[x][1] - self._data()[x][0]
+    return self._plot(self._data()[x][1:], np.diff(self._data()[y])//dt, y_label)
+
+  def _add_rpy_plot(self, x_label, y, idx):
+    assert (idx >= 0 and idx <= 2),"index must be 0, 1 or 2"
+    rpy_label = ['roll', 'pitch', 'yaw']
+    y_label = "{}_{}".format(y, rpy_label[idx])
+    fmt = ""
+    if "{}_qw".format(y) in self._data().keys():
+      fmt = "q"
+    qw, qx, qy, qz = [ self._data()[k] for k in [ "{}_{}{}".format(y, fmt, ax) for ax in ["w", "x", "y", "z"] ] ]
+    data = [ rpyFromQuat([w, x, y, z])[idx] for w, x, y, z in zip(qw, qx, qy, qz) ]
+    return self._plot(self._data()[x_label], data, y_label)
+
+  def add_roll_plot(self, x, y):
+    return self._add_rpy_plot(x, y, 0)
+
+  def add_pitch_plot(self, x, y):
+    return self._add_rpy_plot(x, y, 1)
+
+  def add_yaw_plot(self, x, y):
+    return self._add_rpy_plot(x, y, 2)
+
+  def add_rpy_plot(self, x, y):
+    r = self.add_roll_plot(x, y)
+    p = self.add_pitch_plot(x, y)
+    y = self.add_yaw_plot(x, y)
+    return r or p or y
+
+  def remove_plot(self, y):
+    if y not in self.plots:
+      return
+    self.plots[y].remove()
+    del self.plots[y]
+    if len(self.plots):
+      self._axis.relim()
+      self.legend()
+    else:
+      self._axis.clear()
+
+  def clear(self):
+    self.plots = {}
+    self._axis.clear()
+
+  # Get or set the style of a given plot
+  def style(self, y, style = None):
+    if y not in self.plots:
+      raise KeyError("No plot named {}".format(y))
+    plt = self.plots[y]
+    if style is None:
+      return LineStyle(plt.get_color(), plt.get_linestyle(), plt.get_linewidth(), label = plt.get_label())
+    plt.set_color(style.color)
+    plt.set_linestyle(style.linestyle)
+    plt.set_linewidth(style.linewidth)
+    if len(style.label):
+      plt.set_label(style.label)
+
 class PlotFigure(object):
   def __init__(self):
     self.fig = matplotlib.pyplot.figure(figsize=(5, 4), dpi=100)
-    self.axes = self.fig.add_subplot(111)
-    self.axes.autoscale(enable = True, axis = 'both', tight = False)
-    self.axes.autoscale_view(False,True,True)
-    self.axes2 = self.axes.twinx()
-    self.axes2.autoscale_view(False,True,True)
-    self.axes_format_coord = self.axes.format_coord
-    self.axes2_format_coord = self.axes2.format_coord
-    self.axes.format_coord = self.format_coord
-    self.axes2.format_coord = self.format_coord
+    self.axes = {}
+    self.axes[PlotSide.LEFT] = PlotYAxis(self)
+    self.axes[PlotSide.RIGHT] = PlotYAxis(self, self._left().axis())
 
-    self.grid = LineStyle()
-    self.grid2 = LineStyle()
-
+    self._title_fontsize = 12
     self._x_label_fontsize = 10
-    self._y1_label_fontsize = 10
-    self._y2_label_fontsize = 10
     self._labelpad = 10
     self._tick_labelsize = 10
     self._legend_fontsize = 10
     self._top_offset = 0.9
     self._bottom_offset = 0.1
-    self._y1_legend_ncol = 3
-    self._y2_legend_ncol = 3
 
     self.data = None
     self.computed_data = {}
-    self.axes_plots = OrderedDict()
-    self.axes2_plots = OrderedDict()
 
     self.color = 0
     cm = matplotlib.cm.Set1
@@ -79,57 +265,33 @@ class PlotFigure(object):
 
     self.x_data = 't'
 
+  # Helper function to call something on all axes, call expects an axis argument
+  def _axes(self, call):
+    call(self._left())
+    call(self._right())
+
+  # Shortcut to the left axis
+  def _left(self):
+    return self.axes[PlotSide.LEFT]
+
+  # Shortcut to the right axis
+  def _right(self):
+    return self.axes[PlotSide.RIGHT]
+
   def _drawGrid(self):
-    def draw(axes, style):
-      axes.grid(color = style.color, linestyle = style.linestyle, linewidth = style.linewidth, visible = style.visible, which = 'both')
-      axes.set_axisbelow(True)
-    if len(self.axes_plots) > 0:
-      draw(self.axes, self.grid)
-    if len(self.axes2_plots) > 0:
-      draw(self.axes2, self.grid2)
+    self._axes(lambda axis: axis.drawGrid())
+
+  def _legend(self):
+    self._axes(lambda axis: axis.legend())
 
   def draw(self, x_limits = None, y1_limits = None, y2_limits = None):
-    def fix_axes_limits(axes, axes2):
-      point = (axes2.dataLim.get_points()[1] + axes2.dataLim.get_points()[0])/2
-      plt, = axes.plot([point[0]], [point[1]], visible = False)
-      plt.remove()
-      del plt
-      axes.relim()
-    if len(self.axes_plots) == 0 and len(self.axes2_plots) != 0:
-      fix_axes_limits(self.axes, self.axes2)
-    if len(self.axes2_plots) == 0 and len(self.axes_plots) != 0:
-      fix_axes_limits(self.axes2, self.axes)
-    def set_axes_limits(axes, xlim = None, ylim = None):
-      dataLim = axes.dataLim.get_points()
-      x_range = (dataLim[1][0] - dataLim[0][0])/2
-      y_range = (dataLim[1][1] - dataLim[0][1])/2
-      x_min = dataLim[0][0] - x_range*0.05
-      x_max = dataLim[1][0] + x_range*0.05
-      if xlim is not None:
-        x_min = min(x_min, xlim[0])
-        x_max = max(x_max, xlim[1])
-      axes.set_xlim([x_min, x_max])
-      if ylim is None:
-        axes.set_ylim([dataLim[0][1] - y_range*0.05, dataLim[1][1] + y_range*0.05])
-      else:
-        axes.set_ylim(ylim)
-      return x_min, x_max
-    if len(self.axes_plots):
-      x_limits = set_axes_limits(self.axes, xlim = x_limits, ylim = y1_limits)
-    if len(self.axes2_plots):
-      x_limits = set_axes_limits(self.axes2, xlim = x_limits, ylim = y2_limits)
-      self.axes.set_xlim(x_limits)
-    self._legend_left()
-    self._legend_right()
+    self._left().fixLimits(self._right())
+    x_limits = self._left().setLimits(x_limits, y1_limits)
+    self._right().setLimits(x_limits, y2_limits)
+    self._legend()
     self._drawGrid()
-    top_offset = self._top_offset
-    top_legend_rows = math.ceil(len(self.axes_plots.keys()) / 3.)
-    if top_legend_rows > 3:
-      top_offset = top_offset - 0.015 * (top_legend_rows - 3)
-    bottom_offset = self._bottom_offset
-    bottom_legend_rows = math.ceil(len(self.axes2_plots.keys()) / 3.)
-    if bottom_legend_rows > 3:
-      bottom_offset = bottom_offset + 0.015 * (bottom_legend_rows - 3)
+    top_offset = self._left().legendOffset(self._top_offset, -1)
+    bottom_offset = self._left().legendOffset(self._bottom_offset, 1)
     self.fig.subplots_adjust(top = top_offset, bottom = bottom_offset)
 
   def setData(self, data):
@@ -155,84 +317,56 @@ class PlotFigure(object):
       if self.fig._suptitle is None:
         return ""
       return self.fig._suptitle.get_text()
-    else:
-      self.fig.suptitle(title)
+    self.fig.suptitle(title)
 
   def title_fontsize(self, fontsize = None):
     if fontsize is None:
-      if self.fig._suptitle is None:
-        return 12
-      return self.fig._suptitle.get_fontsize()
-    else:
-      self.fig.suptitle(self.title(), fontsize = fontsize)
+      return self._title_fontsize
+    self._title_fontsize = fontsize
+    self.fig.suptitle(self.title(), fontsize = self._title_fontsize)
 
   def tick_fontsize(self, size = None):
     if size is None:
       return self._tick_labelsize
-    else:
-      self._tick_labelsize = size
-      self.axes.tick_params(labelsize = self._tick_labelsize)
-      self.axes2.tick_params(labelsize = self._tick_labelsize)
+    self._tick_labelsize = size
+    self._axes(lambda a: a.axis().tick_params(labelsize = self._tick_labelsize))
 
   def labelpad(self, pad = None):
     if pad is None:
       return self._labelpad
-    else:
-      self._labelpad = pad
-      self._x_label()
-      self._y1_label()
-      self._y2_label()
+    self._labelpad = pad
+    self._left()._x_label()
+    self._axes(lambda axis: axis._y_label())
 
   def _x_label(self, label = None):
-    if label is None:
-      label = self.x_label()
-    self.axes.set_xlabel(label, fontsize = self._x_label_fontsize, labelpad = self._labelpad)
+    self._left()._x_label(label)
 
   def _y1_label(self, label = None):
-    if label is None:
-      label = self.y1_label()
-    self.axes.set_ylabel(label, fontsize = self._y1_label_fontsize, labelpad = self._labelpad)
+    self._left()._y_label(label)
 
   def _y2_label(self, label = None):
-    if label is None:
-      label = self.y2_label()
-    self.axes2.set_ylabel(label, fontsize = self._y2_label_fontsize, labelpad = self._labelpad)
+    self._right()._y_label(label)
 
   def x_label(self, label = None):
-    if label is None:
-      return self.axes.get_xlabel()
-    self._x_label(label)
+    return self._left().x_label(label)
 
   def x_label_fontsize(self, fontsize = None):
     if fontsize is None:
       return self._x_label_fontsize
-    else:
-      self._x_label_fontsize = fontsize
-      self._x_label()
+    self._x_label_fontsize = fontsize
+    self._x_label()
 
   def y1_label(self, label = None):
-    if label is None:
-      return self.axes.get_ylabel()
-    self._y1_label(label)
+    return self._left().y_label(label)
 
   def y1_label_fontsize(self, fontsize = None):
-    if fontsize is None:
-      return self._y1_label_fontsize
-    else:
-      self._y1_label_fontsize = fontsize
-      self._y1_label()
+    return self._left().y_label_fontsize(fontsize)
 
   def y2_label(self, label = None):
-    if label is None:
-      return self.axes2.get_ylabel()
-    self._y2_label(label)
+    return self._right().y_label(label)
 
   def y2_label_fontsize(self, fontsize = None):
-    if fontsize is None:
-      return self._y2_label_fontsize
-    else:
-      self._y2_label_fontsize = fontsize
-      self._y2_label()
+    return self._right().y_label_fontsize(fontsize)
 
   def _next_color(self):
     self.color += 1
@@ -241,230 +375,84 @@ class PlotFigure(object):
   def legend_fontsize(self, size = None):
     if size is None:
       return self._legend_fontsize
-    else:
-      self._legend_fontsize = size
-      self._legend_left()
-      self._legend_right()
+    self._legend_fontsize = size
+    self._legend()
 
   def y1_legend_ncol(self, n = None):
-    if n is None:
-      return self._y1_legend_ncol
-    self._y1_legend_ncol = n
-    self._legend_left()
+    return self._left().legendNCol(n)
 
   def y2_legend_ncol(self, n = None):
-    if n is None:
-      return self._y2_legend_ncol
-    self._y2_legend_ncol = n
-    self._legend_right()
-
-  def _legend_left(self):
-    if len(self.axes_plots):
-      self.axes.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=self._y1_legend_ncol, mode="expand", borderaxespad=0.5, fontsize = self._legend_fontsize)
-
-  def _legend_right(self):
-    top_anchor = -0.125
-    if len(self.x_label()):
-      top_anchor = -0.175
-    if len(self.axes2_plots):
-      self.axes2.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=2, ncol=self._y2_legend_ncol, mode="expand", borderaxespad=0.5, fontsize = self._legend_fontsize)
-
-  def _plot(self, axe, update_legend_fn, x, y, y_label, style = None):
-    if style is None:
-      plt = axe.plot(x, y, label = y_label, color = self._next_color())
-    else:
-      plt = axe.plot(x, y, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)
-    update_legend_fn()
-    return plt[0]
+    return self._right().legendNCol(n)
 
   def add_plot_left(self, x, y, y_label, style = None):
-    if y_label in self.axes_plots:
-      return False
-    self.axes_plots[y] = self._plot(self.axes, self._legend_left, self.data[x], self.data[y], y_label, style)
-    return True
+    return self._left().add_plot(x, y, y_label, style)
 
   def add_plot_right(self, x, y, y_label, style = None):
-    if y_label in self.axes2_plots:
-      return False
-    self.axes2_plots[y] = self._plot(self.axes2, self._legend_right, self.data[x], self.data[y], y_label, style)
-    return True
-
-  def _add_diff_plot(self, axes, legend, x, y, y_label):
-    dt = self.data[x][1] - self.data[x][0]
-    return self._plot(axes, legend, self.data[x][1:], np.diff(self.data[y])/dt, y_label)
+    return self._right().add_plot(x, y, y_label, style)
 
   def add_diff_plot_left(self, x, y, y_label):
-    if y_label in self.axes_plots:
-      return False
-    self.axes_plots[y_label] = self._add_diff_plot(self.axes, self._legend_left, x, y, y_label)
-    return True
-  def add_diff_plot_right(self, x, y, y_label):
-    if y_label in self.axes2_plots:
-      return False
-    self.axes2_plots[y_label] = self._add_diff_plot(self.axes2, self._legend_right, x, y, y_label)
-    return True
+    return self._left().add_diff_plot(x, y, y_label)
 
-  def _add_roll_plot(self, axes, legend, x_label, base):
-    if "{}_qw".format(base) in self.data.keys():
-      fmt = "q"
-    else:
-      fmt = ""
-    keys = [ "{}_{}{}".format(base, fmt, ax) for ax in ["w", "x", "y", "z"] ]
-    qw, qx, qy, qz = [ self.data[k] for k in keys ]
-    rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
-    r = [ rpy[0] for rpy in rpys ]
-    return self._plot(axes, legend, self.data[x_label], r, "{}_roll".format(base))
+  def add_diff_plot_right(self, x, y, y_label):
+    return self._right().add_diff_plot(x, y, y_label)
 
   def add_roll_plot_left(self, x, y):
-    if "{}_roll".format(y) in self.axes_plots:
-      return False
-    self.axes_plots["{}_roll".format(y)] = self._add_roll_plot(self.axes, self._legend_left, x, y)
-    return True
-
-  def add_roll_plot_right(self, x, y):
-    if "{}_roll".format(y) in self.axes2_plots:
-      return False
-    self.axes2_plots["{}_roll".format(y)] = self._add_roll_plot(self.axes2, self._legend_right, x, y)
-    return True
-
-  def _add_pitch_plot(self, axes, legend, x_label, base):
-    if "{}_qw".format(base) in self.data.keys():
-      fmt = "q"
-    else:
-      fmt = ""
-    keys = [ "{}_{}{}".format(base, fmt, ax) for ax in ["w", "x", "y", "z"] ]
-    qw, qx, qy, qz = [ self.data[k] for k in keys ]
-    rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
-    p = [ rpy[1] for rpy in rpys ]
-    return self._plot(axes, legend, self.data[x_label], p, "{}_pitch".format(base))
+    return self._left().add_roll_plot(x, y)
 
   def add_pitch_plot_left(self, x, y):
-    if "{}_pitch".format(y) in self.axes_plots:
-      return False
-    self.axes_plots["{}_pitch".format(y)] = self._add_pitch_plot(self.axes, self._legend_left, x, y)
-    return True
-
-  def add_pitch_plot_right(self, x, y):
-    if "{}_pitch".format(y) in self.axes2_plots:
-      return False
-    self.axes2_plots["{}_pitch".format(y)] = self._add_pitch_plot(self.axes2, self._legend_right, x, y)
-    return True
-
-  def _add_yaw_plot(self, axes, legend, x_label, base):
-    if "{}_qw".format(base) in self.data.keys():
-      fmt = "q"
-    else:
-      fmt = ""
-    keys = [ "{}_{}{}".format(base, fmt, ax) for ax in ["w", "x", "y", "z"] ]
-    qw, qx, qy, qz = [ self.data[k] for k in keys ]
-    rpys = [ rpyFromQuat([w, x, y, z]) for w, x, y, z in zip(qw, qx, qy, qz) ]
-    y = [ rpy[2] for rpy in rpys ]
-    return self._plot(axes, legend, self.data[x_label], y, "{}_yaw".format(base))
+    return self._left().add_pitch_plot(x, y)
 
   def add_yaw_plot_left(self, x, y):
-    if "{}_yaw".format(y) in self.axes_plots:
-      return False
-    self.axes_plots["{}_yaw".format(y)] = self._add_yaw_plot(self.axes, self._legend_left, x, y)
-    return True
+    return self._left().add_yaw_plot(x, y)
+
+  def add_roll_plot_right(self, x, y):
+    return self._right().add_roll_plot(x, y)
+
+  def add_pitch_plot_right(self, x, y):
+    return self._right().add_pitch_plot(x, y)
 
   def add_yaw_plot_right(self, x, y):
-    if "{}_yaw".format(y) in self.axes2_plots:
-      return False
-    self.axes2_plots["{}_yaw".format(y)] = self._add_yaw_plot(self.axes2, self._legend_right, x, y)
-    return True
+    return self._right().add_yaw_plot(x, y)
 
   def add_rpy_plot_left(self, x, y):
-    has_roll = "{}_roll".format(y) in self.axes2_plots
-    has_pitch = "{}_pitch".format(y) in self.axes2_plots
-    has_yaw = "{}_yaw".format(y) in self.axes2_plots
-    if has_roll and has_pitch and has_yaw:
-        return False
-    if not has_roll:
-      self.add_roll_plot_left(x, y)
-    if not has_pitch:
-      self.add_pitch_plot_left(x, y)
-    if not has_yaw:
-      self.add_yaw_plot_left(x, y)
-    return True
+    return self._left().add_rpy_plot(x, y)
 
   def add_rpy_plot_right(self, x, y):
-    has_roll = "{}_roll".format(y) in self.axes2_plots
-    has_pitch = "{}_pitch".format(y) in self.axes2_plots
-    has_yaw = "{}_yaw".format(y) in self.axes2_plots
-    if has_roll and has_pitch and has_yaw:
-        return False
-    if not has_roll:
-      self.add_roll_plot_right(x, y)
-    if not has_pitch:
-      self.add_pitch_plot_right(x, y)
-    if not has_yaw:
-      self.add_yaw_plot_right(x, y)
-    return True
+    return self._right().add_rpy_plot(x, y)
+
+  def _remove_plot(self, SIDE, y_label):
+    self.axes[SIDE].remove_plot(y_label)
+    if len(self._left()) == 0 and len(self._right()) == 0:
+      self.color = 0
 
   def remove_plot_left(self, y_label):
-    if y_label not in self.axes_plots:
-      return
-    self.axes_plots[y_label].remove()
-    del self.axes_plots[y_label]
-    if len(self.axes_plots):
-      self.axes.relim()
-      self._legend_left()
-    else:
-      self.axes.clear()
-    if len(self.axes_plots) == 0 and len(self.axes2_plots) == 0:
-      self.color = 0
+    self._remove_plot(PlotSide.LEFT, y_label)
 
   def remove_plot_right(self, y_label):
-    if y_label not in self.axes2_plots:
-      return
-    self.axes2_plots[y_label].remove()
-    del self.axes2_plots[y_label]
-    if len(self.axes2_plots):
-      self.axes2.relim()
-      self._legend_right()
-    else:
-      self.axes2.clear()
-    if len(self.axes_plots) == 0 and len(self.axes2_plots) == 0:
-      self.color = 0
+    self._remove_plot(PlotSide.RIGHT, y_label)
 
   def format_coord(self, x, y):
-    display_coord = self.axes2.transData.transform((x,y))
-    inv = self.axes.transData.inverted()
+    display_coord = self.axes[PlotSide.RIGHT].axis().transData.transform((x,y))
+    inv = self.axes[PlotSide.LEFT].axis().transData.inverted()
     ax_coord = inv.transform(display_coord)
-    if len(self.axes2_plots) and len(self.axes_plots):
+    if len(self._left()) and len(self._right()):
       return "x: {:.3f}    y1: {:.3f}    y2: {:.3f}".format(x, ax_coord[1], y)
-    elif len(self.axes_plots):
+    elif len(self._left()):
       return "x: {:.3f}    y1: {:.3f}".format(x, ax_coord[1])
-    elif len(self.axes2_plots):
+    elif len(self._right()):
       return "x: {:.3f}    y2: {:.3f}".format(x, y)
     else:
       return "x: {:.3f}".format(x)
 
   def clear_all(self):
     self.color = 0
-    self.axes_plots = {}
-    self.axes2_plots = {}
-    self.axes.clear()
-    self.axes2.clear()
-
-  def _style(self, plots, y, styleIn = None):
-    if not y in plots:
-      raise KeyError("No plot named {}".format(y))
-    plt = plots[y]
-    if styleIn is None:
-      return LineStyle(plt.get_color(), plt.get_linestyle(), plt.get_linewidth(), label = plt.get_label())
-    else:
-      plt.set_color(styleIn.color)
-      plt.set_linestyle(styleIn.linestyle)
-      plt.set_linewidth(styleIn.linewidth)
-      if len(styleIn.label):
-        plt.set_label(styleIn.label)
+    self._axes(lambda a: a.clear())
 
   def style_left(self, y, styleIn = None):
-    return self._style(self.axes_plots, y, styleIn)
+    return self._left().style(y, styleIn)
 
   def style_right(self, y, styleIn = None):
-    return self._style(self.axes2_plots, y, styleIn)
+    return self._right().style(y, styleIn)
 
 class SimpleAxesDialog(QtWidgets.QDialog):
   def __init__(self, parent):
@@ -478,36 +466,36 @@ class SimpleAxesDialog(QtWidgets.QDialog):
     self.layout.addWidget(QtWidgets.QLabel("X"), 1, 0)
     x_limits = parent.x_limits
     if x_limits is None:
-      x_limits = parent.axes.get_xlim()
+      x_limits = parent._left().axis().get_xlim()
     self.x_min = QtWidgets.QLineEdit(str(x_limits[0]))
-    self.x_min.setValidator(QtWidgets.QDoubleValidator())
+    self.x_min.setValidator(QtGui.QDoubleValidator())
     self.layout.addWidget(self.x_min, 1, 1)
     self.x_max = QtWidgets.QLineEdit(str(x_limits[1]))
-    self.x_max.setValidator(QtWidgets.QDoubleValidator())
+    self.x_max.setValidator(QtGui.QDoubleValidator())
     self.x_init = [float(self.x_min.text()), float(self.x_max.text())]
     self.layout.addWidget(self.x_max, 1, 2)
 
     self.layout.addWidget(QtWidgets.QLabel("Y1"), 2, 0)
     y1_limits = parent.y1_limits
     if y1_limits is None:
-      y1_limits = parent.axes.get_ylim()
+      y1_limits = parent._left().axis().get_ylim()
     self.y1_min = QtWidgets.QLineEdit(str(y1_limits[0]))
-    self.y1_min.setValidator(QtWidgets.QDoubleValidator())
+    self.y1_min.setValidator(QtGui.QDoubleValidator())
     self.layout.addWidget(self.y1_min, 2, 1)
     self.y1_max = QtWidgets.QLineEdit(str(y1_limits[1]))
-    self.y1_max.setValidator(QtWidgets.QDoubleValidator())
+    self.y1_max.setValidator(QtGui.QDoubleValidator())
     self.y1_init = [float(self.y1_min.text()), float(self.y1_max.text())]
     self.layout.addWidget(self.y1_max, 2, 2)
 
     self.layout.addWidget(QtWidgets.QLabel("Y2"), 3, 0)
     y2_limits = parent.y2_limits
     if y2_limits is None:
-      y2_limits = parent.axes2.get_ylim()
+      y2_limits = parent._right().axis().get_ylim()
     self.y2_min = QtWidgets.QLineEdit(str(y2_limits[0]))
-    self.y2_min.setValidator(QtWidgets.QDoubleValidator())
+    self.y2_min.setValidator(QtGui.QDoubleValidator())
     self.layout.addWidget(self.y2_min, 3, 1)
     self.y2_max = QtWidgets.QLineEdit(str(y2_limits[1]))
-    self.y2_max.setValidator(QtWidgets.QDoubleValidator())
+    self.y2_max.setValidator(QtGui.QDoubleValidator())
     self.y2_init = [float(self.y2_min.text()), float(self.y2_max.text())]
     self.layout.addWidget(self.y2_max, 3, 2)
 
@@ -585,11 +573,11 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
 
   def on_draw(self, event):
     if self.x_limits is not None:
-      self.x_limits = self.axes.get_xlim()
+      self.x_limits = self._left().axis().get_xlim()
     if self.y1_limits is not None:
-      self.y1_limits = self.axes.get_ylim()
+      self.y1_limits = self._left().axis().get_ylim()
     if self.y2_limits is not None:
-      self.y2_limits = self.axes2.get_ylim()
+      self.y2_limits = self._right().axis().get_ylim()
 
   def draw(self):
     PlotFigure.draw(self, self.x_limits, self.y1_limits, self.y2_limits)
@@ -604,16 +592,16 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
       return None
 
   def x_locked_changed(self, status):
-    self.x_limits = self._y_lock_changed("X", self.x_locked, self.axes.get_xlim)
+    self.x_limits = self._y_lock_changed("X", self.x_locked, self._left().axis().get_xlim)
     if self.x_limits is None:
       self.draw()
 
   def y1_locked_changed(self, status):
-    self.y1_limits = self._y_lock_changed("Y1", self.y1_locked, self.axes.get_ylim)
+    self.y1_limits = self._y_lock_changed("Y1", self.y1_locked, self._left().axis().get_ylim)
     if self.y1_limits is None:
       self.draw()
 
   def y2_locked_changed(self, status):
-    self.y2_limits = self._y_lock_changed("Y2", self.y2_locked, self.axes2.get_ylim)
+    self.y2_limits = self._y_lock_changed("Y2", self.y2_locked, self._right().axis().get_ylim)
     if self.y2_limits is None:
       self.draw()

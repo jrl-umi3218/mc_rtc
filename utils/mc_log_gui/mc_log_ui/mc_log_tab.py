@@ -214,8 +214,8 @@ class MCLogTab(QtWidgets.QWidget):
     self.ui.setupUi(self)
     self.ui.canvas.setupLockButtons(self.ui.selectorLayout)
     if parent is not None:
-      self.ui.canvas.grid = parent.gridStyles['left']
-      self.ui.canvas.grid2 = parent.gridStyles['right']
+      self.ui.canvas._left().grid = parent.gridStyles['left']
+      self.ui.canvas._right().grid = parent.gridStyles['right']
     def setupSelector(ySelector):
       ySelector.setHeaderLabels(["Data"])
       ySelector.header().setSectionResizeMode(QtWidgets.QHeaderView.Fixed)
@@ -241,8 +241,8 @@ class MCLogTab(QtWidgets.QWidget):
     self.update_y_selectors()
 
   def setGridStyles(self, gridStyles):
-    self.ui.canvas.grid = copy.deepcopy(gridStyles['left'])
-    self.ui.canvas.grid2 = copy.deepcopy(gridStyles['right'])
+    self.ui.canvas._left().grid = copy.deepcopy(gridStyles['left'])
+    self.ui.canvas._right().grid = copy.deepcopy(gridStyles['right'])
 
   def setRobotModule(self, rm):
     self.rm = rm
@@ -455,13 +455,13 @@ class MCLogTab(QtWidgets.QWidget):
     handle_yd(p.y1d, 0)
     handle_yd(p.y2d, 1)
     if not isinstance(p.grid1, LineStyle):
-      figure.grid = LineStyle(**p.grid1)
+      figure._left().grid = LineStyle(**p.grid1)
     else:
-      figure.grid = p.grid1
+      figure._left().grid = p.grid1
     if not isinstance(p.grid2, LineStyle):
-      figure.grid2 = LineStyle(**p.grid2)
+      figure._right().grid = LineStyle(**p.grid2)
     else:
-      figure.grid2 = p.grid2
+      figure._right().grid = p.grid2
     for y,s in p.style.iteritems():
       figure.style_left(y, s)
     for y,s in p.style2.iteritems():

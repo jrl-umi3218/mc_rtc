@@ -1,8 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 import collections
@@ -592,7 +589,7 @@ class MCLogUI(QtWidgets.QMainWindow):
 
     self.data = {}
 
-    self.gridStyles = {'left': LineStyle(), 'right': LineStyle(linestyle = ':') }
+    self.gridStyles = {'left': LineStyle(linestyle = '--'), 'right': LineStyle(linestyle = ':') }
     self.gridStyleFile = os.path.expanduser("~") + "/.config/mc_log_ui/grid_style.json"
     if os.path.exists(self.gridStyleFile):
       with open(self.gridStyleFile) as f:
@@ -667,8 +664,8 @@ class MCLogUI(QtWidgets.QMainWindow):
           group.addAction(action)
         menu.addActions(group.actions())
         self.lineStyleMenu.addMenu(menu)
-      makePlotMenu(self, "Left", canvas.axes_plots.keys(), canvas.style_left)
-      makePlotMenu(self, "Right", canvas.axes2_plots.keys(), canvas.style_right)
+      makePlotMenu(self, "Left", canvas._left().plots.keys(), canvas.style_left)
+      makePlotMenu(self, "Right", canvas._right().plots.keys(), canvas.style_right)
     self.lineStyleMenu.aboutToShow.connect(lambda: fillLineStyleMenu(self))
     self.styleMenu.addMenu(self.lineStyleMenu)
 
@@ -677,10 +674,10 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.gridDisplayActionGroup = QtWidgets.QActionGroup(self.gridStyleMenu)
     self.gridDisplayActionGroup.setExclusive(True)
     self.leftGridAction = QtWidgets.QAction("Left", self.gridDisplayActionGroup)
-    self.leftGridAction.triggered.connect(lambda: GridStyleDialog(self, "left", self.getCanvas(), self.getCanvas().grid).exec_())
+    self.leftGridAction.triggered.connect(lambda: GridStyleDialog(self, "left", self.getCanvas(), self.getCanvas()._left().grid).exec_())
     self.gridDisplayActionGroup.addAction(self.leftGridAction)
     self.rightGridAction = QtWidgets.QAction("Right", self.gridDisplayActionGroup)
-    self.rightGridAction.triggered.connect(lambda: GridStyleDialog(self, "right", self.getCanvas(), self.getCanvas().grid2).exec_())
+    self.rightGridAction.triggered.connect(lambda: GridStyleDialog(self, "right", self.getCanvas(), self.getCanvas()._right().grid).exec_())
     self.gridDisplayActionGroup.addAction(self.rightGridAction)
     self.gridStyleMenu.addActions(self.gridDisplayActionGroup.actions())
     self.styleMenu.addMenu(self.gridStyleMenu)
@@ -753,7 +750,7 @@ class MCLogUI(QtWidgets.QMainWindow):
   def save_userplot(self):
     tab = self.ui.tabWidget.currentWidget()
     canvas = tab.ui.canvas
-    valid = len(canvas.axes_plots) != 0 or len(canvas.axes2_plots) != 0
+    valid = len(canvas._left()) != 0 or len(canvas._right()) != 0
     if not valid:
       err_diag = QtWidgets.QMessageBox(self)
       err_diag.setModal(True)
@@ -765,15 +762,15 @@ class MCLogUI(QtWidgets.QMainWindow):
       defaultTitle = ""
     title, ok = QtWidgets.QInputDialog.getText(self, "User plot", "Title of your plot:", text = defaultTitle)
     if ok:
-      y1 = filter(lambda k: k in self.data.keys(), canvas.axes_plots.keys())
-      y2 = filter(lambda k: k in self.data.keys(), canvas.axes2_plots.keys())
+      y1 = filter(lambda k: k in self.data.keys(), canvas._left().plots.keys())
+      y2 = filter(lambda k: k in self.data.keys(), canvas._right().plots.keys())
       y1d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 0, tab.specials.values()))
       y2d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 1, tab.specials.values()))
-      style = { y: canvas.style_left(y) for y in canvas.axes_plots.keys() }
-      style2 = { y: canvas.style_right(y) for y in canvas.axes2_plots.keys() }
+      style = { y: canvas.style_left(y) for y in canvas._left().plots.keys() }
+      style2 = { y: canvas.style_right(y) for y in canvas._right().plots.keys() }
       found = False
       extra = { p: getattr(self.getCanvas(), p)() for p in ["tick_fontsize", "legend_fontsize", "labelpad", "top_offset", "bottom_offset", "y1_legend_ncol", "y2_legend_ncol"] }
-      up = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas().grid, self.getCanvas().grid2, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())), extra)
+      up = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas()._left().grid, self.getCanvas()._right().grid, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())), extra)
       for i in range(len(self.userPlotList)):
         if self.userPlotList[i].title == title:
           self.userPlotList[i] = up
