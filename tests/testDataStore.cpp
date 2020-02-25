@@ -85,6 +85,9 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
 
   // Try creating an object that already exists on the datastore
   BOOST_CHECK_THROW(store.make_initializer<Test>("Test", 42, "Test"), std::runtime_error);
+  // Check that existing object has not been modified
+  BOOST_REQUIRE(store.get<Test>("Test").a == 42);
+  BOOST_REQUIRE(store.get<Test>("Test").name == "Test");
   // Remove object
   store.remove("Test");
   BOOST_CHECK(!store.has("Test"));
@@ -110,6 +113,21 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
   BOOST_REQUIRE(value == 42);
   store.get("TestAssignNonExisting", value);
   BOOST_REQUIRE(value == 42);
+
+  // Test creation without explicitely specifying type
+  {
+    auto & unsignedVal = store.make("TestUnsigned", 1u);
+    BOOST_REQUIRE(unsignedVal == 1u);
+    BOOST_REQUIRE(store.get<unsigned>("TestUnsigned") == 1u);
+    store.remove("TestUnsigned");
+  }
+  {
+    auto vecData = std::vector<double>{1, 2, 3, 4};
+    const auto & vec = store.make_or_assign("TestCopyVector", std::move(vecData));
+    BOOST_REQUIRE(vecData.size() == 4);
+    BOOST_REQUIRE(vec.size() == 4);
+    BOOST_REQUIRE(vecData == store.get<std::vector<double>>("TestCopyVector"));
+  }
 
   // Test make_or_assign
   {
@@ -172,4 +190,98 @@ BOOST_AUTO_TEST_CASE(TestRobotDataStore)
   BOOST_CHECK_CLOSE(robots2.robot().posW().translation().x(), 42, 1e-10);
   BOOST_CHECK_CLOSE(robots2.robot().posW().translation().y(), 42, 1e-10);
   BOOST_CHECK_CLOSE(robots2.robot().posW().translation().z(), 42, 1e-10);
+}
+
+BOOST_AUTO_TEST_CASE(Lambda)
+{
+  DataStore store;
+  struct A
+  {
+    double val;
+    double compute(double t)
+    {
+      return val * t;
+    }
+  };
+  A a;
+  a.val = 42;
+  store.make<std::function<void(double)>>("lambda_setter", [&a](double val) { a.val = val; });
+  auto & setter = store.get<std::function<void(double)>>("lambda_setter");
+  setter(33);
+  BOOST_REQUIRE(a.val == 33);
+
+  store.make<std::function<double()>>("lambda_getter", [&a]() { return a.val; });
+  auto & getter = store.get<std::function<double()>>("lambda_getter");
+  auto val = getter();
+  BOOST_REQUIRE(val == 33);
+
+  double val2 = 33;
+  store.get<double>("Value", val2);
+
+  store.make<std::function<double(double)>>("lambda_compute", [&a](double t) { return a.compute(t); });
+  auto res = store.get<std::function<double(double)>>("lambda_compute")(2);
+  BOOST_REQUIRE(res == 66);
+
+  // Dummy example of a footstepplan decalring a callback mechanism to trigger
+  // recomputation of the footstep plan.
+  struct FootstepPlan
+  {
+    FootstepPlan(DataStore & store) : store_(store)
+    {
+      store.make<std::function<std::vector<double>()>>("compute_footstep", [this]() {
+        recompute();
+        return plan_;
+      });
+    }
+
+    ~FootstepPlan()
+    {
+      store_.remove("compute_footstep");
+    }
+
+    // In practice this would do actual computations, just add a dummy number to
+    // the footstep vector for this test
+    void recompute()
+    {
+      plan_.push_back(plan_.back() + 1);
+    }
+
+    std::vector<double> plan_{1, 2, 3};
+    DataStore & store_;
+  };
+
+  {
+    FootstepPlan plan(store);
+    // XXX can we retrieve it without specifying type explicitely?
+    auto & computeFootStep = store.get<std::function<std::vector<double>()>>("compute_footstep");
+    BOOST_REQUIRE(computeFootStep().back() == 4);
+    BOOST_REQUIRE(computeFootStep().back() == 5);
+    BOOST_REQUIRE(computeFootStep().back() == 6);
+  }
+  // Check that lambda was automatically removed from datastore
+  BOOST_CHECK(!store.has("compute_footstep"));
+}
+
+BOOST_AUTO_TEST_CASE(TestRemove)
+{
+  struct Object
+  {
+    Object(const std::string & name) : name_(name)
+    {
+      LOG_SUCCESS("Object " << name_ << " constructed");
+    }
+
+    ~Object()
+    {
+      LOG_SUCCESS("Object " << name_ << " destructed");
+    }
+    std::string name_;
+  };
+
+  DataStore store;
+  store.make<Object>("TestObject", "TestObject");
+  {
+    auto & r = store.get<Object>("TestObject");
+    store.remove("TestObject");
+  }
 }

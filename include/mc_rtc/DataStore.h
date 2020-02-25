@@ -139,7 +139,6 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     auto & data = datas_[name];
     if(data.buffer)
     {
-      data.destroy(data);
       LOG_ERROR_AND_THROW(std::runtime_error,
                           "[" << name_ << "] An object named " << name << " already exists on the datastore.");
     }
@@ -148,6 +147,20 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     data.same = &is_valid_hash<T, ArgsT...>;
     data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
     return *(reinterpret_cast<T *>(data.buffer.get()));
+  }
+
+  /**
+   * @brief Creates an object on the datastore without explicitely specifiying its type
+   *
+   * @param name Name of the stored object
+   * @param object Object to create on the datastore
+   *
+   * @return Reference to the datastore object
+   */
+  template<typename Arg>
+  Arg & make(const std::string & name, const Arg && object)
+  {
+    return make<Arg>(name, object);
   }
 
   /**
@@ -166,7 +179,6 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     auto & data = datas_[name];
     if(data.buffer)
     {
-      data.destroy(data);
       LOG_ERROR_AND_THROW(std::runtime_error,
                           "[" << name_ << "] An object named " << name << " already exists on the datastore.");
     }
@@ -204,6 +216,21 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   }
 
   /**
+   * @brief Convenience function that creates an object on the datastore if it
+   * does not already exist, or assign the passed value
+   *
+   * @param name Name of the stored object to create or modify
+   * @param arg Value to assign on the datastore
+   *
+   * @return The assigned object
+   */
+  template<typename T>
+  T & make_or_assign(const std::string & name, const T && arg)
+  {
+    return make_or_assign<T>(name, arg);
+  }
+
+  /**
    * @brief Convenience function that creates or assigns an object on the
    * datastore using list initialization.
    *
@@ -228,6 +255,21 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     {
       return make_initializer<T>(name, args...);
     }
+  }
+
+  /**
+   * @brief Convenience function that creates an object on the datastore if it
+   * does not already exist, or assign the passed value
+   *
+   * @param name Name of the stored object to create or modify
+   * @param arg Value to assign on the datastore
+   *
+   * @return The assigned object
+   */
+  template<typename T>
+  T & make_initializer_or_assign(const std::string & name, const T && arg)
+  {
+    return make_initializer_or_assign<T>(name, std::forward<T>(arg));
   }
 
   /**
@@ -280,10 +322,6 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     {
       LOG_ERROR("[" << name_ << "] Failed to remove element \"" << name << "\" (element does not exist)");
       return;
-    }
-    if(it->second.buffer)
-    {
-      it->second.destroy(it->second);
     }
     datas_.erase(it);
   }
