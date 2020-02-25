@@ -158,7 +158,7 @@ struct MC_RTC_UTILS_DLLAPI DataStore
    * @return Reference to the datastore object
    */
   template<typename Arg>
-  Arg & make(const std::string & name, const Arg && object)
+  Arg & make(const std::string & name, Arg && object)
   {
     return make<Arg>(name, object);
   }
@@ -201,7 +201,7 @@ struct MC_RTC_UTILS_DLLAPI DataStore
    * \anchor make_or_assign
    */
   template<typename T, typename... ArgsT, typename... Args>
-  T & make_or_assign(const std::string & name, const Args &&... args)
+  T & make_or_assign(const std::string & name, Args &&... args)
   {
     if(has(name))
     {
@@ -243,7 +243,7 @@ struct MC_RTC_UTILS_DLLAPI DataStore
    * \see make_or_assign
    */
   template<typename T, typename... ArgsT, typename... Args>
-  T & make_initializer_or_assign(const std::string & name, const Args &&... args)
+  T & make_initializer_or_assign(const std::string & name, Args &&... args)
   {
     if(has(name))
     {
