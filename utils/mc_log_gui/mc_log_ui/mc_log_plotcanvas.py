@@ -53,6 +53,7 @@ class PlotYAxis(object):
       self._x_axis = x_axis
     self._axis.autoscale_view(False,True,True)
     self._axis.format_coord = parent.format_coord
+    self._axis.get_yaxis().set_visible(False)
     self.grid = LineStyle(linestyle = '--')
     self.plots = OrderedDict()
     self._label_fontsize = 10
@@ -110,8 +111,6 @@ class PlotYAxis(object):
   # If this axis is empty but the other is not, fix my own limits, in the
   # opposite condition call the opposite function
   def fixLimits(self, axis):
-    self._axis.get_yaxis().set_visible(len(self) != 0)
-    axis._axis.get_yaxis().set_visible(len(axis) != 0)
     if len(axis) != 0 and len(self) == 0:
       point = (axis.axis().dataLim.get_points()[1] + axis.axis().dataLim.get_points()[0])/2
       plt, = self._axis.plot([point[0]], [point[1]], visible = False)
@@ -174,6 +173,7 @@ class PlotYAxis(object):
       return self._plot(x, y, y_label, LineStyle(color = self.figure._next_color()))
     if y_label in self.plots:
       return False
+    self._axis.get_yaxis().set_visible(True)
     self.plots[y_label] = self._axis.plot(x, y, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
     self.legend()
     return True
@@ -220,6 +220,7 @@ class PlotYAxis(object):
       self._axis.relim()
       self.legend()
     else:
+      self._axis.get_yaxis().set_visible(False)
       self._axis.clear()
 
   def clear(self):
