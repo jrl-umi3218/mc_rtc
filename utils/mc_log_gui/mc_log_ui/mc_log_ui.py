@@ -21,7 +21,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 import ui
 from mc_log_tab import MCLogTab
-from mc_log_types import LineStyle, TextWithFontSize, GraphLabels
+from mc_log_types import LineStyle, TextWithFontSize, GraphLabels, ColorsSchemeConfiguration
 
 try:
   import mc_rbdyn
@@ -245,6 +245,113 @@ class LineStyleDialog(CommonStyleDialog):
     self.set_style(self.name, self.style)
     self.setWindowTitle('Edit {} style'.format(style.label))
     self.canvas.draw()
+
+class ColorButtonRightClick(QtWidgets.QPushButton):
+  rightClick = QtCore.pyqtSignal()
+  def __init__(self, parent, color):
+    super(ColorButtonRightClick, self).__init__("", parent)
+    self.color = QtGui.QColor(color)
+    self.setStyleSheet("background-color: {color}; color: {color}".format(color = color))
+    self.released.connect(self.selectColor)
+  def selectColor(self):
+    color = QtWidgets.QColorDialog.getColor(self.color, parent = self)
+    if color.isValid():
+      self.color = color
+      self.setStyleSheet("background-color: {color}; color: {color}".format(color = color.name()))
+    self.parent().setCustom()
+  def mouseReleaseEvent(self, event):
+    if event.button() == QtCore.Qt.RightButton:
+      self.parent().removeColorFromSelector(self)
+    super(ColorButtonRightClick, self).mouseReleaseEvent(event)
+
+class ColorsSchemeConfigurationDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel(Layout = QtWidgets.QFormLayout, apply_ = False)
+  def __init__(self, parent):
+    self.scheme = copy.deepcopy(parent.colorsScheme)
+
+    self.setSelector = QtWidgets.QComboBox(self)
+    # Qualitative maps, see https://matplotlib.org/3.1.0/gallery/color/colormap_reference.html
+    qualitative = ['Pastel1', 'Pastel2', 'Paired', 'Accent', 'Dark2', 'Set1', 'Set2', 'Set3', 'tab10', 'tab20', 'tab20b', 'tab20c']
+    [ self.setSelector.addItem(s) for s in qualitative ]
+    self.setSelector.addItem('custom')
+    self.setSelector.setCurrentText(self.scheme.cm_)
+    self.setSelector.currentIndexChanged.connect(self.cmChanged)
+    self.layout.addRow("Colormap", self.setSelector)
+
+    self.ncolorsSetter = QtWidgets.QSpinBox(self)
+    self.ncolorsSetter.setMinimum(1)
+    self.ncolorsSetter.setValue(self.scheme.ncolors_)
+    self.ncolorsSetter.valueChanged.connect(self.ncolorsChanged)
+    self.layout.addRow("Number of colors", self.ncolorsSetter)
+
+    self.colorSelection = QtWidgets.QGridLayout()
+    self.setupColorSelection()
+    self.layout.addRow(self.colorSelection)
+
+  def cmChanged(self):
+    cm = self.setSelector.currentText()
+    if cm != 'custom':
+      self.scheme._select_pyplot_set(cm, self.scheme.ncolors_)
+      self.ncolorsSetter.setValue(self.scheme.ncolors_)
+      self.setupColorSelection()
+
+  def ncolorsChanged(self):
+    ncolors = self.ncolorsSetter.value()
+    prev = self.scheme.ncolors_
+    if self.scheme.cm_ != 'custom':
+      self.scheme._select_pyplot_set(self.scheme.cm_, ncolors)
+      if self.scheme.ncolors_ != prev:
+        self.setupColorSelection()
+      if self.scheme.ncolors_ != ncolors:
+        self.ncolorsSetter.setValue(self.scheme.ncolors_)
+    else:
+      if ncolors > prev:
+        for i in range(prev, ncolors):
+          self.scheme.colors_.append('#000000')
+      else:
+        self.scheme.colors_ = self.scheme.colors_[:ncolors]
+      self.scheme.ncolors_ = len(self.scheme.colors_)
+      self.setupColorSelection()
+
+
+  def setCustom(self):
+    self.scheme.cm_ = 'custom'
+    self.setSelector.setCurrentText(self.scheme.cm_)
+
+  def setupColorSelection(self):
+    itm = self.colorSelection.takeAt(0)
+    while itm:
+      widget = itm.widget()
+      widget.deleteLater()
+      itm  = self.colorSelection.takeAt(0)
+    ncol = 5
+    col = 0
+    row = 0
+    for color in self.scheme.colors():
+      self.colorSelection.addWidget(ColorButtonRightClick(self, color), row, col)
+      col += 1
+      if col == ncol:
+        row += 1
+        col = 0
+
+  def removeColorFromSelector(self, btn):
+    self.setCustom()
+    colors = []
+    itm = self.colorSelection.takeAt(0)
+    while itm:
+      if isinstance(itm.widget(), ColorButtonRightClick) and itm.widget() is not btn:
+        colors.append(itm.widget().color.name())
+      itm.widget().deleteLater()
+      itm = self.colorSelection.takeAt(0)
+    self.scheme._select_custom_set(colors)
+    self.ncolorsSetter.setValue(self.scheme.ncolors_)
+    self.setupColorSelection()
+
+  def accept(self):
+    super(ColorsSchemeConfigurationDialog, self).accept()
+    if self.scheme.cm_ == 'custom':
+      self.removeColorFromSelector(None)
+    self.parent().setColorsScheme(self.scheme)
 
 class MCLogJointDialog(QtWidgets.QDialog):
   @InitDialogWithOkCancel(Layout = QtWidgets.QVBoxLayout, apply_ = False)
@@ -574,6 +681,9 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.userPlotList = load_UserPlots(self.userPlotFile)
     self.update_userplot_menu()
 
+    self.colorsFile = os.path.expanduser("~") + "/.config/mc_log_ui/colors.json"
+    self.colorsScheme = ColorsSchemeConfiguration(self.colorsFile)
+
     self.activeRobotAction = None
     self.rm = None
     if mc_rbdyn is not None:
@@ -656,6 +766,11 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.titleAction = QtWidgets.QAction("Labels/Title/Fonts", self.styleMenu)
     self.titleAction.triggered.connect(lambda: LabelsTitleEditDialog(self, self.getCanvas()).exec_())
     self.styleMenu.addAction(self.titleAction)
+
+    # Color scheme selector
+    self.colorSchemeAction = QtWidgets.QAction("Colors selection", self.styleMenu)
+    self.colorSchemeAction.triggered.connect(lambda: ColorsSchemeConfigurationDialog(self).exec_())
+    self.styleMenu.addAction(self.colorSchemeAction)
 
     self.ui.menubar.addMenu(self.styleMenu)
 
@@ -813,6 +928,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       plotW.setData(self.data)
       plotW.setGridStyles(self.gridStyles)
       plotW.setRobotModule(self.rm)
+      plotW.setColors(self.colorsScheme.colors())
       j = 1
       for i in range(self.ui.tabWidget.count() -1):
         if self.tab_re.match(self.ui.tabWidget.tabText(i)):
@@ -884,6 +1000,12 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.update_data()
     self.setWindowTitle("MC Log Plotter - {}".format(os.path.basename(fpath)))
 
+  def setColorsScheme(self, scheme):
+    self.colorsScheme = scheme
+    for i in range(self.ui.tabWidget.count() - 1):
+      self.ui.tabWidget.widget(i).setColors(self.colorsScheme.colors())
+    self.colorsScheme.save(self.colorsFile)
+
   def update_data(self):
     self.update_menu()
     for i in range(self.ui.tabWidget.count() - 1):
@@ -892,6 +1014,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       tab.setData(self.data)
       tab.setGridStyles(self.gridStyles)
       tab.setRobotModule(self.rm)
+      tab.setColors(self.colorsScheme.colors())
 
   def update_menu(self):
     self.ui.menuCommonPlots.clear()

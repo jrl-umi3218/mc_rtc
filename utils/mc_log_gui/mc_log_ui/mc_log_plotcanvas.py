@@ -298,6 +298,10 @@ class PlotFigure(object):
   def setData(self, data):
     self.data = data
 
+  def setColors(self, colors):
+    self.colors = colors
+    self.Ncolor = len(self.colors)
+
   def show(self):
     self.fig.show()
 

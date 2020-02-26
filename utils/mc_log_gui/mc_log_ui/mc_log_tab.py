@@ -244,6 +244,9 @@ class MCLogTab(QtWidgets.QWidget):
     self.ui.canvas._left().grid = copy.deepcopy(gridStyles['left'])
     self.ui.canvas._right().grid = copy.deepcopy(gridStyles['right'])
 
+  def setColors(self, colors):
+    self.ui.canvas.setColors(colors)
+
   def setRobotModule(self, rm):
     self.rm = rm
     if self.rm is None:
