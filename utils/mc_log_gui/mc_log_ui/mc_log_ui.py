@@ -6,6 +6,7 @@ import collections
 import copy
 import csv
 import ctypes
+import functools
 import json
 import numpy as np
 import os
@@ -132,18 +133,48 @@ class RobotAction(QtWidgets.QAction):
     else:
       self._actual = n
 
-class CommonStyleDialog(QtWidgets.QDialog):
-  def __init__(self, parent, name, canvas, style):
-    super(CommonStyleDialog, self).__init__(parent)
+# Decorator to wrap a dialog
+def InitDialogWithOkCancel(fun = None, Layout = QtWidgets.QFormLayout , apply_ = True):
+  def wrap_init(init_fun):
+    @functools.wraps(init_fun)
+    def wrapped_init(self, parent, *args, **kwargs):
+      super(QtWidgets.QDialog, self).__init__(parent)
+      self.setModal(True)
+      self.layout = Layout(self)
+      init_fun(self, parent, *args, **kwargs)
+      confirmLayout = QtWidgets.QHBoxLayout()
+      okButton = QtWidgets.QPushButton("Ok", self)
+      confirmLayout.addWidget(okButton)
+      okButton.clicked.connect(self.accept)
+      if apply_:
+        applyButton = QtWidgets.QPushButton("Apply", self)
+        confirmLayout.addWidget(applyButton)
+        applyButton.clicked.connect(self.apply)
+      cancelButton = QtWidgets.QPushButton("Cancel", self)
+      confirmLayout.addWidget(cancelButton)
+      cancelButton.clicked.connect(self.reject)
+      if Layout is QtWidgets.QFormLayout:
+        self.layout.addRow(confirmLayout)
+      elif Layout is QtWidgets.QGridLayout:
+        colSpan = 2
+        if apply_:
+          colSpan += 1
+        self.layout.addLayout(confirmLayout, self.layout.rowCount(), 1, 1, colSpan)
+      else:
+        self.layout.addLayout(confirmLayout)
+    return wrapped_init
+  if fun:
+    return wrap_init(fun)
+  else:
+    return wrap_init
 
+
+class CommonStyleDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel
+  def __init__(self, parent, name, canvas, style):
     self.name = name
     self.canvas = canvas
     self.style = style
-
-    self.setWindowTitle('Edit {} grid style'.format(name))
-    self.setModal(True)
-
-    self.layout = QtWidgets.QFormLayout(self)
 
     self.linestyle = QtWidgets.QComboBox()
     styles = ['-', ':', '--', '-.']
@@ -157,25 +188,13 @@ class CommonStyleDialog(QtWidgets.QDialog):
     self.layout.addRow("Width", self.linewidth)
 
     self.color = QtGui.QColor(style.color)
-    self.colorButton = QtWidgets.QPushButton(" ")
+    self.colorButton = QtWidgets.QPushButton("")
     self.colorButton.setStyleSheet("background-color: {}; color: {}".format(self.style.color, self.style.color))
     self.colorButton.released.connect(self.selectColor)
     self.layout.addRow("Color", self.colorButton)
 
-    confirmLayout = QtWidgets.QHBoxLayout()
-    okButton = QtWidgets.QPushButton("Ok", self)
-    confirmLayout.addWidget(okButton)
-    okButton.clicked.connect(self.accept)
-    applyButton = QtWidgets.QPushButton("Apply", self)
-    confirmLayout.addWidget(applyButton)
-    applyButton.clicked.connect(self.apply)
-    cancelButton = QtWidgets.QPushButton("Cancel", self)
-    confirmLayout.addWidget(cancelButton)
-    cancelButton.clicked.connect(self.reject)
-    self.layout.addRow(confirmLayout)
-
   def selectColor(self):
-    color = QtWidgets.QColorDialog.getColor(self.color)
+    color = QtWidgets.QColorDialog.getColor(self.color, parent = self)
     if color.isValid():
       self.color = color
       self.colorButton.setStyleSheet("background-color: {}; color: {}".format(self.color.name(), self.color.name()))
@@ -192,6 +211,7 @@ class CommonStyleDialog(QtWidgets.QDialog):
 class GridStyleDialog(CommonStyleDialog):
   def __init__(self, parent, name, canvas, style):
     super(GridStyleDialog, self).__init__(parent, name, canvas, style)
+    self.setWindowTitle('Edit {} grid style'.format(name))
 
     self.enabled = QtWidgets.QCheckBox()
     self.enabled.setChecked(style.visible)
@@ -214,6 +234,8 @@ class LineStyleDialog(CommonStyleDialog):
     super(LineStyleDialog, self).__init__(parent, name, canvas, style)
     self.set_style = set_style_fn
 
+    self.setWindowTitle('Edit {} style'.format(style.label))
+
     self.labelInput = QtWidgets.QLineEdit(style.label)
     self.layout.insertRow(0, "Label", self.labelInput)
 
@@ -221,20 +243,19 @@ class LineStyleDialog(CommonStyleDialog):
     super(LineStyleDialog, self).apply()
     self.style.label = self.labelInput.text()
     self.set_style(self.name, self.style)
+    self.setWindowTitle('Edit {} style'.format(style.label))
     self.canvas.draw()
 
 class MCLogJointDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel(Layout = QtWidgets.QVBoxLayout, apply_ = False)
   def __init__(self, parent, rm, name, y1_prefix = None, y2_prefix = None, y1_diff_prefix = None, y2_diff_prefix = None):
-    super(MCLogJointDialog, self).__init__(parent)
     self.setWindowTitle("Select plot joints")
-    self.setModal(True)
     self.joints = []
     self.name = name
     self.y1_prefix = y1_prefix
     self.y2_prefix = y2_prefix
     self.y1_diff_prefix = y1_diff_prefix
     self.y2_diff_prefix = y2_diff_prefix
-    layout = QtWidgets.QVBoxLayout(self)
 
     jointsBox = QtWidgets.QGroupBox("Joints", self)
     grid = QtWidgets.QGridLayout(jointsBox)
@@ -254,7 +275,7 @@ class MCLogJointDialog(QtWidgets.QDialog):
           if col == 4:
             col = 0
             row += 1
-    layout.addWidget(jointsBox)
+    self.layout.addWidget(jointsBox)
 
     optionsBox = QtWidgets.QGroupBox("Options", self)
     optionsLayout = QtWidgets.QHBoxLayout(optionsBox)
@@ -268,25 +289,16 @@ class MCLogJointDialog(QtWidgets.QDialog):
     optionsLayout.addWidget(self.onePlotPerJointBox)
     self.plotLimits = QtWidgets.QCheckBox("Plot limits", self)
     optionsLayout.addWidget(self.plotLimits)
-    layout.addWidget(optionsBox)
+    self.layout.addWidget(optionsBox)
 
-    confirmLayout = QtWidgets.QHBoxLayout()
-    okButton = QtWidgets.QPushButton("Ok", self)
-    confirmLayout.addWidget(okButton)
-    okButton.clicked.connect(self.okButton)
-    cancelButton = QtWidgets.QPushButton("Cancel", self)
-    confirmLayout.addWidget(cancelButton)
-    cancelButton.clicked.connect(self.reject)
-    layout.addLayout(confirmLayout)
-
-  def okButton(self):
+  def accept(self):
     if len(self.joints):
       plotLimits = self.plotLimits.isChecked()
       if self.onePlotPerJointBox.isChecked():
         [ self.parent().plot_joint_data(self.name + ": {}".format(j), [j], self.y1_prefix, self.y2_prefix, self.y1_diff_prefix, self.y2_diff_prefix, plotLimits) for j in self.joints ]
       else:
         self.parent().plot_joint_data(self.name, self.joints, self.y1_prefix, self.y2_prefix, self.y1_diff_prefix, self.y2_diff_prefix, plotLimits)
-    self.accept()
+    super(MCLogJointDialog, self).accept()
 
   def checkboxChanged(self, item, state):
     if state:
@@ -303,18 +315,14 @@ class MCLogJointDialog(QtWidgets.QDialog):
       self.selectAllBox.setText("Select all")
 
 class AllLineStyleDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel(Layout = QtWidgets.QGridLayout)
   def __init__(self, parent, name, canvas, plots, style_fn):
-    super(AllLineStyleDialog, self).__init__(parent)
-
     self.name = name
     self.canvas = canvas
     self.plots = plots
     self.style = style_fn
 
     self.setWindowTitle('Edit {} graph line style'.format(name))
-    self.setModal(True)
-
-    self.layout = QtWidgets.QGridLayout(self)
 
     row = 0
     [ self.layout.addWidget(QtWidgets.QLabel(txt), row, i) for i,txt in enumerate(["Label", "Style", "Width", "Color"]) ]
@@ -334,7 +342,7 @@ class AllLineStyleDialog(QtWidgets.QDialog):
       return ret
 
     def makeColorButton(self, style):
-      ret = QtWidgets.QPushButton(" ")
+      ret = QtWidgets.QPushButton("")
       ret.color = QtGui.QColor(style.color)
       ret.setStyleSheet("background-color: {color}; color: {color}".format(color = style.color))
       ret.released.connect(lambda bt=ret: self.selectColor(bt))
@@ -353,20 +361,8 @@ class AllLineStyleDialog(QtWidgets.QDialog):
       add_plot(self, p, self.style(p))
       row += 1
 
-    hlayout = QtWidgets.QHBoxLayout()
-    okButton = QtWidgets.QPushButton("Ok", self)
-    okButton.clicked.connect(self.accept)
-    cancelButton = QtWidgets.QPushButton("Cancel", self)
-    cancelButton.clicked.connect(self.reject)
-    applyButton = QtWidgets.QPushButton("Apply", self)
-    applyButton.clicked.connect(self.apply)
-    hlayout.addWidget(okButton)
-    hlayout.addWidget(cancelButton)
-    hlayout.addWidget(applyButton)
-    self.layout.addLayout(hlayout, row, 1, 1, 3)
-
   def selectColor(self, button):
-    color = QtWidgets.QColorDialog.getColor(button.color)
+    color = QtWidgets.QColorDialog.getColor(button.color, parent = self)
     if color.isValid():
       button.color = color
       button.setStyleSheet("background-color: {color}; color: {color}".format(color = color.name()))
@@ -386,45 +382,35 @@ class AllLineStyleDialog(QtWidgets.QDialog):
     self.apply()
 
 class DumpSeqPlayDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel(Layout = QtWidgets.QGridLayout, apply_ = False)
   def __init__(self, parent):
-    super(DumpSeqPlayDialog, self).__init__(parent)
     self.setWindowTitle("Dump qOut to seqplay")
-    self.setModal(True)
 
-    layout = QtWidgets.QGridLayout(self)
     row = 0
 
     row += 1
-    layout.addWidget(QtWidgets.QLabel("Timestep"), row, 0)
+    self.layout.addWidget(QtWidgets.QLabel("Timestep"), row, 0)
     self.timestepLineEdit = QtWidgets.QLineEdit("0.005")
     validator = QtGui.QDoubleValidator()
     validator.setBottom(1e-6)
     self.timestepLineEdit.setValidator(validator)
-    layout.addWidget(self.timestepLineEdit, row, 1)
+    self.layout.addWidget(self.timestepLineEdit, row, 1)
 
     row += 1
-    layout.addWidget(QtWidgets.QLabel("Time scale"), row, 0)
+    self.layout.addWidget(QtWidgets.QLabel("Time scale"), row, 0)
     self.timeScaleSpinBox = QtWidgets.QSpinBox()
     self.timeScaleSpinBox.setMinimum(1)
     self.timeScaleSpinBox.setPrefix("x")
-    layout.addWidget(self.timeScaleSpinBox, row, 1)
+    self.layout.addWidget(self.timeScaleSpinBox, row, 1)
 
     row += 1
     filedialogButton = QtWidgets.QPushButton("Browse...")
     filedialogButton.clicked.connect(self.filedialogButton)
-    layout.addWidget(filedialogButton, row, 0)
+    self.layout.addWidget(filedialogButton, row, 0)
     self.fileLineEdit = QtWidgets.QLineEdit("out.pos")
-    layout.addWidget(self.fileLineEdit)
+    self.layout.addWidget(self.fileLineEdit)
 
-    row += 1
-    okButton = QtWidgets.QPushButton("Ok", self)
-    okButton.clicked.connect(self.okButton)
-    layout.addWidget(okButton, row, 0)
-    cancelButton = QtWidgets.QPushButton("Cancel", self)
-    cancelButton.clicked.connect(self.reject)
-    layout.addWidget(cancelButton, row, 1)
-
-  def okButton(self):
+  def accept(self):
     fout = self.fileLineEdit.text()
     tScale = self.timeScaleSpinBox.value()
     dt = float(self.timestepLineEdit.text())
@@ -448,7 +434,7 @@ class DumpSeqPlayDialog(QtWidgets.QDialog):
           qOut = map(str, q + j/float(tScale) * (next_q - q))
           fd.write("{} {}\n".format(t, " ".join(qOut)))
           t += dt
-    self.accept()
+    super(DumpSeqPlayDialog, self).accept()
 
   def filedialogButton(self):
     fpath = QtWidgets.QFileDialog.getSaveFileName(self, "Output file")[0]
@@ -456,15 +442,11 @@ class DumpSeqPlayDialog(QtWidgets.QDialog):
       self.fileLineEdit.setText(fpath)
 
 class LabelsTitleEditDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel(Layout = QtWidgets.QGridLayout)
   def __init__(self, parent, canvas):
-    super(LabelsTitleEditDialog, self).__init__(parent)
-
     self.canvas = canvas
 
     self.setWindowTitle('Edit graph title')
-    self.setModal(True)
-
-    self.layout = QtWidgets.QGridLayout(self)
 
     row = 0
 
@@ -542,18 +524,6 @@ class LabelsTitleEditDialog(QtWidgets.QDialog):
 
     self.layout.addLayout(self.extraLayout, row, 0, extraRow, 3)
     row += extraRow
-
-    hlayout = QtWidgets.QHBoxLayout()
-    Ok = QtWidgets.QPushButton("Ok")
-    Ok.clicked.connect(self.accept)
-    hlayout.addWidget(Ok)
-    Cancel = QtWidgets.QPushButton("Cancel")
-    Cancel.clicked.connect(self.reject)
-    hlayout.addWidget(Cancel)
-    Apply = QtWidgets.QPushButton("Apply")
-    Apply.clicked.connect(self.apply)
-    hlayout.addWidget(Apply)
-    self.layout.addLayout(hlayout, row, 0, 1, 3)
 
   def apply(self):
     self.canvas.title(self.titleEdit.text())
