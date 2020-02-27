@@ -22,10 +22,12 @@ namespace details
  */
 struct CompoundJointConstraint : public tasks::qp::ConstraintFunction<tasks::qp::Inequality>
 {
+  MC_SOLVER_DLLAPI CompoundJointConstraint(const mc_rbdyn::Robots & robots, unsigned int rIndex, double dt);
+
   MC_SOLVER_DLLAPI CompoundJointConstraint(const mc_rbdyn::Robots & robots,
                                            unsigned int rIndex,
                                            double dt,
-                                           const CompoundJointConstraintDescriptionVector & desc = {});
+                                           const CompoundJointConstraintDescriptionVector & desc);
 
   MC_SOLVER_DLLAPI ~CompoundJointConstraint() override;
 
