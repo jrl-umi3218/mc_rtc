@@ -104,27 +104,27 @@ fi
 
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --help                     (-h)               : print this help
-    --install-prefix           (-i) PATH          : the directory used to install everything         (default $INSTALL_PREFIX)
-    --source-dir               (-s) PATH          : the directory used to clone everything           (default $SOURCE_DIR)
-    --build-type                    Type          : the build type to use                            (default $BUILD_TYPE)
-    --build-testing                 {true, false} : whether to build and run unit tests              (default $BUILD_TESTING)
-    --build-core               (-j) N             : number of cores used for building                (default $BUILD_CORE)
-    --with-lssol                                  : enable LSSOL (requires eigen-lssol access)       (default $WITH_LSSOL)
-    --with-hrp2                                   : enable HRP2 (requires mc-hrp2 group access)      (default $WITH_HRP2)
-    --with-hrp4                                   : enable HRP4 (requires mc-hrp4 group access)      (default $WITH_HRP4)
-    --with-hrp5                                   : enable HRP5 (requires mc-hrp5 group access)      (default $WITH_HRP5)
-    --with-python-support           {true, false} : whether to build with Python support             (default $WITH_PYTHON_SUPPORT)
-    --python-user-install           {true, false} : whether to install Python bindings with user     (default $PYTHON_USER_INSTALL)
-    --python-force-python2          {true, false} : whether to enforce the use of Python 2           (default $PYTHON_FORCE_PYTHON2)
-    --python-force-python3          {true, false} : whether to enforce the use of Python 3           (default $PYTHON_FORCE_PYTHON3)
-    --python-build-2-and-3          {true, false} : whether to build both Python 2 and Python 3      (default $PYTHON_BUILD_PYTHON2_AND_PYTHON3)
-    --with-ros-support              {true, false} : whether to build with ROS support                (default $WITH_ROS_SUPPORT)
-    --ros-distro                    NAME          : the ros distro to use                            (default $ROS_DISTRO)
-    --install-system-dependencies      {true, false} : whether to install system packages            (default $INSTALL_SYSTEM_DEPENDENCIES)
-    --clone-only                       {true, false} : only perform cloning                          (default $CLONE_ONLY)
-    --skip-update                      {true, false} : skip git update                               (default $SKIP_UPDATE)
-    --skip-dirty-update                {true, false} : skip git update if dirty repository           (default ${SKIP_DIRTY_UPDATE})
-    --user-input                       {true, false} : ask the user confirmation                     (default ${ASK_USER_INPUT})
+    --install-prefix           (-i) PATH          : the directory used to install everything           (default $INSTALL_PREFIX)
+    --source-dir               (-s) PATH          : the directory used to clone everything             (default $SOURCE_DIR)
+    --build-type                    Type          : the build type to use                              (default $BUILD_TYPE)
+    --build-testing                 {true, false} : whether to build and run unit tests                (default $BUILD_TESTING)
+    --build-core               (-j) N             : number of cores used for building                  (default $BUILD_CORE)
+    --with-lssol                                  : enable LSSOL (requires multi-contact group access) (default $WITH_LSSOL)
+    --with-hrp2                                   : enable HRP2 (requires mc-hrp2 group access)        (default $WITH_HRP2)
+    --with-hrp4                                   : enable HRP4 (requires mc-hrp4 group access)        (default $WITH_HRP4)
+    --with-hrp5                                   : enable HRP5 (requires mc-hrp5 group access)        (default $WITH_HRP5)
+    --with-python-support           {true, false} : whether to build with Python support               (default $WITH_PYTHON_SUPPORT)
+    --python-user-install           {true, false} : whether to install Python bindings with user       (default $PYTHON_USER_INSTALL)
+    --python-force-python2          {true, false} : whether to enforce the use of Python 2             (default $PYTHON_FORCE_PYTHON2)
+    --python-force-python3          {true, false} : whether to enforce the use of Python 3             (default $PYTHON_FORCE_PYTHON3)
+    --python-build-2-and-3          {true, false} : whether to build both Python 2 and Python 3        (default $PYTHON_BUILD_PYTHON2_AND_PYTHON3)
+    --with-ros-support              {true, false} : whether to build with ROS support                  (default $WITH_ROS_SUPPORT)
+    --ros-distro                    NAME          : the ros distro to use                              (default $ROS_DISTRO)
+    --install-system-dependencies      {true, false} : whether to install system packages              (default $INSTALL_SYSTEM_DEPENDENCIES)
+    --clone-only                       {true, false} : only perform cloning                            (default $CLONE_ONLY)
+    --skip-update                      {true, false} : skip git update                                 (default $SKIP_UPDATE)
+    --skip-dirty-update                {true, false} : skip git update if dirty repository             (default ${SKIP_DIRTY_UPDATE})
+    --user-input                       {true, false} : ask the user confirmation                       (default ${ASK_USER_INPUT})
 "
 #helper for parsing
 check_true_false()
@@ -195,7 +195,7 @@ do
         --with-lssol)
           i=$(($i+1))
           WITH_LSSOL="${!i}"
-          check_true_false --with-hrp2 "$WITH_LSSOL"
+          check_true_false --with-lssol "$WITH_LSSOL"
           ;;
 
         --with-hrp2)
@@ -387,7 +387,6 @@ echo_log "   INSTALL_SYSTEM_DEPENDENCIES=$INSTALL_SYSTEM_DEPENDENCIES"
 echo_log "   BUILD_CORE=$BUILD_CORE"
 echo_log "   BUILD_TESTING=$BUILD_TESTING"
 echo_log "   CLONE_ONLY=$CLONE_ONLY"
-echo_log "   BUILD_ONLY=$BUILD_ONLY"
 echo_log "   WITH_LSSOL=$WITH_LSSOL"
 echo_log "   WITH_HRP2=$WITH_HRP2"
 echo_log "   WITH_HRP4=$WITH_HRP4"
@@ -747,7 +746,6 @@ echo_log "-- [OK] All manadatory repositories successfuly cloned or updated"
 if $WITH_LSSOL
 then
   check_and_clone_git_dependency git@gite.lirmm.fr:multi-contact/eigen-lssol $SOURCE_DIR
-  echo_log "-- [OK] Successfully cloned and updated $git_dep to $repo_dir"
 fi
 
 if $WITH_HRP2
@@ -963,7 +961,7 @@ if $WITH_LSSOL
 then
   echo_log "-- Building with eigen-lssol support (WITH_LSSOL=true)"
   build_git_dependency git@gite.lirmm.fr:multi-contact/eigen-lssol
-  echo_log "-- [OK] Successfully cloned and updated $git_dep to $repo_dir"
+  echo_log "-- [OK] Successfully built $git_dep to $repo_dir"
 fi
 
 build_git_dependency jrl-umi3218/Tasks tasks
