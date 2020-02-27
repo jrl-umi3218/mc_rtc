@@ -5,7 +5,7 @@
   "properties":
   {
     "stiffness": { "type": "number", "minimum": 0, "description": "Stiffness of the posture task" },
-    "completion": { "type": "number", "minimum": 0, "description": "Threshold on posture eval after which the state is considered completed" },
+    "eval": { "type": "number", "minimum": 0, "description": "Threshold on posture eval after which the state is considered completed" },
     "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
                      "description": "Add the specified contacts during the state's start"  },
     "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
