@@ -169,6 +169,8 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
       store.make_or_assign<Eigen::Vector3d>("EigenVectorScope", vec);
     }
     BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVectorScope").isApprox(Eigen::Vector3d{1, 2, 3}, 1e-10));
+    store.make_or_assign<Eigen::Vector3d>("EigenVector", 2, 4, 5);
+    BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVector").isApprox(Eigen::Vector3d{2, 4, 5}, 1e-10));
   }
 }
 
