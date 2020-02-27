@@ -16,6 +16,7 @@ import numpy as np
 matplotlib.use('Qt5Agg')
 import matplotlib.pyplot
 
+from matplotlib.animation import FuncAnimation
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas,\
                                                NavigationToolbar2QT as NavigationToolbar
@@ -58,6 +59,7 @@ class PlotYAxis(object):
     self.plots = OrderedDict()
     self._label_fontsize = 10
     self._legend_ncol = 3
+    self.data = {}
 
   def __len__(self):
     return len(self.plots)
@@ -120,25 +122,29 @@ class PlotYAxis(object):
     elif len(self) != 0 and len(axis) == 0:
       axis.fixLimits(self)
 
-  def setLimits(self, xlim = None, ylim = None):
+  def setLimits(self, xlim = None, ylim = None, frame = None):
     if not len(self):
       return xlim
     dataLim = self._axis.dataLim.get_points()
-    if xlim is not None:
-      x_min = xlim[0]
-      x_max = xlim[1]
-    else:
-      dataLim = self._axis.dataLim.get_points()
-      x_range = dataLim[1][0] - dataLim[0][0]
-      x_min = dataLim[0][0] - x_range*0.01
-      x_max = dataLim[1][0] + x_range*0.01
-    self._x_axis.set_xlim([x_min, x_max])
-    if ylim is None:
-      y_range = dataLim[1][1] - dataLim[0][1]
-      self._axis.set_ylim([dataLim[0][1] - y_range*0.01, dataLim[1][1] + y_range*0.01])
-    else:
-      self._axis.set_ylim(ylim)
-    return x_min, x_max
+    def setLimit(lim, idx, set_lim):
+      if lim is not None:
+        min_ = lim[0]
+        max_ = lim[1]
+      elif frame is not None:
+        min_ = np.min(self.data.values()[0][idx][:frame])
+        max_ = np.max(self.data.values()[0][idx][:frame])
+        for i in range(1, len(self.data.values())):
+          data = self.data.values()[i][idx][:frame]
+          min_ = min(np.min(data), min_)
+          max_ = max(np.max(data), max_)
+      else:
+        range_ = dataLim[1][idx] - dataLim[0][idx]
+        min_ = dataLim[0][idx] - range_ * 0.01
+        max_ = dataLim[1][idx] + range_ * 0.01
+      set_lim([min_, max_])
+      return min_, max_
+    setLimit(ylim, 1, self._axis.set_ylim)
+    return setLimit(xlim, 0, self._x_axis.set_xlim)
 
   def _label(self, get_label, set_label, l, size):
     if l is None:
@@ -168,6 +174,11 @@ class PlotYAxis(object):
     self._label_fontsize = fontsize
     self._y_label()
 
+  def animate(self, frame):
+    for y_label in self.plots.keys():
+      self.plots[y_label].set_data(self.data[y_label][0][:frame], self.data[y_label][1][:frame])
+    return self.plots.values()
+
   def _plot(self, x, y, y_label, style = None):
     if style is None:
       return self._plot(x, y, y_label, LineStyle(color = self.figure._next_color()))
@@ -175,8 +186,19 @@ class PlotYAxis(object):
       return False
     self._axis.get_yaxis().set_visible(True)
     self.plots[y_label] = self._axis.plot(x, y, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+    self.data[y_label] = (x, y)
     self.legend()
     return True
+
+  def startAnimation(self):
+    for y_label in self.plots.keys():
+      style = self.style(y_label)
+      self.plots[y_label] = self._axis.plot(self.data[y_label][0][0], self.data[y_label][1][0], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+
+  def stopAnimation(self):
+    for y_label in self.plots.keys():
+      style = self.style(y_label)
+      self.plots[y_label] = self._axis.plot(self.data[y_label][0], self.data[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
 
   def add_plot(self, x, y, y_label, style = None):
     return self._plot(self._data()[x], self._data()[y], y_label, style)
@@ -216,6 +238,7 @@ class PlotYAxis(object):
       return
     self.plots[y].remove()
     del self.plots[y]
+    del self.data[y]
     if len(self.plots):
       self._axis.relim()
       self.legend()
@@ -246,6 +269,7 @@ class PlotFigure(object):
     self.axes = {}
     self.axes[PlotSide.LEFT] = PlotYAxis(self)
     self.axes[PlotSide.RIGHT] = PlotYAxis(self, self._left().axis())
+    self.animation = None
 
     self._title_fontsize = 12
     self._x_label_fontsize = 10
@@ -286,7 +310,7 @@ class PlotFigure(object):
     self._axes(lambda axis: axis.legend())
 
   def draw(self, x_limits = None, y1_limits = None, y2_limits = None):
-    self._left().fixLimits(self._right())
+    #self._left().fixLimits(self._right())
     x_limits = self._left().setLimits(x_limits, y1_limits)
     self._right().setLimits(x_limits, y2_limits)
     self._legend()
@@ -294,6 +318,21 @@ class PlotFigure(object):
     top_offset = self._left().legendOffset(self._top_offset, -1)
     bottom_offset = self._left().legendOffset(self._bottom_offset, 1)
     self.fig.subplots_adjust(top = top_offset, bottom = bottom_offset)
+
+  def animate(self, frame, x_limits = None, y1_limits = None, y2_limits = None):
+    ret = self._left().animate(frame)
+    ret.extend(self._right().animate(frame))
+    x_limits = self._left().setLimits(xlim = x_limits, ylim = y1_limits, frame = frame)
+    self._right().setLimits(xlim = x_limits, ylim = y2_limits, frame = frame)
+    self._legend()
+    self._drawGrid()
+    top_offset = self._left().legendOffset(self._top_offset, -1)
+    bottom_offset = self._left().legendOffset(self._bottom_offset, 1)
+    self.fig.subplots_adjust(top = top_offset, bottom = bottom_offset)
+    return ret
+
+  def stopAnimation(self):
+    self._axes(lambda a: a.stopAnimation())
 
   def setData(self, data):
     self.data = data
@@ -552,7 +591,6 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     vbox = QVBoxLayout(self)
     vbox.addWidget(self.canvas)
     vbox.addWidget(self.toolbar)
-    self.setLayout(vbox)
 
   def setupLockButtons(self, layout):
     self.x_locked = QtWidgets.QPushButton(u"🔒X", self)
@@ -572,6 +610,44 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     layout.addWidget(self.y2_locked)
     self.y2_locked.toggled.connect(self.y2_locked_changed)
     self.y2_limits = None
+
+  def setupAnimationButtons(self, layout):
+    self.animation = None
+    self.animationButton = QtWidgets.QPushButton("Start animation")
+    self.animationButton.setCheckable(True)
+    self.animationButton.toggled.connect(self.startStopAnimation)
+    layout.addWidget(self.animationButton)
+
+  def startStopAnimation(self):
+    if self.animationButton.isChecked():
+      if self.startAnimation():
+        self.animationButton.setText("Stop animation")
+      else:
+        self.animationButton.setChecked(False)
+    else:
+      self.stopAnimation()
+      self.animationButton.setText("Start animation")
+
+  def startAnimation(self):
+    interval = 50 # ms
+    if self.data is None or len(self.data) == 0:
+      return False
+    x_data = self.data[self.x_data]
+    dt = (x_data[1] - x_data[0]) * 1000 # dt in ms
+    step = int(math.ceil(interval/dt))
+    self._axes(lambda axis: axis._axis.clear())
+    self.animation = FuncAnimation(self.fig, self.animate, frames = range(1, len(x_data), step), interval = interval)
+    self._axes(lambda a: a.startAnimation())
+    self.draw()
+    return True
+
+  def animate(self, frame):
+    return PlotFigure.animate(self, frame, self.x_limits, self.y1_limits, self.y2_limits)
+
+  def stopAnimation(self):
+    self.animation.event_source.stop()
+    PlotFigure.stopAnimation(self)
+    self.draw()
 
   def axesDialog(self):
     SimpleAxesDialog(self).exec_()

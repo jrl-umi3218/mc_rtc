@@ -213,6 +213,7 @@ class MCLogTab(QtWidgets.QWidget):
     self.ui = ui.MCLogTab()
     self.ui.setupUi(self)
     self.ui.canvas.setupLockButtons(self.ui.selectorLayout)
+    self.ui.canvas.setupAnimationButtons(self.ui.verticalLayout)
     if parent is not None:
       self.ui.canvas._left().grid = parent.gridStyles['left']
       self.ui.canvas._right().grid = parent.gridStyles['right']
