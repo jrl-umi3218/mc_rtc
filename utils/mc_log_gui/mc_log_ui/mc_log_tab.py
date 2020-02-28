@@ -298,6 +298,7 @@ class MCLogTab(QtWidgets.QWidget):
     self.itemSelectionChanged(self.ui.y2Selector, self.y2Selected, 1)
     for _,s in self.specials.iteritems():
       s.plot()
+    self.ui.canvas.restartAnimation()
 
   @QtCore.Slot(QtWidgets.QTreeWidgetItem, int)
   def on_y1Selector_itemClicked(self, item, col):

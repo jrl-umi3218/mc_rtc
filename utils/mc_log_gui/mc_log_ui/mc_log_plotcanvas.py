@@ -131,12 +131,12 @@ class PlotYAxis(object):
         min_ = lim[0]
         max_ = lim[1]
       elif frame is not None:
-        min_ = np.min(self.data.values()[0][idx][:frame])
-        max_ = np.max(self.data.values()[0][idx][:frame])
+        min_ = np.nanmin(self.data.values()[0][idx][:frame])
+        max_ = np.nanmax(self.data.values()[0][idx][:frame])
         for i in range(1, len(self.data.values())):
           data = self.data.values()[i][idx][:frame]
-          min_ = min(np.min(data), min_)
-          max_ = max(np.max(data), max_)
+          min_ = min(np.nanmin(data), min_)
+          max_ = max(np.nanmax(data), max_)
       else:
         range_ = dataLim[1][idx] - dataLim[0][idx]
         min_ = dataLim[0][idx] - range_ * 0.01
@@ -190,14 +190,15 @@ class PlotYAxis(object):
     self.legend()
     return True
 
-  def startAnimation(self):
+  def startAnimation(self, i0):
     for y_label in self.plots.keys():
       style = self.style(y_label)
-      self.plots[y_label] = self._axis.plot(self.data[y_label][0][0], self.data[y_label][1][0], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+      self.plots[y_label] = self._axis.plot(self.data[y_label][0][i0], self.data[y_label][1][i0], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
 
   def stopAnimation(self):
     for y_label in self.plots.keys():
       style = self.style(y_label)
+      self.plots[y_label].remove()
       self.plots[y_label] = self._axis.plot(self.data[y_label][0], self.data[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
 
   def add_plot(self, x, y, y_label, style = None):
@@ -310,7 +311,7 @@ class PlotFigure(object):
     self._axes(lambda axis: axis.legend())
 
   def draw(self, x_limits = None, y1_limits = None, y2_limits = None):
-    #self._left().fixLimits(self._right())
+    self._left().fixLimits(self._right())
     x_limits = self._left().setLimits(x_limits, y1_limits)
     self._right().setLimits(x_limits, y2_limits)
     self._legend()
@@ -628,16 +629,28 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
       self.stopAnimation()
       self.animationButton.setText("Start animation")
 
+  def restartAnimation(self):
+    if self.animationButton.isChecked():
+      self.stopAnimation()
+      self.startAnimation()
+
   def startAnimation(self):
     interval = 50 # ms
     if self.data is None or len(self.data) == 0:
       return False
     x_data = self.data[self.x_data]
-    dt = (x_data[1] - x_data[0]) * 1000 # dt in ms
+    i0 = 0
+    while i0 < len(x_data) and np.isnan(x_data[i0]):
+      i0 += 1
+    iN = i0
+    while iN + 1 < len(x_data) and not np.isnan(x_data[iN + 1]):
+      iN += 1
+    assert(iN > i0 and i0 < len(x_data)),"Strange time range"
+    dt = (x_data[i0 + 1] - x_data[i0]) * 1000 # dt in ms
     step = int(math.ceil(interval/dt))
     self._axes(lambda axis: axis._axis.clear())
-    self.animation = FuncAnimation(self.fig, self.animate, frames = range(1, len(x_data), step), interval = interval)
-    self._axes(lambda a: a.startAnimation())
+    self.animation = FuncAnimation(self.fig, self.animate, frames = range(i0 + 1, iN, step), interval = interval)
+    self._axes(lambda a: a.startAnimation(i0))
     self.draw()
     return True
 
