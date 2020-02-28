@@ -613,11 +613,16 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.y2_limits = None
 
   def setupAnimationButtons(self, layout):
+    animationLayout = QtWidgets.QHBoxLayout()
     self.animation = None
     self.animationButton = QtWidgets.QPushButton("Start animation")
     self.animationButton.setCheckable(True)
     self.animationButton.toggled.connect(self.startStopAnimation)
-    layout.addWidget(self.animationButton)
+    animationLayout.addWidget(self.animationButton)
+    self.saveAnimationButton = QtWidgets.QPushButton("Save animation")
+    self.saveAnimationButton.released.connect(self.saveAnimation)
+    animationLayout.addWidget(self.saveAnimationButton)
+    layout.addLayout(animationLayout)
 
   def startStopAnimation(self):
     if self.animationButton.isChecked():
@@ -661,6 +666,17 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.animation.event_source.stop()
     PlotFigure.stopAnimation(self)
     self.draw()
+
+  def saveAnimation(self):
+    fpath = QtWidgets.QFileDialog.getSaveFileName(self, "Output file", filter = "Video (*.mp4)")[0]
+    if not len(fpath):
+      return
+    if self.animationButton.isChecked():
+      self.animation.save(fpath)
+    else:
+      self.startAnimation()
+      self.animation.save(fpath)
+      self.stopAnimation()
 
   def axesDialog(self):
     SimpleAxesDialog(self).exec_()
