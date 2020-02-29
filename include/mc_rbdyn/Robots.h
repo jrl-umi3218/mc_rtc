@@ -200,7 +200,7 @@ public:
   void reserve(size_type new_cap);
 
 protected:
-  std::vector<mc_rbdyn::RobotModule> robot_modules_;
+  RobotModuleVector robot_modules_;
   std::vector<mc_rbdyn::Robot> robots_;
   std::vector<rbd::MultiBody> mbs_;
   std::vector<rbd::MultiBodyConfig> mbcs_;

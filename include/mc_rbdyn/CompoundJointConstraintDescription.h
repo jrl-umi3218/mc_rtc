@@ -29,6 +29,9 @@ struct CompoundJointConstraintDescription
   Eigen::Vector2d p2;
 };
 
+using CompoundJointConstraintDescriptionVector =
+    std::vector<CompoundJointConstraintDescription, Eigen::aligned_allocator<CompoundJointConstraintDescription>>;
+
 } // namespace mc_rbdyn
 
 namespace mc_rtc

@@ -300,7 +300,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    *
    * \see mc_rbdyn::CompoundJointConstraintDescription for details on the expected data
    */
-  inline const std::vector<CompoundJointConstraintDescription> & compoundJoints() const
+  inline const CompoundJointConstraintDescriptionVector & compoundJoints() const
   {
     return _compoundJoints;
   }
@@ -360,7 +360,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** \see default_attitude() */
   std::array<double, 7> _default_attitude = {{1., 0., 0., 0., 0., 0., 0.}};
   /** \see compoundJoints() */
-  std::vector<CompoundJointConstraintDescription> _compoundJoints;
+  CompoundJointConstraintDescriptionVector _compoundJoints;
   /** \see parameters() */
   std::vector<std::string> _parameters;
   /** \see defaultLIPMStabilizerConfiguration() */
@@ -375,6 +375,8 @@ typedef std::shared_ptr<RobotModule> RobotModulePtr;
  *
  */
 RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits);
+
+using RobotModuleVector = std::vector<RobotModule, Eigen::aligned_allocator<RobotModule>>;
 
 } // namespace mc_rbdyn
 
