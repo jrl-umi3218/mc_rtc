@@ -145,8 +145,12 @@ Classes</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:a728d731db2806e7673f67b958970e558"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="a02027.html">BodySensor</a>, Eigen::aligned_allocator&lt; <a class="el" href="a02027.html">BodySensor</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00669.html#a728d731db2806e7673f67b958970e558">BodySensorVector</a></td></tr>
 <tr class="separator:a728d731db2806e7673f67b958970e558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96a35f8f44c0b0eb301fabc4af2bd978"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00669.html#a96a35f8f44c0b0eb301fabc4af2bd978">CompoundJointConstraintDescriptionVector</a> = std::vector&lt; <a class="el" href="a02035.html">CompoundJointConstraintDescription</a>, Eigen::aligned_allocator&lt; <a class="el" href="a02035.html">CompoundJointConstraintDescription</a> &gt; &gt;</td></tr>
+<tr class="separator:a96a35f8f44c0b0eb301fabc4af2bd978"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af67e459a90b9a864418fca7d55d959a3"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; <a class="el" href="a02143.html">RobotModule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00669.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a></td></tr>
 <tr class="separator:af67e459a90b9a864418fca7d55d959a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95605f5cb57b7c5b39027072bedbbc04"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00669.html#a95605f5cb57b7c5b39027072bedbbc04">RobotModuleVector</a> = std::vector&lt; <a class="el" href="a02143.html">RobotModule</a>, Eigen::aligned_allocator&lt; <a class="el" href="a02143.html">RobotModule</a> &gt; &gt;</td></tr>
+<tr class="separator:a95605f5cb57b7c5b39027072bedbbc04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a848cf0b2e8f6ca6f18ceba1769d9a426"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; <a class="el" href="a02159.html">Surface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00669.html#a848cf0b2e8f6ca6f18ceba1769d9a426">SurfacePtr</a></td></tr>
 <tr class="separator:a848cf0b2e8f6ca6f18ceba1769d9a426"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -235,6 +239,20 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a96a35f8f44c0b0eb301fabc4af2bd978"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96a35f8f44c0b0eb301fabc4af2bd978">&#9670;&nbsp;</a></span>CompoundJointConstraintDescriptionVector</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a00669.html#a96a35f8f44c0b0eb301fabc4af2bd978">mc_rbdyn::CompoundJointConstraintDescriptionVector</a> = typedef std::vector&lt;<a class="el" href="a02035.html">CompoundJointConstraintDescription</a>, Eigen::aligned_allocator&lt;<a class="el" href="a02035.html">CompoundJointConstraintDescription</a>&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="af67e459a90b9a864418fca7d55d959a3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af67e459a90b9a864418fca7d55d959a3">&#9670;&nbsp;</a></span>RobotModulePtr</h2>
 
@@ -243,6 +261,20 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">typedef std::shared_ptr&lt;<a class="el" href="a02143.html">RobotModule</a>&gt; <a class="el" href="a00669.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a95605f5cb57b7c5b39027072bedbbc04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95605f5cb57b7c5b39027072bedbbc04">&#9670;&nbsp;</a></span>RobotModuleVector</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a00669.html#a95605f5cb57b7c5b39027072bedbbc04">mc_rbdyn::RobotModuleVector</a> = typedef std::vector&lt;<a class="el" href="a02143.html">RobotModule</a>, Eigen::aligned_allocator&lt;<a class="el" href="a02143.html">RobotModule</a>&gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1257,7 +1289,7 @@ rotation vectors", i.e. we need to transpose/flip signs from Equation (290) of t
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00669.html">mc_rbdyn</a></li>
-    <li class="footer">Generated on Thu Feb 27 2020 02:24:40 for mc_rtc by
+    <li class="footer">Generated on Sat Feb 29 2020 15:55:16 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

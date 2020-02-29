@@ -95,8 +95,10 @@ Inheritance diagram for mc_solver::details::CompoundJointConstraint:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ade6344aa7dd5625e6d8dd08b740227ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03779.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02535.html#ade6344aa7dd5625e6d8dd08b740227ed">CompoundJointConstraint</a> (const <a class="el" href="a02163.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int rIndex, double dt, const std::vector&lt; <a class="el" href="a00687.html#afa4d95156100f691a3f35392f403217f">CompoundJointConstraintDescription</a> &gt; &amp;desc={})</td></tr>
-<tr class="separator:ade6344aa7dd5625e6d8dd08b740227ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad06e91a57f1229af89b70c358f4a7b13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03779.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02535.html#ad06e91a57f1229af89b70c358f4a7b13">CompoundJointConstraint</a> (const <a class="el" href="a02163.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int rIndex, double dt)</td></tr>
+<tr class="separator:ad06e91a57f1229af89b70c358f4a7b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb4fa85bb33ff2a1de3b7de351f131c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03779.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02535.html#acb4fa85bb33ff2a1de3b7de351f131c5">CompoundJointConstraint</a> (const <a class="el" href="a02163.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int rIndex, double dt, const <a class="el" href="a00687.html#a2503fc4f7d91a2f6c53349f2a12effd1">CompoundJointConstraintDescriptionVector</a> &amp;desc)</td></tr>
+<tr class="separator:acb4fa85bb33ff2a1de3b7de351f131c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a652516c75f732ca1396233a447a75060"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03779.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02535.html#a652516c75f732ca1396233a447a75060">~CompoundJointConstraint</a> () override</td></tr>
 <tr class="separator:a652516c75f732ca1396233a447a75060"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6b6d7c5a42e5233d89290cd75460dad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03779.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02535.html#aa6b6d7c5a42e5233d89290cd75460dad">addConstraint</a> (const <a class="el" href="a02163.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int rIndex, const <a class="el" href="a00687.html#afa4d95156100f691a3f35392f403217f">CompoundJointConstraintDescription</a> &amp;desc)</td></tr>
@@ -132,8 +134,42 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Implement compound joint constraints. </p>
 <p>This constraint is given a set of <a class="el" href="a02535.html" title="Implement compound joint constraints. ">CompoundJointConstraint</a> for a given robot and will enforce them </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ade6344aa7dd5625e6d8dd08b740227ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade6344aa7dd5625e6d8dd08b740227ed">&#9670;&nbsp;</a></span>CompoundJointConstraint()</h2>
+<a id="ad06e91a57f1229af89b70c358f4a7b13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad06e91a57f1229af89b70c358f4a7b13">&#9670;&nbsp;</a></span>CompoundJointConstraint() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03779.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a> mc_solver::details::CompoundJointConstraint::CompoundJointConstraint </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02163.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robots</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>rIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acb4fa85bb33ff2a1de3b7de351f131c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb4fa85bb33ff2a1de3b7de351f131c5">&#9670;&nbsp;</a></span>CompoundJointConstraint() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -159,8 +195,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; <a class="el" href="a00687.html#afa4d95156100f691a3f35392f403217f">CompoundJointConstraintDescription</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>desc</em> = <code>{}</code>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00687.html#a2503fc4f7d91a2f6c53349f2a12effd1">CompoundJointConstraintDescriptionVector</a> &amp;&#160;</td>
+          <td class="paramname"><em>desc</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -461,7 +497,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00687.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00702.html">details</a></li><li class="navelem"><a class="el" href="a02535.html">CompoundJointConstraint</a></li>
-    <li class="footer">Generated on Thu Feb 27 2020 02:27:04 for mc_rtc by
+    <li class="footer">Generated on Sat Feb 29 2020 15:57:42 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

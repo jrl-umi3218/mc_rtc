@@ -61,10 +61,7 @@ var files =
       [ "ComplianceTask", "a02699.html", "a02699" ]
     ] ],
     [ "CompoundJointConstraint.h", "a00353.html", "a00353" ],
-    [ "CompoundJointConstraintDescription.h", "a00146.html", [
-      [ "CompoundJointConstraintDescription", "a02047.html", "a02047" ],
-      [ "ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "a02051.html", "a02051" ]
-    ] ],
+    [ "CompoundJointConstraintDescription.h", "a00146.html", "a00146" ],
     [ "CoMTask.h", "a00416.html", [
       [ "CoMTask", "a02703.html", "a02703" ]
     ] ],

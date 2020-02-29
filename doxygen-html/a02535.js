@@ -1,6 +1,7 @@
 var a02535 =
 [
-    [ "CompoundJointConstraint", "a02535.html#ade6344aa7dd5625e6d8dd08b740227ed", null ],
+    [ "CompoundJointConstraint", "a02535.html#ad06e91a57f1229af89b70c358f4a7b13", null ],
+    [ "CompoundJointConstraint", "a02535.html#acb4fa85bb33ff2a1de3b7de351f131c5", null ],
     [ "~CompoundJointConstraint", "a02535.html#a652516c75f732ca1396233a447a75060", null ],
     [ "addConstraint", "a02535.html#aa6b6d7c5a42e5233d89290cd75460dad", null ],
     [ "AInEq", "a02535.html#aab8f87d466ef7d494d1781854d5753db", null ],

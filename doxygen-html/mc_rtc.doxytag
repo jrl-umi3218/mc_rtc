@@ -1040,6 +1040,13 @@
       <anchor>afa4d95156100f691a3f35392f403217f</anchor>
       <arglist></arglist>
     </member>
+    <member kind="typedef">
+      <type>mc_rbdyn::CompoundJointConstraintDescriptionVector</type>
+      <name>CompoundJointConstraintDescriptionVector</name>
+      <anchorfile>a00687.html</anchorfile>
+      <anchor>a2503fc4f7d91a2f6c53349f2a12effd1</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>CompoundJointConstraintDescription.h</name>
@@ -1050,6 +1057,13 @@
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;</class>
     <namespace>mc_rbdyn</namespace>
     <namespace>mc_rtc</namespace>
+    <member kind="typedef">
+      <type>std::vector&lt; CompoundJointConstraintDescription, Eigen::aligned_allocator&lt; CompoundJointConstraintDescription &gt; &gt;</type>
+      <name>CompoundJointConstraintDescriptionVector</name>
+      <anchorfile>a00681.html</anchorfile>
+      <anchor>a96a35f8f44c0b0eb301fabc4af2bd978</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>CoMTask.h</name>
@@ -2744,6 +2758,13 @@
       <name>RobotModulePtr</name>
       <anchorfile>a00681.html</anchorfile>
       <anchor>af67e459a90b9a864418fca7d55d959a3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::vector&lt; RobotModule, Eigen::aligned_allocator&lt; RobotModule &gt; &gt;</type>
+      <name>RobotModuleVector</name>
+      <anchorfile>a00681.html</anchorfile>
+      <anchor>a95605f5cb57b7c5b39027072bedbbc04</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -6265,8 +6286,15 @@
       <type>MC_SOLVER_DLLAPI</type>
       <name>CompoundJointConstraint</name>
       <anchorfile>a02535.html</anchorfile>
-      <anchor>ade6344aa7dd5625e6d8dd08b740227ed</anchor>
-      <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int rIndex, double dt, const std::vector&lt; CompoundJointConstraintDescription &gt; &amp;desc={})</arglist>
+      <anchor>ad06e91a57f1229af89b70c358f4a7b13</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int rIndex, double dt)</arglist>
+    </member>
+    <member kind="function">
+      <type>MC_SOLVER_DLLAPI</type>
+      <name>CompoundJointConstraint</name>
+      <anchorfile>a02535.html</anchorfile>
+      <anchor>acb4fa85bb33ff2a1de3b7de351f131c5</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int rIndex, double dt, const CompoundJointConstraintDescriptionVector &amp;desc)</arglist>
     </member>
     <member kind="function">
       <type>MC_SOLVER_DLLAPI</type>
@@ -21198,10 +21226,10 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>const std::vector&lt; CompoundJointConstraintDescription &gt; &amp;</type>
+      <type>const CompoundJointConstraintDescriptionVector &amp;</type>
       <name>compoundJoints</name>
       <anchorfile>a02155.html</anchorfile>
-      <anchor>a2fa5e108022c274023f101cdae524276</anchor>
+      <anchor>a28b00d3621296be062c8545316171a89</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -21380,10 +21408,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>std::vector&lt; CompoundJointConstraintDescription &gt;</type>
+      <type>CompoundJointConstraintDescriptionVector</type>
       <name>_compoundJoints</name>
       <anchorfile>a02155.html</anchorfile>
-      <anchor>a2eb00053ce681565f590583d861fa851</anchor>
+      <anchor>a0b4dd720e3b699b37947c3453a93e126</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -21682,10 +21710,10 @@
       <arglist>()</arglist>
     </member>
     <member kind="variable" protection="protected">
-      <type>std::vector&lt; mc_rbdyn::RobotModule &gt;</type>
+      <type>RobotModuleVector</type>
       <name>robot_modules_</name>
       <anchorfile>a02163.html</anchorfile>
-      <anchor>a77e5ac668f50ab58f3513fd60cbfc2ed</anchor>
+      <anchor>a393d65c7732ca980aaef77638076565a</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -29436,10 +29464,24 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
+      <type>std::vector&lt; CompoundJointConstraintDescription, Eigen::aligned_allocator&lt; CompoundJointConstraintDescription &gt; &gt;</type>
+      <name>CompoundJointConstraintDescriptionVector</name>
+      <anchorfile>a00681.html</anchorfile>
+      <anchor>a96a35f8f44c0b0eb301fabc4af2bd978</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
       <type>std::shared_ptr&lt; RobotModule &gt;</type>
       <name>RobotModulePtr</name>
       <anchorfile>a00681.html</anchorfile>
       <anchor>af67e459a90b9a864418fca7d55d959a3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::vector&lt; RobotModule, Eigen::aligned_allocator&lt; RobotModule &gt; &gt;</type>
+      <name>RobotModuleVector</name>
+      <anchorfile>a00681.html</anchorfile>
+      <anchor>a95605f5cb57b7c5b39027072bedbbc04</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -30606,6 +30648,13 @@
       <name>CompoundJointConstraintDescription</name>
       <anchorfile>a00687.html</anchorfile>
       <anchor>afa4d95156100f691a3f35392f403217f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>mc_rbdyn::CompoundJointConstraintDescriptionVector</type>
+      <name>CompoundJointConstraintDescriptionVector</name>
+      <anchorfile>a00687.html</anchorfile>
+      <anchor>a2503fc4f7d91a2f6c53349f2a12effd1</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">

@@ -8,7 +8,7 @@ var searchData=
   ['_5fbounds',['_bounds',['../a02155.html#af19dd43ad8642aabc8c406e0972c5d65',1,'mc_rbdyn::RobotModule']]],
   ['_5fcollisiontransforms',['_collisionTransforms',['../a02155.html#a57b63a2f82b40741398b3a167b43592c',1,'mc_rbdyn::RobotModule']]],
   ['_5fcommonselfcollisions',['_commonSelfCollisions',['../a02155.html#a064f95b0a8e134739d1f7ab194afe42f',1,'mc_rbdyn::RobotModule']]],
-  ['_5fcompoundjoints',['_compoundJoints',['../a02155.html#a2eb00053ce681565f590583d861fa851',1,'mc_rbdyn::RobotModule']]],
+  ['_5fcompoundjoints',['_compoundJoints',['../a02155.html#a0b4dd720e3b699b37947c3453a93e126',1,'mc_rbdyn::RobotModule']]],
   ['_5fconvexhull',['_convexHull',['../a02155.html#a65db2f156200c10f888f52bf12875e64',1,'mc_rbdyn::RobotModule']]],
   ['_5fdefault_5fattitude',['_default_attitude',['../a02155.html#a1699dbd63835da199d52d232980c6b7a',1,'mc_rbdyn::RobotModule']]],
   ['_5fflexibility',['_flexibility',['../a02155.html#a664972f2b2163e90aab92a3903385b28',1,'mc_rbdyn::RobotModule']]],
