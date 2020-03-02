@@ -43,7 +43,7 @@ def read_flat(f, tmp = False):
         return ctypes.c_bool.from_buffer_copy(fd.read(ctypes.sizeof(ctypes.c_bool))).value
     def read_string(fd, size):
         if size == 0:
-            return None
+            return "".decode('ascii')
         return fd.read(size).decode('ascii')
     def read_array(fd, size):
         return np.frombuffer(fd.read(size * ctypes.sizeof(ctypes.c_double)), np.double)
@@ -58,15 +58,7 @@ def read_flat(f, tmp = False):
             if is_numeric:
                 data[key] = read_array(fd, read_size(fd))
             else:
-                entries = read_string_array(fd, read_size(fd))
-                entries_to_int = {None: None}
-                i = 0
-                for v in entries:
-                    if v in entries_to_int:
-                        continue
-                    entries_to_int[v] = i
-                    i += 1
-                data[key] = [ entries_to_int[v] for v in entries ]
+                data[key] = read_string_array(fd, read_size(fd))
     if tmp:
       os.unlink(f)
     return data
@@ -77,20 +69,20 @@ def read_csv(fpath, tmp = False):
   with open(fpath) as fd:
     reader = csv.DictReader(fd, delimiter=';')
     for k in reader.fieldnames:
+      if not(len(k)):
+        continue
       data[k] = []
     for row in reader:
       for k in reader.fieldnames:
-        if k not in string_entries:
-          try:
-            data[k].append(safe_float(row[k]))
-          except ValueError:
-            string_entries[k] = {None: None, row[k]: 0}
-            data[k].append(0)
-        else:
-          if row[k] not in string_entries[k]:
-            string_entries[k][row[k]] = max(string_entries[k].values()) + 1
-          data[k].append(string_entries[k][row[k]])
+        if not(len(k)):
+          continue
+        try:
+          data[k].append(safe_float(row[k]))
+        except ValueError:
+          data[k].append(row[k].decode('ascii'))
   for k in data:
+    if type(data[k][0]) is unicode:
+      continue
     data[k] = np.array(data[k])
   if tmp:
     os.unlink(fpath)

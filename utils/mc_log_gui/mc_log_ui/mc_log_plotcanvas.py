@@ -18,6 +18,8 @@ import matplotlib.pyplot
 
 from matplotlib.animation import FuncAnimation
 from matplotlib.figure import Figure
+from matplotlib.patches import Patch, Polygon, Rectangle
+
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas,\
                                                NavigationToolbar2QT as NavigationToolbar
 
@@ -40,8 +42,66 @@ def rpyFromQuat(quat):
     import eigen
     return rpyFromMat(list(eigen.Quaterniond(*quat).toRotationMatrix()))
 
+class PlotPolygonAxis(object):
+  def __init__(self, parent, axis):
+    self.figure = parent
+    self._axis = axis.twinx()
+    self._axis.set_zorder(-1)
+    self._axis.set_yticks([])
+    self._axis.set_ylim(0, 1)
+    self._axis.get_yaxis().set_visible(False)
+    self.plotsCount = {}
+    self.plots = OrderedDict()
+    self.colors = OrderedDict()
+  def _plot_string(self, x, y, y_label, style):
+    if y_label in self.plots:
+      self.plotsCount[y_label] += 1
+      return False
+    self.plotsCount[y_label] = 1
+    self.plots[y_label] = []
+    i = 0
+    i0 = 0
+    label = y[i0]
+    while i < len(y):
+      if y[i] == label and i + 1 != len(y):
+        i += 1
+        continue
+      if len(label) == 0:
+        i += 1
+        continue
+      if label not in self.colors:
+        self.colors[label] = self.figure._next_poly_color()
+      if i + 1 < len(y):
+        xi = x[i + 1]
+      else:
+        xi = x[i]
+      self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = self.colors[label])))
+      i += 1
+      i0 = i
+      if i < len(y):
+        label = y[i0]
+    return True
+  def legend(self):
+    if not len(self.plots):
+      self._axis.clear()
+      return
+    xL = 1.0
+    if len(self.figure._right()):
+      xL = 1.025
+    self._axis.legend(bbox_to_anchor=(xL, 0., 0.2, 0.1), mode="expand", borderaxespad=0.5)
+  def remove_plot(self, y):
+    if y not in self.plots:
+      return
+    self.plotsCount[y] -= 1
+    if self.plotsCount[y]:
+      return
+    for plt in self.plots[y]:
+      plt.remove()
+    del self.plots[y]
+    self.figure.draw()
+
 class PlotYAxis(object):
-  def __init__(self, parent, x_axis = None):
+  def __init__(self, parent, x_axis = None, poly = None):
     self.figure = parent
     if x_axis is None:
       self.is_left = True
@@ -52,6 +112,12 @@ class PlotYAxis(object):
       self.is_left = False
       self._axis = x_axis.twinx()
       self._x_axis = x_axis
+    if poly is None:
+      self._polyAxis = PlotPolygonAxis(parent, self._axis)
+    else:
+      self._polyAxis = poly
+    self._axis.set_facecolor((1, 1, 1, 0))
+    box = self._axis.get_position()
     self._axis.autoscale_view(False,True,True)
     self._axis.format_coord = parent.format_coord
     self._axis.get_yaxis().set_visible(False)
@@ -91,10 +157,11 @@ class PlotYAxis(object):
       top_anchor = 1.02
     else:
       loc = 2
-      top_anchor = -0.125
+      top_anchor = -0.14
       if len(self.figure.x_label()):
         top_anchor = -0.175
     self._axis.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=loc, ncol=self._legend_ncol, mode="expand", borderaxespad=0.5, fontsize=self._legend_fontsize())
+    self._polyAxis.legend()
 
   def legendNCol(self, n = None):
     if n is None:
@@ -107,7 +174,7 @@ class PlotYAxis(object):
 
   def legendOffset(self, offset, sign):
     if self.legendRows() > 3:
-      offset = offset + sign * 0.015 * (self.legendRows() - 3)
+      offset = offset + sign * 0.035 * (self.legendRows() - 3)
     return offset
 
   # If this axis is empty but the other is not, fix my own limits, in the
@@ -180,6 +247,8 @@ class PlotYAxis(object):
     return self.plots.values()
 
   def _plot(self, x, y, y_label, style = None):
+    if type(y[0]) is unicode:
+      return self._polyAxis._plot_string(x, y, y_label, style)
     if style is None:
       return self._plot(x, y, y_label, LineStyle(color = self.figure._next_color()))
     if y_label in self.plots:
@@ -236,6 +305,7 @@ class PlotYAxis(object):
 
   def remove_plot(self, y):
     if y not in self.plots:
+      self._polyAxis.remove_plot(y)
       return
     self.plots[y].remove()
     del self.plots[y]
@@ -269,7 +339,7 @@ class PlotFigure(object):
     self.fig = matplotlib.pyplot.figure(figsize=(5, 4), dpi=100)
     self.axes = {}
     self.axes[PlotSide.LEFT] = PlotYAxis(self)
-    self.axes[PlotSide.RIGHT] = PlotYAxis(self, self._left().axis())
+    self.axes[PlotSide.RIGHT] = PlotYAxis(self, self._left().axis(), self._left()._polyAxis)
     self.animation = None
 
     self._title_fontsize = 12
@@ -288,6 +358,11 @@ class PlotFigure(object):
     self.Ncolor = min(cm.N, 12)
     cm2rgb = (np.array(cm(x)[0:3]) for x in np.linspace(0, 1, self.Ncolor))
     self.colors = ['#%02x%02x%02x' % tuple((255 * rgb).astype(int)) for rgb in cm2rgb]
+
+    self.polyColor = 0
+    cm = matplotlib.cm.Pastel1
+    cm2rgb = (np.array(cm(x)[0:3] + (0.5,)) for x in np.linspace(0, 1, min(cm.N, 32)))
+    self.polyColors = [rgb for rgb in cm2rgb]
 
     self.x_data = 't'
 
@@ -310,26 +385,24 @@ class PlotFigure(object):
   def _legend(self):
     self._axes(lambda axis: axis.legend())
 
-  def draw(self, x_limits = None, y1_limits = None, y2_limits = None):
+  def draw(self, x_limits = None, y1_limits = None, y2_limits = None, frame = None):
     self._left().fixLimits(self._right())
-    x_limits = self._left().setLimits(x_limits, y1_limits)
-    self._right().setLimits(x_limits, y2_limits)
+    x_limits = self._left().setLimits(x_limits, y1_limits, frame = frame)
+    self._right().setLimits(x_limits, y2_limits, frame = frame)
     self._legend()
     self._drawGrid()
     top_offset = self._left().legendOffset(self._top_offset, -1)
-    bottom_offset = self._left().legendOffset(self._bottom_offset, 1)
-    self.fig.subplots_adjust(top = top_offset, bottom = bottom_offset)
+    bottom_offset = self._right().legendOffset(self._bottom_offset, 1)
+    left_offset = 0.125
+    right_offset = 0.9
+    if len(self._left()._polyAxis.plots):
+      left_offset, right_offset = 0.05, right_offset - (left_offset - 0.05)
+    self.fig.subplots_adjust(left = left_offset, right = right_offset, top = top_offset, bottom = bottom_offset)
 
   def animate(self, frame, x_limits = None, y1_limits = None, y2_limits = None):
     ret = self._left().animate(frame)
     ret.extend(self._right().animate(frame))
-    x_limits = self._left().setLimits(xlim = x_limits, ylim = y1_limits, frame = frame)
-    self._right().setLimits(xlim = x_limits, ylim = y2_limits, frame = frame)
-    self._legend()
-    self._drawGrid()
-    top_offset = self._left().legendOffset(self._top_offset, -1)
-    bottom_offset = self._left().legendOffset(self._bottom_offset, 1)
-    self.fig.subplots_adjust(top = top_offset, bottom = bottom_offset)
+    PlotFigure.draw(self, x_limits = x_limits, y1_limits = y1_limits, y2_limits = y2_limits, frame = frame)
     return ret
 
   def stopAnimation(self):
@@ -412,6 +485,10 @@ class PlotFigure(object):
 
   def y2_label_fontsize(self, fontsize = None):
     return self._right().y_label_fontsize(fontsize)
+
+  def _next_poly_color(self):
+    self.polyColor += 1
+    return self.polyColors[ (self.polyColor - 1) % len(self.polyColors) ]
 
   def _next_color(self):
     self.color += 1
