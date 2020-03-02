@@ -111,8 +111,11 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
   double value = 0;
   store.get("TestAssign", value);
   BOOST_REQUIRE(value == 42);
+  // Test modifying existing value from non-existing key in the datastore
   store.get("TestAssignNonExisting", value);
   BOOST_REQUIRE(value == 42);
+  // Test getting non-exising value with default
+  BOOST_REQUIRE(store.get("TestAssignNonExisting", 12) == 12);
 
   // Test creation without explicitely specifying type
   {
@@ -127,6 +130,9 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
     BOOST_REQUIRE(vecData.size() == 4);
     BOOST_REQUIRE(vec.size() == 4);
     BOOST_REQUIRE(vecData == store.get<std::vector<double>>("TestCopyVector"));
+    auto newVecData = std::vector<double>{1, 2, 3, 4, 5};
+    store.assign("TestCopyVector", newVecData);
+    BOOST_REQUIRE(store.get<std::vector<double>>("TestCopyVector") == newVecData);
   }
 
   // Test make_or_assign
@@ -282,6 +288,9 @@ BOOST_AUTO_TEST_CASE(TestRemove)
   store.make<Object>("TestObject", "TestObject");
   {
     auto & r = store.get<Object>("TestObject");
+    BOOST_REQUIRE(r.name_ == "TestObject");
+    BOOST_CHECK(store.has("TestObject"));
     store.remove("TestObject");
+    BOOST_CHECK(!store.has("TestObject"));
   }
 }

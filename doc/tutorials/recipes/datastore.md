@@ -84,7 +84,7 @@ This section provides a list of the main datastore objects used within the frame
     </tr>
 
     <tr>
-      <td>Desired::com</td>
+      <td>StabilizerStandingState::com</td>
       <td>Eigen::Vector3d</td>
       <td>Modify the CoM target used by the stabilizer.</td>
     </tr>

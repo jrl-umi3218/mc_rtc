@@ -124,6 +124,39 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   }
 
   /**
+   * @brief Gets a value from the datastore if it exists or a default value
+   * otherwise
+   *
+   * @param name Name of the stored data
+   * @param defaultValue Default value used if the data is not in the datastore
+   *
+   * @return Stored data if it exists, defaultValue otherwise.
+   */
+  template<typename T>
+  const T & get(const std::string & name, const T & defaultValue) const
+  {
+    if(has(name))
+    {
+      return get<T>(name);
+    }
+    return defaultValue;
+  }
+
+  /**
+   * @brief Copies an object to an existing datastore object
+   *
+   * @param name Name of the stored object
+   * @param data Data to copy on the datastore
+   *
+   * \see get(std::string)
+   */
+  template<typename T>
+  void assign(const std::string & name, const T & data)
+  {
+    get<T>(name) = data;
+  }
+
+  /**
    * @brief Creates an object on the datastore and returns a reference to it
    *
    * @param name Name of the stored object.
@@ -225,7 +258,7 @@ struct MC_RTC_UTILS_DLLAPI DataStore
    * @return The assigned object
    */
   template<typename T>
-  T & make_or_assign(const std::string & name, const T && arg)
+  T & make_or_assign(const std::string & name, T && arg)
   {
     return make_or_assign<T>(name, arg);
   }
