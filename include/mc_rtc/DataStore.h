@@ -247,6 +247,12 @@ struct MC_RTC_UTILS_DLLAPI DataStore
 private:
   struct Data
   {
+    Data() = default;
+    Data(const Data &) = default;
+    Data & operator=(const Data &) = default;
+    Data(Data &&) = default;
+    Data & operator=(Data &&) = default;
+
     /** Hold the data */
     std::unique_ptr<uint8_t[]> buffer;
     /** Check requested type */
