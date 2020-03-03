@@ -233,12 +233,13 @@ public:
   }
 
   /** Provides access to the shared datastore */
-  mc_rtc::datastore::DataStore & datastore()
+  mc_rtc::DataStore & datastore()
   {
     return datastore_;
   }
 
-  const mc_rtc::datastore::DataStore & datastore() const
+  /** Provides access to the shared datastore (const) */
+  const mc_rtc::DataStore & datastore() const
   {
     return datastore_;
   }
@@ -325,7 +326,7 @@ protected:
 
   /** DataStore to share variables/objects between different parts of the
    * framework (states...) */
-  mc_rtc::datastore::DataStore datastore_;
+  mc_rtc::DataStore datastore_;
 
 public:
   /** Controller timestep */

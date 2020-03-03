@@ -15,13 +15,13 @@ The `DataStore` may for instance be used to:
   - (ii) Could be provided by the controller, or another plugin such as object detection
   - (iii) The footstep plan can then be used by the controller
 
-These are of course just a few example, this feature is intended to simplify sharing data across the framework. Use it sparingly, as adding objects to the datastore effectively makes them global, and thus modifiable from anywhere, including external plugins.
+These are of course just a few examples, this feature is intended to simplify sharing data across the framework. Use it sparingly, as adding objects to the datastore effectively makes them global, and thus modifiable from anywhere, including external plugins.
 
 ## Usage
 
 A default `DataStore` instance is available in the `mc_control::MCController` class, and can be accessed using `mc_control::MCController::datastore()`. Any `c++` object can be created and retrieved from this `DataStore` instance from anywhere with access to the controller's instance.
 
-- Objects can be directly created on the datastore throught the use of `make` or `make_initializer` as follows:
+- Objects can be directly created on the datastore through the use of `make` or `make_initializer` as follows:
 
   ```cpp
   // Create a vector of double of size 4 initialized with value 42
@@ -37,38 +37,22 @@ A default `DataStore` instance is available in the `mc_control::MCController` cl
     datastore().make<Eigen::Vector3d>("key", 1, 2, 3);
   }
   ```
-  or by using the more compact `make_or_assign` helper function that does the same in a single operattion
+
+  Note that these functions also return a reference to the created object that you can use to access and modify it
 
   ```cpp
-  datastore().make_or_assign<Eigen::Vector3d>("EigenVectorScope", 1,2,3);
-  ```
-
-- You can also add an existing object to the datastore
-
-  ```cpp
-  Eigen::Vector3d vec{1, 2, 3};
-  // Creates a copy of vec on the datastore
-  store.make_or_assign<Eigen::Vector3d>("EigenVector", vec); // EigenVector is now {1,2,3}
-  vec.x() = 2; // The datastore object is a copy of vec, so modifying vec will not modify the datastore's value
-  // EigenVector: {1,2,3}
-  // vec: {1,2,2}
-  ```
-
-  Note that all of these functions also return a reference to the created object that you can use to access and modify it
-
-  ```cpp
-  auto & vec = datastore().make_or_assign<Eigen::Vector3d>("EigenVector", Eigen::Vector3d::Zero());
+  auto & vec = datastore().make<Eigen::Vector3d>("EigenVector", Eigen::Vector3d::Zero());
   vec.x() = 42; // vec is now: 42, 0, 0
   ```
 
-- A reference to the stored value can be retrieved at any time using `get<Type>`. Note that the retrived `Type` must match the one used when creating the object.
+- A reference to the stored value can be retrieved at any time using `get<Type>`:
 
   ```cpp
   auto & vec = datastore().get<Eigen::Vector3d>("EigenVector");
   // vec: 42, 0, 0
   ```
 
-  An exception will be thrown if the key is not present in the datastore, or the requested `Type` differs from the one used upon creation. Similarely to `mc_rtc::Configuration` objects, you may also use one of the convenience overloads of `get` to specify a default value to use in case the key does not exist:
+  An exception will be thrown if the key is not present in the datastore, or the requested `Type` differs from the one used upon creation. Similarly to `mc_rtc::Configuration` objects, you may also use one of the convenience overloads of `get` to specify a default value to use in case the key does not exist:
 
   ```cpp
   Eigen::Vector3d vec{1,2,3};
@@ -81,7 +65,7 @@ A default `DataStore` instance is available in the `mc_control::MCController` cl
 
 ## Advanced usage
 
-- **Inheritance** is also supported, but you need to explitely provide the type of your object's parent classes to be able to retrive them later. Here is a very simple example showing how to store and use objects using inheritance and polymorphic member functions.
+- **Inheritance** is also supported, but you need to explicitly provide the type of your object's parent classes to be able to retrieve them later. Here is a very simple example showing how to store and use objects using inheritance and polymorphic member functions.
 
   ```cpp
   struct A
@@ -116,14 +100,7 @@ A default `DataStore` instance is available in the `mc_control::MCController` cl
   derived.hello(); // "B"
   ```
 
-- **Lambda functions** may also be stored, but their type must be explitely specified as an `std::function<...>`. Indeed, the inferred type for a lambda is a composite type and cannot be used for later retrieving it:
-
-  ```cpp
-  datastore().make("lambda", [](double t) {} ); // valid but the inferred lambda type is unknown
-  datastore().get<???>("lambda");
-  ```
-
-  Instead, store the lambda as
+- **Lambda functions** may also be stored, but their type must be explicitly specified as an `std::function<...>`.
 
   ```
   // Create a lambda function and store it as an std::function
@@ -137,7 +114,7 @@ A default `DataStore` instance is available in the `mc_control::MCController` cl
 
 # Main datastore objects
 
-This section provides a list of the main datastore objects used within the framework. In some cases it is required to use datastore objects to ensure proper use of some componenents. Other components may use datastore objects if they are defined but do not require them, this is for instance the case of the `StabilizerStandingState` to which CoM targets may be provided using the datastore. In the table below, required elements are displayed in *bold*.
+This section provides a list of the main datastore objects used within the framework. In some cases it is required to use datastore objects to ensure proper use of some components. Other components may use datastore objects if they are defined but do not require them, this is for instance the case of the `StabilizerStandingState` to which CoM targets may be provided using the datastore. In the table below, required elements are displayed in *bold*.
 
 <table class="table">
   <thead>

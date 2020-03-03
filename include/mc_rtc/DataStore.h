@@ -15,9 +15,9 @@
 
 namespace mc_rtc
 {
-namespace datastore
-{
 
+namespace internal
+{
 template<typename T>
 bool is_valid_hash(std::size_t h)
 {
@@ -29,6 +29,7 @@ bool is_valid_hash(std::size_t h)
 {
   return is_valid_hash<T>(h) || is_valid_hash<U, Args...>(h);
 }
+} // namespace internal
 
 /**
  * @brief Generic data store
@@ -117,9 +118,10 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   template<typename T>
   void get(const std::string & name, T & data)
   {
-    if(has(name))
+    auto it = datas_.find(name);
+    if(it != datas_.end())
     {
-      data = get<T>(name);
+      data = safe_cast<T>(it->second, name);
     }
   }
 
@@ -135,9 +137,10 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   template<typename T>
   const T & get(const std::string & name, const T & defaultValue) const
   {
-    if(has(name))
+    auto it = datas_.find(name);
+    if(it != datas_.end())
     {
-      return get<T>(name);
+      return safe_cast<T>(it->second, name);
     }
     return defaultValue;
   }
@@ -177,23 +180,9 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     }
     data.buffer.reset(new uint8_t[sizeof(T)]);
     new(data.buffer.get()) T(std::forward<Args>(args)...);
-    data.same = &is_valid_hash<T, ArgsT...>;
+    data.same = &internal::is_valid_hash<T, ArgsT...>;
     data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
     return *(reinterpret_cast<T *>(data.buffer.get()));
-  }
-
-  /**
-   * @brief Creates an object on the datastore without explicitely specifiying its type
-   *
-   * @param name Name of the stored object
-   * @param object Object to create on the datastore
-   *
-   * @return Reference to the datastore object
-   */
-  template<typename Arg>
-  Arg & make(const std::string & name, Arg && object)
-  {
-    return make<Arg>(name, object);
   }
 
   /**
@@ -217,131 +206,9 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     }
     data.buffer.reset(new uint8_t[sizeof(T)]);
     new(data.buffer.get()) T{std::forward<Args>(args)...};
-    data.same = &is_valid_hash<T, ArgsT...>;
+    data.same = &internal::is_valid_hash<T, ArgsT...>;
     data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
     return *(reinterpret_cast<T *>(data.buffer.get()));
-  }
-
-  /**
-   * @brief Convenience function that creates an object on the datastore if it
-   * does not already exist, or assign the passed values
-   *
-   * @param name Name of the stored object to create or modify
-   * @param args Arguments passed for creation of the object
-   *
-   * @return The assigned object
-   *
-   * \anchor make_or_assign
-   */
-  template<typename T, typename... ArgsT, typename... Args>
-  T & make_or_assign(const std::string & name, Args &&... args)
-  {
-    if(has(name))
-    {
-      auto & data = get<T>(name);
-      data = T(args...);
-      return data;
-    }
-    else
-    {
-      return make<T>(name, args...);
-    }
-  }
-
-  /**
-   * @brief Convenience function that creates an object on the datastore if it
-   * does not already exist, or assign the passed value
-   *
-   * @param name Name of the stored object to create or modify
-   * @param arg Value to assign on the datastore
-   *
-   * @return The assigned object
-   */
-  template<typename T>
-  T & make_or_assign(const std::string & name, T && arg)
-  {
-    return make_or_assign<T>(name, arg);
-  }
-
-  /**
-   * @brief Convenience function that creates or assigns an object on the
-   * datastore using list initialization.
-   *
-   * @param name Name of the stored object to create or modify
-   * @param args Arguments passed for creation of the object. The object is
-   * constructed using list initialization.
-   *
-   * @return The assigned object
-   *
-   * \see make_or_assign
-   */
-  template<typename T, typename... ArgsT, typename... Args>
-  T & make_initializer_or_assign(const std::string & name, Args &&... args)
-  {
-    if(has(name))
-    {
-      auto & data = get<T>(name);
-      data = T{args...};
-      return data;
-    }
-    else
-    {
-      return make_initializer<T>(name, args...);
-    }
-  }
-
-  /**
-   * @brief Convenience function that creates an object on the datastore if it
-   * does not already exist, or assign the passed value
-   *
-   * @param name Name of the stored object to create or modify
-   * @param arg Value to assign on the datastore
-   *
-   * @return The assigned object
-   */
-  template<typename T>
-  T & make_initializer_or_assign(const std::string & name, const T && arg)
-  {
-    return make_initializer_or_assign<T>(name, std::forward<T>(arg));
-  }
-
-  /**
-   * @brief Convenience function that creates an object on the datastore if it
-   * does not already exist, or assign its value from the provided argument
-   *
-   * @param name Name of the stored object
-   * @param arg Data to be copied to the datastore
-   *
-   * \note This function creates a copy of the provided argument. Thus,
-   * modifying the original object afterwards will not affect the datastore's
-   * value
-   *
-   * \code{cpp}
-   * Eigen::Vector3d vec{1,2,3};
-   * auto & data = store.make_or_assign<Eigen::Vector3d>("EigenVector", vec);
-   * vec.x() = 2;
-   * // The datastore object is a copy of vec, so modifying vec will not modify
-   * // the datastore's value
-   * data.isApprox(Eigen::Vector3d{2,2,3}); // false
-   *
-   * // But modifying the datastore object must modify the value
-   * store.get<Eigen::Vector3d>("EigenVector").x() = 2;
-   * data.isApprox(Eigen::Vector3d{2,2,3}); // true
-   * \endcode
-   */
-  template<typename T>
-  T & make_or_assign(const std::string & name, const T & arg)
-  {
-    if(has(name))
-    {
-      auto & data = get<T>(name);
-      data = arg;
-      return data;
-    }
-    else
-    {
-      return make<T>(name, arg);
-    }
   }
 
   /**
@@ -378,25 +245,6 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   }
 
 private:
-  /** @brief const variant of \ref get */
-  template<typename T>
-  const T & get_(const std::string & name) const
-  {
-    const auto it = datas_.find(name);
-    if(it == datas_.end())
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\"");
-    }
-    const auto & data = it->second;
-    if(!data.same(typeid(T).hash_code()))
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Object for key \"" << name
-                                                  << "\" does not have the same type as the stored type");
-    }
-    return *(reinterpret_cast<T *>(data.buffer.get()));
-  }
-
-private:
   struct Data
   {
     /** Hold the data */
@@ -414,9 +262,33 @@ private:
       }
     }
   };
+
+  template<typename T>
+  const T & safe_cast(const Data & data, const std::string & name) const
+  {
+    if(!data.same(typeid(T).hash_code()))
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Object for key \"" << name
+                                                  << "\" does not have the same type as the stored type");
+    }
+    return *(reinterpret_cast<T *>(data.buffer.get()));
+  }
+
+  template<typename T>
+  const T & get_(const std::string & name) const
+  {
+    const auto it = datas_.find(name);
+    if(it == datas_.end())
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\"");
+    }
+    const auto & data = it->second;
+    return safe_cast<T>(data, name);
+  }
+
+private:
   std::unordered_map<std::string, Data> datas_;
   std::string name_ = "DataStore";
 };
 
-} // namespace datastore
 } // namespace mc_rtc

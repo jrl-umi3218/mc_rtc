@@ -9,38 +9,7 @@
 #include "utils.h"
 #include <Eigen/Core>
 
-using DataStore = mc_rtc::datastore::DataStore;
-
-struct A
-{
-  A(const std::string & name) : name_(name) {}
-  virtual std::string hello() const
-  {
-    return "A::Hello " + name_;
-  }
-  void printHello() const
-  {
-    std::cout << hello() << std::endl;
-  }
-  std::string type() const
-  {
-    return "A";
-  }
-  std::string name_;
-};
-
-struct B : public A
-{
-  using A::A;
-  std::string hello() const override
-  {
-    return "B::Hello " + name_;
-  }
-  std::string type() const
-  {
-    return "B";
-  }
-};
+using DataStore = mc_rtc::DataStore;
 
 BOOST_AUTO_TEST_CASE(TestDataStore)
 {
@@ -62,17 +31,6 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
   const auto & constData = store.get<std::vector<double>>("data");
   BOOST_REQUIRE(data2.size() == constData.size());
 
-  // Creating an inherited object and checking virtual inheritance
-  store.make<B, A>("b", "World");
-  auto & a = store.get<A>("b");
-  // Checking member function
-  BOOST_REQUIRE(a.type() == "A");
-  // Checking virtual function
-  BOOST_REQUIRE(a.hello() == "B::Hello World");
-  auto & b = store.get<B>("b");
-  BOOST_REQUIRE(b.type() == "B");
-  BOOST_REQUIRE(b.hello() == "B::Hello World");
-
   // Test make_initializer
   struct Test
   {
@@ -91,7 +49,6 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
   // Remove object
   store.remove("Test");
   BOOST_CHECK(!store.has("Test"));
-  BOOST_CHECK(store.has("b"));
   BOOST_CHECK(store.has("data"));
   // Recreate it with the same name and directly assign some value to it
   // Recreate it with the same name and directly assign some value to it
@@ -116,62 +73,54 @@ BOOST_AUTO_TEST_CASE(TestDataStore)
   BOOST_REQUIRE(value == 42);
   // Test getting non-exising value with default
   BOOST_REQUIRE(store.get("TestAssignNonExisting", 12) == 12);
+  BOOST_REQUIRE(store.get("HasFeature", false) == false);
+}
 
-  // Test creation without explicitely specifying type
+BOOST_AUTO_TEST_CASE(TestDataStoreInheritance)
+{
+  struct A
   {
-    auto & unsignedVal = store.make("TestUnsigned", 1u);
-    BOOST_REQUIRE(unsignedVal == 1u);
-    BOOST_REQUIRE(store.get<unsigned>("TestUnsigned") == 1u);
-    store.remove("TestUnsigned");
-  }
-  {
-    auto vecData = std::vector<double>{1, 2, 3, 4};
-    const auto & vec = store.make_or_assign("TestCopyVector", std::move(vecData));
-    BOOST_REQUIRE(vecData.size() == 4);
-    BOOST_REQUIRE(vec.size() == 4);
-    BOOST_REQUIRE(vecData == store.get<std::vector<double>>("TestCopyVector"));
-    auto newVecData = std::vector<double>{1, 2, 3, 4, 5};
-    store.assign("TestCopyVector", newVecData);
-    BOOST_REQUIRE(store.get<std::vector<double>>("TestCopyVector") == newVecData);
-  }
-
-  // Test make_or_assign
-  {
-    store.make_or_assign<std::vector<double>>("MakeOrAssign", 2, 42.);
-    BOOST_CHECK(store.has("MakeOrAssign"));
-    auto & data = store.get<std::vector<double>>("MakeOrAssign");
-    BOOST_REQUIRE(data.size() == 2);
-    BOOST_REQUIRE(data[0] == 42);
-    BOOST_REQUIRE(data[1] == 42);
-    // Make or assign on existing object
-    store.make_or_assign<std::vector<double>>("MakeOrAssign", 2, 12.);
-    BOOST_REQUIRE(data.size() == 2);
-    BOOST_REQUIRE(data[0] == 12);
-    BOOST_REQUIRE(data[1] == 12);
-    // Make or assign on existing object
-    store.make_initializer_or_assign<std::vector<double>>("MakeOrAssign", 4., 12.);
-    BOOST_REQUIRE(data.size() == 2);
-    BOOST_REQUIRE(data[0] == 4);
-    BOOST_REQUIRE(data[1] == 12);
-    Eigen::Vector3d vec{1, 2, 3};
-    store.make_or_assign<Eigen::Vector3d>("EigenVector", vec);
-    BOOST_CHECK(store.has("EigenVector"));
-    BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVector").isApprox(Eigen::Vector3d{1, 2, 3}, 1e-10));
-    // The datastore object is a copy of vec, so modifying vec will not modify
-    // the datastore's value
-    vec.x() = 2;
-    BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVector").isApprox(Eigen::Vector3d{1, 2, 3}, 1e-10));
-    // But modifying the datastore object must modify the value
-    store.get<Eigen::Vector3d>("EigenVector").x() = 2;
-    BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVector").isApprox(Eigen::Vector3d{2, 2, 3}, 1e-10));
+    A(const std::string & name) : name_(name) {}
+    virtual std::string hello() const
     {
-      Eigen::Vector3d vec{1, 2, 3};
-      store.make_or_assign<Eigen::Vector3d>("EigenVectorScope", vec);
+      return "A::Hello " + name_;
     }
-    BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVectorScope").isApprox(Eigen::Vector3d{1, 2, 3}, 1e-10));
-    store.make_or_assign<Eigen::Vector3d>("EigenVector", 2, 4, 5);
-    BOOST_CHECK(store.get<Eigen::Vector3d>("EigenVector").isApprox(Eigen::Vector3d{2, 4, 5}, 1e-10));
-  }
+    void printHello() const
+    {
+      std::cout << hello() << std::endl;
+    }
+    std::string type() const
+    {
+      return "A";
+    }
+    std::string name_;
+  };
+
+  struct B : public A
+  {
+    using A::A;
+    std::string hello() const override
+    {
+      return "B::Hello " + name_;
+    }
+    std::string type() const
+    {
+      return "B";
+    }
+  };
+
+  DataStore store;
+
+  // Creating an inherited object and checking virtual inheritance
+  store.make<B, A>("b", "World");
+  auto & a = store.get<A>("b");
+  // Checking member function
+  BOOST_REQUIRE(a.type() == "A");
+  // Checking virtual function
+  BOOST_REQUIRE(a.hello() == "B::Hello World");
+  auto & b = store.get<B>("b");
+  BOOST_REQUIRE(b.type() == "B");
+  BOOST_REQUIRE(b.hello() == "B::Hello World");
 }
 
 BOOST_AUTO_TEST_CASE(TestRobotDataStore)
@@ -187,7 +136,6 @@ BOOST_AUTO_TEST_CASE(TestRobotDataStore)
   BOOST_REQUIRE(robots.size() == 2);
 
   // Get another reference to robots
-  // XXX would be nice to support store.get("robots") and infer type automatically
   auto & robots2 = store.get<mc_rbdyn::Robots>("robots");
   BOOST_REQUIRE(robots2.size() == 2);
 
