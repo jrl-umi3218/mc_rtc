@@ -189,21 +189,27 @@ class PlotYAxis(object):
     elif len(self) != 0 and len(axis) == 0:
       axis.fixLimits(self)
 
+  def getLimits(self, frame, idx):
+    if not len(self):
+      return None
+    min_ = np.nanmin(self.data.values()[0][idx][:frame])
+    max_ = np.nanmax(self.data.values()[0][idx][:frame])
+    for i in range(1, len(self.data.values())):
+      data = self.data.values()[i][idx][:frame]
+      min_ = min(np.nanmin(data), min_)
+      max_ = max(np.nanmax(data), max_)
+    return min_, max_
+
+
   def setLimits(self, xlim = None, ylim = None, frame = None):
     if not len(self):
       return xlim
     dataLim = self._axis.dataLim.get_points()
     def setLimit(lim, idx, set_lim):
       if lim is not None:
-        min_ = lim[0]
-        max_ = lim[1]
+        min_, max_ = lim
       elif frame is not None:
-        min_ = np.nanmin(self.data.values()[0][idx][:frame])
-        max_ = np.nanmax(self.data.values()[0][idx][:frame])
-        for i in range(1, len(self.data.values())):
-          data = self.data.values()[i][idx][:frame]
-          min_ = min(np.nanmin(data), min_)
-          max_ = max(np.nanmax(data), max_)
+        min_, max_ = self.getLimits(frame, idx)
       else:
         range_ = dataLim[1][idx] - dataLim[0][idx]
         min_ = dataLim[0][idx] - range_ * 0.01
@@ -696,6 +702,9 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.animationButton.setCheckable(True)
     self.animationButton.toggled.connect(self.startStopAnimation)
     animationLayout.addWidget(self.animationButton)
+    self.lockAxesButton = QtWidgets.QPushButton("Lock axes")
+    self.lockAxesButton.released.connect(self.lockAxes)
+    animationLayout.addWidget(self.lockAxesButton)
     self.saveAnimationButton = QtWidgets.QPushButton("Save animation")
     self.saveAnimationButton.released.connect(self.saveAnimation)
     animationLayout.addWidget(self.saveAnimationButton)
@@ -716,10 +725,9 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
       self.stopAnimation()
       self.startAnimation()
 
-  def startAnimation(self):
-    interval = 50 # ms
+  def getFrameRange(self):
     if self.data is None or len(self.data) == 0:
-      return False
+      return 0, 0
     x_data = self.data[self.x_data]
     i0 = 0
     while i0 < len(x_data) and np.isnan(x_data[i0]):
@@ -728,6 +736,29 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     while iN + 1 < len(x_data) and not np.isnan(x_data[iN + 1]):
       iN += 1
     assert(iN > i0 and i0 < len(x_data)),"Strange time range"
+    return i0, iN
+
+  def lockAxes(self):
+    i0, iN = self.getFrameRange()
+    if i0 == iN:
+      return
+    self.x_limits = self._left().getLimits(iN, 0) or self._right().getLimits(iN, 0)
+    if self.x_limits is None:
+      return
+    self.x_locked.setChecked(True)
+    self.y1_limits = self._left().getLimits(iN, 1)
+    if self.y1_limits is not None:
+      self.y1_locked.setChecked(True)
+    self.y2_limits = self._right().getLimits(iN, 1)
+    if self.y2_limits is not None:
+      self.y2_locked.setChecked(True)
+
+  def startAnimation(self):
+    interval = 50 # ms
+    i0, iN = self.getFrameRange()
+    if i0 == iN:
+      return False
+    x_data = self.data[self.x_data]
     dt = (x_data[i0 + 1] - x_data[i0]) * 1000 # dt in ms
     step = int(math.ceil(interval/dt))
     self._axes(lambda axis: axis._axis.clear())
