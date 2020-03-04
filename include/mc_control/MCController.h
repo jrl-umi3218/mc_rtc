@@ -254,6 +254,16 @@ public:
    */
   virtual std::vector<std::string> supported_robots() const;
 
+  /** Load an additional robot into the controller
+   *
+   * \param rm RobotModule used to load the robot
+   *
+   * \param name Name of the robot
+   *
+   * \returns The loaded robot
+   */
+  mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
+
 protected:
   /** Builds a controller base with an empty environment
    * \param robot Pointer to the main RobotModule
@@ -267,17 +277,6 @@ protected:
    * \param dt Timestep of the controller
    */
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules, double dt);
-
-protected:
-  /** Load an additional robot into the controller
-   *
-   * \param rm RobotModule used to load the robot
-   *
-   * \param name Name of the robot
-   *
-   * \returns The loaded robot
-   */
-  mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
 
 protected:
   /** QP solver */

@@ -142,6 +142,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
     }
     data("surfaces").add(r.name(), r.availableSurfaces());
   }
+  solver().updateNrVars();
   return r;
 }
 
