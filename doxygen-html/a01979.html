@@ -181,6 +181,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a22ae41d5d06f23a8012cd99518549ef5"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01979.html#a22ae41d5d06f23a8012cd99518549ef5">supported_robots</a> () const</td></tr>
 <tr class="memdesc:a22ae41d5d06f23a8012cd99518549ef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of robots supported by the controller.  <a href="#a22ae41d5d06f23a8012cd99518549ef5">More...</a><br /></td></tr>
 <tr class="separator:a22ae41d5d06f23a8012cd99518549ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3110512ea26812d8a58d3945e739c751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02135.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01979.html#a3110512ea26812d8a58d3945e739c751">loadRobot</a> (<a class="el" href="a00681.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> rm, const std::string &amp;name)</td></tr>
+<tr class="memdesc:a3110512ea26812d8a58d3945e739c751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an additional robot into the controller.  <a href="#a3110512ea26812d8a58d3945e739c751">More...</a><br /></td></tr>
+<tr class="separator:a3110512ea26812d8a58d3945e739c751"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -217,9 +220,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1ac3cbc244e98473e90b06e4c187aec0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01979.html#a1ac3cbc244e98473e90b06e4c187aec0">MCController</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02155.html">mc_rbdyn::RobotModule</a> &gt;&gt; &amp;robot_modules, double dt)</td></tr>
 <tr class="memdesc:a1ac3cbc244e98473e90b06e4c187aec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a multi-robot controller base.  <a href="#a1ac3cbc244e98473e90b06e4c187aec0">More...</a><br /></td></tr>
 <tr class="separator:a1ac3cbc244e98473e90b06e4c187aec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3110512ea26812d8a58d3945e739c751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02135.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01979.html#a3110512ea26812d8a58d3945e739c751">loadRobot</a> (<a class="el" href="a00681.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> rm, const std::string &amp;name)</td></tr>
-<tr class="memdesc:a3110512ea26812d8a58d3945e739c751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an additional robot into the controller.  <a href="#a3110512ea26812d8a58d3945e739c751">More...</a><br /></td></tr>
-<tr class="separator:a3110512ea26812d8a58d3945e739c751"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee84dbf2540fda3182f7eb8ef31b89fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01979.html#aee84dbf2540fda3182f7eb8ef31b89fa">realRobots</a> (std::shared_ptr&lt; <a class="el" href="a02163.html">mc_rbdyn::Robots</a> &gt; realRobots)</td></tr>
 <tr class="separator:aee84dbf2540fda3182f7eb8ef31b89fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -545,9 +545,6 @@ Friends</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="a02135.html">mc_rbdyn::Robot</a>&amp; mc_control::MCController::loadRobot </td>
@@ -567,11 +564,6 @@ Friends</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Load an additional robot into the controller. </p>
@@ -1468,7 +1460,7 @@ If the default pipeline behaviour does not suit you, you may override this metho
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00676.html">mc_control</a></li><li class="navelem"><a class="el" href="a01979.html">MCController</a></li>
-    <li class="footer">Generated on Sat Feb 29 2020 15:57:41 for mc_rtc by
+    <li class="footer">Generated on Wed Mar 4 2020 03:51:25 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -14674,6 +14674,13 @@
       <anchor>a22ae41d5d06f23a8012cd99518549ef5</anchor>
       <arglist>() const</arglist>
     </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>loadRobot</name>
+      <anchorfile>a01979.html</anchorfile>
+      <anchor>a3110512ea26812d8a58d3945e739c751</anchor>
+      <arglist>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name)</arglist>
+    </member>
     <member kind="variable">
       <type>const double</type>
       <name>timeStep</name>
@@ -14743,13 +14750,6 @@
       <anchorfile>a01979.html</anchorfile>
       <anchor>a1ac3cbc244e98473e90b06e4c187aec0</anchor>
       <arglist>(const std::vector&lt; std::shared_ptr&lt; mc_rbdyn::RobotModule &gt;&gt; &amp;robot_modules, double dt)</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>loadRobot</name>
-      <anchorfile>a01979.html</anchorfile>
-      <anchor>a3110512ea26812d8a58d3945e739c751</anchor>
-      <arglist>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name)</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
