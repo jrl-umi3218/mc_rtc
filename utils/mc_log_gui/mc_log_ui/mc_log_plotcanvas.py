@@ -27,7 +27,72 @@ from collections import OrderedDict
 from math import asin, atan2
 
 from mc_log_types import LineStyle, PlotSide
+import mc_log_ui
+from mc_log_utils import InitDialogWithOkCancel
 
+
+class GenerateRangeDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel(Layout = QtWidgets.QFormLayout, apply_ = False)
+  def __init__(self, parent):
+    self.setWindowTitle("Generate time-range(s) based on data range")
+    self.data = parent.data
+    self.selectedData = QtWidgets.QComboBox(self)
+    keys = self.data.keys()
+    keys.sort()
+    for k in keys:
+      self.selectedData.addItem(k)
+    self.selectedData.currentTextChanged.connect(self.setDefaultName)
+    self.layout.addRow("Data range", self.selectedData)
+    self.outputName = QtWidgets.QLineEdit()
+    self.setDefaultName()
+    self.layout.addRow("Name", self.outputName)
+
+  def setDefaultName(self):
+    self.outputName.setText("t_" + self.selectedData.currentText())
+
+  def accept(self):
+    key = self.selectedData.currentText()
+    data = self.data[key]
+    if type(data[0]) is unicode:
+      def is_valid(idx):
+        return len(data[idx]) != 0
+    else:
+      def is_valid(idx):
+        return not np.isnan(data[idx])
+    def get_range(i0):
+      assert(i0 < len(data))
+      if i0 == len(data) - 1:
+        return None
+      while i0 < len(data) and not is_valid(i0):
+        i0 += 1
+      if i0 == len(data):
+        return None
+      iN = i0
+      while iN < len(data) and is_valid(iN):
+        iN += 1
+      if iN == len(data):
+        iN = len(data) - 1
+      return (i0, iN)
+    ranges = [get_range(0)]
+    while ranges[-1] is not None:
+      ranges.append(get_range(ranges[-1][1]))
+    ranges = ranges[:-1]
+    def make_range(i0, iN):
+      out = copy.deepcopy(self.data['t'])
+      out[:i0] = np.nan
+      out[iN:] = np.nan
+      return out
+    if len(ranges) == 1:
+      self.data[self.outputName.text()] = make_range(ranges[0][0], ranges[0][1])
+    else:
+      zeros = len(str(len(ranges)))
+      i = 1
+      for r in ranges:
+        text = self.outputName.text() + "_{}".format(str(i).zfill(zeros))
+        self.data[text] = make_range(r[0], r[1])
+        i += 1
+    self.data.notify_update()
+    super(GenerateRangeDialog, self).accept()
 
 def rpyFromMat(E):
     """Same as mc_rbdyn::rpyFromMat."""
@@ -377,6 +442,10 @@ class PlotFigure(object):
     call(self._left())
     call(self._right())
 
+  # Shortcut to get the polygon axis
+  def _polygons(self):
+    return self._left()._polyAxis
+
   # Shortcut to the left axis
   def _left(self):
     return self.axes[PlotSide.LEFT]
@@ -677,6 +746,10 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     vbox.addWidget(self.toolbar)
 
   def setupLockButtons(self, layout):
+    self.genRangeButton = QtWidgets.QPushButton(u"Make range")
+    self.genRangeButton.released.connect(lambda: GenerateRangeDialog(self).exec_())
+    layout.addWidget(self.genRangeButton)
+
     self.x_locked = QtWidgets.QPushButton(u"🔒X", self)
     self.x_locked.setCheckable(True)
     layout.addWidget(self.x_locked)

@@ -20,8 +20,10 @@ from functools import partial
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import ui
+from mc_log_data import Data
 from mc_log_tab import MCLogTab
 from mc_log_types import LineStyle, TextWithFontSize, GraphLabels, ColorsSchemeConfiguration
+from mc_log_utils import InitDialogWithOkCancel
 
 try:
   import mc_rbdyn
@@ -49,7 +51,7 @@ def read_flat(f, tmp = False):
         return np.frombuffer(fd.read(size * ctypes.sizeof(ctypes.c_double)), np.double)
     def read_string_array(fd, size):
         return [ read_string(fd, read_size(fd)) for i in range(size) ]
-    data = {}
+    data = Data()
     with open(f, 'rb') as fd:
         nrEntries = read_size(fd)
         for i in range(nrEntries):
@@ -64,7 +66,7 @@ def read_flat(f, tmp = False):
     return data
 
 def read_csv(fpath, tmp = False):
-  data = {}
+  data = Data()
   string_entries = {}
   with open(fpath) as fd:
     reader = csv.DictReader(fd, delimiter=';')
@@ -124,42 +126,6 @@ class RobotAction(QtWidgets.QAction):
       return self._actual
     else:
       self._actual = n
-
-# Decorator to wrap a dialog
-def InitDialogWithOkCancel(fun = None, Layout = QtWidgets.QFormLayout , apply_ = True):
-  def wrap_init(init_fun):
-    @functools.wraps(init_fun)
-    def wrapped_init(self, parent, *args, **kwargs):
-      super(QtWidgets.QDialog, self).__init__(parent)
-      self.setModal(True)
-      self.layout = Layout(self)
-      init_fun(self, parent, *args, **kwargs)
-      confirmLayout = QtWidgets.QHBoxLayout()
-      okButton = QtWidgets.QPushButton("Ok", self)
-      confirmLayout.addWidget(okButton)
-      okButton.clicked.connect(self.accept)
-      if apply_:
-        applyButton = QtWidgets.QPushButton("Apply", self)
-        confirmLayout.addWidget(applyButton)
-        applyButton.clicked.connect(self.apply)
-      cancelButton = QtWidgets.QPushButton("Cancel", self)
-      confirmLayout.addWidget(cancelButton)
-      cancelButton.clicked.connect(self.reject)
-      if Layout is QtWidgets.QFormLayout:
-        self.layout.addRow(confirmLayout)
-      elif Layout is QtWidgets.QGridLayout:
-        colSpan = 2
-        if apply_:
-          colSpan += 1
-        self.layout.addLayout(confirmLayout, self.layout.rowCount(), 1, 1, colSpan)
-      else:
-        self.layout.addLayout(confirmLayout)
-    return wrapped_init
-  if fun:
-    return wrap_init(fun)
-  else:
-    return wrap_init
-
 
 class CommonStyleDialog(QtWidgets.QDialog):
   @InitDialogWithOkCancel
@@ -656,7 +622,8 @@ class MCLogUI(QtWidgets.QMainWindow):
 
     self.tab_re = re.compile('^Plot [0-9]+$')
 
-    self.data = {}
+    self.data = Data()
+    self.data.data_updated.connect(self.update_data)
 
     self.gridStyles = {'left': LineStyle(linestyle = '--'), 'right': LineStyle(linestyle = ':') }
     self.gridStyleFile = os.path.expanduser("~") + "/.config/mc_log_ui/grid_style.json"
@@ -970,6 +937,7 @@ class MCLogUI(QtWidgets.QMainWindow):
 
   def load_csv(self, fpath):
     self.data = read_log(fpath)
+    self.data.data_updated.connect(self.update_data)
     i = 0
     while "qIn_{}".format(i) in self.data and "qOut_{}".format(i) in self.data:
       self.data["error_q_{}".format(i)] = self.data["qOut_{}".format(i)] - self.data["qIn_{}".format(i)]

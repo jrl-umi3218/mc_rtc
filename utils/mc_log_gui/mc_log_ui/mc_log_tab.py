@@ -356,6 +356,7 @@ class MCLogTab(QtWidgets.QWidget):
       self.ui.xSelector.setCurrentIndex(idx)
 
   def update_y_selectors(self):
+    canvas = self.ui.canvas
     self.ui.y1Selector.clear()
     self.ui.y2Selector.clear()
     self.tree_view = TreeView()
@@ -369,6 +370,12 @@ class MCLogTab(QtWidgets.QWidget):
       ySelector.setMaximumWidth(cWidth + 75)
     update_y_selector(self.ui.y1Selector)
     update_y_selector(self.ui.y2Selector)
+    y1 = filter(lambda k: k in self.data.keys(), canvas._left().plots.keys())
+    [ self.tree_view.select(y, self.ui.y1Selector, 0) for y in y1 ]
+    y2 = filter(lambda k: k in self.data.keys(), canvas._right().plots.keys())
+    [ self.tree_view.select(y, self.ui.y2Selector, 1) for y in y2 ]
+    poly = filter(lambda k: k in self.data.keys(), canvas._polygons().plots.keys())
+    [ self.tree_view.select(y, self.ui.y1Selector, 0) for y in poly ]
 
   def showCustomMenu(self, ySelector, point, idx):
     item = ySelector.itemAt(point)
