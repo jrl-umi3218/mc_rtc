@@ -41,21 +41,59 @@ class GenerateRangeDialog(QtWidgets.QDialog):
     keys.sort()
     for k in keys:
       self.selectedData.addItem(k)
-    self.selectedData.currentTextChanged.connect(self.setDefaultName)
     self.layout.addRow("Data range", self.selectedData)
+    self.stringSelector = QtWidgets.QComboBox(self)
+    self.stringSelectorLabel = QtWidgets.QLabel("Select value")
+    self.setStringSelector()
+    self.layout.addRow(self.stringSelectorLabel, self.stringSelector)
     self.outputName = QtWidgets.QLineEdit()
     self.setDefaultName()
     self.layout.addRow("Name", self.outputName)
+    self.selectedData.currentTextChanged.connect(self.setDefaultName)
+    self.selectedData.currentTextChanged.connect(self.setStringSelector)
+    self.stringSelector.currentTextChanged.connect(self.setDefaultName)
+
+  def setStringSelector(self):
+    key = self.selectedData.currentText()
+    data = self.data[key]
+    self.stringSelector.clear()
+    if type(data[0]) is unicode:
+      self.stringSelectorLabel.show()
+      self.stringSelector.show()
+      self.stringSelector.addItem("All")
+      self.stringSelector.insertSeparator(1)
+      keys = set(data)
+      for k in keys:
+        self.stringSelector.addItem(k)
+    else:
+      self.stringSelectorLabel.hide()
+      self.stringSelector.hide()
 
   def setDefaultName(self):
     self.outputName.setText("t_" + self.selectedData.currentText())
+    if self.stringSelector.currentIndex() > 0:
+      self.outputName.setText(self.outputName.text() + "_" + self.stringSelector.currentText())
 
   def accept(self):
     key = self.selectedData.currentText()
     data = self.data[key]
+    def make_key(i, ranges):
+      if len(ranges) == 1:
+        return self.outputName.text()
+      zeros = len(str(len(ranges)))
+      text = self.outputName.text() + "_{}".format(str(i).zfill(zeros))
+      i += 1
+      return text
+
     if type(data[0]) is unicode:
-      def is_valid(idx):
-        return len(data[idx]) != 0
+      strIdx = self.stringSelector.currentIndex()
+      if strIdx == 0:
+        def is_valid(idx):
+          return len(data[idx]) != 0
+      else:
+        string = self.stringSelector.currentText()
+        def is_valid(idx):
+          return data[idx] == string
     else:
       def is_valid(idx):
         return not np.isnan(data[idx])
@@ -80,17 +118,13 @@ class GenerateRangeDialog(QtWidgets.QDialog):
     def make_range(i0, iN):
       out = copy.deepcopy(self.data['t'])
       out[:i0] = np.nan
-      out[iN:] = np.nan
+      out[iN+1:] = np.nan
       return out
-    if len(ranges) == 1:
-      self.data[self.outputName.text()] = make_range(ranges[0][0], ranges[0][1])
-    else:
-      zeros = len(str(len(ranges)))
-      i = 1
-      for r in ranges:
-        text = self.outputName.text() + "_{}".format(str(i).zfill(zeros))
-        self.data[text] = make_range(r[0], r[1])
-        i += 1
+    i = 1
+    for r in ranges:
+      k = make_key(i, ranges)
+      self.data[make_key(i, ranges)] = make_range(r[0], r[1])
+      i += 1
     self.data.notify_update()
     super(GenerateRangeDialog, self).accept()
 
@@ -136,15 +170,17 @@ class PlotPolygonAxis(object):
         continue
       if label not in self.colors:
         self.colors[label] = self.figure._next_poly_color()
-      if i + 1 < len(y):
+      if i + 1 < len(y) and not np.isnan(x[i + 1]):
         xi = x[i + 1]
       else:
         xi = x[i]
+        if np.isnan(xi):
+          xi = x[i - 1]
       self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = self.colors[label])))
-      i += 1
       i0 = i
       if i < len(y):
         label = y[i0]
+      i += 1
     return True
   def legend(self):
     if not len(self.plots):
