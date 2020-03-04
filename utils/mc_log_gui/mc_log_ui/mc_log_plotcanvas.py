@@ -149,15 +149,14 @@ class PlotPolygonAxis(object):
     self._axis.set_yticks([])
     self._axis.set_ylim(0, 1)
     self._axis.get_yaxis().set_visible(False)
-    self.plotsCount = {}
+    self.data = {}
     self.plots = OrderedDict()
     self.colors = OrderedDict()
   def _plot_string(self, x, y, y_label, style):
     if y_label in self.plots:
-      self.plotsCount[y_label] += 1
       return False
-    self.plotsCount[y_label] = 1
     self.plots[y_label] = []
+    self.data[y_label] = [x, y]
     i = 0
     i0 = 0
     label = y[i0]
@@ -193,13 +192,14 @@ class PlotPolygonAxis(object):
   def remove_plot(self, y):
     if y not in self.plots:
       return
-    self.plotsCount[y] -= 1
-    if self.plotsCount[y]:
-      return
     for plt in self.plots[y]:
       plt.remove()
     del self.plots[y]
     self.figure.draw()
+  def update_x(self, x):
+    for y_label in self.data.keys():
+      self.remove_plot(y_label)
+      self._plot_string(x, self.data[y_label][1], y_label, None)
 
 class PlotYAxis(object):
   def __init__(self, parent, x_axis = None, poly = None):
@@ -353,6 +353,15 @@ class PlotYAxis(object):
       self.plots[y_label].set_data(self.data[y_label][0][:frame], self.data[y_label][1][:frame])
     return self.plots.values()
 
+  def update_x(self, x):
+    styles = {}
+    for y_label in self.data.keys():
+      self.data[y_label][0] = x
+      styles[y_label] = self.style(y_label)
+    self.clear()
+    for y_label in self.data.keys():
+      self._plot(self.data[y_label][0], self.data[y_label][1], y_label, styles[y_label])
+
   def _plot(self, x, y, y_label, style = None):
     if type(y[0]) is unicode:
       return self._polyAxis._plot_string(x, y, y_label, style)
@@ -362,7 +371,7 @@ class PlotYAxis(object):
       return False
     self._axis.get_yaxis().set_visible(True)
     self.plots[y_label] = self._axis.plot(x, y, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
-    self.data[y_label] = (x, y)
+    self.data[y_label] = [x, y]
     self.legend()
     return True
 
@@ -833,6 +842,12 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     if self.animationButton.isChecked():
       self.stopAnimation()
       self.startAnimation()
+
+  def update_x(self):
+    self._axes(lambda a: a.update_x(self.data[self.x_data]))
+    self._polygons().update_x(self.data[self.x_data])
+    self.restartAnimation()
+    self.draw()
 
   def getFrameRange(self):
     if self.data is None or len(self.data) == 0:
