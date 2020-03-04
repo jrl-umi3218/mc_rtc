@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(TestDataStoreInheritance)
 
   struct B : public A
   {
-    using A::A;
+    B(const std::string & name) : A(name) {}
     std::string hello() const override
     {
       return "B::Hello " + name_;
