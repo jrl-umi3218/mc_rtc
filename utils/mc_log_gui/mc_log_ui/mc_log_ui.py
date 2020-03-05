@@ -866,7 +866,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       self.rm = None
 
   def getCanvas(self):
-    return self.ui.tabWidget.currentWidget().ui.canvas
+    return self.ui.tabWidget.currentWidget().activeCanvas
 
   @QtCore.Slot()
   def on_actionLoad_triggered(self):
@@ -931,7 +931,7 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.ui.tabWidget.setCurrentIndex(self.ui.tabWidget.count() - 1)
 
   def shortcutAxesDialog(self):
-    self.ui.tabWidget.currentWidget().ui.canvas.axesDialog()
+    self.ui.tabWidget.currentWidget().activeCanvas.axesDialog()
 
   def load_csv(self, fpath):
     self.data = read_log(fpath)

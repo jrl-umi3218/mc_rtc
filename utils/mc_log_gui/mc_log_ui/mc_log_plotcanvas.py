@@ -227,6 +227,7 @@ class PlotYAxis(object):
     self._label_fontsize = 10
     self._legend_ncol = 3
     self.data = {}
+    self.filtered = {}
 
   def __len__(self):
     return len(self.plots)
@@ -348,46 +349,81 @@ class PlotYAxis(object):
     self._label_fontsize = fontsize
     self._y_label()
 
-  def animate(self, frame):
+  def animate(self, frame0, frame):
     for y_label in self.plots.keys():
-      self.plots[y_label].set_data(self.data[y_label][0][:frame], self.data[y_label][1][:frame])
+      self.plots[y_label].set_data(self.data[y_label][0][frame0:frame], self.data[y_label][1][frame0:frame])
     return self.plots.values()
 
   def update_x(self, x):
     styles = {}
     for y_label in self.data.keys():
-      self.data[y_label][0] = x
+      filter_ = self.data[y_label][-1]
+      if filter_ is None:
+        self.data[y_label][0] = x
+      else:
+        filter_ = x
       styles[y_label] = self.style(y_label)
     self.clear()
     for y_label in self.data.keys():
-      self._plot(self.data[y_label][0], self.data[y_label][1], y_label, styles[y_label])
+      x = self.data[y_label][0]
+      y = self.data[y_label][1]
+      z = self.data[y_label][2]
+      self._plot(x, y, y_label, styles[y_label], filter_ = filter_, z = z)
 
-  def _plot(self, x, y, y_label, style = None):
+  def _filter(self, data, filter_):
+    if data is None:
+      return None
+    out = copy.deepcopy(data)
+    for i,d in enumerate(filter_):
+      if np.isnan(d):
+        out[i] = np.nan
+    return out
+
+  def _plot(self, x, y, y_label, style = None, filter_ = None, z = None):
     if type(y[0]) is unicode:
+      if filter_ is not None:
+        return False
       return self._polyAxis._plot_string(x, y, y_label, style)
     if style is None:
-      return self._plot(x, y, y_label, LineStyle(color = self.figure._next_color()))
+      return self._plot(x, y, y_label, LineStyle(color = self.figure._next_color()), filter_ = filter_, z = z)
     if y_label in self.plots:
       return False
     self._axis.get_yaxis().set_visible(True)
+    self.data[y_label] = [x, y, z, filter_]
+    if filter_ is not None:
+      x = self._filter(x, filter_)
+      y = self._filter(y, filter_)
+      z = self._filter(z, filter_)
+      self.filtered[y_label] = [x, y, z]
+    else:
+      self.filtered[y_label] = None
     self.plots[y_label] = self._axis.plot(x, y, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
-    self.data[y_label] = [x, y]
     self.legend()
     return True
 
   def startAnimation(self, i0):
     for y_label in self.plots.keys():
       style = self.style(y_label)
+      self.plots[y_label].remove()
       self.plots[y_label] = self._axis.plot(self.data[y_label][0][i0], self.data[y_label][1][i0], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
 
   def stopAnimation(self):
     for y_label in self.plots.keys():
       style = self.style(y_label)
       self.plots[y_label].remove()
-      self.plots[y_label] = self._axis.plot(self.data[y_label][0], self.data[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+      if self.filtered[y_label] is not None:
+        self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+      else:
+        self.plots[y_label] = self._axis.plot(self.data[y_label][0], self.data[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
 
   def add_plot(self, x, y, y_label, style = None):
     return self._plot(self._data()[x], self._data()[y], y_label, style)
+
+  def add_plot_xy(self, x, y, y_label, t, style = None):
+    return self._plot(self._data()[x], self._data()[y], y_label, style, filter_ = self._data()[t])
+
+  def add_plot_xyz(self, x, y, z, y_label, t, style = None):
+    return self._plot(self._data()[x], self._data()[y], y_label, style, filter_ = self._data()[t], z = self._data()[z])
 
   def add_diff_plot(self, x, y, y_label):
     dt = self._data()[x][1] - self._data()[x][0]
@@ -519,9 +555,9 @@ class PlotFigure(object):
       left_offset, right_offset = 0.05, right_offset - (left_offset - 0.05)
     self.fig.subplots_adjust(left = left_offset, right = right_offset, top = top_offset, bottom = bottom_offset)
 
-  def animate(self, frame, x_limits = None, y1_limits = None, y2_limits = None):
-    ret = self._left().animate(frame)
-    ret.extend(self._right().animate(frame))
+  def animate(self, frame0, frame, x_limits = None, y1_limits = None, y2_limits = None):
+    ret = self._left().animate(frame0, frame)
+    ret.extend(self._right().animate(frame0, frame))
     PlotFigure.draw(self, x_limits = x_limits, y1_limits = y1_limits, y2_limits = y2_limits, frame = frame)
     return ret
 
@@ -629,8 +665,20 @@ class PlotFigure(object):
   def add_plot_left(self, x, y, y_label, style = None):
     return self._left().add_plot(x, y, y_label, style)
 
+  def add_plot_left_xy(self, x, y, y_label, style = None):
+    return self._left().add_plot_xy(x, y, y_label, self.x_data, style)
+
+  def add_plot_left_xyz(self, x, y, z, y_label, style = None):
+    return self._left().add_plot_xyz(x, y, z, y_label, self.x_data, style)
+
   def add_plot_right(self, x, y, y_label, style = None):
     return self._right().add_plot(x, y, y_label, style)
+
+  def add_plot_right_xy(self, x, y, y_label, style = None):
+    return self._right().add_plot_xy(x, y, y_label, self.x_data, style)
+
+  def add_plot_right_xyz(self, x, y, z, y_label, style = None):
+    return self._right().add_plot_xyz(x, y, z, y_label, self.x_data, style)
 
   def add_diff_plot_left(self, x, y, y_label):
     return self._left().add_diff_plot(x, y, y_label)
@@ -906,23 +954,24 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.y2_limits = self._right().getLimits(iN, 1)
     if self.y2_limits is not None:
       self.y2_locked.setChecked(True)
+    return i0, iN
 
   def startAnimation(self):
     interval = 50 # ms
-    i0, iN = self.getFrameRange()
+    i0, iN = self.lockAxes()
     if i0 == iN:
       return False
     x_data = self.data[self.x_data]
     dt = (x_data[i0 + 1] - x_data[i0]) * 1000 # dt in ms
     step = int(math.ceil(interval/dt))
-    self._axes(lambda axis: axis._axis.clear())
+    self.frame0 = i0
     self.animation = FuncAnimation(self.fig, self.animate, frames = range(i0 + 1, iN, step), interval = interval)
     self._axes(lambda a: a.startAnimation(i0))
     self.draw()
     return True
 
   def animate(self, frame):
-    return PlotFigure.animate(self, frame, self.x_limits, self.y1_limits, self.y2_limits)
+    return PlotFigure.animate(self, self.frame0, frame, self.x_limits, self.y1_limits, self.y2_limits)
 
   def stopAnimation(self):
     self.animation.event_source.stop()
