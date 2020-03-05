@@ -7,8 +7,8 @@
 from PyQt5 import QtCore, QtWidgets
 
 import ui
-from mc_log_types import LineStyle
-from mc_log_plotcanvas import PlotFigure
+from mc_log_types import LineStyle, PlotType
+from mc_log_plotcanvas import PlotFigure, PlotCanvasWithToolbar
 
 from functools import partial
 
@@ -206,14 +206,40 @@ class RemoveSpecialPlotButton(SpecialPlot, QtWidgets.QPushButton):
     del self.logtab.specials["{}_{}".format(self.name, self.id)]
     self.deleteLater()
 
+class XYSelector(QtWidgets.QWidget):
+  def __init__(self, parent, add_plot_cb, remove_plot_cb):
+    super(XYSelector, self).__init__(parent)
+    self.XYLayout = QtWidgets.QVBoxLayout()
+    self.layout = QtWidgets.QVBoxLayout(self)
+    self.layout.addLayout(self.XYLayout)
+    self.layout.addStretch()
+    self.addButton = QtWidgets.QPushButton("Add XY pair")
+    self.layout.addWidget(self.addButton)
+    self.addButton.released.connect(self.addXYPair)
+    self.add_plot = add_plot_cb
+    self.remove_plot = remove_plot_cb
+    self.i = 0
+    self.hide()
+  def addXYPair(self):
+    btn = QtWidgets.QPushButton("Pair {}".format(self.i))
+    btn.plotName = btn.text()
+    btn.released.connect(lambda b=btn: self.removeXYPair(btn))
+    self.XYLayout.addWidget(btn)
+    self.i += 1
+  def removeXYPair(self, btn):
+    btn.deleteLater()
+
+class XYZSelector(XYSelector):
+  def __init__(self, parent, add_plot_cb, remove_plot_cb):
+    super(XYZSelector, self).__init__(parent, add_plot_cb, remove_plot_cb)
+    self.addButton.setText("Add XYZ pair")
+
 class MCLogTab(QtWidgets.QWidget):
   canvas_need_update = QtCore.Signal()
   def __init__(self, parent = None):
     super(MCLogTab, self).__init__(parent)
     self.ui = ui.MCLogTab()
     self.ui.setupUi(self)
-    self.ui.canvas.setupLockButtons(self.ui.selectorLayout)
-    self.ui.canvas.setupAnimationButtons(self.ui.verticalLayout)
     if parent is not None:
       self.ui.canvas._left().grid = parent.gridStyles['left']
       self.ui.canvas._right().grid = parent.gridStyles['right']
@@ -228,6 +254,32 @@ class MCLogTab(QtWidgets.QWidget):
     self.y1Selected = []
     self.y2Selected = []
 
+    self.XYCanvas = PlotCanvasWithToolbar(self, PlotType.XY)
+    self.ui.verticalLayout.insertWidget(0, self.XYCanvas)
+    self.XYCanvas.hide()
+    self.XYSelector1 = XYSelector(self, self.XYCanvas.add_plot_left, self.XYCanvas.remove_plot_left)
+    self.ui.y1SelectorLayout.addWidget(self.XYSelector1)
+    self.XYSelector2 = XYSelector(self, self.XYCanvas.add_plot_right, self.XYCanvas.remove_plot_right)
+    self.ui.y2SelectorLayout.addWidget(self.XYSelector2)
+
+    self._3DCanvas = PlotCanvasWithToolbar(self, PlotType._3D)
+    self.ui.verticalLayout.insertWidget(0, self._3DCanvas)
+    self._3DCanvas.hide()
+    self.XYZSelector1 = XYZSelector(self, self._3DCanvas.add_plot_left, self._3DCanvas.remove_plot_left)
+    self.ui.y1SelectorLayout.addWidget(self.XYZSelector1)
+    self.XYZSelector2 = XYZSelector(self, self._3DCanvas.add_plot_right, self._3DCanvas.remove_plot_right)
+    self.ui.y2SelectorLayout.addWidget(self.XYZSelector2)
+
+    self.activeCanvas = self.ui.canvas
+    self.activeSelectors = [self.ui.y1Selector, self.ui.y2Selector]
+
+    self.modeSelector = QtWidgets.QComboBox(self)
+    self.modeSelector.addItem("Time plot")
+    self.modeSelector.addItem("X/Y plot")
+    self.modeSelector.addItem("3D plot")
+    self.ui.y1SelectorLayout.addWidget(self.modeSelector)
+    self.modeSelector.currentTextChanged.connect(self.changeCanvasMode)
+
     self.data = None
     self.rm = None
     self.ui.canvas.x_data = 't'
@@ -235,10 +287,27 @@ class MCLogTab(QtWidgets.QWidget):
 
     self.specials = {}
 
+  def changeCanvasMode(self):
+    idx = self.modeSelector.currentIndex()
+    self.activeCanvas.hide()
+    [ s.hide() for s in self.activeSelectors ]
+    if idx == 0:
+      self.activeCanvas = self.ui.canvas
+      self.activeSelectors = [self.ui.y1Selector, self.ui.y2Selector]
+    if idx == 1:
+      self.activeCanvas = self.XYCanvas
+      self.activeSelectors = [self.XYSelector1, self.XYSelector2]
+    if idx == 2:
+      self.activeCanvas = self._3DCanvas
+      self.activeSelectors = [self.XYZSelector1, self.XYZSelector2]
+    self.activeCanvas.show()
+    [ s.show() for s in self.activeSelectors ]
+
   def setData(self, data):
     self.data = data
     self.ui.canvas.setData(data)
-    self.update_x_selector()
+    self.XYCanvas.setData(data)
+    self._3DCanvas.setData(data)
     self.update_y_selectors()
 
   def setGridStyles(self, gridStyles):
@@ -287,11 +356,10 @@ class MCLogTab(QtWidgets.QWidget):
         self.data["tauOut_limits_upper_{}".format(i)].fill(bounds[5][jn][0])
 
 
-  @QtCore.Slot(str)
-  def on_xSelector_activated(self, k):
+  def on_xSelector_activated(self, canvas, k):
     self.x_data = k
-    self.ui.canvas.x_data = k
-    self.ui.canvas.update_x()
+    canvas.x_data = k
+    canvas.update_x()
     for _,s in self.specials.iteritems():
       s.plot()
 
@@ -342,13 +410,6 @@ class MCLogTab(QtWidgets.QWidget):
         remove_fn(s)
     self.ui.canvas.draw()
     return selected
-
-  def update_x_selector(self):
-    self.ui.xSelector.clear()
-    self.ui.xSelector.addItems(sorted(self.data.keys()))
-    idx = self.ui.xSelector.findText(self.x_data)
-    if idx != -1:
-      self.ui.xSelector.setCurrentIndex(idx)
 
   def update_y_selectors(self):
     canvas = self.ui.canvas

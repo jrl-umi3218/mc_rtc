@@ -19,6 +19,11 @@ class PlotSide(Enum):
   LEFT = 0
   RIGHT = 1
 
+class PlotType(Enum):
+  TIME = 0
+  XY = 1
+  _3D = 2
+
 class LineStyle(object):
   def __init__(self, color = 'black', linestyle = '-', linewidth = 0.5, visible = False, label = ""):
     self.color = color

@@ -44,20 +44,6 @@
      <item>
       <widget class="PlotCanvasWithToolbar" name="canvas" native="true"/>
      </item>
-     <item>
-      <layout class="QHBoxLayout" name="selectorLayout">
-       <item>
-        <widget class="QComboBox" name="xSelector">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
     </layout>
    </item>
    <item>

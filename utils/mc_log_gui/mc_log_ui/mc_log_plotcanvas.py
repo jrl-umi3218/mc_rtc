@@ -7,7 +7,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QComboBox
 
 import copy
 import math
@@ -26,7 +26,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from collections import OrderedDict
 from math import asin, atan2
 
-from mc_log_types import LineStyle, PlotSide
+from mc_log_types import LineStyle, PlotSide, PlotType
 import mc_log_ui
 from mc_log_utils import InitDialogWithOkCancel
 
@@ -778,19 +778,36 @@ class SimpleAxesDialog(QtWidgets.QDialog):
     self.apply()
 
 class PlotCanvasWithToolbar(PlotFigure, QWidget):
-  def __init__(self, parent = None):
+  def __init__(self, parent = None, mode = None):
     PlotFigure.__init__(self)
     QWidget.__init__(self, parent)
+
+    if mode is None:
+      mode = PlotType.TIME
 
     self.canvas = FigureCanvas(self.fig)
     self.canvas.mpl_connect('draw_event', self.on_draw)
     self.toolbar = NavigationToolbar(self.canvas, self)
 
-    vbox = QVBoxLayout(self)
-    vbox.addWidget(self.canvas)
-    vbox.addWidget(self.toolbar)
+    self.layout = QVBoxLayout(self)
+    self.layout.addWidget(self.canvas)
+    self.layout.addWidget(self.toolbar)
 
-  def setupLockButtons(self, layout):
+    self.setupLockButtons()
+    self.setupAnimationButtons()
+
+  def setupLockButtons(self):
+    layout = QHBoxLayout()
+
+    self.xSelector = QComboBox(self)
+    self.xSelector.activated.connect(lambda: self.parent().on_xSelector_activated(self, self.xSelector.currentText()))
+    sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+    sizePolicy.setHorizontalStretch(0)
+    sizePolicy.setVerticalStretch(0)
+    sizePolicy.setHeightForWidth(self.xSelector.sizePolicy().hasHeightForWidth())
+    self.xSelector.setSizePolicy(sizePolicy)
+    layout.addWidget(self.xSelector)
+
     self.genRangeButton = QtWidgets.QPushButton(u"Make range")
     self.genRangeButton.released.connect(lambda: GenerateRangeDialog(self).exec_())
     layout.addWidget(self.genRangeButton)
@@ -813,7 +830,9 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.y2_locked.toggled.connect(self.y2_locked_changed)
     self.y2_limits = None
 
-  def setupAnimationButtons(self, layout):
+    self.layout.addLayout(layout)
+
+  def setupAnimationButtons(self):
     animationLayout = QtWidgets.QHBoxLayout()
     self.animation = None
     self.animationButton = QtWidgets.QPushButton("Start animation")
@@ -826,7 +845,18 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.saveAnimationButton = QtWidgets.QPushButton("Save animation")
     self.saveAnimationButton.released.connect(self.saveAnimation)
     animationLayout.addWidget(self.saveAnimationButton)
-    layout.addLayout(animationLayout)
+    self.layout.addLayout(animationLayout)
+
+  def setData(self, data):
+    super(PlotCanvasWithToolbar, self).setData(data)
+    self.update_x_selector()
+
+  def update_x_selector(self):
+    self.xSelector.clear()
+    self.xSelector.addItems(sorted(self.data.keys()))
+    idx = self.xSelector.findText(self.x_data)
+    if idx != -1:
+      self.xSelector.setCurrentIndex(idx)
 
   def startStopAnimation(self):
     if self.animationButton.isChecked():
@@ -947,3 +977,6 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.y2_limits = self._y_lock_changed("Y2", self.y2_locked, self._right().axis().get_ylim)
     if self.y2_limits is None:
       self.draw()
+
+  def show(self):
+    return QWidget.show(self)
