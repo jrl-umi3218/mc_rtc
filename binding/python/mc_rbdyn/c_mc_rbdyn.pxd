@@ -233,6 +233,8 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
     PTransformd posW()
     void posW(PTransformd pt)
 
+    RobotModule & module()
+
   shared_ptr[Robots] loadRobot(const RobotModule&, PTransformd *, const string&)
   shared_ptr[Robots] loadRobots(const vector[RobotModulePtr]&)
   shared_ptr[Robots] loadRobotAndEnv(const RobotModule&, const RobotModule&)
@@ -398,3 +400,4 @@ cdef extern from "mc_rbdyn_wrapper.hpp" namespace "mc_rbdyn":
   unsigned int getBodySensorsSize[T](T &)
   (BodySensor&) getBodySensor[T](T &, unsigned int)
   #XXX
+  RobotModulePtr copyRobotModule(const RobotModule &)
