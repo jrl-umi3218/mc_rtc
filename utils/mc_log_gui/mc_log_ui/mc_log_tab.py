@@ -250,6 +250,8 @@ class XYSelector(QtWidgets.QWidget):
     self.hide()
   def addXYPlot(self, x, y, label):
     self.add_plot(x, y, label)
+    self.addXYPlotButton(label)
+  def addXYPlotButton(self, label):
     btn = QtWidgets.QPushButton("{}".format(label))
     btn.released.connect(lambda b=btn: self.removeXYPlot(b))
     self.XYLayout.addWidget(btn)
@@ -283,18 +285,20 @@ class XYZSelector(XYSelector):
     self.dialog = XYZSelectorDialog
   def addXYZPlot(self, x, y, z, label):
     self.add_plot(x, y, z, label)
+    self.addXYZPlotButton(label)
+  def addXYZPlotButton(self, label):
     btn = QtWidgets.QPushButton("{}".format(label))
     btn.released.connect(lambda b=btn: self.removeXYZPlot(b))
     self.XYLayout.addWidget(btn)
     self.draw()
-  def removeXYPair(self, btn):
+  def removeXYZPlot(self, btn):
     self.remove_plot(btn.text())
     btn.deleteLater()
     self.draw()
 
 class MCLogTab(QtWidgets.QWidget):
   canvas_need_update = QtCore.Signal()
-  def __init__(self, parent = None):
+  def __init__(self, parent = None, type_ = PlotType.TIME):
     super(MCLogTab, self).__init__(parent)
     self.ui = ui.MCLogTab()
     self.ui.setupUi(self)
@@ -347,17 +351,26 @@ class MCLogTab(QtWidgets.QWidget):
 
     self.specials = {}
 
+    self.setPlotType(type_)
+
+  def plotType(self):
+    return PlotType(self.modeSelector.currentIndex())
+
+  def setPlotType(self, type_):
+    self.modeSelector.setCurrentIndex(type_.value)
+    self.changeCanvasMode()
+
   def changeCanvasMode(self):
-    idx = self.modeSelector.currentIndex()
+    type_ = self.plotType()
     self.activeCanvas.hide()
     [ s.hide() for s in self.activeSelectors ]
-    if idx == 0:
+    if type_ is PlotType.TIME:
       self.activeCanvas = self.ui.canvas
       self.activeSelectors = [self.ui.y1Selector, self.ui.y2Selector]
-    if idx == 1:
+    elif type_ is PlotType.XY:
       self.activeCanvas = self.XYCanvas
       self.activeSelectors = [self.XYSelector1, self.XYSelector2]
-    if idx == 2:
+    else:
       self.activeCanvas = self._3DCanvas
       self.activeSelectors = [self.XYZSelector1, self.XYZSelector2]
     self.activeCanvas.show()
@@ -522,44 +535,80 @@ class MCLogTab(QtWidgets.QWidget):
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
   @staticmethod
-  def MakeFigure(data, x, y1, y2, y1_label = None, y2_label = None, figure = None):
+  def MakeFigure(type_, data, x, y1, y2, y1_label = None, y2_label = None, figure = None):
+    def labels(yN):
+      if type_ is PlotType.TIME:
+        return yN
+      elif type_ is PlotType.XY:
+        return [l for x,y,l in yN]
+      else:
+        return [l for x,y,z,l in yN]
     if y1_label is None:
-      return MCLogTab.MakeFigure(data, x, y1, y2, y1, y2_label, figure)
+      return MCLogTab.MakeFigure(type_, data, x, y1, y2, labels(y1), y2_label, figure)
     if y2_label is None:
-      return MCLogTab.MakeFigure(data, x, y1, y2, y1_label, y2, figure)
+      return MCLogTab.MakeFigure(type_, data, x, y1, y2, y1_label, labels(y2), figure)
     if figure is None:
-      return MCLogTab.MakeFigure(data, x, y1, y2, y1_label, y2_label, PlotFigure())
+      return MCLogTab.MakeFigure(type_, data, x, y1, y2, y1_label, y2_label, PlotFigure())
     figure.setData(data)
-    for y,yl in zip(y1, y1_label):
-      figure.add_plot_left(x, y, yl)
-    for y,yl in zip(y2, y2_label):
-      figure.add_plot_right(x, y, yl)
+    if type_ is PlotType.TIME:
+      for y,yl in zip(y1, y1_label):
+        figure.add_plot_left(x, y, yl)
+      for y,yl in zip(y2, y2_label):
+        figure.add_plot_right(x, y, yl)
+    elif type_ is PlotType.XY:
+      for x,y,label in y1:
+        figure.add_plot_left_xy(x, y, label)
+      for x,y,label in y2:
+        figure.add_plot_right_xy(x, y, label)
+    else:
+      for x,y,z,label in y1:
+        figure.add_plot_left_xyz(x, y, z, label)
+      for x,y,z,label in y2:
+        figure.add_plot_right_xyz(x, y, z, label)
     return figure
 
   @staticmethod
-  def MakePlot(parent, x_data, y1, y2, y1_label = None, y2_label = None):
+  def MakePlot(parent, type_, x_data, y1, y2, y1_label = None, y2_label = None):
+    def labels(yN):
+      if type_ is PlotType.TIME:
+        return yN
+      elif type_ is PlotType.XY:
+        return [l for x,y,l in yN]
+      else:
+        return [l for x,y,z,l in yN]
     if y1_label is None:
-      return MCLogTab.MakePlot(parent, x_data, y1, y2, y1, y2_label)
+      return MCLogTab.MakePlot(parent, type_, x_data, y1, y2, labels(y1), y2_label)
     if y2_label is None:
-      return MCLogTab.MakePlot(parent, x_data, y1, y2, y1_label, y2)
-    tab = MCLogTab(parent)
+      return MCLogTab.MakePlot(parent, type_, x_data, y1, y2, y1_label, labels(y2))
+    tab = MCLogTab(parent, type_)
     tab.x_data = x_data
     tab.setData(parent.data)
     tab.setRobotModule(parent.rm)
-    for y,yl in zip(y1, y1_label):
-      tab.tree_view.select(y, tab.ui.y1Selector, 0)
-    for y,yl in zip(y2, y2_label):
-      tab.tree_view.select(y, tab.ui.y2Selector, 1)
-    tab.y1Selected = y1
-    tab.y2Selected = y2
-    MCLogTab.MakeFigure(parent.data, x_data, y1, y2, y1_label, y2_label, tab.ui.canvas)
-    tab.ui.canvas.x_data = x_data
+    if type_ is PlotType.TIME:
+      for y,yl in zip(y1, y1_label):
+        tab.tree_view.select(y, tab.ui.y1Selector, 0)
+      for y,yl in zip(y2, y2_label):
+        tab.tree_view.select(y, tab.ui.y2Selector, 1)
+      tab.y1Selected = y1
+      tab.y2Selected = y2
+    elif type_ is PlotType.XY:
+      for label in y1_label:
+        tab.XYSelector1.addXYPlotButton(label)
+      for label in y2_label:
+        tab.XYSelector2.addXYPlotButton(label)
+    else:
+      for label in y1_label:
+        tab.XYZSelector1.addXYZPlotButton(label)
+      for label in y2_label:
+        tab.XYZSelector2.addXYZPlotButton(label)
+    MCLogTab.MakeFigure(type_, parent.data, x_data, y1, y2, y1_label, y2_label, tab.activeCanvas)
+    tab.activeCanvas.x_data = x_data
     return tab
 
   @staticmethod
   def UserFigure(data, p, figure = None, special = None):
     if figure is None:
-      return MCLogTab.UserFigure(data, p, MCLogTab.MakeFigure(data, p.x, p.y1, p.y2), special)
+      return MCLogTab.UserFigure(data, p, MCLogTab.MakeFigure(p.type, data, p.x, p.y1, p.y2), special)
     if special is None:
       return MCLogTab.UserFigure(data, p, figure, lambda y, idx, id_: UserPlot(y, figure, idx, id_))
     def set_label(label_fn, label_size_fn, label):
@@ -599,14 +648,14 @@ class MCLogTab(QtWidgets.QWidget):
 
   @staticmethod
   def UserPlot(parent, p):
-    tab = MCLogTab.MakePlot(parent, p.x, p.y1, p.y2)
-    MCLogTab.UserFigure(parent.data, p, tab.ui.canvas, lambda y, idx, id_: RemoveSpecialPlotButton(y, tab, idx, id_))
-    tab.ui.canvas.draw()
+    tab = MCLogTab.MakePlot(parent, p.type, p.x, p.y1, p.y2)
+    MCLogTab.UserFigure(parent.data, p, tab.activeCanvas, lambda y, idx, id_: RemoveSpecialPlotButton(y, tab, idx, id_))
+    tab.activeCanvas.draw()
     return tab
 
   @staticmethod
   def ForceSensorPlot(parent, fs):
-    tab = MCLogTab.MakePlot(parent, 't', ['{}ForceSensor_f{}'.format(fs, ax) for ax in ['x', 'y', 'z']], ['{}ForceSensor_c{}'.format(fs, ax) for ax in ['x', 'y', 'z']])
+    tab = MCLogTab.MakePlot(parent, PlotType.TIME, 't', ['{}ForceSensor_f{}'.format(fs, ax) for ax in ['x', 'y', 'z']], ['{}ForceSensor_c{}'.format(fs, ax) for ax in ['x', 'y', 'z']])
     tab.ui.canvas.title('Force sensor: {}'.format(fs))
     tab.ui.canvas.y1_label('Force')
     tab.ui.canvas.y2_label('Moment')
@@ -661,7 +710,7 @@ class MCLogTab(QtWidgets.QWidget):
       if y2_diff_prefix:
         y_diff_data[1] += [ '{}_{}'.format(y2_diff_prefix, jIndex) ]
         y_diff_data_labels[1] += [ '{}_{}'.format(y2_diff_label, j) ]
-    tab = MCLogTab.MakePlot(parent, 't', y_data[0], y_data[1], y_data_labels[0], y_data_labels[1])
+    tab = MCLogTab.MakePlot(parent, PlotType.TIME, 't', y_data[0], y_data[1], y_data_labels[0], y_data_labels[1])
     for y, y_label in zip(y_diff_data[0], y_diff_data_labels[0]):
       tab.ui.canvas.add_diff_plot_left(tab.x_data, y, y_label)
     for y, y_label in zip(y_diff_data[1], y_diff_data_labels[1]):

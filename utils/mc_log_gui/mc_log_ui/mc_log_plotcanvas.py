@@ -226,6 +226,7 @@ class PlotYAxis(object):
     self.plots = OrderedDict()
     self._label_fontsize = 10
     self._legend_ncol = 3
+    self.source = {}
     self.data = {}
     self.filtered = {}
 
@@ -379,13 +380,13 @@ class PlotYAxis(object):
         out[i] = np.nan
     return out
 
-  def _plot(self, x, y, y_label, style = None, filter_ = None, z = None):
+  def _plot(self, x, y, y_label, style = None, filter_ = None, z = None, source = None):
     if type(y[0]) is unicode:
       if filter_ is not None:
         return False
       return self._polyAxis._plot_string(x, y, y_label, style)
     if style is None:
-      return self._plot(x, y, y_label, LineStyle(color = self.figure._next_color()), filter_ = filter_, z = z)
+      return self._plot(x, y, y_label, LineStyle(color = self.figure._next_color()), filter_ = filter_, z = z, source = source)
     if y_label in self.plots:
       return False
     self._axis.get_yaxis().set_visible(True)
@@ -397,6 +398,7 @@ class PlotYAxis(object):
       self.filtered[y_label] = [x, y, z]
     else:
       self.filtered[y_label] = None
+    self.source[y_label] = source
     self.plots[y_label] = self._axis.plot(x, y, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
     self.legend()
     return True
@@ -417,13 +419,13 @@ class PlotYAxis(object):
         self.plots[y_label] = self._axis.plot(self.data[y_label][0], self.data[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
 
   def add_plot(self, x, y, y_label, style = None):
-    return self._plot(self._data()[x], self._data()[y], y_label, style)
+    return self._plot(self._data()[x], self._data()[y], y_label, style, source = y)
 
   def add_plot_xy(self, x, y, y_label, t, style = None):
-    return self._plot(self._data()[x], self._data()[y], y_label, style, filter_ = self._data()[t])
+    return self._plot(self._data()[x], self._data()[y], y_label, style, filter_ = self._data()[t], source = [x, y, y_label])
 
   def add_plot_xyz(self, x, y, z, y_label, t, style = None):
-    return self._plot(self._data()[x], self._data()[y], y_label, style, filter_ = self._data()[t], z = self._data()[z])
+    return self._plot(self._data()[x], self._data()[y], y_label, style, filter_ = self._data()[t], z = self._data()[z], source = [x, y, z, y_label])
 
   def add_diff_plot(self, x, y, y_label):
     dt = self._data()[x][1] - self._data()[x][0]
@@ -462,6 +464,8 @@ class PlotYAxis(object):
     self.plots[y].remove()
     del self.plots[y]
     del self.data[y]
+    del self.filtered[y]
+    del self.source[y]
     if len(self.plots):
       self._axis.relim()
       self.legend()

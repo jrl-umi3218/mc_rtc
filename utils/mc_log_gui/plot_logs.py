@@ -9,7 +9,7 @@ import json
 import sys
 
 from mc_log_ui import *
-UserPlot.__new__.__defaults__ = (LineStyle(), LineStyle(), {}, {}, GraphLabels(), {})
+UserPlot.__new__.__defaults__ = (LineStyle(), LineStyle(), {}, {}, GraphLabels(), {}, PlotType(0))
 
 import matplotlib.pyplot as plt
 plt.rcParams['svg.fonttype'] = 'none'

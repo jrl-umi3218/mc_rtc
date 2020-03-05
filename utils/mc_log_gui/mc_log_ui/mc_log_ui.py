@@ -22,7 +22,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import ui
 from mc_log_data import Data
 from mc_log_tab import MCLogTab
-from mc_log_types import LineStyle, TextWithFontSize, GraphLabels, ColorsSchemeConfiguration
+from mc_log_types import LineStyle, TextWithFontSize, GraphLabels, ColorsSchemeConfiguration, PlotType
 from mc_log_utils import InitDialogWithOkCancel
 
 try:
@@ -30,7 +30,7 @@ try:
 except ImportError:
   mc_rbdyn = None
 
-UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d', 'grid1', 'grid2', 'style', 'style2', 'graph_labels', 'extra'])
+UserPlot = collections.namedtuple('UserPlot', ['title', 'x', 'y1', 'y1d', 'y2', 'y2d', 'grid1', 'grid2', 'style', 'style2', 'graph_labels', 'extra', 'type'])
 
 def safe_float(v):
     if len(v):
@@ -115,6 +115,8 @@ def load_UserPlots(fpath):
           for key, value in plt.graph_labels.items():
             plt.graph_labels[key] = TextWithFontSize(**plt.graph_labels[key])
           userPlotList[i] = plt._replace(graph_labels = GraphLabels(**plt.graph_labels))
+          plt = userPlotList[i]
+        userPlotList[i] = plt._replace(type = PlotType(plt.type))
     return userPlotList
 
 class RobotAction(QtWidgets.QAction):
@@ -633,7 +635,7 @@ class MCLogUI(QtWidgets.QMainWindow):
         for k in self.gridStyles.keys():
           if k in data:
             self.gridStyles[k] = LineStyle(**data[k])
-    UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'], {}, {}, GraphLabels(), {})
+    UserPlot.__new__.__defaults__ = (self.gridStyles['left'], self.gridStyles['right'], {}, {}, GraphLabels(), {}, PlotType(0))
 
     self.robotFile = os.path.expanduser("~") + "/.config/mc_log_ui/robot"
     self.userPlotFile = os.path.expanduser("~") + "/.config/mc_log_ui/custom_plot.json"
@@ -749,8 +751,13 @@ class MCLogUI(QtWidgets.QMainWindow):
     confDir = os.path.dirname(self.userPlotFile)
     if not os.path.exists(confDir):
       os.makedirs(confDir)
+    def default_(o):
+      if isinstance(o, PlotType):
+        return o.value
+      else:
+        return o.__dict__
     with open(self.userPlotFile, 'w') as f:
-        json.dump(self.userPlotList, f, default = lambda o: o.__dict__, indent = 2, separators = (',', ': '))
+        json.dump(self.userPlotList, f, default = default_, indent = 2, separators = (',', ': '))
     self.update_userplot_menu()
 
   def saveDefaultRobot(self, name):
@@ -791,7 +798,7 @@ class MCLogUI(QtWidgets.QMainWindow):
 
   def save_userplot(self):
     tab = self.ui.tabWidget.currentWidget()
-    canvas = tab.ui.canvas
+    canvas = tab.activeCanvas
     valid = len(canvas._left()) != 0 or len(canvas._right()) != 0
     if not valid:
       err_diag = QtWidgets.QMessageBox(self)
@@ -804,15 +811,22 @@ class MCLogUI(QtWidgets.QMainWindow):
       defaultTitle = ""
     title, ok = QtWidgets.QInputDialog.getText(self, "User plot", "Title of your plot:", text = defaultTitle)
     if ok:
-      y1 = filter(lambda k: k in self.data.keys(), canvas._left().plots.keys())
-      y2 = filter(lambda k: k in self.data.keys(), canvas._right().plots.keys())
-      y1d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 0, tab.specials.values()))
-      y2d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 1, tab.specials.values()))
+      type_ = tab.plotType()
+      if type_ is PlotType.TIME:
+        y1 = filter(lambda k: k in self.data.keys(), canvas._left().plots.keys())
+        y2 = filter(lambda k: k in self.data.keys(), canvas._right().plots.keys())
+        y1d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 0, tab.specials.values()))
+        y2d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 1, tab.specials.values()))
+      else:
+        y1 = canvas._left().source.values()
+        y2 = canvas._right().source.values()
+        y1d = []
+        y2d = []
       style = { y: canvas.style_left(y) for y in canvas._left().plots.keys() }
       style2 = { y: canvas.style_right(y) for y in canvas._right().plots.keys() }
       found = False
       extra = { p: getattr(self.getCanvas(), p)() for p in ["tick_fontsize", "legend_fontsize", "labelpad", "top_offset", "bottom_offset", "y1_legend_ncol", "y2_legend_ncol"] }
-      up = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas()._left().grid, self.getCanvas()._right().grid, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())), extra)
+      up = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas()._left().grid, self.getCanvas()._right().grid, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())), extra, type_)
       for i in range(len(self.userPlotList)):
         if self.userPlotList[i].title == title:
           self.userPlotList[i] = up
@@ -823,7 +837,12 @@ class MCLogUI(QtWidgets.QMainWindow):
       self.saveUserPlots()
 
   def plot_userplot(self, p):
-    valid = p.x in self.data.keys() and all([y in self.data.keys() for x in [p.y1, p.y2] for y in x])
+    if p.type is PlotType.TIME:
+      valid = p.x in self.data.keys() and all([y in self.data.keys() for x in [p.y1, p.y2] for y in x])
+    elif p.type is PlotType.XY:
+      valid = p.x in self.data.keys() and all([x in self.data.keys() and y in self.data.keys() for x,y,l in p.y1 + p.y2])
+    else:
+      valid = p.x in self.data.keys() and all([x in self.data.keys() and y in self.data.keys() and z in self.data.keys() for x,y,z,l in p.y1 + p.y2])
     if not valid:
       missing_entries = ""
       if not p.x in self.data.keys():
