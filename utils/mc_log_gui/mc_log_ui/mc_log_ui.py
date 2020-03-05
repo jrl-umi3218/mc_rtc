@@ -657,15 +657,13 @@ class MCLogUI(QtWidgets.QMainWindow):
         if '/' in r:
           category, name = r.split('/', 1)
           if not category in rCategoryMenu:
-            rCategoryMenu[category] = QtWidgets.QMenu(category)
+            rCategoryMenu[category] = rMenu.addMenu(category)
           rAct.setText(name)
           rAct.actual(r)
           rCategoryMenu[category].addAction(rAct)
         else:
           rActions.append(rAct)
       rMenu.addActions(rActions)
-      for category in sorted(rCategoryMenu):
-          rMenu.addMenu(rCategoryMenu[category])
       defaultBot = self.getDefaultRobot()
       if defaultBot in mc_rbdyn.RobotLoader.available_robots():
         actionIndex = mc_rbdyn.RobotLoader.available_robots().index(defaultBot)
