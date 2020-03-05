@@ -43,6 +43,7 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     Robot& robot()
     Robot& env()
     Robots& robots()
+    c_mc_rtc.Configuration & config()
     vector[string] supported_robots()
     c_mc_rtc.Logger & logger()
     shared_ptr[c_mc_rtc_gui.StateBuilder] gui()

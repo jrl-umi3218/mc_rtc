@@ -205,12 +205,6 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
     return factory_;
   }
 
-  /** Access controller configuration */
-  mc_rtc::Configuration & config()
-  {
-    return config_;
-  }
-
 private:
   /** Reset all posture tasks */
   void resetPostures();
@@ -225,8 +219,6 @@ private:
   void teardownIdleState();
 
 private:
-  /** Keep track of the configuration of the controller */
-  mc_rtc::Configuration config_;
   /** Map robots' names to index */
   std::map<std::string, size_t> robots_idx_;
 

@@ -21,18 +21,30 @@
 namespace mc_control
 {
 
-MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt)
+MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt) : MCController(robot, dt, {}) {}
+
+MCController::MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
+                           double dt,
+                           const mc_rtc::Configuration & config)
 : MCController({robot, mc_rbdyn::RobotLoader::get_robot_module("env",
                                                                std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
                                                                std::string("ground"))},
-               dt)
+               dt,
+               config)
 {
 }
 
 MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules, double dt)
+: MCController(robots_modules, dt, {})
+{
+}
+
+MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robots_modules,
+                           double dt,
+                           const mc_rtc::Configuration & config)
 : qpsolver(std::make_shared<mc_solver::QPSolver>(dt)),
   logger_(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, "", "")),
-  gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), timeStep(dt)
+  gui_(std::make_shared<mc_rtc::gui::StateBuilder>()), config_(config), timeStep(dt)
 {
   /* Load robots */
   qpsolver->logger(logger_);

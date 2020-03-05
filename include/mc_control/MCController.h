@@ -277,6 +277,18 @@ public:
    */
   mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
 
+  /** Access or modify controller configuration */
+  mc_rtc::Configuration & config()
+  {
+    return config_;
+  }
+
+  /** Access controller configuration (const) */
+  const mc_rtc::Configuration & config() const
+  {
+    return config_;
+  }
+
 protected:
   /** Builds a controller base with an empty environment
    * \param robot Pointer to the main RobotModule
@@ -285,11 +297,22 @@ protected:
    */
   MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
 
+  MCController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt, const mc_rtc::Configuration & config);
+
   /** Builds a multi-robot controller base
    * \param robots Collection of robot modules used by the controller
    * \param dt Timestep of the controller
    */
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules, double dt);
+
+  /** Builds a multi-robot controller base
+   * \param robots Collection of robot modules used by the controller
+   * \param dt Timestep of the controller
+   * \param config Controller configuration
+   */
+  MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules,
+               double dt,
+               const mc_rtc::Configuration & config);
 
 protected:
   /** QP solver */
@@ -323,6 +346,9 @@ protected:
   std::shared_ptr<mc_rtc::Logger> logger_;
   /** GUI state builder */
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
+
+  /** Keep track of the configuration of the controller */
+  mc_rtc::Configuration config_;
 
   /** DataStore to share variables/objects between different parts of the
    * framework (states...) */

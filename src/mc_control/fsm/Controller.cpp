@@ -39,7 +39,7 @@ Contact Contact::from_mc_rbdyn(const Controller & ctl, const mc_rbdyn::Contact &
 }
 
 Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, const mc_rtc::Configuration & config)
-: MCController(std::vector<mc_rbdyn::RobotModulePtr>{rm}, dt), config_(config),
+: MCController(std::vector<mc_rbdyn::RobotModulePtr>{rm}, dt, config),
   factory_(config("StatesLibraries", std::vector<std::string>{}),
            config("StatesFiles", std::vector<std::string>{}),
            config("VerboseStateFactory", false))
