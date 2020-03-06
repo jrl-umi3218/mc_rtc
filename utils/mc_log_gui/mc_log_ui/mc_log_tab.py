@@ -208,6 +208,22 @@ class RemoveSpecialPlotButton(SpecialPlot, QtWidgets.QPushButton):
     del self.logtab.specials["{}_{}".format(self.name, self.id)]
     self.deleteLater()
 
+class RemoveXYDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel(Layout = QtWidgets.QVBoxLayout, apply_ = False)
+  def __init__(self, parent, remove_cb, style_cb, get_plots_cb):
+    self.remove = remove_cb
+    self.get_plots = get_plots_cb
+    for itm in self.get_plots().keys():
+      label = style_cb(itm).label
+      btn = QtWidgets.QPushButton("Remove {}".format(label))
+      btn.released.connect(lambda l=label,b=btn: self.removePlot(l, b))
+      self.layout.addWidget(btn)
+  def removePlot(self, label, btn):
+    self.remove(label)
+    btn.deleteLater()
+    if len(self.get_plots()) == 0:
+      self.parent().removeButton.hide()
+
 class XYSelectorDialog(QtWidgets.QDialog):
   @InitDialogWithOkCancel(Layout = QtWidgets.QFormLayout, apply_ = False)
   def __init__(self, parent, data):
@@ -278,43 +294,26 @@ class XYSelectorDialog(QtWidgets.QDialog):
       self.parent().addXYPlot(x, y, label)
 
 class XYSelector(QtWidgets.QWidget):
-  def __init__(self, parent, add_plot_cb, remove_plot_cb, draw_cb):
+  def __init__(self, parent, add_plot_cb, remove_plot_cb, style_cb, draw_cb, get_plots_cb):
     super(XYSelector, self).__init__(parent)
-    self.XYLayout = QtWidgets.QVBoxLayout()
-    self.XYLayout.addWidget(QtWidgets.QLabel("Remove plots"))
     self.layout = QtWidgets.QVBoxLayout(self)
-    self.layout.addLayout(self.XYLayout)
-    self.layout.addStretch()
     self.addButton = QtWidgets.QPushButton("Add XY plot")
     self.layout.addWidget(self.addButton)
     self.dialog = XYSelectorDialog
     self.addButton.released.connect(lambda: self.dialog(self, self.parent().data).exec_())
+    self.removeButton = QtWidgets.QPushButton("Remove XY plot(s)")
+    self.removeButton.released.connect(lambda: RemoveXYDialog(self, self.remove_plot, self.style, self.get_plots).exec_())
+    self.removeButton.hide()
+    self.layout.addWidget(self.removeButton)
     self.add_plot = add_plot_cb
     self.remove_plot = remove_plot_cb
+    self.style = style_cb
     self.draw = draw_cb
+    self.get_plots = get_plots_cb
     self.hide()
   def addXYPlot(self, x, y, label):
     self.add_plot(x, y, label)
-    self.addXYPlotButton(label)
-  def addXYPlotButton(self, label):
-    btn = QtWidgets.QPushButton("{}".format(label))
-    btn.released.connect(lambda b=btn: self.removeXYPlot(b))
-    self.label = label
-    self.XYLayout.addWidget(btn)
-    self.draw()
-  def removeXYPlot(self, btn):
-    self.remove_plot(self.label)
-    btn.deleteLater()
-    self.draw()
-  def updateText(self, old, new):
-    i = 1
-    itm = self.XYLayout.itemAt(i)
-    while itm is not None:
-      btn = itm.widget()
-      i += 1
-      if isinstance(btn, QtWidgets.QPushButton) and btn.text() == old:
-        btn.setText(new)
-      itm = self.XYLayout.itemAt(i)
+    self.removeButton.show()
 
 class XYZSelectorDialog(XYSelectorDialog):
   def __init__(self, parent, data):
@@ -335,13 +334,14 @@ class XYZSelectorDialog(XYSelectorDialog):
       self.parent().addXYZPlot(x, y, z, label)
 
 class XYZSelector(XYSelector):
-  def __init__(self, parent, add_plot_cb, remove_plot_cb, draw_cb):
-    super(XYZSelector, self).__init__(parent, add_plot_cb, remove_plot_cb, draw_cb)
-    self.addButton.setText("Add XYZ plot")
+  def __init__(self, parent, add_plot_cb, remove_plot_cb, style_cb, draw_cb, get_plots_cb):
+    super(XYZSelector, self).__init__(parent, add_plot_cb, remove_plot_cb, style_cb, draw_cb, get_plots_cb)
+    self.addButton.setText("Add 3D plot")
+    self.removeButton.setText("Remove 3D plot(s)")
     self.dialog = XYZSelectorDialog
   def addXYZPlot(self, x, y, z, label):
     self.add_plot(x, y, z, label)
-    self.addXYPlotButton(label)
+    self.removeButton.show()
 
 class MCLogTab(QtWidgets.QWidget):
   canvas_need_update = QtCore.Signal()
@@ -363,15 +363,15 @@ class MCLogTab(QtWidgets.QWidget):
     self.XYCanvas = PlotCanvasWithToolbar(self, PlotType.XY)
     self.ui.verticalLayout.insertWidget(0, self.XYCanvas)
     self.XYCanvas.hide()
-    self.XYSelector1 = XYSelector(self, self.XYCanvas.add_plot_left_xy, self.XYCanvas.remove_plot_left, self.XYCanvas.draw)
+    self.XYSelector1 = XYSelector(self, self.XYCanvas.add_plot_left_xy, self.XYCanvas.remove_plot_left, self.XYCanvas.style_left, self.XYCanvas.draw, lambda: self.XYCanvas._left().plots)
     self.ui.y1SelectorLayout.addWidget(self.XYSelector1)
-    self.XYSelector2 = XYSelector(self, self.XYCanvas.add_plot_right_xy, self.XYCanvas.remove_plot_right, self.XYCanvas.draw)
+    self.XYSelector2 = XYSelector(self, self.XYCanvas.add_plot_right_xy, self.XYCanvas.remove_plot_right, self.XYCanvas.style_right, self.XYCanvas.draw, lambda: self.XYCanvas._right().plots)
     self.ui.y2SelectorLayout.addWidget(self.XYSelector2)
 
     self._3DCanvas = PlotCanvasWithToolbar(self, PlotType._3D)
     self.ui.verticalLayout.insertWidget(0, self._3DCanvas)
     self._3DCanvas.hide()
-    self.XYZSelector1 = XYZSelector(self, self._3DCanvas.add_plot_left_xyz, self._3DCanvas.remove_plot_left, self._3DCanvas.draw)
+    self.XYZSelector1 = XYZSelector(self, self._3DCanvas.add_plot_left_xyz, self._3DCanvas.remove_plot_left, self._3DCanvas.style_left, self._3DCanvas.draw, lambda: self._3DCanvas._left().plots)
     self.ui.y1SelectorLayout.addWidget(self.XYZSelector1)
 
     self.activeCanvas = self.ui.canvas
@@ -581,15 +581,9 @@ class MCLogTab(QtWidgets.QWidget):
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
   def style_left(self, y, styleIn = None):
-    if self.plotType() is not PlotType.TIME and styleIn is not None:
-      style = self.activeCanvas.style_left(y)
-      self.activeSelectors[0].updateText(style.label, styleIn.label)
     return self.activeCanvas.style_left(y, styleIn)
 
   def style_right(self, y, styleIn = None):
-    if self.plotType() is not PlotType.TIME and styleIn is not None:
-      style = self.activeCanvas.style_right(y)
-      self.activeSelectors[1].updateText(style, styleIn.label)
     return self.activeCanvas.style_right(y, styleIn)
 
   @staticmethod
@@ -650,13 +644,13 @@ class MCLogTab(QtWidgets.QWidget):
       tab.y1Selected = y1
       tab.y2Selected = y2
     elif type_ is PlotType.XY:
-      for label in y1_label:
-        tab.XYSelector1.addXYPlotButton(label)
-      for label in y2_label:
-        tab.XYSelector2.addXYPlotButton(label)
+      if len(y1_label):
+        tab.XYSelector1.removeButton.show()
+      if len(y2_label):
+        tab.XYSelector2.removeButton.show()
     else:
-      for label in y1_label:
-        tab.XYZSelector1.addXYPlotButton(label)
+        tab.XYZSelector1.removeButton.show()
+
     MCLogTab.MakeFigure(type_, parent.data, x_data, y1, y2, y1_label, y2_label, tab.activeCanvas)
     tab.activeCanvas.x_data = x_data
     return tab
