@@ -85,14 +85,13 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   rightCoP->name(n + "_cop_right");
   pelvisTask->name(n + "_pelvis");
   torsoTask->name(n + "_torso");
-
-  configure(robot().module().defaultLIPMStabilizerConfiguration());
 }
 
 void StabilizerTask::reset()
 {
   t_ = 0;
   configure(robot().module().defaultLIPMStabilizerConfiguration());
+  commitConfig();
   comTask->reset();
   comTarget_ = comTask->com();
 
@@ -230,6 +229,8 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
 
 void StabilizerTask::update(mc_solver::QPSolver & solver)
 {
+  if(reconfigure_) configure_(solver);
+
   // Update contacts if they have changed
   updateContacts(solver);
 
@@ -397,9 +398,11 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   using namespace mc_rtc::gui;
 
-  gui.addElement({"Tasks", name_, "Main"}, Button("Disable stabilizer", [this]() { disable(); }),
-                 Button("Reconfigure / Enable Stabilizer", [this]() { reconfigure(); }),
-                 Button("Reset DCM integrator", [this]() { dcmIntegrator_.reset(Eigen::Vector3d::Zero()); }),
+  gui.addElement({"Tasks", name_, "Main"}, Button("Disable", [this]() { disable(); }),
+                 Button("Reset DCM integrator", [this]() { dcmIntegrator_.reset(Eigen::Vector3d::Zero()); }));
+  gui.addElement({"Tasks", name_, "Main"}, ElementsStacking::Horizontal, Button("Enable", [this]() { enable(); }),
+                 Button("Reconfigure", [this]() { reconfigure(); }), Button("Commit", [this]() { commitConfig(); }));
+  gui.addElement({"Tasks", name_, "Main"},
                  ArrayInput("Foot admittance", {"CoPx", "CoPy"},
                             [this]() -> Eigen::Vector2d {
                               return {c_.copAdmittance.x(), c_.copAdmittance.y()};
@@ -430,8 +433,10 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               dcmIntegrator_.timeConstant(T(0));
                               dcmDerivator_.timeConstant(T(1));
                             }));
-  gui.addElement({"Tasks", name_, "Advanced"}, Button("Disable stabilizer", [this]() { disable(); }),
-                 Button("Reconfigure", [this]() { reconfigure(); }),
+  gui.addElement({"Tasks", name_, "Advanced"}, Button("Disable", [this]() { disable(); }));
+  gui.addElement({"Tasks", name_, "Advanced"}, ElementsStacking::Horizontal, Button("Enable", [this]() { enable(); }),
+                 Button("Reconfigure", [this]() { reconfigure(); }), Button("Commit", [this]() { commitConfig(); }));
+  gui.addElement({"Tasks", name_, "Advanced"},
                  ArrayInput("Vertical drift compensation", {"frequency", "stiffness"},
                             [this]() -> Eigen::Vector2d {
                               return {c_.vdcFrequency, c_.vdcStiffness};
@@ -443,8 +448,10 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  NumberInput("Torso pitch [rad]", [this]() { return c_.torsoPitch; },
                              [this](double pitch) { c_.torsoPitch = pitch; }));
 
-  gui.addElement({"Tasks", name_, "Debug"}, Button("Disable stabilizer", [this]() { disable(); }),
-                 Button("Reconfigure", [this]() { reconfigure(); }), Button("Dump configuration", [this]() {
+  gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal, Button("Disable", [this]() { disable(); }));
+  gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal, Button("Enable", [this]() { enable(); }),
+                 Button("Reconfigure", [this]() { reconfigure(); }), Button("Commit", [this]() { commitConfig(); }));
+  gui.addElement({"Tasks", name_, "Debug"}, Button("Dump configuration", [this]() {
                    LOG_INFO("[LIPMStabilizerTask] configuration (YAML)");
                    LOG_INFO(c_.save().dump(true, true));
                  }));
@@ -589,17 +596,22 @@ void StabilizerTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
 
 void StabilizerTask::enable()
 {
+  LOG_INFO("[StabilizerTask] enabled");
   // Reset DCM integrator when enabling the stabilizer.
   // While idle, it will accumulate a lot of error, and would case the robot to
   // move suddently to compensate it otherwise
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
 
-  reconfigure();
+  configure(lastConfig_);
 }
 
 void StabilizerTask::disable()
 {
+  LOG_INFO("[StabilizerTask] disabled");
+  // Save current configuration to be reused when re-enabling
+  lastConfig_ = c_;
+  // Set the stabilizer gains to zero
   c_.copAdmittance.setZero();
   c_.dcmDerivGain = 0.;
   c_.dcmIntegralGain = 0.;
@@ -611,18 +623,29 @@ void StabilizerTask::disable()
 
 void StabilizerTask::reconfigure()
 {
+  LOG_INFO("[StabilizerTask] reconfigured to the last commited configuration");
   configure(defaultConfig_);
+  enable();
 }
 
 void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
 {
-  defaultConfig_ = config;
-  c_ = defaultConfig_;
+  lastConfig_ = config;
+  c_ = config;
+  reconfigure_ = true;
+}
 
+void StabilizerTask::commitConfig()
+{
+  defaultConfig_ = c_;
+}
+
+void StabilizerTask::configure_(mc_solver::QPSolver & solver)
+{
   dcmDerivator_.timeConstant(c_.dcmDerivatorTimeConstant);
   dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
 
-  // Configure upper-body tasks
+  // // Configure upper-body tasks
   pelvisTask->stiffness(c_.pelvisStiffness);
   pelvisTask->weight(c_.pelvisWeight);
 
@@ -632,7 +655,7 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
 
   if(!c_.comActiveJoints.empty())
   {
-    comTask->selectActiveJoints(c_.comActiveJoints);
+    comTask->selectActiveJoints(solver, c_.comActiveJoints);
   }
   comTask->setGains(c_.comStiffness, 2 * c_.comStiffness.cwiseSqrt());
   comTask->weight(c_.comWeight);
@@ -642,6 +665,7 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
     footTask.second->maxLinearVel(c_.copMaxVel.linear());
     footTask.second->maxAngularVel(c_.copMaxVel.angular());
   }
+  reconfigure_ = false;
 }
 
 void StabilizerTask::load(mc_solver::QPSolver &, const mc_rtc::Configuration & config)
@@ -1199,6 +1223,7 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       t->reset();
       t->configure(stabiConf);
       t->load(solver, config);
+      t->commitConfig();
       return t;
     });
 }

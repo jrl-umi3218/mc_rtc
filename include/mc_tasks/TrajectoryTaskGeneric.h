@@ -155,17 +155,59 @@ struct TrajectoryTaskGeneric : public MetaTask
 
   virtual Eigen::VectorXd dimWeight() const override;
 
+  /** \brief Create an active joints selector
+   *
+   * \warning This function should only be called if the task hasn't yet been
+   * added to the solver. If the tasks is already in the solver it does nothing,
+   * and warns that it had no effect. Call void selectActiveJoints(mc_solver::QPSolver &, const std::vector<std::string>
+   * &, const std::map<std::string, std::vector<std::array<int, 2>>> &) instead.
+   *
+   * @param activeJointsName Name of the joints activated for this task
+   * \param activeDofs Allow to select only part of the dofs of a joint
+   */
   virtual void selectActiveJoints(const std::vector<std::string> & activeJointsName,
                                   const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {});
 
+  /** \brief Create an active joints selector
+   *
+   * \note Calling this function is a bit expensive. If the task is already in
+   * the solver, it will be removed first, then recreated with the joint
+   * selector and added to the solver again. If possible, consider calling void selectActiveJoints(const
+   * std::vector<std::string> &, const std::map<std::string, std::vector<std::array<int, 2>>> &) before adding the task
+   * to the solver.
+   *
+   * @param activeJointsName Name of the joints activated for this task
+   * \param activeDofs Allow to select only part of the dofs of a joint
+   */
   virtual void selectActiveJoints(
       mc_solver::QPSolver & solver,
       const std::vector<std::string> & activeJointsName,
       const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {}) override;
 
+  /** \brief Create an unactive joints selector
+   *
+   * \warning This function should only be called if the task hasn't yet been
+   * added to the solver. If the tasks is already in the solver it does nothing,
+   * and warns that it had no effect. Call void selectUnactiveJoints(mc_solver::QPSolver &, const
+   * std::vector<std::string> &, const std::map<std::string, std::vector<std::array<int, 2>>> &) instead.
+   *
+   * @param unactiveJointsName Name of the joints not activated for this task
+   * \param unactiveDofs Allow to select only part of the dofs of a joint
+   */
   virtual void selectUnactiveJoints(const std::vector<std::string> & unactiveJointsName,
                                     const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {});
 
+  /** \brief Create an unactive joints selector
+   *
+   * \note Calling this function is a bit expensive. If the task is already in
+   * the solver, it will be removed first, then recreated with the joint
+   * selector and added to the solver again. If possible, consider calling void selectUnactiveJoints(const
+   * std::vector<std::string> &, const std::map<std::string, std::vector<std::array<int, 2>>> &) before adding the task
+   * to the solver.
+   *
+   * @param unactiveJointsName Name of the joints not activated for this task
+   * \param unactiveDofs Allow to select only part of the dofs of a joint
+   */
   virtual void selectUnactiveJoints(
       mc_solver::QPSolver & solver,
       const std::vector<std::string> & unactiveJointsName,

@@ -138,22 +138,27 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    */
   void configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
 
+  /**
+   * @brief Use the current configuration as the new default
+   */
+  void commitConfig();
+
   /*! \brief Load targets and contacts from configuration */
   void load(mc_solver::QPSolver &, const mc_rtc::Configuration & config) override;
 
   /**
-   * @brief Get current stabilizer's configuration (including changes from GUI)
+   * @brief Get current stabilizer's configuration (including changes from
+   * GUI/code)
    *
    * \see commitedConfig()
    */
   const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config() const;
 
   /**
-   * @brief Get last commited configuration (not including latest changes from
-   * the GUI)
+   * @brief Get last commited configuration
    *
-   * Commited configuration is corresponds to the latest one set by calling configure(const
-   * mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &)
+   * Commited configuration is corresponds to the latest one set by calling commitConfig(), either manually or from the
+   * GUI.
    *
    * \see config()
    */
@@ -425,6 +430,14 @@ protected:
     return realRobots_.robot(robotIndex_);
   }
 
+  /**
+   * @brief Actual configuration of the stabilizer.
+   * Called when reconfigure_ is true
+   *
+   * @param solver Solver to which this task has been added
+   */
+  void configure_(mc_solver::QPSolver & solver);
+
 protected:
   /**
    * @brief Workaround a C++11 standard bug: no specialization of the hash
@@ -467,11 +480,17 @@ protected:
   double t_ = 0.; /**< Time elapsed since the task is running */
 
 protected:
-  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
-      defaultConfig_; /**< Default (user-provided) configuration for the stabilizer. This configuration is superseeded
-                         by the parameters set in the GUI */
-  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
-      c_; /* Online stabilizer configuration, can be set from the GUI. Defaults to defaultConfig_ */
+  /**< Default (user-provided) configuration for the stabilizer. This configuration is superseeded by the parameters set
+   * in the GUI */
+  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration defaultConfig_;
+  /**< Last valid stabilizer configuration. */
+  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration lastConfig_;
+  /**< Online stabilizer configuration, can be set from the GUI. Defaults to defaultConfig_ */
+  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration c_;
+  /**< Whether the stabilizer needs to be reconfigured at the next
+   * update(solver) call */
+  bool reconfigure_ = true;
+
   Eigen::QuadProgDense qpSolver_; /**< Least-squares solver for wrench distribution */
   Eigen::Vector3d dcmAverageError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmError_ = Eigen::Vector3d::Zero();
