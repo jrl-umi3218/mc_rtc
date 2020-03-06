@@ -313,6 +313,7 @@ class XYSelector(QtWidgets.QWidget):
     self.hide()
   def addXYPlot(self, x, y, label):
     self.add_plot(x, y, label)
+    self.draw()
     self.removeButton.show()
 
 class XYZSelectorDialog(XYSelectorDialog):
@@ -341,6 +342,7 @@ class XYZSelector(XYSelector):
     self.dialog = XYZSelectorDialog
   def addXYZPlot(self, x, y, z, label):
     self.add_plot(x, y, z, label)
+    self.draw()
     self.removeButton.show()
 
 class MCLogTab(QtWidgets.QWidget):
