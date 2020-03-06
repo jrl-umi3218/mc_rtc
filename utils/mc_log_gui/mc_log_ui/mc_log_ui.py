@@ -687,6 +687,7 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.lineStyleMenu = QtWidgets.QMenu("Graph", self.styleMenu)
     def fillLineStyleMenu(self):
       self.lineStyleMenu.clear()
+      tab = self.ui.tabWidget.currentWidget()
       canvas = self.getCanvas()
       def makePlotMenu(self, name, plots, style_fn):
         if not len(plots):
@@ -706,9 +707,9 @@ class MCLogUI(QtWidgets.QMainWindow):
           group.addAction(action)
         menu.addActions(group.actions())
         self.lineStyleMenu.addMenu(menu)
-      makePlotMenu(self, "Left", canvas._left().plots.keys(), canvas.style_left)
+      makePlotMenu(self, "Left", canvas._left().plots.keys(), tab.style_left)
       if canvas._right():
-        makePlotMenu(self, "Right", canvas._right().plots.keys(), canvas.style_right)
+        makePlotMenu(self, "Right", canvas._right().plots.keys(), tab.style_right)
     self.lineStyleMenu.aboutToShow.connect(lambda: fillLineStyleMenu(self))
     self.styleMenu.addMenu(self.lineStyleMenu)
 

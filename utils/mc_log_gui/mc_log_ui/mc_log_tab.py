@@ -254,12 +254,22 @@ class XYSelector(QtWidgets.QWidget):
   def addXYPlotButton(self, label):
     btn = QtWidgets.QPushButton("{}".format(label))
     btn.released.connect(lambda b=btn: self.removeXYPlot(b))
+    self.label = label
     self.XYLayout.addWidget(btn)
     self.draw()
   def removeXYPlot(self, btn):
-    self.remove_plot(btn.text())
+    self.remove_plot(self.label)
     btn.deleteLater()
     self.draw()
+  def updateText(self, old, new):
+    i = 1
+    itm = self.XYLayout.itemAt(i)
+    while itm is not None:
+      btn = itm.widget()
+      i += 1
+      if isinstance(btn, QtWidgets.QPushButton) and btn.text() == old:
+        btn.setText(new)
+      itm = self.XYLayout.itemAt(i)
 
 class XYZSelectorDialog(XYSelectorDialog):
   def __init__(self, parent, data):
@@ -285,16 +295,7 @@ class XYZSelector(XYSelector):
     self.dialog = XYZSelectorDialog
   def addXYZPlot(self, x, y, z, label):
     self.add_plot(x, y, z, label)
-    self.addXYZPlotButton(label)
-  def addXYZPlotButton(self, label):
-    btn = QtWidgets.QPushButton("{}".format(label))
-    btn.released.connect(lambda b=btn: self.removeXYZPlot(b))
-    self.XYLayout.addWidget(btn)
-    self.draw()
-  def removeXYZPlot(self, btn):
-    self.remove_plot(btn.text())
-    btn.deleteLater()
-    self.draw()
+    self.addXYPlotButton(label)
 
 class MCLogTab(QtWidgets.QWidget):
   canvas_need_update = QtCore.Signal()
@@ -533,6 +534,18 @@ class MCLogTab(QtWidgets.QWidget):
           menu.addAction(action)
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
+  def style_left(self, y, styleIn = None):
+    if self.plotType() is not PlotType.TIME and styleIn is not None:
+      style = self.activeCanvas.style_left(y)
+      self.activeSelectors[0].updateText(style.label, styleIn.label)
+    return self.activeCanvas.style_left(y, styleIn)
+
+  def style_right(self, y, styleIn = None):
+    if self.plotType() is not PlotType.TIME and styleIn is not None:
+      style = self.activeCanvas.style_right(y)
+      self.activeSelectors[1].updateText(style, styleIn.label)
+    return self.activeCanvas.style_right(y, styleIn)
+
   @staticmethod
   def MakeFigure(type_, data, x, y1, y2, y1_label = None, y2_label = None, figure = None):
     def labels(yN):
@@ -597,7 +610,7 @@ class MCLogTab(QtWidgets.QWidget):
         tab.XYSelector2.addXYPlotButton(label)
     else:
       for label in y1_label:
-        tab.XYZSelector1.addXYZPlotButton(label)
+        tab.XYZSelector1.addXYPlotButton(label)
     MCLogTab.MakeFigure(type_, parent.data, x_data, y1, y2, y1_label, y2_label, tab.activeCanvas)
     tab.activeCanvas.x_data = x_data
     return tab
