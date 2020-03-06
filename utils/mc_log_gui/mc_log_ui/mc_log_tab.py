@@ -212,25 +212,70 @@ class XYSelectorDialog(QtWidgets.QDialog):
   @InitDialogWithOkCancel(Layout = QtWidgets.QFormLayout, apply_ = False)
   def __init__(self, parent, data):
     self.setWindowTitle("Add X/Y data to the plot")
-    self.xSelector = QtWidgets.QComboBox(self)
-    self.layout.addRow("X", self.xSelector)
-    self.ySelector = QtWidgets.QComboBox(self)
-    self.keys = data.keys()
-    self.keys.sort()
-    for k in self.keys:
-      self.xSelector.addItem(k)
-      self.ySelector.addItem(k)
-    self.layout.addRow("Y", self.ySelector)
+    self.data = data
+    self.tree_view = TreeView()
+    for k in sorted(data.keys()):
+      if type(data[k][0]) is not unicode:
+        self.tree_view.add(k.split('_'))
+    self.tree_view.simplify()
+    self.treeSelector = QtWidgets.QTreeWidget(self)
+    self.treeSelector.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
+    self.treeSelector.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
+    self.treeSelector.setColumnCount(1)
+    self.treeSelector.itemClicked.connect(self.itemClicked)
+    self.treeSelector.header().setVisible(False)
+    self.tree_view.update_y_selector(self.treeSelector, self.treeSelector)
+    self.layout.addRow(self.treeSelector)
+
+    self.xLabel = QtWidgets.QLabel(self)
+    self.layout.addRow("X", self.xLabel)
+    self.yLabel = QtWidgets.QLabel(self)
+    self.layout.addRow("Y", self.yLabel)
     self.labelEdit = QtWidgets.QLineEdit(self)
     self.layout.addRow("Label", self.labelEdit)
+    self.nextLabel = 0
+    self.labels = [self.xLabel, self.yLabel]
+
+  def itemClicked(self, item, col):
+    if item.isSelected():
+      if not item.hasData:
+        childs = [ k for k in self.data.keys() if k.startswith("{}_".format(item.actualText)) ]
+        childs.sort()
+        if len(childs) == len(self.labels) and all([len(l.text()) == 0 for l in self.labels]):
+          [ l.setText(c) for c,l in zip(childs, self.labels) ]
+          self.nextLabel = len(self.labels)
+        else:
+          item.setSelected(False)
+      else:
+        if self.nextLabel < len(self.labels):
+          self.labels[self.nextLabel].setText(item.actualText)
+          while self.nextLabel < len(self.labels) and len(self.labels[self.nextLabel].text()) != 0:
+            self.nextLabel += 1
+        else:
+          item.setSelected(False)
+    else:
+      if not item.hasData:
+        [ label.setText("") for label in self.labels ]
+        self.nextLabel = 0
+        return
+      for label in self.labels:
+        if label.text() == item.actualText:
+          label.setText("")
+          break
+      for i, label in enumerate(self.labels):
+        if len(label.text()) == 0:
+          self.nextLabel = i
+          return
+
   def accept(self):
     super(XYSelectorDialog, self).accept()
-    x = self.xSelector.currentText()
-    y = self.ySelector.currentText()
+    x = self.xLabel.text()
+    y = self.yLabel.text()
     label = self.labelEdit.text()
-    if len(label) == 0:
-      label = "{} / {}".format(x, y)
-    self.parent().addXYPlot(x, y, label)
+    if len(x) and len(y):
+      if len(label) == 0:
+        label = "{} / {}".format(x, y)
+      self.parent().addXYPlot(x, y, label)
 
 class XYSelector(QtWidgets.QWidget):
   def __init__(self, parent, add_plot_cb, remove_plot_cb, draw_cb):
@@ -274,19 +319,20 @@ class XYSelector(QtWidgets.QWidget):
 class XYZSelectorDialog(XYSelectorDialog):
   def __init__(self, parent, data):
     super(XYZSelectorDialog, self).__init__(parent, data)
-    self.zSelector = QtWidgets.QComboBox(self)
-    self.layout.insertRow(2, "Z", self.zSelector)
-    for k in self.keys:
-      self.zSelector.addItem(k)
+    self.setWindowTitle("Add X/Y/Z data to the plot")
+    self.zLabel = QtWidgets.QLabel(self)
+    self.layout.insertRow(3, "Z", self.zLabel)
+    self.labels.append(self.zLabel)
   def accept(self):
     super(XYSelectorDialog, self).accept()
-    x = self.xSelector.currentText()
-    y = self.ySelector.currentText()
-    z = self.zSelector.currentText()
+    x = self.xLabel.text()
+    y = self.yLabel.text()
+    z = self.zLabel.text()
     label = self.labelEdit.text()
-    if len(label) == 0:
-      label = "{} / {} / {}".format(x, y, z)
-    self.parent().addXYZPlot(x, y, z, label)
+    if len(x) and len(y) and len(z):
+      if len(label) == 0:
+        label = "{} / {} / {}".format(x, y, z)
+      self.parent().addXYZPlot(x, y, z, label)
 
 class XYZSelector(XYSelector):
   def __init__(self, parent, add_plot_cb, remove_plot_cb, draw_cb):
