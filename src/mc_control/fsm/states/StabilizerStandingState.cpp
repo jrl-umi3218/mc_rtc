@@ -120,6 +120,24 @@ void StabilizerStandingState::start(Controller & ctl)
   ctl.logger().addLogEntry(name() + "_damping", [this]() { return D_; });
   ctl.logger().addLogEntry(name() + "_targetCoM", [this]() -> const Eigen::Vector3d & { return comTarget_; });
   ctl.logger().addLogEntry(name() + "_targetCoP", [this]() -> const Eigen::Vector3d & { return copTarget_; });
+
+  // Provide accessor callbacks on the datastore
+  ctl.datastore().make<std::function<const Eigen::Vector3d &(void)>>(
+      "StabilizerStandingState::getCoMTarget", [this]() -> const Eigen::Vector3d & { return comTarget_; });
+  ctl.datastore().make<std::function<void(const Eigen::Vector3d &)>>(
+      "StabilizerStandingState::setCoMTarget", [this](const Eigen::Vector3d & com) { this->targetCoM(com); });
+  ctl.datastore().make<std::function<void(double)>>("StabilizerStandingState::setStiffness",
+                                                    [this](double K) { this->K_ = K; });
+  ctl.datastore().make<std::function<void(double)>>("StabilizerStandingState::setDamping",
+                                                    [this](double D) { this->D_ = D; });
+  ctl.datastore().make<std::function<double(void)>>("StabilizerStandingState::getStiffness", [this]() { return K_; });
+  ctl.datastore().make<std::function<double(void)>>("StabilizerStandingState::getDamping", [this]() { return D_; });
+  ctl.datastore().make<std::function<mc_rbdyn::lipm_stabilizer::StabilizerConfiguration(void)>>(
+      "StabilizerStandingState::getConfiguration",
+      [this]() -> mc_rbdyn::lipm_stabilizer::StabilizerConfiguration { return stabilizerTask_->config(); });
+  ctl.datastore().make<std::function<void(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &)>>(
+      "StabilizerStandingState::setConfiguration",
+      [this](const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & conf) { stabilizerTask_->configure(conf); });
 }
 
 void StabilizerStandingState::targetCoP(const Eigen::Vector3d & cop)
@@ -152,11 +170,6 @@ void StabilizerStandingState::targetCoM(const Eigen::Vector3d & com)
 
 bool StabilizerStandingState::run(Controller & ctl)
 {
-  // Configure from the datastore if available
-  ctl.datastore().get("StabilizerStandingState::com", comTarget_);
-  ctl.datastore().get("StabilizerStandingState::stiffness", K_);
-  ctl.datastore().get("StabilizerStandingState::damping", D_);
-
   const Eigen::Vector3d & com_ = pendulum_.com();
   const Eigen::Vector3d & comd_ = pendulum_.comd();
 
@@ -195,6 +208,15 @@ void StabilizerStandingState::teardown(Controller & ctl)
   ctl.logger().removeLogEntry(name() + "_damping");
   ctl.logger().removeLogEntry(name() + "_targetCoM");
   ctl.logger().removeLogEntry(name() + "_targetCoP");
+
+  ctl.datastore().remove("StabilizerStandingState::getCoMTarget");
+  ctl.datastore().remove("StabilizerStandingState::setCoMTarget");
+  ctl.datastore().remove("StabilizerStandingState::getStiffness");
+  ctl.datastore().remove("StabilizerStandingState::setStiffness");
+  ctl.datastore().remove("StabilizerStandingState::getDamping");
+  ctl.datastore().remove("StabilizerStandingState::setDamping");
+  ctl.datastore().remove("StabilizerStandingState::getConfiguration");
+  ctl.datastore().remove("StabilizerStandingState::setConfiguration");
 }
 
 } // namespace fsm

@@ -4,6 +4,7 @@
 
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Robots.h>
+#include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 #include <mc_rtc/DataStore.h>
 #include <boost/test/unit_test.hpp>
 #include "utils.h"
@@ -243,4 +244,49 @@ BOOST_AUTO_TEST_CASE(TestRemove)
     store.remove("TestObject");
     BOOST_CHECK(!store.has("TestObject"));
   }
+}
+
+BOOST_AUTO_TEST_CASE(PointerSharing)
+{
+  DataStore store;
+  struct State
+  {
+    State(DataStore & store)
+    {
+      store.make<State *>("APtr", this); // Do not do this, dangerous (see below)
+      store.make<std::function<State &(void)>>("ARef", [this]() -> State & { return *this; }); // This is ok
+    }
+    ~State()
+    {
+      v = 0;
+    }
+    double v = 42;
+  };
+  State state(store);
+
+  // Gets a raw pointer to the state. this is dangerous, as one can misuse the
+  // pointer easily
+  auto aptr = store.get<State *>("APtr");
+  BOOST_REQUIRE(aptr != nullptr);
+  BOOST_REQUIRE(aptr->v == 42);
+  // delete aptr; any use of state will likely segfault + double free
+
+  // Ok, get a reference to the state through a lambda
+  auto & aref = store.get<std::function<State &(void)>>("ARef")();
+  BOOST_REQUIRE(aref.v == 42);
+  aref.v = 12;
+  BOOST_REQUIRE(state.v == 12);
+}
+
+BOOST_AUTO_TEST_CASE(TestStabilizer)
+{
+
+  using namespace mc_rbdyn::lipm_stabilizer;
+
+  DataStore store;
+  store.make<StabilizerConfiguration>("conf");
+  BOOST_CHECK_NO_THROW(store.get<StabilizerConfiguration>("conf"));
+
+  store.make<std::function<StabilizerConfiguration(void)>>("getConf");
+  BOOST_CHECK_NO_THROW(store.get<std::function<StabilizerConfiguration(void)>>("getConf"));
 }
