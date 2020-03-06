@@ -23,6 +23,8 @@ from matplotlib.patches import Patch, Polygon, Rectangle
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas,\
                                                NavigationToolbar2QT as NavigationToolbar
 
+from mpl_toolkits.mplot3d import Axes3D
+
 from collections import OrderedDict
 from math import asin, atan2
 
@@ -202,18 +204,25 @@ class PlotPolygonAxis(object):
       self._plot_string(x, self.data[y_label][1], y_label, None)
 
 class PlotYAxis(object):
-  def __init__(self, parent, x_axis = None, poly = None):
+  def __init__(self, parent, x_axis = None, poly = None, _3D = False):
     self.figure = parent
+    self._3D = _3D
     if x_axis is None:
       self.is_left = True
-      self._axis = parent.fig.add_subplot(111)
+      if not _3D:
+        self._axis = parent.fig.add_subplot(111)
+      else:
+        self._axis = parent.fig.gca(projection='3d')
       self._axis.autoscale(enable = True, axis = 'both', tight = False)
       self._x_axis = self._axis
     else:
       self.is_left = False
-      self._axis = x_axis.twinx()
+      if not _3D:
+        self._axis = x_axis.twinx()
+      else:
+        self._axis = x_axis
       self._x_axis = x_axis
-    if poly is None:
+    if poly is None and not _3D:
       self._polyAxis = PlotPolygonAxis(parent, self._axis)
     else:
       self._polyAxis = poly
@@ -225,6 +234,7 @@ class PlotYAxis(object):
     self.grid = LineStyle(linestyle = '--')
     self.plots = OrderedDict()
     self._label_fontsize = 10
+    self._z_label_fontsize = 10
     self._legend_ncol = 3
     self.source = {}
     self.data = {}
@@ -264,7 +274,8 @@ class PlotYAxis(object):
       if len(self.figure.x_label()):
         top_anchor = -0.175
     self._axis.legend(bbox_to_anchor=(0., top_anchor, 1., .102), loc=loc, ncol=self._legend_ncol, mode="expand", borderaxespad=0.5, fontsize=self._legend_fontsize())
-    self._polyAxis.legend()
+    if self._polyAxis is not None:
+      self._polyAxis.legend()
 
   def legendNCol(self, n = None):
     if n is None:
@@ -280,18 +291,6 @@ class PlotYAxis(object):
       offset = offset + sign * 0.035 * (self.legendRows() - 3)
     return offset
 
-  # If this axis is empty but the other is not, fix my own limits, in the
-  # opposite condition call the opposite function
-  def fixLimits(self, axis):
-    if len(axis) != 0 and len(self) == 0:
-      point = (axis.axis().dataLim.get_points()[1] + axis.axis().dataLim.get_points()[0])/2
-      plt, = self._axis.plot([point[0]], [point[1]], visible = False)
-      plt.remove()
-      del plt
-      self._axis.relim()
-    elif len(self) != 0 and len(axis) == 0:
-      axis.fixLimits(self)
-
   def getLimits(self, frame, idx):
     if not len(self):
       return None
@@ -304,7 +303,7 @@ class PlotYAxis(object):
     return min_, max_
 
 
-  def setLimits(self, xlim = None, ylim = None, frame = None):
+  def setLimits(self, xlim = None, ylim = None, frame = None, zlim = None):
     if not len(self):
       return xlim
     dataLim = self._axis.dataLim.get_points()
@@ -320,6 +319,9 @@ class PlotYAxis(object):
       set_lim([min_, max_])
       return min_, max_
     setLimit(ylim, 1, self._axis.set_ylim)
+    if self._3D:
+      frame = -1
+      setLimit(zlim, 2, self._axis.set_zlim)
     return setLimit(xlim, 0, self._x_axis.set_xlim)
 
   def _label(self, get_label, set_label, l, size):
@@ -344,15 +346,29 @@ class PlotYAxis(object):
   def y_label(self, l = None):
     return self._label_property(self._axis.get_ylabel, self._y_label, l)
 
+  def _z_label(self, l = None):
+    self._label(self.z_label, self._axis.set_zlabel, l, self._z_label_fontsize)
+
+  def z_label(self, l = None):
+    return self._label_property(self._axis.get_zlabel, self._z_label, l)
+
   def y_label_fontsize(self, fontsize = None):
     if fontsize is None:
       return self._label_fontsize
     self._label_fontsize = fontsize
     self._y_label()
 
+  def z_label_fontsize(self, fontsize = None):
+    if fontsize is None:
+      return self._z_label_fontsize
+    self._z_label_fontsize = fontsize
+    self._z_label()
+
   def animate(self, frame0, frame):
     for y_label in self.plots.keys():
       self.plots[y_label].set_data(self.data[y_label][0][frame0:frame], self.data[y_label][1][frame0:frame])
+      if self._3D:
+        self.plots[y_label].set_3d_properties(self.data[y_label][2][frame0:frame])
     return self.plots.values()
 
   def update_x(self, x):
@@ -399,7 +415,10 @@ class PlotYAxis(object):
     else:
       self.filtered[y_label] = None
     self.source[y_label] = source
-    self.plots[y_label] = self._axis.plot(x, y, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+    if z is None:
+      self.plots[y_label] = self._axis.plot(x, y, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+    else:
+      self.plots[y_label] = self._axis.plot(x, y, z, label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
     self.legend()
     return True
 
@@ -407,14 +426,20 @@ class PlotYAxis(object):
     for y_label in self.plots.keys():
       style = self.style(y_label)
       self.plots[y_label].remove()
-      self.plots[y_label] = self._axis.plot(self.data[y_label][0][i0], self.data[y_label][1][i0], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+      if not self._3D:
+        self.plots[y_label] = self._axis.plot(self.data[y_label][0][i0], self.data[y_label][1][i0], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+      else:
+        self.plots[y_label] = self._axis.plot([self.data[y_label][0][i0]], [self.data[y_label][1][i0]], [self.data[y_label][2][0]], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
 
   def stopAnimation(self):
     for y_label in self.plots.keys():
       style = self.style(y_label)
       self.plots[y_label].remove()
       if self.filtered[y_label] is not None:
-        self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+        if not self._3D:
+          self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+        else:
+          self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], self.filtered[y_label][2], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
       else:
         self.plots[y_label] = self._axis.plot(self.data[y_label][0], self.data[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
 
@@ -491,11 +516,17 @@ class PlotYAxis(object):
       plt.set_label(style.label)
 
 class PlotFigure(object):
-  def __init__(self):
+  def __init__(self, type_ = PlotType.TIME, init_canvas = False):
     self.fig = matplotlib.pyplot.figure(figsize=(5, 4), dpi=100)
+    if init_canvas:
+      self.canvas = FigureCanvas(self.fig)
     self.axes = {}
-    self.axes[PlotSide.LEFT] = PlotYAxis(self)
-    self.axes[PlotSide.RIGHT] = PlotYAxis(self, self._left().axis(), self._left()._polyAxis)
+    self._3D = type_ is PlotType._3D
+    self.axes[PlotSide.LEFT] = PlotYAxis(self, _3D = self._3D)
+    if not self._3D:
+      self.axes[PlotSide.RIGHT] = PlotYAxis(self, self._left().axis(), self._left()._polyAxis, _3D = self._3D)
+    else:
+      self.axes[PlotSide.RIGHT] = None
     self.animation = None
 
     self._title_fontsize = 12
@@ -505,6 +536,8 @@ class PlotFigure(object):
     self._legend_fontsize = 10
     self._top_offset = 0.9
     self._bottom_offset = 0.1
+    if self._3D:
+      self._bottom_offset = 0
 
     self.data = None
     self.computed_data = {}
@@ -525,7 +558,8 @@ class PlotFigure(object):
   # Helper function to call something on all axes, call expects an axis argument
   def _axes(self, call):
     call(self._left())
-    call(self._right())
+    if self._right() is not None:
+      call(self._right())
 
   # Shortcut to get the polygon axis
   def _polygons(self):
@@ -546,22 +580,28 @@ class PlotFigure(object):
     self._axes(lambda axis: axis.legend())
 
   def draw(self, x_limits = None, y1_limits = None, y2_limits = None, frame = None):
-    self._left().fixLimits(self._right())
-    x_limits = self._left().setLimits(x_limits, y1_limits, frame = frame)
-    self._right().setLimits(x_limits, y2_limits, frame = frame)
+    if self._3D:
+      x_limits = self._left().setLimits(x_limits, y1_limits, frame = frame, zlim = y2_limits)
+    else:
+      x_limits = self._left().setLimits(x_limits, y1_limits, frame = frame)
+      self._right().setLimits(x_limits, y2_limits, frame = frame)
     self._legend()
     self._drawGrid()
     top_offset = self._left().legendOffset(self._top_offset, -1)
-    bottom_offset = self._right().legendOffset(self._bottom_offset, 1)
+    if self._right() is not None:
+      bottom_offset = self._right().legendOffset(self._bottom_offset, 1)
+    else:
+      bottom_offset = self._bottom_offset
     left_offset = 0.125
     right_offset = 0.9
-    if len(self._left()._polyAxis.plots):
+    if self._left()._polyAxis is not None and len(self._left()._polyAxis.plots):
       left_offset, right_offset = 0.05, right_offset - (left_offset - 0.05)
     self.fig.subplots_adjust(left = left_offset, right = right_offset, top = top_offset, bottom = bottom_offset)
 
   def animate(self, frame0, frame, x_limits = None, y1_limits = None, y2_limits = None):
     ret = self._left().animate(frame0, frame)
-    ret.extend(self._right().animate(frame0, frame))
+    if self._right():
+      ret.extend(self._right().animate(frame0, frame))
     PlotFigure.draw(self, x_limits = x_limits, y1_limits = y1_limits, y2_limits = y2_limits, frame = frame)
     return ret
 
@@ -641,9 +681,13 @@ class PlotFigure(object):
     return self._left().y_label_fontsize(fontsize)
 
   def y2_label(self, label = None):
+    if self._3D:
+      return self._left().z_label(label)
     return self._right().y_label(label)
 
   def y2_label_fontsize(self, fontsize = None):
+    if self._3D:
+      return self._left().z_label_fontsize(fontsize)
     return self._right().y_label_fontsize(fontsize)
 
   def _next_poly_color(self):
@@ -664,7 +708,10 @@ class PlotFigure(object):
     return self._left().legendNCol(n)
 
   def y2_legend_ncol(self, n = None):
-    return self._right().legendNCol(n)
+    if self._right() is not None:
+      return self._right().legendNCol(n)
+    else:
+      return 0
 
   def add_plot_left(self, x, y, y_label, style = None):
     return self._left().add_plot(x, y, y_label, style)
@@ -716,7 +763,7 @@ class PlotFigure(object):
 
   def _remove_plot(self, SIDE, y_label):
     self.axes[SIDE].remove_plot(y_label)
-    if len(self._left()) == 0 and len(self._right()) == 0:
+    if len(self._left()) == 0 and self._right() and len(self._right()) == 0:
       self.color = 0
 
   def remove_plot_left(self, y_label):
@@ -726,17 +773,21 @@ class PlotFigure(object):
     self._remove_plot(PlotSide.RIGHT, y_label)
 
   def format_coord(self, x, y):
-    display_coord = self.axes[PlotSide.RIGHT].axis().transData.transform((x,y))
-    inv = self.axes[PlotSide.LEFT].axis().transData.inverted()
-    ax_coord = inv.transform(display_coord)
-    if len(self._left()) and len(self._right()):
-      return "x: {:.3f}    y1: {:.3f}    y2: {:.3f}".format(x, ax_coord[1], y)
-    elif len(self._left()):
-      return "x: {:.3f}    y1: {:.3f}".format(x, ax_coord[1])
-    elif len(self._right()):
-      return "x: {:.3f}    y2: {:.3f}".format(x, y)
+    if self._right() is not None:
+      display_coord = self.axes[PlotSide.RIGHT].axis().transData.transform((x,y))
+      inv = self.axes[PlotSide.LEFT].axis().transData.inverted()
+      ax_coord = inv.transform(display_coord)
+      if len(self._left()) and len(self._right()):
+        return "x: {:.3f}    y1: {:.3f}    y2: {:.3f}".format(x, ax_coord[1], y)
+      elif len(self._left()):
+        return "x: {:.3f}    y1: {:.3f}".format(x, ax_coord[1])
+      elif len(self._right()):
+        return "x: {:.3f}    y2: {:.3f}".format(x, y)
+      else:
+        return "x: {:.3f}".format(x)
     else:
-      return "x: {:.3f}".format(x)
+      axis = self.axes[PlotSide.LEFT].axis()
+      return type(axis).format_coord(axis, x, y)
 
   def clear_all(self):
     self.color = 0
@@ -781,10 +832,16 @@ class SimpleAxesDialog(QtWidgets.QDialog):
     self.y1_init = [float(self.y1_min.text()), float(self.y1_max.text())]
     self.layout.addWidget(self.y1_max, 2, 2)
 
-    self.layout.addWidget(QtWidgets.QLabel("Y2"), 3, 0)
+    y2_label = "Y2"
+    if parent._3D:
+      y2_label = "Z"
+    self.layout.addWidget(QtWidgets.QLabel(y2_label), 3, 0)
     y2_limits = parent.y2_limits
     if y2_limits is None:
-      y2_limits = parent._right().axis().get_ylim()
+      if parent._3D:
+        y2_limits = parent._left().axis().get_zlim()
+      else:
+        y2_limits = parent._right().axis().get_ylim()
     self.y2_min = QtWidgets.QLineEdit(str(y2_limits[0]))
     self.y2_min.setValidator(QtGui.QDoubleValidator())
     self.layout.addWidget(self.y2_min, 3, 1)
@@ -830,14 +887,10 @@ class SimpleAxesDialog(QtWidgets.QDialog):
     self.apply()
 
 class PlotCanvasWithToolbar(PlotFigure, QWidget):
-  def __init__(self, parent = None, mode = None):
-    PlotFigure.__init__(self)
+  def __init__(self, parent = None, mode = PlotType.TIME):
+    PlotFigure.__init__(self, mode, True)
     QWidget.__init__(self, parent)
 
-    if mode is None:
-      mode = PlotType.TIME
-
-    self.canvas = FigureCanvas(self.fig)
     self.canvas.mpl_connect('draw_event', self.on_draw)
     self.toolbar = NavigationToolbar(self.canvas, self)
 
@@ -877,6 +930,8 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.y1_limits = None
 
     self.y2_locked = QtWidgets.QPushButton(u"🔒 Y2", self)
+    if self._3D:
+      self.y2_locked.setText(u"🔒 Z")
     self.y2_locked.setCheckable(True)
     layout.addWidget(self.y2_locked)
     self.y2_locked.toggled.connect(self.y2_locked_changed)
@@ -927,7 +982,8 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
 
   def update_x(self):
     self._axes(lambda a: a.update_x(self.data[self.x_data]))
-    self._polygons().update_x(self.data[self.x_data])
+    if self._polygons():
+      self._polygons().update_x(self.data[self.x_data])
     self.restartAnimation()
     self.draw()
 
@@ -948,14 +1004,20 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     i0, iN = self.getFrameRange()
     if i0 == iN:
       return
-    self.x_limits = self._left().getLimits(iN, 0) or self._right().getLimits(iN, 0)
+    if self.x_limits is None:
+      self.x_limits = self._left().getLimits(iN, 0) or self._right().getLimits(iN, 0)
     if self.x_limits is None:
       return
     self.x_locked.setChecked(True)
-    self.y1_limits = self._left().getLimits(iN, 1)
+    if self.y1_limits is None:
+      self.y1_limits = self._left().getLimits(iN, 1)
     if self.y1_limits is not None:
       self.y1_locked.setChecked(True)
-    self.y2_limits = self._right().getLimits(iN, 1)
+    if self.y2_limits is None:
+      if self._3D:
+        self.y2_limits = self._left().getLimits(iN, 2)
+      else:
+        self.y2_limits = self._right().getLimits(iN, 1)
     if self.y2_limits is not None:
       self.y2_locked.setChecked(True)
     return i0, iN
@@ -1002,7 +1064,10 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     if self.y1_limits is not None:
       self.y1_limits = self._left().axis().get_ylim()
     if self.y2_limits is not None:
-      self.y2_limits = self._right().axis().get_ylim()
+      if self._3D:
+        self.y2_limits = self._left().axis().get_zlim()
+      else:
+        self.y2_limits = self._right().axis().get_ylim()
 
   def draw(self):
     PlotFigure.draw(self, self.x_limits, self.y1_limits, self.y2_limits)
@@ -1027,7 +1092,10 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
       self.draw()
 
   def y2_locked_changed(self, status):
-    self.y2_limits = self._y_lock_changed("Y2", self.y2_locked, self._right().axis().get_ylim)
+    if self._3D:
+      self.y2_limits = self._y_lock_changed("Z", self.y2_locked, self._left().axis().get_zlim)
+    else:
+      self.y2_limits = self._y_lock_changed("Y2", self.y2_locked, self._right().axis().get_ylim)
     if self.y2_limits is None:
       self.draw()
 

@@ -545,7 +545,10 @@ class LabelsTitleEditDialog(QtWidgets.QDialog):
     self.y2LabelEdit = QtWidgets.QLineEdit(canvas.y2_label())
     self.y2LabelFontsizeEdit = QtWidgets.QLineEdit(str(canvas.y2_label_fontsize()))
     self.y2LabelFontsizeEdit.setValidator(QtGui.QDoubleValidator(1, 1e6, 1))
-    self.layout.addWidget(QtWidgets.QLabel("Y2 label"), row, 0)
+    if canvas._3D:
+      self.layout.addWidget(QtWidgets.QLabel("Z label"), row, 0)
+    else:
+      self.layout.addWidget(QtWidgets.QLabel("Y2 label"), row, 0)
     self.layout.addWidget(self.y2LabelEdit, row, 1)
     self.layout.addWidget(self.y2LabelFontsizeEdit, row, 2)
     row += 1
@@ -704,7 +707,8 @@ class MCLogUI(QtWidgets.QMainWindow):
         menu.addActions(group.actions())
         self.lineStyleMenu.addMenu(menu)
       makePlotMenu(self, "Left", canvas._left().plots.keys(), canvas.style_left)
-      makePlotMenu(self, "Right", canvas._right().plots.keys(), canvas.style_right)
+      if canvas._right():
+        makePlotMenu(self, "Right", canvas._right().plots.keys(), canvas.style_right)
     self.lineStyleMenu.aboutToShow.connect(lambda: fillLineStyleMenu(self))
     self.styleMenu.addMenu(self.lineStyleMenu)
 
@@ -819,14 +823,25 @@ class MCLogUI(QtWidgets.QMainWindow):
         y2d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 1, tab.specials.values()))
       else:
         y1 = canvas._left().source.values()
-        y2 = canvas._right().source.values()
+        if canvas._right():
+          y2 = canvas._right().source.values()
+        else:
+          y2 = []
         y1d = []
         y2d = []
       style = { y: canvas.style_left(y) for y in canvas._left().plots.keys() }
-      style2 = { y: canvas.style_right(y) for y in canvas._right().plots.keys() }
+      if canvas._right():
+        style2 = { y: canvas.style_right(y) for y in canvas._right().plots.keys() }
+      else:
+        style2 = {}
+      grid = canvas._left().grid
+      if canvas._right():
+        grid2 = canvas._right().grid
+      else:
+        grid2 = grid
       found = False
       extra = { p: getattr(self.getCanvas(), p)() for p in ["tick_fontsize", "legend_fontsize", "labelpad", "top_offset", "bottom_offset", "y1_legend_ncol", "y2_legend_ncol"] }
-      up = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, self.getCanvas()._left().grid, self.getCanvas()._right().grid, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())), extra, type_)
+      up = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, grid, grid2, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())), extra, type_)
       for i in range(len(self.userPlotList)):
         if self.userPlotList[i].title == title:
           self.userPlotList[i] = up

@@ -263,7 +263,7 @@ class XYSelector(QtWidgets.QWidget):
 
 class XYZSelectorDialog(XYSelectorDialog):
   def __init__(self, parent, data):
-    super(XYZSelectorDialog, self).__init__(self, parent, data)
+    super(XYZSelectorDialog, self).__init__(parent, data)
     self.zSelector = QtWidgets.QComboBox(self)
     self.layout.insertRow(2, "Z", self.zSelector)
     for k in self.keys:
@@ -326,8 +326,6 @@ class MCLogTab(QtWidgets.QWidget):
     self._3DCanvas.hide()
     self.XYZSelector1 = XYZSelector(self, self._3DCanvas.add_plot_left_xyz, self._3DCanvas.remove_plot_left, self._3DCanvas.draw)
     self.ui.y1SelectorLayout.addWidget(self.XYZSelector1)
-    self.XYZSelector2 = XYZSelector(self, self._3DCanvas.add_plot_right_xyz, self._3DCanvas.remove_plot_right, self._3DCanvas.draw)
-    self.ui.y2SelectorLayout.addWidget(self.XYZSelector2)
 
     self.activeCanvas = self.ui.canvas
     self.activeSelectors = [self.ui.y1Selector, self.ui.y2Selector]
@@ -347,7 +345,8 @@ class MCLogTab(QtWidgets.QWidget):
     if parent is not None:
       for c in [self.ui.canvas, self.XYCanvas, self._3DCanvas]:
         c._left().grid = parent.gridStyles['left']
-        c._right().grid = parent.gridStyles['right']
+        if c._right() is not None:
+          c._right().grid = parent.gridStyles['right']
 
     self.specials = {}
 
@@ -372,7 +371,7 @@ class MCLogTab(QtWidgets.QWidget):
       self.activeSelectors = [self.XYSelector1, self.XYSelector2]
     else:
       self.activeCanvas = self._3DCanvas
-      self.activeSelectors = [self.XYZSelector1, self.XYZSelector2]
+      self.activeSelectors = [self.XYZSelector1]
     self.activeCanvas.show()
     [ s.show() for s in self.activeSelectors ]
 
@@ -599,8 +598,6 @@ class MCLogTab(QtWidgets.QWidget):
     else:
       for label in y1_label:
         tab.XYZSelector1.addXYZPlotButton(label)
-      for label in y2_label:
-        tab.XYZSelector2.addXYZPlotButton(label)
     MCLogTab.MakeFigure(type_, parent.data, x_data, y1, y2, y1_label, y2_label, tab.activeCanvas)
     tab.activeCanvas.x_data = x_data
     return tab
@@ -634,10 +631,11 @@ class MCLogTab(QtWidgets.QWidget):
       figure._left().grid = LineStyle(**p.grid1)
     else:
       figure._left().grid = p.grid1
-    if not isinstance(p.grid2, LineStyle):
-      figure._right().grid = LineStyle(**p.grid2)
-    else:
-      figure._right().grid = p.grid2
+    if figure._right() is not None:
+      if not isinstance(p.grid2, LineStyle):
+        figure._right().grid = LineStyle(**p.grid2)
+      else:
+        figure._right().grid = p.grid2
     for y,s in p.style.iteritems():
       figure.style_left(y, s)
     for y,s in p.style2.iteritems():
