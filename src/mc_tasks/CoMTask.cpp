@@ -74,15 +74,20 @@ void CoMTask::com(const Eigen::Vector3d & com)
   errorT->com(com);
 }
 
-Eigen::Vector3d CoMTask::com()
+const Eigen::Vector3d & CoMTask::com() const
 {
   return errorT->com();
+}
+
+const Eigen::Vector3d & CoMTask::actual() const
+{
+  return errorT->actual();
 }
 
 void CoMTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
-  logger.addLogEntry(name_ + "_pos", [this]() -> Eigen::Vector3d { return cur_com_ - eval(); });
+  logger.addLogEntry(name_ + "_pos", [this]() -> const Eigen::Vector3d & { return actual(); });
   logger.addLogEntry(name_ + "_target", [this]() -> const Eigen::Vector3d & { return cur_com_; });
 }
 
@@ -97,9 +102,9 @@ void CoMTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTaskGeneric<tasks::qp::CoMTask>::addToGUI(gui);
   gui.addElement({"Tasks", name_},
-                 mc_rtc::gui::Point3D("com_target", [this]() { return this->com(); },
+                 mc_rtc::gui::Point3D("com_target", [this]() -> const Eigen::Vector3d & { return this->com(); },
                                       [this](const Eigen::Vector3d & com) { this->com(com); }),
-                 mc_rtc::gui::Point3D("com", [this]() { return (this->com() - this->eval()).eval(); }));
+                 mc_rtc::gui::Point3D("com", [this]() -> const Eigen::Vector3d & { return this->actual(); }));
 }
 
 } // namespace mc_tasks
