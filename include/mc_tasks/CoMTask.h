@@ -52,7 +52,13 @@ public:
    *
    * \returns The current CoM target
    */
-  Eigen::Vector3d com();
+  const Eigen::Vector3d & com() const;
+
+  /** \brief Actual CoM position (computed at the previous iteration)
+   *
+   * \return Return the current CoM position
+   */
+  const Eigen::Vector3d & actual() const;
 
   /*! \brief Load from configuration */
   void load(mc_solver::QPSolver &, const mc_rtc::Configuration & config) override;
