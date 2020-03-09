@@ -29,6 +29,14 @@ bool is_valid_hash(std::size_t h)
   return is_valid_hash<T>(h) || is_valid_hash<U, Args...>(h);
 }
 
+MC_RTC_UTILS_DLLAPI std::string demangle(const char * name);
+
+template<typename T>
+std::string type_name()
+{
+  return demangle(typeid(T).name());
+}
+
 /** Extract return type and argument types from a lambda by accessing ::operator() */
 template<typename T>
 struct lambda_traits : public lambda_traits<decltype(&T::operator())>
@@ -200,6 +208,7 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     }
     data.buffer.reset(new uint8_t[sizeof(T)]);
     new(data.buffer.get()) T(std::forward<Args>(args)...);
+    data.type = &internal::type_name<T>;
     data.same = &internal::is_valid_hash<T, ArgsT...>;
     data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
     return *(reinterpret_cast<T *>(data.buffer.get()));
@@ -244,6 +253,7 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     }
     data.buffer.reset(new uint8_t[sizeof(T)]);
     new(data.buffer.get()) T{std::forward<Args>(args)...};
+    data.type = &internal::type_name<T>;
     data.same = &internal::is_valid_hash<T, ArgsT...>;
     data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
     return *(reinterpret_cast<T *>(data.buffer.get()));
@@ -271,7 +281,9 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     if(!data.same(typeid(fn_t).hash_code()))
     {
       LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Function for key \"" << name
-                                                  << "\" does not have the same signature as the requested one");
+                                                  << "\" does not have the same signature as the requested one. "
+                                                  << "Stored " << data.type() << " but requested "
+                                                  << internal::type_name<fn_t>());
     }
     auto & fn = *(reinterpret_cast<fn_t *>(data.buffer.get()));
     return fn(std::forward<ArgsT>(args)...);
@@ -321,6 +333,8 @@ private:
 
     /** Hold the data */
     std::unique_ptr<uint8_t[]> buffer;
+    /** Return the stored type name */
+    std::string (*type)();
     /** Check requested type */
     bool (*same)(std::size_t);
     /** Call destructor and delete the buffer */
@@ -341,7 +355,9 @@ private:
     if(!data.same(typeid(T).hash_code()))
     {
       LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Object for key \"" << name
-                                                  << "\" does not have the same type as the stored type");
+                                                  << "\" does not have the same type as the stored type. "
+                                                  << "Stored " << data.type() << " but requested "
+                                                  << internal::type_name<T>());
     }
     return *(reinterpret_cast<T *>(data.buffer.get()));
   }
