@@ -15,6 +15,24 @@
 
 #include <chrono>
 
+namespace mc_rbdyn
+{
+Eigen::Vector3d computeZMP(const sva::ForceVecd & wrench, const sva::PTransformd & zmpFrame)
+{
+  Eigen::Vector3d n = zmpFrame.rotation().row(2);
+  Eigen::Vector3d p = zmpFrame.translation();
+  const Eigen::Vector3d & force = wrench.force();
+  double normalForce = n.dot(force);
+  if(normalForce < 1.)
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "Computed force too small");
+  }
+  const Eigen::Vector3d & moment_0 = wrench.couple();
+  Eigen::Vector3d moment_p = moment_0 - p.cross(force);
+  return p + n.cross(moment_p) / normalForce;
+}
+} // namespace mc_rbdyn
+
 namespace mc_tasks
 {
 namespace lipm_stabilizer
@@ -29,7 +47,6 @@ namespace constants = ::mc_rbdyn::constants;
 // Fixes https://github.com/stephane-caron/lipm_walking_controller/issues/21
 // See also https://stackoverflow.com/q/8016780
 constexpr double StabilizerTask::MAX_AVERAGE_DCM_ERROR;
-constexpr double StabilizerTask::MAX_COM_ADMITTANCE;
 constexpr double StabilizerTask::MAX_COP_ADMITTANCE;
 constexpr double StabilizerTask::MAX_DCM_D_GAIN;
 constexpr double StabilizerTask::MAX_DCM_I_GAIN;
@@ -113,7 +130,8 @@ void StabilizerTask::reset()
   dfzHeightError_ = 0.;
   distribWrench_ = {comTarget_.cross(staticForce), staticForce};
   vdcHeightError_ = 0.;
-  zmpError_ = Eigen::Vector3d::Zero();
+
+  zmpcc_.reset();
 
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
   dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
@@ -261,8 +279,8 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_error_dfz_force", [this]() { return dfzForceError_; });
   logger.addLogEntry(name_ + "_error_dfz_height", [this]() { return dfzHeightError_; });
   logger.addLogEntry(name_ + "_error_vdc", [this]() { return vdcHeightError_; });
-  logger.addLogEntry(name_ + "_error_zmp", [this]() { return zmpError_; });
   logger.addLogEntry(name_ + "_admittance_cop", [this]() { return c_.copAdmittance; });
+  zmpcc_.addToLogger(logger, name_);
   logger.addLogEntry(name_ + "_admittance_dfz", [this]() { return c_.dfzAdmittance; });
   logger.addLogEntry(name_ + "_dcmDerivator_filtered", [this]() { return dcmDerivator_.eval(); });
   logger.addLogEntry(name_ + "_dcmDerivator_timeConstant", [this]() { return dcmDerivator_.timeConstant(); });
@@ -340,8 +358,7 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_error_dfz_force");
   logger.removeLogEntry(name_ + "_error_dfz_height");
   logger.removeLogEntry(name_ + "_error_vdc");
-  logger.removeLogEntry(name_ + "_error_zmp");
-  logger.removeLogEntry(name_ + "_admittance_com");
+  zmpcc_.removeFromLogger(logger, name_);
   logger.removeLogEntry(name_ + "_admittance_cop");
   logger.removeLogEntry(name_ + "_admittance_dfz");
   logger.removeLogEntry(name_ + "_dcmDerivator_filtered");
@@ -436,6 +453,10 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement({"Tasks", name_, "Advanced"}, Button("Disable", [this]() { disable(); }));
   gui.addElement({"Tasks", name_, "Advanced"}, ElementsStacking::Horizontal, Button("Enable", [this]() { enable(); }),
                  Button("Reconfigure", [this]() { reconfigure(); }), Button("Commit", [this]() { commitConfig(); }));
+  gui.addElement({"Tasks", name_, "Advanced"},
+                 Checkbox("Apply CoM admittance only in double support?", [this]() { return zmpccOnlyDS_; },
+                          [this]() { zmpccOnlyDS_ = !zmpccOnlyDS_; }));
+  zmpcc_.addToGUI(gui, {"Tasks", name_, "Advanced"});
   gui.addElement({"Tasks", name_, "Advanced"},
                  ArrayInput("Vertical drift compensation", {"frequency", "stiffness"},
                             [this]() -> Eigen::Vector2d {
@@ -604,6 +625,7 @@ void StabilizerTask::enable()
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
 
   configure(lastConfig_);
+  zmpcc_.enabled(true);
 }
 
 void StabilizerTask::disable()
@@ -619,6 +641,7 @@ void StabilizerTask::disable()
   c_.dfzAdmittance = 0.;
   c_.vdcFrequency = 0.;
   c_.vdcStiffness = 0.;
+  zmpcc_.enabled(false);
 }
 
 void StabilizerTask::reconfigure()
@@ -652,6 +675,8 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
   torsoTask->stiffness(c_.torsoStiffness);
   torsoTask->weight(c_.torsoWeight);
   torsoTask->orientation(mc_rbdyn::rpyToMat({0, c_.torsoPitch, 0}));
+
+  zmpcc_.configure(c_.zmpcc);
 
   if(!c_.comActiveJoints.empty())
   {
@@ -937,6 +962,7 @@ void StabilizerTask::run()
     footTasks[ContactState::Left]->setZeroTargetWrench();
   }
 
+  updateCoMTaskZMPCC();
   updateFootForceDifferenceControl();
 
   comTask->com(comTarget_);
@@ -974,9 +1000,9 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   }
   else
   {
-    zmpError_ = zmpTarget_ - measuredZMP_; // XXX: both in same plane?
-    zmpError_.z() = 0.;
-    dcmDerivator_.update(omega_ * (dcmError_ - zmpError_));
+    Eigen::Vector3d zmpError = zmpTarget_ - measuredZMP_;
+    zmpError.z() = 0.;
+    dcmDerivator_.update(omega_ * (dcmError_ - zmpError));
     dcmIntegrator_.append(dcmError_);
   }
   dcmAverageError_ = dcmIntegrator_.eval();
@@ -1159,6 +1185,23 @@ void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
   footTask->targetCoP(cop);
   footTask->targetForce(w_c.force());
   distribWrench_ = w_0;
+}
+
+void StabilizerTask::updateCoMTaskZMPCC()
+{
+  c_.zmpcc = zmpcc_.config();
+  if(zmpccOnlyDS_ && !inDoubleSupport())
+  {
+    zmpcc_.enabled(false); // Leak to zero
+  }
+  else
+  {
+    auto distribZMP = mc_rbdyn::computeZMP(distribWrench_, zmpFrame_);
+    zmpcc_.configure(c_.zmpcc);
+    zmpcc_.enabled(true);
+    zmpcc_.update(distribZMP, measuredZMP_, zmpFrame_, dt_);
+  }
+  zmpcc_.apply(comTarget_, comdTarget_, comddTarget_);
 }
 
 void StabilizerTask::updateFootForceDifferenceControl()

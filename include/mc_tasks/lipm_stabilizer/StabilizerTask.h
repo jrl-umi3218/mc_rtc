@@ -17,6 +17,7 @@
 
 #include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 #include <mc_tasks/lipm_stabilizer/Contact.h>
+#include <mc_tasks/lipm_stabilizer/ZMPCC.h>
 
 #include <Eigen/QR>
 #include <eigen-quadprog/QuadProg.h>
@@ -44,7 +45,6 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 {
 
   static constexpr double MAX_AVERAGE_DCM_ERROR = 0.05; /**< Maximum average (integral) DCM error in [m] */
-  static constexpr double MAX_COM_ADMITTANCE = 20; /**< Maximum admittance for CoM admittance control */
   static constexpr double MAX_COP_ADMITTANCE = 0.1; /**< Maximum CoP admittance for foot damping control */
   static constexpr double MAX_DCM_D_GAIN = 2.; /**< Maximum DCM derivative gain (no unit) */
   static constexpr double MAX_DCM_I_GAIN = 100.; /**< Maximum DCM average integral gain in [Hz] */
@@ -388,6 +388,18 @@ private:
   /** Reset admittance, damping and stiffness for every foot in contact. */
   void setSupportFootGains();
 
+  /** Update CoM task with ZMP Compensation Control.
+   *
+   * This approach is based on Section 6.2.2 of Dr Nagasaka's PhD thesis
+   * "体幹位置コンプライアンス制御によるモデル誤差吸収" (1999) from
+   * <https://sites.google.com/site/humanoidchannel/home/publication>.
+   * The main differences is that the CoM offset is (1) implemented as CoM
+   * damping control with an internal leaky integrator and (2) computed from
+   * the distributed rather than reference ZMP.
+   *
+   */
+  void updateCoMTaskZMPCC();
+
   /** Apply foot force difference control.
    *
    * This method is described in Section III.E of "Biped walking
@@ -500,7 +512,10 @@ protected:
   Eigen::Vector3d measuredZMP_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero();
   sva::ForceVecd measuredNetWrench_ = sva::ForceVecd::Zero();
-  Eigen::Vector3d zmpError_ = Eigen::Vector3d::Zero();
+
+  bool zmpccOnlyDS_ = true;
+  ZMPCC zmpcc_;
+
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
