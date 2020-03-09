@@ -267,19 +267,49 @@ has been performed. This tool is installed as <code class="highlighter-rouge">mc
 
 <p><em>Note: some menus and operations described in the next sections are only available if you have mc_rtc Python bindings</em></p>
 
-<h3 id="basic-operations">Basic operations</h3>
+<h3 id="plotting-mode">Plotting mode</h3>
 
-<p>The panels on the left and the right of the plot let you select which data to display. You can select a grouped entry (e.g. <code class="highlighter-rouge">LeftFootForceSensor</code>) or a single entry (e.g. <code class="highlighter-rouge">LeftForceSensors -&gt; fz</code>).</p>
+<p>The selector in the bottom left of the interface lets you select between three plotting modes:</p>
 
-<p>The selector under the plot let you select the abscissa for the graph. It defaults to <code class="highlighter-rouge">t</code> (i.e. the controller time). The buttons next to this selector let you lock the X axis, the left side Y axis and the right side Y axis respectively. Otherwise the limits adapt to the selected data. Note that the GUI doesn’t try to align the left and right side Y-axes even when the ranges are similar.</p>
+<h4 id="time-plot">Time plot</h4>
 
-<p>You can open a new graph by clicking the <code class="highlighter-rouge">+</code> button next to the current tab title.</p>
+<p>In this mode you select data that shares the same abscissa (generally time hence the name), the panels on the left and the right of the plot let you select which data to display. You can select a grouped entry (e.g. <code class="highlighter-rouge">LeftFootForceSensor</code>) or a single entry (e.g. <code class="highlighter-rouge">LeftFootForceSensor -&gt; fz</code>).</p>
 
-<h3 id="changing-the-axis-limits">Changing the axis limits</h3>
+<p>Plots can be removed by clicking the same data entry again.</p>
 
-<p>The button above the abscissa selector let you manipulate the graph view.</p>
+<p>In this mode, selecting string entries (typically, the current state output of an FSM) will draw colored background patches according to the current value of said string. Only one string can be visible at a given time.</p>
 
-<p>For more precise manipulations, you can change the range of the X and Y axis by using the <code class="highlighter-rouge">Ctrl+A</code> shortcut to open an axis menu. Setting manual limits will automatically lock the appropriate axis.</p>
+<h4 id="xy-plot">X/Y plot</h4>
+
+<p>In this mode, <code class="highlighter-rouge">Add XY plots</code> buttons on the left and right of the plot will open a menu to let you select two data entries that will be plotted on the X and Y axis respectively. You can select a grouped entry if it has exactly two entries (i.e. selecting <code class="highlighter-rouge">LeftFoot -&gt; CoP</code> is the same as selecting <code class="highlighter-rouge">LeftFoot -&gt; CoP -&gt; x</code> and <code class="highlighter-rouge">LeftFoot -&gt; CoP -&gt; y</code> individually). A label can be set at this point or later in the sytle menu.</p>
+
+<p>Plots can be removed by clicking the <code class="highlighter-rouge">Remove XY plot(s)</code> button on the left or right and selecting the plots to remove.</p>
+
+<h4 id="3d-plot">3D plot</h4>
+
+<p>In this mode, an <code class="highlighter-rouge">Add 3D plot</code> button on the left will open a menu to let you select three data entries that will be plotted on the X, Y and Z axis respectively. You can select a grouped entry if it has exactly three entries (i.e. selecting <code class="highlighter-rouge">CoM</code> is the same as selecting <code class="highlighter-rouge">CoM -&gt; x</code>, <code class="highlighter-rouge">CoM -&gt; y</code> and <code class="highlighter-rouge">CoM -&gt; z</code> individually). A label can be set at this point or later in the style menu.</p>
+
+<p>Plots can be removed by clicking the <code class="highlighter-rouge">Remove 3D plot(s)</code> button and selecting the plots to remove.</p>
+
+<p>You can use the mouse to manipulate the view in 3D mode.</p>
+
+<h3 id="time-range-selector-range-making-and-axis-lock">Time range selector, range making and axis lock</h3>
+
+<p>The selector under the plot lets you select the time range under which you wish to examine the log. In time plot mode, it simply selects the abscissa for the graph. In X/Y plot and 3D plot modes it will act as a filter (i.e. display the selected data when the selected range is active).</p>
+
+<p>The <code class="highlighter-rouge">Make range</code> button lets you select arbitrary data to create time ranges when the data is in the log. For example, if <code class="highlighter-rouge">com_x</code> is present if <code class="highlighter-rouge">5 &lt; t &lt; 10</code> and <code class="highlighter-rouge">15 &lt; t &lt; 20</code> then it will generate <code class="highlighter-rouge">t_com_x_1</code> and <code class="highlighter-rouge">t_com_x_2</code> corresponding to these ranges. For strings (typically <code class="highlighter-rouge">Executor_*</code> from the FSM), the selection can be refined for specific values of the string (so you can typically generate ranges for specific states).</p>
+
+<p>Finally, three buttons beside the <code class="highlighter-rouge">Make range</code> button let you lock the X axis, the left side Y axis and the right side Y axis (or Z axis in 3D mode) respectively. Otherwise, the limits adapt to the selected data. Note that the GUI will not try to align the left and the right side Y axes even when the ranges are similar.</p>
+
+<h3 id="animation">Animation</h3>
+
+<p>The three buttons below the range selector relate to the animation:</p>
+
+<p><code class="highlighter-rouge">Start animation</code> will start an animation based on the current time range selected. By default, the axes limits will adapt during the animation.</p>
+
+<p>If the animation is not running, <code class="highlighter-rouge">Lock axes</code> will lock the axes so that the whole final graph in the animation is visible. Otherwise, it will lock the axes to the current view.</p>
+
+<p><code class="highlighter-rouge">Save animation</code> will export the animation to an mp4 file. Note that no progress bar appears and it could take a while to save the animation.</p>
 
 <h3 id="common-plots-menu">Common plots menu</h3>
 
@@ -297,7 +327,7 @@ has been performed. This tool is installed as <code class="highlighter-rouge">mc
 
 <h3 id="robot-menu">Robot menu</h3>
 
-<p>This menu lets you select with which robot the plot was generated. The main effect is to display user-friendly names in joint-related entries (e.g. instead of <code class="highlighter-rouge">qIn_0</code> you will get <code class="highlighter-rouge">qIn_R_HIP_P</code> with JVRC1 but <code class="highlighter-rouge">qIn_RLEG_JOINT0</code> with HRP2DRC.</p>
+<p>This menu lets you select with which robot the log was generated. The main effect is to display user-friendly names in joint-related entries (e.g. instead of <code class="highlighter-rouge">qIn_0</code> you will get <code class="highlighter-rouge">qIn_R_HIP_P</code> with JVRC1 but <code class="highlighter-rouge">qIn_RLEG_JOINT0</code> with HRP2DRC.</p>
 
 <p>The robot selection is saved upon change and restored when you open the UI again. Unless you work with a lot of robots it is likely you will change it once.</p>
 
@@ -309,19 +339,22 @@ has been performed. This tool is installed as <code class="highlighter-rouge">mc
   <li><code class="highlighter-rouge">Graph</code>: lets you choose the line color and line style for each plot;</li>
   <li><code class="highlighter-rouge">Grid</code>: lets you enable a grid aligned with the left and/or right axis;</li>
   <li><code class="highlighter-rouge">Labels/Title/Fonts</code>: lets you add labels to the axes, a title to the graph and choose the police size for those;</li>
+  <li><code class="highlighter-rouge">Colors selection</code>: lets you choose which colors are picked to display curves, you can either choose an existing color set (which have a limited number of colors available) or build your own selection;</li>
+  <li><code class="highlighter-rouge">Polygons colors selection</code>: lets you choose the colors that are used when displaying string entries in time-plot mode;</li>
 </ul>
 
 <p><em>Note: style options are also saved when you save a user plot</em></p>
 
-<h3 id="other-shortcuts">Other shortcuts</h3>
+<h3 id="shortcuts">Shortcuts</h3>
 
-<p>Additional shortcuts are provided to navigate through tabs:</p>
+<p>The following keyboard shortcuts can be used within the interface:</p>
 
 <ul>
   <li><code class="highlighter-rouge">Ctrl+T</code>: create a new tab</li>
   <li><code class="highlighter-rouge">Ctrl+W</code>: close the current tab</li>
   <li><code class="highlighter-rouge">Ctrl+PageDown</code>: next tab</li>
   <li><code class="highlighter-rouge">Ctrl+PageUp</code>: previous tab</li>
+  <li><code class="highlighter-rouge">Ctrl+A</code>: Axis limits menu</li>
 </ul>
 
 <h3 id="saving-a-figure">Saving a figure</h3>
