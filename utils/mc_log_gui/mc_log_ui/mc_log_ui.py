@@ -226,8 +226,8 @@ class ColorButtonRightClick(QtWidgets.QPushButton):
 
 class ColorsSchemeConfigurationDialog(QtWidgets.QDialog):
   @InitDialogWithOkCancel(Layout = QtWidgets.QFormLayout, apply_ = False)
-  def __init__(self, parent):
-    self.scheme = copy.deepcopy(parent.colorsScheme)
+  def __init__(self, parent, scheme, apply_cb):
+    self.scheme = copy.deepcopy(scheme)
 
     self.setSelector = QtWidgets.QComboBox(self)
     # Qualitative maps, see https://matplotlib.org/3.1.0/gallery/color/colormap_reference.html
@@ -247,6 +247,8 @@ class ColorsSchemeConfigurationDialog(QtWidgets.QDialog):
     self.colorSelection = QtWidgets.QGridLayout()
     self.setupColorSelection()
     self.layout.addRow(self.colorSelection)
+
+    self.apply_cb = apply_cb
 
   def cmChanged(self):
     cm = self.setSelector.currentText()
@@ -311,7 +313,7 @@ class ColorsSchemeConfigurationDialog(QtWidgets.QDialog):
     super(ColorsSchemeConfigurationDialog, self).accept()
     if self.scheme.cm_ == 'custom':
       self.removeColorFromSelector(None)
-    self.parent().setColorsScheme(self.scheme)
+    self.apply_cb(self.scheme)
 
 class MCLogJointDialog(QtWidgets.QDialog):
   @InitDialogWithOkCancel(Layout = QtWidgets.QVBoxLayout, apply_ = False)
@@ -648,6 +650,9 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.colorsFile = os.path.expanduser("~") + "/.config/mc_log_ui/colors.json"
     self.colorsScheme = ColorsSchemeConfiguration(self.colorsFile)
 
+    self.polyColorsFile = os.path.expanduser("~") + "/.config/mc_log_ui/poly_colors.json"
+    self.polyColorsScheme = ColorsSchemeConfiguration(self.polyColorsFile, 'Pastel1')
+
     self.activeRobotAction = None
     self.rm = None
     if mc_rbdyn is not None:
@@ -733,8 +738,13 @@ class MCLogUI(QtWidgets.QMainWindow):
 
     # Color scheme selector
     self.colorSchemeAction = QtWidgets.QAction("Colors selection", self.styleMenu)
-    self.colorSchemeAction.triggered.connect(lambda: ColorsSchemeConfigurationDialog(self).exec_())
+    self.colorSchemeAction.triggered.connect(lambda: ColorsSchemeConfigurationDialog(self, self.colorsScheme, self.setColorsScheme).exec_())
     self.styleMenu.addAction(self.colorSchemeAction)
+
+    # Polygon color scheme selector
+    self.polyColorSchemeAction = QtWidgets.QAction("Polygons colors selection", self.styleMenu)
+    self.polyColorSchemeAction.triggered.connect(lambda: ColorsSchemeConfigurationDialog(self, self.polyColorsScheme, self.setPolyColorsScheme).exec_())
+    self.styleMenu.addAction(self.polyColorSchemeAction)
 
     self.ui.menubar.addMenu(self.styleMenu)
 
@@ -921,6 +931,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       plotW.setGridStyles(self.gridStyles)
       plotW.setRobotModule(self.rm)
       plotW.setColors(self.colorsScheme.colors())
+      plotW.setPolyColors(self.polyColorsScheme.colors())
       j = 1
       for i in range(self.ui.tabWidget.count() -1):
         if self.tab_re.match(self.ui.tabWidget.tabText(i)):
@@ -999,6 +1010,12 @@ class MCLogUI(QtWidgets.QMainWindow):
       self.ui.tabWidget.widget(i).setColors(self.colorsScheme.colors())
     self.colorsScheme.save(self.colorsFile)
 
+  def setPolyColorsScheme(self, scheme):
+    self.polyColorsScheme = scheme
+    for i in range(self.ui.tabWidget.count() - 1):
+      self.ui.tabWidget.widget(i).setPolyColors(self.polyColorsScheme.colors())
+    self.polyColorsScheme.save(self.polyColorsFile)
+
   def update_data(self):
     self.update_menu()
     for i in range(self.ui.tabWidget.count() - 1):
@@ -1008,6 +1025,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       tab.setGridStyles(self.gridStyles)
       tab.setRobotModule(self.rm)
       tab.setColors(self.colorsScheme.colors())
+      tab.setPolyColors(self.polyColorsScheme.colors())
 
   def update_menu(self):
     self.ui.menuCommonPlots.clear()

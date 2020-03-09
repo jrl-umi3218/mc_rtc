@@ -47,8 +47,8 @@ class GraphLabels(object):
     self.y2_label = y2_label
 
 class ColorsSchemeConfiguration(object):
-  def __init__(self, f):
-    cm = 'Set1'
+  def __init__(self, f, default = 'Set1'):
+    cm = default
     ncolors = 12
     data = {}
     if os.path.exists(f):

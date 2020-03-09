@@ -159,6 +159,7 @@ class PlotPolygonAxis(object):
       return False
     self.plots[y_label] = []
     self.data[y_label] = [x, y]
+    self.colors[y_label] = {}
     i = 0
     i0 = 0
     label = y[i0]
@@ -169,15 +170,16 @@ class PlotPolygonAxis(object):
       if len(label) == 0:
         i += 1
         continue
-      if label not in self.colors:
-        self.colors[label] = self.figure._next_poly_color()
+      if label not in self.colors[y_label]:
+        self.colors[y_label][label] = self.figure._next_poly_color()
+      color = self.colors[y_label][label]
       if i + 1 < len(y) and not np.isnan(x[i + 1]):
         xi = x[i + 1]
       else:
         xi = x[i]
         if np.isnan(xi):
           xi = x[i - 1]
-      self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = self.colors[label])))
+      self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = color)))
       i0 = i
       if i < len(y):
         label = y[i0]
@@ -196,12 +198,16 @@ class PlotPolygonAxis(object):
       return
     for plt in self.plots[y]:
       plt.remove()
+    del self.data[y]
     del self.plots[y]
+    del self.colors[y]
     self.figure.draw()
   def update_x(self, x):
-    for y_label in self.data.keys():
+    keys = self.data.keys()
+    for y_label in keys:
+      x, y = self.data[y_label]
       self.remove_plot(y_label)
-      self._plot_string(x, self.data[y_label][1], y_label, None)
+      self._plot_string(x, y, y_label, None)
 
 class PlotYAxis(object):
   def __init__(self, parent, x_axis = None, poly = None, _3D = False):
@@ -614,6 +620,9 @@ class PlotFigure(object):
   def setColors(self, colors):
     self.colors = colors
     self.Ncolor = len(self.colors)
+
+  def setPolyColors(self, colors):
+    self.polyColors = colors
 
   def show(self):
     self.fig.show()

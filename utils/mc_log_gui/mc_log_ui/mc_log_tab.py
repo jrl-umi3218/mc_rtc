@@ -431,11 +431,18 @@ class MCLogTab(QtWidgets.QWidget):
     self.update_y_selectors()
 
   def setGridStyles(self, gridStyles):
-    self.activeCanvas._left().grid = copy.deepcopy(gridStyles['left'])
-    self.activeCanvas._right().grid = copy.deepcopy(gridStyles['right'])
+    for c in [self.ui.canvas, self.XYCanvas, self._3DCanvas]:
+      c._left().grid = copy.deepcopy(gridStyles['left'])
+      if c._right():
+        c._right().grid = copy.deepcopy(gridStyles['right'])
 
   def setColors(self, colors):
-    self.activeCanvas.setColors(colors)
+    for c in [self.ui.canvas, self.XYCanvas, self._3DCanvas]:
+      c.setColors(colors)
+
+  def setPolyColors(self, colors):
+    for c in [self.ui.canvas, self.XYCanvas, self._3DCanvas]:
+      c.setPolyColors(colors)
 
   def setRobotModule(self, rm):
     self.rm = rm
