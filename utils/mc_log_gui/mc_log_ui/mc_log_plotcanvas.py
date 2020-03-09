@@ -219,6 +219,9 @@ class PlotYAxis(object):
         self._axis = parent.fig.add_subplot(111)
       else:
         self._axis = parent.fig.gca(projection='3d')
+        self._axis.set_xlabel('X')
+        self._axis.set_ylabel('Y')
+        self._axis.set_zlabel('Z')
       self._axis.autoscale(enable = True, axis = 'both', tight = False)
       self._x_axis = self._axis
     else:
