@@ -196,6 +196,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       vdc("frequency", vdcFrequency);
       vdc("stiffness", vdcStiffness);
     }
+
+    config("zmpcc", zmpcc);
   }
 
   mc_rtc::Configuration save() const
@@ -208,9 +210,11 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf.add("rightFootSurface", rightFootSurface);
 
     conf.add("admittance");
-    conf("admittance")("cop", copAdmittance);
-    conf("admittance")("dfz", dfzAdmittance);
-    conf("admittance")("dfz_damping", dfzDamping);
+    conf("admittance").add("cop", copAdmittance);
+    conf("admittance").add("dfz", dfzAdmittance);
+    conf("admittance").add("dfz_damping", dfzDamping);
+
+    conf.add("zmpcc", zmpcc);
 
     conf.add("dcm_tracking");
     conf("dcm_tracking").add("gains");
