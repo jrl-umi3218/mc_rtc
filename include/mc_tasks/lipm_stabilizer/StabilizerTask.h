@@ -502,6 +502,7 @@ protected:
   /**< Whether the stabilizer needs to be reconfigured at the next
    * update(solver) call */
   bool reconfigure_ = true;
+  bool enabled_ = true; /** Whether the stabilizer is enabled */
 
   Eigen::QuadProgDense qpSolver_; /**< Least-squares solver for wrench distribution */
   Eigen::Vector3d dcmAverageError_ = Eigen::Vector3d::Zero();
@@ -513,8 +514,8 @@ protected:
   Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero();
   sva::ForceVecd measuredNetWrench_ = sva::ForceVecd::Zero();
 
-  bool zmpccOnlyDS_ = true;
-  ZMPCC zmpcc_;
+  bool zmpccOnlyDS_ = true; /**< Only apply ZMPCC in double support */
+  ZMPCC zmpcc_; /**< Compute CoM offset due to ZMPCC compensation */
 
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;

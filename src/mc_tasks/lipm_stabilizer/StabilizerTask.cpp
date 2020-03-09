@@ -230,6 +230,12 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
 
 void StabilizerTask::update(mc_solver::QPSolver & solver)
 {
+  // Prevent configuration changes while the stabilizer is disabled
+  if(!enabled_)
+  {
+    c_ = lastConfig_;
+    zmpcc_.configure(c_.zmpcc);
+  }
   if(reconfigure_) configure_(solver);
 
   // Update contacts if they have changed
@@ -609,6 +615,7 @@ void StabilizerTask::enable()
 
   configure(lastConfig_);
   zmpcc_.enabled(true);
+  enabled_ = true;
 }
 
 void StabilizerTask::disable()
@@ -625,6 +632,7 @@ void StabilizerTask::disable()
   c_.vdcFrequency = 0.;
   c_.vdcStiffness = 0.;
   zmpcc_.enabled(false);
+  enabled_ = false;
 }
 
 void StabilizerTask::reconfigure()
@@ -1181,7 +1189,7 @@ void StabilizerTask::updateCoMTaskZMPCC()
   {
     auto distribZMP = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
     zmpcc_.configure(c_.zmpcc);
-    zmpcc_.enabled(true);
+    zmpcc_.enabled(enabled_);
     zmpcc_.update(distribZMP, measuredZMP_, zmpFrame_, dt_);
   }
   zmpcc_.apply(comTarget_, comdTarget_, comddTarget_);
