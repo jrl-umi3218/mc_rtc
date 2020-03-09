@@ -116,9 +116,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9c9d83e308955c7de9205e28bc7c0e9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#a9c9d83e308955c7de9205e28bc7c0e9b">com</a> (const Eigen::Vector3d &amp;com)</td></tr>
 <tr class="memdesc:a9c9d83e308955c7de9205e28bc7c0e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the CoM target to a given position.  <a href="#a9c9d83e308955c7de9205e28bc7c0e9b">More...</a><br /></td></tr>
 <tr class="separator:a9c9d83e308955c7de9205e28bc7c0e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a825a00f6cfbe2d75909daf1e14b1833a"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#a825a00f6cfbe2d75909daf1e14b1833a">com</a> ()</td></tr>
-<tr class="memdesc:a825a00f6cfbe2d75909daf1e14b1833a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current CoM target.  <a href="#a825a00f6cfbe2d75909daf1e14b1833a">More...</a><br /></td></tr>
-<tr class="separator:a825a00f6cfbe2d75909daf1e14b1833a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afab16ec288652d1509a90a4df324e3ff"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#afab16ec288652d1509a90a4df324e3ff">com</a> () const</td></tr>
+<tr class="memdesc:afab16ec288652d1509a90a4df324e3ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current CoM target.  <a href="#afab16ec288652d1509a90a4df324e3ff">More...</a><br /></td></tr>
+<tr class="separator:afab16ec288652d1509a90a4df324e3ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc72179651c43a085fe41dd7e420b699"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#abc72179651c43a085fe41dd7e420b699">actual</a> () const</td></tr>
+<tr class="memdesc:abc72179651c43a085fe41dd7e420b699"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual CoM position (computed at the previous iteration)  <a href="#abc72179651c43a085fe41dd7e420b699">More...</a><br /></td></tr>
+<tr class="separator:abc72179651c43a085fe41dd7e420b699"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e128a33ad470c85099edc2f64409a25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#a1e128a33ad470c85099edc2f64409a25">load</a> (<a class="el" href="a02639.html">mc_solver::QPSolver</a> &amp;, const <a class="el" href="a02199.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
 <tr class="memdesc:a1e128a33ad470c85099edc2f64409a25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load from configuration.  <a href="#a1e128a33ad470c85099edc2f64409a25">More...</a><br /></td></tr>
 <tr class="separator:a1e128a33ad470c85099edc2f64409a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -366,6 +369,26 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="abc72179651c43a085fe41dd7e420b699"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc72179651c43a085fe41dd7e420b699">&#9670;&nbsp;</a></span>actual()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const Eigen::Vector3d&amp; mc_tasks::CoMTask::actual </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Actual CoM position (computed at the previous iteration) </p>
+<dl class="section return"><dt>Returns</dt><dd>Return the current CoM position </dd></dl>
+
+</div>
+</div>
 <a id="ad673a413597c928fe6b631c7d778e650"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad673a413597c928fe6b631c7d778e650">&#9670;&nbsp;</a></span>addToGUI()</h2>
 
@@ -456,17 +479,17 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a825a00f6cfbe2d75909daf1e14b1833a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a825a00f6cfbe2d75909daf1e14b1833a">&#9670;&nbsp;</a></span>com() <span class="overload">[2/2]</span></h2>
+<a id="afab16ec288652d1509a90a4df324e3ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afab16ec288652d1509a90a4df324e3ff">&#9670;&nbsp;</a></span>com() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::CoMTask::com </td>
+          <td class="memname">const Eigen::Vector3d&amp; mc_tasks::CoMTask::com </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -610,7 +633,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00679.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a02703.html">CoMTask</a></li>
-    <li class="footer">Generated on Fri Mar 6 2020 06:09:57 for mc_rtc by
+    <li class="footer">Generated on Mon Mar 9 2020 04:25:52 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

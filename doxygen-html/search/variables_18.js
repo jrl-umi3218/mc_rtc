@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['x',['X',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01019.html#a7426487e03bd105101c6f4e266516eb7',1,'rbd::MultiBodyGraph::Arc::X()'],['../a02635.html#aa979cfc7765a146ead01123e495c5975',1,'mc_solver::ZMP::x()']]],
+  ['x',['x',['../a02635.html#aa979cfc7765a146ead01123e495c5975',1,'mc_solver::ZMP::x()'],['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01019.html#a7426487e03bd105101c6f4e266516eb7',1,'rbd::MultiBodyGraph::Arc::X()']]],
   ['x_5f',['X_',['/usr/local/share/doc/eigen-quadprog/doxygen-html/a00563.html#a1e06bde9844925415c948f37f2825608',1,'Eigen::QuadProgCommon']]],
   ['x_5f0_5fs',['X_0_s',['../a02035.html#ae50130e4a7f74e88220617d3080c65ec',1,'mc_rbdyn::Base']]],
   ['x_5f0_5ft_5f',['X_0_t_',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01257.html#a65b337e6e48ec7e93b8137364374752f',1,'tasks::TransformTaskCommon']]],

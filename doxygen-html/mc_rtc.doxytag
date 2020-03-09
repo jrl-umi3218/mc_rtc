@@ -6458,11 +6458,18 @@
       <arglist>(const Eigen::Vector3d &amp;com)</arglist>
     </member>
     <member kind="function">
-      <type>Eigen::Vector3d</type>
+      <type>const Eigen::Vector3d &amp;</type>
       <name>com</name>
       <anchorfile>a02703.html</anchorfile>
-      <anchor>a825a00f6cfbe2d75909daf1e14b1833a</anchor>
-      <arglist>()</arglist>
+      <anchor>afab16ec288652d1509a90a4df324e3ff</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>actual</name>
+      <anchorfile>a02703.html</anchorfile>
+      <anchor>abc72179651c43a085fe41dd7e420b699</anchor>
+      <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>void</type>
