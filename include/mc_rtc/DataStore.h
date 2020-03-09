@@ -8,7 +8,6 @@
 #include <mc_rtc/utils_api.h>
 
 #include <functional>
-#include <iostream>
 #include <memory>
 #include <unordered_map>
 #include <vector>
@@ -29,6 +28,27 @@ bool is_valid_hash(std::size_t h)
 {
   return is_valid_hash<T>(h) || is_valid_hash<U, Args...>(h);
 }
+
+/** Extract return type and argument types from a lambda by accessing ::operator() */
+template<typename T>
+struct lambda_traits : public lambda_traits<decltype(&T::operator())>
+{
+};
+
+/** Specialization that matches non-mutable lambda */
+template<typename C, typename RetT, typename... Args>
+struct lambda_traits<RetT (C::*)(Args...) const>
+{
+  using fn_t = std::function<RetT(Args...)>;
+};
+
+/** Specialization that matches mutable lambda */
+template<typename C, typename RetT, typename... Args>
+struct lambda_traits<RetT (C::*)(Args...)>
+{
+  using fn_t = std::function<RetT(Args...)>;
+};
+
 } // namespace internal
 
 /**
@@ -186,6 +206,24 @@ struct MC_RTC_UTILS_DLLAPI DataStore
   }
 
   /**
+   * @brief Creates an object on the datastore and returns a reference to it
+   *
+   * This overload should only work with lambda-like objects and transform the lambda into an equivalent std::function
+   *
+   * @param name Name of the stored object
+   * @param fn Function that will be stored in the datastore
+   *
+   * @ return A reference to the constructed object
+   *
+   */
+  template<typename T>
+  auto make_call(const std::string & name, T fn) -> typename internal::lambda_traits<T>::fn_t &
+  {
+    using fn_t = typename internal::lambda_traits<T>::fn_t;
+    return make<fn_t>(name, fn_t(fn));
+  }
+
+  /**
    * @brief Creates an object on the datastore using initializer_list
    * initialization and returns a reference to it
    *
@@ -209,6 +247,34 @@ struct MC_RTC_UTILS_DLLAPI DataStore
     data.same = &internal::is_valid_hash<T, ArgsT...>;
     data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
     return *(reinterpret_cast<T *>(data.buffer.get()));
+  }
+
+  /**
+   * @brief Call a function that was registered in the datastore and returns this call result
+   *
+   * This is syntaxic sugar for getting the function object and calling it
+   *
+   * @param name Name of the stored object
+   * @params args Arguments passed to the function
+   *
+   */
+  template<typename RetT = void, typename... ArgsT>
+  RetT call(const std::string & name, ArgsT &&... args) const
+  {
+    using fn_t = std::function<RetT(ArgsT...)>;
+    const auto it = datas_.find(name);
+    if(it == datas_.end())
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\"");
+    }
+    const auto & data = it->second;
+    if(!data.same(typeid(fn_t).hash_code()))
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Function for key \"" << name
+                                                  << "\" does not have the same signature as the requested one");
+    }
+    auto & fn = *(reinterpret_cast<fn_t *>(data.buffer.get()));
+    return fn(std::forward<ArgsT>(args)...);
   }
 
   /**

@@ -172,9 +172,6 @@ BOOST_AUTO_TEST_CASE(Lambda)
   auto val = getter();
   BOOST_REQUIRE(val == 33);
 
-  double val2 = 33;
-  store.get<double>("Value", val2);
-
   store.make<std::function<double(double)>>("lambda_compute", [&a](double t) { return a.compute(t); });
   auto res = store.get<std::function<double(double)>>("lambda_compute")(2);
   BOOST_REQUIRE(res == 66);
@@ -217,6 +214,100 @@ BOOST_AUTO_TEST_CASE(Lambda)
   }
   // Check that lambda was automatically removed from datastore
   BOOST_CHECK(!store.has("compute_footstep"));
+}
+
+BOOST_AUTO_TEST_CASE(LambdaSugar)
+{
+  DataStore store;
+  struct A
+  {
+    double val;
+    double compute(double t)
+    {
+      return val * t;
+    }
+  };
+  A a;
+  a.val = 42;
+  store.make_call("lambda_setter", [&a](double val) { a.val = val; });
+
+  store.call<void, double>("lambda_setter", 42.42);
+  BOOST_REQUIRE(a.val == 42.42);
+
+  auto & setter = store.get<std::function<void(double)>>("lambda_setter");
+  setter(33);
+  BOOST_REQUIRE(a.val == 33);
+
+  store.make_call("lambda_getter", [&a]() { return a.val; });
+  double val = store.call<double>("lambda_getter");
+  BOOST_REQUIRE(val == 33);
+
+  store.make_call("lambda_compute", [&a](double t) { return a.compute(t); });
+  auto res = store.call<double, double>("lambda_compute", 2);
+  BOOST_REQUIRE(res == a.compute(2));
+
+  // Dummy example of a footstepplan decalring a callback mechanism to trigger
+  // recomputation of the footstep plan.
+  struct FootstepPlan
+  {
+    FootstepPlan(DataStore & store) : store_(store)
+    {
+      store.make_call("compute_footstep", [this]() {
+        recompute();
+        return plan_;
+      });
+    }
+
+    ~FootstepPlan()
+    {
+      store_.remove("compute_footstep");
+    }
+
+    // In practice this would do actual computations, just add a dummy number to
+    // the footstep vector for this test
+    void recompute()
+    {
+      plan_.push_back(plan_.back() + 1);
+    }
+
+    std::vector<size_t> plan_{1, 2, 3};
+    DataStore & store_;
+  };
+
+  {
+    FootstepPlan plan(store);
+    for(size_t i = 0; i < 3; ++i)
+    {
+      size_t out = store.call<std::vector<size_t>>("compute_footstep").back();
+      BOOST_REQUIRE(out == 4 + i);
+    }
+  }
+  // Check that lambda was automatically removed from datastore
+  BOOST_CHECK(!store.has("compute_footstep"));
+
+  size_t ii = 0;
+  store.make_call("mutable", [ii]() mutable { return ii++; });
+  for(size_t i = 0; i < 100;)
+  {
+    BOOST_CHECK(ii == 0);
+    BOOST_CHECK(store.call<size_t>("mutable") == i++);
+  }
+
+  store.make_call("append", [](std::string & s) { s.append("#"); });
+  std::string s = "abc";
+  store.call<void, std::string &>("append", s);
+  BOOST_CHECK(s == "abc#");
+
+  store.make_call("conversion", [](const std::string & in, std::string & out, size_t nRepeats) {
+    out = "";
+    for(size_t i = 0; i < nRepeats; ++i)
+    {
+      out.append(in);
+    }
+  });
+  std::string out;
+  store.call<void, const std::string &, std::string &, size_t>("conversion", "abc#", out, 3.0f);
+  BOOST_CHECK(out == "abc#abc#abc#");
 }
 
 BOOST_AUTO_TEST_CASE(TestRemove)
