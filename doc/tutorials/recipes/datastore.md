@@ -100,51 +100,15 @@ A default `DataStore` instance is available in the `mc_control::MCController` cl
   derived.hello(); // "B"
   ```
 
-- **Lambda functions** may also be stored, but their type must be explicitly specified as an `std::function<...>`.
+- **Lambda functions** may also be stored but you must use the special `make_call`
 
-  ```
+  ```cpp
   // Create a lambda function and store it as an std::function
-  datastore().make<std::function<void(double)>("lambda", [](double t) {});
+  datastore().make_call("lambda", [](double t) {});
   // Retrieve the lambda
   auto & lambdaFun = datastore().get<std::function<void(double)>("lambda") {});
   // Call function
   lambdaFun(42);
+  // Call directly through the datastore (the function return type and arguments type must be repeated)
+  datastore().call<void, double>("lambda", 42);
   ```
-
-
-# Main datastore objects
-
-This section provides a list of the main datastore objects used within the framework. In some cases it is required to use datastore objects to ensure proper use of some components. Other components may use datastore objects if they are defined but do not require them, this is for instance the case of the `StabilizerStandingState` to which CoM targets may be provided using the datastore. In the table below, required elements are displayed in *bold*.
-
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Type</th>
-      <th scope="col">Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="table-active">
-      <th scope="row">
-        StabilizerStandingState
-      </th>
-      <td colspan="2">These entries concern the StabilizerStandingState (see the <a href="lipm-stabilizer.html">stabilizer tutorial</a>)</td>
-    </tr>
-
-    <tr>
-      <td>StabilizerStandingState::com</td>
-      <td>Eigen::Vector3d</td>
-      <td>Modify the CoM target used by the stabilizer.</td>
-    </tr>
-    <tr>
-      <td>StabilizerStandingState::stiffness</td>
-      <td>double</td>
-      <td>Modify the CoM tracking stiffness</td>
-    </tr>
-    <tr>
-      <td>StabilizerStandingState::damping</td>
-      <td>double</td>
-      <td>Modify the CoM damping used by the stabilizer. If stiffness is provided but not damping, the default damping of 2*sqrt(stiffness) will be used</td>
-    </tr>
-</table>

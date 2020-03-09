@@ -293,3 +293,59 @@ And run an interface supporting dynamic simulation (such as `mc_vrep` or `choreo
 - `AlternateFeetLiftingManual`: same as above, but transitions are triggered by the user. Useful to tune the stabilizer's behaviour
 - `StepForward`: performs one `20cm` step foward using a quasi-static motion. If using on a real robot, be careful as the swing foot trajectory is merly a spline with no early/late impact handling.
 - `StepBackward`: performs one `10cm` step backward using a quasi-static motion.
+
+## Interacting with the stabilizer from another FSM states
+
+The stabilizer states provides a number of callbacks for other states to configure it through the user of the [datastore](datastore.html). The following table lists the available callbacks.
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>StabilizerStandingState::getCoMTarget</td>
+      <td><pre>const Eigen::Vector3d & ()</pre></td>
+      <td>Returns the CoM target used by the stabilizer</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setCoMTarget</td>
+      <td><pre>void (const Eigen::Vector3d &)</pre></td>
+      <td>Modifies the CoM target used by the stabilizer</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::getStiffness</td>
+      <td><pre>double ()</pre></td>
+      <td>Returns the CoM tracking stiffness</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setStiffness</td>
+      <td><pre>void (double)</pre></td>
+      <td>Modifies the CoM tracking stiffness<br/>Also sets damping to 2*sqrt(stiffness)</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::getDamping</td>
+      <td><pre>double ()</pre></td>
+      <td>Returns the CoM tracking damping</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setDamping</td>
+      <td><pre>void (double)</pre></td>
+      <td>Modifies the CoM tracking damping</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::getConfiguration</td>
+      <td><pre>lipm_stabilizer::StabilizerConfiguration ()</pre></td>
+      <td>Returns the stabilizer configuration</td>
+    </tr>
+    <tr>
+      <td>StabilizerStandingState::setConfiguration</td>
+      <td><pre>void (lipm_stabilizer::StabilizerConfiguration)</pre></td>
+      <td>Sets the stabilizer configuration</td>
+    </tr>
+  </tbody>
+</table>
