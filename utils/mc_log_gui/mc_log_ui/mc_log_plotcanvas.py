@@ -1033,7 +1033,7 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
 
   def startAnimation(self):
     interval = 50 # ms
-    i0, iN = self.lockAxes()
+    i0, iN = self.getFrameRange()
     if i0 == iN:
       return False
     x_data = self.data[self.x_data]
