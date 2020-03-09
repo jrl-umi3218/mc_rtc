@@ -4,9 +4,9 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PySide import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 
-class MCLogTabBar(QtGui.QTabBar):
+class MCLogTabBar(QtWidgets.QTabBar):
   def __init__(self, parent = None):
     super(MCLogTabBar, self).__init__(parent)
   def mouseReleaseEvent(self, event):
@@ -19,7 +19,7 @@ class MCLogTabBar(QtGui.QTabBar):
     super(MCLogTabBar, self).mouseReleaseEvent(event)
   def mouseDoubleClickEvent(self, event):
     if event.button() == QtCore.Qt.LeftButton:
-      name = QtGui.QInputDialog.getText(self,
+      name = QtWidgets.QInputDialog.getText(self,
                                         "New name for current graph",
                                         "New name:",
                                         text = self.tabText(self.currentIndex()))
@@ -27,7 +27,7 @@ class MCLogTabBar(QtGui.QTabBar):
         self.setTabText(self.currentIndex(), name[0])
     super(MCLogTabBar, self).mouseDoubleClickEvent(event)
 
-class MCLogTabWidget(QtGui.QTabWidget):
+class MCLogTabWidget(QtWidgets.QTabWidget):
   def __init__(self, parent = None):
     super(MCLogTabWidget, self).__init__(parent)
     self.setTabBar(MCLogTabBar(self))

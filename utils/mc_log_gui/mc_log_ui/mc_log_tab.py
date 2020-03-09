@@ -4,18 +4,20 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PySide import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 
 import ui
-from mc_log_types import LineStyle
-from mc_log_plotcanvas import PlotFigure
+
+from mc_log_plotcanvas import PlotFigure, PlotCanvasWithToolbar
+from mc_log_types import LineStyle, PlotType
+from mc_log_utils import InitDialogWithOkCancel
 
 from functools import partial
 
 import copy
 import re
 
-class MCLogTreeWidgetItem(QtGui.QTreeWidgetItem):
+class MCLogTreeWidgetItem(QtWidgets.QTreeWidgetItem):
   def __init__(self, parent, displayText, actualText, hasData):
     super(MCLogTreeWidgetItem, self).__init__(parent, [displayText])
     self._displayText = displayText
@@ -82,7 +84,7 @@ class TreeView(object):
   def select(self, name, ySelector, idx, fullName = ""):
     if name == fullName:
       selection = ySelector.selectionModel()
-      selection.select(self.modelIdxs[idx], QtGui.QItemSelectionModel.Select)
+      selection.select(self.modelIdxs[idx], QtCore.QItemSelectionModel.Select)
       ySelector.setSelectionModel(selection)
       parent = self.parent
       while parent is not None and idx < len(parent.widgets):
@@ -181,11 +183,11 @@ class SpecialPlot(object):
   def plot(self):
     self.__plot()
 
-class RemoveSpecialPlotButton(SpecialPlot, QtGui.QPushButton):
+class RemoveSpecialPlotButton(SpecialPlot, QtWidgets.QPushButton):
   def __init__(self, name, logtab, idx, special_id):
     self.logtab = logtab
     SpecialPlot.__init__(self, name, logtab.ui.canvas, idx, special_id)
-    QtGui.QPushButton.__init__(self, u"Remove {} {} plot".format(name, special_id), logtab)
+    QtWidgets.QPushButton.__init__(self, u"Remove {} {} plot".format(name, special_id), logtab)
     self.clicked.connect(self.on_clicked)
     if idx == 0:
       self.layout = logtab.ui.y1SelectorLayout
@@ -206,19 +208,152 @@ class RemoveSpecialPlotButton(SpecialPlot, QtGui.QPushButton):
     del self.logtab.specials["{}_{}".format(self.name, self.id)]
     self.deleteLater()
 
-class MCLogTab(QtGui.QWidget):
+class RemoveXYDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel(Layout = QtWidgets.QVBoxLayout, apply_ = False)
+  def __init__(self, parent, remove_cb, style_cb, get_plots_cb):
+    self.remove = remove_cb
+    self.get_plots = get_plots_cb
+    for itm in self.get_plots().keys():
+      label = style_cb(itm).label
+      btn = QtWidgets.QPushButton("Remove {}".format(label))
+      btn.released.connect(lambda l=label,b=btn: self.removePlot(l, b))
+      self.layout.addWidget(btn)
+  def removePlot(self, label, btn):
+    self.remove(label)
+    btn.deleteLater()
+    if len(self.get_plots()) == 0:
+      self.parent().removeButton.hide()
+
+class XYSelectorDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel(Layout = QtWidgets.QFormLayout, apply_ = False)
+  def __init__(self, parent, data):
+    self.setWindowTitle("Add X/Y data to the plot")
+    self.data = data
+    self.tree_view = TreeView()
+    for k in sorted(data.keys()):
+      if type(data[k][0]) is not unicode:
+        self.tree_view.add(k.split('_'))
+    self.tree_view.simplify()
+    self.treeSelector = QtWidgets.QTreeWidget(self)
+    self.treeSelector.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
+    self.treeSelector.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectItems)
+    self.treeSelector.setColumnCount(1)
+    self.treeSelector.itemClicked.connect(self.itemClicked)
+    self.treeSelector.header().setVisible(False)
+    self.tree_view.update_y_selector(self.treeSelector, self.treeSelector)
+    self.layout.addRow(self.treeSelector)
+
+    self.xLabel = QtWidgets.QLabel(self)
+    self.layout.addRow("X", self.xLabel)
+    self.yLabel = QtWidgets.QLabel(self)
+    self.layout.addRow("Y", self.yLabel)
+    self.labelEdit = QtWidgets.QLineEdit(self)
+    self.layout.addRow("Label", self.labelEdit)
+    self.nextLabel = 0
+    self.labels = [self.xLabel, self.yLabel]
+
+  def itemClicked(self, item, col):
+    if item.isSelected():
+      if not item.hasData:
+        childs = [ k for k in self.data.keys() if k.startswith("{}_".format(item.actualText)) ]
+        childs.sort()
+        if len(childs) == len(self.labels) and all([len(l.text()) == 0 for l in self.labels]):
+          [ l.setText(c) for c,l in zip(childs, self.labels) ]
+          self.nextLabel = len(self.labels)
+        else:
+          item.setSelected(False)
+      else:
+        if self.nextLabel < len(self.labels):
+          self.labels[self.nextLabel].setText(item.actualText)
+          while self.nextLabel < len(self.labels) and len(self.labels[self.nextLabel].text()) != 0:
+            self.nextLabel += 1
+        else:
+          item.setSelected(False)
+    else:
+      if not item.hasData:
+        [ label.setText("") for label in self.labels ]
+        self.nextLabel = 0
+        return
+      for label in self.labels:
+        if label.text() == item.actualText:
+          label.setText("")
+          break
+      for i, label in enumerate(self.labels):
+        if len(label.text()) == 0:
+          self.nextLabel = i
+          return
+
+  def accept(self):
+    super(XYSelectorDialog, self).accept()
+    x = self.xLabel.text()
+    y = self.yLabel.text()
+    label = self.labelEdit.text()
+    if len(x) and len(y):
+      if len(label) == 0:
+        label = "{} / {}".format(x, y)
+      self.parent().addXYPlot(x, y, label)
+
+class XYSelector(QtWidgets.QWidget):
+  def __init__(self, parent, add_plot_cb, remove_plot_cb, style_cb, draw_cb, get_plots_cb):
+    super(XYSelector, self).__init__(parent)
+    self.layout = QtWidgets.QVBoxLayout(self)
+    self.addButton = QtWidgets.QPushButton("Add XY plot")
+    self.layout.addWidget(self.addButton)
+    self.dialog = XYSelectorDialog
+    self.addButton.released.connect(lambda: self.dialog(self, self.parent().data).exec_())
+    self.removeButton = QtWidgets.QPushButton("Remove XY plot(s)")
+    self.removeButton.released.connect(lambda: RemoveXYDialog(self, self.remove_plot, self.style, self.get_plots).exec_())
+    self.removeButton.hide()
+    self.layout.addWidget(self.removeButton)
+    self.add_plot = add_plot_cb
+    self.remove_plot = remove_plot_cb
+    self.style = style_cb
+    self.draw = draw_cb
+    self.get_plots = get_plots_cb
+    self.hide()
+  def addXYPlot(self, x, y, label):
+    self.add_plot(x, y, label)
+    self.draw()
+    self.removeButton.show()
+
+class XYZSelectorDialog(XYSelectorDialog):
+  def __init__(self, parent, data):
+    super(XYZSelectorDialog, self).__init__(parent, data)
+    self.setWindowTitle("Add X/Y/Z data to the plot")
+    self.zLabel = QtWidgets.QLabel(self)
+    self.layout.insertRow(3, "Z", self.zLabel)
+    self.labels.append(self.zLabel)
+  def accept(self):
+    super(XYSelectorDialog, self).accept()
+    x = self.xLabel.text()
+    y = self.yLabel.text()
+    z = self.zLabel.text()
+    label = self.labelEdit.text()
+    if len(x) and len(y) and len(z):
+      if len(label) == 0:
+        label = "{} / {} / {}".format(x, y, z)
+      self.parent().addXYZPlot(x, y, z, label)
+
+class XYZSelector(XYSelector):
+  def __init__(self, parent, add_plot_cb, remove_plot_cb, style_cb, draw_cb, get_plots_cb):
+    super(XYZSelector, self).__init__(parent, add_plot_cb, remove_plot_cb, style_cb, draw_cb, get_plots_cb)
+    self.addButton.setText("Add 3D plot")
+    self.removeButton.setText("Remove 3D plot(s)")
+    self.dialog = XYZSelectorDialog
+  def addXYZPlot(self, x, y, z, label):
+    self.add_plot(x, y, z, label)
+    self.draw()
+    self.removeButton.show()
+
+class MCLogTab(QtWidgets.QWidget):
   canvas_need_update = QtCore.Signal()
-  def __init__(self, parent = None):
+  def __init__(self, parent = None, type_ = PlotType.TIME):
     super(MCLogTab, self).__init__(parent)
     self.ui = ui.MCLogTab()
     self.ui.setupUi(self)
-    self.ui.canvas.setupLockButtons(self.ui.selectorLayout)
-    if parent is not None:
-      self.ui.canvas.grid = parent.gridStyles['left']
-      self.ui.canvas.grid2 = parent.gridStyles['right']
     def setupSelector(ySelector):
       ySelector.setHeaderLabels(["Data"])
-      ySelector.header().setResizeMode(QtGui.QHeaderView.ResizeMode.Fixed)
+      ySelector.header().setSectionResizeMode(QtWidgets.QHeaderView.Fixed)
       ySelector.viewport().installEventFilter(FilterRightClick(ySelector))
     setupSelector(self.ui.y1Selector)
     setupSelector(self.ui.y2Selector)
@@ -227,32 +362,97 @@ class MCLogTab(QtGui.QWidget):
     self.y1Selected = []
     self.y2Selected = []
 
+    self.XYCanvas = PlotCanvasWithToolbar(self, PlotType.XY)
+    self.ui.verticalLayout.insertWidget(0, self.XYCanvas)
+    self.XYCanvas.hide()
+    self.XYSelector1 = XYSelector(self, self.XYCanvas.add_plot_left_xy, self.XYCanvas.remove_plot_left, self.XYCanvas.style_left, self.XYCanvas.draw, lambda: self.XYCanvas._left().plots)
+    self.ui.y1SelectorLayout.addWidget(self.XYSelector1)
+    self.XYSelector2 = XYSelector(self, self.XYCanvas.add_plot_right_xy, self.XYCanvas.remove_plot_right, self.XYCanvas.style_right, self.XYCanvas.draw, lambda: self.XYCanvas._right().plots)
+    self.ui.y2SelectorLayout.addWidget(self.XYSelector2)
+
+    self._3DCanvas = PlotCanvasWithToolbar(self, PlotType._3D)
+    self.ui.verticalLayout.insertWidget(0, self._3DCanvas)
+    self._3DCanvas.hide()
+    self.XYZSelector1 = XYZSelector(self, self._3DCanvas.add_plot_left_xyz, self._3DCanvas.remove_plot_left, self._3DCanvas.style_left, self._3DCanvas.draw, lambda: self._3DCanvas._left().plots)
+    self.ui.y1SelectorLayout.addWidget(self.XYZSelector1)
+
+    self.activeCanvas = self.ui.canvas
+    self.activeSelectors = [self.ui.y1Selector, self.ui.y2Selector]
+
+    self.modeSelector = QtWidgets.QComboBox(self)
+    self.modeSelector.addItem("Time plot")
+    self.modeSelector.addItem("X/Y plot")
+    self.modeSelector.addItem("3D plot")
+    self.ui.y1SelectorLayout.addWidget(self.modeSelector)
+    self.modeSelector.currentTextChanged.connect(self.changeCanvasMode)
+
     self.data = None
     self.rm = None
     self.ui.canvas.x_data = 't'
     self.x_data = 't'
 
+    if parent is not None:
+      for c in [self.ui.canvas, self.XYCanvas, self._3DCanvas]:
+        c._left().grid = parent.gridStyles['left']
+        if c._right() is not None:
+          c._right().grid = parent.gridStyles['right']
+
     self.specials = {}
+
+    self.setPlotType(type_)
+
+  def plotType(self):
+    return PlotType(self.modeSelector.currentIndex())
+
+  def setPlotType(self, type_):
+    self.modeSelector.setCurrentIndex(type_.value)
+    self.changeCanvasMode()
+
+  def changeCanvasMode(self):
+    type_ = self.plotType()
+    self.activeCanvas.hide()
+    [ s.hide() for s in self.activeSelectors ]
+    if type_ is PlotType.TIME:
+      self.activeCanvas = self.ui.canvas
+      self.activeSelectors = [self.ui.y1Selector, self.ui.y2Selector]
+    elif type_ is PlotType.XY:
+      self.activeCanvas = self.XYCanvas
+      self.activeSelectors = [self.XYSelector1, self.XYSelector2]
+    else:
+      self.activeCanvas = self._3DCanvas
+      self.activeSelectors = [self.XYZSelector1]
+    self.activeCanvas.show()
+    [ s.show() for s in self.activeSelectors ]
 
   def setData(self, data):
     self.data = data
-    self.ui.canvas.setData(data)
-    self.update_x_selector()
+    for c in [self.ui.canvas, self.XYCanvas, self._3DCanvas]:
+      c.setData(data)
     self.update_y_selectors()
 
   def setGridStyles(self, gridStyles):
-    self.ui.canvas.grid = copy.deepcopy(gridStyles['left'])
-    self.ui.canvas.grid2 = copy.deepcopy(gridStyles['right'])
+    for c in [self.ui.canvas, self.XYCanvas, self._3DCanvas]:
+      c._left().grid = copy.deepcopy(gridStyles['left'])
+      if c._right():
+        c._right().grid = copy.deepcopy(gridStyles['right'])
+
+  def setColors(self, colors):
+    for c in [self.ui.canvas, self.XYCanvas, self._3DCanvas]:
+      c.setColors(colors)
+
+  def setPolyColors(self, colors):
+    for c in [self.ui.canvas, self.XYCanvas, self._3DCanvas]:
+      c.setPolyColors(colors)
 
   def setRobotModule(self, rm):
     self.rm = rm
     if self.rm is None:
       return
     def setQNames(ySelector):
-      qList = ySelector.findItems("q", QtCore.Qt.MatchFlag.MatchStartsWith)
-      qList += ySelector.findItems("alpha", QtCore.Qt.MatchFlag.MatchStartsWith)
-      qList += ySelector.findItems("error", QtCore.Qt.MatchFlag.MatchStartsWith)
-      qList += ySelector.findItems("tau", QtCore.Qt.MatchFlag.MatchStartsWith)
+      qList = ySelector.findItems("q", QtCore.Qt.MatchStartsWith)
+      qList += ySelector.findItems("alpha", QtCore.Qt.MatchStartsWith)
+      qList += ySelector.findItems("error", QtCore.Qt.MatchStartsWith)
+      qList += ySelector.findItems("tau", QtCore.Qt.MatchStartsWith)
       def update_child_display(items):
         for itm in items:
           cCount = itm.childCount()
@@ -283,23 +483,18 @@ class MCLogTab(QtGui.QWidget):
         self.data["tauOut_limits_upper_{}".format(i)].fill(bounds[5][jn][0])
 
 
-  @QtCore.Slot(str)
-  def on_xSelector_activated(self, k):
+  def on_xSelector_activated(self, canvas, k):
     self.x_data = k
-    self.ui.canvas.clear_all()
-    self.ui.canvas.x_data = k
-    self.y1Selected = []
-    self.itemSelectionChanged(self.ui.y1Selector, self.y1Selected, 0)
-    self.y2Selected = []
-    self.itemSelectionChanged(self.ui.y2Selector, self.y2Selected, 1)
+    canvas.x_data = k
+    canvas.update_x()
     for _,s in self.specials.iteritems():
       s.plot()
 
-  @QtCore.Slot(QtGui.QTreeWidgetItem, int)
+  @QtCore.Slot(QtWidgets.QTreeWidgetItem, int)
   def on_y1Selector_itemClicked(self, item, col):
     self.y1Selected = self.itemSelectionChanged(self.ui.y1Selector, self.y1Selected, 0)
 
-  @QtCore.Slot(QtGui.QTreeWidgetItem, int)
+  @QtCore.Slot(QtWidgets.QTreeWidgetItem, int)
   def on_y2Selector_itemClicked(self, item, col):
     self.y2Selected = self.itemSelectionChanged(self.ui.y2Selector, self.y2Selected, 1)
 
@@ -327,9 +522,11 @@ class MCLogTab(QtGui.QWidget):
       return re.match("{}($|_.*$)".format(s[0]), x) is not None
     selected = sorted(filter(lambda x: any([is_selected(s, x) for s in selected_items]), self.data.keys()))
     def find_item(s):
-      for itm in [it.value() for it in QtGui.QTreeWidgetItemIterator(ySelector)]:
-        if itm.actualText == s:
-          return itm
+      itm = QtWidgets.QTreeWidgetItemIterator(ySelector)
+      while itm:
+        if itm.value().actualText == s:
+          return itm.value()
+        itm += 1
       return None
     legends = [itm.actualText.replace(itm.originalText, itm.displayText) for itm in [ find_item(s) for s in selected ] ]
     for s,l in zip(selected, legends):
@@ -341,14 +538,8 @@ class MCLogTab(QtGui.QWidget):
     self.ui.canvas.draw()
     return selected
 
-  def update_x_selector(self):
-    self.ui.xSelector.clear()
-    self.ui.xSelector.addItems(sorted(self.data.keys()))
-    idx = self.ui.xSelector.findText(self.x_data)
-    if idx != -1:
-      self.ui.xSelector.setCurrentIndex(idx)
-
   def update_y_selectors(self):
+    canvas = self.ui.canvas
     self.ui.y1Selector.clear()
     self.ui.y2Selector.clear()
     self.tree_view = TreeView()
@@ -362,21 +553,27 @@ class MCLogTab(QtGui.QWidget):
       ySelector.setMaximumWidth(cWidth + 75)
     update_y_selector(self.ui.y1Selector)
     update_y_selector(self.ui.y2Selector)
+    y1 = filter(lambda k: k in self.data.keys(), canvas._left().plots.keys())
+    [ self.tree_view.select(y, self.ui.y1Selector, 0) for y in y1 ]
+    y2 = filter(lambda k: k in self.data.keys(), canvas._right().plots.keys())
+    [ self.tree_view.select(y, self.ui.y2Selector, 1) for y in y2 ]
+    poly = filter(lambda k: k in self.data.keys(), canvas._polygons().plots.keys())
+    [ self.tree_view.select(y, self.ui.y1Selector, 0) for y in poly ]
 
   def showCustomMenu(self, ySelector, point, idx):
     item = ySelector.itemAt(point)
     if item is None:
       return
-    menu = QtGui.QMenu(ySelector)
+    menu = QtWidgets.QMenu(ySelector)
     addedAction = False
-    action = QtGui.QAction(u"Plot diff".format(item.actualText), menu)
+    action = QtWidgets.QAction(u"Plot diff".format(item.actualText), menu)
     action.triggered.connect(lambda: RemoveSpecialPlotButton(item.actualText, self, idx, "diff"))
     menu.addAction(action)
     s = re.match('^(.*)_q?[wxyz]$', item.actualText)
     if s is not None:
       for item_label, axis_label in [("RPY angles", "rpy"), ("ROLL angle", "r"), ("PITCH angle", "p"), ("YAW angle", "y")]:
-        action = QtGui.QAction(u"Plot {}".format(item_label, item.actualText), menu)
-        action.triggered.connect(lambda label=axis_label: RemoveSpecialPlotButton(s.group(1), self, idx, label))
+        action = QtWidgets.QAction(u"Plot {}".format(item_label, item.actualText), menu)
+        action.triggered.connect(lambda checked, label=axis_label: RemoveSpecialPlotButton(s.group(1), self, idx, label))
         menu.addAction(action)
     else:
       quat_childs = filter(lambda x: x is not None, [ re.match('{}((_.+)*)_q?w$'.format(item.actualText), x) for x in self.data.keys() ])
@@ -386,51 +583,91 @@ class MCLogTab(QtGui.QWidget):
             action_text = u"Plot {} {}".format(qc.group(1)[1:], item_label)
           else:
             action_text = u"Plot {}".format(item_label)
-          action = QtGui.QAction(action_text, menu)
+          action = QtWidgets.QAction(action_text, menu)
           plot_name = item.actualText + qc.group(1)
-          action.triggered.connect(lambda name=plot_name, label=axis_label: RemoveSpecialPlotButton(name, self, idx, label))
+          action.triggered.connect(lambda checked, name=plot_name, label=axis_label: RemoveSpecialPlotButton(name, self, idx, label))
           menu.addAction(action)
     menu.exec_(ySelector.viewport().mapToGlobal(point))
 
+  def style_left(self, y, styleIn = None):
+    return self.activeCanvas.style_left(y, styleIn)
+
+  def style_right(self, y, styleIn = None):
+    return self.activeCanvas.style_right(y, styleIn)
+
   @staticmethod
-  def MakeFigure(data, x, y1, y2, y1_label = None, y2_label = None, figure = None):
+  def MakeFigure(type_, data, x, y1, y2, y1_label = None, y2_label = None, figure = None):
+    def labels(yN):
+      if type_ is PlotType.TIME:
+        return yN
+      elif type_ is PlotType.XY:
+        return [l for x,y,l in yN]
+      else:
+        return [l for x,y,z,l in yN]
     if y1_label is None:
-      return MCLogTab.MakeFigure(data, x, y1, y2, y1, y2_label, figure)
+      return MCLogTab.MakeFigure(type_, data, x, y1, y2, labels(y1), y2_label, figure)
     if y2_label is None:
-      return MCLogTab.MakeFigure(data, x, y1, y2, y1_label, y2, figure)
+      return MCLogTab.MakeFigure(type_, data, x, y1, y2, y1_label, labels(y2), figure)
     if figure is None:
-      return MCLogTab.MakeFigure(data, x, y1, y2, y1_label, y2_label, PlotFigure())
+      return MCLogTab.MakeFigure(type_, data, x, y1, y2, y1_label, y2_label, PlotFigure())
     figure.setData(data)
-    for y,yl in zip(y1, y1_label):
-      figure.add_plot_left(x, y, yl)
-    for y,yl in zip(y2, y2_label):
-      figure.add_plot_right(x, y, yl)
+    if type_ is PlotType.TIME:
+      for y,yl in zip(y1, y1_label):
+        figure.add_plot_left(x, y, yl)
+      for y,yl in zip(y2, y2_label):
+        figure.add_plot_right(x, y, yl)
+    elif type_ is PlotType.XY:
+      for x,y,label in y1:
+        figure.add_plot_left_xy(x, y, label)
+      for x,y,label in y2:
+        figure.add_plot_right_xy(x, y, label)
+    else:
+      for x,y,z,label in y1:
+        figure.add_plot_left_xyz(x, y, z, label)
+      for x,y,z,label in y2:
+        figure.add_plot_right_xyz(x, y, z, label)
     return figure
 
   @staticmethod
-  def MakePlot(parent, x_data, y1, y2, y1_label = None, y2_label = None):
+  def MakePlot(parent, type_, x_data, y1, y2, y1_label = None, y2_label = None):
+    def labels(yN):
+      if type_ is PlotType.TIME:
+        return yN
+      elif type_ is PlotType.XY:
+        return [l for x,y,l in yN]
+      else:
+        return [l for x,y,z,l in yN]
     if y1_label is None:
-      return MCLogTab.MakePlot(parent, x_data, y1, y2, y1, y2_label)
+      return MCLogTab.MakePlot(parent, type_, x_data, y1, y2, labels(y1), y2_label)
     if y2_label is None:
-      return MCLogTab.MakePlot(parent, x_data, y1, y2, y1_label, y2)
-    tab = MCLogTab(parent)
+      return MCLogTab.MakePlot(parent, type_, x_data, y1, y2, y1_label, labels(y2))
+    tab = MCLogTab(parent, type_)
     tab.x_data = x_data
     tab.setData(parent.data)
     tab.setRobotModule(parent.rm)
-    for y,yl in zip(y1, y1_label):
-      tab.tree_view.select(y, tab.ui.y1Selector, 0)
-    for y,yl in zip(y2, y2_label):
-      tab.tree_view.select(y, tab.ui.y2Selector, 1)
-    tab.y1Selected = y1
-    tab.y2Selected = y2
-    MCLogTab.MakeFigure(parent.data, x_data, y1, y2, y1_label, y2_label, tab.ui.canvas)
-    tab.ui.canvas.x_data = x_data
+    if type_ is PlotType.TIME:
+      for y,yl in zip(y1, y1_label):
+        tab.tree_view.select(y, tab.ui.y1Selector, 0)
+      for y,yl in zip(y2, y2_label):
+        tab.tree_view.select(y, tab.ui.y2Selector, 1)
+      tab.y1Selected = y1
+      tab.y2Selected = y2
+    elif type_ is PlotType.XY:
+      if len(y1_label):
+        tab.XYSelector1.removeButton.show()
+      if len(y2_label):
+        tab.XYSelector2.removeButton.show()
+    else:
+        tab.XYZSelector1.removeButton.show()
+
+    MCLogTab.MakeFigure(type_, parent.data, x_data, y1, y2, y1_label, y2_label, tab.activeCanvas)
+    tab.activeCanvas.x_data = x_data
     return tab
 
   @staticmethod
   def UserFigure(data, p, figure = None, special = None):
     if figure is None:
-      return MCLogTab.UserFigure(data, p, MCLogTab.MakeFigure(data, p.x, p.y1, p.y2), special)
+      return MCLogTab.UserFigure(data, p, MCLogTab.MakeFigure(p.type, data, p.x, p.y1, p.y2), special)
     if special is None:
       return MCLogTab.UserFigure(data, p, figure, lambda y, idx, id_: UserPlot(y, figure, idx, id_))
     def set_label(label_fn, label_size_fn, label):
@@ -453,13 +690,14 @@ class MCLogTab(QtGui.QWidget):
     handle_yd(p.y1d, 0)
     handle_yd(p.y2d, 1)
     if not isinstance(p.grid1, LineStyle):
-      figure.grid = LineStyle(**p.grid1)
+      figure._left().grid = LineStyle(**p.grid1)
     else:
-      figure.grid = p.grid1
-    if not isinstance(p.grid2, LineStyle):
-      figure.grid2 = LineStyle(**p.grid2)
-    else:
-      figure.grid2 = p.grid2
+      figure._left().grid = p.grid1
+    if figure._right() is not None:
+      if not isinstance(p.grid2, LineStyle):
+        figure._right().grid = LineStyle(**p.grid2)
+      else:
+        figure._right().grid = p.grid2
     for y,s in p.style.iteritems():
       figure.style_left(y, s)
     for y,s in p.style2.iteritems():
@@ -470,14 +708,14 @@ class MCLogTab(QtGui.QWidget):
 
   @staticmethod
   def UserPlot(parent, p):
-    tab = MCLogTab.MakePlot(parent, p.x, p.y1, p.y2)
-    MCLogTab.UserFigure(parent.data, p, tab.ui.canvas, lambda y, idx, id_: RemoveSpecialPlotButton(y, tab, idx, id_))
-    tab.ui.canvas.draw()
+    tab = MCLogTab.MakePlot(parent, p.type, p.x, p.y1, p.y2)
+    MCLogTab.UserFigure(parent.data, p, tab.activeCanvas, lambda y, idx, id_: RemoveSpecialPlotButton(y, tab, idx, id_))
+    tab.activeCanvas.draw()
     return tab
 
   @staticmethod
   def ForceSensorPlot(parent, fs):
-    tab = MCLogTab.MakePlot(parent, 't', ['{}ForceSensor_f{}'.format(fs, ax) for ax in ['x', 'y', 'z']], ['{}ForceSensor_c{}'.format(fs, ax) for ax in ['x', 'y', 'z']])
+    tab = MCLogTab.MakePlot(parent, PlotType.TIME, 't', ['{}ForceSensor_f{}'.format(fs, ax) for ax in ['x', 'y', 'z']], ['{}ForceSensor_c{}'.format(fs, ax) for ax in ['x', 'y', 'z']])
     tab.ui.canvas.title('Force sensor: {}'.format(fs))
     tab.ui.canvas.y1_label('Force')
     tab.ui.canvas.y2_label('Moment')
@@ -532,7 +770,7 @@ class MCLogTab(QtGui.QWidget):
       if y2_diff_prefix:
         y_diff_data[1] += [ '{}_{}'.format(y2_diff_prefix, jIndex) ]
         y_diff_data_labels[1] += [ '{}_{}'.format(y2_diff_label, j) ]
-    tab = MCLogTab.MakePlot(parent, 't', y_data[0], y_data[1], y_data_labels[0], y_data_labels[1])
+    tab = MCLogTab.MakePlot(parent, PlotType.TIME, 't', y_data[0], y_data[1], y_data_labels[0], y_data_labels[1])
     for y, y_label in zip(y_diff_data[0], y_diff_data_labels[0]):
       tab.ui.canvas.add_diff_plot_left(tab.x_data, y, y_label)
     for y, y_label in zip(y_diff_data[1], y_diff_data_labels[1]):

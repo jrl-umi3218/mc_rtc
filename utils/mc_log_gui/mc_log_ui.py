@@ -5,14 +5,14 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-from PySide import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 from mc_log_ui import MCLogUI
 
 import signal
 import sys
 
 if __name__ == '__main__':
-  app = QtGui.QApplication(sys.argv)
+  app = QtWidgets.QApplication(sys.argv)
   gui = MCLogUI()
   if len(sys.argv) > 1:
     gui.load_csv(sys.argv[1])

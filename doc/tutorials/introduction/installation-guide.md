@@ -119,7 +119,7 @@ If you wish to get Python bindings you will also need the following:
 
 Additional Python libraries are required to run mc\_rtc tools:
  * [python-git]() (pip name: `GitPython`)
- * [python-pyside]()
+ * [python-pyqt5]()
 
 The following packages are not required but bring additionnal features:
 - [ROS](http://www.ros.org/)
