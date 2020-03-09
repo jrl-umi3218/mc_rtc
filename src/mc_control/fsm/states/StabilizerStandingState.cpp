@@ -122,20 +122,18 @@ void StabilizerStandingState::start(Controller & ctl)
   ctl.logger().addLogEntry(name() + "_targetCoP", [this]() -> const Eigen::Vector3d & { return copTarget_; });
 
   // Provide accessor callbacks on the datastore
-  ctl.datastore().make<std::function<const Eigen::Vector3d &(void)>>(
-      "StabilizerStandingState::getCoMTarget", [this]() -> const Eigen::Vector3d & { return comTarget_; });
-  ctl.datastore().make<std::function<void(const Eigen::Vector3d &)>>(
-      "StabilizerStandingState::setCoMTarget", [this](const Eigen::Vector3d & com) { this->targetCoM(com); });
-  ctl.datastore().make<std::function<void(double)>>("StabilizerStandingState::setStiffness",
-                                                    [this](double K) { this->K_ = K; });
-  ctl.datastore().make<std::function<void(double)>>("StabilizerStandingState::setDamping",
-                                                    [this](double D) { this->D_ = D; });
-  ctl.datastore().make<std::function<double(void)>>("StabilizerStandingState::getStiffness", [this]() { return K_; });
-  ctl.datastore().make<std::function<double(void)>>("StabilizerStandingState::getDamping", [this]() { return D_; });
-  ctl.datastore().make<std::function<mc_rbdyn::lipm_stabilizer::StabilizerConfiguration(void)>>(
+  ctl.datastore().make_call("StabilizerStandingState::getCoMTarget",
+                            [this]() -> const Eigen::Vector3d & { return comTarget_; });
+  ctl.datastore().make_call("StabilizerStandingState::setCoMTarget",
+                            [this](const Eigen::Vector3d & com) { this->targetCoM(com); });
+  ctl.datastore().make_call("StabilizerStandingState::setStiffness", [this](double K) { this->K_ = K; });
+  ctl.datastore().make_call("StabilizerStandingState::setDamping", [this](double D) { this->D_ = D; });
+  ctl.datastore().make_call("StabilizerStandingState::getStiffness", [this]() { return K_; });
+  ctl.datastore().make_call("StabilizerStandingState::getDamping", [this]() { return D_; });
+  ctl.datastore().make_call(
       "StabilizerStandingState::getConfiguration",
       [this]() -> mc_rbdyn::lipm_stabilizer::StabilizerConfiguration { return stabilizerTask_->config(); });
-  ctl.datastore().make<std::function<void(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &)>>(
+  ctl.datastore().make_call(
       "StabilizerStandingState::setConfiguration",
       [this](const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & conf) { stabilizerTask_->configure(conf); });
 }
