@@ -6,6 +6,7 @@
  */
 
 #include <mc_filter/utils/clamp.h>
+#include <mc_rbdyn/ZMP.h>
 #include <mc_rbdyn/constants.h>
 #include <mc_rbdyn/rpy_utils.h>
 #include <mc_rtc/gui.h>
@@ -14,24 +15,6 @@
 #include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
 
 #include <chrono>
-
-namespace mc_rbdyn
-{
-Eigen::Vector3d computeZMP(const sva::ForceVecd & wrench, const sva::PTransformd & zmpFrame)
-{
-  Eigen::Vector3d n = zmpFrame.rotation().row(2);
-  Eigen::Vector3d p = zmpFrame.translation();
-  const Eigen::Vector3d & force = wrench.force();
-  double normalForce = n.dot(force);
-  if(normalForce < 1.)
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Computed force too small");
-  }
-  const Eigen::Vector3d & moment_0 = wrench.couple();
-  Eigen::Vector3d moment_p = moment_0 - p.cross(force);
-  return p + n.cross(moment_p) / normalForce;
-}
-} // namespace mc_rbdyn
 
 namespace mc_tasks
 {
@@ -1196,7 +1179,7 @@ void StabilizerTask::updateCoMTaskZMPCC()
   }
   else
   {
-    auto distribZMP = mc_rbdyn::computeZMP(distribWrench_, zmpFrame_);
+    auto distribZMP = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
     zmpcc_.configure(c_.zmpcc);
     zmpcc_.enabled(true);
     zmpcc_.update(distribZMP, measuredZMP_, zmpFrame_, dt_);

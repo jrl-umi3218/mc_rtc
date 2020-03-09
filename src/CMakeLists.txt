@@ -126,6 +126,7 @@ mc_rbdyn/Collision.cpp
 mc_rbdyn/ForceSensor.cpp
 mc_rbdyn/RobotModule.cpp
 mc_rbdyn/configuration_io.cpp
+mc_rbdyn/ZMP.cpp
 )
 
 set(mc_rbdyn_HDR
@@ -158,6 +159,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/configuration_io.h
 ../include/mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h
 ../include/mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h
+../include/mc_rbdyn/ZMP.h
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
