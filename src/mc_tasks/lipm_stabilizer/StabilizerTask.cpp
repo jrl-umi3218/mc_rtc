@@ -900,8 +900,6 @@ void StabilizerTask::updateZMPFrame()
   {
     zmpFrame_ = contacts_.at(ContactState::Right).surfacePose();
   }
-  measuredNetWrench_ = robots_.robot(robotIndex_).netWrench(sensorNames_);
-  measuredZMP_ = robots_.robot(robotIndex_).zmp(measuredNetWrench_, zmpFrame_, MIN_NET_TOTAL_FORCE_ZMP);
 }
 
 void StabilizerTask::staticTarget(const Eigen::Vector3d & com, double zmpHeight)
@@ -936,6 +934,15 @@ void StabilizerTask::run()
   computeLeftFootRatio();
   setSupportFootGains();
   updateZMPFrame();
+  if(!inTheAir_)
+  {
+    measuredNetWrench_ = robots_.robot(robotIndex_).netWrench(sensorNames_);
+    measuredZMP_ = robots_.robot(robotIndex_).zmp(measuredNetWrench_, zmpFrame_, MIN_NET_TOTAL_FORCE_ZMP);
+  }
+  else
+  {
+    measuredNetWrench_ = sva::ForceVecd::Zero();
+  }
   auto desiredWrench = computeDesiredWrench();
 
   if(inDoubleSupport())
@@ -1181,7 +1188,7 @@ void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
 void StabilizerTask::updateCoMTaskZMPCC()
 {
   c_.zmpcc = zmpcc_.config();
-  if(zmpccOnlyDS_ && !inDoubleSupport())
+  if(inTheAir_ || (zmpccOnlyDS_ && !inDoubleSupport()))
   {
     zmpcc_.enabled(false); // Leak to zero
   }

@@ -362,9 +362,7 @@ private:
    */
   void updateContacts(mc_solver::QPSolver & solver);
 
-  /** Compute desired wrench based on DCM error.
-   *
-   */
+  /** Compute desired wrench based on DCM error. */
   sva::ForceVecd computeDesiredWrench();
 
   /** Distribute a desired wrench in double support.
