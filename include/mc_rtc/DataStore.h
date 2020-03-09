@@ -95,7 +95,7 @@ struct lambda_traits<RetT (C::*)(Args...)>
  * auto & derived = store.get<B>("data");
  * \endcode
  */
-struct MC_RTC_UTILS_DLLAPI DataStore
+struct DataStore
 {
   DataStore() = default;
   DataStore(const DataStore &) = delete;
@@ -326,8 +326,8 @@ private:
   struct Data
   {
     Data() = default;
-    Data(const Data &) = default;
-    Data & operator=(const Data &) = default;
+    Data(const Data &) = delete;
+    Data & operator=(const Data &) = delete;
     Data(Data &&) = default;
     Data & operator=(Data &&) = default;
 
