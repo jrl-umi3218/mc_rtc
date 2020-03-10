@@ -1,5 +1,13 @@
 #include <mc_rtc/DataStore.h>
 
+#ifdef __GNUG__
+
+#  include <cstdlib>
+#  include <cxxabi.h>
+#  include <memory>
+
+#endif
+
 namespace mc_rtc
 {
 
@@ -7,10 +15,6 @@ namespace internal
 {
 
 #ifdef __GNUG__
-
-#  include <cstdlib>
-#  include <cxxabi.h>
-#  include <memory>
 
 std::string demangle(const char * name)
 {
