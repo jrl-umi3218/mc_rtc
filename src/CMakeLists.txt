@@ -78,6 +78,7 @@ install_mc_rtc_lib(mc_rtc_loader)
 
 set(mc_rtc_utils_SRC
   mc_rtc/Configuration.cpp
+  mc_rtc/DataStore.cpp
   mc_rtc/FlatLog.cpp
   mc_rtc/iterate_binary_log.cpp
   mc_rtc/Logger.cpp
@@ -95,6 +96,7 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/log/Logger.h
   ../include/mc_rtc/utils.h
   ../include/mc_rtc/utils_api.h
+  ../include/mc_rtc/DataStore.h
 )
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})

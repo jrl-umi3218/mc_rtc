@@ -5,6 +5,7 @@
 #pragma once
 
 #include <iostream>
+#include <sstream>
 
 #ifndef WIN32
 
