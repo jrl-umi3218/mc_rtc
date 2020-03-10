@@ -7,9 +7,9 @@ var searchData=
   ['bodysensor',['BodySensor',['../a02045.html',1,'mc_rbdyn']]],
   ['bodysensorobserver',['BodySensorObserver',['../a02013.html',1,'mc_observers']]],
   ['bound',['Bound',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01093.html',1,'tasks::qp']]],
-  ['boundedspeedconstr',['BoundedSpeedConstr',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00965.html',1,'tasks::qp::BoundedSpeedConstr'],['../a02549.html',1,'mc_solver::BoundedSpeedConstr']]],
+  ['boundedspeedconstr',['BoundedSpeedConstr',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00965.html',1,'tasks::qp::BoundedSpeedConstr'],['../a02557.html',1,'mc_solver::BoundedSpeedConstr']]],
   ['box',['Box',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00653.html',1,'mc_rbdyn_urdf::Geometry']]],
-  ['bspline',['BSpline',['../a02829.html',1,'mc_trajectory']]],
-  ['bsplinetrajectorytask',['BSplineTrajectoryTask',['../a02725.html',1,'mc_tasks']]],
-  ['buttonimpl',['ButtonImpl',['../a02261.html',1,'mc_rtc::gui']]]
+  ['bspline',['BSpline',['../a02837.html',1,'mc_trajectory']]],
+  ['bsplinetrajectorytask',['BSplineTrajectoryTask',['../a02733.html',1,'mc_tasks']]],
+  ['buttonimpl',['ButtonImpl',['../a02269.html',1,'mc_rtc::gui']]]
 ];

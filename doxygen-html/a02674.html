@@ -70,22 +70,64 @@ $(document).ready(function(){initNavTree('a02677.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix Member List</div>  </div>
+<div class="title">mc_solver::QPSolver Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02677.html">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a02677.html">mc_solver::QPSolver</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a023d5ba6b69792d96db4ca6e8fd20e2c">ContactWrenchMatrixToLambdaMatrix</a>(const mc_solver::QPSolver &amp;solver, const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02677.html#a3024b20e8f098756d24cd2082469c055">transform</a>(const Eigen::MatrixXd &amp;A) const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02677.html#ae56a8607e4c339c9a345155ec613032d">transform</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a8508225c35f55cef193bf45adb17ebce">addConstraint</a>(tasks::qp::ConstraintFunction&lt; Fun... &gt; *constraint)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a37580a89d1a0d1a862dfb6b7240e6dd0">addConstraintSet</a>(ConstraintSet &amp;cs)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a8b2f689232445049015987d2ff4d78ce">addTask</a>(tasks::qp::Task *task)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a68cf69e4985228c83affeb35320c4c25">addTask</a>(mc_tasks::MetaTask *task)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a8526c038006669a9f433c94445c69338">addTask</a>(std::shared_ptr&lt; T &gt; task)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a9d3c5b0a375a038d88ebc4c0acb35afc">contactById</a>(const tasks::qp::ContactId &amp;id) const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a14141ec983c638fb3400c1ea23c19aed">contacts</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a74f4a76c8edd444c9c903392c196be8a">data</a>()</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a12c9bbc1231db2f16cfeced583d1c213">desiredContactForce</a>(const mc_rbdyn::Contact &amp;id) const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#aaf2cd366ed6fa6e21e9cc6833e94cd70">dt</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#af48a56a36d044fa4077f1c9e0ad69936">env</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#ae35ec2765a45413bcfebae5e57bcea5f">env</a>()</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a26f03d18cabc6bc384e4ca7a8e172637">fillTorque</a>(const mc_solver::DynamicsConstraint &amp;dynamicsConstraint)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#ac015f44b8b157dafe8303dd295e10e8d">gui</a>(std::shared_ptr&lt; mc_rtc::gui::StateBuilder &gt; gui)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#aaff0d1437fd451774eb7a306b2c5d464">gui</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#aba37f50ba476a2701c05b8aa737d9362">lambdaVec</a>(int cIndex) const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a6d2e5c1529e97fa15bff07a9092b1339">logger</a>(std::shared_ptr&lt; mc_rtc::Logger &gt; logger)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#ae805619eed38900664c15a1f3be7921f">logger</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a6f0c3211feb7722f0316b8808b61f6d1">QPSolver</a>(std::shared_ptr&lt; mc_rbdyn::Robots &gt; robots, double timeStep)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#adb5af970ec8d5b46ddcf8af19bd205be">QPSolver</a>(double timeStep)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a4f91d1d6ce556366149d3d947182e5f3">QPSolver</a>()</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a1d6aeb840e2e8f9abc904c1a19e75408">realRobots</a>(std::shared_ptr&lt; mc_rbdyn::Robots &gt; realRobots)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a6c9e02613427dd8ab79f833d4244186d">realRobots</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#acac203b080dfbd7dbc680e4d9e8aaa3c">realRobots</a>()</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a91e043a96e0de999c337b15ea8f8a62f">removeConstraint</a>(tasks::qp::ConstraintFunction&lt; Fun... &gt; *constraint)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a2d48a1aa9f88ea1c6873000df4299a1d">removeConstraintSet</a>(ConstraintSet &amp;cs)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a59755b6d2a453830d66a662767ff3923">removeTask</a>(tasks::qp::Task *task)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a28e05133ff619c24f30a376e951fde51">removeTask</a>(mc_tasks::MetaTask *task)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#ab9c66bd9fbc6687dccd60727db474c53">removeTask</a>(std::shared_ptr&lt; T &gt; task)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a14b25f17d47d3f23079d557fd8d2fc6a">result</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a07536ec6c134bd3f335a382a0a87d55e">robot</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a9de399f8ca81b31588579ac59deb8d44">robot</a>()</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a50b2ba3514b0bd8fa4e4775f6a74fc73">robot</a>(unsigned int idx)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a71a644e823553814792909b06f00f6c6">robot</a>(unsigned int idx) const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#aad5585a2e93a0dcac5f96b1ecf8cddf0">robots</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#afadc51df1ed896ae8e1546bfb7443ffb">robots</a>()</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#ab8f45ed05cf2852c592659d496b2acbb">run</a>(FeedbackType fType=FeedbackType::None)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a174d43a36fd4106dd1267564946327a5">runClosedLoop</a>(std::shared_ptr&lt; mc_rbdyn::Robots &gt; robot_est)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a0b4e9a6b5015c188b1c3825f4e266bd0">send</a>(double curTime=0)</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#ae628e7f079f7ec8dd5ba2818ffe27adc">setContacts</a>(const std::vector&lt; mc_rbdyn::Contact &gt; &amp;contacts={})</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#a53c4d41439ee0e428928a7318fde3f07">solveAndBuildTime</a>()</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#a58d895e4be36ff13a42b481f28576e38">solveTime</a>()</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#ae04be5acbc6d5470efc60889e4024290">tasks</a>() const</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02677.html#aff107d95b504492274cf0499aa4ddfa0">updateConstrSize</a>()</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02677.html#acd57fb80048c2f364bc216334ed148a8">updateNrVars</a>()</td><td class="entry"><a class="el" href="a02677.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Mar 10 2020 09:44:20 for mc_rtc by
+    <li class="footer">Generated on Tue Mar 10 2020 11:53:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

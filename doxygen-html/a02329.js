@@ -1,8 +1,9 @@
 var a02329 =
 [
-    [ "FormDataInput", "a02329.html#a45792576086cfc726477211c689f91fe", null ],
-    [ "FormDataInput", "a02329.html#a21fef6dc43743e2ee23e4f7f9c17748c", null ],
-    [ "FormDataInput", "a02329.html#ae4775746b3e202b49af5f020f1a82fc6", null ],
-    [ "write_", "a02329.html#a7099d1ab42cc99fe4f460b48d4750688", null ],
-    [ "write_size_", "a02329.html#a42ef72cfde36a03cbd221f6372b6dfe9", null ]
+    [ "FormImpl", "a02329.html#a0a9bdbcc3e4a6c161caf9f0dbf347c32", null ],
+    [ "FormImpl", "a02329.html#af03aec651081a3257a860feb38246c1d", null ],
+    [ "addElement", "a02329.html#ab9e4a119c65afeb42213d0e4a6fd7019", null ],
+    [ "write", "a02329.html#a45371b1cc879901474c65fdee5f56808", null ],
+    [ "write_size", "a02329.html#acf9c033b7b7440e437a3327795424f02", null ],
+    [ "type", "a02329.html#a49d4514deb2452ef6908eda1daacf629", null ]
 ];

@@ -11,7 +11,7 @@ var searchData=
   ['joint',['joint',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01019.html#a94a56746ed672ba266fbfc69c54fd35e',1,'rbd::MultiBodyGraph::Arc::joint()'],['../a02117.html#a4d23695d0cbacd0471313e1323d9e4b1',1,'mc_rbdyn::Mimic::joint()']]],
   ['jointconfig',['jointConfig',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html#a3e4c0a9cab659e103634c1f07615cfe9',1,'rbd::MultiBodyConfig']]],
   ['jointindex_5f',['jointIndex_',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01065.html#a1cb6d383d1f32142b8215f626496fe63',1,'tasks::qp::MotionPolyConstr']]],
-  ['jointlimitsconstr',['jointLimitsConstr',['../a02649.html#ab113d21083add766566decba27631820',1,'mc_solver::KinematicsConstraint']]],
+  ['jointlimitsconstr',['jointLimitsConstr',['../a02657.html#ab113d21083add766566decba27631820',1,'mc_solver::KinematicsConstraint']]],
   ['jointname',['jointName',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01161.html#a08d3a7fa0479efaaa54f8e49301e280f',1,'tasks::qp::JointGains::jointName()'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01157.html#ad4bedc4f72672de6e850add50e757853',1,'tasks::qp::JointStiffness::jointName()'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01053.html#a029b134a876b568f05bc4ad280a48a69',1,'tasks::qp::SpringJoint::jointName()'],['../a02089.html#aae8d1a8eaa685b5efc3eb22b95fbb892',1,'mc_rbdyn::Flexibility::jointName()']]],
   ['jointnametoind_5f',['jointNameToInd_',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html#acec6b8cf62e7eccb89057ce2172ca5f7',1,'rbd::MultiBody']]],
   ['jointnametojoint_5f',['jointNameToJoint_',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01015.html#abf0d910d1082456320792a7008b368a2',1,'rbd::MultiBodyGraph']]],

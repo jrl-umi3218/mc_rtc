@@ -1,10 +1,5 @@
 var a02493 =
 [
-    [ "callback_t", "a02493.html#ae88a2f28e5fa458257316949fd08a539", null ],
-    [ "handle_map_t", "a02493.html#a9c2401890571dbbde00eda2fb1e87710", null ],
-    [ "close", "a02493.html#a63ca4850e72fbb0ea10d1362c5402a51", null ],
-    [ "init", "a02493.html#a2d478e04efaa0d71d340ed45577b478a", null ],
-    [ "load_libraries", "a02493.html#a9611f8c05257ffd4651e68ea2f4f7e68", null ],
-    [ "ObjectLoader", "a02493.html#a0b9f840f1f1352debe8e77115e2454b1", null ],
-    [ "default_cb", "a02493.html#a2569410b656743e1d955a9aafc7ee793", null ]
+    [ "LoaderException", "a02493.html#a52e22f0a82bd6634d02ca30961643c25", null ],
+    [ "what", "a02493.html#a2db77040caace4fc6f15e231a328a608", null ]
 ];

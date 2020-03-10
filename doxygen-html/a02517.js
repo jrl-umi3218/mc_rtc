@@ -1,17 +1,12 @@
 var a02517 =
 [
-    [ "serialize_fn", "a02517.html#a6fd0d1237a81647e462f7af2b4225d5e", null ],
-    [ "Policy", "a02517.html#a0fefb36635930cf5a9db966442756b9b", [
-      [ "NON_THREADED", "a02517.html#a0fefb36635930cf5a9db966442756b9ba1515271d5edd3952e5aa146109a98e78", null ],
-      [ "THREADED", "a02517.html#a0fefb36635930cf5a9db966442756b9ba1ba1ba2bd2141794d82c4363b7e533f7", null ]
-    ] ],
-    [ "Logger", "a02517.html#a18ce85d2d7612f7029b47a3931c72316", null ],
-    [ "~Logger", "a02517.html#a7692f0ca12a02805cba83a9422de5a4e", null ],
-    [ "addLogEntry", "a02517.html#a1fe9ebf879c471ae7741170c9e0d6933", null ],
-    [ "log", "a02517.html#aec88caf27ebb9c9615ed4fd51d9ccd98", null ],
-    [ "removeLogEntry", "a02517.html#a2b1427e1251ebbd90947468fc4bdf964", null ],
-    [ "setup", "a02517.html#a986b2719c1337aa9d1e84e2b0b34481c", null ],
-    [ "start", "a02517.html#a7a6f0685999b14f4bf67cd30dce03413", null ],
-    [ "t", "a02517.html#aeb0d9597ada6a67eb2a89fcda8c74e7d", null ],
-    [ "magic", "a02517.html#ae70a958cf17138f9b726740deab0d34c", null ]
+    [ "unique_void_ptr", "a02517.html#a4e556fb8cf1154c39f535f18bbbbf2a0", null ],
+    [ "record", "a02517.html#a1189082dce7ec759c42e551534f5b158", null ],
+    [ "record", "a02517.html#a687a3142850022473bc2724a024a2597", null ],
+    [ "record", "a02517.html#ad2377ca354cb3b3d61500c1eee451d69", null ],
+    [ "record", "a02517.html#afb9458b8f743e9f2e8ce8ee0911e38c8", null ],
+    [ "operator=", "a02517.html#a447e5c16c3e286bb51a0a90b0f4ef182", null ],
+    [ "operator=", "a02517.html#af03a9665af14ae1a3a0545ea86d94804", null ],
+    [ "data", "a02517.html#a74d58f27e34799a1650342340dc35d0a", null ],
+    [ "type", "a02517.html#a0796a1bb292299608b539563b87a8610", null ]
 ];

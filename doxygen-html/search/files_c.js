@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['api_2eh',['api.h',['../a03793.html',1,'(Global Namespace)'],['../a03796.html',1,'(Global Namespace)'],['../a03799.html',1,'(Global Namespace)'],['../a03802.html',1,'(Global Namespace)'],['../a03805.html',1,'(Global Namespace)'],['../a03808.html',1,'(Global Namespace)'],['../a03811.html',1,'(Global Namespace)'],['../a03814.html',1,'(Global Namespace)'],['../a03817.html',1,'(Global Namespace)'],['../a03820.html',1,'(Global Namespace)'],['../a03823.html',1,'(Global Namespace)']]],
-  ['configuration_2eh',['Configuration.h',['../a03826.html',1,'(Global Namespace)'],['../a03829.html',1,'(Global Namespace)']]],
-  ['contact_2eh',['Contact.h',['../a03832.html',1,'(Global Namespace)'],['../a03835.html',1,'(Global Namespace)'],['../a03838.html',1,'(Global Namespace)']]],
+  ['api_2eh',['api.h',['../a03805.html',1,'(Global Namespace)'],['../a03808.html',1,'(Global Namespace)'],['../a03811.html',1,'(Global Namespace)'],['../a03814.html',1,'(Global Namespace)'],['../a03817.html',1,'(Global Namespace)'],['../a03820.html',1,'(Global Namespace)'],['../a03823.html',1,'(Global Namespace)'],['../a03826.html',1,'(Global Namespace)'],['../a03829.html',1,'(Global Namespace)'],['../a03832.html',1,'(Global Namespace)'],['../a03835.html',1,'(Global Namespace)']]],
+  ['configuration_2eh',['Configuration.h',['../a03838.html',1,'(Global Namespace)'],['../a03841.html',1,'(Global Namespace)']]],
+  ['contact_2eh',['Contact.h',['../a03844.html',1,'(Global Namespace)'],['../a03847.html',1,'(Global Namespace)'],['../a03850.html',1,'(Global Namespace)']]],
   ['mathfunc_2eh',['MathFunc.h',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00044.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00044.html',1,'(Global Namespace)']]],
   ['mc_5fcontroller_2eh',['mc_controller.h',['../a00080.html',1,'']]],
   ['mc_5fglobal_5fcontroller_2eh',['mc_global_controller.h',['../a00083.html',1,'']]],
@@ -19,5 +19,5 @@ var searchData=
   ['multibody_2eh',['MultiBody.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00365.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00365.html',1,'(Global Namespace)']]],
   ['multibodyconfig_2eh',['MultiBodyConfig.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00368.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00368.html',1,'(Global Namespace)']]],
   ['multibodygraph_2eh',['MultiBodyGraph.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00371.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00371.html',1,'(Global Namespace)']]],
-  ['robot_2eh',['Robot.h',['../a03844.html',1,'(Global Namespace)'],['../a03847.html',1,'(Global Namespace)']]]
+  ['robot_2eh',['Robot.h',['../a03856.html',1,'(Global Namespace)'],['../a03859.html',1,'(Global Namespace)']]]
 ];

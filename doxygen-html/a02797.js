@@ -1,17 +1,13 @@
 var a02797 =
 [
-    [ "PositionTask", "a02797.html#af67679b5190933536dbc6f20adc44aac", null ],
-    [ "PositionTask", "a02797.html#ac499556b7d530acd382b95bc949036cb", null ],
-    [ "~PositionTask", "a02797.html#a8b27ece320044774405b64dcfd78147c", null ],
-    [ "addToGUI", "a02797.html#a4424ab1a1faf897723d2f3bdbacc3f97", null ],
-    [ "addToLogger", "a02797.html#a14d145d4f022d810aadcc42f18083c6b", null ],
-    [ "bodyPoint", "a02797.html#a5400521cf1e500a9df8895a1ffd13240", null ],
-    [ "bodyPoint", "a02797.html#a4bf8127c35886227640928b1a35d2d93", null ],
-    [ "position", "a02797.html#a627a0324b89372679d66aee384cf8626", null ],
-    [ "position", "a02797.html#a0e4c276d1d0f1903e4bec9bd8f8dfb27", null ],
-    [ "removeFromLogger", "a02797.html#a135de9a59363e65792510f7606db5132", null ],
-    [ "reset", "a02797.html#af32bca3285f7bc4cd41ea8a0bd357d43", null ],
+    [ "OrientationTask", "a02797.html#aed570ad6882e85529777864cc33d58ed", null ],
+    [ "addToGUI", "a02797.html#ac5953577c61c0b6943106f08851f562c", null ],
+    [ "addToLogger", "a02797.html#ae0f93ea2baa6813562b79f74658bf561", null ],
+    [ "orientation", "a02797.html#a8b10f7f275eec4a245cf826c90f9aca7", null ],
+    [ "orientation", "a02797.html#ada80fbd5aaf53369618630495e92a175", null ],
+    [ "removeFromLogger", "a02797.html#a05e73e60e317fb0d0e0fa7a9149b5be1", null ],
+    [ "reset", "a02797.html#a3230ff70e491adbeea990dc62bf0d069", null ],
     [ "EndEffectorTask", "a02797.html#ab333c1b08462c2014c404b1b2b886246", null ],
-    [ "bIndex", "a02797.html#a922a7fc03cfcae2c0cdb403952a49c5c", null ],
-    [ "bodyName", "a02797.html#ab5a74d25feb1e33ed9895903b23886fc", null ]
+    [ "bIndex", "a02797.html#abfd25888b1dc814b280d5443506fe258", null ],
+    [ "bodyName", "a02797.html#a97da00bdf087f04a99473553efaa6390", null ]
 ];

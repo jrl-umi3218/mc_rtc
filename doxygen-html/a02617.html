@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils::GenInequalityConstraint&lt; UpdateT &gt; Class Template Reference</title>
+<title>mc_solver::GenericLoader&lt; Derived, T &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,198 +70,146 @@ $(document).ready(function(){initNavTree('a02617.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="a02614.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils::GenInequalityConstraint&lt; UpdateT &gt; Class Template Reference</div>  </div>
+<div class="title">mc_solver::GenericLoader&lt; Derived, T &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Helper class to write a general inequality constraint for Tasks.  
+<p>Retrieve an object using a JSON configuration object and a solver instance.  
  <a href="a02617.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_solver/GenInequalityConstraint.h&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mc_solver::utils::GenInequalityConstraint&lt; UpdateT &gt;:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a02617.png" usemap="#mc_5Fsolver::utils::GenInequalityConstraint_3C_20UpdateT_20_3E_map" alt=""/>
-  <map id="mc_5Fsolver::utils::GenInequalityConstraint_3C_20UpdateT_20_3E_map" name="mc_5Fsolver::utils::GenInequalityConstraint_3C_20UpdateT_20_3E_map">
-<area href="a02673.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::GenInequality, UpdateT &gt;" shape="rect" coords="189,112,558,136"/>
-<area doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html" alt="tasks::qp::ConstraintFunction&lt; tasks::qp::GenInequality &gt;" shape="rect" coords="0,56,369,80"/>
-<area doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01073.html" alt="tasks::qp::Constraint" shape="rect" coords="0,0,369,24"/>
-</map>
- </div></div>
+<p><code>#include &lt;mc_solver/GenericLoader.h&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02621.html">Handle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a02621.html" title="Handle returned by register_laod_function. ">Handle</a> returned by register_laod_function.  <a href="a02621.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a647a3478f1ace415da2dfe9cbd9705e4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02617.html#a647a3478f1ace415da2dfe9cbd9705e4">Base</a> = <a class="el" href="a02673.html">Constraint</a>&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01089.html">tasks::qp::GenInequality</a>, UpdateT &gt;</td></tr>
-<tr class="separator:a647a3478f1ace415da2dfe9cbd9705e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb735279d914086553de0a21285126e4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02617.html#adb735279d914086553de0a21285126e4">T_ptr</a> = std::shared_ptr&lt; T &gt;</td></tr>
+<tr class="memdesc:adb735279d914086553de0a21285126e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">shared_ptr to T  <a href="#adb735279d914086553de0a21285126e4">More...</a><br /></td></tr>
+<tr class="separator:adb735279d914086553de0a21285126e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02dbea2e4a083ed146cea53d7b648483"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02617.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a> = std::function&lt; <a class="el" href="a02617.html#adb735279d914086553de0a21285126e4">T_ptr</a>(<a class="el" href="a02677.html">mc_solver::QPSolver</a> &amp;, const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;)&gt;</td></tr>
+<tr class="memdesc:a02dbea2e4a083ed146cea53d7b648483"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function that is able to load a T object through a solver instance and JSON configuration.  <a href="#a02dbea2e4a083ed146cea53d7b648483">More...</a><br /></td></tr>
+<tr class="separator:a02dbea2e4a083ed146cea53d7b648483"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc58a28dae04a63aa3ed180a654ec223"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02617.html#afc58a28dae04a63aa3ed180a654ec223">storage_t</a> = std::map&lt; std::string, <a class="el" href="a02617.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a> &gt;</td></tr>
+<tr class="memdesc:afc58a28dae04a63aa3ed180a654ec223"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage type, actual storage location is returned by Derived::storage()  <a href="#afc58a28dae04a63aa3ed180a654ec223">More...</a><br /></td></tr>
+<tr class="separator:afc58a28dae04a63aa3ed180a654ec223"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:ac5df683b56271a2bdbdd26487b6cc026"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateRobot&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:ac5df683b56271a2bdbdd26487b6cc026"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02617.html#ac5df683b56271a2bdbdd26487b6cc026">GenInequalityConstraint</a> (unsigned int rIndex)</td></tr>
-<tr class="separator:ac5df683b56271a2bdbdd26487b6cc026"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d193fcd6f294807a5e1182f223304a6"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateLambda&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:a7d193fcd6f294807a5e1182f223304a6"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02617.html#a7d193fcd6f294807a5e1182f223304a6">GenInequalityConstraint</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
-<tr class="separator:a7d193fcd6f294807a5e1182f223304a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab606fd78c1a99c26a63a78f41519bb89"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateForce&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:ab606fd78c1a99c26a63a78f41519bb89"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02617.html#ab606fd78c1a99c26a63a78f41519bb89">GenInequalityConstraint</a> (const <a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;solver, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
-<tr class="separator:ab606fd78c1a99c26a63a78f41519bb89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72ffdce8cb16cfd75fb337488cc44160"><td class="memItemLeft" align="right" valign="top">const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02617.html#a72ffdce8cb16cfd75fb337488cc44160">AGenInEq</a> () const override</td></tr>
-<tr class="separator:a72ffdce8cb16cfd75fb337488cc44160"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac87906b16a1bdd6be59c7d630461a2b4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02617.html#ac87906b16a1bdd6be59c7d630461a2b4">descGenInEq</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;, int i) override</td></tr>
-<tr class="separator:ac87906b16a1bdd6be59c7d630461a2b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a01077"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a01077')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html">tasks::qp::ConstraintFunction&lt; tasks::qp::GenInequality &gt;</a></td></tr>
-<tr class="memitem:ad668fbb366458056c27a466578c26b94 inherit pub_methods_a01077"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html#ad668fbb366458056c27a466578c26b94">~ConstraintFunction</a> () override</td></tr>
-<tr class="separator:ad668fbb366458056c27a466578c26b94 inherit pub_methods_a01077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff67c3cdc38c098ddcd8a2b47bc55946 inherit pub_methods_a01077"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html#aff67c3cdc38c098ddcd8a2b47bc55946">addToSolver</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">QPSolver</a> &amp;sol)</td></tr>
-<tr class="separator:aff67c3cdc38c098ddcd8a2b47bc55946 inherit pub_methods_a01077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1156de5e1b49d1d91319fd96cb936b7a inherit pub_methods_a01077"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html#a1156de5e1b49d1d91319fd96cb936b7a">addToSolver</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;mbs, <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">QPSolver</a> &amp;sol)</td></tr>
-<tr class="separator:a1156de5e1b49d1d91319fd96cb936b7a inherit pub_methods_a01077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a454bf752ccf215aa991d036eaf1c3223 inherit pub_methods_a01077"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01077.html#a454bf752ccf215aa991d036eaf1c3223">removeFromSolver</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">QPSolver</a> &amp;sol)</td></tr>
-<tr class="separator:a454bf752ccf215aa991d036eaf1c3223 inherit pub_methods_a01077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_methods_a02673"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02673')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02673.html">mc_solver::utils::Constraint&lt; tasks::qp::GenInequality, UpdateT &gt;</a></td></tr>
-<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73 inherit pro_methods_a02673"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02673.html#adcc2b9ec9fbd3b47e0183ef0ce034c73">Constraint</a> (unsigned int rIndex)</td></tr>
-<tr class="separator:adcc2b9ec9fbd3b47e0183ef0ce034c73 inherit pro_methods_a02673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e inherit pro_methods_a02673"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02673.html#ae5a2073ed0b8b0432593221fec955e4e">Constraint</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
-<tr class="separator:ae5a2073ed0b8b0432593221fec955e4e inherit pro_methods_a02673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca inherit pro_methods_a02673"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02673.html#aab0cc49bca85557519c9a110b54c65ca">Constraint</a> (const <a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;solver, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
-<tr class="separator:aab0cc49bca85557519c9a110b54c65ca inherit pro_methods_a02673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02673"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02673.html#a819dd76da2909a4c88efcca1cb9aaf69">~Constraint</a> ()</td></tr>
-<tr class="memdesc:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="a02673.html#a819dd76da2909a4c88efcca1cb9aaf69">More...</a><br /></td></tr>
-<tr class="separator:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab383394a69ab62c4fab23378e64868de inherit pro_methods_a02673"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02673.html#ab383394a69ab62c4fab23378e64868de">updateNrVars</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;mbs, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01121.html">tasks::qp::SolverData</a> &amp;data) override</td></tr>
-<tr class="separator:ab383394a69ab62c4fab23378e64868de inherit pro_methods_a02673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7693804807033e3718c4ba01a58d3a58 inherit pro_methods_a02673"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02673.html#a7693804807033e3718c4ba01a58d3a58">update</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;mbs, const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01007.html">rbd::MultiBodyConfig</a> &gt; &amp;mbcs, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01121.html">tasks::qp::SolverData</a> &amp;data) override</td></tr>
-<tr class="separator:a7693804807033e3718c4ba01a58d3a58 inherit pro_methods_a02673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ac24012d951d6a04490b05a64f5ccf620"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02621.html">Handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02617.html#ac24012d951d6a04490b05a64f5ccf620">register_load_function</a> (const std::string &amp;type, <a class="el" href="a02617.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a> fn)</td></tr>
+<tr class="memdesc:ac24012d951d6a04490b05a64f5ccf620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a new loading function.  <a href="#ac24012d951d6a04490b05a64f5ccf620">More...</a><br /></td></tr>
+<tr class="separator:ac24012d951d6a04490b05a64f5ccf620"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35fcd3b9f4280a31049089aa57b54330"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02617.html#a35fcd3b9f4280a31049089aa57b54330">unregister_load_function</a> (const std::string &amp;type)</td></tr>
+<tr class="memdesc:a35fcd3b9f4280a31049089aa57b54330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a registered loading function.  <a href="#a35fcd3b9f4280a31049089aa57b54330">More...</a><br /></td></tr>
+<tr class="separator:a35fcd3b9f4280a31049089aa57b54330"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5da6be5874e61bd328a5452dda08950c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02617.html#adb735279d914086553de0a21285126e4">T_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02617.html#a5da6be5874e61bd328a5452dda08950c">load</a> (<a class="el" href="a02677.html">mc_solver::QPSolver</a> &amp;solver, const std::string &amp;file)</td></tr>
+<tr class="memdesc:a5da6be5874e61bd328a5452dda08950c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from a file.  <a href="#a5da6be5874e61bd328a5452dda08950c">More...</a><br /></td></tr>
+<tr class="separator:a5da6be5874e61bd328a5452dda08950c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13b1f947ca0b22d2985f580ec57caf85"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02617.html#adb735279d914086553de0a21285126e4">T_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02617.html#a13b1f947ca0b22d2985f580ec57caf85">load</a> (<a class="el" href="a02677.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="memdesc:a13b1f947ca0b22d2985f580ec57caf85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from an <a class="el" href="a02205.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> object.  <a href="#a13b1f947ca0b22d2985f580ec57caf85">More...</a><br /></td></tr>
+<tr class="separator:a13b1f947ca0b22d2985f580ec57caf85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5236104825bda3a24cc3645e0e3bf448"><td class="memTemplParams" colspan="2">template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:a5236104825bda3a24cc3645e0e3bf448"><td class="memTemplItemLeft" align="right" valign="top">static std::shared_ptr&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02617.html#a5236104825bda3a24cc3645e0e3bf448">load</a> (<a class="el" href="a02677.html">mc_solver::QPSolver</a> &amp;solver, const std::string &amp;file)</td></tr>
+<tr class="memdesc:a5236104825bda3a24cc3645e0e3bf448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a more precise object's type from a file.  <a href="#a5236104825bda3a24cc3645e0e3bf448">More...</a><br /></td></tr>
+<tr class="separator:a5236104825bda3a24cc3645e0e3bf448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab10c87faa2a1fb4721163c6a479fdd78"><td class="memTemplParams" colspan="2">template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:ab10c87faa2a1fb4721163c6a479fdd78"><td class="memTemplItemLeft" align="right" valign="top">static std::shared_ptr&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02617.html#ab10c87faa2a1fb4721163c6a479fdd78">load</a> (<a class="el" href="a02677.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="memdesc:ab10c87faa2a1fb4721163c6a479fdd78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a more precise object's type from a Configuration entry.  <a href="#ab10c87faa2a1fb4721163c6a479fdd78">More...</a><br /></td></tr>
+<tr class="separator:ab10c87faa2a1fb4721163c6a479fdd78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename UpdateT&gt;<br />
-class mc_solver::utils::GenInequalityConstraint&lt; UpdateT &gt;</h3>
+<div class="textblock"><h3>template&lt;typename Derived, typename T&gt;<br />
+struct mc_solver::GenericLoader&lt; Derived, T &gt;</h3>
 
-<p>Helper class to write a general inequality constraint for Tasks. </p>
-<p>This implements \( L \le A * x \le U \)</p>
-<p>You must implement the following functions:</p><ul>
-<li><code>const Eigen::MatrixXd &amp; A() const override; // Return A</code></li>
-<li>void compute() override; // <a class="el" href="a02685.html">Update</a> constraint matrix and bounds</li>
-<li>int maxGenInEq() const override; // Number of inequality lines</li>
-<li>std::string nameGenInEq() const override; // Desriptive name of the constraint</li>
-<li>const Eigen::VectorXd &amp; LowerGenInEq() const override; // Return the lower bound L</li>
-<li>const Eigen::VectorXd &amp; UpperGenInEq() const override; // Return the upper bound U</li>
-</ul>
-<p>Depending on what the constraint applies to you have to make sure A has the following size:</p><ul>
-<li>(nrLines, alphaD.size()) for a constraint on a robot's state</li>
-<li>(nrLines, nrLambda) for a constraint on the lambdas of a t</li>
-<li>(nrLines, 6) for a constraint on a wrench </li>
-</ul>
+<p>Retrieve an object using a JSON configuration object and a solver instance. </p>
+<p>Other objects can register new types that can be loaded through such an interface. If you are writing a new <a class="el" href="a02789.html" title="Represents a generic task. ">mc_tasks::MetaTask</a> or <a class="el" href="a02585.html" title="This class is a basis to wrap Constraint functions from Tasks. ">mc_solver::ConstraintSet</a> you will probably register through <a class="el" href="a02793.html">mc_tasks::MetaTaskLoader</a> and <a class="el" href="a02589.html">mc_solver::ConstraintSetLoader</a> respectively.</p>
+<p>The CRTP is used to provide an ODR-resilient storage here. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a647a3478f1ace415da2dfe9cbd9705e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a647a3478f1ace415da2dfe9cbd9705e4">&#9670;&nbsp;</a></span>Base</h2>
+<a id="a02dbea2e4a083ed146cea53d7b648483"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02dbea2e4a083ed146cea53d7b648483">&#9670;&nbsp;</a></span>load_fun</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
+template&lt;typename Derived, typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a02617.html">mc_solver::utils::GenInequalityConstraint</a>&lt; UpdateT &gt;::<a class="el" href="a02617.html#a647a3478f1ace415da2dfe9cbd9705e4">Base</a> =  <a class="el" href="a02673.html">Constraint</a>&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01089.html">tasks::qp::GenInequality</a>, UpdateT&gt;</td>
+          <td class="memname">using <a class="el" href="a02617.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::<a class="el" href="a02617.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a> =  std::function&lt;<a class="el" href="a02617.html#adb735279d914086553de0a21285126e4">T_ptr</a>(<a class="el" href="a02677.html">mc_solver::QPSolver</a> &amp;, const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;)&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>A function that is able to load a T object through a solver instance and JSON configuration. </p>
+
 </div>
 </div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac5df683b56271a2bdbdd26487b6cc026"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5df683b56271a2bdbdd26487b6cc026">&#9670;&nbsp;</a></span>GenInequalityConstraint() <span class="overload">[1/3]</span></h2>
+<a id="afc58a28dae04a63aa3ed180a654ec223"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc58a28dae04a63aa3ed180a654ec223">&#9670;&nbsp;</a></span>storage_t</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
+template&lt;typename Derived, typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a02617.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::<a class="el" href="a02617.html#afc58a28dae04a63aa3ed180a654ec223">storage_t</a> =  std::map&lt;std::string, <a class="el" href="a02617.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Storage type, actual storage location is returned by Derived::storage() </p>
+
+</div>
+</div>
+<a id="adb735279d914086553de0a21285126e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb735279d914086553de0a21285126e4">&#9670;&nbsp;</a></span>T_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
 <div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateRobot&gt;::value&gt;::type&gt; </div>
+template&lt;typename Derived, typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a02617.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::<a class="el" href="a02617.html#adb735279d914086553de0a21285126e4">T_ptr</a> =  std::shared_ptr&lt;T&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>shared_ptr to T </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5da6be5874e61bd328a5452dda08950c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5da6be5874e61bd328a5452dda08950c">&#9670;&nbsp;</a></span>load() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02617.html">mc_solver::utils::GenInequalityConstraint</a>&lt; UpdateT &gt;::<a class="el" href="a02617.html">GenInequalityConstraint</a> </td>
+          <td class="memname">static <a class="el" href="a02617.html#adb735279d914086553de0a21285126e4">T_ptr</a> <a class="el" href="a02617.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
           <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>rIndex</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7d193fcd6f294807a5e1182f223304a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d193fcd6f294807a5e1182f223304a6">&#9670;&nbsp;</a></span>GenInequalityConstraint() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateLambda&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02617.html">mc_solver::utils::GenInequalityConstraint</a>&lt; UpdateT &gt;::<a class="el" href="a02617.html">GenInequalityConstraint</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;&#160;</td>
-          <td class="paramname"><em>cid</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab606fd78c1a99c26a63a78f41519bb89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab606fd78c1a99c26a63a78f41519bb89">&#9670;&nbsp;</a></span>GenInequalityConstraint() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateForce&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02617.html">mc_solver::utils::GenInequalityConstraint</a>&lt; UpdateT &gt;::<a class="el" href="a02617.html">GenInequalityConstraint</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02677.html">mc_solver::QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;&#160;</td>
-          <td class="paramname"><em>cid</em>&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -271,63 +219,50 @@ template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::i
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>Load an object from a file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver to create the object for</td></tr>
+    <tr><td class="paramname">file</td><td>File to load the object from</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>the file does not exist or the loaded JSON object does not represent a known object </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a72ffdce8cb16cfd75fb337488cc44160"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72ffdce8cb16cfd75fb337488cc44160">&#9670;&nbsp;</a></span>AGenInEq()</h2>
+<a id="a13b1f947ca0b22d2985f580ec57caf85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13b1f947ca0b22d2985f580ec57caf85">&#9670;&nbsp;</a></span>load() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
+template&lt;typename Derived, typename T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const Eigen::MatrixXd&amp; <a class="el" href="a02617.html">mc_solver::utils::GenInequalityConstraint</a>&lt; UpdateT &gt;::AGenInEq </td>
+          <td class="memname">static <a class="el" href="a02617.html#adb735279d914086553de0a21285126e4">T_ptr</a> <a class="el" href="a02617.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac87906b16a1bdd6be59c7d630461a2b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac87906b16a1bdd6be59c7d630461a2b4">&#9670;&nbsp;</a></span>descGenInEq()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="a02617.html">mc_solver::utils::GenInequalityConstraint</a>&lt; UpdateT &gt;::descGenInEq </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;&#160;</td>
-          <td class="paramname">, </td>
+          <td class="paramtype"><a class="el" href="a02677.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>i</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -337,10 +272,193 @@ template&lt;typename UpdateT&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Load an object from an <a class="el" href="a02205.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver to create the object for</td></tr>
+    <tr><td class="paramname">config</td><td>Configuration to load the object from</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>the loaded JSON object does not represent a known object </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5236104825bda3a24cc3645e0e3bf448"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5236104825bda3a24cc3645e0e3bf448">&#9670;&nbsp;</a></span>load() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename T&gt; </div>
+<div class="memtemplate">
+template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::shared_ptr&lt;U&gt; <a class="el" href="a02617.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02677.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieve a more precise object's type from a file. </p>
+
+</div>
+</div>
+<a id="ab10c87faa2a1fb4721163c6a479fdd78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab10c87faa2a1fb4721163c6a479fdd78">&#9670;&nbsp;</a></span>load() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename T&gt; </div>
+<div class="memtemplate">
+template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::shared_ptr&lt;U&gt; <a class="el" href="a02617.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02677.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieve a more precise object's type from a Configuration entry. </p>
+
+</div>
+</div>
+<a id="ac24012d951d6a04490b05a64f5ccf620"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac24012d951d6a04490b05a64f5ccf620">&#9670;&nbsp;</a></span>register_load_function()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a02621.html">Handle</a> <a class="el" href="a02617.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::register_load_function </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a02617.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a>&#160;</td>
+          <td class="paramname"><em>fn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Register a new loading function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>Type of the object this function handles. It should match the "type" entry of the expected JSON objects</td></tr>
+    <tr><td class="paramname">fn</td><td>Function that will be registered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a35fcd3b9f4280a31049089aa57b54330"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35fcd3b9f4280a31049089aa57b54330">&#9670;&nbsp;</a></span>unregister_load_function()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void <a class="el" href="a02617.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::unregister_load_function </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove a registered loading function. </p>
+<p>This is mostly called automatically by the handle returned by <a class="el" href="a02617.html#ac24012d951d6a04490b05a64f5ccf620">register_load_function</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td>Type of the object to un-register </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -350,8 +468,8 @@ template&lt;typename UpdateT&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00693.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00709.html">utils</a></li><li class="navelem"><a class="el" href="a02617.html">GenInequalityConstraint</a></li>
-    <li class="footer">Generated on Tue Mar 10 2020 09:44:20 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00693.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02617.html">GenericLoader</a></li>
+    <li class="footer">Generated on Tue Mar 10 2020 11:53:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

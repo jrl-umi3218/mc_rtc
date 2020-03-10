@@ -1,5 +1,6 @@
 var a02713 =
 [
-    [ "AddContactTask", "a02713.html#ae885f5a1cee241dd40b788d40654ef6b", null ],
-    [ "AddContactTask", "a02713.html#a2875c53a7f7c8bd2f1eeabd21ff920c1", null ]
+    [ "UpdateNrVarsLambda", "a02713.html#a9d6f46e4b6e93b51903495758aecd406", null ],
+    [ "updateNrVarsImpl", "a02713.html#a3c7ce960742e1844186550b503af6207", null ],
+    [ "cid_", "a02713.html#a855dd9e41399b5a6271e9b4e02576b23", null ]
 ];

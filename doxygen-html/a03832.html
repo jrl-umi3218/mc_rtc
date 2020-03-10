@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Contact.h File Reference</title>
+<title>api.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,48 +70,120 @@ $(document).ready(function(){initNavTree('a03832.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn/Contact.h File Reference</div>  </div>
+<div class="title">mc_tasks/api.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03808.html">mc_rbdyn/api.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03829.html">mc_rtc/Configuration.h</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00044.html">Tasks/QPContacts.h</a>&gt;</code><br />
-<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02073.html">mc_solver::QPContactPtr</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02077.html">mc_solver::QPContactPtrWPoints</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02081.html">mc_rbdyn::Contact</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00693"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00693.html">mc_solver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00687"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00687.html">mc_rbdyn</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a736c36f68b3eff9f08124c8b1a58cba3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03808.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00687.html#a736c36f68b3eff9f08124c8b1a58cba3">mc_rbdyn::computePoints</a> (const <a class="el" href="a02177.html">mc_rbdyn::Surface</a> &amp;robotSurface, const <a class="el" href="a02177.html">mc_rbdyn::Surface</a> &amp;envSurface, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;X_es_rs)</td></tr>
-<tr class="separator:a736c36f68b3eff9f08124c8b1a58cba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a47ff1b35f32c422f53ffee9a1a5d2de4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03832.html#a47ff1b35f32c422f53ffee9a1a5d2de4">MC_TASKS_VERSION</a>&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td></tr>
+<tr class="separator:a47ff1b35f32c422f53ffee9a1a5d2de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ca51f7fba6e50050fa71ee00906116e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03832.html#a1ca51f7fba6e50050fa71ee00906116e">MC_TASKS_DLLIMPORT</a></td></tr>
+<tr class="separator:a1ca51f7fba6e50050fa71ee00906116e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f58d55d50caa4b695e9ae0db68a84e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03832.html#a6f58d55d50caa4b695e9ae0db68a84e3">MC_TASKS_DLLEXPORT</a></td></tr>
+<tr class="separator:a6f58d55d50caa4b695e9ae0db68a84e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88d2b44a0ab87ccac98cac02f5bc0220"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03832.html#a88d2b44a0ab87ccac98cac02f5bc0220">MC_TASKS_DLLLOCAL</a></td></tr>
+<tr class="separator:a88d2b44a0ab87ccac98cac02f5bc0220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54b6b62a72f51c6877ce5f6855eae009"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03832.html#a54b6b62a72f51c6877ce5f6855eae009">MC_TASKS_DLLAPI</a>&#160;&#160;&#160;<a class="el" href="a03832.html#a1ca51f7fba6e50050fa71ee00906116e">MC_TASKS_DLLIMPORT</a></td></tr>
+<tr class="separator:a54b6b62a72f51c6877ce5f6855eae009"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fad7ce5639c7536227a82e08f06c0e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03832.html#a6fad7ce5639c7536227a82e08f06c0e5">MC_TASKS_LOCAL</a>&#160;&#160;&#160;<a class="el" href="a03832.html#a88d2b44a0ab87ccac98cac02f5bc0220">MC_TASKS_DLLLOCAL</a></td></tr>
+<tr class="separator:a6fad7ce5639c7536227a82e08f06c0e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a54b6b62a72f51c6877ce5f6855eae009"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54b6b62a72f51c6877ce5f6855eae009">&#9670;&nbsp;</a></span>MC_TASKS_DLLAPI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_TASKS_DLLAPI&#160;&#160;&#160;<a class="el" href="a03832.html#a1ca51f7fba6e50050fa71ee00906116e">MC_TASKS_DLLIMPORT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6f58d55d50caa4b695e9ae0db68a84e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f58d55d50caa4b695e9ae0db68a84e3">&#9670;&nbsp;</a></span>MC_TASKS_DLLEXPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_TASKS_DLLEXPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1ca51f7fba6e50050fa71ee00906116e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ca51f7fba6e50050fa71ee00906116e">&#9670;&nbsp;</a></span>MC_TASKS_DLLIMPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_TASKS_DLLIMPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a88d2b44a0ab87ccac98cac02f5bc0220"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88d2b44a0ab87ccac98cac02f5bc0220">&#9670;&nbsp;</a></span>MC_TASKS_DLLLOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_TASKS_DLLLOCAL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6fad7ce5639c7536227a82e08f06c0e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fad7ce5639c7536227a82e08f06c0e5">&#9670;&nbsp;</a></span>MC_TASKS_LOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_TASKS_LOCAL&#160;&#160;&#160;<a class="el" href="a03832.html#a88d2b44a0ab87ccac98cac02f5bc0220">MC_TASKS_DLLLOCAL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a47ff1b35f32c422f53ffee9a1a5d2de4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47ff1b35f32c422f53ffee9a1a5d2de4">&#9670;&nbsp;</a></span>MC_TASKS_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_TASKS_VERSION&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a03832.html">Contact.h</a></li>
-    <li class="footer">Generated on Tue Mar 10 2020 09:44:19 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c5d9ba9e59fcda315855869f4a23a264.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a03832.html">api.h</a></li>
+    <li class="footer">Generated on Tue Mar 10 2020 11:53:44 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

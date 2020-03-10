@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_tasks::lipm_stabilizer::StabilizerTask Struct Reference</title>
+<title>mc_tasks::lipm_stabilizer::internal::Contact Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,389 +70,103 @@ $(document).ready(function(){initNavTree('a02765.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="a02762.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_tasks::lipm_stabilizer::StabilizerTask Struct Reference</div>  </div>
+<div class="title">mc_tasks::lipm_stabilizer::internal::Contact Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Walking stabilization based on linear inverted pendulum tracking.  
+<p>This class wraps information about contact surfaces used by the stabilizer.  
  <a href="a02765.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_tasks/lipm_stabilizer/StabilizerTask.h&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mc_tasks::lipm_stabilizer::StabilizerTask:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a02765.png" usemap="#mc_5Ftasks::lipm_5Fstabilizer::StabilizerTask_map" alt=""/>
-  <map id="mc_5Ftasks::lipm_5Fstabilizer::StabilizerTask_map" name="mc_5Ftasks::lipm_5Fstabilizer::StabilizerTask_map">
-<area href="a02781.html" title="Represents a generic task. " alt="mc_tasks::MetaTask" shape="rect" coords="0,0,232,24"/>
-</map>
- </div></div>
+<p><code>#include &lt;mc_tasks/lipm_stabilizer/Contact.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02769.html">EnumClassHash</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Workaround a C++11 standard bug: no specialization of the hash functor exists for enum types.  <a href="a02769.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afe79a5d39b9aaf14d33026354d81280d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#afe79a5d39b9aaf14d33026354d81280d">StabilizerTask</a> (const <a class="el" href="a02169.html">mc_rbdyn::Robots</a> &amp;robots, const <a class="el" href="a02169.html">mc_rbdyn::Robots</a> &amp;realRobots, unsigned int robotIndex, const std::string &amp;leftSurface, const std::string &amp;rightSurface, const std::string &amp;torsoBodyName, double dt)</td></tr>
-<tr class="memdesc:afe79a5d39b9aaf14d33026354d81280d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a stabilizer meta task.  <a href="#afe79a5d39b9aaf14d33026354d81280d">More...</a><br /></td></tr>
-<tr class="separator:afe79a5d39b9aaf14d33026354d81280d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65b51a83fbd47db891199fdafdc50220"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a65b51a83fbd47db891199fdafdc50220">reset</a> () override</td></tr>
-<tr class="memdesc:a65b51a83fbd47db891199fdafdc50220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the stabilizer tasks and parameters to their default configuration.  <a href="#a65b51a83fbd47db891199fdafdc50220">More...</a><br /></td></tr>
-<tr class="separator:a65b51a83fbd47db891199fdafdc50220"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada370921b62caa185b6eaeaa9638cd06"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ada370921b62caa185b6eaeaa9638cd06">eval</a> () const override</td></tr>
-<tr class="memdesc:ada370921b62caa185b6eaeaa9638cd06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task error.  <a href="#ada370921b62caa185b6eaeaa9638cd06">More...</a><br /></td></tr>
-<tr class="separator:ada370921b62caa185b6eaeaa9638cd06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a291e8bd69f054b3cce5117e721356185"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a291e8bd69f054b3cce5117e721356185">speed</a> () const override</td></tr>
-<tr class="memdesc:a291e8bd69f054b3cce5117e721356185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task velocity.  <a href="#a291e8bd69f054b3cce5117e721356185">More...</a><br /></td></tr>
-<tr class="separator:a291e8bd69f054b3cce5117e721356185"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04089abb785bdade64b4c8309c33c4c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a04089abb785bdade64b4c8309c33c4c9">enable</a> ()</td></tr>
-<tr class="memdesc:a04089abb785bdade64b4c8309c33c4c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables stabilizer.  <a href="#a04089abb785bdade64b4c8309c33c4c9">More...</a><br /></td></tr>
-<tr class="separator:a04089abb785bdade64b4c8309c33c4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45f17fc7c444f8a9ccaebaf287574108"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a45f17fc7c444f8a9ccaebaf287574108">disable</a> ()</td></tr>
-<tr class="memdesc:a45f17fc7c444f8a9ccaebaf287574108"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable all feedback components.  <a href="#a45f17fc7c444f8a9ccaebaf287574108">More...</a><br /></td></tr>
-<tr class="separator:a45f17fc7c444f8a9ccaebaf287574108"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92ca7d350b4d444eaf183ea61e4c8491"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a92ca7d350b4d444eaf183ea61e4c8491">configure</a> (const <a class="el" href="a02109.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> &amp;<a class="el" href="a02765.html#aa65a9b2c018ada2906213964b9c15248">config</a>)</td></tr>
-<tr class="memdesc:a92ca7d350b4d444eaf183ea61e4c8491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure stabilizer's parameters from a stabilizer's configuration object.  <a href="#a92ca7d350b4d444eaf183ea61e4c8491">More...</a><br /></td></tr>
-<tr class="separator:a92ca7d350b4d444eaf183ea61e4c8491"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea4976e383f665df47a0396b85a2db32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aea4976e383f665df47a0396b85a2db32">load</a> (<a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;, const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;<a class="el" href="a02765.html#aa65a9b2c018ada2906213964b9c15248">config</a>) override</td></tr>
-<tr class="memdesc:aea4976e383f665df47a0396b85a2db32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load targets and contacts from configuration.  <a href="#aea4976e383f665df47a0396b85a2db32">More...</a><br /></td></tr>
-<tr class="separator:aea4976e383f665df47a0396b85a2db32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa65a9b2c018ada2906213964b9c15248"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02109.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aa65a9b2c018ada2906213964b9c15248">config</a> () const</td></tr>
-<tr class="memdesc:aa65a9b2c018ada2906213964b9c15248"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current stabilizer's configuration (including changes from GUI)  <a href="#aa65a9b2c018ada2906213964b9c15248">More...</a><br /></td></tr>
-<tr class="separator:aa65a9b2c018ada2906213964b9c15248"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64ccf8d3b99e44891b58df7df76c296f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02109.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a64ccf8d3b99e44891b58df7df76c296f">commitedConfig</a> () const</td></tr>
-<tr class="memdesc:a64ccf8d3b99e44891b58df7df76c296f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last commited configuration (not including latest changes from the GUI)  <a href="#a64ccf8d3b99e44891b58df7df76c296f">More...</a><br /></td></tr>
-<tr class="separator:a64ccf8d3b99e44891b58df7df76c296f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c93d88492cb1541133d83c8072be280"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a9c93d88492cb1541133d83c8072be280">reconfigure</a> ()</td></tr>
-<tr class="memdesc:a9c93d88492cb1541133d83c8072be280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset stabilizer configuration from last configuration set by <a class="el" href="a02765.html#a92ca7d350b4d444eaf183ea61e4c8491" title="Configure stabilizer&#39;s parameters from a stabilizer&#39;s configuration object. ">configure()</a>  <a href="#a9c93d88492cb1541133d83c8072be280">More...</a><br /></td></tr>
-<tr class="separator:a9c93d88492cb1541133d83c8072be280"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a834eb99d2717aacb38b5eee307bd0773"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a834eb99d2717aacb38b5eee307bd0773">run</a> ()</td></tr>
-<tr class="memdesc:a834eb99d2717aacb38b5eee307bd0773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update QP task targets.  <a href="#a834eb99d2717aacb38b5eee307bd0773">More...</a><br /></td></tr>
-<tr class="separator:a834eb99d2717aacb38b5eee307bd0773"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3348f167e5652a215c2bc4325488a541"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a3348f167e5652a215c2bc4325488a541">setContacts</a> (const std::vector&lt; std::pair&lt; ContactState, <a class="el" href="a02757.html">internal::Contact</a> &gt;&gt; &amp;contacts)</td></tr>
-<tr class="memdesc:a3348f167e5652a215c2bc4325488a541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure foot tasks for contact at a given location, and add contacts to the solver.  <a href="#a3348f167e5652a215c2bc4325488a541">More...</a><br /></td></tr>
-<tr class="separator:a3348f167e5652a215c2bc4325488a541"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a694edac11eca809a1faaafed3971cbca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a694edac11eca809a1faaafed3971cbca">setContacts</a> (const std::vector&lt; std::pair&lt; ContactState, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt;&gt; &amp;contacts)</td></tr>
-<tr class="memdesc:a694edac11eca809a1faaafed3971cbca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to set contacts with a provided target pose.  <a href="#a694edac11eca809a1faaafed3971cbca">More...</a><br /></td></tr>
-<tr class="separator:a694edac11eca809a1faaafed3971cbca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2284666da172e5bc40f90525f800a0c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a2284666da172e5bc40f90525f800a0c0">setContacts</a> (const std::vector&lt; ContactState &gt; &amp;contacts)</td></tr>
-<tr class="memdesc:a2284666da172e5bc40f90525f800a0c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to set contacts from the current surface pose.  <a href="#a2284666da172e5bc40f90525f800a0c0">More...</a><br /></td></tr>
-<tr class="separator:a2284666da172e5bc40f90525f800a0c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18cf3bbe16d6f31b76fb67a4db7bf216"><td class="memItemLeft" align="right" valign="top">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a18cf3bbe16d6f31b76fb67a4db7bf216">contactAnklePose</a> (ContactState s) const</td></tr>
-<tr class="memdesc:a18cf3bbe16d6f31b76fb67a4db7bf216"><td class="mdescLeft">&#160;</td><td class="mdescRight">Projected pose of the ankle frame in the contact frame.  <a href="#a18cf3bbe16d6f31b76fb67a4db7bf216">More...</a><br /></td></tr>
-<tr class="separator:a18cf3bbe16d6f31b76fb67a4db7bf216"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f59f1f61174faf255e2fd32e61a72fa"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a4f59f1f61174faf255e2fd32e61a72fa">footSurface</a> (ContactState s) const</td></tr>
-<tr class="separator:a4f59f1f61174faf255e2fd32e61a72fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad11d62616938f7b665640ee5dbf0dc7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aad11d62616938f7b665640ee5dbf0dc7">leftFootRatio</a> () const</td></tr>
-<tr class="memdesc:aad11d62616938f7b665640ee5dbf0dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolation paremeter between left and right foot.  <a href="#aad11d62616938f7b665640ee5dbf0dc7">More...</a><br /></td></tr>
-<tr class="separator:aad11d62616938f7b665640ee5dbf0dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4e37b7fc5368d0727c18cbca19cebc0"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ab4e37b7fc5368d0727c18cbca19cebc0">anchorFrame</a> () const</td></tr>
-<tr class="memdesc:ab4e37b7fc5368d0727c18cbca19cebc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes the anchorFrame compatible with the state observers (KinematicInertial)  <a href="#ab4e37b7fc5368d0727c18cbca19cebc0">More...</a><br /></td></tr>
-<tr class="separator:ab4e37b7fc5368d0727c18cbca19cebc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8bf27488a2f076443dce128a71d8fe1"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#af8bf27488a2f076443dce128a71d8fe1">anchorFrameReal</a> () const</td></tr>
-<tr class="memdesc:af8bf27488a2f076443dce128a71d8fe1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the anchor frame computed from real robot.  <a href="#af8bf27488a2f076443dce128a71d8fe1">More...</a><br /></td></tr>
-<tr class="separator:af8bf27488a2f076443dce128a71d8fe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeca8ec3501161284eebe42d34b7433d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aeca8ec3501161284eebe42d34b7433d3">staticTarget</a> (const Eigen::Vector3d &amp;com, double zmpHeight=0)</td></tr>
-<tr class="memdesc:aeca8ec3501161284eebe42d34b7433d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a static target to the stabilizer.  <a href="#aeca8ec3501161284eebe42d34b7433d3">More...</a><br /></td></tr>
-<tr class="separator:aeca8ec3501161284eebe42d34b7433d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbe9f9871a4c131a6c2176eeaf0a5dc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#acbe9f9871a4c131a6c2176eeaf0a5dc4">target</a> (const Eigen::Vector3d &amp;com, const Eigen::Vector3d &amp;comd, const Eigen::Vector3d &amp;comdd, const Eigen::Vector3d &amp;zmp)</td></tr>
-<tr class="memdesc:acbe9f9871a4c131a6c2176eeaf0a5dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a dynamic target to the stabilizer.  <a href="#acbe9f9871a4c131a6c2176eeaf0a5dc4">More...</a><br /></td></tr>
-<tr class="separator:acbe9f9871a4c131a6c2176eeaf0a5dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8701a57a809d6623b80306bd6cc9609a"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a8701a57a809d6623b80306bd6cc9609a">measuredDCM</a> ()</td></tr>
-<tr class="separator:a8701a57a809d6623b80306bd6cc9609a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52698baf31cd96e73a65d30009db86ff"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a52698baf31cd96e73a65d30009db86ff">measuredZMP</a> ()</td></tr>
-<tr class="separator:a52698baf31cd96e73a65d30009db86ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a297f2b26b3156ed4ebae0ee789b89a8b"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a297f2b26b3156ed4ebae0ee789b89a8b">measuredCoM</a> ()</td></tr>
-<tr class="separator:a297f2b26b3156ed4ebae0ee789b89a8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b4613e8df107c406a9b434c06b9b27a"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a0b4613e8df107c406a9b434c06b9b27a">measuredCoMd</a> ()</td></tr>
-<tr class="separator:a0b4613e8df107c406a9b434c06b9b27a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93b9dbba22bc61bcba9c36af64167b0e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a93b9dbba22bc61bcba9c36af64167b0e">inContact</a> (ContactState state) const</td></tr>
-<tr class="separator:a93b9dbba22bc61bcba9c36af64167b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae33cd7a56736b6d070f229493ba14ed5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ae33cd7a56736b6d070f229493ba14ed5">inDoubleSupport</a> () const</td></tr>
-<tr class="separator:ae33cd7a56736b6d070f229493ba14ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a02781"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02781')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02781.html">mc_tasks::MetaTask</a></td></tr>
-<tr class="memitem:aea3e513dfe137830b38272336451b8cc inherit pub_methods_a02781"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#aea3e513dfe137830b38272336451b8cc">~MetaTask</a> ()</td></tr>
-<tr class="separator:aea3e513dfe137830b38272336451b8cc inherit pub_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_a02781"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#ac090b29eae1954585e32572d40731ca1">type</a> () const</td></tr>
-<tr class="memdesc:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_a02781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of the task.  <a href="a02781.html#ac090b29eae1954585e32572d40731ca1">More...</a><br /></td></tr>
-<tr class="separator:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa98468771424ad14d60915a6b52e927b inherit pub_methods_a02781"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#aa98468771424ad14d60915a6b52e927b">name</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:aa98468771424ad14d60915a6b52e927b inherit pub_methods_a02781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a name for the task.  <a href="a02781.html#aa98468771424ad14d60915a6b52e927b">More...</a><br /></td></tr>
-<tr class="separator:aa98468771424ad14d60915a6b52e927b inherit pub_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_a02781"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#a94831a7f067fdd5b05e03e83bfc4166b">name</a> () const</td></tr>
-<tr class="memdesc:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_a02781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the task.  <a href="a02781.html#a94831a7f067fdd5b05e03e83bfc4166b">More...</a><br /></td></tr>
-<tr class="separator:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:a423757f45cfdd7eea6a85d1dfa7d2ee2"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a423757f45cfdd7eea6a85d1dfa7d2ee2">MAX_AVERAGE_DCM_ERROR</a> = 0.05</td></tr>
-<tr class="memdesc:a423757f45cfdd7eea6a85d1dfa7d2ee2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum average (integral) DCM error in [m].  <a href="#a423757f45cfdd7eea6a85d1dfa7d2ee2">More...</a><br /></td></tr>
-<tr class="separator:a423757f45cfdd7eea6a85d1dfa7d2ee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fc7ac59767f6524cb23b21380c0651f"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a3fc7ac59767f6524cb23b21380c0651f">MAX_COM_ADMITTANCE</a> = 20</td></tr>
-<tr class="memdesc:a3fc7ac59767f6524cb23b21380c0651f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum admittance for CoM admittance control.  <a href="#a3fc7ac59767f6524cb23b21380c0651f">More...</a><br /></td></tr>
-<tr class="separator:a3fc7ac59767f6524cb23b21380c0651f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afeaae9007994ca1a28123f130ac40a62"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#afeaae9007994ca1a28123f130ac40a62">MAX_COP_ADMITTANCE</a> = 0.1</td></tr>
-<tr class="memdesc:afeaae9007994ca1a28123f130ac40a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum CoP admittance for foot damping control.  <a href="#afeaae9007994ca1a28123f130ac40a62">More...</a><br /></td></tr>
-<tr class="separator:afeaae9007994ca1a28123f130ac40a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd042284edded71ef5a11fa3338cd474"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#afd042284edded71ef5a11fa3338cd474">MAX_DCM_D_GAIN</a> = 2.</td></tr>
-<tr class="memdesc:afd042284edded71ef5a11fa3338cd474"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum DCM derivative gain (no unit)  <a href="#afd042284edded71ef5a11fa3338cd474">More...</a><br /></td></tr>
-<tr class="separator:afd042284edded71ef5a11fa3338cd474"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4e24167d33878c916253d40cdb35df8"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ab4e24167d33878c916253d40cdb35df8">MAX_DCM_I_GAIN</a> = 100.</td></tr>
-<tr class="memdesc:ab4e24167d33878c916253d40cdb35df8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum DCM average integral gain in [Hz].  <a href="#ab4e24167d33878c916253d40cdb35df8">More...</a><br /></td></tr>
-<tr class="separator:ab4e24167d33878c916253d40cdb35df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accb3d0657c3d76b48410d17e70ba8e66"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#accb3d0657c3d76b48410d17e70ba8e66">MAX_DCM_P_GAIN</a> = 20.</td></tr>
-<tr class="memdesc:accb3d0657c3d76b48410d17e70ba8e66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum DCM proportional gain in [Hz].  <a href="#accb3d0657c3d76b48410d17e70ba8e66">More...</a><br /></td></tr>
-<tr class="separator:accb3d0657c3d76b48410d17e70ba8e66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3b0b19db008d81607d673433e888e61"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ac3b0b19db008d81607d673433e888e61">MAX_DFZ_ADMITTANCE</a></td></tr>
-<tr class="memdesc:ac3b0b19db008d81607d673433e888e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum admittance in [s] / [kg] for foot force difference control.  <a href="#ac3b0b19db008d81607d673433e888e61">More...</a><br /></td></tr>
-<tr class="separator:ac3b0b19db008d81607d673433e888e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe1f288c9f4f825a150cb952ca56d02a"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#abe1f288c9f4f825a150cb952ca56d02a">MAX_DFZ_DAMPING</a></td></tr>
-<tr class="memdesc:abe1f288c9f4f825a150cb952ca56d02a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum normalized damping in [Hz] for foot force difference control.  <a href="#abe1f288c9f4f825a150cb952ca56d02a">More...</a><br /></td></tr>
-<tr class="separator:abe1f288c9f4f825a150cb952ca56d02a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d9aa68a658b6c84416e7aa2603f07dc"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a5d9aa68a658b6c84416e7aa2603f07dc">MAX_FDC_RX_VEL</a></td></tr>
-<tr class="memdesc:a5d9aa68a658b6c84416e7aa2603f07dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum x-axis angular velocity in [rad] / [s] for foot damping control.  <a href="#a5d9aa68a658b6c84416e7aa2603f07dc">More...</a><br /></td></tr>
-<tr class="separator:a5d9aa68a658b6c84416e7aa2603f07dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2e64e0d5c2fba868860809414d228c9"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ab2e64e0d5c2fba868860809414d228c9">MAX_FDC_RY_VEL</a></td></tr>
-<tr class="memdesc:ab2e64e0d5c2fba868860809414d228c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum y-axis angular velocity in [rad] / [s] for foot damping control.  <a href="#ab2e64e0d5c2fba868860809414d228c9">More...</a><br /></td></tr>
-<tr class="separator:ab2e64e0d5c2fba868860809414d228c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a254e6d570a19e2fc9c6e0b55f1c40e34"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a254e6d570a19e2fc9c6e0b55f1c40e34">MAX_FDC_RZ_VEL</a></td></tr>
-<tr class="memdesc:a254e6d570a19e2fc9c6e0b55f1c40e34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum z-axis angular velocity in [rad] / [s] for foot damping control.  <a href="#a254e6d570a19e2fc9c6e0b55f1c40e34">More...</a><br /></td></tr>
-<tr class="separator:a254e6d570a19e2fc9c6e0b55f1c40e34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9645bcc1b8e2296b6b060c2285b5eb6d"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a9645bcc1b8e2296b6b060c2285b5eb6d">MIN_DS_PRESSURE</a> = 15.</td></tr>
-<tr class="memdesc:a9645bcc1b8e2296b6b060c2285b5eb6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum normal contact force in DSP, used to avoid low-pressure targets when close to contact switches.  <a href="#a9645bcc1b8e2296b6b060c2285b5eb6d">More...</a><br /></td></tr>
-<tr class="separator:a9645bcc1b8e2296b6b060c2285b5eb6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeba1f1684be4d513d2140d25b908a20d"><td class="memItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aeba1f1684be4d513d2140d25b908a20d">MIN_NET_TOTAL_FORCE_ZMP</a> = 1.</td></tr>
-<tr class="separator:aeba1f1684be4d513d2140d25b908a20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac7709c43f16a9b418ecf2619d69821a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ac7709c43f16a9b418ecf2619d69821a6">addToSolver</a> (<a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:ac7709c43f16a9b418ecf2619d69821a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the task to a solver.  <a href="#ac7709c43f16a9b418ecf2619d69821a6">More...</a><br /></td></tr>
-<tr class="separator:ac7709c43f16a9b418ecf2619d69821a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bef48c5f1f58cf958f55c9fb2c9e6e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a1bef48c5f1f58cf958f55c9fb2c9e6e1">removeFromSolver</a> (<a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:a1bef48c5f1f58cf958f55c9fb2c9e6e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the task from a solver.  <a href="#a1bef48c5f1f58cf958f55c9fb2c9e6e1">More...</a><br /></td></tr>
-<tr class="separator:a1bef48c5f1f58cf958f55c9fb2c9e6e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47f242d0db7ed96a17dc3aea2726c473"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a47f242d0db7ed96a17dc3aea2726c473">removeFromGUI</a> (<a class="el" href="a02425.html">mc_rtc::gui::StateBuilder</a> &amp;) override</td></tr>
-<tr class="memdesc:a47f242d0db7ed96a17dc3aea2726c473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove elements from the GUI through the helper.  <a href="#a47f242d0db7ed96a17dc3aea2726c473">More...</a><br /></td></tr>
-<tr class="separator:a47f242d0db7ed96a17dc3aea2726c473"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5015b2c830f229580727098d7b769d1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a5015b2c830f229580727098d7b769d1d">update</a> (<a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;) override</td></tr>
-<tr class="memdesc:a5015b2c830f229580727098d7b769d1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the task.  <a href="#a5015b2c830f229580727098d7b769d1d">More...</a><br /></td></tr>
-<tr class="separator:a5015b2c830f229580727098d7b769d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0806e753efb5d4a75ea474d775ccadf4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a0806e753efb5d4a75ea474d775ccadf4">addToLogger</a> (<a class="el" href="a02517.html">mc_rtc::Logger</a> &amp;) override</td></tr>
-<tr class="memdesc:a0806e753efb5d4a75ea474d775ccadf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log stabilizer entries.  <a href="#a0806e753efb5d4a75ea474d775ccadf4">More...</a><br /></td></tr>
-<tr class="separator:a0806e753efb5d4a75ea474d775ccadf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18352e8c8269aabbd125f8d49a9c5b2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a18352e8c8269aabbd125f8d49a9c5b2f">removeFromLogger</a> (<a class="el" href="a02517.html">mc_rtc::Logger</a> &amp;) override</td></tr>
-<tr class="memdesc:a18352e8c8269aabbd125f8d49a9c5b2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove entries from the logger.  <a href="#a18352e8c8269aabbd125f8d49a9c5b2f">More...</a><br /></td></tr>
-<tr class="separator:a18352e8c8269aabbd125f8d49a9c5b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50bd7771e0e45cd45b507af97b285544"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a50bd7771e0e45cd45b507af97b285544">addToGUI</a> (<a class="el" href="a02425.html">mc_rtc::gui::StateBuilder</a> &amp;) override</td></tr>
-<tr class="memdesc:a50bd7771e0e45cd45b507af97b285544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add elements to the GUI through the helper.  <a href="#a50bd7771e0e45cd45b507af97b285544">More...</a><br /></td></tr>
-<tr class="separator:a50bd7771e0e45cd45b507af97b285544"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5456b94e95138e35e7e5738de51512a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02141.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aa5456b94e95138e35e7e5738de51512a">robot</a> () const</td></tr>
-<tr class="separator:aa5456b94e95138e35e7e5738de51512a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ad771c0db927eff99269276ef551e86"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02141.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a3ad771c0db927eff99269276ef551e86">realRobot</a> () const</td></tr>
-<tr class="separator:a3ad771c0db927eff99269276ef551e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_a02781"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02781')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02781.html">mc_tasks::MetaTask</a></td></tr>
-<tr class="memitem:a753237535cc3e200e44ae0fa276f733e inherit pro_methods_a02781"><td class="memItemLeft" align="right" valign="top">virtual std::function&lt; bool(const <a class="el" href="a02781.html">mc_tasks::MetaTask</a> &amp;task, std::string &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#a753237535cc3e200e44ae0fa276f733e">buildCompletionCriteria</a> (double dt, const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;config) const</td></tr>
-<tr class="memdesc:a753237535cc3e200e44ae0fa276f733e inherit pro_methods_a02781"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add additional completion criterias to <a class="el" href="a01861.html" title="A generic MetaTask completion criteria. ">mc_control::CompletionCriteria</a> object.  <a href="a02781.html#a753237535cc3e200e44ae0fa276f733e">More...</a><br /></td></tr>
-<tr class="separator:a753237535cc3e200e44ae0fa276f733e inherit pro_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:af8efcb989d745983adeb1becc77f5f13"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; ContactState, <a class="el" href="a02757.html">internal::Contact</a>, <a class="el" href="a02769.html">EnumClassHash</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#af8efcb989d745983adeb1becc77f5f13">contacts_</a></td></tr>
-<tr class="separator:af8efcb989d745983adeb1becc77f5f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0aa6726e77f2dc1d7f371980426fdef"><td class="memItemLeft" align="right" valign="top">std::vector&lt; ContactState &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#af0aa6726e77f2dc1d7f371980426fdef">addContacts_</a></td></tr>
-<tr class="memdesc:af0aa6726e77f2dc1d7f371980426fdef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contacts to add to the QPSolver when the task is inserted.  <a href="#af0aa6726e77f2dc1d7f371980426fdef">More...</a><br /></td></tr>
-<tr class="separator:af0aa6726e77f2dc1d7f371980426fdef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c3405e9317cfb1104b0b18658ef3b43"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; ContactState, std::shared_ptr&lt; <a class="el" href="a02737.html">mc_tasks::force::CoPTask</a> &gt;, <a class="el" href="a02769.html">EnumClassHash</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a7c3405e9317cfb1104b0b18658ef3b43">footTasks</a></td></tr>
-<tr class="separator:a7c3405e9317cfb1104b0b18658ef3b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac619cfcd7785d886845a724f361f8e71"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02737.html">mc_tasks::force::CoPTask</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ac619cfcd7785d886845a724f361f8e71">contactTasks</a></td></tr>
-<tr class="separator:ac619cfcd7785d886845a724f361f8e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad55b59e574799dcf11bc7598b8a6cea9"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; Eigen::Vector3d &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ad55b59e574799dcf11bc7598b8a6cea9">supportPolygons_</a></td></tr>
-<tr class="memdesc:ad55b59e574799dcf11bc7598b8a6cea9"><td class="mdescLeft">&#160;</td><td class="mdescRight">For GUI display.  <a href="#ad55b59e574799dcf11bc7598b8a6cea9">More...</a><br /></td></tr>
-<tr class="separator:ad55b59e574799dcf11bc7598b8a6cea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37b5b7e6f2acd693711f6b1e8c7310db"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a37b5b7e6f2acd693711f6b1e8c7310db">supportMin_</a> = Eigen::Vector2d::Zero()</td></tr>
-<tr class="separator:a37b5b7e6f2acd693711f6b1e8c7310db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1133e256a909367f839ecef2528c7be"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ae1133e256a909367f839ecef2528c7be">supportMax_</a> = Eigen::Vector2d::Zero()</td></tr>
-<tr class="separator:ae1133e256a909367f839ecef2528c7be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0878448d283b4e2aa4a0dae3aff044cf"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02733.html">mc_tasks::CoMTask</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a0878448d283b4e2aa4a0dae3aff044cf">comTask</a></td></tr>
-<tr class="separator:a0878448d283b4e2aa4a0dae3aff044cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6476ed836d208897809eb8eb5e404689"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02789.html">mc_tasks::OrientationTask</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a6476ed836d208897809eb8eb5e404689">pelvisTask</a></td></tr>
-<tr class="memdesc:a6476ed836d208897809eb8eb5e404689"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pelvis orientation task.  <a href="#a6476ed836d208897809eb8eb5e404689">More...</a><br /></td></tr>
-<tr class="separator:a6476ed836d208897809eb8eb5e404689"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a207abdb63fcc13968352a6c7fffd47fb"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02789.html">mc_tasks::OrientationTask</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a207abdb63fcc13968352a6c7fffd47fb">torsoTask</a></td></tr>
-<tr class="memdesc:a207abdb63fcc13968352a6c7fffd47fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Torso orientation task.  <a href="#a207abdb63fcc13968352a6c7fffd47fb">More...</a><br /></td></tr>
-<tr class="separator:a207abdb63fcc13968352a6c7fffd47fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac252cd1d8af9703038aa40b61c0686ca"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02169.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ac252cd1d8af9703038aa40b61c0686ca">robots_</a></td></tr>
-<tr class="separator:ac252cd1d8af9703038aa40b61c0686ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01584b7cc75fc92846251632bec2e835"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02169.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a01584b7cc75fc92846251632bec2e835">realRobots_</a></td></tr>
-<tr class="separator:a01584b7cc75fc92846251632bec2e835"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23a5f961e6993f20ebe16f246736e1cc"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a23a5f961e6993f20ebe16f246736e1cc">robotIndex_</a></td></tr>
-<tr class="separator:a23a5f961e6993f20ebe16f246736e1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6f2964c1be8b168193c80636bc0b583"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#af6f2964c1be8b168193c80636bc0b583">comTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="memdesc:af6f2964c1be8b168193c80636bc0b583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stabilizer targets.  <a href="#af6f2964c1be8b168193c80636bc0b583">More...</a><br /></td></tr>
-<tr class="separator:af6f2964c1be8b168193c80636bc0b583"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3aac681a66c5968dde54b17f47d27fd"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aa3aac681a66c5968dde54b17f47d27fd">comdTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:aa3aac681a66c5968dde54b17f47d27fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a9150a5ae2456a5943fef824a02febf"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a1a9150a5ae2456a5943fef824a02febf">comddTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:a1a9150a5ae2456a5943fef824a02febf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae15134e2c9dad716a90a85d146969e0"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aae15134e2c9dad716a90a85d146969e0">zmpTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:aae15134e2c9dad716a90a85d146969e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0234fd0ce9a193f6a591b70f29448db"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#af0234fd0ce9a193f6a591b70f29448db">dcmTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:af0234fd0ce9a193f6a591b70f29448db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9eccc2bdf062ef36fc1f2647bc87f6d5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a9eccc2bdf062ef36fc1f2647bc87f6d5">omega_</a></td></tr>
-<tr class="separator:a9eccc2bdf062ef36fc1f2647bc87f6d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4da2c074568197514ca356b776540601"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a4da2c074568197514ca356b776540601">t_</a> = 0.</td></tr>
-<tr class="memdesc:a4da2c074568197514ca356b776540601"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time elapsed since the task is running.  <a href="#a4da2c074568197514ca356b776540601">More...</a><br /></td></tr>
-<tr class="separator:a4da2c074568197514ca356b776540601"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f8e78508d61b22ab56478c951d55245"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02109.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a3f8e78508d61b22ab56478c951d55245">defaultConfig_</a></td></tr>
-<tr class="memdesc:a3f8e78508d61b22ab56478c951d55245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default (user-provided) configuration for the stabilizer.  <a href="#a3f8e78508d61b22ab56478c951d55245">More...</a><br /></td></tr>
-<tr class="separator:a3f8e78508d61b22ab56478c951d55245"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5cb6dea903cd77c34f1f30f7ab8e754"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02109.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ae5cb6dea903cd77c34f1f30f7ab8e754">c_</a></td></tr>
-<tr class="separator:ae5cb6dea903cd77c34f1f30f7ab8e754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a017bc4102822276a88a60ae683c46627"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="/usr/local/share/doc/eigen-quadprog/doxygen-html/eigen-quadprog.doxytag:/usr/local/share/doc/eigen-quadprog/doxygen-html/" href="/usr/local/share/doc/eigen-quadprog/doxygen-html/a00567.html">Eigen::QuadProgDense</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a017bc4102822276a88a60ae683c46627">qpSolver_</a></td></tr>
-<tr class="memdesc:a017bc4102822276a88a60ae683c46627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Least-squares solver for wrench distribution.  <a href="#a017bc4102822276a88a60ae683c46627">More...</a><br /></td></tr>
-<tr class="separator:a017bc4102822276a88a60ae683c46627"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa588b56d52973ccad6a81e719f669614"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aa588b56d52973ccad6a81e719f669614">dcmAverageError_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:aa588b56d52973ccad6a81e719f669614"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1f0f546550766ef228fc687e556c8eb"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ae1f0f546550766ef228fc687e556c8eb">dcmError_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:ae1f0f546550766ef228fc687e556c8eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a488812c1669547a3b416bc203026832c"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a488812c1669547a3b416bc203026832c">dcmVelError_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:a488812c1669547a3b416bc203026832c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ba652e24e17842a3a0e7d00157a0416"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a5ba652e24e17842a3a0e7d00157a0416">measuredCoM_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:a5ba652e24e17842a3a0e7d00157a0416"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa44333b1b7aa2db2ae3f82162fe00536"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aa44333b1b7aa2db2ae3f82162fe00536">measuredCoMd_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:aa44333b1b7aa2db2ae3f82162fe00536"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6863d425eff4e098af4abc8a38ee2326"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a6863d425eff4e098af4abc8a38ee2326">measuredZMP_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:a6863d425eff4e098af4abc8a38ee2326"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b4b1c28b4e34a2f4c4600b4f2ec2245"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a0b4b1c28b4e34a2f4c4600b4f2ec2245">measuredDCM_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:a0b4b1c28b4e34a2f4c4600b4f2ec2245"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d3d079514e89bcafe3d35b1ea2c1018"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a1d3d079514e89bcafe3d35b1ea2c1018">measuredNetWrench_</a> = <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00627.html#aaeb95999d383653c0c848fc57e47c913">sva::ForceVecd::Zero</a>()</td></tr>
-<tr class="separator:a1d3d079514e89bcafe3d35b1ea2c1018"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a1be4b382b22e64d6c10a0a25ac2eb9"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a1a1be4b382b22e64d6c10a0a25ac2eb9">zmpError_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="separator:a1a1be4b382b22e64d6c10a0a25ac2eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe50c92ded00ad8f22e9da9433dee655"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01993.html">mc_filter::ExponentialMovingAverage</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#abe50c92ded00ad8f22e9da9433dee655">dcmIntegrator_</a></td></tr>
-<tr class="separator:abe50c92ded00ad8f22e9da9433dee655"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0238d047704d0cdaca32fe09153e4688"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02009.html">mc_filter::StationaryOffset</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a0238d047704d0cdaca32fe09153e4688">dcmDerivator_</a></td></tr>
-<tr class="separator:a0238d047704d0cdaca32fe09153e4688"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22569ac33f8c0e99bb674520373c41c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a22569ac33f8c0e99bb674520373c41c6">inTheAir_</a> = false</td></tr>
-<tr class="memdesc:a22569ac33f8c0e99bb674520373c41c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the robot in the air?  <a href="#a22569ac33f8c0e99bb674520373c41c6">More...</a><br /></td></tr>
-<tr class="separator:a22569ac33f8c0e99bb674520373c41c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29892a01046ffddb485441466a5dfbe0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a29892a01046ffddb485441466a5dfbe0">dfzForceError_</a> = 0.</td></tr>
-<tr class="memdesc:a29892a01046ffddb485441466a5dfbe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force error in foot force difference control.  <a href="#a29892a01046ffddb485441466a5dfbe0">More...</a><br /></td></tr>
-<tr class="separator:a29892a01046ffddb485441466a5dfbe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac424f24910f5856c99a44c359865dc2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aac424f24910f5856c99a44c359865dc2">dfzHeightError_</a> = 0.</td></tr>
-<tr class="memdesc:aac424f24910f5856c99a44c359865dc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Height error in foot force difference control.  <a href="#aac424f24910f5856c99a44c359865dc2">More...</a><br /></td></tr>
-<tr class="separator:aac424f24910f5856c99a44c359865dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78355a7b3bb963abe0bc160f0d51bcb9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a78355a7b3bb963abe0bc160f0d51bcb9">dt_</a> = 0.005</td></tr>
-<tr class="memdesc:a78355a7b3bb963abe0bc160f0d51bcb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controller cycle in [s].  <a href="#a78355a7b3bb963abe0bc160f0d51bcb9">More...</a><br /></td></tr>
-<tr class="separator:a78355a7b3bb963abe0bc160f0d51bcb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a077f98071aa5d9ae2b861aba4edbc606"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a077f98071aa5d9ae2b861aba4edbc606">leftFootRatio_</a> = 0.5</td></tr>
-<tr class="memdesc:a077f98071aa5d9ae2b861aba4edbc606"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weight distribution ratio (0: all weight on right foot, 1: all on left foot)  <a href="#a077f98071aa5d9ae2b861aba4edbc606">More...</a><br /></td></tr>
-<tr class="separator:a077f98071aa5d9ae2b861aba4edbc606"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadea2267fb6365e262900d3da4e40d98"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aadea2267fb6365e262900d3da4e40d98">mass_</a> = 38.</td></tr>
-<tr class="memdesc:aadea2267fb6365e262900d3da4e40d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Robot mass in [kg].  <a href="#aadea2267fb6365e262900d3da4e40d98">More...</a><br /></td></tr>
-<tr class="separator:aadea2267fb6365e262900d3da4e40d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c5ff776bf36beaee2182776ba4feca0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a1c5ff776bf36beaee2182776ba4feca0">runTime_</a> = 0.</td></tr>
-<tr class="separator:a1c5ff776bf36beaee2182776ba4feca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab459d6ba167857323daefe6a3fbef750"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ab459d6ba167857323daefe6a3fbef750">vdcHeightError_</a> = 0.</td></tr>
-<tr class="memdesc:ab459d6ba167857323daefe6a3fbef750"><td class="mdescLeft">&#160;</td><td class="mdescRight">Average height error used in vertical drift compensation.  <a href="#ab459d6ba167857323daefe6a3fbef750">More...</a><br /></td></tr>
-<tr class="separator:ab459d6ba167857323daefe6a3fbef750"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acea47979a383c106e0eedc05a02e52bb"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#acea47979a383c106e0eedc05a02e52bb">distribWrench_</a> = <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00627.html#aaeb95999d383653c0c848fc57e47c913">sva::ForceVecd::Zero</a>()</td></tr>
-<tr class="separator:acea47979a383c106e0eedc05a02e52bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6ca6cea95b8b7489553d88bf9e4d4e4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ae6ca6cea95b8b7489553d88bf9e4d4e4">sensorNames_</a></td></tr>
-<tr class="separator:ae6ca6cea95b8b7489553d88bf9e4d4e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeca99cf5f7b08a8d39bc3a7045d2e46d"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aeca99cf5f7b08a8d39bc3a7045d2e46d">zmpFrame_</a></td></tr>
-<tr class="memdesc:aeca99cf5f7b08a8d39bc3a7045d2e46d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force sensors corresponding to established contacts.  <a href="#aeca99cf5f7b08a8d39bc3a7045d2e46d">More...</a><br /></td></tr>
-<tr class="separator:aeca99cf5f7b08a8d39bc3a7045d2e46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_a02781"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02781')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02781.html">mc_tasks::MetaTask</a></td></tr>
-<tr class="memitem:addf8dbe10befa2b37c8e7ea386561775 inherit pro_attribs_a02781"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#addf8dbe10befa2b37c8e7ea386561775">type_</a></td></tr>
-<tr class="separator:addf8dbe10befa2b37c8e7ea386561775 inherit pro_attribs_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e55f0bff9a3d49ba0b92e0a4dff9a6f inherit pro_attribs_a02781"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#a6e55f0bff9a3d49ba0b92e0a4dff9a6f">name_</a></td></tr>
-<tr class="separator:a6e55f0bff9a3d49ba0b92e0a4dff9a6f inherit pro_attribs_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_static_methods_a02781"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_a02781')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="a02781.html">mc_tasks::MetaTask</a></td></tr>
-<tr class="memitem:a6f753630a5e0aca76308b4d652e62277 inherit pro_static_methods_a02781"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#a6f753630a5e0aca76308b4d652e62277">addToSolver</a> (<a class="el" href="a02781.html">MetaTask</a> &amp;t, <a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
-<tr class="separator:a6f753630a5e0aca76308b4d652e62277 inherit pro_static_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af374c0658624a4cb7a6a9f900ab9f69a inherit pro_static_methods_a02781"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#af374c0658624a4cb7a6a9f900ab9f69a">removeFromSolver</a> (<a class="el" href="a02781.html">MetaTask</a> &amp;t, <a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
-<tr class="separator:af374c0658624a4cb7a6a9f900ab9f69a inherit pro_static_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a570ef153c01abad5d5642b7a16f44d79 inherit pro_static_methods_a02781"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#a570ef153c01abad5d5642b7a16f44d79">update</a> (<a class="el" href="a02781.html">MetaTask</a> &amp;t, <a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
-<tr class="separator:a570ef153c01abad5d5642b7a16f44d79 inherit pro_static_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac29af31e9eb526d06b6d4ec1d2f3d5bb inherit pro_static_methods_a02781"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#ac29af31e9eb526d06b6d4ec1d2f3d5bb">addToLogger</a> (<a class="el" href="a02781.html">MetaTask</a> &amp;t, <a class="el" href="a02517.html">mc_rtc::Logger</a> &amp;logger)</td></tr>
-<tr class="separator:ac29af31e9eb526d06b6d4ec1d2f3d5bb inherit pro_static_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a256b3b8d5c00bc81ef7726f536f79bfb inherit pro_static_methods_a02781"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#a256b3b8d5c00bc81ef7726f536f79bfb">removeFromLogger</a> (<a class="el" href="a02781.html">MetaTask</a> &amp;t, <a class="el" href="a02517.html">mc_rtc::Logger</a> &amp;logger)</td></tr>
-<tr class="separator:a256b3b8d5c00bc81ef7726f536f79bfb inherit pro_static_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73ce0e373c9cf7f5b8db6745c46c3ef4 inherit pro_static_methods_a02781"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#a73ce0e373c9cf7f5b8db6745c46c3ef4">addToGUI</a> (<a class="el" href="a02781.html">MetaTask</a> &amp;t, <a class="el" href="a02425.html">mc_rtc::gui::StateBuilder</a> &amp;gui)</td></tr>
-<tr class="separator:a73ce0e373c9cf7f5b8db6745c46c3ef4 inherit pro_static_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a780d496b8148d863b2aa0462abcba525 inherit pro_static_methods_a02781"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02781.html#a780d496b8148d863b2aa0462abcba525">removeFromGUI</a> (<a class="el" href="a02781.html">MetaTask</a> &amp;t, <a class="el" href="a02425.html">mc_rtc::gui::StateBuilder</a> &amp;gui)</td></tr>
-<tr class="separator:a780d496b8148d863b2aa0462abcba525 inherit pro_static_methods_a02781"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65934b1c7c1f5ba59139c2b2d4351971"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a65934b1c7c1f5ba59139c2b2d4351971">Contact</a> (const <a class="el" href="a02141.html">mc_rbdyn::Robot</a> &amp;robot, const std::string &amp;<a class="el" href="a02765.html#a88df6c5efb4bf9e601ab5f3d82933cca">surfaceName</a>, double friction)</td></tr>
+<tr class="memdesc:a65934b1c7c1f5ba59139c2b2d4351971"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a contact from a surface attached to the ankle frame of a robot.  <a href="#a65934b1c7c1f5ba59139c2b2d4351971">More...</a><br /></td></tr>
+<tr class="separator:a65934b1c7c1f5ba59139c2b2d4351971"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a326db6cb41cb9ee4d824d52a8ddbe0e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a326db6cb41cb9ee4d824d52a8ddbe0e1">Contact</a> (const <a class="el" href="a02141.html">mc_rbdyn::Robot</a> &amp;robot, const std::string &amp;<a class="el" href="a02765.html#a88df6c5efb4bf9e601ab5f3d82933cca">surfaceName</a>, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;<a class="el" href="a02765.html#a1c494354335f7d7aa16f0202b637ea98">surfacePose</a>, double friction)</td></tr>
+<tr class="memdesc:a326db6cb41cb9ee4d824d52a8ddbe0e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="a02765.html" title="This class wraps information about contact surfaces used by the stabilizer. ">Contact</a> with user-specified surface pose.  <a href="#a326db6cb41cb9ee4d824d52a8ddbe0e1">More...</a><br /></td></tr>
+<tr class="separator:a326db6cb41cb9ee4d824d52a8ddbe0e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f5506ed9550e264f73e26e6178b30e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00686.html#af644950088ef46324f20a7214021a824">HrepXd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a8f5506ed9550e264f73e26e6178b30e0">hrep</a> (const Eigen::Vector3d &amp;<a class="el" href="a02765.html#a58a17b848f5db25d422c17d56c82f6b0">vertical</a>) const</td></tr>
+<tr class="memdesc:a8f5506ed9550e264f73e26e6178b30e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Halfspace representation of contact area in world frame.  <a href="#a8f5506ed9550e264f73e26e6178b30e0">More...</a><br /></td></tr>
+<tr class="separator:a8f5506ed9550e264f73e26e6178b30e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aced5d5b44832c71dcdde1ebfe46f7c32"><td class="memItemLeft" align="right" valign="top">const Eigen::Matrix&lt; double, 16, 6 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#aced5d5b44832c71dcdde1ebfe46f7c32">wrenchFaceMatrix</a> () const</td></tr>
+<tr class="memdesc:aced5d5b44832c71dcdde1ebfe46f7c32"><td class="mdescLeft">&#160;</td><td class="mdescRight">H-representation of contact wrench cones.  <a href="#aced5d5b44832c71dcdde1ebfe46f7c32">More...</a><br /></td></tr>
+<tr class="separator:aced5d5b44832c71dcdde1ebfe46f7c32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a335b37445d20098b896931675aaedc34"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a335b37445d20098b896931675aaedc34">sagittal</a> () const</td></tr>
+<tr class="memdesc:a335b37445d20098b896931675aaedc34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sagittal unit vector of the contact frame.  <a href="#a335b37445d20098b896931675aaedc34">More...</a><br /></td></tr>
+<tr class="separator:a335b37445d20098b896931675aaedc34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a221647a888696d4d1837961e1b7a6d"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a1a221647a888696d4d1837961e1b7a6d">lateral</a> () const</td></tr>
+<tr class="memdesc:a1a221647a888696d4d1837961e1b7a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lateral unit vector of the contact frame.  <a href="#a1a221647a888696d4d1837961e1b7a6d">More...</a><br /></td></tr>
+<tr class="separator:a1a221647a888696d4d1837961e1b7a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f40394e257213822ca9b73a581b2c10"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a5f40394e257213822ca9b73a581b2c10">normal</a> () const</td></tr>
+<tr class="memdesc:a5f40394e257213822ca9b73a581b2c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normal unit vector of the contact frame.  <a href="#a5f40394e257213822ca9b73a581b2c10">More...</a><br /></td></tr>
+<tr class="separator:a5f40394e257213822ca9b73a581b2c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1b330e62ef0cb3d0d1b4db0a8e886fb"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ab1b330e62ef0cb3d0d1b4db0a8e886fb">position</a> () const</td></tr>
+<tr class="memdesc:ab1b330e62ef0cb3d0d1b4db0a8e886fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for position.  <a href="#ab1b330e62ef0cb3d0d1b4db0a8e886fb">More...</a><br /></td></tr>
+<tr class="separator:ab1b330e62ef0cb3d0d1b4db0a8e886fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9eaefdf3407007a4c8f3dab5220d45c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ad9eaefdf3407007a4c8f3dab5220d45c">halfWidth</a> () const</td></tr>
+<tr class="separator:ad9eaefdf3407007a4c8f3dab5220d45c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2778ca298df3670ee48b9c2fb269e44c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a2778ca298df3670ee48b9c2fb269e44c">halfLength</a> () const</td></tr>
+<tr class="separator:a2778ca298df3670ee48b9c2fb269e44c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ebec093bad160567aca2d5ea46dc679"><td class="memItemLeft" align="right" valign="top">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a1ebec093bad160567aca2d5ea46dc679">anklePose</a> () const</td></tr>
+<tr class="memdesc:a1ebec093bad160567aca2d5ea46dc679"><td class="mdescLeft">&#160;</td><td class="mdescRight">World position of projected ankle frame into surface frame.  <a href="#a1ebec093bad160567aca2d5ea46dc679">More...</a><br /></td></tr>
+<tr class="separator:a1ebec093bad160567aca2d5ea46dc679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7880a19753e73389edd2b9ed0c120d8"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#ac7880a19753e73389edd2b9ed0c120d8">sagital</a> ()</td></tr>
+<tr class="separator:ac7880a19753e73389edd2b9ed0c120d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e213b8f4786b25e7f84eb78132a3d4a"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a8e213b8f4786b25e7f84eb78132a3d4a">lateral</a> ()</td></tr>
+<tr class="separator:a8e213b8f4786b25e7f84eb78132a3d4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58a17b848f5db25d422c17d56c82f6b0"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a58a17b848f5db25d422c17d56c82f6b0">vertical</a> ()</td></tr>
+<tr class="separator:a58a17b848f5db25d422c17d56c82f6b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88df6c5efb4bf9e601ab5f3d82933cca"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a88df6c5efb4bf9e601ab5f3d82933cca">surfaceName</a> () const</td></tr>
+<tr class="separator:a88df6c5efb4bf9e601ab5f3d82933cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c494354335f7d7aa16f0202b637ea98"><td class="memItemLeft" align="right" valign="top">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a1c494354335f7d7aa16f0202b637ea98">surfacePose</a> () const</td></tr>
+<tr class="separator:a1c494354335f7d7aa16f0202b637ea98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b6cfbb78cfb49c05589e1f861355853"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; Eigen::Vector3d &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a5b6cfbb78cfb49c05589e1f861355853">polygon</a> () const</td></tr>
+<tr class="memdesc:a5b6cfbb78cfb49c05589e1f861355853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the contact polygon defined by the 4 vertices of the min/max coordinates along the surface's sagital and normal direction.  <a href="#a5b6cfbb78cfb49c05589e1f861355853">More...</a><br /></td></tr>
+<tr class="separator:a5b6cfbb78cfb49c05589e1f861355853"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c628b2b87c83e06392028092bd89107"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a2c628b2b87c83e06392028092bd89107">xmin</a> () const</td></tr>
+<tr class="memdesc:a2c628b2b87c83e06392028092bd89107"><td class="mdescLeft">&#160;</td><td class="mdescRight">World coordinates of the point furthest back in the surface's sagital direction.  <a href="#a2c628b2b87c83e06392028092bd89107">More...</a><br /></td></tr>
+<tr class="separator:a2c628b2b87c83e06392028092bd89107"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adee46fe7d5c7596d13f2288c92a7a0c8"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#adee46fe7d5c7596d13f2288c92a7a0c8">xmax</a> () const</td></tr>
+<tr class="memdesc:adee46fe7d5c7596d13f2288c92a7a0c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">World coordinates of the point furthest front in the surface's sagital direction.  <a href="#adee46fe7d5c7596d13f2288c92a7a0c8">More...</a><br /></td></tr>
+<tr class="separator:adee46fe7d5c7596d13f2288c92a7a0c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16f8c6cb34189692495e7afafb0b2ced"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a16f8c6cb34189692495e7afafb0b2ced">ymin</a> () const</td></tr>
+<tr class="memdesc:a16f8c6cb34189692495e7afafb0b2ced"><td class="mdescLeft">&#160;</td><td class="mdescRight">World coordinates of the point furthest right in the surface's lateral direction.  <a href="#a16f8c6cb34189692495e7afafb0b2ced">More...</a><br /></td></tr>
+<tr class="separator:a16f8c6cb34189692495e7afafb0b2ced"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ce5eeed46427c049da3050580e1456f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02765.html#a1ce5eeed46427c049da3050580e1456f">ymax</a> () const</td></tr>
+<tr class="memdesc:a1ce5eeed46427c049da3050580e1456f"><td class="mdescLeft">&#160;</td><td class="mdescRight">World coordinates of the point furthest left in the surface's lateral direction.  <a href="#a1ce5eeed46427c049da3050580e1456f">More...</a><br /></td></tr>
+<tr class="separator:a1ce5eeed46427c049da3050580e1456f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Walking stabilization based on linear inverted pendulum tracking. </p>
-<p>Stabilization bridges the gap between the open-loop behavior of the pendulum state reference (feedforward controls) and feedback read from state estimation. In our case, feedback is done on the DCM of the LIPM:</p>
-<p class="formulaDsp">
-\[ \dot{\xi} = \dot{\xi}^{d} + k_p (\xi^d - \xi) + k_i \int (\xi^d - \xi) \]
-</p>
-<p>Which boils down into corresponding formulas for the CoP and CoM acceleration targets. </p>
+<div class="textblock"><p>This class wraps information about contact surfaces used by the stabilizer. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="afe79a5d39b9aaf14d33026354d81280d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe79a5d39b9aaf14d33026354d81280d">&#9670;&nbsp;</a></span>StabilizerTask()</h2>
+<a id="a65934b1c7c1f5ba59139c2b2d4351971"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65934b1c7c1f5ba59139c2b2d4351971">&#9670;&nbsp;</a></span>Contact() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mc_tasks::lipm_stabilizer::StabilizerTask::StabilizerTask </td>
+          <td class="memname">mc_tasks::lipm_stabilizer::internal::Contact::Contact </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02169.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
-          <td class="paramname"><em>robots</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a02169.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
-          <td class="paramname"><em>realRobots</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>robotIndex</em>, </td>
+          <td class="paramtype">const <a class="el" href="a02141.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>leftSurface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>rightSurface</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>torsoBodyName</em>, </td>
+          <td class="paramname"><em>surfaceName</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>&#160;</td>
+          <td class="paramname"><em>friction</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -462,25 +176,75 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates a stabilizer meta task. </p>
+<p>Constructs a contact from a surface attached to the ankle frame of a robot. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">robots</td><td>Robots on which the task acts </td></tr>
-    <tr><td class="paramname">realRobots</td><td>Corresponding real robot instances </td></tr>
-    <tr><td class="paramname">robotIndex</td><td>Index of the robot to stabilize </td></tr>
-    <tr><td class="paramname">leftSurface</td><td>Left foot surface name. Its origin should be the center of the foot sole </td></tr>
-    <tr><td class="paramname">rightSurface</td><td>Left foot surface name. Its origin should be the center of the foot sole </td></tr>
-    <tr><td class="paramname">torsoBodyName</td><td>Body name of the robot's torso (i.e a link above the floating base) </td></tr>
-    <tr><td class="paramname">dt</td><td>Controller's timestep </td></tr>
+    <tr><td class="paramname">robot</td><td>Robot from which to create the contact </td></tr>
+    <tr><td class="paramname">surfaceName</td><td>Name of surface attached to the robot's ankle. It is assumed that the surface frame is defined as follows:<ul>
+<li>z axis going from the environment towards the robot</li>
+<li>x aligned with the sagital direction</li>
+<li>y axis aligned with the lateral direction</li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">friction</td><td>sole friction </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a326db6cb41cb9ee4d824d52a8ddbe0e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a326db6cb41cb9ee4d824d52a8ddbe0e1">&#9670;&nbsp;</a></span>Contact() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_tasks::lipm_stabilizer::internal::Contact::Contact </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02141.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>surfaceName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td>
+          <td class="paramname"><em>surfacePose</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>friction</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="a02765.html" title="This class wraps information about contact surfaces used by the stabilizer. ">Contact</a> with user-specified surface pose. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">surfacePose</td><td>Pose of the contact surface frame</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02765.html#a65934b1c7c1f5ba59139c2b2d4351971" title="Constructs a contact from a surface attached to the ankle frame of a robot. ">Contact(const mc_rbdyn::Robot&amp;, const std::string &amp;, double)</a>; </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a50bd7771e0e45cd45b507af97b285544"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a50bd7771e0e45cd45b507af97b285544">&#9670;&nbsp;</a></span>addToGUI()</h2>
+<a id="a1ebec093bad160567aca2d5ea46dc679"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ebec093bad160567aca2d5ea46dc679">&#9670;&nbsp;</a></span>anklePose()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -489,221 +253,9 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::addToGUI </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02425.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add elements to the GUI through the helper. </p>
-<p>This will be called by the solver when the task is added.</p>
-<p>The default implementation adds the type of the task under the {"Tasks", name_} category. </p>
-
-<p>Reimplemented from <a class="el" href="a02781.html#a6be5d66b0aba0cac4f65093d5d3b7c7f">mc_tasks::MetaTask</a>.</p>
-
-</div>
-</div>
-<a id="a0806e753efb5d4a75ea474d775ccadf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0806e753efb5d4a75ea474d775ccadf4">&#9670;&nbsp;</a></span>addToLogger()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::addToLogger </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02517.html">mc_rtc::Logger</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Log stabilizer entries. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">logger</td><td>Logger. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Reimplemented from <a class="el" href="a02781.html#a19bd5d3b7b1b36dae48b516457de16a8">mc_tasks::MetaTask</a>.</p>
-
-</div>
-</div>
-<a id="ac7709c43f16a9b418ecf2619d69821a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7709c43f16a9b418ecf2619d69821a6">&#9670;&nbsp;</a></span>addToSolver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::addToSolver </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add the task to a solver. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver where to add the task </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="a02781.html#a87fbfd10dd81b8ce64a7a9f82d80d078">mc_tasks::MetaTask</a>.</p>
-
-</div>
-</div>
-<a id="ab4e37b7fc5368d0727c18cbca19cebc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4e37b7fc5368d0727c18cbca19cebc0">&#9670;&nbsp;</a></span>anchorFrame()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_tasks::lipm_stabilizer::StabilizerTask::anchorFrame </td>
+          <td class="memname">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&amp; mc_tasks::lipm_stabilizer::internal::Contact::anklePose </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>computes the anchorFrame compatible with the state observers (KinematicInertial) </p>
-<dl class="section return"><dt>Returns</dt><dd>Anchor frame in-between the feet according to <a class="el" href="a02765.html#aad11d62616938f7b665640ee5dbf0dc7" title="Interpolation paremeter between left and right foot. ">leftFootRatio()</a> </dd></dl>
-
-</div>
-</div>
-<a id="af8bf27488a2f076443dce128a71d8fe1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8bf27488a2f076443dce128a71d8fe1">&#9670;&nbsp;</a></span>anchorFrameReal()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_tasks::lipm_stabilizer::StabilizerTask::anchorFrameReal </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the anchor frame computed from real robot. </p>
-
-</div>
-</div>
-<a id="a64ccf8d3b99e44891b58df7df76c296f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64ccf8d3b99e44891b58df7df76c296f">&#9670;&nbsp;</a></span>commitedConfig()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="a02109.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a>&amp; mc_tasks::lipm_stabilizer::StabilizerTask::commitedConfig </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get last commited configuration (not including latest changes from the GUI) </p>
-<p>Commited configuration is corresponds to the latest one set by calling configure(const <a class="el" href="a02109.html" title="Configuration of the LIPMStabilizer. ">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> &amp;)</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02765.html#aa65a9b2c018ada2906213964b9c15248" title="Get current stabilizer&#39;s configuration (including changes from GUI) ">config()</a> </dd></dl>
-
-</div>
-</div>
-<a id="aa65a9b2c018ada2906213964b9c15248"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa65a9b2c018ada2906213964b9c15248">&#9670;&nbsp;</a></span>config()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="a02109.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a>&amp; mc_tasks::lipm_stabilizer::StabilizerTask::config </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get current stabilizer's configuration (including changes from GUI) </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02765.html#a64ccf8d3b99e44891b58df7df76c296f" title="Get last commited configuration (not including latest changes from the GUI) ">commitedConfig()</a> </dd></dl>
-
-</div>
-</div>
-<a id="a92ca7d350b4d444eaf183ea61e4c8491"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92ca7d350b4d444eaf183ea61e4c8491">&#9670;&nbsp;</a></span>configure()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::configure </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02109.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Configure stabilizer's parameters from a stabilizer's configuration object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Stabilizer configuration. Default values can be found in the RobotModule, and modified from YAML configuration or manually.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02765.html#aea4976e383f665df47a0396b85a2db32" title="Load targets and contacts from configuration. ">load(mc_solver::QPSolver &amp;, const mc_rtc::Configuration &amp;)</a> to set stabilizer targets and contacts from configuration </dd></dl>
-
-</div>
-</div>
-<a id="a18cf3bbe16d6f31b76fb67a4db7bf216"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18cf3bbe16d6f31b76fb67a4db7bf216">&#9670;&nbsp;</a></span>contactAnklePose()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&amp; mc_tasks::lipm_stabilizer::StabilizerTask::contactAnklePose </td>
-          <td>(</td>
-          <td class="paramtype">ContactState&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -714,58 +266,13 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Projected pose of the ankle frame in the contact frame. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">s</td><td>Contact for which the frame is requested</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The projected ankle frame expressed in world frame. </dd></dl>
+<p>World position of projected ankle frame into surface frame. </p>
+<p>Orientation is that of the target contact frame. </p>
 
 </div>
 </div>
-<a id="a45f17fc7c444f8a9ccaebaf287574108"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45f17fc7c444f8a9ccaebaf287574108">&#9670;&nbsp;</a></span>disable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::disable </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Disable all feedback components. </p>
-
-</div>
-</div>
-<a id="a04089abb785bdade64b4c8309c33c4c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04089abb785bdade64b4c8309c33c4c9">&#9670;&nbsp;</a></span>enable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::enable </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Enables stabilizer. </p>
-<p>This will reinitialize all integrators, and set the stabilizer gains according to the last call to <a class="el" href="a02765.html#a92ca7d350b4d444eaf183ea61e4c8491" title="Configure stabilizer&#39;s parameters from a stabilizer&#39;s configuration object. ">configure()</a> </p>
-
-</div>
-</div>
-<a id="ada370921b62caa185b6eaeaa9638cd06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada370921b62caa185b6eaeaa9638cd06">&#9670;&nbsp;</a></span>eval()</h2>
+<a id="a2778ca298df3670ee48b9c2fb269e44c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2778ca298df3670ee48b9c2fb269e44c">&#9670;&nbsp;</a></span>halfLength()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -774,89 +281,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::VectorXd mc_tasks::lipm_stabilizer::StabilizerTask::eval </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns the task error. </p>
-<p>Since the <a class="el" href="a02765.html" title="Walking stabilization based on linear inverted pendulum tracking. ">StabilizerTask</a> is a <a class="el" href="a02781.html" title="Represents a generic task. ">MetaTask</a>, the vector is a concatenation of each sub-tasks. The vector's dimensions depend on the underlying task, and the sub-tasks evaluation depends on their order of insertion. </p>
-
-<p>Implements <a class="el" href="a02781.html#ad6451130cee8c71e4045d48f7b8b7a18">mc_tasks::MetaTask</a>.</p>
-
-</div>
-</div>
-<a id="a4f59f1f61174faf255e2fd32e61a72fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f59f1f61174faf255e2fd32e61a72fa">&#9670;&nbsp;</a></span>footSurface()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string&amp; mc_tasks::lipm_stabilizer::StabilizerTask::footSurface </td>
-          <td>(</td>
-          <td class="paramtype">ContactState&#160;</td>
-          <td class="paramname"><em>s</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a93b9dbba22bc61bcba9c36af64167b0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93b9dbba22bc61bcba9c36af64167b0e">&#9670;&nbsp;</a></span>inContact()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_tasks::lipm_stabilizer::StabilizerTask::inContact </td>
-          <td>(</td>
-          <td class="paramtype">ContactState&#160;</td>
-          <td class="paramname"><em>state</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae33cd7a56736b6d070f229493ba14ed5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae33cd7a56736b6d070f229493ba14ed5">&#9670;&nbsp;</a></span>inDoubleSupport()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_tasks::lipm_stabilizer::StabilizerTask::inDoubleSupport </td>
+          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::halfLength </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -871,8 +296,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="aad11d62616938f7b665640ee5dbf0dc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad11d62616938f7b665640ee5dbf0dc7">&#9670;&nbsp;</a></span>leftFootRatio()</h2>
+<a id="ad9eaefdf3407007a4c8f3dab5220d45c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9eaefdf3407007a4c8f3dab5220d45c">&#9670;&nbsp;</a></span>halfWidth()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -881,7 +306,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::leftFootRatio </td>
+          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::halfWidth </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -894,583 +319,63 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Interpolation paremeter between left and right foot. </p>
-<dl class="section return"><dt>Returns</dt><dd>Left foot ratio between [0,1] </dd></dl>
-
 </div>
 </div>
-<a id="aea4976e383f665df47a0396b85a2db32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea4976e383f665df47a0396b85a2db32">&#9670;&nbsp;</a></span>load()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::load </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Load targets and contacts from configuration. </p>
-
-<p>Reimplemented from <a class="el" href="a02781.html#a27dbee0df32ae7f803184cb6222fc427">mc_tasks::MetaTask</a>.</p>
-
-</div>
-</div>
-<a id="a297f2b26b3156ed4ebae0ee789b89a8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a297f2b26b3156ed4ebae0ee789b89a8b">&#9670;&nbsp;</a></span>measuredCoM()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::Vector3d&amp; mc_tasks::lipm_stabilizer::StabilizerTask::measuredCoM </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0b4613e8df107c406a9b434c06b9b27a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b4613e8df107c406a9b434c06b9b27a">&#9670;&nbsp;</a></span>measuredCoMd()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::Vector3d&amp; mc_tasks::lipm_stabilizer::StabilizerTask::measuredCoMd </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8701a57a809d6623b80306bd6cc9609a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8701a57a809d6623b80306bd6cc9609a">&#9670;&nbsp;</a></span>measuredDCM()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::Vector3d&amp; mc_tasks::lipm_stabilizer::StabilizerTask::measuredDCM </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a52698baf31cd96e73a65d30009db86ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52698baf31cd96e73a65d30009db86ff">&#9670;&nbsp;</a></span>measuredZMP()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::Vector3d&amp; mc_tasks::lipm_stabilizer::StabilizerTask::measuredZMP </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3ad771c0db927eff99269276ef551e86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ad771c0db927eff99269276ef551e86">&#9670;&nbsp;</a></span>realRobot()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="a02141.html">mc_rbdyn::Robot</a>&amp; mc_tasks::lipm_stabilizer::StabilizerTask::realRobot </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9c93d88492cb1541133d83c8072be280"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c93d88492cb1541133d83c8072be280">&#9670;&nbsp;</a></span>reconfigure()</h2>
+<a id="a8f5506ed9550e264f73e26e6178b30e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f5506ed9550e264f73e26e6178b30e0">&#9670;&nbsp;</a></span>hrep()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::reconfigure </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reset stabilizer configuration from last configuration set by <a class="el" href="a02765.html#a92ca7d350b4d444eaf183ea61e4c8491" title="Configure stabilizer&#39;s parameters from a stabilizer&#39;s configuration object. ">configure()</a> </p>
-<p>Does not include changes made from the GUI. </p>
-
-</div>
-</div>
-<a id="a47f242d0db7ed96a17dc3aea2726c473"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47f242d0db7ed96a17dc3aea2726c473">&#9670;&nbsp;</a></span>removeFromGUI()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::removeFromGUI </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02425.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Remove elements from the GUI through the helper. </p>
-<p>This will be called by the solver when the task is removed.</p>
-<p>The default implementation removes the {"Tasks", name_} category. </p>
-
-<p>Reimplemented from <a class="el" href="a02781.html#a44d85f3f65abc8a5f8965efec40ebe7d">mc_tasks::MetaTask</a>.</p>
-
-</div>
-</div>
-<a id="a18352e8c8269aabbd125f8d49a9c5b2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18352e8c8269aabbd125f8d49a9c5b2f">&#9670;&nbsp;</a></span>removeFromLogger()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::removeFromLogger </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02517.html">mc_rtc::Logger</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Remove entries from the logger. </p>
-<p>This will be called by the solver when the task is removed.</p>
-<p>The default implementation removes nothing from the log. </p>
-
-<p>Reimplemented from <a class="el" href="a02781.html#a1db4ea4e03d00823e7ee10b444a697b1">mc_tasks::MetaTask</a>.</p>
-
-</div>
-</div>
-<a id="a1bef48c5f1f58cf958f55c9fb2c9e6e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1bef48c5f1f58cf958f55c9fb2c9e6e1">&#9670;&nbsp;</a></span>removeFromSolver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::removeFromSolver </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Remove the task from a solver. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver from which to remove the task </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="a02781.html#afa7c055d8cef8f4a8bb1e76689445130">mc_tasks::MetaTask</a>.</p>
-
-</div>
-</div>
-<a id="a65b51a83fbd47db891199fdafdc50220"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65b51a83fbd47db891199fdafdc50220">&#9670;&nbsp;</a></span>reset()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::reset </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Resets the stabilizer tasks and parameters to their default configuration. </p>
-<p>Resets all tasks and errors/integrator/derivators to their initial configuration. Configures the default stabilizer parameters from the robot module.</p>
-<p>You can configure the stabilizer parameters (DCM tacking gains, task gains, etc) by calling <a class="el" href="a02765.html#a92ca7d350b4d444eaf183ea61e4c8491" title="Configure stabilizer&#39;s parameters from a stabilizer&#39;s configuration object. ">configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &amp; config)</a></p>
-<dl class="section note"><dt>Note</dt><dd>If you wish to reset the stabilizer from it's current configuration, you can do so by storing its current configuration as accessed by <a class="el" href="a02765.html#aa65a9b2c018ada2906213964b9c15248" title="Get current stabilizer&#39;s configuration (including changes from GUI) ">config()</a> or <a class="el" href="a02765.html#a64ccf8d3b99e44891b58df7df76c296f" title="Get last commited configuration (not including latest changes from the GUI) ">commitedConfig()</a> and set it explitely after calling reset by calling <a class="el" href="a02765.html#a92ca7d350b4d444eaf183ea61e4c8491" title="Configure stabilizer&#39;s parameters from a stabilizer&#39;s configuration object. ">configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &amp;)</a>; </dd></dl>
-
-<p>Implements <a class="el" href="a02781.html#a7821083f6def1d54f22ea7c0e223e21a">mc_tasks::MetaTask</a>.</p>
-
-</div>
-</div>
-<a id="aa5456b94e95138e35e7e5738de51512a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5456b94e95138e35e7e5738de51512a">&#9670;&nbsp;</a></span>robot()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="a02141.html">mc_rbdyn::Robot</a>&amp; mc_tasks::lipm_stabilizer::StabilizerTask::robot </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a834eb99d2717aacb38b5eee307bd0773"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a834eb99d2717aacb38b5eee307bd0773">&#9670;&nbsp;</a></span>run()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::run </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Update QP task targets. </p>
-<p>This function is called once the reference has been updated. </p>
-
-</div>
-</div>
-<a id="a3348f167e5652a215c2bc4325488a541"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3348f167e5652a215c2bc4325488a541">&#9670;&nbsp;</a></span>setContacts() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::setContacts </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::pair&lt; ContactState, <a class="el" href="a02757.html">internal::Contact</a> &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>contacts</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Configure foot tasks for contact at a given location, and add contacts to the solver. </p>
-<dl class="section note"><dt>Note</dt><dd>To use the stabilizer with dynamics constraint, you need to add the corresponding <a class="el" href="a02081.html">mc_rbdyn::Contact</a> to the solver and free the roll/pitch rotation and z translation (in contact frame). This assumes the foot surfaces to have x pointing towards the front of the foot, and z from the ground up.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>The QP solver to which the contact tasks will be added. Note that this method will not add contact constraints to the QPSolver. If you wish to do so, bear in mind that for the stabilizer to work properly, the contact's dofs along the x and y rotations and z translation need to be free. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a694edac11eca809a1faaafed3971cbca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a694edac11eca809a1faaafed3971cbca">&#9670;&nbsp;</a></span>setContacts() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::setContacts </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::pair&lt; ContactState, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>contacts</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper to set contacts with a provided target pose. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">contacts</td><td>vectors of contacts defined by their ContactState and a desired pose </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a2284666da172e5bc40f90525f800a0c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2284666da172e5bc40f90525f800a0c0">&#9670;&nbsp;</a></span>setContacts() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::setContacts </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; ContactState &gt; &amp;&#160;</td>
-          <td class="paramname"><em>contacts</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Helper to set contacts from the current surface pose. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">contacts</td><td>Contacts to add. Their pose will be determined set from the realRobot estimate of the foot surface pose. Use with caution.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd>void setContacts(mc_solver::QPSolver &amp;, const std::vector&lt;std::pair&lt;ContactState, sva::PTransformd&gt;&gt; &amp;); </dd></dl>
-
-</div>
-</div>
-<a id="a291e8bd69f054b3cce5117e721356185"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a291e8bd69f054b3cce5117e721356185">&#9670;&nbsp;</a></span>speed()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::VectorXd mc_tasks::lipm_stabilizer::StabilizerTask::speed </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns the task velocity. </p>
-<p>Since the <a class="el" href="a02765.html" title="Walking stabilization based on linear inverted pendulum tracking. ">StabilizerTask</a> is a <a class="el" href="a02781.html" title="Represents a generic task. ">MetaTask</a>, the vector is a concatenation of each sub-tasks. The vector's dimensions depend on the underlying task, and the sub-tasks evaluation depends on their order of insertion. </p>
-
-<p>Implements <a class="el" href="a02781.html#a2f04c2bc3c4806a13bd383826127f7e1">mc_tasks::MetaTask</a>.</p>
-
-</div>
-</div>
-<a id="aeca8ec3501161284eebe42d34b7433d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeca8ec3501161284eebe42d34b7433d3">&#9670;&nbsp;</a></span>staticTarget()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::staticTarget </td>
+          <td class="memname"><a class="el" href="a00686.html#af644950088ef46324f20a7214021a824">HrepXd</a> mc_tasks::lipm_stabilizer::internal::Contact::hrep </td>
           <td>(</td>
           <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>com</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>zmpHeight</em> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramname"><em>vertical</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Provides a static target to the stabilizer. </p>
-<ul>
-<li>CoM target : user-provided</li>
-<li>CoM velocity target: zero (static)</li>
-<li>CoM acceleration target: zero (static)</li>
-<li>ZMP: computed under the CoM</li>
-</ul>
+<p>Halfspace representation of contact area in world frame. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">com</td><td>desired com position</td></tr>
-    <tr><td class="paramname">zmpHeight[=0]</td><td>optional height of the ZMP plane (eg contacts), used to compute the pendulums omega.</td></tr>
+    <tr><td class="paramname">vertical</td><td>Normalized vector parallel to gravity </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02765.html#acbe9f9871a4c131a6c2176eeaf0a5dc4" title="Provides a dynamic target to the stabilizer. ">target</a> for dynamic motions. </dd></dl>
 
 </div>
 </div>
-<a id="acbe9f9871a4c131a6c2176eeaf0a5dc4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbe9f9871a4c131a6c2176eeaf0a5dc4">&#9670;&nbsp;</a></span>target()</h2>
+<a id="a1a221647a888696d4d1837961e1b7a6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a221647a888696d4d1837961e1b7a6d">&#9670;&nbsp;</a></span>lateral() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::target </td>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::lateral </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>com</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>comd</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>comdd</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>zmp</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Provides a dynamic target to the stabilizer. </p>
-<p>Note that this target should be updated at each iteration and provide a dynamically-consistent trajectory. This would typically be generated by a compatible Model Preview Controller.</p>
-<p>See <a href="https://github.com/jrl-umi3218/lipm_walking_controller">https://github.com/jrl-umi3218/lipm_walking_controller</a> for example in the context of walking.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">com</td><td>Desired CoM position </td></tr>
-    <tr><td class="paramname">comd</td><td>Desired CoM velocity </td></tr>
-    <tr><td class="paramname">comdd</td><td>Desired CoM acceleration </td></tr>
-    <tr><td class="paramname">zmp</td><td>Desired ZMP</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02765.html#aeca8ec3501161284eebe42d34b7433d3" title="Provides a static target to the stabilizer. ">staticTarget</a> for a helper to define the stabilizer <a class="el" href="a02765.html#acbe9f9871a4c131a6c2176eeaf0a5dc4" title="Provides a dynamic target to the stabilizer. ">target</a> when the CoM is static </dd></dl>
+<p>Lateral unit vector of the contact frame. </p>
 
 </div>
 </div>
-<a id="a5015b2c830f229580727098d7b769d1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5015b2c830f229580727098d7b769d1d">&#9670;&nbsp;</a></span>update()</h2>
+<a id="a8e213b8f4786b25e7f84eb78132a3d4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e213b8f4786b25e7f84eb78132a3d4a">&#9670;&nbsp;</a></span>lateral() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1479,36 +384,23 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::update </td>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::lateral </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a02669.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Update the task. </p>
-<p>This function (usually) has to be called at every iteration of the solver once it has been added. It should update the state of the task.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver in which the task is inserted </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="a02781.html#a21e9870f7434084d52299f18f8f86da7">mc_tasks::MetaTask</a>.</p>
-
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="af0aa6726e77f2dc1d7f371980426fdef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0aa6726e77f2dc1d7f371980426fdef">&#9670;&nbsp;</a></span>addContacts_</h2>
+<a id="a5f40394e257213822ca9b73a581b2c10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f40394e257213822ca9b73a581b2c10">&#9670;&nbsp;</a></span>normal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1517,22 +409,25 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;ContactState&gt; mc_tasks::lipm_stabilizer::StabilizerTask::addContacts_</td>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::normal </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Contacts to add to the QPSolver when the task is inserted. </p>
+<p>Normal unit vector of the contact frame. </p>
 
 </div>
 </div>
-<a id="ae5cb6dea903cd77c34f1f30f7ab8e754"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5cb6dea903cd77c34f1f30f7ab8e754">&#9670;&nbsp;</a></span>c_</h2>
+<a id="a5b6cfbb78cfb49c05589e1f861355853"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b6cfbb78cfb49c05589e1f861355853">&#9670;&nbsp;</a></span>polygon()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1541,20 +436,25 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02109.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> mc_tasks::lipm_stabilizer::StabilizerTask::c_</td>
+          <td class="memname">const std::vector&lt;Eigen::Vector3d&gt;&amp; mc_tasks::lipm_stabilizer::internal::Contact::polygon </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the contact polygon defined by the 4 vertices of the min/max coordinates along the surface's sagital and normal direction. </p>
+
 </div>
 </div>
-<a id="a1a9150a5ae2456a5943fef824a02febf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a9150a5ae2456a5943fef824a02febf">&#9670;&nbsp;</a></span>comddTarget_</h2>
+<a id="ab1b330e62ef0cb3d0d1b4db0a8e886fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1b330e62ef0cb3d0d1b4db0a8e886fb">&#9670;&nbsp;</a></span>position()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1563,20 +463,25 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::comddTarget_ = Eigen::Vector3d::Zero()</td>
+          <td class="memname">const Eigen::Vector3d&amp; mc_tasks::lipm_stabilizer::internal::Contact::position </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>Shorthand for position. </p>
+
 </div>
 </div>
-<a id="aa3aac681a66c5968dde54b17f47d27fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3aac681a66c5968dde54b17f47d27fd">&#9670;&nbsp;</a></span>comdTarget_</h2>
+<a id="ac7880a19753e73389edd2b9ed0c120d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7880a19753e73389edd2b9ed0c120d8">&#9670;&nbsp;</a></span>sagital()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1585,20 +490,23 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::comdTarget_ = Eigen::Vector3d::Zero()</td>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::sagital </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af6f2964c1be8b168193c80636bc0b583"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6f2964c1be8b168193c80636bc0b583">&#9670;&nbsp;</a></span>comTarget_</h2>
+<a id="a335b37445d20098b896931675aaedc34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a335b37445d20098b896931675aaedc34">&#9670;&nbsp;</a></span>sagittal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1607,22 +515,25 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::comTarget_ = Eigen::Vector3d::Zero()</td>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::sagittal </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Stabilizer targets. </p>
+<p>Sagittal unit vector of the contact frame. </p>
 
 </div>
 </div>
-<a id="a0878448d283b4e2aa4a0dae3aff044cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0878448d283b4e2aa4a0dae3aff044cf">&#9670;&nbsp;</a></span>comTask</h2>
+<a id="a88df6c5efb4bf9e601ab5f3d82933cca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88df6c5efb4bf9e601ab5f3d82933cca">&#9670;&nbsp;</a></span>surfaceName()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1631,20 +542,23 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="a02733.html">mc_tasks::CoMTask</a>&gt; mc_tasks::lipm_stabilizer::StabilizerTask::comTask</td>
+          <td class="memname">const std::string&amp; mc_tasks::lipm_stabilizer::internal::Contact::surfaceName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af8efcb989d745983adeb1becc77f5f13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8efcb989d745983adeb1becc77f5f13">&#9670;&nbsp;</a></span>contacts_</h2>
+<a id="a1c494354335f7d7aa16f0202b637ea98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c494354335f7d7aa16f0202b637ea98">&#9670;&nbsp;</a></span>surfacePose()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1653,20 +567,23 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unordered_map&lt;ContactState, <a class="el" href="a02757.html">internal::Contact</a>, <a class="el" href="a02769.html">EnumClassHash</a>&gt; mc_tasks::lipm_stabilizer::StabilizerTask::contacts_</td>
+          <td class="memname">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&amp; mc_tasks::lipm_stabilizer::internal::Contact::surfacePose </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ac619cfcd7785d886845a724f361f8e71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac619cfcd7785d886845a724f361f8e71">&#9670;&nbsp;</a></span>contactTasks</h2>
+<a id="a58a17b848f5db25d422c17d56c82f6b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58a17b848f5db25d422c17d56c82f6b0">&#9670;&nbsp;</a></span>vertical()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1675,20 +592,23 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;std::shared_ptr&lt;<a class="el" href="a02737.html">mc_tasks::force::CoPTask</a>&gt; &gt; mc_tasks::lipm_stabilizer::StabilizerTask::contactTasks</td>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::internal::Contact::vertical </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aa588b56d52973ccad6a81e719f669614"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa588b56d52973ccad6a81e719f669614">&#9670;&nbsp;</a></span>dcmAverageError_</h2>
+<a id="aced5d5b44832c71dcdde1ebfe46f7c32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aced5d5b44832c71dcdde1ebfe46f7c32">&#9670;&nbsp;</a></span>wrenchFaceMatrix()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1697,20 +617,27 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::dcmAverageError_ = Eigen::Vector3d::Zero()</td>
+          <td class="memname">const Eigen::Matrix&lt;double, 16, 6&gt;&amp; mc_tasks::lipm_stabilizer::internal::Contact::wrenchFaceMatrix </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>H-representation of contact wrench cones. </p>
+<p>See <a href="https://hal.archives-ouvertes.fr/hal-02108449/document">https://hal.archives-ouvertes.fr/hal-02108449/document</a> for technical details on the derivation of this formula.</p>
+<dl class="section note"><dt>Note</dt><dd>Uses halfLength_, halfWidth_ computed from the surface points in findSurfaceBoundaries(), friction_: sole friction </dd></dl>
+
 </div>
 </div>
-<a id="a0238d047704d0cdaca32fe09153e4688"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0238d047704d0cdaca32fe09153e4688">&#9670;&nbsp;</a></span>dcmDerivator_</h2>
+<a id="adee46fe7d5c7596d13f2288c92a7a0c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adee46fe7d5c7596d13f2288c92a7a0c8">&#9670;&nbsp;</a></span>xmax()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1719,20 +646,25 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02009.html">mc_filter::StationaryOffset</a>&lt;Eigen::Vector3d&gt; mc_tasks::lipm_stabilizer::StabilizerTask::dcmDerivator_</td>
+          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::xmax </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>World coordinates of the point furthest front in the surface's sagital direction. </p>
+
 </div>
 </div>
-<a id="ae1f0f546550766ef228fc687e556c8eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1f0f546550766ef228fc687e556c8eb">&#9670;&nbsp;</a></span>dcmError_</h2>
+<a id="a2c628b2b87c83e06392028092bd89107"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c628b2b87c83e06392028092bd89107">&#9670;&nbsp;</a></span>xmin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1741,20 +673,25 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::dcmError_ = Eigen::Vector3d::Zero()</td>
+          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::xmin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>World coordinates of the point furthest back in the surface's sagital direction. </p>
+
 </div>
 </div>
-<a id="abe50c92ded00ad8f22e9da9433dee655"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe50c92ded00ad8f22e9da9433dee655">&#9670;&nbsp;</a></span>dcmIntegrator_</h2>
+<a id="a1ce5eeed46427c049da3050580e1456f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ce5eeed46427c049da3050580e1456f">&#9670;&nbsp;</a></span>ymax()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1763,20 +700,25 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01993.html">mc_filter::ExponentialMovingAverage</a>&lt;Eigen::Vector3d&gt; mc_tasks::lipm_stabilizer::StabilizerTask::dcmIntegrator_</td>
+          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::ymax </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>World coordinates of the point furthest left in the surface's lateral direction. </p>
+
 </div>
 </div>
-<a id="af0234fd0ce9a193f6a591b70f29448db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0234fd0ce9a193f6a591b70f29448db">&#9670;&nbsp;</a></span>dcmTarget_</h2>
+<a id="a16f8c6cb34189692495e7afafb0b2ced"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16f8c6cb34189692495e7afafb0b2ced">&#9670;&nbsp;</a></span>ymin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1785,1059 +727,20 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::dcmTarget_ = Eigen::Vector3d::Zero()</td>
+          <td class="memname">double mc_tasks::lipm_stabilizer::internal::Contact::ymin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a488812c1669547a3b416bc203026832c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a488812c1669547a3b416bc203026832c">&#9670;&nbsp;</a></span>dcmVelError_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::dcmVelError_ = Eigen::Vector3d::Zero()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3f8e78508d61b22ab56478c951d55245"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f8e78508d61b22ab56478c951d55245">&#9670;&nbsp;</a></span>defaultConfig_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02109.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> mc_tasks::lipm_stabilizer::StabilizerTask::defaultConfig_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Default (user-provided) configuration for the stabilizer. </p>
-<p>This configuration is superseeded by the parameters set in the GUI </p>
-
-</div>
-</div>
-<a id="a29892a01046ffddb485441466a5dfbe0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29892a01046ffddb485441466a5dfbe0">&#9670;&nbsp;</a></span>dfzForceError_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::dfzForceError_ = 0.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Force error in foot force difference control. </p>
-
-</div>
-</div>
-<a id="aac424f24910f5856c99a44c359865dc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac424f24910f5856c99a44c359865dc2">&#9670;&nbsp;</a></span>dfzHeightError_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::dfzHeightError_ = 0.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Height error in foot force difference control. </p>
-
-</div>
-</div>
-<a id="acea47979a383c106e0eedc05a02e52bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acea47979a383c106e0eedc05a02e52bb">&#9670;&nbsp;</a></span>distribWrench_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a> mc_tasks::lipm_stabilizer::StabilizerTask::distribWrench_ = <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00627.html#aaeb95999d383653c0c848fc57e47c913">sva::ForceVecd::Zero</a>()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a78355a7b3bb963abe0bc160f0d51bcb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78355a7b3bb963abe0bc160f0d51bcb9">&#9670;&nbsp;</a></span>dt_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::dt_ = 0.005</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Controller cycle in [s]. </p>
-
-</div>
-</div>
-<a id="a7c3405e9317cfb1104b0b18658ef3b43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7c3405e9317cfb1104b0b18658ef3b43">&#9670;&nbsp;</a></span>footTasks</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::unordered_map&lt;ContactState, std::shared_ptr&lt;<a class="el" href="a02737.html">mc_tasks::force::CoPTask</a>&gt;, <a class="el" href="a02769.html">EnumClassHash</a>&gt; mc_tasks::lipm_stabilizer::StabilizerTask::footTasks</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a22569ac33f8c0e99bb674520373c41c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22569ac33f8c0e99bb674520373c41c6">&#9670;&nbsp;</a></span>inTheAir_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_tasks::lipm_stabilizer::StabilizerTask::inTheAir_ = false</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Is the robot in the air? </p>
-
-</div>
-</div>
-<a id="a077f98071aa5d9ae2b861aba4edbc606"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a077f98071aa5d9ae2b861aba4edbc606">&#9670;&nbsp;</a></span>leftFootRatio_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::leftFootRatio_ = 0.5</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Weight distribution ratio (0: all weight on right foot, 1: all on left foot) </p>
-
-</div>
-</div>
-<a id="aadea2267fb6365e262900d3da4e40d98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aadea2267fb6365e262900d3da4e40d98">&#9670;&nbsp;</a></span>mass_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::mass_ = 38.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Robot mass in [kg]. </p>
-
-</div>
-</div>
-<a id="a423757f45cfdd7eea6a85d1dfa7d2ee2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a423757f45cfdd7eea6a85d1dfa7d2ee2">&#9670;&nbsp;</a></span>MAX_AVERAGE_DCM_ERROR</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_AVERAGE_DCM_ERROR = 0.05</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Maximum average (integral) DCM error in [m]. </p>
-
-</div>
-</div>
-<a id="a3fc7ac59767f6524cb23b21380c0651f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fc7ac59767f6524cb23b21380c0651f">&#9670;&nbsp;</a></span>MAX_COM_ADMITTANCE</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_COM_ADMITTANCE = 20</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Maximum admittance for CoM admittance control. </p>
-
-</div>
-</div>
-<a id="afeaae9007994ca1a28123f130ac40a62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afeaae9007994ca1a28123f130ac40a62">&#9670;&nbsp;</a></span>MAX_COP_ADMITTANCE</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_COP_ADMITTANCE = 0.1</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Maximum CoP admittance for foot damping control. </p>
-
-</div>
-</div>
-<a id="afd042284edded71ef5a11fa3338cd474"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd042284edded71ef5a11fa3338cd474">&#9670;&nbsp;</a></span>MAX_DCM_D_GAIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_DCM_D_GAIN = 2.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Maximum DCM derivative gain (no unit) </p>
-
-</div>
-</div>
-<a id="ab4e24167d33878c916253d40cdb35df8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4e24167d33878c916253d40cdb35df8">&#9670;&nbsp;</a></span>MAX_DCM_I_GAIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_DCM_I_GAIN = 100.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Maximum DCM average integral gain in [Hz]. </p>
-
-</div>
-</div>
-<a id="accb3d0657c3d76b48410d17e70ba8e66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#accb3d0657c3d76b48410d17e70ba8e66">&#9670;&nbsp;</a></span>MAX_DCM_P_GAIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_DCM_P_GAIN = 20.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Maximum DCM proportional gain in [Hz]. </p>
-
-</div>
-</div>
-<a id="ac3b0b19db008d81607d673433e888e61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3b0b19db008d81607d673433e888e61">&#9670;&nbsp;</a></span>MAX_DFZ_ADMITTANCE</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_DFZ_ADMITTANCE</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      5e-4</div></div><!-- fragment -->
-<p>Maximum admittance in [s] / [kg] for foot force difference control. </p>
-
-</div>
-</div>
-<a id="abe1f288c9f4f825a150cb952ca56d02a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe1f288c9f4f825a150cb952ca56d02a">&#9670;&nbsp;</a></span>MAX_DFZ_DAMPING</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_DFZ_DAMPING</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      10.</div></div><!-- fragment -->
-<p>Maximum normalized damping in [Hz] for foot force difference control. </p>
-
-</div>
-</div>
-<a id="a5d9aa68a658b6c84416e7aa2603f07dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d9aa68a658b6c84416e7aa2603f07dc">&#9670;&nbsp;</a></span>MAX_FDC_RX_VEL</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_FDC_RX_VEL</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      0.2</div></div><!-- fragment -->
-<p>Maximum x-axis angular velocity in [rad] / [s] for foot damping control. </p>
-
-</div>
-</div>
-<a id="ab2e64e0d5c2fba868860809414d228c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2e64e0d5c2fba868860809414d228c9">&#9670;&nbsp;</a></span>MAX_FDC_RY_VEL</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_FDC_RY_VEL</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      0.2</div></div><!-- fragment -->
-<p>Maximum y-axis angular velocity in [rad] / [s] for foot damping control. </p>
-
-</div>
-</div>
-<a id="a254e6d570a19e2fc9c6e0b55f1c40e34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a254e6d570a19e2fc9c6e0b55f1c40e34">&#9670;&nbsp;</a></span>MAX_FDC_RZ_VEL</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MAX_FDC_RZ_VEL</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      0.2</div></div><!-- fragment -->
-<p>Maximum z-axis angular velocity in [rad] / [s] for foot damping control. </p>
-
-</div>
-</div>
-<a id="a5ba652e24e17842a3a0e7d00157a0416"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ba652e24e17842a3a0e7d00157a0416">&#9670;&nbsp;</a></span>measuredCoM_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::measuredCoM_ = Eigen::Vector3d::Zero()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa44333b1b7aa2db2ae3f82162fe00536"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa44333b1b7aa2db2ae3f82162fe00536">&#9670;&nbsp;</a></span>measuredCoMd_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::measuredCoMd_ = Eigen::Vector3d::Zero()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0b4b1c28b4e34a2f4c4600b4f2ec2245"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b4b1c28b4e34a2f4c4600b4f2ec2245">&#9670;&nbsp;</a></span>measuredDCM_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::measuredDCM_ = Eigen::Vector3d::Zero()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1d3d079514e89bcafe3d35b1ea2c1018"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d3d079514e89bcafe3d35b1ea2c1018">&#9670;&nbsp;</a></span>measuredNetWrench_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a> mc_tasks::lipm_stabilizer::StabilizerTask::measuredNetWrench_ = <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00627.html#aaeb95999d383653c0c848fc57e47c913">sva::ForceVecd::Zero</a>()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6863d425eff4e098af4abc8a38ee2326"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6863d425eff4e098af4abc8a38ee2326">&#9670;&nbsp;</a></span>measuredZMP_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::measuredZMP_ = Eigen::Vector3d::Zero()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9645bcc1b8e2296b6b060c2285b5eb6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9645bcc1b8e2296b6b060c2285b5eb6d">&#9670;&nbsp;</a></span>MIN_DS_PRESSURE</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MIN_DS_PRESSURE = 15.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Minimum normal contact force in DSP, used to avoid low-pressure targets when close to contact switches. </p>
-<p>Minimum force for valid ZMP computation (throws otherwise) </p>
-
-</div>
-</div>
-<a id="aeba1f1684be4d513d2140d25b908a20d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeba1f1684be4d513d2140d25b908a20d">&#9670;&nbsp;</a></span>MIN_NET_TOTAL_FORCE_ZMP</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_tasks::lipm_stabilizer::StabilizerTask::MIN_NET_TOTAL_FORCE_ZMP = 1.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a9eccc2bdf062ef36fc1f2647bc87f6d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9eccc2bdf062ef36fc1f2647bc87f6d5">&#9670;&nbsp;</a></span>omega_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::omega_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6476ed836d208897809eb8eb5e404689"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6476ed836d208897809eb8eb5e404689">&#9670;&nbsp;</a></span>pelvisTask</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="a02789.html">mc_tasks::OrientationTask</a>&gt; mc_tasks::lipm_stabilizer::StabilizerTask::pelvisTask</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Pelvis orientation task. </p>
-
-</div>
-</div>
-<a id="a017bc4102822276a88a60ae683c46627"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a017bc4102822276a88a60ae683c46627">&#9670;&nbsp;</a></span>qpSolver_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" doxygen="/usr/local/share/doc/eigen-quadprog/doxygen-html/eigen-quadprog.doxytag:/usr/local/share/doc/eigen-quadprog/doxygen-html/" href="/usr/local/share/doc/eigen-quadprog/doxygen-html/a00567.html">Eigen::QuadProgDense</a> mc_tasks::lipm_stabilizer::StabilizerTask::qpSolver_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Least-squares solver for wrench distribution. </p>
-
-</div>
-</div>
-<a id="a01584b7cc75fc92846251632bec2e835"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01584b7cc75fc92846251632bec2e835">&#9670;&nbsp;</a></span>realRobots_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="a02169.html">mc_rbdyn::Robots</a>&amp; mc_tasks::lipm_stabilizer::StabilizerTask::realRobots_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a23a5f961e6993f20ebe16f246736e1cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23a5f961e6993f20ebe16f246736e1cc">&#9670;&nbsp;</a></span>robotIndex_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int mc_tasks::lipm_stabilizer::StabilizerTask::robotIndex_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac252cd1d8af9703038aa40b61c0686ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac252cd1d8af9703038aa40b61c0686ca">&#9670;&nbsp;</a></span>robots_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="a02169.html">mc_rbdyn::Robots</a>&amp; mc_tasks::lipm_stabilizer::StabilizerTask::robots_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1c5ff776bf36beaee2182776ba4feca0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c5ff776bf36beaee2182776ba4feca0">&#9670;&nbsp;</a></span>runTime_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::runTime_ = 0.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae6ca6cea95b8b7489553d88bf9e4d4e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6ca6cea95b8b7489553d88bf9e4d4e4">&#9670;&nbsp;</a></span>sensorNames_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;std::string&gt; mc_tasks::lipm_stabilizer::StabilizerTask::sensorNames_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">      <span class="stringliteral">&quot;LeftFootForceSensor&quot;</span>, <span class="stringliteral">&quot;RightFootForceSensor&quot;</span>}</div></div><!-- fragment -->
-</div>
-</div>
-<a id="ae1133e256a909367f839ecef2528c7be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1133e256a909367f839ecef2528c7be">&#9670;&nbsp;</a></span>supportMax_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector2d mc_tasks::lipm_stabilizer::StabilizerTask::supportMax_ = Eigen::Vector2d::Zero()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a37b5b7e6f2acd693711f6b1e8c7310db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37b5b7e6f2acd693711f6b1e8c7310db">&#9670;&nbsp;</a></span>supportMin_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector2d mc_tasks::lipm_stabilizer::StabilizerTask::supportMin_ = Eigen::Vector2d::Zero()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad55b59e574799dcf11bc7598b8a6cea9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad55b59e574799dcf11bc7598b8a6cea9">&#9670;&nbsp;</a></span>supportPolygons_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;std::vector&lt;Eigen::Vector3d&gt; &gt; mc_tasks::lipm_stabilizer::StabilizerTask::supportPolygons_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>For GUI display. </p>
-
-</div>
-</div>
-<a id="a4da2c074568197514ca356b776540601"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4da2c074568197514ca356b776540601">&#9670;&nbsp;</a></span>t_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::t_ = 0.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Time elapsed since the task is running. </p>
-
-</div>
-</div>
-<a id="a207abdb63fcc13968352a6c7fffd47fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a207abdb63fcc13968352a6c7fffd47fb">&#9670;&nbsp;</a></span>torsoTask</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="a02789.html">mc_tasks::OrientationTask</a>&gt; mc_tasks::lipm_stabilizer::StabilizerTask::torsoTask</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Torso orientation task. </p>
-
-</div>
-</div>
-<a id="ab459d6ba167857323daefe6a3fbef750"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab459d6ba167857323daefe6a3fbef750">&#9670;&nbsp;</a></span>vdcHeightError_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::vdcHeightError_ = 0.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Average height error used in vertical drift compensation. </p>
-
-</div>
-</div>
-<a id="a1a1be4b382b22e64d6c10a0a25ac2eb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a1be4b382b22e64d6c10a0a25ac2eb9">&#9670;&nbsp;</a></span>zmpError_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::zmpError_ = Eigen::Vector3d::Zero()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aeca99cf5f7b08a8d39bc3a7045d2e46d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeca99cf5f7b08a8d39bc3a7045d2e46d">&#9670;&nbsp;</a></span>zmpFrame_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_tasks::lipm_stabilizer::StabilizerTask::zmpFrame_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Force sensors corresponding to established contacts. </p>
-
-</div>
-</div>
-<a id="aae15134e2c9dad716a90a85d146969e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae15134e2c9dad716a90a85d146969e0">&#9670;&nbsp;</a></span>zmpTarget_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::zmpTarget_ = Eigen::Vector3d::Zero()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>World coordinates of the point furthest right in the surface's lateral direction. </p>
 
 </div>
 </div>
@@ -2847,8 +750,8 @@ Additional Inherited Members</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00685.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00686.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a02765.html">StabilizerTask</a></li>
-    <li class="footer">Generated on Tue Mar 10 2020 09:44:21 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00685.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00686.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a00712.html">internal</a></li><li class="navelem"><a class="el" href="a02765.html">Contact</a></li>
+    <li class="footer">Generated on Tue Mar 10 2020 11:53:46 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -13,14 +13,14 @@ var a00684 =
     [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "a02113.html", "a02113" ],
     [ "ConfigurationLoader< mc_rbdyn::RobotModule >", "a02061.html", "a02061" ],
     [ "ConfigurationLoader< mc_rbdyn::RobotModulePtr >", "a02065.html", "a02065" ],
-    [ "ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "a02761.html", "a02761" ],
+    [ "ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "a02769.html", "a02769" ],
     [ "ConfigurationLoader< void >", "a02185.html", "a02185" ],
-    [ "DataStore", "a02237.html", "a02237" ],
-    [ "Loader", "a02493.html", "a02493" ],
-    [ "LoaderException", "a02485.html", "a02485" ],
-    [ "LoaderSandboxData", "a02501.html", "a02501" ],
-    [ "Logger", "a02517.html", "a02517" ],
-    [ "LTDLHandle", "a02489.html", "a02489" ],
-    [ "MessagePackBuilder", "a02541.html", "a02541" ],
-    [ "ObjectLoader", "a02481.html", "a02481" ]
+    [ "DataStore", "a02245.html", "a02245" ],
+    [ "Loader", "a02501.html", "a02501" ],
+    [ "LoaderException", "a02493.html", "a02493" ],
+    [ "LoaderSandboxData", "a02509.html", "a02509" ],
+    [ "Logger", "a02525.html", "a02525" ],
+    [ "LTDLHandle", "a02497.html", "a02497" ],
+    [ "MessagePackBuilder", "a02549.html", "a02549" ],
+    [ "ObjectLoader", "a02489.html", "a02489" ]
 ];

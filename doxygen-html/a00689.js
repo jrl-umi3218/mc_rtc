@@ -2,6 +2,8 @@ var a00689 =
 [
     [ "_has_configuration_load_object", "a02177.html", "a02177" ],
     [ "_has_configuration_save_object", "a02185.html", "a02185" ],
+    [ "Allocator", "a02225.html", null ],
+    [ "Allocator< T, typename T::eigen_aligned_operator_new_marker_type >", "a02229.html", null ],
     [ "args_t", "a02221.html", "a02221" ],
     [ "has_configuration_load_object", "a02181.html", null ],
     [ "has_configuration_save_object", "a02189.html", null ],

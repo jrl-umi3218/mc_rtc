@@ -1,9 +1,6 @@
 var a02361 =
 [
-    [ "Abscissa", "a02361.html#a57a4c02713024e53ec4043123cab4c50", null ],
-    [ "max", "a02361.html#a190355057411d2e31f821dbb45afcf96", null ],
-    [ "min", "a02361.html#aabf95601f4cd3af4b63249bd327f2148", null ],
-    [ "range", "a02361.html#a86d5bd8a471e0f85217fd8a6872c89ca", null ],
-    [ "write", "a02361.html#ad46e2e46e2c4e130880c831cf3df8d07", null ],
-    [ "type", "a02361.html#a74de98c8a1157861357192b66f451241", null ]
+    [ "NumberInputImpl", "a02361.html#adc6a76d29546ffa6d09e6e244cde1310", null ],
+    [ "NumberInputImpl", "a02361.html#a33da2f6fd4d4ffeb4ed07e93094b002f", null ],
+    [ "type", "a02361.html#ae1b80d0abc5e1d9e04ff01069779aaf4", null ]
 ];

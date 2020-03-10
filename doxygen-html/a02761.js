@@ -1,5 +1,8 @@
 var a02761 =
 [
-    [ "load", "a02761.html#a1528be809a0f45f51c25a46722a101bb", null ],
-    [ "save", "a02761.html#a569fbb0c9f4777d08b28cad40479fb7f", null ]
+    [ "GazeTask", "a02761.html#a84332429e702444553058f37edcbe1d8", null ],
+    [ "GazeTask", "a02761.html#abbb977995875cf7717d4ad89d78b0e12", null ],
+    [ "error", "a02761.html#acc7bf6883b72a0d7082addb417956037", null ],
+    [ "error", "a02761.html#afeef6a71bd72087a707d60a093664d86", null ],
+    [ "reset", "a02761.html#a0be1042d1ec91e59bb2431ba86d226fe", null ]
 ];

@@ -70,33 +70,29 @@ $(document).ready(function(){initNavTree('a02589.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_solver::DynamicsConstraint Member List</div>  </div>
+<div class="title">mc_solver::ConstraintSetLoader Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02589.html">mc_solver::DynamicsConstraint</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a02589.html">mc_solver::ConstraintSetLoader</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02589.html#a08413ca37fc394ed2b3f692f2bcc8e44">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02589.html">mc_solver::DynamicsConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02649.html#a3febf798804706fce1efe1eac46c16f9">damperJointLimitsConstr</a></td><td class="entry"><a class="el" href="a02649.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02589.html#a0f1097a536c65e610735d3314e86a4e3">DynamicsConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double timeStep, bool infTorque=false)</td><td class="entry"><a class="el" href="a02589.html">mc_solver::DynamicsConstraint</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02589.html#a330391bd86278523ae70830fc2d7e9f9">DynamicsConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double timeStep, const std::array&lt; double, 3 &gt; &amp;damper, double velocityPercent=1.0, bool infTorque=false)</td><td class="entry"><a class="el" href="a02589.html">mc_solver::DynamicsConstraint</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02589.html#a2adb5f59889ad682361cbdd940e7d527">DynamicsConstraint</a>()</td><td class="entry"><a class="el" href="a02589.html">mc_solver::DynamicsConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02589.html#ad1eea623f5d96d9d75043108d4251911">inSolver</a>() const</td><td class="entry"><a class="el" href="a02589.html">mc_solver::DynamicsConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02649.html#ab113d21083add766566decba27631820">jointLimitsConstr</a></td><td class="entry"><a class="el" href="a02649.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02649.html#ae4fa119dd4f6643ea9bfd6e71d100e48">KinematicsConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double timeStep)</td><td class="entry"><a class="el" href="a02649.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02649.html#a89801271d9d8e8288c6be32b13970f3f">KinematicsConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double timeStep, const std::array&lt; double, 3 &gt; &amp;damper, double velocityPercent=1.0)</td><td class="entry"><a class="el" href="a02649.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02649.html#a9772713ef63997c2ff16a754cdf34401">KinematicsConstraint</a>()</td><td class="entry"><a class="el" href="a02649.html">mc_solver::KinematicsConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02589.html#a888094b65574aed3b2bb86a67a744a44">motionConstr</a></td><td class="entry"><a class="el" href="a02589.html">mc_solver::DynamicsConstraint</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02589.html#ac37f401f997c13db2b3a3cf080f0bd4b">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02589.html">mc_solver::DynamicsConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02589.html#af226f3dc547957b5700408bcc6688f7a">robotIndex</a>() const</td><td class="entry"><a class="el" href="a02589.html">mc_solver::DynamicsConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02577.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02577.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02617.html#a5da6be5874e61bd328a5452dda08950c">load</a>(mc_solver::QPSolver &amp;solver, const std::string &amp;file)</td><td class="entry"><a class="el" href="a02617.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02617.html#a13b1f947ca0b22d2985f580ec57caf85">load</a>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config)</td><td class="entry"><a class="el" href="a02617.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02617.html#a5236104825bda3a24cc3645e0e3bf448">load</a>(mc_solver::QPSolver &amp;solver, const std::string &amp;file)</td><td class="entry"><a class="el" href="a02617.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02617.html#ab10c87faa2a1fb4721163c6a479fdd78">load</a>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config)</td><td class="entry"><a class="el" href="a02617.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02617.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a> typedef</td><td class="entry"><a class="el" href="a02617.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02617.html#ac24012d951d6a04490b05a64f5ccf620">register_load_function</a>(const std::string &amp;type, load_fun fn)</td><td class="entry"><a class="el" href="a02617.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02589.html#a96dbeec49975b75e093f8074822fc5dd">storage</a>()</td><td class="entry"><a class="el" href="a02589.html">mc_solver::ConstraintSetLoader</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02617.html#afc58a28dae04a63aa3ed180a654ec223">storage_t</a> typedef</td><td class="entry"><a class="el" href="a02617.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02617.html#adb735279d914086553de0a21285126e4">T_ptr</a> typedef</td><td class="entry"><a class="el" href="a02617.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02617.html#a35fcd3b9f4280a31049089aa57b54330">unregister_load_function</a>(const std::string &amp;type)</td><td class="entry"><a class="el" href="a02617.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Mar 10 2020 09:44:20 for mc_rtc by
+    <li class="footer">Generated on Tue Mar 10 2020 11:53:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

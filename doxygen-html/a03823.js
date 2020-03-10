@@ -1,9 +1,9 @@
 var a03823 =
 [
-    [ "MC_TRAJECTORY_DLLAPI", "a03823.html#adff5a6c1e965ae6fdc756a2c5187f9c9", null ],
-    [ "MC_TRAJECTORY_DLLEXPORT", "a03823.html#a531302b8554807c8aca0fcf931c490f3", null ],
-    [ "MC_TRAJECTORY_DLLIMPORT", "a03823.html#a6dc4322483ff7548be6769a3e2d2ae54", null ],
-    [ "MC_TRAJECTORY_DLLLOCAL", "a03823.html#aa1a1e2ac0d81d28e134d91b52199d1e1", null ],
-    [ "MC_TRAJECTORY_LOCAL", "a03823.html#a4d2a4bf4b090297efb1f6dfa124b52e2", null ],
-    [ "MC_TRAJECTORY_VERSION", "a03823.html#acd63e2a4854ce5d3f1eec2e5f2cf7498", null ]
+    [ "MC_ROBOTS_DLLAPI", "a03823.html#aab9f1fcb73f7bb68ce97897257085bc6", null ],
+    [ "MC_ROBOTS_DLLEXPORT", "a03823.html#a551f4997282c602cc3b9699950bff0d9", null ],
+    [ "MC_ROBOTS_DLLIMPORT", "a03823.html#afab08aefa87854e0f4e002300f42f2e0", null ],
+    [ "MC_ROBOTS_DLLLOCAL", "a03823.html#abd12baa7258deaf7a15d3874f1920e57", null ],
+    [ "MC_ROBOTS_LOCAL", "a03823.html#a31fee9d1d5fe536ba8cfac80e376564e", null ],
+    [ "MC_ROBOTS_VERSION", "a03823.html#a12b895bf0b39c259b3eb51ee7782f970", null ]
 ];

@@ -1,6 +1,4 @@
 var a02533 =
 [
-    [ "base_type", "a02533.html#a36029a9801c5ca972f21e626ea554174", null ],
-    [ "ret_type", "a02533.html#a38207f8c1014c4e1b2ebb310e3ceb551", null ],
-    [ "value", "a02533.html#aad0ab42aac325e0fa19a1a82d853288b", null ]
+    [ "type", "a02533.html#af37730234c3db7fedadf42ef4699c090", null ]
 ];
