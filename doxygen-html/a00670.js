@@ -1,8 +1,16 @@
 var a00670 =
 [
-    [ "ExponentialMovingAverage", "a01975.html", "a01975" ],
-    [ "LeakyIntegrator", "a01979.html", "a01979" ],
-    [ "LowPass", "a01983.html", "a01983" ],
-    [ "LowPassFiniteDifferences", "a01987.html", "a01987" ],
-    [ "StationaryOffset", "a01991.html", "a01991" ]
+    [ "fsm", "a00671.html", "a00671" ],
+    [ "CompletionCriteria", "a01849.html", "a01849" ],
+    [ "ControllerClient", "a01857.html", "a01857" ],
+    [ "ControllerResetData", "a01969.html", "a01969" ],
+    [ "ControllerServer", "a01861.html", "a01861" ],
+    [ "ElementId", "a01853.html", "a01853" ],
+    [ "GlobalPlugin", "a01945.html", "a01945" ],
+    [ "Gripper", "a01941.html", "a01941" ],
+    [ "MCController", "a01973.html", "a01973" ],
+    [ "MCGlobalController", "a01949.html", "a01949" ],
+    [ "MCPythonController", "a01965.html", "a01965" ],
+    [ "PythonRWCallback", "a01961.html", "a01961" ],
+    [ "SimulationContactPair", "a01977.html", "a01977" ]
 ];

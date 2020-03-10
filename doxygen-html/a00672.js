@@ -1,9 +1,26 @@
 var a00672 =
 [
-    [ "BodySensorObserver", "a01995.html", "a01995" ],
-    [ "EncoderObserver", "a01999.html", "a01999" ],
-    [ "KinematicInertialObserver", "a02003.html", "a02003" ],
-    [ "KinematicInertialPoseObserver", "a02007.html", "a02007" ],
-    [ "Observer", "a02011.html", "a02011" ],
-    [ "ObserverLoader", "a02015.html", "a02015" ]
+    [ "gui", "a00690.html", "a00690" ],
+    [ "internal", "a00689.html", "a00689" ],
+    [ "log", "a00694.html", "a00694" ],
+    [ "Configuration", "a02193.html", "a02193" ],
+    [ "ConfigurationArrayIterator", "a02205.html", "a02205" ],
+    [ "ConfigurationLoader", "a02169.html", "a02169" ],
+    [ "ConfigurationLoader< mc_control::fsm::Contact >", "a01873.html", "a01873" ],
+    [ "ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "a02045.html", "a02045" ],
+    [ "ConfigurationLoader< mc_rbdyn::Contact >", "a02057.html", "a02057" ],
+    [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::FDQPWeights >", "a02093.html", "a02093" ],
+    [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "a02101.html", "a02101" ],
+    [ "ConfigurationLoader< mc_rbdyn::RobotModule >", "a02049.html", "a02049" ],
+    [ "ConfigurationLoader< mc_rbdyn::RobotModulePtr >", "a02053.html", "a02053" ],
+    [ "ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "a02749.html", "a02749" ],
+    [ "ConfigurationLoader< void >", "a02173.html", "a02173" ],
+    [ "DataStore", "a02225.html", "a02225" ],
+    [ "Loader", "a02481.html", "a02481" ],
+    [ "LoaderException", "a02473.html", "a02473" ],
+    [ "LoaderSandboxData", "a02489.html", "a02489" ],
+    [ "Logger", "a02505.html", "a02505" ],
+    [ "LTDLHandle", "a02477.html", "a02477" ],
+    [ "MessagePackBuilder", "a02529.html", "a02529" ],
+    [ "ObjectLoader", "a02469.html", "a02469" ]
 ];

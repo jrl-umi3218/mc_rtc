@@ -1,5 +1,5 @@
 var a00263 =
 [
-    [ "NumberSliderImpl", "a02327.html", "a02327" ],
-    [ "NumberSlider", "a00263.html#a5c6714af47a8cb199c7345ed1c2e8ffe", null ]
+    [ "NumberInputImpl", "a02353.html", "a02353" ],
+    [ "NumberInput", "a00263.html#a42ba0a1ea0c4890a7941cf76892e1268", null ]
 ];

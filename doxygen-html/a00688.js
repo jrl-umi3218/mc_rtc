@@ -1,9 +1,8 @@
 var a00688 =
 [
-    [ "callback_is_serializable", "a02491.html", "a02491" ],
-    [ "FlatLog", "a02463.html", "a02463" ],
-    [ "GetLogType", "a02479.html", "a02479" ],
-    [ "GetLogType< std::vector< double, A > >", "a02483.html", "a02483" ],
-    [ "is_serializable", "a02487.html", "a02487" ],
-    [ "LogWriter", "a02495.html", "a02495" ]
+    [ "ExponentialMovingAverage", "a01993.html", "a01993" ],
+    [ "LeakyIntegrator", "a01997.html", "a01997" ],
+    [ "LowPass", "a02001.html", "a02001" ],
+    [ "LowPassFiniteDifferences", "a02005.html", "a02005" ],
+    [ "StationaryOffset", "a02009.html", "a02009" ]
 ];

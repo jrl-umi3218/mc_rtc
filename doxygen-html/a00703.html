@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils Namespace Reference</title>
+<title>mc_rtc::gui::details Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -73,78 +73,46 @@ $(document).ready(function(){initNavTree('a00703.html','');});
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils Namespace Reference</div>  </div>
+<div class="title">mc_rtc::gui::details Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02643.html">Constraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic helper class to write a new constraint for Tasks.  <a href="a02643.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02281.html">CheckReturnType</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the return type of a getter function.  <a href="a02281.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02647.html">ContactWrenchMatrixToLambdaMatrix</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform contact wrench matrix to lambda matrix.  <a href="a02647.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02285.html">CheckReturnType&lt; GetT, T &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02563.html">EqualityConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write an equality constraint for Tasks.  <a href="a02563.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02289.html">CheckReturnType&lt; GetT, T, Args... &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02587.html">GenInequalityConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write a general inequality constraint for Tasks.  <a href="a02587.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02603.html">InequalityConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write an inequality constraint for Tasks.  <a href="a02603.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02659.html">IsUpdate</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02655.html">Update</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02663.html">UpdateForce</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02667.html">UpdateNrVarsData</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct provides common data for UpdateNrVars* classes.  <a href="a02667.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02675.html">UpdateNrVarsLambda</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct provides an implement for updateNrVars for a lambda-based constraint.  <a href="a02675.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02671.html">UpdateNrVarsRobot</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct provides an implementation for updateNrVars for a robot-based constraint.  <a href="a02671.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02651.html">UpdateTag</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02277.html">ReturnType</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the return type of a getter function.  <a href="a02277.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a3fef857fcf6a819b7f8061f33248d0b5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00703.html#a3fef857fcf6a819b7f8061f33248d0b5">UpdateRobot</a> = <a class="el" href="a02655.html">Update</a>&lt; <a class="el" href="a02671.html">UpdateNrVarsRobot</a> &gt;</td></tr>
-<tr class="separator:a3fef857fcf6a819b7f8061f33248d0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51609ca39a4099935af3983ff08a0c50"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00703.html#a51609ca39a4099935af3983ff08a0c50">UpdateLambda</a> = <a class="el" href="a02655.html">Update</a>&lt; <a class="el" href="a02675.html">UpdateNrVarsLambda</a> &gt;</td></tr>
-<tr class="separator:a51609ca39a4099935af3983ff08a0c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62d70a1c5467de8404eceee15a80da68"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
+<tr class="memitem:a62d70a1c5467de8404eceee15a80da68"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00703.html#a62d70a1c5467de8404eceee15a80da68">ReturnTypeT</a> = typename <a class="el" href="a02277.html">ReturnType</a>&lt; GetT &gt;::type</td></tr>
+<tr class="memdesc:a62d70a1c5467de8404eceee15a80da68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper.  <a href="#a62d70a1c5467de8404eceee15a80da68">More...</a><br /></td></tr>
+<tr class="separator:a62d70a1c5467de8404eceee15a80da68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="a51609ca39a4099935af3983ff08a0c50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51609ca39a4099935af3983ff08a0c50">&#9670;&nbsp;</a></span>UpdateLambda</h2>
+<a id="a62d70a1c5467de8404eceee15a80da68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62d70a1c5467de8404eceee15a80da68">&#9670;&nbsp;</a></span>ReturnTypeT</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename GetT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00703.html#a51609ca39a4099935af3983ff08a0c50">mc_solver::utils::UpdateLambda</a> = typedef <a class="el" href="a02655.html">Update</a>&lt;<a class="el" href="a02675.html">UpdateNrVarsLambda</a>&gt;</td>
+          <td class="memname">using <a class="el" href="a00703.html#a62d70a1c5467de8404eceee15a80da68">mc_rtc::gui::details::ReturnTypeT</a> = typedef typename <a class="el" href="a02277.html">ReturnType</a>&lt;GetT&gt;::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a3fef857fcf6a819b7f8061f33248d0b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fef857fcf6a819b7f8061f33248d0b5">&#9670;&nbsp;</a></span>UpdateRobot</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a00703.html#a3fef857fcf6a819b7f8061f33248d0b5">mc_solver::utils::UpdateRobot</a> = typedef <a class="el" href="a02655.html">Update</a>&lt;<a class="el" href="a02671.html">UpdateNrVarsRobot</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Helper. </p>
 
 </div>
 </div>
@@ -154,8 +122,8 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00687.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00703.html">utils</a></li>
-    <li class="footer">Generated on Mon Mar 9 2020 06:24:32 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00684.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00702.html">gui</a></li><li class="navelem"><a class="el" href="a00703.html">details</a></li>
+    <li class="footer">Generated on Tue Mar 10 2020 09:44:20 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

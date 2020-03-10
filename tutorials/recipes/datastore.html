@@ -1,0 +1,410 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - DataStore: Sharing Objects - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><strong>DataStore: Sharing Objects</strong></li>
+                
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">Using the LIPM Stabilizer</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>DataStore: Sharing Objects</h1>
+
+        <p>The <code class="highlighter-rouge">DataStore</code> is a facility used to efficiently store and retrieve arbitrary C++ objects, and is intended as a way to conveniently and efficiently share arbitrary objects within the framework. It is strongly typed (only objects of the same type as the stored type can be retrieved), and only relies on standard C++ mechanisms.</p>
+
+<p>The <code class="highlighter-rouge">DataStore</code> may for instance be used to:</p>
+
+<ul>
+  <li><strong>Share data between <code class="highlighter-rouge">States</code> in the FSM</strong>.
+    <ul>
+      <li>For instance, it makes it easy to achieve a stabilized FSM simply by putting a <code class="highlighter-rouge">StabilizerStandingState</code> (see the <a href="lipm-stabilizer.html">LIPM Stabilizer tutorial</a>) in parallel with an existing FSM. Targets to the <code class="highlighter-rouge">StabilizerStandingState</code> may then be provided through the <code class="highlighter-rouge">DataStore</code>. For instance to change the CoM target, you can simply set the <code class="highlighter-rouge">StabilizerStandingState::com</code> property.</li>
+    </ul>
+  </li>
+  <li><strong>Provide additional information to <a href="observers.html">observers</a></strong> (such as the <code class="highlighter-rouge">anchorFrame</code> required by the <code class="highlighter-rouge">KinematicInertial</code> observer).</li>
+  <li>
+    <p><strong>Share data between plugins and the controller</strong>. As an example, consider the interaction between a walking controller and a footstep planner plugin. As an input, the footstep planner requires information about <em>(i) the current feet contacts</em>, <em>(ii) a desired goal</em>, and might also use additional information (such as obstacles, etc.). In return, it should provide the <em>(iii) next footsteps</em> that the walking controller should follow. Additionally in the case of an online footstep planner, it is needed to request updates to the footstep plan (when the goal or robot state changes, new obstacles are detected, etc.)</p>
+
+    <ul>
+      <li>(i) Could be provided by the controller, or alternatively another vision plugin that estimates the state of the robot</li>
+      <li>(ii) Could be provided by the controller, or another plugin such as object detection</li>
+      <li>(iii) The footstep plan can then be used by the controller</li>
+    </ul>
+  </li>
+</ul>
+
+<p>These are of course just a few examples, this feature is intended to simplify sharing data across the framework. Use it sparingly, as adding objects to the datastore effectively makes them global, and thus modifiable from anywhere, including external plugins.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>A default <code class="highlighter-rouge">DataStore</code> instance is available in the <code class="highlighter-rouge">mc_control::MCController</code> class, and can be accessed using <code class="highlighter-rouge">mc_control::MCController::datastore()</code>. Any <code class="highlighter-rouge">c++</code> object can be created and retrieved from this <code class="highlighter-rouge">DataStore</code> instance from anywhere with access to the controller’s instance.</p>
+
+<ul>
+  <li>
+    <p>Objects can be directly created on the datastore through the use of <code class="highlighter-rouge">make</code> or <code class="highlighter-rouge">make_initializer</code> as follows:</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a vector of double of size 4 initialized with value 42</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">"key"</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">);</span>
+<span class="c1">// Create a vector of double of size 2 initialized with value {4, 42} (using list initialization)</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">make_initializer</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">"key"</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+  <li>If an object with the same name already exists, an exception will be raised. To avoid this, you can either check whether the datastore already has such an element with
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="p">(</span><span class="n">datastore</span><span class="p">().</span><span class="n">has</span><span class="p">(</span><span class="s">"key"</span><span class="p">))</span>
+<span class="p">{</span>
+  <span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"key"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+
+    <p>Note that these functions also return a reference to the created object that you can use to access and modify it</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="o">&amp;</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">,</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">::</span><span class="n">Zero</span><span class="p">());</span>
+<span class="n">vec</span><span class="p">.</span><span class="n">x</span><span class="p">()</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// vec is now: 42, 0, 0</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>A reference to the stored value can be retrieved at any time using <code class="highlighter-rouge">get&lt;Type&gt;</code>:</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="o">&amp;</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">);</span>
+<span class="c1">// vec: 42, 0, 0</span>
+</code></pre></div>    </div>
+
+    <p>An exception will be thrown if the key is not present in the datastore, or the requested <code class="highlighter-rouge">Type</code> differs from the one used upon creation. Similarly to <code class="highlighter-rouge">mc_rtc::Configuration</code> objects, you may also use one of the convenience overloads of <code class="highlighter-rouge">get</code> to specify a default value to use in case the key does not exist:</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">vec</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"NotAKey"</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span> <span class="c1">// vec remains unchanged: 1, 2, 3</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span> <span class="c1">// vec is now 42, 0, 0</span>
+
+<span class="kt">bool</span> <span class="n">hasFeature</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"HasFeature"</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span> <span class="c1">// hasFeature will be assigned the value of "HasFeature" if that key exists, false otherwise</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="advanced-usage">Advanced usage</h2>
+
+<ul>
+  <li>
+    <p><strong>Inheritance</strong> is also supported, but you need to explicitly provide the type of your object’s parent classes to be able to retrieve them later. Here is a very simple example showing how to store and use objects using inheritance and polymorphic member functions.</p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">A</span>
+<span class="p">{</span>
+  <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">hello</span><span class="p">()</span> <span class="k">const</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="s">"A"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">type</span><span class="p">()</span> <span class="k">const</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="s">"A"</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
+<span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">hello</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="s">"B"</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">type</span><span class="p">()</span> <span class="k">const</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="s">"B"</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"ObjectB"</span><span class="p">);</span>
+<span class="k">auto</span> <span class="o">&amp;</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">store</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"ObjectB"</span><span class="p">);</span>
+<span class="k">auto</span> <span class="o">&amp;</span> <span class="n">derived</span> <span class="o">=</span> <span class="n">store</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">B</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"ObjectB"</span><span class="p">);</span>
+<span class="n">parent</span><span class="p">.</span><span class="n">type</span><span class="p">();</span>   <span class="c1">// "A"</span>
+<span class="n">parent</span><span class="p">.</span><span class="n">hello</span><span class="p">();</span>  <span class="c1">// "B" because hello is virtual</span>
+<span class="n">derived</span><span class="p">.</span><span class="n">type</span><span class="p">();</span>  <span class="c1">// "B"</span>
+<span class="n">derived</span><span class="p">.</span><span class="n">hello</span><span class="p">();</span> <span class="c1">// "B"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Lambda functions</strong> may also be stored but you must use the special <code class="highlighter-rouge">make_call</code></p>
+
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a lambda function and store it as an std::function</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">make_call</span><span class="p">(</span><span class="s">"lambda"</span><span class="p">,</span> <span class="p">[](</span><span class="kt">double</span> <span class="n">t</span><span class="p">)</span> <span class="p">{});</span>
+<span class="c1">// Retrieve the lambda</span>
+<span class="k">auto</span> <span class="o">&amp;</span> <span class="n">lambdaFun</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"lambda"</span><span class="p">)</span> <span class="p">{});</span>
+<span class="c1">// Call function</span>
+<span class="n">lambdaFun</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+<span class="c1">// Call directly through the datastore (the function return type and arguments type must be repeated)</span>
+<span class="n">datastore</span><span class="p">().</span><span class="n">call</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">,</span> <span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"lambda"</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/recipes/observers.html">Next tutorial: Using the observers pipeline</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

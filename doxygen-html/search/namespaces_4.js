@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['geom',['geom',['../a00691.html',1,'geos']]],
-  ['geos',['geos',['../a00690.html',1,'']]]
+  ['geom',['geom',['../a00697.html',1,'geos']]],
+  ['geos',['geos',['../a00696.html',1,'']]]
 ];
