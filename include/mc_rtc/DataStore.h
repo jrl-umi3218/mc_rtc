@@ -118,11 +118,11 @@ struct DataStore
   DataStore & operator=(DataStore &&) = default;
 
   /**
-   * @brief Checks if an object is in the datastore
+   * @brief Checks whether an object is in the datastore
    *
    * @param name Name of the stored object
    *
-   * @return true if the object is in the datastore
+   * @return true when the object is in the datastore
    */
   bool has(const std::string & name) const
   {
@@ -134,8 +134,10 @@ struct DataStore
    * @param name Name of the stored oject
    * @return Reference to the stored object
    *
-   * \note T must have the same type as defined when creating the object using
-   * \ref make
+   * @throws std::runtime_error when the type of T does not match the one
+   * defined upon creation.
+   *
+   * @ref make
    */
   template<typename T>
   T & get(const std::string & name)
@@ -209,6 +211,9 @@ struct DataStore
    *
    * @return A reference to the constructed object
    *
+   * @throws std::runtime_error if an object with the same name already exists
+   * in the datastore.
+   *
    * \anchor make
    */
   template<typename T, typename... ArgsT, typename... Args>
@@ -236,8 +241,7 @@ struct DataStore
    * @param name Name of the stored object
    * @param fn Function that will be stored in the datastore
    *
-   * @ return A reference to the constructed object
-   *
+   * @return A reference to the constructed object
    */
   template<typename T>
   auto make_call(const std::string & name, T fn) -> typename internal::lambda_traits<T>::fn_t &
@@ -247,12 +251,10 @@ struct DataStore
   }
 
   /**
-   * @brief Creates an object on the datastore using initializer_list
-   * initialization and returns a reference to it
+   * @brief Creates an object on the datastore using list initialization and returns a reference to it
    *
    * @param name Name of the stored object.
-   * @param args Parameters to be passed to the object's using initializer_list
-   * initialization.
+   * @param args Parameters to be passed to the object using list initialization
    *
    * @return A reference to the constructed object
    */
@@ -276,7 +278,7 @@ struct DataStore
   /** @brief Calls a function that was registered in the datastore and returns
    * this call result
    *
-   * This is syntaxis sugar for getting the function object and calling it
+   * This is syntactic sugar for getting the function object and calling it
    *
    * In this version you must specify the argument types for the function you
    * are calling. This is especially useful when the types deduced from the

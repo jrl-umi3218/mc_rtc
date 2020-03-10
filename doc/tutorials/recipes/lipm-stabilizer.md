@@ -344,8 +344,25 @@ The stabilizer states provides a number of callbacks for other states to configu
     </tr>
     <tr>
       <td>StabilizerStandingState::setConfiguration</td>
-      <td><pre>void (lipm_stabilizer::StabilizerConfiguration)</pre></td>
+      <td><pre>void (const lipm_stabilizer::StabilizerConfiguration &)</pre></td>
       <td>Sets the stabilizer configuration</td>
     </tr>
   </tbody>
 </table>
+
+Example:
+
+```cpp
+// Adds a GUI element to the controller instance ctl, providing the ability to read and modify the stiffness of the stabilizer
+// This may for instance be used from another FSM state running in parallel with the StabilizerStandingState.
+ctl.gui()->addElement({"DatastoreExample"},
+    mc_rtc::gui::NumberInput("Stiffness",
+      [&ctl]()
+      {
+        return ctl.datastore().call<double>("StabilizerStandingState::getStiffness");
+      },
+      [&ctl](double K)
+      {
+        ctl.datastore().call("StabilizerStandingState::setStiffness", K);
+      }));
+```
