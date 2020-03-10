@@ -34,7 +34,7 @@ public:
   Robot & operator=(Robot &&) = default;
 
   /** Returns the name of the robot */
-  std::string name() const;
+  const std::string & name() const;
 
   /** Set the name of the robot
    *
