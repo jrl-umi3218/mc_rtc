@@ -57,6 +57,20 @@ struct lambda_traits<RetT (C::*)(Args...)>
   using fn_t = std::function<RetT(Args...)>;
 };
 
+/** Bend usual C++ rules to deduct the argument types in call
+ *
+ * Normally when passing an lvalue to a template function, T && will be T &. In
+ * our case, for arithmetic types (typically double) we far more often want T
+ * so this traits changes the deduction rule for those types
+ */
+template<typename T>
+struct args_t
+{
+  using decay_t = typename std::decay<T>::type;
+  static constexpr bool is_arithmetic = std::is_arithmetic<decay_t>::value;
+  using type = typename std::conditional<is_arithmetic, decay_t, T>::type;
+};
+
 } // namespace internal
 
 /**
@@ -259,34 +273,56 @@ struct DataStore
     return *(reinterpret_cast<T *>(data.buffer.get()));
   }
 
-  /**
-   * @brief Call a function that was registered in the datastore and returns this call result
+  /** @brief Calls a function that was registered in the datastore and returns
+   * this call result
+   *
+   * This is syntaxis sugar for getting the function object and calling it
+   *
+   * In this version you must specify the argument types for the function you
+   * are calling. This is especially useful when the types deduced from the
+   * arguments do not match the function type (typically passing a non-const
+   * reference to a function expecting a const reference.
+   *
+   * @param name Name of the stored function
+   *
+   * @tparam FunArgsT Types of arguments expected by the function
+   *
+   * @param args Arguments passed to the function
+   *
+   */
+  template<typename RetT,
+           typename... FuncArgsT,
+           typename... ArgsT,
+           typename std::enable_if<sizeof...(FuncArgsT) == sizeof...(ArgsT)
+                                       && !std::is_same<std::tuple<FuncArgsT...>, std::tuple<ArgsT...>>::value,
+                                   int>::type = 0>
+  RetT call(const std::string & name, ArgsT &&... args) const
+  {
+    return safe_call<RetT, FuncArgsT...>(name, std::forward<ArgsT>(args)...);
+  }
+
+  /** @brief Calls a function that was registered in the datastore and returns
+   * this call result
    *
    * This is syntaxic sugar for getting the function object and calling it
    *
+   * This version deduces the functions' arguments from the arguments passed to
+   * the call. This follows C++ rules for deducing types from universal
+   * reference collapsing *except* for arithmetic types where the type is
+   * deduced to be of value type.
+   *
+   * If you need to call a callback that takes an arithmetic type by reference
+   * then you must specify the arguments' type explicitely
+   *
    * @param name Name of the stored object
+   *
    * @params args Arguments passed to the function
    *
    */
   template<typename RetT = void, typename... ArgsT>
   RetT call(const std::string & name, ArgsT &&... args) const
   {
-    using fn_t = std::function<RetT(ArgsT...)>;
-    const auto it = datas_.find(name);
-    if(it == datas_.end())
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\"");
-    }
-    const auto & data = it->second;
-    if(!data.same(typeid(fn_t).hash_code()))
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Function for key \"" << name
-                                                  << "\" does not have the same signature as the requested one. "
-                                                  << "Stored " << data.type() << " but requested "
-                                                  << internal::type_name<fn_t>());
-    }
-    auto & fn = *(reinterpret_cast<fn_t *>(data.buffer.get()));
-    return fn(std::forward<ArgsT>(args)...);
+    return safe_call<RetT, typename internal::args_t<ArgsT>::type...>(name, std::forward<ArgsT>(args)...);
   }
 
   /**
@@ -362,16 +398,36 @@ private:
     return *(reinterpret_cast<T *>(data.buffer.get()));
   }
 
+  template<typename RetT, typename... FuncArgsT, typename... ArgsT>
+  RetT safe_call(const std::string & name, ArgsT &&... args) const
+  {
+    const auto & data = get_data(name);
+    using fn_t = std::function<RetT(FuncArgsT...)>;
+    if(!data.same(typeid(fn_t).hash_code()))
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Function for key \"" << name
+                                                  << "\" does not have the same signature as the requested one. "
+                                                  << "Stored " << data.type() << " but requested "
+                                                  << internal::type_name<fn_t>());
+    }
+    auto & fn = *(reinterpret_cast<fn_t *>(data.buffer.get()));
+    return fn(std::forward<ArgsT>(args)...);
+  }
+
   template<typename T>
   const T & get_(const std::string & name) const
+  {
+    return safe_cast<T>(get_data(name), name);
+  }
+
+  inline const Data & get_data(const std::string & name) const
   {
     const auto it = datas_.find(name);
     if(it == datas_.end())
     {
       LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\"");
     }
-    const auto & data = it->second;
-    return safe_cast<T>(data, name);
+    return it->second;
   }
 
 private:

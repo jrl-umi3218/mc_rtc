@@ -297,6 +297,10 @@ BOOST_AUTO_TEST_CASE(LambdaSugar)
   std::string s = "abc";
   store.call<void, std::string &>("append", s);
   BOOST_CHECK(s == "abc#");
+  store.call<void>("append", s);
+  BOOST_CHECK(s == "abc##");
+  store.call("append", s);
+  BOOST_CHECK(s == "abc###");
 
   store.make_call("conversion", [](const std::string & in, std::string & out, size_t nRepeats) {
     out = "";
@@ -306,8 +310,23 @@ BOOST_AUTO_TEST_CASE(LambdaSugar)
     }
   });
   std::string out;
-  store.call<void, const std::string &, std::string &, size_t>("conversion", "abc#", out, 3.0f);
+  store.call<void, const std::string &, std::string &, size_t>("conversion", "abc#", out, 3);
   BOOST_CHECK(out == "abc#abc#abc#");
+
+  double d = 2;
+  store.make_call("double", [](double d) { return 2 * d; });
+  double d2 = store.call<double>("double", d);
+  BOOST_CHECK(d2 == 2 * d);
+  double d3 = store.call<double, double>("double", d);
+  BOOST_CHECK(d3 == 2 * d);
+
+  Eigen::Vector3d v_value = Eigen::Vector3d::Ones();
+  const Eigen::Vector3d & v = v_value;
+  store.make_call("double_v", [](const Eigen::Vector3d & v) -> Eigen::Vector3d { return 2 * v; });
+  Eigen::Vector3d v2 = store.call<Eigen::Vector3d>("double_v", v);
+  BOOST_CHECK(v2 == 2 * v);
+  Eigen::Vector3d v3 = store.call<Eigen::Vector3d, const Eigen::Vector3d &>("double_v", v);
+  BOOST_CHECK(v3 == 2 * v);
 }
 
 BOOST_AUTO_TEST_CASE(TestRemove)
