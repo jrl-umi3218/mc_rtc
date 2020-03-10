@@ -388,6 +388,45 @@ BOOST_AUTO_TEST_CASE(PointerSharing)
   BOOST_REQUIRE(state.v == 12);
 }
 
+// This is only used in the next test but we need to overload the Eigen::aligned_allocator for this type
+struct Overloaded
+{
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+};
+
+// We cheat here since we know our code is going to use Eigen::aligned_allocator in such cases
+namespace Eigen
+{
+template<>
+struct aligned_allocator<Overloaded> : public std::allocator<Overloaded>
+{
+  static bool used;
+  Overloaded * allocate(size_t n, const void * hint = nullptr)
+  {
+    used = true;
+    return std::allocator<Overloaded>::allocate(n, hint);
+  }
+
+  void deallocate(Overloaded * p, std::size_t n)
+  {
+    used = false;
+    return std::allocator<Overloaded>::deallocate(p, n);
+  }
+};
+
+bool aligned_allocator<Overloaded>::used = false;
+} // namespace Eigen
+
+BOOST_AUTO_TEST_CASE(EigenOverloadOperatorNew)
+{
+  DataStore store;
+  BOOST_CHECK(Eigen::aligned_allocator<Overloaded>::used == false);
+  store.make<Overloaded>("overloaded");
+  BOOST_CHECK(Eigen::aligned_allocator<Overloaded>::used == true);
+  store.remove("overloaded");
+  BOOST_CHECK(Eigen::aligned_allocator<Overloaded>::used == false);
+}
+
 BOOST_AUTO_TEST_CASE(TestStabilizer)
 {
 

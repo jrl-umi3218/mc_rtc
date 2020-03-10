@@ -13,6 +13,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include <Eigen/Core>
+
 namespace mc_rtc
 {
 
@@ -70,6 +72,18 @@ struct args_t
   using decay_t = typename std::decay<T>::type;
   static constexpr bool is_arithmetic = std::is_arithmetic<decay_t>::value;
   using type = typename std::conditional<is_arithmetic, decay_t, T>::type;
+};
+
+/** Allocator<T> is std::allocator<T> for usual types */
+template<typename T, typename = void>
+struct Allocator : public std::allocator<T>
+{
+};
+
+/** Allocator<T> is Eigen::aligned_allocator for EIGEN_MAKE_ALIGNED_OPERATOR_NEW types */
+template<typename T>
+struct Allocator<T, typename T::eigen_aligned_operator_new_marker_type> : public Eigen::aligned_allocator<T>
+{
 };
 
 } // namespace internal
@@ -226,12 +240,9 @@ struct DataStore
       LOG_ERROR_AND_THROW(std::runtime_error,
                           "[" << name_ << "] An object named " << name << " already exists on the datastore.");
     }
-    data.buffer.reset(new uint8_t[sizeof(T)]);
+    data.allocate<T>(name_, name);
     new(data.buffer.get()) T(std::forward<Args>(args)...);
-    data.type = &internal::type_name<T>;
-    data.same = &internal::is_valid_hash<T, ArgsT...>;
-    data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
-    return *(reinterpret_cast<T *>(data.buffer.get()));
+    return data.setup<T, ArgsT...>();
   }
 
   /**
@@ -268,12 +279,9 @@ struct DataStore
       LOG_ERROR_AND_THROW(std::runtime_error,
                           "[" << name_ << "] An object named " << name << " already exists on the datastore.");
     }
-    data.buffer.reset(new uint8_t[sizeof(T)]);
+    data.allocate<T>(name_, name);
     new(data.buffer.get()) T{std::forward<Args>(args)...};
-    data.type = &internal::type_name<T>;
-    data.same = &internal::is_valid_hash<T, ArgsT...>;
-    data.destroy = [](Data & self) { reinterpret_cast<T *>(self.buffer.get())->~T(); };
-    return *(reinterpret_cast<T *>(data.buffer.get()));
+    return data.setup<T, ArgsT...>();
   }
 
   /** @brief Calls a function that was registered in the datastore and returns
@@ -385,6 +393,30 @@ private:
       {
         destroy(*this);
       }
+    }
+
+    template<typename T>
+    void allocate(const std::string & name_, const std::string & name)
+    {
+      if(buffer)
+      {
+        LOG_ERROR_AND_THROW(std::runtime_error,
+                            "[" << name_ << "] An object named " << name << " already exists on the datastore.");
+      }
+      buffer.reset(reinterpret_cast<uint8_t *>(internal::Allocator<T>().allocate(1)));
+    }
+
+    template<typename T, typename... ArgsT>
+    T & setup()
+    {
+      this->type = &internal::type_name<T>;
+      this->same = &internal::is_valid_hash<T, ArgsT...>;
+      this->destroy = [](Data & self) {
+        T * p = reinterpret_cast<T *>(self.buffer.release());
+        p->~T();
+        internal::Allocator<T>().deallocate(p, 1);
+      };
+      return *(reinterpret_cast<T *>(buffer.get()));
     }
   };
 
