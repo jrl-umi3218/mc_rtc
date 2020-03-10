@@ -39,6 +39,10 @@ Eigen::Vector3d MC_RBDYN_DLLAPI zmp(const sva::ForceVecd & netTotalWrench,
  * that the contact frame should have its z-axis pointing in the normal
  * direction of the contact towards the robot.
  *
+ * @throws To prevent dividing by zero, throws if the projected force is below minimalNetNormalForce newton. This is
+ * highly unlikely to happen and would likely indicate indicate that you are computing a ZMP from invalid forces (such
+ * as with the robot in the air).
+ *
  * @return ZMP expressed in the plane defined by the zmpFrame frame.
  */
 Eigen::Vector3d MC_RBDYN_DLLAPI zmp(const sva::ForceVecd & netTotalWrench,

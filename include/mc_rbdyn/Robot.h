@@ -303,7 +303,7 @@ public:
    *
    * \anchor zmpDoc
    *
-   * \see Eigen::Vector3d mc_rbdyn::ZMP(const sva::ForceVecd & netTotalWrench, const Eigen::Vector3d & plane_p, const
+   * \see Eigen::Vector3d mc_rbdyn::zmp(const sva::ForceVecd & netTotalWrench, const Eigen::Vector3d & plane_p, const
    * Eigen::Vector3d & plane_n, double minimalNetNormalForce)
    */
   Eigen::Vector3d zmp(const sva::ForceVecd & netTotalWrench,
