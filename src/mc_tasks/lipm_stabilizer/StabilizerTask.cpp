@@ -404,10 +404,20 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   using namespace mc_rtc::gui;
 
+  // clang-format off
+  auto addConfigButtons =
+    [this,&gui](const std::vector<std::string> & category)
+    {
+      gui.addElement(category, ElementsStacking::Horizontal,
+                     Button("Enable", [this]() { enable(); }),
+                     Button("Reconfigure", [this]() { reconfigure(); }),
+                     Button("Commit", [this]() { commitConfig(); }));
+    };
+  // clang-format on
+
   gui.addElement({"Tasks", name_, "Main"}, Button("Disable", [this]() { disable(); }),
                  Button("Reset DCM integrator", [this]() { dcmIntegrator_.reset(Eigen::Vector3d::Zero()); }));
-  gui.addElement({"Tasks", name_, "Main"}, ElementsStacking::Horizontal, Button("Enable", [this]() { enable(); }),
-                 Button("Reconfigure", [this]() { reconfigure(); }), Button("Commit", [this]() { commitConfig(); }));
+  addConfigButtons({"Tasks", name_, "Main"});
   gui.addElement({"Tasks", name_, "Main"},
                  ArrayInput("Foot admittance", {"CoPx", "CoPy"},
                             [this]() -> Eigen::Vector2d {
@@ -440,8 +450,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               dcmDerivator_.timeConstant(T(1));
                             }));
   gui.addElement({"Tasks", name_, "Advanced"}, Button("Disable", [this]() { disable(); }));
-  gui.addElement({"Tasks", name_, "Advanced"}, ElementsStacking::Horizontal, Button("Enable", [this]() { enable(); }),
-                 Button("Reconfigure", [this]() { reconfigure(); }), Button("Commit", [this]() { commitConfig(); }));
+  addConfigButtons({"Tasks", name_, "Advanced"});
   gui.addElement({"Tasks", name_, "Advanced"},
                  Checkbox("Apply CoM admittance only in double support?", [this]() { return zmpccOnlyDS_; },
                           [this]() { zmpccOnlyDS_ = !zmpccOnlyDS_; }));
@@ -458,9 +467,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  NumberInput("Torso pitch [rad]", [this]() { return c_.torsoPitch; },
                              [this](double pitch) { c_.torsoPitch = pitch; }));
 
-  gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal, Button("Disable", [this]() { disable(); }));
-  gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal, Button("Enable", [this]() { enable(); }),
-                 Button("Reconfigure", [this]() { reconfigure(); }), Button("Commit", [this]() { commitConfig(); }));
+  gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
+  addConfigButtons({"Tasks", name_, "Debug"});
   gui.addElement({"Tasks", name_, "Debug"}, Button("Dump configuration", [this]() {
                    LOG_INFO("[LIPMStabilizerTask] configuration (YAML)");
                    LOG_INFO(c_.save().dump(true, true));

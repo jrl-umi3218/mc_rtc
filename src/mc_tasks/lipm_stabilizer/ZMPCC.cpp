@@ -56,7 +56,7 @@ void ZMPCC::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::str
   using namespace mc_rtc::gui;
   gui.addElement(category,
                  ArrayInput("CoM admittance", {"Ax", "Ay"},
-                            [this]() -> Eigen::Vector2d { return config_.comAdmittance; },
+                            [this]() -> const Eigen::Vector2d & { return config_.comAdmittance; },
                             [this](const Eigen::Vector2d & a) { config_.comAdmittance = a; }),
                  NumberInput("CoM integrator leak rate [Hz]", [this]() { return integrator_.rate(); },
                              [this](double T) {
@@ -74,8 +74,8 @@ void ZMPCC::removeFromGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std
 void ZMPCC::addToLogger(mc_rtc::Logger & logger, const std::string & name)
 {
   logger.addLogEntry(name + "_zmpcc_comAdmittance",
-                     [this]() -> const Eigen::Vector2d { return config_.comAdmittance; });
-  logger.addLogEntry(name + "_zmpcc_errorZMP", [this]() -> const Eigen::Vector3d { return error_; });
+                     [this]() -> const Eigen::Vector2d & { return config_.comAdmittance; });
+  logger.addLogEntry(name + "_zmpcc_errorZMP", [this]() -> const Eigen::Vector3d & { return error_; });
 }
 
 void ZMPCC::removeFromLogger(mc_rtc::Logger & logger, const std::string & name)
