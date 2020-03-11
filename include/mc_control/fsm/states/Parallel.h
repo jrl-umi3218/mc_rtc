@@ -80,6 +80,7 @@ protected:
    * State1: (State1 output) | State2: (State2 output)
    */
   std::vector<std::string> outputStates_;
+  bool finished_first_ = false;
 };
 
 } // namespace fsm

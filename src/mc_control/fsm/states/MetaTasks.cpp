@@ -88,14 +88,11 @@ bool MetaTasksState::run(Controller &)
         }
         LOG_INFO("Completed " << t.name() << " (" << crit.output() << ")")
       }
-    }
-    if(outputCrit_.size() && out.size())
-    {
+      if(out.empty())
+      {
+        out = "OK";
+      }
       output(out);
-    }
-    else
-    {
-      output("OK");
     }
     return true;
   }

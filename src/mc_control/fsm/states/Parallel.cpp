@@ -95,8 +95,9 @@ bool ParallelState::run(Controller & ctl)
     ret = s.run(ctl, time_) && ret;
   }
   time_ += ctl.solver().dt();
-  if(ret)
+  if(ret && !finished_first_)
   {
+    finished_first_ = true;
     if(outputStates_.empty())
     {
       out = states_.back().state()->output();
@@ -111,16 +112,16 @@ bool ParallelState::run(Controller & ctl)
           {
             out += " | ";
           }
-          out += s.name() + ": (" + s.state()->output() + ")";
+          out += s.name() + "(" + s.state()->output() + ")";
         }
       }
     }
+    if(out.empty())
+    {
+      out = "OK";
+    }
+    output(out);
   }
-  if(out.empty())
-  {
-    out = "OK";
-  }
-  output(out);
   return ret;
 }
 
