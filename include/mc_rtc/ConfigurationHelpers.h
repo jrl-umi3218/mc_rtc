@@ -7,8 +7,9 @@
 namespace mc_rtc
 {
 
-/** Attempts to convert an mc_rtc::Configuration object from a vector<T> or a
- * single T
+/** Attempts to convert a read a vector or single element as a vector, use
+ * default value if it fails.
+ *
  *
  * Example:
  * \code{.yaml}
@@ -33,8 +34,42 @@ namespace mc_rtc
  * @param key Name of the element to read
  *
  * @return Vector containing all elements in the configuration vector or the
- * single item
+ * single item. If it fails, return defaultVec.
+ */
+template<typename T>
+std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config,
+                                   const std::string & key,
+                                   const std::vector<T> & defaultVec)
+{
+  std::vector<T> vec = defaultVec;
+  if(!config.has(key))
+  {
+    return vec;
+  }
+  const auto & c = config(key);
+  try
+  {
+    vec = config(key);
+  }
+  catch(...)
+  {
+    try
+    {
+      T elem = c;
+      vec.push_back(elem);
+    }
+    catch(...)
+    {
+      return defaultVec;
+    }
+  }
+  return vec;
+}
+
+/** Attempts to convert a read a vector or single element as a vector
  *
+ * Variant of fromVectorOrElement(const mc_rtc::Configuration & config, const std::string & key, const std::vector<T> &
+ * defaultVec)
  * @throws If the key is not found or the configuration is neither convertible
  * as std::vector<T> or T.
  */
@@ -57,7 +92,7 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config, const s
     catch(...)
     {
       LOG_ERROR_AND_THROW(std::runtime_error,
-                          "Configuration " << key << " cannot be converted from a vector or single element");
+                          "Configuration " << key << " is not valid. It should be a vector or single element.");
     }
   }
   return vec;

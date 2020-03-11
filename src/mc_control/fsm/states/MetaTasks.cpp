@@ -24,11 +24,7 @@ void MetaTasksState::configure(const mc_rtc::Configuration & config)
     const auto & tConfig = e.second;
     tasks_configs_[tName].load(tConfig);
   }
-
-  if(config.has("outputs"))
-  {
-    outputCrit_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs");
-  }
+  outputCrit_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs", {});
 }
 
 void MetaTasksState::start(Controller & ctl)

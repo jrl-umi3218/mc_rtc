@@ -51,11 +51,7 @@ void ParallelState::DelayedState::createState(Controller & ctl)
 void ParallelState::configure(const mc_rtc::Configuration & config)
 {
   config_.load(config);
-
-  if(config.has("outputs"))
-  {
-    outputStates_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs");
-  }
+  outputStates_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs", {});
 }
 
 void ParallelState::start(Controller & ctl)
