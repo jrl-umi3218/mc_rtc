@@ -20,6 +20,11 @@ title: Robots
     <img class="mr-3 img-fluid rounded-circle" src="{{site.baseurl}}/assets/robots/{{bot.icon}}" alt="{{bot.name}}" width="75" height="75"/>
     <div class="media-body">
       <h5 class="mt-0">{{bot.name}}</h5>
+      {% if bot.desc != nil %}
+      <dl class="row">
+        <dd class="col-9" rowspan=2>{{ bot.desc }}<dd>
+      </dl>
+      {% endif %}
       <dl class="row">
         <dt class="col">Description</dt>
         <dd class="col-9"><a href="{{bot.pkg.desc.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.desc.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>

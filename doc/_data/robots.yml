@@ -52,3 +52,13 @@
     module:
       url: https://github.com/jrl-umi3218/mc-sawyer
       name: mc-sawyer
+- name: BAZAR
+  desc: Two Kukka-LWR4+ arms mounted on a Neobotix MPO 700 omni-directional mobilebase
+  icon: bazar.jpg
+  pkg:
+    desc:
+      url: https://gite.lirmm.fr/multi-contact/bazar_description
+      name: bazar_description
+    module:
+      url: https://gite.lirmm.fr/multi-contact/mc-bazar
+      name: mc-bazar
