@@ -4,6 +4,7 @@
 
 #pragma once
 #include <mc_rbdyn/api.h>
+#include <mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h>
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
 
@@ -26,6 +27,7 @@ struct MC_RBDYN_DLLAPI FDQPWeights
   double netWrenchSqrt;
   double pressureSqrt;
 };
+
 } // namespace lipm_stabilizer
 } // namespace mc_rbdyn
 
@@ -86,6 +88,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   Eigen::Vector2d copAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
   sva::MotionVecd copMaxVel{{0.3, 0.3, 0.3}, {0.1, 0.1, 0.1}}; /**< Maximal velocity of the cop tasks */
+  ZMPCCConfiguration zmpcc; /**< Configuration of ZMPCC (CoM admittance) */
 
   double dfzAdmittance = 1e-4; /**< Admittance for foot force difference control */
   double dfzDamping = 0.; /**< Damping term in foot force difference control */
@@ -193,6 +196,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       vdc("frequency", vdcFrequency);
       vdc("stiffness", vdcStiffness);
     }
+
+    config("zmpcc", zmpcc);
   }
 
   mc_rtc::Configuration save() const
@@ -205,9 +210,11 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf.add("rightFootSurface", rightFootSurface);
 
     conf.add("admittance");
-    conf("admittance")("cop", copAdmittance);
-    conf("admittance")("dfz", dfzAdmittance);
-    conf("admittance")("dfz_damping", dfzDamping);
+    conf("admittance").add("cop", copAdmittance);
+    conf("admittance").add("dfz", dfzAdmittance);
+    conf("admittance").add("dfz_damping", dfzDamping);
+
+    conf.add("zmpcc", zmpcc);
 
     conf.add("dcm_tracking");
     conf("dcm_tracking").add("gains");

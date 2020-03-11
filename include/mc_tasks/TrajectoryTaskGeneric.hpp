@@ -206,6 +206,7 @@ void TrajectoryTaskGeneric<T>::selectActiveJoints(
   {
     LOG_WARNING("selectActiveJoints(names) ignored: use selectActiveJoints(solver, names) for a task already added to "
                 "the solver");
+    return;
   }
   selectorT_ = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::ActiveJoints(
       robots.mbs(), static_cast<int>(rIndex), errorT.get(), activeJointsName, activeDofs));
@@ -240,6 +241,7 @@ void TrajectoryTaskGeneric<T>::selectUnactiveJoints(
   {
     LOG_WARNING("selectUnactiveJoints(names) ignored: use selectUnactiveJoints(solver, names) for a task already added "
                 "to the solver");
+    return;
   }
   selectorT_ = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::UnactiveJoints(
       robots.mbs(), static_cast<int>(rIndex), errorT.get(), unactiveJointsName, unactiveDofs));
@@ -272,6 +274,7 @@ void TrajectoryTaskGeneric<T>::resetJointsSelector()
   {
     LOG_WARNING(
         "resetJointsSelector() ignored: use resetJointsSelector(solver) for a task already added to the solver");
+    return;
   }
   selectorT_ = nullptr;
   trajectoryT_ = std::make_shared<tasks::qp::TrajectoryTask>(robots.mbs(), rIndex, errorT.get(), 1, 2, weight_);

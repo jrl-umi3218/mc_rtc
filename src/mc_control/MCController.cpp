@@ -5,6 +5,7 @@
 #include <mc_control/MCController.h>
 
 #include <mc_rbdyn/RobotLoader.h>
+#include <mc_rbdyn/constants.h>
 
 #include <mc_rtc/config.h>
 #include <mc_rtc/gui/Schema.h>
@@ -128,7 +129,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   assert(rm);
   auto & r = robots().load(*rm);
   r.name(name);
-  r.mbc().gravity = Eigen::Vector3d{0, 0, 9.81};
+  r.mbc().gravity = mc_rbdyn::constants::gravity;
   r.forwardKinematics();
   r.forwardVelocity();
   if(gui_)

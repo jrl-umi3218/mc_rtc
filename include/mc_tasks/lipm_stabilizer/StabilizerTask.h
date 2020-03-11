@@ -17,6 +17,7 @@
 
 #include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 #include <mc_tasks/lipm_stabilizer/Contact.h>
+#include <mc_tasks/lipm_stabilizer/ZMPCC.h>
 
 #include <Eigen/QR>
 #include <eigen-quadprog/QuadProg.h>
@@ -44,7 +45,6 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 {
 
   static constexpr double MAX_AVERAGE_DCM_ERROR = 0.05; /**< Maximum average (integral) DCM error in [m] */
-  static constexpr double MAX_COM_ADMITTANCE = 20; /**< Maximum admittance for CoM admittance control */
   static constexpr double MAX_COP_ADMITTANCE = 0.1; /**< Maximum CoP admittance for foot damping control */
   static constexpr double MAX_DCM_D_GAIN = 2.; /**< Maximum DCM derivative gain (no unit) */
   static constexpr double MAX_DCM_I_GAIN = 100.; /**< Maximum DCM average integral gain in [Hz] */
@@ -138,22 +138,27 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    */
   void configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
 
+  /**
+   * @brief Use the current configuration as the new default
+   */
+  void commitConfig();
+
   /*! \brief Load targets and contacts from configuration */
   void load(mc_solver::QPSolver &, const mc_rtc::Configuration & config) override;
 
   /**
-   * @brief Get current stabilizer's configuration (including changes from GUI)
+   * @brief Get current stabilizer's configuration (including changes from
+   * GUI/code)
    *
    * \see commitedConfig()
    */
   const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config() const;
 
   /**
-   * @brief Get last commited configuration (not including latest changes from
-   * the GUI)
+   * @brief Get last commited configuration
    *
-   * Commited configuration is corresponds to the latest one set by calling configure(const
-   * mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &)
+   * Commited configuration is corresponds to the latest one set by calling commitConfig(), either manually or from the
+   * GUI.
    *
    * \see config()
    */
@@ -357,9 +362,7 @@ private:
    */
   void updateContacts(mc_solver::QPSolver & solver);
 
-  /** Compute desired wrench based on DCM error.
-   *
-   */
+  /** Compute desired wrench based on DCM error. */
   sva::ForceVecd computeDesiredWrench();
 
   /** Distribute a desired wrench in double support.
@@ -382,6 +385,18 @@ private:
 
   /** Reset admittance, damping and stiffness for every foot in contact. */
   void setSupportFootGains();
+
+  /** Update CoM task with ZMP Compensation Control.
+   *
+   * This approach is based on Section 6.2.2 of Dr Nagasaka's PhD thesis
+   * "体幹位置コンプライアンス制御によるモデル誤差吸収" (1999) from
+   * <https://sites.google.com/site/humanoidchannel/home/publication>.
+   * The main differences is that the CoM offset is (1) implemented as CoM
+   * damping control with an internal leaky integrator and (2) computed from
+   * the distributed rather than reference ZMP.
+   *
+   */
+  void updateCoMTaskZMPCC();
 
   /** Apply foot force difference control.
    *
@@ -425,6 +440,14 @@ protected:
     return realRobots_.robot(robotIndex_);
   }
 
+  /**
+   * @brief Actual configuration of the stabilizer.
+   * Called when reconfigure_ is true
+   *
+   * @param solver Solver to which this task has been added
+   */
+  void configure_(mc_solver::QPSolver & solver);
+
 protected:
   /**
    * @brief Workaround a C++11 standard bug: no specialization of the hash
@@ -467,11 +490,18 @@ protected:
   double t_ = 0.; /**< Time elapsed since the task is running */
 
 protected:
-  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
-      defaultConfig_; /**< Default (user-provided) configuration for the stabilizer. This configuration is superseeded
-                         by the parameters set in the GUI */
-  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration
-      c_; /* Online stabilizer configuration, can be set from the GUI. Defaults to defaultConfig_ */
+  /**< Default (user-provided) configuration for the stabilizer. This configuration is superseeded by the parameters set
+   * in the GUI */
+  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration defaultConfig_;
+  /**< Last valid stabilizer configuration. */
+  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration lastConfig_;
+  /**< Online stabilizer configuration, can be set from the GUI. Defaults to defaultConfig_ */
+  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration c_;
+  /**< Whether the stabilizer needs to be reconfigured at the next
+   * update(solver) call */
+  bool reconfigure_ = true;
+  bool enabled_ = true; /** Whether the stabilizer is enabled */
+
   Eigen::QuadProgDense qpSolver_; /**< Least-squares solver for wrench distribution */
   Eigen::Vector3d dcmAverageError_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmError_ = Eigen::Vector3d::Zero();
@@ -481,7 +511,10 @@ protected:
   Eigen::Vector3d measuredZMP_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero();
   sva::ForceVecd measuredNetWrench_ = sva::ForceVecd::Zero();
-  Eigen::Vector3d zmpError_ = Eigen::Vector3d::Zero();
+
+  bool zmpccOnlyDS_ = true; /**< Only apply ZMPCC in double support */
+  ZMPCC zmpcc_; /**< Compute CoM offset due to ZMPCC compensation */
+
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */

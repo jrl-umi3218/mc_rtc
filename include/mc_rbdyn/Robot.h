@@ -302,6 +302,9 @@ public:
    * invalid forces (such as with the robot in the air).
    *
    * \anchor zmpDoc
+   *
+   * \see Eigen::Vector3d mc_rbdyn::zmp(const sva::ForceVecd & netTotalWrench, const Eigen::Vector3d & plane_p, const
+   * Eigen::Vector3d & plane_n, double minimalNetNormalForce)
    */
   Eigen::Vector3d zmp(const sva::ForceVecd & netTotalWrench,
                       const Eigen::Vector3d & plane_p,
@@ -312,6 +315,9 @@ public:
    * @brief ZMP computation from net total wrench and a frame
    *
    * See \ref zmpDoc
+   *
+   * \see Eigen::Vector3d mc_rbdyn::zmp(const sva::ForceVecd & netTotalWrench, const sva::PTransformd & zmpFrame, double
+   * minimalNetNormalForce) const;
    *
    * @param netTotalWrench
    * @param zmpFrame Frame used for ZMP computation. The convention here is
