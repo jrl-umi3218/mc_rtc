@@ -313,6 +313,7 @@ mc_tasks/LookAtTask.cpp
 mc_tasks/LookAtSurfaceTask.cpp
 mc_tasks/MetaTaskLoader.cpp
 mc_tasks/lipm_stabilizer/StabilizerTask.cpp
+mc_tasks/lipm_stabilizer/StabilizerTask_log_gui.cpp
 mc_tasks/lipm_stabilizer/ZMPCC.cpp
 mc_tasks/lipm_stabilizer/Contact.cpp
 )
