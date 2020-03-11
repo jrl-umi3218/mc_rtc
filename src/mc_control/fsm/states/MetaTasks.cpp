@@ -22,10 +22,10 @@ void MetaTasksState::configure(const mc_rtc::Configuration & config)
     const auto & tConfig = e.second;
     tasks_configs_[tName].load(tConfig);
   }
-  config("outputCriteriaTasks", outputCrit_);
+  config("outputs", outputCrit_);
   if(outputCrit_.empty())
   {
-    std::string critTask = config("outputCriteriaTasks", std::string{""});
+    std::string critTask = config("outputs", std::string{""});
     if(!critTask.empty())
     {
       outputCrit_.clear();
@@ -82,7 +82,7 @@ bool MetaTasksState::run(Controller &)
         {
           if(out.size())
           {
-            out += " | ";
+            out += ", ";
           }
           out += t.name() + "=" + crit.output();
         }

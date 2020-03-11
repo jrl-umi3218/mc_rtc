@@ -50,10 +50,10 @@ void ParallelState::configure(const mc_rtc::Configuration & config)
 {
   config_.load(config);
 
-  config("outputStates", outputStates_);
+  config("outputs", outputStates_);
   if(outputStates_.empty())
   {
-    std::string state = config_("outputStates", std::string{""});
+    std::string state = config_("outputs", std::string{""});
     if(!state.empty())
     {
       outputStates_.clear();
@@ -110,7 +110,7 @@ bool ParallelState::run(Controller & ctl)
         {
           if(out.size())
           {
-            out += " | ";
+            out += ", ";
           }
           out += s.name() + "(" + s.state()->output() + ")";
         }
