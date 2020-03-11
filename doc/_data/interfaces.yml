@@ -26,3 +26,10 @@
   pkg:
     name: mc_rtc_naoqi
     url: https://github.com/jrl-umi3218/mc_rtc_naoqi
+- name: UDP Communication
+  desc: A generic UDP-based client/server interface implementation. The client is a regular mc_rtc interface that gets data through UDP sockets. The server can easily be implemented to interface with your own robot.<br />The following server implementations are currently available&#58; <ul><li>An OpenRTM server is provided and may be used with HRP robots.</li><li>A server implementation is also available for the <a href="https://hal.archives-ouvertes.fr/hal-02101562">BAZAR</a> robot.</li></ul>
+  url: https://openrtm.org/openrtm/
+  icon: mc_udp.png
+  pkg:
+    name: mc_udp
+    url: https://github.com/jrl-umi3218/mc_udp
