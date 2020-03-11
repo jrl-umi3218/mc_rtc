@@ -1,5 +1,7 @@
 var a00281 =
 [
-    [ "Polygons", "a02393.html", "a02393" ],
-    [ "Polygons", "a00281.html#a2bfb0562e6093e2274530cb22f523030", null ]
+    [ "Ordinate", "a02395.html", "a02395" ],
+    [ "OrdinateWithColor", "a02399.html", "a02399" ],
+    [ "Y", "a00281.html#aa288bbda415eb4c0d8c5d6fd8fd00f12", null ],
+    [ "Y", "a00281.html#a5957f379abaa61742baef9909ae18990", null ]
 ];

@@ -1,7 +1,6 @@
 var a00311 =
 [
-    [ "XYThetaROImpl", "a02481.html", "a02481" ],
-    [ "XYThetaImpl", "a02485.html", "a02485" ],
-    [ "XYTheta", "a00311.html#aaaa2ebe2ecb490f266fe541318646561", null ],
-    [ "XYTheta", "a00311.html#a98fa40132858d1d9c0091acb36ce9f32", null ]
+    [ "TrajectoryImpl", "a02463.html", "a02463" ],
+    [ "Trajectory", "a00311.html#a062a5442d4cabf7a31d7f83008751a6a", null ],
+    [ "Trajectory", "a00311.html#aa175899f8868d419050975dc9f79ed97", null ]
 ];

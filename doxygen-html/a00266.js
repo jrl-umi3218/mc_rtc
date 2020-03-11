@@ -1,5 +1,5 @@
 var a00266 =
 [
-    [ "NumberSliderImpl", "a02365.html", "a02365" ],
-    [ "NumberSlider", "a00266.html#a5c6714af47a8cb199c7345ed1c2e8ffe", null ]
+    [ "LabelImpl", "a02371.html", "a02371" ],
+    [ "Label", "a00266.html#a4b4617f09036971e7ccbf6917ee37c19", null ]
 ];

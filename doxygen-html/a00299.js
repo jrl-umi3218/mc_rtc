@@ -1,8 +1,7 @@
 var a00299 =
 [
-    [ "StateBuilder", "a02433.html", "a02433" ],
-    [ "ElementsStacking", "a00299.html#a649ddcaedb769dede3922fa845e71ca4", [
-      [ "Vertical", "a00299.html#a649ddcaedb769dede3922fa845e71ca4a06ce2a25e5d12c166a36f654dbea6012", null ],
-      [ "Horizontal", "a00299.html#a649ddcaedb769dede3922fa845e71ca4ac1b5fa03ecdb95d4a45dd1c40b02527f", null ]
-    ] ]
+    [ "RotationROImpl", "a02435.html", "a02435" ],
+    [ "RotationImpl", "a02439.html", "a02439" ],
+    [ "Rotation", "a00299.html#a9dc809d7e99978fe3f5e2439d1a20771", null ],
+    [ "Rotation", "a00299.html#a6440392ea4b48778f6d4012e0400ee5b", null ]
 ];

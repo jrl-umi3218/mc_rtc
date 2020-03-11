@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_filter::utils Namespace Reference</title>
+<title>mc_control::fsm Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,583 +70,137 @@ $(document).ready(function(){initNavTree('a00689.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">mc_filter::utils Namespace Reference</div>  </div>
+<div class="title">mc_control::fsm Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:adfd3c18de5d65e94ce24d479f30dab1b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00689.html#adfd3c18de5d65e94ce24d479f30dab1b">clamp</a> (double value, double lower, double upper)</td></tr>
-<tr class="memdesc:adfd3c18de5d65e94ce24d479f30dab1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamp a value in a given interval.  <a href="#adfd3c18de5d65e94ce24d479f30dab1b">More...</a><br /></td></tr>
-<tr class="separator:adfd3c18de5d65e94ce24d479f30dab1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8d9ca10808c933f3408d9b3f0fd72ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00689.html#ab8d9ca10808c933f3408d9b3f0fd72ab">clampInPlace</a> (double &amp;value, double lower, double upper)</td></tr>
-<tr class="memdesc:ab8d9ca10808c933f3408d9b3f0fd72ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamp a value in-place in a given interval.  <a href="#ab8d9ca10808c933f3408d9b3f0fd72ab">More...</a><br /></td></tr>
-<tr class="separator:ab8d9ca10808c933f3408d9b3f0fd72ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae558cb782558a6fe59c9975f5e9dc2b4"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00689.html#ae558cb782558a6fe59c9975f5e9dc2b4">clampAndWarn</a> (double value, double lower, double upper, const std::string &amp;label)</td></tr>
-<tr class="memdesc:ae558cb782558a6fe59c9975f5e9dc2b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamp a value in a given interval, issuing a warning when bounds are hit.  <a href="#ae558cb782558a6fe59c9975f5e9dc2b4">More...</a><br /></td></tr>
-<tr class="separator:ae558cb782558a6fe59c9975f5e9dc2b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac413b7125d296374adc252995e63570d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00689.html#ac413b7125d296374adc252995e63570d">clampInPlaceAndWarn</a> (double &amp;value, double lower, double upper, const std::string &amp;label)</td></tr>
-<tr class="memdesc:ac413b7125d296374adc252995e63570d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamp value in-place in a given interval, issuing a warning when bounds are hit.  <a href="#ac413b7125d296374adc252995e63570d">More...</a><br /></td></tr>
-<tr class="separator:ac413b7125d296374adc252995e63570d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a644eea0a16a707328be39ddd79f967f5"><td class="memTemplParams" colspan="2">template&lt;typename VectorT &gt; </td></tr>
-<tr class="memitem:a644eea0a16a707328be39ddd79f967f5"><td class="memTemplItemLeft" align="right" valign="top">VectorT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00689.html#a644eea0a16a707328be39ddd79f967f5">clamp</a> (const VectorT &amp;v, double lower, double upper)</td></tr>
-<tr class="memdesc:a644eea0a16a707328be39ddd79f967f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps each component of a vector in a given interval.  <a href="#a644eea0a16a707328be39ddd79f967f5">More...</a><br /></td></tr>
-<tr class="separator:a644eea0a16a707328be39ddd79f967f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27751a2cc46af2d62717f6f52c518382"><td class="memTemplParams" colspan="2">template&lt;typename VectorT &gt; </td></tr>
-<tr class="memitem:a27751a2cc46af2d62717f6f52c518382"><td class="memTemplItemLeft" align="right" valign="top">VectorT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00689.html#a27751a2cc46af2d62717f6f52c518382">clamp</a> (const VectorT &amp;v, const VectorT &amp;lower, const VectorT &amp;upper)</td></tr>
-<tr class="memdesc:a27751a2cc46af2d62717f6f52c518382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps each component of a vector in a given interval with vector bounds.  <a href="#a27751a2cc46af2d62717f6f52c518382">More...</a><br /></td></tr>
-<tr class="separator:a27751a2cc46af2d62717f6f52c518382"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab0443f3755eb02422bb0ed23308f220"><td class="memTemplParams" colspan="2">template&lt;typename VectorT &gt; </td></tr>
-<tr class="memitem:aab0443f3755eb02422bb0ed23308f220"><td class="memTemplItemLeft" align="right" valign="top">VectorT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00689.html#aab0443f3755eb02422bb0ed23308f220">clampAndWarn</a> (const VectorT &amp;v, const VectorT &amp;lower, const VectorT &amp;upper, const std::string &amp;label)</td></tr>
-<tr class="memdesc:aab0443f3755eb02422bb0ed23308f220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps each component of a vector in a given interval with vector bounds issuing a warning when bounds are hit.  <a href="#aab0443f3755eb02422bb0ed23308f220">More...</a><br /></td></tr>
-<tr class="separator:aab0443f3755eb02422bb0ed23308f220"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ee9282ad316cf4eef418c7060fcfcf9"><td class="memTemplParams" colspan="2">template&lt;typename VectorT &gt; </td></tr>
-<tr class="memitem:a7ee9282ad316cf4eef418c7060fcfcf9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00689.html#a7ee9282ad316cf4eef418c7060fcfcf9">clampInPlace</a> (VectorT &amp;v, const VectorT &amp;lower, const VectorT &amp;upper)</td></tr>
-<tr class="memdesc:a7ee9282ad316cf4eef418c7060fcfcf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps each component of a vector in a given interval.  <a href="#a7ee9282ad316cf4eef418c7060fcfcf9">More...</a><br /></td></tr>
-<tr class="separator:a7ee9282ad316cf4eef418c7060fcfcf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4de43cd1afd6571c2b390ac00c3ed252"><td class="memTemplParams" colspan="2">template&lt;typename VectorT &gt; </td></tr>
-<tr class="memitem:a4de43cd1afd6571c2b390ac00c3ed252"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00689.html#a4de43cd1afd6571c2b390ac00c3ed252">clampInPlace</a> (VectorT &amp;v, double lower, double upper)</td></tr>
-<tr class="memdesc:a4de43cd1afd6571c2b390ac00c3ed252"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps in-place each component of a vector in a given interval.  <a href="#a4de43cd1afd6571c2b390ac00c3ed252">More...</a><br /></td></tr>
-<tr class="separator:a4de43cd1afd6571c2b390ac00c3ed252"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae7592fcc8c4adee0d0108bc9ffba659"><td class="memTemplParams" colspan="2">template&lt;typename VectorT &gt; </td></tr>
-<tr class="memitem:aae7592fcc8c4adee0d0108bc9ffba659"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00689.html#aae7592fcc8c4adee0d0108bc9ffba659">clampInPlaceAndWarn</a> (VectorT &amp;vector, const VectorT &amp;lower, const VectorT &amp;upper, const std::string &amp;label)</td></tr>
-<tr class="memdesc:aae7592fcc8c4adee0d0108bc9ffba659"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps in-place each component of a vector in a given interval, issuing a warning when bounds are hit.  <a href="#aae7592fcc8c4adee0d0108bc9ffba659">More...</a><br /></td></tr>
-<tr class="separator:aae7592fcc8c4adee0d0108bc9ffba659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01911.html">AddRemoveContactState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a state that is able to remove or add a contact.  <a href="a01911.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01883.html">Contact</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A lightweight variant of <a class="el" href="a02087.html">mc_rbdyn::Contact</a> meant to simplify contact manipulation in the FSM.  <a href="a01883.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01887.html">Controller</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This controller implements a finite-state machine to handle complex scenarios in a generic fashion.  <a href="a01887.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01895.html">Executor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">of executing an FSM  <a href="a01895.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01915.html">Grippers</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls the gripper of a robot.  <a href="a01915.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01919.html">HalfSittingState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a state that brings the robot posture to halfsitting stance.  <a href="a01919.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01923.html">MetaState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a "meta" state.  <a href="a01923.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01927.html">MetaTasksState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a generic tasks state.  <a href="a01927.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01931.html">ParallelState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements parallel states.  <a href="a01931.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01939.html">PauseState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a pause state.  <a href="a01939.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01899.html">PythonState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides an interface for the Python bindings to fill-out.  <a href="a01899.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01943.html">SlidingFootContactState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a state that is able to slide a foot contact.  <a href="a01943.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01947.html">StabilizerStandingState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple state to control and stabilize the CoM of a biped-like robot using the LIPMStabilizer.  <a href="a01947.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01903.html">State</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A state of an FSM.  <a href="a01903.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01907.html">StateFactory</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates <a class="el" href="a01903.html" title="A state of an FSM. ">State</a> objects based on name and configuration entries.  <a href="a01907.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01951.html">Transition</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transition is given by the destination state and a type of transition.  <a href="a01951.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01955.html">TransitionMap</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class takes care of reading a transition map from a configuration entry and makes sure it's coherent with the states provided by the <a class="el" href="a01907.html" title="Creates State objects based on name and configuration entries. ">StateFactory</a>.  <a href="a01955.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:aca87ebca97bbd8350345078660965c73"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00689.html#aca87ebca97bbd8350345078660965c73">ContactSet</a> = std::set&lt; <a class="el" href="a01883.html">Contact</a>, std::less&lt; <a class="el" href="a01883.html">Contact</a> &gt;, Eigen::aligned_allocator&lt; <a class="el" href="a01883.html">Contact</a> &gt; &gt;</td></tr>
+<tr class="separator:aca87ebca97bbd8350345078660965c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c42d903de4c4a1e5ad50c37bc2d547a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00689.html#a4c42d903de4c4a1e5ad50c37bc2d547a">StatePtr</a> = std::shared_ptr&lt; <a class="el" href="a01903.html">State</a> &gt;</td></tr>
+<tr class="separator:a4c42d903de4c4a1e5ad50c37bc2d547a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a3d06e24faff23eaa588f3820e74042b7"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a03830.html#abb5c53c99c37c6ca870d1838f76228ef">MC_CONTROL_FSM_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00689.html#a3d06e24faff23eaa588f3820e74042b7">Controller</a></td></tr>
+<tr class="separator:a3d06e24faff23eaa588f3820e74042b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2deb94750a61f8f86801bd02f4149d5e"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a03833.html#a4cfcac728c1786a9888c977f8b656ba2">MC_CONTROL_FSM_STATE_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00689.html#a2deb94750a61f8f86801bd02f4149d5e">AddRemoveContactStateImpl</a></td></tr>
+<tr class="separator:a2deb94750a61f8f86801bd02f4149d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="adfd3c18de5d65e94ce24d479f30dab1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfd3c18de5d65e94ce24d479f30dab1b">&#9670;&nbsp;</a></span>clamp() <span class="overload">[1/3]</span></h2>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="aca87ebca97bbd8350345078660965c73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca87ebca97bbd8350345078660965c73">&#9670;&nbsp;</a></span>ContactSet</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_filter::utils::clamp </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>lower</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>upper</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">using <a class="el" href="a00689.html#aca87ebca97bbd8350345078660965c73">mc_control::fsm::ContactSet</a> = typedef std::set&lt;<a class="el" href="a01883.html">Contact</a>, std::less&lt;<a class="el" href="a01883.html">Contact</a>&gt;, Eigen::aligned_allocator&lt;<a class="el" href="a01883.html">Contact</a>&gt; &gt;</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Clamp a value in a given interval. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">value</td><td>Value to clamp. </td></tr>
-    <tr><td class="paramname">lower</td><td>Lower bound. </td></tr>
-    <tr><td class="paramname">upper</td><td>Upper bound.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>clamped value </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="a00689.html#a644eea0a16a707328be39ddd79f967f5">clamp()</a>, and <a class="el" href="a00689.html#ab8d9ca10808c933f3408d9b3f0fd72ab">clampInPlace()</a>.</p>
-
 </div>
 </div>
-<a id="a644eea0a16a707328be39ddd79f967f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a644eea0a16a707328be39ddd79f967f5">&#9670;&nbsp;</a></span>clamp() <span class="overload">[2/3]</span></h2>
+<a id="a4c42d903de4c4a1e5ad50c37bc2d547a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c42d903de4c4a1e5ad50c37bc2d547a">&#9670;&nbsp;</a></span>StatePtr</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">VectorT mc_filter::utils::clamp </td>
-          <td>(</td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>lower</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>upper</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">using <a class="el" href="a00689.html#a4c42d903de4c4a1e5ad50c37bc2d547a">mc_control::fsm::StatePtr</a> = typedef std::shared_ptr&lt;<a class="el" href="a01903.html">State</a>&gt;</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Clamps each component of a vector in a given interval. </p>
-<p>The same lower and upper bounds will be used for each element of the vector.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">v</td><td>Vector of values </td></tr>
-    <tr><td class="paramname">lower</td><td>Lower bound </td></tr>
-    <tr><td class="paramname">upper</td><td>Upper bound</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>VectorT must meet the following requirements:</p><ul>
-<li>Read-write element access operator(size_t)</li>
-<li>The value type of VectorT must meet the requirements of std::max and std::min</li>
-</ul>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a00689.html#a27751a2cc46af2d62717f6f52c518382" title="Clamps each component of a vector in a given interval with vector bounds. ">clamp(const VectorT&amp; v, const VectorT &amp; lower, const VectorT &amp; upper)</a> </dd></dl>
-
-<p class="reference">References <a class="el" href="a00689.html#adfd3c18de5d65e94ce24d479f30dab1b">clamp()</a>.</p>
-
 </div>
 </div>
-<a id="a27751a2cc46af2d62717f6f52c518382"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27751a2cc46af2d62717f6f52c518382">&#9670;&nbsp;</a></span>clamp() <span class="overload">[3/3]</span></h2>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a2deb94750a61f8f86801bd02f4149d5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2deb94750a61f8f86801bd02f4149d5e">&#9670;&nbsp;</a></span>AddRemoveContactStateImpl</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">VectorT mc_filter::utils::clamp </td>
-          <td>(</td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>lower</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>upper</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">struct <a class="el" href="a03833.html#a4cfcac728c1786a9888c977f8b656ba2">MC_CONTROL_FSM_STATE_DLLAPI</a> mc_control::fsm::AddRemoveContactStateImpl</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Clamps each component of a vector in a given interval with vector bounds. </p>
-<p>VectorT requirements: </p><dl class="section see"><dt>See also</dt><dd>VectorT <a class="el" href="a00689.html#a644eea0a16a707328be39ddd79f967f5" title="Clamps each component of a vector in a given interval. ">clamp(const VectorT&amp; v, double lower, double upper)</a> </dd></dl>
-
-<p class="reference">References <a class="el" href="a00689.html#adfd3c18de5d65e94ce24d479f30dab1b">clamp()</a>.</p>
-
 </div>
 </div>
-<a id="ae558cb782558a6fe59c9975f5e9dc2b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae558cb782558a6fe59c9975f5e9dc2b4">&#9670;&nbsp;</a></span>clampAndWarn() <span class="overload">[1/2]</span></h2>
+<a id="a3d06e24faff23eaa588f3820e74042b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d06e24faff23eaa588f3820e74042b7">&#9670;&nbsp;</a></span>Controller</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_filter::utils::clampAndWarn </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>lower</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>upper</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>label</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">struct <a class="el" href="a03830.html#abb5c53c99c37c6ca870d1838f76228ef">MC_CONTROL_FSM_DLLAPI</a> <a class="el" href="a01887.html">mc_control::fsm::Controller</a></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-
-<p>Clamp a value in a given interval, issuing a warning when bounds are hit. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a00689.html#adfd3c18de5d65e94ce24d479f30dab1b" title="Clamp a value in a given interval. ">clamp(double value, double lower, double upper)</a></dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>clamped value </dd></dl>
-
-<p class="reference">References <a class="el" href="a00338.html#ad8493c09711c1562481e104d334694db">LOG_WARNING</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00689.html#aab0443f3755eb02422bb0ed23308f220">clampAndWarn()</a>, and <a class="el" href="a00689.html#ac413b7125d296374adc252995e63570d">clampInPlaceAndWarn()</a>.</p>
-
-</div>
-</div>
-<a id="aab0443f3755eb02422bb0ed23308f220"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab0443f3755eb02422bb0ed23308f220">&#9670;&nbsp;</a></span>clampAndWarn() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">VectorT mc_filter::utils::clampAndWarn </td>
-          <td>(</td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>lower</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>upper</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>label</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Clamps each component of a vector in a given interval with vector bounds issuing a warning when bounds are hit. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a00689.html#a27751a2cc46af2d62717f6f52c518382" title="Clamps each component of a vector in a given interval with vector bounds. ">clamp(const VectorT&amp; v, const VectorT &amp; lower, const VectorT &amp; upper)</a> </dd></dl>
-
-<p class="reference">References <a class="el" href="a00689.html#ae558cb782558a6fe59c9975f5e9dc2b4">clampAndWarn()</a>, and <a class="el" href="a00698.html#a71fcd7fe46e75452f9c6302bb1c40412">mc_rbdyn::details::to_string()</a>.</p>
-
-</div>
-</div>
-<a id="ab8d9ca10808c933f3408d9b3f0fd72ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8d9ca10808c933f3408d9b3f0fd72ab">&#9670;&nbsp;</a></span>clampInPlace() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_filter::utils::clampInPlace </td>
-          <td>(</td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>lower</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>upper</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Clamp a value in-place in a given interval. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a00689.html#adfd3c18de5d65e94ce24d479f30dab1b" title="Clamp a value in a given interval. ">clamp(double value, double lower, double upper)</a> </dd></dl>
-
-<p class="reference">References <a class="el" href="a00689.html#adfd3c18de5d65e94ce24d479f30dab1b">clamp()</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a01997.html#a5d1fe6b17b1cab5807291e292f25b778">mc_filter::LeakyIntegrator&lt; VectorT &gt;::add()</a>, <a class="el" href="a01993.html#afc5e32731c162cecc484c71b1cd6680f">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::append()</a>, and <a class="el" href="a02009.html#ac9dfa7c0425d04a71c179ee05f477d0a">mc_filter::StationaryOffset&lt; Eigen::Vector3d &gt;::update()</a>.</p>
-
-</div>
-</div>
-<a id="a7ee9282ad316cf4eef418c7060fcfcf9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ee9282ad316cf4eef418c7060fcfcf9">&#9670;&nbsp;</a></span>clampInPlace() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_filter::utils::clampInPlace </td>
-          <td>(</td>
-          <td class="paramtype">VectorT &amp;&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>lower</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>upper</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Clamps each component of a vector in a given interval. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a00689.html#a27751a2cc46af2d62717f6f52c518382" title="Clamps each component of a vector in a given interval with vector bounds. ">clamp(const VectorT&amp; v, const VectorT &amp; lower, const VectorT &amp; upper)</a> </dd></dl>
-
-<p class="reference">References <a class="el" href="a00689.html#adfd3c18de5d65e94ce24d479f30dab1b">clamp()</a>.</p>
-
-</div>
-</div>
-<a id="a4de43cd1afd6571c2b390ac00c3ed252"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4de43cd1afd6571c2b390ac00c3ed252">&#9670;&nbsp;</a></span>clampInPlace() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_filter::utils::clampInPlace </td>
-          <td>(</td>
-          <td class="paramtype">VectorT &amp;&#160;</td>
-          <td class="paramname"><em>v</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>lower</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>upper</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Clamps in-place each component of a vector in a given interval. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a00689.html#a644eea0a16a707328be39ddd79f967f5" title="Clamps each component of a vector in a given interval. ">clamp(const VectorT&amp; v, double lower, double upper)</a> </dd></dl>
-
-<p class="reference">References <a class="el" href="a00689.html#adfd3c18de5d65e94ce24d479f30dab1b">clamp()</a>.</p>
-
-</div>
-</div>
-<a id="ac413b7125d296374adc252995e63570d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac413b7125d296374adc252995e63570d">&#9670;&nbsp;</a></span>clampInPlaceAndWarn() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_filter::utils::clampInPlaceAndWarn </td>
-          <td>(</td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>lower</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>upper</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>label</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Clamp value in-place in a given interval, issuing a warning when bounds are hit. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a00689.html#ae558cb782558a6fe59c9975f5e9dc2b4" title="Clamp a value in a given interval, issuing a warning when bounds are hit. ">clampAndWarn(double value, double lower, double upper, const std::string &amp; label)</a> </dd></dl>
-
-<p class="reference">References <a class="el" href="a00689.html#ae558cb782558a6fe59c9975f5e9dc2b4">clampAndWarn()</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00689.html#aae7592fcc8c4adee0d0108bc9ffba659">clampInPlaceAndWarn()</a>.</p>
-
-</div>
-</div>
-<a id="aae7592fcc8c4adee0d0108bc9ffba659"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae7592fcc8c4adee0d0108bc9ffba659">&#9670;&nbsp;</a></span>clampInPlaceAndWarn() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_filter::utils::clampInPlaceAndWarn </td>
-          <td>(</td>
-          <td class="paramtype">VectorT &amp;&#160;</td>
-          <td class="paramname"><em>vector</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>lower</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>upper</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>label</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Clamps in-place each component of a vector in a given interval, issuing a warning when bounds are hit. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a00689.html#a7ee9282ad316cf4eef418c7060fcfcf9" title="Clamps each component of a vector in a given interval. ">clampInPlace(VectorT&amp; v, const VectorT &amp; lower, const VectorT &amp; upper)</a> </dd></dl>
-
-<p class="reference">References <a class="el" href="a00689.html#ac413b7125d296374adc252995e63570d">clampInPlaceAndWarn()</a>, and <a class="el" href="a00698.html#a71fcd7fe46e75452f9c6302bb1c40412">mc_rbdyn::details::to_string()</a>.</p>
 
 </div>
 </div>
@@ -656,8 +210,8 @@ template&lt;typename VectorT &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00688.html">mc_filter</a></li><li class="navelem"><a class="el" href="a00689.html">utils</a></li>
-    <li class="footer">Generated on Wed Mar 11 2020 02:25:59 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00688.html">mc_control</a></li><li class="navelem"><a class="el" href="a00689.html">fsm</a></li>
+    <li class="footer">Generated on Wed Mar 11 2020 08:58:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

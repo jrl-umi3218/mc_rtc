@@ -1,7 +1,7 @@
 var a00710 =
 [
-    [ "AdmittanceTask", "a02729.html", "a02729" ],
-    [ "ComplianceTask", "a02737.html", "a02737" ],
-    [ "CoPTask", "a02745.html", "a02745" ],
-    [ "DampingTask", "a02749.html", "a02749" ]
+    [ "impl", "a00711.html", "a00711" ],
+    [ "AxisConfiguration", "a02415.html", "a02415" ],
+    [ "PolygonDescription", "a02419.html", "a02419" ],
+    [ "Range", "a02411.html", "a02411" ]
 ];

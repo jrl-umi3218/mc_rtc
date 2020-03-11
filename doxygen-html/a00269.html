@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Abscissa.h File Reference</title>
+<title>NumberInput.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -74,44 +74,31 @@ $(document).ready(function(){initNavTree('a00269.html','');});
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Abscissa.h File Reference</div>  </div>
+<div class="title">NumberInput.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00245.html">mc_rtc/gui/details/traits.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03862.html">mc_rtc/gui/plot/types.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00254.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02369.html">mc_rtc::gui::plot::impl::Abscissa&lt; GetT &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">For a given plot, this holds options on the abscissa axis and a callback that returns the current abscissa value.  <a href="a02369.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02375.html">mc_rtc::gui::NumberInputImpl&lt; GetT, SetT &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This element should implement a dialog to input a number.  <a href="a02375.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00684"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00684.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00684"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02205.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00687.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memitem:a00690"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00690.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00690"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02219.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00693.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00702"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00702.html">mc_rtc::gui</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00704"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00704.html">mc_rtc::gui::plot</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00705"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00705.html">mc_rtc::gui::plot::impl</a></td></tr>
+<tr class="memitem:a00708"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00708.html">mc_rtc::gui</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a13155e82e2012b946c5c973369b1db56"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:a13155e82e2012b946c5c973369b1db56"><td class="memTemplItemLeft" align="right" valign="top">impl::Abscissa&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00704.html#a13155e82e2012b946c5c973369b1db56">mc_rtc::gui::plot::X</a> (AxisConfiguration config, GetT get_fn)</td></tr>
-<tr class="memdesc:a13155e82e2012b946c5c973369b1db56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to create an <a class="el" href="a02369.html" title="For a given plot, this holds options on the abscissa axis and a callback that returns the current abs...">impl::Abscissa</a>.  <a href="a00704.html#a13155e82e2012b946c5c973369b1db56">More...</a><br /></td></tr>
-<tr class="separator:a13155e82e2012b946c5c973369b1db56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac22eeca55379fb5c66be97b783a8bd32"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:ac22eeca55379fb5c66be97b783a8bd32"><td class="memTemplItemLeft" align="right" valign="top">impl::Abscissa&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00704.html#ac22eeca55379fb5c66be97b783a8bd32">mc_rtc::gui::plot::X</a> (const std::string &amp;legend, GetT get_fn)</td></tr>
-<tr class="memdesc:ac22eeca55379fb5c66be97b783a8bd32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to create an <a class="el" href="a02369.html" title="For a given plot, this holds options on the abscissa axis and a callback that returns the current abs...">impl::Abscissa</a> without limits.  <a href="a00704.html#ac22eeca55379fb5c66be97b783a8bd32">More...</a><br /></td></tr>
-<tr class="separator:ac22eeca55379fb5c66be97b783a8bd32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2f689ceed9f080a4ccc49a6a70aeb4c"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:ac2f689ceed9f080a4ccc49a6a70aeb4c"><td class="memTemplItemLeft" align="right" valign="top">impl::Abscissa&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00704.html#ac2f689ceed9f080a4ccc49a6a70aeb4c">mc_rtc::gui::plot::X</a> (const char *legend, GetT get_fn)</td></tr>
-<tr class="memdesc:ac2f689ceed9f080a4ccc49a6a70aeb4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to create an <a class="el" href="a02369.html" title="For a given plot, this holds options on the abscissa axis and a callback that returns the current abs...">impl::Abscissa</a> without limits (C-string overload)  <a href="a00704.html#ac2f689ceed9f080a4ccc49a6a70aeb4c">More...</a><br /></td></tr>
-<tr class="separator:ac2f689ceed9f080a4ccc49a6a70aeb4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42ba0a1ea0c4890a7941cf76892e1268"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
+<tr class="memitem:a42ba0a1ea0c4890a7941cf76892e1268"><td class="memTemplItemLeft" align="right" valign="top">NumberInputImpl&lt; GetT, SetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00708.html#a42ba0a1ea0c4890a7941cf76892e1268">mc_rtc::gui::NumberInput</a> (const std::string &amp;name, GetT get_fn, SetT set_fn)</td></tr>
+<tr class="memdesc:a42ba0a1ea0c4890a7941cf76892e1268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to create a <a class="el" href="a02375.html" title="This element should implement a dialog to input a number. ">NumberInputImpl</a>.  <a href="a00708.html#a42ba0a1ea0c4890a7941cf76892e1268">More...</a><br /></td></tr>
+<tr class="separator:a42ba0a1ea0c4890a7941cf76892e1268"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -119,8 +106,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="dir_db09ff38bdf4a48089498df3a23be2f9.html">plot</a></li><li class="navelem"><a class="el" href="a00269.html">Abscissa.h</a></li>
-    <li class="footer">Generated on Wed Mar 11 2020 02:25:58 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00269.html">NumberInput.h</a></li>
+    <li class="footer">Generated on Wed Mar 11 2020 08:58:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

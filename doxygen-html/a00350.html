@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>CollisionsConstraint.h File Reference</title>
+<title>utils_api.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,41 +70,122 @@ $(document).ready(function(){initNavTree('a00350.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">CollisionsConstraint.h File Reference</div>  </div>
+<div class="title">utils_api.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00143.html">mc_rbdyn/Collision.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03844.html">mc_rbdyn/Contact.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00200.html">mc_rbdyn/Robots.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00359.html">mc_solver/ConstraintSet.h</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00038.html">Tasks/QPConstr.h</a>&gt;</code><br />
-<code>#include &lt;set&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02561.html">mc_solver::CollisionsConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a collision constraint between two robots.  <a href="a02561.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02565.html">mc_solver::RobotEnvCollisionsConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility class for the very common-case of (robot,env) scenarios.  <a href="a02565.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00693"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00693.html">mc_solver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a46af0212489d0be9e68321c07f865e45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a46af0212489d0be9e68321c07f865e45">MC_RTC_UTILS_VERSION</a>&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td></tr>
+<tr class="separator:a46af0212489d0be9e68321c07f865e45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c714e5ec4642ad2fbeb874ec1ea290c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a8c714e5ec4642ad2fbeb874ec1ea290c">MC_RTC_UTILS_DLLIMPORT</a></td></tr>
+<tr class="separator:a8c714e5ec4642ad2fbeb874ec1ea290c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59b21389e495a6b42899eea7452bde3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a59b21389e495a6b42899eea7452bde3c">MC_RTC_UTILS_DLLEXPORT</a></td></tr>
+<tr class="separator:a59b21389e495a6b42899eea7452bde3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac847eca5b9bc55005276d08214aad7ff"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#ac847eca5b9bc55005276d08214aad7ff">MC_RTC_UTILS_DLLLOCAL</a></td></tr>
+<tr class="separator:ac847eca5b9bc55005276d08214aad7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a797d67eb3213978212928ed90cf0dff2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;&#160;&#160;<a class="el" href="a00350.html#a8c714e5ec4642ad2fbeb874ec1ea290c">MC_RTC_UTILS_DLLIMPORT</a></td></tr>
+<tr class="separator:a797d67eb3213978212928ed90cf0dff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3c7cdf1557399d0a6334aef3b20a746"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#af3c7cdf1557399d0a6334aef3b20a746">MC_RTC_UTILS_LOCAL</a>&#160;&#160;&#160;<a class="el" href="a00350.html#ac847eca5b9bc55005276d08214aad7ff">MC_RTC_UTILS_DLLLOCAL</a></td></tr>
+<tr class="separator:af3c7cdf1557399d0a6334aef3b20a746"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a797d67eb3213978212928ed90cf0dff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a797d67eb3213978212928ed90cf0dff2">&#9670;&nbsp;</a></span>MC_RTC_UTILS_DLLAPI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RTC_UTILS_DLLAPI&#160;&#160;&#160;<a class="el" href="a00350.html#a8c714e5ec4642ad2fbeb874ec1ea290c">MC_RTC_UTILS_DLLIMPORT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a00707.html#a0f0cc0f5914bc62d93b19fda0ed53e75">mc_rtc::internal::is_valid_hash()</a>, and <a class="el" href="a02219.html#ab8cc8b0acc61a5bcf4befd1752691e97">mc_rtc::Configuration::push()</a>.</p>
+
+</div>
+</div>
+<a id="a59b21389e495a6b42899eea7452bde3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59b21389e495a6b42899eea7452bde3c">&#9670;&nbsp;</a></span>MC_RTC_UTILS_DLLEXPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RTC_UTILS_DLLEXPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8c714e5ec4642ad2fbeb874ec1ea290c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c714e5ec4642ad2fbeb874ec1ea290c">&#9670;&nbsp;</a></span>MC_RTC_UTILS_DLLIMPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RTC_UTILS_DLLIMPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac847eca5b9bc55005276d08214aad7ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac847eca5b9bc55005276d08214aad7ff">&#9670;&nbsp;</a></span>MC_RTC_UTILS_DLLLOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RTC_UTILS_DLLLOCAL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af3c7cdf1557399d0a6334aef3b20a746"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3c7cdf1557399d0a6334aef3b20a746">&#9670;&nbsp;</a></span>MC_RTC_UTILS_LOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RTC_UTILS_LOCAL&#160;&#160;&#160;<a class="el" href="a00350.html#ac847eca5b9bc55005276d08214aad7ff">MC_RTC_UTILS_DLLLOCAL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a46af0212489d0be9e68321c07f865e45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46af0212489d0be9e68321c07f865e45">&#9670;&nbsp;</a></span>MC_RTC_UTILS_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RTC_UTILS_VERSION&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fad12f0f0b10f75a80792b958ab0d808.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00350.html">CollisionsConstraint.h</a></li>
-    <li class="footer">Generated on Wed Mar 11 2020 02:25:58 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00350.html">utils_api.h</a></li>
+    <li class="footer">Generated on Wed Mar 11 2020 08:58:54 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -1,27 +1,4 @@
 var a00685 =
 [
-    [ "force", "a00710.html", "a00710" ],
-    [ "lipm_stabilizer", "a00686.html", "a00686" ],
-    [ "AddContactTask", "a02721.html", "a02721" ],
-    [ "AddRemoveContactTask", "a02717.html", "a02717" ],
-    [ "BSplineTrajectoryTask", "a02733.html", "a02733" ],
-    [ "CoMTask", "a02741.html", "a02741" ],
-    [ "EndEffectorTask", "a02753.html", "a02753" ],
-    [ "ExactCubicTrajectoryTask", "a02757.html", "a02757" ],
-    [ "GazeTask", "a02761.html", "a02761" ],
-    [ "LookAtSurfaceTask", "a02781.html", "a02781" ],
-    [ "LookAtTask", "a02785.html", "a02785" ],
-    [ "MetaTask", "a02789.html", "a02789" ],
-    [ "MetaTaskLoader", "a02793.html", "a02793" ],
-    [ "OrientationTask", "a02797.html", "a02797" ],
-    [ "PositionBasedVisServoTask", "a02801.html", "a02801" ],
-    [ "PositionTask", "a02805.html", "a02805" ],
-    [ "PostureTask", "a02809.html", "a02809" ],
-    [ "RelativeEndEffectorTask", "a02813.html", "a02813" ],
-    [ "RemoveContactTask", "a02725.html", "a02725" ],
-    [ "SmoothTask", "a02817.html", "a02817" ],
-    [ "SplineTrajectoryTask", "a02821.html", "a02821" ],
-    [ "SurfaceTransformTask", "a02825.html", "a02825" ],
-    [ "TrajectoryTaskGeneric", "a02829.html", "a02829" ],
-    [ "VectorOrientationTask", "a02833.html", "a02833" ]
+    [ "Pendulum", "a02031.html", "a02031" ]
 ];
