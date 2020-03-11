@@ -9092,13 +9092,6 @@
       <anchor>acf6e4968c19820c0928e459dd42d0d64</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function">
-      <type>mc_rtc::Configuration &amp;</type>
-      <name>config</name>
-      <anchorfile>a01881.html</anchorfile>
-      <anchor>a904c563ef54b89f211e75d545f60db01</anchor>
-      <arglist>()</arglist>
-    </member>
     <member kind="friend">
       <type>friend struct</type>
       <name>Executor</name>
@@ -14955,6 +14948,20 @@
       <anchor>a3110512ea26812d8a58d3945e739c751</anchor>
       <arglist>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name)</arglist>
     </member>
+    <member kind="function">
+      <type>mc_rtc::Configuration &amp;</type>
+      <name>config</name>
+      <anchorfile>a01985.html</anchorfile>
+      <anchor>aca6f0bb79c273474a9e6ed524ff4d33c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rtc::Configuration &amp;</type>
+      <name>config</name>
+      <anchorfile>a01985.html</anchorfile>
+      <anchor>a7d12aa9497219df451e115d53e62bcd8</anchor>
+      <arglist>() const</arglist>
+    </member>
     <member kind="variable">
       <type>const double</type>
       <name>timeStep</name>
@@ -15022,8 +15029,22 @@
       <type></type>
       <name>MCController</name>
       <anchorfile>a01985.html</anchorfile>
+      <anchor>a5908d94ed55dc5a858e156d63e8513e7</anchor>
+      <arglist>(std::shared_ptr&lt; mc_rbdyn::RobotModule &gt; robot, double dt, const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type></type>
+      <name>MCController</name>
+      <anchorfile>a01985.html</anchorfile>
       <anchor>a1ac3cbc244e98473e90b06e4c187aec0</anchor>
       <arglist>(const std::vector&lt; std::shared_ptr&lt; mc_rbdyn::RobotModule &gt;&gt; &amp;robot_modules, double dt)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type></type>
+      <name>MCController</name>
+      <anchorfile>a01985.html</anchorfile>
+      <anchor>a0788cb5ea805128e4825e14f52122b5d</anchor>
+      <arglist>(const std::vector&lt; std::shared_ptr&lt; mc_rbdyn::RobotModule &gt;&gt; &amp;robot_modules, double dt, const mc_rtc::Configuration &amp;config)</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
@@ -15086,6 +15107,13 @@
       <name>gui_</name>
       <anchorfile>a01985.html</anchorfile>
       <anchor>a5761e783caf225454e03628b2533fc13</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_rtc::Configuration</type>
+      <name>config_</name>
+      <anchorfile>a01985.html</anchorfile>
+      <anchor>adbb3001e8874fedbdc2b71a0db93965c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">

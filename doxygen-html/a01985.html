@@ -190,6 +190,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3110512ea26812d8a58d3945e739c751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02141.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#a3110512ea26812d8a58d3945e739c751">loadRobot</a> (<a class="el" href="a00687.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> rm, const std::string &amp;name)</td></tr>
 <tr class="memdesc:a3110512ea26812d8a58d3945e739c751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an additional robot into the controller.  <a href="#a3110512ea26812d8a58d3945e739c751">More...</a><br /></td></tr>
 <tr class="separator:a3110512ea26812d8a58d3945e739c751"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca6f0bb79c273474a9e6ed524ff4d33c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#aca6f0bb79c273474a9e6ed524ff4d33c">config</a> ()</td></tr>
+<tr class="memdesc:aca6f0bb79c273474a9e6ed524ff4d33c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access or modify controller configuration.  <a href="#aca6f0bb79c273474a9e6ed524ff4d33c">More...</a><br /></td></tr>
+<tr class="separator:aca6f0bb79c273474a9e6ed524ff4d33c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d12aa9497219df451e115d53e62bcd8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#a7d12aa9497219df451e115d53e62bcd8">config</a> () const</td></tr>
+<tr class="memdesc:a7d12aa9497219df451e115d53e62bcd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access controller configuration (const)  <a href="#a7d12aa9497219df451e115d53e62bcd8">More...</a><br /></td></tr>
+<tr class="separator:a7d12aa9497219df451e115d53e62bcd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -223,9 +229,14 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a0a5a9b4670e467fa2eabd8f2342e0846"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#a0a5a9b4670e467fa2eabd8f2342e0846">MCController</a> (std::shared_ptr&lt; <a class="el" href="a02161.html">mc_rbdyn::RobotModule</a> &gt; <a class="el" href="a01985.html#a3d0a5351228f1b62ad1268339020d230">robot</a>, double dt)</td></tr>
 <tr class="memdesc:a0a5a9b4670e467fa2eabd8f2342e0846"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a controller base with an empty environment.  <a href="#a0a5a9b4670e467fa2eabd8f2342e0846">More...</a><br /></td></tr>
 <tr class="separator:a0a5a9b4670e467fa2eabd8f2342e0846"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5908d94ed55dc5a858e156d63e8513e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#a5908d94ed55dc5a858e156d63e8513e7">MCController</a> (std::shared_ptr&lt; <a class="el" href="a02161.html">mc_rbdyn::RobotModule</a> &gt; <a class="el" href="a01985.html#a3d0a5351228f1b62ad1268339020d230">robot</a>, double dt, const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;<a class="el" href="a01985.html#aca6f0bb79c273474a9e6ed524ff4d33c">config</a>)</td></tr>
+<tr class="separator:a5908d94ed55dc5a858e156d63e8513e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ac3cbc244e98473e90b06e4c187aec0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#a1ac3cbc244e98473e90b06e4c187aec0">MCController</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02161.html">mc_rbdyn::RobotModule</a> &gt;&gt; &amp;robot_modules, double dt)</td></tr>
 <tr class="memdesc:a1ac3cbc244e98473e90b06e4c187aec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a multi-robot controller base.  <a href="#a1ac3cbc244e98473e90b06e4c187aec0">More...</a><br /></td></tr>
 <tr class="separator:a1ac3cbc244e98473e90b06e4c187aec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0788cb5ea805128e4825e14f52122b5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#a0788cb5ea805128e4825e14f52122b5d">MCController</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02161.html">mc_rbdyn::RobotModule</a> &gt;&gt; &amp;robot_modules, double dt, const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;<a class="el" href="a01985.html#aca6f0bb79c273474a9e6ed524ff4d33c">config</a>)</td></tr>
+<tr class="memdesc:a0788cb5ea805128e4825e14f52122b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a multi-robot controller base.  <a href="#a0788cb5ea805128e4825e14f52122b5d">More...</a><br /></td></tr>
+<tr class="separator:a0788cb5ea805128e4825e14f52122b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee84dbf2540fda3182f7eb8ef31b89fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#aee84dbf2540fda3182f7eb8ef31b89fa">realRobots</a> (std::shared_ptr&lt; <a class="el" href="a02169.html">mc_rbdyn::Robots</a> &gt; realRobots)</td></tr>
 <tr class="separator:aee84dbf2540fda3182f7eb8ef31b89fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -254,6 +265,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a5761e783caf225454e03628b2533fc13"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02433.html">mc_rtc::gui::StateBuilder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#a5761e783caf225454e03628b2533fc13">gui_</a></td></tr>
 <tr class="memdesc:a5761e783caf225454e03628b2533fc13"><td class="mdescLeft">&#160;</td><td class="mdescRight">GUI state builder.  <a href="#a5761e783caf225454e03628b2533fc13">More...</a><br /></td></tr>
 <tr class="separator:a5761e783caf225454e03628b2533fc13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb3001e8874fedbdc2b71a0db93965c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02205.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#adbb3001e8874fedbdc2b71a0db93965c">config_</a></td></tr>
+<tr class="memdesc:adbb3001e8874fedbdc2b71a0db93965c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keep track of the configuration of the controller.  <a href="#adbb3001e8874fedbdc2b71a0db93965c">More...</a><br /></td></tr>
+<tr class="separator:adbb3001e8874fedbdc2b71a0db93965c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40233bd6dab6721085d266e1dc306de2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02245.html">mc_rtc::DataStore</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html#a40233bd6dab6721085d266e1dc306de2">datastore_</a></td></tr>
 <tr class="memdesc:a40233bd6dab6721085d266e1dc306de2"><td class="mdescLeft">&#160;</td><td class="mdescRight">DataStore to share variables/objects between different parts of the framework (states...)  <a href="#a40233bd6dab6721085d266e1dc306de2">More...</a><br /></td></tr>
 <tr class="separator:a40233bd6dab6721085d266e1dc306de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -293,7 +307,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="a0a5a9b4670e467fa2eabd8f2342e0846"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a5a9b4670e467fa2eabd8f2342e0846">&#9670;&nbsp;</a></span>MCController() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a5a9b4670e467fa2eabd8f2342e0846">&#9670;&nbsp;</a></span>MCController() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -337,8 +351,50 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a5908d94ed55dc5a858e156d63e8513e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5908d94ed55dc5a858e156d63e8513e7">&#9670;&nbsp;</a></span>MCController() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_control::MCController::MCController </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="a02161.html">mc_rbdyn::RobotModule</a> &gt;&#160;</td>
+          <td class="paramname"><em>robot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a1ac3cbc244e98473e90b06e4c187aec0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ac3cbc244e98473e90b06e4c187aec0">&#9670;&nbsp;</a></span>MCController() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ac3cbc244e98473e90b06e4c187aec0">&#9670;&nbsp;</a></span>MCController() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -376,6 +432,58 @@ Friends</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">robots</td><td>Collection of robot modules used by the controller </td></tr>
     <tr><td class="paramname">dt</td><td>Timestep of the controller </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0788cb5ea805128e4825e14f52122b5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0788cb5ea805128e4825e14f52122b5d">&#9670;&nbsp;</a></span>MCController() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_control::MCController::MCController </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02161.html">mc_rbdyn::RobotModule</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>robot_modules</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02205.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Builds a multi-robot controller base. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robots</td><td>Collection of robot modules used by the controller </td></tr>
+    <tr><td class="paramname">dt</td><td>Timestep of the controller </td></tr>
+    <tr><td class="paramname">config</td><td>Controller configuration </td></tr>
   </table>
   </dd>
 </dl>
@@ -474,6 +582,60 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section see"><dt>See also</dt><dd>const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp; <a class="el" href="a01985.html#a919b06efb009d290381fff69bdd04995" title="Returns the anchor frame computed from the real robot. ">anchorFrameReal() const</a>; </dd></dl>
+
+</div>
+</div>
+<a id="aca6f0bb79c273474a9e6ed524ff4d33c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca6f0bb79c273474a9e6ed524ff4d33c">&#9670;&nbsp;</a></span>config() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02205.html">mc_rtc::Configuration</a>&amp; mc_control::MCController::config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Access or modify controller configuration. </p>
+
+</div>
+</div>
+<a id="a7d12aa9497219df451e115d53e62bcd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d12aa9497219df451e115d53e62bcd8">&#9670;&nbsp;</a></span>config() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a02205.html">mc_rtc::Configuration</a>&amp; mc_control::MCController::config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Access controller configuration (const) </p>
 
 </div>
 </div>
@@ -1255,6 +1417,30 @@ If the default pipeline behaviour does not suit you, you may override this metho
 
 </div>
 </div>
+<a id="adbb3001e8874fedbdc2b71a0db93965c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbb3001e8874fedbdc2b71a0db93965c">&#9670;&nbsp;</a></span>config_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02205.html">mc_rtc::Configuration</a> mc_control::MCController::config_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Keep track of the configuration of the controller. </p>
+
+</div>
+</div>
 <a id="a765929daba315c7ec7d455486f2817b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a765929daba315c7ec7d455486f2817b3">&#9670;&nbsp;</a></span>contactConstraint</h2>
 
@@ -1547,7 +1733,7 @@ If the default pipeline behaviour does not suit you, you may override this metho
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00682.html">mc_control</a></li><li class="navelem"><a class="el" href="a01985.html">MCController</a></li>
-    <li class="footer">Generated on Tue Mar 10 2020 11:53:44 for mc_rtc by
+    <li class="footer">Generated on Wed Mar 11 2020 02:25:59 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

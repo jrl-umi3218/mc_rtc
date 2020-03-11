@@ -3,7 +3,6 @@ var a01881 =
     [ "Controller", "a01881.html#a5e0523baab1c8ec0905f7715115d41c6", null ],
     [ "addCollisions", "a01881.html#a93448016e3467364e352d87cdb0dae89", null ],
     [ "addContact", "a01881.html#afc21d62af737dc80c7b62b1fbc9c742e", null ],
-    [ "config", "a01881.html#a904c563ef54b89f211e75d545f60db01", null ],
     [ "contactConstraint", "a01881.html#afc0ff4e1c1bec2352684291698b467dd", null ],
     [ "contacts", "a01881.html#a95a11b1d9a3ca77f322d1ec1b7819e08", null ],
     [ "factory", "a01881.html#acf6e4968c19820c0928e459dd42d0d64", null ],

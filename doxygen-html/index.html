@@ -84,6 +84,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <p>The following interface between <code><a class="el" href="a00684.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a></code> and 3rd-party framework are available:</p><ul>
 <li><a href="https://github.com/jrl-umi3218/mc_rtc_ros">mc_rtc_ros</a> contains a number of tools related to the framework as well as a simple "ticker" that allows to run controllers in an open-loop fashion;</li>
 <li><a href="https://github.com/jrl-umi3218/mc_openrtm">mc_openrtm</a> embeds <code><a class="el" href="a00684.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a></code> into a RTC component, this can be used to control a robot that is using the OpenRTM framework, an example with the virtual JVRC1 robot is also provided;</li>
+<li><a href="https://github.com/jrl-umi3218/mc_udp">mc_udp</a> provides a thin UDP-based client/server. The client is a regular <code><a class="el" href="a00684.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a></code> interface that gets data through the UDP socket. The server can easily be implemented to interface with your robot. A server to interface with OpenRTM components is provided.</li>
 <li><a href="https://github.com/jrl-umi3218/mc_vrep">mc_vrep</a> interface with the VREP simulation software;</li>
 <li><a href="https://github.com/jrl-umi3218/mc_rtc_naoqi">mc_rtc_naoqi</a> interface with the NAOqi framework (Softbank Robotics robots);</li>
 </ul>
@@ -101,7 +102,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Mar 10 2020 11:53:46 for mc_rtc by
+    <li class="footer">Generated on Wed Mar 11 2020 02:26:00 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
