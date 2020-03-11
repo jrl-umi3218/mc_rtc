@@ -137,4 +137,9 @@ const BodySensor & getBodySensor(const T & rm, size_t i)
   return rm.bodySensors()[i];
 }
 
+RobotModulePtr copyRobotModule(const RobotModule & rm)
+{
+  return std::make_shared<RobotModule>(rm);
+}
+
 } // namespace mc_rbdyn

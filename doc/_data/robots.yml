@@ -43,3 +43,12 @@
     module:
       url: https://gite.lirmm.fr/multi-contact/mc_pepper
       name: mc_pepper
+- name: Sawyer
+  icon: sawyer.jpg
+  pkg:
+    desc:
+      url: https://github.com/jrl-umi3218/sawyer_robot
+      name: sawyer_description
+    module:
+      url: https://github.com/jrl-umi3218/mc-sawyer
+      name: mc-sawyer

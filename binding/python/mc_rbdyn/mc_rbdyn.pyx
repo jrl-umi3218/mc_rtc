@@ -419,6 +419,11 @@ cdef RobotModule RobotModuleFromC(const c_mc_rbdyn.RobotModulePtr v):
   ret.impl = v
   return ret
 
+cdef RobotModule RobotModuleFromCRef(const c_mc_rbdyn.RobotModule & rm):
+  cdef RobotModule ret = RobotModule()
+  ret.impl = c_mc_rbdyn.copyRobotModule(rm)
+  return ret
+
 cdef class RobotModuleVector(object):
   def __addRM(self, RobotModule rm):
     self.v.push_back(rm.impl)
@@ -850,6 +855,10 @@ cdef class Robot(object):
       return sva.PTransformdFromC(self.impl.posW())
     else:
       self.impl.posW(deref(pt.impl))
+
+  def module(self):
+      self.__is_valid()
+      return RobotModuleFromCRef(self.impl.module())
 
 
 cdef Robot RobotFromC(const c_mc_rbdyn.Robot & robot):

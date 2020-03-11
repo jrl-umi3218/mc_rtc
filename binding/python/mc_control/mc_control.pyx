@@ -73,6 +73,8 @@ cdef class MCController(object):
     return mc_rbdyn.RobotsFromRawPtr(&(self.base.robots()))
   def supported_robots(self):
     return self.base.supported_robots()
+  def config(self):
+    return mc_rtc.ConfigurationFromRef(self.base.config())
   def logger(self):
     return mc_rtc.LoggerFromRef(self.base.logger())
   def gui(self):
