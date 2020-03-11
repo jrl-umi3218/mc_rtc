@@ -4,6 +4,8 @@
 
 #include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/states/MetaTasks.h>
+#include <mc_rtc/ConfigurationHelpers.h>
+#include <mc_rtc/io_utils.h>
 #include <mc_tasks/MetaTaskLoader.h>
 #include <algorithm>
 
@@ -22,15 +24,10 @@ void MetaTasksState::configure(const mc_rtc::Configuration & config)
     const auto & tConfig = e.second;
     tasks_configs_[tName].load(tConfig);
   }
-  config("outputs", outputCrit_);
-  if(outputCrit_.empty())
+
+  if(config.has("outputs"))
   {
-    std::string critTask = config("outputs", std::string{""});
-    if(!critTask.empty())
-    {
-      outputCrit_.clear();
-      outputCrit_.push_back(critTask);
-    }
+    outputCrit_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs");
   }
 }
 
@@ -55,6 +52,18 @@ void MetaTasksState::start(Controller & ctl)
         crit.configure(*task, ctl.solver().dt(), tConfig("completion"));
         return crit;
       }());
+    }
+  }
+  // Check validity of tasks output names
+  for(const auto & tName : outputCrit_)
+  {
+    if(!tasks_configs_.count(tName))
+    {
+      LOG_ERROR_AND_THROW(
+          std::runtime_error,
+          "[" << name() << "] Invalid output task name " << tName << ": should be one of the following tasks: "
+              << mc_rtc::io::to_string(tasks_, [](const mc_tasks::MetaTaskPtr & t) { return t->name(); })
+              << ". Check your \"outputs\" configuration.");
     }
   }
 }

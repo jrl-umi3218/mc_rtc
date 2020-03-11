@@ -1,0 +1,66 @@
+/*
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
+ */
+
+#include <mc_rtc/Configuration.h>
+
+namespace mc_rtc
+{
+
+/** Attempts to convert an mc_rtc::Configuration object from a vector<T> or a
+ * single T
+ *
+ * Example:
+ * \code{.yaml}
+ * configVector: ["String1", "String2"]
+ * configString: "String"
+ * \endcode
+ *
+ * The following are valid
+ * \code{.cpp}
+ * auto conf = mc_rtc::Configuration{};
+ * conf.add("configVector", {"String1", "String2"})
+ * conf.add("configString", "String1");
+ * auto v1 = fromVectorOrElement<std::string>(conf("configVector"));
+ * auto v2 = fromVectorOrElement<std::string>(conf("configString"));
+ * \endcode
+ *
+ * @tparam T Type of the element to convert toward
+ * @param config Configuration object from which to convert. This should contain
+ * either a vector of elements convertible to T ([T, T, ...]) or a single T
+ * element.
+ *
+ * @param key Name of the element to read
+ *
+ * @return Vector containing all elements in the configuration vector or the
+ * single item
+ *
+ * @throws If the key is not found or the configuration is neither convertible
+ * as std::vector<T> or T.
+ */
+template<typename T>
+std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config, const std::string & key)
+{
+  std::vector<T> vec;
+  const auto & c = config(key);
+  try
+  {
+    vec = c;
+  }
+  catch(...)
+  {
+    try
+    {
+      T elem = c;
+      vec.push_back(elem);
+    }
+    catch(...)
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error,
+                          "Configuration " << key << " cannot be converted from a vector or single element");
+    }
+  }
+  return vec;
+}
+
+} // namespace mc_rtc
