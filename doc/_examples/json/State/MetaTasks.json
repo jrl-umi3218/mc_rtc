@@ -89,6 +89,7 @@
 // In addition, the outputCriteriaTasks array asks the state to generate
 // its output string based on the completion criterias of tasks "t1" and "t2".
 // The completion output will look like one of the following
-// - t1=eval | t2=eval
-// - t1=timeout AND speed | t2=eval
+// - t1=eval, t2=eval
+// - t1=timeout AND speed, t2=eval
 // It may be used to trigger branch choices in the FSM
+// You may also use the DEFAULT output in your transition maps that will be used in case no other pattern matches

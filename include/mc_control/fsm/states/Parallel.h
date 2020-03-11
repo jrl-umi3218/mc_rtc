@@ -77,7 +77,7 @@ protected:
   std::vector<DelayedState> states_;
   /** States used to generate the output. If multiple states output are used,
    * they will generated according to the following pattern:
-   * State1: (State1 output) | State2: (State2 output)
+   * State1: (State1 output), State2: (State2 output)
    */
   std::vector<std::string> outputStates_;
   bool finished_first_ = false;

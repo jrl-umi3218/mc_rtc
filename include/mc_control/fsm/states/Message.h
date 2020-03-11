@@ -12,13 +12,13 @@ namespace mc_control
 namespace fsm
 {
 
-/** Implements a pause state
+/** Implements a simple Message state to display debug information in the FSM
  *
  * This states does nothing for a while then exits with "OK"
  *
  * Configuration options:
- * - duration Duration of the pause in seconds (double, defaults: 0)
- *
+ * - type: one of [info, error, warning, success] corresponding to the LOG_* macros
+ * - message: the string to display
  */
 struct MC_CONTROL_FSM_STATE_DLLAPI MessageState : State
 {

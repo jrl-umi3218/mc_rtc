@@ -17,8 +17,10 @@ void MessageState::configure(const mc_rtc::Configuration & config)
   config("type", type_);
 }
 
-void MessageState::start(Controller & ctl)
+void MessageState::start(Controller & /* ctl */)
 {
+  std::transform(type_.begin(), type_.end(), type_.begin(), [](unsigned char c) { return std::tolower(c); });
+
   if(type_ == "info")
   {
     LOG_INFO(message_);
