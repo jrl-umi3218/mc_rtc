@@ -76,6 +76,9 @@
       id: fsm
       title: Using the FSM facilities
     -
+      id: fsm-main-states
+      title: Main FSM states
+    -
       id: fsm-example
       title: FSM controller in practice
     -
