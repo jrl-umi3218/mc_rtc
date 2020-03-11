@@ -5,7 +5,7 @@ usr/include/mc_rbdyn/*
 usr/include/mc_robots/*
 usr/include/mc_rtc/gui/*
 usr/include/mc_rtc/log/*
-usr/include/mc_rtc/Datastore.h
+usr/include/mc_rtc/DataStore.h
 usr/include/mc_rtc/config.h
 usr/include/mc_rtc/loader_api.h
 usr/include/mc_rtc/loader.h
