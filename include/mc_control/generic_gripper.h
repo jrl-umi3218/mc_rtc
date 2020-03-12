@@ -29,7 +29,13 @@ namespace mc_control
  */
 struct MC_CONTROL_DLLAPI Gripper
 {
-public:
+  /*! Percentage of max velocity of active joints in the gripper */
+  static constexpr double DEFAULT_PERCENT_VMAX = 0.25;
+  /*! Difference between the command and the reality that triggers the safety */
+  static constexpr double DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER = 8. * M_PI / 180.;
+  /*! Number of iterations before the security is triggered */
+  static constexpr unsigned int DEFAULT_OVER_COMMAND_LIMIT_ITER_N = 5;
+
   /*! \brief Constructor
    *
    * \param robot The full robot including uncontrolled joints
@@ -63,6 +69,9 @@ public:
           const std::vector<double> & currentQ,
           double timeStep,
           bool reverseLimits = false);
+
+  /** \brief Resets the gripper parameters to their default value (percentVMax, actualCommandDiffTrigger) */
+  void resetDefaults();
 
   /*! \brief Set the current configuration of the active joints involved in the gripper
    * \param curentQ Current values of the active joints involved in the gripper
@@ -102,9 +111,15 @@ public:
    */
   void setActualQ(const std::vector<double> & q);
 
-  /*! \brief Allows to check if the desired motion is finish or encounter an
-   * obstacle
-   * \return True if no motion, False if is moving
+  /*! \brief Check if the gripper motion stopped moving.
+   *
+   * The gripper will stop if
+   * - the desired motion is finished
+   * - the gripper encountered an obstacle and gripper safety was triggered.
+   *   This is defined by an encoder error threshold (actualCommandDiffTrigger) and a maximum number of iterations
+   *   where the gripper is allowed to be at this threshold (overCommandLimitIterN)
+   *
+   * \return True if gripper is not moving, False if it is moving
    */
   bool complete() const;
 
@@ -117,7 +132,7 @@ public:
   std::vector<std::string> active_joints;
 
   /*! True if the gripper is reversed */
-  bool reversed;
+  bool reversed = false;
   /*! Lower limits of active joints in the gripper (closed-gripper values) */
   std::vector<double> closeP;
   /*! Upper limits of active joints in the gripper (open-gripper values) */
@@ -125,9 +140,9 @@ public:
   /*! Maximum velocity of active joints in the gripper */
   std::vector<double> vmax;
   /*! Percentage of max velocity of active joints in the gripper */
-  double percentVMAX;
+  double percentVMAX = DEFAULT_PERCENT_VMAX;
   /*! Controller timestep */
-  double timeStep;
+  double timeStep = 0;
   /*! Current opening percentage */
   std::vector<double> percentOpen;
 
@@ -148,11 +163,11 @@ public:
   /*! Store the number of iterations where the gripper command was over the limit */
   std::vector<unsigned int> overCommandLimitIter;
   /*! Number of iterations before the security is triggered */
-  unsigned int overCommandLimitIterN;
+  unsigned int overCommandLimitIterN = DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
   /*! Joints' values from the encoders */
   std::vector<double> actualQ;
   /*! Difference between the command and the reality that triggers the safety */
-  double actualCommandDiffTrigger;
+  double actualCommandDiffTrigger = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
 };
 
 } // namespace mc_control

@@ -4,6 +4,7 @@
 
 #include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/states/Grippers.h>
+#include <mc_filter/utils/clamp.h>
 
 namespace mc_control
 {
@@ -29,26 +30,14 @@ void Grippers::start(Controller & ctl)
         continue;
       }
       auto gripper = ctl.grippers[g];
-      if(grippers(g).has("percentVMAX"))
-      {
-        gripper->percentVMAX = grippers(g)("percentVMAX");
-      }
-      else
-      {
-        gripper->percentVMAX = 0.25;
-      }
+      grippers(g)("percentVMAX", gripper->percentVMAX);
       if(grippers(g).has("actualCommandDiffTrigger"))
       {
         gripper->actualCommandDiffTrigger = static_cast<double>(grippers(g)("actualCommandDiffTrigger")) * M_PI / 180;
       }
-      else
-      {
-        gripper->actualCommandDiffTrigger = 8 * M_PI / 180;
-      }
       if(grippers(g).has("opening"))
       {
-        double open = grippers(g)("opening");
-        open = open > 1 ? 1 : open < 0 ? 0 : open;
+        double open = mc_filter::utils::clamp(static_cast<double>(grippers(g)("opening")), 0, 1);
         gripper->setTargetOpening(open);
         grippers_.push_back(g);
       }
@@ -75,11 +64,9 @@ void Grippers::start(Controller & ctl)
 
 bool Grippers::run(Controller & ctl)
 {
-  LOG_ERROR("Grippers::State::Run")
   if(std::all_of(grippers_.begin(), grippers_.end(),
                  [&ctl](const std::string & g) { return ctl.grippers[g]->complete(); }))
   {
-    LOG_SUCCESS("OK")
     output("OK");
     return true;
   }
@@ -93,8 +80,7 @@ void Grippers::teardown(Controller & ctl)
     auto grippers = config_("grippers");
     for(const auto & g : grippers.keys())
     {
-      auto gripper = ctl.grippers[g];
-      gripper->percentVMAX = 0.25;
+      ctl.grippers[g]->resetDefaults();
     }
   }
 }

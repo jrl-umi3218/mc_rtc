@@ -100,9 +100,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
                  const std::vector<double> & currentQ,
                  double timeStep,
                  bool reverseLimits)
-: percentVMAX(0.25),
-  overCommandLimitIter(0), overCommandLimitIterN(5), actualQ(currentQ),
-  actualCommandDiffTrigger(8 * M_PI / 180) /* 8 degress of difference */
+: actualQ(currentQ)
 {
   active_joints = jointNames;
   mult.resize(0);
@@ -167,6 +165,13 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
   targetQ = nullptr;
 
   reversed = reverseLimits;
+}
+
+void Gripper::resetDefaults()
+{
+  percentVMAX = DEFAULT_PERCENT_VMAX;
+  actualCommandDiffTrigger = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
+  overCommandLimitIterN = DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
 }
 
 void Gripper::setCurrentQ(const std::vector<double> & currentQ)
@@ -288,15 +293,9 @@ bool Gripper::complete() const
     res = true;
     for(size_t i = 0; i < actualQ.size(); ++i)
     {
-      LOG_INFO("Gripper::Complete::OverCommand: " << overCommandLimit[i])
       res = res && overCommandLimit[i];
     }
   }
-  else
-  {
-    LOG_INFO("Gripper::Complete::ResTargetQ: " << res)
-  }
-  LOG_INFO("Gripper::Complete::Res: " << res)
   return res;
 }
 
