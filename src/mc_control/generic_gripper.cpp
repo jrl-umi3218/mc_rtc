@@ -3,6 +3,8 @@
  */
 
 #include <mc_control/generic_gripper.h>
+#include <mc_filter/utils/clamp.h>
+#include <mc_rtc/gui.h>
 #include <mc_rtc/logging.h>
 
 #include <cmath>
@@ -10,8 +12,7 @@
 #include <tinyxml2.h>
 
 #ifndef M_PI
-#  include <boost/math/constants/constants.hpp>
-#  define M_PI boost::math::constants::pi<double>()
+#  define M_PI = boost::math::constants::pi<double>();
 #endif
 
 namespace mc_control
@@ -297,6 +298,36 @@ bool Gripper::complete() const
     }
   }
   return res;
+}
+
+void Gripper::addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category)
+{
+  using namespace mc_rtc::gui;
+  std::vector<std::string> cat = category;
+  cat.push_back(name);
+  gui.addElement(
+      cat, Button("Open", [this]() { setTargetOpening(1); }), Button("Close", [this]() { setTargetOpening(0); }),
+      NumberInput("Opening percentage", [this]() { return opening(); },
+                  [this](double op) { setTargetOpening(mc_filter::utils::clamp(op, 0, 1)); }),
+      NumberInput("Percentage VMAX", [this]() { return percentVMAX; }, [this](double op) { percentVMAX = op; }));
+  std::vector<std::string> cat_safety = cat;
+  cat_safety.push_back("Safety");
+  gui.addElement(cat_safety,
+                 NumberInput("Actual command diff threshold [deg]",
+                             [this]() { return actualCommandDiffTrigger * 180 / M_PI; },
+                             [this](double t) { actualCommandDiffTrigger = t * M_PI / 180; }),
+                 NumberInput("Over command limiter iterations", [this]() { return overCommandLimitIterN; },
+                             [this](unsigned int N) { overCommandLimitIterN = N; }));
+}
+
+void Gripper::removeFromGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category)
+{
+  std::vector<std::string> cat = category;
+  cat.push_back(name);
+  gui.removeCategory(cat);
+  std::vector<std::string> cat_safety = cat;
+  cat_safety.push_back("Safety");
+  gui.removeCategory(cat_safety);
 }
 
 } // namespace mc_control

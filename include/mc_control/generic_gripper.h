@@ -7,10 +7,19 @@
 #include <mc_control/api.h>
 #include <mc_rbdyn/Mimic.h>
 #include <mc_rbdyn/Robots.h>
+#include <boost/math/constants/constants.hpp>
 
 #include <map>
 #include <string>
 #include <vector>
+
+namespace mc_rtc
+{
+namespace gui
+{
+struct StateBuilder;
+} // namespace gui
+} // namespace mc_rtc
 
 namespace mc_control
 {
@@ -32,7 +41,7 @@ struct MC_CONTROL_DLLAPI Gripper
   /*! Percentage of max velocity of active joints in the gripper */
   static constexpr double DEFAULT_PERCENT_VMAX = 0.25;
   /*! Difference between the command and the reality that triggers the safety */
-  static constexpr double DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER = 8. * M_PI / 180.;
+  static constexpr double DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER = 8. * boost::math::constants::pi<double>() / 180.;
   /*! Number of iterations before the security is triggered */
   static constexpr unsigned int DEFAULT_OVER_COMMAND_LIMIT_ITER_N = 5;
 
@@ -122,6 +131,10 @@ struct MC_CONTROL_DLLAPI Gripper
    * \return True if gripper is not moving, False if it is moving
    */
   bool complete() const;
+
+  /* Gripper gui will be added under {category, name} category */
+  void addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category);
+  void removeFromGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category);
 
 public:
   /*! Gripper name */

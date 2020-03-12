@@ -22,22 +22,9 @@ void MCGlobalController::initGUI()
     auto gui = controller_->gui();
     gui->removeCategory({"Global", "Log"});
     gui->addElement({"Global", "Log"}, mc_rtc::gui::Button("Start a new log", [this]() { this->refreshLog(); }));
-    auto addGripper = [this, gui](const std::string & gname) {
-      gui->removeCategory({"Global", "Grippers", gname});
-      gui->addElement(
-          {"Global", "Grippers", gname},
-          mc_rtc::gui::Button("Open", [this, gname]() { this->setGripperOpenPercent(gname, 1); }),
-          mc_rtc::gui::Button("Close", [this, gname]() { this->setGripperOpenPercent(gname, 0); }),
-          mc_rtc::gui::NumberInput("Opening percentage",
-                                   [this, gname]() { return this->controller().grippers.at(gname)->opening(); },
-                                   [this, gname](double op) { this->setGripperOpenPercent(gname, op); }),
-          mc_rtc::gui::NumberInput(
-              "Percentage VMAX", [this, gname]() { return this->controller().grippers.at(gname)->percentVMAX; },
-              [this, gname](double op) { this->controller().grippers.at(gname)->percentVMAX = op; }));
-    };
     for(const auto & g : controller().grippers)
     {
-      addGripper(g.first);
+      g.second->addToGUI(*gui, {"Global", "Grippers"});
     }
     gui->removeCategory({"Global", "Change controller"});
     gui->addElement({"Global", "Change controller"},
