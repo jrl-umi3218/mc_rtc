@@ -170,9 +170,10 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
 
 void Gripper::resetDefaults()
 {
-  percentVMAX = DEFAULT_PERCENT_VMAX;
-  actualCommandDiffTrigger = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
-  overCommandLimitIterN = DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
+  percentVMAX_ = DEFAULT_PERCENT_VMAX;
+  actualCommandDiffTrigger_ = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
+  overCommandLimitIterN_ = DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
+  releaseSafetyOffset_ = DEFAULT_RELEASE_OFFSET;
 }
 
 void Gripper::setCurrentQ(const std::vector<double> & currentQ)
@@ -191,6 +192,7 @@ void Gripper::setTargetQ(const std::vector<double> & targetQ)
 
 void Gripper::setTargetOpening(double targetOpening)
 {
+  targetOpening = mc_filter::utils::clamp(targetOpening, 0, 1);
   auto cur = curPosition();
   std::vector<double> targetQin(cur.size());
   for(size_t i = 0; i < targetQin.size(); ++i)
@@ -198,6 +200,16 @@ void Gripper::setTargetOpening(double targetOpening)
     targetQin[i] = cur[i] + (targetOpening - percentOpen[i]) * (openP[i] - closeP[i]);
   }
   setTargetQ(targetQin);
+}
+
+void Gripper::percentVMAX(double percent)
+{
+  percentVMAX_ = mc_filter::utils::clamp(percent, 0, 1);
+}
+
+double Gripper::percentVMAX() const
+{
+  return percentVMAX_;
 }
 
 std::vector<double> Gripper::curPosition() const
@@ -216,20 +228,20 @@ void Gripper::setActualQ(const std::vector<double> & q)
   auto currentQ = curPosition();
   for(size_t i = 0; i < actualQ.size(); ++i)
   {
-    if(std::abs(actualQ[i] - currentQ[i]) > actualCommandDiffTrigger)
+    if(std::abs(actualQ[i] - currentQ[i]) > actualCommandDiffTrigger_)
     {
       overCommandLimitIter[i]++;
-      if(overCommandLimitIter[i] == overCommandLimitIterN)
+      if(overCommandLimitIter[i] == overCommandLimitIterN_)
       {
         LOG_WARNING("Gripper safety triggered on " << names[i])
         overCommandLimit[i] = true;
         if(reversed)
         {
-          actualQ[i] = actualQ[i] + 2 * M_PI / 180;
+          actualQ[i] = actualQ[i] + releaseSafetyOffset_;
         }
         else
         {
-          actualQ[i] = actualQ[i] - 2 * M_PI / 180;
+          actualQ[i] = actualQ[i] - releaseSafetyOffset_;
         }
         setTargetQ(actualQ);
       }
@@ -255,11 +267,12 @@ const std::vector<double> & Gripper::q()
       {
         if(targetQIn[i] > cur[i])
         {
-          percentOpen[i] += std::min(vmax[i] * percentVMAX * timeStep, targetQIn[i] - cur[i]) / (openP[i] - closeP[i]);
+          percentOpen[i] += std::min(vmax[i] * percentVMAX_ * timeStep, targetQIn[i] - cur[i]) / (openP[i] - closeP[i]);
         }
         else
         {
-          percentOpen[i] += std::max(-vmax[i] * percentVMAX * timeStep, targetQIn[i] - cur[i]) / (openP[i] - closeP[i]);
+          percentOpen[i] +=
+              std::max(-vmax[i] * percentVMAX_ * timeStep, targetQIn[i] - cur[i]) / (openP[i] - closeP[i]);
         }
       }
       reached = reached && i_reached;
@@ -307,17 +320,18 @@ void Gripper::addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string>
   cat.push_back(name);
   gui.addElement(
       cat, Button("Open", [this]() { setTargetOpening(1); }), Button("Close", [this]() { setTargetOpening(0); }),
-      NumberInput("Opening percentage", [this]() { return opening(); },
-                  [this](double op) { setTargetOpening(mc_filter::utils::clamp(op, 0, 1)); }),
-      NumberInput("Percentage VMAX", [this]() { return percentVMAX; }, [this](double op) { percentVMAX = op; }));
+      NumberInput("Opening percentage", [this]() { return opening(); }, [this](double op) { setTargetOpening(op); }),
+      NumberInput("Percentage VMAX", [this]() { return percentVMAX(); }, [this](double op) { percentVMAX(op); }));
   std::vector<std::string> cat_safety = cat;
   cat_safety.push_back("Safety");
   gui.addElement(cat_safety,
                  NumberInput("Actual command diff threshold [deg]",
-                             [this]() { return actualCommandDiffTrigger * 180 / M_PI; },
-                             [this](double t) { actualCommandDiffTrigger = t * M_PI / 180; }),
-                 NumberInput("Over command limiter iterations", [this]() { return overCommandLimitIterN; },
-                             [this](unsigned int N) { overCommandLimitIterN = N; }));
+                             [this]() { return actualCommandDiffTrigger() * 180 / M_PI; },
+                             [this](double t) { actualCommandDiffTrigger(t * M_PI / 180); }),
+                 NumberInput("Over command limiter iterations", [this]() -> double { return overCommandLimitIterN(); },
+                             [this](double N) { overCommandLimitIterN(static_cast<unsigned int>(N)); }),
+                 NumberInput("Release offset [deg]", [this]() { return releaseSafetyOffset() * 180 / M_PI; },
+                             [this](double d) { releaseSafetyOffset(d * M_PI / 180); }));
 }
 
 void Gripper::removeFromGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category)

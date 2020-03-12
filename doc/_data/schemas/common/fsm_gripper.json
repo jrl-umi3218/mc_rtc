@@ -5,6 +5,18 @@
   "properties":
   {
     "target": { "type": "array", "items": { "type": "number" }, "description": "Target of active joints in the gripper" },
-    "opening": { "type": "number", "mininimum": 0, "maximum": 1, "description": "Target opening of the gripper" }
+    "opening": { "type": "number", "mininimum": 0, "maximum": 1, "description": "Target opening of the gripper" },
+    "safety":
+    {
+      "type": "object",
+      "title": "Gripper safety parameters",
+      "description": "Parameters to prevent over-torques on position-controlled grippers",
+      "properties":
+      {
+        "iter": { "type": "number", "minimum": 1, "default": 5, "description": "Maximum number of iterations spent above \"threshold\" before the gripper is release by \"release\"" },
+        "threshold": { "type": "number", "minimum": 0, "default": 8, "description": "Encoder-command difference [degrees] over which the gripper is considered in overtorque" },
+        "release":  { "type": "number", "minimum": 0, "default": 2, "description": "Number of degrees by which the gripper should be released when safety is triggered" }
+      }
+    }
   }
 }

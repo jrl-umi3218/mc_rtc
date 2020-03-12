@@ -8,6 +8,7 @@
 #include <mc_rbdyn/Mimic.h>
 #include <mc_rbdyn/Robots.h>
 #include <boost/math/constants/constants.hpp>
+#include <algorithm>
 
 #include <map>
 #include <string>
@@ -44,6 +45,8 @@ struct MC_CONTROL_DLLAPI Gripper
   static constexpr double DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER = 8. * boost::math::constants::pi<double>() / 180.;
   /*! Number of iterations before the security is triggered */
   static constexpr unsigned int DEFAULT_OVER_COMMAND_LIMIT_ITER_N = 5;
+  /** Release offset [rad] */
+  static constexpr double DEFAULT_RELEASE_OFFSET = 2 * boost::math::constants::pi<double>() / 180;
 
   /*! \brief Constructor
    *
@@ -120,6 +123,57 @@ struct MC_CONTROL_DLLAPI Gripper
    */
   void setActualQ(const std::vector<double> & q);
 
+  /** Set gripper speed as a percentage of maximum velocity */
+  void percentVMAX(double percent);
+  /** Get gripper speed (percentage of max velocity) */
+  double percentVMAX() const;
+
+  /*! Set safety trigger threshold (difference between the command and the reality)
+   *
+   * This safety is meant to prevent over-torques on position controlled
+   * grippers with no torque readings by checking how far the encoder output is
+   * from the desired command. If it is over the limit, it can only stay there
+   * for overCommandLimitIterN iterations before being released
+   **/
+  void actualCommandDiffTrigger(double d)
+  {
+    actualCommandDiffTrigger_ = d;
+  }
+  /*! Difference between the command and the reality that triggers the safety */
+  double actualCommandDiffTrigger() const
+  {
+    return actualCommandDiffTrigger_;
+  }
+
+  /*! Number of iterations where actualCommandDiffTrigger() threshold may be
+   * exceeded before the security is triggered */
+  void overCommandLimitIterN(unsigned int N)
+  {
+    overCommandLimitIterN_ = std::max(N, 1u);
+  }
+  /*! Number of iterations where actualCommandDiffTrigger() threshold may be
+   * exceeded before the security is triggered */
+  unsigned int overCommandLimitIterN() const
+  {
+    return overCommandLimitIterN_;
+  }
+
+  /** Offset by which the gripper is released if overCommandDiffTrigger is
+   * trigger for more than overCommandLimitIterN
+   *
+   * @param offset offset angle in [rad]
+   **/
+  void releaseSafetyOffset(double offset)
+  {
+    releaseSafetyOffset_ = offset;
+  }
+  /** Offset by which the gripper is release if overCommandDiffTrigger is
+   * trigger for more than overCommandLimitIterN */
+  double releaseSafetyOffset() const
+  {
+    return releaseSafetyOffset_;
+  }
+
   /*! \brief Check if the gripper motion stopped moving.
    *
    * The gripper will stop if
@@ -134,6 +188,7 @@ struct MC_CONTROL_DLLAPI Gripper
 
   /* Gripper gui will be added under {category, name} category */
   void addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category);
+  /* Gripper gui will be removed from {category, name} category */
   void removeFromGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category);
 
 public:
@@ -144,20 +199,12 @@ public:
   /*! Name of active joints involved in the gripper */
   std::vector<std::string> active_joints;
 
-  /*! True if the gripper is reversed */
-  bool reversed = false;
   /*! Lower limits of active joints in the gripper (closed-gripper values) */
   std::vector<double> closeP;
   /*! Upper limits of active joints in the gripper (open-gripper values) */
   std::vector<double> openP;
   /*! Maximum velocity of active joints in the gripper */
   std::vector<double> vmax;
-  /*! Percentage of max velocity of active joints in the gripper */
-  double percentVMAX = DEFAULT_PERCENT_VMAX;
-  /*! Controller timestep */
-  double timeStep = 0;
-  /*! Current opening percentage */
-  std::vector<double> percentOpen;
 
   /*! Mimic multiplier, first element is the joint to mimic, second is the multiplier */
   std::vector<std::pair<size_t, double>> mult;
@@ -171,16 +218,28 @@ public:
   /*! Current gripper target: NULL if target has been reached or safety was triggered */
   std::vector<double> * targetQ;
 
+  /*! Joints' values from the encoders */
+  std::vector<double> actualQ;
+
+protected:
+  /*! Percentage of max velocity of active joints in the gripper */
+  double percentVMAX_ = DEFAULT_PERCENT_VMAX;
+  /*! Difference between the command and the reality that triggers the safety */
+  double actualCommandDiffTrigger_ = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
+  /** Offset by which the gripper is released when safety is triggered */
+  double releaseSafetyOffset_ = DEFAULT_RELEASE_OFFSET;
+  /*! Current opening percentage */
+  std::vector<double> percentOpen;
+  /*! Controller timestep */
+  double timeStep = 0;
   /*! True if the gripper has been too far from the command for over overCommandLimitIterN iterations */
   std::vector<bool> overCommandLimit;
   /*! Store the number of iterations where the gripper command was over the limit */
   std::vector<unsigned int> overCommandLimitIter;
   /*! Number of iterations before the security is triggered */
-  unsigned int overCommandLimitIterN = DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
-  /*! Joints' values from the encoders */
-  std::vector<double> actualQ;
-  /*! Difference between the command and the reality that triggers the safety */
-  double actualCommandDiffTrigger = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
+  unsigned int overCommandLimitIterN_ = DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
+  /*! True if the gripper is reversed */
+  bool reversed = false;
 };
 
 } // namespace mc_control

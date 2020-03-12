@@ -29,12 +29,25 @@ void Grippers::start(Controller & ctl)
         LOG_WARNING("[FSM::" << name() << "] " << g << " is not a known gripper")
         continue;
       }
-      auto gripper = ctl.grippers[g];
-      grippers(g)("percentVMAX", gripper->percentVMAX);
-      if(grippers(g).has("actualCommandDiffTrigger"))
+      auto & gripper = ctl.grippers[g];
+      grippers(g)("percentVMAX", gripper->percentVMAX());
+      if(grippers(g).has("safety"))
       {
-        gripper->actualCommandDiffTrigger = static_cast<double>(grippers(g)("actualCommandDiffTrigger")) * M_PI / 180;
+        const auto & safety = grippers(g)("safety");
+        if(safety.has("threshold"))
+        {
+          gripper->actualCommandDiffTrigger(static_cast<double>(safety("threshold")) * M_PI / 180);
+        }
+        if(grippers(g).has("iter"))
+        {
+          gripper->overCommandLimitIterN(safety("iter"));
+        }
+        if(grippers(g).has("release"))
+        {
+          gripper->releaseSafetyOffset(static_cast<double>(safety("release")) * M_PI / 180);
+        }
       }
+
       if(grippers(g).has("opening"))
       {
         double open = mc_filter::utils::clamp(static_cast<double>(grippers(g)("opening")), 0, 1);
