@@ -339,9 +339,6 @@ void Gripper::removeFromGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::st
   std::vector<std::string> cat = category;
   cat.push_back(name);
   gui.removeCategory(cat);
-  std::vector<std::string> cat_safety = cat;
-  cat_safety.push_back("Safety");
-  gui.removeCategory(cat_safety);
 }
 
 } // namespace mc_control
