@@ -28,21 +28,21 @@ public:
    * should contain 13 parameters in that order: mass (1),
    * rpy for X_f_ds (3), position for X_p_vb (3), wrench
    * offset (6).
-   * @return Default calibration if the file does not exist,
-   * throws if the file is ill-formed. */
-  ForceSensorCalibData(const std::string & filename, const Eigen::Vector3d & gravity) : ForceSensorCalibData()
+   *
+   * If the file does not exist, returns a default calibration. If the file
+   * exists but its parameters are invalid, an exception will be thrown.
+   *
+   * @return false if the file was not found, true otherwise
+   *
+   * @throws std::invalid_argument if the file is ill-formed.
+   **/
+  bool loadData(const std::string & filename, const Eigen::Vector3d & gravity)
   {
-    loadData(filename, gravity);
-  }
-
-  void loadData(const std::string & filename, const Eigen::Vector3d & gravity)
-  {
-    const int nr_params = 13;
+    constexpr int nr_params = 13;
     std::ifstream strm(filename);
     if(!strm.is_open())
     {
-      LOG_ERROR("Could not open " << filename)
-      return;
+      return false;
     }
 
     // Vector 13d
@@ -53,13 +53,15 @@ public:
       strm >> temp;
       if(!strm.good())
       {
-        LOG_ERROR("Invalid calibration file")
-        return;
+        LOG_ERROR_AND_THROW(std::invalid_argument, "[ForceSensorCalibData] Invalid calibration file "
+                                                       << filename << ". " << dataRequirements())
+        return false;
       }
       if(strm.eof())
       {
-        LOG_ERROR("File too short, should have " << nr_params << " parameters")
-        return;
+        LOG_ERROR_AND_THROW(std::invalid_argument, "[ForceSensorCalibData] Calibration file "
+                                                       << filename << " too short. " << dataRequirements())
+        return false;
       }
       X(i) = temp;
     }
@@ -69,7 +71,13 @@ public:
     X_f_ds_ = mc_rbdyn::rpyToPT(X.segment<3>(1));
     X_p_vb_ = sva::PTransformd(Eigen::Matrix3d::Identity(), X.segment<3>(4));
     offset_ = sva::ForceVecd(X.segment<6>(7));
-    LOG_SUCCESS("Successfully load calib data file " << filename)
+    return true;
+  }
+
+  static std::string dataRequirements()
+  {
+    return "The file should contain 13 parameters in that order: mass (1), rpy for X_f_ds (3), position for X_p_vb "
+           "(3), wrench offset (6).";
   }
 
   /** Return the gravity wrench applied on the force sensor in the sensor
@@ -161,7 +169,12 @@ void ForceSensor::wrench(const sva::ForceVecd & wrench)
 
 void ForceSensor::loadCalibrator(const std::string & calib_file, const Eigen::Vector3d & gravity)
 {
-  calibration_->loadData(calib_file, gravity);
+  if(!calibration_->loadData(calib_file, gravity))
+  {
+    LOG_WARNING("No calibration file " << calib_file << " found for force sensor " << name()
+                                       << " (using default calibration). "
+                                       << detail::ForceSensorCalibData::dataRequirements());
+  }
 }
 
 const sva::PTransformd & ForceSensor::X_fsmodel_fsactual() const
