@@ -6,7 +6,6 @@
 
 #include <mc_control/fsm/StateFactory.h>
 #include <mc_control/fsm/Transition.h>
-#include <mc_control/fsm/api.h>
 
 #include <map>
 #include <string>

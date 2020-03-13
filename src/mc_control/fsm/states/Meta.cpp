@@ -75,6 +75,16 @@ bool MetaState::read_msg(std::string & msg)
   return false;
 }
 
+std::vector<std::vector<std::string>> MetaState::transitions() const
+{
+  return config_("transitions");
+}
+
+std::map<std::string, mc_rtc::Configuration> MetaState::configs() const
+{
+  return config_("configs", mc_rtc::Configuration{});
+}
+
 } // namespace fsm
 
 } // namespace mc_control

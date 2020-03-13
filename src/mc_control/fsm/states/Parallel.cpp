@@ -169,6 +169,16 @@ bool ParallelState::read_write_msg(std::string & msg, std::string & out)
   return false;
 }
 
+std::vector<std::string> ParallelState::states() const
+{
+  return config_("states");
+}
+
+std::map<std::string, mc_rtc::Configuration> ParallelState::configs() const
+{
+  return config_("configs", mc_rtc::Configuration{});
+}
+
 } // namespace fsm
 
 } // namespace mc_control
