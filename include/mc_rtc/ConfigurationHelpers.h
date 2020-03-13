@@ -2,7 +2,9 @@
  * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+#pragma once
 #include <mc_rtc/Configuration.h>
+#include <mc_rtc/logging.h>
 
 namespace mc_rtc
 {
@@ -70,7 +72,7 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config,
  *
  * Variant of fromVectorOrElement(const mc_rtc::Configuration & config, const std::string & key, const std::vector<T> &
  * defaultVec)
- * @throws If the key is not found or the configuration is neither convertible
+ * @throws mc_rtc::Configuration::Exception If the key is not found or the configuration is neither convertible
  * as std::vector<T> or T.
  */
 template<typename T>
@@ -91,7 +93,7 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config, const s
     }
     catch(...)
     {
-      LOG_ERROR_AND_THROW(std::runtime_error,
+      LOG_ERROR_AND_THROW(mc_rtc::Configuration::Exception,
                           "Configuration " << key << " is not valid. It should be a vector or single element.");
     }
   }
