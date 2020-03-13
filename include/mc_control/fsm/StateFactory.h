@@ -73,6 +73,20 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
   /** Creates a state without extra configuration */
   StatePtr create(const std::string & state, Controller & ctl);
 
+  /** Creates a and configures a state but does not start it
+   *
+   * This is meant for tools working with the FSM
+   *
+   */
+  StatePtr create(const std::string & state, const mc_rtc::Configuration & config);
+
+  /** Creates a state but does not start it
+   *
+   * This is meant for tools working with the FSM
+   *
+   */
+  StatePtr create(const std::string & state);
+
   /** Query existence of a state */
   bool hasState(const std::string & state) const;
 
@@ -102,6 +116,7 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
 private:
   /** Create a state from libraries or factory */
   StatePtr create(const std::string & state, const std::string & final_name);
+
   /** Implementation for create */
   StatePtr create(const std::string & state,
                   Controller & ctl,
