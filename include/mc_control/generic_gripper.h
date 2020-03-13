@@ -85,6 +85,17 @@ struct MC_CONTROL_DLLAPI Gripper
   /** \brief Resets the gripper parameters to their default value (percentVMax, actualCommandDiffTrigger) */
   void resetDefaults();
 
+  /** \brief Saves the current gripper configuration parameters contained in
+   * Config **/
+  void saveConfig();
+
+  /** \brief Restores the gripper configuration parameters from their saved
+   * value
+   *
+   * \see saveConfig()
+   **/
+  void restoreConfig();
+
   /*! \brief Set the current configuration of the active joints involved in the gripper
    * \param curentQ Current values of the active joints involved in the gripper
    */
@@ -137,25 +148,25 @@ struct MC_CONTROL_DLLAPI Gripper
    **/
   void actualCommandDiffTrigger(double d)
   {
-    actualCommandDiffTrigger_ = d;
+    config_.actualCommandDiffTrigger = d;
   }
   /*! Difference between the command and the reality that triggers the safety */
   double actualCommandDiffTrigger() const
   {
-    return actualCommandDiffTrigger_;
+    return config_.actualCommandDiffTrigger;
   }
 
   /*! Number of iterations where actualCommandDiffTrigger() threshold may be
    * exceeded before the security is triggered */
   void overCommandLimitIterN(unsigned int N)
   {
-    overCommandLimitIterN_ = std::max(N, 1u);
+    config_.overCommandLimitIterN = std::max(N, 1u);
   }
   /*! Number of iterations where actualCommandDiffTrigger() threshold may be
    * exceeded before the security is triggered */
   unsigned int overCommandLimitIterN() const
   {
-    return overCommandLimitIterN_;
+    return config_.overCommandLimitIterN;
   }
 
   /** Offset by which the gripper is released if overCommandDiffTrigger is
@@ -165,13 +176,13 @@ struct MC_CONTROL_DLLAPI Gripper
    **/
   void releaseSafetyOffset(double offset)
   {
-    releaseSafetyOffset_ = offset;
+    config_.releaseSafetyOffset = offset;
   }
   /** Offset by which the gripper is release if overCommandDiffTrigger is
    * trigger for more than overCommandLimitIterN */
   double releaseSafetyOffset() const
   {
-    return releaseSafetyOffset_;
+    return config_.releaseSafetyOffset;
   }
 
   /*! \brief Check if the gripper motion stopped moving.
@@ -222,12 +233,23 @@ public:
   std::vector<double> actualQ;
 
 protected:
-  /*! Percentage of max velocity of active joints in the gripper */
-  double percentVMAX_ = DEFAULT_PERCENT_VMAX;
-  /*! Difference between the command and the reality that triggers the safety */
-  double actualCommandDiffTrigger_ = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
-  /** Offset by which the gripper is released when safety is triggered */
-  double releaseSafetyOffset_ = DEFAULT_RELEASE_OFFSET;
+  /** User-controllable parameters for the gripper */
+  struct Config
+  {
+    /*! Percentage of max velocity of active joints in the gripper */
+    double percentVMax = DEFAULT_PERCENT_VMAX;
+    /*! Difference between the command and the reality that triggers the safety */
+    double actualCommandDiffTrigger = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
+    /** Offset by which the gripper is released when safety is triggered */
+    double releaseSafetyOffset = DEFAULT_RELEASE_OFFSET;
+    /*! Number of iterations before the security is triggered */
+    unsigned int overCommandLimitIterN = DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
+  };
+  /** Current configuration of the gripper parameters */
+  Config config_;
+  /** Saved configuration of the parameters saved by savedConfig() */
+  Config savedConfig_;
+
   /*! Current opening percentage */
   std::vector<double> percentOpen;
   /*! Controller timestep */
@@ -236,8 +258,6 @@ protected:
   std::vector<bool> overCommandLimit;
   /*! Store the number of iterations where the gripper command was over the limit */
   std::vector<unsigned int> overCommandLimitIter;
-  /*! Number of iterations before the security is triggered */
-  unsigned int overCommandLimitIterN_ = DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
   /*! True if the gripper is reversed */
   bool reversed = false;
 };

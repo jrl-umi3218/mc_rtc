@@ -19,6 +19,11 @@ void Grippers::configure(const mc_rtc::Configuration & config)
 
 void Grippers::start(Controller & ctl)
 {
+  for(const auto & g : ctl.grippers)
+  {
+    g.second->saveConfig();
+  }
+
   if(config_.has("grippers"))
   {
     auto grippers = config_("grippers");
@@ -30,7 +35,7 @@ void Grippers::start(Controller & ctl)
         continue;
       }
       auto & gripper = ctl.grippers[g];
-      grippers(g)("percentVMAX", gripper->percentVMAX());
+      gripper->percentVMAX(grippers(g)("percentVMAX", gripper->percentVMAX()));
       if(grippers(g).has("safety"))
       {
         const auto & safety = grippers(g)("safety");
@@ -38,11 +43,11 @@ void Grippers::start(Controller & ctl)
         {
           gripper->actualCommandDiffTrigger(static_cast<double>(safety("threshold")) * M_PI / 180);
         }
-        if(grippers(g).has("iter"))
+        if(safety.has("iter"))
         {
           gripper->overCommandLimitIterN(safety("iter"));
         }
-        if(grippers(g).has("release"))
+        if(safety.has("release"))
         {
           gripper->releaseSafetyOffset(static_cast<double>(safety("release")) * M_PI / 180);
         }
@@ -88,13 +93,9 @@ bool Grippers::run(Controller & ctl)
 
 void Grippers::teardown(Controller & ctl)
 {
-  if(config_.has("grippers"))
+  for(const auto & g : ctl.grippers)
   {
-    auto grippers = config_("grippers");
-    for(const auto & g : grippers.keys())
-    {
-      ctl.grippers[g]->resetDefaults();
-    }
+    g.second->restoreConfig();
   }
 }
 
