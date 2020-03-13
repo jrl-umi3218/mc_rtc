@@ -219,7 +219,7 @@ Robot::Robot(Robots & robots,
   for(auto & fs : forceSensors_)
   {
     bfs::path calib_file = bfs::path(module_.calib_dir) / std::string("calib_data." + fs.name());
-    fs.loadCalibrator(calib_file.string(), -mbc().gravity);
+    fs.loadCalibrator(calib_file.string(), mbc().gravity);
   }
   for(size_t i = 0; i < forceSensors_.size(); ++i)
   {
