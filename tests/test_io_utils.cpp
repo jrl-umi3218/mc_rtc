@@ -11,11 +11,11 @@ BOOST_AUTO_TEST_CASE(TestIOUtils)
   using namespace mc_rtc::io;
   std::vector<std::string> vecs{"str1", "str2"};
   BOOST_CHECK(to_string(vecs) == "str1, str2");
-  // BOOST_CHECK(to_string(vecs, " + ") == "str1 + str2");
-  // BOOST_CHECK(to_string(vecs, "; ") == "str1; str2");
+  BOOST_CHECK(to_string(vecs, " + ") == "str1 + str2");
+  BOOST_CHECK(to_string(vecs, "; ") == "str1; str2");
 
-  // std::vector<std::string> emptyVec{};
-  // BOOST_CHECK(to_string(emptyVec) == "");
+  std::vector<std::string> emptyVec{};
+  BOOST_CHECK(to_string(emptyVec) == "");
 
   struct TestStruct
   {
