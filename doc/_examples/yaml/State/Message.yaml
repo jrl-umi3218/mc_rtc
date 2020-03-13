@@ -3,8 +3,3 @@ WarningDebugMessage:
   base: Message
   type: warning
   message: 'Warning: the following action may be dangerous'
-WaitWithWarning:
-  base: Parallel
-  states:
-  - WarningDebugMessage
-  - Pause_5s

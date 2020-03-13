@@ -7,7 +7,6 @@
 #include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/io_utils.h>
 #include <mc_tasks/MetaTaskLoader.h>
-#include <algorithm>
 
 namespace mc_control
 {
@@ -24,7 +23,7 @@ void MetaTasksState::configure(const mc_rtc::Configuration & config)
     const auto & tConfig = e.second;
     tasks_configs_[tName].load(tConfig);
   }
-  outputCrit_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs", {});
+  outputCrit_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs", outputCrit_);
 }
 
 void MetaTasksState::start(Controller & ctl)
@@ -38,16 +37,16 @@ void MetaTasksState::start(Controller & ctl)
       tConfig.add("name", tName);
     }
     tasks_.push_back(mc_tasks::MetaTaskLoader::load(ctl.solver(), tConfig));
-    ctl.solver().addTask(tasks_.back());
+    auto & task = tasks_.back();
+    ctl.solver().addTask(task);
     if(tConfig.has("completion"))
     {
-      std::pair<size_t, mc_control::CompletionCriteria> p = {tasks_.size() - 1, {}};
-      auto task = tasks_.back();
-      criterias_.emplace_back(tasks_.size() - 1, [&ctl, &tConfig, task]() {
-        CompletionCriteria crit;
-        crit.configure(*task, ctl.solver().dt(), tConfig("completion"));
-        return crit;
-      }());
+      CompletionCriteria crit;
+      crit.configure(*task, ctl.solver().dt(), tConfig("completion"));
+      auto & tCrit = criterias_[tName];
+      tCrit.idx = tasks_.size() - 1;
+      tCrit.criteria = crit;
+      tCrit.use_output = false;
     }
   }
   // Check validity of tasks output names
@@ -61,29 +60,34 @@ void MetaTasksState::start(Controller & ctl)
               << mc_rtc::io::to_string(tasks_, [](const mc_tasks::MetaTaskPtr & t) { return t->name(); })
               << ". Check your \"outputs\" configuration.");
     }
+    else
+    {
+      criterias_[tName].use_output = true;
+    }
   }
 }
 
 bool MetaTasksState::run(Controller &)
 {
   bool finished = true;
-  std::string out = "";
   for(auto & c : criterias_)
   {
-    auto & crit = c.second;
-    const auto & t = *tasks_[c.first];
-    finished = crit.completed(t) && finished;
+    auto & tCrit = c.second;
+    const auto & t = *tasks_[tCrit.idx];
+    finished = tCrit.criteria.completed(t) && finished;
   }
   if(finished)
   {
     if(!finished_first_)
     {
       finished_first_ = true;
+      std::string out = "";
       for(auto & c : criterias_)
       {
-        auto & crit = c.second;
-        const auto & t = *tasks_[c.first];
-        if(std::find(outputCrit_.begin(), outputCrit_.end(), t.name()) != std::end(outputCrit_))
+        auto & tCrit = c.second;
+        auto & crit = tCrit.criteria;
+        const auto & t = *tasks_[tCrit.idx];
+        if(tCrit.use_output)
         {
           if(out.size())
           {

@@ -31,8 +31,7 @@ namespace fsm
  * - ["GraspBar", "DEFAULT", "GraspBar", "Auto"]
  *
  * If the "DEFAULT" output is present, this transition will be returned in case
- * no other output pattern has been matched. If "DEFAULT" is ommited, the
- * transition has no meaning.
+ * no other output pattern has been matched.
  *
  * Valid values for the trigger type are:
  * - "StepByStep": only require user input if running in StepByStep mode
@@ -55,11 +54,9 @@ struct MC_CONTROL_FSM_DLLAPI TransitionMap
    * \returns A pair made of a bool and a Transition:
    * - If the (state, output) has a registered next state, the bool is true
    *   and Transition returns the corresponding transition.
-   * - Else If the (state, output) has a registered next state, but the output
-   *   does not match any of the output in the transition map, then attempts to
-   *   return the Transition corresponding to the DEFAULT output.
-   * - Otherwise, the bool is false and the Transition has no meaning.
-   *
+   * - Else, if the (state, DEFAULT) has a registered next state, the bool is true and Transition returns the
+   * corresponding transition
+   * - Otherwise, the bool is false and the Transition has no meaning
    */
   std::pair<bool, Transition> transition(const std::string & state, const std::string & output) const;
 

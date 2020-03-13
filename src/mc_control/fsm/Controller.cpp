@@ -309,9 +309,10 @@ void Controller::updateContacts()
     auto ensureValidContact = [this](const std::string & robotName, const std::string & surfaceName) {
       if(!hasRobot(robotName))
       {
-        const auto availabeRobots = mc_rtc::io::to_string(robots(), [](const mc_rbdyn::Robot & r) { return r.name(); });
+        const auto availableRobots =
+            mc_rtc::io::to_string(robots(), [](const mc_rbdyn::Robot & r) { return r.name(); });
         LOG_ERROR_AND_THROW(std::runtime_error, "Failed to add contact: no robot named "
-                                                    << robotName << " (available: " << availabeRobots << ")");
+                                                    << robotName << " (available: " << availableRobots << ")");
       }
       if(!robot(robotName).hasSurface(surfaceName))
       {

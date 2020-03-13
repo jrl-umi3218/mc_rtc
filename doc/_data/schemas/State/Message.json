@@ -5,7 +5,7 @@
   "properties":
   {
     "message": { "type": "string", "description": "Message to display" },
-    "type": { "enum": ["info", "success", "warning", "error"], "type": "string" },
+    "type": { "enum": ["info", "success", "warning", "error"], "type": "string", "default": "info" },
     "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
                      "description": "Add the specified contacts during the state's start"  },
     "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },

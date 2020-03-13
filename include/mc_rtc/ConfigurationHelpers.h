@@ -41,29 +41,29 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config,
                                    const std::string & key,
                                    const std::vector<T> & defaultVec)
 {
-  std::vector<T> vec = defaultVec;
   if(!config.has(key))
   {
-    return vec;
+    return defaultVec;
   }
   const auto & c = config(key);
   try
   {
-    vec = config(key);
+    // Try to convert configuration as a vector
+    std::vector<T> vec = c;
+    return vec;
   }
   catch(...)
-  {
+  { // If that fails, try to convert as an element
     try
     {
       T elem = c;
-      vec.push_back(elem);
+      return {elem};
     }
     catch(...)
-    {
+    { // If that fails as well, return the default
       return defaultVec;
     }
   }
-  return vec;
 }
 
 /** Attempts to convert a read a vector or single element as a vector

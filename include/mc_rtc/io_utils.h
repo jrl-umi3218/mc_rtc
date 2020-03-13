@@ -4,6 +4,7 @@
 
 #pragma once
 #include <algorithm>
+#include <functional>
 #include <string>
 
 namespace mc_rtc
@@ -22,17 +23,19 @@ namespace io
  * @return A string of all the container elements.
  */
 template<typename Container>
-std::string to_string(const Container & c, const std::string & delimeter = ", ")
+std::string to_string(const Container & c, const std::string & delimiter = ", ")
 {
-  std::string s{""};
-  std::for_each(c.cbegin(), c.cend(), [&](const std::string & e) {
-    if(!s.empty())
-    {
-      s += delimeter;
-    }
-    s += e;
-  });
-  return s;
+  if(c.cbegin() == c.cend())
+  {
+    return "";
+  }
+  std::string out = *c.cbegin();
+  for(auto it = std::next(c.cbegin()); it != c.cend(); ++it)
+  {
+    out += delimiter;
+    out += *it;
+  }
+  return out;
 }
 
 /** Converts a container to a string
@@ -40,29 +43,34 @@ std::string to_string(const Container & c, const std::string & delimeter = ", ")
  * Example:
  *\code{.cpp}
  * const auto availabeRobots = mc_rtc::io::to_string(robots(), [](const mc_rbdyn::Robot & r) -> const std::string & {
- *return r.name(); }); \endcode
+ *return r.name(); });
+ \endcode
  *
  * @tparam Container An iterable container whose unerlying type is convertible
  * to std::string. The container must define Container::value_type.
- * @tparam GetT Functor that converts an element of type Container::value_type to std::string
  *
- * @tparam Container A container whose underlying type is convertible to
  * @param c Container to convert
+ * @param get_value Lambda or functor that converts a single element from the container (of type Container::value_type)
+ to std::string
  *
  * @return A string of all the container elements.
  */
-template<typename Container, typename GetT>
-std::string to_string(const Container & c, GetT get_value, const std::string & delimiter = ", ")
+template<typename Container>
+std::string to_string(const Container & c,
+                      std::function<std::string(typename Container::value_type const &)> && get_value,
+                      const std::string & delimiter = ", ")
 {
-  std::string s{""};
-  std::for_each(c.cbegin(), c.cend(), [&](const typename Container::value_type & e) {
-    if(!s.empty())
-    {
-      s += delimiter;
-    }
-    s += get_value(e);
-  });
-  return s;
+  if(c.cbegin() == c.cend())
+  {
+    return "";
+  }
+  std::string out = get_value(*c.cbegin());
+  for(auto it = std::next(c.cbegin()); it != c.cend(); ++it)
+  {
+    out += delimiter;
+    out += get_value(*it);
+  }
+  return out;
 }
 
 } // namespace io

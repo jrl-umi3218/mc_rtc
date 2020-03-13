@@ -8,11 +8,11 @@ The framework provides by default a few pre-implemented states intended to make 
 - [Parallel]({{site.baseurl}}/json.html#State/Parallel): Runs multiple states in "parallel"
 - [Meta]({{site.baseurl}}/json.html#State/Meta): Nests an FSM within an FSM
 
-In the remainder of this tutorial, we'll see how these may be used. Only `YAML` examples will be shown, `JSON` is of course also supported and similar examples may be found in the documentation. A full list of available states can be found in the ["States" section of the JSON/YAML documentation]({{site.baseurl}}/json.html#State-objects).
+In the remainder of this tutorial, we'll see how these may be used. Only `YAML` examples will be shown, `JSON` is of course also supported and similar examples may be found in the documentation. A full list of available states can be found in the ["State objects"]({{site.baseurl}}/json.html#State) section of the JSON/YAML documentation.
 
 ## MetaTasks state
 
-The `MetaTasks` state ([documentation](json.html#State/MetaTasks)) allows to load a list of tasks from their `JSON/YAML` configuration. The full list of available tasks is available [JSON/YAML documentation]({{site.baseurl}}/json.html#MetaTask-objects).
+The `MetaTasks` state ([documentation](json.html#State/MetaTasks)) allows to load a list of tasks from their `JSON/YAML` configuration. The full list of available tasks is available [JSON/YAML documentation]({{site.baseurl}}/json.html#MetaTask).
 
 Let's start with an example, we will add a new `MetaTasks` state in the `states:` section of the `FSM` configuration.
 
@@ -27,7 +27,7 @@ states:
       CoM:
         type: com
         robotIndex: 0
-        move_com: [0, 0, -5]
+        move_com: [0, 0, -0.05]
         completion:
           OR:
             - timeout: 3
@@ -56,24 +56,24 @@ This will create a new state named `ExampleState` that will itself loads:
 
 ### Completion criterias
 
-Notice the `completion` elements in the example above. These are what we refer to as `completion criteria`. They are a way to generate conditional statements to determine when a task has been completed. See the API documentation for [CompletionCriteria](${{site.baseurl}}/doxygen.html#a01840) for details.
+Notice the `completion` elements in the example above. These are what we refer to as "completion criteria". They are a way to generate conditional statements to determine when a task has been completed. See the API documentation for {% doxygen mc_control::CompletionCriteria %} for details.
 
 By default, every task defines the following entries:
 
-- `eval`: Returns the value of `MetaTask::eval()`, that is, the norm of the tasks' error
-- `speed`: Returns the value of `MetaTask::speed()`
-- `timeout`: Time elapsed since the task was added to the solver
+- `eval`: True when the norm of MetaTask::eval() is below the provided value
+- `speed`: True when the norm of MetaTask::speed() is below the provided value
+- `timeout`: True when the task has been added to the solver longer than the provided time (in seconds)
 
 Some tasks define additional completion criterias, such as:
 - `SplineTrajectoryTask` variants (`bspline_trajectory`, `exact_cubic_trajectory`) additionally define
-  - `timeElapsed: true`: checks whether the task has reached its `duration`.
-  - `wrench`: 6dof vector that checks wheter the force applied on the robot surface is lower than a threshold. This may only be used if a force-sensor is attached to the surface.
+  - `timeElapsed: true`: True when the task `duration` has elapsed
+  - `wrench`: True when the force applied on the robot surface is higher than the provided threshold (6d vector, NaN value ignores the reading, negative values invert the condition). Ignored if the surface has no force-sensor attached.
 
 You may add your own completion criterias by implementing `mc_task::MetaTask::buildCompletionCriteria` for your task. These completion criterias can be combined using the conditional constructs `AND` and `OR` as follows. The usual rules of lazy evaluation apply. For example, to check whether the hand trajectory tasks has completed if its total duration has been reached or more than 15N apply along the `z` direction of the hand's surface normal after 3 seconds of delay, you could write:
 
 ```yaml
 # completion criteria that checks whether a trajectory task has been active for at least its specified duration
-# or whether more than 30N apply along the `z` direction of the hand surface after 3 seconds of delay.
+# or whether more than 15N apply along the `z` direction of the hand surface after 3 seconds of delay.
 completion:
   OR:
     - timeElapsed: true
@@ -116,8 +116,8 @@ Your transition map can now branch conditionally based on the `CoM` completion c
 #       - AND:
 #         - eval: 0.01
 #         - speed: 0.005
-- [ExampleState, "CoM: timeout", CoMHasNotConvergedState, Auto]
-- [ExampleState, "CoM: eval AND speed", NextMotionState, Auto]
+- [ExampleState, "CoM=timeout", CoMHasNotConvergedState, Auto]
+- [ExampleState, "CoM=eval AND speed", NextMotionState, Auto]
 # state to execute by default if none of the completion patterns are matched in the transition map
 # This allows to define non-exhaustive matching patterns in the transition map
 - [ExampleState, "DEFAULT", DefaultState, Auto]
@@ -131,7 +131,7 @@ You may now define three new states:
 
 ## Parallel state
 
-The parallel state ([documentation](json.html#State/Parallel)) allows to exectute multiple states sequentially but during a single iteration of the controller. Hence the `Parallel` name here is not intended in the sense of multi-threading, but in the sense that all the states will run at the current iteration.
+The parallel state ([documentation](json.html#State/Parallel)) allows to execute multiple states in parallel. Since the FSM execution is actually single-threaded, the states are actually executed sequentially in a single controller iteration.
 
 ```yaml
 # Define an additional MetaTasks state that moves the right hand
@@ -161,7 +161,12 @@ ExampleParallelState:
   outputs: [ExampleState, RightHandState]
 ```
 
-As for the `MetaTasks` state, it is possible to specify how the state output is generated. By default, the output of the last state in `states` list will be used. If `outputs` is specified, the output of the state names it contains will be used to generate the `parallel state`'s output. For example:
+Parallel states are considered completed when all of its states have completed. As for the `MetaTasks` state, it is possible to specify how the state output is generated:
+- By default, the output of the last state in `states` list will be used.
+- When `outputs` is specified, these states' outputs will be used to generate the `parallel state`'s output.
+
+
+For example:
 
 ```yaml
 [ExampleParallelState, "ExampleState: (CoM=timeout), RightHandState: (timeElapsed)", "StateA"]
@@ -173,7 +178,7 @@ As for the `MetaTasks` state, it is possible to specify how the state output is 
 
 ### Interacting between parallel states
 
-Sometimes it is useful to be able to interact between states. For instance consider a `StabilizerStandingState` in parallel to a `Pickup` state that wants to pick-up an object on the floor. This state needs to move the `CoM` lower to enable to robot to reach. This kind of interaction between states can be achieved using the [DataStore]({{site.baseurl}}/tutorials/recipes/datastore.html).
+Sometimes it is useful to be able to interact between states. For instance consider a `StabilizerStandingState` in parallel to a `Pickup` state that wants to pick-up an object on the floor. This state needs to move the `CoM` lower to enable the robot to reach. This kind of interaction between states can be achieved using the [DataStore]({{site.baseurl}}/tutorials/recipes/datastore.html).
 
 
 ## Meta: FSM within an FSM
@@ -189,10 +194,12 @@ ExampleMetaState:
   - ...
 ```
 
-This state can then be exectued as part of another FSM, or even as part of another `Meta` state:
+This state can then be exectued as part of another FSM, or even as part of another `Meta` state.
 
 ```yaml
 transtions:
 - [ExampleParallelState, DEFAULT, ExampleMetaState]
-- [ExampleMetaState, OK, ...
+- [ExampleMetaState, OK, LastStateOutput]
 ```
+
+ Note that the ouput of a Meta FSM is the output of its last state without a transition within the Meta FSM (here `LastStateOutput`).

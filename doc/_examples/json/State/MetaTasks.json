@@ -84,8 +84,6 @@
 // Example4 still have two tasks, objectives are unchanged but:
 // - t1 now has a complex completion criteria
 // - t2 has the same completion criteria but with a different threshold
-// - t1 has no more completion criteria
-// - t2 has a completion criteria
 // In addition, the outputCriteriaTasks array asks the state to generate
 // its output string based on the completion criterias of tasks "t1" and "t2".
 // The completion output will look like one of the following

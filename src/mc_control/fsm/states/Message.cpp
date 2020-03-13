@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_control/fsm/Controller.h>
@@ -37,11 +37,11 @@ void MessageState::start(Controller & /* ctl */)
   {
     LOG_ERROR(message_);
   }
+  output("OK");
 }
 
 bool MessageState::run(Controller &)
 {
-  output("OK");
   return true;
 }
 

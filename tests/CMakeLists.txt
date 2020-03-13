@@ -73,6 +73,7 @@ mc_rtc_test(testCompletionCriteria mc_control)
 mc_rtc_test(testSimulationContactPair mc_control)
 mc_rtc_test(testDataStore mc_rtc_utils mc_rbdyn)
 mc_rtc_test(test_mc_rtc_utils mc_rtc_utils)
+mc_rtc_test(test_io_utils mc_rtc_utils)
 
 ###########################
 # -- FSM related tests -- #

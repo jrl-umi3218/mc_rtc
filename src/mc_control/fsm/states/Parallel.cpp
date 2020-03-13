@@ -92,7 +92,6 @@ void ParallelState::start(Controller & ctl)
 bool ParallelState::run(Controller & ctl)
 {
   bool ret = true;
-  std::string out = "";
   for(auto & s : states_)
   {
     ret = s.run(ctl, time_) && ret;
@@ -101,6 +100,7 @@ bool ParallelState::run(Controller & ctl)
   if(ret && !finished_first_)
   {
     finished_first_ = true;
+    std::string out = "";
     if(outputStates_.empty())
     {
       out = states_.back().state()->output();
@@ -118,10 +118,6 @@ bool ParallelState::run(Controller & ctl)
           out += s.name() + "(" + s.state()->output() + ")";
         }
       }
-    }
-    if(out.empty())
-    {
-      out = "OK";
     }
     output(out);
   }
