@@ -7,6 +7,7 @@
 #include <mc_rbdyn/PlanarSurface.h>
 #include <mc_rbdyn/SCHAddon.h>
 #include <mc_rbdyn/surface_hull.h>
+#include <mc_rtc/constants.h>
 #include <mc_rtc/logging.h>
 
 #include <fstream>
@@ -17,11 +18,6 @@
 #include "libqhullcpp/QhullFacetList.h"
 #include "libqhullcpp/QhullPoints.h"
 #include "libqhullcpp/QhullVertexSet.h"
-
-#ifndef M_PI
-#  include <boost/math/constants/constants.hpp>
-#  define M_PI boost::math::constants::pi<double>()
-#endif
 
 #ifdef WIN32
 #  include <Windows.h>
@@ -144,7 +140,7 @@ sch::S_Object * cylindrical_hull(const mc_rbdyn::CylindricalSurface & surface, c
   {
     for(unsigned int s = 0; s < slice; ++s)
     {
-      points.push_back(bTransform * sva::PTransformd(sva::RotX((2 * M_PI * s) / slice)) * p);
+      points.push_back(bTransform * sva::PTransformd(sva::RotX((2 * mc_rtc::constants::PI * s) / slice)) * p);
     }
   }
   return sch_polyhedron(points);

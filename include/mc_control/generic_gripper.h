@@ -7,6 +7,7 @@
 #include <mc_control/api.h>
 #include <mc_rbdyn/Mimic.h>
 #include <mc_rbdyn/Robots.h>
+#include <mc_rtc/constants.h>
 #include <boost/math/constants/constants.hpp>
 #include <algorithm>
 
@@ -42,11 +43,11 @@ struct MC_CONTROL_DLLAPI Gripper
   /*! Percentage of max velocity of active joints in the gripper */
   static constexpr double DEFAULT_PERCENT_VMAX = 0.25;
   /*! Difference between the command and the reality that triggers the safety */
-  static constexpr double DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER = 8. * boost::math::constants::pi<double>() / 180.;
+  static constexpr double DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER = mc_rtc::constants::toRad(8.);
   /*! Number of iterations before the security is triggered */
   static constexpr unsigned int DEFAULT_OVER_COMMAND_LIMIT_ITER_N = 5;
   /** Release offset [rad] */
-  static constexpr double DEFAULT_RELEASE_OFFSET = 2 * boost::math::constants::pi<double>() / 180;
+  static constexpr double DEFAULT_RELEASE_OFFSET = mc_rtc::constants::toRad(2);
 
   /*! \brief Constructor
    *

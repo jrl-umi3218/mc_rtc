@@ -8,8 +8,8 @@
 #include <mc_rbdyn/SCHAddon.h>
 #include <mc_rbdyn/Surface.h>
 #include <mc_rbdyn/ZMP.h>
-#include <mc_rbdyn/constants.h>
 #include <mc_rbdyn/surface_utils.h>
+#include <mc_rtc/constants.h>
 #include <mc_rtc/logging.h>
 
 #include <mc_rbdyn_urdf/urdf.h>
@@ -138,7 +138,7 @@ Robot::Robot(Robots & robots,
     mbc() = rbd::MultiBodyConfig(mb());
   }
 
-  mbc().gravity = constants::gravity;
+  mbc().gravity = mc_rtc::constants::gravity;
   mbc().zero(mb());
   {
     auto initQ = mbc().q;

@@ -5,6 +5,7 @@
 #include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/states/Grippers.h>
 #include <mc_filter/utils/clamp.h>
+#include <mc_rtc/constants.h>
 
 namespace mc_control
 {
@@ -41,7 +42,7 @@ void Grippers::start(Controller & ctl)
         const auto & safety = grippers(g)("safety");
         if(safety.has("threshold"))
         {
-          gripper->actualCommandDiffTrigger(static_cast<double>(safety("threshold")) * M_PI / 180);
+          gripper->actualCommandDiffTrigger(mc_rtc::constants::toRad(safety("threshold")));
         }
         if(safety.has("iter"))
         {
@@ -49,7 +50,7 @@ void Grippers::start(Controller & ctl)
         }
         if(safety.has("release"))
         {
-          gripper->releaseSafetyOffset(static_cast<double>(safety("release")) * M_PI / 180);
+          gripper->releaseSafetyOffset(mc_rtc::constants::toRad(safety("release")));
         }
       }
 

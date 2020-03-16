@@ -5,16 +5,12 @@
 #pragma once
 
 #include <mc_control/fsm/State.h>
+#include <mc_rtc/constants.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/CoPTask.h>
 #include <mc_tasks/OrientationTask.h>
 #include <mc_tasks/PostureTask.h>
 #include <mc_tasks/RelativeEndEffectorTask.h>
-
-#ifndef M_PI
-#  include <boost/math/constants/constants.hpp>
-#  define M_PI boost::math::constants::pi<double>()
-#endif
 
 namespace mc_control
 {
@@ -52,7 +48,7 @@ protected:
   Eigen::Vector3d com_offset_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d com_offset_sliding_ = Eigen::Vector3d::Zero();
   double move_com_z_ = 0;
-  double rot_angle_ = -2.5 * M_PI / 180;
+  double rot_angle_ = mc_rtc::constants::toRad(-2.5);
   bool wait_for_slide_trigger_ = false;
   bool slide_triggered_ = true;
   std::string next_ = "";

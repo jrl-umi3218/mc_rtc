@@ -4,16 +4,13 @@
 
 #include <mc_control/generic_gripper.h>
 #include <mc_filter/utils/clamp.h>
+#include <mc_rtc/constants.h>
 #include <mc_rtc/gui.h>
 #include <mc_rtc/logging.h>
 
 #include <cmath>
 #include <numeric>
 #include <tinyxml2.h>
-
-#ifndef M_PI
-#  define M_PI = boost::math::constants::pi<double>()
-#endif
 
 namespace mc_control
 {
@@ -330,12 +327,13 @@ void Gripper::addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string>
   cat_safety.push_back("Safety");
   gui.addElement(cat_safety,
                  NumberInput("Actual command diff threshold [deg]",
-                             [this]() { return actualCommandDiffTrigger() * 180 / M_PI; },
-                             [this](double t) { actualCommandDiffTrigger(t * M_PI / 180); }),
+                             [this]() { return mc_rtc::constants::toDeg(actualCommandDiffTrigger()); },
+                             [this](double deg) { actualCommandDiffTrigger(mc_rtc::constants::toRad(deg)); }),
                  NumberInput("Over command limiter iterations", [this]() -> double { return overCommandLimitIterN(); },
                              [this](double N) { overCommandLimitIterN(static_cast<unsigned int>(N)); }),
-                 NumberInput("Release offset [deg]", [this]() { return releaseSafetyOffset() * 180 / M_PI; },
-                             [this](double d) { releaseSafetyOffset(d * M_PI / 180); }));
+                 NumberInput("Release offset [deg]",
+                             [this]() { return mc_rtc::constants::toDeg(releaseSafetyOffset()); },
+                             [this](double deg) { releaseSafetyOffset(mc_rtc::constants::toRad(deg)); }));
 }
 
 void Gripper::removeFromGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category)
