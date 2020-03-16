@@ -23,14 +23,14 @@ std::pair<bool, Transition> TransitionMap::transition(const std::string & state,
   return {false, {}};
 }
 
-std::vector<std::string> TransitionMap::transitions(const std::string & state) const
+std::unordered_set<std::string> TransitionMap::transitions(const std::string & state) const
 {
-  std::vector<std::string> ret;
+  std::unordered_set<std::string> ret;
   for(const auto & t : map_)
   {
     if(t.first.first == state)
     {
-      ret.push_back(t.second.state);
+      ret.insert(t.second.state);
     }
   }
   return ret;

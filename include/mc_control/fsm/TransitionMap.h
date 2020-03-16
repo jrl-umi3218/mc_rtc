@@ -10,6 +10,7 @@
 
 #include <map>
 #include <string>
+#include <unordered_set>
 
 namespace mc_control
 {
@@ -60,8 +61,8 @@ struct MC_CONTROL_FSM_DLLAPI TransitionMap
    */
   std::pair<bool, Transition> transition(const std::string & state, const std::string & output) const;
 
-  /** For a given state, gives all possible next states */
-  std::vector<std::string> transitions(const std::string & state) const;
+  /** For a given state, gives all possible next states **/
+  std::unordered_set<std::string> transitions(const std::string & state) const;
 
   /** Build the map from a Configuration
    *
