@@ -43,6 +43,7 @@ public:
     if(!strm.is_open())
     {
       LOG_ERROR("Could not open " << filename)
+      return;
     }
 
     // Vector 13d

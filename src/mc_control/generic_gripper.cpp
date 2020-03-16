@@ -12,7 +12,7 @@
 #include <tinyxml2.h>
 
 #ifndef M_PI
-#  define M_PI = boost::math::constants::pi<double>();
+#  define M_PI = boost::math::constants::pi<double>()
 #endif
 
 namespace mc_control
@@ -290,7 +290,7 @@ const std::vector<double> & Gripper::q()
     }
     if(reached)
     {
-      targetQ = 0;
+      targetQ = nullptr;
     }
   }
   auto cur = curPosition();
@@ -312,16 +312,7 @@ double Gripper::opening() const
 
 bool Gripper::complete() const
 {
-  bool res = (targetQ == nullptr);
-  if(!res)
-  {
-    res = true;
-    for(size_t i = 0; i < actualQ.size(); ++i)
-    {
-      res = res && overCommandLimit[i];
-    }
-  }
-  return res;
+  return targetQ == nullptr;
 }
 
 void Gripper::addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category)
