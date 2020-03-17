@@ -19,6 +19,10 @@
 namespace mc_rbdyn
 {
 
+// Repeat static constexpr declarations
+// See also https://stackoverflow.com/q/8016780
+constexpr double Contact::defaultFriction;
+
 struct ContactImpl
 {
 public:
