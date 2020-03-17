@@ -1,7 +1,7 @@
 var NAVTREE =
 [
   [ "mc_rtc", "index.html", [
-    [ "Deprecated List", "a00686.html", null ],
+    [ "Deprecated List", "a00689.html", null ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -41,19 +41,20 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00005.html",
-"a00305.html",
-"a01875.html#aebaab2ca01fe90e61c5902a94bbf99fe",
-"a01955.html#ac57f4e0666b325b21f0ed076fd75fe75",
-"a02019.html#a164f25654c0fc7ef6d08e5c052260445",
-"a02115.html#a254b96dec351e68787a55ac10130c6d8",
-"a02175.html#ac2b9033d9bfb0232685967225ea836f2",
-"a02231.html#a5beff7f5439023c5c17f8a0008413c49",
-"a02419.html#a45ab1398054c73f857e813161bb32c62",
-"a02539.html#a0fefb36635930cf5a9db966442756b9ba1ba1ba2bd2141794d82c4363b7e533f7",
-"a02691.html#a50b2ba3514b0bd8fa4e4775f6a74fc73",
-"a02771.html#ad8ed139887005e36a8ae46295ebecf60",
-"a02827.html#ab3327552ee53d6f191b04208baafd9a9",
-"a03842.html#a5f64edebd03a669545de1ba699d6cb49"
+"a00302.html",
+"a01878.html#ae5d35906c488252e7ddd9efb814ce112",
+"a01958.html#a85cfacc20b7ca6c22181193031a0f922",
+"a02014.html",
+"a02106.html#ae828d09148f8c17e1e1381055ab04a11",
+"a02182.html#a17c32dff692bf59b7bd63460ff30492b",
+"a02226.html#aed2f387badb9d350e03140894fea693b",
+"a02414.html#ac8a95deed7837d208505cbe7d949844b",
+"a02534.html#a92db42485fe91e0df8355298a344280d",
+"a02686.html#a7644b4af12fb81a39338fdab81d6ded6",
+"a02774.html#a5faa0d85f0343702e3917d74b831dad7",
+"a02830.html#a4bf8127c35886227640928b1a35d2d93",
+"a03840.html#a4cfcac728c1786a9888c977f8b656ba2",
+"namespacemembers_type.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

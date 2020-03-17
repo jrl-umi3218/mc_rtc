@@ -1,7 +1,8 @@
 var a00698 =
 [
-    [ "impl", "a00699.html", "a00699" ],
-    [ "AxisConfiguration", "a02403.html", "a02403" ],
-    [ "PolygonDescription", "a02407.html", "a02407" ],
-    [ "Range", "a02399.html", "a02399" ]
+    [ "ExponentialMovingAverage", "a02006.html", "a02006" ],
+    [ "LeakyIntegrator", "a02010.html", "a02010" ],
+    [ "LowPass", "a02014.html", "a02014" ],
+    [ "LowPassFiniteDifferences", "a02018.html", "a02018" ],
+    [ "StationaryOffset", "a02022.html", "a02022" ]
 ];

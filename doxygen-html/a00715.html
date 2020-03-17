@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils Namespace Reference</title>
+<title>mc_rtc::log Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -71,80 +71,957 @@ $(document).ready(function(){initNavTree('a00715.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils Namespace Reference</div>  </div>
+<div class="title">mc_rtc::log Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02695.html">Constraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic helper class to write a new constraint for Tasks.  <a href="a02695.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02562.html">callback_is_serializable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type-traits for callables that returns a serializable type.  <a href="a02562.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02699.html">ContactWrenchMatrixToLambdaMatrix</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform contact wrench matrix to lambda matrix.  <a href="a02699.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02534.html">FlatLog</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">From an on-disk binary log recorded by <a class="el" href="a00693.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a>, return a flat structure.  <a href="a02534.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02615.html">EqualityConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write an equality constraint for Tasks.  <a href="a02615.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02550.html">GetLogType</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to build a correspondance between C++ types and enum values.  <a href="a02550.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02639.html">GenInequalityConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write a general inequality constraint for Tasks.  <a href="a02639.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02554.html">GetLogType&lt; std::vector&lt; double, A &gt; &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02655.html">InequalityConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to write an inequality constraint for Tasks.  <a href="a02655.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02558.html">is_serializable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the given type is serializable in the log.  <a href="a02558.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02711.html">IsUpdate</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02707.html">Update</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02715.html">UpdateForce</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02719.html">UpdateNrVarsData</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct provides common data for UpdateNrVars* classes.  <a href="a02719.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02727.html">UpdateNrVarsLambda</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct provides an implement for updateNrVars for a lambda-based constraint.  <a href="a02727.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02723.html">UpdateNrVarsRobot</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct provides an implementation for updateNrVars for a robot-based constraint.  <a href="a02723.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html">UpdateTag</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02566.html">LogWriter</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">For a given type, writes to the log.  <a href="a02566.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a3fef857fcf6a819b7f8061f33248d0b5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a3fef857fcf6a819b7f8061f33248d0b5">UpdateRobot</a> = <a class="el" href="a02707.html">Update</a>&lt; <a class="el" href="a02723.html">UpdateNrVarsRobot</a> &gt;</td></tr>
-<tr class="separator:a3fef857fcf6a819b7f8061f33248d0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51609ca39a4099935af3983ff08a0c50"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a51609ca39a4099935af3983ff08a0c50">UpdateLambda</a> = <a class="el" href="a02707.html">Update</a>&lt; <a class="el" href="a02727.html">UpdateNrVarsLambda</a> &gt;</td></tr>
-<tr class="separator:a51609ca39a4099935af3983ff08a0c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e5bbb4664bc287ec78732a63a7cd646"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a2e5bbb4664bc287ec78732a63a7cd646">binary_log_callback</a> = std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; <a class="el" href="a02538.html">FlatLog::record</a> &gt; &amp;, double)&gt;</td></tr>
+<tr class="separator:a2e5bbb4664bc287ec78732a63a7cd646"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c09aed839e3ee87a5be3e286a3e8903"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a9c09aed839e3ee87a5be3e286a3e8903">copy_callback</a> = std::function&lt; void(<a class="el" href="a02570.html">mc_rtc::MessagePackBuilder</a> &amp;, const std::vector&lt; std::string &gt; &amp;)&gt;</td></tr>
+<tr class="separator:a9c09aed839e3ee87a5be3e286a3e8903"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c86e8f30b914960080029679897a749"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a1c86e8f30b914960080029679897a749">binary_log_copy_callback</a> = std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; <a class="el" href="a02538.html">FlatLog::record</a> &gt; &amp;, double, const <a class="el" href="a00715.html#a9c09aed839e3ee87a5be3e286a3e8903">copy_callback</a> &amp;, const char *, uint64_t)&gt;</td></tr>
+<tr class="separator:a1c86e8f30b914960080029679897a749"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ae623e7dc6e6722fd48752713664b3549"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549">LogType</a> { <br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a6adf97f83acf6453d4a6a4b1070f3754">LogType::None</a> = 0, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549ac26f15e86e3de4c398a8273272aba034">LogType::Bool</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a310554dc6901f24b84131602f5aa7728">LogType::Int8_t</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a52b8419558c2745bb3f452f5dba89c0e">LogType::Int16_t</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a31da5bff69db770ab36fc4197417eb6e">LogType::Int32_t</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a6ee9244c64454706197c23f12163b3e4">LogType::Int64_t</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549aaa8a6d419e8de319fc0fb8151154a3c8">LogType::Uint8_t</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a2cf01fdc4d5b4b49bd5531cea84517ae">LogType::Uint16_t</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a114753c09137e486b349fb7ded3a738e">LogType::Uint32_t</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a752da4dabeb6a21c46c62388107f2b53">LogType::Uint64_t</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a22ae0e2b89e5e3d477f988cc36d3272b">LogType::Float</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549ad909d38d705ce75386dd86e611a82f5b">LogType::Double</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a27118326006d3829667a400ad23d5d98">LogType::String</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549ae9b0a766c9aba1f88f69157593dcade3">LogType::Vector2d</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549abd18c4378a1b42df9061eb5bd43755c9">LogType::Vector3d</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549ada57d50e3cb02d10e15d0dab71fb846f">LogType::Vector6d</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549ab2e07f7f9214839944e939b29de2252b">LogType::VectorXd</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a9dea906d4e9243ea050120f8f4a1f1c9">LogType::Quaterniond</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a2ec69636c565a422c59d7fc675bcd836">LogType::PTransformd</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a9fd99a0871090c0c75a35ac57944e044">LogType::ForceVecd</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a08efd42d00b69280268271026472b237">LogType::MotionVecd</a>, 
+<br />
+&#160;&#160;<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a18f1829c8dab599745c7d5bc84585aa2">LogType::VectorDouble</a>
+<br />
+ }<tr class="memdesc:ae623e7dc6e6722fd48752713664b3549"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum representing the type of data being logged.  <a href="a00715.html#ae623e7dc6e6722fd48752713664b3549">More...</a><br /></td></tr>
+</td></tr>
+<tr class="separator:ae623e7dc6e6722fd48752713664b3549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ae939074ac3cce1fde0bb5e0ea7e90c86"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="a00350.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#ae939074ac3cce1fde0bb5e0ea7e90c86">iterate_binary_log</a> (const std::string &amp;fpath, const <a class="el" href="a00715.html#a1c86e8f30b914960080029679897a749">binary_log_copy_callback</a> &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</td></tr>
+<tr class="memdesc:ae939074ac3cce1fde0bb5e0ea7e90c86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over a given binary log data.  <a href="#ae939074ac3cce1fde0bb5e0ea7e90c86">More...</a><br /></td></tr>
+<tr class="separator:ae939074ac3cce1fde0bb5e0ea7e90c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51b18863af2ea7f3e981b32be6b2174f"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="a00350.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a51b18863af2ea7f3e981b32be6b2174f">iterate_binary_log</a> (const std::string &amp;fpath, const <a class="el" href="a00715.html#a2e5bbb4664bc287ec78732a63a7cd646">binary_log_callback</a> &amp;callback, bool extract, const std::string &amp;time=&quot;t&quot;)</td></tr>
+<tr class="memdesc:a51b18863af2ea7f3e981b32be6b2174f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate over a given binary log data.  <a href="#a51b18863af2ea7f3e981b32be6b2174f">More...</a><br /></td></tr>
+<tr class="separator:a51b18863af2ea7f3e981b32be6b2174f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9979086ae04c2369f6ea39d42ec2fcb6"><td class="memItemLeft" align="right" valign="top">const char **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a9979086ae04c2369f6ea39d42ec2fcb6">LogTypeNames</a> ()</td></tr>
+<tr class="separator:a9979086ae04c2369f6ea39d42ec2fcb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6351f9d1bb2bb7f8f3508cc9f0e36e5e"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a6351f9d1bb2bb7f8f3508cc9f0e36e5e">LogTypeName</a> (<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549">LogType</a> t)</td></tr>
+<tr class="separator:a6351f9d1bb2bb7f8f3508cc9f0e36e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9aa92bc1668b9218bf395ae4fc92e795"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a9aa92bc1668b9218bf395ae4fc92e795">IMPL_MAPPING</a> (bool, Bool)</td></tr>
+<tr class="separator:a9aa92bc1668b9218bf395ae4fc92e795"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a530e246a423018eb4757de9a38fe0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a4a530e246a423018eb4757de9a38fe0a">IMPL_MAPPING</a> (int8_t, Int8_t)</td></tr>
+<tr class="separator:a4a530e246a423018eb4757de9a38fe0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a701b7606804a3db8de4c0e7a52d928c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a701b7606804a3db8de4c0e7a52d928c0">IMPL_MAPPING</a> (int16_t, Int16_t)</td></tr>
+<tr class="separator:a701b7606804a3db8de4c0e7a52d928c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bf6ab72f6469b3269f31e5bba5a2e53"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a2bf6ab72f6469b3269f31e5bba5a2e53">IMPL_MAPPING</a> (int32_t, Int32_t)</td></tr>
+<tr class="separator:a2bf6ab72f6469b3269f31e5bba5a2e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bfaf29781e441da25c30cbeba3acf09"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a8bfaf29781e441da25c30cbeba3acf09">IMPL_MAPPING</a> (int64_t, Int64_t)</td></tr>
+<tr class="separator:a8bfaf29781e441da25c30cbeba3acf09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e592f5c13ba9f39d5b1a71a53bdfd8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a9e592f5c13ba9f39d5b1a71a53bdfd8e">IMPL_MAPPING</a> (uint8_t, Uint8_t)</td></tr>
+<tr class="separator:a9e592f5c13ba9f39d5b1a71a53bdfd8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70fc3b45c7d5e2602b6c0967efa4b4f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a70fc3b45c7d5e2602b6c0967efa4b4f0">IMPL_MAPPING</a> (uint16_t, Uint16_t)</td></tr>
+<tr class="separator:a70fc3b45c7d5e2602b6c0967efa4b4f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5725243119abb09aa142128b7fc9f40f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a5725243119abb09aa142128b7fc9f40f">IMPL_MAPPING</a> (uint32_t, Uint32_t)</td></tr>
+<tr class="separator:a5725243119abb09aa142128b7fc9f40f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6b297b2129cec68c11ffa52c448d8ae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#ad6b297b2129cec68c11ffa52c448d8ae">IMPL_MAPPING</a> (uint64_t, Uint64_t)</td></tr>
+<tr class="separator:ad6b297b2129cec68c11ffa52c448d8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7349ebfd4a26447bfa3c1d087924b8ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a7349ebfd4a26447bfa3c1d087924b8ed">IMPL_MAPPING</a> (float, Float)</td></tr>
+<tr class="separator:a7349ebfd4a26447bfa3c1d087924b8ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a254cbef473857a8f7300c4893e025070"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a254cbef473857a8f7300c4893e025070">IMPL_MAPPING</a> (double, Double)</td></tr>
+<tr class="separator:a254cbef473857a8f7300c4893e025070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a209c2c06d48dddd58e98eb20b6537fbf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a209c2c06d48dddd58e98eb20b6537fbf">IMPL_MAPPING</a> (std::string, String)</td></tr>
+<tr class="separator:a209c2c06d48dddd58e98eb20b6537fbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3832207f7dfe9bb0a76bd55c40141aa0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a3832207f7dfe9bb0a76bd55c40141aa0">IMPL_MAPPING</a> (<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549ae9b0a766c9aba1f88f69157593dcade3">Eigen::Vector2d</a>, Vector2d)</td></tr>
+<tr class="separator:a3832207f7dfe9bb0a76bd55c40141aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a95695038f7381e9ff63fb77021fe22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a8a95695038f7381e9ff63fb77021fe22">IMPL_MAPPING</a> (<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549abd18c4378a1b42df9061eb5bd43755c9">Eigen::Vector3d</a>, Vector3d)</td></tr>
+<tr class="separator:a8a95695038f7381e9ff63fb77021fe22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abde1c442a27ca22960f0a2c42c12e1e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#abde1c442a27ca22960f0a2c42c12e1e5">IMPL_MAPPING</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00069.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a>, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00069.html#acdb6a5c038a9c26a61b0187b696b2630">Vector6d</a>)</td></tr>
+<tr class="separator:abde1c442a27ca22960f0a2c42c12e1e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40e42a14f68a8cacf3f5c14bdc235422"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a40e42a14f68a8cacf3f5c14bdc235422">IMPL_MAPPING</a> (<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549ab2e07f7f9214839944e939b29de2252b">Eigen::VectorXd</a>, VectorXd)</td></tr>
+<tr class="separator:a40e42a14f68a8cacf3f5c14bdc235422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ff7d3e9889df9292a6575c95b473a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a77ff7d3e9889df9292a6575c95b473a8">IMPL_MAPPING</a> (<a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a9dea906d4e9243ea050120f8f4a1f1c9">Eigen::Quaterniond</a>, Quaterniond)</td></tr>
+<tr class="separator:a77ff7d3e9889df9292a6575c95b473a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85a6ea306358c1ae94b79e65b22cb252"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a85a6ea306358c1ae94b79e65b22cb252">IMPL_MAPPING</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">PTransformd</a>)</td></tr>
+<tr class="separator:a85a6ea306358c1ae94b79e65b22cb252"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42e9d70a432b1bc02a1f5dcff729bfb5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a42e9d70a432b1bc02a1f5dcff729bfb5">IMPL_MAPPING</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a>, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">ForceVecd</a>)</td></tr>
+<tr class="separator:a42e9d70a432b1bc02a1f5dcff729bfb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d34eabb941deeb9f0dea2280ae1201"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a70d34eabb941deeb9f0dea2280ae1201">IMPL_MAPPING</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#afc16c15a4fbcc2d8cf5676551b74816d">sva::MotionVecd</a>, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#afc16c15a4fbcc2d8cf5676551b74816d">MotionVecd</a>)</td></tr>
+<tr class="separator:a70d34eabb941deeb9f0dea2280ae1201"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="a51609ca39a4099935af3983ff08a0c50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51609ca39a4099935af3983ff08a0c50">&#9670;&nbsp;</a></span>UpdateLambda</h2>
+<a id="a2e5bbb4664bc287ec78732a63a7cd646"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e5bbb4664bc287ec78732a63a7cd646">&#9670;&nbsp;</a></span>binary_log_callback</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00715.html#a51609ca39a4099935af3983ff08a0c50">mc_solver::utils::UpdateLambda</a> = typedef <a class="el" href="a02707.html">Update</a>&lt;<a class="el" href="a02727.html">UpdateNrVarsLambda</a>&gt;</td>
+          <td class="memname">using <a class="el" href="a00715.html#a2e5bbb4664bc287ec78732a63a7cd646">mc_rtc::log::binary_log_callback</a> = typedef std::function&lt;bool(const std::vector&lt;std::string&gt; &amp;, std::vector&lt;<a class="el" href="a02538.html">FlatLog::record</a>&gt; &amp;, double)&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3fef857fcf6a819b7f8061f33248d0b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fef857fcf6a819b7f8061f33248d0b5">&#9670;&nbsp;</a></span>UpdateRobot</h2>
+<a id="a1c86e8f30b914960080029679897a749"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c86e8f30b914960080029679897a749">&#9670;&nbsp;</a></span>binary_log_copy_callback</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00715.html#a3fef857fcf6a819b7f8061f33248d0b5">mc_solver::utils::UpdateRobot</a> = typedef <a class="el" href="a02707.html">Update</a>&lt;<a class="el" href="a02723.html">UpdateNrVarsRobot</a>&gt;</td>
+          <td class="memname">using <a class="el" href="a00715.html#a1c86e8f30b914960080029679897a749">mc_rtc::log::binary_log_copy_callback</a> = typedef std::function&lt;bool(const std::vector&lt;std::string&gt; &amp;, std::vector&lt;<a class="el" href="a02538.html">FlatLog::record</a>&gt; &amp;, double, const <a class="el" href="a00715.html#a9c09aed839e3ee87a5be3e286a3e8903">copy_callback</a> &amp;, const char *, uint64_t)&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9c09aed839e3ee87a5be3e286a3e8903"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c09aed839e3ee87a5be3e286a3e8903">&#9670;&nbsp;</a></span>copy_callback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a00715.html#a9c09aed839e3ee87a5be3e286a3e8903">mc_rtc::log::copy_callback</a> = typedef std::function&lt;void(<a class="el" href="a02570.html">mc_rtc::MessagePackBuilder</a> &amp;, const std::vector&lt;std::string&gt; &amp;)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ae623e7dc6e6722fd48752713664b3549"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae623e7dc6e6722fd48752713664b3549">&#9670;&nbsp;</a></span>LogType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549">mc_rtc::log::LogType</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enum representing the type of data being logged. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549ac26f15e86e3de4c398a8273272aba034"></a>Bool&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a310554dc6901f24b84131602f5aa7728"></a>Int8_t&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a52b8419558c2745bb3f452f5dba89c0e"></a>Int16_t&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a31da5bff69db770ab36fc4197417eb6e"></a>Int32_t&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a6ee9244c64454706197c23f12163b3e4"></a>Int64_t&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549aaa8a6d419e8de319fc0fb8151154a3c8"></a>Uint8_t&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a2cf01fdc4d5b4b49bd5531cea84517ae"></a>Uint16_t&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a114753c09137e486b349fb7ded3a738e"></a>Uint32_t&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a752da4dabeb6a21c46c62388107f2b53"></a>Uint64_t&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a22ae0e2b89e5e3d477f988cc36d3272b"></a>Float&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549ad909d38d705ce75386dd86e611a82f5b"></a>Double&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a27118326006d3829667a400ad23d5d98"></a>String&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549ae9b0a766c9aba1f88f69157593dcade3"></a>Vector2d&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549abd18c4378a1b42df9061eb5bd43755c9"></a>Vector3d&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549ada57d50e3cb02d10e15d0dab71fb846f"></a>Vector6d&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549ab2e07f7f9214839944e939b29de2252b"></a>VectorXd&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a9dea906d4e9243ea050120f8f4a1f1c9"></a>Quaterniond&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a2ec69636c565a422c59d7fc675bcd836"></a>PTransformd&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a9fd99a0871090c0c75a35ac57944e044"></a>ForceVecd&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a08efd42d00b69280268271026472b237"></a>MotionVecd&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae623e7dc6e6722fd48752713664b3549a18f1829c8dab599745c7d5bc84585aa2"></a>VectorDouble&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a9aa92bc1668b9218bf395ae4fc92e795"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9aa92bc1668b9218bf395ae4fc92e795">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[1/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Bool&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4a530e246a423018eb4757de9a38fe0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a530e246a423018eb4757de9a38fe0a">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[2/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">int8_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Int8_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a701b7606804a3db8de4c0e7a52d928c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a701b7606804a3db8de4c0e7a52d928c0">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[3/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Int16_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2bf6ab72f6469b3269f31e5bba5a2e53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bf6ab72f6469b3269f31e5bba5a2e53">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[4/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Int32_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8bfaf29781e441da25c30cbeba3acf09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bfaf29781e441da25c30cbeba3acf09">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[5/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Int64_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9e592f5c13ba9f39d5b1a71a53bdfd8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e592f5c13ba9f39d5b1a71a53bdfd8e">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[6/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Uint8_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a70fc3b45c7d5e2602b6c0967efa4b4f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70fc3b45c7d5e2602b6c0967efa4b4f0">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[7/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Uint16_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5725243119abb09aa142128b7fc9f40f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5725243119abb09aa142128b7fc9f40f">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[8/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Uint32_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad6b297b2129cec68c11ffa52c448d8ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6b297b2129cec68c11ffa52c448d8ae">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[9/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">uint64_t&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Uint64_t&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7349ebfd4a26447bfa3c1d087924b8ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7349ebfd4a26447bfa3c1d087924b8ed">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[10/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Float&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a254cbef473857a8f7300c4893e025070"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a254cbef473857a8f7300c4893e025070">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[11/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Double&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a209c2c06d48dddd58e98eb20b6537fbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a209c2c06d48dddd58e98eb20b6537fbf">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[12/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3832207f7dfe9bb0a76bd55c40141aa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3832207f7dfe9bb0a76bd55c40141aa0">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[13/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549ae9b0a766c9aba1f88f69157593dcade3">Eigen::Vector2d</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Vector2d&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8a95695038f7381e9ff63fb77021fe22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a95695038f7381e9ff63fb77021fe22">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[14/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549abd18c4378a1b42df9061eb5bd43755c9">Eigen::Vector3d</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Vector3d&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abde1c442a27ca22960f0a2c42c12e1e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abde1c442a27ca22960f0a2c42c12e1e5">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[15/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00069.html#acdb6a5c038a9c26a61b0187b696b2630">Eigen::Vector6d</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00069.html#acdb6a5c038a9c26a61b0187b696b2630">Vector6d</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a40e42a14f68a8cacf3f5c14bdc235422"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40e42a14f68a8cacf3f5c14bdc235422">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[16/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549ab2e07f7f9214839944e939b29de2252b">Eigen::VectorXd</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">VectorXd&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a77ff7d3e9889df9292a6575c95b473a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77ff7d3e9889df9292a6575c95b473a8">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[17/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a9dea906d4e9243ea050120f8f4a1f1c9">Eigen::Quaterniond</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Quaterniond&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a85a6ea306358c1ae94b79e65b22cb252"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85a6ea306358c1ae94b79e65b22cb252">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[18/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">PTransformd</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a42e9d70a432b1bc02a1f5dcff729bfb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42e9d70a432b1bc02a1f5dcff729bfb5">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[19/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">ForceVecd</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a70d34eabb941deeb9f0dea2280ae1201"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70d34eabb941deeb9f0dea2280ae1201">&#9670;&nbsp;</a></span>IMPL_MAPPING() <span class="overload">[20/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::log::IMPL_MAPPING </td>
+          <td>(</td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#afc16c15a4fbcc2d8cf5676551b74816d">sva::MotionVecd</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#afc16c15a4fbcc2d8cf5676551b74816d">MotionVecd</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae939074ac3cce1fde0bb5e0ea7e90c86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae939074ac3cce1fde0bb5e0ea7e90c86">&#9670;&nbsp;</a></span>iterate_binary_log() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="a00350.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> mc_rtc::log::iterate_binary_log </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fpath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00715.html#a1c86e8f30b914960080029679897a749">binary_log_copy_callback</a> &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>extract</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>time</em> = <code>&quot;t&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Iterate over a given binary log data. </p>
+<p>For each entry in the log, this will call the provided callback. The callback has six arguments:</p>
+<ul>
+<li>the first are the keys of the entry, note that this is empty if there has been no change since the previous entry</li>
+<li>the second is the data corresponding to the keys. The index of a key in the keys vector give the index for the corresponding data. This index may change when keys are updated</li>
+<li>the third is the value for the time entry</li>
+<li>the fourth is a copy callback that can be used to obtain a copy of the data with provided keys</li>
+<li>the fifth is a pointer to the raw buffer data</li>
+<li>the sixth is the size of this buffer</li>
+</ul>
+<p>If the callback returns false, parsing is aborted</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fpath</td><td>Path to the binary log file</td></tr>
+    <tr><td class="paramname">callback</td><td>Called for every entry in the log</td></tr>
+    <tr><td class="paramname">extract</td><td>If true, data is available as their original C++ type, if false, no data is available. Skipping extraction is much faster</td></tr>
+    <tr><td class="paramname">time</td><td>Key used as time source. If that key doesn't exist or if it's not a Double record, the parsing will fail. If this parameter is empty, no extraction is attempted and the third callback parameter is always -1</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if parsing was sucessful, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="a51b18863af2ea7f3e981b32be6b2174f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51b18863af2ea7f3e981b32be6b2174f">&#9670;&nbsp;</a></span>iterate_binary_log() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="a00350.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> mc_rtc::log::iterate_binary_log </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>fpath</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00715.html#a2e5bbb4664bc287ec78732a63a7cd646">binary_log_callback</a> &amp;&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>extract</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>time</em> = <code>&quot;t&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Iterate over a given binary log data. </p>
+<p>This function has the same functionality as its overload but the callback doesn't have to bother with the copy callback. </p>
+
+</div>
+</div>
+<a id="a6351f9d1bb2bb7f8f3508cc9f0e36e5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6351f9d1bb2bb7f8f3508cc9f0e36e5e">&#9670;&nbsp;</a></span>LogTypeName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* mc_rtc::log::LogTypeName </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549">LogType</a>&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="reference">References <a class="el" href="a00715.html#a9979086ae04c2369f6ea39d42ec2fcb6">LogTypeNames()</a>.</p>
+
+</div>
+</div>
+<a id="a9979086ae04c2369f6ea39d42ec2fcb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9979086ae04c2369f6ea39d42ec2fcb6">&#9670;&nbsp;</a></span>LogTypeNames()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char** mc_rtc::log::LogTypeNames </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a00715.html#a6351f9d1bb2bb7f8f3508cc9f0e36e5e">LogTypeName()</a>.</p>
 
 </div>
 </div>
@@ -154,8 +1031,8 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00699.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00715.html">utils</a></li>
-    <li class="footer">Generated on Wed Mar 11 2020 08:58:55 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00693.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00715.html">log</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 03:25:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

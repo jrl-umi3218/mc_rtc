@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rbdyn::constants Namespace Reference</title>
+<title>mc_filter Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,77 +70,44 @@ $(document).ready(function(){initNavTree('a00698.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#var-members">Variables</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::constants Namespace Reference</div>  </div>
+<div class="title">mc_filter Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a8fa57e20c005da2ca8c0d4c31afbdb13"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#a8fa57e20c005da2ca8c0d4c31afbdb13">GRAVITY</a> = 9.80665</td></tr>
-<tr class="separator:a8fa57e20c005da2ca8c0d4c31afbdb13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a168de7234976be363c8c8d4e9dc2f7c2"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#a168de7234976be363c8c8d4e9dc2f7c2">gravity</a> = Eigen::Vector3d{0., 0., <a class="el" href="a00698.html#a8fa57e20c005da2ca8c0d4c31afbdb13">GRAVITY</a>}</td></tr>
-<tr class="memdesc:a168de7234976be363c8c8d4e9dc2f7c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; Gravity positive along the vertical axis  <a href="#a168de7234976be363c8c8d4e9dc2f7c2">More...</a><br /></td></tr>
-<tr class="separator:a168de7234976be363c8c8d4e9dc2f7c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c92978a62ec11421cc0bcf72bd848bc"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#a3c92978a62ec11421cc0bcf72bd848bc">vertical</a> = Eigen::Vector3d{0., 0., 1.}</td></tr>
-<tr class="separator:a3c92978a62ec11421cc0bcf72bd848bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:a00699"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00699.html">utils</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02006.html">ExponentialMovingAverage</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exponential Moving Average.  <a href="a02006.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02010.html">LeakyIntegrator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leaky integrator.  <a href="a02010.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02014.html">LowPass</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-pass filter from series of velocity measurements.  <a href="a02014.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02018.html">LowPassFiniteDifferences</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low-pass velocity filter from series of position measurements.  <a href="a02018.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02022.html">StationaryOffset</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove stationary offset from an input signal.  <a href="a02022.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a8fa57e20c005da2ca8c0d4c31afbdb13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fa57e20c005da2ca8c0d4c31afbdb13">&#9670;&nbsp;</a></span>GRAVITY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_rbdyn::constants::GRAVITY = 9.80665</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a168de7234976be363c8c8d4e9dc2f7c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a168de7234976be363c8c8d4e9dc2f7c2">&#9670;&nbsp;</a></span>gravity</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::Vector3d mc_rbdyn::constants::gravity = Eigen::Vector3d{0., 0., <a class="el" href="a00698.html#a8fa57e20c005da2ca8c0d4c31afbdb13">GRAVITY</a>}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>&lt; Gravity positive along the vertical axis </p>
-
-<p class="reference">Referenced by <a class="el" href="a02099.html#af437477c82db35d456f99ebef763b8a4">mc_rbdyn::ForceSensor::couple()</a>.</p>
-
-</div>
-</div>
-<a id="a3c92978a62ec11421cc0bcf72bd848bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c92978a62ec11421cc0bcf72bd848bc">&#9670;&nbsp;</a></span>vertical</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::Vector3d mc_rbdyn::constants::vertical = Eigen::Vector3d{0., 0., 1.}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00693.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00698.html">constants</a></li>
-    <li class="footer">Generated on Wed Mar 11 2020 08:58:55 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00698.html">mc_filter</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 03:25:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

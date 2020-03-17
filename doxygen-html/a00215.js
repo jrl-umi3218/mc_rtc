@@ -1,5 +1,8 @@
 var a00215 =
 [
-    [ "Surface", "a02191.html", "a02191" ],
-    [ "SurfacePtr", "a00215.html#a848cf0b2e8f6ca6f18ceba1769d9a426", null ]
+    [ "cylindrical_hull", "a00215.html#adcd59f0c2e8c9cd94a6f9800c164e723", null ],
+    [ "gripper_hull", "a00215.html#a70b7277a0499a32774e608f8def99043", null ],
+    [ "planar_hull", "a00215.html#a96cab2abc78656a41b2b56987c5fbbfa", null ],
+    [ "sch_polyhedron", "a00215.html#a3db1776d4f8f36e1eb2a8c51bc157867", null ],
+    [ "surface_to_sch", "a00215.html#adf1399b68c68126e373f564e95bc7531", null ]
 ];

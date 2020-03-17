@@ -60239,6 +60239,177 @@ Stabilizer::GoHalfSitting:
 
 
 
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>safety</td>
+  
+  <td>
+    
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Grippers_PROP_grippers_PROP_STAR_PROP_safety" aria-expanded="false" aria-controls="collapseState_Grippers_PROP_grippers_PROP_STAR_PROP_safety">Gripper safety parameters</a>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Parameters to prevent over-torques on position-controlled grippers</small></span>
+  </td>
+  
+</tr>
+
+  
+    <tr class="collapse" id="collapseState_Grippers_PROP_grippers_PROP_STAR_PROP_safety">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Gripper safety parameters</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Parameters to prevent over-torques on position-controlled grippers</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>iter</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number &ge; 1</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">5</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Maximum number of iterations spent above "threshold" before the gripper is release by "release"</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>threshold</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">8</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Encoder-command difference [degrees] over which the gripper is considered in overtorque</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>release</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">2</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Number of degrees by which the gripper should be released when safety is triggered</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
 
 </tbody>
 </table>

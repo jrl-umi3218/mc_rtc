@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::BoundedSpeedConstr Class Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02571.html','');});
+$(document).ready(function(){initNavTree('a02574.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,345 +69,33 @@ $(document).ready(function(){initNavTree('a02571.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a02568.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::BoundedSpeedConstr Class Reference</div>  </div>
+<div class="title">mc_solver::RobotEnvCollisionsConstraint Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper around <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00965.html">tasks::qp::BoundedSpeedConstr</a>.  
- <a href="a02571.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_solver/BoundedSpeedConstr.h&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mc_solver::BoundedSpeedConstr:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a02571.png" usemap="#mc_5Fsolver::BoundedSpeedConstr_map" alt=""/>
-  <map id="mc_5Fsolver::BoundedSpeedConstr_map" name="mc_5Fsolver::BoundedSpeedConstr_map">
-<area href="a02599.html" title="This class is a basis to wrap Constraint functions from Tasks. " alt="mc_solver::ConstraintSet" shape="rect" coords="0,0,199,24"/>
-</map>
- </div></div>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a43af0872dd664d13d864053d3ecfda18"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02571.html#a43af0872dd664d13d864053d3ecfda18">BoundedSpeedConstr</a> (const <a class="el" href="a02183.html">mc_rbdyn::Robots</a> &amp;robots, unsigned int robotIndex, double dt)</td></tr>
-<tr class="separator:a43af0872dd664d13d864053d3ecfda18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54adcdc90cc41a64a9723b693f8beb1b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02571.html#a54adcdc90cc41a64a9723b693f8beb1b">addToSolver</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;mbs, <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">tasks::qp::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:a54adcdc90cc41a64a9723b693f8beb1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called by <a class="el" href="a02691.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02691.html#a37580a89d1a0d1a862dfb6b7240e6dd0" title="Add a constraint set. ">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr:  <a href="#a54adcdc90cc41a64a9723b693f8beb1b">More...</a><br /></td></tr>
-<tr class="separator:a54adcdc90cc41a64a9723b693f8beb1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0214a46d2452e2dcf610bbf44f863019"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02571.html#a0214a46d2452e2dcf610bbf44f863019">removeFromSolver</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">tasks::qp::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:a0214a46d2452e2dcf610bbf44f863019"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called by <a class="el" href="a02691.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02691.html#a2d48a1aa9f88ea1c6873000df4299a1d" title="Remove a constraint set. ">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call:  <a href="#a0214a46d2452e2dcf610bbf44f863019">More...</a><br /></td></tr>
-<tr class="separator:a0214a46d2452e2dcf610bbf44f863019"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abcd47fff771a0c7357bd5b682398b3df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02571.html#abcd47fff771a0c7357bd5b682398b3df">addBoundedSpeed</a> (<a class="el" href="a02691.html">QPSolver</a> &amp;solver, const std::string &amp;bodyName, const Eigen::Vector3d &amp;bodyPoint, const Eigen::MatrixXd &amp;dof, const Eigen::VectorXd &amp;speed)</td></tr>
-<tr class="separator:abcd47fff771a0c7357bd5b682398b3df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff11f05b8b3f2139db8ae2d95ce4afee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02571.html#aff11f05b8b3f2139db8ae2d95ce4afee">addBoundedSpeed</a> (<a class="el" href="a02691.html">QPSolver</a> &amp;solver, const std::string &amp;bodyName, const Eigen::Vector3d &amp;bodyPoint, const Eigen::MatrixXd &amp;dof, const Eigen::VectorXd &amp;lowerSpeed, const Eigen::VectorXd &amp;upperSpeed)</td></tr>
-<tr class="separator:aff11f05b8b3f2139db8ae2d95ce4afee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b85799a5bb8df9c5344cd9d3f630708"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02571.html#a5b85799a5bb8df9c5344cd9d3f630708">removeBoundedSpeed</a> (<a class="el" href="a02691.html">QPSolver</a> &amp;solver, const std::string &amp;bodyName)</td></tr>
-<tr class="separator:a5b85799a5bb8df9c5344cd9d3f630708"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70c84d6defba583690d9175ca4cf192d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02571.html#a70c84d6defba583690d9175ca4cf192d">nrBoundedSpeeds</a> () const</td></tr>
-<tr class="separator:a70c84d6defba583690d9175ca4cf192d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0fffcd8e01c61ced64cf5371999acb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02571.html#ab0fffcd8e01c61ced64cf5371999acb7">reset</a> (<a class="el" href="a02691.html">QPSolver</a> &amp;solver)</td></tr>
-<tr class="separator:ab0fffcd8e01c61ced64cf5371999acb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a02599"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02599')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02599.html">mc_solver::ConstraintSet</a></td></tr>
-<tr class="memitem:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_a02599"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02599.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a> ()</td></tr>
-<tr class="memdesc:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_a02599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="a02599.html#ad979bb11e0faeba2c10d36d5a4c46e00">More...</a><br /></td></tr>
-<tr class="separator:ad979bb11e0faeba2c10d36d5a4c46e00 inherit pub_methods_a02599"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper around <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00965.html">tasks::qp::BoundedSpeedConstr</a>. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a43af0872dd664d13d864053d3ecfda18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43af0872dd664d13d864053d3ecfda18">&#9670;&nbsp;</a></span>BoundedSpeedConstr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_solver::BoundedSpeedConstr::BoundedSpeedConstr </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02183.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
-          <td class="paramname"><em>robots</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>robotIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="abcd47fff771a0c7357bd5b682398b3df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abcd47fff771a0c7357bd5b682398b3df">&#9670;&nbsp;</a></span>addBoundedSpeed() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_solver::BoundedSpeedConstr::addBoundedSpeed </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02691.html">QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bodyName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>bodyPoint</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::MatrixXd &amp;&#160;</td>
-          <td class="paramname"><em>dof</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>speed</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aff11f05b8b3f2139db8ae2d95ce4afee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff11f05b8b3f2139db8ae2d95ce4afee">&#9670;&nbsp;</a></span>addBoundedSpeed() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_solver::BoundedSpeedConstr::addBoundedSpeed </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02691.html">QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bodyName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>bodyPoint</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::MatrixXd &amp;&#160;</td>
-          <td class="paramname"><em>dof</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>lowerSpeed</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"><em>upperSpeed</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a54adcdc90cc41a64a9723b693f8beb1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54adcdc90cc41a64a9723b693f8beb1b">&#9670;&nbsp;</a></span>addToSolver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void mc_solver::BoundedSpeedConstr::addToSolver </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">tasks::qp::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>This function is called by <a class="el" href="a02691.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02691.html#a37580a89d1a0d1a862dfb6b7240e6dd0" title="Add a constraint set. ">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr: </p>
-<pre class="fragment">&lt;wrapped-type&gt;::addToSolver(mbs, solver)
-</pre> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mbs</td><td>The MultiBody vector controlled by the invoking <a class="el" href="a02691.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
-    <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="a02691.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="a02599.html#a8b2739907caaeb5d49ccaedc1665e3ca">mc_solver::ConstraintSet</a>.</p>
-
-</div>
-</div>
-<a id="a70c84d6defba583690d9175ca4cf192d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70c84d6defba583690d9175ca4cf192d">&#9670;&nbsp;</a></span>nrBoundedSpeeds()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t mc_solver::BoundedSpeedConstr::nrBoundedSpeeds </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5b85799a5bb8df9c5344cd9d3f630708"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b85799a5bb8df9c5344cd9d3f630708">&#9670;&nbsp;</a></span>removeBoundedSpeed()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_solver::BoundedSpeedConstr::removeBoundedSpeed </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02691.html">QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>bodyName</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0214a46d2452e2dcf610bbf44f863019"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0214a46d2452e2dcf610bbf44f863019">&#9670;&nbsp;</a></span>removeFromSolver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void mc_solver::BoundedSpeedConstr::removeFromSolver </td>
-          <td>(</td>
-          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">tasks::qp::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>This function is called by <a class="el" href="a02691.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02691.html#a2d48a1aa9f88ea1c6873000df4299a1d" title="Remove a constraint set. ">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call: </p>
-<pre class="fragment">&lt;wrapped-type&gt;::removeFromSolver(solver)
-</pre> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="a02691.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implements <a class="el" href="a02599.html#aa7a3302adccb4d3183e829fd2754b75a">mc_solver::ConstraintSet</a>.</p>
-
-</div>
-</div>
-<a id="ab0fffcd8e01c61ced64cf5371999acb7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0fffcd8e01c61ced64cf5371999acb7">&#9670;&nbsp;</a></span>reset()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_solver::BoundedSpeedConstr::reset </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02691.html">QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a02574.html#afbce8ca7f72ce83dd61060a2b1526237">addEnvCollision</a>(QPSolver &amp;solver, const mc_rbdyn::Collision &amp;col)</td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02574.html#abf0d85d3b3c319dc2482f67c05d22968">addSelfCollision</a>(QPSolver &amp;solver, const mc_rbdyn::Collision &amp;col)</td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02574.html#a958e2813a9368f8e2628e367aac46449">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02574.html#a8a12fce61aaa56f6d8d698ab7c925b6d">envCollConstrMng</a></td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02574.html#ae1da1cc998ffcad31638d384cd6e09c5">removeEnvCollision</a>(QPSolver &amp;solver, const std::string &amp;rBodyName, const std::string &amp;eBodyName)</td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02574.html#a618ee70816991cf1c4911a4ce5631dc7">removeEnvCollisionByBody</a>(QPSolver &amp;solver, const std::string &amp;rBodyName, const std::string &amp;eBodyName)</td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02574.html#a1c44940f9826474f5b4c894c1014a610">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02574.html#a1a2afa771fb34c646081db42ea78f549">removeSelfCollision</a>(QPSolver &amp;solver, const std::string &amp;body1Name, const std::string &amp;body2Name)</td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02574.html#a39287b8c789b11ede7208c03a199ca74">RobotEnvCollisionsConstraint</a>(const mc_rbdyn::Robots &amp;robots, double timeStep)</td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02574.html#af4e19d19f4f444ec1597600ea3fb43ea">selfCollConstrMng</a></td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02574.html#aa8ec417a8fe966ff8fd516ee32c2e029">setEnvCollisions</a>(QPSolver &amp;solver, const std::vector&lt; mc_rbdyn::Contact &gt; &amp;contacts, const std::vector&lt; mc_rbdyn::Collision &gt; &amp;cols)</td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02574.html#a7da0970955748569829288d534c7d6c4">setSelfCollisions</a>(QPSolver &amp;solver, const std::vector&lt; mc_rbdyn::Contact &gt; &amp;contacts, const std::vector&lt; mc_rbdyn::Collision &gt; &amp;cols)</td><td class="entry"><a class="el" href="a02574.html">mc_solver::RobotEnvCollisionsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02594.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02594.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00699.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02571.html">BoundedSpeedConstr</a></li>
-    <li class="footer">Generated on Wed Mar 11 2020 08:58:55 for mc_rtc by
+    <li class="footer">Generated on Tue Mar 17 2020 03:23:15 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

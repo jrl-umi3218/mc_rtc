@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_trajectory Namespace Reference</title>
+<title>mc_tasks::force Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,74 +70,35 @@ $(document).ready(function(){initNavTree('a00719.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">mc_trajectory Namespace Reference</div>  </div>
+<div class="title">mc_tasks::force Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02855.html">BSpline</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02750.html">AdmittanceTask</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hybrid position-force control on a contacting end-effector.  <a href="a02750.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02859.html">ExactCubic</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an Exact Cubic spline : a curve that passes exactly through waypoints in position, while respecting optional constraints on its initial and final velocity and acceleration.  <a href="a02859.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02758.html">ComplianceTask</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a contact in a compliant manner.  <a href="a02758.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02863.html">InterpolatedRotation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes a trajectory with smoothly interpolate rotation between waypoints.  <a href="a02863.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02766.html">CoPTask</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Track center-of-pressure (CoP) references at contact.  <a href="a02766.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02867.html">Spline</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02770.html">DampingTask</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hybrid position-force control on a contacting end-effector.  <a href="a02770.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a9fbcf4dd49d2e09b5d33208fae44f11b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03857.html#adff5a6c1e965ae6fdc756a2c5187f9c9">MC_TRAJECTORY_DLLAPI</a> Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00719.html#a9fbcf4dd49d2e09b5d33208fae44f11b">generateInterpolatedWaypoints</a> (const Eigen::Vector3d &amp;start, const Eigen::Vector3d &amp;stop, unsigned int nrWP)</td></tr>
-<tr class="separator:a9fbcf4dd49d2e09b5d33208fae44f11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a9fbcf4dd49d2e09b5d33208fae44f11b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9fbcf4dd49d2e09b5d33208fae44f11b">&#9670;&nbsp;</a></span>generateInterpolatedWaypoints()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a03857.html#adff5a6c1e965ae6fdc756a2c5187f9c9">MC_TRAJECTORY_DLLAPI</a> Eigen::MatrixXd mc_trajectory::generateInterpolatedWaypoints </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>start</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>stop</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>nrWP</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00719.html">mc_trajectory</a></li>
-    <li class="footer">Generated on Wed Mar 11 2020 08:58:56 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00694.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00719.html">force</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 03:25:46 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

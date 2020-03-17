@@ -1,7 +1,7 @@
 var a00236 =
 [
-    [ "ArrowROImpl", "a02275.html", "a02275" ],
-    [ "ArrowImpl", "a02279.html", "a02279" ],
+    [ "ArrowROImpl", "a02282.html", "a02282" ],
+    [ "ArrowImpl", "a02286.html", "a02286" ],
     [ "Arrow", "a00236.html#aae7d8d2d90a01712f0f57ba5f5ec0faf", null ],
     [ "Arrow", "a00236.html#ab5cef94f254edfaaa52e300ef9d9287b", null ],
     [ "Arrow", "a00236.html#a910fc94e100370b4eaa72737398268aa", null ],

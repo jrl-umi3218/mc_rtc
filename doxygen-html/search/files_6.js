@@ -11,6 +11,6 @@ var searchData=
   ['globalplugin_5ffwd_2eh',['GlobalPlugin_fwd.h',['../a00074.html',1,'']]],
   ['globalpluginmacros_2eh',['GlobalPluginMacros.h',['../a00077.html',1,'']]],
   ['grippers_2eh',['Grippers.h',['../a00038.html',1,'']]],
-  ['grippersurface_2eh',['GripperSurface.h',['../a00170.html',1,'']]],
+  ['grippersurface_2eh',['GripperSurface.h',['../a00167.html',1,'']]],
   ['gui_2eh',['gui.h',['../a00320.html',1,'']]]
 ];
