@@ -1,6 +1,10 @@
 #pragma once
 #include <Eigen/Core>
 
+#ifndef EIGEN_PI
+#  define EIGEN_PI 3.141592653589793238462643383279502884197169399375105820974944592307816406L
+#endif
+
 namespace mc_rtc
 {
 namespace constants

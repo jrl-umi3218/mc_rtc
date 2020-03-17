@@ -1049,20 +1049,20 @@ cdef class Contact(object):
   def __copyctor__(self, Contact other):
     self.impl = new c_mc_rbdyn.Contact(deref(other.impl))
   def __robotspt_ctor__(self, Robots robots, robotSurface, envSurface,
-      sva.PTransformd X_es_rs = None):
+      sva.PTransformd X_es_rs = None, friction = Contact.defaultFriction):
     if isinstance(robotSurface, unicode):
       robotSurface = robotSurface.encode(u'ascii')
     if isinstance(envSurface, unicode):
       envSurface = envSurface.encode(u'ascii')
     if X_es_rs is None:
       self.impl = new c_mc_rbdyn.Contact(deref(robots.impl), robotSurface,
-          envSurface)
+          envSurface, friction)
     else:
       self.impl = new c_mc_rbdyn.Contact(deref(robots.impl), robotSurface,
-          envSurface, deref(X_es_rs.impl))
+          envSurface, deref(X_es_rs.impl), friction)
   def __full_ctor__(self, Robots robots, r1Index, r2Index, r1Surface, r2Surface,
       sva.PTransformd X_r2s_r1s = sva.PTransformd.Identity(), sva.PTransformd Xbs =
-      None, ambId = -1):
+      None, friction = Contact.defaultFriction, ambId = -1):
     if isinstance(r1Surface, unicode):
       r1Surface = r1Surface.encode(u'ascii')
     if isinstance(r2Surface, unicode):
@@ -1070,7 +1070,7 @@ cdef class Contact(object):
     if Xbs is None:
       Xbs = robots.robot(r1Index).surface(r1Surface).X_b_s()
     self.impl = new c_mc_rbdyn.Contact(deref(robots.impl), r1Index, r2Index,
-        r1Surface, r2Surface, deref(X_r2s_r1s.impl), deref(Xbs.impl), ambId)
+        r1Surface, r2Surface, deref(X_r2s_r1s.impl), deref(Xbs.impl), friction, ambId)
   def __cinit__(self, *args, **kwds):
     if "skip_alloc" in kwds:
       skip_alloc = bool(kwds["skip_alloc"])
@@ -1079,14 +1079,18 @@ cdef class Contact(object):
     self.__own_impl = True
     if len(args) == 0 and skip_alloc:
       self.impl = NULL
-      pass
     elif len(args) == 1 and isinstance(args[0], Contact):
       self.__copyctor__(args[0])
     elif len(args) > 2 and isinstance(args[0], Robots):
-      if len(args) == 3 or (len(args) == 4 and args[3] is None):
+      if len(args) == 3:
         self.__robotspt_ctor__(args[0], args[1], args[2])
-      elif len(args) == 4 and isinstance(args[3], sva.PTransformd):
-        self.__robotspt_ctor__(args[0], args[1], args[2], args[3])
+      elif len(args) == 4:
+        if isinstance(args[3], sva.PTransformd):
+          self.__robotspt_ctor__(args[0], args[1], args[2], args[3])
+        else:
+          self.__robotspt_ctor__(args[0], args[1], args[2], None, args[3])
+      elif len(args) == 5 and isinstance(args[3], sva.PTransformd):
+        self.__robtspt_ctor(args[0], args[1], args[2], args[3], args[4])
       elif len(args) >= 5:
         X_r2s_r1s = None
         if len(args) >= 6 or "X_r2s_r1s" in kwds:
@@ -1100,14 +1104,20 @@ cdef class Contact(object):
             X_b_s = kwds["X_b_s"]
           else:
             X_b_s = args[6]
+        friction = Contact.defaultFriction
+        if len(args) >= 8 or "friction" in kwds:
+          if "friction" in kwds:
+            friction = kwds["friction"]
+          else:
+            friction = args[7]
         ambiguityId = -1
-        if len(args) >= 8 or "ambiguityId" in kwds:
+        if len(args) >= 9 or "ambiguityId" in kwds:
           if "ambiguityId" in kwds:
             ambiguityId = kwds["ambiguityId"]
           else:
-            ambiguityId = args[7]
+            ambiguityId = args[8]
         self.__full_ctor__(args[0], args[1], args[2], args[3], args[4],
-            X_r2s_r1s, X_b_s, ambiguityId)
+            X_r2s_r1s, X_b_s, friction, ambiguityId)
       else:
         raise TypeError("Wrong arguments provided to Contact ctor")
     else:

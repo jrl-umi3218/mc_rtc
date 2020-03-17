@@ -306,10 +306,10 @@ cdef extern from "<mc_rbdyn/surface_utils.h>" namespace "mc_rbdyn":
 
 cdef extern from "<mc_rbdyn/Contact.h>" namespace "mc_rbdyn":
   cdef cppclass Contact:
-    Contact(const Robots&, string, string)
-    Contact(const Robots&, string, string, const PTransformd&)
+    Contact(const Robots&, string, string, double)
+    Contact(const Robots&, string, string, const PTransformd&, double)
     Contact(const Robots&, unsigned int, unsigned int, string, string, const
-        PTransformd&, const PTransformd&, int)
+        PTransformd&, const PTransformd&, double, int)
     Contact(const Contact&)
 
     unsigned int r1Index()

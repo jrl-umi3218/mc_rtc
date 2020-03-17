@@ -53,16 +53,21 @@ public:
   constexpr static unsigned int nrBilatPoints = 4;
 
 public:
-  Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface);
   Contact(const mc_rbdyn::Robots & robots,
           const std::string & robotSurface,
           const std::string & envSurface,
-          const sva::PTransformd & X_es_rs);
+          double friction = defaultFriction);
+  Contact(const mc_rbdyn::Robots & robots,
+          const std::string & robotSurface,
+          const std::string & envSurface,
+          const sva::PTransformd & X_es_rs,
+          double friction = defaultFriction);
   Contact(const mc_rbdyn::Robots & robots,
           unsigned int r1Index,
           unsigned int r2Index,
           const std::string & r1Surface,
           const std::string & r2Surface,
+          double friction = defaultFriction,
           int ambiguityId = -1);
   Contact(const mc_rbdyn::Robots & robots,
           unsigned int r1Index,
@@ -70,6 +75,7 @@ public:
           const std::string & r1Surface,
           const std::string & r2Surface,
           const sva::PTransformd & X_r2s_r1s,
+          double friction = defaultFriction,
           int ambiguityId = -1);
   Contact(const mc_rbdyn::Robots & robots,
           unsigned int r1Index,
@@ -78,6 +84,7 @@ public:
           const std::string & r2Surface,
           const sva::PTransformd & X_r2s_r1s,
           const sva::PTransformd & X_b_s,
+          double friction = defaultFriction,
           int ambiguityId = -1);
 
 private:
@@ -85,6 +92,7 @@ private:
           const std::string & robotSurface,
           const std::string & envSurface,
           const sva::PTransformd & X_es_rs,
+          double friction,
           bool is_fixed);
 
 public:
@@ -109,6 +117,12 @@ public:
   const int & ambiguityId() const;
 
   bool isFixed() const;
+
+  /** Return the contact friction */
+  double friction() const;
+
+  /** Set the contact friction */
+  void friction(double friction);
 
   std::pair<std::string, std::string> surfaces() const;
 

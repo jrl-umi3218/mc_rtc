@@ -49,7 +49,7 @@ std::vector<mc_solver::ContactMsg> contactsMsgFromContacts(const mc_rbdyn::Robot
     msg.r1_points = const_cast<const mc_rbdyn::Surface &>(*(c.r1Surface())).points();
     msg.X_b1_b2 = X_b1_b2;
     msg.nr_generators = static_cast<uint16_t>(mc_rbdyn::Contact::nrConeGen);
-    msg.mu = mc_rbdyn::Contact::defaultFriction;
+    msg.mu = c.friction();
     res.push_back(msg);
   }
 
