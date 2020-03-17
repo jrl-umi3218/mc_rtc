@@ -186,7 +186,7 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
     return ret;
   };
 
-  for(const mc_rbdyn::Contact & c : contacts)
+  for(const mc_rbdyn::Contact & c : contacts_)
   {
     QPContactPtr qcptr = c.taskContact(*robots_p);
     if(qcptr.unilateralContact)
@@ -205,7 +205,7 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
     {
       std::string bName = robot(c.r1Index()).name() + "::" + c.r1Surface()->name() + " & " + robot(c.r2Index()).name()
                           + "::" + c.r2Surface()->name();
-      auto nContacts = allBut(contacts, c);
+      auto nContacts = allBut(contacts_, c);
       gui_->addElement({"Contacts", "Remove"},
                        mc_rtc::gui::Button(bName, [nContacts, this]() { setContacts(nContacts); }));
     }
@@ -213,7 +213,7 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
 
   solver.nrVars(robots_p->mbs(), uniContacts, biContacts);
   const tasks::qp::SolverData & data = solver.data();
-  qpRes.contacts = contactsMsgFromContacts(*robots_p, contacts);
+  qpRes.contacts = contactsMsgFromContacts(*robots_p, contacts_);
   qpRes.contacts_lambda_begin.clear();
   for(int i = 0; i < data.nrContacts(); ++i)
   {
