@@ -6,12 +6,13 @@
   {
     "r1Surface": { "type": "string" },
     "r2Surface": { "type": "string" },
-    "r1Index": { "type": "number", "default": "0" },
-    "r2Index": { "type": "number", "default": "1" },
+    "r1Index": { "type": "integer", "default": "0" },
+    "r2Index": { "type": "integer", "default": "1" },
     "isFixed": { "type": "boolean" },
     "X_r2s_r1s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
     "X_b_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-    "ambiguityId": { "type": "integer" }
+    "friction": { "type": "number", "default": "0.7" },
+    "ambiguityId": { "type": "integer", "default": "-1" }
   },
   "required": ["r1Surface", "r2Surface", "isFixed"],
   "additionalProperties": false

@@ -3,5 +3,6 @@
   "r2Surface": "surf2",
   "r1Index": 0,
   "r2Index": 1,
+  "friction": 0.7,
   "isFixed": false
 }
