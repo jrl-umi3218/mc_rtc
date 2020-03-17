@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>MetaTask.h File Reference</title>
+<title>ZMPCC.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -71,43 +71,32 @@ $(document).ready(function(){initNavTree('a00452.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">MetaTask.h File Reference</div>  </div>
+<div class="title">ZMPCC.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03870.html">mc_rtc/Configuration.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00305.html">mc_rtc/gui/StateBuilder.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00338.html">mc_rtc/log/Logger.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00395.html">mc_solver/QPSolver.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03858.html">mc_solver/api.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03861.html">mc_tasks/api.h</a>&gt;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00101.html">mc_filter/LeakyIntegrator.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00176.html">mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h</a>&gt;</code><br />
+<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02814.html">mc_tasks::MetaTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a generic task.  <a href="a02814.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02826.html">mc_tasks::lipm_stabilizer::ZMPCC</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ZMP Compensation Control (<a class="el" href="a02826.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>)  <a href="a02826.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00691"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00691.html">mc_control</a></td></tr>
+<tr class="memitem:a00708"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00708.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00708"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02250.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00712.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00694"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00694.html">mc_tasks</a></td></tr>
+<tr class="memitem:a00711"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00711.html">mc_rtc::gui</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a3ce36af538f25151dc006eb3d50e8b3d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00694.html#a3ce36af538f25151dc006eb3d50e8b3d">mc_tasks::MetaTaskPtr</a> = std::shared_ptr&lt; MetaTask &gt;</td></tr>
-<tr class="separator:a3ce36af538f25151dc006eb3d50e8b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aa673a5574c449b983c740d35cddf6669"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03858.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a> double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00694.html#aa673a5574c449b983c740d35cddf6669">mc_tasks::extraStiffness</a> (double error, double extraStiffness)</td></tr>
-<tr class="separator:aa673a5574c449b983c740d35cddf6669"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00709"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00709.html">mc_tasks</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00710"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html">mc_tasks::lipm_stabilizer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -115,8 +104,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c5d9ba9e59fcda315855869f4a23a264.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00452.html">MetaTask.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:44 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c5d9ba9e59fcda315855869f4a23a264.html">mc_tasks</a></li><li class="navelem"><a class="el" href="dir_18af6c2952718ac3c6e0c979e92f25ef.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a00452.html">ZMPCC.h</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

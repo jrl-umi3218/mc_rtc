@@ -1,10 +1,6 @@
 var a01954 =
 [
-    [ "Type", "a01954.html#ad0d49171493519fb008c73e58696edc1", [
-      [ "StepByStep", "a01954.html#ad0d49171493519fb008c73e58696edc1a68d8c641ebe12c46d077d8ff720c3bbd", null ],
-      [ "Auto", "a01954.html#ad0d49171493519fb008c73e58696edc1a06b9281e396db002010bde1de57262eb", null ],
-      [ "Strict", "a01954.html#ad0d49171493519fb008c73e58696edc1a2e979835dd62324f5bfe217449ba4974", null ]
-    ] ],
-    [ "state", "a01954.html#a9fc7e260a07a8da86ee5724d47f9664a", null ],
-    [ "type", "a01954.html#aeb7c3f9f5d60af38b50cbd0caa1b2b65", null ]
+    [ "criteria", "a01954.html#aa1d90135dc97508bf146a086b7b8305e", null ],
+    [ "idx", "a01954.html#a15631f7cb4afab3665d62197f9b0aa67", null ],
+    [ "use_output", "a01954.html#abc76ec57de7ebd6ad839c05d4d391cde", null ]
 ];

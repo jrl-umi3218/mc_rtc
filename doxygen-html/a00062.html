@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Transition.h File Reference</title>
+<title>StabilizerStandingState.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -73,23 +73,28 @@ $(document).ready(function(){initNavTree('a00062.html','');});
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">Transition.h File Reference</div>  </div>
+<div class="title">StabilizerStandingState.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03834.html">mc_control/api.h</a>&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00029.html">mc_control/fsm/State.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00137.html">mc_planning/Pendulum.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03903.html">mc_tasks/lipm_stabilizer/Contact.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01954.html">mc_control::fsm::Transition</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transition is given by the destination state and a type of transition.  <a href="a01954.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01974.html">mc_control::fsm::StabilizerStandingState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple state to control and stabilize the CoM of a biped-like robot using the LIPMStabilizer.  <a href="a01974.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00691"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00691.html">mc_control</a></td></tr>
+<tr class="memitem:a00709"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00709.html">mc_tasks</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00692"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00692.html">mc_control::fsm</a></td></tr>
+<tr class="memitem:a00710"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html">mc_tasks::lipm_stabilizer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00706"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00706.html">mc_control</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00707"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html">mc_control::fsm</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
@@ -98,8 +103,8 @@ Namespaces</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8a948ff1aa35df8f7730fc54bf71041a.html">mc_control</a></li><li class="navelem"><a class="el" href="dir_5eca7bb21ab95c8ba50a69c382d19321.html">fsm</a></li><li class="navelem"><a class="el" href="a00062.html">Transition.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:44 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8a948ff1aa35df8f7730fc54bf71041a.html">mc_control</a></li><li class="navelem"><a class="el" href="dir_5eca7bb21ab95c8ba50a69c382d19321.html">fsm</a></li><li class="navelem"><a class="el" href="dir_e6b7f2c290ec347c099e5f45d81956a4.html">states</a></li><li class="navelem"><a class="el" href="a00062.html">StabilizerStandingState.h</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

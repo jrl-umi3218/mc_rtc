@@ -1,5 +1,6 @@
 var a02398 =
 [
-    [ "AbscissaOrdinateWithColor", "a02398.html#abd61cc0d2ea75882f75a5f54f9047a0f", null ],
-    [ "write", "a02398.html#a3d6f033510ac8d8a5a05b56adf3c19e2", null ]
+    [ "IntegerInputImpl", "a02398.html#abb43e816875fdb07339135c65fa7982e", null ],
+    [ "IntegerInputImpl", "a02398.html#a5b3e150b460bd7c5b4fc426a1d08e370", null ],
+    [ "type", "a02398.html#ad03092ac48c1ea07ce3ee119e000229b", null ]
 ];

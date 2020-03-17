@@ -1,9 +1,6 @@
 var a00404 =
 [
-    [ "UpdateTag", "a02710.html", null ],
-    [ "Update", "a02714.html", "a02714" ],
-    [ "IsUpdate", "a02718.html", null ],
-    [ "UpdateForce", "a02722.html", "a02722" ],
-    [ "UpdateLambda", "a00404.html#a51609ca39a4099935af3983ff08a0c50", null ],
-    [ "UpdateRobot", "a00404.html#a3fef857fcf6a819b7f8061f33248d0b5", null ]
+    [ "QPSolver", "a02722.html", "a02722" ],
+    [ "Joints", "a00404.html#afe16a7652eeda60792bb24b8bce8455c", null ],
+    [ "None", "a00404.html#ac7485dcc8d256a6f197ed7802687f252", null ]
 ];

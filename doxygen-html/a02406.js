@@ -1,5 +1,6 @@
 var a02406 =
 [
-    [ "OrdinateWithColor", "a02406.html#a7070266af8da1fd1c5130a42d6327ebf", null ],
-    [ "write", "a02406.html#a336ddb0dc18460959466cef6486e5f78", null ]
+    [ "NumberInputImpl", "a02406.html#adc6a76d29546ffa6d09e6e244cde1310", null ],
+    [ "NumberInputImpl", "a02406.html#a33da2f6fd4d4ffeb4ed07e93094b002f", null ],
+    [ "type", "a02406.html#ae1b80d0abc5e1d9e04ff01069779aaf4", null ]
 ];

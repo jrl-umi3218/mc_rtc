@@ -1,11 +1,10 @@
 var a02518 =
 [
-    [ "LTDLHandle", "a02518.html#a1d2ebbcff7e52decbb18a9dc96b7671b", null ],
-    [ "~LTDLHandle", "a02518.html#ac3f676e1ef23ac13767069ebf1018af7", null ],
-    [ "LTDLHandle", "a02518.html#aeb254d88dad0c357ba003eb2ef458556", null ],
-    [ "classes", "a02518.html#a5027f7059635b26c598d8547787c70da", null ],
-    [ "get_symbol", "a02518.html#ac9e807398c51fe641aa12610ee1d35fc", null ],
-    [ "operator=", "a02518.html#ab5ad49d16629787bd61589dbf4924c4e", null ],
-    [ "path", "a02518.html#aab506987ae59f5623e4875126b3ad06b", null ],
-    [ "valid", "a02518.html#aad84c0ae1a67095338adf0205ee6cbfe", null ]
+    [ "ForceConfig", "a02518.html#aa43d330299a7e98bf4f71bb41203ef82", null ],
+    [ "ForceConfig", "a02518.html#a2d88ac62138a8f3a15a0c48468ec2d51", null ],
+    [ "ForceConfig", "a02518.html#a9a4b2dd24ef25e1505a01f37a899349c", null ],
+    [ "load", "a02518.html#a8fffaa27fe7b876e7dd342dc519b3ebf", null ],
+    [ "write", "a02518.html#a172deb6bbb037afc2955e6ce0495a1cd", null ],
+    [ "write_size", "a02518.html#a3c32ba4f04a0903e09314c4fce866254", null ],
+    [ "force_scale", "a02518.html#a5b196a2d50081a662c2765c283a6d6b8", null ]
 ];

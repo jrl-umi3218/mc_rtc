@@ -1,14 +1,7 @@
 var a02614 =
 [
-    [ "ContactType", "a02614.html#aa1038fc325c517503d2f68a3feec1c30", [
-      [ "Acceleration", "a02614.html#aa1038fc325c517503d2f68a3feec1c30acbc392a30777e1fa953eea2c011ea2c3", null ],
-      [ "Velocity", "a02614.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652", null ],
-      [ "Position", "a02614.html#aa1038fc325c517503d2f68a3feec1c30a75ced229938828d7cf205928657fd137", null ]
-    ] ],
-    [ "ContactConstraint", "a02614.html#a2226b4449ee6faeb3f6d70cfdfb13b4f", null ],
-    [ "ContactConstraint", "a02614.html#ad4a4d2baaacb8b1d914d66a0110c99ab", null ],
-    [ "addToSolver", "a02614.html#a3e94d3c790da36671345692cbf14e81d", null ],
-    [ "removeFromSolver", "a02614.html#af72efeda2c9cd6af2e4626f32ab7583d", null ],
-    [ "contactConstr", "a02614.html#ad8b6359d4d1a771db2fd8bad433acf1f", null ],
-    [ "posLambdaConstr", "a02614.html#a4456741f8ae0b07c199415fda9b9aecf", null ]
+    [ "CoMIncPlaneConstr", "a02614.html#a36c14d8513aede45203f3113bca8866f", null ],
+    [ "addToSolver", "a02614.html#a7fe287ede6acc66b93ebc6e1a8f54882", null ],
+    [ "removeFromSolver", "a02614.html#aa6901fd29799bb8f88e639be2e2e06ac", null ],
+    [ "set_planes", "a02614.html#aae037f758b45e836e2ef33edbda90c58", null ]
 ];

@@ -1,6 +1,13 @@
 var a02086 =
 [
-    [ "QPContactPtr", "a02086.html#ae43784e3317dd1ab1d0d8f42926e5de7", null ],
-    [ "bilateralContact", "a02086.html#a31a08f61bfa921fa79dde45a30f72aa9", null ],
-    [ "unilateralContact", "a02086.html#a8edb8058d39c00e880534c7d416819f2", null ]
+    [ "Collision", "a02086.html#afaef9be2f1209c8cc63876f13b8da184", null ],
+    [ "Collision", "a02086.html#a212f22fc390d0f873dc67244cdbdbce7", null ],
+    [ "isNone", "a02086.html#a664a8719f81b8fee2d2b26cd3cf645ab", null ],
+    [ "operator!=", "a02086.html#a4f990041663f252046812111a6791048", null ],
+    [ "operator==", "a02086.html#aab32d2891597a9ec0d7f76e3dd0723a9", null ],
+    [ "body1", "a02086.html#a169addbd06a09743b06287121884f027", null ],
+    [ "body2", "a02086.html#afde353de6419a4e248eec0851f664968", null ],
+    [ "damping", "a02086.html#affd388406c44197c32f6685e64d7bdb9", null ],
+    [ "iDist", "a02086.html#a4e96ac27cda155ffddb1222ff08f012c", null ],
+    [ "sDist", "a02086.html#a2853ab9ab669747303ccda6b22bb7d77", null ]
 ];

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::ConfigurationLoader&lt; mc_rbdyn::RobotModulePtr &gt; Struct Template Reference</title>
+<title>mc_rbdyn::Base Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,94 +70,97 @@ $(document).ready(function(){initNavTree('a02078.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a02075.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::RobotModulePtr &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_rbdyn::Base Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;mc_rbdyn/configuration_io.h&gt;</code></p>
+<p>This struct represents a base for the creation of a robot.  
+ <a href="a02078.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_rbdyn/Base.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a27d2d736e80c235652f7576f9bd95e2a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00697.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02078.html#a27d2d736e80c235652f7576f9bd95e2a">load</a> (const <a class="el" href="a02226.html">mc_rtc::Configuration</a> &amp;)</td></tr>
-<tr class="separator:a27d2d736e80c235652f7576f9bd95e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6081d5cb189f9b7439d8eced06fce954"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02078.html#a6081d5cb189f9b7439d8eced06fce954">save</a> (const <a class="el" href="a00697.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> &amp;, bool save_mbc=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false)</td></tr>
-<tr class="separator:a6081d5cb189f9b7439d8eced06fce954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a29e3501c76c5f562000ea4c144bcb92e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02078.html#a29e3501c76c5f562000ea4c144bcb92e">baseName</a></td></tr>
+<tr class="memdesc:a29e3501c76c5f562000ea4c144bcb92e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the base.  <a href="#a29e3501c76c5f562000ea4c144bcb92e">More...</a><br /></td></tr>
+<tr class="separator:a29e3501c76c5f562000ea4c144bcb92e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae50130e4a7f74e88220617d3080c65ec"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02078.html#ae50130e4a7f74e88220617d3080c65ec">X_0_s</a></td></tr>
+<tr class="memdesc:ae50130e4a7f74e88220617d3080c65ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transformation from the world to the root joint.  <a href="#ae50130e4a7f74e88220617d3080c65ec">More...</a><br /></td></tr>
+<tr class="separator:ae50130e4a7f74e88220617d3080c65ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fed34226bcc4165ddc6f39fab4dfacb"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02078.html#a4fed34226bcc4165ddc6f39fab4dfacb">X_b0_s</a></td></tr>
+<tr class="memdesc:a4fed34226bcc4165ddc6f39fab4dfacb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transformation from the root body to the root joint.  <a href="#a4fed34226bcc4165ddc6f39fab4dfacb">More...</a><br /></td></tr>
+<tr class="separator:a4fed34226bcc4165ddc6f39fab4dfacb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefd54756f82332b9155a61cea33d8cc3"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00995.html#afff99e26b5eeb3d899af433df385f4fd">rbd::Joint::Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02078.html#aefd54756f82332b9155a61cea33d8cc3">baseType</a></td></tr>
+<tr class="memdesc:aefd54756f82332b9155a61cea33d8cc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of the root joint.  <a href="#aefd54756f82332b9155a61cea33d8cc3">More...</a><br /></td></tr>
+<tr class="separator:aefd54756f82332b9155a61cea33d8cc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a27d2d736e80c235652f7576f9bd95e2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27d2d736e80c235652f7576f9bd95e2a">&#9670;&nbsp;</a></span>load()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This struct represents a base for the creation of a robot. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a29e3501c76c5f562000ea4c144bcb92e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29e3501c76c5f562000ea4c144bcb92e">&#9670;&nbsp;</a></span>baseName</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a00697.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> <a class="el" href="a02202.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a00697.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> &gt;::load </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02226.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">std::string mc_rbdyn::Base::baseName</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Name of the base. </p>
 
 </div>
 </div>
-<a id="a6081d5cb189f9b7439d8eced06fce954"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6081d5cb189f9b7439d8eced06fce954">&#9670;&nbsp;</a></span>save()</h2>
+<a id="aefd54756f82332b9155a61cea33d8cc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefd54756f82332b9155a61cea33d8cc3">&#9670;&nbsp;</a></span>baseType</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a02226.html">mc_rtc::Configuration</a> <a class="el" href="a02202.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a00697.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> &gt;::save </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00697.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> &amp;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>save_mbc</em> = <code>true</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>filteredLinks</em> = <code>{}</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>fixed</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00995.html#afff99e26b5eeb3d899af433df385f4fd">rbd::Joint::Type</a> mc_rbdyn::Base::baseType</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Type of the root joint. </p>
+
+</div>
+</div>
+<a id="ae50130e4a7f74e88220617d3080c65ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae50130e4a7f74e88220617d3080c65ec">&#9670;&nbsp;</a></span>X_0_s</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_rbdyn::Base::X_0_s</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transformation from the world to the root joint. </p>
+
+</div>
+</div>
+<a id="a4fed34226bcc4165ddc6f39fab4dfacb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fed34226bcc4165ddc6f39fab4dfacb">&#9670;&nbsp;</a></span>X_b0_s</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_rbdyn::Base::X_b0_s</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transformation from the root body to the root joint. </p>
 
 </div>
 </div>
@@ -167,8 +170,8 @@ Static Public Member Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00693.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02078.html">ConfigurationLoader&lt; mc_rbdyn::RobotModulePtr &gt;</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00712.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02078.html">Base</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

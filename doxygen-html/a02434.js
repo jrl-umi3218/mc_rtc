@@ -1,8 +1,7 @@
 var a02434 =
 [
-    [ "Point3DImpl", "a02434.html#aebb2b0f65583cdb425856d7589a325d9", null ],
-    [ "Point3DImpl", "a02434.html#a81ef40f7c6064e0c1888601141f88cfd", null ],
-    [ "write", "a02434.html#a9101fdc36b843f5a6e93eb033095de14", null ],
-    [ "write_size", "a02434.html#a0c1fd00806f16e62c3ee1140799ac02c", null ],
-    [ "type", "a02434.html#a0471c69344137b9065b0c26db9d43639", null ]
+    [ "Polygon", "a02434.html#af7e96bad2cd93f2b0eaecbf94e8ce4c2", null ],
+    [ "side", "a02434.html#ab7683b7758fdcb4c826c57eb7ef37800", null ],
+    [ "write", "a02434.html#a5cad8ea3b30915d71a70df177591e536", null ],
+    [ "type", "a02434.html#a5c7df3c2bb038af2fd07bc822c1af1bc", null ]
 ];

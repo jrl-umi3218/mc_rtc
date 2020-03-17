@@ -1,10 +1,14 @@
 var a02418 =
 [
-    [ "Range", "a02418.html#aead20688a3c041cd852dd71c98cfc15b", null ],
-    [ "Range", "a02418.html#ae57efd48b0202aac88fd98578af24993", null ],
-    [ "load", "a02418.html#ad303c48ab81bc362a13995c1b2464d0b", null ],
-    [ "write", "a02418.html#aa6b749d005afc464c84b138a2d72ae79", null ],
-    [ "inf", "a02418.html#ab995e2707a19a7b8beb6b05bbeffa3b9", null ],
-    [ "max", "a02418.html#a85f2d2500191f058985f2d32ea40583d", null ],
-    [ "min", "a02418.html#a3626d90084b55cd8a94307e620a09062", null ]
+    [ "AbscissaOrdinate", "a02418.html#a59782a8bb1c04dbaf888856985d7273d", null ],
+    [ "side", "a02418.html#ac412c96504ea09d32b3f19e18e0fca0b", null ],
+    [ "style", "a02418.html#a9298450fcf5a9549db2df14dc6223e4a", null ],
+    [ "write", "a02418.html#a3356c8e13777a41231e4a53f60a0e14c", null ],
+    [ "color_", "a02418.html#a86c83c91843a11a26a3404ddb7b4437b", null ],
+    [ "get_x_fn_", "a02418.html#a06bb63c46c89243d82cbcb4a7323a3cb", null ],
+    [ "get_y_fn_", "a02418.html#ade656f6138f2fd579ad5670c5afac13b", null ],
+    [ "name_", "a02418.html#af7bfde3739ae017ceb6db526762ca6aa", null ],
+    [ "side_", "a02418.html#ae33beeb0efca412dd64fcbad5e984c48", null ],
+    [ "style_", "a02418.html#ad56c269ffbd0cbf144af4b4ff066bd59", null ],
+    [ "type", "a02418.html#a13fb99d2e08099b6c7d7738e8bdd31fa", null ]
 ];

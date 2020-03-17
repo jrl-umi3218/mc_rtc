@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Contact.h File Reference</title>
+<title>api.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,48 +70,122 @@ $(document).ready(function(){initNavTree('a03873.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn/Contact.h File Reference</div>  </div>
+<div class="title">mc_rbdyn/api.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03849.html">mc_rbdyn/api.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03870.html">mc_rtc/Configuration.h</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00044.html">Tasks/QPContacts.h</a>&gt;</code><br />
-<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02086.html">mc_solver::QPContactPtr</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02090.html">mc_solver::QPContactPtrWPoints</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02094.html">mc_rbdyn::Contact</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00702"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00702.html">mc_solver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00697"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00697.html">mc_rbdyn</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a736c36f68b3eff9f08124c8b1a58cba3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03849.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00697.html#a736c36f68b3eff9f08124c8b1a58cba3">mc_rbdyn::computePoints</a> (const <a class="el" href="a02198.html">mc_rbdyn::Surface</a> &amp;robotSurface, const <a class="el" href="a02198.html">mc_rbdyn::Surface</a> &amp;envSurface, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;X_es_rs)</td></tr>
-<tr class="separator:a736c36f68b3eff9f08124c8b1a58cba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a552577349e8efdac2745cbdd3898f85e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03873.html#a552577349e8efdac2745cbdd3898f85e">MC_RBDYN_VERSION</a>&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td></tr>
+<tr class="separator:a552577349e8efdac2745cbdd3898f85e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a529cb71c3827899033a1e94d10552a38"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03873.html#a529cb71c3827899033a1e94d10552a38">MC_RBDYN_DLLIMPORT</a></td></tr>
+<tr class="separator:a529cb71c3827899033a1e94d10552a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae269070c4054c9fa40053b5e28ea074f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03873.html#ae269070c4054c9fa40053b5e28ea074f">MC_RBDYN_DLLEXPORT</a></td></tr>
+<tr class="separator:ae269070c4054c9fa40053b5e28ea074f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2956eb566ae27b5965f64bc3c422c703"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03873.html#a2956eb566ae27b5965f64bc3c422c703">MC_RBDYN_DLLLOCAL</a></td></tr>
+<tr class="separator:a2956eb566ae27b5965f64bc3c422c703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f64edebd03a669545de1ba699d6cb49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03873.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;&#160;&#160;<a class="el" href="a03873.html#a529cb71c3827899033a1e94d10552a38">MC_RBDYN_DLLIMPORT</a></td></tr>
+<tr class="separator:a5f64edebd03a669545de1ba699d6cb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a830b69e4ab5049ef14b25b9a3dd872cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03873.html#a830b69e4ab5049ef14b25b9a3dd872cb">MC_RBDYN_LOCAL</a>&#160;&#160;&#160;<a class="el" href="a03873.html#a2956eb566ae27b5965f64bc3c422c703">MC_RBDYN_DLLLOCAL</a></td></tr>
+<tr class="separator:a830b69e4ab5049ef14b25b9a3dd872cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a5f64edebd03a669545de1ba699d6cb49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f64edebd03a669545de1ba699d6cb49">&#9670;&nbsp;</a></span>MC_RBDYN_DLLAPI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RBDYN_DLLAPI&#160;&#160;&#160;<a class="el" href="a03873.html#a529cb71c3827899033a1e94d10552a38">MC_RBDYN_DLLIMPORT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a02086.html#a664a8719f81b8fee2d2b26cd3cf645ab">mc_rbdyn::Collision::isNone()</a>.</p>
+
+</div>
+</div>
+<a id="ae269070c4054c9fa40053b5e28ea074f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae269070c4054c9fa40053b5e28ea074f">&#9670;&nbsp;</a></span>MC_RBDYN_DLLEXPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RBDYN_DLLEXPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a529cb71c3827899033a1e94d10552a38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a529cb71c3827899033a1e94d10552a38">&#9670;&nbsp;</a></span>MC_RBDYN_DLLIMPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RBDYN_DLLIMPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2956eb566ae27b5965f64bc3c422c703"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2956eb566ae27b5965f64bc3c422c703">&#9670;&nbsp;</a></span>MC_RBDYN_DLLLOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RBDYN_DLLLOCAL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a830b69e4ab5049ef14b25b9a3dd872cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a830b69e4ab5049ef14b25b9a3dd872cb">&#9670;&nbsp;</a></span>MC_RBDYN_LOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RBDYN_LOCAL&#160;&#160;&#160;<a class="el" href="a03873.html#a2956eb566ae27b5965f64bc3c422c703">MC_RBDYN_DLLLOCAL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a552577349e8efdac2745cbdd3898f85e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a552577349e8efdac2745cbdd3898f85e">&#9670;&nbsp;</a></span>MC_RBDYN_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RBDYN_VERSION&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a03873.html">Contact.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:44 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a03873.html">api.h</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils::ContactWrenchMatrixToLambdaMatrix Struct Reference</title>
+<title>mc_solver::ContactMsg Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,141 +70,175 @@ $(document).ready(function(){initNavTree('a02706.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a02703.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix Struct Reference</div>  </div>
+<div class="title">mc_solver::ContactMsg Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Transform contact wrench matrix to lambda matrix.  
- <a href="a02706.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_solver/utils/ContactWrenchMatrixToLambdaMatrix.h&gt;</code></p>
+<p><code>#include &lt;mc_solver/msg/Contact.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a023d5ba6b69792d96db4ca6e8fd20e2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#a023d5ba6b69792d96db4ca6e8fd20e2c">ContactWrenchMatrixToLambdaMatrix</a> (const <a class="el" href="a02698.html">mc_solver::QPSolver</a> &amp;solver, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
-<tr class="memdesc:a023d5ba6b69792d96db4ca6e8fd20e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the transformation matrix for a given contact.  <a href="#a023d5ba6b69792d96db4ca6e8fd20e2c">More...</a><br /></td></tr>
-<tr class="separator:a023d5ba6b69792d96db4ca6e8fd20e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3024b20e8f098756d24cd2082469c055"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#a3024b20e8f098756d24cd2082469c055">transform</a> (const Eigen::MatrixXd &amp;A) const</td></tr>
-<tr class="memdesc:a3024b20e8f098756d24cd2082469c055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the \(A&#39;\) matrix given the \(A\) matrix.  <a href="#a3024b20e8f098756d24cd2082469c055">More...</a><br /></td></tr>
-<tr class="separator:a3024b20e8f098756d24cd2082469c055"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae56a8607e4c339c9a345155ec613032d"><td class="memItemLeft" align="right" valign="top">const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#ae56a8607e4c339c9a345155ec613032d">transform</a> () const</td></tr>
-<tr class="separator:ae56a8607e4c339c9a345155ec613032d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a91f4355799d2e97441538f28adf25071"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#a91f4355799d2e97441538f28adf25071">r1_index</a></td></tr>
+<tr class="separator:a91f4355799d2e97441538f28adf25071"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaa28b666db138b8073c87f0367408ea"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#aaaa28b666db138b8073c87f0367408ea">r2_index</a></td></tr>
+<tr class="separator:aaaa28b666db138b8073c87f0367408ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8c4a5aae685b15b8dffeddcb01aa9f7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#ad8c4a5aae685b15b8dffeddcb01aa9f7">r1_body</a></td></tr>
+<tr class="separator:ad8c4a5aae685b15b8dffeddcb01aa9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30084dbbeaca445a811e2b169344919d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#a30084dbbeaca445a811e2b169344919d">r2_body</a></td></tr>
+<tr class="separator:a30084dbbeaca445a811e2b169344919d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7af4dca57bbecf5e3397e7ea4f11a360"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#a7af4dca57bbecf5e3397e7ea4f11a360">r1_surface</a></td></tr>
+<tr class="separator:a7af4dca57bbecf5e3397e7ea4f11a360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d179ea79ffefc9a499c3300b4fba396"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#a7d179ea79ffefc9a499c3300b4fba396">r2_surface</a></td></tr>
+<tr class="separator:a7d179ea79ffefc9a499c3300b4fba396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ffb13c3e88fdefbdf8ad51aab184c16"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#a7ffb13c3e88fdefbdf8ad51aab184c16">r1_points</a></td></tr>
+<tr class="separator:a7ffb13c3e88fdefbdf8ad51aab184c16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c97419447f414150d56fb8cc8ea791e"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#a0c97419447f414150d56fb8cc8ea791e">X_b1_b2</a></td></tr>
+<tr class="separator:a0c97419447f414150d56fb8cc8ea791e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c34937b82f901be184a1de7ae8d1dd9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#a5c34937b82f901be184a1de7ae8d1dd9">nr_generators</a></td></tr>
+<tr class="separator:a5c34937b82f901be184a1de7ae8d1dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e1941c9323f825326c7f8d64fac14ac"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02706.html#a9e1941c9323f825326c7f8d64fac14ac">mu</a></td></tr>
+<tr class="separator:a9e1941c9323f825326c7f8d64fac14ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Transform contact wrench matrix to lambda matrix. </p>
-<p>This transforms a given matrix A that applies to a wrench (e.g. such as in \(A F &lt;= F_{max}\)) into a matrix that applies to lambdas (i.e. such \(A&#39; \boldsymbol{\lambda} &lt;= F_{max}\))</p>
-<p>For a given force \(f_p\) at point \(p\), the linearized friction cone provides:</p>
-<p class="formulaDsp">
-\[f_p = \sum^{N^{Gen}_{p}}_{i=1} G^{p}_{i} \lambda^{p}_{i}\]
-</p>
-<p>Where \(G^{p}_{i} \in \mathbb{R}^{3,1}\) are the generatrix of the friction cone. In the remainder of these equations we write \(N = N^{Gen}_{p}\) for sparcity</p>
-<p>In matrix form:</p>
-<p class="formulaDsp">
-\[ f_p = \begin{bmatrix} G^p_{1x} &amp; \cdots &amp; G^p_{Nx} \\ G^p_{1y} &amp; \cdots &amp; G^p_{Ny} \\ G^p_{1z} &amp; \cdots &amp; G^p_{Nz} \end{bmatrix} \begin{bmatrix} \lambda^{p}_{i} \\ \vdots \\ \lambda^{p}_{N} \end{bmatrix} \]
-</p>
-<p>For a given wrench \(F\) at frame b, resulting from \(P\) contacts</p>
-<p class="formulaDsp">
-\begin{align} F &amp; = \sum^{P}_{i=1} {}^{p_{i}}X_{b}^{T} f_{p_{i}} \\ &amp; = \begin{bmatrix} \begin{bmatrix} r^{\times}_{1}E^{T}_{1} \\ E^{T}_{1} \end{bmatrix} \begin{bmatrix} G^{1}_{1} &amp; \cdots &amp; G^{1}_{N} \end{bmatrix} &amp; \cdots &amp; \begin{bmatrix} r^{\times}_{P}E^{T}_{P} \\ E^{T}_{P} \end{bmatrix} \begin{bmatrix} G^{P}_{1} &amp; \cdots &amp; G^{P}_{N} \end{bmatrix} \end{bmatrix} \begin{bmatrix} \lambda^{1}_{1} \\ \vdots \\ \lambda^{P}_{N} \end{bmatrix} \end{align}
-</p>
-<p>Where \({}^{p_{i}}X_{b}\) is the Plücker transform from the point \(p\) to the wrench frame \(b\):</p>
-<p class="formulaDsp">
-\begin{align*} {}^{p_{i}}X_{b} = \begin{bmatrix} E_{i} &amp; 0 \\ -E_{i}r_{i}^{\times} &amp; E_{i} \end{bmatrix} &amp; &amp; {}^{p_{i}}X_{b}^{T} = \begin{bmatrix} E^{T}_{i} &amp; r^{\times}_{i}E^{T}_{i} \\ 0 &amp; E^{T}_{i} \end{bmatrix} \end{align*}
-</p>
-<p>Note: we only take the last three columns on \({}^{p_{i}}X_{b}^{T}\) in Equation (2)</p>
-<p>Hence:</p>
-<p class="formulaDsp">
-\begin{align*} A&#39; = A \begin{bmatrix} \begin{bmatrix} r^{\times}_{1}E^{T}_{1} \\ E^{T}_{1} \end{bmatrix} \begin{bmatrix} G^{1}_{1} &amp; \cdots &amp; G^{1}_{N} \end{bmatrix} &amp; \cdots &amp; \begin{bmatrix} r^{\times}_{P}E^{T}_{P} \\ E^{T}_{P} \end{bmatrix} \begin{bmatrix} G^{P}_{1} &amp; \cdots &amp; G^{P}_{N} \end{bmatrix} \end{bmatrix} \end{align*}
-</p>
- </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a023d5ba6b69792d96db4ca6e8fd20e2c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a023d5ba6b69792d96db4ca6e8fd20e2c">&#9670;&nbsp;</a></span>ContactWrenchMatrixToLambdaMatrix()</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a9e1941c9323f825326c7f8d64fac14ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e1941c9323f825326c7f8d64fac14ac">&#9670;&nbsp;</a></span>mu</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix::ContactWrenchMatrixToLambdaMatrix </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02698.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01021.html">tasks::qp::ContactId</a> &amp;&#160;</td>
-          <td class="paramname"><em>cid</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">double mc_solver::ContactMsg::mu</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates the transformation matrix for a given contact. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">If</td><td>the contact has not been added to the solver </td></tr>
-  </table>
-  </dd>
-</dl>
-
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3024b20e8f098756d24cd2082469c055"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3024b20e8f098756d24cd2082469c055">&#9670;&nbsp;</a></span>transform() <span class="overload">[1/2]</span></h2>
+<a id="a5c34937b82f901be184a1de7ae8d1dd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c34937b82f901be184a1de7ae8d1dd9">&#9670;&nbsp;</a></span>nr_generators</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::MatrixXd mc_solver::utils::ContactWrenchMatrixToLambdaMatrix::transform </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::MatrixXd &amp;&#160;</td>
-          <td class="paramname"><em>A</em></td><td>)</td>
-          <td> const</td>
+          <td class="memname">uint16_t mc_solver::ContactMsg::nr_generators</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Compute the \(A&#39;\) matrix given the \(A\) matrix. </p>
-
 </div>
 </div>
-<a id="ae56a8607e4c339c9a345155ec613032d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae56a8607e4c339c9a345155ec613032d">&#9670;&nbsp;</a></span>transform() <span class="overload">[2/2]</span></h2>
+<a id="ad8c4a5aae685b15b8dffeddcb01aa9f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8c4a5aae685b15b8dffeddcb01aa9f7">&#9670;&nbsp;</a></span>r1_body</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const Eigen::MatrixXd&amp; mc_solver::utils::ContactWrenchMatrixToLambdaMatrix::transform </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td class="memname">std::string mc_solver::ContactMsg::r1_body</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a91f4355799d2e97441538f28adf25071"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91f4355799d2e97441538f28adf25071">&#9670;&nbsp;</a></span>r1_index</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t mc_solver::ContactMsg::r1_index</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7ffb13c3e88fdefbdf8ad51aab184c16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ffb13c3e88fdefbdf8ad51aab184c16">&#9670;&nbsp;</a></span>r1_points</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&gt; mc_solver::ContactMsg::r1_points</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7af4dca57bbecf5e3397e7ea4f11a360"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7af4dca57bbecf5e3397e7ea4f11a360">&#9670;&nbsp;</a></span>r1_surface</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_solver::ContactMsg::r1_surface</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a30084dbbeaca445a811e2b169344919d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30084dbbeaca445a811e2b169344919d">&#9670;&nbsp;</a></span>r2_body</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_solver::ContactMsg::r2_body</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaaa28b666db138b8073c87f0367408ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaa28b666db138b8073c87f0367408ea">&#9670;&nbsp;</a></span>r2_index</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t mc_solver::ContactMsg::r2_index</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7d179ea79ffefc9a499c3300b4fba396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d179ea79ffefc9a499c3300b4fba396">&#9670;&nbsp;</a></span>r2_surface</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_solver::ContactMsg::r2_surface</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0c97419447f414150d56fb8cc8ea791e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c97419447f414150d56fb8cc8ea791e">&#9670;&nbsp;</a></span>X_b1_b2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_solver::ContactMsg::X_b1_b2</td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>
@@ -215,8 +249,8 @@ Public Member Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00702.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00718.html">utils</a></li><li class="navelem"><a class="el" href="a02706.html">ContactWrenchMatrixToLambdaMatrix</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00717.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02706.html">ContactMsg</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:02 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_control::fsm::StabilizerStandingState Struct Reference</title>
+<title>mc_control::fsm::MetaTasksState Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,156 +70,138 @@ $(document).ready(function(){initNavTree('a01950.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="a01947.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_control::fsm::StabilizerStandingState Struct Reference</div>  </div>
+<div class="title">mc_control::fsm::MetaTasksState Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Simple state to control and stabilize the CoM of a biped-like robot using the LIPMStabilizer.  
+<p>Implements a generic tasks state.  
  <a href="a01950.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_control/fsm/states/StabilizerStandingState.h&gt;</code></p>
+<p><code>#include &lt;mc_control/fsm/states/MetaTasks.h&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for mc_control::fsm::StabilizerStandingState:</div>
+Inheritance diagram for mc_control::fsm::MetaTasksState:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="a01950.png" usemap="#mc_5Fcontrol::fsm::StabilizerStandingState_map" alt=""/>
-  <map id="mc_5Fcontrol::fsm::StabilizerStandingState_map" name="mc_5Fcontrol::fsm::StabilizerStandingState_map">
-<area href="a01906.html" title="A state of an FSM. " alt="mc_control::fsm::State" shape="rect" coords="0,0,234,24"/>
+  <img src="a01950.png" usemap="#mc_5Fcontrol::fsm::MetaTasksState_map" alt=""/>
+  <map id="mc_5Fcontrol::fsm::MetaTasksState_map" name="mc_5Fcontrol::fsm::MetaTasksState_map">
+<area href="a01922.html" title="A state of an FSM. " alt="mc_control::fsm::State" shape="rect" coords="0,0,193,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01954.html">TaskCriteria</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion criteria and related infomation.  <a href="a01954.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4ae65ee8eda22d7e926e2d9aecbbbfb8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a4ae65ee8eda22d7e926e2d9aecbbbfb8">configure</a> (const <a class="el" href="a02226.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
-<tr class="memdesc:a4ae65ee8eda22d7e926e2d9aecbbbfb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to configure the state.  <a href="#a4ae65ee8eda22d7e926e2d9aecbbbfb8">More...</a><br /></td></tr>
-<tr class="separator:a4ae65ee8eda22d7e926e2d9aecbbbfb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e8df7ef63d968bdfe366e5c12d224e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a6e8df7ef63d968bdfe366e5c12d224e7">start</a> (<a class="el" href="a01890.html">Controller</a> &amp;) override</td></tr>
-<tr class="memdesc:a6e8df7ef63d968bdfe366e5c12d224e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called before the state starts being run.  <a href="#a6e8df7ef63d968bdfe366e5c12d224e7">More...</a><br /></td></tr>
-<tr class="separator:a6e8df7ef63d968bdfe366e5c12d224e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57fdd73a5287a112295a179b3dc3a834"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a57fdd73a5287a112295a179b3dc3a834">run</a> (<a class="el" href="a01890.html">Controller</a> &amp;) override</td></tr>
-<tr class="memdesc:a57fdd73a5287a112295a179b3dc3a834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called every iteration until it returns true.  <a href="#a57fdd73a5287a112295a179b3dc3a834">More...</a><br /></td></tr>
-<tr class="separator:a57fdd73a5287a112295a179b3dc3a834"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a398141d42554616c96b06784c46e1c1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a398141d42554616c96b06784c46e1c1e">teardown</a> (<a class="el" href="a01890.html">Controller</a> &amp;) override</td></tr>
-<tr class="memdesc:a398141d42554616c96b06784c46e1c1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called right before destruction.  <a href="#a398141d42554616c96b06784c46e1c1e">More...</a><br /></td></tr>
-<tr class="separator:a398141d42554616c96b06784c46e1c1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a01906"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a01906')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a01906.html">mc_control::fsm::State</a></td></tr>
-<tr class="memitem:a361292f4c1af52fb11fb081142832e06 inherit pub_methods_a01906"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a361292f4c1af52fb11fb081142832e06">~State</a> ()</td></tr>
-<tr class="separator:a361292f4c1af52fb11fb081142832e06 inherit pub_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32a8ea03359d52b9c7b096c3b9c6a890 inherit pub_methods_a01906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a32a8ea03359d52b9c7b096c3b9c6a890">configure_</a> (const <a class="el" href="a02226.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
-<tr class="memdesc:a32a8ea03359d52b9c7b096c3b9c6a890 inherit pub_methods_a01906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common implementation, handles the following options:  <a href="a01906.html#a32a8ea03359d52b9c7b096c3b9c6a890">More...</a><br /></td></tr>
-<tr class="separator:a32a8ea03359d52b9c7b096c3b9c6a890 inherit pub_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb573a0d4be2001f1e6820d9d75d3a94 inherit pub_methods_a01906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#acb573a0d4be2001f1e6820d9d75d3a94">start_</a> (<a class="el" href="a01890.html">Controller</a> &amp;ctl)</td></tr>
-<tr class="memdesc:acb573a0d4be2001f1e6820d9d75d3a94 inherit pub_methods_a01906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common implementation, takes care of common options.  <a href="a01906.html#acb573a0d4be2001f1e6820d9d75d3a94">More...</a><br /></td></tr>
-<tr class="separator:acb573a0d4be2001f1e6820d9d75d3a94 inherit pub_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70d93ac4ef5012911b48890e8108141f inherit pub_methods_a01906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a70d93ac4ef5012911b48890e8108141f">teardown_</a> (<a class="el" href="a01890.html">Controller</a> &amp;ctl)</td></tr>
-<tr class="memdesc:a70d93ac4ef5012911b48890e8108141f inherit pub_methods_a01906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common implementation, takes care of common options.  <a href="a01906.html#a70d93ac4ef5012911b48890e8108141f">More...</a><br /></td></tr>
-<tr class="separator:a70d93ac4ef5012911b48890e8108141f inherit pub_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a7a9e7bb388af127cf54b748c01c069 inherit pub_methods_a01906"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a8a7a9e7bb388af127cf54b748c01c069">stop</a> (<a class="el" href="a01890.html">Controller</a> &amp;)</td></tr>
-<tr class="memdesc:a8a7a9e7bb388af127cf54b748c01c069 inherit pub_methods_a01906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called if the state is interrupted.  <a href="a01906.html#a8a7a9e7bb388af127cf54b748c01c069">More...</a><br /></td></tr>
-<tr class="separator:a8a7a9e7bb388af127cf54b748c01c069 inherit pub_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a282c4e94aea17f84229e16f2496560df inherit pub_methods_a01906"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a282c4e94aea17f84229e16f2496560df">read_msg</a> (std::string &amp;)</td></tr>
-<tr class="memdesc:a282c4e94aea17f84229e16f2496560df inherit pub_methods_a01906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle read service call.  <a href="a01906.html#a282c4e94aea17f84229e16f2496560df">More...</a><br /></td></tr>
-<tr class="separator:a282c4e94aea17f84229e16f2496560df inherit pub_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a870b4c681a830419af9f482d1891893f inherit pub_methods_a01906"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a870b4c681a830419af9f482d1891893f">read_write_msg</a> (std::string &amp;, std::string &amp;)</td></tr>
-<tr class="memdesc:a870b4c681a830419af9f482d1891893f inherit pub_methods_a01906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle read/write service call.  <a href="a01906.html#a870b4c681a830419af9f482d1891893f">More...</a><br /></td></tr>
-<tr class="separator:a870b4c681a830419af9f482d1891893f inherit pub_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a94b4c21887b3bc710d040a31c5a2dc inherit pub_methods_a01906"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a0a94b4c21887b3bc710d040a31c5a2dc">output</a> ()</td></tr>
-<tr class="memdesc:a0a94b4c21887b3bc710d040a31c5a2dc inherit pub_methods_a01906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the output of the state, should only be consulted once run has returned true.  <a href="a01906.html#a0a94b4c21887b3bc710d040a31c5a2dc">More...</a><br /></td></tr>
-<tr class="separator:a0a94b4c21887b3bc710d040a31c5a2dc inherit pub_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a5b441d6b4c08f462903b243484e02e inherit pub_methods_a01906"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a6a5b441d6b4c08f462903b243484e02e">name</a> ()</td></tr>
-<tr class="memdesc:a6a5b441d6b4c08f462903b243484e02e inherit pub_methods_a01906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of the state.  <a href="a01906.html#a6a5b441d6b4c08f462903b243484e02e">More...</a><br /></td></tr>
-<tr class="separator:a6a5b441d6b4c08f462903b243484e02e inherit pub_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af62e0496fbbe60350808ba3cfe574fd1 inherit pub_methods_a01906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#af62e0496fbbe60350808ba3cfe574fd1">name</a> (const std::string &amp;n)</td></tr>
-<tr class="separator:af62e0496fbbe60350808ba3cfe574fd1 inherit pub_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a174cd1cafc870e7251577d1057ec340f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a174cd1cafc870e7251577d1057ec340f">targetCoP</a> (const Eigen::Vector3d &amp;cop)</td></tr>
-<tr class="memdesc:a174cd1cafc870e7251577d1057ec340f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Targets a given Cop.  <a href="#a174cd1cafc870e7251577d1057ec340f">More...</a><br /></td></tr>
-<tr class="separator:a174cd1cafc870e7251577d1057ec340f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2dcb13246f2146455596c75fa75eb62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#af2dcb13246f2146455596c75fa75eb62">targetCoM</a> (const Eigen::Vector3d &amp;com)</td></tr>
-<tr class="memdesc:af2dcb13246f2146455596c75fa75eb62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Freely target a CoM position.  <a href="#af2dcb13246f2146455596c75fa75eb62">More...</a><br /></td></tr>
-<tr class="separator:af2dcb13246f2146455596c75fa75eb62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af13d0e8b9e94acd0cfc3e6a7a42516ba"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#af13d0e8b9e94acd0cfc3e6a7a42516ba">copHeight</a> () const</td></tr>
-<tr class="memdesc:af13d0e8b9e94acd0cfc3e6a7a42516ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">CoP height from contacts.  <a href="#af13d0e8b9e94acd0cfc3e6a7a42516ba">More...</a><br /></td></tr>
-<tr class="separator:af13d0e8b9e94acd0cfc3e6a7a42516ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_a01906"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a01906')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a01906.html">mc_control::fsm::State</a></td></tr>
-<tr class="memitem:a1e115a009309410f0eadabf118a6fb49 inherit pro_methods_a01906"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a1e115a009309410f0eadabf118a6fb49">output</a> (const std::string &amp;o)</td></tr>
-<tr class="memdesc:a1e115a009309410f0eadabf118a6fb49 inherit pro_methods_a01906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output setter for derived classes.  <a href="a01906.html#a1e115a009309410f0eadabf118a6fb49">More...</a><br /></td></tr>
-<tr class="separator:a1e115a009309410f0eadabf118a6fb49 inherit pro_methods_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ea26c3c3626ad237567cd0bb4d8c077"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a7ea26c3c3626ad237567cd0bb4d8c077">configure</a> (const <a class="el" href="a02250.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
+<tr class="memdesc:a7ea26c3c3626ad237567cd0bb4d8c077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called to configure the state.  <a href="#a7ea26c3c3626ad237567cd0bb4d8c077">More...</a><br /></td></tr>
+<tr class="separator:a7ea26c3c3626ad237567cd0bb4d8c077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab76034ae6d2f04688543a13a49c15493"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#ab76034ae6d2f04688543a13a49c15493">start</a> (<a class="el" href="a01906.html">Controller</a> &amp;) override</td></tr>
+<tr class="memdesc:ab76034ae6d2f04688543a13a49c15493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called before the state starts being run.  <a href="#ab76034ae6d2f04688543a13a49c15493">More...</a><br /></td></tr>
+<tr class="separator:ab76034ae6d2f04688543a13a49c15493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa58d3f76e1bdcee77b08b1786765e5aa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#aa58d3f76e1bdcee77b08b1786765e5aa">run</a> (<a class="el" href="a01906.html">Controller</a> &amp;) override</td></tr>
+<tr class="memdesc:aa58d3f76e1bdcee77b08b1786765e5aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called every iteration until it returns true.  <a href="#aa58d3f76e1bdcee77b08b1786765e5aa">More...</a><br /></td></tr>
+<tr class="separator:aa58d3f76e1bdcee77b08b1786765e5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60321fa59012d49604c9e38d760aa7db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a60321fa59012d49604c9e38d760aa7db">teardown</a> (<a class="el" href="a01906.html">Controller</a> &amp;) override</td></tr>
+<tr class="memdesc:a60321fa59012d49604c9e38d760aa7db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called right before destruction.  <a href="#a60321fa59012d49604c9e38d760aa7db">More...</a><br /></td></tr>
+<tr class="separator:a60321fa59012d49604c9e38d760aa7db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a01922"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a01922')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a01922.html">mc_control::fsm::State</a></td></tr>
+<tr class="memitem:a361292f4c1af52fb11fb081142832e06 inherit pub_methods_a01922"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a361292f4c1af52fb11fb081142832e06">~State</a> ()</td></tr>
+<tr class="separator:a361292f4c1af52fb11fb081142832e06 inherit pub_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32a8ea03359d52b9c7b096c3b9c6a890 inherit pub_methods_a01922"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a32a8ea03359d52b9c7b096c3b9c6a890">configure_</a> (const <a class="el" href="a02250.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="memdesc:a32a8ea03359d52b9c7b096c3b9c6a890 inherit pub_methods_a01922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common implementation, handles the following options:  <a href="a01922.html#a32a8ea03359d52b9c7b096c3b9c6a890">More...</a><br /></td></tr>
+<tr class="separator:a32a8ea03359d52b9c7b096c3b9c6a890 inherit pub_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb573a0d4be2001f1e6820d9d75d3a94 inherit pub_methods_a01922"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#acb573a0d4be2001f1e6820d9d75d3a94">start_</a> (<a class="el" href="a01906.html">Controller</a> &amp;ctl)</td></tr>
+<tr class="memdesc:acb573a0d4be2001f1e6820d9d75d3a94 inherit pub_methods_a01922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common implementation, takes care of common options.  <a href="a01922.html#acb573a0d4be2001f1e6820d9d75d3a94">More...</a><br /></td></tr>
+<tr class="separator:acb573a0d4be2001f1e6820d9d75d3a94 inherit pub_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d93ac4ef5012911b48890e8108141f inherit pub_methods_a01922"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a70d93ac4ef5012911b48890e8108141f">teardown_</a> (<a class="el" href="a01906.html">Controller</a> &amp;ctl)</td></tr>
+<tr class="memdesc:a70d93ac4ef5012911b48890e8108141f inherit pub_methods_a01922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common implementation, takes care of common options.  <a href="a01922.html#a70d93ac4ef5012911b48890e8108141f">More...</a><br /></td></tr>
+<tr class="separator:a70d93ac4ef5012911b48890e8108141f inherit pub_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a7a9e7bb388af127cf54b748c01c069 inherit pub_methods_a01922"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a8a7a9e7bb388af127cf54b748c01c069">stop</a> (<a class="el" href="a01906.html">Controller</a> &amp;)</td></tr>
+<tr class="memdesc:a8a7a9e7bb388af127cf54b748c01c069 inherit pub_methods_a01922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called if the state is interrupted.  <a href="a01922.html#a8a7a9e7bb388af127cf54b748c01c069">More...</a><br /></td></tr>
+<tr class="separator:a8a7a9e7bb388af127cf54b748c01c069 inherit pub_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a282c4e94aea17f84229e16f2496560df inherit pub_methods_a01922"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a282c4e94aea17f84229e16f2496560df">read_msg</a> (std::string &amp;)</td></tr>
+<tr class="memdesc:a282c4e94aea17f84229e16f2496560df inherit pub_methods_a01922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle read service call.  <a href="a01922.html#a282c4e94aea17f84229e16f2496560df">More...</a><br /></td></tr>
+<tr class="separator:a282c4e94aea17f84229e16f2496560df inherit pub_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a870b4c681a830419af9f482d1891893f inherit pub_methods_a01922"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a870b4c681a830419af9f482d1891893f">read_write_msg</a> (std::string &amp;, std::string &amp;)</td></tr>
+<tr class="memdesc:a870b4c681a830419af9f482d1891893f inherit pub_methods_a01922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle read/write service call.  <a href="a01922.html#a870b4c681a830419af9f482d1891893f">More...</a><br /></td></tr>
+<tr class="separator:a870b4c681a830419af9f482d1891893f inherit pub_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a94b4c21887b3bc710d040a31c5a2dc inherit pub_methods_a01922"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a0a94b4c21887b3bc710d040a31c5a2dc">output</a> ()</td></tr>
+<tr class="memdesc:a0a94b4c21887b3bc710d040a31c5a2dc inherit pub_methods_a01922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the output of the state, should only be consulted once run has returned true.  <a href="a01922.html#a0a94b4c21887b3bc710d040a31c5a2dc">More...</a><br /></td></tr>
+<tr class="separator:a0a94b4c21887b3bc710d040a31c5a2dc inherit pub_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a5b441d6b4c08f462903b243484e02e inherit pub_methods_a01922"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a6a5b441d6b4c08f462903b243484e02e">name</a> ()</td></tr>
+<tr class="memdesc:a6a5b441d6b4c08f462903b243484e02e inherit pub_methods_a01922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the name of the state.  <a href="a01922.html#a6a5b441d6b4c08f462903b243484e02e">More...</a><br /></td></tr>
+<tr class="separator:a6a5b441d6b4c08f462903b243484e02e inherit pub_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af62e0496fbbe60350808ba3cfe574fd1 inherit pub_methods_a01922"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#af62e0496fbbe60350808ba3cfe574fd1">name</a> (const std::string &amp;n)</td></tr>
+<tr class="separator:af62e0496fbbe60350808ba3cfe574fd1 inherit pub_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ac1b5a6462db239740800b703e5ef6d38"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02794.html">mc_tasks::lipm_stabilizer::StabilizerTask</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#ac1b5a6462db239740800b703e5ef6d38">stabilizerTask_</a> = nullptr</td></tr>
-<tr class="separator:ac1b5a6462db239740800b703e5ef6d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6c74bc9e24d8446290e7f48820019bc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#aa6c74bc9e24d8446290e7f48820019bc">config_</a></td></tr>
-<tr class="memdesc:aa6c74bc9e24d8446290e7f48820019bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Full state configuration.  <a href="#aa6c74bc9e24d8446290e7f48820019bc">More...</a><br /></td></tr>
-<tr class="separator:aa6c74bc9e24d8446290e7f48820019bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefa6ecfbc94489eec5d0cac0ae5b82ba"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#aefa6ecfbc94489eec5d0cac0ae5b82ba">hasCompletion_</a> = false</td></tr>
-<tr class="memdesc:aefa6ecfbc94489eec5d0cac0ae5b82ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the latest definition of the state configuration has an empty "completion" element, no completion rule will be used.  <a href="#aefa6ecfbc94489eec5d0cac0ae5b82ba">More...</a><br /></td></tr>
-<tr class="separator:aefa6ecfbc94489eec5d0cac0ae5b82ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bf7aa7e62f87ec4ab70e7fdfc9fb656"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a5bf7aa7e62f87ec4ab70e7fdfc9fb656">dcmThreshold_</a> = Eigen::Vector3d{0.01, 0.01, 0.01}</td></tr>
-<tr class="memdesc:a5bf7aa7e62f87ec4ab70e7fdfc9fb656"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion criteria threshold.  <a href="#a5bf7aa7e62f87ec4ab70e7fdfc9fb656">More...</a><br /></td></tr>
-<tr class="separator:a5bf7aa7e62f87ec4ab70e7fdfc9fb656"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab540aeb0263d7368a8f0f28c6cf8db01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02050.html">mc_planning::Pendulum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#ab540aeb0263d7368a8f0f28c6cf8db01">pendulum_</a></td></tr>
-<tr class="separator:ab540aeb0263d7368a8f0f28c6cf8db01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21831be19e200ffe66e41d74e496dcda"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a21831be19e200ffe66e41d74e496dcda">K_</a> = 5</td></tr>
-<tr class="memdesc:a21831be19e200ffe66e41d74e496dcda"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIPM Pendulum model.  <a href="#a21831be19e200ffe66e41d74e496dcda">More...</a><br /></td></tr>
-<tr class="separator:a21831be19e200ffe66e41d74e496dcda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3d152c14ec40bfb43fbd96c46335d8b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#aa3d152c14ec40bfb43fbd96c46335d8b">D_</a> = 0.</td></tr>
-<tr class="memdesc:aa3d152c14ec40bfb43fbd96c46335d8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">CoM tracking damping.  <a href="#aa3d152c14ec40bfb43fbd96c46335d8b">More...</a><br /></td></tr>
-<tr class="separator:aa3d152c14ec40bfb43fbd96c46335d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef9d57338a8967af8f645abde17fe235"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#aef9d57338a8967af8f645abde17fe235">comHeight_</a> = 0</td></tr>
-<tr class="memdesc:aef9d57338a8967af8f645abde17fe235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desired height of the CoM above the CoP target.  <a href="#aef9d57338a8967af8f645abde17fe235">More...</a><br /></td></tr>
-<tr class="separator:aef9d57338a8967af8f645abde17fe235"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec95cfe1bf344ed978a0f427916c457c"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#aec95cfe1bf344ed978a0f427916c457c">comTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="memdesc:aec95cfe1bf344ed978a0f427916c457c"><td class="mdescLeft">&#160;</td><td class="mdescRight">World target for the CoM.  <a href="#aec95cfe1bf344ed978a0f427916c457c">More...</a><br /></td></tr>
-<tr class="separator:aec95cfe1bf344ed978a0f427916c457c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d628fb75354ff6eed63d59a49677694"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a7d628fb75354ff6eed63d59a49677694">copTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
-<tr class="memdesc:a7d628fb75354ff6eed63d59a49677694"><td class="mdescLeft">&#160;</td><td class="mdescRight">World target for the CoP.  <a href="#a7d628fb75354ff6eed63d59a49677694">More...</a><br /></td></tr>
-<tr class="separator:a7d628fb75354ff6eed63d59a49677694"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d66966f079f819c302800335ed8aeaa"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a9d66966f079f819c302800335ed8aeaa">optionalGUI_</a> = true</td></tr>
-<tr class="memdesc:a9d66966f079f819c302800335ed8aeaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls whether optional GUI elements are displayed.  <a href="#a9d66966f079f819c302800335ed8aeaa">More...</a><br /></td></tr>
-<tr class="separator:a9d66966f079f819c302800335ed8aeaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_a01906"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a01906')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a01906.html">mc_control::fsm::State</a></td></tr>
-<tr class="memitem:ad5e8acab9275900efb0a32ffaf155bed inherit pro_attribs_a01906"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#ad5e8acab9275900efb0a32ffaf155bed">add_contacts_config_</a></td></tr>
-<tr class="separator:ad5e8acab9275900efb0a32ffaf155bed inherit pro_attribs_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a902a5522347fbb8aa78872ae4ee0042c inherit pro_attribs_a01906"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a902a5522347fbb8aa78872ae4ee0042c">remove_contacts_config_</a></td></tr>
-<tr class="separator:a902a5522347fbb8aa78872ae4ee0042c inherit pro_attribs_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57c8d5de04fd74feef0699a82a72123f inherit pro_attribs_a01906"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a57c8d5de04fd74feef0699a82a72123f">add_contacts_after_config_</a></td></tr>
-<tr class="separator:a57c8d5de04fd74feef0699a82a72123f inherit pro_attribs_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68a4a86a3ee1b873a53add96ead9c064 inherit pro_attribs_a01906"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a68a4a86a3ee1b873a53add96ead9c064">remove_contacts_after_config_</a></td></tr>
-<tr class="separator:a68a4a86a3ee1b873a53add96ead9c064 inherit pro_attribs_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f84b8e24821763df3524fa551df0875 inherit pro_attribs_a01906"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a6f84b8e24821763df3524fa551df0875">add_collisions_config_</a></td></tr>
-<tr class="separator:a6f84b8e24821763df3524fa551df0875 inherit pro_attribs_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb0a79ae8a940e3138f9bbce2a508b60 inherit pro_attribs_a01906"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#abb0a79ae8a940e3138f9bbce2a508b60">remove_collisions_config_</a></td></tr>
-<tr class="separator:abb0a79ae8a940e3138f9bbce2a508b60 inherit pro_attribs_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac82605212b9b9341bebc091bd24922d3 inherit pro_attribs_a01906"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#ac82605212b9b9341bebc091bd24922d3">add_collisions_after_config_</a></td></tr>
-<tr class="separator:ac82605212b9b9341bebc091bd24922d3 inherit pro_attribs_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b2e5163abce708367767793befab639 inherit pro_attribs_a01906"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a0b2e5163abce708367767793befab639">remove_collisions_after_config_</a></td></tr>
-<tr class="separator:a0b2e5163abce708367767793befab639 inherit pro_attribs_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a086f5c210f8149fc3cc6627bd2dd74 inherit pro_attribs_a01906"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01906.html#a0a086f5c210f8149fc3cc6627bd2dd74">remove_posture_task_</a> = false</td></tr>
-<tr class="separator:a0a086f5c210f8149fc3cc6627bd2dd74 inherit pro_attribs_a01906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8a28534801a9c1967233cfaf07d9482"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <a class="el" href="a02250.html">mc_rtc::Configuration</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#ad8a28534801a9c1967233cfaf07d9482">tasks_configs_</a></td></tr>
+<tr class="memdesc:ad8a28534801a9c1967233cfaf07d9482"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for each of the state's tasks.  <a href="#ad8a28534801a9c1967233cfaf07d9482">More...</a><br /></td></tr>
+<tr class="separator:ad8a28534801a9c1967233cfaf07d9482"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15385e3dba9c3a9ceacf9aa32ee4d0b5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a15385e3dba9c3a9ceacf9aa32ee4d0b5">outputCrit_</a></td></tr>
+<tr class="memdesc:a15385e3dba9c3a9ceacf9aa32ee4d0b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion criterias used to generate the state's output.  <a href="#a15385e3dba9c3a9ceacf9aa32ee4d0b5">More...</a><br /></td></tr>
+<tr class="separator:a15385e3dba9c3a9ceacf9aa32ee4d0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7549c1830cef253c172306bb11ea4c4d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a00709.html#a3ce36af538f25151dc006eb3d50e8b3d">mc_tasks::MetaTaskPtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#a7549c1830cef253c172306bb11ea4c4d">tasks_</a></td></tr>
+<tr class="memdesc:a7549c1830cef253c172306bb11ea4c4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tasks managed by the state.  <a href="#a7549c1830cef253c172306bb11ea4c4d">More...</a><br /></td></tr>
+<tr class="separator:a7549c1830cef253c172306bb11ea4c4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf365e7d07d5e71915cfa982fc0eb3cd"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <a class="el" href="a01954.html">TaskCriteria</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#abf365e7d07d5e71915cfa982fc0eb3cd">criterias_</a></td></tr>
+<tr class="memdesc:abf365e7d07d5e71915cfa982fc0eb3cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Completion criterias as a map index by task name.  <a href="#abf365e7d07d5e71915cfa982fc0eb3cd">More...</a><br /></td></tr>
+<tr class="separator:abf365e7d07d5e71915cfa982fc0eb3cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef0fdf94ede34d66242bd301c560ea74"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html#aef0fdf94ede34d66242bd301c560ea74">finished_first_</a> = false</td></tr>
+<tr class="memdesc:aef0fdf94ede34d66242bd301c560ea74"><td class="mdescLeft">&#160;</td><td class="mdescRight">True when the state has already been completed at least once.  <a href="#aef0fdf94ede34d66242bd301c560ea74">More...</a><br /></td></tr>
+<tr class="separator:aef0fdf94ede34d66242bd301c560ea74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a01922"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a01922')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a01922.html">mc_control::fsm::State</a></td></tr>
+<tr class="memitem:ad5e8acab9275900efb0a32ffaf155bed inherit pro_attribs_a01922"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02250.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#ad5e8acab9275900efb0a32ffaf155bed">add_contacts_config_</a></td></tr>
+<tr class="separator:ad5e8acab9275900efb0a32ffaf155bed inherit pro_attribs_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a902a5522347fbb8aa78872ae4ee0042c inherit pro_attribs_a01922"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02250.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a902a5522347fbb8aa78872ae4ee0042c">remove_contacts_config_</a></td></tr>
+<tr class="separator:a902a5522347fbb8aa78872ae4ee0042c inherit pro_attribs_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57c8d5de04fd74feef0699a82a72123f inherit pro_attribs_a01922"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02250.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a57c8d5de04fd74feef0699a82a72123f">add_contacts_after_config_</a></td></tr>
+<tr class="separator:a57c8d5de04fd74feef0699a82a72123f inherit pro_attribs_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68a4a86a3ee1b873a53add96ead9c064 inherit pro_attribs_a01922"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02250.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a68a4a86a3ee1b873a53add96ead9c064">remove_contacts_after_config_</a></td></tr>
+<tr class="separator:a68a4a86a3ee1b873a53add96ead9c064 inherit pro_attribs_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f84b8e24821763df3524fa551df0875 inherit pro_attribs_a01922"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02250.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a6f84b8e24821763df3524fa551df0875">add_collisions_config_</a></td></tr>
+<tr class="separator:a6f84b8e24821763df3524fa551df0875 inherit pro_attribs_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb0a79ae8a940e3138f9bbce2a508b60 inherit pro_attribs_a01922"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02250.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#abb0a79ae8a940e3138f9bbce2a508b60">remove_collisions_config_</a></td></tr>
+<tr class="separator:abb0a79ae8a940e3138f9bbce2a508b60 inherit pro_attribs_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac82605212b9b9341bebc091bd24922d3 inherit pro_attribs_a01922"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02250.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#ac82605212b9b9341bebc091bd24922d3">add_collisions_after_config_</a></td></tr>
+<tr class="separator:ac82605212b9b9341bebc091bd24922d3 inherit pro_attribs_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b2e5163abce708367767793befab639 inherit pro_attribs_a01922"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02250.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a0b2e5163abce708367767793befab639">remove_collisions_after_config_</a></td></tr>
+<tr class="separator:a0b2e5163abce708367767793befab639 inherit pro_attribs_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a086f5c210f8149fc3cc6627bd2dd74 inherit pro_attribs_a01922"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a0a086f5c210f8149fc3cc6627bd2dd74">remove_posture_task_</a> = false</td></tr>
+<tr class="separator:a0a086f5c210f8149fc3cc6627bd2dd74 inherit pro_attribs_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_a01922"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a01922')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a01922.html">mc_control::fsm::State</a></td></tr>
+<tr class="memitem:a1e115a009309410f0eadabf118a6fb49 inherit pro_methods_a01922"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html#a1e115a009309410f0eadabf118a6fb49">output</a> (const std::string &amp;o)</td></tr>
+<tr class="memdesc:a1e115a009309410f0eadabf118a6fb49 inherit pro_methods_a01922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output setter for derived classes.  <a href="a01922.html#a1e115a009309410f0eadabf118a6fb49">More...</a><br /></td></tr>
+<tr class="separator:a1e115a009309410f0eadabf118a6fb49 inherit pro_methods_a01922"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Simple state to control and stabilize the CoM of a biped-like robot using the LIPMStabilizer. </p>
-<p>This state allows to:</p><ul>
-<li>Move the CoM to a desired position using the LIPMStabilizer The reference trajectory is computed as a simple spring-damper system.</li>
+<div class="textblock"><p>Implements a generic tasks state. </p>
+<p>This tasks creates an arbitrary number of MetaTasks and executes them until completion criteria are fullfiled for each tasks.</p>
+<p>The tasks in the state are configured through the "tasks" entry which a JSON object.</p>
+<p>The keys are the name of the tasks and values are MetaTask objects as expected by MetaTaskLoader plus an optional "completion" criteria that represents one or more completion criteria.</p>
+<p>The names of the tasks are only relevant for the state. You can override the actual task's name using the name entry in the Task's configuration.</p>
+<p>If the "completion" entry is absent and if there is no existing completion entry for the related task then this task is added but not considered as part of the completion criteria (e.g. you can add a CoMTask and an EndEffectorTask but only care for the completion of the later).</p>
+<p>When the "tasks" entry is read multiple times, the following ensues:</p><ul>
+<li>if a new tasks appears then it is added</li>
+<li>if an existing task is not repeated, nothing happens for this task</li>
+<li>if a task already exists, existing configuration entries are overwriten by the new entry, non-existing configuration entries are simply added to the existing configuration Example:</li>
 </ul>
-<p>Typical uses:</p><ul>
-<li>Simple stabilized CoM motion</li>
-<li><p class="startli">Stabilized manipulation can be easily achieved by putting this state in parallel to manipulation states</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02794.html" title="Walking stabilization based on linear inverted pendulum tracking. ">mc_tasks::lipm_stabilizer::StabilizerTask</a> </dd></dl>
-</li>
-</ul>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4ae65ee8eda22d7e926e2d9aecbbbfb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ae65ee8eda22d7e926e2d9aecbbbfb8">&#9670;&nbsp;</a></span>configure()</h2>
+<div class="fragment"><div class="line"># First pass, we simplify task entries for the sake of the example</div><div class="line">{</div><div class="line">  &quot;tasks&quot;:</div><div class="line">  {</div><div class="line">     &quot;t1&quot;:</div><div class="line">     {</div><div class="line">       &quot;objectiveA&quot;: 0.5,</div><div class="line">       &quot;objectiveB&quot;: 1.0,</div><div class="line">       &quot;completion&quot;: { &quot;timeout&quot;: 5.0 }</div><div class="line">     }</div><div class="line">  }</div><div class="line">}</div><div class="line"># After this pass, one task is considered</div><div class="line"># Second pass</div><div class="line">{</div><div class="line">  &quot;tasks&quot;:</div><div class="line">  {</div><div class="line">    &quot;t1&quot;:</div><div class="line">    {</div><div class="line">      &quot;objectiveA&quot;: 1.0,</div><div class="line">      &quot;completion&quot;: { &quot;eval&quot;: 1e-6 }</div><div class="line">    },</div><div class="line">    &quot;t2&quot;:</div><div class="line">    {</div><div class="line">      &quot;objective&quot;: 0.5</div><div class="line">    }</div><div class="line">  }</div><div class="line">}</div><div class="line"># We now have two tasks, and:</div><div class="line"># - t1&#39;s objectiveA is changed to 1.0, objectiveB is the same</div><div class="line"># - t1 completion criteria is replaced</div><div class="line"># Third pass</div><div class="line">{</div><div class="line">  &quot;tasks&quot;:</div><div class="line">  {</div><div class="line">    &quot;t1&quot;:</div><div class="line">    {</div><div class="line">      &quot;completion&quot;: {}</div><div class="line">    },</div><div class="line">    &quot;t2&quot;:</div><div class="line">    {</div><div class="line">      &quot;completion&quot;: { &quot;eval&quot;: 1e-6 }</div><div class="line">    }</div><div class="line">  }</div><div class="line">}</div><div class="line"># We still have two tasks, objectives are unchanged but:</div><div class="line">- t1 has no more completion criteria</div><div class="line">- t2 has a completion criteria</div></div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7ea26c3c3626ad237567cd0bb4d8c077"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ea26c3c3626ad237567cd0bb4d8c077">&#9670;&nbsp;</a></span>configure()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -228,9 +210,9 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_control::fsm::StabilizerStandingState::configure </td>
+          <td class="memname">void mc_control::fsm::MetaTasksState::configure </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02226.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="a02250.html">mc_rtc::Configuration</a> &amp;&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -245,12 +227,12 @@ Protected Attributes</h2></td></tr>
 <p>Called to configure the state. </p>
 <p>This might be called multiple times. </p>
 
-<p>Implements <a class="el" href="a01906.html#a8eb8bdd1c15a9dc5f5aed402e4dc885d">mc_control::fsm::State</a>.</p>
+<p>Implements <a class="el" href="a01922.html#a8eb8bdd1c15a9dc5f5aed402e4dc885d">mc_control::fsm::State</a>.</p>
 
 </div>
 </div>
-<a id="af13d0e8b9e94acd0cfc3e6a7a42516ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af13d0e8b9e94acd0cfc3e6a7a42516ba">&#9670;&nbsp;</a></span>copHeight()</h2>
+<a id="aa58d3f76e1bdcee77b08b1786765e5aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa58d3f76e1bdcee77b08b1786765e5aa">&#9670;&nbsp;</a></span>run()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -259,40 +241,9 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_control::fsm::StabilizerStandingState::copHeight </td>
+          <td class="memname">bool mc_control::fsm::MetaTasksState::run </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>CoP height from contacts. </p>
-<ul>
-<li>double support: average of both contact heights</li>
-<li>single support: contact height </li>
-</ul>
-
-</div>
-</div>
-<a id="a57fdd73a5287a112295a179b3dc3a834"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a57fdd73a5287a112295a179b3dc3a834">&#9670;&nbsp;</a></span>run()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::StabilizerStandingState::run </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01890.html">Controller</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a01906.html">Controller</a> &amp;&#160;</td>
           <td class="paramname"><em>ctl</em></td><td>)</td>
           <td></td>
         </tr>
@@ -306,12 +257,12 @@ Protected Attributes</h2></td></tr>
 
 <p>Called every iteration until it returns true. </p>
 
-<p>Implements <a class="el" href="a01906.html#a88b6bae6fed3e5b9897bcab3feb27621">mc_control::fsm::State</a>.</p>
+<p>Implements <a class="el" href="a01922.html#a88b6bae6fed3e5b9897bcab3feb27621">mc_control::fsm::State</a>.</p>
 
 </div>
 </div>
-<a id="a6e8df7ef63d968bdfe366e5c12d224e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e8df7ef63d968bdfe366e5c12d224e7">&#9670;&nbsp;</a></span>start()</h2>
+<a id="ab76034ae6d2f04688543a13a49c15493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab76034ae6d2f04688543a13a49c15493">&#9670;&nbsp;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -320,9 +271,9 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_control::fsm::StabilizerStandingState::start </td>
+          <td class="memname">void mc_control::fsm::MetaTasksState::start </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a01890.html">Controller</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a01906.html">Controller</a> &amp;&#160;</td>
           <td class="paramname"><em>ctl</em></td><td>)</td>
           <td></td>
         </tr>
@@ -337,12 +288,12 @@ Protected Attributes</h2></td></tr>
 <p>Called before the state starts being run. </p>
 <p>This will be called only once with the state fully configured. </p>
 
-<p>Implements <a class="el" href="a01906.html#aabbb5ad8636a504d50d0fe5a6b4b6267">mc_control::fsm::State</a>.</p>
+<p>Implements <a class="el" href="a01922.html#aabbb5ad8636a504d50d0fe5a6b4b6267">mc_control::fsm::State</a>.</p>
 
 </div>
 </div>
-<a id="af2dcb13246f2146455596c75fa75eb62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2dcb13246f2146455596c75fa75eb62">&#9670;&nbsp;</a></span>targetCoM()</h2>
+<a id="a60321fa59012d49604c9e38d760aa7db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60321fa59012d49604c9e38d760aa7db">&#9670;&nbsp;</a></span>teardown()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -351,80 +302,9 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_control::fsm::StabilizerStandingState::targetCoM </td>
+          <td class="memname">void mc_control::fsm::MetaTasksState::teardown </td>
           <td>(</td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>com</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Freely target a CoM position. </p>
-<p>The corresponding CoP position will be computed as the projection of the CoM at the average height of both feet contacts.</p>
-<dl class="section note"><dt>Note</dt><dd>Caution, this function does not check the feasibility of the provided CoM</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">com</td><td>Desired CoM position </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a174cd1cafc870e7251577d1057ec340f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a174cd1cafc870e7251577d1057ec340f">&#9670;&nbsp;</a></span>targetCoP()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::fsm::StabilizerStandingState::targetCoP </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>cop</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Targets a given Cop. </p>
-<p>The CoM height will be automatically set at comHeight_ above this CoP. The default CoM height is that of the stabilizer's configuration, and can be overriden from configuration through "comHeight: 0.8" entry.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cop</td><td>Desired CoP </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a398141d42554616c96b06784c46e1c1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a398141d42554616c96b06784c46e1c1e">&#9670;&nbsp;</a></span>teardown()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::fsm::StabilizerStandingState::teardown </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01890.html">Controller</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a01906.html">Controller</a> &amp;&#160;</td>
           <td class="paramname"><em>ctl</em></td><td>)</td>
           <td></td>
         </tr>
@@ -438,13 +318,13 @@ Protected Attributes</h2></td></tr>
 
 <p>Called right before destruction. </p>
 
-<p>Implements <a class="el" href="a01906.html#a0feca48f8402f89d6e453d7739b7dab3">mc_control::fsm::State</a>.</p>
+<p>Implements <a class="el" href="a01922.html#a0feca48f8402f89d6e453d7739b7dab3">mc_control::fsm::State</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="aef9d57338a8967af8f645abde17fe235"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef9d57338a8967af8f645abde17fe235">&#9670;&nbsp;</a></span>comHeight_</h2>
+<a id="abf365e7d07d5e71915cfa982fc0eb3cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf365e7d07d5e71915cfa982fc0eb3cd">&#9670;&nbsp;</a></span>criterias_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -453,7 +333,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_control::fsm::StabilizerStandingState::comHeight_ = 0</td>
+          <td class="memname">std::map&lt;std::string, <a class="el" href="a01954.html">TaskCriteria</a>&gt; mc_control::fsm::MetaTasksState::criterias_</td>
         </tr>
       </table>
   </td>
@@ -463,12 +343,12 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Desired height of the CoM above the CoP target. </p>
+<p>Completion criterias as a map index by task name. </p>
 
 </div>
 </div>
-<a id="aec95cfe1bf344ed978a0f427916c457c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec95cfe1bf344ed978a0f427916c457c">&#9670;&nbsp;</a></span>comTarget_</h2>
+<a id="aef0fdf94ede34d66242bd301c560ea74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef0fdf94ede34d66242bd301c560ea74">&#9670;&nbsp;</a></span>finished_first_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -477,7 +357,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Vector3d mc_control::fsm::StabilizerStandingState::comTarget_ = Eigen::Vector3d::Zero()</td>
+          <td class="memname">bool mc_control::fsm::MetaTasksState::finished_first_ = false</td>
         </tr>
       </table>
   </td>
@@ -487,12 +367,12 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>World target for the CoM. </p>
+<p>True when the state has already been completed at least once. </p>
 
 </div>
 </div>
-<a id="aa6c74bc9e24d8446290e7f48820019bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6c74bc9e24d8446290e7f48820019bc">&#9670;&nbsp;</a></span>config_</h2>
+<a id="a15385e3dba9c3a9ceacf9aa32ee4d0b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15385e3dba9c3a9ceacf9aa32ee4d0b5">&#9670;&nbsp;</a></span>outputCrit_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -501,7 +381,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02226.html">mc_rtc::Configuration</a> mc_control::fsm::StabilizerStandingState::config_</td>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::fsm::MetaTasksState::outputCrit_</td>
         </tr>
       </table>
   </td>
@@ -511,12 +391,12 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Full state configuration. </p>
+<p>Completion criterias used to generate the state's output. </p>
 
 </div>
 </div>
-<a id="a7d628fb75354ff6eed63d59a49677694"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d628fb75354ff6eed63d59a49677694">&#9670;&nbsp;</a></span>copTarget_</h2>
+<a id="a7549c1830cef253c172306bb11ea4c4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7549c1830cef253c172306bb11ea4c4d">&#9670;&nbsp;</a></span>tasks_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -525,7 +405,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Eigen::Vector3d mc_control::fsm::StabilizerStandingState::copTarget_ = Eigen::Vector3d::Zero()</td>
+          <td class="memname">std::vector&lt;<a class="el" href="a00709.html#a3ce36af538f25151dc006eb3d50e8b3d">mc_tasks::MetaTaskPtr</a>&gt; mc_control::fsm::MetaTasksState::tasks_</td>
         </tr>
       </table>
   </td>
@@ -535,12 +415,12 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>World target for the CoP. </p>
+<p>Tasks managed by the state. </p>
 
 </div>
 </div>
-<a id="aa3d152c14ec40bfb43fbd96c46335d8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3d152c14ec40bfb43fbd96c46335d8b">&#9670;&nbsp;</a></span>D_</h2>
+<a id="ad8a28534801a9c1967233cfaf07d9482"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8a28534801a9c1967233cfaf07d9482">&#9670;&nbsp;</a></span>tasks_configs_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -549,7 +429,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_control::fsm::StabilizerStandingState::D_ = 0.</td>
+          <td class="memname">std::map&lt;std::string, <a class="el" href="a02250.html">mc_rtc::Configuration</a>&gt; mc_control::fsm::MetaTasksState::tasks_configs_</td>
         </tr>
       </table>
   </td>
@@ -559,148 +439,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>CoM tracking damping. </p>
-
-</div>
-</div>
-<a id="a5bf7aa7e62f87ec4ab70e7fdfc9fb656"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bf7aa7e62f87ec4ab70e7fdfc9fb656">&#9670;&nbsp;</a></span>dcmThreshold_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::Vector3d mc_control::fsm::StabilizerStandingState::dcmThreshold_ = Eigen::Vector3d{0.01, 0.01, 0.01}</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Completion criteria threshold. </p>
-
-</div>
-</div>
-<a id="aefa6ecfbc94489eec5d0cac0ae5b82ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefa6ecfbc94489eec5d0cac0ae5b82ba">&#9670;&nbsp;</a></span>hasCompletion_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::StabilizerStandingState::hasCompletion_ = false</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>If the latest definition of the state configuration has an empty "completion" element, no completion rule will be used. </p>
-
-</div>
-</div>
-<a id="a21831be19e200ffe66e41d74e496dcda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21831be19e200ffe66e41d74e496dcda">&#9670;&nbsp;</a></span>K_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_control::fsm::StabilizerStandingState::K_ = 5</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>LIPM Pendulum model. </p>
-<p>CoM tracking stiffness (set-point) </p>
-
-</div>
-</div>
-<a id="a9d66966f079f819c302800335ed8aeaa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d66966f079f819c302800335ed8aeaa">&#9670;&nbsp;</a></span>optionalGUI_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_control::fsm::StabilizerStandingState::optionalGUI_ = true</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Controls whether optional GUI elements are displayed. </p>
-
-</div>
-</div>
-<a id="ab540aeb0263d7368a8f0f28c6cf8db01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab540aeb0263d7368a8f0f28c6cf8db01">&#9670;&nbsp;</a></span>pendulum_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02050.html">mc_planning::Pendulum</a> mc_control::fsm::StabilizerStandingState::pendulum_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac1b5a6462db239740800b703e5ef6d38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1b5a6462db239740800b703e5ef6d38">&#9670;&nbsp;</a></span>stabilizerTask_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="a02794.html">mc_tasks::lipm_stabilizer::StabilizerTask</a>&gt; mc_control::fsm::StabilizerStandingState::stabilizerTask_ = nullptr</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>Configuration for each of the state's tasks. </p>
 
 </div>
 </div>
@@ -710,8 +449,8 @@ Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00691.html">mc_control</a></li><li class="navelem"><a class="el" href="a00692.html">fsm</a></li><li class="navelem"><a class="el" href="a01950.html">StabilizerStandingState</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:44 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00706.html">mc_control</a></li><li class="navelem"><a class="el" href="a00707.html">fsm</a></li><li class="navelem"><a class="el" href="a01950.html">MetaTasksState</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

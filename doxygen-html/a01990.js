@@ -1,8 +1,7 @@
 var a01990 =
 [
-    [ "MCPythonController", "a01990.html#a032e887f83331f4138a8b4125010930a", null ],
-    [ "reset", "a01990.html#a9f6c69c9b96a4fadd5f94d7500d633d7", null ],
-    [ "run", "a01990.html#a3700ef59c7492c0be19158e991ccf6e6", null ],
-    [ "reset_callback", "a01990.html#a912a0dc9659948113b9eca0605c2cd12", null ],
-    [ "run_callback", "a01990.html#ac76e53f48809f9cede138425a0b7aac9", null ]
+    [ "actualCommandDiffTrigger", "a01990.html#a8d5f701aba2e36bed8e03806ac35e28a", null ],
+    [ "overCommandLimitIterN", "a01990.html#ae08797a5f9cba8108cadeed41ca4a165", null ],
+    [ "percentVMax", "a01990.html#a5a54f79ab7fc20b3009362fc247c3a8c", null ],
+    [ "releaseSafetyOffset", "a01990.html#a2e1c84bb64483af6431c41b20e87bf5f", null ]
 ];

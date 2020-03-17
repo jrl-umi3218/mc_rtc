@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &gt; Struct Template Reference</title>
+<title>mc_rbdyn::Flexibility Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,76 +70,100 @@ $(document).ready(function(){initNavTree('a02126.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a02123.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_rbdyn::Flexibility Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h&gt;</code></p>
+<p>This structure holds a flexible joint, if such a joint is part of a robot, then the following dynamic constraint will be applied for the flexible joint torques:  
+ <a href="a02126.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_rbdyn/Flexibility.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a6f8a65b949b2129b60545644f984db59"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02122.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02126.html#a6f8a65b949b2129b60545644f984db59">load</a> (const <a class="el" href="a02226.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
-<tr class="separator:a6f8a65b949b2129b60545644f984db59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e91cd76b79b671e4049c8444cf1e3f4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02226.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02126.html#a4e91cd76b79b671e4049c8444cf1e3f4">save</a> (const <a class="el" href="a02122.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> &amp;stabiConf)</td></tr>
-<tr class="separator:a4e91cd76b79b671e4049c8444cf1e3f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:aae8d1a8eaa685b5efc3eb22b95fbb892"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02126.html#aae8d1a8eaa685b5efc3eb22b95fbb892">jointName</a></td></tr>
+<tr class="memdesc:aae8d1a8eaa685b5efc3eb22b95fbb892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the joint.  <a href="#aae8d1a8eaa685b5efc3eb22b95fbb892">More...</a><br /></td></tr>
+<tr class="separator:aae8d1a8eaa685b5efc3eb22b95fbb892"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9fa8b3ad657cbfd784a906f80e2a493"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02126.html#ad9fa8b3ad657cbfd784a906f80e2a493">K</a></td></tr>
+<tr class="memdesc:ad9fa8b3ad657cbfd784a906f80e2a493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stiffness.  <a href="#ad9fa8b3ad657cbfd784a906f80e2a493">More...</a><br /></td></tr>
+<tr class="separator:ad9fa8b3ad657cbfd784a906f80e2a493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6937033e6a1e29165b7a1f9b2005232a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02126.html#a6937033e6a1e29165b7a1f9b2005232a">C</a></td></tr>
+<tr class="memdesc:a6937033e6a1e29165b7a1f9b2005232a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Damping.  <a href="#a6937033e6a1e29165b7a1f9b2005232a">More...</a><br /></td></tr>
+<tr class="separator:a6937033e6a1e29165b7a1f9b2005232a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea9ed4cd59fb673fdac0d4f252d90987"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02126.html#aea9ed4cd59fb673fdac0d4f252d90987">O</a></td></tr>
+<tr class="memdesc:aea9ed4cd59fb673fdac0d4f252d90987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bias.  <a href="#aea9ed4cd59fb673fdac0d4f252d90987">More...</a><br /></td></tr>
+<tr class="separator:aea9ed4cd59fb673fdac0d4f252d90987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6f8a65b949b2129b60545644f984db59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f8a65b949b2129b60545644f984db59">&#9670;&nbsp;</a></span>load()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This structure holds a flexible joint, if such a joint is part of a robot, then the following dynamic constraint will be applied for the flexible joint torques: </p>
+<p class="formulaDsp">
+\begin{align} \underline{\mathbf{\tau}} = \overline{\mathbf{\tau}} = -K\mathbf{q} -C\dot{\mathbf{q}} - O \end{align}
+</p>
+ </div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a6937033e6a1e29165b7a1f9b2005232a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6937033e6a1e29165b7a1f9b2005232a">&#9670;&nbsp;</a></span>C</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a02122.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> <a class="el" href="a02202.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a02122.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> &gt;::load </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02226.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
+          <td class="memname">double mc_rbdyn::Flexibility::C</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="reference">References <a class="el" href="a02122.html#ad62077263c1af6f677dd4645b663eb8e">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::load()</a>.</p>
+<p>Damping. </p>
 
 </div>
 </div>
-<a id="a4e91cd76b79b671e4049c8444cf1e3f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e91cd76b79b671e4049c8444cf1e3f4">&#9670;&nbsp;</a></span>save()</h2>
+<a id="aae8d1a8eaa685b5efc3eb22b95fbb892"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae8d1a8eaa685b5efc3eb22b95fbb892">&#9670;&nbsp;</a></span>jointName</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a02226.html">mc_rtc::Configuration</a> <a class="el" href="a02202.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a02122.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> &gt;::save </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02122.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a> &amp;&#160;</td>
-          <td class="paramname"><em>stabiConf</em></td><td>)</td>
-          <td></td>
+          <td class="memname">std::string mc_rbdyn::Flexibility::jointName</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p class="reference">References <a class="el" href="a02122.html#afb389e9e183efdcad0db023e57383b98">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::save()</a>.</p>
+<p>Name of the joint. </p>
+
+</div>
+</div>
+<a id="ad9fa8b3ad657cbfd784a906f80e2a493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9fa8b3ad657cbfd784a906f80e2a493">&#9670;&nbsp;</a></span>K</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_rbdyn::Flexibility::K</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Stiffness. </p>
+
+</div>
+</div>
+<a id="aea9ed4cd59fb673fdac0d4f252d90987"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea9ed4cd59fb673fdac0d4f252d90987">&#9670;&nbsp;</a></span>O</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_rbdyn::Flexibility::O</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bias. </p>
 
 </div>
 </div>
@@ -149,8 +173,8 @@ Static Public Member Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00693.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02126.html">ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &gt;</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00712.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02126.html">Flexibility</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -70,30 +70,24 @@ $(document).ready(function(){initNavTree('a02614.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_solver::ContactConstraint Member List</div>  </div>
+<div class="title">mc_solver::CoMIncPlaneConstr Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02614.html">mc_solver::ContactConstraint</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a02614.html">mc_solver::CoMIncPlaneConstr</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02614.html#aa1038fc325c517503d2f68a3feec1c30acbc392a30777e1fa953eea2c011ea2c3">Acceleration</a> enum value</td><td class="entry"><a class="el" href="a02614.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02614.html#a3e94d3c790da36671345692cbf14e81d">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02614.html">mc_solver::ContactConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02614.html#ad8b6359d4d1a771db2fd8bad433acf1f">contactConstr</a></td><td class="entry"><a class="el" href="a02614.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02614.html#a2226b4449ee6faeb3f6d70cfdfb13b4f">ContactConstraint</a>(double timeStep, ContactType contactType=Velocity, bool dynamics=true)</td><td class="entry"><a class="el" href="a02614.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02614.html#ad4a4d2baaacb8b1d914d66a0110c99ab">ContactConstraint</a>()</td><td class="entry"><a class="el" href="a02614.html">mc_solver::ContactConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02614.html#aa1038fc325c517503d2f68a3feec1c30">ContactType</a> enum name</td><td class="entry"><a class="el" href="a02614.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02614.html#aa1038fc325c517503d2f68a3feec1c30a75ced229938828d7cf205928657fd137">Position</a> enum value</td><td class="entry"><a class="el" href="a02614.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02614.html#a4456741f8ae0b07c199415fda9b9aecf">posLambdaConstr</a></td><td class="entry"><a class="el" href="a02614.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02614.html#af72efeda2c9cd6af2e4626f32ab7583d">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02614.html">mc_solver::ContactConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02614.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652">Velocity</a> enum value</td><td class="entry"><a class="el" href="a02614.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02606.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02606.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02614.html#a7fe287ede6acc66b93ebc6e1a8f54882">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02614.html">mc_solver::CoMIncPlaneConstr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02614.html#a36c14d8513aede45203f3113bca8866f">CoMIncPlaneConstr</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double dt)</td><td class="entry"><a class="el" href="a02614.html">mc_solver::CoMIncPlaneConstr</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02614.html#aa6901fd29799bb8f88e639be2e2e06ac">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02614.html">mc_solver::CoMIncPlaneConstr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02614.html#aae037f758b45e836e2ef33edbda90c58">set_planes</a>(QPSolver &amp;solver, const std::vector&lt; mc_rbdyn::Plane &gt; &amp;planes, const std::vector&lt; Eigen::Vector3d &gt; &amp;speeds={}, const std::vector&lt; Eigen::Vector3d &gt; &amp;normalsDots={}, double iDist=0.05, double sDist=0.01, double damping=0.1, double dampingOff=0.)</td><td class="entry"><a class="el" href="a02614.html">mc_solver::CoMIncPlaneConstr</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02630.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02630.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:45 for mc_rtc by
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:02 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

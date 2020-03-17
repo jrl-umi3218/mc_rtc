@@ -1,7 +1,10 @@
 var a01966 =
 [
-    [ "actualCommandDiffTrigger", "a01966.html#a8d5f701aba2e36bed8e03806ac35e28a", null ],
-    [ "overCommandLimitIterN", "a01966.html#ae08797a5f9cba8108cadeed41ca4a165", null ],
-    [ "percentVMax", "a01966.html#a5a54f79ab7fc20b3009362fc247c3a8c", null ],
-    [ "releaseSafetyOffset", "a01966.html#a2e1c84bb64483af6431c41b20e87bf5f", null ]
+    [ "configure", "a01966.html#ae794e4997ff266a2e709b3a9cf2ba687", null ],
+    [ "run", "a01966.html#a21910e5c2ee0eb49560345113ae9b6be", null ],
+    [ "start", "a01966.html#a21cbe60a2692a0eede28cd09a0510084", null ],
+    [ "teardown", "a01966.html#a15a4573c025bf929bd7416b132b8a5c4", null ],
+    [ "duration_", "a01966.html#abf66f94f4a86433976e52ba2751cb60f", null ],
+    [ "goal_", "a01966.html#aabaccc34e1562ea3f396dc2105274b44", null ],
+    [ "tick_", "a01966.html#abecdfc22b00a1fa457f6beadadf3a069", null ]
 ];

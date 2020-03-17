@@ -1,19 +1,15 @@
 var a02030 =
 [
-    [ "Update", "a02030.html#ab23dff7bf325e5a4a3fcf84d13fa62b2", [
-      [ "Control", "a02030.html#ab23dff7bf325e5a4a3fcf84d13fa62b2aa1595abbb4c3a326636dd178757cd6c1", null ],
-      [ "Estimator", "a02030.html#ab23dff7bf325e5a4a3fcf84d13fa62b2ada2a1b654dd8965375b17b81a0874e1d", null ],
-      [ "None", "a02030.html#ab23dff7bf325e5a4a3fcf84d13fa62b2a6adf97f83acf6453d4a6a4b1070f3754", null ]
-    ] ],
-    [ "EncoderObserver", "a02030.html#ae041a35fb0a73ebdbe7bbea9e1346155", null ],
-    [ "addToLogger", "a02030.html#a2a2f2d12d8ea8643e3a2ad1e910aa892", null ],
-    [ "removeFromLogger", "a02030.html#af71d87a052f0e72a00198643ab760a11", null ],
-    [ "reset", "a02030.html#a2934c6f44a6b49aae0e8e412b04d37c1", null ],
-    [ "run", "a02030.html#ad65144731e89fc2d6ba40c39e9d5b691", null ],
-    [ "updateRobots", "a02030.html#af72093790abd36ada558ed00cb0414a0", null ],
-    [ "encodersVelocity_", "a02030.html#a836476dda18a176da54e14ede5f0eabd", null ],
-    [ "logEstimation_", "a02030.html#a53abfb8ea362389b0a08a268bc9ac268", null ],
-    [ "posUpdate_", "a02030.html#a8b1666591ee20b8a1f45f7766b5ec694", null ],
-    [ "prevEncoders_", "a02030.html#a81e5682d74e14df7b3b65c6344b49cb0", null ],
-    [ "velUpdate_", "a02030.html#a6da1c395f9ebe746776910c6713c21d4", null ]
+    [ "ExponentialMovingAverage", "a02030.html#a156a26de235d293b4e94cb1f269dd16c", null ],
+    [ "append", "a02030.html#afc5e32731c162cecc484c71b1cd6680f", null ],
+    [ "eval", "a02030.html#a59a37436a454f4caa5d9ba49ab85b2e8", null ],
+    [ "reset", "a02030.html#a4fe8efb515654281aa77b87296449f89", null ],
+    [ "saturation", "a02030.html#abc199c7a1935a35f01882c9ce6f355e4", null ],
+    [ "timeConstant", "a02030.html#a25e06aceff6cb86deaba24edc060ef8f", null ],
+    [ "timeConstant", "a02030.html#a5e116fb401af8c027896173066d8b8ed", null ],
+    [ "alpha_", "a02030.html#accd3db44b24084922b2d1915e378b2fb", null ],
+    [ "average_", "a02030.html#adaad48a146f8e945da36b18c0e9c4f8a", null ],
+    [ "dt_", "a02030.html#a6a235570200c501307ebc666fcd81e20", null ],
+    [ "saturation_", "a02030.html#aa39c03dbafb64fa46f4be54499b3ed48", null ],
+    [ "timeConstant_", "a02030.html#a08b8eaf1a64cf2abc37a27311db4923e", null ]
 ];

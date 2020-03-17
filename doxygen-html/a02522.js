@@ -1,10 +1,11 @@
 var a02522 =
 [
-    [ "callback_t", "a02522.html#ae88a2f28e5fa458257316949fd08a539", null ],
-    [ "handle_map_t", "a02522.html#a9c2401890571dbbde00eda2fb1e87710", null ],
-    [ "close", "a02522.html#a63ca4850e72fbb0ea10d1362c5402a51", null ],
-    [ "init", "a02522.html#a2d478e04efaa0d71d340ed45577b478a", null ],
-    [ "load_libraries", "a02522.html#a9611f8c05257ffd4651e68ea2f4f7e68", null ],
-    [ "ObjectLoader", "a02522.html#a0b9f840f1f1352debe8e77115e2454b1", null ],
-    [ "default_cb", "a02522.html#a2569410b656743e1d955a9aafc7ee793", null ]
+    [ "PointConfig", "a02522.html#a1561d8ebb70e3cb79de4ccab8c1d9f39", null ],
+    [ "PointConfig", "a02522.html#a292175258d872208e99632ac1552700b", null ],
+    [ "PointConfig", "a02522.html#a8277e9a9b0552925512c2c5bf13e27af", null ],
+    [ "load", "a02522.html#ac42a2a7dbe68b518029a300b5ed6ff2d", null ],
+    [ "write", "a02522.html#a21cfe22ca3c76493be3f27788a18c0bf", null ],
+    [ "write_size", "a02522.html#aceab827e57173288e6abee5abf7cf368", null ],
+    [ "color", "a02522.html#a322a868c95c738f131da19c405ca0fd3", null ],
+    [ "scale", "a02522.html#aec3bebebe03aa2f57a8e9dfab49e55a2", null ]
 ];

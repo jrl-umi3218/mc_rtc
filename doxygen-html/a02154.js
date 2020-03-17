@@ -1,10 +1,7 @@
 var a02154 =
 [
-    [ "tuple_pair_t", "a02154.html#adda7bb6a81b142d132c7772fe7b1672c", null ],
-    [ "tuple_t", "a02154.html#a8667e5bd25c0215d10ce8e139028207d", null ],
-    [ "PolygonInterpolator", "a02154.html#a279595aaf7f350b0247920b77efb8040", null ],
-    [ "fast_interpolate", "a02154.html#a41490869f7df5826143477c52ac3f236", null ],
-    [ "midpoint_derivative", "a02154.html#a5dbd705039482f156583eadaa91bd51a", null ],
-    [ "normal_derivative", "a02154.html#a8692430f5c1315d38bbc1a1f4798907c", null ],
-    [ "tuple_pairs", "a02154.html#a8c6e2f6234920055ea5c7ab8e32434ee", null ]
+    [ "comAdmittance", "a02154.html#ad6b1427db5969e53c93eda40b82c29c0", null ],
+    [ "integratorLeakRate", "a02154.html#a3c05d238cf8b0b2803e502985898c9ca", null ],
+    [ "maxCoMAdmitance", "a02154.html#ab4355cd8a898d9fb511b6820b4573902", null ],
+    [ "maxCoMOffset", "a02154.html#a1d42904ddf94ae3ac2660f01dd5e8ed9", null ]
 ];

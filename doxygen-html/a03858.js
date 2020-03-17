@@ -1,9 +1,9 @@
 var a03858 =
 [
-    [ "MC_SOLVER_DLLAPI", "a03858.html#a1f670c9ef41bde54578a3afc8fd75445", null ],
-    [ "MC_SOLVER_DLLEXPORT", "a03858.html#a24ff42006c016a5adc79aec2a1dfc0fe", null ],
-    [ "MC_SOLVER_DLLIMPORT", "a03858.html#a85361305f43d765074b5a82afaa82487", null ],
-    [ "MC_SOLVER_DLLLOCAL", "a03858.html#ae3c35da4cb012ab2f6caea5696a56dae", null ],
-    [ "MC_SOLVER_LOCAL", "a03858.html#ad2b85045fbd2243b5745829691239595", null ],
-    [ "MC_SOLVER_VERSION", "a03858.html#ae4634b29539fd982b8b83c15830c1c37", null ]
+    [ "MC_CONTROL_DLLAPI", "a03858.html#a167861c5d95139886801b242d6d0115f", null ],
+    [ "MC_CONTROL_DLLEXPORT", "a03858.html#a3ab2eb8965ce5e6d787aecf3e46d3be0", null ],
+    [ "MC_CONTROL_DLLIMPORT", "a03858.html#a93d9bb1f3f36bbffb00cf015b0bb0e37", null ],
+    [ "MC_CONTROL_DLLLOCAL", "a03858.html#a5fd14ed2320e3cbe50d19d4ada5b64a7", null ],
+    [ "MC_CONTROL_LOCAL", "a03858.html#aaef3a5c95b86a2ae0592bfafaec89185", null ],
+    [ "MC_CONTROL_VERSION", "a03858.html#a22df2857d14ed04f3b639527d08f7740", null ]
 ];

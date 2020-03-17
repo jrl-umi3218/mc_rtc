@@ -1,9 +1,10 @@
 var a02702 =
 [
-    [ "Constraint", "a02702.html#adcc2b9ec9fbd3b47e0183ef0ce034c73", null ],
-    [ "Constraint", "a02702.html#ae5a2073ed0b8b0432593221fec955e4e", null ],
-    [ "Constraint", "a02702.html#aab0cc49bca85557519c9a110b54c65ca", null ],
-    [ "~Constraint", "a02702.html#a819dd76da2909a4c88efcca1cb9aaf69", null ],
-    [ "update", "a02702.html#a7693804807033e3718c4ba01a58d3a58", null ],
-    [ "updateNrVars", "a02702.html#ab383394a69ab62c4fab23378e64868de", null ]
+    [ "KinematicsConstraint", "a02702.html#ae4fa119dd4f6643ea9bfd6e71d100e48", null ],
+    [ "KinematicsConstraint", "a02702.html#a89801271d9d8e8288c6be32b13970f3f", null ],
+    [ "KinematicsConstraint", "a02702.html#a9772713ef63997c2ff16a754cdf34401", null ],
+    [ "addToSolver", "a02702.html#af5b445df5cd29d199cfda9031d5a468f", null ],
+    [ "removeFromSolver", "a02702.html#a559d44b398969ebc1c69f0ffd80a3569", null ],
+    [ "damperJointLimitsConstr", "a02702.html#a3febf798804706fce1efe1eac46c16f9", null ],
+    [ "jointLimitsConstr", "a02702.html#ab113d21083add766566decba27631820", null ]
 ];

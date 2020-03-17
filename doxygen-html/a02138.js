@@ -1,7 +1,8 @@
 var a02138 =
 [
-    [ "joint", "a02138.html#a4d23695d0cbacd0471313e1323d9e4b1", null ],
-    [ "multiplier", "a02138.html#acae914e7c2302757339b3f4624394c11", null ],
-    [ "name", "a02138.html#a461c2efe0da4d17cc75ce43837a0503f", null ],
-    [ "offset", "a02138.html#a07938e029fb7d951388c0b1ad64642b5", null ]
+    [ "FDQPWeights", "a02138.html#aba4a576e4d7853321ccf5890465a1b89", null ],
+    [ "FDQPWeights", "a02138.html#a6d926ba6ea4f799ff815395dca3d9912", null ],
+    [ "ankleTorqueSqrt", "a02138.html#afb817ae2c1c643510fdaf15dc911cdd4", null ],
+    [ "netWrenchSqrt", "a02138.html#a982bc88cbf52ea49e182df9a81a6eb00", null ],
+    [ "pressureSqrt", "a02138.html#a2faca452947045f6c8f40e1947ac86a1", null ]
 ];

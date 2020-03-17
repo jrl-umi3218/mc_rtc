@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>MCController.h File Reference</title>
+<title>mc_python_controller.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -71,73 +71,34 @@ $(document).ready(function(){initNavTree('a00089.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">MCController.h File Reference</div>  </div>
+<div class="title">mc_python_controller.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03867.html">mc_control/Configuration.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00068.html">mc_control/generic_gripper.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00128.html">mc_observers/ObserverLoader.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00200.html">mc_rbdyn/Robots.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00227.html">mc_rtc/DataStore.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00320.html">mc_rtc/gui.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00338.html">mc_rtc/log/Logger.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00356.html">mc_solver/CollisionsConstraint.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00362.html">mc_solver/CompoundJointConstraint.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00371.html">mc_solver/ContactConstraint.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00374.html">mc_solver/DynamicsConstraint.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00389.html">mc_solver/KinematicsConstraint.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00395.html">mc_solver/QPSolver.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00392.html">mc_solver/msg/QPResult.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00467.html">mc_tasks/PostureTask.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03834.html">mc_control/api.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00092.html">mc_control/MCController.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03858.html">mc_control/api.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01994.html">mc_control::ControllerResetData</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains information allowing the controller to start smoothly from the current state of the robot.  <a href="a01994.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02010.html">mc_control::PythonRWCallback</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01998.html">mc_control::MCController</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a01998.html" title="MCController is the base class to implement all controllers. ">MCController</a> is the base class to implement all controllers.  <a href="a01998.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02014.html">mc_control::MCPythonController</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00697"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00697.html">mc_rbdyn</a></td></tr>
+<tr class="memitem:a00706"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00706.html">mc_control</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00691"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00691.html">mc_control</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a26817757133aa8127df9f7c6a90bafb1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00089.html#a26817757133aa8127df9f7c6a90bafb1">CONTROLLER_MODULE_API</a></td></tr>
-<tr class="separator:a26817757133aa8127df9f7c6a90bafb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a26817757133aa8127df9f7c6a90bafb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26817757133aa8127df9f7c6a90bafb1">&#9670;&nbsp;</a></span>CONTROLLER_MODULE_API</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CONTROLLER_MODULE_API</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8a948ff1aa35df8f7730fc54bf71041a.html">mc_control</a></li><li class="navelem"><a class="el" href="a00089.html">MCController.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:44 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8a948ff1aa35df8f7730fc54bf71041a.html">mc_control</a></li><li class="navelem"><a class="el" href="a00089.html">mc_python_controller.h</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

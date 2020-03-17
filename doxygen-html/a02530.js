@@ -1,6 +1,8 @@
 var a02530 =
 [
-    [ "complete", "a02530.html#aecb02006f5f0cd5aeabf7965973d3542", null ],
-    [ "fn", "a02530.html#adf4719d80846e018c3de0290164048ac", null ],
-    [ "ret", "a02530.html#a0bd1edac4d08d70b609b18efb6942d44", null ]
+    [ "XYThetaImpl", "a02530.html#a6de2e9a332b75b696ddbd1167dc31d1b", null ],
+    [ "XYThetaImpl", "a02530.html#ad69684bdac6275e7cd47e84f786cac2d", null ],
+    [ "write", "a02530.html#a247757b0f4f2f7537cd966304f6395fc", null ],
+    [ "write_size", "a02530.html#ada9a5e8aafdff45f17263ae02a574970", null ],
+    [ "type", "a02530.html#a3db5a65e4c481b435a71e15ac8715c26", null ]
 ];

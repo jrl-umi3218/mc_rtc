@@ -1,8 +1,10 @@
 var a02442 =
 [
-    [ "RotationROImpl", "a02442.html#a09c1c750a2be23f5554b148d0bdc0355", null ],
-    [ "RotationROImpl", "a02442.html#a4fd7310d27046f65c062596a31abda2b", null ],
-    [ "write", "a02442.html#ac51a9c31ab21b7f4fab3c2888cc728a6", null ],
-    [ "write_size", "a02442.html#afc5b2ee991da77eae0a2ef1623ca19c9", null ],
-    [ "type", "a02442.html#aa295eb5ebba63beadb8f2d9f9348b0fa", null ]
+    [ "Range", "a02442.html#aead20688a3c041cd852dd71c98cfc15b", null ],
+    [ "Range", "a02442.html#ae57efd48b0202aac88fd98578af24993", null ],
+    [ "load", "a02442.html#ad303c48ab81bc362a13995c1b2464d0b", null ],
+    [ "write", "a02442.html#aa6b749d005afc464c84b138a2d72ae79", null ],
+    [ "inf", "a02442.html#ab995e2707a19a7b8beb6b05bbeffa3b9", null ],
+    [ "max", "a02442.html#a85f2d2500191f058985f2d32ea40583d", null ],
+    [ "min", "a02442.html#a3626d90084b55cd8a94307e620a09062", null ]
 ];

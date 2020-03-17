@@ -1,11 +1,7 @@
 var a00200 =
 [
-    [ "Robots", "a02190.html", "a02190" ],
-    [ "loadRobot", "a00200.html#acaac690d2e96da3b8254fecefe1cccf9", null ],
-    [ "loadRobot", "a00200.html#a7f3fbf6971706876454da1142aadb193", null ],
-    [ "loadRobotAndEnv", "a00200.html#afad00246a5238eb31795027c0acad7a9", null ],
-    [ "loadRobotAndEnv", "a00200.html#a21e283b3c61bc0db909f2a950bf4384a", null ],
-    [ "loadRobotFromUrdf", "a00200.html#a8e415d422767b48828fbf2e282b66041", null ],
-    [ "loadRobots", "a00200.html#a90beb4c07fba317439956363ae429538", null ],
-    [ "loadRobots", "a00200.html#a1506cb6d1d95f69cae2f1a6c072fa406", null ]
+    [ "ROBOT_MODULE_CANONIC_CONSTRUCTOR", "a00200.html#a835eb9cb28d7a07e5fb285241d7e7b08", null ],
+    [ "ROBOT_MODULE_CHECK_VERSION", "a00200.html#a8ff1f95ceab073746f8203ca23fbb3cd", null ],
+    [ "ROBOT_MODULE_COMMON", "a00200.html#aefdd7a13affe8001b4bf38b8e94fcd50", null ],
+    [ "ROBOT_MODULE_DEFAULT_CONSTRUCTOR", "a00200.html#a61416168a2a0e73c18a99a7da049df9a", null ]
 ];

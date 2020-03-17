@@ -1,9 +1,7 @@
 var a02390 =
 [
-    [ "Abscissa", "a02390.html#a57a4c02713024e53ec4043123cab4c50", null ],
-    [ "max", "a02390.html#a190355057411d2e31f821dbb45afcf96", null ],
-    [ "min", "a02390.html#aabf95601f4cd3af4b63249bd327f2148", null ],
-    [ "range", "a02390.html#a86d5bd8a471e0f85217fd8a6872c89ca", null ],
-    [ "write", "a02390.html#ad46e2e46e2c4e130880c831cf3df8d07", null ],
-    [ "type", "a02390.html#a74de98c8a1157861357192b66f451241", null ]
+    [ "FormComboInput", "a02390.html#afbedbea2356966c5929c16f6405886c3", null ],
+    [ "FormComboInput", "a02390.html#a072a747dd87980f5fc0d65fb401ddd90", null ],
+    [ "write_", "a02390.html#ade120c97d849d5c36e15391f84a24422", null ],
+    [ "write_size_", "a02390.html#ae1372753a57496a61314d8eb0a9e4434", null ]
 ];

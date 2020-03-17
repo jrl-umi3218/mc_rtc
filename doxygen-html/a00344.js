@@ -1,13 +1,8 @@
 var a00344 =
 [
-    [ "LOG_ERROR", "a00344.html#ac6c926a2075cbaa39c4e9d12a2cac7e2", null ],
-    [ "LOG_ERROR_AND_THROW", "a00344.html#ae0e43eaf4d638a83e59084a107b3b62f", null ],
-    [ "LOG_INFO", "a00344.html#a63a6359b81688166256710bf0ea161df", null ],
-    [ "LOG_SUCCESS", "a00344.html#ada5a572b2a8b25bcd9f471bc5c3c0787", null ],
-    [ "LOG_WARNING", "a00344.html#ad8493c09711c1562481e104d334694db", null ],
-    [ "OUT_BLUE", "a00344.html#a15b005678017d9608ff8f599e34e41de", null ],
-    [ "OUT_GREEN", "a00344.html#a7ab584d4904b2b1695ae2cb04ca984ca", null ],
-    [ "OUT_NONE", "a00344.html#ab85e3cb123f11bf1f9290abe17a7d49e", null ],
-    [ "OUT_PURPLE", "a00344.html#aeb1d99e566cb5c454074579fcfa712f4", null ],
-    [ "OUT_RED", "a00344.html#a9003469324d75c8934d51654d98ef862", null ]
+    [ "binary_log_callback", "a00344.html#a2e5bbb4664bc287ec78732a63a7cd646", null ],
+    [ "binary_log_copy_callback", "a00344.html#a1c86e8f30b914960080029679897a749", null ],
+    [ "copy_callback", "a00344.html#a9c09aed839e3ee87a5be3e286a3e8903", null ],
+    [ "iterate_binary_log", "a00344.html#ae939074ac3cce1fde0bb5e0ea7e90c86", null ],
+    [ "iterate_binary_log", "a00344.html#a51b18863af2ea7f3e981b32be6b2174f", null ]
 ];

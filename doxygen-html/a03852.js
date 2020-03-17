@@ -1,9 +1,9 @@
 var a03852 =
 [
-    [ "MC_ROBOTS_DLLAPI", "a03852.html#aab9f1fcb73f7bb68ce97897257085bc6", null ],
-    [ "MC_ROBOTS_DLLEXPORT", "a03852.html#a551f4997282c602cc3b9699950bff0d9", null ],
-    [ "MC_ROBOTS_DLLIMPORT", "a03852.html#afab08aefa87854e0f4e002300f42f2e0", null ],
-    [ "MC_ROBOTS_DLLLOCAL", "a03852.html#abd12baa7258deaf7a15d3874f1920e57", null ],
-    [ "MC_ROBOTS_LOCAL", "a03852.html#a31fee9d1d5fe536ba8cfac80e376564e", null ],
-    [ "MC_ROBOTS_VERSION", "a03852.html#a12b895bf0b39c259b3eb51ee7782f970", null ]
+    [ "MC_CONTROL_FSM_STATE_DLLAPI", "a03852.html#a4cfcac728c1786a9888c977f8b656ba2", null ],
+    [ "MC_CONTROL_FSM_STATE_DLLEXPORT", "a03852.html#a16bceb2813abeb80aa1e49f1109e6c88", null ],
+    [ "MC_CONTROL_FSM_STATE_DLLIMPORT", "a03852.html#adb918e5798089061b14f124312865580", null ],
+    [ "MC_CONTROL_FSM_STATE_DLLLOCAL", "a03852.html#a113188e6b7bc199d59abd8a7f463d9f9", null ],
+    [ "MC_CONTROL_FSM_STATE_LOCAL", "a03852.html#a9f940b92f5b7fef9b7af442273630546", null ],
+    [ "MC_CONTROL_FSM_STATE_VERSION", "a03852.html#a2fe6be3f7fd6b98de2dbdcb335b157b0", null ]
 ];

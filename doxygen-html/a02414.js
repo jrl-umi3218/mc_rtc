@@ -1,7 +1,9 @@
 var a02414 =
 [
-    [ "Polygons", "a02414.html#af5c1dd31a2d012206f2915a07a9f792c", null ],
-    [ "side", "a02414.html#ac8a95deed7837d208505cbe7d949844b", null ],
-    [ "write", "a02414.html#a881d4f1ec50acb6bb79e8db1605ac1ac", null ],
-    [ "type", "a02414.html#a9bac28b142bf3360b5d6a15aa09197fa", null ]
+    [ "Abscissa", "a02414.html#a57a4c02713024e53ec4043123cab4c50", null ],
+    [ "max", "a02414.html#a190355057411d2e31f821dbb45afcf96", null ],
+    [ "min", "a02414.html#aabf95601f4cd3af4b63249bd327f2148", null ],
+    [ "range", "a02414.html#a86d5bd8a471e0f85217fd8a6872c89ca", null ],
+    [ "write", "a02414.html#ad46e2e46e2c4e130880c831cf3df8d07", null ],
+    [ "type", "a02414.html#a74de98c8a1157861357192b66f451241", null ]
 ];

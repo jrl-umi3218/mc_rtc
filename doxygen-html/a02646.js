@@ -1,9 +1,9 @@
 var a02646 =
 [
-    [ "Base", "a02646.html#a647a3478f1ace415da2dfe9cbd9705e4", null ],
-    [ "GenInequalityConstraint", "a02646.html#ac5df683b56271a2bdbdd26487b6cc026", null ],
-    [ "GenInequalityConstraint", "a02646.html#a7d193fcd6f294807a5e1182f223304a6", null ],
-    [ "GenInequalityConstraint", "a02646.html#ab606fd78c1a99c26a63a78f41519bb89", null ],
-    [ "AGenInEq", "a02646.html#a72ffdce8cb16cfd75fb337488cc44160", null ],
-    [ "descGenInEq", "a02646.html#ac87906b16a1bdd6be59c7d630461a2b4", null ]
+    [ "Base", "a02646.html#a30e140ba79389f855367792961934326", null ],
+    [ "EqualityConstraint", "a02646.html#afac8d98cb261408cd57f582fe581d425", null ],
+    [ "EqualityConstraint", "a02646.html#ac9c31eab66ce20859ff84a59e1689f67", null ],
+    [ "EqualityConstraint", "a02646.html#a3cac80832dee69a3d8449bdcf37c8b19", null ],
+    [ "AEq", "a02646.html#ae98f12b4064111652efd273fe72e4352", null ],
+    [ "descEq", "a02646.html#a48e36fd2b8881ffa1e7ba7a5b885f51d", null ]
 ];

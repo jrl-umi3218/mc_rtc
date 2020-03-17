@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Contact.h File Reference</title>
+<title>api.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,35 +70,120 @@ $(document).ready(function(){initNavTree('a03876.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver/msg/Contact.h File Reference</div>  </div>
+<div class="title">mc_robots/api.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
-<code>#include &lt;cstdint&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02682.html">mc_solver::ContactMsg</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00702"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00702.html">mc_solver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a12b895bf0b39c259b3eb51ee7782f970"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03876.html#a12b895bf0b39c259b3eb51ee7782f970">MC_ROBOTS_VERSION</a>&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td></tr>
+<tr class="separator:a12b895bf0b39c259b3eb51ee7782f970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afab08aefa87854e0f4e002300f42f2e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03876.html#afab08aefa87854e0f4e002300f42f2e0">MC_ROBOTS_DLLIMPORT</a></td></tr>
+<tr class="separator:afab08aefa87854e0f4e002300f42f2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a551f4997282c602cc3b9699950bff0d9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03876.html#a551f4997282c602cc3b9699950bff0d9">MC_ROBOTS_DLLEXPORT</a></td></tr>
+<tr class="separator:a551f4997282c602cc3b9699950bff0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd12baa7258deaf7a15d3874f1920e57"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03876.html#abd12baa7258deaf7a15d3874f1920e57">MC_ROBOTS_DLLLOCAL</a></td></tr>
+<tr class="separator:abd12baa7258deaf7a15d3874f1920e57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab9f1fcb73f7bb68ce97897257085bc6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03876.html#aab9f1fcb73f7bb68ce97897257085bc6">MC_ROBOTS_DLLAPI</a>&#160;&#160;&#160;<a class="el" href="a03876.html#afab08aefa87854e0f4e002300f42f2e0">MC_ROBOTS_DLLIMPORT</a></td></tr>
+<tr class="separator:aab9f1fcb73f7bb68ce97897257085bc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31fee9d1d5fe536ba8cfac80e376564e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03876.html#a31fee9d1d5fe536ba8cfac80e376564e">MC_ROBOTS_LOCAL</a>&#160;&#160;&#160;<a class="el" href="a03876.html#abd12baa7258deaf7a15d3874f1920e57">MC_ROBOTS_DLLLOCAL</a></td></tr>
+<tr class="separator:a31fee9d1d5fe536ba8cfac80e376564e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aab9f1fcb73f7bb68ce97897257085bc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab9f1fcb73f7bb68ce97897257085bc6">&#9670;&nbsp;</a></span>MC_ROBOTS_DLLAPI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_ROBOTS_DLLAPI&#160;&#160;&#160;<a class="el" href="a03876.html#afab08aefa87854e0f4e002300f42f2e0">MC_ROBOTS_DLLIMPORT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a551f4997282c602cc3b9699950bff0d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a551f4997282c602cc3b9699950bff0d9">&#9670;&nbsp;</a></span>MC_ROBOTS_DLLEXPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_ROBOTS_DLLEXPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afab08aefa87854e0f4e002300f42f2e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afab08aefa87854e0f4e002300f42f2e0">&#9670;&nbsp;</a></span>MC_ROBOTS_DLLIMPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_ROBOTS_DLLIMPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abd12baa7258deaf7a15d3874f1920e57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd12baa7258deaf7a15d3874f1920e57">&#9670;&nbsp;</a></span>MC_ROBOTS_DLLLOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_ROBOTS_DLLLOCAL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a31fee9d1d5fe536ba8cfac80e376564e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31fee9d1d5fe536ba8cfac80e376564e">&#9670;&nbsp;</a></span>MC_ROBOTS_LOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_ROBOTS_LOCAL&#160;&#160;&#160;<a class="el" href="a03876.html#abd12baa7258deaf7a15d3874f1920e57">MC_ROBOTS_DLLLOCAL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a12b895bf0b39c259b3eb51ee7782f970"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12b895bf0b39c259b3eb51ee7782f970">&#9670;&nbsp;</a></span>MC_ROBOTS_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_ROBOTS_VERSION&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fad12f0f0b10f75a80792b958ab0d808.html">mc_solver</a></li><li class="navelem"><a class="el" href="dir_334ef0e5d85f2880d776f6f4efef6326.html">msg</a></li><li class="navelem"><a class="el" href="a03876.html">Contact.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:44 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_bdd1e3963958c16d978788161539a083.html">mc_robots</a></li><li class="navelem"><a class="el" href="a03876.html">api.h</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

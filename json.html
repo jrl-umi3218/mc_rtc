@@ -456,7 +456,7 @@
           
             
             
-            <a id="State_AddRemoveContact_link" href="#collapse_State_AddRemoveContact" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/AddRemoveContact" aria-controls="collapse_State_AddRemoveContact">AddRemoveContactState</a>
+            <a id="State_AddRemoveContact_link" href="#collapse_State_AddRemoveContact" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/AddRemoveContact" aria-controls="collapse_State_AddRemoveContact">AddRemoveContact</a>
           
             
             
@@ -468,6 +468,10 @@
           
             
             
+            <a id="State_Message_link" href="#collapse_State_Message" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/Message" aria-controls="collapse_State_Message">Message</a>
+          
+            
+            
             <a id="State_Meta_link" href="#collapse_State_Meta" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/Meta" aria-controls="collapse_State_Meta">Meta</a>
           
             
@@ -476,11 +480,11 @@
           
             
             
-            <a id="State_Parallel_link" href="#collapse_State_Parallel" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/Parallel" aria-controls="collapse_State_Parallel">ParallelState</a>
+            <a id="State_Parallel_link" href="#collapse_State_Parallel" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/Parallel" aria-controls="collapse_State_Parallel">Parallel</a>
           
             
             
-            <a id="State_Pause_link" href="#collapse_State_Pause" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/Pause" aria-controls="collapse_State_Pause">PauseState</a>
+            <a id="State_Pause_link" href="#collapse_State_Pause" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/Pause" aria-controls="collapse_State_Pause">Pause</a>
           
             
             
@@ -45795,6 +45799,2813 @@ eval: 0.001</pre>
   
   
   
+  <div id="collapse_State_Message" class="collapse collapseSchema" style="position:sticky; top: 65px;">
+    
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">fsm::Message</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Prints a message to the terminal</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>message</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Message to display</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>type</td>
+  
+  <td colspan="2">
+    
+  
+  
+    <span class="text-secondary">enum&nbsp;</span>
+  
+  
+    <span class="text-string">string</span>&nbsp;
+  
+  
+    <span class="text-enum">info</span>&nbsp;
+  
+    <span class="text-enum">success</span>&nbsp;
+  
+    <span class="text-enum">warning</span>&nbsp;
+  
+    <span class="text-enum">error</span>&nbsp;
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>AddContacts</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_AddContacts" aria-expanded="false" aria-controls="collapseState_Message_PROP_AddContacts">mc_control::fsm::Contact</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Add the specified contacts during the state's start</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_AddContacts">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_control::fsm::Contact</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Contact representation used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1Surface</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot's surface in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2Surface</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot's surface in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dof</td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_AddContacts_PROP_dof" aria-expanded="false" aria-controls="collapseState_Message_PROP_AddContacts_PROP_dof">Eigen::Vector6d</a>
+  
+    &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">[1, 1, 1, 1, 1, 1]</span>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Contact DoF</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_AddContacts_PROP_dof">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>RemoveContacts</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_RemoveContacts" aria-expanded="false" aria-controls="collapseState_Message_PROP_RemoveContacts">mc_control::fsm::Contact</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Remove the specified contacts during the state's start</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_RemoveContacts">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_control::fsm::Contact</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Contact representation used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1Surface</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot's surface in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2Surface</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot's surface in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dof</td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_RemoveContacts_PROP_dof" aria-expanded="false" aria-controls="collapseState_Message_PROP_RemoveContacts_PROP_dof">Eigen::Vector6d</a>
+  
+    &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">[1, 1, 1, 1, 1, 1]</span>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Contact DoF</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_RemoveContacts_PROP_dof">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>AddContactsAfter</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_AddContactsAfter" aria-expanded="false" aria-controls="collapseState_Message_PROP_AddContactsAfter">mc_control::fsm::Contact</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Add the specified contacts during the state's teardown</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_AddContactsAfter">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_control::fsm::Contact</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Contact representation used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1Surface</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot's surface in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2Surface</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot's surface in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dof</td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_AddContactsAfter_PROP_dof" aria-expanded="false" aria-controls="collapseState_Message_PROP_AddContactsAfter_PROP_dof">Eigen::Vector6d</a>
+  
+    &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">[1, 1, 1, 1, 1, 1]</span>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Contact DoF</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_AddContactsAfter_PROP_dof">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>RemoveContactsAfter</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_RemoveContactsAfter" aria-expanded="false" aria-controls="collapseState_Message_PROP_RemoveContactsAfter">mc_control::fsm::Contact</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Remove the specified contacts during the state's teardown</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_RemoveContactsAfter">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_control::fsm::Contact</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Contact representation used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1Surface</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot's surface in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r2Surface</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot's surface in the contact</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dof</td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_RemoveContactsAfter_PROP_dof" aria-expanded="false" aria-controls="collapseState_Message_PROP_RemoveContactsAfter_PROP_dof">Eigen::Vector6d</a>
+  
+    &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">[1, 1, 1, 1, 1, 1]</span>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Contact DoF</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_RemoveContactsAfter_PROP_dof">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>AddColissions</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_AddColissions" aria-expanded="false" aria-controls="collapseState_Message_PROP_AddColissions">FSM collisions</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Add the specified collisions during the state's start</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_AddColissions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">FSM collisions</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Collisions constraint specification used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot in the collision constraint</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>r2</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">r1</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot in the collision constraint</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>collisions</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_AddColissions_PROP_collisions" aria-expanded="false" aria-controls="collapseState_Message_PROP_AddColissions_PROP_collisions">mc_rbdyn::Collision</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Required if collisions are added.<br/>Otherwise, if empty, all collisions between r1 and r2 are disabled</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_AddColissions_PROP_collisions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body1</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body2</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>iDist</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>sDist</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>damping</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>RemoveColissions</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_RemoveColissions" aria-expanded="false" aria-controls="collapseState_Message_PROP_RemoveColissions">FSM collisions</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Remove the specified collisions during the state's start</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_RemoveColissions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">FSM collisions</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Collisions constraint specification used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot in the collision constraint</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>r2</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">r1</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot in the collision constraint</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>collisions</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_RemoveColissions_PROP_collisions" aria-expanded="false" aria-controls="collapseState_Message_PROP_RemoveColissions_PROP_collisions">mc_rbdyn::Collision</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Required if collisions are added.<br/>Otherwise, if empty, all collisions between r1 and r2 are disabled</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_RemoveColissions_PROP_collisions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body1</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body2</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>iDist</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>sDist</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>damping</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>AddColissionsAfter</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_AddColissionsAfter" aria-expanded="false" aria-controls="collapseState_Message_PROP_AddColissionsAfter">FSM collisions</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Add the specified collisions during the state's teardown</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_AddColissionsAfter">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">FSM collisions</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Collisions constraint specification used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot in the collision constraint</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>r2</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">r1</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot in the collision constraint</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>collisions</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_AddColissionsAfter_PROP_collisions" aria-expanded="false" aria-controls="collapseState_Message_PROP_AddColissionsAfter_PROP_collisions">mc_rbdyn::Collision</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Required if collisions are added.<br/>Otherwise, if empty, all collisions between r1 and r2 are disabled</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_AddColissionsAfter_PROP_collisions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body1</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body2</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>iDist</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>sDist</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>damping</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>RemoveColissionsAfter</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_RemoveColissionsAfter" aria-expanded="false" aria-controls="collapseState_Message_PROP_RemoveColissionsAfter">FSM collisions</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Remove the specified collisions during the state's teardown</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_RemoveColissionsAfter">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">FSM collisions</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Collisions constraint specification used by the FSM</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>r1</strong></td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the first robot in the collision constraint</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>r2</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">r1</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the second robot in the collision constraint</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>collisions</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Message_PROP_RemoveColissionsAfter_PROP_collisions" aria-expanded="false" aria-controls="collapseState_Message_PROP_RemoveColissionsAfter_PROP_collisions">mc_rbdyn::Collision</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Required if collisions are added.<br/>Otherwise, if empty, all collisions between r1 and r2 are disabled</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Message_PROP_RemoveColissionsAfter_PROP_collisions">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body1</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>body2</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>iDist</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>sDist</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>damping</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>RemovePostureTask</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-boolean">boolean</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-boolean">false</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>If true, remove the main robot posture task at the state's start</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_State_Message_example" aria-expanded="false" aria-controls="collapse_State_Message_example">Example</button>
+      </div>
+      <div id="collapse_State_Message_example" class="collapse">
+        <div class="card-body">
+          <ul class="nav nav-tabs" id="State_Message_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="state-message-examplejsonjsonTab" data-toggle="tab" href="#state-message-examplejsonjsonTabContent" role="tab" aria-controls="state-message-examplejsonjsonTabContent" aria-selected="true">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="state-message-exampleyamlyamlTab" data-toggle="tab" href="#state-message-exampleyamlyamlTabContent" role="tab" aria-controls="state-message-exampleyamlyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="State_Message_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="state-message-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-message-examplejsonjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+ </span><span class="nl">"WarningDebugMessage"</span><span class="p">:</span><span class="w">
+ </span><span class="p">{</span><span class="w">
+   </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Message"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"warning"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning: the following action may be dangerous"</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="State_Message_examplejsonCopySource" class="offscreen" aria-hidden=true>{
+ "WarningDebugMessage":
+ {
+   "base": "Message",
+   "type": "warning",
+   "message": "Warning: the following action may be dangerous"
+ }
+}</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#State_Message_examplejsonCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="state-message-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-message-exampleyamlyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+<span class="na">WarningDebugMessage</span><span class="pi">:</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">Message</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">warning</span>
+  <span class="na">message</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Warning:</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">following</span><span class="nv"> </span><span class="s">action</span><span class="nv"> </span><span class="s">may</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">dangerous'</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="State_Message_exampleyamlCopySource" class="offscreen" aria-hidden=true>---
+WarningDebugMessage:
+  base: Message
+  type: warning
+  message: 'Warning: the following action may be dangerous'</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#State_Message_exampleyamlCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      
+        
+        
+        
+        
+        
+        
+  
+  
+  
   <div id="collapse_State_Meta" class="collapse collapseSchema" style="position:sticky; top: 65px;">
     
 <div class="card card-schema">
@@ -48879,6 +51690,51 @@ configs:
   
   
   
+  <td>outputs</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>List of tasks names from which the completion criteria will be used to generate the state's output.<br /><ul><li>output="OK" if empty</li><li>Otherwise the output will be of the form "Taks1=citeria1, Task2=criteria2..." where "criteria1" and "criteria2" correspond to the output string of the tasks' completion criteria (e.g. "timeout AND speed").</li></ul></small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
   <td>AddContacts</td>
   
   <td>
@@ -51568,7 +54424,46 @@ configs:
 </span><span class="p">}</span><span class="w">
 </span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="mi">3</span><span class="w"> </span><span class="err">still</span><span class="w"> </span><span class="err">have</span><span class="w"> </span><span class="err">two</span><span class="w"> </span><span class="err">tasks,</span><span class="w"> </span><span class="err">objectives</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">unchanged</span><span class="w"> </span><span class="err">but:</span><span class="w">
 </span><span class="err">//</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">t</span><span class="mi">1</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">no</span><span class="w"> </span><span class="err">more</span><span class="w"> </span><span class="err">completion</span><span class="w"> </span><span class="err">criteria</span><span class="w">
-</span><span class="err">//</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">t</span><span class="mi">2</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">completion</span><span class="w"> </span><span class="err">criteria</span></code></pre></figure>
+</span><span class="err">//</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">t</span><span class="mi">2</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">completion</span><span class="w"> </span><span class="err">criteria</span><span class="w">
+</span><span class="nl">"Example4"</span><span class="p">:</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Example3"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"t1"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"completion"</span><span class="p">:</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"OR"</span><span class="p">:</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w"> </span><span class="nl">"eval"</span><span class="p">:</span><span class="w"> </span><span class="mi">1e-3</span><span class="w"> </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"AND"</span><span class="p">:</span><span class="w">
+            </span><span class="p">[</span><span class="w">
+              </span><span class="p">{</span><span class="w"> </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.0</span><span class="w"> </span><span class="p">},</span><span class="w">
+              </span><span class="p">{</span><span class="w"> </span><span class="nl">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mi">1e-2</span><span class="w"> </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"t2"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"completion"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"eval"</span><span class="p">:</span><span class="w"> </span><span class="mi">1e-4</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"outputCriteriaTasks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"t1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"t2"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="mi">4</span><span class="w"> </span><span class="err">still</span><span class="w"> </span><span class="err">have</span><span class="w"> </span><span class="err">two</span><span class="w"> </span><span class="err">tasks,</span><span class="w"> </span><span class="err">objectives</span><span class="w"> </span><span class="err">are</span><span class="w"> </span><span class="err">unchanged</span><span class="w"> </span><span class="err">but:</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">t</span><span class="mi">1</span><span class="w"> </span><span class="err">now</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">complex</span><span class="w"> </span><span class="err">completion</span><span class="w"> </span><span class="err">criteria</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">t</span><span class="mi">2</span><span class="w"> </span><span class="err">has</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">same</span><span class="w"> </span><span class="err">completion</span><span class="w"> </span><span class="err">criteria</span><span class="w"> </span><span class="err">but</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">different</span><span class="w"> </span><span class="err">threshold</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">In</span><span class="w"> </span><span class="err">addition,</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">outputCriteriaTasks</span><span class="w"> </span><span class="err">array</span><span class="w"> </span><span class="err">asks</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">generate</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">its</span><span class="w"> </span><span class="err">output</span><span class="w"> </span><span class="err">string</span><span class="w"> </span><span class="err">based</span><span class="w"> </span><span class="err">on</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">completion</span><span class="w"> </span><span class="err">criterias</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">tasks</span><span class="w"> </span><span class="s2">"t1"</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="s2">"t2"</span><span class="err">.</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">completion</span><span class="w"> </span><span class="err">output</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">look</span><span class="w"> </span><span class="err">like</span><span class="w"> </span><span class="err">one</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">following</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">t</span><span class="mi">1</span><span class="err">=eval,</span><span class="w"> </span><span class="err">t</span><span class="mi">2</span><span class="err">=eval</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">t</span><span class="mi">1</span><span class="err">=timeout</span><span class="w"> </span><span class="err">AND</span><span class="w"> </span><span class="err">speed,</span><span class="w"> </span><span class="err">t</span><span class="mi">2</span><span class="err">=eval</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">It</span><span class="w"> </span><span class="err">may</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">trigger</span><span class="w"> </span><span class="err">branch</span><span class="w"> </span><span class="err">choices</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">FSM</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">You</span><span class="w"> </span><span class="err">may</span><span class="w"> </span><span class="err">also</span><span class="w"> </span><span class="err">use</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">DEFAULT</span><span class="w"> </span><span class="err">output</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">your</span><span class="w"> </span><span class="err">transition</span><span class="w"> </span><span class="err">maps</span><span class="w"> </span><span class="err">that</span><span class="w"> </span><span class="err">will</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">case</span><span class="w"> </span><span class="err">no</span><span class="w"> </span><span class="err">other</span><span class="w"> </span><span class="err">pattern</span><span class="w"> </span><span class="err">matches</span></code></pre></figure>
 
   </div>
 </div>
@@ -51627,7 +54522,46 @@ configs:
 }
 // Example3 still have two tasks, objectives are unchanged but:
 // - t1 has no more completion criteria
-// - t2 has a completion criteria</pre>
+// - t2 has a completion criteria
+"Example4":
+{
+  "base": "Example3",
+  "tasks":
+  {
+    "t1":
+    {
+      "completion":
+      {
+        "OR":
+        [
+          { "eval": 1e-3 },
+          {
+            "AND":
+            [
+              { "timeout": 3.0 },
+              { "speed": 1e-2 }
+            ]
+          }
+        ]
+      }
+    },
+    "t2":
+    {
+      "completion": { "eval": 1e-4 }
+    }
+  },
+  "outputCriteriaTasks": ["t1", "t2"]
+}
+// Example4 still have two tasks, objectives are unchanged but:
+// - t1 now has a complex completion criteria
+// - t2 has the same completion criteria but with a different threshold
+// In addition, the outputCriteriaTasks array asks the state to generate
+// its output string based on the completion criterias of tasks "t1" and "t2".
+// The completion output will look like one of the following
+// - t1=eval, t2=eval
+// - t1=timeout AND speed, t2=eval
+// It may be used to trigger branch choices in the FSM
+// You may also use the DEFAULT output in your transition maps that will be used in case no other pattern matches</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#State_MetaTasks_examplejsonCopySource">Copy to clipboard</button>
 
 
@@ -51674,7 +54608,32 @@ configs:
         <span class="na">eval</span><span class="pi">:</span> <span class="s">1e-6</span>
 <span class="c1"># Example3 still have two tasks, objectives are unchanged but:</span>
 <span class="c1"># - t1 has no more completion criteria</span>
-<span class="c1"># - t2 has a completion criteria</span></code></pre></figure>
+<span class="c1"># - t2 has a completion criteria</span>
+<span class="nn">---</span>
+<span class="na">Example4</span><span class="pi">:</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">Example3</span>
+  <span class="na">tasks</span><span class="pi">:</span>
+    <span class="na">t1</span><span class="pi">:</span>
+      <span class="na">completion</span><span class="pi">:</span>
+        <span class="na">OR</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">eval</span><span class="pi">:</span> <span class="m">0.001</span>
+        <span class="pi">-</span> <span class="na">AND</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">timeout</span><span class="pi">:</span> <span class="m">3</span>
+          <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="m">0.01</span>
+    <span class="na">t2</span><span class="pi">:</span>
+      <span class="na">completion</span><span class="pi">:</span>
+        <span class="na">eval</span><span class="pi">:</span> <span class="m">0.0001</span>
+  <span class="na">outputs</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">t1</span><span class="pi">,</span> <span class="nv">t2</span><span class="pi">]</span>
+<span class="c1"># Example4 still have two tasks, objectives are unchanged but:</span>
+<span class="c1"># - t1 now has a complex completion criteria</span>
+<span class="c1"># - t2 has the same completion criteria but with a different threshold</span>
+<span class="c1"># In addition, the outputCriteriaTasks array asks the state to generate</span>
+<span class="c1"># its output string based on the completion criterias of tasks "t1" and "t2".</span>
+<span class="c1"># The completion output will look like one of the following</span>
+<span class="c1"># - t1=eval, t2=eval</span>
+<span class="c1"># - t1=timeout AND speed, t2=eval</span>
+<span class="c1"># It may be used to trigger branch choices in the FSM</span>
+<span class="c1"># You may also use the DEFAULT output in your transition maps that will be used in case no other pattern matches</span></code></pre></figure>
 
   </div>
 </div>
@@ -51714,7 +54673,32 @@ Example3:
         eval: 1e-6
 # Example3 still have two tasks, objectives are unchanged but:
 # - t1 has no more completion criteria
-# - t2 has a completion criteria</pre>
+# - t2 has a completion criteria
+---
+Example4:
+  base: Example3
+  tasks:
+    t1:
+      completion:
+        OR:
+        - eval: 0.001
+        - AND:
+          - timeout: 3
+          - speed: 0.01
+    t2:
+      completion:
+        eval: 0.0001
+  outputs: [t1, t2]
+# Example4 still have two tasks, objectives are unchanged but:
+# - t1 now has a complex completion criteria
+# - t2 has the same completion criteria but with a different threshold
+# In addition, the outputCriteriaTasks array asks the state to generate
+# its output string based on the completion criterias of tasks "t1" and "t2".
+# The completion output will look like one of the following
+# - t1=eval, t2=eval
+# - t1=timeout AND speed, t2=eval
+# It may be used to trigger branch choices in the FSM
+# You may also use the DEFAULT output in your transition maps that will be used in case no other pattern matches</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#State_MetaTasks_exampleyamlCopySource">Copy to clipboard</button>
 
 
@@ -51742,7 +54726,7 @@ Example3:
     
 <div class="card card-schema">
   <div class="card-header">
-    <h6 class="text-primary font-weight-bold">fsm::PauseState</h6>
+    <h6 class="text-primary font-weight-bold">fsm::Pause</h6>
     <div class="float-right">
       <small class="text-muted text-right">Pause for a given duration</small>
     </div>
@@ -63166,7 +66150,7 @@ grippers:
     
 <div class="card card-schema">
   <div class="card-header">
-    <h6 class="text-primary font-weight-bold">fsm::AddRemoveContactState</h6>
+    <h6 class="text-primary font-weight-bold">fsm::AddRemoveContact</h6>
     <div class="float-right">
       <small class="text-muted text-right">Add or remove a contact</small>
     </div>
@@ -67236,9 +70220,9 @@ AddContactCompliant:
     
 <div class="card card-schema">
   <div class="card-header">
-    <h6 class="text-primary font-weight-bold">fsm::ParallelState</h6>
+    <h6 class="text-primary font-weight-bold">fsm::Parallel</h6>
     <div class="float-right">
-      <small class="text-muted text-right">Play multiple states in parallel<br/>The state is completed when all the states it's running are completed<br/>The state's output is the output of the last state it's running</small>
+      <small class="text-muted text-right">Play multiple states in parallel<br/>The state is completed when all the states it's running are completed<br/>The default state's output is the output of the last state it's running (see "outputs" for other behaviours)</small>
     </div>
   </div>
   <div class="card-body">
@@ -67414,6 +70398,51 @@ AddContactCompliant:
       </td>
     </tr>
     
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>outputs</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>List of state names for which the transition will be generated from the state output.<br /><ul><li>When omitted or empty the output of the last state in the "states" property will be used.</li><li>When state names are provided, the transition output is generated according to the following pattern: "State1(state1 output), State2(state2 output)".</li></ul></small></span>
+  </td>
+  
+</tr>
 
 
 

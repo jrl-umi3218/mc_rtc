@@ -1,8 +1,6 @@
 var a00698 =
 [
-    [ "ExponentialMovingAverage", "a02006.html", "a02006" ],
-    [ "LeakyIntegrator", "a02010.html", "a02010" ],
-    [ "LowPass", "a02014.html", "a02014" ],
-    [ "LowPassFiniteDifferences", "a02018.html", "a02018" ],
-    [ "StationaryOffset", "a02022.html", "a02022" ]
+    [ "internal", "a00725.html", "a00725" ],
+    [ "StabilizerTask", "a02806.html", "a02806" ],
+    [ "ZMPCC", "a02814.html", "a02814" ]
 ];

@@ -1,8 +1,5 @@
 var a02430 =
 [
-    [ "Point3DROImpl", "a02430.html#adbfe7a2b3ff83932027e08f0c95d663b", null ],
-    [ "Point3DROImpl", "a02430.html#a3a11467db7f88a9eab78a93aee90227b", null ],
-    [ "write", "a02430.html#a2b4d2003ac770437919c754325d04134", null ],
-    [ "write_size", "a02430.html#abe5261acb5b704491064407a9b734b6b", null ],
-    [ "type", "a02430.html#a91b7374b66df426ff377ec34f124e73b", null ]
+    [ "OrdinateWithColor", "a02430.html#a7070266af8da1fd1c5130a42d6327ebf", null ],
+    [ "write", "a02430.html#a336ddb0dc18460959466cef6486e5f78", null ]
 ];

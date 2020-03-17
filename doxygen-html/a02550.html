@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::log::GetLogType&lt; T &gt; Struct Template Reference</title>
+<title>mc_rtc::ObjectLoader&lt; T &gt;::ObjectDeleter Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,49 +70,89 @@ $(document).ready(function(){initNavTree('a02550.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a02547.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::log::GetLogType&lt; T &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_rtc::ObjectLoader&lt; T &gt;::ObjectDeleter Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Helper to build a correspondance between C++ types and enum values.  
- <a href="a02550.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_rtc/log/utils.h&gt;</code></p>
+<p><code>#include &lt;mc_rtc/loader.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:a7b718d634332b545266bbe2298a624d4"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549">mc_rtc::log::LogType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02550.html#a7b718d634332b545266bbe2298a624d4">type</a> = <a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a6adf97f83acf6453d4a6a4b1070f3754">mc_rtc::log::LogType::None</a></td></tr>
-<tr class="separator:a7b718d634332b545266bbe2298a624d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ad9d8c7bebf11fd046f3264f25d73f56d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02550.html#ad9d8c7bebf11fd046f3264f25d73f56d">ObjectDeleter</a> ()</td></tr>
+<tr class="separator:ad9d8c7bebf11fd046f3264f25d73f56d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3527e6200ab7ef9bf24606c987072039"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02550.html#a3527e6200ab7ef9bf24606c987072039">ObjectDeleter</a> (void(*fn)(T *))</td></tr>
+<tr class="separator:a3527e6200ab7ef9bf24606c987072039"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cd3bbddec0b057af90444eb5794ad80"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02550.html#a7cd3bbddec0b057af90444eb5794ad80">operator()</a> (T *ptr)</td></tr>
+<tr class="separator:a7cd3bbddec0b057af90444eb5794ad80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename T&gt;<br />
-struct mc_rtc::log::GetLogType&lt; T &gt;</h3>
-
-<p>Helper to build a correspondance between C++ types and enum values. </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a7b718d634332b545266bbe2298a624d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b718d634332b545266bbe2298a624d4">&#9670;&nbsp;</a></span>type</h2>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ad9d8c7bebf11fd046f3264f25d73f56d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9d8c7bebf11fd046f3264f25d73f56d">&#9670;&nbsp;</a></span>ObjectDeleter() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549">mc_rtc::log::LogType</a> <a class="el" href="a02550.html">mc_rtc::log::GetLogType</a>&lt; T &gt;::type = <a class="el" href="a00715.html#ae623e7dc6e6722fd48752713664b3549a6adf97f83acf6453d4a6a4b1070f3754">mc_rtc::log::LogType::None</a></td>
+          <td class="memname"><a class="el" href="a02534.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::ObjectDeleter::ObjectDeleter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3527e6200ab7ef9bf24606c987072039"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3527e6200ab7ef9bf24606c987072039">&#9670;&nbsp;</a></span>ObjectDeleter() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02534.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::ObjectDeleter::ObjectDeleter </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(T *)&#160;</td>
+          <td class="paramname"><em>fn</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7cd3bbddec0b057af90444eb5794ad80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7cd3bbddec0b057af90444eb5794ad80">&#9670;&nbsp;</a></span>operator()()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a02534.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::ObjectDeleter::operator() </td>
+          <td>(</td>
+          <td class="paramtype">T *&#160;</td>
+          <td class="paramname"><em>ptr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 
 </div>
@@ -123,8 +163,8 @@ template&lt;typename T &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00693.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00715.html">log</a></li><li class="navelem"><a class="el" href="a02550.html">GetLogType</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00708.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02534.html">ObjectLoader</a></li><li class="navelem"><a class="el" href="a02550.html">ObjectDeleter</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:02 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

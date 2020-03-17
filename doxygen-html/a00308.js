@@ -1,5 +1,5 @@
 var a00308 =
 [
-    [ "StringInputImpl", "a02466.html", "a02466" ],
-    [ "StringInput", "a00308.html#a4f8c1eb018c71e856f48cee90d7ea65d", null ]
+    [ "SchemaImpl", "a02474.html", "a02474" ],
+    [ "Schema", "a00308.html#a0c892f6b2ba9e06d4bda32a16b76b75b", null ]
 ];

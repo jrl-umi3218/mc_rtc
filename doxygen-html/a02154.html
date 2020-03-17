@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rbdyn::PolygonInterpolator Struct Reference</title>
+<title>mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,154 +70,98 @@ $(document).ready(function(){initNavTree('a02154.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a02151.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::PolygonInterpolator Struct Reference</div>  </div>
+<div class="title">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;mc_rbdyn/PolygonInterpolator.h&gt;</code></p>
+<p><code>#include &lt;mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a8667e5bd25c0215d10ce8e139028207d"><td class="memItemLeft" align="right" valign="top">typedef std::array&lt; double, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a></td></tr>
-<tr class="separator:a8667e5bd25c0215d10ce8e139028207d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adda7bb6a81b142d132c7772fe7b1672c"><td class="memItemLeft" align="right" valign="top">typedef std::pair&lt; <a class="el" href="a02154.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a>, <a class="el" href="a02154.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#adda7bb6a81b142d132c7772fe7b1672c">tuple_pair_t</a></td></tr>
-<tr class="separator:adda7bb6a81b142d132c7772fe7b1672c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a279595aaf7f350b0247920b77efb8040"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#a279595aaf7f350b0247920b77efb8040">PolygonInterpolator</a> (const std::vector&lt; <a class="el" href="a02154.html#adda7bb6a81b142d132c7772fe7b1672c">tuple_pair_t</a> &gt; &amp;tpv)</td></tr>
-<tr class="separator:a279595aaf7f350b0247920b77efb8040"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41490869f7df5826143477c52ac3f236"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; geos::geom::Geometry &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#a41490869f7df5826143477c52ac3f236">fast_interpolate</a> (double percent)</td></tr>
-<tr class="separator:a41490869f7df5826143477c52ac3f236"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dbd705039482f156583eadaa91bd51a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a02154.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#a5dbd705039482f156583eadaa91bd51a">midpoint_derivative</a> (double epsilon_derivative)</td></tr>
-<tr class="separator:a5dbd705039482f156583eadaa91bd51a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8692430f5c1315d38bbc1a1f4798907c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a02154.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#a8692430f5c1315d38bbc1a1f4798907c">normal_derivative</a> (double epsilon_derivative)</td></tr>
-<tr class="separator:a8692430f5c1315d38bbc1a1f4798907c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c6e2f6234920055ea5c7ab8e32434ee"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="a02154.html#adda7bb6a81b142d132c7772fe7b1672c">tuple_pair_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#a8c6e2f6234920055ea5c7ab8e32434ee">tuple_pairs</a> () const</td></tr>
-<tr class="separator:a8c6e2f6234920055ea5c7ab8e32434ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ad6b1427db5969e53c93eda40b82c29c0"><td class="memItemLeft" align="right" valign="top">EIGEN_MAKE_ALIGNED_OPERATOR_NEW Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#ad6b1427db5969e53c93eda40b82c29c0">comAdmittance</a> = Eigen::Vector2d::Zero()</td></tr>
+<tr class="memdesc:ad6b1427db5969e53c93eda40b82c29c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Admittance gains for CoM admittance control.  <a href="#ad6b1427db5969e53c93eda40b82c29c0">More...</a><br /></td></tr>
+<tr class="separator:ad6b1427db5969e53c93eda40b82c29c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c05d238cf8b0b2803e502985898c9ca"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#a3c05d238cf8b0b2803e502985898c9ca">integratorLeakRate</a> = 0.1</td></tr>
+<tr class="memdesc:a3c05d238cf8b0b2803e502985898c9ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leak rate.  <a href="#a3c05d238cf8b0b2803e502985898c9ca">More...</a><br /></td></tr>
+<tr class="separator:a3c05d238cf8b0b2803e502985898c9ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d42904ddf94ae3ac2660f01dd5e8ed9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#a1d42904ddf94ae3ac2660f01dd5e8ed9">maxCoMOffset</a> = 0.05</td></tr>
+<tr class="memdesc:a1d42904ddf94ae3ac2660f01dd5e8ed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum CoM offset due to admittance control in [m].  <a href="#a1d42904ddf94ae3ac2660f01dd5e8ed9">More...</a><br /></td></tr>
+<tr class="separator:a1d42904ddf94ae3ac2660f01dd5e8ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4355cd8a898d9fb511b6820b4573902"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html#ab4355cd8a898d9fb511b6820b4573902">maxCoMAdmitance</a> = 20</td></tr>
+<tr class="memdesc:ab4355cd8a898d9fb511b6820b4573902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum admittance for CoM admittance control.  <a href="#ab4355cd8a898d9fb511b6820b4573902">More...</a><br /></td></tr>
+<tr class="separator:ab4355cd8a898d9fb511b6820b4573902"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="adda7bb6a81b142d132c7772fe7b1672c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adda7bb6a81b142d132c7772fe7b1672c">&#9670;&nbsp;</a></span>tuple_pair_t</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ad6b1427db5969e53c93eda40b82c29c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6b1427db5969e53c93eda40b82c29c0">&#9670;&nbsp;</a></span>comAdmittance</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::pair&lt;<a class="el" href="a02154.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a>, <a class="el" href="a02154.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a>&gt; <a class="el" href="a02154.html#adda7bb6a81b142d132c7772fe7b1672c">mc_rbdyn::PolygonInterpolator::tuple_pair_t</a></td>
+          <td class="memname">EIGEN_MAKE_ALIGNED_OPERATOR_NEW Eigen::Vector2d mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::comAdmittance = Eigen::Vector2d::Zero()</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Admittance gains for CoM admittance control. </p>
+
+<p class="reference">Referenced by <a class="el" href="a02158.html#a424041a72a1aab6e27b6b8c9115041bb">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::load()</a>, and <a class="el" href="a02158.html#a9dc93d8923aa1b6251a7c61acf5332c7">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::save()</a>.</p>
+
 </div>
 </div>
-<a id="a8667e5bd25c0215d10ce8e139028207d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8667e5bd25c0215d10ce8e139028207d">&#9670;&nbsp;</a></span>tuple_t</h2>
+<a id="a3c05d238cf8b0b2803e502985898c9ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c05d238cf8b0b2803e502985898c9ca">&#9670;&nbsp;</a></span>integratorLeakRate</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::array&lt;double, 2&gt; <a class="el" href="a02154.html#a8667e5bd25c0215d10ce8e139028207d">mc_rbdyn::PolygonInterpolator::tuple_t</a></td>
+          <td class="memname">double mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::integratorLeakRate = 0.1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Leak rate. </p>
+
+<p class="reference">Referenced by <a class="el" href="a02158.html#a424041a72a1aab6e27b6b8c9115041bb">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::load()</a>, and <a class="el" href="a02158.html#a9dc93d8923aa1b6251a7c61acf5332c7">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::save()</a>.</p>
+
 </div>
 </div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a279595aaf7f350b0247920b77efb8040"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a279595aaf7f350b0247920b77efb8040">&#9670;&nbsp;</a></span>PolygonInterpolator()</h2>
+<a id="ab4355cd8a898d9fb511b6820b4573902"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4355cd8a898d9fb511b6820b4573902">&#9670;&nbsp;</a></span>maxCoMAdmitance</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mc_rbdyn::PolygonInterpolator::PolygonInterpolator </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; <a class="el" href="a02154.html#adda7bb6a81b142d132c7772fe7b1672c">tuple_pair_t</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>tpv</em></td><td>)</td>
-          <td></td>
+          <td class="memname">double mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::maxCoMAdmitance = 20</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Maximum admittance for CoM admittance control. </p>
+
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a41490869f7df5826143477c52ac3f236"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41490869f7df5826143477c52ac3f236">&#9670;&nbsp;</a></span>fast_interpolate()</h2>
+<a id="a1d42904ddf94ae3ac2660f01dd5e8ed9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d42904ddf94ae3ac2660f01dd5e8ed9">&#9670;&nbsp;</a></span>maxCoMOffset</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;geos::geom::Geometry&gt; mc_rbdyn::PolygonInterpolator::fast_interpolate </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>percent</em></td><td>)</td>
-          <td></td>
+          <td class="memname">double mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::maxCoMOffset = 0.05</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a5dbd705039482f156583eadaa91bd51a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5dbd705039482f156583eadaa91bd51a">&#9670;&nbsp;</a></span>midpoint_derivative()</h2>
+<p>Maximum CoM offset due to admittance control in [m]. </p>
 
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="a02154.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a>&gt; mc_rbdyn::PolygonInterpolator::midpoint_derivative </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>epsilon_derivative</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8692430f5c1315d38bbc1a1f4798907c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8692430f5c1315d38bbc1a1f4798907c">&#9670;&nbsp;</a></span>normal_derivative()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="a02154.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a>&gt; mc_rbdyn::PolygonInterpolator::normal_derivative </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>epsilon_derivative</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8c6e2f6234920055ea5c7ab8e32434ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c6e2f6234920055ea5c7ab8e32434ee">&#9670;&nbsp;</a></span>tuple_pairs()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::vector&lt;<a class="el" href="a02154.html#adda7bb6a81b142d132c7772fe7b1672c">tuple_pair_t</a>&gt;&amp; mc_rbdyn::PolygonInterpolator::tuple_pairs </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p class="reference">Referenced by <a class="el" href="a02826.html#a63c6fb35d5efd1595a1ead7be388c0df">mc_tasks::lipm_stabilizer::ZMPCC::configure()</a>, <a class="el" href="a02158.html#a424041a72a1aab6e27b6b8c9115041bb">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::load()</a>, and <a class="el" href="a02158.html#a9dc93d8923aa1b6251a7c61acf5332c7">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::save()</a>.</p>
 
 </div>
 </div>
@@ -227,8 +171,8 @@ Public Member Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00697.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02154.html">PolygonInterpolator</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00712.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00719.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a02154.html">ZMPCCConfiguration</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:02 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

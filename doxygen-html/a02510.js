@@ -1,21 +1,12 @@
 var a02510 =
 [
-    [ "ObjectDeleter", "a02526.html", "a02526" ],
-    [ "unique_ptr", "a02510.html#a78852c55af0f996b628466db4f6ae828", null ],
-    [ "ObjectLoader", "a02510.html#af60c459a8ffc58fb8329669bd3967bcb", null ],
-    [ "~ObjectLoader", "a02510.html#a8dd305a8add6473f847951f6fcc6bf0c", null ],
-    [ "clear", "a02510.html#a33bbdbec8644e9b0e09077f076c88b0b", null ],
-    [ "create", "a02510.html#a0dce6e455c174537d988c115dc31ce80", null ],
-    [ "create_object", "a02510.html#ab0fb7a187ae96e784f32978127824fd8", null ],
-    [ "create_unique_object", "a02510.html#af0215e4d220b8e17862a1f1e0dcc42ad", null ],
-    [ "enable_sandboxing", "a02510.html#ae6747e5d8a42e424da0e89f2f2ed8363", null ],
-    [ "has_object", "a02510.html#aa0739f917476b8d1af3c3de7b32c1d1b", null ],
-    [ "load_libraries", "a02510.html#a42d500b49baacc44c189bb53264a5185", null ],
-    [ "objects", "a02510.html#acab918dfa002205a257be3c638f94ff2", null ],
-    [ "set_verbosity", "a02510.html#aae9bc7b4461a90a191a7c1bd8f82fc7e", null ],
-    [ "class_name", "a02510.html#aab1c409baa5b97ec1e5b58242c572fbe", null ],
-    [ "deleters_", "a02510.html#a716eefa0204ce8e39886323aaad00a02", null ],
-    [ "enable_sandbox", "a02510.html#a2ed489dea742157c337ac078e99f6dc3", null ],
-    [ "handles_", "a02510.html#a5c219f5a809cfc139409874145d76a20", null ],
-    [ "verbose", "a02510.html#ac2b5e003d3ccd4958a32a83f1981754c", null ]
+    [ "LineConfig", "a02510.html#a15dd7cd44bf0edc5b475448de6e26451", null ],
+    [ "LineConfig", "a02510.html#a0ba859719a9ff99290fec7b8e8add72b", null ],
+    [ "LineConfig", "a02510.html#a05fe24ecd21753185e6da09151f35ce2", null ],
+    [ "load", "a02510.html#ac77f299a585b18903c8628590b8f6a00", null ],
+    [ "write", "a02510.html#a2845b8dfdbdaeb72cb473086c6bdf8a7", null ],
+    [ "write_size", "a02510.html#a76ab2e9dcb6923c3877c2822dec478dd", null ],
+    [ "color", "a02510.html#a4f88bdc8e23bf720a90553abaca4d6ec", null ],
+    [ "style", "a02510.html#a2678eadbdc5908c80e0dcc9c39941a14", null ],
+    [ "width", "a02510.html#a57cd8fdd493c21993724fe26828cf47c", null ]
 ];

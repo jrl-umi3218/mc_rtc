@@ -1,11 +1,10 @@
 var a02178 =
 [
-    [ "available_robots", "a02178.html#aae5fb8baa5acee06c3af0dd976808a2f", null ],
-    [ "clear", "a02178.html#a86f7b35ed2a4b3d37508f51aa2b29a38", null ],
-    [ "enable_sandboxing", "a02178.html#a730c3f67a0bc12f73633c42b121b219e", null ],
-    [ "get_robot_module", "a02178.html#ad660aedc7dbf7cd0cd0e60da5fffe4c2", null ],
-    [ "has_robot", "a02178.html#a3edda7983edda591b3664eef5c450144", null ],
-    [ "load_aliases", "a02178.html#a6286734468abc8c146eaad6902dbdd01", null ],
-    [ "set_verbosity", "a02178.html#a6126ced85ec52c8445755948d1060a6f", null ],
-    [ "update_robot_module_path", "a02178.html#a48f1ada05ff7db2152a00da892183c8b", null ]
+    [ "tuple_pair_t", "a02178.html#adda7bb6a81b142d132c7772fe7b1672c", null ],
+    [ "tuple_t", "a02178.html#a8667e5bd25c0215d10ce8e139028207d", null ],
+    [ "PolygonInterpolator", "a02178.html#a279595aaf7f350b0247920b77efb8040", null ],
+    [ "fast_interpolate", "a02178.html#a41490869f7df5826143477c52ac3f236", null ],
+    [ "midpoint_derivative", "a02178.html#a5dbd705039482f156583eadaa91bd51a", null ],
+    [ "normal_derivative", "a02178.html#a8692430f5c1315d38bbc1a1f4798907c", null ],
+    [ "tuple_pairs", "a02178.html#a8c6e2f6234920055ea5c7ab8e32434ee", null ]
 ];

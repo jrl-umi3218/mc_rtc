@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rbdyn::RobotLoader Class Reference</title>
+<title>mc_rbdyn::PolygonInterpolator Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,312 +70,154 @@ $(document).ready(function(){initNavTree('a02178.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a02175.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::RobotLoader Class Reference</div>  </div>
+<div class="title">mc_rbdyn::PolygonInterpolator Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Load <a class="el" href="a02182.html">RobotModule</a> instances from shared libraries.  
- <a href="a02178.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_rbdyn/RobotLoader.h&gt;</code></p>
+<p><code>#include &lt;mc_rbdyn/PolygonInterpolator.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="a00697.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02178.html#ad660aedc7dbf7cd0cd0e60da5fffe4c2">get_robot_module</a> (const std::string &amp;name, const Args &amp;... args)</td></tr>
-<tr class="memdesc:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a <a class="el" href="a02182.html">RobotModule</a> constructed with the provided Args.  <a href="#ad660aedc7dbf7cd0cd0e60da5fffe4c2">More...</a><br /></td></tr>
-<tr class="separator:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48f1ada05ff7db2152a00da892183c8b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a48f1ada05ff7db2152a00da892183c8b">update_robot_module_path</a> (const std::vector&lt; std::string &gt; &amp;paths)</td></tr>
-<tr class="memdesc:a48f1ada05ff7db2152a00da892183c8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add additional directories to the robot module path.  <a href="#a48f1ada05ff7db2152a00da892183c8b">More...</a><br /></td></tr>
-<tr class="separator:a48f1ada05ff7db2152a00da892183c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86f7b35ed2a4b3d37508f51aa2b29a38"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a86f7b35ed2a4b3d37508f51aa2b29a38">clear</a> ()</td></tr>
-<tr class="memdesc:a86f7b35ed2a4b3d37508f51aa2b29a38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all loaded libraries.  <a href="#a86f7b35ed2a4b3d37508f51aa2b29a38">More...</a><br /></td></tr>
-<tr class="separator:a86f7b35ed2a4b3d37508f51aa2b29a38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3edda7983edda591b3664eef5c450144"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a3edda7983edda591b3664eef5c450144">has_robot</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:a3edda7983edda591b3664eef5c450144"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a robot is available.  <a href="#a3edda7983edda591b3664eef5c450144">More...</a><br /></td></tr>
-<tr class="separator:a3edda7983edda591b3664eef5c450144"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a730c3f67a0bc12f73633c42b121b219e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a730c3f67a0bc12f73633c42b121b219e">enable_sandboxing</a> (bool enable_sandbox)</td></tr>
-<tr class="memdesc:a730c3f67a0bc12f73633c42b121b219e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable robot's creation sandboxing.  <a href="#a730c3f67a0bc12f73633c42b121b219e">More...</a><br /></td></tr>
-<tr class="separator:a730c3f67a0bc12f73633c42b121b219e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6126ced85ec52c8445755948d1060a6f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a6126ced85ec52c8445755948d1060a6f">set_verbosity</a> (bool verbose)</td></tr>
-<tr class="separator:a6126ced85ec52c8445755948d1060a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae5fb8baa5acee06c3af0dd976808a2f"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#aae5fb8baa5acee06c3af0dd976808a2f">available_robots</a> ()</td></tr>
-<tr class="memdesc:aae5fb8baa5acee06c3af0dd976808a2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of available robots.  <a href="#aae5fb8baa5acee06c3af0dd976808a2f">More...</a><br /></td></tr>
-<tr class="separator:aae5fb8baa5acee06c3af0dd976808a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6286734468abc8c146eaad6902dbdd01"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a6286734468abc8c146eaad6902dbdd01">load_aliases</a> (const std::string &amp;fname)</td></tr>
-<tr class="memdesc:a6286734468abc8c146eaad6902dbdd01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load aliases.  <a href="#a6286734468abc8c146eaad6902dbdd01">More...</a><br /></td></tr>
-<tr class="separator:a6286734468abc8c146eaad6902dbdd01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a8667e5bd25c0215d10ce8e139028207d"><td class="memItemLeft" align="right" valign="top">typedef std::array&lt; double, 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a></td></tr>
+<tr class="separator:a8667e5bd25c0215d10ce8e139028207d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adda7bb6a81b142d132c7772fe7b1672c"><td class="memItemLeft" align="right" valign="top">typedef std::pair&lt; <a class="el" href="a02178.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a>, <a class="el" href="a02178.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#adda7bb6a81b142d132c7772fe7b1672c">tuple_pair_t</a></td></tr>
+<tr class="separator:adda7bb6a81b142d132c7772fe7b1672c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a279595aaf7f350b0247920b77efb8040"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a279595aaf7f350b0247920b77efb8040">PolygonInterpolator</a> (const std::vector&lt; <a class="el" href="a02178.html#adda7bb6a81b142d132c7772fe7b1672c">tuple_pair_t</a> &gt; &amp;tpv)</td></tr>
+<tr class="separator:a279595aaf7f350b0247920b77efb8040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41490869f7df5826143477c52ac3f236"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; geos::geom::Geometry &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a41490869f7df5826143477c52ac3f236">fast_interpolate</a> (double percent)</td></tr>
+<tr class="separator:a41490869f7df5826143477c52ac3f236"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dbd705039482f156583eadaa91bd51a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a02178.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a5dbd705039482f156583eadaa91bd51a">midpoint_derivative</a> (double epsilon_derivative)</td></tr>
+<tr class="separator:a5dbd705039482f156583eadaa91bd51a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8692430f5c1315d38bbc1a1f4798907c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a02178.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a8692430f5c1315d38bbc1a1f4798907c">normal_derivative</a> (double epsilon_derivative)</td></tr>
+<tr class="separator:a8692430f5c1315d38bbc1a1f4798907c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c6e2f6234920055ea5c7ab8e32434ee"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="a02178.html#adda7bb6a81b142d132c7772fe7b1672c">tuple_pair_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02178.html#a8c6e2f6234920055ea5c7ab8e32434ee">tuple_pairs</a> () const</td></tr>
+<tr class="separator:a8c6e2f6234920055ea5c7ab8e32434ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Load <a class="el" href="a02182.html">RobotModule</a> instances from shared libraries. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aae5fb8baa5acee06c3af0dd976808a2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae5fb8baa5acee06c3af0dd976808a2f">&#9670;&nbsp;</a></span>available_robots()</h2>
+<h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="adda7bb6a81b142d132c7772fe7b1672c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adda7bb6a81b142d132c7772fe7b1672c">&#9670;&nbsp;</a></span>tuple_pair_t</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::vector&lt;std::string&gt; mc_rbdyn::RobotLoader::available_robots </td>
+          <td class="memname">typedef std::pair&lt;<a class="el" href="a02178.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a>, <a class="el" href="a02178.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a>&gt; <a class="el" href="a02178.html#adda7bb6a81b142d132c7772fe7b1672c">mc_rbdyn::PolygonInterpolator::tuple_pair_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8667e5bd25c0215d10ce8e139028207d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8667e5bd25c0215d10ce8e139028207d">&#9670;&nbsp;</a></span>tuple_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::array&lt;double, 2&gt; <a class="el" href="a02178.html#a8667e5bd25c0215d10ce8e139028207d">mc_rbdyn::PolygonInterpolator::tuple_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a279595aaf7f350b0247920b77efb8040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a279595aaf7f350b0247920b77efb8040">&#9670;&nbsp;</a></span>PolygonInterpolator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rbdyn::PolygonInterpolator::PolygonInterpolator </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="a02178.html#adda7bb6a81b142d132c7772fe7b1672c">tuple_pair_t</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>tpv</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a41490869f7df5826143477c52ac3f236"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41490869f7df5826143477c52ac3f236">&#9670;&nbsp;</a></span>fast_interpolate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;geos::geom::Geometry&gt; mc_rbdyn::PolygonInterpolator::fast_interpolate </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>percent</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5dbd705039482f156583eadaa91bd51a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dbd705039482f156583eadaa91bd51a">&#9670;&nbsp;</a></span>midpoint_derivative()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="a02178.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a>&gt; mc_rbdyn::PolygonInterpolator::midpoint_derivative </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>epsilon_derivative</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8692430f5c1315d38bbc1a1f4798907c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8692430f5c1315d38bbc1a1f4798907c">&#9670;&nbsp;</a></span>normal_derivative()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="a02178.html#a8667e5bd25c0215d10ce8e139028207d">tuple_t</a>&gt; mc_rbdyn::PolygonInterpolator::normal_derivative </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>epsilon_derivative</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8c6e2f6234920055ea5c7ab8e32434ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c6e2f6234920055ea5c7ab8e32434ee">&#9670;&nbsp;</a></span>tuple_pairs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="el" href="a02178.html#adda7bb6a81b142d132c7772fe7b1672c">tuple_pair_t</a>&gt;&amp; mc_rbdyn::PolygonInterpolator::tuple_pairs </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-
-<p>Returns a list of available robots. </p>
-
-</div>
-</div>
-<a id="a86f7b35ed2a4b3d37508f51aa2b29a38"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86f7b35ed2a4b3d37508f51aa2b29a38">&#9670;&nbsp;</a></span>clear()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void mc_rbdyn::RobotLoader::clear </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Remove all loaded libraries. </p>
-
-</div>
-</div>
-<a id="a730c3f67a0bc12f73633c42b121b219e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a730c3f67a0bc12f73633c42b121b219e">&#9670;&nbsp;</a></span>enable_sandboxing()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void mc_rbdyn::RobotLoader::enable_sandboxing </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable_sandbox</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Enable robot's creation sandboxing. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">enable_sandbox</td><td>If true, robot's create call are sandboxed </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ad660aedc7dbf7cd0cd0e60da5fffe4c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad660aedc7dbf7cd0cd0e60da5fffe4c2">&#9670;&nbsp;</a></span>get_robot_module()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Args&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a00697.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> mc_rbdyn::RobotLoader::get_robot_module </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Args &amp;...&#160;</td>
-          <td class="paramname"><em>args</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Return a <a class="el" href="a02182.html">RobotModule</a> constructed with the provided Args. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The module name </td></tr>
-    <tr><td class="paramname">args</td><td>The arguments provided to the module creation function </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>It is the responsability of the caller to make sure that the signature of the module creation fits that declared by the module </dd></dl>
-
-<p class="reference">References <a class="el" href="a00344.html#ac6c926a2075cbaa39c4e9d12a2cac7e2">LOG_ERROR</a>, <a class="el" href="a00344.html#ae0e43eaf4d638a83e59084a107b3b62f">LOG_ERROR_AND_THROW</a>, and <a class="el" href="a00707.html#a71fcd7fe46e75452f9c6302bb1c40412">mc_rbdyn::details::to_string()</a>.</p>
-
-</div>
-</div>
-<a id="a3edda7983edda591b3664eef5c450144"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3edda7983edda591b3664eef5c450144">&#9670;&nbsp;</a></span>has_robot()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool mc_rbdyn::RobotLoader::has_robot </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Check if a robot is available. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td><a class="el" href="a02162.html">Robot</a> name </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a6286734468abc8c146eaad6902dbdd01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6286734468abc8c146eaad6902dbdd01">&#9670;&nbsp;</a></span>load_aliases()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void mc_rbdyn::RobotLoader::load_aliases </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>fname</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Load aliases. </p>
-<p>An aliases file should be a map of alias to param vector</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">fname</td><td>A JSON or YAML containing aliases </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a6126ced85ec52c8445755948d1060a6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6126ced85ec52c8445755948d1060a6f">&#9670;&nbsp;</a></span>set_verbosity()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void mc_rbdyn::RobotLoader::set_verbosity </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>verbose</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a48f1ada05ff7db2152a00da892183c8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48f1ada05ff7db2152a00da892183c8b">&#9670;&nbsp;</a></span>update_robot_module_path()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void mc_rbdyn::RobotLoader::update_robot_module_path </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>paths</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add additional directories to the robot module path. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">paths</td><td>Directories to be added to the module path </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -385,8 +227,8 @@ template&lt;typename... Args&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00697.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02178.html">RobotLoader</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00712.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02178.html">PolygonInterpolator</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

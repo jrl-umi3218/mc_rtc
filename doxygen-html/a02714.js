@@ -1,10 +1,6 @@
 var a02714 =
 [
-    [ "Update", "a02714.html#ad172325243564a16279d9392bd86efa5", null ],
-    [ "Update", "a02714.html#a806d3dc017b28e570dfa268a32a55600", null ],
-    [ "~Update", "a02714.html#ab8ad71dd3414ee8bccc766c7bc8b4dc3", null ],
-    [ "A", "a02714.html#adcc1dc8dc0563b2e14f962f26afbfa5f", null ],
-    [ "compute", "a02714.html#a8f658eb01d91768ab6a4e9b095a894de", null ],
-    [ "updateImpl", "a02714.html#ab889dcd5361a420fe976146c40f56533", null ],
-    [ "AFull_", "a02714.html#a6ba3138c342b7e4efa2328ac11930706", null ]
+    [ "alphaDVec", "a02714.html#a006a571037b605b0b5c9e749fac3e06c", null ],
+    [ "alphaVec", "a02714.html#ab4e17120478e2a800aa790e32be96e84", null ],
+    [ "q", "a02714.html#a2266d5ca2aace35d45464180feda1768", null ]
 ];

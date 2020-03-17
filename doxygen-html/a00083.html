@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_global_controller.h File Reference</title>
+<title>mc_controller.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,45 +70,121 @@ $(document).ready(function(){initNavTree('a00083.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">mc_global_controller.h File Reference</div>  </div>
+<div class="title">mc_controller.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00017.html">mc_control/ControllerServer.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00074.html">mc_control/GlobalPlugin_fwd.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00089.html">mc_control/MCController.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03834.html">mc_control/api.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00194.html">mc_rbdyn/RobotModule.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00323.html">mc_rtc/loader.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00338.html">mc_rtc/log/Logger.h</a>&gt;</code><br />
-<code>#include &lt;array&gt;</code><br />
-<code>#include &lt;fstream&gt;</code><br />
-<code>#include &lt;sstream&gt;</code><br />
-<code>#include &lt;thread&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00092.html">mc_control/MCController.h</a>&gt;</code><br />
+<code>#include &lt;mc_rtc/version.h&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01974.html">mc_control::MCGlobalController</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01978.html">mc_control::MCGlobalController::GlobalConfiguration</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the controller configuration.  <a href="a01978.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00691"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00691.html">mc_control</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a53b7790e199f0eb693195a9e0f3183fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#a53b7790e199f0eb693195a9e0f3183fa">CONTROLLER_CHECK_VERSION</a>(NAME)</td></tr>
+<tr class="memdesc:a53b7790e199f0eb693195a9e0f3183fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set of macros to assist with the writing of an MCController.  <a href="#a53b7790e199f0eb693195a9e0f3183fa">More...</a><br /></td></tr>
+<tr class="separator:a53b7790e199f0eb693195a9e0f3183fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe63c9c89a7762fc5ef9a7589218978c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#abe63c9c89a7762fc5ef9a7589218978c">CONTROLLER_CONSTRUCTOR</a>(NAME,  TYPE)</td></tr>
+<tr class="memdesc:abe63c9c89a7762fc5ef9a7589218978c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a handle to construct the controller with Json config.  <a href="#abe63c9c89a7762fc5ef9a7589218978c">More...</a><br /></td></tr>
+<tr class="separator:abe63c9c89a7762fc5ef9a7589218978c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae12249535408100bcdf1007ef0eb8fb8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00083.html#ae12249535408100bcdf1007ef0eb8fb8">SIMPLE_CONTROLLER_CONSTRUCTOR</a>(NAME,  TYPE)</td></tr>
+<tr class="memdesc:ae12249535408100bcdf1007ef0eb8fb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a handle to construct a generic controller.  <a href="#ae12249535408100bcdf1007ef0eb8fb8">More...</a><br /></td></tr>
+<tr class="separator:ae12249535408100bcdf1007ef0eb8fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a53b7790e199f0eb693195a9e0f3183fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53b7790e199f0eb693195a9e0f3183fa">&#9670;&nbsp;</a></span>CONTROLLER_CHECK_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONTROLLER_CHECK_VERSION</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span>(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                 \</div><div class="line">  {                                                                                                               \</div><div class="line">    LOG_ERROR(NAME &lt;&lt; <span class="stringliteral">&quot; was compiled with &quot;</span> &lt;&lt; mc_rtc::MC_RTC_VERSION &lt;&lt; <span class="stringliteral">&quot; but mc_rtc is currently at version &quot;</span>   \</div><div class="line">                   &lt;&lt; mc_rtc::version() &lt;&lt; <span class="stringliteral">&quot;, you might experience subtle issues and should recompile your code&quot;</span>) \</div><div class="line">  }</div></div><!-- fragment -->
+<p>Set of macros to assist with the writing of an MCController. </p>
+<p>A simple compile-time versus run-time version checking macro</p>
+<p>If you are not relying on CONTROLLER_CONSTRUCTOR or SIMPLE_CONTROLLER_CONSTRUCTOR you should use this in your MC_RTC_CONTROLLER implementation </p>
+
+</div>
+</div>
+<a id="abe63c9c89a7762fc5ef9a7589218978c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe63c9c89a7762fc5ef9a7589218978c">&#9670;&nbsp;</a></span>CONTROLLER_CONSTRUCTOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONTROLLER_CONSTRUCTOR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TYPE&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span>                                                                                                      \</div><div class="line">  {                                                                                                               \</div><div class="line">    CONTROLLER_MODULE_API <span class="keywordtype">void</span> MC_RTC_CONTROLLER(std::vector&lt;std::string&gt; &amp; names)                                \</div><div class="line">    {                                                                                                             \</div><div class="line">      CONTROLLER_CHECK_VERSION(NAME)                                                                              \</div><div class="line">      names = {NAME};                                                                                             \</div><div class="line">    }                                                                                                             \</div><div class="line">    CONTROLLER_MODULE_API <span class="keywordtype">void</span> destroy(<a class="code" href="a02022.html">mc_control::MCController</a> * ptr)                                            \</div><div class="line">    {                                                                                                             \</div><div class="line">      delete ptr;                                                                                                 \</div><div class="line">    }                                                                                                             \</div><div class="line">    CONTROLLER_MODULE_API <a class="code" href="a02022.html">mc_control::MCController</a> * create(<span class="keyword">const</span> std::string &amp;,                                  \</div><div class="line">                                                            <span class="keyword">const</span> std::shared_ptr&lt;mc_rbdyn::RobotModule&gt; &amp; robot, \</div><div class="line">                                                            <span class="keyword">const</span> <span class="keywordtype">double</span> &amp; dt,                                    \</div><div class="line">                                                            <span class="keyword">const</span> <a class="code" href="a02250.html">mc_control::Configuration</a> &amp; conf)               \</div><div class="line">    {                                                                                                             \</div><div class="line">      return <span class="keyword">new</span> TYPE(robot, dt, conf);                                                                           \</div><div class="line">    }                                                                                                             \</div><div class="line">  }</div><div class="ttc" id="a02022_html"><div class="ttname"><a href="a02022.html">mc_control::MCController</a></div><div class="ttdoc">MCController is the base class to implement all controllers. </div><div class="ttdef"><b>Definition:</b> MCController.h:58</div></div>
+<div class="ttc" id="a02250_html"><div class="ttname"><a href="a02250.html">mc_rtc::Configuration</a></div><div class="ttdoc">Simplify access to values hold within a JSON file. </div><div class="ttdef"><b>Definition:</b> mc_rtc/Configuration.h:100</div></div>
+</div><!-- fragment -->
+<p>Provides a handle to construct the controller with Json config. </p>
+
+</div>
+</div>
+<a id="ae12249535408100bcdf1007ef0eb8fb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae12249535408100bcdf1007ef0eb8fb8">&#9670;&nbsp;</a></span>SIMPLE_CONTROLLER_CONSTRUCTOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SIMPLE_CONTROLLER_CONSTRUCTOR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TYPE&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span>                                                                                                      \</div><div class="line">  {                                                                                                               \</div><div class="line">    CONTROLLER_MODULE_API <span class="keywordtype">void</span> MC_RTC_CONTROLLER(std::vector&lt;std::string&gt; &amp; names)                                \</div><div class="line">    {                                                                                                             \</div><div class="line">      CONTROLLER_CHECK_VERSION(NAME)                                                                              \</div><div class="line">      names = {NAME};                                                                                             \</div><div class="line">    }                                                                                                             \</div><div class="line">    CONTROLLER_MODULE_API <span class="keywordtype">void</span> destroy(<a class="code" href="a02022.html">mc_control::MCController</a> * ptr)                                            \</div><div class="line">    {                                                                                                             \</div><div class="line">      delete ptr;                                                                                                 \</div><div class="line">    }                                                                                                             \</div><div class="line">    CONTROLLER_MODULE_API <a class="code" href="a02022.html">mc_control::MCController</a> * create(<span class="keyword">const</span> std::string &amp;,                                  \</div><div class="line">                                                            <span class="keyword">const</span> std::shared_ptr&lt;mc_rbdyn::RobotModule&gt; &amp; robot, \</div><div class="line">                                                            <span class="keyword">const</span> <span class="keywordtype">double</span> &amp; dt,                                    \</div><div class="line">                                                            <span class="keyword">const</span> <a class="code" href="a02250.html">mc_control::Configuration</a> &amp;)                    \</div><div class="line">    {                                                                                                             \</div><div class="line">      return <span class="keyword">new</span> TYPE(robot, dt);                                                                                 \</div><div class="line">    }                                                                                                             \</div><div class="line">  }</div><div class="ttc" id="a02022_html"><div class="ttname"><a href="a02022.html">mc_control::MCController</a></div><div class="ttdoc">MCController is the base class to implement all controllers. </div><div class="ttdef"><b>Definition:</b> MCController.h:58</div></div>
+<div class="ttc" id="a02250_html"><div class="ttname"><a href="a02250.html">mc_rtc::Configuration</a></div><div class="ttdoc">Simplify access to values hold within a JSON file. </div><div class="ttdef"><b>Definition:</b> mc_rtc/Configuration.h:100</div></div>
+</div><!-- fragment -->
+<p>Provides a handle to construct a generic controller. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8a948ff1aa35df8f7730fc54bf71041a.html">mc_control</a></li><li class="navelem"><a class="el" href="a00083.html">mc_global_controller.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:44 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8a948ff1aa35df8f7730fc54bf71041a.html">mc_control</a></li><li class="navelem"><a class="el" href="a00083.html">mc_controller.h</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

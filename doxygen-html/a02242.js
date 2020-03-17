@@ -1,6 +1,5 @@
 var a02242 =
 [
-    [ "decay_t", "a02242.html#a5b8154625caf14c4dcc919d071c7ba46", null ],
-    [ "type", "a02242.html#a0b4ee875f9490a7d6bef544143160904", null ],
-    [ "is_arithmetic", "a02242.html#a63d9d0405b36451f9c9441f71e3642f6", null ]
+    [ "test", "a02242.html#a2620f7e45fb564c548f34b045d2694e7", null ],
+    [ "test", "a02242.html#a4baa69ec78f3c15e6563f9416632b4c3", null ]
 ];

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>DataStore.h File Reference</title>
+<title>ConfigurationHelpers.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,67 +70,31 @@ $(document).ready(function(){initNavTree('a00227.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DataStore.h File Reference</div>  </div>
+<div class="title">ConfigurationHelpers.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00344.html">mc_rtc/logging.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00350.html">mc_rtc/utils_api.h</a>&gt;</code><br />
-<code>#include &lt;functional&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
-<code>#include &lt;stdexcept&gt;</code><br />
-<code>#include &lt;unordered_map&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
-<code>#include &lt;Eigen/Core&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a03894.html">mc_rtc/Configuration.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00353.html">mc_rtc/logging.h</a>&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02242.html">mc_rtc::internal::lambda_traits&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract return type and argument types from a lambda by accessing ::operator()  <a href="a02242.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02246.html">mc_rtc::internal::lambda_traits&lt; RetT(C::*)(Args...) const &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization that matches non-mutable lambda.  <a href="a02246.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02250.html">mc_rtc::internal::lambda_traits&lt; RetT(C::*)(Args...)&gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization that matches mutable lambda.  <a href="a02250.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02254.html">mc_rtc::internal::args_t&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bend usual C++ rules to deduct the argument types in call.  <a href="a02254.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02258.html">mc_rtc::internal::Allocator&lt; T, typename &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocator&lt;T&gt; is std::allocator&lt;T&gt; for usual types.  <a href="a02258.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02262.html">mc_rtc::internal::Allocator&lt; T, typename T::eigen_aligned_operator_new_marker_type &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocator&lt;T&gt; is Eigen::aligned_allocator for EIGEN_MAKE_ALIGNED_OPERATOR_NEW types.  <a href="a02262.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02266.html">mc_rtc::DataStore</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic data store.  <a href="a02266.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00693"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00693.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00693"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02226.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00697.html">mc_rbdyn</a> objects. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00710"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html">mc_rtc::internal</a></td></tr>
+<tr class="memitem:a00708"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00708.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00708"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02250.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00712.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a759676405e1815363e6d9094dd1919b1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a759676405e1815363e6d9094dd1919b1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00710.html#a759676405e1815363e6d9094dd1919b1">mc_rtc::internal::is_valid_hash</a> (std::size_t h)</td></tr>
-<tr class="separator:a759676405e1815363e6d9094dd1919b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memTemplParams" colspan="2">template&lt;typename T , typename U , typename... Args&gt; </td></tr>
-<tr class="memitem:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00710.html#a0f0cc0f5914bc62d93b19fda0ed53e75">mc_rtc::internal::is_valid_hash</a> (std::size_t h)</td></tr>
-<tr class="separator:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af017e274f3cf4699850fdbf753d07fa2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00350.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html#af017e274f3cf4699850fdbf753d07fa2">mc_rtc::internal::demangle</a> (const char *name)</td></tr>
-<tr class="separator:af017e274f3cf4699850fdbf753d07fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f9098d8e8055ca6d2d02b576714b9f2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8f9098d8e8055ca6d2d02b576714b9f2"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00710.html#a8f9098d8e8055ca6d2d02b576714b9f2">mc_rtc::internal::type_name</a> ()</td></tr>
-<tr class="separator:a8f9098d8e8055ca6d2d02b576714b9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1107b5d5bcf197a41add86ce445c866"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ac1107b5d5bcf197a41add86ce445c866"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00708.html#ac1107b5d5bcf197a41add86ce445c866">mc_rtc::fromVectorOrElement</a> (const <a class="el" href="a02250.html">mc_rtc::Configuration</a> &amp;config, const std::string &amp;key, const std::vector&lt; T &gt; &amp;defaultVec)</td></tr>
+<tr class="memdesc:ac1107b5d5bcf197a41add86ce445c866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to convert a read a vector or single element as a vector, use default value if it fails.  <a href="a00708.html#ac1107b5d5bcf197a41add86ce445c866">More...</a><br /></td></tr>
+<tr class="separator:ac1107b5d5bcf197a41add86ce445c866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c308b4400fb83031251be1f6ab0adb2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9c308b4400fb83031251be1f6ab0adb2"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00708.html#a9c308b4400fb83031251be1f6ab0adb2">mc_rtc::fromVectorOrElement</a> (const <a class="el" href="a02250.html">mc_rtc::Configuration</a> &amp;config, const std::string &amp;key)</td></tr>
+<tr class="memdesc:a9c308b4400fb83031251be1f6ab0adb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to convert a read a vector or single element as a vector.  <a href="a00708.html#a9c308b4400fb83031251be1f6ab0adb2">More...</a><br /></td></tr>
+<tr class="separator:a9c308b4400fb83031251be1f6ab0adb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -138,8 +102,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00227.html">DataStore.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:44 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00227.html">ConfigurationHelpers.h</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -1,6 +1,8 @@
 var a02526 =
 [
-    [ "ObjectDeleter", "a02526.html#ad9d8c7bebf11fd046f3264f25d73f56d", null ],
-    [ "ObjectDeleter", "a02526.html#a3527e6200ab7ef9bf24606c987072039", null ],
-    [ "operator()", "a02526.html#a7cd3bbddec0b057af90444eb5794ad80", null ]
+    [ "XYThetaROImpl", "a02526.html#ac0153847ff6a36d76c47cae5292be192", null ],
+    [ "XYThetaROImpl", "a02526.html#a17aa4be99cbd7e12a198638912b80726", null ],
+    [ "write", "a02526.html#a2a9635b525b47f997fffcf697ae4b2f5", null ],
+    [ "write_size", "a02526.html#a10d9c0c5738157dac5fdb0e5dec24c21", null ],
+    [ "type", "a02526.html#aff70a2c515c79366813abd70e1d09996", null ]
 ];

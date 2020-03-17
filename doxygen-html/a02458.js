@@ -1,8 +1,8 @@
 var a02458 =
 [
-    [ "TrajectoryImpl", "a02458.html#aa5739c5b73ee002d3bd0857c1daf5695", null ],
-    [ "TrajectoryImpl", "a02458.html#ad07155be02930a5f4ca5ad25527f5180", null ],
-    [ "write", "a02458.html#ab4ad9750f804e593ee1fcc52e35ff0e1", null ],
-    [ "write_size", "a02458.html#addbe3e273eb652e9b31e8fb2d15d0738", null ],
-    [ "type", "a02458.html#ad6c1b7129408a35fa938b3a4e594e669", null ]
+    [ "Point3DImpl", "a02458.html#aebb2b0f65583cdb425856d7589a325d9", null ],
+    [ "Point3DImpl", "a02458.html#a81ef40f7c6064e0c1888601141f88cfd", null ],
+    [ "write", "a02458.html#a9101fdc36b843f5a6e93eb033095de14", null ],
+    [ "write_size", "a02458.html#a0c1fd00806f16e62c3ee1140799ac02c", null ],
+    [ "type", "a02458.html#a0471c69344137b9065b0c26db9d43639", null ]
 ];

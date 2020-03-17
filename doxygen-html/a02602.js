@@ -1,6 +1,11 @@
 var a02602 =
 [
-    [ "CompoundJointConstraint", "a02602.html#a6bab2c52e39b3c37781091ff0477b554", null ],
-    [ "addToSolver", "a02602.html#ab5c96ef4ac5e418eed9e07ad0be00064", null ],
-    [ "removeFromSolver", "a02602.html#af01c6fabfd9fb7f818d62693aaaac1ed", null ]
+    [ "BoundedSpeedConstr", "a02602.html#a43af0872dd664d13d864053d3ecfda18", null ],
+    [ "addBoundedSpeed", "a02602.html#abcd47fff771a0c7357bd5b682398b3df", null ],
+    [ "addBoundedSpeed", "a02602.html#aff11f05b8b3f2139db8ae2d95ce4afee", null ],
+    [ "addToSolver", "a02602.html#a54adcdc90cc41a64a9723b693f8beb1b", null ],
+    [ "nrBoundedSpeeds", "a02602.html#a70c84d6defba583690d9175ca4cf192d", null ],
+    [ "removeBoundedSpeed", "a02602.html#a5b85799a5bb8df9c5344cd9d3f630708", null ],
+    [ "removeFromSolver", "a02602.html#a0214a46d2452e2dcf610bbf44f863019", null ],
+    [ "reset", "a02602.html#ab0fffcd8e01c61ced64cf5371999acb7", null ]
 ];

@@ -1,17 +1,10 @@
 var a02546 =
 [
-    [ "serialize_fn", "a02546.html#a6fd0d1237a81647e462f7af2b4225d5e", null ],
-    [ "Policy", "a02546.html#a0fefb36635930cf5a9db966442756b9b", [
-      [ "NON_THREADED", "a02546.html#a0fefb36635930cf5a9db966442756b9ba1515271d5edd3952e5aa146109a98e78", null ],
-      [ "THREADED", "a02546.html#a0fefb36635930cf5a9db966442756b9ba1ba1ba2bd2141794d82c4363b7e533f7", null ]
-    ] ],
-    [ "Logger", "a02546.html#a18ce85d2d7612f7029b47a3931c72316", null ],
-    [ "~Logger", "a02546.html#a7692f0ca12a02805cba83a9422de5a4e", null ],
-    [ "addLogEntry", "a02546.html#a1fe9ebf879c471ae7741170c9e0d6933", null ],
-    [ "log", "a02546.html#aec88caf27ebb9c9615ed4fd51d9ccd98", null ],
-    [ "removeLogEntry", "a02546.html#a2b1427e1251ebbd90947468fc4bdf964", null ],
-    [ "setup", "a02546.html#a986b2719c1337aa9d1e84e2b0b34481c", null ],
-    [ "start", "a02546.html#a7a6f0685999b14f4bf67cd30dce03413", null ],
-    [ "t", "a02546.html#aeb0d9597ada6a67eb2a89fcda8c74e7d", null ],
-    [ "magic", "a02546.html#ae70a958cf17138f9b726740deab0d34c", null ]
+    [ "callback_t", "a02546.html#ae88a2f28e5fa458257316949fd08a539", null ],
+    [ "handle_map_t", "a02546.html#a9c2401890571dbbde00eda2fb1e87710", null ],
+    [ "close", "a02546.html#a63ca4850e72fbb0ea10d1362c5402a51", null ],
+    [ "init", "a02546.html#a2d478e04efaa0d71d340ed45577b478a", null ],
+    [ "load_libraries", "a02546.html#a9611f8c05257ffd4651e68ea2f4f7e68", null ],
+    [ "ObjectLoader", "a02546.html#a0b9f840f1f1352debe8e77115e2454b1", null ],
+    [ "default_cb", "a02546.html#a2569410b656743e1d955a9aafc7ee793", null ]
 ];

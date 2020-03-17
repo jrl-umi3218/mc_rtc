@@ -1,5 +1,10 @@
 var a02070 =
 [
-    [ "load", "a02070.html#ae134fc4eeb684a9fe90b8bea94f74b84", null ],
-    [ "save", "a02070.html#a24281b69d10bef2a02ccc3f57f5c1508", null ]
+    [ "available_observers", "a02070.html#ac104339befa76e8673940c1a86ad2847", null ],
+    [ "clear", "a02070.html#a8649f98bfdfa69a7b1c76bea9897c933", null ],
+    [ "enable_sandboxing", "a02070.html#a8182bc3bc5952e68b6dd9d7ea8435478", null ],
+    [ "get_observer", "a02070.html#a3d1ff69617f71a1eb0aea7aedc13caa9", null ],
+    [ "has_observer", "a02070.html#aac203ca60191fa7e4041339a52baf625", null ],
+    [ "set_verbosity", "a02070.html#afc7d5d833c4d4ce520be8fa81a0b1b63", null ],
+    [ "update_module_path", "a02070.html#a56fc6c53c0487328ed16473706e82df6", null ]
 ];

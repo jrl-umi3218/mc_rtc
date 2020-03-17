@@ -1,5 +1,7 @@
 var a02090 =
 [
-    [ "points", "a02090.html#a0b18450a98acf02d8b5b56b0c74e84a1", null ],
-    [ "qpcontact_ptr", "a02090.html#a18f4220244dc364488e15a5b6fc7bdf6", null ]
+    [ "j1", "a02090.html#a4fc963a5996bfafc4e1e0675e9db6b6a", null ],
+    [ "j2", "a02090.html#ac9819775fec0daea6ce39b6979ef153d", null ],
+    [ "p1", "a02090.html#a8c937c01687684763d1d040626ca9dcb", null ],
+    [ "p2", "a02090.html#a0cc1f94178b76862c60dd6d6c86ddb07", null ]
 ];

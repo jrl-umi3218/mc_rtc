@@ -1,18 +1,14 @@
 var a02058 =
 [
-    [ "BodySensor", "a02058.html#a0ccd7feb3cb52abec8d65b3da9df4989", null ],
-    [ "BodySensor", "a02058.html#a44f050d481291a6015f3a5423e5098fe", null ],
-    [ "acceleration", "a02058.html#a9ddd4e669bf23bc6d3ec7428a1f030ea", null ],
-    [ "acceleration", "a02058.html#a47391dc54a7bfcfc505a52c8352d066c", null ],
-    [ "angularVelocity", "a02058.html#a0a4ae01169db62588ed207fa0b60b117", null ],
-    [ "angularVelocity", "a02058.html#aaf978a01b2013293156e3a825b58f868", null ],
-    [ "linearVelocity", "a02058.html#ad01dc341ccff4cab51488c3cbffe21ee", null ],
-    [ "linearVelocity", "a02058.html#a0df07b5cdfd86d18be2227182bb2aec2", null ],
-    [ "name", "a02058.html#aefae278e4a03612f61cff411f36210db", null ],
-    [ "orientation", "a02058.html#abcf42c2151733e3ef80c9594cb37a43a", null ],
-    [ "orientation", "a02058.html#a9544ac0b6bb997b65db638bf52b2d5a3", null ],
-    [ "parentBody", "a02058.html#ab5d6323b65ec6e712804d0c8590c8b55", null ],
-    [ "position", "a02058.html#a2be6a3b9c958d75d4c4310418356e014", null ],
-    [ "position", "a02058.html#a644c0b250aaa8890d6b8f9ea26f2afb6", null ],
-    [ "X_b_s", "a02058.html#adb95b5d1ba5be5b51912cfc058f2371d", null ]
+    [ "KinematicInertialObserver", "a02058.html#a165a77caf0652ffe0388127ceafe7ba6", null ],
+    [ "addToGUI", "a02058.html#a8d79052ede7702b4e1271aa45f8c17e4", null ],
+    [ "addToLogger", "a02058.html#a70349dda9da00837225afa919fdc9ce7", null ],
+    [ "removeFromGUI", "a02058.html#aee19bc2e4f9457e9df7e60fa5f562769", null ],
+    [ "removeFromLogger", "a02058.html#ab7a34a69d1337573093b19cce5f4442e", null ],
+    [ "reset", "a02058.html#ae964341c760e3f942152f39d4d596432", null ],
+    [ "reset", "a02058.html#a218d679b8851235ad18b2a49b2c71e01", null ],
+    [ "run", "a02058.html#a2c4b4fe83ab2ad282f02ad6c093e1be6", null ],
+    [ "updateBodySensor", "a02058.html#a70199d5e62d4869778cd91e5e1f1bdee", null ],
+    [ "updateRobots", "a02058.html#ae46ba5b39b85a8b8e271b8b9c63a9a3b", null ],
+    [ "velW", "a02058.html#a2c973c62cabf96b73042047669579a64", null ]
 ];

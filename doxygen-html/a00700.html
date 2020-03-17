@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_observers Namespace Reference</title>
+<title>mc_rbdyn Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,51 +70,1331 @@ $(document).ready(function(){initNavTree('a00700.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">mc_observers Namespace Reference</div>  </div>
+<div class="title">mc_rbdyn Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:a00706"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00706.html">detail</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00710"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00710.html">details</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00707"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html">lipm_stabilizer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02026.html">BodySensorObserver</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02066.html">Base</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct represents a base for the creation of a robot.  <a href="a02066.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02030.html">EncoderObserver</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02070.html">BodySensor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure defines a body sensor, that is a sensor that provides dynamic information about a body.  <a href="a02070.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02034.html">KinematicInertialObserver</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kinematics-inertial observer of the floating base position with finite differences estimation of the floating base velocity using low-pass filtering.  <a href="a02034.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02074.html">Collision</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02038.html">KinematicInertialPoseObserver</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kinematics-inertial observer of the floating base position.  <a href="a02038.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02078.html">CompoundJointConstraintDescription</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describe a compound joint constraint.  <a href="a02078.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02042.html">Observer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">State observation API.  <a href="a02042.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02106.html">Contact</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02046.html">ObserverLoader</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load <a class="el" href="a02042.html" title="State observation API. ">Observer</a> instances from shared libraries.  <a href="a02046.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02110.html">CylindricalSurface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02114.html">Flexibility</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure holds a flexible joint, if such a joint is part of a robot, then the following dynamic constraint will be applied for the flexible joint torques:  <a href="a02114.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02118.html">ForceSensor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This struct is intended to hold static information about a force sensor and the current reading of said sensor.  <a href="a02118.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02122.html">GripperSurface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02150.html">Mimic</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores mimic joint information.  <a href="a02150.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02154.html">PlanarSurface</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02162.html">Plane</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02166.html">PolygonInterpolator</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02158.html">QuadraticGenerator</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02174.html">Robot</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02190.html">RobotLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load <a class="el" href="a02194.html">RobotModule</a> instances from shared libraries.  <a href="a02190.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02194.html">RobotModule</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02202.html">Robots</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02206.html">Springs</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds data regarding springs in a robot.  <a href="a02206.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02210.html">Surface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a45c5f50ee1e5bcc4959faef24b334643"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a45c5f50ee1e5bcc4959faef24b334643">ObserverPtr</a> = std::shared_ptr&lt; <a class="el" href="a02042.html">mc_observers::Observer</a> &gt;</td></tr>
-<tr class="separator:a45c5f50ee1e5bcc4959faef24b334643"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a728d731db2806e7673f67b958970e558"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="a02070.html">BodySensor</a>, Eigen::aligned_allocator&lt; <a class="el" href="a02070.html">BodySensor</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a728d731db2806e7673f67b958970e558">BodySensorVector</a></td></tr>
+<tr class="separator:a728d731db2806e7673f67b958970e558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96a35f8f44c0b0eb301fabc4af2bd978"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a96a35f8f44c0b0eb301fabc4af2bd978">CompoundJointConstraintDescriptionVector</a> = std::vector&lt; <a class="el" href="a02078.html">CompoundJointConstraintDescription</a>, Eigen::aligned_allocator&lt; <a class="el" href="a02078.html">CompoundJointConstraintDescription</a> &gt; &gt;</td></tr>
+<tr class="separator:a96a35f8f44c0b0eb301fabc4af2bd978"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af67e459a90b9a864418fca7d55d959a3"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; <a class="el" href="a02194.html">RobotModule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#af67e459a90b9a864418fca7d55d959a3">RobotModulePtr</a></td></tr>
+<tr class="separator:af67e459a90b9a864418fca7d55d959a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95605f5cb57b7c5b39027072bedbbc04"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a95605f5cb57b7c5b39027072bedbbc04">RobotModuleVector</a> = std::vector&lt; <a class="el" href="a02194.html">RobotModule</a>, Eigen::aligned_allocator&lt; <a class="el" href="a02194.html">RobotModule</a> &gt; &gt;</td></tr>
+<tr class="separator:a95605f5cb57b7c5b39027072bedbbc04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a848cf0b2e8f6ca6f18ceba1769d9a426"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; <a class="el" href="a02210.html">Surface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a848cf0b2e8f6ca6f18ceba1769d9a426">SurfacePtr</a></td></tr>
+<tr class="separator:a848cf0b2e8f6ca6f18ceba1769d9a426"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aca0a2bc620d221c02c834716d875c1e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#aca0a2bc620d221c02c834716d875c1e0">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="a02074.html">Collision</a> &amp;c)</td></tr>
+<tr class="separator:aca0a2bc620d221c02c834716d875c1e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a736c36f68b3eff9f08124c8b1a58cba3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a736c36f68b3eff9f08124c8b1a58cba3">computePoints</a> (const <a class="el" href="a02210.html">mc_rbdyn::Surface</a> &amp;robotSurface, const <a class="el" href="a02210.html">mc_rbdyn::Surface</a> &amp;envSurface, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;X_es_rs)</td></tr>
+<tr class="separator:a736c36f68b3eff9f08124c8b1a58cba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca49bff3651cf81d0b834813b80fcdf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#aca49bff3651cf81d0b834813b80fcdf6">planar</a> (const double &amp;T, const double &amp;B, const double &amp;N_rot)</td></tr>
+<tr class="separator:aca49bff3651cf81d0b834813b80fcdf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44fdec158ad0a6005388d1f2296b154f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a44fdec158ad0a6005388d1f2296b154f">cylindrical</a> (const double &amp;T, const double &amp;T_rot)</td></tr>
+<tr class="separator:a44fdec158ad0a6005388d1f2296b154f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2a0e2d6fd6cdece777a838b76a7c1da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#ad2a0e2d6fd6cdece777a838b76a7c1da">planarParam</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;X_es_rs, double &amp;T, double &amp;B, double &amp;N_rot)</td></tr>
+<tr class="separator:ad2a0e2d6fd6cdece777a838b76a7c1da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a611ca01f8c4f76581c96c8df0202f195"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a611ca01f8c4f76581c96c8df0202f195">cylindricalParam</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;X_es_rs, double &amp;T, double &amp;T_rot)</td></tr>
+<tr class="separator:a611ca01f8c4f76581c96c8df0202f195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6670e00a7e663e03a4709533a706e89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#ac6670e00a7e663e03a4709533a706e89">jointParam</a> (const <a class="el" href="a02210.html">Surface</a> &amp;r1Surface, const <a class="el" href="a02210.html">Surface</a> &amp;r2Surface, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;X_es_rs)</td></tr>
+<tr class="separator:ac6670e00a7e663e03a4709533a706e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3313c1739e7847d2155cd1e8eb248c1e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; <a class="el" href="a02162.html">Plane</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a3313c1739e7847d2155cd1e8eb248c1e">planes_from_polygon</a> (const std::shared_ptr&lt; geos::geom::Geometry &gt; &amp;geometry)</td></tr>
+<tr class="separator:a3313c1739e7847d2155cd1e8eb248c1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b64034329a5f248185cf1904c0732a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a8b64034329a5f248185cf1904c0732a0">points_from_polygon</a> (std::shared_ptr&lt; geos::geom::Geometry &gt; geometry)</td></tr>
+<tr class="separator:a8b64034329a5f248185cf1904c0732a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd726f23454c176e9845fa296326f23f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02194.html#a5b8304a1ea905fa0378a31dcf65b1460">RobotModule::bounds_t</a> <a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#acd726f23454c176e9845fa296326f23f">urdf_limits_to_bounds</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag:https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/" href="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00641.html">mc_rbdyn_urdf::Limits</a> &amp;limits)</td></tr>
+<tr class="memdesc:acd726f23454c176e9845fa296326f23f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts limits provided by <a class="elRef" doxygen="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag:https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/" href="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00015.html">mc_rbdyn_urdf</a> to bounds.  <a href="#acd726f23454c176e9845fa296326f23f">More...</a><br /></td></tr>
+<tr class="separator:acd726f23454c176e9845fa296326f23f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acaac690d2e96da3b8254fecefe1cccf9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; <a class="el" href="a02202.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#acaac690d2e96da3b8254fecefe1cccf9">loadRobot</a> (const <a class="el" href="a02194.html">RobotModule</a> &amp;module, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:acaac690d2e96da3b8254fecefe1cccf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f3fbf6971706876454da1142aadb193"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; <a class="el" href="a02202.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a7f3fbf6971706876454da1142aadb193">loadRobot</a> (const <a class="el" href="a02194.html">RobotModule</a> &amp;module, const std::string &amp;surfaceDir, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:a7f3fbf6971706876454da1142aadb193"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90beb4c07fba317439956363ae429538"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; <a class="el" href="a02202.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a90beb4c07fba317439956363ae429538">loadRobots</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02194.html">RobotModule</a> &gt;&gt; &amp;modules)</td></tr>
+<tr class="separator:a90beb4c07fba317439956363ae429538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1506cb6d1d95f69cae2f1a6c072fa406"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; <a class="el" href="a02202.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a1506cb6d1d95f69cae2f1a6c072fa406">loadRobots</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02194.html">RobotModule</a> &gt;&gt; &amp;modules, const std::vector&lt; std::string &gt; &amp;surfaceDirs)</td></tr>
+<tr class="separator:a1506cb6d1d95f69cae2f1a6c072fa406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afad00246a5238eb31795027c0acad7a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; <a class="el" href="a02202.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#afad00246a5238eb31795027c0acad7a9">loadRobotAndEnv</a> (const <a class="el" href="a02194.html">RobotModule</a> &amp;module, const <a class="el" href="a02194.html">RobotModule</a> &amp;envModule, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:afad00246a5238eb31795027c0acad7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21e283b3c61bc0db909f2a950bf4384a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; <a class="el" href="a02202.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a21e283b3c61bc0db909f2a950bf4384a">loadRobotAndEnv</a> (const <a class="el" href="a02194.html">RobotModule</a> &amp;module, const std::string &amp;surfaceDir, const <a class="el" href="a02194.html">RobotModule</a> &amp;envModule, const std::string &amp;envSurfaceDir, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:a21e283b3c61bc0db909f2a950bf4384a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e415d422767b48828fbf2e282b66041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; <a class="el" href="a02202.html">Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a8e415d422767b48828fbf2e282b66041">loadRobotFromUrdf</a> (const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
+<tr class="separator:a8e415d422767b48828fbf2e282b66041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f178afee4c03533ae15c4dc04c143e2"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a5f178afee4c03533ae15c4dc04c143e2">rpyToMat</a> (const double &amp;r, const double &amp;p, const double &amp;y)</td></tr>
+<tr class="memdesc:a5f178afee4c03533ae15c4dc04c143e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotation matrix from roll-pitch-yaw angles.  <a href="#a5f178afee4c03533ae15c4dc04c143e2">More...</a><br /></td></tr>
+<tr class="separator:a5f178afee4c03533ae15c4dc04c143e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04f15be86a9827b0d076764f344406ab"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a04f15be86a9827b0d076764f344406ab">rpyToMat</a> (const Eigen::Vector3d &amp;rpy)</td></tr>
+<tr class="memdesc:a04f15be86a9827b0d076764f344406ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotation matrix from roll-pitch-yaw angles.  <a href="#a04f15be86a9827b0d076764f344406ab">More...</a><br /></td></tr>
+<tr class="separator:a04f15be86a9827b0d076764f344406ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa2b9eed96e67a1bdb6abf90bb597063"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#afa2b9eed96e67a1bdb6abf90bb597063">rpyToPT</a> (const Eigen::Vector3d &amp;rpy)</td></tr>
+<tr class="memdesc:afa2b9eed96e67a1bdb6abf90bb597063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plucker transfrom from roll-pitch-yaw angles.  <a href="#afa2b9eed96e67a1bdb6abf90bb597063">More...</a><br /></td></tr>
+<tr class="separator:afa2b9eed96e67a1bdb6abf90bb597063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4626f965b6c407b0bd14e10f98ec42b9"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a4626f965b6c407b0bd14e10f98ec42b9">rpyToPT</a> (const double &amp;r, const double &amp;p, const double &amp;y)</td></tr>
+<tr class="memdesc:a4626f965b6c407b0bd14e10f98ec42b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plucker transfrom from roll-pitch-yaw angles.  <a href="#a4626f965b6c407b0bd14e10f98ec42b9">More...</a><br /></td></tr>
+<tr class="separator:a4626f965b6c407b0bd14e10f98ec42b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0948fb6dc9382e116f65c76261d26ea0"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a0948fb6dc9382e116f65c76261d26ea0">rpyFromMat</a> (const Eigen::Matrix3d &amp;E)</td></tr>
+<tr class="memdesc:a0948fb6dc9382e116f65c76261d26ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Roll-pitch-yaw from rotation matrix.  <a href="#a0948fb6dc9382e116f65c76261d26ea0">More...</a><br /></td></tr>
+<tr class="separator:a0948fb6dc9382e116f65c76261d26ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a058cd1f189f02e2c4986b6aacffa8195"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a058cd1f189f02e2c4986b6aacffa8195">rpyFromQuat</a> (const Eigen::Quaterniond &amp;quat)</td></tr>
+<tr class="memdesc:a058cd1f189f02e2c4986b6aacffa8195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Roll-pitch-yaw from unit quaternion.  <a href="#a058cd1f189f02e2c4986b6aacffa8195">More...</a><br /></td></tr>
+<tr class="separator:a058cd1f189f02e2c4986b6aacffa8195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf1399b68c68126e373f564e95bc7531"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#adf1399b68c68126e373f564e95bc7531">surface_to_sch</a> (const <a class="el" href="a02210.html">mc_rbdyn::Surface</a> &amp;surface, const double &amp;depth=0.01, const unsigned int &amp;slice=8)</td></tr>
+<tr class="separator:adf1399b68c68126e373f564e95bc7531"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3db1776d4f8f36e1eb2a8c51bc157867"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a3db1776d4f8f36e1eb2a8c51bc157867">sch_polyhedron</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt; &amp;points)</td></tr>
+<tr class="separator:a3db1776d4f8f36e1eb2a8c51bc157867"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96cab2abc78656a41b2b56987c5fbbfa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a96cab2abc78656a41b2b56987c5fbbfa">planar_hull</a> (const <a class="el" href="a02154.html">mc_rbdyn::PlanarSurface</a> &amp;surface, const double &amp;depth)</td></tr>
+<tr class="separator:a96cab2abc78656a41b2b56987c5fbbfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcd59f0c2e8c9cd94a6f9800c164e723"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#adcd59f0c2e8c9cd94a6f9800c164e723">cylindrical_hull</a> (const <a class="el" href="a02110.html">mc_rbdyn::CylindricalSurface</a> &amp;surface, const unsigned int &amp;slice)</td></tr>
+<tr class="separator:adcd59f0c2e8c9cd94a6f9800c164e723"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70b7277a0499a32774e608f8def99043"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a70b7277a0499a32774e608f8def99043">gripper_hull</a> (const <a class="el" href="a02122.html">mc_rbdyn::GripperSurface</a> &amp;surface, const double &amp;depth)</td></tr>
+<tr class="separator:a70b7277a0499a32774e608f8def99043"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01a984b0ca29b3b20b799b01e7239a9b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02210.html">Surface</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a01a984b0ca29b3b20b799b01e7239a9b">readRSDFFromDir</a> (const std::string &amp;dirname)</td></tr>
+<tr class="separator:a01a984b0ca29b3b20b799b01e7239a9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a329453006944dae96fa60d86dca66db8"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d <a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#a329453006944dae96fa60d86dca66db8">zmp</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a> &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.)</td></tr>
+<tr class="memdesc:a329453006944dae96fa60d86dca66db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual ZMP computation from net total wrench and the ZMP plane.  <a href="#a329453006944dae96fa60d86dca66db8">More...</a><br /></td></tr>
+<tr class="separator:a329453006944dae96fa60d86dca66db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9d4155584b04e51fdb5c24f5739fc24"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d <a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00700.html#aa9d4155584b04e51fdb5c24f5739fc24">zmp</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a> &amp;netTotalWrench, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;zmpFrame, double minimalNetNormalForce=1.)</td></tr>
+<tr class="memdesc:aa9d4155584b04e51fdb5c24f5739fc24"><td class="mdescLeft">&#160;</td><td class="mdescRight">ZMP computation from net total wrench and a frame.  <a href="#aa9d4155584b04e51fdb5c24f5739fc24">More...</a><br /></td></tr>
+<tr class="separator:aa9d4155584b04e51fdb5c24f5739fc24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface used to load robots </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a45c5f50ee1e5bcc4959faef24b334643"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45c5f50ee1e5bcc4959faef24b334643">&#9670;&nbsp;</a></span>ObserverPtr</h2>
+<a id="a728d731db2806e7673f67b958970e558"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a728d731db2806e7673f67b958970e558">&#9670;&nbsp;</a></span>BodySensorVector</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00700.html#a45c5f50ee1e5bcc4959faef24b334643">mc_observers::ObserverPtr</a> = typedef std::shared_ptr&lt;<a class="el" href="a02042.html">mc_observers::Observer</a>&gt;</td>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="a02070.html">BodySensor</a>, Eigen::aligned_allocator&lt;<a class="el" href="a02070.html">BodySensor</a>&gt; &gt; <a class="el" href="a00700.html#a728d731db2806e7673f67b958970e558">mc_rbdyn::BodySensorVector</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a96a35f8f44c0b0eb301fabc4af2bd978"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96a35f8f44c0b0eb301fabc4af2bd978">&#9670;&nbsp;</a></span>CompoundJointConstraintDescriptionVector</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a00700.html#a96a35f8f44c0b0eb301fabc4af2bd978">mc_rbdyn::CompoundJointConstraintDescriptionVector</a> = typedef std::vector&lt;<a class="el" href="a02078.html">CompoundJointConstraintDescription</a>, Eigen::aligned_allocator&lt;<a class="el" href="a02078.html">CompoundJointConstraintDescription</a>&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af67e459a90b9a864418fca7d55d959a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af67e459a90b9a864418fca7d55d959a3">&#9670;&nbsp;</a></span>RobotModulePtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::shared_ptr&lt;<a class="el" href="a02194.html">RobotModule</a>&gt; <a class="el" href="a00700.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a95605f5cb57b7c5b39027072bedbbc04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95605f5cb57b7c5b39027072bedbbc04">&#9670;&nbsp;</a></span>RobotModuleVector</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a00700.html#a95605f5cb57b7c5b39027072bedbbc04">mc_rbdyn::RobotModuleVector</a> = typedef std::vector&lt;<a class="el" href="a02194.html">RobotModule</a>, Eigen::aligned_allocator&lt;<a class="el" href="a02194.html">RobotModule</a>&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a848cf0b2e8f6ca6f18ceba1769d9a426"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a848cf0b2e8f6ca6f18ceba1769d9a426">&#9670;&nbsp;</a></span>SurfacePtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::shared_ptr&lt;<a class="el" href="a02210.html">Surface</a>&gt; <a class="el" href="a00700.html#a848cf0b2e8f6ca6f18ceba1769d9a426">mc_rbdyn::SurfacePtr</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a736c36f68b3eff9f08124c8b1a58cba3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a736c36f68b3eff9f08124c8b1a58cba3">&#9670;&nbsp;</a></span>computePoints()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a>&gt; mc_rbdyn::computePoints </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02210.html">mc_rbdyn::Surface</a> &amp;&#160;</td>
+          <td class="paramname"><em>robotSurface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02210.html">mc_rbdyn::Surface</a> &amp;&#160;</td>
+          <td class="paramname"><em>envSurface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td>
+          <td class="paramname"><em>X_es_rs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a44fdec158ad0a6005388d1f2296b154f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44fdec158ad0a6005388d1f2296b154f">&#9670;&nbsp;</a></span>cylindrical()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_rbdyn::cylindrical </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>T</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>T_rot</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adcd59f0c2e8c9cd94a6f9800c164e723"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcd59f0c2e8c9cd94a6f9800c164e723">&#9670;&nbsp;</a></span>cylindrical_hull()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a>* mc_rbdyn::cylindrical_hull </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02110.html">mc_rbdyn::CylindricalSurface</a> &amp;&#160;</td>
+          <td class="paramname"><em>surface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramname"><em>slice</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a611ca01f8c4f76581c96c8df0202f195"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a611ca01f8c4f76581c96c8df0202f195">&#9670;&nbsp;</a></span>cylindricalParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> void mc_rbdyn::cylindricalParam </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td>
+          <td class="paramname"><em>X_es_rs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>T</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>T_rot</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a70b7277a0499a32774e608f8def99043"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70b7277a0499a32774e608f8def99043">&#9670;&nbsp;</a></span>gripper_hull()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a>* mc_rbdyn::gripper_hull </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02122.html">mc_rbdyn::GripperSurface</a> &amp;&#160;</td>
+          <td class="paramname"><em>surface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>depth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac6670e00a7e663e03a4709533a706e89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6670e00a7e663e03a4709533a706e89">&#9670;&nbsp;</a></span>jointParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt;double&gt; mc_rbdyn::jointParam </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02210.html">Surface</a> &amp;&#160;</td>
+          <td class="paramname"><em>r1Surface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02210.html">Surface</a> &amp;&#160;</td>
+          <td class="paramname"><em>r2Surface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td>
+          <td class="paramname"><em>X_es_rs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acaac690d2e96da3b8254fecefe1cccf9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acaac690d2e96da3b8254fecefe1cccf9">&#9670;&nbsp;</a></span>loadRobot() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt;<a class="el" href="a02202.html">Robots</a>&gt; mc_rbdyn::loadRobot </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02194.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *&#160;</td>
+          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>baseName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a02010.html#a03fa7c2dd20fecd96b0b92f1ea2977d3">mc_control::MCController::datastore()</a>.</p>
+
+</div>
+</div>
+<a id="a7f3fbf6971706876454da1142aadb193"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f3fbf6971706876454da1142aadb193">&#9670;&nbsp;</a></span>loadRobot() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt;<a class="el" href="a02202.html">Robots</a>&gt; mc_rbdyn::loadRobot </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02194.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>surfaceDir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *&#160;</td>
+          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>baseName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afad00246a5238eb31795027c0acad7a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afad00246a5238eb31795027c0acad7a9">&#9670;&nbsp;</a></span>loadRobotAndEnv() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt;<a class="el" href="a02202.html">Robots</a>&gt; mc_rbdyn::loadRobotAndEnv </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02194.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02194.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>envModule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *&#160;</td>
+          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>baseName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a21e283b3c61bc0db909f2a950bf4384a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21e283b3c61bc0db909f2a950bf4384a">&#9670;&nbsp;</a></span>loadRobotAndEnv() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt;<a class="el" href="a02202.html">Robots</a>&gt; mc_rbdyn::loadRobotAndEnv </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02194.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>module</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>surfaceDir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02194.html">RobotModule</a> &amp;&#160;</td>
+          <td class="paramname"><em>envModule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>envSurfaceDir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *&#160;</td>
+          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>baseName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8e415d422767b48828fbf2e282b66041"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e415d422767b48828fbf2e282b66041">&#9670;&nbsp;</a></span>loadRobotFromUrdf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt;<a class="el" href="a02202.html">Robots</a>&gt; mc_rbdyn::loadRobotFromUrdf </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>urdf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>withVirtualLinks</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>filteredLinks</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>fixed</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *&#160;</td>
+          <td class="paramname"><em>base</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>baseName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a90beb4c07fba317439956363ae429538"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90beb4c07fba317439956363ae429538">&#9670;&nbsp;</a></span>loadRobots() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt;<a class="el" href="a02202.html">Robots</a>&gt; mc_rbdyn::loadRobots </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02194.html">RobotModule</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>modules</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1506cb6d1d95f69cae2f1a6c072fa406"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1506cb6d1d95f69cae2f1a6c072fa406">&#9670;&nbsp;</a></span>loadRobots() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt;<a class="el" href="a02202.html">Robots</a>&gt; mc_rbdyn::loadRobots </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a02194.html">RobotModule</a> &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>modules</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>surfaceDirs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aca0a2bc620d221c02c834716d875c1e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca0a2bc620d221c02c834716d875c1e0">&#9670;&nbsp;</a></span>operator<<()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::ostream&amp; mc_rbdyn::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02074.html">Collision</a> &amp;&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a02074.html#a664a8719f81b8fee2d2b26cd3cf645ab">mc_rbdyn::Collision::isNone()</a>.</p>
+
+</div>
+</div>
+<a id="aca49bff3651cf81d0b834813b80fcdf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca49bff3651cf81d0b834813b80fcdf6">&#9670;&nbsp;</a></span>planar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_rbdyn::planar </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>T</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>B</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>N_rot</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a96cab2abc78656a41b2b56987c5fbbfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96cab2abc78656a41b2b56987c5fbbfa">&#9670;&nbsp;</a></span>planar_hull()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a>* mc_rbdyn::planar_hull </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02154.html">mc_rbdyn::PlanarSurface</a> &amp;&#160;</td>
+          <td class="paramname"><em>surface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>depth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad2a0e2d6fd6cdece777a838b76a7c1da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2a0e2d6fd6cdece777a838b76a7c1da">&#9670;&nbsp;</a></span>planarParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> void mc_rbdyn::planarParam </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td>
+          <td class="paramname"><em>X_es_rs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>T</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>B</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double &amp;&#160;</td>
+          <td class="paramname"><em>N_rot</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3313c1739e7847d2155cd1e8eb248c1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3313c1739e7847d2155cd1e8eb248c1e">&#9670;&nbsp;</a></span>planes_from_polygon()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt;<a class="el" href="a02162.html">Plane</a>&gt; mc_rbdyn::planes_from_polygon </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; geos::geom::Geometry &gt; &amp;&#160;</td>
+          <td class="paramname"><em>geometry</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8b64034329a5f248185cf1904c0732a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b64034329a5f248185cf1904c0732a0">&#9670;&nbsp;</a></span>points_from_polygon()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt;Eigen::Vector3d&gt; mc_rbdyn::points_from_polygon </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; geos::geom::Geometry &gt;&#160;</td>
+          <td class="paramname"><em>geometry</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a01a984b0ca29b3b20b799b01e7239a9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01a984b0ca29b3b20b799b01e7239a9b">&#9670;&nbsp;</a></span>readRSDFFromDir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt;std::shared_ptr&lt;<a class="el" href="a02210.html">Surface</a>&gt; &gt; mc_rbdyn::readRSDFFromDir </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>dirname</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0948fb6dc9382e116f65c76261d26ea0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0948fb6dc9382e116f65c76261d26ea0">&#9670;&nbsp;</a></span>rpyFromMat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_rbdyn::rpyFromMat </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::Matrix3d &amp;&#160;</td>
+          <td class="paramname"><em>E</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Roll-pitch-yaw from rotation matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">R</td><td>Rotation matrix.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>rpy Vector of roll-pitch-yaw angles (Euler sequence (0, 1, 2)).</dd></dl>
+<p>Adapted from formula (289) of "Representing attitude: Euler angles, unit
+quaternions, and rotation vectors". </p>
+
+<p class="reference">Referenced by <a class="el" href="a00700.html#a058cd1f189f02e2c4986b6aacffa8195">rpyFromQuat()</a>.</p>
+
+</div>
+</div>
+<a id="a058cd1f189f02e2c4986b6aacffa8195"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a058cd1f189f02e2c4986b6aacffa8195">&#9670;&nbsp;</a></span>rpyFromQuat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_rbdyn::rpyFromQuat </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::Quaterniond &amp;&#160;</td>
+          <td class="paramname"><em>quat</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Roll-pitch-yaw from unit quaternion. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">quat</td><td>Input unit quaternion.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>rpy Vector of roll-pitch-yaw angles (Euler sequence (0, 1, 2)).</dd></dl>
+<p>Be careful that <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00069.html">Eigen</a>'s conversion to rotation matrices is the OPPOSITE of that from "Representing attitude: Euler angles, unit quaternions, and
+rotation vectors", i.e. we need to transpose/flip signs from Equation (290) of this paper. </p>
+
+<p class="reference">References <a class="el" href="a00700.html#a0948fb6dc9382e116f65c76261d26ea0">rpyFromMat()</a>.</p>
+
+</div>
+</div>
+<a id="a5f178afee4c03533ae15c4dc04c143e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f178afee4c03533ae15c4dc04c143e2">&#9670;&nbsp;</a></span>rpyToMat() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Matrix3d mc_rbdyn::rpyToMat </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Rotation matrix from roll-pitch-yaw angles. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Roll angle.</td></tr>
+    <tr><td class="paramname">p</td><td>Pitch angle.</td></tr>
+    <tr><td class="paramname">y</td><td>Yaw angle.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>E Rotation matrix. </dd></dl>
+
+<p class="reference">References <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a3d8592bd972b6bdd69677f5a620daa73">sva::RotX()</a>, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a72dd05ef42d5f3f01e76aecd3c769658">sva::RotY()</a>, and <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a945b27220fb3db512a24939c8cc1b5ee">sva::RotZ()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00700.html#a04f15be86a9827b0d076764f344406ab">rpyToMat()</a>, and <a class="el" href="a00700.html#afa2b9eed96e67a1bdb6abf90bb597063">rpyToPT()</a>.</p>
+
+</div>
+</div>
+<a id="a04f15be86a9827b0d076764f344406ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04f15be86a9827b0d076764f344406ab">&#9670;&nbsp;</a></span>rpyToMat() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Matrix3d mc_rbdyn::rpyToMat </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>rpy</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Rotation matrix from roll-pitch-yaw angles. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rpy</td><td>Vector of roll-pitch-yaw angles.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>E Rotation matrix. </dd></dl>
+
+<p class="reference">References <a class="el" href="a00700.html#a5f178afee4c03533ae15c4dc04c143e2">rpyToMat()</a>.</p>
+
+</div>
+</div>
+<a id="afa2b9eed96e67a1bdb6abf90bb597063"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa2b9eed96e67a1bdb6abf90bb597063">&#9670;&nbsp;</a></span>rpyToPT() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_rbdyn::rpyToPT </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>rpy</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Plucker transfrom from roll-pitch-yaw angles. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rpy</td><td>Vector of roll-pitch-yaw angles.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>X Plucker transform with no translation. </dd></dl>
+
+<p class="reference">References <a class="el" href="a00700.html#a5f178afee4c03533ae15c4dc04c143e2">rpyToMat()</a>.</p>
+
+</div>
+</div>
+<a id="a4626f965b6c407b0bd14e10f98ec42b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4626f965b6c407b0bd14e10f98ec42b9">&#9670;&nbsp;</a></span>rpyToPT() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> mc_rbdyn::rpyToPT </td>
+          <td>(</td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Plucker transfrom from roll-pitch-yaw angles. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Roll angle.</td></tr>
+    <tr><td class="paramname">p</td><td>Pitch angle.</td></tr>
+    <tr><td class="paramname">y</td><td>Yaw angle.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>X Plucker transform with no translation. </dd></dl>
+
+<p class="reference">References <a class="el" href="a00700.html#a5f178afee4c03533ae15c4dc04c143e2">rpyToMat()</a>.</p>
+
+</div>
+</div>
+<a id="a3db1776d4f8f36e1eb2a8c51bc157867"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3db1776d4f8f36e1eb2a8c51bc157867">&#9670;&nbsp;</a></span>sch_polyhedron()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a>* mc_rbdyn::sch_polyhedron </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>points</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adf1399b68c68126e373f564e95bc7531"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf1399b68c68126e373f564e95bc7531">&#9670;&nbsp;</a></span>surface_to_sch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a>* mc_rbdyn::surface_to_sch </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02210.html">mc_rbdyn::Surface</a> &amp;&#160;</td>
+          <td class="paramname"><em>surface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double &amp;&#160;</td>
+          <td class="paramname"><em>depth</em> = <code>0.01</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const unsigned int &amp;&#160;</td>
+          <td class="paramname"><em>slice</em> = <code>8</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acd726f23454c176e9845fa296326f23f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd726f23454c176e9845fa296326f23f">&#9670;&nbsp;</a></span>urdf_limits_to_bounds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02194.html#a5b8304a1ea905fa0378a31dcf65b1460">RobotModule::bounds_t</a> <a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> mc_rbdyn::urdf_limits_to_bounds </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag:https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/" href="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00641.html">mc_rbdyn_urdf::Limits</a> &amp;&#160;</td>
+          <td class="paramname"><em>limits</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converts limits provided by <a class="elRef" doxygen="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag:https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/" href="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00015.html">mc_rbdyn_urdf</a> to bounds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">limits</td><td>Limits as provided by <a class="elRef" doxygen="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag:https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/" href="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00015.html">mc_rbdyn_urdf</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a329453006944dae96fa60d86dca66db8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a329453006944dae96fa60d86dca66db8">&#9670;&nbsp;</a></span>zmp() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d <a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> mc_rbdyn::zmp </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a> &amp;&#160;</td>
+          <td class="paramname"><em>netTotalWrench</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>plane_p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>plane_n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>minimalNetNormalForce</em> = <code>1.</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Actual ZMP computation from net total wrench and the ZMP plane. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">netTotalWrench</td><td>Total wrench for all links in contact </td></tr>
+    <tr><td class="paramname">plane_p</td><td>Arbitrary point on the ZMP plane </td></tr>
+    <tr><td class="paramname">plane_n</td><td>Normal to the ZMP plane (normalized) </td></tr>
+    <tr><td class="paramname">minimalNetNormalForce[N]</td><td>Mininal force above which the ZMP computation is considered valid. Must be &gt;0 (prevents a divide by zero).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>zmp expressed in the requested plane</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">To</td><td>prevent dividing by zero, throws if the projected force is below minimalNetNormalForce newton. This is highly unlikely to happen and would likely indicate indicate that you are computing a ZMP from invalid forces (such as with the robot in the air).</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><a class="anchor" id="zmpDoc"></a></p>
+
+<p class="reference">Referenced by <a class="el" href="a02806.html#aad11d62616938f7b665640ee5dbf0dc7">mc_tasks::lipm_stabilizer::StabilizerTask::leftFootRatio()</a>.</p>
+
+</div>
+</div>
+<a id="aa9d4155584b04e51fdb5c24f5739fc24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9d4155584b04e51fdb5c24f5739fc24">&#9670;&nbsp;</a></span>zmp() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d <a class="el" href="a03861.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> mc_rbdyn::zmp </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#aaea958106abfa742585ced52492029c4">sva::ForceVecd</a> &amp;&#160;</td>
+          <td class="paramname"><em>netTotalWrench</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td>
+          <td class="paramname"><em>zmpFrame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>minimalNetNormalForce</em> = <code>1.</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ZMP computation from net total wrench and a frame. </p>
+<p>See <a class="el" href="a00700.html#zmpDoc">zmpDoc</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">netTotalWrench</td><td></td></tr>
+    <tr><td class="paramname">zmpFrame</td><td>Frame used for ZMP computation. The convention here is that the contact frame should have its z-axis pointing in the normal direction of the contact towards the robot.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">To</td><td>prevent dividing by zero, throws if the projected force is below minimalNetNormalForce newton. This is highly unlikely to happen and would likely indicate indicate that you are computing a ZMP from invalid forces (such as with the robot in the air).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>ZMP expressed in the plane defined by the zmpFrame frame. </dd></dl>
 
 </div>
 </div>
@@ -124,8 +1404,8 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00700.html">mc_observers</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00700.html">mc_rbdyn</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:18:31 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

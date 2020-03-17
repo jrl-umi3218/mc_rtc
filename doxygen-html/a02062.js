@@ -1,13 +1,13 @@
 var a02062 =
 [
-    [ "Collision", "a02062.html#afaef9be2f1209c8cc63876f13b8da184", null ],
-    [ "Collision", "a02062.html#a212f22fc390d0f873dc67244cdbdbce7", null ],
-    [ "isNone", "a02062.html#a664a8719f81b8fee2d2b26cd3cf645ab", null ],
-    [ "operator!=", "a02062.html#a4f990041663f252046812111a6791048", null ],
-    [ "operator==", "a02062.html#aab32d2891597a9ec0d7f76e3dd0723a9", null ],
-    [ "body1", "a02062.html#a169addbd06a09743b06287121884f027", null ],
-    [ "body2", "a02062.html#afde353de6419a4e248eec0851f664968", null ],
-    [ "damping", "a02062.html#affd388406c44197c32f6685e64d7bdb9", null ],
-    [ "iDist", "a02062.html#a4e96ac27cda155ffddb1222ff08f012c", null ],
-    [ "sDist", "a02062.html#a2853ab9ab669747303ccda6b22bb7d77", null ]
+    [ "KinematicInertialPoseObserver", "a02062.html#a0fe74faab4da1913b5e271bbf6a7d1ed", null ],
+    [ "addToLogger", "a02062.html#a2ef97a314ad3f21392694e585ff89582", null ],
+    [ "estimateOrientation", "a02062.html#a6b6a2d32b41691feec87fbff77276731", null ],
+    [ "estimatePosition", "a02062.html#af4516c687fb2683eea570e5afc926165", null ],
+    [ "posW", "a02062.html#ae0059d688bf9a9864199b4f8bece7e3e", null ],
+    [ "removeFromLogger", "a02062.html#adbd72a6d4f7f24086bb399c556aef15c", null ],
+    [ "reset", "a02062.html#a5564591fc150e119fbfe35991031c7da", null ],
+    [ "run", "a02062.html#a91574e17a50e7d77a05835335accc0ec", null ],
+    [ "updateBodySensor", "a02062.html#a143ebfe1847c460ee63c5ec2b8ec5047", null ],
+    [ "updateRobots", "a02062.html#a4c4e67e7605e46a446caaf2fd6525b7c", null ]
 ];

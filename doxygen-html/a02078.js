@@ -1,5 +1,7 @@
 var a02078 =
 [
-    [ "load", "a02078.html#a27d2d736e80c235652f7576f9bd95e2a", null ],
-    [ "save", "a02078.html#a6081d5cb189f9b7439d8eced06fce954", null ]
+    [ "baseName", "a02078.html#a29e3501c76c5f562000ea4c144bcb92e", null ],
+    [ "baseType", "a02078.html#aefd54756f82332b9155a61cea33d8cc3", null ],
+    [ "X_0_s", "a02078.html#ae50130e4a7f74e88220617d3080c65ec", null ],
+    [ "X_b0_s", "a02078.html#a4fed34226bcc4165ddc6f39fab4dfacb", null ]
 ];

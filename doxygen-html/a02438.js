@@ -1,8 +1,7 @@
 var a02438 =
 [
-    [ "PolygonImpl", "a02438.html#af21492bee86877ea68740b1c555e8d45", null ],
-    [ "PolygonImpl", "a02438.html#a9c908c6704072d862688c0dcd3f1de73", null ],
-    [ "write", "a02438.html#a1896414f0415b4fa49e11934bde4c612", null ],
-    [ "write_size", "a02438.html#af8c8a207d5a4859a307ba1a213515562", null ],
-    [ "type", "a02438.html#a121a2efa2d2ab80bd1ef5f528ec2bb36", null ]
+    [ "Polygons", "a02438.html#af5c1dd31a2d012206f2915a07a9f792c", null ],
+    [ "side", "a02438.html#ac8a95deed7837d208505cbe7d949844b", null ],
+    [ "write", "a02438.html#a881d4f1ec50acb6bb79e8db1605ac1ac", null ],
+    [ "type", "a02438.html#a9bac28b142bf3360b5d6a15aa09197fa", null ]
 ];

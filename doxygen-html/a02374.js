@@ -1,6 +1,9 @@
 var a02374 =
 [
-    [ "IntegerInputImpl", "a02374.html#abb43e816875fdb07339135c65fa7982e", null ],
-    [ "IntegerInputImpl", "a02374.html#a5b3e150b460bd7c5b4fc426a1d08e370", null ],
-    [ "type", "a02374.html#ad03092ac48c1ea07ce3ee119e000229b", null ]
+    [ "FormImpl", "a02374.html#a0a9bdbcc3e4a6c161caf9f0dbf347c32", null ],
+    [ "FormImpl", "a02374.html#af03aec651081a3257a860feb38246c1d", null ],
+    [ "addElement", "a02374.html#ab9e4a119c65afeb42213d0e4a6fd7019", null ],
+    [ "write", "a02374.html#a45371b1cc879901474c65fdee5f56808", null ],
+    [ "write_size", "a02374.html#acf9c033b7b7440e437a3327795424f02", null ],
+    [ "type", "a02374.html#a49d4514deb2452ef6908eda1daacf629", null ]
 ];

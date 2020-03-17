@@ -1,6 +1,5 @@
 var a02174 =
 [
-    [ "joints", "a02174.html#a8ed52bd8f3d7ce552f62843c352b3d9c", null ],
-    [ "name", "a02174.html#a4c63d69cf61ff0c5ae634a549eadecd1", null ],
-    [ "reverse_limits", "a02174.html#a61df660109da82ecf0cb5cb476525045", null ]
+    [ "normal", "a02174.html#ad8cba2015c957fc2f09367e269b33a07", null ],
+    [ "offset", "a02174.html#a8c864cca3648d188ffc463ee9cdb2fc6", null ]
 ];

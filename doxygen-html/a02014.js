@@ -1,11 +1,8 @@
 var a02014 =
 [
-    [ "LowPass", "a02014.html#ae3ddcbbc84aae62aad621a14a91c39bf", null ],
-    [ "cutoffPeriod", "a02014.html#ac48741a383af10509d4678c5a0673f3a", null ],
-    [ "cutoffPeriod", "a02014.html#ac3c92851291e84d2347271125877dc0c", null ],
-    [ "dt", "a02014.html#a41bcea9e9de194a6816f03cacbd534dd", null ],
-    [ "eval", "a02014.html#a543781fd1c5ec7b653de6e2189de8fdb", null ],
-    [ "reset", "a02014.html#af9ccdd55e5d7f3beabcf4c26bcea9620", null ],
-    [ "update", "a02014.html#a03ab891a2b1f5cd2fd2398b7016ba633", null ],
-    [ "dt_", "a02014.html#a54232494fa4fa74a08d85acf3f95ab7a", null ]
+    [ "MCPythonController", "a02014.html#a032e887f83331f4138a8b4125010930a", null ],
+    [ "reset", "a02014.html#a9f6c69c9b96a4fadd5f94d7500d633d7", null ],
+    [ "run", "a02014.html#a3700ef59c7492c0be19158e991ccf6e6", null ],
+    [ "reset_callback", "a02014.html#a912a0dc9659948113b9eca0605c2cd12", null ],
+    [ "run_callback", "a02014.html#ac76e53f48809f9cede138425a0b7aac9", null ]
 ];

@@ -1,10 +1,9 @@
 var a01942 =
 [
-    [ "configure", "a01942.html#ae794e4997ff266a2e709b3a9cf2ba687", null ],
-    [ "run", "a01942.html#a21910e5c2ee0eb49560345113ae9b6be", null ],
-    [ "start", "a01942.html#a21cbe60a2692a0eede28cd09a0510084", null ],
-    [ "teardown", "a01942.html#a15a4573c025bf929bd7416b132b8a5c4", null ],
-    [ "duration_", "a01942.html#abf66f94f4a86433976e52ba2751cb60f", null ],
-    [ "goal_", "a01942.html#aabaccc34e1562ea3f396dc2105274b44", null ],
-    [ "tick_", "a01942.html#abecdfc22b00a1fa457f6beadadf3a069", null ]
+    [ "configure", "a01942.html#a803539f968b698dc20c1e393072a8328", null ],
+    [ "run", "a01942.html#a32d7b135708d46a0f671cb656e142b28", null ],
+    [ "start", "a01942.html#a19bb59f7d7f27358310774e0cee836c7", null ],
+    [ "teardown", "a01942.html#a13aaf77e6c79a2dc709e4951499ec36f", null ],
+    [ "message_", "a01942.html#a58da17ef00e79d1a799b39a4cb10e186", null ],
+    [ "type_", "a01942.html#aaa04d8dfdb2e5c1fd243ead220677eae", null ]
 ];

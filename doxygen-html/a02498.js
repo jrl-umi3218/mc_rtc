@@ -1,11 +1,8 @@
 var a02498 =
 [
-    [ "PointConfig", "a02498.html#a1561d8ebb70e3cb79de4ccab8c1d9f39", null ],
-    [ "PointConfig", "a02498.html#a292175258d872208e99632ac1552700b", null ],
-    [ "PointConfig", "a02498.html#a8277e9a9b0552925512c2c5bf13e27af", null ],
-    [ "load", "a02498.html#ac42a2a7dbe68b518029a300b5ed6ff2d", null ],
-    [ "write", "a02498.html#a21cfe22ca3c76493be3f27788a18c0bf", null ],
-    [ "write_size", "a02498.html#aceab827e57173288e6abee5abf7cf368", null ],
-    [ "color", "a02498.html#a322a868c95c738f131da19c405ca0fd3", null ],
-    [ "scale", "a02498.html#aec3bebebe03aa2f57a8e9dfab49e55a2", null ]
+    [ "TransformROImpl", "a02498.html#ad88471593f6707749be38dc161ba68d3", null ],
+    [ "TransformROImpl", "a02498.html#addc021aab7f8a9deb4df511d332797df", null ],
+    [ "write", "a02498.html#a1fd1a86ab5dcbdae0718bf032aba51d3", null ],
+    [ "write_size", "a02498.html#aa2d9aff3c8adfcf000c577c9e15df210", null ],
+    [ "type", "a02498.html#acc345b440558ab6f45437f2db8b23e53", null ]
 ];

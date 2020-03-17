@@ -1,11 +1,11 @@
 var a02166 =
 [
-    [ "available_robots", "a02166.html#aae5fb8baa5acee06c3af0dd976808a2f", null ],
-    [ "clear", "a02166.html#a86f7b35ed2a4b3d37508f51aa2b29a38", null ],
-    [ "enable_sandboxing", "a02166.html#a730c3f67a0bc12f73633c42b121b219e", null ],
-    [ "get_robot_module", "a02166.html#ad660aedc7dbf7cd0cd0e60da5fffe4c2", null ],
-    [ "has_robot", "a02166.html#a3edda7983edda591b3664eef5c450144", null ],
-    [ "load_aliases", "a02166.html#a6286734468abc8c146eaad6902dbdd01", null ],
-    [ "set_verbosity", "a02166.html#a6126ced85ec52c8445755948d1060a6f", null ],
-    [ "update_robot_module_path", "a02166.html#a48f1ada05ff7db2152a00da892183c8b", null ]
+    [ "PlanarSurface", "a02166.html#a129e3603625f117dc8199b89bf43cd22", null ],
+    [ "~PlanarSurface", "a02166.html#a14cef1c49d935db2d1e30c9a54180f84", null ],
+    [ "computePoints", "a02166.html#a99d226753ea56cc0df9678db6550e0b4", null ],
+    [ "copy", "a02166.html#a798203ec1bf48a3390f89f3586b6ea85", null ],
+    [ "planarPoints", "a02166.html#a8d6d8fdf89e2a53cfaf933d2f4d70e7c", null ],
+    [ "planarPoints", "a02166.html#a0eab075507f287b7127f484f23fe3039", null ],
+    [ "planarTransform", "a02166.html#ab49f9384bc47d3f19bcce47d4c22ca5c", null ],
+    [ "type", "a02166.html#a183b940ce2bf200eed3056d5996588d3", null ]
 ];

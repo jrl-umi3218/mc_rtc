@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>ArrayInput.h File Reference</title>
+<title>constants.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,39 +70,43 @@ $(document).ready(function(){initNavTree('a00230.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">ArrayInput.h File Reference</div>  </div>
+<div class="title">constants.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00254.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;Eigen/Core&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02274.html">mc_rtc::gui::ArrayInputImpl&lt; GetT, SetT &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ArrayInput should display an array (.  <a href="a02274.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00693"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00693.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00693"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02226.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00697.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memitem:a00708"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00708.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00708"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02250.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00712.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00696"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00696.html">mc_rtc::gui</a></td></tr>
+<tr class="memitem:a00726"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html">mc_rtc::constants</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ad70775c90f4b00f10abc4c5a5721e557"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
-<tr class="memitem:ad70775c90f4b00f10abc4c5a5721e557"><td class="memTemplItemLeft" align="right" valign="top">ArrayInputImpl&lt; GetT, SetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00696.html#ad70775c90f4b00f10abc4c5a5721e557">mc_rtc::gui::ArrayInput</a> (const std::string &amp;name, GetT get_fn, SetT set_fn)</td></tr>
-<tr class="memdesc:ad70775c90f4b00f10abc4c5a5721e557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to create an ArrayInput element (no labels)  <a href="a00696.html#ad70775c90f4b00f10abc4c5a5721e557">More...</a><br /></td></tr>
-<tr class="separator:ad70775c90f4b00f10abc4c5a5721e557"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f24f6599b905f3caf6ad3ec29def6bf"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
-<tr class="memitem:a7f24f6599b905f3caf6ad3ec29def6bf"><td class="memTemplItemLeft" align="right" valign="top">ArrayInputImpl&lt; GetT, SetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00696.html#a7f24f6599b905f3caf6ad3ec29def6bf">mc_rtc::gui::ArrayInput</a> (const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;labels, GetT get_fn, SetT set_fn)</td></tr>
-<tr class="memdesc:a7f24f6599b905f3caf6ad3ec29def6bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to create an ArrayInput element (with labels)  <a href="a00696.html#a7f24f6599b905f3caf6ad3ec29def6bf">More...</a><br /></td></tr>
-<tr class="separator:a7f24f6599b905f3caf6ad3ec29def6bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a357fd1ef503f568cf436fbda923472cf"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#a357fd1ef503f568cf436fbda923472cf">mc_rtc::constants::toDeg</a> (const double degrees)</td></tr>
+<tr class="memdesc:a357fd1ef503f568cf436fbda923472cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts degrees to radians.  <a href="a00726.html#a357fd1ef503f568cf436fbda923472cf">More...</a><br /></td></tr>
+<tr class="separator:a357fd1ef503f568cf436fbda923472cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca6e1fbd563bfd79d6484a3295d08bd"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#a2ca6e1fbd563bfd79d6484a3295d08bd">mc_rtc::constants::toRad</a> (const double rad)</td></tr>
+<tr class="memdesc:a2ca6e1fbd563bfd79d6484a3295d08bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts radians to degrees.  <a href="a00726.html#a2ca6e1fbd563bfd79d6484a3295d08bd">More...</a><br /></td></tr>
+<tr class="separator:a2ca6e1fbd563bfd79d6484a3295d08bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a04b344c34834432afcfcc1ac86bff22c"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#a04b344c34834432afcfcc1ac86bff22c">mc_rtc::constants::GRAVITY</a> = 9.80665</td></tr>
+<tr class="separator:a04b344c34834432afcfcc1ac86bff22c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf271123cee2ac958b9ae0f9220ea422"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#acf271123cee2ac958b9ae0f9220ea422">mc_rtc::constants::gravity</a> = Eigen::Vector3d{0., 0., GRAVITY}</td></tr>
+<tr class="memdesc:acf271123cee2ac958b9ae0f9220ea422"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; Gravity positive along the vertical axis  <a href="a00726.html#acf271123cee2ac958b9ae0f9220ea422">More...</a><br /></td></tr>
+<tr class="separator:acf271123cee2ac958b9ae0f9220ea422"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaeaab7136aa7d17fa172fde905c2cc7"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#aaaeaab7136aa7d17fa172fde905c2cc7">mc_rtc::constants::vertical</a> = Eigen::Vector3d{0., 0., 1.}</td></tr>
+<tr class="separator:aaaeaab7136aa7d17fa172fde905c2cc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cb2b2837ea283890b185cfef0631602"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#a8cb2b2837ea283890b185cfef0631602">mc_rtc::constants::PI</a> = static_cast&lt;double&gt;(EIGEN_PI)</td></tr>
+<tr class="separator:a8cb2b2837ea283890b185cfef0631602"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -110,8 +114,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00230.html">ArrayInput.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2020 03:25:44 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00230.html">constants.h</a></li>
+    <li class="footer">Generated on Tue Mar 17 2020 05:21:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

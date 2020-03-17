@@ -1,8 +1,9 @@
 var a00335 =
 [
-    [ "binary_log_callback", "a00335.html#a2e5bbb4664bc287ec78732a63a7cd646", null ],
-    [ "binary_log_copy_callback", "a00335.html#a1c86e8f30b914960080029679897a749", null ],
-    [ "copy_callback", "a00335.html#a9c09aed839e3ee87a5be3e286a3e8903", null ],
-    [ "iterate_binary_log", "a00335.html#ae939074ac3cce1fde0bb5e0ea7e90c86", null ],
-    [ "iterate_binary_log", "a00335.html#a51b18863af2ea7f3e981b32be6b2174f", null ]
+    [ "MC_RTC_LOADER_DLLAPI", "a00335.html#a4b7b7ab74d91ada84566764639f2f8c5", null ],
+    [ "MC_RTC_LOADER_DLLEXPORT", "a00335.html#a6d2514a2d7cbf1461637d19c84d4e190", null ],
+    [ "MC_RTC_LOADER_DLLIMPORT", "a00335.html#ab10c7ea7ab2d8c66f1766d42f4271e07", null ],
+    [ "MC_RTC_LOADER_DLLLOCAL", "a00335.html#a124acbd88de464891bac5a0d4753f3b1", null ],
+    [ "MC_RTC_LOADER_LOCAL", "a00335.html#acf2b4c50e45b046a77958363021c3f17", null ],
+    [ "MC_RTC_LOADER_VERSION", "a00335.html#a20b4289ae8266a5d45b7799ebc1c2cb9", null ]
 ];
