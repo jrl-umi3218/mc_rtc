@@ -8,8 +8,8 @@
 #include <mc_rbdyn/SCHAddon.h>
 #include <mc_rbdyn/Surface.h>
 #include <mc_rbdyn/ZMP.h>
-#include <mc_rbdyn/constants.h>
 #include <mc_rbdyn/surface_utils.h>
+#include <mc_rtc/constants.h>
 #include <mc_rtc/logging.h>
 
 #include <mc_rbdyn_urdf/urdf.h>
@@ -138,7 +138,7 @@ Robot::Robot(Robots & robots,
     mbc() = rbd::MultiBodyConfig(mb());
   }
 
-  mbc().gravity = constants::gravity;
+  mbc().gravity = mc_rtc::constants::gravity;
   mbc().zero(mb());
   {
     auto initQ = mbc().q;
@@ -219,10 +219,7 @@ Robot::Robot(Robots & robots,
   for(auto & fs : forceSensors_)
   {
     bfs::path calib_file = bfs::path(module_.calib_dir) / std::string("calib_data." + fs.name());
-    if(bfs::exists(calib_file))
-    {
-      fs.loadCalibrator(calib_file.string(), mbc().gravity);
-    }
+    fs.loadCalibrator(calib_file.string(), mbc().gravity);
   }
   for(size_t i = 0; i < forceSensors_.size(); ++i)
   {

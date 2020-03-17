@@ -7,8 +7,8 @@
 
 #include <mc_filter/utils/clamp.h>
 #include <mc_rbdyn/ZMP.h>
-#include <mc_rbdyn/constants.h>
 #include <mc_rbdyn/rpy_utils.h>
+#include <mc_rtc/constants.h>
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
 
@@ -22,7 +22,7 @@ namespace lipm_stabilizer
 using internal::Contact;
 using ::mc_filter::utils::clamp;
 using ::mc_filter::utils::clampInPlaceAndWarn;
-namespace constants = ::mc_rbdyn::constants;
+namespace constants = ::mc_rtc::constants;
 
 // Repeat static constexpr declarations
 // Fixes https://github.com/stephane-caron/lipm_walking_controller/issues/21

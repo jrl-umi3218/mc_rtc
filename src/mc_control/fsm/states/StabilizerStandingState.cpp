@@ -1,6 +1,6 @@
 #include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/states/StabilizerStandingState.h>
-#include <mc_rbdyn/constants.h>
+#include <mc_rtc/constants.h>
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
 
@@ -9,7 +9,7 @@ namespace mc_control
 namespace fsm
 {
 
-namespace constants = mc_rbdyn::constants;
+namespace constants = mc_rtc::constants;
 using ContactState = mc_tasks::lipm_stabilizer::ContactState;
 
 void StabilizerStandingState::configure(const mc_rtc::Configuration & config)
@@ -43,7 +43,7 @@ void StabilizerStandingState::start(Controller & ctl)
   // Initialize stabilizer targets. Defaults to current CoM/CoP
   config_("comHeight", stabilizerTask_->config().comHeight);
   // Reset linear inverted pendulum model, used here to compute stabilizer references
-  double lambda = mc_rbdyn::constants::GRAVITY / stabilizerTask_->config().comHeight;
+  double lambda = constants::GRAVITY / stabilizerTask_->config().comHeight;
   pendulum_.reset(lambda, ctl.robot().com(), ctl.robot().comVelocity(), ctl.robot().comAcceleration());
   if(config_.has("above"))
   {
@@ -172,7 +172,7 @@ bool StabilizerStandingState::run(Controller & ctl)
   const Eigen::Vector3d & comd_ = pendulum_.comd();
 
   Eigen::Vector3d comdd = K_ * (comTarget_ - com_) - D_ * comd_;
-  Eigen::Vector3d n = mc_rbdyn::constants::vertical;
+  Eigen::Vector3d n = constants::vertical;
   double lambda = n.dot(comdd + constants::gravity) / n.dot(com_ - copTarget_);
   Eigen::Vector3d zmp = com_ - (constants::gravity + comdd) / lambda;
 

@@ -1,9 +1,9 @@
 #include <mc_planning/Pendulum.h>
-#include <mc_rbdyn/constants.h>
+#include <mc_rtc/constants.h>
 
 namespace mc_planning
 {
-namespace constants = mc_rbdyn::constants;
+namespace constants = mc_rtc::constants;
 
 Pendulum::Pendulum() {}
 
@@ -35,7 +35,7 @@ void Pendulum::resetCoMHeight(double height, const Eigen::Vector3d & p, const Ei
   comd_ -= n.dot(comd_) * n;
   comdd_ -= n.dot(comdd_) * n;
   comddd_ -= n.dot(comddd_) * n;
-  omega_ = std::sqrt(mc_rbdyn::constants::GRAVITY / height);
+  omega_ = std::sqrt(constants::GRAVITY / height);
 }
 
 void Pendulum::integrateIPM(Eigen::Vector3d zmp, double lambda, double dt)

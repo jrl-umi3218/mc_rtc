@@ -11,11 +11,6 @@
 #include <mc_rtc/gui/NumberInput.h>
 #include <mc_rtc/gui/NumberSlider.h>
 
-#ifndef M_PI
-#  include <boost/math/constants/constants.hpp>
-#  define M_PI boost::math::constants::pi<double>()
-#endif
-
 namespace mc_tasks
 {
 

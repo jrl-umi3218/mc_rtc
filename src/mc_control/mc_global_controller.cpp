@@ -276,10 +276,11 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
     return -1;
   };
   std::map<std::string, std::vector<double>> gripperInit;
-  for(const auto & g_p : controller().grippers)
+  for(auto & g_p : controller().grippers)
   {
     const auto & gName = g_p.first;
-    const auto & g = *g_p.second;
+    auto & g = *g_p.second;
+    g.name = gName;
     gripperInit[gName] = {};
     auto & gQ = gripperInit[gName];
     for(const auto & j : g.active_joints)
