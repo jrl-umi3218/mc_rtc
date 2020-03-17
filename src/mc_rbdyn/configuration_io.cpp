@@ -826,10 +826,10 @@ mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Con
   std::string r1Surface = config("r1Surface");
   sva::PTransformd X_b_s = robots.robot(r1Index).surface(r1Surface).X_b_s();
   config("X_b_s", X_b_s);
-  int ambiguityId = -1;
-  config("ambiguityId", ambiguityId);
+  double friction = config("friction", mc_rbdyn::Contact::defaultFriction);
+  int ambiguityId = config("ambiguityId", -1);
   return mc_rbdyn::Contact(robots, r1Index, r2Index, config("r1Surface"), config("r2Surface"), X_r2s_r1s, X_b_s,
-                           ambiguityId);
+                           friction, ambiguityId);
 }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Contact>::save(const mc_rbdyn::Contact & c)
