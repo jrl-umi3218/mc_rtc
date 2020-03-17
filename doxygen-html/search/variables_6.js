@@ -15,7 +15,7 @@ var searchData=
   ['force_5fscale',['force_scale',['../a02518.html#a5b196a2d50081a662c2765c283a6d6b8',1,'mc_rtc::gui::ForceConfig']]],
   ['forcedistchanged_5f',['forceDistChanged_',['../a01970.html#a70f7cedb74095a3619f37ee71088bff7',1,'mc_control::fsm::SlidingFootContactState']]],
   ['free',['Free',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00995.html#afff99e26b5eeb3d899af433df385f4fdab6d9c54c25c59aa44ef674c5b58be044',1,'rbd::Joint']]],
-  ['friction',['friction',['../a02146.html#a2711f393aa208d546265f1ccdaa4f927',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
+  ['friction',['friction',['../a01902.html#a2d8289fa5ded9a7df86e5c85d03e4435',1,'mc_control::fsm::Contact::friction()'],['../a02146.html#a2711f393aa208d546265f1ccdaa4f927',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::friction()']]],
   ['fulljac_5f',['fullJac_',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00993.html#abeee7362aae0d198aff26ac2b52f0dc0',1,'tasks::qp::ContactConstr']]],
   ['fulljaclambda_5f',['fullJacLambda_',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01041.html#add4e8d750eefe4d196f4b124d04bbba3',1,'tasks::qp::MotionConstrCommon']]],
   ['fulltoreduced_5f',['fullToReduced_',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00921.html#ad497fb681272aef64e78c7b3a775bfbf',1,'tasks::qp::GenQPSolver']]]

@@ -8612,8 +8612,8 @@
       <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
       <name>Contact</name>
       <anchorfile>a01902.html</anchorfile>
-      <anchor>a6637fcb7f8ac4a04f730f5ffed87cc55</anchor>
-      <arglist>(const std::string &amp;r1, const std::string &amp;r2, const std::string &amp;r1Surface, const std::string &amp;r2Surface, const Eigen::Vector6d &amp;dof=Eigen::Vector6d::Ones())</arglist>
+      <anchor>a63c45626b5b52b6f6be29663c10a8613</anchor>
+      <arglist>(const std::string &amp;r1, const std::string &amp;r2, const std::string &amp;r1Surface, const std::string &amp;r2Surface, double friction=mc_rbdyn::Contact::defaultFriction, const Eigen::Vector6d &amp;dof=Eigen::Vector6d::Ones())</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -8676,6 +8676,13 @@
       <name>r2Surface</name>
       <anchorfile>a01902.html</anchorfile>
       <anchor>a19bb1febaf343d980f6de167b004d8bb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>friction</name>
+      <anchorfile>a01902.html</anchorfile>
+      <anchor>a2d8289fa5ded9a7df86e5c85d03e4435</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
