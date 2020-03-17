@@ -241,6 +241,7 @@ Contact & Contact::operator=(const Contact & rhs)
   this->impl->X_r2s_r1s = rhs.X_r2s_r1s();
   this->impl->is_fixed = rhs.isFixed();
   this->impl->X_b_s = rhs.X_b_s();
+  this->impl->friction = rhs.friction();
   this->impl->ambiguityId = rhs.ambiguityId();
   return *this;
 }
