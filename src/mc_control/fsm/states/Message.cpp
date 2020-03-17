@@ -25,17 +25,22 @@ void MessageState::start(Controller & /* ctl */)
   {
     LOG_INFO(message_);
   }
-  if(type_ == "success")
+  else if(type_ == "success")
   {
     LOG_SUCCESS(message_);
   }
-  if(type_ == "warning")
+  else if(type_ == "warning")
   {
     LOG_WARNING(message_);
   }
-  if(type_ == "error")
+  else if(type_ == "error")
   {
     LOG_ERROR(message_);
+  }
+  else
+  {
+    LOG_WARNING("[" << name() << "] Unknown type: " << type_ << ", treating as INFO")
+    LOG_INFO(message_);
   }
   output("OK");
 }
