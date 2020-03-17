@@ -5,6 +5,7 @@
 #include <mc_control/mc_global_controller.h>
 #include <mc_observers/ObserverLoader.h>
 #include <mc_rbdyn/RobotLoader.h>
+#include <mc_rtc/ConfigurationHelpers.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -169,16 +170,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
 
   // Vector of observers module names (or single observer name)
-  config("EnabledObservers", enabled_observers);
-  if(enabled_observers.empty())
-  {
-    std::string enabled = config("EnabledObservers", std::string{""});
-    if(!enabled.empty())
-    {
-      enabled_observers = {enabled};
-    }
-  }
-
+  enabled_observers = mc_rtc::fromVectorOrElement<std::string>(config, "EnabledObservers", {});
   if(config.has("Observers"))
   {
     const auto & oc = config("Observers");
@@ -230,8 +222,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       }
     }
   }
-  std::vector<std::string> plugins;
-  config("Plugins", plugins);
+  std::vector<std::string> plugins = mc_rtc::fromVectorOrElement<std::string>(config, "Plugins", {});
   for(const auto & p : plugins)
   {
     if(std::find(global_plugins.begin(), global_plugins.end(), p) == global_plugins.end())
@@ -250,24 +241,14 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   {
     controller_module_paths.insert(controller_module_paths.begin(), mc_rtc::MC_CONTROLLER_INSTALL_PREFIX);
   }
-  config("Enabled", enabled_controllers);
+  enabled_controllers = mc_rtc::fromVectorOrElement<std::string>(config, "Enabled", {});
   if(enabled_controllers.size())
   {
     initial_controller = enabled_controllers[0];
   }
   else
   {
-    std::string enabled = config("Enabled", std::string(""));
-    if(enabled.size())
-    {
-      initial_controller = enabled;
-      enabled_controllers = {enabled};
-    }
-    else
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Enabled entry in mc_rtc configuration is not valid it should be a "
-                                              "vector of enabled controllers or a single controller name")
-    }
+    LOG_ERROR_AND_THROW(std::runtime_error, "Enabled entry in mc_rtc must contain at least one controller name");
   }
   config("Default", initial_controller);
 

@@ -90,10 +90,12 @@ set(mc_rtc_utils_HDR
   mc_rtc/internals/yaml.h
   mc_rtc/internals/LogEntry.h
   ../include/mc_rtc/Configuration.h
+  ../include/mc_rtc/ConfigurationHelpers.h
   ../include/mc_rtc/MessagePackBuilder.h
   ../include/mc_rtc/log/FlatLog.h
   ../include/mc_rtc/log/iterate_binary_log.h
   ../include/mc_rtc/log/Logger.h
+  ../include/mc_rtc/io_utils.h
   ../include/mc_rtc/utils.h
   ../include/mc_rtc/utils_api.h
   ../include/mc_rtc/constants.h

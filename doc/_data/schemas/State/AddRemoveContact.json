@@ -1,5 +1,5 @@
 {
-  "title": "fsm::AddRemoveContactState",
+  "title": "fsm::AddRemoveContact",
   "description": "Add or remove a contact",
   "type": "object",
   "properties":

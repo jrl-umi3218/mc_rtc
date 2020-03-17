@@ -33,3 +33,28 @@ Example3:
 # Example3 still have two tasks, objectives are unchanged but:
 # - t1 has no more completion criteria
 # - t2 has a completion criteria
+---
+Example4:
+  base: Example3
+  tasks:
+    t1:
+      completion:
+        OR:
+        - eval: 0.001
+        - AND:
+          - timeout: 3
+          - speed: 0.01
+    t2:
+      completion:
+        eval: 0.0001
+  outputs: [t1, t2]
+# Example4 still have two tasks, objectives are unchanged but:
+# - t1 now has a complex completion criteria
+# - t2 has the same completion criteria but with a different threshold
+# In addition, the outputCriteriaTasks array asks the state to generate
+# its output string based on the completion criterias of tasks "t1" and "t2".
+# The completion output will look like one of the following
+# - t1=eval, t2=eval
+# - t1=timeout AND speed, t2=eval
+# It may be used to trigger branch choices in the FSM
+# You may also use the DEFAULT output in your transition maps that will be used in case no other pattern matches

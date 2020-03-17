@@ -14,6 +14,8 @@ usr/include/mc_rtc/MessagePackBuilder.h
 usr/include/mc_rtc/utils.h
 usr/include/mc_rtc/logging.h
 usr/include/mc_rtc/Configuration.h
+usr/include/mc_rtc/ConfigurationHelpers.h
+usr/include/mc_rtc/io_utils.h
 usr/include/mc_rtc/loader_sandbox.h
 usr/include/mc_rtc/utils_api.h
 usr/include/mc_rtc/gui.h

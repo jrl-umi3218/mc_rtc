@@ -231,7 +231,8 @@
     "MoveLeftFootCoM":
     {
       "base": "Parallel",
-      "states": ["MoveLeftFoot", "RightCoM", "HalfSitting"]
+      "states": ["MoveLeftFoot", "RightCoM", "HalfSitting"],
+      "outputStates": ["MoveLeftFoot", "RightCoM"]
     },
     "MoveRightFoot":
     {
@@ -247,6 +248,9 @@
           }
         }
       },
+      // When this list contains tasks names, these
+      // tasks' completion criteria will be used to generate an output string for the state
+      "outputCriteriaTasks": ["MoveFoot"],
       "RemoveContacts":
       [
         {
@@ -260,7 +264,7 @@
     "MoveRightFootCoM":
     {
       "base": "Parallel",
-      "states": ["MoveRightFoot", "LeftCoM", "HalfSitting"]
+      "states": ["LeftCoM", "HalfSitting", "MoveRightFoot"]
     },
     "HeadUp":
     {
@@ -305,6 +309,32 @@
         }
       }
     },
+    "MessageMoveRightFootEval":
+    {
+      "base": "Message",
+      "message": "Move Right Foot state completed with eval completion criteria",
+      "type": "success"
+    },
+    "MessageMoveRightFootTimeout":
+    {
+      "base": "Message",
+      "message": "Move Right Foot state completed with timeout completion criteria",
+      "type": "success"
+    },
+    "AddLeftFootCoMWithWarning":
+    {
+      "base": "Parallel",
+      "states": ["Message", "AddLeftFootCoM"],
+      "configs":
+      {
+        "Message":
+        {
+          "base": "Message",
+          "type": "warning",
+          "message": "The previous state has completed, but no valid transition pattern matched for state MoveLeftFootCoM, defaulting to state AddLeftFootCoM (this warning was triggered on purpose to demonstrate the defaulting mechanism)"
+        }
+      }
+    },
     "WalkTwoSteps":
     {
       "base": "Meta",
@@ -314,11 +344,24 @@
       [
         ["PauseHalfSitting", "OK", "LeftCoM"],
         ["LeftCoM", "OK", "MoveRightFootCoM"],
-        ["MoveRightFootCoM", "OK", "AddRightFootCoM"],
+
+        // Demonstrate branching ability based on tasks completion criteria
+        ["MoveRightFootCoM", "MoveFoot=eval", "MessageMoveRightFootEval"],
+        ["MoveRightFootCoM", "MoveFoot=timeout AND speed", "MessageMoveRightFootTimeout"],
+        ["MessageMoveRightFootEval", "OK", "AddRightFootCoM"],
+        ["MessageMoveRightFootTimeout", "OK", "AddRightFootCoM"],
+
         ["AddRightFootCoM", "OK", "RightCoM"],
+
         ["RightCoM", "OK", "MoveLeftFootCoM"],
-        ["MoveLeftFootCoM", "OK", "AddLeftFootCoM"],
-        ["AddLeftFootCoM", "OK", "PauseHalfSitting"]
+        // When using Parallel states, branching based on the output
+        // of multiple states is also possible
+        ["MoveLeftFootCoM", "LeftCoM: (OK) | MoveRightFoot: (MoveFoot=timeout AND speed)", "AddLeftFootCoM"],
+        ["MoveLeftFootCoM", "LeftCoM: (OK) | MoveRightFoot: (MoveFoot=eval)", "AddLeftFootCoM"],
+        // You can default to a desired state if no transition pattern has been matched
+        ["MoveLeftFootCoM", "DEFAULT", "AddLeftFootCoMWithWarning"],
+        ["AddLeftFootCoM", "OK", "PauseHalfSitting"],
+        ["AddLeftFootCoMWithWarning", "OK", "PauseHalfSitting"]
       ]
     },
     "HeadFSM":

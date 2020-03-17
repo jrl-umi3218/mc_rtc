@@ -14,6 +14,7 @@
 #include <mc_rtc/gui/Button.h>
 #include <mc_rtc/gui/Form.h>
 #include <mc_rtc/gui/Label.h>
+#include <mc_rtc/io_utils.h>
 
 namespace mc_rtc
 {
@@ -304,8 +305,25 @@ void Controller::updateContacts()
   {
     std::vector<mc_rbdyn::Contact> contacts;
     contact_constraint_->contactConstr->resetDofContacts();
+
+    auto ensureValidContact = [this](const std::string & robotName, const std::string & surfaceName) {
+      if(!hasRobot(robotName))
+      {
+        const auto availableRobots =
+            mc_rtc::io::to_string(robots(), [](const mc_rbdyn::Robot & r) { return r.name(); });
+        LOG_ERROR_AND_THROW(std::runtime_error, "Failed to add contact: no robot named "
+                                                    << robotName << " (available: " << availableRobots << ")");
+      }
+      if(!robot(robotName).hasSurface(surfaceName))
+      {
+        LOG_ERROR_AND_THROW(std::runtime_error,
+                            "Failed to add contact: no surface named " << surfaceName << " in robot " << robotName);
+      }
+    };
     for(const auto & c : contacts_)
     {
+      ensureValidContact(c.r1, c.r1Surface);
+      ensureValidContact(c.r2, c.r2Surface);
       contacts.emplace_back(robots(), static_cast<unsigned int>(robots_idx_.at(c.r1)),
                             static_cast<unsigned int>(robots_idx_.at(c.r2)), c.r1Surface, c.r2Surface);
       auto cId = contacts.back().contactId(robots());

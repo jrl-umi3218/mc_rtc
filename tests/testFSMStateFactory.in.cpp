@@ -110,3 +110,31 @@ BOOST_AUTO_TEST_CASE(TestConfigureState)
   config.add("value", 42);
   test_state("ConfigureState8", 42, config);
 }
+
+BOOST_AUTO_TEST_CASE(TestTransitionMap)
+{
+  mc_control::fsm::StateFactory factory{{MultipleStates_DIR}, {}, false};
+  check_states(factory, {"State1", "State2"});
+  { // Test single state with multiple outputs to the same state
+    // This should only add the transition once to the transitions() list
+    mc_rtc::Configuration tConfig;
+    tConfig.add("transitions", std::vector<std::vector<std::string>>{{"State1", "Output1", "State2"},
+                                                                     {"State1", "Output2", "State2"},
+                                                                     {"State2", "Output1", "State1"},
+                                                                     {"State2", "Output2", "State1"}});
+    mc_control::fsm::TransitionMap transitions;
+    transitions.init(factory, tConfig);
+    BOOST_REQUIRE(transitions.transitions("State1") == std::unordered_set<std::string>{"State2"});
+    BOOST_REQUIRE(transitions.transitions("State2") == std::unordered_set<std::string>{"State1"});
+  }
+  { // Test wrongly defined transition with the same output going to multiple states
+    // This should display a warning message, and use the latest defined
+    // transition
+    mc_rtc::Configuration tConfig;
+    tConfig.add("transitions",
+                std::vector<std::vector<std::string>>{{"State1", "Output", "State1"}, {"State1", "Output", "State2"}});
+    mc_control::fsm::TransitionMap transitions;
+    transitions.init(factory, tConfig);
+    BOOST_REQUIRE(transitions.transitions("State1") == std::unordered_set<std::string>{"State2"});
+  }
+}

@@ -1121,7 +1121,6 @@ struct MC_RTC_UTILS_DLLAPI Configuration
   /*! \brief Push a string-indexed map into the JSON document
    *
    * \param value Map of elements to add
-   *
    */
   template<typename T,
            class C = std::less<std::string>,
@@ -1180,7 +1179,6 @@ private:
    *
    * This structure is meant to hide the JSON library used by mc_rtc
    * while allowing the template method implementation.
-   *
    */
   struct MC_RTC_UTILS_DLLAPI Json
   {

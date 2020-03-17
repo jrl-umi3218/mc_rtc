@@ -10,6 +10,7 @@
 
 #include <map>
 #include <string>
+#include <unordered_set>
 
 namespace mc_control
 {
@@ -28,6 +29,10 @@ namespace fsm
  * - ["InitState", "OK", "GraspBar", "Strict"]
  * - ["GraspBar", "OK", "LiftLeftFoot", "StepByStep"]
  * - ["GraspBar", "NOK", "GraspBar", "Auto"]
+ * - ["GraspBar", "DEFAULT", "GraspBar", "Auto"]
+ *
+ * If the "DEFAULT" output is present, this transition will be returned in case
+ * no other output pattern has been matched.
  *
  * Valid values for the trigger type are:
  * - "StepByStep": only require user input if running in StepByStep mode
@@ -47,16 +52,17 @@ struct MC_CONTROL_FSM_DLLAPI TransitionMap
    *
    * \param output The state's output
    *
-   * \returns A pair made of a bool and a Transition. If the (state,
-   * output) has a registered next state, the bool is true and Transition
-   * returns the corresponding transition. Otherwise, the bool is false
-   * and the Transition has no meaning.
-   *
+   * \returns A pair made of a bool and a Transition:
+   * - If the (state, output) has a registered next state, the bool is true
+   *   and Transition returns the corresponding transition.
+   * - Else, if the (state, DEFAULT) has a registered next state, the bool is true and Transition returns the
+   * corresponding transition
+   * - Otherwise, the bool is false and the Transition has no meaning
    */
   std::pair<bool, Transition> transition(const std::string & state, const std::string & output) const;
 
-  /** For a given state, gives all possible next states */
-  std::vector<std::string> transitions(const std::string & state) const;
+  /** For a given state, gives all possible next states **/
+  std::unordered_set<std::string> transitions(const std::string & state) const;
 
   /** Build the map from a Configuration
    *

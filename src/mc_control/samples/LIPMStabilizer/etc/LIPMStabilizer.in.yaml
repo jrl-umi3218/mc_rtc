@@ -271,7 +271,11 @@ states:
         weight: 100
         displaySamples: 20
         completion:
-          timeElapsed: true
+          OR:
+            - timeElapsed: true
+            - AND:
+              - timeout: 2.5
+              - wrench: [.nan, .nan, .nan, .nan, .nan, 20] 
         targetSurface:
           surface: RightFootCenter
           robotIndex: 0

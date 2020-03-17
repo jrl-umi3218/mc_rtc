@@ -107,9 +107,25 @@ struct MC_CONTROL_FSM_STATE_DLLAPI MetaTasksState : State
   void teardown(Controller &) override;
 
 protected:
+  /** Configuration for each of the state's tasks */
   std::map<std::string, mc_rtc::Configuration> tasks_configs_;
+  /** Completion criterias used to generate the state's output */
+  std::vector<std::string> outputCrit_;
+  /** Tasks managed by the state */
   std::vector<mc_tasks::MetaTaskPtr> tasks_;
-  std::vector<std::pair<size_t, mc_control::CompletionCriteria>> criterias_;
+  /** Completion criteria and related infomation */
+  struct TaskCriteria
+  {
+    // Index of the task in tasks_ vector
+    size_t idx{0};
+    // Completion criteria
+    mc_control::CompletionCriteria criteria;
+    // Whether this criteria appears in the output
+    bool use_output{false};
+  };
+  /** Completion criterias as a map index by task name */
+  std::map<std::string, TaskCriteria> criterias_;
+  /** True when the state has already been completed at least once */
   bool finished_first_ = false;
 };
 

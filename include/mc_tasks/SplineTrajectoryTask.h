@@ -59,8 +59,11 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
 
   /** Add support for the following entries
    *
-   * - timeElapsed When true, the task will stop when the trajectory duration is
-   *   reached
+   * - timeElapsed: True when the task duration has elapsed
+   * - wrench: True when the force applied on the robot surface is higher than the provided threshold (6d vector, NaN
+   * value ignores the reading, negative values invert the condition). Ignored if the surface has no force-sensor
+   * attached.
+   *   @throws if the surface does not have an associated force sensor
    */
   std::function<bool(const mc_tasks::MetaTask &, std::string &)> buildCompletionCriteria(
       double dt,

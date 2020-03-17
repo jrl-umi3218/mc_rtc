@@ -62,6 +62,11 @@ protected:
     bool run(Controller & ctl, double time);
     StatePtr & state();
 
+    const std::string & name()
+    {
+      return name_;
+    };
+
   private:
     StatePtr state_;
     std::string name_;
@@ -70,6 +75,12 @@ protected:
     void createState(Controller & ctl);
   };
   std::vector<DelayedState> states_;
+  /** States used to generate the output. If multiple states output are used,
+   * they will generated according to the following pattern:
+   * State1: (State1 output), State2: (State2 output)
+   */
+  std::vector<std::string> outputStates_;
+  bool finished_first_ = false;
 };
 
 } // namespace fsm

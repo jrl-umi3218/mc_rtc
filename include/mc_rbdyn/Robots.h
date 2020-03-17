@@ -14,6 +14,7 @@ namespace mc_rbdyn
 struct MC_RBDYN_DLLAPI Robots
 {
   friend struct Robot;
+  using value_type = mc_rbdyn::Robot;
 
 public:
   /** @name Iterators

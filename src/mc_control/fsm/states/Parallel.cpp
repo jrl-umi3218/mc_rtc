@@ -4,6 +4,8 @@
 
 #include <mc_control/fsm/Controller.h>
 #include <mc_control/fsm/states/Parallel.h>
+#include <mc_rtc/ConfigurationHelpers.h>
+#include <mc_rtc/io_utils.h>
 
 namespace mc_control
 {
@@ -49,6 +51,7 @@ void ParallelState::DelayedState::createState(Controller & ctl)
 void ParallelState::configure(const mc_rtc::Configuration & config)
 {
   config_.load(config);
+  outputStates_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs", {});
 }
 
 void ParallelState::start(Controller & ctl)
@@ -63,6 +66,17 @@ void ParallelState::start(Controller & ctl)
     if(!ctl.factory().hasState(s))
     {
       LOG_ERROR_AND_THROW(std::runtime_error, name() + ": " + s + " is not available")
+    }
+  }
+  // Check validity of output states names
+  for(const auto & sName : outputStates_)
+  {
+    if(std::find(states.begin(), states.end(), sName) == states.end())
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error,
+                          "[" << name() << "] Invalid output state name " << sName
+                              << ". It should be one of the following states: " << mc_rtc::io::to_string(states)
+                              << ". Check your \"outputs\" configuration.");
     }
   }
   auto states_config = config_("configs", mc_rtc::Configuration{});
@@ -83,9 +97,29 @@ bool ParallelState::run(Controller & ctl)
     ret = s.run(ctl, time_) && ret;
   }
   time_ += ctl.solver().dt();
-  if(ret)
+  if(ret && !finished_first_)
   {
-    output(states_.back().state()->output());
+    finished_first_ = true;
+    std::string out = "";
+    if(outputStates_.empty())
+    {
+      out = states_.back().state()->output();
+    }
+    else
+    {
+      for(auto & s : states_)
+      {
+        if(std::find(std::begin(outputStates_), std::end(outputStates_), s.name()) != std::end(outputStates_))
+        {
+          if(out.size())
+          {
+            out += ", ";
+          }
+          out += s.name() + "(" + s.state()->output() + ")";
+        }
+      }
+    }
+    output(out);
   }
   return ret;
 }

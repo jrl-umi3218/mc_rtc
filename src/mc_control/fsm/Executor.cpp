@@ -92,7 +92,7 @@ bool Executor::run(Controller & ctl, bool keep_state)
     {
       ready_ = true;
       state_output_ = state_->output();
-      LOG_SUCCESS("Completed " << curr_state_)
+      LOG_SUCCESS("Completed " << curr_state_ << " - output: " << state_output_)
     }
     if(managed_)
     {

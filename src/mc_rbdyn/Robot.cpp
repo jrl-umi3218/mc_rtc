@@ -265,7 +265,7 @@ Robot::Robot(Robots & robots,
   zmp_ = Eigen::Vector3d::Zero();
 }
 
-std::string Robot::name() const
+const std::string & Robot::name() const
 {
   return name_;
 }
