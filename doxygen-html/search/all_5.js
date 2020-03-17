@@ -3,6 +3,7 @@ var searchData=
   ['e',['e',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00706.html#a650bb63bba4aba1c54500a0339ef7b59',1,'boost::archive::detail::pointer_oserializer']]],
   ['e_5f0_5fc',['E_0_c',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01265.html#af28399b8910027ff33d9230fdf5611b8',1,'tasks::TransformTask::E_0_c(const Eigen::Matrix3d &amp;E_0_c)'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01265.html#a32dbd2552c66dadac00b86152e53f4f9',1,'tasks::TransformTask::E_0_c() const'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01193.html#ae260b35ffe9afa1c939261a76a219982',1,'tasks::qp::TransformTask::E_0_c(const Eigen::Matrix3d &amp;E_0_c)'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01193.html#a5f6bd5a0921c99d1d58a41f9eb7aeaa2',1,'tasks::qp::TransformTask::E_0_c() const']]],
   ['eigen',['Eigen',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00069.html',1,'']]],
+  ['eigen_5fpi',['EIGEN_PI',['../a00230.html#aebdd4427aa2148313c07b0eedad449ad',1,'constants.h']]],
   ['eigen_5fqld_5fapi_2eh',['eigen_qld_api.h',['/usr/local/share/doc/eigen-qld/doxygen-html/a00011.html',1,'']]],
   ['eigen_5fquadprog_5fapi_2eh',['eigen_quadprog_api.h',['/usr/local/share/doc/eigen-quadprog/doxygen-html/a00008.html',1,'']]],
   ['eigentypedef_2eh',['EigenTypedef.h',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00032.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00032.html',1,'(Global Namespace)']]],

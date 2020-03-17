@@ -1184,6 +1184,13 @@
     <filename>a00230</filename>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::constants</namespace>
+    <member kind="define">
+      <type>#define</type>
+      <name>EIGEN_PI</name>
+      <anchorfile>a00230.html</anchorfile>
+      <anchor>aebdd4427aa2148313c07b0eedad449ad</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="function">
       <type>constexpr double</type>
       <name>toDeg</name>
@@ -8686,36 +8693,36 @@
       <type></type>
       <name>Contact</name>
       <anchorfile>a02118.html</anchorfile>
-      <anchor>acd523c29a480e0eb39b16491d91927b8</anchor>
-      <arglist>(const mc_rbdyn::Robots &amp;robots, const std::string &amp;robotSurface, const std::string &amp;envSurface)</arglist>
+      <anchor>a569ffb048042c0924db72685d3850d2a</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robots, const std::string &amp;robotSurface, const std::string &amp;envSurface, double friction=defaultFriction)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>Contact</name>
       <anchorfile>a02118.html</anchorfile>
-      <anchor>a0c42f72aef604f5a4b2f267c6ba3188c</anchor>
-      <arglist>(const mc_rbdyn::Robots &amp;robots, const std::string &amp;robotSurface, const std::string &amp;envSurface, const sva::PTransformd &amp;X_es_rs)</arglist>
+      <anchor>a711291c387e7b26909dc6de01cb6f94d</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robots, const std::string &amp;robotSurface, const std::string &amp;envSurface, const sva::PTransformd &amp;X_es_rs, double friction=defaultFriction)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>Contact</name>
       <anchorfile>a02118.html</anchorfile>
-      <anchor>a9c8629a32710f05c96222f7b159534e7</anchor>
-      <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int r1Index, unsigned int r2Index, const std::string &amp;r1Surface, const std::string &amp;r2Surface, int ambiguityId=-1)</arglist>
+      <anchor>aa64e9ae1b141768ff36beab5ababfe62</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int r1Index, unsigned int r2Index, const std::string &amp;r1Surface, const std::string &amp;r2Surface, double friction=defaultFriction, int ambiguityId=-1)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>Contact</name>
       <anchorfile>a02118.html</anchorfile>
-      <anchor>a8a48fdd7ccad74d6c339b02967eeb4e5</anchor>
-      <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int r1Index, unsigned int r2Index, const std::string &amp;r1Surface, const std::string &amp;r2Surface, const sva::PTransformd &amp;X_r2s_r1s, int ambiguityId=-1)</arglist>
+      <anchor>a7bf365419cb070e0346b19deb39ef967</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int r1Index, unsigned int r2Index, const std::string &amp;r1Surface, const std::string &amp;r2Surface, const sva::PTransformd &amp;X_r2s_r1s, double friction=defaultFriction, int ambiguityId=-1)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>Contact</name>
       <anchorfile>a02118.html</anchorfile>
-      <anchor>ac2ae8403133f8cefe5871f76c3f3483a</anchor>
-      <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int r1Index, unsigned int r2Index, const std::string &amp;r1Surface, const std::string &amp;r2Surface, const sva::PTransformd &amp;X_r2s_r1s, const sva::PTransformd &amp;X_b_s, int ambiguityId=-1)</arglist>
+      <anchor>a1e88a7e40daa8d2b1b1eb703681eec3c</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int r1Index, unsigned int r2Index, const std::string &amp;r1Surface, const std::string &amp;r2Surface, const sva::PTransformd &amp;X_r2s_r1s, const sva::PTransformd &amp;X_b_s, double friction=defaultFriction, int ambiguityId=-1)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -8800,6 +8807,20 @@
       <anchorfile>a02118.html</anchorfile>
       <anchor>a7cc9fdeb70bb0ce49c00d052513430b2</anchor>
       <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>friction</name>
+      <anchorfile>a02118.html</anchorfile>
+      <anchor>a54b141ffefe0b35cfed175e92d5220ce</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>friction</name>
+      <anchorfile>a02118.html</anchorfile>
+      <anchor>ae7a6d2761bed3b5ddc4f2f61f72000bc</anchor>
+      <arglist>(double friction)</arglist>
     </member>
     <member kind="function">
       <type>std::pair&lt; std::string, std::string &gt;</type>
