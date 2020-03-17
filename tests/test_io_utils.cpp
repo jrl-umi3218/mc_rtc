@@ -32,4 +32,18 @@ BOOST_AUTO_TEST_CASE(TestIOUtils)
   BOOST_CHECK(
       to_string(structVec, [](const TestStruct & c) -> const std::string { return std::to_string(c.val); }, " + ")
       == "1 + 2 + 3");
+
+  BOOST_CHECK(to_string(std::vector<std::string>{"a", "aa", "aaa"},
+                        [](const std::string & s) { return std::to_string(s.size()); })
+              == "1, 2, 3");
+
+  BOOST_CHECK(to_string(std::vector<std::string>{"a", "aa", "aaa"},
+                        [](const std::string & s) { return std::to_string(s.size()); }, " + ")
+              == "1 + 2 + 3");
+
+  auto lambda = [](const std::string & s) { return std::to_string(s.size()); };
+
+  BOOST_CHECK(to_string(std::vector<std::string>{"a", "aa", "aaa"}, lambda) == "1, 2, 3");
+
+  BOOST_CHECK(to_string(std::vector<std::string>{"a", "aa", "aaa"}, lambda, " + ") == "1 + 2 + 3");
 }

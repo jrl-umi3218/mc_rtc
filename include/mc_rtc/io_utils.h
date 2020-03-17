@@ -55,10 +55,10 @@ std::string to_string(const Container & c, const std::string & delimiter = ", ")
  *
  * @return A string of all the container elements.
  */
-template<typename Container>
-std::string to_string(const Container & c,
-                      std::function<std::string(typename Container::value_type const &)> && get_value,
-                      const std::string & delimiter = ", ")
+template<typename Container,
+         typename Callback,
+         typename std::enable_if<!std::is_convertible<Callback, std::string>::value, int>::type = 0>
+std::string to_string(const Container & c, Callback && get_value, const std::string & delimiter = ", ")
 {
   if(c.cbegin() == c.cend())
   {
