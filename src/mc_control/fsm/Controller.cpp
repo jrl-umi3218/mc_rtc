@@ -22,6 +22,7 @@ namespace mc_rtc
 mc_control::fsm::Contact ConfigurationLoader<mc_control::fsm::Contact>::load(const mc_rtc::Configuration & config)
 {
   return mc_control::fsm::Contact(config("r1"), config("r2"), config("r1Surface"), config("r2Surface"),
+                                  config("friction", mc_rbdyn::Contact::defaultFriction),
                                   config("dof", Eigen::Vector6d::Ones().eval()));
 }
 
@@ -36,7 +37,7 @@ namespace fsm
 Contact Contact::from_mc_rbdyn(const Controller & ctl, const mc_rbdyn::Contact & contact)
 {
   return {ctl.robots().robot(contact.r1Index()).name(), ctl.robots().robot(contact.r2Index()).name(),
-          contact.r1Surface()->name(), contact.r2Surface()->name()};
+          contact.r1Surface()->name(), contact.r2Surface()->name(), contact.friction()};
 }
 
 Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, const mc_rtc::Configuration & config)
@@ -229,7 +230,8 @@ void Controller::reset(const ControllerResetData & data)
                        for(const auto & c : contacts_)
                        {
                          std::stringstream ss;
-                         ss << c.r1Surface << "/" << c.r2Surface << " | " << c.dof.transpose() << "\n";
+                         ss << c.r1Surface << "/" << c.r2Surface << " | " << c.dof.transpose() << " | " << c.friction
+                            << "\n";
                          ret += ss.str();
                        }
                        if(ret.size())
@@ -247,13 +249,15 @@ void Controller::reset(const ControllerResetData & data)
                             std::string r1 = data("R1");
                             std::string r0Surface = data("R0 surface");
                             std::string r1Surface = data("R1 surface");
+                            double friction = data("Friction", mc_rbdyn::Contact::defaultFriction);
                             Eigen::Vector6d dof = data("dof", Eigen::Vector6d::Ones().eval());
-                            addContact({r0, r1, r0Surface, r1Surface, dof});
+                            addContact({r0, r1, r0Surface, r1Surface, friction, dof});
                           },
                           mc_rtc::gui::FormDataComboInput{"R0", true, {"robots"}},
                           mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
                           mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
                           mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}},
+                          mc_rtc::gui::FormNumberInput{"Friction", false, mc_rbdyn::Contact::defaultFriction},
                           mc_rtc::gui::FormArrayInput<Eigen::Vector6d>{"dof", false, Eigen::Vector6d::Ones()}));
   }
   startIdleState();
@@ -325,7 +329,7 @@ void Controller::updateContacts()
       ensureValidContact(c.r1, c.r1Surface);
       ensureValidContact(c.r2, c.r2Surface);
       contacts.emplace_back(robots(), static_cast<unsigned int>(robots_idx_.at(c.r1)),
-                            static_cast<unsigned int>(robots_idx_.at(c.r2)), c.r1Surface, c.r2Surface);
+                            static_cast<unsigned int>(robots_idx_.at(c.r2)), c.r1Surface, c.r2Surface, c.friction);
       auto cId = contacts.back().contactId(robots());
       contact_constraint_->contactConstr->addDofContact(cId, c.dof.asDiagonal());
     }
@@ -429,6 +433,13 @@ void Controller::addContact(const Contact & c)
       LOG_INFO("[FSM] Changed contact DoF " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface
                                             << " to " << c.dof.transpose())
       it->dof = c.dof;
+      contacts_changed_ = true;
+    }
+    if(it->friction != c.friction)
+    {
+      LOG_INFO("[FSM] Changed contact friction " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface
+                                                 << " to " << c.friction)
+      it->friction = c.friction;
       contacts_changed_ = true;
     }
   }

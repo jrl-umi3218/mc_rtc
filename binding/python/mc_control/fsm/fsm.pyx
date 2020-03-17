@@ -23,7 +23,7 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 
 cdef class Contact(object):
-  def __ctor__(self, r1, r2, r1Surface, r2Surface, eigen.Vector6d dof = None):
+  def __ctor__(self, r1, r2, r1Surface, r2Surface, friction = mc_rbdyn.Contact.defaultFriction, eigen.Vector6d dof = None):
     if isinstance(r1, unicode):
       r1 = r1.encode(u'ascii')
     if isinstance(r1Surface, unicode):
@@ -33,9 +33,9 @@ cdef class Contact(object):
     if isinstance(r2Surface, unicode):
       r2Surface = r2Surface.encode(u'ascii')
     if dof is None:
-      self.impl = c_fsm.Contact(r1, r2, r1Surface, r2Surface)
+      self.impl = c_fsm.Contact(r1, r2, r1Surface, r2Surface, friction)
     else:
-      self.impl = c_fsm.Contact(r1, r2, r1Surface, r2Surface, dof.impl)
+      self.impl = c_fsm.Contact(r1, r2, r1Surface, r2Surface, friction, dof.impl)
   def __cinit__(self, *args):
     if len(args) > 0:
       self.__ctor__(*args)
@@ -67,6 +67,11 @@ cdef class Contact(object):
       if isinstance(r2Surface, unicode):
         r2Surface = r2Surface.encode(u'ascii')
       self.impl.r2Surface = r2Surface
+  property friction:
+    def __get__(self):
+      return self.impl.friction
+    def __set__(self, friction):
+      self.impl.friction = friction
   property dof:
     def __get__(self):
       return eigen.Vector6dFromC(self.impl.dof)

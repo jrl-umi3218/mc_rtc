@@ -8,6 +8,7 @@
     "r2": { "type": "string", "description": "Name of the second robot in the contact" },
     "r1Surface": { "type": "string", "description": "Name of the first robot's surface in the contact" },
     "r2Surface": { "type": "string", "description": "Name of the second robot's surface in the contact" },
+    "friction": { "type": "number", "description": "Contact's coefficient of friction", "default": "0.7" },
     "dof": { "$ref": "/../../Eigen/Vector6d.json", "description": "Contact DoF", "default": "[1, 1, 1, 1, 1, 1]" }
   },
   "required": ["r1", "r2", "r1Surface", "r2Surface"]

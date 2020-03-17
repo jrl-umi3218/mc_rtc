@@ -34,13 +34,14 @@ cdef extern from "mc_control_fsm_wrapper.hpp":
 
 cdef extern from "<mc_control/fsm/Controller.h>" namespace "mc_control::fsm":
   cdef cppclass Contact:
-    Contact(const string&, const string&, const string&, const string&)
-    Contact(const string&, const string&, const string&, const string&, const c_eigen.Vector6d)
+    Contact(const string&, const string&, const string&, const string&, double)
+    Contact(const string&, const string&, const string&, const string&, double, const c_eigen.Vector6d)
     Contact()
     string r1
     string r2
     string r1Surface
     string r2Surface
+    double friction
     c_eigen.Vector6d dof
 
   # Actually std::set<Contact, std::less<Contact>, Eigen::aligned_allocator<Contact>> but Cython only know std::set<T>

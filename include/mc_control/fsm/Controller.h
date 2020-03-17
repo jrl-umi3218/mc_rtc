@@ -31,8 +31,9 @@ struct MC_CONTROL_FSM_DLLAPI Contact
           const std::string & r2,
           const std::string & r1Surface,
           const std::string & r2Surface,
+          double friction = mc_rbdyn::Contact::defaultFriction,
           const Eigen::Vector6d & dof = Eigen::Vector6d::Ones())
-  : r1(r1), r2(r2), r1Surface(r1Surface), r2Surface(r2Surface), dof(dof)
+  : r1(r1), r2(r2), r1Surface(r1Surface), r2Surface(r2Surface), friction(friction), dof(dof)
   {
   }
 
@@ -40,6 +41,7 @@ struct MC_CONTROL_FSM_DLLAPI Contact
   std::string r2;
   std::string r1Surface;
   std::string r2Surface;
+  mutable double friction;
   mutable Eigen::Vector6d dof;
 
   bool operator<(const Contact & rhs) const
