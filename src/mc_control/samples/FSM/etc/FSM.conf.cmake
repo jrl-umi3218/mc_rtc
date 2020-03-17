@@ -232,7 +232,7 @@
     {
       "base": "Parallel",
       "states": ["MoveLeftFoot", "RightCoM", "HalfSitting"],
-      "outputStates": ["MoveLeftFoot", "RightCoM"]
+      "outputs": ["MoveLeftFoot", "RightCoM"]
     },
     "MoveRightFoot":
     {
@@ -250,7 +250,7 @@
       },
       // When this list contains tasks names, these
       // tasks' completion criteria will be used to generate an output string for the state
-      "outputCriteriaTasks": ["MoveFoot"],
+      "outputs": ["MoveFoot"],
       "RemoveContacts":
       [
         {

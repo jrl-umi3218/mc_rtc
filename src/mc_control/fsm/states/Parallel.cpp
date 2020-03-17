@@ -51,7 +51,6 @@ void ParallelState::DelayedState::createState(Controller & ctl)
 void ParallelState::configure(const mc_rtc::Configuration & config)
 {
   config_.load(config);
-  outputStates_ = mc_rtc::fromVectorOrElement<std::string>(config, "outputs", {});
 }
 
 void ParallelState::start(Controller & ctl)
@@ -69,6 +68,7 @@ void ParallelState::start(Controller & ctl)
     }
   }
   // Check validity of output states names
+  outputStates_ = mc_rtc::fromVectorOrElement<std::string>(config_, "outputs", {});
   for(const auto & sName : outputStates_)
   {
     if(std::find(states.begin(), states.end(), sName) == states.end())
