@@ -27,6 +27,7 @@ public:
   std::shared_ptr<mc_rbdyn::Surface> r1Surface;
   std::shared_ptr<mc_rbdyn::Surface> r2Surface;
   sva::PTransformd X_r2s_r1s;
+  double friction;
   bool is_fixed;
   sva::PTransformd X_b_s;
   int ambiguityId;
@@ -121,16 +122,11 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
                                                       << " have incompatible types for contact")
 }
 
-Contact::Contact(const mc_rbdyn::Robots & robots, const std::string & robotSurface, const std::string & envSurface)
-: Contact(robots, robotSurface, envSurface, sva::PTransformd::Identity(), false)
-{
-}
-
 Contact::Contact(const mc_rbdyn::Robots & robots,
                  const std::string & robotSurface,
                  const std::string & envSurface,
-                 const sva::PTransformd & X_es_rs)
-: Contact(robots, robotSurface, envSurface, X_es_rs, true)
+                 double friction)
+: Contact(robots, robotSurface, envSurface, sva::PTransformd::Identity(), friction, false)
 {
 }
 
@@ -138,10 +134,20 @@ Contact::Contact(const mc_rbdyn::Robots & robots,
                  const std::string & robotSurface,
                  const std::string & envSurface,
                  const sva::PTransformd & X_es_rs,
+                 double friction)
+: Contact(robots, robotSurface, envSurface, X_es_rs, friction, true)
+{
+}
+
+Contact::Contact(const mc_rbdyn::Robots & robots,
+                 const std::string & robotSurface,
+                 const std::string & envSurface,
+                 const sva::PTransformd & X_es_rs,
+                 double friction,
                  bool is_fixed)
 {
   impl.reset(new ContactImpl{0, 1, robots.robot(0).surface(robotSurface).copy(),
-                             robots.robot(1).surface(envSurface).copy(), X_es_rs, is_fixed,
+                             robots.robot(1).surface(envSurface).copy(), X_es_rs, friction, is_fixed,
                              robots.robot(0).surface(robotSurface).X_b_s(), -1});
 }
 
@@ -150,6 +156,7 @@ Contact::Contact(const mc_rbdyn::Robots & robots,
                  unsigned int r2Index,
                  const std::string & r1Surface,
                  const std::string & r2Surface,
+                 double friction,
                  int ambiguityId)
 : Contact(robots,
           r1Index,
@@ -158,6 +165,7 @@ Contact::Contact(const mc_rbdyn::Robots & robots,
           r2Surface,
           sva::PTransformd::Identity(),
           robots.robot(r1Index).surface(r1Surface).X_b_s(),
+          friction,
           ambiguityId)
 {
 }
@@ -168,6 +176,7 @@ Contact::Contact(const mc_rbdyn::Robots & robots,
                  const std::string & r1Surface,
                  const std::string & r2Surface,
                  const sva::PTransformd & X_r2s_r1s,
+                 double friction,
                  int ambiguityId)
 : Contact(robots,
           r1Index,
@@ -176,6 +185,7 @@ Contact::Contact(const mc_rbdyn::Robots & robots,
           r2Surface,
           X_r2s_r1s,
           robots.robot(r1Index).surface(r1Surface).X_b_s(),
+          friction,
           ambiguityId)
 {
 }
@@ -187,10 +197,12 @@ Contact::Contact(const mc_rbdyn::Robots & robots,
                  const std::string & r2Surface,
                  const sva::PTransformd & X_r2s_r1s,
                  const sva::PTransformd & X_b_s,
+                 double friction,
                  int ambiguityId)
 {
   impl.reset(new ContactImpl{r1Index, r2Index, robots.robot(r1Index).surface(r1Surface).copy(),
-                             robots.robot(r2Index).surface(r2Surface).copy(), X_r2s_r1s, true, X_b_s, ambiguityId});
+                             robots.robot(r2Index).surface(r2Surface).copy(), X_r2s_r1s, friction, true, X_b_s,
+                             ambiguityId});
 }
 
 mc_rbdyn::Contact Contact::load(const mc_rbdyn::Robots & robots, const mc_rtc::Configuration & config)
@@ -211,9 +223,9 @@ std::vector<mc_rbdyn::Contact> Contact::loadVector(const mc_rbdyn::Robots & robo
 
 Contact::Contact(const Contact & contact)
 {
-  impl.reset(
-      new ContactImpl({contact.r1Index(), contact.r2Index(), contact.r1Surface()->copy(), contact.r2Surface()->copy(),
-                       contact.X_r2s_r1s(), contact.isFixed(), contact.X_b_s(), contact.ambiguityId()}));
+  impl.reset(new ContactImpl({contact.r1Index(), contact.r2Index(), contact.r1Surface()->copy(),
+                              contact.r2Surface()->copy(), contact.X_r2s_r1s(), contact.friction(), contact.isFixed(),
+                              contact.X_b_s(), contact.ambiguityId()}));
 }
 
 Contact & Contact::operator=(const Contact & rhs)
@@ -395,14 +407,14 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & /*robots*/
     res.unilateralContact =
         new tasks::qp::UnilateralContact(static_cast<int>(impl->r1Index), static_cast<int>(impl->r2Index),
                                          impl->r1Surface->bodyName(), impl->r2Surface->bodyName(), impl->ambiguityId,
-                                         points, frames[0], X_b1_b2, nrConeGen, defaultFriction, impl->X_b_s);
+                                         points, frames[0], X_b1_b2, nrConeGen, impl->friction, impl->X_b_s);
   }
   else if(impl->r1Surface->type() == "gripper")
   {
     res.bilateralContact =
         new tasks::qp::BilateralContact(static_cast<int>(impl->r1Index), static_cast<int>(impl->r2Index),
                                         impl->r1Surface->bodyName(), impl->r2Surface->bodyName(), impl->ambiguityId,
-                                        points, frames, X_b1_b2, nrConeGen, defaultFriction, impl->X_b_s);
+                                        points, frames, X_b1_b2, nrConeGen, impl->friction, impl->X_b_s);
   }
   else
   {
@@ -427,6 +439,16 @@ bool Contact::operator==(const Contact & rhs) const
 bool Contact::operator!=(const Contact & rhs) const
 {
   return !(*this == rhs);
+}
+
+double Contact::friction() const
+{
+  return impl->friction;
+}
+
+void Contact::friction(double friction)
+{
+  impl->friction = friction;
 }
 
 } // namespace mc_rbdyn
