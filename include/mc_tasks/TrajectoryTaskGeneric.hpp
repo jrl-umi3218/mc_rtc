@@ -200,13 +200,18 @@ Eigen::VectorXd TrajectoryTaskGeneric<T>::dimWeight() const
 template<typename T>
 void TrajectoryTaskGeneric<T>::selectActiveJoints(
     const std::vector<std::string> & activeJointsName,
-    const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
+    const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs,
+    bool checkJoints)
 {
   if(inSolver_)
   {
     LOG_WARNING("selectActiveJoints(names) ignored: use selectActiveJoints(solver, names) for a task already added to "
                 "the solver");
     return;
+  }
+  if(checkJoints)
+  {
+    ensureHasJoints(robots.robot(rIndex), activeJointsName, "[selectActiveJoints]");
   }
   selectorT_ = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::ActiveJoints(
       robots.mbs(), static_cast<int>(rIndex), errorT.get(), activeJointsName, activeDofs));
@@ -220,28 +225,34 @@ void TrajectoryTaskGeneric<T>::selectActiveJoints(
     const std::vector<std::string> & activeJointsName,
     const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
 {
+  ensureHasJoints(robots.robot(rIndex), activeJointsName, "[selectActiveJoints]");
   if(inSolver_)
   {
     removeFromSolver(solver);
-    selectActiveJoints(activeJointsName, activeDofs);
+    selectActiveJoints(activeJointsName, activeDofs, false);
     addToSolver(solver);
   }
   else
   {
-    selectActiveJoints(activeJointsName, activeDofs);
+    selectActiveJoints(activeJointsName, activeDofs, false);
   }
 }
 
 template<typename T>
 void TrajectoryTaskGeneric<T>::selectUnactiveJoints(
     const std::vector<std::string> & unactiveJointsName,
-    const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
+    const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs,
+    bool checkJoints)
 {
   if(inSolver_)
   {
     LOG_WARNING("selectUnactiveJoints(names) ignored: use selectUnactiveJoints(solver, names) for a task already added "
                 "to the solver");
     return;
+  }
+  if(checkJoints)
+  {
+    ensureHasJoints(robots.robot(rIndex), unactiveJointsName, "[selectUnactiveJoints]");
   }
   selectorT_ = std::make_shared<tasks::qp::JointsSelector>(tasks::qp::JointsSelector::UnactiveJoints(
       robots.mbs(), static_cast<int>(rIndex), errorT.get(), unactiveJointsName, unactiveDofs));
@@ -255,15 +266,16 @@ void TrajectoryTaskGeneric<T>::selectUnactiveJoints(
     const std::vector<std::string> & unactiveJointsName,
     const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
 {
+  ensureHasJoints(robots.robot(rIndex), unactiveJointsName, "[selectUnactiveJoints]");
   if(inSolver_)
   {
     removeFromSolver(solver);
-    selectUnactiveJoints(unactiveJointsName, unactiveDofs);
+    selectUnactiveJoints(unactiveJointsName, unactiveDofs, false);
     addToSolver(solver);
   }
   else
   {
-    selectUnactiveJoints(unactiveJointsName, unactiveDofs);
+    selectUnactiveJoints(unactiveJointsName, unactiveDofs, false);
   }
 }
 

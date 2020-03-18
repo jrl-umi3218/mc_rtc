@@ -140,6 +140,7 @@ void ComplianceTask::selectActiveJoints(mc_solver::QPSolver & solver,
                                         const std::vector<std::string> & activeJointsName,
                                         const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
 {
+  ensureHasJoints(robots_.robot(rIndex_), activeJointsName, "[ComplianceTask::selectActiveJoints]");
   efTask_->selectActiveJoints(solver, activeJointsName, activeDofs);
 }
 
@@ -147,6 +148,7 @@ void ComplianceTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
                                           const std::vector<std::string> & unactiveJointsName,
                                           const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
 {
+  ensureHasJoints(robots_.robot(rIndex_), unactiveJointsName, "[ComplianceTask::selectUnactiveJoints]");
   efTask_->selectUnactiveJoints(solver, unactiveJointsName, unactiveDofs);
 }
 
