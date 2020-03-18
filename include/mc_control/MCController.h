@@ -184,6 +184,8 @@ public:
    * The default implementation reset the main robot's state to that provided by
    * reset_data (with a null speed/acceleration). It maintains the contacts as
    * they were set by the controller previously.
+   *
+   * \throws if the main robot is not supported (see supported_robots())
    */
   virtual void reset(const ControllerResetData & reset_data);
 
@@ -262,8 +264,11 @@ public:
    * \return Vector of supported robots designed by name (as returned by
    * RobotModule::name())
    * \note
-   * Default implementation returns an empty list which indicates that all
+   * - Default implementation returns an empty list which indicates that all
    * robots are supported.
+   * - If the list is not empty, only the robots in that list are allowed to be
+   *   used with the controller. The main robot will be checked against the list of supported robots
+   * upon call to reset(), and an exception will be thrown if the robot is not supported.
    */
   virtual std::vector<std::string> supported_robots() const;
 

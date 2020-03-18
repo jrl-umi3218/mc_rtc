@@ -16,6 +16,11 @@ struct MC_CONTROL_DLLAPI FSMController : public mc_control::fsm::Controller
 
   void reset(const mc_control::ControllerResetData & reset_data) override;
 
+  std::vector<std::string> supported_robots() const override
+  {
+    return {"jvrc1"};
+  }
+
 private:
   mc_rtc::Configuration config_;
 };
