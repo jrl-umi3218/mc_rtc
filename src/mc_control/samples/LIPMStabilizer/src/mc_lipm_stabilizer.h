@@ -16,6 +16,11 @@ struct MC_CONTROL_DLLAPI LIPMStabilizerController : public mc_control::fsm::Cont
 
   void reset(const mc_control::ControllerResetData & reset_data) override;
 
+  std::vector<std::string> supported_robots() const override
+  {
+    return {"jvrc1", "hrp2_drc", "hrp4", "hrp5_p"};
+  }
+
 private:
   mc_rtc::Configuration config_;
 };
