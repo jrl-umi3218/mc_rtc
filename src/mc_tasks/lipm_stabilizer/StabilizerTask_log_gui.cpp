@@ -285,22 +285,18 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   });
 
   // Log computed robot properties
-  logger.addLogEntry(name_ + "_controlRobot_LeftFoot", [this]() { return robot().surfacePose("LeftFoot"); });
-  logger.addLogEntry(name_ + "_controlRobot_LeftFootCenter",
-                     [this]() { return robot().surfacePose("LeftFootCenter"); });
-  logger.addLogEntry(name_ + "_controlRobot_RightFoot", [this]() { return robot().surfacePose("RightFoot"); });
-  logger.addLogEntry(name_ + "_controlRobot_RightFootCenter",
-                     [this]() { return robot().surfacePose("RightFootCenter"); });
+  logger.addLogEntry(name_ + "_controlRobot_LeftFoot",
+                     [this]() { return robot().surfacePose(footSurface(ContactState::Left)); });
+  logger.addLogEntry(name_ + "_controlRobot_RightFoot",
+                     [this]() { return robot().surfacePose(footSurface(ContactState::Right)); });
   logger.addLogEntry(name_ + "_controlRobot_com", [this]() { return robot().com(); });
   logger.addLogEntry(name_ + "_controlRobot_comd", [this]() { return robot().comVelocity(); });
   logger.addLogEntry(name_ + "_controlRobot_posW", [this]() { return robot().posW(); });
 
-  logger.addLogEntry(name_ + "_realRobot_LeftFoot", [this]() { return realRobot().surfacePose("LeftFoot"); });
-  logger.addLogEntry(name_ + "_realRobot_LeftFootCenter",
-                     [this]() { return realRobot().surfacePose("LeftFootCenter"); });
-  logger.addLogEntry(name_ + "_realRobot_RightFoot", [this]() { return realRobot().surfacePose("RightFoot"); });
-  logger.addLogEntry(name_ + "_realRobot_RightFootCenter",
-                     [this]() { return realRobot().surfacePose("RightFootCenter"); });
+  logger.addLogEntry(name_ + "_realRobot_LeftFoot",
+                     [this]() { return realRobot().surfacePose(footSurface(ContactState::Left)); });
+  logger.addLogEntry(name_ + "_realRobot_RightFoot",
+                     [this]() { return realRobot().surfacePose(footSurface(ContactState::Right)); });
   logger.addLogEntry(name_ + "_realRobot_com", [this]() { return measuredCoM_; });
   logger.addLogEntry(name_ + "_realRobot_comd", [this]() { return measuredCoMd_; });
   logger.addLogEntry(name_ + "_realRobot_dcm", [this]() -> Eigen::Vector3d { return measuredDCM_; });
@@ -350,16 +346,12 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_target_pendulum_omega");
   logger.removeLogEntry(name_ + "_target_pendulum_zmp");
   logger.removeLogEntry(name_ + "_controlRobot_LeftFoot");
-  logger.removeLogEntry(name_ + "_controlRobot_LeftFootCenter");
   logger.removeLogEntry(name_ + "_controlRobot_RightFoot");
-  logger.removeLogEntry(name_ + "_controlRobot_RightFootCenter");
   logger.removeLogEntry(name_ + "_controlRobot_com");
   logger.removeLogEntry(name_ + "_controlRobot_comd");
   logger.removeLogEntry(name_ + "_controlRobot_posW");
   logger.removeLogEntry(name_ + "_realRobot_LeftFoot");
-  logger.removeLogEntry(name_ + "_realRobot_LeftFootCenter");
   logger.removeLogEntry(name_ + "_realRobot_RightFoot");
-  logger.removeLogEntry(name_ + "_realRobot_RightFootCenter");
   logger.removeLogEntry(name_ + "_realRobot_com");
   logger.removeLogEntry(name_ + "_realRobot_comd");
   logger.removeLogEntry(name_ + "_realRobot_dcm");

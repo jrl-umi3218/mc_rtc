@@ -59,12 +59,12 @@ states:
     AddContacts:
     - r1: hrp2_drc
       r2: ground
-      r1Surface: LeftFootCenter
+      r1Surface: LeftFoot
       r2Surface: AllGround
       dof: [0, 0, 1, 1, 1, 0]
     - r1: hrp2_drc
       r2: ground
-      r1Surface: RightFootCenter
+      r1Surface: RightFoot
       r2Surface: AllGround
       dof: [0, 0, 1, 1, 1, 0]
 
@@ -77,8 +77,8 @@ states:
       # Default values for these robot-specific parameters are set in the corresponding robot module.
       # You may choose to override any of them here, with due caution.
       hrp2_drc:
-        leftFootSurface: LeftFootCenter
-        rightFootSurface: RightFootCenter
+        leftFootSurface: LeftFoot
+        rightFootSurface: RightFoot
         friction: 0.8
         torsoBodyName: CHEST_LINK1
         # Configuration  of the QP tasks used by the stabilizer
@@ -141,7 +141,7 @@ states:
         type: surfaceTransform
         stiffness: 10
         weight: 500
-        surface: "RightFootCenter"
+        surface: "RightFoot"
         moveWorld:
           translation: [0,0,0.1]
         completion:
@@ -155,14 +155,14 @@ states:
     base: LIPMStabilizer::LiftRightFoot
     tasks:
       LiftFootTask:
-        surface: "LeftFootCenter"
-
+        surface: LeftFoot
+  
   LIPMStabilizer::PutRightFoot:
     base: MetaTasks
     tasks:
       PutFootAdmittance:
         type: admittance
-        surface: "RightFootCenter"
+        surface: RightFoot
         stiffness: [10, 10, 10, 10, 10, 3]
         damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
         admittance: [0,0,0,0,0,0.001]
@@ -186,8 +186,8 @@ states:
     base: LIPMStabilizer::PutRightFoot
     tasks:
       PutFootAdmittance:
-        surface: "LeftFootCenter"
-
+        surface: LeftFoot
+  
   LIPMStabilizer::Stabilized::LiftRightFoot:
     base: Parallel
     states: [Stabilizer::LeftSupport, LIPMStabilizer::LiftRightFoot]
@@ -256,7 +256,7 @@ states:
     tasks:
       SwingFootTrajectory:
         type: exact_cubic_trajectory
-        surface: RightFootCenter
+        surface: RightFoot
         stiffness: 10000.0
         duration: 5.0
         weight: 100
@@ -268,7 +268,7 @@ states:
               - timeout: 2.5
               - wrench: [.nan, .nan, .nan, .nan, .nan, 20] 
         targetSurface:
-          surface: RightFootCenter
+          surface: RightFoot
           # Aim 5mm above ground as the FSM does not have early-impact detection
           translation: [0.1, 0.0, 0.005]
           rotation: [0,0,0]
@@ -280,9 +280,9 @@ states:
     base: LIPMStabilizer::RightFootTrajectory
     tasks:
       SwingFootTrajectory:
-        surface: LeftFootCenter
+        surface: LeftFoot
         targetSurface:
-          surface: LeftFootCenter
+          surface: LeftFoot
           translation: [0.1, 0.0, 0.005]
           rotation: [0,0,0]
           # control points in target surface frame
@@ -324,7 +324,7 @@ states:
     tasks:
       SwingFootTrajectory:
         targetSurface:
-          surface: RightFootCenter
+          surface: RightFoot
           translation: [-0.1, 0.0, 0.005]
           rotation: [0, 0, 0]
           # control points in target surface frame
@@ -335,9 +335,9 @@ states:
     base: LIPMStabilizer::RightFootBackwardTrajectory
     tasks:
       SwingFootTrajectory:
-        surface: LeftFootCenter
+        surface: LeftFoot
         targetSurface:
-          surface: LeftFootCenter
+          surface: LeftFoot
           translation: [-0.1, 0.0, 0.005]
           rotation: [0,0,0]
           # control points in target surface frame
