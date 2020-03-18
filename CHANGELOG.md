@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [1.2.1] - 2020-03-18
+
+### Added
+
+- Friction support for FSM contacts
+
+### Fixes
+
+- Bug when removing contacts from the GUI
+- Loading of mc\_rbdyn::Contact from YAML/JSON now supports friction
+
 ## [1.2.0] - 2020-03-17
 
 ### Added
@@ -74,7 +85,8 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.2.1...HEAD
+[1.2.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.2.1
 [1.2.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.2.0
 [1.1.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.1.0
 [1.0.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.0.1
