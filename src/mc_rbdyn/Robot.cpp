@@ -231,11 +231,6 @@ Robot::Robot(Robots & robots,
   stance_ = module_.stance();
 
   bodySensors_ = module_.bodySensors();
-  // Add a single default sensor if no sensor on the robot
-  if(bodySensors_.size() == 0)
-  {
-    bodySensors_.emplace_back();
-  }
   for(size_t i = 0; i < bodySensors_.size(); ++i)
   {
     const auto & bS = bodySensors_[i];
@@ -282,11 +277,19 @@ const RobotModule & Robot::module() const
 
 BodySensor & Robot::bodySensor()
 {
+  if(bodySensors_.empty())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[Robot] Robot " << name() << " does not have a default bodySensor");
+  }
   return bodySensors_[0];
 }
 
 const BodySensor & Robot::bodySensor() const
 {
+  if(bodySensors_.empty())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[Robot] Robot " << name() << " does not have a default bodySensor");
+  }
   return bodySensors_[0];
 }
 

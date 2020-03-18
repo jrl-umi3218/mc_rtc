@@ -22,6 +22,11 @@ KinematicInertialPoseObserver::KinematicInertialPoseObserver(const std::string &
 
 void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)
 {
+  if(ctl.robot().bodySensors().empty())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "KinematicInertialPoseObserver requires the robot to have at least one body sensor");
+  }
   run(ctl);
 }
 

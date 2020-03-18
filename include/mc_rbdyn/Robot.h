@@ -55,13 +55,14 @@ public:
 
   /** Return the first BodySensor in the robot
    *
-   * If the robot does not have body sensors, it returns a default
-   * (invalid) one
-   *
+   * \throw if the robot does not have any body sensor
    */
   BodySensor & bodySensor();
 
-  /** Return the first BodySensor in the robot (const) */
+  /** Return the first BodySensor in the robot (const)
+   *
+   * \throw if the robot does not have any body sensor
+   */
   const BodySensor & bodySensor() const;
 
   /** Return true if the robot has a body sensor named name
@@ -83,7 +84,6 @@ public:
    * @param name Name of the sensor
    *
    * @throws If the sensor does not exist
-   *
    */
   BodySensor & bodySensor(const std::string & name);
 

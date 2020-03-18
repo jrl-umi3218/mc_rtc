@@ -301,14 +301,20 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
 {
-  robot().bodySensor().position(pos);
-  realRobot().bodySensor().position(pos);
+  if(robot().bodySensors().size())
+  {
+    robot().bodySensor().position(pos);
+    realRobot().bodySensor().position(pos);
+  }
 }
 
 void MCGlobalController::setSensorPositions(const std::map<std::string, Eigen::Vector3d> & poses)
 {
-  setSensorPositions(robot(), poses);
-  setSensorPositions(realRobot(), poses);
+  if(robot().bodySensors().size())
+  {
+    setSensorPositions(robot(), poses);
+    setSensorPositions(realRobot(), poses);
+  }
 }
 
 void MCGlobalController::setSensorPositions(mc_rbdyn::Robot & robot,
@@ -322,8 +328,11 @@ void MCGlobalController::setSensorPositions(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setSensorOrientation(const Eigen::Quaterniond & ori)
 {
-  robot().bodySensor().orientation(ori);
-  realRobot().bodySensor().orientation(ori);
+  if(robot().bodySensors().size())
+  {
+    robot().bodySensor().orientation(ori);
+    realRobot().bodySensor().orientation(ori);
+  }
 }
 
 void MCGlobalController::setSensorOrientations(const std::map<std::string, Eigen::Quaterniond> & oris)
@@ -343,8 +352,11 @@ void MCGlobalController::setSensorOrientations(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setSensorLinearVelocity(const Eigen::Vector3d & vel)
 {
-  robot().bodySensor().linearVelocity(vel);
-  realRobot().bodySensor().linearVelocity(vel);
+  if(robot().bodySensors().size())
+  {
+    robot().bodySensor().linearVelocity(vel);
+    realRobot().bodySensor().linearVelocity(vel);
+  }
 }
 
 void MCGlobalController::setSensorLinearVelocities(const std::map<std::string, Eigen::Vector3d> & linearVels)
@@ -364,8 +376,11 @@ void MCGlobalController::setSensorLinearVelocities(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setSensorAngularVelocity(const Eigen::Vector3d & vel)
 {
-  robot().bodySensor().angularVelocity(vel);
-  realRobot().bodySensor().angularVelocity(vel);
+  if(robot().bodySensors().size())
+  {
+    robot().bodySensor().angularVelocity(vel);
+    realRobot().bodySensor().angularVelocity(vel);
+  }
 }
 
 void MCGlobalController::setSensorAngularVelocities(const std::map<std::string, Eigen::Vector3d> & angularVels)
@@ -384,8 +399,11 @@ void MCGlobalController::setSensorAngularVelocities(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setSensorAcceleration(const Eigen::Vector3d & acc)
 {
-  robot().bodySensor().acceleration(acc);
-  realRobot().bodySensor().acceleration(acc);
+  if(robot().bodySensors().size())
+  {
+    robot().bodySensor().acceleration(acc);
+    realRobot().bodySensor().acceleration(acc);
+  }
 }
 
 void MCGlobalController::setSensorAccelerations(const std::map<std::string, Eigen::Vector3d> & accels)
@@ -908,21 +926,10 @@ void MCGlobalController::setup_log()
       return controller->robot().forceSensor(fs_name).wrench();
     });
   }
-  controller->logger().addLogEntry(
-      "pIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().position(); });
-  controller->logger().addLogEntry(
-      "rpyIn", [controller]() -> const Eigen::Quaterniond & { return controller->robot().bodySensor().orientation(); });
-  controller->logger().addLogEntry(
-      "velIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().linearVelocity(); });
-  controller->logger().addLogEntry("rateIn", [controller]() -> const Eigen::Vector3d & {
-    return controller->robot().bodySensor().angularVelocity();
-  });
-  controller->logger().addLogEntry(
-      "accIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().acceleration(); });
 
   // Log all other body sensors
   const auto & bodySensors = controller->robot().bodySensors();
-  for(size_t i = 1; i < bodySensors.size(); ++i)
+  for(size_t i = 0; i < bodySensors.size(); ++i)
   {
     const auto & name = bodySensors[i].name();
     controller->logger().addLogEntry(name + "_pIn", [controller, name]() -> const Eigen::Vector3d & {

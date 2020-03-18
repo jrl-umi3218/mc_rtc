@@ -166,8 +166,11 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot)
     }
   }
 
-  data.odom.header.frame_id = "robot_map";
-  data.odom.child_frame_id = prefix + robot.bodySensor().parentBody();
+  if(robot.bodySensors().size())
+  {
+    data.odom.header.frame_id = "robot_map";
+    data.odom.child_frame_id = prefix + robot.bodySensor().parentBody();
+  }
 
   auto id = sva::PTransformd::Identity();
   data.tfs.push_back(PT2TF(id, tm, "robot_map", prefix + robot.mb().body(0).name(), 0));
@@ -294,42 +297,45 @@ void RobotPublisherImpl::update(double,
     }
   }
 
-  data.imu.header = data.js.header;
-  const auto & imu_linear_acceleration = robot.bodySensor().acceleration();
-  data.imu.linear_acceleration.x = imu_linear_acceleration.x();
-  data.imu.linear_acceleration.y = imu_linear_acceleration.y();
-  data.imu.linear_acceleration.z = imu_linear_acceleration.z();
-  const auto & imu_angular_velocity = robot.bodySensor().angularVelocity();
-  data.imu.angular_velocity.x = imu_angular_velocity.x();
-  data.imu.angular_velocity.y = imu_angular_velocity.y();
-  data.imu.angular_velocity.z = imu_angular_velocity.z();
-  const auto & imu_orientation = robot.bodySensor().orientation();
-  data.imu.orientation.x = imu_orientation.x();
-  data.imu.orientation.y = imu_orientation.y();
-  data.imu.orientation.z = imu_orientation.z();
+  if(robot.bodySensors().size())
+  {
+    data.imu.header = data.js.header;
+    const auto & imu_linear_acceleration = robot.bodySensor().acceleration();
+    data.imu.linear_acceleration.x = imu_linear_acceleration.x();
+    data.imu.linear_acceleration.y = imu_linear_acceleration.y();
+    data.imu.linear_acceleration.z = imu_linear_acceleration.z();
+    const auto & imu_angular_velocity = robot.bodySensor().angularVelocity();
+    data.imu.angular_velocity.x = imu_angular_velocity.x();
+    data.imu.angular_velocity.y = imu_angular_velocity.y();
+    data.imu.angular_velocity.z = imu_angular_velocity.z();
+    const auto & imu_orientation = robot.bodySensor().orientation();
+    data.imu.orientation.x = imu_orientation.x();
+    data.imu.orientation.y = imu_orientation.y();
+    data.imu.orientation.z = imu_orientation.z();
 
-  data.odom.header.seq = data.js.header.seq;
-  data.odom.header.stamp = data.js.header.stamp;
-  const auto & odom_p = robot.bodySensor().position();
-  Eigen::Quaterniond odom_q = robot.bodySensor().orientation();
-  data.odom.pose.pose.position.x = odom_p.x();
-  data.odom.pose.pose.position.y = odom_p.y();
-  data.odom.pose.pose.position.z = odom_p.z();
-  data.odom.pose.pose.orientation.w = odom_q.w();
-  data.odom.pose.pose.orientation.x = odom_q.x();
-  data.odom.pose.pose.orientation.y = odom_q.y();
-  data.odom.pose.pose.orientation.z = odom_q.z();
-  data.odom.pose.covariance.fill(0);
-  /* Provide linear and angular velocity */
-  const auto & vel = robot.bodySensor().linearVelocity();
-  data.odom.twist.twist.linear.x = vel.x();
-  data.odom.twist.twist.linear.y = vel.y();
-  data.odom.twist.twist.linear.z = vel.z();
-  const auto & rate = robot.bodySensor().angularVelocity();
-  data.odom.twist.twist.angular.x = rate.x();
-  data.odom.twist.twist.angular.y = rate.y();
-  data.odom.twist.twist.angular.z = rate.z();
-  data.odom.twist.covariance.fill(0);
+    data.odom.header.seq = data.js.header.seq;
+    data.odom.header.stamp = data.js.header.stamp;
+    const auto & odom_p = robot.bodySensor().position();
+    Eigen::Quaterniond odom_q = robot.bodySensor().orientation();
+    data.odom.pose.pose.position.x = odom_p.x();
+    data.odom.pose.pose.position.y = odom_p.y();
+    data.odom.pose.pose.position.z = odom_p.z();
+    data.odom.pose.pose.orientation.w = odom_q.w();
+    data.odom.pose.pose.orientation.x = odom_q.x();
+    data.odom.pose.pose.orientation.y = odom_q.y();
+    data.odom.pose.pose.orientation.z = odom_q.z();
+    data.odom.pose.covariance.fill(0);
+    /* Provide linear and angular velocity */
+    const auto & vel = robot.bodySensor().linearVelocity();
+    data.odom.twist.twist.linear.x = vel.x();
+    data.odom.twist.twist.linear.y = vel.y();
+    data.odom.twist.twist.linear.z = vel.z();
+    const auto & rate = robot.bodySensor().angularVelocity();
+    data.odom.twist.twist.angular.x = rate.x();
+    data.odom.twist.twist.angular.y = rate.y();
+    data.odom.twist.twist.angular.z = rate.z();
+    data.odom.twist.covariance.fill(0);
+  }
 
   {
     size_t wrench_i = 0;
