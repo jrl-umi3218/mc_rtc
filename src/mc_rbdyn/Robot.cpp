@@ -345,6 +345,7 @@ bool Robot::hasBody(const std::string & name) const
 
 unsigned int Robot::jointIndexByName(const std::string & name) const
 {
+  ensureHasJoint(name);
   return mb().jointIndexByName().at(name);
 }
 
@@ -354,6 +355,12 @@ int Robot::jointIndexInMBC(size_t jointIndex) const
 }
 
 unsigned int Robot::bodyIndexByName(const std::string & name) const
+{
+  ensureHasBody(name);
+  return bodyIndexByName_(name);
+}
+
+unsigned int Robot::bodyIndexByName_(const std::string & name) const
 {
   return mb().bodyIndexByName().at(name);
 }
@@ -452,26 +459,32 @@ std::vector<sva::MotionVecd> & Robot::bodyAccB()
 
 const sva::PTransformd & Robot::bodyPosW(const std::string & name) const
 {
+  ensureHasBody(name);
   return bodyPosW()[bodyIndexByName(name)];
 }
 
 sva::PTransformd Robot::X_b1_b2(const std::string & b1, const std::string & b2) const
 {
+  ensureHasBody(b1);
+  ensureHasBody(b2);
   return bodyPosW()[bodyIndexByName(b2)] * bodyPosW()[bodyIndexByName(b1)].inv();
 }
 
 const sva::MotionVecd & Robot::bodyVelW(const std::string & name) const
 {
+  ensureHasBody(name);
   return bodyVelW()[bodyIndexByName(name)];
 }
 
 const sva::MotionVecd & Robot::bodyVelB(const std::string & name) const
 {
+  ensureHasBody(name);
   return bodyVelB()[bodyIndexByName(name)];
 }
 
 const sva::MotionVecd & Robot::bodyAccB(const std::string & name) const
 {
+  ensureHasBody(name);
   return bodyAccB()[bodyIndexByName(name)];
 }
 
@@ -720,6 +733,7 @@ const std::vector<ForceSensor> & Robot::forceSensors() const
 
 mc_rbdyn::Surface & Robot::surface(const std::string & sName)
 {
+  ensureHasSurface(sName);
   return const_cast<mc_rbdyn::Surface &>(static_cast<const Robot *>(this)->surface(sName));
 }
 
@@ -730,10 +744,7 @@ sva::PTransformd Robot::surfacePose(const std::string & sName) const
 
 const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
 {
-  if(!hasSurface(sName))
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No surface named " << sName << " found in robot " << this->name())
-  }
+  ensureHasSurface(sName);
   return *(surfaces_.at(sName));
 }
 
@@ -760,15 +771,12 @@ bool Robot::hasConvex(const std::string & name) const
 
 Robot::convex_pair_t & Robot::convex(const std::string & cName)
 {
+  ensureHasConvex(cName);
   return const_cast<Robot::convex_pair_t &>(static_cast<const Robot *>(this)->convex(cName));
 }
 const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
 {
-  if(convexes_.count(cName) == 0)
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "No convex named " << cName << " found in this robot (" << this->name_ << ")")
-  }
+  ensureHasConvex(cName);
   return convexes_.at(cName);
 }
 
@@ -798,10 +806,7 @@ void Robot::removeConvex(const std::string & cName)
 
 const sva::PTransformd & Robot::bodyTransform(const std::string & bName) const
 {
-  if(!hasBody(bName))
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No body transform with name " << bName << " found in this robot")
-  }
+  ensureHasBody(bName);
   return bodyTransforms_[bodyIndexByName(bName)];
 }
 
@@ -1048,6 +1053,38 @@ void mc_rbdyn::Robot::zmpTarget(const Eigen::Vector3d & zmp)
 const Eigen::Vector3d & mc_rbdyn::Robot::zmpTarget() const
 {
   return zmp_;
+}
+
+void mc_rbdyn::Robot::ensureHasBody(const std::string & name) const
+{
+  if(!hasBody(name))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[Robot] No body named \"" << name << "\" in robot " << this->name());
+  }
+}
+
+void mc_rbdyn::Robot::ensureHasJoint(const std::string & name) const
+{
+  if(!hasJoint(name))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[Robot] No joint named \"" << name << "\" in robot " << this->name());
+  }
+}
+
+void mc_rbdyn::Robot::ensureHasSurface(const std::string & name) const
+{
+  if(!hasSurface(name))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[Robot] No surface named \"" << name << "\" in robot " << this->name());
+  }
+}
+
+void mc_rbdyn::Robot::ensureHasConvex(const std::string & name) const
+{
+  if(!hasConvex(name))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[Robot] No convex named \"" << name << "\" in robot " << this->name());
+  }
 }
 
 } // namespace mc_rbdyn

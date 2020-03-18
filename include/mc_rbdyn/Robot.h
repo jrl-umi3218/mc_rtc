@@ -714,6 +714,17 @@ protected:
   /** Used to set the collision transforms correctly */
   void fixCollisionTransforms();
 
+  /** Unsafe version of bodyIndexByName */
+  unsigned int bodyIndexByName_(const std::string & name) const;
+  /** Throws if the joint is not in this robot */
+  void ensureHasJoint(const std::string & name) const;
+  /** Throws if the body is not in this robot */
+  void ensureHasBody(const std::string & name) const;
+  /** Throws if the surface is not in this robot */
+  void ensureHasSurface(const std::string & name) const;
+  /** Throws if the convex is not in this robot */
+  void ensureHasConvex(const std::string & name) const;
+
 private:
   Robot(const Robot &) = delete;
   Robot & operator=(const Robot &) = delete;
