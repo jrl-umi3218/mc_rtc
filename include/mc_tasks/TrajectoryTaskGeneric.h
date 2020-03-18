@@ -164,9 +164,13 @@ struct TrajectoryTaskGeneric : public MetaTask
    *
    * @param activeJointsName Name of the joints activated for this task
    * \param activeDofs Allow to select only part of the dofs of a joint
+   * \param checkJoints When true, checks whether the joints exist in the robot
+   * \throws If checkJoints is true and a joint name in activeJointsName is not
+   * part of the robot
    */
   virtual void selectActiveJoints(const std::vector<std::string> & activeJointsName,
-                                  const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {});
+                                  const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {},
+                                  bool checkJoints = true);
 
   /** \brief Create an active joints selector
    *
@@ -178,6 +182,7 @@ struct TrajectoryTaskGeneric : public MetaTask
    *
    * @param activeJointsName Name of the joints activated for this task
    * \param activeDofs Allow to select only part of the dofs of a joint
+   * \throws If a joint name in activeJointsName is not part of the robot
    */
   virtual void selectActiveJoints(
       mc_solver::QPSolver & solver,
@@ -193,9 +198,13 @@ struct TrajectoryTaskGeneric : public MetaTask
    *
    * @param unactiveJointsName Name of the joints not activated for this task
    * \param unactiveDofs Allow to select only part of the dofs of a joint
+   * \param checkJoints When true, checks whether the joints exist in the robot
+   * \throws If checkJoints is true and a joint name in unactiveJointsName is not
+   * part of the robot
    */
   virtual void selectUnactiveJoints(const std::vector<std::string> & unactiveJointsName,
-                                    const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {});
+                                    const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {},
+                                    bool checkJoints = true);
 
   /** \brief Create an unactive joints selector
    *
@@ -207,6 +216,7 @@ struct TrajectoryTaskGeneric : public MetaTask
    *
    * @param unactiveJointsName Name of the joints not activated for this task
    * \param unactiveDofs Allow to select only part of the dofs of a joint
+   * \throws If a joint name in unactiveJointsName is not part of the robot
    */
   virtual void selectUnactiveJoints(
       mc_solver::QPSolver & solver,

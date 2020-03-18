@@ -247,6 +247,27 @@ protected:
     t.removeFromGUI(gui);
   }
 
+  void ensureHasJoints(const mc_rbdyn::Robot & robot,
+                       const std::vector<std::string> & joints,
+                       const std::string & prefix = "")
+  {
+    for(const auto & jName : joints)
+    {
+      if(!robot.hasJoint(jName))
+      {
+        if(prefix.size())
+        {
+          LOG_ERROR_AND_THROW(std::runtime_error,
+                              prefix << " No joint named " << jName << " in robot " << robot.name());
+        }
+        else
+        {
+          LOG_ERROR_AND_THROW(std::runtime_error, "No joint named " << jName << " in robot " << robot.name());
+        }
+      }
+    }
+  }
+
   /** Add additional completion criterias to mc_control::CompletionCriteria
    * object
    *
