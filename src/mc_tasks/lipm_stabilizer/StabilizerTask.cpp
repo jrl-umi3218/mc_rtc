@@ -206,6 +206,7 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
       MetaTask::removeFromSolver(*contactT, solver);
     }
     contactTasks.clear();
+    contactSensors.clear();
 
     // Add new contacts
     for(const auto contactState : addContacts_)
@@ -215,6 +216,9 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
       MetaTask::addToSolver(*footTask, solver);
       MetaTask::addToLogger(*footTask, *solver.logger());
       contactTasks.push_back(footTask);
+      const auto & bodyName = robot().surface(footTask->surface()).bodyName();
+      const auto & fs = robot().bodyForceSensor(bodyName);
+      contactSensors.push_back(fs.name());
     }
     addContacts_.clear();
   }
@@ -587,7 +591,7 @@ void StabilizerTask::run()
   updateZMPFrame();
   if(!inTheAir_)
   {
-    measuredNetWrench_ = robots_.robot(robotIndex_).netWrench(sensorNames_);
+    measuredNetWrench_ = robots_.robot(robotIndex_).netWrench(contactSensors);
     measuredZMP_ = robots_.robot(robotIndex_).zmp(measuredNetWrench_, zmpFrame_, MIN_NET_TOTAL_FORCE_ZMP);
   }
   else

@@ -473,7 +473,8 @@ protected:
       contacts_;
   std::vector<ContactState> addContacts_; /**< Contacts to add to the QPSolver when the task is inserted */
   std::unordered_map<ContactState, std::shared_ptr<mc_tasks::force::CoPTask>, EnumClassHash> footTasks;
-  std::vector<std::shared_ptr<mc_tasks::force::CoPTask>> contactTasks;
+  std::vector<std::shared_ptr<mc_tasks::force::CoPTask>> contactTasks; /** Foot tasks for the established contacts */
+  std::vector<std::string> contactSensors; /** Force sensors corresponding to established contacts */
 
   std::vector<std::vector<Eigen::Vector3d>> supportPolygons_; /**< For GUI display */
   Eigen::Vector2d supportMin_ = Eigen::Vector2d::Zero();
@@ -531,10 +532,8 @@ protected:
   double mass_ = 38.; /**< Robot mass in [kg] */
   double runTime_ = 0.;
   double vdcHeightError_ = 0.; /**< Average height error used in vertical drift compensation */
-  sva::ForceVecd distribWrench_ = sva::ForceVecd::Zero();
-  std::vector<std::string> sensorNames_ = {
-      "LeftFootForceSensor", "RightFootForceSensor"}; /** Force sensors corresponding to established contacts */
-  sva::PTransformd zmpFrame_;
+  sva::ForceVecd distribWrench_ = sva::ForceVecd::Zero(); /**< Result of the force distribution QP */
+  sva::PTransformd zmpFrame_ = sva::PTransformd::Identity(); /**< Frame in which the ZMP is computed */
 };
 
 } // namespace lipm_stabilizer
