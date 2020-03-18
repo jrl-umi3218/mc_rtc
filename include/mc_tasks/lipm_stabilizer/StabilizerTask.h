@@ -448,6 +448,9 @@ protected:
    */
   void configure_(mc_solver::QPSolver & solver);
 
+  /** Ensures that the configuration is valid */
+  void checkConfiguration(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
+
 protected:
   /**
    * @brief Workaround a C++11 standard bug: no specialization of the hash

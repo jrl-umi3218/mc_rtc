@@ -288,6 +288,7 @@ void StabilizerTask::reconfigure()
 
 void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
 {
+  checkConfiguration(config);
   lastConfig_ = config;
   c_ = config;
   reconfigure_ = true;
@@ -326,6 +327,25 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
     footTask.second->maxAngularVel(c_.copMaxVel.angular());
   }
   reconfigure_ = false;
+}
+
+void StabilizerTask::checkConfiguration(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
+{
+  // Check whether feet have force sensors
+  auto checkSurface = [&](const std::string & surfaceName) {
+    if(!robot().hasSurface(surfaceName))
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, "[StabilizerTask] requires a surface named "
+                                                  << surfaceName << " in robot " << robot().name());
+    }
+    if(!robot().bodyHasForceSensor(robot().surface(surfaceName).bodyName()))
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error,
+                          "[StabilizerTask] Surface " << surfaceName << " must have an associated force sensor.");
+    }
+  };
+  checkSurface(config.rightFootSurface);
+  checkSurface(config.leftFootSurface);
 }
 
 void StabilizerTask::load(mc_solver::QPSolver &, const mc_rtc::Configuration & config)
