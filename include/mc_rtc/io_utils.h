@@ -5,6 +5,7 @@
 #pragma once
 #include <algorithm>
 #include <functional>
+#include <sstream>
 #include <string>
 
 namespace mc_rtc
@@ -21,8 +22,11 @@ namespace io
  * coma-separated
  *
  * @return A string of all the container elements.
+ *
+ * @anchor to_string
  */
-template<typename Container>
+template<typename Container,
+         typename std::enable_if<!std::is_arithmetic<typename Container::value_type>::value, int>::type = 0>
 std::string to_string(const Container & c, const std::string & delimiter = ", ")
 {
   if(c.cbegin() == c.cend())
@@ -36,6 +40,33 @@ std::string to_string(const Container & c, const std::string & delimiter = ", ")
     out += *it;
   }
   return out;
+}
+
+/**
+ * @brief Variant of \ref to_string that converts numeric types to string
+ *
+ * @param precision Number of digits to keep. The default precision corresponds
+ * to the number of decimal digits that can be represented without change.
+ */
+template<typename Container,
+         typename std::enable_if<std::is_arithmetic<typename Container::value_type>::value, int>::type = 0>
+std::string to_string(const Container & c,
+                      const std::string & delimiter = ", ",
+                      const unsigned precision = std::numeric_limits<typename Container::value_type>::digits10)
+{
+  if(c.cbegin() == c.cend())
+  {
+    return "";
+  }
+  std::ostringstream out;
+  out.precision(precision);
+  out << std::fixed << *c.cbegin();
+  for(auto it = std::next(c.cbegin()); it != c.cend(); ++it)
+  {
+    out << delimiter;
+    out << std::fixed << *it;
+  }
+  return out.str();
 }
 
 /** Converts a container to a string
