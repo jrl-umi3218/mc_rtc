@@ -485,12 +485,29 @@ public:
    *
    * @return The attached sensor
    *
-   * @throws If no sensor is attached to this body
+   * @throws If no sensor is directly attached to this body
+   *
+   * @note if the body in indirectly attached to a body, use
+   * findBodyForceSensor() instead
    */
   ForceSensor & bodyForceSensor(const std::string & body);
 
   /** Const variant */
   const ForceSensor & bodyForceSensor(const std::string & body) const;
+
+  /**
+   * @brief Looks for a force sensor from a body up the kinematic chain until the floating base.
+   *
+   * @param body Body name indirectly attached to the sensor
+   *
+   * @return The sensor to which the body is indirectly attached
+   *
+   * @throws If no sensor is found between the body and the floating base
+   */
+  ForceSensor & findBodyForceSensor(const std::string & body);
+
+  /** Const variant */
+  const ForceSensor & findBodyForceSensor(const std::string & body) const;
 
   /** Returns all force sensors */
   std::vector<ForceSensor> & forceSensors();

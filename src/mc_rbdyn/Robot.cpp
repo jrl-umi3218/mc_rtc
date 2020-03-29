@@ -527,18 +527,23 @@ Eigen::Vector3d Robot::comAcceleration() const
 
 sva::ForceVecd Robot::bodyWrench(const std::string & bodyName) const
 {
-  const auto & fs = bodyForceSensor(bodyName);
+  const auto & fs = findBodyForceSensor(bodyName);
   sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
-  sva::PTransformd X_fsactual_surf = fs.X_fsactual_parent();
+  const auto & X_0_body = bodyPosW(bodyName);
+  const auto & X_0_parent = bodyPosW(fs.parentBody());
+  const auto X_parent_body = X_0_body * X_0_parent.inv();
+  sva::PTransformd X_fsactual_surf = X_parent_body * fs.X_fsactual_parent();
   return X_fsactual_surf.dualMul(w_fsactual);
 }
 
 sva::ForceVecd Robot::surfaceWrench(const std::string & surfaceName) const
 {
   const auto & bodyName = surface(surfaceName).bodyName();
-  const auto & fs = bodyForceSensor(bodyName);
+  const auto & fs = findBodyForceSensor(bodyName);
   sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
-  sva::PTransformd X_fsactual_surf = surface(surfaceName).X_b_s() * fs.X_fsactual_parent();
+  const auto & X_0_fsParent = bodyPosW(fs.parentBody());
+  const auto X_fsParent_surf = surface(surfaceName).X_0_s(*this) * X_0_fsParent.inv();
+  sva::PTransformd X_fsactual_surf = X_fsParent_surf * fs.X_fsactual_parent();
   return X_fsactual_surf.dualMul(w_fsactual);
 }
 
@@ -738,6 +743,26 @@ ForceSensor & Robot::bodyForceSensor(const std::string & body)
 const ForceSensor & Robot::bodyForceSensor(const std::string & body) const
 {
   return forceSensors_.at(bodyForceSensors_.at(body));
+}
+
+const ForceSensor & Robot::findBodyForceSensor(const std::string & body) const
+{
+  unsigned nextIndex = bodyIndexByName(body);
+  while(nextIndex != 0)
+  {
+    const auto & b = mb().body(nextIndex);
+    if(bodyHasForceSensor(b.name()))
+    {
+      return bodyForceSensor(b.name());
+    }
+    nextIndex = mb().parent(nextIndex);
+  }
+  LOG_ERROR_AND_THROW(std::runtime_error, "No force sensor attached to body " << body);
+}
+
+ForceSensor & Robot::findBodyForceSensor(const std::string & body)
+{
+  return const_cast<ForceSensor &>(static_cast<const Robot *>(this)->bodyForceSensor(body));
 }
 
 bool Robot::hasSurface(const std::string & surface) const
