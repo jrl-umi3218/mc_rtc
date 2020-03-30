@@ -20,11 +20,11 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI BSplineTrajectoryTask : public SplineTrajectoryTask<BSplineTrajectoryTask>
 {
   friend struct SplineTrajectoryTask<BSplineTrajectoryTask>;
-
-public:
+  using SplineTrajectoryBase = SplineTrajectoryTask<BSplineTrajectoryTask>;
   using waypoints_t = mc_trajectory::BSpline::waypoints_t;
 
 public:
+  using SplineTrajectoryBase::target;
   /**
    * \brief Creates a trajectory that follows a bspline curve
    *

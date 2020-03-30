@@ -22,11 +22,11 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<ExactCubicTrajectoryTask>
 {
   friend struct SplineTrajectoryTask<ExactCubicTrajectoryTask>;
-
-public:
   using SplineTrajectoryBase = SplineTrajectoryTask<ExactCubicTrajectoryTask>;
 
 public:
+  using SplineTrajectoryBase::target;
+
   /**
    * \brief Trajectory following an exact cubic spline with given initial and
    * final acceleration/velocity. The curve will pass exactly through the

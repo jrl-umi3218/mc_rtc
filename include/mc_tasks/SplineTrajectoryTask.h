@@ -141,6 +141,25 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    */
   unsigned displaySamples() const;
 
+  /**
+   * @brief Allows to pause the task
+   *
+   * @warning Pausing sets the task's desired velocity and acceleration to zero, which
+   * will suddently stop the motion. Avoid pausing during high-speed
+   * trajectories.
+   *
+   * @param paused True to pause the task, False to resume.
+   */
+  inline void pause(bool paused)
+  {
+    paused_ = paused;
+  }
+
+  inline bool pause() const
+  {
+    return paused_;
+  }
+
 protected:
   /**
    * \brief Tracks a reference world pose
@@ -189,6 +208,7 @@ protected:
   double duration_;
   mc_trajectory::InterpolatedRotation oriSpline_;
   std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
+  bool paused_ = false;
 
   double currTime_ = 0.;
   double timeStep_ = 0;
