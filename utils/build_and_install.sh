@@ -797,7 +797,7 @@ if $CLONE_ONLY
 then
   echo_log "-- [INFO] The script was executed with CLONE_ONLY=true, stopping now."
   echo_log "   Use CLONE_ONLY=false if you wish to build and install."
-  return
+  exit 0
 fi
 
 echo_log ""

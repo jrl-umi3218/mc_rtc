@@ -17,7 +17,7 @@ void MessageState::configure(const mc_rtc::Configuration & config)
   config("type", type_);
 }
 
-void MessageState::start(Controller & /* ctl */)
+void MessageState::start(Controller & ctl)
 {
   std::transform(type_.begin(), type_.end(), type_.begin(), [](unsigned char c) { return std::tolower(c); });
 
@@ -37,6 +37,10 @@ void MessageState::start(Controller & /* ctl */)
   {
     LOG_ERROR(message_);
   }
+  else if(type_ == "gui")
+  {
+    ctl.gui()->addElement({}, mc_rtc::gui::Label("Status", [this]() -> const std::string & { return message_; }));
+  }
   else
   {
     LOG_WARNING("[" << name() << "] Unknown type: " << type_ << ", treating as INFO")
@@ -48,6 +52,14 @@ void MessageState::start(Controller & /* ctl */)
 bool MessageState::run(Controller &)
 {
   return true;
+}
+
+void MessageState::teardown(Controller & ctl)
+{
+  if(type_ == "gui")
+  {
+    ctl.gui()->removeElement({}, "Status");
+  }
 }
 
 } // namespace fsm

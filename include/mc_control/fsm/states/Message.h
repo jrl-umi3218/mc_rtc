@@ -28,7 +28,7 @@ struct MC_CONTROL_FSM_STATE_DLLAPI MessageState : State
 
   bool run(Controller &) override;
 
-  void teardown(Controller &) override {}
+  void teardown(Controller &) override;
 
 protected:
   std::string message_;
