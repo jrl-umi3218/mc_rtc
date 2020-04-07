@@ -295,6 +295,7 @@ target_link_libraries(mc_trajectory PUBLIC mc_rtc_3rd_party::hpp-spline mc_rtc::
 install_mc_rtc_lib(mc_trajectory)
 
 set(mc_tasks_SRC
+mc_tasks/MomentumTask.cpp
 mc_tasks/PositionTask.cpp
 mc_tasks/SurfaceTransformTask.cpp
 mc_tasks/OrientationTask.cpp
@@ -327,6 +328,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/CoMTask.h
 ../include/mc_tasks/EndEffectorTask.h
 ../include/mc_tasks/MetaTaskLoader.h
+../include/mc_tasks/MomentumTask.h
 ../include/mc_tasks/OrientationTask.h
 ../include/mc_tasks/VectorOrientationTask.h
 ../include/mc_tasks/PositionTask.h
