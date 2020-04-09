@@ -183,9 +183,20 @@ void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                           [this](const double & s) { this->stiffness(s); }),
                  mc_rtc::gui::NumberInput("weight", [this]() { return this->weight(); },
                                           [this](const double & w) { this->weight(w); }));
+  std::vector<std::string> active_gripper_joints;
+  for(const auto & g : robots_.robot(rIndex_).grippers())
+  {
+    for(const auto & n : g.get().activeJoints())
+    {
+      active_gripper_joints.push_back(n);
+    }
+  }
+  auto isActiveGripperJoint = [&](const std::string & j) {
+    return std::find(active_gripper_joints.begin(), active_gripper_joints.end(), j) != active_gripper_joints.end();
+  };
   for(const auto & j : robots_.robot(rIndex_).mb().joints())
   {
-    if(j.dof() != 1 || j.isMimic())
+    if(j.dof() != 1 || j.isMimic() || isActiveGripperJoint(j.name()))
     {
       continue;
     }

@@ -128,6 +128,12 @@ struct MC_CONTROL_DLLAPI Gripper
     return names;
   }
 
+  /*! \brief Returns all active joints involved in the gripper */
+  inline const std::vector<std::string> & activeJoints() const
+  {
+    return active_joints;
+  }
+
   /*! \brief Return all gripper joints configuration
    * \return Current values of all the gripper's joints, including passive joints
    */
