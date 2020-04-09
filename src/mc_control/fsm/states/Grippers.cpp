@@ -20,14 +20,6 @@ void Grippers::configure(const mc_rtc::Configuration & config)
 
 void Grippers::start(Controller & ctl)
 {
-  for(const auto & gi : ctl.grippers)
-  {
-    for(const auto & g : gi)
-    {
-      g.second->saveConfig();
-    }
-  }
-
   unsigned int rIndex = 0;
   if(config_.has("robot"))
   {
@@ -43,7 +35,7 @@ void Grippers::start(Controller & ctl)
   if(config_.has("grippers"))
   {
     auto grippers = config_("grippers");
-    auto & ctl_grippers = ctl.grippers[rIndex];
+    auto & ctl_grippers = ctl.robots().robot(rIndex).grippersByName();
     for(const auto & g : grippers.keys())
     {
       if(ctl_grippers.count(g) == 0)
@@ -51,7 +43,34 @@ void Grippers::start(Controller & ctl)
         LOG_WARNING("[FSM::" << name() << "] " << g << " is not a known gripper")
         continue;
       }
-      auto & gripper = ctl_grippers[g];
+      auto & gripper = ctl_grippers.at(g);
+
+      if(grippers(g).has("opening"))
+      {
+        double open = mc_filter::utils::clamp(static_cast<double>(grippers(g)("opening")), 0, 1);
+        gripper->setTargetOpening(open);
+        grippers_.push_back(std::ref(*gripper));
+      }
+      else if(grippers(g).has("target"))
+      {
+        std::vector<double> target = grippers(g)("target");
+        if(gripper->curPosition().size() != target.size())
+        {
+          LOG_WARNING("[FSM::" << name() << "] Provided target for " << g
+                               << " does not have the correct size (expected: " << gripper->curPosition().size()
+                               << ", got: " << target.size() << ")")
+          continue;
+        }
+        gripper->setTargetQ(target);
+        grippers_.push_back(std::ref(*gripper));
+      }
+      else
+      {
+        LOG_WARNING("[FSM::" << name() << "] " << g << " has no opening or target specified")
+        continue;
+      }
+
+      gripper->saveConfig();
       gripper->percentVMAX(grippers(g)("percentVMAX", gripper->percentVMAX()));
       if(grippers(g).has("safety"))
       {
@@ -69,30 +88,6 @@ void Grippers::start(Controller & ctl)
           gripper->releaseSafetyOffset(mc_rtc::constants::toRad(safety("release")));
         }
       }
-
-      if(grippers(g).has("opening"))
-      {
-        double open = mc_filter::utils::clamp(static_cast<double>(grippers(g)("opening")), 0, 1);
-        gripper->setTargetOpening(open);
-        grippers_.push_back(gripper);
-      }
-      else if(grippers(g).has("target"))
-      {
-        std::vector<double> target = grippers(g)("target");
-        if(gripper->curPosition().size() != target.size())
-        {
-          LOG_WARNING("[FSM::" << name() << "] Provided target for " << g
-                               << " does not have the correct size (expected: " << gripper->curPosition().size()
-                               << ", got: " << target.size() << ")")
-          continue;
-        }
-        gripper->setTargetQ(target);
-        grippers_.push_back(gripper);
-      }
-      else
-      {
-        LOG_WARNING("[FSM::" << name() << "] " << g << " has no opening or target specified")
-      }
     }
   }
 }
@@ -100,7 +95,7 @@ void Grippers::start(Controller & ctl)
 bool Grippers::run(Controller &)
 {
   if(std::all_of(grippers_.begin(), grippers_.end(),
-                 [](const std::shared_ptr<mc_control::Gripper> & g) { return g->complete(); }))
+                 [](const mc_control::GripperRef & g) { return g.get().complete(); }))
   {
     output("OK");
     return true;
@@ -112,7 +107,7 @@ void Grippers::teardown(Controller &)
 {
   for(auto & g : grippers_)
   {
-    g->restoreConfig();
+    g.get().restoreConfig();
   }
 }
 

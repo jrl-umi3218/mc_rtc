@@ -8,12 +8,16 @@
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rbdyn/Surface.h>
 
+#include <mc_control/generic_gripper.h>
+
 #include <RBDyn/MultiBody.h>
 #include <RBDyn/MultiBodyConfig.h>
 #include <RBDyn/MultiBodyGraph.h>
 
-#include <memory>
 #include <sch/S_Object/S_Object.h>
+
+#include <memory>
+#include <unordered_map>
 
 namespace mc_rbdyn
 {
@@ -645,6 +649,25 @@ public:
   /** Return the robot's floating base velocity expressed in the inertial frame */
   const sva::MotionVecd & velW() const;
 
+  /** Access a gripper by name
+   *
+   * \param gripper Gripper name
+   *
+   * \throws If the gripper does not exist within this robot
+   */
+  mc_control::Gripper & gripper(const std::string & gripper);
+
+  inline const std::unordered_map<std::string, mc_control::GripperPtr> & grippersByName() const
+  {
+    return grippers_;
+  }
+
+  /** Access all grippers */
+  inline const std::vector<mc_control::GripperRef> & grippers() const
+  {
+    return grippersRef_;
+  }
+
 private:
   Robots * robots_;
   unsigned int robots_idx_;
@@ -689,6 +712,10 @@ private:
   std::map<std::string, size_t> forceSensorsIndex_;
   /** Correspondance between bodies' names and attached force sensors */
   std::map<std::string, size_t> bodyForceSensors_;
+  /** Grippers attached to this robot */
+  std::unordered_map<std::string, mc_control::GripperPtr> grippers_;
+  /** Grippers reference for this robot */
+  std::vector<mc_control::GripperRef> grippersRef_;
 
 protected:
   /** Invoked by Robots parent instance after mb/mbc/mbg/RobotModule are stored

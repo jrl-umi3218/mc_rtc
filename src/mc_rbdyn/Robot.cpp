@@ -263,6 +263,46 @@ Robot::Robot(Robots & robots,
   flexibility_ = module_.flexibility();
 
   zmp_ = Eigen::Vector3d::Zero();
+
+  const auto & mimics = module_.gripperMimics();
+  if(mimics.size())
+  {
+    for(const auto & gripper : module_.grippers())
+    {
+      if(!mimics.count(gripper.name))
+      {
+        LOG_ERROR_AND_THROW(std::runtime_error,
+                            "Mimics information not specified for gripper: " << gripper.name << " in " << module_.name)
+      }
+      grippers_[gripper.name].reset(
+          new mc_control::Gripper(*this, gripper.joints, mimics.at(gripper.name), gripper.reverse_limits));
+    }
+  }
+  else
+  {
+    const auto & urdfPath = module_.urdf_path;
+    std::ifstream ifs(urdfPath);
+    if(ifs.is_open())
+    {
+      std::stringstream urdfSS;
+      urdfSS << ifs.rdbuf();
+      auto urdf = urdfSS.str();
+      for(const auto & gripper : module_.grippers())
+      {
+        grippers_[gripper.name].reset(new mc_control::Gripper(*this, gripper.joints, urdf, gripper.reverse_limits));
+      }
+    }
+    else
+    {
+      LOG_ERROR("Could not open urdf file " << urdfPath << " for robot " << module_.name
+                                            << ", cannot initialize grippers")
+      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize grippers")
+    }
+  }
+  for(auto & g : grippers_)
+  {
+    grippersRef_.push_back(std::ref(*g.second));
+  }
 }
 
 const std::string & Robot::name() const
@@ -1045,6 +1085,15 @@ void mc_rbdyn::Robot::zmpTarget(const Eigen::Vector3d & zmp)
 const Eigen::Vector3d & mc_rbdyn::Robot::zmpTarget() const
 {
   return zmp_;
+}
+
+mc_control::Gripper & Robot::gripper(const std::string & gripper)
+{
+  if(!grippers_.count(gripper))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "No gripper named " << gripper << " in robot " << name());
+  }
+  return *grippers_.at(gripper);
 }
 
 } // namespace mc_rbdyn

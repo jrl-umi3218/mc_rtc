@@ -6,7 +6,6 @@
 
 #include <mc_control/api.h>
 #include <mc_rbdyn/Mimic.h>
-#include <mc_rbdyn/Robots.h>
 #include <mc_rtc/constants.h>
 #include <boost/math/constants/constants.hpp>
 #include <algorithm>
@@ -15,13 +14,10 @@
 #include <string>
 #include <vector>
 
-namespace mc_rtc
+namespace mc_rbdyn
 {
-namespace gui
-{
-struct StateBuilder;
-} // namespace gui
-} // namespace mc_rtc
+struct Robot;
+} // namespace mc_rbdyn
 
 namespace mc_control
 {
@@ -54,16 +50,12 @@ struct MC_CONTROL_DLLAPI Gripper
    * \param robot The full robot including uncontrolled joints
    * \param jointNames Name of the active joints involved in the gripper
    * \param robot_urdf URDF of the robot
-   * \param currentQ Current values of the active joints involved in the gripper
-   * \param timeStep Controller timestep
    * \param reverseLimits If set to true, then the gripper is considered "open" when the joints' values are minimal
    */
   Gripper(const mc_rbdyn::Robot & robot,
           const std::vector<std::string> & jointNames,
           const std::string & robot_urdf,
-          const std::vector<double> & currentQ,
-          double timeStep,
-          bool reverseLimits = false);
+          bool reverseLimits);
 
   /*! \brief Constructor
    *
@@ -72,16 +64,12 @@ struct MC_CONTROL_DLLAPI Gripper
    * \param robot Robot, must have the active joints of the gripper to work properly
    * \param jointNames Name of the active joints involved in the gripper
    * \param mimics Mimic joints for the gripper
-   * \param currentQ Current values of the active joints
-   * \param timeStep Controller timestep
    * \param reverseLimits If true, the gripper is considered "open" when the joints values are minimal
    */
   Gripper(const mc_rbdyn::Robot & robot,
           const std::vector<std::string> & jointNames,
           const std::vector<mc_rbdyn::Mimic> & mimics,
-          const std::vector<double> & currentQ,
-          double timeStep,
-          bool reverseLimits = false);
+          bool reverseLimits);
 
   /** \brief Resets the gripper parameters to their default value (percentVMax, actualCommandDiffTrigger) */
   void resetDefaults();
@@ -99,11 +87,9 @@ struct MC_CONTROL_DLLAPI Gripper
 
   /*! \brief Reset the gripper state to the current actual state of the gripper
    *
-   * \param robot Robot that this gripper is attached to
-   *
    * \param currentQ Current encoder values for the robot
    */
-  void reset(const mc_rbdyn::Robot & robot, const std::vector<double> & currentQ);
+  void reset(const std::vector<double> & currentQ);
 
   /*! \brief Reset from another gripper
    *
@@ -119,7 +105,7 @@ struct MC_CONTROL_DLLAPI Gripper
    *
    * The gripper control updates both the robot's configuration and the output
    */
-  void run(mc_rbdyn::Robot & robot, std::map<std::string, std::vector<double>> & qOut);
+  void run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string, std::vector<double>> & qOut);
 
   /*! \brief Set the target configuration of the active joints involved in the gripper
    * \param targetQ Desired values of the active joints involved in the gripper
@@ -221,9 +207,6 @@ struct MC_CONTROL_DLLAPI Gripper
    */
   bool complete() const;
 
-  /* Gripper gui will be added under {category} category */
-  void addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category);
-
 protected:
   /*! Name of joints involved in the gripper */
   std::vector<std::string> names;
@@ -276,8 +259,6 @@ protected:
 
   /*! Current opening percentage */
   std::vector<double> percentOpen;
-  /*! Controller timestep */
-  double timeStep = 0;
   /*! True if the gripper has been too far from the command for over overCommandLimitIterN iterations */
   std::vector<bool> overCommandLimit;
   /*! Store the number of iterations where the gripper command was over the limit */
@@ -285,5 +266,8 @@ protected:
   /*! True if the gripper is reversed */
   bool reversed = false;
 };
+
+using GripperPtr = std::unique_ptr<Gripper>;
+using GripperRef = std::reference_wrapper<Gripper>;
 
 } // namespace mc_control

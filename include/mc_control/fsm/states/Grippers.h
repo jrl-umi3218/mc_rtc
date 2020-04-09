@@ -60,7 +60,7 @@ struct MC_CONTROL_FSM_STATE_DLLAPI Grippers : State
 
 protected:
   mc_rtc::Configuration config_;
-  std::vector<std::shared_ptr<mc_control::Gripper>> grippers_;
+  std::vector<mc_control::GripperRef> grippers_;
 };
 
 } // namespace fsm

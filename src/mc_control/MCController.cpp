@@ -118,51 +118,11 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
     data("surfaces").add(r.name(), r.availableSurfaces());
   }
   solver().updateNrVars();
-  /** Initialize grippers for this new robot */
-  grippers.push_back({});
-  auto & grippers = this->grippers.back();
-  const auto & mimics = rm->gripperMimics();
-  if(mimics.size())
-  {
-    for(const auto & gripper : rm->grippers())
-    {
-      if(!mimics.count(gripper.name))
-      {
-        LOG_ERROR_AND_THROW(std::runtime_error, "Mimics information not specified for gripper: " << gripper.name)
-      }
-      grippers[gripper.name] = std::make_shared<mc_control::Gripper>(r, gripper.joints, mimics.at(gripper.name),
-                                                                     std::vector<double>(gripper.joints.size(), 0.0),
-                                                                     timeStep, gripper.reverse_limits);
-    }
-  }
-  else
-  {
-    std::string urdfPath = rm->urdf_path;
-    std::ifstream ifs(urdfPath);
-    if(ifs.is_open())
-    {
-      std::stringstream urdf;
-      urdf << ifs.rdbuf();
-      for(const auto & gripper : rm->grippers())
-      {
-        grippers[gripper.name] = std::make_shared<mc_control::Gripper>(r, gripper.joints, urdf.str(),
-                                                                       std::vector<double>(gripper.joints.size(), 0.0),
-                                                                       timeStep, gripper.reverse_limits);
-      }
-    }
-    else
-    {
-      LOG_ERROR("Could not open urdf file " << urdfPath << " for robot " << rm->name << ", cannot initialize grippers")
-      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize grippers")
-    }
-  }
   return r;
 }
 
 void MCController::removeRobot(const std::string & name)
 {
-  auto idx = robots().robotIndex(name);
-  grippers.erase(grippers.begin() + idx);
   robots().removeRobot(name);
   solver().updateNrVars();
 }
@@ -379,8 +339,7 @@ void MCController::stop() {}
 
 Gripper & MCController::gripper(const std::string & robot, const std::string & gripper)
 {
-  auto rIndex = robots().robotIndex(robot);
-  return *grippers[rIndex].at(gripper);
+  return robots().robot(robot).gripper(gripper);
 }
 
 } // namespace mc_control

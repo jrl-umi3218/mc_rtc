@@ -5,7 +5,6 @@
 #pragma once
 
 #include <mc_control/Configuration.h>
-#include <mc_control/generic_gripper.h>
 
 #include <mc_observers/ObserverLoader.h>
 
@@ -378,8 +377,6 @@ protected:
 public:
   /** Controller timestep */
   const double timeStep;
-  /** Grippers */
-  std::vector<std::unordered_map<std::string, std::shared_ptr<mc_control::Gripper>>> grippers;
   /** Contact constraint for the main robot */
   mc_solver::ContactConstraint contactConstraint;
   /** Dynamics constraints for the main robot */

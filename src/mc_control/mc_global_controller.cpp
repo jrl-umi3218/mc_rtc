@@ -208,17 +208,17 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
       q[robot().jointIndexByName(jn)][0] = initq[i];
     }
   }
-  for(auto & g : controller_->grippers[0])
+  for(auto & g : controller_->robot().grippers())
   {
-    g.second->reset(controller_->robot(), initq);
+    g.get().reset(initq);
   }
-  for(size_t i = 1; i < controller_->grippers.size(); ++i)
+  for(size_t i = 1; i < controller_->robots().size(); ++i)
   {
-    if(controller_->grippers.empty())
+    auto & robot = controller_->robots().robot(i);
+    if(robot.grippers().empty())
     {
       continue;
     }
-    const auto & robot = controller_->robots().robot(i);
     const auto & rjo = robot.refJointOrder();
     std::vector<double> rinitq;
     rinitq.reserve(rjo.size());
@@ -238,9 +238,9 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
         rinitq.push_back(0);
       }
     }
-    for(auto & g : controller_->grippers[i])
+    for(auto & g : robot.grippers())
     {
-      g.second->reset(robot, rinitq);
+      g.get().reset(rinitq);
     }
   }
   controller_->reset({q});
@@ -449,9 +449,9 @@ bool MCGlobalController::run()
       std::cout << controller_->robot().mbc().q[0][4] << " ";
       std::cout << controller_->robot().mbc().q[0][5] << " ";
       std::cout << controller_->robot().mbc().q[0][6] << std::endl;
-      for(const auto & g : controller_->grippers[0])
+      for(const auto & g : controller_->robot().grippersByName())
       {
-        next_controller_->grippers[0][g.first]->reset(*g.second);
+        next_controller_->robot().gripper(g.first).reset(*g.second);
       }
       next_controller_->reset({controller_->robot().mbc().q});
       next_controller_->resetObservers();
@@ -493,16 +493,17 @@ bool MCGlobalController::run()
       gui_dt = clock::now() - start_gui_t;
     }
     pre_gripper_mbcs_ = controller_->robots().mbcs();
-    for(size_t i = 0; i < controller_->grippers.size(); ++i)
+    for(size_t i = 0; i < controller_->robots().size(); ++i)
     {
-      const auto & gi = controller_->grippers[i];
+      const auto & gi = controller_->robots().robot(i).grippers();
       if(gi.empty())
       {
         continue;
       }
       for(auto & g : gi)
       {
-        g.second->run(controller_->robots().robot(i), controller_->solver().result().robots_state[i].q);
+        g.get().run(controller_->timeStep, controller_->robots().robot(i),
+                    controller_->solver().result().robots_state[i].q);
       }
       controller_->robots().robot(i).forwardKinematics();
     }
@@ -574,22 +575,21 @@ const mc_rbdyn::Robot & MCGlobalController::robot() const
 
 void MCGlobalController::setGripperOpenPercent(const std::string & robot, double pOpen)
 {
-  auto idx = controller_->robots().robotIndex(robot);
-  for(auto & g : controller_->grippers[idx])
+  auto & r = controller_->robots().robot(robot);
+  for(auto & g : r.grippers())
   {
-    g.second->setTargetOpening(pOpen);
+    g.get().setTargetOpening(pOpen);
   }
 }
 
 void MCGlobalController::setGripperOpenPercent(const std::string & robot, const std::string & name, double pOpen)
 {
-  auto idx = controller_->robots().robotIndex(robot);
-  auto & grippers = controller_->grippers[idx];
-  if(grippers.count(name))
+  try
   {
-    grippers[name]->setTargetOpening(pOpen);
+    auto & gripper = controller_->gripper(robot, name);
+    gripper.setTargetOpening(pOpen);
   }
-  else
+  catch(const std::exception &)
   {
     LOG_ERROR("Cannot set gripper opening for non-existing gripper " << name << " in " << robot)
   }

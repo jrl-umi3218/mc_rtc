@@ -3,7 +3,11 @@
  */
 
 #include <mc_control/generic_gripper.h>
+
 #include <mc_filter/utils/clamp.h>
+
+#include <mc_rbdyn/Robot.h>
+
 #include <mc_rtc/constants.h>
 #include <mc_rtc/gui.h>
 #include <mc_rtc/logging.h>
@@ -85,20 +89,16 @@ std::vector<mc_rbdyn::Mimic> gripperMimics(const std::vector<std::string> & join
 Gripper::Gripper(const mc_rbdyn::Robot & robot,
                  const std::vector<std::string> & jointNames,
                  const std::string & robot_urdf,
-                 const std::vector<double> & currentQ,
-                 double timeStep,
                  bool reverseLimits)
-: Gripper(robot, jointNames, gripperMimics(jointNames, readMimic(robot_urdf)), currentQ, timeStep, reverseLimits)
+: Gripper(robot, jointNames, gripperMimics(jointNames, readMimic(robot_urdf)), reverseLimits)
 {
 }
 
 Gripper::Gripper(const mc_rbdyn::Robot & robot,
                  const std::vector<std::string> & jointNames,
                  const std::vector<mc_rbdyn::Mimic> & mimics,
-                 const std::vector<double> & currentQ,
-                 double timeStep,
                  bool reverseLimits)
-: actualQ(currentQ)
+: actualQ(jointNames.size(), 0)
 {
   active_joints = jointNames;
   mult.resize(0);
@@ -133,7 +133,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
         openP.push_back(robot.ql()[jointIndex][0]);
       }
       vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0]));
-      _q.push_back(currentQ[i]);
+      _q.push_back(actualQ[i]);
     }
     else
     {
@@ -167,15 +167,27 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
     offset.push_back(m.offset);
   }
 
-  percentOpen.resize(currentQ.size());
-  overCommandLimit.resize(currentQ.size());
-  overCommandLimitIter.resize(currentQ.size());
-  this->timeStep = timeStep;
+  percentOpen.resize(actualQ.size());
+  overCommandLimit.resize(actualQ.size());
+  overCommandLimitIter.resize(actualQ.size());
 
   targetQIn = {};
   targetQ = nullptr;
 
   reversed = reverseLimits;
+
+  joints_mbc_idx.clear();
+  for(const auto & name : names)
+  {
+    if(robot.hasJoint(name))
+    {
+      joints_mbc_idx.push_back(robot.jointIndexByName(name));
+    }
+    else
+    {
+      joints_mbc_idx.push_back(-1);
+    }
+  }
 }
 
 void Gripper::resetDefaults()
@@ -196,20 +208,8 @@ void Gripper::restoreConfig()
   config_ = savedConfig_;
 }
 
-void Gripper::reset(const mc_rbdyn::Robot & robot, const std::vector<double> & currentQ)
+void Gripper::reset(const std::vector<double> & currentQ)
 {
-  joints_mbc_idx.clear();
-  for(const auto & name : names)
-  {
-    if(robot.hasJoint(name))
-    {
-      joints_mbc_idx.push_back(robot.jointIndexByName(name));
-    }
-    else
-    {
-      joints_mbc_idx.push_back(-1);
-    }
-  }
   for(size_t i = 0; i < percentOpen.size(); ++i)
   {
     percentOpen[i] = (currentQ[active_joints_idx[i]] - closeP[i]) / (openP[i] - closeP[i]);
@@ -259,7 +259,7 @@ std::vector<double> Gripper::curPosition() const
   return res;
 }
 
-void Gripper::run(mc_rbdyn::Robot & robot, std::map<std::string, std::vector<double>> & qOut)
+void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string, std::vector<double>> & qOut)
 {
   if(targetQ)
   {
@@ -355,27 +355,6 @@ double Gripper::opening() const
 bool Gripper::complete() const
 {
   return targetQ == nullptr;
-}
-
-void Gripper::addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> cat)
-{
-  using namespace mc_rtc::gui;
-  gui.addElement(cat, Button("Open", [this]() { setTargetOpening(1); }),
-                 Button("Close", [this]() { setTargetOpening(0); }),
-                 NumberSlider("Opening percentage", [this]() { return opening(); },
-                              [this](double op) { setTargetOpening(op); }, 0, 1),
-                 NumberSlider("Percentage VMAX", [this]() { return percentVMAX(); },
-                              [this](double op) { percentVMAX(op); }, 0, 1));
-  cat.push_back("Safety");
-  gui.addElement(cat,
-                 NumberInput("Actual command diff threshold [deg]",
-                             [this]() { return mc_rtc::constants::toDeg(actualCommandDiffTrigger()); },
-                             [this](double deg) { actualCommandDiffTrigger(mc_rtc::constants::toRad(deg)); }),
-                 NumberInput("Over command limiter iterations", [this]() -> double { return overCommandLimitIterN(); },
-                             [this](double N) { overCommandLimitIterN(static_cast<unsigned int>(N)); }),
-                 NumberInput("Release offset [deg]",
-                             [this]() { return mc_rtc::constants::toDeg(releaseSafetyOffset()); },
-                             [this](double deg) { releaseSafetyOffset(mc_rtc::constants::toRad(deg)); }));
 }
 
 } // namespace mc_control
