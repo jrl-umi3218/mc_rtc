@@ -377,4 +377,10 @@ void MCController::anchorFrameReal(const sva::PTransformd & anchor)
 
 void MCController::stop() {}
 
+Gripper & MCController::gripper(const std::string & robot, const std::string & gripper)
+{
+  auto rIndex = robots().robotIndex(robot);
+  return *grippers[rIndex].at(gripper);
+}
+
 } // namespace mc_control

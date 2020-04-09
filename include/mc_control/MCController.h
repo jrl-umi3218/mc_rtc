@@ -300,6 +300,16 @@ public:
     return config_;
   }
 
+  /** Access a gripper by robot's name and gripper's name
+   *
+   * \param robot Name of the robot
+   *
+   * \param gripper Name of the gripper
+   *
+   * \throws If the robot's name is not valid or the gripper's name is not valid
+   */
+  Gripper & gripper(const std::string & robot, const std::string & gripper);
+
 protected:
   /** Builds a controller base with an empty environment
    * \param robot Pointer to the main RobotModule
