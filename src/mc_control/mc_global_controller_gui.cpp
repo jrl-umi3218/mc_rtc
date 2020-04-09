@@ -33,7 +33,10 @@ void MCGlobalController::initGUI()
         gui->addElement(category, mc_rtc::gui::Button("Open", [g_ptr]() { g_ptr->setTargetOpening(1); }),
                         mc_rtc::gui::Button("Close", [g_ptr]() { g_ptr->setTargetOpening(0); }),
                         mc_rtc::gui::NumberSlider("Opening percentage", [g_ptr]() { return g_ptr->opening(); },
-                                                  [g_ptr](double op) { g_ptr->setTargetOpening(op); }, 0, 1));
+                                                  [g_ptr](double op) { g_ptr->setTargetOpening(op); }, 0, 1),
+                        mc_rtc::gui::NumberSlider("Maximum velocity percentage",
+                                                  [g_ptr]() { return g_ptr->percentVMAX(); },
+                                                  [g_ptr](double op) { g_ptr->percentVMAX(op); }, 0, 1));
         category.push_back("Safety");
         gui->addElement(
             category,
