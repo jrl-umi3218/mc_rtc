@@ -573,6 +573,21 @@ const mc_rbdyn::Robot & MCGlobalController::robot() const
   return controller_->robot();
 }
 
+void MCGlobalController::setGripperTargetQ(const std::string & robot,
+                                           const std::string & name,
+                                           const std::vector<double> & q)
+{
+  try
+  {
+    auto & gripper = controller_->gripper(robot, name);
+    gripper.setTargetQ(q);
+  }
+  catch(const std::exception &)
+  {
+    LOG_ERROR("Cannot set gripper opening for non-existing gripper " << name << " in " << robot)
+  }
+}
+
 void MCGlobalController::setGripperOpenPercent(const std::string & robot, double pOpen)
 {
   auto & r = controller_->robots().robot(robot);
