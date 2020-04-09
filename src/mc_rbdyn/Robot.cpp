@@ -23,6 +23,7 @@
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
+#include <fstream>
 #include <tuple>
 
 namespace
