@@ -97,10 +97,29 @@ struct MC_CONTROL_DLLAPI Gripper
    **/
   void restoreConfig();
 
-  /*! \brief Set the current configuration of the active joints involved in the gripper
-   * \param curentQ Current values of the active joints involved in the gripper
+  /*! \brief Reset the gripper state to the current actual state of the gripper
+   *
+   * \param robot Robot that this gripper is attached to
+   *
+   * \param currentQ Current encoder values for the robot
    */
-  void setCurrentQ(const std::vector<double> & currentQ);
+  void reset(const mc_rbdyn::Robot & robot, const std::vector<double> & currentQ);
+
+  /*! \brief Reset from another gripper
+   *
+   * \param gripper Gripper used to reset this one
+   */
+  void reset(const Gripper & gripper);
+
+  /*! \brief Run one iteration of control
+   *
+   * \param robot Robot for which this gripper control is running
+   *
+   * \param qOut Output of the gripper state
+   *
+   * The gripper control updates both the robot's configuration and the output
+   */
+  void run(mc_rbdyn::Robot & robot, std::map<std::string, std::vector<double>> & qOut);
 
   /*! \brief Set the target configuration of the active joints involved in the gripper
    * \param targetQ Desired values of the active joints involved in the gripper
@@ -117,10 +136,19 @@ struct MC_CONTROL_DLLAPI Gripper
    */
   std::vector<double> curPosition() const;
 
+  /*! \brief Returns all joints involved in the gripper */
+  inline const std::vector<std::string> & joints() const
+  {
+    return names;
+  }
+
   /*! \brief Return all gripper joints configuration
    * \return Current values of all the gripper's joints, including passive joints
    */
-  const std::vector<double> & q();
+  inline const std::vector<double> & q() const
+  {
+    return _q;
+  }
 
   /*! \brief Get the current opening percentage
    *
@@ -129,11 +157,6 @@ struct MC_CONTROL_DLLAPI Gripper
    * \return Current opening percentage
    */
   double opening() const;
-
-  /*! \brief Set the encoder-based values of the gripper's active joints
-   * \param q Encoder value of the gripper's active joints
-   */
-  void setActualQ(const std::vector<double> & q);
 
   /** Set gripper speed as a percentage of maximum velocity */
   void percentVMAX(double percent);
@@ -198,18 +221,18 @@ struct MC_CONTROL_DLLAPI Gripper
    */
   bool complete() const;
 
-  /* Gripper gui will be added under {category, name} category */
+  /* Gripper gui will be added under {category} category */
   void addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category);
-  /* Gripper gui will be removed from {category, name} category */
-  void removeFromGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category);
 
-public:
-  /*! Gripper name */
-  std::string name;
+protected:
   /*! Name of joints involved in the gripper */
   std::vector<std::string> names;
   /*! Name of active joints involved in the gripper */
   std::vector<std::string> active_joints;
+  /*! Active joints indexes in the reference joint order */
+  std::vector<size_t> active_joints_idx;
+  /*! All joint indexes in mbc, -1 if absent */
+  std::vector<int> joints_mbc_idx;
 
   /*! Lower limits of active joints in the gripper (closed-gripper values) */
   std::vector<double> closeP;

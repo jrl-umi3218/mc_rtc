@@ -282,6 +282,12 @@ public:
    */
   mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
 
+  /** Remove a robot from the controller
+   *
+   * \param name Name of the robot to remove
+   */
+  void removeRobot(const std::string & name);
+
   /** Access or modify controller configuration */
   mc_rtc::Configuration & config()
   {
@@ -363,7 +369,7 @@ public:
   /** Controller timestep */
   const double timeStep;
   /** Grippers */
-  std::map<std::string, std::shared_ptr<mc_control::Gripper>> grippers;
+  std::vector<std::unordered_map<std::string, std::shared_ptr<mc_control::Gripper>>> grippers;
   /** Contact constraint for the main robot */
   mc_solver::ContactConstraint contactConstraint;
   /** Dynamics constraints for the main robot */

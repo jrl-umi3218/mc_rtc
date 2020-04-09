@@ -22,9 +22,14 @@ void MCGlobalController::initGUI()
     auto gui = controller_->gui();
     gui->removeCategory({"Global", "Log"});
     gui->addElement({"Global", "Log"}, mc_rtc::gui::Button("Start a new log", [this]() { this->refreshLog(); }));
-    for(const auto & g : controller().grippers)
+    gui->removeCategory({"Global", "Grippers"});
+    for(size_t i = 0; i < controller().grippers.size(); ++i)
     {
-      g.second->addToGUI(*gui, {"Global", "Grippers"});
+      const auto & gi = controller().grippers[i];
+      for(const auto & g : gi)
+      {
+        g.second->addToGUI(*gui, {"Global", "Grippers", controller().robots().robot(i).name(), g.first});
+      }
     }
     gui->removeCategory({"Global", "Change controller"});
     gui->addElement({"Global", "Change controller"},

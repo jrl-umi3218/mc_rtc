@@ -57,8 +57,7 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
 {
   if(publish_control)
   {
-    mc_rtc::ROSBridge::update_robot_publisher("control", controller.timestep(), controller.robot(),
-                                              controller.controller().grippers);
+    mc_rtc::ROSBridge::update_robot_publisher("control", controller.timestep(), controller.robot());
   }
   // Publish environment state
   if(publish_env)
@@ -74,8 +73,7 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
   if(publish_real)
   {
     auto & real_robot = controller.controller().realRobot();
-    mc_rtc::ROSBridge::update_robot_publisher("real", controller.timestep(), real_robot,
-                                              controller.controller().grippers);
+    mc_rtc::ROSBridge::update_robot_publisher("real", controller.timestep(), real_robot);
   }
 }
 

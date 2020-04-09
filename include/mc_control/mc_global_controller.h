@@ -226,9 +226,6 @@ public:
   /*! \brief Force sensors' readings for another robot than the main robot */
   void setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches);
 
-  /*! \brief Gripper active joints actual values */
-  void setActualGripperQ(const std::map<std::string, std::vector<double>> & grippersQ);
-
   /** @} */
 
   /*! \brief Runs one step of the controller
@@ -326,28 +323,25 @@ public:
    * @{
    */
 
-  /*! \brief Get the current (active) joints values for the grippers */
-  std::map<std::string, std::vector<double>> gripperQ();
-  /*! \brief Get the joints in the grippers */
-  std::map<std::string, std::vector<std::string>> gripperJoints();
-  /*! \brief Get the active joints in the grippers */
-  std::map<std::string, std::vector<std::string>> gripperActiveJoints();
-  /*! \brief Set the current values of (active) joints in the grippers */
-  void setGripperCurrentQ(const std::map<std::string, std::vector<double>> & gripperQs);
-  /*! \brief Set the opening target(s) for a given gripper
+  /*! \brief Set the opening target(s) for a given robot/gripper
+   * \param robot Name of the robot
    * \param name Name of the gripper
    * \param q Active joints values
    */
-  void setGripperTargetQ(const std::string & name, const std::vector<double> & q);
-  /*! \brief Set the gripper opening percentage for all grippers
+  void setGripperTargetQ(const std::string & robot, const std::string & name, const std::vector<double> & q);
+
+  /*! \brief Set the gripper opening percentage for all grippers in a robot
+   * \param robot Name of the robot
    * \param pOpen Opening percentage (0: closed, 1: open)
    */
-  void setGripperOpenPercent(double pOpen);
-  /*! \brief Set the gripper opening percentage for a given gripper
+  void setGripperOpenPercent(const std::string & robot, double pOpen);
+
+  /*! \brief Set the gripper opening percentage for a given robot/gripper
+   * \param robot Name of the robot
    * \param name Name of the gripper
    * \param pOpen Opening percentage (0: closed, 1: open)
    */
-  void setGripperOpenPercent(const std::string & name, double pOpen);
+  void setGripperOpenPercent(const std::string & robot, const std::string & name, double pOpen);
   /** @} */
 
   /** @name Services
@@ -493,6 +487,9 @@ private:
   double solver_build_and_solve_t = 0;
   double solver_solve_t = 0;
   double framework_cost = 0;
+
+  /** Keep track of controller outputs before applying gripper control */
+  std::vector<rbd::MultiBodyConfig> pre_gripper_mbcs_;
 };
 
 } // namespace mc_control

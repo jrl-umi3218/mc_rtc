@@ -10,8 +10,6 @@
 
 #include <RBDyn/FK.h>
 
-#include <mc_control/generic_gripper.h>
-
 #include <geometry_msgs/WrenchStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <ros/ros.h>
@@ -88,9 +86,7 @@ struct RobotPublisherImpl
 
   void init(const mc_rbdyn::Robot & robot, bool use_real);
 
-  void update(double dt,
-              const mc_rbdyn::Robot & robot,
-              const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers);
+  void update(double dt, const mc_rbdyn::Robot & robot);
 
 private:
   ros::NodeHandle & nh;
@@ -112,7 +108,6 @@ private:
 
   /* Hold the address of the last init/update call */
   const mc_rbdyn::Robot * previous_robot;
-  rbd::MultiBodyConfig mbc;
   RobotStateData data;
   bool use_real;
 
@@ -213,9 +208,7 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
   nh.setParam(prefix + "/robot_description", urdf.str());
 }
 
-void RobotPublisherImpl::update(double,
-                                const mc_rbdyn::Robot & robot,
-                                const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
+void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
 {
   if(&robot != previous_robot)
   {
@@ -232,53 +225,7 @@ void RobotPublisherImpl::update(double,
   const auto & mb = robot.mb();
   size_t tfs_i = 0;
 
-  mbc = robot.mbc();
-  for(const auto & g : grippers)
-  {
-    const auto & gJoints = g.second->names;
-    const auto & gQ = g.second->_q;
-    for(size_t i = 0; i < gJoints.size(); ++i)
-    {
-      const auto & j = gJoints[i];
-      if(!robot.hasJoint(j))
-      {
-        continue;
-      }
-      const auto & q = gQ[i];
-      auto jIndex = robot.jointIndexByName(gJoints[i]);
-      if(mbc.q[jIndex].size() > 0)
-      {
-        mbc.q[jIndex][0] = q;
-      }
-    }
-    if(gJoints.size() == 0 || !robot.hasJoint(gJoints[0]))
-    {
-      continue;
-    } // unlikely
-    /** Perform FK starting at the gripper */
-    int startIndex = static_cast<int>(robot.jointIndexByName(gJoints[0]));
-    for(int jIndex = startIndex; jIndex < static_cast<int>(mb.joints().size()); ++jIndex)
-    {
-      size_t jIdx = static_cast<size_t>(jIndex);
-      auto pred = mb.predecessor(jIndex);
-      if(pred < startIndex - 1 || pred > jIndex - 1)
-      {
-        break;
-      }
-      mbc.jointConfig[jIdx] = mb.joints()[jIdx].pose(mbc.q[jIdx]);
-      mbc.parentToSon[jIdx] = mbc.jointConfig[jIdx] * mb.transforms()[jIdx];
-      if(pred != -1)
-      {
-        mbc.bodyPosW[static_cast<size_t>(mb.successor(jIndex))] =
-            mbc.parentToSon[jIdx] * mbc.bodyPosW[static_cast<size_t>(pred)];
-      }
-      else
-      {
-        mbc.bodyPosW[static_cast<size_t>(mb.successor(jIndex))] = mbc.parentToSon[static_cast<size_t>(jIndex)];
-      }
-    }
-  }
-
+  const auto & mbc = robot.mbc();
   data.js.header.seq = seq;
   data.js.header.stamp = tm;
   {
@@ -392,13 +339,11 @@ void RobotPublisher::init(const mc_rbdyn::Robot & robot, bool use_real)
   }
 }
 
-void RobotPublisher::update(double dt,
-                            const mc_rbdyn::Robot & robot,
-                            const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
+void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot)
 {
   if(impl)
   {
-    impl->update(dt, robot, grippers);
+    impl->update(dt, robot);
   }
 }
 
@@ -494,10 +439,7 @@ void ROSBridge::init_robot_publisher(const std::string & publisher,
   impl.rpubs[publisher]->init(robot, use_real);
 }
 
-void ROSBridge::update_robot_publisher(const std::string & publisher,
-                                       double dt,
-                                       const mc_rbdyn::Robot & robot,
-                                       const std::map<std::string, std::shared_ptr<mc_control::Gripper>> & grippers)
+void ROSBridge::update_robot_publisher(const std::string & publisher, double dt, const mc_rbdyn::Robot & robot)
 {
   static auto & impl = impl_();
   if(impl.rpubs.count(publisher) == 0)
@@ -505,7 +447,7 @@ void ROSBridge::update_robot_publisher(const std::string & publisher,
     impl.rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", impl.publish_rate, dt);
     impl.rpubs[publisher]->init(robot);
   }
-  impl.rpubs[publisher]->update(dt, robot, grippers);
+  impl.rpubs[publisher]->update(dt, robot);
 }
 
 void ROSBridge::shutdown()

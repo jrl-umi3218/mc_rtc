@@ -4,6 +4,10 @@
   "type": "object",
   "properties":
   {
+    "robot": { "type": "string",
+               "title": "Robot this is applied to",
+               "description": "If ommited, the state applies to the main robot"
+    },
     "grippers": { "type": "object",
                   "title": "Grippers' target",
                   "properties":

@@ -41,7 +41,7 @@ bool ROSServices::close_grippers_callback(mc_rtc_msgs::close_grippers::Request &
                                           mc_rtc_msgs::close_grippers::Response & resp)
 {
   LOG_INFO("[mc_rtc::ROS] close grippers");
-  controller_.setGripperOpenPercent(0.);
+  controller_.setGripperOpenPercent(controller_.robot().name(), 0.);
   resp.success = true;
   return true;
 }
@@ -50,7 +50,7 @@ bool ROSServices::open_grippers_callback(mc_rtc_msgs::open_grippers::Request &,
                                          mc_rtc_msgs::open_grippers::Response & resp)
 {
   LOG_INFO("[mc_rtc::ROS] Open grippers");
-  controller_.setGripperOpenPercent(1.);
+  controller_.setGripperOpenPercent(controller_.robot().name(), 1.);
   resp.success = true;
   return true;
 }
@@ -59,7 +59,7 @@ bool ROSServices::set_gripper_callback(mc_rtc_msgs::set_gripper::Request & req,
                                        mc_rtc_msgs::set_gripper::Response & resp)
 {
   LOG_INFO("[mc_rtc::ROS] Set gripper " << req.gname);
-  controller_.setGripperTargetQ(req.gname, req.values);
+  controller_.setGripperTargetQ(controller_.robot().name(), req.gname, req.values);
   resp.success = true;
   return true;
 }

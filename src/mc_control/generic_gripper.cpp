@@ -103,6 +103,19 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
   active_joints = jointNames;
   mult.resize(0);
   _q.resize(0);
+  auto getReferenceIdx = [&](const std::string & joint) {
+    const auto & rjo = robot.refJointOrder();
+    for(size_t i = 0; i < rjo.size(); ++i)
+    {
+      const auto & rji = rjo[i];
+      if(rji == joint)
+      {
+        return i;
+      }
+    }
+    LOG_ERROR_AND_THROW(std::runtime_error, "Active joint " << joint << " for " << robot.name()
+                                                            << " is not part of the reference joint order");
+  };
   for(size_t i = 0; i < jointNames.size(); ++i)
   {
     const auto & name = jointNames[i];
@@ -130,6 +143,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
       vmax.push_back(0);
       _q.push_back(0);
     }
+    active_joints_idx.push_back(getReferenceIdx(name));
     mult.push_back({i, 1.0});
     offset.push_back(0.0);
   }
@@ -156,7 +170,6 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
   percentOpen.resize(currentQ.size());
   overCommandLimit.resize(currentQ.size());
   overCommandLimitIter.resize(currentQ.size());
-  setCurrentQ(currentQ);
   this->timeStep = timeStep;
 
   targetQIn = {};
@@ -183,12 +196,29 @@ void Gripper::restoreConfig()
   config_ = savedConfig_;
 }
 
-void Gripper::setCurrentQ(const std::vector<double> & currentQ)
+void Gripper::reset(const mc_rbdyn::Robot & robot, const std::vector<double> & currentQ)
 {
+  joints_mbc_idx.clear();
+  for(const auto & name : names)
+  {
+    if(robot.hasJoint(name))
+    {
+      joints_mbc_idx.push_back(robot.jointIndexByName(name));
+    }
+    else
+    {
+      joints_mbc_idx.push_back(-1);
+    }
+  }
   for(size_t i = 0; i < percentOpen.size(); ++i)
   {
-    percentOpen[i] = (currentQ[i] - closeP[i]) / (openP[i] - closeP[i]);
+    percentOpen[i] = (currentQ[active_joints_idx[i]] - closeP[i]) / (openP[i] - closeP[i]);
   }
+}
+
+void Gripper::reset(const Gripper & gripper)
+{
+  this->percentOpen = gripper.percentOpen;
 }
 
 void Gripper::setTargetQ(const std::vector<double> & targetQ)
@@ -229,39 +259,7 @@ std::vector<double> Gripper::curPosition() const
   return res;
 }
 
-void Gripper::setActualQ(const std::vector<double> & q)
-{
-  actualQ = q;
-  auto currentQ = curPosition();
-  for(size_t i = 0; i < actualQ.size(); ++i)
-  {
-    if(std::abs(actualQ[i] - currentQ[i]) > config_.actualCommandDiffTrigger)
-    {
-      overCommandLimitIter[i]++;
-      if(overCommandLimitIter[i] == config_.overCommandLimitIterN)
-      {
-        LOG_WARNING("Gripper safety triggered on " << names[i])
-        overCommandLimit[i] = true;
-        if(reversed)
-        {
-          actualQ[i] = actualQ[i] + config_.releaseSafetyOffset;
-        }
-        else
-        {
-          actualQ[i] = actualQ[i] - config_.releaseSafetyOffset;
-        }
-        setTargetQ(actualQ);
-      }
-    }
-    else
-    {
-      overCommandLimitIter[i] = 0;
-      overCommandLimit[i] = false;
-    }
-  }
-}
-
-const std::vector<double> & Gripper::q()
+void Gripper::run(mc_rbdyn::Robot & robot, std::map<std::string, std::vector<double>> & qOut)
 {
   if(targetQ)
   {
@@ -290,16 +288,63 @@ const std::vector<double> & Gripper::q()
       targetQ = nullptr;
     }
   }
-  auto cur = curPosition();
+  const auto & q = robot.encoderValues();
+  auto currentQ = curPosition();
+  if(q.size())
+  {
+    for(size_t i = 0; i < active_joints_idx.size(); ++i)
+    {
+      actualQ[i] = q[active_joints_idx[i]];
+    }
+  }
+  else
+  {
+    actualQ = currentQ;
+  }
   for(size_t i = 0; i < active_joints.size(); ++i)
   {
-    _q[i] = cur[i];
+    _q[i] = currentQ[i];
+    if(joints_mbc_idx[i] != -1)
+    {
+      robot.mbc().q[joints_mbc_idx[i]] = {_q[i]};
+    }
+    qOut[names[i]] = {_q[i]};
   }
   for(size_t i = active_joints.size(); i < names.size(); ++i)
   {
     _q[i] = mult[i].second * _q[mult[i].first] + offset[i];
+    if(joints_mbc_idx[i] != -1)
+    {
+      robot.mbc().q[joints_mbc_idx[i]] = {_q[i]};
+    }
+    qOut[names[i]] = {_q[i]};
   }
-  return _q;
+  for(size_t i = 0; i < actualQ.size(); ++i)
+  {
+    if(std::abs(actualQ[i] - currentQ[i]) > config_.actualCommandDiffTrigger)
+    {
+      overCommandLimitIter[i]++;
+      if(overCommandLimitIter[i] == config_.overCommandLimitIterN)
+      {
+        LOG_WARNING("Gripper safety triggered on " << names[i])
+        overCommandLimit[i] = true;
+        if(reversed)
+        {
+          actualQ[i] = actualQ[i] + config_.releaseSafetyOffset;
+        }
+        else
+        {
+          actualQ[i] = actualQ[i] - config_.releaseSafetyOffset;
+        }
+        setTargetQ(actualQ);
+      }
+    }
+    else
+    {
+      overCommandLimitIter[i] = 0;
+      overCommandLimit[i] = false;
+    }
+  }
 }
 
 double Gripper::opening() const
@@ -312,20 +357,17 @@ bool Gripper::complete() const
   return targetQ == nullptr;
 }
 
-void Gripper::addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category)
+void Gripper::addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> cat)
 {
   using namespace mc_rtc::gui;
-  std::vector<std::string> cat = category;
-  cat.push_back(name);
   gui.addElement(cat, Button("Open", [this]() { setTargetOpening(1); }),
                  Button("Close", [this]() { setTargetOpening(0); }),
                  NumberSlider("Opening percentage", [this]() { return opening(); },
                               [this](double op) { setTargetOpening(op); }, 0, 1),
                  NumberSlider("Percentage VMAX", [this]() { return percentVMAX(); },
                               [this](double op) { percentVMAX(op); }, 0, 1));
-  std::vector<std::string> cat_safety = cat;
-  cat_safety.push_back("Safety");
-  gui.addElement(cat_safety,
+  cat.push_back("Safety");
+  gui.addElement(cat,
                  NumberInput("Actual command diff threshold [deg]",
                              [this]() { return mc_rtc::constants::toDeg(actualCommandDiffTrigger()); },
                              [this](double deg) { actualCommandDiffTrigger(mc_rtc::constants::toRad(deg)); }),
@@ -334,13 +376,6 @@ void Gripper::addToGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string>
                  NumberInput("Release offset [deg]",
                              [this]() { return mc_rtc::constants::toDeg(releaseSafetyOffset()); },
                              [this](double deg) { releaseSafetyOffset(mc_rtc::constants::toRad(deg)); }));
-}
-
-void Gripper::removeFromGUI(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category)
-{
-  std::vector<std::string> cat = category;
-  cat.push_back(name);
-  gui.removeCategory(cat);
 }
 
 } // namespace mc_control
