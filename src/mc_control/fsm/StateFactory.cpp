@@ -205,11 +205,7 @@ void StateFactory::load(const std::string & name, const std::string & base, cons
     mc_rtc::log::info("New state from file: {} (base: {})", name, base);
   }
   states_.push_back(name);
-  states_factories_[name] = [config, base](StateFactory & f, const std::string & final_name) {
-    auto ret = f.create(base, final_name);
-    ret->configure_(config);
-    return ret;
-  };
+  states_configurations_[name] = {base, "", config};
 }
 
 StatePtr StateFactory::create(const std::string & state, Controller & ctl, const mc_rtc::Configuration & config)
@@ -266,9 +262,19 @@ StatePtr StateFactory::create(const std::string & state, const std::string & fin
     ret = create_object(state);
     ret->name(final_name);
   }
-  else
+  else if(states_configurations_.count(state))
   {
-    ret = states_factories_[state](*this, final_name);
+    const auto & config = states_configurations_[state];
+    if(config.arg.size())
+    {
+      ret = create_object(config.base, config.arg);
+      ret->name(final_name);
+    }
+    else
+    {
+      ret = create(config.base, final_name);
+    }
+    ret->configure_(config.config);
   }
   if(!ret)
   {
@@ -302,11 +308,7 @@ bool StateFactory::load_with_loader(const std::string & state)
     mc_rtc::log::info("New state: {} provided by loader: {}", state, loader);
   }
   states_.push_back(state);
-  states_factories_[state] = [loader, arg](StateFactory & factory, const std::string & final_name) {
-    auto object = factory.create_object(loader, arg);
-    object->name(final_name);
-    return object;
-  };
+  states_configurations_[state] = {loader, arg, {}};
   return true;
 }
 
