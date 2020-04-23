@@ -195,4 +195,9 @@ sva::ForceVecd ForceSensor::worldWrenchWithoutGravity(const mc_rbdyn::Robot & ro
   return X_fsactual_0.dualMul(w_fsactual);
 }
 
+ForceSensor * ForceSensor::clone() const
+{
+  return new ForceSensor(*this);
+}
+
 } // namespace mc_rbdyn

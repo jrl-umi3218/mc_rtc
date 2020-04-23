@@ -54,6 +54,8 @@ struct MC_RBDYN_DLLAPI Sensor
   /** Returns the sensor position in the inertial frame (convenience function) */
   sva::PTransformd X_0_s(const mc_rbdyn::Robot & robot) const;
 
+  virtual Sensor * clone() const = 0;
+
 protected:
   /** Type of sensor as string */
   std::string type_;

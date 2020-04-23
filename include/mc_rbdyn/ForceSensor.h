@@ -156,6 +156,9 @@ public:
 
   /** @} */
   /* End of Calibration group */
+
+  ForceSensor * clone() const override;
+
 private:
   sva::ForceVecd wrench_;
 

@@ -15,11 +15,11 @@ namespace mc_rbdyn
  * dynamic information about a body. It would typically be used to represent an
  * IMU reading but in more ideal (simulation, external tracking system...) it
  * can hold more information */
-struct BodySensor : public Sensor
+struct MC_RBDYN_DLLAPI BodySensor : public Sensor
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /** Default constructor, does not represent a valid body sensor */
-  BodySensor() : BodySensor("", "", sva::PTransformd::Identity()) {}
+  inline BodySensor() : BodySensor("", "", sva::PTransformd::Identity()) {}
 
   /** Constructor
    *
@@ -36,7 +36,7 @@ struct BodySensor : public Sensor
     type_ = "BodySensor";
   }
 
-  ~BodySensor() override = default;
+  ~BodySensor() override;
 
   /** Get the sensor's parent body name */
   inline const std::string & parentBody() const
@@ -116,6 +116,8 @@ struct BodySensor : public Sensor
   {
     acceleration_ = acceleration;
   }
+
+  BodySensor * clone() const override;
 
 private:
   Eigen::Vector3d position_ = Eigen::Vector3d::Zero();

@@ -132,6 +132,7 @@ mc_rbdyn/configuration_io.cpp
 mc_rbdyn/ZMP.cpp
 mc_control/generic_gripper.cpp
 mc_rbdyn/Sensor.cpp
+mc_rbdyn/BodySensor.cpp
 )
 
 set(mc_rbdyn_HDR
