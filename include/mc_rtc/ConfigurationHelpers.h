@@ -54,15 +54,17 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config,
     std::vector<T> vec = c;
     return vec;
   }
-  catch(...)
+  catch(mc_rtc::Configuration::Exception & notAVec)
   { // If that fails, try to convert as an element
+    notAVec.silence();
     try
     {
       T elem = c;
       return {elem};
     }
-    catch(...)
+    catch(mc_rtc::Configuration::Exception & notAnElem)
     { // If that fails as well, return the default
+      notAnElem.silence();
       return defaultVec;
     }
   }
@@ -84,15 +86,17 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config, const s
   {
     vec = c;
   }
-  catch(...)
+  catch(mc_rtc::Configuration::Exception & notAVec)
   {
+    notAVec.silence();
     try
     {
       T elem = c;
       vec.push_back(elem);
     }
-    catch(...)
+    catch(mc_rtc::Configuration::Exception & notAnElem)
     {
+      notAnElem.silence();
       LOG_ERROR_AND_THROW(mc_rtc::Configuration::Exception,
                           "Configuration " << key << " is not valid. It should be a vector or single element.");
     }

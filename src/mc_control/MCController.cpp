@@ -9,6 +9,7 @@
 
 #include <mc_rtc/config.h>
 #include <mc_rtc/gui/Schema.h>
+#include <mc_rtc/io_utils.h>
 #include <mc_rtc/logging.h>
 
 #include <mc_tasks/MetaTaskLoader.h>
@@ -252,6 +253,16 @@ const mc_solver::QPResultMsg & MCController::send(const double & t)
 
 void MCController::reset(const ControllerResetData & reset_data)
 {
+  std::vector<std::string> supported;
+  supported_robots(supported);
+  if(supported.size() && std::find(supported.cbegin(), supported.cend(), robot().name()) == supported.end())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[MCController] The main robot "
+                                                << robot().name()
+                                                << " is not supported by this controller. Supported robots are: ["
+                                                << mc_rtc::io::to_string(supported) << "].");
+  }
+
   robot().mbc().zero(robot().mb());
   robot().mbc().q = reset_data.q;
   postureTask->posture(reset_data.q);
@@ -306,9 +317,9 @@ mc_rtc::Logger & MCController::logger()
   return *logger_;
 }
 
-std::vector<std::string> MCController::supported_robots() const
+void MCController::supported_robots(std::vector<std::string> & out) const
 {
-  return {};
+  out = {};
 }
 
 void MCController::realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots)

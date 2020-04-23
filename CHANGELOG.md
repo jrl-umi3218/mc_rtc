@@ -6,6 +6,10 @@
 
 - mc\_tasks::MomentumTask
 
+### Fixes
+
+- Enforce the list of supported robots provided by a controller
+
 ## [1.2.1] - 2020-03-18
 
 ### Added
