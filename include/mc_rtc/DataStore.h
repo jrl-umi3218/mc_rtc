@@ -1,10 +1,11 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_rtc/logging.h>
+#include <mc_rtc/type_name.h>
 #include <mc_rtc/utils_api.h>
 
 #include <functional>
@@ -30,14 +31,6 @@ template<typename T, typename U, typename... Args>
 bool is_valid_hash(std::size_t h)
 {
   return is_valid_hash<T>(h) || is_valid_hash<U, Args...>(h);
-}
-
-MC_RTC_UTILS_DLLAPI std::string demangle(const char * name);
-
-template<typename T>
-std::string type_name()
-{
-  return demangle(typeid(T).name());
 }
 
 /** Extract return type and argument types from a lambda by accessing ::operator() */
@@ -409,7 +402,7 @@ private:
     template<typename T, typename... ArgsT>
     T & setup()
     {
-      this->type = &internal::type_name<T>;
+      this->type = &type_name<T>;
       this->same = &internal::is_valid_hash<T, ArgsT...>;
       this->destroy = [](Data & self) {
         T * p = reinterpret_cast<T *>(self.buffer.release());
@@ -427,8 +420,7 @@ private:
     {
       LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Object for key \"" << name
                                                   << "\" does not have the same type as the stored type. "
-                                                  << "Stored " << data.type() << " but requested "
-                                                  << internal::type_name<T>());
+                                                  << "Stored " << data.type() << " but requested " << type_name<T>());
     }
     return *(reinterpret_cast<T *>(data.buffer.get()));
   }
@@ -443,7 +435,7 @@ private:
       LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Function for key \"" << name
                                                   << "\" does not have the same signature as the requested one. "
                                                   << "Stored " << data.type() << " but requested "
-                                                  << internal::type_name<fn_t>());
+                                                  << type_name<fn_t>());
     }
     auto & fn = *(reinterpret_cast<fn_t *>(data.buffer.get()));
     return fn(std::forward<ArgsT>(args)...);
