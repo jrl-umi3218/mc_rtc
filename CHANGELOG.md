@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- mc\_tasks::MomentumTask
+
 ## [1.2.1] - 2020-03-18
 
 ### Added
