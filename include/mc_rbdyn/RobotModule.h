@@ -27,7 +27,6 @@
 namespace mc_rbdyn
 {
 
-/* TODO Functions are declared const here but most implementations will likely not respect the constness */
 struct MC_RBDYN_DLLAPI RobotModule
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -406,6 +405,12 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _real_urdf;
   }
 
+  /** Returns a list of non standard sensors supported by this module */
+  inline const std::vector<SensorPtr> & sensors() const
+  {
+    return _sensors;
+  }
+
   /** Path to the robot's description package */
   std::string path;
   /** (default) Name of the robot */
@@ -462,6 +467,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration _lipmStabilizerConfig;
   /** \see real_urdf() */
   std::string _real_urdf;
+  /** \see sensors() */
+  std::vector<SensorPtr> _sensors;
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;
