@@ -34,21 +34,20 @@ public:
 
   /*! \brief Reset the task
    *
-   * Set the task target to the current surface, and reset its target velocity
-   * and acceleration to zero.
+   * Set the task target to the current momentum and reset desired velocity and acceleration to zero.
    *
    */
   virtual void reset() override;
 
   /*! \brief Get the current target momentum */
-  sva::ForceVecd target() const;
+  sva::ForceVecd momentum() const;
 
   /*! \brief Set the target momentum
    *
    * \param target Target momentum
    *
    */
-  void target(const sva::ForceVecd & pos);
+  void momentum(const sva::ForceVecd & mom);
 
   void addToLogger(mc_rtc::Logger & logger) override;
 
