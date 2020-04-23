@@ -247,9 +247,9 @@ protected:
     t.removeFromGUI(gui);
   }
 
-  void ensureHasJoints(const mc_rbdyn::Robot & robot,
-                       const std::vector<std::string> & joints,
-                       const std::string & prefix) const
+  inline static void ensureHasJoints(const mc_rbdyn::Robot & robot,
+                                     const std::vector<std::string> & joints,
+                                     const std::string & prefix)
   {
     for(const auto & jName : joints)
     {
