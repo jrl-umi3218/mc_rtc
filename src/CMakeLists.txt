@@ -131,6 +131,7 @@ mc_rbdyn/RobotModule.cpp
 mc_rbdyn/configuration_io.cpp
 mc_rbdyn/ZMP.cpp
 mc_control/generic_gripper.cpp
+mc_rbdyn/Sensor.cpp
 )
 
 set(mc_rbdyn_HDR

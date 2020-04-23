@@ -4,9 +4,7 @@
 
 #pragma once
 
-#include <mc_rbdyn/api.h>
-
-#include <SpaceVecAlg/SpaceVecAlg>
+#include <mc_rbdyn/Sensor.h>
 
 #include <Eigen/StdVector>
 
@@ -17,7 +15,7 @@ namespace mc_rbdyn
  * dynamic information about a body. It would typically be used to represent an
  * IMU reading but in more ideal (simulation, external tracking system...) it
  * can hold more information */
-struct BodySensor
+struct BodySensor : public Sensor
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /** Default constructor, does not represent a valid body sensor */
@@ -32,27 +30,24 @@ struct BodySensor
    * @param X_b_s Transformation from the parent body to the sensor
    *
    */
-  BodySensor(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s)
-  : name_(name), bodyName_(bodyName), X_b_s_(X_b_s)
+  inline BodySensor(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s)
+  : Sensor(name, bodyName, X_b_s)
   {
+    type_ = "BodySensor";
   }
 
-  /** Get the sensor's name */
-  inline const std::string & name() const
-  {
-    return name_;
-  }
+  ~BodySensor() override = default;
 
   /** Get the sensor's parent body name */
   inline const std::string & parentBody() const
   {
-    return bodyName_;
+    return Sensor::parent();
   }
 
   /** Return the transformation from the parent body to the sensor */
   inline const sva::PTransformd & X_b_s() const
   {
-    return X_b_s_;
+    return Sensor::X_p_s();
   }
 
   /** Return the sensor's position reading, Zero if not provided */
@@ -123,9 +118,6 @@ struct BodySensor
   }
 
 private:
-  std::string name_;
-  std::string bodyName_;
-  sva::PTransformd X_b_s_;
   Eigen::Vector3d position_ = Eigen::Vector3d::Zero();
   Eigen::Quaterniond orientation_ = Eigen::Quaterniond::Identity();
   Eigen::Vector3d linear_velocity_ = Eigen::Vector3d::Zero();
