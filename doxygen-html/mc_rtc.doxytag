@@ -16978,6 +16978,13 @@
       <anchor>a780d496b8148d863b2aa0462abcba525</anchor>
       <arglist>(MetaTask &amp;t, mc_rtc::gui::StateBuilder &amp;gui)</arglist>
     </member>
+    <member kind="function" protection="protected" static="yes">
+      <type>static void</type>
+      <name>ensureHasJoints</name>
+      <anchorfile>a02841.html</anchorfile>
+      <anchor>a5d90bfa419602be569c6098e822cdb0d</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;robot, const std::vector&lt; std::string &gt; &amp;joints, const std::string &amp;prefix)</arglist>
+    </member>
     <member kind="variable" protection="protected">
       <type>std::string</type>
       <name>type_</name>
@@ -26721,8 +26728,8 @@
       <type>virtual void</type>
       <name>selectActiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a7462f19868c7cfbe4ccdefb3fb2e08cb</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</arglist>
+      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -26735,8 +26742,8 @@
       <type>virtual void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a291491e212dbe63935aee5828a72d0d8</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</arglist>
+      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -27048,8 +27055,8 @@
       <type>virtual void</type>
       <name>selectActiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a7462f19868c7cfbe4ccdefb3fb2e08cb</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</arglist>
+      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -27062,8 +27069,8 @@
       <type>virtual void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a291491e212dbe63935aee5828a72d0d8</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</arglist>
+      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -27375,8 +27382,8 @@
       <type>virtual void</type>
       <name>selectActiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a7462f19868c7cfbe4ccdefb3fb2e08cb</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</arglist>
+      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -27389,8 +27396,8 @@
       <type>virtual void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a291491e212dbe63935aee5828a72d0d8</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</arglist>
+      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -27702,8 +27709,8 @@
       <type>virtual void</type>
       <name>selectActiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a7462f19868c7cfbe4ccdefb3fb2e08cb</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</arglist>
+      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -27716,8 +27723,8 @@
       <type>virtual void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a291491e212dbe63935aee5828a72d0d8</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</arglist>
+      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -28029,8 +28036,8 @@
       <type>virtual void</type>
       <name>selectActiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a7462f19868c7cfbe4ccdefb3fb2e08cb</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</arglist>
+      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -28043,8 +28050,8 @@
       <type>virtual void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a291491e212dbe63935aee5828a72d0d8</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</arglist>
+      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -28356,8 +28363,8 @@
       <type>virtual void</type>
       <name>selectActiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a7462f19868c7cfbe4ccdefb3fb2e08cb</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</arglist>
+      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -28370,8 +28377,8 @@
       <type>virtual void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a291491e212dbe63935aee5828a72d0d8</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</arglist>
+      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -28683,8 +28690,8 @@
       <type>virtual void</type>
       <name>selectActiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a7462f19868c7cfbe4ccdefb3fb2e08cb</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</arglist>
+      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -28697,8 +28704,8 @@
       <type>virtual void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a291491e212dbe63935aee5828a72d0d8</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</arglist>
+      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -29010,8 +29017,8 @@
       <type>virtual void</type>
       <name>selectActiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a7462f19868c7cfbe4ccdefb3fb2e08cb</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</arglist>
+      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -29024,8 +29031,8 @@
       <type>virtual void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a291491e212dbe63935aee5828a72d0d8</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</arglist>
+      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -29337,8 +29344,8 @@
       <type>virtual void</type>
       <name>selectActiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a7462f19868c7cfbe4ccdefb3fb2e08cb</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</arglist>
+      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -29351,8 +29358,8 @@
       <type>virtual void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a291491e212dbe63935aee5828a72d0d8</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</arglist>
+      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -29664,8 +29671,8 @@
       <type>virtual void</type>
       <name>selectActiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a7462f19868c7cfbe4ccdefb3fb2e08cb</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</arglist>
+      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -29678,8 +29685,8 @@
       <type>virtual void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>a02885.html</anchorfile>
-      <anchor>a291491e212dbe63935aee5828a72d0d8</anchor>
-      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</arglist>
+      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>

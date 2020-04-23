@@ -29,7 +29,7 @@ var searchData=
   ['pendulum_5f',['pendulum_',['../a01977.html#ab540aeb0263d7368a8f0f28c6cf8db01',1,'mc_control::fsm::StabilizerStandingState']]],
   ['penetrationdepth',['penetrationDepth',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00762.html#a186619fca4e55f991f8fe34b613e2494',1,'sch::CD_Pair']]],
   ['percentopen',['percentOpen',['../a01989.html#a8d40258cf16f5f0f65e938a5aaac330d',1,'mc_control::Gripper']]],
-  ['percentvmax',['percentVMAX',['../a01989.html#aad4ca73d511751dca580ea0f372780e1',1,'mc_control::Gripper::percentVMAX(double percent)'],['../a01989.html#a255e63b9cd2411c182b63f7d645414ad',1,'mc_control::Gripper::percentVMAX() const'],['../a01993.html#a5a54f79ab7fc20b3009362fc247c3a8c',1,'mc_control::Gripper::Config::percentVMax()']]],
+  ['percentvmax',['percentVMax',['../a01993.html#a5a54f79ab7fc20b3009362fc247c3a8c',1,'mc_control::Gripper::Config::percentVMax()'],['../a01989.html#aad4ca73d511751dca580ea0f372780e1',1,'mc_control::Gripper::percentVMAX(double percent)'],['../a01989.html#a255e63b9cd2411c182b63f7d645414ad',1,'mc_control::Gripper::percentVMAX() const']]],
   ['phase',['Phase',['../a01973.html#a28b4bbcf2a082a21bdb917678feda880',1,'mc_control::fsm::SlidingFootContactState']]],
   ['phase_5f',['phase_',['../a01973.html#a3fdec465c10879591e4ef2ce3e74c8dd',1,'mc_control::fsm::SlidingFootContactState']]],
   ['phi',['phi',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01145.html#af5a0fa532e5559325ab9bfac7d20f209',1,'tasks::qp::TargetObjectiveTask']]],

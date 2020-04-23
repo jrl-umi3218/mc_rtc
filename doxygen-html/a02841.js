@@ -10,6 +10,7 @@ var a02841 =
     [ "buildCompletionCriteria", "a02841.html#a753237535cc3e200e44ae0fa276f733e", null ],
     [ "dimWeight", "a02841.html#a98221b876dab3cc67fbd60036213eb46", null ],
     [ "dimWeight", "a02841.html#ae6437fb02541a7c63e177ee13170b5a4", null ],
+    [ "ensureHasJoints", "a02841.html#a5d90bfa419602be569c6098e822cdb0d", null ],
     [ "eval", "a02841.html#ad6451130cee8c71e4045d48f7b8b7a18", null ],
     [ "load", "a02841.html#a27dbee0df32ae7f803184cb6222fc427", null ],
     [ "name", "a02841.html#aa98468771424ad14d60915a6b52e927b", null ],

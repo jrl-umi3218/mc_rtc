@@ -193,6 +193,8 @@ Static Protected Member Functions</h2></td></tr>
 <tr class="separator:a73ce0e373c9cf7f5b8db6745c46c3ef4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a780d496b8148d863b2aa0462abcba525"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02841.html#a780d496b8148d863b2aa0462abcba525">removeFromGUI</a> (<a class="el" href="a02841.html">MetaTask</a> &amp;t, <a class="el" href="a02481.html">mc_rtc::gui::StateBuilder</a> &amp;gui)</td></tr>
 <tr class="separator:a780d496b8148d863b2aa0462abcba525"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d90bfa419602be569c6098e822cdb0d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02841.html#a5d90bfa419602be569c6098e822cdb0d">ensureHasJoints</a> (const <a class="el" href="a02189.html">mc_rbdyn::Robot</a> &amp;robot, const std::vector&lt; std::string &gt; &amp;joints, const std::string &amp;prefix)</td></tr>
+<tr class="separator:a5d90bfa419602be569c6098e822cdb0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -576,6 +578,50 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a5d90bfa419602be569c6098e822cdb0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d90bfa419602be569c6098e822cdb0d">&#9670;&nbsp;</a></span>ensureHasJoints()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void mc_tasks::MetaTask::ensureHasJoints </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02189.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>joints</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>prefix</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="reference">References <a class="el" href="a02189.html#aafb78a38ec8b2037519f030140a95976">mc_rbdyn::Robot::hasJoint()</a>, <a class="el" href="a00353.html#ae0e43eaf4d638a83e59084a107b3b62f">LOG_ERROR_AND_THROW</a>, and <a class="el" href="a02189.html#a9f0c4c44861063b684d43d4ad78a995e">mc_rbdyn::Robot::name()</a>.</p>
+
+</div>
+</div>
 <a id="ad6451130cee8c71e4045d48f7b8b7a18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad6451130cee8c71e4045d48f7b8b7a18">&#9670;&nbsp;</a></span>eval()</h2>
 
@@ -602,7 +648,7 @@ Friends</h2></td></tr>
 <p>Returns the task error. </p>
 <p>The vector's dimensions depend on the underlying task </p>
 
-<p>Implemented in <a class="el" href="a02785.html#a1e2ffbb255464894b2254af872876957">mc_tasks::force::ComplianceTask</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; T &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::PositionTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::OrientationTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::SurfaceTransformTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::MomentumTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::PositionBasedVisServoTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::VectorOrientationTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::GazeTask &gt;</a>, <a class="el" href="a02765.html#af45fc0604c6dbf8742fcbf5f29555b7e">mc_tasks::AddRemoveContactTask</a>, <a class="el" href="a02821.html#ada370921b62caa185b6eaeaa9638cd06">mc_tasks::lipm_stabilizer::StabilizerTask</a>, <a class="el" href="a02877.html#a46526962a3e24819c84aa77182abdb7f">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>, <a class="el" href="a02877.html#a46526962a3e24819c84aa77182abdb7f">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a>, <a class="el" href="a02877.html#a46526962a3e24819c84aa77182abdb7f">mc_tasks::SplineTrajectoryTask&lt; BSplineTrajectoryTask &gt;</a>, <a class="el" href="a02801.html#a37e497c45f98e4f5e14bc8b7ac0c2305">mc_tasks::EndEffectorTask</a>, and <a class="el" href="a02865.html#a529169e0178306b0eec9bf0f428752c7">mc_tasks::PostureTask</a>.</p>
+<p>Implemented in <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; T &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::PositionTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::OrientationTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::SurfaceTransformTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::MomentumTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::PositionBasedVisServoTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::VectorOrientationTask &gt;</a>, <a class="el" href="a02885.html#a464299be73754bdde996cac844877175">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::GazeTask &gt;</a>, <a class="el" href="a02785.html#a1e2ffbb255464894b2254af872876957">mc_tasks::force::ComplianceTask</a>, <a class="el" href="a02765.html#af45fc0604c6dbf8742fcbf5f29555b7e">mc_tasks::AddRemoveContactTask</a>, <a class="el" href="a02821.html#ada370921b62caa185b6eaeaa9638cd06">mc_tasks::lipm_stabilizer::StabilizerTask</a>, <a class="el" href="a02877.html#a46526962a3e24819c84aa77182abdb7f">mc_tasks::SplineTrajectoryTask&lt; Derived &gt;</a>, <a class="el" href="a02877.html#a46526962a3e24819c84aa77182abdb7f">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a>, <a class="el" href="a02877.html#a46526962a3e24819c84aa77182abdb7f">mc_tasks::SplineTrajectoryTask&lt; BSplineTrajectoryTask &gt;</a>, <a class="el" href="a02801.html#a37e497c45f98e4f5e14bc8b7ac0c2305">mc_tasks::EndEffectorTask</a>, and <a class="el" href="a02865.html#a529169e0178306b0eec9bf0f428752c7">mc_tasks::PostureTask</a>.</p>
 
 </div>
 </div>
@@ -987,7 +1033,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="a02785.html#ad1f9dd57c39cef2bdcffafeea3404702">mc_tasks::force::ComplianceTask</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; T &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::PositionTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::OrientationTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::SurfaceTransformTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::MomentumTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::PositionBasedVisServoTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::VectorOrientationTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::GazeTask &gt;</a>, <a class="el" href="a02801.html#a65456b7b90d53cbf097f88d546bda7fb">mc_tasks::EndEffectorTask</a>, and <a class="el" href="a02865.html#a53ab7fdbe90e3b309a618bec3bb69859">mc_tasks::PostureTask</a>.</p>
+<p>Implemented in <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; T &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::PositionTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::OrientationTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::SurfaceTransformTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::CoMTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::MomentumTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::PositionBasedVisServoTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::VectorOrientationTask &gt;</a>, <a class="el" href="a02885.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::GazeTask &gt;</a>, <a class="el" href="a02785.html#ad1f9dd57c39cef2bdcffafeea3404702">mc_tasks::force::ComplianceTask</a>, <a class="el" href="a02801.html#a65456b7b90d53cbf097f88d546bda7fb">mc_tasks::EndEffectorTask</a>, and <a class="el" href="a02865.html#a53ab7fdbe90e3b309a618bec3bb69859">mc_tasks::PostureTask</a>.</p>
 
 </div>
 </div>
@@ -1335,7 +1381,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00712.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a02841.html">MetaTask</a></li>
-    <li class="footer">Generated on Thu Apr 23 2020 10:13:25 for mc_rtc by
+    <li class="footer">Generated on Thu Apr 23 2020 11:42:07 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

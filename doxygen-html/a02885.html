@@ -163,15 +163,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab69cebe473f8c5f8a152726476655e6b"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02885.html#ab69cebe473f8c5f8a152726476655e6b">dimWeight</a> () const override</td></tr>
 <tr class="memdesc:ab69cebe473f8c5f8a152726476655e6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current task's dim weight vector.  <a href="#ab69cebe473f8c5f8a152726476655e6b">More...</a><br /></td></tr>
 <tr class="separator:ab69cebe473f8c5f8a152726476655e6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7462f19868c7cfbe4ccdefb3fb2e08cb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02885.html#a7462f19868c7cfbe4ccdefb3fb2e08cb">selectActiveJoints</a> (const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={})</td></tr>
-<tr class="memdesc:a7462f19868c7cfbe4ccdefb3fb2e08cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an active joints selector.  <a href="#a7462f19868c7cfbe4ccdefb3fb2e08cb">More...</a><br /></td></tr>
-<tr class="separator:a7462f19868c7cfbe4ccdefb3fb2e08cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a568cbb2dd1a32fa24a3d257dbc7f7ab7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02885.html#a568cbb2dd1a32fa24a3d257dbc7f7ab7">selectActiveJoints</a> (const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</td></tr>
+<tr class="memdesc:a568cbb2dd1a32fa24a3d257dbc7f7ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an active joints selector.  <a href="#a568cbb2dd1a32fa24a3d257dbc7f7ab7">More...</a><br /></td></tr>
+<tr class="separator:a568cbb2dd1a32fa24a3d257dbc7f7ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a401e0e9e9dc4acade920f05779540078"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02885.html#a401e0e9e9dc4acade920f05779540078">selectActiveJoints</a> (<a class="el" href="a02725.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</td></tr>
 <tr class="memdesc:a401e0e9e9dc4acade920f05779540078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an active joints selector.  <a href="#a401e0e9e9dc4acade920f05779540078">More...</a><br /></td></tr>
 <tr class="separator:a401e0e9e9dc4acade920f05779540078"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a291491e212dbe63935aee5828a72d0d8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02885.html#a291491e212dbe63935aee5828a72d0d8">selectUnactiveJoints</a> (const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={})</td></tr>
-<tr class="memdesc:a291491e212dbe63935aee5828a72d0d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an unactive joints selector.  <a href="#a291491e212dbe63935aee5828a72d0d8">More...</a><br /></td></tr>
-<tr class="separator:a291491e212dbe63935aee5828a72d0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17f76beb2ace280540b5687701343fa8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02885.html#a17f76beb2ace280540b5687701343fa8">selectUnactiveJoints</a> (const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</td></tr>
+<tr class="memdesc:a17f76beb2ace280540b5687701343fa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an unactive joints selector.  <a href="#a17f76beb2ace280540b5687701343fa8">More...</a><br /></td></tr>
+<tr class="separator:a17f76beb2ace280540b5687701343fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad2277ab64458789c4b2e278cf7ff6c7"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02885.html#aad2277ab64458789c4b2e278cf7ff6c7">selectUnactiveJoints</a> (<a class="el" href="a02725.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</td></tr>
 <tr class="memdesc:aad2277ab64458789c4b2e278cf7ff6c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an unactive joints selector.  <a href="#aad2277ab64458789c4b2e278cf7ff6c7">More...</a><br /></td></tr>
 <tr class="separator:aad2277ab64458789c4b2e278cf7ff6c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -270,6 +270,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a73ce0e373c9cf7f5b8db6745c46c3ef4 inherit pro_static_methods_a02841"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a780d496b8148d863b2aa0462abcba525 inherit pro_static_methods_a02841"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02841.html#a780d496b8148d863b2aa0462abcba525">removeFromGUI</a> (<a class="el" href="a02841.html">MetaTask</a> &amp;t, <a class="el" href="a02481.html">mc_rtc::gui::StateBuilder</a> &amp;gui)</td></tr>
 <tr class="separator:a780d496b8148d863b2aa0462abcba525 inherit pro_static_methods_a02841"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d90bfa419602be569c6098e822cdb0d inherit pro_static_methods_a02841"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02841.html#a5d90bfa419602be569c6098e822cdb0d">ensureHasJoints</a> (const <a class="el" href="a02189.html">mc_rbdyn::Robot</a> &amp;robot, const std::vector&lt; std::string &gt; &amp;joints, const std::string &amp;prefix)</td></tr>
+<tr class="separator:a5d90bfa419602be569c6098e822cdb0d inherit pro_static_methods_a02841"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br />
@@ -1111,8 +1113,8 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="a7462f19868c7cfbe4ccdefb3fb2e08cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7462f19868c7cfbe4ccdefb3fb2e08cb">&#9670;&nbsp;</a></span>selectActiveJoints() <span class="overload">[1/2]</span></h2>
+<a id="a568cbb2dd1a32fa24a3d257dbc7f7ab7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a568cbb2dd1a32fa24a3d257dbc7f7ab7">&#9670;&nbsp;</a></span>selectActiveJoints() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1132,7 +1134,13 @@ template&lt;typename T&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>activeDofs</em> = <code>{}</code>&#160;</td>
+          <td class="paramname"><em>activeDofs</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>checkJoints</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1153,6 +1161,13 @@ template&lt;typename T&gt; </div>
   <table class="params">
     <tr><td class="paramname">activeJointsName</td><td>Name of the joints activated for this task </td></tr>
     <tr><td class="paramname">activeDofs</td><td>Allow to select only part of the dofs of a joint </td></tr>
+    <tr><td class="paramname">checkJoints</td><td>When true, checks whether the joints exist in the robot </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>checkJoints is true and a joint name in activeJointsName is not part of the robot </td></tr>
   </table>
   </dd>
 </dl>
@@ -1210,13 +1225,19 @@ template&lt;typename T&gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>a joint name in activeJointsName is not part of the robot </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implements <a class="el" href="a02841.html#a2fd93334634a24c2955f83cbf71926c1">mc_tasks::MetaTask</a>.</p>
 
 </div>
 </div>
-<a id="a291491e212dbe63935aee5828a72d0d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a291491e212dbe63935aee5828a72d0d8">&#9670;&nbsp;</a></span>selectUnactiveJoints() <span class="overload">[1/2]</span></h2>
+<a id="a17f76beb2ace280540b5687701343fa8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17f76beb2ace280540b5687701343fa8">&#9670;&nbsp;</a></span>selectUnactiveJoints() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1236,7 +1257,13 @@ template&lt;typename T&gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;&#160;</td>
-          <td class="paramname"><em>unactiveDofs</em> = <code>{}</code>&#160;</td>
+          <td class="paramname"><em>unactiveDofs</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>checkJoints</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1257,6 +1284,13 @@ template&lt;typename T&gt; </div>
   <table class="params">
     <tr><td class="paramname">unactiveJointsName</td><td>Name of the joints not activated for this task </td></tr>
     <tr><td class="paramname">unactiveDofs</td><td>Allow to select only part of the dofs of a joint </td></tr>
+    <tr><td class="paramname">checkJoints</td><td>When true, checks whether the joints exist in the robot </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>checkJoints is true and a joint name in unactiveJointsName is not part of the robot </td></tr>
   </table>
   </dd>
 </dl>
@@ -1311,6 +1345,12 @@ template&lt;typename T&gt; </div>
   <table class="params">
     <tr><td class="paramname">unactiveJointsName</td><td>Name of the joints not activated for this task </td></tr>
     <tr><td class="paramname">unactiveDofs</td><td>Allow to select only part of the dofs of a joint </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>a joint name in unactiveJointsName is not part of the robot </td></tr>
   </table>
   </dd>
 </dl>
@@ -1739,7 +1779,7 @@ template&lt;typename T&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00712.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a02885.html">TrajectoryTaskGeneric</a></li>
-    <li class="footer">Generated on Thu Apr 23 2020 10:13:25 for mc_rtc by
+    <li class="footer">Generated on Thu Apr 23 2020 11:42:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
