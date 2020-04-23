@@ -106,6 +106,7 @@ void EndEffectorTask::selectActiveJoints(mc_solver::QPSolver & solver,
                                          const std::vector<std::string> & activeJointsName,
                                          const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs)
 {
+  ensureHasJoints(robots.robot(robotIndex), activeJointsName, "[" + name() + "::selectActiveJoints]");
   positionTask->selectActiveJoints(solver, activeJointsName, activeDofs);
   orientationTask->selectActiveJoints(solver, activeJointsName, activeDofs);
 }
@@ -114,6 +115,7 @@ void EndEffectorTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
                                            const std::vector<std::string> & unactiveJointsName,
                                            const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs)
 {
+  ensureHasJoints(robots.robot(robotIndex), unactiveJointsName, "[" + name() + "::selectUnActiveJoints]");
   positionTask->selectUnactiveJoints(solver, unactiveJointsName, unactiveDofs);
   orientationTask->selectUnactiveJoints(solver, unactiveJointsName, unactiveDofs);
 }

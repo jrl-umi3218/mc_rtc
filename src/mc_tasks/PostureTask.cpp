@@ -43,6 +43,7 @@ void PostureTask::selectActiveJoints(mc_solver::QPSolver & solver,
                                      const std::vector<std::string> & activeJointsName,
                                      const std::map<std::string, std::vector<std::array<int, 2>>> &)
 {
+  ensureHasJoints(robots_.robot(rIndex_), activeJointsName, "[" + name() + "::selectActiveJoints]");
   std::vector<std::string> unactiveJoints = {};
   for(const auto & j : robots_.robot(rIndex_).mb().joints())
   {
@@ -58,6 +59,7 @@ void PostureTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
                                        const std::vector<std::string> & unactiveJointsName,
                                        const std::map<std::string, std::vector<std::array<int, 2>>> &)
 {
+  ensureHasJoints(robots_.robot(rIndex_), unactiveJointsName, "[" + name() + "::selectUnActiveJoints]");
   std::vector<tasks::qp::JointStiffness> jsv;
   for(const auto & j : unactiveJointsName)
   {
