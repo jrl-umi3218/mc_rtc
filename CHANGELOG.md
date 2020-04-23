@@ -9,6 +9,7 @@
 ### Fixes
 
 - Enforce the list of supported robots provided by a controller
+- Throws an error if selected joints do not exist
 
 ## [1.2.1] - 2020-03-18
 
