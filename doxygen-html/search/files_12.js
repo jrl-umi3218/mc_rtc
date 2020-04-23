@@ -26,11 +26,11 @@ var searchData=
   ['smallmatrix4x4t_2eh',['SmallMatrix4x4T.h',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00041.html',1,'']]],
   ['smallvector3t_2eh',['SmallVector3T.h',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00044.html',1,'']]],
   ['smallvector4t_2eh',['SmallVector4T.h',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00047.html',1,'']]],
-  ['smoothtask_2eh',['SmoothTask.h',['../a00482.html',1,'']]],
+  ['smoothtask_2eh',['SmoothTask.h',['../a00485.html',1,'']]],
   ['spacevecalg',['SpaceVecAlg',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00059.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00059.html',1,'(Global Namespace)']]],
-  ['spline_2eh',['Spline.h',['../a00506.html',1,'']]],
-  ['spline_5futils_2eh',['spline_utils.h',['../a00509.html',1,'']]],
-  ['splinetrajectorytask_2eh',['SplineTrajectoryTask.h',['../a00485.html',1,'']]],
+  ['spline_2eh',['Spline.h',['../a00509.html',1,'']]],
+  ['spline_5futils_2eh',['spline_utils.h',['../a00512.html',1,'']]],
+  ['splinetrajectorytask_2eh',['SplineTrajectoryTask.h',['../a00488.html',1,'']]],
   ['springs_2eh',['Springs.h',['../a00212.html',1,'']]],
   ['stabilizerconfiguration_2eh',['StabilizerConfiguration.h',['../a00173.html',1,'']]],
   ['stabilizerstandingstate_2eh',['StabilizerStandingState.h',['../a00062.html',1,'']]],
@@ -50,5 +50,5 @@ var searchData=
   ['surface_2eh',['Surface.h',['../a00215.html',1,'']]],
   ['surface_5fhull_2eh',['surface_hull.h',['../a00218.html',1,'']]],
   ['surface_5futils_2eh',['surface_utils.h',['../a00221.html',1,'']]],
-  ['surfacetransformtask_2eh',['SurfaceTransformTask.h',['../a00488.html',1,'']]]
+  ['surfacetransformtask_2eh',['SurfaceTransformTask.h',['../a00491.html',1,'']]]
 ];

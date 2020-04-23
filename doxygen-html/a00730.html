@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::io Namespace Reference</title>
+<title>mc_rtc::gui::details Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,119 +70,49 @@ $(document).ready(function(){initNavTree('a00730.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::io Namespace Reference</div>  </div>
+<div class="title">mc_rtc::gui::details Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:af3e679ba397e7cc785dc34928ce83d37"><td class="memTemplParams" colspan="2">template&lt;typename Container &gt; </td></tr>
-<tr class="memitem:af3e679ba397e7cc785dc34928ce83d37"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00730.html#af3e679ba397e7cc785dc34928ce83d37">to_string</a> (const Container &amp;c, const std::string &amp;delimiter=&quot;, &quot;)</td></tr>
-<tr class="memdesc:af3e679ba397e7cc785dc34928ce83d37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a container to a string.  <a href="#af3e679ba397e7cc785dc34928ce83d37">More...</a><br /></td></tr>
-<tr class="separator:af3e679ba397e7cc785dc34928ce83d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a288c60b8869f856d23c8a94ac085438e"><td class="memTemplParams" colspan="2">template&lt;typename Container , typename Callback , typename std::enable_if&lt;!std::is_convertible&lt; Callback, std::string &gt;::value, int &gt;::type  = 0&gt; </td></tr>
-<tr class="memitem:a288c60b8869f856d23c8a94ac085438e"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00730.html#a288c60b8869f856d23c8a94ac085438e">to_string</a> (const Container &amp;c, Callback &amp;&amp;get_value, const std::string &amp;delimiter=&quot;, &quot;)</td></tr>
-<tr class="memdesc:a288c60b8869f856d23c8a94ac085438e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a container to a string.  <a href="#a288c60b8869f856d23c8a94ac085438e">More...</a><br /></td></tr>
-<tr class="separator:a288c60b8869f856d23c8a94ac085438e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02337.html">CheckReturnType</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the return type of a getter function.  <a href="a02337.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02341.html">CheckReturnType&lt; GetT, T &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02345.html">CheckReturnType&lt; GetT, T, Args... &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02333.html">ReturnType</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the return type of a getter function.  <a href="a02333.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a62d70a1c5467de8404eceee15a80da68"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
+<tr class="memitem:a62d70a1c5467de8404eceee15a80da68"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00730.html#a62d70a1c5467de8404eceee15a80da68">ReturnTypeT</a> = typename <a class="el" href="a02333.html">ReturnType</a>&lt; GetT &gt;::type</td></tr>
+<tr class="memdesc:a62d70a1c5467de8404eceee15a80da68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper.  <a href="#a62d70a1c5467de8404eceee15a80da68">More...</a><br /></td></tr>
+<tr class="separator:a62d70a1c5467de8404eceee15a80da68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="af3e679ba397e7cc785dc34928ce83d37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3e679ba397e7cc785dc34928ce83d37">&#9670;&nbsp;</a></span>to_string() <span class="overload">[1/2]</span></h2>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a62d70a1c5467de8404eceee15a80da68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62d70a1c5467de8404eceee15a80da68">&#9670;&nbsp;</a></span>ReturnTypeT</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Container &gt; </div>
+template&lt;typename GetT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::string mc_rtc::io::to_string </td>
-          <td>(</td>
-          <td class="paramtype">const Container &amp;&#160;</td>
-          <td class="paramname"><em>c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>delimiter</em> = <code>&quot;,&#160;&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">using <a class="el" href="a00730.html#a62d70a1c5467de8404eceee15a80da68">mc_rtc::gui::details::ReturnTypeT</a> = typedef typename <a class="el" href="a02333.html">ReturnType</a>&lt;GetT&gt;::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts a container to a string. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Container</td><td>A container whose underlying type is convertible to std::string. The container must define Container::value_type. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">c</td><td>Container to convert </td></tr>
-    <tr><td class="paramname">delimiter</td><td>Separator between the elements. By default they are coma-separated</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A string of all the container elements. </dd></dl>
-
-</div>
-</div>
-<a id="a288c60b8869f856d23c8a94ac085438e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a288c60b8869f856d23c8a94ac085438e">&#9670;&nbsp;</a></span>to_string() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Container , typename Callback , typename std::enable_if&lt;!std::is_convertible&lt; Callback, std::string &gt;::value, int &gt;::type  = 0&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string mc_rtc::io::to_string </td>
-          <td>(</td>
-          <td class="paramtype">const Container &amp;&#160;</td>
-          <td class="paramname"><em>c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Callback &amp;&amp;&#160;</td>
-          <td class="paramname"><em>get_value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>delimiter</em> = <code>&quot;,&#160;&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Converts a container to a string. </p>
-<p>Example: </p><div class="fragment"><div class="line">  <span class="keyword">const</span> <span class="keyword">auto</span> availabeRobots = <a class="code" href="a00730.html#af3e679ba397e7cc785dc34928ce83d37">mc_rtc::io::to_string</a>(robots(), [](<span class="keyword">const</span> <a class="code" href="a02186.html">mc_rbdyn::Robot</a> &amp; r) -&gt; <span class="keyword">const</span> std::string &amp; {</div><div class="line">*<span class="keywordflow">return</span> r.<a class="code" href="a02186.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>(); });</div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Container</td><td>An iterable container whose unerlying type is convertible to std::string. The container must define Container::value_type.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">c</td><td>Container to convert </td></tr>
-    <tr><td class="paramname">get_value</td><td>Lambda or functor that converts a single element from the container (of type Container::value_type) to std::string</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A string of all the container elements. </dd></dl>
+<p>Helper. </p>
 
 </div>
 </div>
@@ -192,8 +122,8 @@ template&lt;typename Container , typename Callback , typename std::enable_if&lt;
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00708.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00730.html">io</a></li>
-    <li class="footer">Generated on Wed Mar 18 2020 04:10:55 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00711.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00714.html">gui</a></li><li class="navelem"><a class="el" href="a00730.html">details</a></li>
+    <li class="footer">Generated on Thu Apr 23 2020 08:21:06 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

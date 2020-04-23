@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_control::fsm::TransitionMap Class Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01982.html','');});
+$(document).ready(function(){initNavTree('a01985.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,228 +69,26 @@ $(document).ready(function(){initNavTree('a01982.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a01979.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_control::fsm::TransitionMap Class Reference</div>  </div>
+<div class="title">mc_control::fsm::TransitionMap Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This class takes care of reading a transition map from a configuration entry and makes sure it's coherent with the states provided by the <a class="el" href="a01926.html" title="Creates State objects based on name and configuration entries. ">StateFactory</a>.  
- <a href="a01982.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_control/fsm/TransitionMap.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:ae92ec157ad130676dc1caff84eebae94"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01982.html#ae92ec157ad130676dc1caff84eebae94">origin_t</a> = std::pair&lt; std::string, std::string &gt;</td></tr>
-<tr class="memdesc:ae92ec157ad130676dc1caff84eebae94"><td class="mdescLeft">&#160;</td><td class="mdescRight">A (state, output) pair is the origin of a transition.  <a href="#ae92ec157ad130676dc1caff84eebae94">More...</a><br /></td></tr>
-<tr class="separator:ae92ec157ad130676dc1caff84eebae94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:ae22a9f786f98b01fe50849d23d690c93"><td class="memItemLeft" align="right" valign="top">std::pair&lt; bool, <a class="el" href="a01978.html">Transition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01982.html#ae22a9f786f98b01fe50849d23d690c93">transition</a> (const std::string &amp;state, const std::string &amp;output) const</td></tr>
-<tr class="memdesc:ae22a9f786f98b01fe50849d23d690c93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a transition given a current state and its ouput.  <a href="#ae22a9f786f98b01fe50849d23d690c93">More...</a><br /></td></tr>
-<tr class="separator:ae22a9f786f98b01fe50849d23d690c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a604c23080c7e278d843ec3d0452ee599"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01982.html#a604c23080c7e278d843ec3d0452ee599">transitions</a> (const std::string &amp;state) const</td></tr>
-<tr class="memdesc:a604c23080c7e278d843ec3d0452ee599"><td class="mdescLeft">&#160;</td><td class="mdescRight">For a given state, gives all possible next states.  <a href="#a604c23080c7e278d843ec3d0452ee599">More...</a><br /></td></tr>
-<tr class="separator:a604c23080c7e278d843ec3d0452ee599"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a961cc6df4c21830bb75f60de6f5904d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01982.html#a961cc6df4c21830bb75f60de6f5904d2">init</a> (const <a class="el" href="a01926.html">StateFactory</a> &amp;factory, const <a class="el" href="a02250.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
-<tr class="memdesc:a961cc6df4c21830bb75f60de6f5904d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the map from a Configuration.  <a href="#a961cc6df4c21830bb75f60de6f5904d2">More...</a><br /></td></tr>
-<tr class="separator:a961cc6df4c21830bb75f60de6f5904d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85cfacc20b7ca6c22181193031a0f922"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01982.html#a85cfacc20b7ca6c22181193031a0f922">initState</a> () const</td></tr>
-<tr class="memdesc:a85cfacc20b7ca6c22181193031a0f922"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the initial state value.  <a href="#a85cfacc20b7ca6c22181193031a0f922">More...</a><br /></td></tr>
-<tr class="separator:a85cfacc20b7ca6c22181193031a0f922"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e247cf49772c5bade453bd823a75923"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01982.html#a0e247cf49772c5bade453bd823a75923">print</a> (std::ostream &amp;os) const</td></tr>
-<tr class="memdesc:a0e247cf49772c5bade453bd823a75923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the map.  <a href="#a0e247cf49772c5bade453bd823a75923">More...</a><br /></td></tr>
-<tr class="separator:a0e247cf49772c5bade453bd823a75923"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class takes care of reading a transition map from a configuration entry and makes sure it's coherent with the states provided by the <a class="el" href="a01926.html" title="Creates State objects based on name and configuration entries. ">StateFactory</a>. </p>
-<p>A transition map is formed by entries of the form ["StateName", "OutputName", "NewStateName", "OptionalTriggerType"], e.g.:</p><ul>
-<li>["InitState", "OK", "GraspBar", "Strict"]</li>
-<li>["GraspBar", "OK", "LiftLeftFoot", "StepByStep"]</li>
-<li>["GraspBar", "NOK", "GraspBar", "Auto"]</li>
-<li>["GraspBar", "DEFAULT", "GraspBar", "Auto"]</li>
-</ul>
-<p>If the "DEFAULT" output is present, this transition will be returned in case no other output pattern has been matched.</p>
-<p>Valid values for the trigger type are:</p><ul>
-<li>"StepByStep": only require user input if running in StepByStep mode (default)</li>
-<li>"Auto": automatic transition no matter what</li>
-<li>"Strict": require user input no matter what </li>
-</ul>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="ae92ec157ad130676dc1caff84eebae94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae92ec157ad130676dc1caff84eebae94">&#9670;&nbsp;</a></span>origin_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a01982.html#ae92ec157ad130676dc1caff84eebae94">mc_control::fsm::TransitionMap::origin_t</a> =  std::pair&lt;std::string, std::string&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A (state, output) pair is the origin of a transition. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a961cc6df4c21830bb75f60de6f5904d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a961cc6df4c21830bb75f60de6f5904d2">&#9670;&nbsp;</a></span>init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::fsm::TransitionMap::init </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01926.html">StateFactory</a> &amp;&#160;</td>
-          <td class="paramname"><em>factory</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a02250.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Build the map from a Configuration. </p>
-<p>The following entries are expected in config:</p><ul>
-<li>init: initial state for this map (string)</li>
-<li>transitions: list of transitions as described in this documentation (array of strings' arrays)</li>
-</ul>
-<p>If init is absent, defaults to the first state in transitions</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">factory</td><td>The factory that will provie states</td></tr>
-    <tr><td class="paramname">config</td><td>Holds the JSON representation of this transition map </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a85cfacc20b7ca6c22181193031a0f922"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85cfacc20b7ca6c22181193031a0f922">&#9670;&nbsp;</a></span>initState()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string&amp; mc_control::fsm::TransitionMap::initState </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the initial state value. </p>
-
-</div>
-</div>
-<a id="a0e247cf49772c5bade453bd823a75923"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e247cf49772c5bade453bd823a75923">&#9670;&nbsp;</a></span>print()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; mc_control::fsm::TransitionMap::print </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Print the map. </p>
-
-</div>
-</div>
-<a id="ae22a9f786f98b01fe50849d23d690c93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae22a9f786f98b01fe50849d23d690c93">&#9670;&nbsp;</a></span>transition()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::pair&lt;bool, <a class="el" href="a01978.html">Transition</a>&gt; mc_control::fsm::TransitionMap::transition </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>state</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>output</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return a transition given a current state and its ouput. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">state</td><td>The current state</td></tr>
-    <tr><td class="paramname">output</td><td>The state's output</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A pair made of a bool and a <a class="el" href="a01978.html" title="A transition is given by the destination state and a type of transition. ">Transition</a>:<ul>
-<li>If the (state, output) has a registered next state, the bool is true and <a class="el" href="a01978.html" title="A transition is given by the destination state and a type of transition. ">Transition</a> returns the corresponding transition.</li>
-<li>Else, if the (state, DEFAULT) has a registered next state, the bool is true and <a class="el" href="a01978.html" title="A transition is given by the destination state and a type of transition. ">Transition</a> returns the corresponding transition</li>
-<li>Otherwise, the bool is false and the <a class="el" href="a01978.html" title="A transition is given by the destination state and a type of transition. ">Transition</a> has no meaning </li>
-</ul>
-</dd></dl>
-
-</div>
-</div>
-<a id="a604c23080c7e278d843ec3d0452ee599"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a604c23080c7e278d843ec3d0452ee599">&#9670;&nbsp;</a></span>transitions()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::unordered_set&lt;std::string&gt; mc_control::fsm::TransitionMap::transitions </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>state</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>For a given state, gives all possible next states. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a01985.html">mc_control::fsm::TransitionMap</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a01985.html#a961cc6df4c21830bb75f60de6f5904d2">init</a>(const StateFactory &amp;factory, const mc_rtc::Configuration &amp;config)</td><td class="entry"><a class="el" href="a01985.html">mc_control::fsm::TransitionMap</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01985.html#a85cfacc20b7ca6c22181193031a0f922">initState</a>() const</td><td class="entry"><a class="el" href="a01985.html">mc_control::fsm::TransitionMap</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01985.html#ae92ec157ad130676dc1caff84eebae94">origin_t</a> typedef</td><td class="entry"><a class="el" href="a01985.html">mc_control::fsm::TransitionMap</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01985.html#a0e247cf49772c5bade453bd823a75923">print</a>(std::ostream &amp;os) const</td><td class="entry"><a class="el" href="a01985.html">mc_control::fsm::TransitionMap</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01985.html#ae22a9f786f98b01fe50849d23d690c93">transition</a>(const std::string &amp;state, const std::string &amp;output) const</td><td class="entry"><a class="el" href="a01985.html">mc_control::fsm::TransitionMap</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01985.html#a604c23080c7e278d843ec3d0452ee599">transitions</a>(const std::string &amp;state) const</td><td class="entry"><a class="el" href="a01985.html">mc_control::fsm::TransitionMap</a></td><td class="entry"></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00706.html">mc_control</a></li><li class="navelem"><a class="el" href="a00707.html">fsm</a></li><li class="navelem"><a class="el" href="a01982.html">TransitionMap</a></li>
-    <li class="footer">Generated on Wed Mar 18 2020 04:10:55 for mc_rtc by
+    <li class="footer">Generated on Thu Apr 23 2020 08:21:05 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -9,7 +9,7 @@ var searchData=
   ['endeffectortask_2eh',['EndEffectorTask.h',['../a00440.html',1,'']]],
   ['equalityconstraint_2eh',['EqualityConstraint.h',['../a00386.html',1,'']]],
   ['eulerintegration_2eh',['EulerIntegration.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00329.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00329.html',1,'(Global Namespace)']]],
-  ['exactcubic_2eh',['ExactCubic.h',['../a00500.html',1,'']]],
+  ['exactcubic_2eh',['ExactCubic.h',['../a00503.html',1,'']]],
   ['exactcubictrajectorytask_2eh',['ExactCubicTrajectoryTask.h',['../a00443.html',1,'']]],
   ['executor_2eh',['Executor.h',['../a00023.html',1,'']]],
   ['exponentialmovingaverage_2eh',['ExponentialMovingAverage.h',['../a00098.html',1,'']]]
