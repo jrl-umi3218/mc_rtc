@@ -184,9 +184,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a545cbd53e4486c535a4e4ffcd2ad0d6e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02189.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02025.html#a545cbd53e4486c535a4e4ffcd2ad0d6e">realRobot</a> ()</td></tr>
 <tr class="memdesc:a545cbd53e4486c535a4e4ffcd2ad0d6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-const variant of <a class="el" href="a02025.html#mc_controller_real_robot_const_doc">realRobot()</a>.  <a href="#a545cbd53e4486c535a4e4ffcd2ad0d6e">More...</a><br /></td></tr>
 <tr class="separator:a545cbd53e4486c535a4e4ffcd2ad0d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22ae41d5d06f23a8012cd99518549ef5"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02025.html#a22ae41d5d06f23a8012cd99518549ef5">supported_robots</a> () const</td></tr>
-<tr class="memdesc:a22ae41d5d06f23a8012cd99518549ef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of robots supported by the controller.  <a href="#a22ae41d5d06f23a8012cd99518549ef5">More...</a><br /></td></tr>
-<tr class="separator:a22ae41d5d06f23a8012cd99518549ef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab071255e2e17b62e05aec6f67d88ce44"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02025.html#ab071255e2e17b62e05aec6f67d88ce44">supported_robots</a> (std::vector&lt; std::string &gt; &amp;out) const</td></tr>
+<tr class="memdesc:ab071255e2e17b62e05aec6f67d88ce44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of robots supported by the controller.  <a href="#ab071255e2e17b62e05aec6f67d88ce44">More...</a><br /></td></tr>
+<tr class="separator:ab071255e2e17b62e05aec6f67d88ce44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3110512ea26812d8a58d3945e739c751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02189.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02025.html#a3110512ea26812d8a58d3945e739c751">loadRobot</a> (<a class="el" href="a00715.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> rm, const std::string &amp;name)</td></tr>
 <tr class="memdesc:a3110512ea26812d8a58d3945e739c751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an additional robot into the controller.  <a href="#a3110512ea26812d8a58d3945e739c751">More...</a><br /></td></tr>
 <tr class="separator:a3110512ea26812d8a58d3945e739c751"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -959,7 +959,13 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>The default implementation reset the main robot's state to that provided by reset_data (with a null speed/acceleration). It maintains the contacts as they were set by the controller previously. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The default implementation reset the main robot's state to that provided by reset_data (with a null speed/acceleration). It maintains the contacts as they were set by the controller previously.</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">if</td><td>the main robot is not supported (see <a class="el" href="a02025.html#ab071255e2e17b62e05aec6f67d88ce44" title="Returns a list of robots supported by the controller. ">supported_robots()</a>) </td></tr>
+  </table>
+  </dd>
+</dl>
 </li>
 </ol>
 
@@ -1301,8 +1307,8 @@ If the default pipeline behaviour does not suit you, you may override this metho
 
 </div>
 </div>
-<a id="a22ae41d5d06f23a8012cd99518549ef5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22ae41d5d06f23a8012cd99518549ef5">&#9670;&nbsp;</a></span>supported_robots()</h2>
+<a id="ab071255e2e17b62e05aec6f67d88ce44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab071255e2e17b62e05aec6f67d88ce44">&#9670;&nbsp;</a></span>supported_robots()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1311,9 +1317,10 @@ If the default pipeline behaviour does not suit you, you may override this metho
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::vector&lt;std::string&gt; mc_control::MCController::supported_robots </td>
+          <td class="memname">virtual void mc_control::MCController::supported_robots </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>out</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -1325,8 +1332,17 @@ If the default pipeline behaviour does not suit you, you may override this metho
 </div><div class="memdoc">
 
 <p>Returns a list of robots supported by the controller. </p>
-<dl class="section return"><dt>Returns</dt><dd>Vector of supported robots designed by name (as returned by RobotModule::name()) </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Default implementation returns an empty list which indicates that all robots are supported. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>Vector of supported robots designed by name (as returned by RobotModule::name()) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>Default implementation returns an empty list which indicates that all robots are supported.</li>
+<li>If the list is not empty, only the robots in that list are allowed to be used with the controller. The main robot will be checked against the list of supported robots upon call to <a class="el" href="a02025.html#a3c4ebbba1c40f48c3e9f3d35e2f7e432" title="Reset the controller with data provided by ControllerResetData. ">reset()</a>, and an exception will be thrown if the robot is not supported. </li>
+</ul>
+</dd></dl>
 
 </div>
 </div>
@@ -1733,7 +1749,7 @@ If the default pipeline behaviour does not suit you, you may override this metho
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00709.html">mc_control</a></li><li class="navelem"><a class="el" href="a02025.html">MCController</a></li>
-    <li class="footer">Generated on Thu Apr 23 2020 08:21:05 for mc_rtc by
+    <li class="footer">Generated on Thu Apr 23 2020 10:13:24 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
