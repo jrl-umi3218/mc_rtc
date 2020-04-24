@@ -117,7 +117,7 @@ struct MC_RBDYN_DLLAPI BodySensor : public Sensor
     acceleration_ = acceleration;
   }
 
-  BodySensor * clone() const override;
+  SensorPtr clone() const override;
 
 private:
   Eigen::Vector3d position_ = Eigen::Vector3d::Zero();

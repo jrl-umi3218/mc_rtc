@@ -27,6 +27,21 @@
 namespace mc_rbdyn
 {
 
+/** Holds a vector of unique pointers
+ *
+ * This enables copy operation by cloning the sensors
+ */
+struct MC_RBDYN_DLLAPI SensorPtrVector : public std::vector<SensorPtr>
+{
+  SensorPtrVector() = default;
+
+  SensorPtrVector(const SensorPtrVector & v);
+  SensorPtrVector & operator=(const SensorPtrVector & v);
+
+  SensorPtrVector(SensorPtrVector && v) = default;
+  SensorPtrVector & operator=(SensorPtrVector && v) = default;
+};
+
 struct MC_RBDYN_DLLAPI RobotModule
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -406,7 +421,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   }
 
   /** Returns a list of non standard sensors supported by this module */
-  inline const std::vector<SensorPtr> & sensors() const
+  inline const SensorPtrVector & sensors() const
   {
     return _sensors;
   }
@@ -468,7 +483,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** \see real_urdf() */
   std::string _real_urdf;
   /** \see sensors() */
-  std::vector<SensorPtr> _sensors;
+  SensorPtrVector _sensors;
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;

@@ -16,6 +16,9 @@ namespace mc_rbdyn
 
 struct Robot;
 
+struct Sensor;
+using SensorPtr = std::unique_ptr<Sensor>;
+
 /** This struct represents a generic sensor or device attached to a robot
  *
  * This is a barebone interface meant to be derived by concrete sensors implementation
@@ -54,7 +57,7 @@ struct MC_RBDYN_DLLAPI Sensor
   /** Returns the sensor position in the inertial frame (convenience function) */
   sva::PTransformd X_0_s(const mc_rbdyn::Robot & robot) const;
 
-  virtual Sensor * clone() const = 0;
+  virtual SensorPtr clone() const = 0;
 
 protected:
   /** Type of sensor as string */
@@ -66,7 +69,5 @@ protected:
   /** Transformation from the parent body frame to the sensor frame */
   sva::PTransformd X_p_s_;
 };
-
-using SensorPtr = std::shared_ptr<Sensor>;
 
 } // namespace mc_rbdyn

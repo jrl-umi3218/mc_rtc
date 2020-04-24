@@ -14,6 +14,29 @@ constexpr double RobotModule::Gripper::Safety::DEFAULT_ACTUAL_COMMAND_DIFF_TRIGG
 constexpr double RobotModule::Gripper::Safety::DEFAULT_RELEASE_OFFSET;
 constexpr unsigned int RobotModule::Gripper::Safety::DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
 
+SensorPtrVector::SensorPtrVector(const SensorPtrVector & v) : std::vector<SensorPtr>()
+{
+  reserve(v.size());
+  for(const auto & s : v)
+  {
+    push_back(s->clone());
+  }
+}
+
+SensorPtrVector & SensorPtrVector::operator=(const SensorPtrVector & v)
+{
+  if(&v == this)
+  {
+    return *this;
+  }
+  resize(v.size());
+  for(size_t i = 0; i < v.size(); ++i)
+  {
+    (*this)[i] = v[i]->clone();
+  }
+  return *this;
+}
+
 RobotModule::RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res)
 : RobotModule("/CREATED/BY/MC/RTC/", name)
 {

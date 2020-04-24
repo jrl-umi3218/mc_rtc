@@ -244,12 +244,11 @@ Robot::Robot(Robots & robots,
     bodyBodySensors_[bS.parentBody()] = i;
   }
 
-  sensors_.reserve(module_.sensors().size());
-  size_t sensorIdx = 0;
-  for(const auto & s : module_.sensors())
+  sensors_ = module_.sensors();
+  for(size_t i = 0; i < sensors_.size(); ++i)
   {
-    sensors_.push_back(SensorPtr(s->clone()));
-    sensorsIndex_[s->name()] = sensorIdx++;
+    const auto & s = sensors_[i];
+    sensorsIndex_[s->name()] = i;
   }
 
   refJointOrder_ = module_.ref_joint_order();
@@ -1246,7 +1245,7 @@ void Robot::addSensor(SensorPtr sensor)
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "You cannot have multiple generic sensor with the same name in a robot");
   }
-  sensors_.push_back(sensor);
+  sensors_.push_back(std::move(sensor));
   sensorsIndex_[sensor->name()] = sensors_.size() - 1;
 }
 

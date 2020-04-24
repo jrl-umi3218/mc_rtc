@@ -802,7 +802,7 @@ private:
   /** Grippers reference for this robot */
   std::vector<mc_control::GripperRef> grippersRef_;
   /** Hold all sensors that are neither force sensors nor body sensors */
-  std::vector<SensorPtr> sensors_;
+  SensorPtrVector sensors_;
   /** Correspondance between a sensor's name and a sensor index */
   std::unordered_map<std::string, size_t> sensorsIndex_;
 

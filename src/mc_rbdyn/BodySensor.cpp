@@ -5,9 +5,9 @@ namespace mc_rbdyn
 
 BodySensor::~BodySensor() = default;
 
-BodySensor * BodySensor::clone() const
+SensorPtr BodySensor::clone() const
 {
-  return new BodySensor(*this);
+  return SensorPtr(new BodySensor(*this));
 }
 
 } // namespace mc_rbdyn
