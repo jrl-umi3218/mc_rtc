@@ -36,7 +36,7 @@ struct MC_RBDYN_DLLAPI BodySensor : public Sensor
     type_ = "BodySensor";
   }
 
-  ~BodySensor() override;
+  ~BodySensor() noexcept override;
 
   /** Get the sensor's parent body name */
   inline const std::string & parentBody() const

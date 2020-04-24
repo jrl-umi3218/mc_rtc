@@ -137,7 +137,7 @@ ForceSensor::ForceSensor(const std::string & name, const std::string & parentBod
   type_ = "ForceSensor";
 }
 
-ForceSensor::~ForceSensor() {}
+ForceSensor::~ForceSensor() noexcept = default;
 
 void ForceSensor::loadCalibrator(const std::string & calib_file, const Eigen::Vector3d & gravity)
 {

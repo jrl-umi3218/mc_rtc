@@ -28,7 +28,7 @@ struct MC_RBDYN_DLLAPI Sensor
 {
   Sensor(const std::string & name, const std::string & parent, const sva::PTransformd & X_p_s);
 
-  virtual ~Sensor() = default;
+  virtual ~Sensor() noexcept = default;
 
   /** Returns the name of the sensor */
   inline const std::string & name() const

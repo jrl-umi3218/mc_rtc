@@ -3,7 +3,7 @@
 namespace mc_rbdyn
 {
 
-BodySensor::~BodySensor() = default;
+BodySensor::~BodySensor() noexcept = default;
 
 SensorPtr BodySensor::clone() const
 {

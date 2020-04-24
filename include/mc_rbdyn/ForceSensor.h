@@ -41,7 +41,7 @@ public:
   ForceSensor(const std::string & name, const std::string & parentBodyName, const sva::PTransformd & X_p_f);
 
   /** Destructor */
-  ~ForceSensor() override;
+  ~ForceSensor() noexcept override;
 
   /** Return the sensor's parent body */
   inline const std::string & parentBody() const
