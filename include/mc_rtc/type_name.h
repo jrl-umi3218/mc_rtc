@@ -7,6 +7,7 @@
 #include <mc_rtc/utils_api.h>
 
 #include <string>
+#include <typeinfo>
 
 namespace mc_rtc
 {
