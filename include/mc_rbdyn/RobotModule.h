@@ -31,15 +31,15 @@ namespace mc_rbdyn
  *
  * This enables copy operation by cloning the sensors
  */
-struct MC_RBDYN_DLLAPI SensorPtrVector : public std::vector<SensorPtr>
+struct SensorPtrVector : public std::vector<SensorPtr>
 {
-  SensorPtrVector() = default;
+  inline SensorPtrVector() = default;
 
-  SensorPtrVector(const SensorPtrVector & v);
-  SensorPtrVector & operator=(const SensorPtrVector & v);
+  MC_RBDYN_DLLAPI SensorPtrVector(const SensorPtrVector & v);
+  MC_RBDYN_DLLAPI SensorPtrVector & operator=(const SensorPtrVector & v);
 
-  SensorPtrVector(SensorPtrVector && v) = default;
-  SensorPtrVector & operator=(SensorPtrVector && v) = default;
+  inline SensorPtrVector(SensorPtrVector && v) = default;
+  inline SensorPtrVector & operator=(SensorPtrVector && v) = default;
 };
 
 struct MC_RBDYN_DLLAPI RobotModule
