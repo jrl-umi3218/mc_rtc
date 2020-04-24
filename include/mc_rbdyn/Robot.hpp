@@ -12,48 +12,50 @@ namespace mc_rbdyn
 {
 
 template<typename T>
-const T * Robot::hasSensor(const std::string & name) const
+bool Robot::hasSensor(const std::string & name) const
 {
-  auto it = sensorsIndex_.find(name);
-  if(it == sensorsIndex_.end())
-  {
-    return nullptr;
-  }
-  return dynamic_cast<T *>(sensors_[it->second]);
+  return sensorsIndex_.count(name) != 0;
 }
 
 template<>
-inline const ForceSensor * Robot::hasSensor<ForceSensor>(const std::string & name) const
+inline bool Robot::hasSensor<ForceSensor>(const std::string & name) const
 {
-  if(hasForceSensor(name))
-  {
-    return &(forceSensor(name));
-  }
-  return nullptr;
+  return hasForceSensor(name);
 }
 
 template<>
-inline const BodySensor * Robot::hasSensor<BodySensor>(const std::string & name) const
+inline bool Robot::hasSensor<BodySensor>(const std::string & name) const
 {
-  if(hasBodySensor(name))
-  {
-    return &(bodySensor(name));
-  }
-  return nullptr;
+  return hasBodySensor(name);
 }
 
 template<typename T>
 const T & Robot::sensor(const std::string & name) const
 {
-  const T * s = this->hasSensor<T>(name);
-  if(!s)
+  auto it = sensorsIndex_.find(name);
+  if(it == sensorsIndex_.end())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "No sensor named " << name << " in " << this->name());
+  }
+  auto ptr = dynamic_cast<T *>(sensors_[it->second].get());
+  if(!ptr)
   {
     LOG_ERROR_AND_THROW(std::runtime_error,
-                        "No sensor named "
-                            << name << " in " << this->name()
-                            << " or the sensor type did not match the requested one: " << mc_rtc::type_name<T>())
+                        name << " sensor type did not match the requested one: " << mc_rtc::type_name<T>())
   }
-  return *s;
+  return *ptr;
+}
+
+template<>
+inline const ForceSensor & Robot::sensor<ForceSensor>(const std::string & name) const
+{
+  return forceSensor(name);
+}
+
+template<>
+inline const BodySensor & Robot::sensor<BodySensor>(const std::string & name) const
+{
+  return bodySensor(name);
 }
 
 } // namespace mc_rbdyn

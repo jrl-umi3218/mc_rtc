@@ -557,7 +557,7 @@ public:
    *
    */
   template<typename T>
-  const T * hasSensor(const std::string & name) const;
+  bool hasSensor(const std::string & name) const;
 
   /** Get a generic sensor of type T named name
    *
