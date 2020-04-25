@@ -52,7 +52,8 @@ void SurfaceTransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Conf
   if(config.has("targetSurface"))
   {
     const auto & c = config("targetSurface");
-    targetSurface(c("robotIndex"), c("surface"),
+    const auto robotIndex = robotIndexFromConfig(c, solver.robots(), name());
+    targetSurface(robotIndex, c("surface"),
                   {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
                    c("offset_translation", Eigen::Vector3d::Zero().eval())});
     X_0_t = this->target();
@@ -63,7 +64,7 @@ void SurfaceTransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Conf
   }
   else if(config.has("relative"))
   {
-    const auto & robot = solver.robot(config("robotIndex"));
+    const auto & robot = robotFromConfig(config("relative"), solver.robots(), name());
     std::string s1 = config("relative")("s1");
     std::string s2 = config("relative")("s2");
     sva::PTransformd target = config("relative")("target");
@@ -164,8 +165,8 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "surfaceTransform",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t =
-          std::make_shared<mc_tasks::SurfaceTransformTask>(config("surface"), solver.robots(), config("robotIndex"));
+      const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "surfaceTransform");
+      auto t = std::make_shared<mc_tasks::SurfaceTransformTask>(config("surface"), solver.robots(), robotIndex);
       t->load(solver, config);
       return t;
     });

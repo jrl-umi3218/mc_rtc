@@ -200,8 +200,9 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "admittance",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t =
-          std::make_shared<mc_tasks::force::AdmittanceTask>(config("surface"), solver.robots(), config("robotIndex"));
+      auto t = std::make_shared<mc_tasks::force::AdmittanceTask>(
+          config("surface"), solver.robots(), robotIndexFromConfig(config, solver.robots(), "admittance"));
+
       t->load(solver, config);
       return t;
     });

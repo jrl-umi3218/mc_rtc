@@ -54,7 +54,9 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "damping",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::force::DampingTask>(config("surface"), solver.robots(), config("robotIndex"));
+      auto t = std::make_shared<mc_tasks::force::DampingTask>(config("surface"), solver.robots(),
+                                                              robotIndexFromConfig(config, solver.robots(), "damping"));
+
       if(config.has("admittance"))
       {
         t->admittance(config("admittance"));
@@ -68,7 +70,7 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       if(config.has("targetSurface"))
       {
         const auto & c = config("targetSurface");
-        t->targetSurface(c("robotIndex"), c("surface"),
+        t->targetSurface(robotIndexFromConfig(c, solver.robots(), t->name() + "::targetSurface"), c("surface"),
                          {c("offset_rotation", Eigen::Matrix3d::Identity().eval()),
                           c("offset_translation", Eigen::Vector3d::Zero().eval())});
       }

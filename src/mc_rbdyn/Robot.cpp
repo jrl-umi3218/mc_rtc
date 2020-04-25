@@ -1096,4 +1096,71 @@ mc_control::Gripper & Robot::gripper(const std::string & gripper)
   return *grippers_.at(gripper);
 }
 
+unsigned int robotIndexFromConfig(const mc_rtc::Configuration & config,
+                                  const mc_rbdyn::Robots & robots,
+                                  const std::string & prefix,
+                                  bool required)
+{
+  const auto & robotName = robotNameFromConfig(config, robots, prefix, required);
+  return robots.robot(robotName).robotIndex();
+}
+
+std::string robotNameFromConfig(const mc_rtc::Configuration & config,
+                                const mc_rbdyn::Robots & robots,
+                                const std::string & prefix,
+                                bool required)
+{
+  const auto & robot = robotFromConfig(config, robots, prefix, required);
+  return robot.name();
+}
+
+const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
+                                        const mc_rbdyn::Robots & robots,
+                                        const std::string & prefix,
+                                        bool required)
+{
+  auto p = std::string{""};
+  if(prefix.size())
+  {
+    p = "[" + prefix + "] ";
+  }
+  if(config.has("robotName"))
+  {
+    const std::string & robotName = config("robotName");
+    if(robots.hasRobot(robotName))
+    {
+      return robots.robot(robotName);
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, p + "No robot named " << robotName << " in this controller");
+    }
+  }
+  else if(config.has("robotIndex"))
+  {
+    LOG_WARNING(p + "[MC_RTC_DEPRECATED] \"robotIndex\" will be deprecated in future versions, use robotName instead");
+    const size_t robotIndex = config("robotIndex");
+    if(robotIndex < robots.size())
+    {
+      return robots.robot(robotIndex);
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, p + "No robot with index " << robotIndex << " in this controller ("
+                                                                         << robots.size() << " robots loaded)");
+    }
+  }
+  else
+  {
+    if(!required)
+    {
+      return robots.robot();
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, p + "\"robotName\" is required.");
+    }
+  }
+}
+
 } // namespace mc_rbdyn

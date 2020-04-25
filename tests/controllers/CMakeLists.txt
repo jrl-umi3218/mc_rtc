@@ -182,7 +182,7 @@ if(CMAKE_CONFIGURATION_TYPES)
   set(FSM_STATES_INSTALL_PREFIX "${FSM_STATES_INSTALL_PREFIX}/$<CONFIGURATION>")
 endif()
 set(FSM_STATES_DATA_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/src/mc_control/fsm/states/data/")
-configure_file("${PROJECT_SOURCE_DIR}/src/mc_control/samples/FSM/etc/FSM.conf.cmake" "${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf")
+configure_file("${PROJECT_SOURCE_DIR}/src/mc_control/samples/FSM/etc/FSM.in.conf" "${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf")
 file(GENERATE OUTPUT "${TEST_CONTROLLER_PATH}/etc/FSM.conf" INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf")
 unset(AROBASE)
 

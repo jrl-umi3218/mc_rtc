@@ -100,7 +100,7 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       sva::PTransformd finalTarget_;
       std::vector<std::pair<double, Eigen::Vector3d>> waypoints;
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
-      const auto robotIndex = config("robotIndex");
+      const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "exact_cubic_trajectory");
       Eigen::Vector3d init_vel, end_vel, init_acc, end_acc;
 
       if(config.has("targetSurface"))
@@ -108,7 +108,7 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
         // in the surface coordinates
         const auto & c = config("targetSurface");
         const auto & targetSurfaceName = c("surface");
-        const auto & robot = solver.robot(c("robotIndex"));
+        const auto & robot = robotFromConfig(c, solver.robots(), "exact_cubic_trajectory::targetSurface");
 
         const sva::PTransformd & targetSurface = robot.surface(targetSurfaceName).X_0_s(robot);
         const Eigen::Vector3d trans = c("translation", Eigen::Vector3d::Zero().eval());

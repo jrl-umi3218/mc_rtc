@@ -72,14 +72,14 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       sva::PTransformd finalTarget_;
       mc_tasks::BSplineTrajectoryTask::waypoints_t waypoints;
       std::vector<std::pair<double, Eigen::Matrix3d>> oriWp;
-      const auto robotIndex = config("robotIndex");
+      const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "bspline_trajectory");
 
       if(config.has("targetSurface"))
       { // Target defined from a target surface, with an offset defined
         // in the surface coordinates
         const auto & c = config("targetSurface");
         const auto & targetSurfaceName = c("surface");
-        const auto & robot = solver.robot(c("robotIndex"));
+        const auto & robot = robotFromConfig(c, solver.robots(), "bspline_trajectory::targetSurface");
 
         const sva::PTransformd & targetSurface = robot.surface(targetSurfaceName).X_0_s(robot);
         const Eigen::Vector3d trans = c("translation", Eigen::Vector3d::Zero().eval());

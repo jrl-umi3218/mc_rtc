@@ -746,6 +746,67 @@ private:
   Robot & operator=(const Robot &) = delete;
 };
 
+/** @defgroup robotFromConfig Helpers to obtain robot index/name from configuration
+ *  The intent of these functions is:
+ *  - to facilitate supporting managing robots by name in the FSM, while maintaining compatibility with the existing
+ * FSMs using robotIndex.
+ *  - to facilitate the upcoming transition from Tasks (requires robotIndex) to TVM (using only robotName).
+ *    When the transition occurs, robotIndexFromConfig can be deprecated, and its uses be replaced with
+ * robotNameFromConfig instead.
+ *  @{
+ */
+
+/**
+ * @brief Obtains a reference to a loaded robot from configuration (using robotName or robotIndex)
+ *
+ * - If robotName is present, it is used to find the robot
+ * - Otherwise, it'll attempt to use robotIndex and inform the user that its use
+ *   is deprecated in favor of robotName
+ *
+ * @param config Configuration from which to look for robotName/robotIndex
+ * @param robots Loaded robots
+ * @param prefix Prefix used for printint outputs to the user (deprecation
+ * warning, non-existing robot, etc).
+ * @param required
+ * - When true, throws if the robotName/robotIndex is invalid or missing.
+ * - When false, returns the main robot if the robotName/robotIndex is invalid or missing.
+ *
+ * @return Robot as configured by the robotName or robotIndex configuration
+ * entry.
+ */
+MC_RBDYN_DLLAPI const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
+                                                        const mc_rbdyn::Robots & robots,
+                                                        const std::string & prefix,
+                                                        bool required = false);
+
+/**
+ * @brief Helper to obtain the robot name from configuration
+ *
+ * @see const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config, const mc_rbdyn::Robots & robots,
+ * const std::string & prefix, bool required);
+ */
+std::string MC_RBDYN_DLLAPI robotNameFromConfig(const mc_rtc::Configuration & config,
+                                                const mc_rbdyn::Robots & robots,
+                                                const std::string & prefix = "",
+                                                bool required = false);
+
+/**
+ * @brief Helper to obtain the robot index from configuration
+ *
+ * @note This function will be removed when transitioning to TVM. To facilitate
+ * the transition from index-based to named-based robots, this function can be
+ * deprecated to help with the transition.
+ *
+ * @see const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config, const mc_rbdyn::Robots & robots,
+ * const std::string & prefix, bool required);
+ */
+unsigned int MC_RBDYN_DLLAPI robotIndexFromConfig(const mc_rtc::Configuration & config,
+                                                  const mc_rbdyn::Robots & robots,
+                                                  const std::string & prefix = "",
+                                                  bool required = false);
+
+/** @} */
+
 /*FIXME Not implemetend for now, only used for ATLAS
 void loadPolyTorqueBoundsData(const std::string & file, Robot & robot);
 */
