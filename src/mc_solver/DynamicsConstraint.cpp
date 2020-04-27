@@ -99,28 +99,29 @@ namespace
 
 mc_solver::ConstraintSetPtr load_kin_constr(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
+  const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "kinematics");
   if(config.has("damper"))
   {
-    return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(),
-                                                             config("damper"), config("velocityPercent", 0.5));
+    return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), robotIndex, solver.dt(), config("damper"),
+                                                             config("velocityPercent", 0.5));
   }
   else
   {
-    return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), config("robotIndex"), solver.dt());
+    return std::make_shared<mc_solver::KinematicsConstraint>(solver.robots(), robotIndex, solver.dt());
   }
 }
 
 mc_solver::ConstraintSetPtr load_dyn_constr(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
+  const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "dynamics");
   if(config.has("damper"))
   {
-    return std::make_shared<mc_solver::DynamicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(),
-                                                           config("damper"), config("velocityPercent", 0.5),
-                                                           config("infTorque", false));
+    return std::make_shared<mc_solver::DynamicsConstraint>(solver.robots(), robotIndex, solver.dt(), config("damper"),
+                                                           config("velocityPercent", 0.5), config("infTorque", false));
   }
   else
   {
-    return std::make_shared<mc_solver::DynamicsConstraint>(solver.robots(), config("robotIndex"), solver.dt(),
+    return std::make_shared<mc_solver::DynamicsConstraint>(solver.robots(), robotIndex, solver.dt(),
                                                            config("infTorque", false));
   }
 }

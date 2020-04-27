@@ -90,7 +90,8 @@ namespace
 static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "boundedSpeed",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto ret = std::make_shared<mc_solver::BoundedSpeedConstr>(solver.robots(), config("robotIndex"), solver.dt());
+      auto ret = std::make_shared<mc_solver::BoundedSpeedConstr>(
+          solver.robots(), robotIndexFromConfig(config, solver.robots(), "boundedSpeed"), solver.dt());
       if(config.has("constraints"))
       {
         for(const auto & c : config("constraints"))
