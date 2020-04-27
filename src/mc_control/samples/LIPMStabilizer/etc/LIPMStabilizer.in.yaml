@@ -31,15 +31,11 @@ robots:
 constraints:
 - type: contact
 - type: kinematics
-  robotIndex: 0
   damper: [0.1, 0.01, 0.5]
 - type: compoundJoint
-  robotIndex: 0
 # Collision constraint
 collisions:
 - type: collision
-  r1Index: 0
-  r2Index: 0
   useMinimal: true
 # Initial set of contacts
 contacts: {}
@@ -76,7 +72,6 @@ states:
       dof: [0, 0, 1, 1, 1, 0]
 
     StabilizerConfig:
-      robotIndex: 0
       enabled: true
 
       ###########################
@@ -149,7 +144,6 @@ states:
         type: surfaceTransform
         stiffness: 10
         weight: 500
-        robotIndex: 0
         surface: "RightFootCenter"
         moveWorld:
           translation: [0,0,0.1]
@@ -171,7 +165,6 @@ states:
     tasks:
       PutFootAdmittance:
         type: admittance
-        robotIndex: 0
         surface: "RightFootCenter"
         stiffness: [10, 10, 10, 10, 10, 3]
         damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
@@ -265,7 +258,6 @@ states:
       SwingFootTrajectory:
         type: exact_cubic_trajectory
         surface: RightFootCenter
-        robotIndex: 0
         stiffness: 10000.0
         duration: 5.0
         weight: 100
@@ -278,7 +270,6 @@ states:
               - wrench: [.nan, .nan, .nan, .nan, .nan, 20] 
         targetSurface:
           surface: RightFootCenter
-          robotIndex: 0
           # Aim 5mm above ground as the FSM does not have early-impact detection
           translation: [0.1, 0.0, 0.005]
           rotation: [0,0,0]
@@ -335,7 +326,6 @@ states:
       SwingFootTrajectory:
         targetSurface:
           surface: RightFootCenter
-          robotIndex: 0
           translation: [-0.1, 0.0, 0.005]
           rotation: [0, 0, 0]
           # control points in target surface frame
