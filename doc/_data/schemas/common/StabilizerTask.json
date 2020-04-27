@@ -4,7 +4,7 @@
   "description": "Stabilizer Configuration",
   "properties":
   {
-    "robotIndex": { "type": "integer", "minimum": 0 },
+    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
     "leftFootSurface": { "type": "string" },
     "rightFootSurface": { "type": "string" },
     "torsoBodyName": { "type": "string" },

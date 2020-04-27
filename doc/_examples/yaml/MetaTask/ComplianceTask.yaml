@@ -1,5 +1,4 @@
 type: compliance
-robotIndex: 0
 body: r_arm
 wrench:
   couple: [0.0, 0.0, 0.0]

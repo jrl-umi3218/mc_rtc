@@ -4,7 +4,7 @@
   "properties":
   {
     "type": { "enum": ["kinematics"], "type": "string" },
-    "robotIndex": { "type": "integer", "minimum": 0 },
+    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot affected by this constraint"},
     "damper":
     {
       "type": "array",
@@ -20,5 +20,5 @@
       "default": "0.5"
     }
   },
-  "required": ["type", "robotIndex"]
+  "required": ["type"]
 }

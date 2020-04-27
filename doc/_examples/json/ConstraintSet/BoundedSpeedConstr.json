@@ -1,6 +1,5 @@
 {
   "type": "boundedSpeed",
-  "robotIndex": 0,
   "constraints": [
   {
     "body": "body0",

@@ -4,7 +4,7 @@
   "properties":
   {
     "type": { "enum": ["boundedSpeed"], "type": "string" },
-    "robotIndex": { "type": "integer", "minimum": 0 },
+    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot affected by this constraint"},
     "constraints":
     {
       "type": "array",
@@ -25,5 +25,5 @@
       }
     }
   },
-  "required": ["type", "robotIndex"]
+  "required": ["type"]
 }

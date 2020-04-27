@@ -1,6 +1,5 @@
 {
   "type": "lookAt",
-  "robotIndex": 0,
   "body": "bodyName",
   "bodyVector": [1.0, 0.0, 0.0],
   "targetPos": [0.0, 0.0, 0.0]

@@ -1,6 +1,5 @@
 {
   "type": "gaze",
-  "robotIndex": 0,
   "body": "h_link",
   "X_b_gaze":
   {

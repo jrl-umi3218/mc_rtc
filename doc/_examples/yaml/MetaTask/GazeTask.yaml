@@ -1,5 +1,4 @@
 type: gaze
-robotIndex: 0
 body: h_link
 X_b_gaze:
   rotation: [1.0, 0.0, 0.0,

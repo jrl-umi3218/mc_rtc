@@ -1,6 +1,5 @@
 {
   "type": "surfaceTransform",
-  "robotIndex": 0,
   "surface": "surfaceName",
   "target":
   {
@@ -12,11 +11,10 @@
 },
 {
   "type": "surfaceTransform",
-  "robotIndex": 0,
   "surface": "surfaceName",
   "targetSurface":
   {
-    "robotIndex": 1,
+    "robot": "TargetRobot",
     "surface": "target_surface_name",
     "offset_translation": [0.0, 0.0, 0.1],
     "offset_rotation": [3.14, 0.0, 0.0]

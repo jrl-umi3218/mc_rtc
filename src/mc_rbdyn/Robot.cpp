@@ -1124,9 +1124,9 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
   {
     p = "[" + prefix + "] ";
   }
-  if(config.has("robotName"))
+  if(config.has("robot"))
   {
-    const std::string & robotName = config("robotName");
+    const std::string & robotName = config("robot");
     if(robots.hasRobot(robotName))
     {
       return robots.robot(robotName);
@@ -1138,7 +1138,9 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
   }
   else if(config.has("robotIndex"))
   {
-    LOG_WARNING(p + "[MC_RTC_DEPRECATED] \"robotIndex\" will be deprecated in future versions, use robotName instead");
+    LOG_WARNING(p
+                + "[MC_RTC_DEPRECATED] \"robotIndex\" will be deprecated in future versions, use \"robot: <robot "
+                  "name>\" instead");
     const size_t robotIndex = config("robotIndex");
     if(robotIndex < robots.size())
     {

@@ -1,6 +1,5 @@
 {
   "type": "cop",
-  "robotIndex": 0,
   "surface": "LeftFootCenter",
   "pose":
   {
@@ -19,12 +18,10 @@
 },
 {
   "type": "cop",
-  "robotIndex": 0,
   "surface": "LeftFootCenter",
   "cop": [2.0, 0.0],
   "targetSurface":
   {
-    "robotIndex": 1,
     "surface": "target_surface_name",
     "offset_translation": [0.0, 0.0, 0.1],
     "offset_rotation": [3.14, 0.0, 0.0]

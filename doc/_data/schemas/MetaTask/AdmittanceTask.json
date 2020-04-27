@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["admittance"], "type": "string" },
     "name": { "type": "string" },
-    "robotIndex": { "type": "integer", "minimum": 0 },
+    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
     "surface": { "type": "string" },
 
     "pose": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
@@ -22,5 +22,5 @@
     "activeJoints": { "type": "array", "items": { "type": "string" } },
     "unactiveJoints": { "type": "array", "items": { "type": "string" } }
   },
-  "required": ["type", "robotIndex", "surface"]
+  "required": ["type", "surface"]
 }
