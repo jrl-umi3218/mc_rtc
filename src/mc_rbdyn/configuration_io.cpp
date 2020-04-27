@@ -901,10 +901,9 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModulePtr>::save(const 
 mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Configuration & config,
                                                                const mc_rbdyn::Robots & robots)
 {
-  unsigned int r1Index = 0;
-  unsigned int r2Index = 1;
-  config("r1Index", r1Index);
-  config("r2Index", r2Index);
+  const auto r1Index = robotIndexFromConfig(config, robots, "contact", false, "r1Index", "r1Name");
+  const auto r2Index =
+      robotIndexFromConfig(config, robots, "contact", false, "r2Index", "r2Name", robots.robot(1).name());
   sva::PTransformd X_r2s_r1s = sva::PTransformd::Identity();
   bool isFixed = config("isFixed");
   if(isFixed)
@@ -923,6 +922,7 @@ mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Con
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Contact>::save(const mc_rbdyn::Contact & c)
 {
   mc_rtc::Configuration config;
+  // FIXME saves by index even if the configuration was created by name
   config.add("r1Index", c.r1Index());
   config.add("r2Index", c.r2Index());
   config.add("r1Surface", c.r1Surface()->name());

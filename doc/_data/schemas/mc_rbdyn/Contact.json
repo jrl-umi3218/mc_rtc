@@ -6,8 +6,8 @@
   {
     "r1Surface": { "type": "string" },
     "r2Surface": { "type": "string" },
-    "r1Index": { "type": "integer", "default": "0" },
-    "r2Index": { "type": "integer", "default": "1" },
+    "r1Name": { "type": "string", "default": "MainRobot", "description": "Name of first robot involved in the contact" },
+    "r2Name": { "type": "string", "default": "First extra robot", "description": "Name of second robot involved in the contact" },
     "isFixed": { "type": "boolean" },
     "X_r2s_r1s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
     "X_b_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },

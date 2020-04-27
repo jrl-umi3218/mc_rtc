@@ -771,13 +771,21 @@ private:
  * - When true, throws if the robotName/robotIndex is invalid or missing.
  * - When false, returns the main robot if the robotName/robotIndex is invalid or missing.
  *
+ * @param robotIndexKey Configuration key for robotIndex
+ * @param robotNameKey Configuration key for robotName
+ * @param defaultRobotName When empty, return the main robot name, otherwise use
+ * the specified name
+ *
  * @return Robot as configured by the robotName or robotIndex configuration
  * entry.
  */
 MC_RBDYN_DLLAPI const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
                                                         const mc_rbdyn::Robots & robots,
                                                         const std::string & prefix,
-                                                        bool required = false);
+                                                        bool required = false,
+                                                        const std::string & robotIndexKey = "robotIndex",
+                                                        const std::string & robotNameKey = "robot",
+                                                        const std::string & defaultRobotName = "");
 
 /**
  * @brief Helper to obtain the robot name from configuration
@@ -788,7 +796,10 @@ MC_RBDYN_DLLAPI const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configurat
 std::string MC_RBDYN_DLLAPI robotNameFromConfig(const mc_rtc::Configuration & config,
                                                 const mc_rbdyn::Robots & robots,
                                                 const std::string & prefix = "",
-                                                bool required = false);
+                                                bool required = false,
+                                                const std::string & robotIndexKey = "robotIndex",
+                                                const std::string & robotNameKey = "robot",
+                                                const std::string & defaultRobotName = "");
 
 /**
  * @brief Helper to obtain the robot index from configuration
@@ -803,7 +814,10 @@ std::string MC_RBDYN_DLLAPI robotNameFromConfig(const mc_rtc::Configuration & co
 unsigned int MC_RBDYN_DLLAPI robotIndexFromConfig(const mc_rtc::Configuration & config,
                                                   const mc_rbdyn::Robots & robots,
                                                   const std::string & prefix = "",
-                                                  bool required = false);
+                                                  bool required = false,
+                                                  const std::string & robotIndexKey = "robotIndex",
+                                                  const std::string & robotNameKey = "robot",
+                                                  const std::string & defaultRobotName = "");
 
 /** @} */
 
