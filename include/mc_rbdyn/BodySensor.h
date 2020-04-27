@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_rbdyn/Sensor.h>
+#include <mc_rbdyn/Device.h>
 
 #include <Eigen/StdVector>
 
@@ -15,7 +15,7 @@ namespace mc_rbdyn
  * dynamic information about a body. It would typically be used to represent an
  * IMU reading but in more ideal (simulation, external tracking system...) it
  * can hold more information */
-struct MC_RBDYN_DLLAPI BodySensor : public Sensor
+struct MC_RBDYN_DLLAPI BodySensor : public Device
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /** Default constructor, does not represent a valid body sensor */
@@ -31,7 +31,7 @@ struct MC_RBDYN_DLLAPI BodySensor : public Sensor
    *
    */
   inline BodySensor(const std::string & name, const std::string & bodyName, const sva::PTransformd & X_b_s)
-  : Sensor(name, bodyName, X_b_s)
+  : Device(name, bodyName, X_b_s)
   {
     type_ = "BodySensor";
   }
@@ -41,13 +41,13 @@ struct MC_RBDYN_DLLAPI BodySensor : public Sensor
   /** Get the sensor's parent body name */
   inline const std::string & parentBody() const
   {
-    return Sensor::parent();
+    return Device::parent();
   }
 
   /** Return the transformation from the parent body to the sensor */
   inline const sva::PTransformd & X_b_s() const
   {
-    return Sensor::X_p_s();
+    return Device::X_p_s();
   }
 
   /** Return the sensor's position reading, Zero if not provided */
@@ -117,7 +117,7 @@ struct MC_RBDYN_DLLAPI BodySensor : public Sensor
     acceleration_ = acceleration;
   }
 
-  SensorPtr clone() const override;
+  DevicePtr clone() const override;
 
 private:
   Eigen::Vector3d position_ = Eigen::Vector3d::Zero();

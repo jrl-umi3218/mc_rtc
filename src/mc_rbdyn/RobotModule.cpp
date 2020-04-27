@@ -14,7 +14,7 @@ constexpr double RobotModule::Gripper::Safety::DEFAULT_ACTUAL_COMMAND_DIFF_TRIGG
 constexpr double RobotModule::Gripper::Safety::DEFAULT_RELEASE_OFFSET;
 constexpr unsigned int RobotModule::Gripper::Safety::DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
 
-SensorPtrVector::SensorPtrVector(const SensorPtrVector & v) : std::vector<SensorPtr>()
+DevicePtrVector::DevicePtrVector(const DevicePtrVector & v) : std::vector<DevicePtr>()
 {
   reserve(v.size());
   for(const auto & s : v)
@@ -23,7 +23,7 @@ SensorPtrVector::SensorPtrVector(const SensorPtrVector & v) : std::vector<Sensor
   }
 }
 
-SensorPtrVector & SensorPtrVector::operator=(const SensorPtrVector & v)
+DevicePtrVector & DevicePtrVector::operator=(const DevicePtrVector & v)
 {
   if(&v == this)
   {

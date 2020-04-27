@@ -131,7 +131,7 @@ private:
 ForceSensor::ForceSensor() : ForceSensor("", "", sva::PTransformd::Identity()) {}
 
 ForceSensor::ForceSensor(const std::string & name, const std::string & parentBodyName, const sva::PTransformd & X_p_f)
-: Sensor(name, parentBodyName, X_p_f), wrench_(Eigen::Vector6d::Zero()),
+: Device(name, parentBodyName, X_p_f), wrench_(Eigen::Vector6d::Zero()),
   calibration_(std::make_shared<detail::ForceSensorCalibData>())
 {
   type_ = "ForceSensor";
@@ -195,9 +195,9 @@ sva::ForceVecd ForceSensor::worldWrenchWithoutGravity(const mc_rbdyn::Robot & ro
   return X_fsactual_0.dualMul(w_fsactual);
 }
 
-SensorPtr ForceSensor::clone() const
+DevicePtr ForceSensor::clone() const
 {
-  return SensorPtr(new ForceSensor(*this));
+  return DevicePtr(new ForceSensor(*this));
 }
 
 } // namespace mc_rbdyn

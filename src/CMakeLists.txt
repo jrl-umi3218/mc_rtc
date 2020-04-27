@@ -132,7 +132,7 @@ mc_rbdyn/RobotModule.cpp
 mc_rbdyn/configuration_io.cpp
 mc_rbdyn/ZMP.cpp
 mc_control/generic_gripper.cpp
-mc_rbdyn/Sensor.cpp
+mc_rbdyn/Device.cpp
 mc_rbdyn/BodySensor.cpp
 )
 
@@ -168,6 +168,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h
 ../include/mc_rbdyn/ZMP.h
 ../include/mc_control/generic_gripper.h
+../include/mc_rbdyn/Device.h
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_rbdyn/Sensor.h>
+#include <mc_rbdyn/Device.h>
 
 namespace mc_rbdyn
 {
@@ -20,7 +20,7 @@ struct ForceSensorCalibData;
  * and the current reading of said sensor. If the appropriate data is
  * provided, a gravity-free reading can be provided.
  */
-struct MC_RBDYN_DLLAPI ForceSensor : public Sensor
+struct MC_RBDYN_DLLAPI ForceSensor : public Device
 {
 public:
   /** Default constructor, this does not represent a valid force sensor */
@@ -46,19 +46,19 @@ public:
   /** Return the sensor's parent body */
   inline const std::string & parentBody() const
   {
-    return Sensor::parent();
+    return Device::parent();
   }
 
   /** Return the transformation from the parent body to the sensor (model) */
   inline const sva::PTransformd & X_p_f() const
   {
-    return Sensor::X_p_s();
+    return Device::X_p_s();
   }
 
   /** Return the sensor pose in the inertial frame (convenience function) */
   inline sva::PTransformd X_0_f(const mc_rbdyn::Robot & robot) const
   {
-    return Sensor::X_0_s(robot);
+    return Device::X_0_s(robot);
   }
 
   /** Return the current wrench */
@@ -157,7 +157,7 @@ public:
   /** @} */
   /* End of Calibration group */
 
-  SensorPtr clone() const override;
+  DevicePtr clone() const override;
 
 private:
   sva::ForceVecd wrench_;

@@ -29,17 +29,17 @@ namespace mc_rbdyn
 
 /** Holds a vector of unique pointers
  *
- * This enables copy operation by cloning the sensors
+ * This enables copy operation by cloning the devices
  */
-struct SensorPtrVector : public std::vector<SensorPtr>
+struct DevicePtrVector : public std::vector<DevicePtr>
 {
-  inline SensorPtrVector() = default;
+  inline DevicePtrVector() = default;
 
-  MC_RBDYN_DLLAPI SensorPtrVector(const SensorPtrVector & v);
-  MC_RBDYN_DLLAPI SensorPtrVector & operator=(const SensorPtrVector & v);
+  MC_RBDYN_DLLAPI DevicePtrVector(const DevicePtrVector & v);
+  MC_RBDYN_DLLAPI DevicePtrVector & operator=(const DevicePtrVector & v);
 
-  inline SensorPtrVector(SensorPtrVector && v) = default;
-  inline SensorPtrVector & operator=(SensorPtrVector && v) = default;
+  inline DevicePtrVector(DevicePtrVector && v) = default;
+  inline DevicePtrVector & operator=(DevicePtrVector && v) = default;
 };
 
 struct MC_RBDYN_DLLAPI RobotModule
@@ -421,9 +421,9 @@ struct MC_RBDYN_DLLAPI RobotModule
   }
 
   /** Returns a list of non standard sensors supported by this module */
-  inline const SensorPtrVector & sensors() const
+  inline const DevicePtrVector & devices() const
   {
-    return _sensors;
+    return _devices;
   }
 
   /** Path to the robot's description package */
@@ -483,7 +483,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** \see real_urdf() */
   std::string _real_urdf;
   /** \see sensors() */
-  SensorPtrVector _sensors;
+  DevicePtrVector _devices;
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;

@@ -12,32 +12,32 @@ namespace mc_rbdyn
 {
 
 template<typename T>
-bool Robot::hasSensor(const std::string & name) const
+bool Robot::hasDevice(const std::string & name) const
 {
-  return sensorsIndex_.count(name) != 0;
+  return devicesIndex_.count(name) != 0;
 }
 
 template<>
-inline bool Robot::hasSensor<ForceSensor>(const std::string & name) const
+inline bool Robot::hasDevice<ForceSensor>(const std::string & name) const
 {
   return hasForceSensor(name);
 }
 
 template<>
-inline bool Robot::hasSensor<BodySensor>(const std::string & name) const
+inline bool Robot::hasDevice<BodySensor>(const std::string & name) const
 {
   return hasBodySensor(name);
 }
 
 template<typename T>
-const T & Robot::sensor(const std::string & name) const
+const T & Robot::device(const std::string & name) const
 {
-  auto it = sensorsIndex_.find(name);
-  if(it == sensorsIndex_.end())
+  auto it = devicesIndex_.find(name);
+  if(it == devicesIndex_.end())
   {
     LOG_ERROR_AND_THROW(std::runtime_error, "No sensor named " << name << " in " << this->name());
   }
-  auto ptr = dynamic_cast<T *>(sensors_[it->second].get());
+  auto ptr = dynamic_cast<T *>(devices_[it->second].get());
   if(!ptr)
   {
     LOG_ERROR_AND_THROW(std::runtime_error,
@@ -47,13 +47,13 @@ const T & Robot::sensor(const std::string & name) const
 }
 
 template<>
-inline const ForceSensor & Robot::sensor<ForceSensor>(const std::string & name) const
+inline const ForceSensor & Robot::device<ForceSensor>(const std::string & name) const
 {
   return forceSensor(name);
 }
 
 template<>
-inline const BodySensor & Robot::sensor<BodySensor>(const std::string & name) const
+inline const BodySensor & Robot::device<BodySensor>(const std::string & name) const
 {
   return bodySensor(name);
 }

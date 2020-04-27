@@ -542,49 +542,49 @@ public:
   /** @} */
   /* End of Force sensors group */
 
-  /** @name Sensors
+  /** @name Devices
    *
-   * These functions are related to generic sensors handling
+   * These functions are related to generic devices handling
    *
    * @{
    */
 
-  /** Returns true if a generic sensor of type T and named name exists in the robot
+  /** Returns true if a generic device of type T and named name exists in the robot
    *
-   * \param name Name of the sensor
+   * \param name Name of the device
    *
-   * \tparam T Type of sensor requested
+   * \tparam T Type of device requested
    *
    */
   template<typename T>
-  bool hasSensor(const std::string & name) const;
+  bool hasDevice(const std::string & name) const;
 
-  /** Get a generic sensor of type T named name
+  /** Get a generic device of type T named name
    *
    * The reference returned by this function is remains valid
    *
-   * \param name Name of the sensor
+   * \param name Name of the device
    *
-   * \tparam T type of the sensor requested
+   * \tparam T type of the device requested
    *
-   * \throws If the sensor does not exist or does not have the right type
+   * \throws If the device does not exist or does not have the right type
    *
    */
   template<typename T>
-  const T & sensor(const std::string & name) const;
+  const T & device(const std::string & name) const;
 
   /** Non-const variant */
   template<typename T>
-  T & sensor(const std::string & name)
+  T & device(const std::string & name)
   {
-    return const_cast<T &>(const_cast<const Robot *>(this)->sensor<T>(name));
+    return const_cast<T &>(const_cast<const Robot *>(this)->device<T>(name));
   }
 
-  /** Add a generic sensor in the robot */
-  void addSensor(SensorPtr sensor);
+  /** Add a generic device to the robot */
+  void addDevice(DevicePtr device);
 
   /** @} */
-  /* End of Sensors group */
+  /* End of Devices group */
 
   /** Check if a surface \p surface exists
    *
@@ -801,10 +801,10 @@ private:
   std::unordered_map<std::string, mc_control::GripperPtr> grippers_;
   /** Grippers reference for this robot */
   std::vector<mc_control::GripperRef> grippersRef_;
-  /** Hold all sensors that are neither force sensors nor body sensors */
-  SensorPtrVector sensors_;
-  /** Correspondance between a sensor's name and a sensor index */
-  std::unordered_map<std::string, size_t> sensorsIndex_;
+  /** Hold all devices that are neither force sensors nor body sensors */
+  DevicePtrVector devices_;
+  /** Correspondance between a device's name and a device index */
+  std::unordered_map<std::string, size_t> devicesIndex_;
 
 protected:
   /** Invoked by Robots parent instance after mb/mbc/mbg/RobotModule are stored
