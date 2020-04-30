@@ -13,6 +13,15 @@
 - mc\_solver::QPSolver always makes sure to udpate the problem size
 - Many tasks throw as documented when pre-conditions are not met (e.g. surface does not exist or has no sensor attached)
 
+### Changes
+
+- Improve gripper handling so that `MCGlobalController` handles gripper update
+- All robots' grippers are loaded and run by the controller
+- Gripper interface is available from the `Robot` class
+- Gripper logging and publishing are correctly handled in a way transparent to the controller
+- Gripper joints are hidden from the posture task GUI
+- Gripper safety settings can be provided at the Gripper definition level or at the RobotModule level
+
 ### Fixes
 
 - Enforce the list of supported robots provided by a controller
