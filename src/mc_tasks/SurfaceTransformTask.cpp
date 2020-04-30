@@ -20,6 +20,11 @@ SurfaceTransformTask::SurfaceTransformTask(const std::string & surfaceName,
   surfaceName(surfaceName)
 {
   const mc_rbdyn::Robot & robot = robots.robot(rIndex);
+  if(!robot.hasSurface(surfaceName))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "[mc_tasks::SurfaceTransformTask] No surface named " << surfaceName << " in " << robot.name())
+  }
   std::string bodyName = robot.surface(surfaceName).bodyName();
   sva::PTransformd curPos = robot.surface(surfaceName).X_0_s(robot);
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, curPos, robot.surface(surfaceName).X_b_s());

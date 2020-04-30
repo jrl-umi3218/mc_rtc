@@ -40,6 +40,11 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
   sensor_(robots_.robot(rIndex_).bodyForceSensor(body)), timestep_(timestep), forceThresh_(forceThresh),
   torqueThresh_(torqueThresh), forceGain_(forceGain), torqueGain_(torqueGain), dof_(dof)
 {
+  const auto & robot = robots.robot(robotIndex);
+  if(!robot.bodyHasForceSensor(body))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::ComplianceTask] No force sensor attached to " << body)
+  }
   efTask_ = std::make_shared<EndEffectorTask>(body, robots, robotIndex, stiffness, weight);
   clampTrans_ = clamper(0.01);
   clampRot_ = clamper(0.1);
