@@ -610,7 +610,7 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
                             unsigned int r1Index = str2idx(data("R1"));
                             std::string r0Surface = data("R0 surface");
                             std::string r1Surface = data("R1 surface");
-                            double friction = data("Friction");
+                            double friction = data("Friction", mc_rbdyn::Contact::defaultFriction);
                             if(r0Index < robots().size() && r1Index < robots().size())
                             {
                               contacts_.push_back({robots(), r0Index, r1Index, r0Surface, r1Surface, friction});

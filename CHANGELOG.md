@@ -10,6 +10,7 @@
 
 - Enforce the list of supported robots provided by a controller
 - Throws an error if selected joints do not exist
+- Correctly handle default case in Contact GUI menu
 
 ## [1.2.1] - 2020-03-18
 
