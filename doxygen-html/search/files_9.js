@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['jacobian_2eh',['Jacobian.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00356.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00356.html',1,'(Global Namespace)']]],
-  ['joint_2eh',['Joint.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00359.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00359.html',1,'(Global Namespace)']]]
+  ['kinematicinertialobserver_2eh',['KinematicInertialObserver.h',['../a00122.html',1,'']]],
+  ['kinematicinertialposeobserver_2eh',['KinematicInertialPoseObserver.h',['../a00125.html',1,'']]],
+  ['kinematicsconstraint_2eh',['KinematicsConstraint.h',['../a00398.html',1,'']]]
 ];

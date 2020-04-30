@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::ConstraintSet Class Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02633.html','');});
+$(document).ready(function(){initNavTree('a02636.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,175 +69,44 @@ $(document).ready(function(){initNavTree('a02633.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a02630.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::ConstraintSet Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">mc_solver::InequalityConstraintRobot Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This class is a basis to wrap Constraint functions from Tasks.  
- <a href="a02633.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_solver/ConstraintSet.h&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mc_solver::ConstraintSet:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a02633.png" usemap="#mc_5Fsolver::ConstraintSet_map" alt=""/>
-  <map id="mc_5Fsolver::ConstraintSet_map" name="mc_5Fsolver::ConstraintSet_map">
-<area href="a02605.html" title="Wrapper around tasks::qp::BoundedSpeedConstr. " alt="mc_solver::BoundedSpeedConstr" shape="rect" coords="0,56,241,80"/>
-<area href="a02609.html" title="Create a collision constraint between two robots. " alt="mc_solver::CollisionsConstraint" shape="rect" coords="251,56,492,80"/>
-<area href="a02617.html" title="Wrapper around tasks::qp::CoMIncPlaneConstr. " alt="mc_solver::CoMIncPlaneConstr" shape="rect" coords="502,56,743,80"/>
-<area href="a02629.html" title="Wrapper for mc_solver::details::CompundJointConstraint. " alt="mc_solver::CompoundJointConstraint" shape="rect" coords="753,56,994,80"/>
-<area href="a02641.html" title="Wraps multiple constraints related to Contact. " alt="mc_solver::ContactConstraint" shape="rect" coords="1004,56,1245,80"/>
-<area href="a02705.html" title="Holds kinematic constraints (joint limits) for the robot. " alt="mc_solver::KinematicsConstraint" shape="rect" coords="1255,56,1496,80"/>
-<area href="a02613.html" title="Utility class for the very common-case of (robot,env) scenarios. " alt="mc_solver::RobotEnvCollisionsConstraint" shape="rect" coords="1506,56,1747,80"/>
-<area href="a02645.html" title="Holds dynamics constraints for a robot. " alt="mc_solver::DynamicsConstraint" shape="rect" coords="1255,112,1496,136"/>
-</map>
- </div></div>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a8b2739907caaeb5d49ccaedc1665e3ca"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02633.html#a8b2739907caaeb5d49ccaedc1665e3ca">addToSolver</a> (const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;mbs, <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">tasks::qp::QPSolver</a> &amp;solver)=0</td></tr>
-<tr class="memdesc:a8b2739907caaeb5d49ccaedc1665e3ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called by <a class="el" href="a02725.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02725.html#a37580a89d1a0d1a862dfb6b7240e6dd0" title="Add a constraint set. ">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr:  <a href="#a8b2739907caaeb5d49ccaedc1665e3ca">More...</a><br /></td></tr>
-<tr class="separator:a8b2739907caaeb5d49ccaedc1665e3ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7a3302adccb4d3183e829fd2754b75a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02633.html#aa7a3302adccb4d3183e829fd2754b75a">removeFromSolver</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">tasks::qp::QPSolver</a> &amp;solver)=0</td></tr>
-<tr class="memdesc:aa7a3302adccb4d3183e829fd2754b75a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is called by <a class="el" href="a02725.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02725.html#a2d48a1aa9f88ea1c6873000df4299a1d" title="Remove a constraint set. ">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call:  <a href="#aa7a3302adccb4d3183e829fd2754b75a">More...</a><br /></td></tr>
-<tr class="separator:aa7a3302adccb4d3183e829fd2754b75a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad979bb11e0faeba2c10d36d5a4c46e00"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02633.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a> ()</td></tr>
-<tr class="memdesc:ad979bb11e0faeba2c10d36d5a4c46e00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="#ad979bb11e0faeba2c10d36d5a4c46e00">More...</a><br /></td></tr>
-<tr class="separator:ad979bb11e0faeba2c10d36d5a4c46e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This class is a basis to wrap Constraint functions from Tasks. </p>
-<p>The aim of such wrappers should be two-folds:</p><ul>
-<li>provide a safe alternative to the Tasks version wrapped</li>
-<li>make the class easier to use with mc_* facilities </li>
-</ul>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ad979bb11e0faeba2c10d36d5a4c46e00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad979bb11e0faeba2c10d36d5a4c46e00">&#9670;&nbsp;</a></span>~ConstraintSet()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual mc_solver::ConstraintSet::~ConstraintSet </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Virtual destructor. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8b2739907caaeb5d49ccaedc1665e3ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b2739907caaeb5d49ccaedc1665e3ca">&#9670;&nbsp;</a></span>addToSolver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void mc_solver::ConstraintSet::addToSolver </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag:https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/" href="https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a01003.html">rbd::MultiBody</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">tasks::qp::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>This function is called by <a class="el" href="a02725.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02725.html#a37580a89d1a0d1a862dfb6b7240e6dd0" title="Add a constraint set. ">mc_solver::QPSolver::addConstraintSet</a> is called, it is expected that the implementation calls the safe variant of its wrapper constr: </p>
-<pre class="fragment">&lt;wrapped-type&gt;::addToSolver(mbs, solver)
-</pre> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mbs</td><td>The MultiBody vector controlled by the invoking <a class="el" href="a02725.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
-    <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="a02725.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="a02613.html#a958e2813a9368f8e2628e367aac46449">mc_solver::RobotEnvCollisionsConstraint</a>, <a class="el" href="a02629.html#ab5c96ef4ac5e418eed9e07ad0be00064">mc_solver::CompoundJointConstraint</a>, <a class="el" href="a02609.html#ad35e4c70b095a3dd62bcc640f5fc3cae">mc_solver::CollisionsConstraint</a>, <a class="el" href="a02645.html#a08413ca37fc394ed2b3f692f2bcc8e44">mc_solver::DynamicsConstraint</a>, <a class="el" href="a02705.html#af5b445df5cd29d199cfda9031d5a468f">mc_solver::KinematicsConstraint</a>, <a class="el" href="a02641.html#a3e94d3c790da36671345692cbf14e81d">mc_solver::ContactConstraint</a>, <a class="el" href="a02617.html#a7fe287ede6acc66b93ebc6e1a8f54882">mc_solver::CoMIncPlaneConstr</a>, and <a class="el" href="a02605.html#a54adcdc90cc41a64a9723b693f8beb1b">mc_solver::BoundedSpeedConstr</a>.</p>
-
-</div>
-</div>
-<a id="aa7a3302adccb4d3183e829fd2754b75a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7a3302adccb4d3183e829fd2754b75a">&#9670;&nbsp;</a></span>removeFromSolver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void mc_solver::ConstraintSet::removeFromSolver </td>
-          <td>(</td>
-          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01069.html">tasks::qp::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>This function is called by <a class="el" href="a02725.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> when <a class="el" href="a02725.html#a2d48a1aa9f88ea1c6873000df4299a1d" title="Remove a constraint set. ">mc_solver::QPSolver::removeConstraintSet</a> is called, typically it would call: </p>
-<pre class="fragment">&lt;wrapped-type&gt;::removeFromSolver(solver)
-</pre> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>The actual solver instance used by the invoking <a class="el" href="a02725.html" title="Wraps a tasks::qp::QPSolver instance. ">mc_solver::QPSolver</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Implemented in <a class="el" href="a02613.html#a1c44940f9826474f5b4c894c1014a610">mc_solver::RobotEnvCollisionsConstraint</a>, <a class="el" href="a02629.html#af01c6fabfd9fb7f818d62693aaaac1ed">mc_solver::CompoundJointConstraint</a>, <a class="el" href="a02609.html#ad7757edd53edcdbda1ba8da7513acc74">mc_solver::CollisionsConstraint</a>, <a class="el" href="a02645.html#ac37f401f997c13db2b3a3cf080f0bd4b">mc_solver::DynamicsConstraint</a>, <a class="el" href="a02705.html#a559d44b398969ebc1c69f0ffd80a3569">mc_solver::KinematicsConstraint</a>, <a class="el" href="a02641.html#af72efeda2c9cd6af2e4626f32ab7583d">mc_solver::ContactConstraint</a>, <a class="el" href="a02617.html#aa6901fd29799bb8f88e639be2e2e06ac">mc_solver::CoMIncPlaneConstr</a>, and <a class="el" href="a02605.html#a0214a46d2452e2dcf610bbf44f863019">mc_solver::BoundedSpeedConstr</a>.</p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a02636.html">mc_solver::InequalityConstraintRobot</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a02684.html#adcc1dc8dc0563b2e14f962f26afbfa5f">A</a>() const =0</td><td class="entry"><a class="el" href="a02684.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01020.html#aff67c3cdc38c098ddcd8a2b47bc55946">addToSolver</a>(QPSolver &amp;sol)</td><td class="entry"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01020.html">tasks::qp::ConstraintFunction&lt; tasks::qp::Inequality &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01020.html#a1156de5e1b49d1d91319fd96cb936b7a">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, QPSolver &amp;sol)</td><td class="entry"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01020.html">tasks::qp::ConstraintFunction&lt; tasks::qp::Inequality &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02684.html#a6ba3138c342b7e4efa2328ac11930706">AFull_</a></td><td class="entry"><a class="el" href="a02684.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02632.html#a2f8d6cb3fdbcb0dbf3a598f5db0db67d">AInEq</a>() const override</td><td class="entry"><a class="el" href="a02632.html">mc_solver::utils::InequalityConstraint&lt; utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02632.html#aa303f3fb9dbf88ece28ef6ee013af8a8">Base</a> typedef</td><td class="entry"><a class="el" href="a02632.html">mc_solver::utils::InequalityConstraint&lt; utils::UpdateRobot &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02684.html#a8f658eb01d91768ab6a4e9b095a894de">compute</a>()=0</td><td class="entry"><a class="el" href="a02684.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02672.html#adcc2b9ec9fbd3b47e0183ef0ce034c73">Constraint</a>(unsigned int rIndex)</td><td class="entry"><a class="el" href="a02672.html">mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02672.html#ae5a2073ed0b8b0432593221fec955e4e">Constraint</a>(const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02672.html">mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02672.html#aab0cc49bca85557519c9a110b54c65ca">Constraint</a>(const mc_solver::QPSolver &amp;solver, const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02672.html">mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02632.html#ad32d4e6549d14ef03faa5b61294a9161">descInEq</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;, int i) override</td><td class="entry"><a class="el" href="a02632.html">mc_solver::utils::InequalityConstraint&lt; utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02632.html#a2cc88eb4c1dbe254f3c849c0e76b0e03">InequalityConstraint</a>(unsigned int rIndex)</td><td class="entry"><a class="el" href="a02632.html">mc_solver::utils::InequalityConstraint&lt; utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02632.html#a94b71fe257e26cc49bb153daa02b32d1">InequalityConstraint</a>(const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02632.html">mc_solver::utils::InequalityConstraint&lt; utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02632.html#aa1a4f382d3a67a6c728632e4f3189cb0">InequalityConstraint</a>(const mc_solver::QPSolver &amp;solver, const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02632.html">mc_solver::utils::InequalityConstraint&lt; utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02636.html#a3a76371902953809f84f92a1c642a75b">InequalityConstraintRobot</a>(unsigned int rIndex)</td><td class="entry"><a class="el" href="a02636.html">mc_solver::InequalityConstraintRobot</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
+  <tr><td class="entry"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01020.html#a454bf752ccf215aa991d036eaf1c3223">removeFromSolver</a>(QPSolver &amp;sol)</td><td class="entry"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01020.html">tasks::qp::ConstraintFunction&lt; tasks::qp::Inequality &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02672.html#a7693804807033e3718c4ba01a58d3a58">update</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;mbcs, const tasks::qp::SolverData &amp;data) override</td><td class="entry"><a class="el" href="a02672.html">mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02684.html#ad172325243564a16279d9392bd86efa5">Update</a>(unsigned int rIndex)</td><td class="entry"><a class="el" href="a02684.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02684.html#a806d3dc017b28e570dfa268a32a55600">Update</a>(const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02684.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02684.html#ab889dcd5361a420fe976146c40f56533">updateImpl</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;, const tasks::qp::SolverData &amp;)</td><td class="entry"><a class="el" href="a02684.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02672.html#ab383394a69ab62c4fab23378e64868de">updateNrVars</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data) override</td><td class="entry"><a class="el" href="a02672.html">mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02672.html#a819dd76da2909a4c88efcca1cb9aaf69">~Constraint</a>()</td><td class="entry"><a class="el" href="a02672.html">mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateRobot &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01020.html#ad668fbb366458056c27a466578c26b94">~ConstraintFunction</a>() override</td><td class="entry"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01020.html">tasks::qp::ConstraintFunction&lt; tasks::qp::Inequality &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02684.html#ab8ad71dd3414ee8bccc766c7bc8b4dc3">~Update</a>()</td><td class="entry"><a class="el" href="a02684.html">mc_solver::utils::Update&lt; UpdateNrVars &gt;</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00720.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02633.html">ConstraintSet</a></li>
-    <li class="footer">Generated on Thu Apr 23 2020 11:42:07 for mc_rtc by
+    <li class="footer">Generated on Thu Apr 30 2020 08:55:47 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

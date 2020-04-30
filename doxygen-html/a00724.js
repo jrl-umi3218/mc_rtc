@@ -1,4 +1,4 @@
 var a00724 =
 [
-    [ "CompoundJointConstraint", "a02609.html", "a02609" ]
+    [ "CompoundJointConstraint", "a02552.html", "a02552" ]
 ];

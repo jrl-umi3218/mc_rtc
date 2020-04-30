@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::log::is_serializable&lt; T &gt; Struct Template Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02585.html','');});
+$(document).ready(function(){initNavTree('a02588.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,62 +69,34 @@ $(document).ready(function(){initNavTree('a02585.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
-<a href="a02582.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::log::is_serializable&lt; T &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_solver::DynamicsConstraint Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>True if the given type is serializable in the log.  
- <a href="a02585.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_rtc/log/utils.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:a61a101e0e713dff37bd79ec91d6581de"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02585.html#a61a101e0e713dff37bd79ec91d6581de">value</a> = <a class="el" href="a02577.html">GetLogType</a>&lt;T&gt;::type != <a class="el" href="a00734.html#ae623e7dc6e6722fd48752713664b3549a6adf97f83acf6453d4a6a4b1070f3754">mc_rtc::log::LogType::None</a></td></tr>
-<tr class="separator:a61a101e0e713dff37bd79ec91d6581de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename T&gt;<br />
-struct mc_rtc::log::is_serializable&lt; T &gt;</h3>
-
-<p>True if the given type is serializable in the log. </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a61a101e0e713dff37bd79ec91d6581de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61a101e0e713dff37bd79ec91d6581de">&#9670;&nbsp;</a></span>value</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr bool <a class="el" href="a02585.html">mc_rtc::log::is_serializable</a>&lt; T &gt;::value = <a class="el" href="a02577.html">GetLogType</a>&lt;T&gt;::type != <a class="el" href="a00734.html#ae623e7dc6e6722fd48752713664b3549a6adf97f83acf6453d4a6a4b1070f3754">mc_rtc::log::LogType::None</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a02588.html">mc_solver::DynamicsConstraint</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a02588.html#a08413ca37fc394ed2b3f692f2bcc8e44">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02588.html">mc_solver::DynamicsConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02648.html#a3febf798804706fce1efe1eac46c16f9">damperJointLimitsConstr</a></td><td class="entry"><a class="el" href="a02648.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02588.html#a0f1097a536c65e610735d3314e86a4e3">DynamicsConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double timeStep, bool infTorque=false)</td><td class="entry"><a class="el" href="a02588.html">mc_solver::DynamicsConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02588.html#a330391bd86278523ae70830fc2d7e9f9">DynamicsConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double timeStep, const std::array&lt; double, 3 &gt; &amp;damper, double velocityPercent=1.0, bool infTorque=false)</td><td class="entry"><a class="el" href="a02588.html">mc_solver::DynamicsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02588.html#a2adb5f59889ad682361cbdd940e7d527">DynamicsConstraint</a>()</td><td class="entry"><a class="el" href="a02588.html">mc_solver::DynamicsConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02588.html#ad1eea623f5d96d9d75043108d4251911">inSolver</a>() const</td><td class="entry"><a class="el" href="a02588.html">mc_solver::DynamicsConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02648.html#ab113d21083add766566decba27631820">jointLimitsConstr</a></td><td class="entry"><a class="el" href="a02648.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02648.html#ae4fa119dd4f6643ea9bfd6e71d100e48">KinematicsConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double timeStep)</td><td class="entry"><a class="el" href="a02648.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02648.html#a89801271d9d8e8288c6be32b13970f3f">KinematicsConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double timeStep, const std::array&lt; double, 3 &gt; &amp;damper, double velocityPercent=1.0)</td><td class="entry"><a class="el" href="a02648.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02648.html#a9772713ef63997c2ff16a754cdf34401">KinematicsConstraint</a>()</td><td class="entry"><a class="el" href="a02648.html">mc_solver::KinematicsConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02588.html#a888094b65574aed3b2bb86a67a744a44">motionConstr</a></td><td class="entry"><a class="el" href="a02588.html">mc_solver::DynamicsConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02588.html#ac37f401f997c13db2b3a3cf080f0bd4b">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02588.html">mc_solver::DynamicsConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02588.html#af226f3dc547957b5700408bcc6688f7a">robotIndex</a>() const</td><td class="entry"><a class="el" href="a02588.html">mc_solver::DynamicsConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02576.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02576.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00711.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00734.html">log</a></li><li class="navelem"><a class="el" href="a02585.html">is_serializable</a></li>
-    <li class="footer">Generated on Thu Apr 23 2020 11:42:07 for mc_rtc by
+    <li class="footer">Generated on Thu Apr 30 2020 08:55:47 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

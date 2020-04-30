@@ -1,20 +1,16 @@
 var searchData=
 [
-  ['parallel_2eh',['Parallel.h',['../a00053.html',1,'']]],
-  ['pause_2eh',['Pause.h',['../a00056.html',1,'']]],
-  ['pendulum_2eh',['Pendulum.h',['../a00137.html',1,'']]],
-  ['planarsurface_2eh',['PlanarSurface.h',['../a00182.html',1,'']]],
-  ['plot_2eh',['plot.h',['../a00299.html',1,'']]],
-  ['point3d_2eh',['Point3D.h',['../a00302.html',1,'']]],
-  ['polygon_2eh',['Polygon.h',['../a03917.html',1,'(Global Namespace)'],['../a00290.html',1,'(Global Namespace)']]],
-  ['polygon_5futils_2eh',['polygon_utils.h',['../a00185.html',1,'']]],
-  ['polygoninterpolator_2eh',['PolygonInterpolator.h',['../a00188.html',1,'']]],
-  ['polygons_2eh',['Polygons.h',['../a00293.html',1,'']]],
-  ['polyhedron_5falgorithms_2eh',['Polyhedron_algorithms.h',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00086.html',1,'']]],
-  ['positionbasedvisservotask_2eh',['PositionBasedVisServoTask.h',['../a00473.html',1,'']]],
-  ['positiontask_2eh',['PositionTask.h',['../a00476.html',1,'']]],
-  ['posturetask_2eh',['PostureTask.h',['../a00479.html',1,'']]],
-  ['ptransform_2eh',['PTransform.h',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00053.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00053.html',1,'(Global Namespace)']]],
-  ['pythonstate_2eh',['PythonState.h',['../a00026.html',1,'']]],
-  ['types_2eh',['types.h',['../a03926.html',1,'']]]
+  ['qld_2eh',['QLD.h',['/usr/local/share/doc/eigen-qld/doxygen-html/a00014.html',1,'']]],
+  ['qlddirect_2eh',['QLDDirect.h',['/usr/local/share/doc/eigen-qld/doxygen-html/a00017.html',1,'']]],
+  ['qldqpsolver_2eh',['QLDQPSolver.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00029.html',1,'']]],
+  ['qpconstr_2eh',['QPConstr.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00038.html',1,'']]],
+  ['qpcontactconstr_2eh',['QPContactConstr.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00041.html',1,'']]],
+  ['qpcontacts_2eh',['QPContacts.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00044.html',1,'']]],
+  ['qpmotionconstr_2eh',['QPMotionConstr.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00047.html',1,'']]],
+  ['qpresult_2eh',['QPResult.h',['../a00401.html',1,'']]],
+  ['qpsolver_2eh',['QPSolver.h',['../a00404.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00050.html',1,'(Global Namespace)']]],
+  ['qpsolverdata_2eh',['QPSolverData.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00053.html',1,'']]],
+  ['qptasks_2eh',['QPTasks.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00056.html',1,'']]],
+  ['quadprog_2eh',['QuadProg.h',['/usr/local/share/doc/eigen-quadprog/doxygen-html/a00011.html',1,'']]],
+  ['quaterniont_2eh',['QuaternionT.h',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00032.html',1,'']]]
 ];

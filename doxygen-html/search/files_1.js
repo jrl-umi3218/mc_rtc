@@ -1,7 +1,6 @@
 var searchData=
 [
   ['base_2eh',['Base.h',['../a00140.html',1,'']]],
-  ['body_2eh',['Body.h',['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00320.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/a00320.html',1,'(Global Namespace)']]],
   ['bodysensor_2eh',['BodySensor.h',['../a00143.html',1,'']]],
   ['bodysensorobserver_2eh',['BodySensorObserver.h',['../a00116.html',1,'']]],
   ['boundedspeedconstr_2eh',['BoundedSpeedConstr.h',['../a00362.html',1,'']]],
