@@ -21,6 +21,46 @@ RobotModule::RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFPars
   expand_stance();
 }
 
+RobotModule::Gripper::Gripper(const std::string & name, const std::vector<std::string> & joints, bool reverse_limits)
+: Gripper(name, joints, reverse_limits, nullptr, nullptr)
+{
+}
+
+RobotModule::Gripper::Gripper(const std::string & name,
+                              const std::vector<std::string> & joints,
+                              bool reverse_limits,
+                              const Safety & safety)
+: Gripper(name, joints, reverse_limits, &safety, nullptr)
+{
+}
+
+RobotModule::Gripper::Gripper(const std::string & name,
+                              const std::vector<std::string> & joints,
+                              bool reverse_limits,
+                              const Safety & safety,
+                              const std::vector<Mimic> & mimics)
+: Gripper(name, joints, reverse_limits, &safety, &mimics)
+{
+}
+
+RobotModule::Gripper::Gripper(const std::string & name,
+                              const std::vector<std::string> & joints,
+                              bool reverse_limits,
+                              const Safety * safety,
+                              const std::vector<Mimic> * mimics)
+: name(name), joints(joints), reverse_limits(reverse_limits), hasSafety_(safety != nullptr),
+  hasMimics_(mimics != nullptr)
+{
+  if(mimics)
+  {
+    mimics_ = *mimics;
+  }
+  if(safety)
+  {
+    safety_ = *safety;
+  }
+}
+
 void RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits & limits)
 {
   auto neg_bound = [](const std::map<std::string, std::vector<double>> & v) {

@@ -265,39 +265,38 @@ Robot::Robot(Robots & robots,
 
   zmp_ = Eigen::Vector3d::Zero();
 
-  const auto & mimics = module_.gripperMimics();
-  if(mimics.size())
-  {
-    for(const auto & gripper : module_.grippers())
+  std::string urdf;
+  auto loadUrdf = [&module_, &urdf]() -> const std::string & {
+    if(urdf.size())
     {
-      if(!mimics.count(gripper.name))
-      {
-        LOG_ERROR_AND_THROW(std::runtime_error,
-                            "Mimics information not specified for gripper: " << gripper.name << " in " << module_.name)
-      }
-      grippers_[gripper.name].reset(
-          new mc_control::Gripper(*this, gripper.joints, mimics.at(gripper.name), gripper.reverse_limits));
+      return urdf;
     }
-  }
-  else
-  {
     const auto & urdfPath = module_.urdf_path;
     std::ifstream ifs(urdfPath);
     if(ifs.is_open())
     {
       std::stringstream urdfSS;
       urdfSS << ifs.rdbuf();
-      auto urdf = urdfSS.str();
-      for(const auto & gripper : module_.grippers())
-      {
-        grippers_[gripper.name].reset(new mc_control::Gripper(*this, gripper.joints, urdf, gripper.reverse_limits));
-      }
+      urdf = urdfSS.str();
+      return urdf;
+    }
+    LOG_ERROR("Could not open urdf file " << urdfPath << " for robot " << module_.name
+                                          << ", cannot initialize grippers")
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize grippers")
+  };
+  for(const auto & gripper : module_.grippers())
+  {
+    auto mimics = gripper.mimics();
+    auto safety = gripper.safety();
+    if(mimics)
+    {
+      grippers_[gripper.name].reset(new mc_control::Gripper(*this, gripper.joints, *mimics, gripper.reverse_limits,
+                                                            safety ? *safety : module_.gripperSafety()));
     }
     else
     {
-      LOG_ERROR("Could not open urdf file " << urdfPath << " for robot " << module_.name
-                                            << ", cannot initialize grippers")
-      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize grippers")
+      grippers_[gripper.name].reset(new mc_control::Gripper(*this, gripper.joints, loadUrdf(), gripper.reverse_limits,
+                                                            safety ? *safety : module_.gripperSafety()));
     }
   }
   for(auto & g : grippers_)

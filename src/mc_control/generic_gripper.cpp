@@ -12,6 +12,7 @@
 #include <mc_rtc/gui.h>
 #include <mc_rtc/logging.h>
 
+#include <algorithm>
 #include <cmath>
 #include <numeric>
 #include <tinyxml2.h>
@@ -89,16 +90,18 @@ std::vector<mc_rbdyn::Mimic> gripperMimics(const std::vector<std::string> & join
 Gripper::Gripper(const mc_rbdyn::Robot & robot,
                  const std::vector<std::string> & jointNames,
                  const std::string & robot_urdf,
-                 bool reverseLimits)
-: Gripper(robot, jointNames, gripperMimics(jointNames, readMimic(robot_urdf)), reverseLimits)
+                 bool reverseLimits,
+                 const mc_rbdyn::RobotModule::Gripper::Safety & safety)
+: Gripper(robot, jointNames, gripperMimics(jointNames, readMimic(robot_urdf)), reverseLimits, safety)
 {
 }
 
 Gripper::Gripper(const mc_rbdyn::Robot & robot,
                  const std::vector<std::string> & jointNames,
                  const std::vector<mc_rbdyn::Mimic> & mimics,
-                 bool reverseLimits)
-: actualQ(jointNames.size(), 0)
+                 bool reverseLimits,
+                 const mc_rbdyn::RobotModule::Gripper::Safety & safety)
+: actualQ(jointNames.size(), 0), config_(safety), savedConfig_(safety), defaultConfig_(safety)
 {
   active_joints = jointNames;
   mult.resize(0);
@@ -192,10 +195,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
 
 void Gripper::resetDefaults()
 {
-  config_.percentVMax = DEFAULT_PERCENT_VMAX;
-  config_.actualCommandDiffTrigger = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
-  config_.overCommandLimitIterN = DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
-  config_.releaseSafetyOffset = DEFAULT_RELEASE_OFFSET;
+  config_ = defaultConfig_;
 }
 
 void Gripper::saveConfig()

@@ -5,10 +5,7 @@
 #pragma once
 
 #include <mc_control/api.h>
-#include <mc_rbdyn/Mimic.h>
-#include <mc_rtc/constants.h>
-#include <boost/math/constants/constants.hpp>
-#include <algorithm>
+#include <mc_rbdyn/RobotModule.h>
 
 #include <map>
 #include <string>
@@ -36,14 +33,6 @@ namespace mc_control
  */
 struct MC_CONTROL_DLLAPI Gripper
 {
-  /*! Percentage of max velocity of active joints in the gripper */
-  static constexpr double DEFAULT_PERCENT_VMAX = 0.25;
-  /*! Difference between the command and the reality that triggers the safety */
-  static constexpr double DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER = mc_rtc::constants::toRad(8.);
-  /*! Number of iterations before the security is triggered */
-  static constexpr unsigned int DEFAULT_OVER_COMMAND_LIMIT_ITER_N = 5;
-  /** Release offset [rad] */
-  static constexpr double DEFAULT_RELEASE_OFFSET = mc_rtc::constants::toRad(2);
 
   /*! \brief Constructor
    *
@@ -51,11 +40,13 @@ struct MC_CONTROL_DLLAPI Gripper
    * \param jointNames Name of the active joints involved in the gripper
    * \param robot_urdf URDF of the robot
    * \param reverseLimits If set to true, then the gripper is considered "open" when the joints' values are minimal
+   * \param safety Default gripper safety parameters
    */
   Gripper(const mc_rbdyn::Robot & robot,
           const std::vector<std::string> & jointNames,
           const std::string & robot_urdf,
-          bool reverseLimits);
+          bool reverseLimits,
+          const mc_rbdyn::RobotModule::Gripper::Safety & safety);
 
   /*! \brief Constructor
    *
@@ -65,11 +56,13 @@ struct MC_CONTROL_DLLAPI Gripper
    * \param jointNames Name of the active joints involved in the gripper
    * \param mimics Mimic joints for the gripper
    * \param reverseLimits If true, the gripper is considered "open" when the joints values are minimal
+   * \param safety Default gripper safety parameters
    */
   Gripper(const mc_rbdyn::Robot & robot,
           const std::vector<std::string> & jointNames,
           const std::vector<mc_rbdyn::Mimic> & mimics,
-          bool reverseLimits);
+          bool reverseLimits,
+          const mc_rbdyn::RobotModule::Gripper::Safety & safety);
 
   /** \brief Resets the gripper parameters to their default value (percentVMax, actualCommandDiffTrigger) */
   void resetDefaults();
@@ -246,22 +239,13 @@ protected:
   std::vector<double> actualQ;
 
 protected:
-  /** User-controllable parameters for the gripper */
-  struct Config
-  {
-    /*! Percentage of max velocity of active joints in the gripper */
-    double percentVMax = DEFAULT_PERCENT_VMAX;
-    /*! Difference between the command and the reality that triggers the safety */
-    double actualCommandDiffTrigger = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
-    /** Offset by which the gripper is released when safety is triggered */
-    double releaseSafetyOffset = DEFAULT_RELEASE_OFFSET;
-    /*! Number of iterations before the security is triggered */
-    unsigned int overCommandLimitIterN = DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
-  };
+  using Config = mc_rbdyn::RobotModule::Gripper::Safety;
   /** Current configuration of the gripper parameters */
   Config config_;
-  /** Saved configuration of the parameters saved by savedConfig() */
+  /** Saved configuration of the parameters saved by saveConfig() */
   Config savedConfig_;
+  /** Default configuration provided at construction */
+  Config defaultConfig_;
 
   /*! Current opening percentage */
   std::vector<double> percentOpen;

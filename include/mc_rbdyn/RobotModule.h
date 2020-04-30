@@ -14,6 +14,8 @@
 #include <mc_rbdyn/api.h>
 #include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 
+#include <mc_rtc/constants.h>
+
 #include <mc_rbdyn_urdf/urdf.h>
 
 #include <array>
@@ -44,12 +46,81 @@ struct MC_RBDYN_DLLAPI RobotModule
   /*! Holds necessary information to create a gripper */
   struct Gripper
   {
+    /*! Holds information regarding gripper control safety parameters */
+    struct Safety
+    {
+      inline Safety() : Safety(0.25) {}
+
+      // FIXME These constructors are only needed to facilitate initialization and not required in C++14
+      inline Safety(double percentVMax,
+                    double actualCommandDiffTrigger = mc_rtc::constants::toRad(8.),
+                    double releaseSafetyOffset = mc_rtc::constants::toRad(2.),
+                    unsigned int overCommandLimitIterN = 5)
+      : percentVMax(percentVMax), actualCommandDiffTrigger(actualCommandDiffTrigger),
+        releaseSafetyOffset(releaseSafetyOffset), overCommandLimitIterN(overCommandLimitIterN)
+      {
+      }
+      /*! Percentage of max velocity of active joints in the gripper */
+      double percentVMax;
+      /*! Difference between the command and the reality that triggers the safety */
+      double actualCommandDiffTrigger;
+      /** Offset by which the gripper is released when safety is triggered */
+      double releaseSafetyOffset;
+      /*! Number of iterations before the security is triggered */
+      unsigned int overCommandLimitIterN;
+    };
+
+    /** Constructor with no mimics and no safety information */
+    Gripper(const std::string & name, const std::vector<std::string> & joints, bool reverse_limits);
+
+    /** Constructor with safety parameters but no mimics information */
+    Gripper(const std::string & name,
+            const std::vector<std::string> & joints,
+            bool reverse_limits,
+            const Safety & safety);
+
+    /** Constructor with mimics and safety information */
+    Gripper(const std::string & name,
+            const std::vector<std::string> & joints,
+            bool reverse_limits,
+            const Safety & safety,
+            const std::vector<Mimic> & mimics);
+
     /*! Gripper's name */
     std::string name;
     /*! Active joints in the gripper */
     std::vector<std::string> joints;
     /*! Whether the limits should be reversed, see mc_control::Gripper */
     bool reverse_limits;
+
+    // FIXME In C++17 std::optional is a better semantic
+    /*! Returns the safety parameters if provided, otherwise a nullptr */
+    inline const Safety * safety() const
+    {
+      return hasSafety_ ? &safety_ : nullptr;
+    }
+
+    /*! Returns the mimics parameters if provided, otherwise a nullptr */
+    inline const std::vector<Mimic> * mimics() const
+    {
+      return hasMimics_ ? &mimics_ : nullptr;
+    }
+
+  private:
+    /*! True if safety parameters were provided by the user */
+    bool hasSafety_ = false;
+    /*! Gripper safety parameters */
+    Safety safety_;
+    /*! True if mimic parameters were provided by the user */
+    bool hasMimics_ = false;
+    /*! User-provided mimic information */
+    std::vector<Mimic> mimics_;
+    /*! Internal constructor used by the others */
+    Gripper(const std::string & name,
+            const std::vector<std::string> & joints,
+            bool reverse_limits,
+            const Safety * safety,
+            const std::vector<Mimic> * mimics);
   };
 
   /** Construct from a provided path and name
@@ -237,13 +308,15 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _grippers;
   }
 
-  /** Return a map of mimics joints associated to a gripper.
+  /** Returns default gripper safety parameters if one is not provided by a gripper.
    *
-   * If this is empty, the mimics are deduced from the URDF.
+   * This can also be used to provide identical settings for every grippers in a robot
+   *
+   * \see mc_rbdyn::Gripper::Safety for details on the safety parameters
    */
-  const std::map<std::string, std::vector<Mimic>> & gripperMimics() const
+  inline const Gripper::Safety & gripperSafety() const
   {
-    return _gripperMimics;
+    return _gripperSafety;
   }
 
   /** Return the reference (native controller) joint order of the robot
@@ -366,8 +439,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::vector<mc_rbdyn::Collision> _commonSelfCollisions;
   /** \see grippers() */
   std::vector<Gripper> _grippers;
-  /** \see gripperMimics() */
-  std::map<std::string, std::vector<Mimic>> _gripperMimics;
+  /** \see gripperSafety() */
+  Gripper::Safety _gripperSafety;
   /** \see ref_joint_order() */
   std::vector<std::string> _ref_joint_order;
   /** \see default_attitude() */
