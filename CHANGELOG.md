@@ -5,6 +5,13 @@
 ### Added
 
 - mc\_tasks::MomentumTask
+- mc\_rbdyn::RobotModule can specify a different URDF for showing the real robot
+- mc\_log\_ui now has an icon and a dedicated .desktop file
+
+### Changes
+
+- mc\_solver::QPSolver always makes sure to udpate the problem size
+- Many tasks throw as documented when pre-conditions are not met (e.g. surface does not exist or has no sensor attached)
 
 ### Fixes
 
