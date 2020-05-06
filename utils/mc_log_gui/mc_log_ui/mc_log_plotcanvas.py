@@ -12,6 +12,8 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QComboBox
 import copy
 import math
 import matplotlib
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
 import numpy as np
 matplotlib.use('Qt5Agg')
 import matplotlib.pyplot

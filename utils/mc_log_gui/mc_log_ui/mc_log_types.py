@@ -12,6 +12,8 @@ import os
 import numpy as np
 
 import matplotlib
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
 matplotlib.use('Qt5Agg')
 import matplotlib.pyplot as plt
 
