@@ -166,6 +166,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8361592b3630831c0cb57d8bb86afceb"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02152.html#a8361592b3630831c0cb57d8bb86afceb">parameters</a> () const</td></tr>
 <tr class="memdesc:a8361592b3630831c0cb57d8bb86afceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the list of parameters passed to <a class="el" href="a02148.html#ad660aedc7dbf7cd0cd0e60da5fffe4c2" title="Return a RobotModule constructed with the provided Args. ">mc_rbdyn::RobotLoader::get_robot_module</a> to obtain this module.  <a href="#a8361592b3630831c0cb57d8bb86afceb">More...</a><br /></td></tr>
 <tr class="separator:a8361592b3630831c0cb57d8bb86afceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacf9d200189fd184ab6fe0b88cf16fdb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02152.html#aacf9d200189fd184ab6fe0b88cf16fdb">real_urdf</a> () const</td></tr>
+<tr class="memdesc:aacf9d200189fd184ab6fe0b88cf16fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the path to a "real" URDF file.  <a href="#aacf9d200189fd184ab6fe0b88cf16fdb">More...</a><br /></td></tr>
+<tr class="separator:aacf9d200189fd184ab6fe0b88cf16fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -232,6 +235,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a0f8cfd4ca7e7772f68266003e7b8fc3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7da8429458a11c340c168aa0eade6694"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02092.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02152.html#a7da8429458a11c340c168aa0eade6694">_lipmStabilizerConfig</a></td></tr>
 <tr class="separator:a7da8429458a11c340c168aa0eade6694"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a581c9d2efa5a52e3850b8858ac0b58c4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02152.html#a581c9d2efa5a52e3850b8858ac0b58c4">_real_urdf</a></td></tr>
+<tr class="separator:a581c9d2efa5a52e3850b8858ac0b58c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a5b8304a1ea905fa0378a31dcf65b1460"></a>
@@ -859,6 +864,35 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aacf9d200189fd184ab6fe0b88cf16fdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacf9d200189fd184ab6fe0b88cf16fdb">&#9670;&nbsp;</a></span>real_urdf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_rbdyn::RobotModule::real_urdf </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the path to a "real" URDF file. </p>
+<p>This will be used to show a visually distinct robot for displaying the control and observed models simulatenously.</p>
+<p>This defaults to urdf_path </p>
+
+</div>
+</div>
 <a id="ad9e8a1a1287fa07848d959d3b10b76c7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad9e8a1a1287fa07848d959d3b10b76c7">&#9670;&nbsp;</a></span>ref_joint_order()</h2>
 
@@ -1189,6 +1223,21 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a581c9d2efa5a52e3850b8858ac0b58c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a581c9d2efa5a52e3850b8858ac0b58c4">&#9670;&nbsp;</a></span>_real_urdf</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_rbdyn::RobotModule::_real_urdf</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02152.html#aacf9d200189fd184ab6fe0b88cf16fdb" title="Returns the path to a &quot;real&quot; URDF file. ">real_urdf()</a> </dd></dl>
+
+</div>
+</div>
 <a id="ae0d4fcfe71467be0aef41abe99458339"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae0d4fcfe71467be0aef41abe99458339">&#9670;&nbsp;</a></span>_ref_joint_order</h2>
 
@@ -1400,7 +1449,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00715.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02152.html">RobotModule</a></li>
-    <li class="footer">Generated on Thu Apr 30 2020 08:55:46 for mc_rtc by
+    <li class="footer">Generated on Wed May 6 2020 09:20:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -26,7 +26,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Tutorials - Implement a new mc_rtc interface - mc_rtc</title>
+    <title>Tutorials - Debugging LSSOL output 6 - mc_rtc</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
@@ -47,6 +47,9 @@
 
     
 
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/tex-mml-chtml.js"></script>
     
 
     <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
@@ -248,8 +251,7 @@
           <ul>
             
               
-              <li><strong>Implement a new mc_rtc interface</strong></li>
-                
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
               
             
               
@@ -261,7 +263,8 @@
               
             
               
-              <li><a href="/mc_rtc/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+              <li><strong>Debugging LSSOL output 6</strong></li>
+                
               
             
           </ul>
@@ -269,16 +272,44 @@
         </ul>
       </div>
       <div class="col-9">
-        <h1>Implement a new mc_rtc interface</h1>
+        <h1>Debugging LSSOL output 6</h1>
 
-        <p>Coming soon</p>
+        <p>This page will help you to debug the issue known as <code class="highlighter-rouge">lssol output (6)</code> that you might typically encounter as the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lssol output (6):
+An input parameter is invalid
+
+QP failed to run()
+</code></pre></div></div>
+
+<p>Note: while this apply specifically to LSSOL, this might be helpful to debug other QP solver failures.</p>
+
+<p>As the message says, one of the input to the solver is invalid. LSSOL returns this when one of the following occurs (from most likely to unlikely):</p>
+
+<ol>
+  <li>The bounds on a constraint \(b_l \leq A_i^T x \leq b_u \) or a variable \(b_l \leq x_i \leq b_u\) are invalid, i.e.
+    <ul>
+      <li>\(b_u &lt; b_l\) (most likely)</li>
+      <li>\(b_l = b_u\) and \(\mid b_l \mid &gt; bigbnd\)</li>
+    </ul>
+  </li>
+  <li>The warm start data are invalid</li>
+  <li>A version of the solver is called that uses a permutation \(k_x\) and \(k_x\) is invalid</li>
+  <li>Not enough workspace memory was allocated</li>
+</ol>
+
+<p>The file <code class="highlighter-rouge">/tmp/fort.9</code> should inform you on the exact nature of the problem. You should have a line ressembling one of these:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">XXX  The bounds on  varbl  3  are inconsistent.   bl =   -1000.000       bu =   -10000.00</code> (inconsistent bounds on a variable)</li>
+  <li><code class="highlighter-rouge">XXX  The bounds on  lncon  4  are inconsistent.   bl =    2       bu =   -1.000000</code> (inconsistent bounds on an inequality constraint)</li>
+  <li><code class="highlighter-rouge">XXX  The equal bounds on  lncon  1  are infinite.   Bounds =   0.1000000+101  bigbnd =   0.9999900E+10</code> (\(b\) too large in an equality constraint \(A_i^T x = b\) - represented internally as \(b \leq A_i^T x \leq b\))</li>
+</ul>
+
+<p>Note: on Windows, that file is located in the folder where the application using LSSOL is executed</p>
 
 
         <hr/>
-        
-        <div class="text-right">
-        <a href="/mc_rtc/tutorials/advanced/new-environment.html">Next tutorial: Environment creation for mc_rtc</a>
-        </div>
         
       </div>
       </div>

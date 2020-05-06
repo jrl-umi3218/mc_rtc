@@ -22084,6 +22084,13 @@
       <anchor>a8361592b3630831c0cb57d8bb86afceb</anchor>
       <arglist>() const</arglist>
     </member>
+    <member kind="function">
+      <type>std::string</type>
+      <name>real_urdf</name>
+      <anchorfile>a02152.html</anchorfile>
+      <anchor>aacf9d200189fd184ab6fe0b88cf16fdb</anchor>
+      <arglist>() const</arglist>
+    </member>
     <member kind="variable">
       <type>std::string</type>
       <name>path</name>
@@ -22271,6 +22278,13 @@
       <name>_lipmStabilizerConfig</name>
       <anchorfile>a02152.html</anchorfile>
       <anchor>a7da8429458a11c340c168aa0eade6694</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>_real_urdf</name>
+      <anchorfile>a02152.html</anchorfile>
+      <anchor>a581c9d2efa5a52e3850b8858ac0b58c4</anchor>
       <arglist></arglist>
     </member>
   </compound>
