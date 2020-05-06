@@ -7,10 +7,12 @@ execute_process(COMMAND "python" -c "from distutils import sysconfig; print(sysc
 if("${PYTHON_INSTALL_DIR_FOUND}" EQUAL 0)
   install(DIRECTORY mc_log_ui
     DESTINATION "${PYTHON_INSTALL_DIR}"
-    FILES_MATCHING PATTERN "*.py")
+    FILES_MATCHING PATTERN "*.py" PATTERN "*.png")
   if(NOT WIN32)
     install(PROGRAMS mc_log_ui.py DESTINATION bin RENAME mc_log_ui)
     install(PROGRAMS plot_logs.py DESTINATION bin RENAME mc_plot_logs)
+    install(FILES mc_log_ui/icons/icon.png DESTINATION share/icons/hicolor/512x512/apps/ RENAME mc_log_ui.png)
+    install(FILES mc_log_ui.desktop DESTINATION share/applications)
   else()
     install(PROGRAMS mc_log_ui.py DESTINATION bin)
     install(PROGRAMS plot_logs.py DESTINATION bin RENAME mc_plot_logs.py)
