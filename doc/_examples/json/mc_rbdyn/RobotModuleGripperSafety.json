@@ -1,0 +1,7 @@
+{
+  "percentVMax": 0.25,
+  "actualCommandDiffTrigger": 0.14, // 8 deg.
+  "releaseSafetyOffset": 0.034, // 2 deg.
+  "overCommandLimitIterN": 5
+}
+

@@ -74,7 +74,9 @@ DECLARE_IO(mc_rbdyn::ForceSensor)
 DECLARE_IO(mc_rbdyn::Plane)
 DECLARE_IO(mc_rbdyn::PolygonInterpolator)
 DECLARE_IO(mc_rbdyn::Springs)
+DECLARE_IO(mc_rbdyn::Mimic)
 DECLARE_IO(mc_rbdyn::RobotModule::Gripper)
+DECLARE_IO(mc_rbdyn::RobotModule::Gripper::Safety)
 
 #undef DECLARE_IO
 

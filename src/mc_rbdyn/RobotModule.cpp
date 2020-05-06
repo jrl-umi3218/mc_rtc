@@ -7,6 +7,13 @@
 namespace mc_rbdyn
 {
 
+// Repeat static constexpr declarations
+// See also https://stackoverflow.com/q/8016780
+constexpr double RobotModule::Gripper::Safety::DEFAULT_PERCENT_VMAX;
+constexpr double RobotModule::Gripper::Safety::DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
+constexpr double RobotModule::Gripper::Safety::DEFAULT_RELEASE_OFFSET;
+constexpr unsigned int RobotModule::Gripper::Safety::DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
+
 RobotModule::RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res)
 : RobotModule("/CREATED/BY/MC/RTC/", name)
 {

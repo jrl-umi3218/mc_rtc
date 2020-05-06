@@ -508,10 +508,52 @@ mc_rtc::Configuration ConfigurationLoader<rbd::MultiBodyConfig>::save(const rbd:
   return config;
 }
 
+mc_rbdyn::Mimic ConfigurationLoader<mc_rbdyn::Mimic>::load(const mc_rtc::Configuration & config)
+{
+  return {config("name"), config("joint"), config("multiplier", 1.0), config("offset", 0.0)};
+}
+
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::Mimic>::save(const mc_rbdyn::Mimic & mimic)
+{
+  mc_rtc::Configuration config;
+  config.add("name", mimic.name);
+  config.add("joint", mimic.joint);
+  config.add("multiplier", mimic.multiplier);
+  config.add("offset", mimic.offset);
+  return config;
+}
+
+namespace
+{
+
+mc_rbdyn::RobotModule::Gripper loadGripper(const mc_rtc::Configuration & config,
+                                           const mc_rbdyn::RobotModule::Gripper::Safety & safety)
+{
+  const std::string & name = config("name");
+  const std::vector<std::string> & joints = config("joints");
+  bool reverse_limits = config("reverse_limits");
+  if(config.has("safety"))
+  {
+    const mc_rbdyn::RobotModule::Gripper::Safety & safety = config("safety");
+    if(config.has("mimics"))
+    {
+      return {name, joints, reverse_limits, safety, config("mimics")};
+    }
+    return {name, joints, reverse_limits, safety};
+  }
+  if(config.has("mimics"))
+  {
+    return {name, joints, reverse_limits, safety, config("mimics")};
+  }
+  return {name, joints, reverse_limits};
+}
+
+} // namespace
+
 mc_rbdyn::RobotModule::Gripper ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::load(
     const mc_rtc::Configuration & config)
 {
-  return {config("name"), config("joints"), config("reverse_limits")};
+  return loadGripper(config, {});
 }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::save(
@@ -521,6 +563,38 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::save(
   config.add("name", rmg.name);
   config.add("joints", rmg.joints);
   config.add("reverse_limits", rmg.reverse_limits);
+  auto safety = rmg.safety();
+  if(safety)
+  {
+    config.add("safety", *safety);
+  }
+  auto mimics = rmg.mimics();
+  if(mimics)
+  {
+    config.add("mimics", *mimics);
+  }
+  return config;
+}
+
+mc_rbdyn::RobotModule::Gripper::Safety ConfigurationLoader<mc_rbdyn::RobotModule::Gripper::Safety>::load(
+    const mc_rtc::Configuration & config)
+{
+  return {
+      config("percentVMax", mc_rbdyn::RobotModule::Gripper::Safety::DEFAULT_PERCENT_VMAX),
+      config("actualCommandDiffTrigger", mc_rbdyn::RobotModule::Gripper::Safety::DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER),
+      config("releaseSafetyOffset", mc_rbdyn::RobotModule::Gripper::Safety::DEFAULT_RELEASE_OFFSET),
+      std::max<unsigned int>(1, config("overCommandLimitIterN",
+                                       mc_rbdyn::RobotModule::Gripper::Safety::DEFAULT_OVER_COMMAND_LIMIT_ITER_N))};
+}
+
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper::Safety>::save(
+    const mc_rbdyn::RobotModule::Gripper::Safety & safety)
+{
+  mc_rtc::Configuration config;
+  config.add("percentVMax", safety.percentVMax);
+  config.add("actualCommandDiffTrigger", safety.actualCommandDiffTrigger);
+  config.add("releaseSafetyOffset", safety.releaseSafetyOffset);
+  config.add("overCommandLimitIterN", safety.overCommandLimitIterN);
   return config;
 }
 
@@ -731,7 +805,6 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   config("springs", rm._springs);
   config("minimalSelfCollisions", rm._minimalSelfCollisions);
   config("commonSelfCollisions", rm._commonSelfCollisions);
-  config("grippers", rm._grippers);
   config("default_attitude", rm._default_attitude);
 
   /* Those cannot be empty */
@@ -745,6 +818,20 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
   {
     rm.make_default_ref_joint_order();
   }
+
+  if(config.has("gripperSafety"))
+  {
+    rm._gripperSafety = config("gripperSafety");
+  }
+  if(config.has("grippers"))
+  {
+    std::vector<mc_rtc::Configuration> grippers = config("grippers");
+    for(auto & g : grippers)
+    {
+      rm._grippers.push_back(loadGripper(g, rm.gripperSafety()));
+    }
+  }
+
   return rm;
 }
 
@@ -793,6 +880,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   config.add("grippers", rm._grippers);
   config.add("ref_joint_order", rm._ref_joint_order);
   config.add("default_attitude", rm._default_attitude);
+  config.add("gripperSafety", rm._gripperSafety);
   return config;
 }
 

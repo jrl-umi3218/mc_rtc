@@ -49,13 +49,22 @@ struct MC_RBDYN_DLLAPI RobotModule
     /*! Holds information regarding gripper control safety parameters */
     struct MC_RBDYN_DLLAPI Safety
     {
-      inline Safety() : Safety(0.25) {}
+      /*! Percentage of max velocity of active joints in the gripper */
+      static constexpr double DEFAULT_PERCENT_VMAX = 0.25;
+      /*! Difference between the command and the reality that triggers the safety */
+      static constexpr double DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER = mc_rtc::constants::toRad(8.);
+      /** Release offset [gripper units] */
+      static constexpr double DEFAULT_RELEASE_OFFSET = mc_rtc::constants::toRad(2);
+      /*! Number of iterations before the security is triggered */
+      static constexpr unsigned int DEFAULT_OVER_COMMAND_LIMIT_ITER_N = 5;
 
       // FIXME These constructors are only needed to facilitate initialization and not required in C++14
+      inline Safety() : Safety(DEFAULT_PERCENT_VMAX) {}
+
       inline Safety(double percentVMax,
-                    double actualCommandDiffTrigger = mc_rtc::constants::toRad(8.),
-                    double releaseSafetyOffset = mc_rtc::constants::toRad(2.),
-                    unsigned int overCommandLimitIterN = 5)
+                    double actualCommandDiffTrigger = DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER,
+                    double releaseSafetyOffset = DEFAULT_RELEASE_OFFSET,
+                    unsigned int overCommandLimitIterN = DEFAULT_OVER_COMMAND_LIMIT_ITER_N)
       : percentVMax(percentVMax), actualCommandDiffTrigger(actualCommandDiffTrigger),
         releaseSafetyOffset(releaseSafetyOffset), overCommandLimitIterN(overCommandLimitIterN)
       {
