@@ -44,10 +44,10 @@ struct MC_RBDYN_DLLAPI RobotModule
   using bounds_t = std::vector<std::map<std::string, std::vector<double>>>;
 
   /*! Holds necessary information to create a gripper */
-  struct Gripper
+  struct MC_RBDYN_DLLAPI Gripper
   {
     /*! Holds information regarding gripper control safety parameters */
-    struct Safety
+    struct MC_RBDYN_DLLAPI Safety
     {
       inline Safety() : Safety(0.25) {}
 

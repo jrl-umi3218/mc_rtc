@@ -31,7 +31,7 @@ namespace mc_control
  * In real operations the actuated joints are also monitored to avoid
  * potential servo errors.
  */
-struct MC_CONTROL_DLLAPI Gripper
+struct MC_RBDYN_DLLAPI Gripper
 {
 
   /*! \brief Constructor
