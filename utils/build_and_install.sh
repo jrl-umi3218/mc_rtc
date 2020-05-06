@@ -477,7 +477,7 @@ else
   export OS=Windows
   if [ "x$WITH_PYTHON_SUPPORT" == xON ] && $NOT_CLONE_ONLY
   then
-    pip install ${PIP_DEPENDENCIES}
+    pip install --user ${PIP_DEPENDENCIES}
   fi
   mc_rtc_extra_steps
 fi
