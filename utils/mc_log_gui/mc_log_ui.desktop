@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=MCLogUI
+Comment=Log file GUI for mc_rtc
+Exec=mc_log_ui %F
+Keywords=robotics
+Terminal=false
+Type=Application
+StartupNotify=true
+MimeType=application/octet-stream
+Icon=mc_log_ui
