@@ -128,3 +128,6 @@
     -
       id: new-robot
       title: Integrate a new robot in mc_rtc
+    -
+      id: debug-lssol-output-6
+      title: Debugging LSSOL output 6
