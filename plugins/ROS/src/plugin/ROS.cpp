@@ -49,7 +49,7 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
   if(publish_real)
   {
     const auto & real_robot = controller.controller().realRobot();
-    mc_rtc::ROSBridge::init_robot_publisher("real", controller.timestep(), real_robot);
+    mc_rtc::ROSBridge::init_robot_publisher("real", controller.timestep(), real_robot, true);
   }
 }
 

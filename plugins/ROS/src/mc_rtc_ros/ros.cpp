@@ -86,7 +86,7 @@ struct RobotPublisherImpl
 
   ~RobotPublisherImpl();
 
-  void init(const mc_rbdyn::Robot & robot);
+  void init(const mc_rbdyn::Robot & robot, bool use_real);
 
   void update(double dt,
               const mc_rbdyn::Robot & robot,
@@ -114,6 +114,7 @@ private:
   const mc_rbdyn::Robot * previous_robot;
   rbd::MultiBodyConfig mbc;
   RobotStateData data;
+  bool use_real;
 
   /** Publication details */
   bool running;
@@ -129,8 +130,8 @@ private:
 RobotPublisherImpl::RobotPublisherImpl(ros::NodeHandle & nh, const std::string & prefix, double rate, double dt)
 : nh(nh), j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix + "joint_states", 1)),
   imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix + "imu", 1)),
-  odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix + "odom", 1)), tf_caster(), prefix(prefix), running(true),
-  seq(0), msgs(), rate(rate), skip(static_cast<unsigned int>(ceil(1 / (rate * dt)))),
+  odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix + "odom", 1)), tf_caster(), prefix(prefix), use_real(false),
+  running(true), seq(0), msgs(), rate(rate), skip(static_cast<unsigned int>(ceil(1 / (rate * dt)))),
   th(std::bind(&RobotPublisherImpl::publishThread, this))
 {
 }
@@ -141,12 +142,13 @@ RobotPublisherImpl::~RobotPublisherImpl()
   th.join();
 }
 
-void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot)
+void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
 {
   if(&robot == previous_robot)
   {
     return;
   }
+  this->use_real = use_real;
   previous_robot = &robot;
 
   // Reset data
@@ -199,10 +201,11 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot)
   }
 
   nh.setParam(prefix + "/robot_module", robot.module().parameters());
-  std::ifstream ifs(robot.module().urdf_path);
+  const auto & urdf_path = use_real ? robot.module().real_urdf() : robot.module().urdf_path;
+  std::ifstream ifs(urdf_path);
   if(!ifs.is_open())
   {
-    LOG_ERROR(robot.name() << " URDF: " << robot.module().urdf_path << " is not readable")
+    LOG_ERROR(robot.name() << " URDF: " << urdf_path << " is not readable")
     return;
   }
   std::stringstream urdf;
@@ -216,7 +219,7 @@ void RobotPublisherImpl::update(double,
 {
   if(&robot != previous_robot)
   {
-    init(robot);
+    init(robot, use_real);
   }
 
   if(++seq % skip)
@@ -381,11 +384,11 @@ RobotPublisher::RobotPublisher(const std::string & prefix, double rate, double d
 
 RobotPublisher::~RobotPublisher() {}
 
-void RobotPublisher::init(const mc_rbdyn::Robot & robot)
+void RobotPublisher::init(const mc_rbdyn::Robot & robot, bool use_real)
 {
   if(impl)
   {
-    impl->init(robot);
+    impl->init(robot, use_real);
   }
 }
 
@@ -478,14 +481,17 @@ void ROSBridge::set_publisher_timestep(double timestep)
   impl.publish_rate = 1 / timestep;
 }
 
-void ROSBridge::init_robot_publisher(const std::string & publisher, double dt, const mc_rbdyn::Robot & robot)
+void ROSBridge::init_robot_publisher(const std::string & publisher,
+                                     double dt,
+                                     const mc_rbdyn::Robot & robot,
+                                     bool use_real)
 {
   static auto & impl = impl_();
   if(impl.rpubs.count(publisher) == 0)
   {
     impl.rpubs[publisher] = std::make_shared<RobotPublisher>(publisher + "/", impl.publish_rate, dt);
   }
-  impl.rpubs[publisher]->init(robot);
+  impl.rpubs[publisher]->init(robot, use_real);
 }
 
 void ROSBridge::update_robot_publisher(const std::string & publisher,

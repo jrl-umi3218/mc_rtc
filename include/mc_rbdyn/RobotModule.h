@@ -85,7 +85,8 @@ struct MC_RBDYN_DLLAPI RobotModule
    * \param urdf_path Path to the robot URDF
    */
   RobotModule(const std::string & path, const std::string & name, const std::string & urdf_path)
-  : path(path), name(name), urdf_path(urdf_path), rsdf_dir(path + "/rsdf/" + name), calib_dir(path + "/calib/" + name)
+  : path(path), name(name), urdf_path(urdf_path), rsdf_dir(path + "/rsdf/" + name), calib_dir(path + "/calib/" + name),
+    _real_urdf(urdf_path)
   {
   }
 
@@ -311,6 +312,18 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _parameters;
   }
 
+  /** Returns the path to a "real" URDF file
+   *
+   * This will be used to show a visually distinct robot for displaying the
+   * control and observed models simulatenously.
+   *
+   * This defaults to urdf_path
+   */
+  std::string real_urdf() const
+  {
+    return _real_urdf;
+  }
+
   /** Path to the robot's description package */
   std::string path;
   /** (default) Name of the robot */
@@ -365,6 +378,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::vector<std::string> _parameters;
   /** \see defaultLIPMStabilizerConfiguration() */
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration _lipmStabilizerConfig;
+  /** \see real_urdf() */
+  std::string _real_urdf;
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;
