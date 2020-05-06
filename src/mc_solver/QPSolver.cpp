@@ -74,11 +74,15 @@ QPSolver::QPSolver(double timeStep) : QPSolver{std::make_shared<mc_rbdyn::Robots
 void QPSolver::addConstraintSet(ConstraintSet & cs)
 {
   cs.addToSolver(robots().mbs(), solver);
+  solver.updateConstrSize();
+  solver.updateNrVars(robots().mbs());
 }
 
 void QPSolver::removeConstraintSet(ConstraintSet & cs)
 {
   cs.removeFromSolver(solver);
+  solver.updateConstrSize();
+  solver.updateNrVars(robots().mbs());
 }
 
 void QPSolver::addTask(tasks::qp::Task * task)

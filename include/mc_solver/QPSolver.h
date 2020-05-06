@@ -160,6 +160,8 @@ public:
   void addConstraint(tasks::qp::ConstraintFunction<Fun...> * constraint)
   {
     constraint->addToSolver(robots().mbs(), solver);
+    solver.updateConstrSize();
+    solver.updateNrVars(robots().mbs());
   }
 
   /** Remove a constraint function from the solver
@@ -169,6 +171,8 @@ public:
   void removeConstraint(tasks::qp::ConstraintFunction<Fun...> * constraint)
   {
     constraint->removeFromSolver(solver);
+    solver.updateConstrSize();
+    solver.updateNrVars(robots().mbs());
   }
 
   /** Gives access to the tasks::qp::BilateralContact entity in the solver from a contact id
