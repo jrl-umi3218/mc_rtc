@@ -12,7 +12,7 @@ endif()
 
 set(PROJECT_NAME mc_rtc)
 set(PROJECT_DESCRIPTION mc_rtc)
-set(PROJECT_VERSION 1.2.1)
+set(PROJECT_VERSION 1.3.0)
 set(PROJECT_URL https://gite.lirmm.fr/multi-contact/mc_rtc)
 set(PROJECT_DEBUG_POSTFIX "_d")
 set(PROJECT_USE_KEYWORD_LINK_LIBRARIES TRUE)
