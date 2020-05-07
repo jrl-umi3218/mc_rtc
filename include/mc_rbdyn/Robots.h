@@ -52,10 +52,15 @@ public:
   /** Give access to the underlying list of rbd::MultiBodyConfig objects (const) */
   const std::vector<rbd::MultiBodyConfig> & mbcs() const;
 
+  /** True if the given robot is part of this intance */
+  bool hasRobot(const std::string & name) const;
+
   /** Index of the main robot */
   unsigned int robotIndex() const;
   /** Index of the first non-actuated robot (or the last actuated robot if no unactuated robot are loaded) */
   unsigned int envIndex() const;
+  /** Index of a robot by name, throws if the robot does not exist */
+  unsigned int robotIndex(const std::string & name) const;
 
   /** @name Robot(s) loading/unloading functions
    *
@@ -209,6 +214,7 @@ protected:
   unsigned int robotIndex_;
   unsigned int envIndex_;
   void updateIndexes();
+  std::vector<mc_rbdyn::Robot>::const_iterator getRobot(const std::string & name) const;
 };
 
 /* Static pendant of the loader functions to create Robots directly */

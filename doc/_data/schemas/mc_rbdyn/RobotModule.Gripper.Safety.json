@@ -1,0 +1,12 @@
+{
+  "title": "mc_rbdyn::RobotModule::Gripper::Safety",
+  "type": "object",
+  "properties":
+  {
+    "percentVMax": { "type": "number", "default": 0.25 },
+    "actualCommandDiffTrigger": { "type": "number", "default": 0.14 },
+    "releaseSafetyOffset": { "type": "number", "default": 0.034 },
+    "overCommandLimitIterN": { "type": "integer", "default": 5, "minimum": 1 }
+  },
+  "additionalProperties": false
+}

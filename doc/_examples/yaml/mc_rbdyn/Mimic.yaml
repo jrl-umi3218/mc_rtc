@@ -1,0 +1,4 @@
+name: LHAND_J0
+joint: LARM_J7
+multiplier: -1
+offset: 0

@@ -26,63 +26,6 @@
 #include <fstream>
 #include <iomanip>
 
-namespace
-{
-
-using gripper_it_t = std::map<std::string, std::shared_ptr<mc_control::Gripper>>::const_iterator;
-
-/** Helper to build the qOut logging */
-void addQOutLogEntry(std::function<void(std::vector<double> &)> callback,
-                     mc_rtc::Logger & logger,
-                     gripper_it_t it,
-                     gripper_it_t end,
-                     const std::vector<std::string> & refJointOrder)
-{
-  if(it == end)
-  {
-    std::vector<double> qOut(refJointOrder.size(), 0);
-    auto cb = [callback, qOut]() mutable -> const std::vector<double> & {
-      callback(qOut);
-      return qOut;
-    };
-    logger.addLogEntry("qOut", cb);
-  }
-  else
-  {
-    auto rjoIndex = [&refJointOrder](const std::string & name) {
-      for(size_t j = 0; j < refJointOrder.size(); ++j)
-      {
-        if(name == refJointOrder[j])
-        {
-          return static_cast<int>(j);
-        }
-      }
-      return -1;
-    };
-    const auto & gripper = it->second;
-    std::vector<int> gripperToRef;
-    for(size_t i = 0; i < gripper->names.size(); ++i)
-    {
-      gripperToRef.push_back(rjoIndex(gripper->names[i]));
-    }
-    auto cb = [callback, gripperToRef, gripper](std::vector<double> & qOut) {
-      callback(qOut);
-      const auto & q = gripper->_q;
-      for(size_t i = 0; i < gripperToRef.size(); ++i)
-      {
-        if(gripperToRef[i] != -1)
-        {
-          qOut[static_cast<size_t>(gripperToRef[i])] = q[i];
-        }
-      }
-    };
-    it++;
-    addQOutLogEntry(cb, logger, it, end, refJointOrder);
-  }
-}
-
-} // namespace
-
 namespace mc_control
 {
 
@@ -265,31 +208,41 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
       q[robot().jointIndexByName(jn)][0] = initq[i];
     }
   }
-  auto refJointIndex = [&rjo](const std::string & name) {
-    for(size_t i = 0; i < rjo.size(); ++i)
+  for(auto & g : controller_->robot().grippers())
+  {
+    g.get().reset(initq);
+  }
+  for(size_t i = 1; i < controller_->robots().size(); ++i)
+  {
+    auto & robot = controller_->robots().robot(i);
+    if(robot.grippers().empty())
     {
-      if(name == rjo[i])
+      continue;
+    }
+    const auto & rjo = robot.refJointOrder();
+    std::vector<double> rinitq;
+    rinitq.reserve(rjo.size());
+    for(const auto & j : rjo)
+    {
+      if(robot.hasJoint(j))
       {
-        return static_cast<int>(i);
+        auto jIndex = robot.jointIndexByName(j);
+        const auto & q = robot.mbc().q[jIndex];
+        for(const auto & qi : q)
+        {
+          rinitq.push_back(qi);
+        }
+      }
+      else
+      {
+        rinitq.push_back(0);
       }
     }
-    return -1;
-  };
-  std::map<std::string, std::vector<double>> gripperInit;
-  for(auto & g_p : controller().grippers)
-  {
-    const auto & gName = g_p.first;
-    auto & g = *g_p.second;
-    g.name = gName;
-    gripperInit[gName] = {};
-    auto & gQ = gripperInit[gName];
-    for(const auto & j : g.active_joints)
+    for(auto & g : robot.grippers())
     {
-      auto jIndex = refJointIndex(j);
-      gQ.push_back(jIndex != -1 ? initq[static_cast<size_t>(jIndex)] : 0);
+      g.get().reset(rinitq);
     }
   }
-  setGripperCurrentQ(gripperInit);
   controller_->reset({q});
   controller_->resetObservers();
   initGUI();
@@ -442,15 +395,6 @@ void MCGlobalController::setWrenches(unsigned int robotIndex, const std::map<std
   }
 }
 
-void MCGlobalController::setActualGripperQ(const std::map<std::string, std::vector<double>> & grippersQ)
-{
-  for(const auto & gQ : grippersQ)
-  {
-    assert(controller_->grippers.count(gQ.first) > 0);
-    controller_->grippers[gQ.first]->setActualQ(gQ.second);
-  }
-}
-
 bool MCGlobalController::run()
 {
   /** Always pick a steady clock */
@@ -505,9 +449,9 @@ bool MCGlobalController::run()
       std::cout << controller_->robot().mbc().q[0][4] << " ";
       std::cout << controller_->robot().mbc().q[0][5] << " ";
       std::cout << controller_->robot().mbc().q[0][6] << std::endl;
-      for(const auto & g : controller_->grippers)
+      for(const auto & g : controller_->robot().grippersByName())
       {
-        next_controller_->grippers[g.first]->setCurrentQ(g.second->curPosition());
+        next_controller_->robot().gripper(g.first).reset(*g.second);
       }
       next_controller_->reset({controller_->robot().mbc().q});
       next_controller_->resetObservers();
@@ -534,9 +478,35 @@ bool MCGlobalController::run()
   }
   if(running)
   {
+    for(size_t i = 0; i < pre_gripper_mbcs_.size() && i < controller_->robots().size(); ++i)
+    {
+      controller_->robots().robot(i).mbc() = pre_gripper_mbcs_[i];
+    }
     auto start_controller_run_t = clock::now();
     bool r = controller_->runObservers() && controller_->run();
     auto end_controller_run_t = clock::now();
+    if(server_)
+    {
+      auto start_gui_t = clock::now();
+      server_->handle_requests(*controller_->gui_);
+      server_->publish(*controller_->gui_);
+      gui_dt = clock::now() - start_gui_t;
+    }
+    pre_gripper_mbcs_ = controller_->robots().mbcs();
+    for(size_t i = 0; i < controller_->robots().size(); ++i)
+    {
+      const auto & gi = controller_->robots().robot(i).grippers();
+      if(gi.empty())
+      {
+        continue;
+      }
+      for(auto & g : gi)
+      {
+        g.get().run(controller_->timeStep, controller_->robots().robot(i),
+                    controller_->solver().result().robots_state[i].q);
+      }
+      controller_->robots().robot(i).forwardKinematics();
+    }
     if(config.enable_log)
     {
       auto start_log_t = clock::now();
@@ -556,13 +526,13 @@ bool MCGlobalController::run()
     controller_run_dt.zero();
     solver_build_and_solve_t = 0;
     solver_solve_t = 0;
-  }
-  if(server_)
-  {
-    auto start_gui_t = clock::now();
-    server_->handle_requests(*controller_->gui_);
-    server_->publish(*controller_->gui_);
-    gui_dt = clock::now() - start_gui_t;
+    if(server_)
+    {
+      auto start_gui_t = clock::now();
+      server_->handle_requests(*controller_->gui_);
+      server_->publish(*controller_->gui_);
+      gui_dt = clock::now() - start_gui_t;
+    }
   }
   for(auto & plugin : plugins_)
   {
@@ -603,87 +573,40 @@ const mc_rbdyn::Robot & MCGlobalController::robot() const
   return controller_->robot();
 }
 
-std::map<std::string, std::vector<double>> MCGlobalController::gripperQ()
+void MCGlobalController::setGripperTargetQ(const std::string & robot,
+                                           const std::string & name,
+                                           const std::vector<double> & q)
 {
-  std::map<std::string, std::vector<double>> res;
-  for(const auto & g : controller_->grippers)
+  try
   {
-    res[g.first] = g.second->q();
+    auto & gripper = controller_->gripper(robot, name);
+    gripper.setTargetQ(q);
   }
-  return res;
-}
-
-std::map<std::string, std::vector<std::string>> MCGlobalController::gripperJoints()
-{
-  std::map<std::string, std::vector<std::string>> res;
-  for(const auto & g : controller_->grippers)
+  catch(const std::exception &)
   {
-    res[g.first] = g.second->names;
-  }
-  return res;
-}
-
-std::map<std::string, std::vector<std::string>> MCGlobalController::gripperActiveJoints()
-{
-  std::map<std::string, std::vector<std::string>> res;
-  for(const auto & g : controller_->grippers)
-  {
-    res[g.first] = g.second->active_joints;
-  }
-  return res;
-}
-
-void MCGlobalController::setGripperCurrentQ(const std::map<std::string, std::vector<double>> & gripperQs)
-{
-  for(const auto & gQ : gripperQs)
-  {
-    if(controller_->grippers.count(gQ.first) == 0)
-    {
-      LOG_ERROR("Cannot update gripper " << gQ.first)
-    }
-    else
-    {
-      controller_->grippers[gQ.first]->setCurrentQ(gQ.second);
-    }
+    LOG_ERROR("Cannot set gripper opening for non-existing gripper " << name << " in " << robot)
   }
 }
 
-void MCGlobalController::setGripperTargetQ(const std::string & name, const std::vector<double> & q)
+void MCGlobalController::setGripperOpenPercent(const std::string & robot, double pOpen)
 {
-  if(controller_->grippers.count(name))
+  auto & r = controller_->robots().robot(robot);
+  for(auto & g : r.grippers())
   {
-    if(controller_->grippers[name]->active_joints.size() == q.size())
-    {
-      controller_->grippers[name]->setTargetQ(q);
-    }
-    else
-    {
-      LOG_ERROR("Try to set gripper value for " << name << " with the wrong number of values")
-    }
-  }
-  else
-  {
-    LOG_ERROR("Cannot set gripper value for non-existing gripper " << name)
+    g.get().setTargetOpening(pOpen);
   }
 }
 
-void MCGlobalController::setGripperOpenPercent(double pOpen)
+void MCGlobalController::setGripperOpenPercent(const std::string & robot, const std::string & name, double pOpen)
 {
-  for(const auto & g : controller_->grippers)
+  try
   {
-    setGripperOpenPercent(g.first, pOpen);
+    auto & gripper = controller_->gripper(robot, name);
+    gripper.setTargetOpening(pOpen);
   }
-}
-
-void MCGlobalController::setGripperOpenPercent(const std::string & name, double pOpen)
-{
-  if(controller_->grippers.count(name))
+  catch(const std::exception &)
   {
-    controller_->grippers[name]->setTargetOpening(pOpen);
-  }
-  else
-  {
-    LOG_ERROR("Cannot set gripper opening for non-existing gripper " << name)
+    LOG_ERROR("Cannot set gripper opening for non-existing gripper " << name << " in " << robot)
   }
 }
 
@@ -887,7 +810,8 @@ void MCGlobalController::setup_log()
     }
     refToQ.push_back(-1);
   }
-  auto qOutCb = [controller, refToQ](std::vector<double> & qOut) {
+  std::vector<double> qOut(controller->robot().refJointOrder().size(), 0);
+  controller->logger().addLogEntry("qOut", [controller, refToQ, qOut]() mutable -> const std::vector<double> & {
     for(size_t i = 0; i < qOut.size(); ++i)
     {
       if(refToQ[i] != -1)
@@ -896,9 +820,7 @@ void MCGlobalController::setup_log()
       }
     }
     return qOut;
-  };
-  addQOutLogEntry(qOutCb, controller->logger(), controller->grippers.cbegin(), controller->grippers.cend(),
-                  controller->robot().refJointOrder());
+  });
   controller->logger().addLogEntry(
       "tauIn", [controller]() -> const std::vector<double> & { return controller->robot().jointTorques(); });
   for(const auto & fs : controller->robot().forceSensors())

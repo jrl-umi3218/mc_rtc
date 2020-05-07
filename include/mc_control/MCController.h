@@ -5,7 +5,6 @@
 #pragma once
 
 #include <mc_control/Configuration.h>
-#include <mc_control/generic_gripper.h>
 
 #include <mc_observers/ObserverLoader.h>
 
@@ -282,6 +281,12 @@ public:
    */
   mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
 
+  /** Remove a robot from the controller
+   *
+   * \param name Name of the robot to remove
+   */
+  void removeRobot(const std::string & name);
+
   /** Access or modify controller configuration */
   mc_rtc::Configuration & config()
   {
@@ -293,6 +298,16 @@ public:
   {
     return config_;
   }
+
+  /** Access a gripper by robot's name and gripper's name
+   *
+   * \param robot Name of the robot
+   *
+   * \param gripper Name of the gripper
+   *
+   * \throws If the robot's name is not valid or the gripper's name is not valid
+   */
+  Gripper & gripper(const std::string & robot, const std::string & gripper);
 
 protected:
   /** Builds a controller base with an empty environment
@@ -362,8 +377,6 @@ protected:
 public:
   /** Controller timestep */
   const double timeStep;
-  /** Grippers */
-  std::map<std::string, std::shared_ptr<mc_control::Gripper>> grippers;
   /** Contact constraint for the main robot */
   mc_solver::ContactConstraint contactConstraint;
   /** Dynamics constraints for the main robot */

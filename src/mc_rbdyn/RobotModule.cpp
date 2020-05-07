@@ -7,6 +7,13 @@
 namespace mc_rbdyn
 {
 
+// Repeat static constexpr declarations
+// See also https://stackoverflow.com/q/8016780
+constexpr double RobotModule::Gripper::Safety::DEFAULT_PERCENT_VMAX;
+constexpr double RobotModule::Gripper::Safety::DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER;
+constexpr double RobotModule::Gripper::Safety::DEFAULT_RELEASE_OFFSET;
+constexpr unsigned int RobotModule::Gripper::Safety::DEFAULT_OVER_COMMAND_LIMIT_ITER_N;
+
 RobotModule::RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res)
 : RobotModule("/CREATED/BY/MC/RTC/", name)
 {
@@ -19,6 +26,46 @@ RobotModule::RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFPars
   _visual = res.visual;
   make_default_ref_joint_order();
   expand_stance();
+}
+
+RobotModule::Gripper::Gripper(const std::string & name, const std::vector<std::string> & joints, bool reverse_limits)
+: Gripper(name, joints, reverse_limits, nullptr, nullptr)
+{
+}
+
+RobotModule::Gripper::Gripper(const std::string & name,
+                              const std::vector<std::string> & joints,
+                              bool reverse_limits,
+                              const Safety & safety)
+: Gripper(name, joints, reverse_limits, &safety, nullptr)
+{
+}
+
+RobotModule::Gripper::Gripper(const std::string & name,
+                              const std::vector<std::string> & joints,
+                              bool reverse_limits,
+                              const Safety & safety,
+                              const std::vector<Mimic> & mimics)
+: Gripper(name, joints, reverse_limits, &safety, &mimics)
+{
+}
+
+RobotModule::Gripper::Gripper(const std::string & name,
+                              const std::vector<std::string> & joints,
+                              bool reverse_limits,
+                              const Safety * safety,
+                              const std::vector<Mimic> * mimics)
+: name(name), joints(joints), reverse_limits(reverse_limits), hasSafety_(safety != nullptr),
+  hasMimics_(mimics != nullptr)
+{
+  if(mimics)
+  {
+    mimics_ = *mimics;
+  }
+  if(safety)
+  {
+    safety_ = *safety;
+  }
 }
 
 void RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits & limits)

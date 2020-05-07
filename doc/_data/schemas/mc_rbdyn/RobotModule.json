@@ -156,7 +156,8 @@
     "ref_joint_order":
     {
       "type": "array", "items": { "type": "string" }
-    }
+    },
+    "gripperSafety": { "$ref": "/../../mc_rbdyn/RobotModule.Gripper.Safety.json" }
   },
   "required": ["path", "name", "urdf_path"],
   "additionalProperties": false,

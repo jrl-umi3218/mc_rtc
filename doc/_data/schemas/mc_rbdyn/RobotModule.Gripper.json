@@ -5,7 +5,9 @@
   {
     "name": { "type": "string" },
     "joints": { "type": "array", "items": { "type": "string" } },
-    "reverse_limits": { "type": "boolean" }
+    "reverse_limits": { "type": "boolean" },
+    "safety": { "$ref": "/../../mc_rbdyn/RobotModule.Gripper.Safety.json" },
+    "mimics": { "type": "array", "items": { "$ref": "/../../mc_rbdyn/Mimic.json" } }
   },
   "required": ["name", "joints", "reverse_limits"],
   "additionalProperties": false

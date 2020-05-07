@@ -23,6 +23,7 @@
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
+#include <fstream>
 #include <tuple>
 
 namespace
@@ -263,6 +264,45 @@ Robot::Robot(Robots & robots,
   flexibility_ = module_.flexibility();
 
   zmp_ = Eigen::Vector3d::Zero();
+
+  std::string urdf;
+  auto loadUrdf = [&module_, &urdf]() -> const std::string & {
+    if(urdf.size())
+    {
+      return urdf;
+    }
+    const auto & urdfPath = module_.urdf_path;
+    std::ifstream ifs(urdfPath);
+    if(ifs.is_open())
+    {
+      std::stringstream urdfSS;
+      urdfSS << ifs.rdbuf();
+      urdf = urdfSS.str();
+      return urdf;
+    }
+    LOG_ERROR("Could not open urdf file " << urdfPath << " for robot " << module_.name
+                                          << ", cannot initialize grippers")
+    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize grippers")
+  };
+  for(const auto & gripper : module_.grippers())
+  {
+    auto mimics = gripper.mimics();
+    auto safety = gripper.safety();
+    if(mimics)
+    {
+      grippers_[gripper.name].reset(new mc_control::Gripper(*this, gripper.joints, *mimics, gripper.reverse_limits,
+                                                            safety ? *safety : module_.gripperSafety()));
+    }
+    else
+    {
+      grippers_[gripper.name].reset(new mc_control::Gripper(*this, gripper.joints, loadUrdf(), gripper.reverse_limits,
+                                                            safety ? *safety : module_.gripperSafety()));
+    }
+  }
+  for(auto & g : grippers_)
+  {
+    grippersRef_.push_back(std::ref(*g.second));
+  }
 }
 
 const std::string & Robot::name() const
@@ -1045,6 +1085,15 @@ void mc_rbdyn::Robot::zmpTarget(const Eigen::Vector3d & zmp)
 const Eigen::Vector3d & mc_rbdyn::Robot::zmpTarget() const
 {
   return zmp_;
+}
+
+mc_control::Gripper & Robot::gripper(const std::string & gripper)
+{
+  if(!grippers_.count(gripper))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "No gripper named " << gripper << " in robot " << name());
+  }
+  return *grippers_.at(gripper);
 }
 
 } // namespace mc_rbdyn

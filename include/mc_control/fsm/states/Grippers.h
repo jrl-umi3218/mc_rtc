@@ -5,6 +5,7 @@
 #pragma once
 
 #include <mc_control/fsm/State.h>
+#include <mc_control/generic_gripper.h>
 
 namespace mc_control
 {
@@ -19,6 +20,8 @@ namespace fsm
  *
  * Configuration options:
  *
+ * - robot: for which robot's grippers this state applies, if ommited, it is
+ *   assumed to be the main robot in the controller
  * - grippers: each entry in this object is considered as a gripper, for each
  *   object, one can specify the gripper target as:
  *   - target: an array of double corresponding to the joint configuration of
@@ -34,6 +37,7 @@ namespace fsm
  *
  * \code{.json}
  * {
+ *  "robot": "jvrc1",
  *  "grippers":
  *  {
  *    "l_gripper": { "target": [0.7, 0.5] },
@@ -56,7 +60,7 @@ struct MC_CONTROL_FSM_STATE_DLLAPI Grippers : State
 
 protected:
   mc_rtc::Configuration config_;
-  std::vector<std::string> grippers_;
+  std::vector<mc_control::GripperRef> grippers_;
 };
 
 } // namespace fsm

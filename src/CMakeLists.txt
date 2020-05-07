@@ -130,6 +130,7 @@ mc_rbdyn/ForceSensor.cpp
 mc_rbdyn/RobotModule.cpp
 mc_rbdyn/configuration_io.cpp
 mc_rbdyn/ZMP.cpp
+mc_control/generic_gripper.cpp
 )
 
 set(mc_rbdyn_HDR
@@ -163,6 +164,7 @@ set(mc_rbdyn_HDR
 ../include/mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h
 ../include/mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h
 ../include/mc_rbdyn/ZMP.h
+../include/mc_control/generic_gripper.h
 )
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
@@ -414,7 +416,6 @@ set(mc_control_SRC
 mc_control/CompletionCriteria.cpp
 mc_control/ControllerServer.cpp
 mc_control/SimulationContactPair.cpp
-mc_control/generic_gripper.cpp
 mc_control/MCController.cpp
 mc_control/mc_python_controller.cpp
 mc_control/mc_global_controller.cpp
@@ -431,7 +432,6 @@ set(mc_control_HDR
 ../include/mc_control/GlobalPlugin.h
 ../include/mc_control/GlobalPluginMacros.h
 ../include/mc_control/GlobalPlugin_fwd.h
-../include/mc_control/generic_gripper.h
 ../include/mc_control/MCController.h
 ../include/mc_control/mc_controller.h
 ../include/mc_control/mc_python_controller.h

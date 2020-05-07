@@ -233,6 +233,17 @@ public:
    */
   const QPResultMsg & send(double curTime = 0);
 
+  /** Non-const access to QPResultMsg
+   *
+   * You are unlikely to need this function, it is used by the framework to
+   * change the gripper's states
+   *
+   */
+  inline QPResultMsg & result()
+  {
+    return qpRes;
+  }
+
   /** Gives access to the main robot in the solver */
   const mc_rbdyn::Robot & robot() const;
   /** Gives access to the main robot in the solver */
