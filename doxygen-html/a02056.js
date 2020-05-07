@@ -1,6 +1,5 @@
 var a02056 =
 [
-    [ "QPContactPtr", "a02056.html#ae43784e3317dd1ab1d0d8f42926e5de7", null ],
-    [ "bilateralContact", "a02056.html#a31a08f61bfa921fa79dde45a30f72aa9", null ],
-    [ "unilateralContact", "a02056.html#a8edb8058d39c00e880534c7d416819f2", null ]
+    [ "points", "a02056.html#a0b18450a98acf02d8b5b56b0c74e84a1", null ],
+    [ "qpcontact_ptr", "a02056.html#a18f4220244dc364488e15a5b6fc7bdf6", null ]
 ];

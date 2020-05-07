@@ -92,6 +92,8 @@ $(document).ready(function(){initNavTree('a02160.html','');});
   <tr><td class="entry"><a class="el" href="a02160.html#a8cfc417942dcc3a73ee5b9cfbbf862fa">env</a>() const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="a02160.html#a450727e6fa924ffe64088165bacac5ec">envIndex</a>() const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="a02160.html#af035c10ad185cddd84fdd05611b88bae">envIndex_</a></td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02160.html#aabc7fbd508dd6967d445866f8966c131">getRobot</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02160.html#a19ff172c4ffea776fc1d7d43c4b7c4ad">hasRobot</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="a02160.html#a5c5a80393f128789275bf1a722068ac9">iterator</a> typedef</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="a02160.html#aff5d4cb6dbea1f169c866ec6004793ee">load</a>(const RobotModule &amp;module, sva::PTransformd *base=nullptr, const std::string &amp;bName=&quot;&quot;)</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="a02160.html#a560aec7c6ac306acd1e9eb9e2048cb5e">load</a>(const RobotModule &amp;module, const RobotModule &amp;envModule, sva::PTransformd *base=nullptr, const std::string &amp;bName=&quot;&quot;)</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
@@ -126,25 +128,26 @@ $(document).ready(function(){initNavTree('a02160.html','');});
   <tr><td class="entry"><a class="el" href="a02160.html#a393d65c7732ca980aaef77638076565a">robot_modules_</a></td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="a02160.html#a2ee7fb2f2bdb6fcaefcbbdf62971a290">robotCopy</a>(const Robot &amp;robot)</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="a02160.html#a6b8424f1c2946197d3f2528a8fba02b5">robotIndex</a>() const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02160.html#ad61b4c8a27b1c5cf841bbeae8ae9cb8b">robotIndex_</a></td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02160.html#a9369f09e1f26a46c62a0a0dab3f5a6f4">robotModule</a>(size_t idx) const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02160.html#adcd2485c334658f2c83b7f1e343963ae">robotModules</a>() const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02160.html#a983b7d961886e155c660d77a71be0553">robots</a>()</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02160.html#a8f9e3200bd791886a6e2742b3970a0da">robots</a>() const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02160.html#a52932f4a6548f1b47f3e57423af136fa">Robots</a>()</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02160.html#a5e8b223f84189c50bf163d3648811422">Robots</a>(const Robots &amp;rhs)</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02160.html#acc9294aa220cbbee47b28ec1322237b3">robots_</a></td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02160.html#a0fe7360e8745aa349a770d489d5585ee">size</a>() const noexcept</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02160.html#a264d2ce2a02a54afc9ecf14a06f0f268">size_type</a> typedef</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02160.html#a577b02e4a3e2384c60bfe983ad362448">updateIndexes</a>()</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02160.html#a857c321c4be0d8fa2443e4a8c2afaa27">value_type</a> typedef</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02160.html#a2c3772d82fdee696f58cb282a3658dfd">robotIndex</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02160.html#ad61b4c8a27b1c5cf841bbeae8ae9cb8b">robotIndex_</a></td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02160.html#a9369f09e1f26a46c62a0a0dab3f5a6f4">robotModule</a>(size_t idx) const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02160.html#adcd2485c334658f2c83b7f1e343963ae">robotModules</a>() const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02160.html#a983b7d961886e155c660d77a71be0553">robots</a>()</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02160.html#a8f9e3200bd791886a6e2742b3970a0da">robots</a>() const</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02160.html#a52932f4a6548f1b47f3e57423af136fa">Robots</a>()</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02160.html#a5e8b223f84189c50bf163d3648811422">Robots</a>(const Robots &amp;rhs)</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02160.html#acc9294aa220cbbee47b28ec1322237b3">robots_</a></td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02160.html#a0fe7360e8745aa349a770d489d5585ee">size</a>() const noexcept</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02160.html#a264d2ce2a02a54afc9ecf14a06f0f268">size_type</a> typedef</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02160.html#a577b02e4a3e2384c60bfe983ad362448">updateIndexes</a>()</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02160.html#a857c321c4be0d8fa2443e4a8c2afaa27">value_type</a> typedef</td><td class="entry"><a class="el" href="a02160.html">mc_rbdyn::Robots</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed May 6 2020 09:20:18 for mc_rtc by
+    <li class="footer">Generated on Thu May 7 2020 03:22:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

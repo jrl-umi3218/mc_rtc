@@ -1,19 +1,14 @@
 var a02000 =
 [
-    [ "Update", "a02000.html#ab23dff7bf325e5a4a3fcf84d13fa62b2", [
-      [ "Control", "a02000.html#ab23dff7bf325e5a4a3fcf84d13fa62b2aa1595abbb4c3a326636dd178757cd6c1", null ],
-      [ "Estimator", "a02000.html#ab23dff7bf325e5a4a3fcf84d13fa62b2ada2a1b654dd8965375b17b81a0874e1d", null ],
-      [ "None", "a02000.html#ab23dff7bf325e5a4a3fcf84d13fa62b2a6adf97f83acf6453d4a6a4b1070f3754", null ]
-    ] ],
-    [ "EncoderObserver", "a02000.html#ae041a35fb0a73ebdbe7bbea9e1346155", null ],
-    [ "addToLogger", "a02000.html#a2a2f2d12d8ea8643e3a2ad1e910aa892", null ],
-    [ "removeFromLogger", "a02000.html#af71d87a052f0e72a00198643ab760a11", null ],
-    [ "reset", "a02000.html#a2934c6f44a6b49aae0e8e412b04d37c1", null ],
-    [ "run", "a02000.html#ad65144731e89fc2d6ba40c39e9d5b691", null ],
-    [ "updateRobots", "a02000.html#af72093790abd36ada558ed00cb0414a0", null ],
-    [ "encodersVelocity_", "a02000.html#a836476dda18a176da54e14ede5f0eabd", null ],
-    [ "logEstimation_", "a02000.html#a53abfb8ea362389b0a08a268bc9ac268", null ],
-    [ "posUpdate_", "a02000.html#a8b1666591ee20b8a1f45f7766b5ec694", null ],
-    [ "prevEncoders_", "a02000.html#a81e5682d74e14df7b3b65c6344b49cb0", null ],
-    [ "velUpdate_", "a02000.html#a6da1c395f9ebe746776910c6713c21d4", null ]
+    [ "KinematicInertialObserver", "a02000.html#a165a77caf0652ffe0388127ceafe7ba6", null ],
+    [ "addToGUI", "a02000.html#a8d79052ede7702b4e1271aa45f8c17e4", null ],
+    [ "addToLogger", "a02000.html#a70349dda9da00837225afa919fdc9ce7", null ],
+    [ "removeFromGUI", "a02000.html#aee19bc2e4f9457e9df7e60fa5f562769", null ],
+    [ "removeFromLogger", "a02000.html#ab7a34a69d1337573093b19cce5f4442e", null ],
+    [ "reset", "a02000.html#ae964341c760e3f942152f39d4d596432", null ],
+    [ "reset", "a02000.html#a218d679b8851235ad18b2a49b2c71e01", null ],
+    [ "run", "a02000.html#a2c4b4fe83ab2ad282f02ad6c093e1be6", null ],
+    [ "updateBodySensor", "a02000.html#a70199d5e62d4869778cd91e5e1f1bdee", null ],
+    [ "updateRobots", "a02000.html#ae46ba5b39b85a8b8e271b8b9c63a9a3b", null ],
+    [ "velW", "a02000.html#a2c973c62cabf96b73042047669579a64", null ]
 ];

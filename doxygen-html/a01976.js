@@ -1,15 +1,10 @@
 var a01976 =
 [
-    [ "ExponentialMovingAverage", "a01976.html#a156a26de235d293b4e94cb1f269dd16c", null ],
-    [ "append", "a01976.html#afc5e32731c162cecc484c71b1cd6680f", null ],
-    [ "eval", "a01976.html#a59a37436a454f4caa5d9ba49ab85b2e8", null ],
-    [ "reset", "a01976.html#a4fe8efb515654281aa77b87296449f89", null ],
-    [ "saturation", "a01976.html#abc199c7a1935a35f01882c9ce6f355e4", null ],
-    [ "timeConstant", "a01976.html#a25e06aceff6cb86deaba24edc060ef8f", null ],
-    [ "timeConstant", "a01976.html#a5e116fb401af8c027896173066d8b8ed", null ],
-    [ "alpha_", "a01976.html#accd3db44b24084922b2d1915e378b2fb", null ],
-    [ "average_", "a01976.html#adaad48a146f8e945da36b18c0e9c4f8a", null ],
-    [ "dt_", "a01976.html#a6a235570200c501307ebc666fcd81e20", null ],
-    [ "saturation_", "a01976.html#aa39c03dbafb64fa46f4be54499b3ed48", null ],
-    [ "timeConstant_", "a01976.html#a08b8eaf1a64cf2abc37a27311db4923e", null ]
+    [ "LeakyIntegrator", "a01976.html#aa7768ba3fcbdb293ff11e389f5161826", null ],
+    [ "add", "a01976.html#a5d1fe6b17b1cab5807291e292f25b778", null ],
+    [ "eval", "a01976.html#af225809442be54a20499760103efa8a4", null ],
+    [ "rate", "a01976.html#aebcd30857d45fde67e66651ff62c0376", null ],
+    [ "rate", "a01976.html#a1c6f1172e2ed09d564b4df366e5d7f21", null ],
+    [ "reset", "a01976.html#a0e45cd463d07d4659224c0c3a53be35c", null ],
+    [ "saturation", "a01976.html#aa8cf04d67353d666454a4e5f689ace5e", null ]
 ];

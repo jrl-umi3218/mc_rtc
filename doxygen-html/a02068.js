@@ -1,11 +1,7 @@
 var a02068 =
 [
-    [ "CylindricalSurface", "a02068.html#ac3eef75ab4cf0a7808e37ce6bd60e171", null ],
-    [ "~CylindricalSurface", "a02068.html#a94041ce7602917987e5829eff07f5ad4", null ],
-    [ "computePoints", "a02068.html#a0c548d2b3f2f16066e260b9e0a89d56c", null ],
-    [ "copy", "a02068.html#af7ea1fd2bee8c3d0dacbae34d5242422", null ],
-    [ "radius", "a02068.html#abd86a4d9aef83ff0a5fd7a9540d81a8a", null ],
-    [ "type", "a02068.html#a221eebcca494033504b7898f95396b73", null ],
-    [ "width", "a02068.html#ad4b8a89811ebfc71a3793db69282626a", null ],
-    [ "width", "a02068.html#ae129c776f6d6bdc8b84151121747a46f", null ]
+    [ "C", "a02068.html#a6937033e6a1e29165b7a1f9b2005232a", null ],
+    [ "jointName", "a02068.html#aae8d1a8eaa685b5efc3eb22b95fbb892", null ],
+    [ "K", "a02068.html#ad9fa8b3ad657cbfd784a906f80e2a493", null ],
+    [ "O", "a02068.html#aea9ed4cd59fb673fdac0d4f252d90987", null ]
 ];

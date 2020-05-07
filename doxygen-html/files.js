@@ -11,26 +11,26 @@ var files =
     [ "AdmittanceTask.h", "a00422.html", [
       [ "AdmittanceTask", "a02720.html", "a02720" ]
     ] ],
-    [ "mc_control/api.h", "a03768.html", "a03768" ],
-    [ "mc_control/fsm/api.h", "a03771.html", "a03771" ],
-    [ "mc_control/fsm/states/api.h", "a03774.html", "a03774" ],
-    [ "mc_observers/api.h", "a03777.html", "a03777" ],
-    [ "mc_planning/api.h", "a03780.html", "a03780" ],
-    [ "mc_rbdyn/api.h", "a03783.html", "a03783" ],
-    [ "mc_robots/api.h", "a03786.html", "a03786" ],
-    [ "mc_rtc/gui/api.h", "a03789.html", "a03789" ],
-    [ "mc_solver/api.h", "a03792.html", "a03792" ],
-    [ "mc_tasks/api.h", "a03795.html", "a03795" ],
-    [ "mc_trajectory/api.h", "a03798.html", "a03798" ],
+    [ "mc_control/api.h", "a03772.html", "a03772" ],
+    [ "mc_control/fsm/api.h", "a03775.html", "a03775" ],
+    [ "mc_control/fsm/states/api.h", "a03778.html", "a03778" ],
+    [ "mc_observers/api.h", "a03781.html", "a03781" ],
+    [ "mc_planning/api.h", "a03784.html", "a03784" ],
+    [ "mc_rbdyn/api.h", "a03787.html", "a03787" ],
+    [ "mc_robots/api.h", "a03790.html", "a03790" ],
+    [ "mc_rtc/gui/api.h", "a03793.html", "a03793" ],
+    [ "mc_solver/api.h", "a03796.html", "a03796" ],
+    [ "mc_tasks/api.h", "a03799.html", "a03799" ],
+    [ "mc_trajectory/api.h", "a03802.html", "a03802" ],
     [ "ArrayInput.h", "a00236.html", "a00236" ],
     [ "ArrayLabel.h", "a00239.html", "a00239" ],
     [ "Arrow.h", "a00242.html", "a00242" ],
     [ "Base.h", "a00140.html", [
-      [ "Base", "a02024.html", "a02024" ]
+      [ "Base", "a02020.html", "a02020" ]
     ] ],
     [ "BodySensor.h", "a00143.html", "a00143" ],
     [ "BodySensorObserver.h", "a00116.html", [
-      [ "BodySensorObserver", "a01996.html", "a01996" ]
+      [ "BodySensorObserver", "a01992.html", "a01992" ]
     ] ],
     [ "BoundedSpeedConstr.h", "a00362.html", [
       [ "BoundedSpeedConstr", "a02548.html", "a02548" ]
@@ -65,8 +65,8 @@ var files =
     [ "CoMTask.h", "a00431.html", [
       [ "CoMTask", "a02732.html", "a02732" ]
     ] ],
-    [ "mc_control/Configuration.h", "a03801.html", "a03801" ],
-    [ "mc_rtc/Configuration.h", "a03804.html", "a03804" ],
+    [ "mc_control/Configuration.h", "a03805.html", "a03805" ],
+    [ "mc_rtc/Configuration.h", "a03808.html", "a03808" ],
     [ "configuration_io.h", "a00152.html", "a00152" ],
     [ "ConfigurationHelpers.h", "a00227.html", "a00227" ],
     [ "constants.h", "a00230.html", "a00230" ],
@@ -77,11 +77,11 @@ var files =
     [ "ConstraintSetLoader.h", "a00377.html", [
       [ "ConstraintSetLoader", "a02580.html", "a02580" ]
     ] ],
-    [ "mc_rbdyn/Contact.h", "a03807.html", "a03807" ],
-    [ "mc_solver/msg/Contact.h", "a03810.html", [
+    [ "mc_rbdyn/Contact.h", "a03811.html", "a03811" ],
+    [ "mc_solver/msg/Contact.h", "a03814.html", [
       [ "ContactMsg", "a02652.html", "a02652" ]
     ] ],
-    [ "mc_tasks/lipm_stabilizer/Contact.h", "a03813.html", "a03813" ],
+    [ "mc_tasks/lipm_stabilizer/Contact.h", "a03817.html", "a03817" ],
     [ "contact_transform.h", "a00158.html", "a00158" ],
     [ "ContactConstraint.h", "a00380.html", [
       [ "ContactConstraint", "a02584.html", "a02584" ]
@@ -101,7 +101,7 @@ var files =
       [ "CoPTask", "a02736.html", "a02736" ]
     ] ],
     [ "CylindricalSurface.h", "a00161.html", [
-      [ "CylindricalSurface", "a02068.html", "a02068" ]
+      [ "CylindricalSurface", "a02064.html", "a02064" ]
     ] ],
     [ "DampingTask.h", "a00437.html", [
       [ "DampingTask", "a02740.html", "a02740" ]
@@ -113,7 +113,7 @@ var files =
     ] ],
     [ "elements.h", "a00260.html", "a00260" ],
     [ "EncoderObserver.h", "a00119.html", [
-      [ "EncoderObserver", "a02000.html", "a02000" ]
+      [ "EncoderObserver", "a01996.html", "a01996" ]
     ] ],
     [ "EndEffectorTask.h", "a00440.html", [
       [ "EndEffectorTask", "a02744.html", "a02744" ]
@@ -134,7 +134,7 @@ var files =
       [ "Executor", "a01860.html", "a01860" ]
     ] ],
     [ "ExponentialMovingAverage.h", "a00098.html", [
-      [ "ExponentialMovingAverage", "a01976.html", "a01976" ]
+      [ "ExponentialMovingAverage", "a01972.html", "a01972" ]
     ] ],
     [ "FlatLog.h", "a00341.html", [
       [ "FlatLog", "a02504.html", "a02504" ],
@@ -142,20 +142,17 @@ var files =
       [ "entry", "a02512.html", "a02512" ]
     ] ],
     [ "Flexibility.h", "a00164.html", [
-      [ "Flexibility", "a02072.html", "a02072" ]
+      [ "Flexibility", "a02068.html", "a02068" ]
     ] ],
     [ "Force.h", "a00263.html", "a00263" ],
     [ "ForceSensor.h", "a00167.html", [
-      [ "ForceSensor", "a02076.html", "a02076" ]
+      [ "ForceSensor", "a02072.html", "a02072" ]
     ] ],
     [ "Form.h", "a00266.html", "a00266" ],
     [ "GazeTask.h", "a00446.html", [
       [ "GazeTask", "a02752.html", "a02752" ]
     ] ],
-    [ "generic_gripper.h", "a00071.html", [
-      [ "Gripper", "a01932.html", "a01932" ],
-      [ "Config", "a01936.html", "a01936" ]
-    ] ],
+    [ "generic_gripper.h", "a00071.html", "a00071" ],
     [ "GenericLoader.h", "a00389.html", [
       [ "GenericLoader", "a02608.html", "a02608" ],
       [ "Handle", "a02612.html", "a02612" ]
@@ -173,7 +170,7 @@ var files =
       [ "Grippers", "a01880.html", "a01880" ]
     ] ],
     [ "GripperSurface.h", "a00170.html", [
-      [ "GripperSurface", "a02080.html", "a02080" ]
+      [ "GripperSurface", "a02076.html", "a02076" ]
     ] ],
     [ "gui.h", "a00326.html", null ],
     [ "HalfSitting.h", "a00041.html", [
@@ -192,17 +189,17 @@ var files =
     [ "io_utils.h", "a00329.html", "a00329" ],
     [ "iterate_binary_log.h", "a00344.html", "a00344" ],
     [ "KinematicInertialObserver.h", "a00122.html", [
-      [ "KinematicInertialObserver", "a02004.html", "a02004" ]
+      [ "KinematicInertialObserver", "a02000.html", "a02000" ]
     ] ],
     [ "KinematicInertialPoseObserver.h", "a00125.html", [
-      [ "KinematicInertialPoseObserver", "a02008.html", "a02008" ]
+      [ "KinematicInertialPoseObserver", "a02004.html", "a02004" ]
     ] ],
     [ "KinematicsConstraint.h", "a00398.html", [
       [ "KinematicsConstraint", "a02648.html", "a02648" ]
     ] ],
     [ "Label.h", "a00272.html", "a00272" ],
     [ "LeakyIntegrator.h", "a00101.html", [
-      [ "LeakyIntegrator", "a01980.html", "a01980" ]
+      [ "LeakyIntegrator", "a01976.html", "a01976" ]
     ] ],
     [ "loader.h", "a00332.html", "a00332" ],
     [ "loader_api.h", "a00335.html", "a00335" ],
@@ -218,19 +215,19 @@ var files =
       [ "LookAtTask", "a02780.html", "a02780" ]
     ] ],
     [ "LowPass.h", "a00104.html", [
-      [ "LowPass", "a01984.html", "a01984" ]
+      [ "LowPass", "a01980.html", "a01980" ]
     ] ],
     [ "LowPassFiniteDifferences.h", "a00107.html", [
-      [ "LowPassFiniteDifferences", "a01988.html", "a01988" ]
+      [ "LowPassFiniteDifferences", "a01984.html", "a01984" ]
     ] ],
     [ "mc_controller.h", "a00083.html", "a00083" ],
     [ "mc_global_controller.h", "a00086.html", [
-      [ "MCGlobalController", "a01944.html", "a01944" ],
-      [ "GlobalConfiguration", "a01948.html", "a01948" ]
+      [ "MCGlobalController", "a01940.html", "a01940" ],
+      [ "GlobalConfiguration", "a01944.html", "a01944" ]
     ] ],
     [ "mc_python_controller.h", "a00089.html", [
-      [ "PythonRWCallback", "a01956.html", "a01956" ],
-      [ "MCPythonController", "a01960.html", "a01960" ]
+      [ "PythonRWCallback", "a01952.html", "a01952" ],
+      [ "MCPythonController", "a01956.html", "a01956" ]
     ] ],
     [ "MCController.h", "a00092.html", "a00092" ],
     [ "Message.h", "a00044.html", [
@@ -251,7 +248,7 @@ var files =
       [ "TaskCriteria", "a01900.html", "a01900" ]
     ] ],
     [ "Mimic.h", "a00179.html", [
-      [ "Mimic", "a02108.html", "a02108" ]
+      [ "Mimic", "a02104.html", "a02104" ]
     ] ],
     [ "MomentumTask.h", "a00467.html", [
       [ "MomentumTask", "a02792.html", "a02792" ]
@@ -260,7 +257,7 @@ var files =
     [ "NumberSlider.h", "a00278.html", "a00278" ],
     [ "Observer.h", "a00128.html", "a00128" ],
     [ "ObserverLoader.h", "a00131.html", [
-      [ "ObserverLoader", "a02016.html", "a02016" ]
+      [ "ObserverLoader", "a02012.html", "a02012" ]
     ] ],
     [ "ObserverMacros.h", "a00134.html", "a00134" ],
     [ "Ordinate.h", "a00287.html", "a00287" ],
@@ -275,18 +272,18 @@ var files =
       [ "PauseState", "a01912.html", "a01912" ]
     ] ],
     [ "Pendulum.h", "a00137.html", [
-      [ "Pendulum", "a02020.html", "a02020" ]
+      [ "Pendulum", "a02016.html", "a02016" ]
     ] ],
     [ "PlanarSurface.h", "a00182.html", [
-      [ "PlanarSurface", "a02112.html", "a02112" ]
+      [ "PlanarSurface", "a02108.html", "a02108" ]
     ] ],
     [ "plot.h", "a00299.html", null ],
     [ "Point3D.h", "a00302.html", "a00302" ],
-    [ "plot/Polygon.h", "a03816.html", "a03816" ],
+    [ "plot/Polygon.h", "a03820.html", "a03820" ],
     [ "Polygon.h", "a00290.html", "a00290" ],
     [ "polygon_utils.h", "a00185.html", "a00185" ],
     [ "PolygonInterpolator.h", "a00188.html", [
-      [ "PolygonInterpolator", "a02124.html", "a02124" ]
+      [ "PolygonInterpolator", "a02120.html", "a02120" ]
     ] ],
     [ "Polygons.h", "a00293.html", "a00293" ],
     [ "PositionBasedVisServoTask.h", "a00473.html", [
@@ -308,10 +305,10 @@ var files =
     [ "RelativeEndEffectorTask.h", "a00482.html", [
       [ "RelativeEndEffectorTask", "a02812.html", "a02812" ]
     ] ],
-    [ "mc_rbdyn/Robot.h", "a03819.html", [
-      [ "Robot", "a02132.html", "a02132" ]
+    [ "mc_rbdyn/Robot.h", "a03823.html", [
+      [ "Robot", "a02128.html", "a02128" ]
     ] ],
-    [ "mc_solver/msg/Robot.h", "a03822.html", [
+    [ "mc_solver/msg/Robot.h", "a03826.html", [
       [ "RobotMsg", "a02660.html", "a02660" ]
     ] ],
     [ "RobotLoader.h", "a00194.html", "a00194" ],
@@ -323,7 +320,7 @@ var files =
     [ "SCHAddon.h", "a00209.html", "a00209" ],
     [ "Schema.h", "a00308.html", "a00308" ],
     [ "SimulationContactPair.h", "a00095.html", [
-      [ "SimulationContactPair", "a01972.html", "a01972" ]
+      [ "SimulationContactPair", "a01968.html", "a01968" ]
     ] ],
     [ "SlidingFootContact.h", "a00059.html", [
       [ "SlidingFootContactState", "a01916.html", "a01916" ]
@@ -342,10 +339,10 @@ var files =
       [ "Springs", "a02164.html", "a02164" ]
     ] ],
     [ "StabilizerConfiguration.h", "a00173.html", [
-      [ "FDQPWeights", "a02084.html", "a02084" ],
-      [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::FDQPWeights >", "a02088.html", "a02088" ],
-      [ "StabilizerConfiguration", "a02092.html", "a02092" ],
-      [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "a02096.html", "a02096" ]
+      [ "FDQPWeights", "a02080.html", "a02080" ],
+      [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::FDQPWeights >", "a02084.html", "a02084" ],
+      [ "StabilizerConfiguration", "a02088.html", "a02088" ],
+      [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "a02092.html", "a02092" ]
     ] ],
     [ "StabilizerStandingState.h", "a00062.html", [
       [ "StabilizerStandingState", "a01920.html", "a01920" ]
@@ -360,7 +357,7 @@ var files =
       [ "StateFactory", "a01872.html", "a01872" ]
     ] ],
     [ "StationaryOffset.h", "a00110.html", [
-      [ "StationaryOffset", "a01992.html", "a01992" ]
+      [ "StationaryOffset", "a01988.html", "a01988" ]
     ] ],
     [ "StringInput.h", "a00314.html", "a00314" ],
     [ "Surface.h", "a00215.html", "a00215" ],
@@ -381,7 +378,7 @@ var files =
     [ "TransitionMap.h", "a00068.html", [
       [ "TransitionMap", "a01928.html", "a01928" ]
     ] ],
-    [ "plot/types.h", "a03825.html", "a03825" ],
+    [ "plot/types.h", "a03829.html", "a03829" ],
     [ "types.h", "a00296.html", "a00296" ],
     [ "Update.h", "a00413.html", "a00413" ],
     [ "UpdateNrVars.h", "a00416.html", [
@@ -389,22 +386,22 @@ var files =
       [ "UpdateNrVarsRobot", "a02700.html", "a02700" ],
       [ "UpdateNrVarsLambda", "a02704.html", "a02704" ]
     ] ],
-    [ "log/utils.h", "a03828.html", "a03828" ],
+    [ "log/utils.h", "a03832.html", "a03832" ],
     [ "utils.h", "a00350.html", null ],
     [ "utils_api.h", "a00359.html", "a00359" ],
     [ "VectorOrientationTask.h", "a00497.html", [
       [ "VectorOrientationTask", "a02832.html", "a02832" ]
     ] ],
     [ "XYTheta.h", "a00323.html", "a00323" ],
-    [ "mc_rbdyn/ZMP.h", "a03831.html", "a03831" ],
-    [ "mc_solver/msg/ZMP.h", "a03834.html", [
+    [ "mc_rbdyn/ZMP.h", "a03835.html", "a03835" ],
+    [ "mc_solver/msg/ZMP.h", "a03838.html", [
       [ "ZMP", "a02664.html", "a02664" ]
     ] ],
     [ "ZMPCC.h", "a00452.html", [
       [ "ZMPCC", "a02772.html", "a02772" ]
     ] ],
     [ "ZMPCCConfiguration.h", "a00176.html", [
-      [ "ZMPCCConfiguration", "a02100.html", "a02100" ],
-      [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration >", "a02104.html", "a02104" ]
+      [ "ZMPCCConfiguration", "a02096.html", "a02096" ],
+      [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration >", "a02100.html", "a02100" ]
     ] ]
 ];

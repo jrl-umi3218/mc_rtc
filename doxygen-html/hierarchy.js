@@ -17,29 +17,28 @@ var hierarchy =
       [ "mc_rtc::gui::ForceConfig", "a02464.html", null ]
     ] ],
     [ "mc_rtc::gui::plot::AxisConfiguration", "a02392.html", null ],
-    [ "mc_rbdyn::Base", "a02024.html", null ],
-    [ "mc_rbdyn::BodySensor", "a02028.html", null ],
+    [ "mc_rbdyn::Base", "a02020.html", null ],
+    [ "mc_rbdyn::BodySensor", "a02024.html", null ],
     [ "mc_rtc::log::callback_is_serializable< T >", "a02532.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, Args >", "a02280.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T >", "a02284.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T, Args... >", "a02288.html", null ],
     [ "Collision", "a02856.html", null ],
-    [ "mc_rbdyn::Collision", "a02032.html", null ],
+    [ "mc_rbdyn::Collision", "a02028.html", null ],
     [ "mc_rtc::gui::Color", "a02452.html", null ],
     [ "mc_control::CompletionCriteria", "a01832.html", null ],
-    [ "mc_rbdyn::CompoundJointConstraintDescription", "a02036.html", null ],
-    [ "mc_control::Gripper::Config", "a01936.html", null ],
+    [ "mc_rbdyn::CompoundJointConstraintDescription", "a02032.html", null ],
     [ "mc_rtc::Configuration", "a02196.html", null ],
     [ "mc_rtc::ConfigurationArrayIterator", "a02208.html", null ],
     [ "mc_rtc::ConfigurationLoader< T >", "a02172.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_control::fsm::Contact >", "a01856.html", null ],
-    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "a02040.html", null ],
-    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::Contact >", "a02052.html", null ],
-    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::FDQPWeights >", "a02088.html", null ],
-    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "a02096.html", null ],
-    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration >", "a02104.html", null ],
-    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::RobotModule >", "a02044.html", null ],
-    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::RobotModulePtr >", "a02048.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "a02036.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::Contact >", "a02048.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::FDQPWeights >", "a02084.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "a02092.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration >", "a02100.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::RobotModule >", "a02040.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::RobotModulePtr >", "a02044.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "a02760.html", null ],
     [ "mc_rtc::ConfigurationLoader< void >", "a02176.html", null ],
     [ "tasks::qp::Constraint", "https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01016.html", [
@@ -121,11 +120,11 @@ var hierarchy =
     ] ],
     [ "mc_tasks::lipm_stabilizer::internal::Contact", "a02756.html", null ],
     [ "mc_control::fsm::Contact", "a01848.html", null ],
-    [ "mc_rbdyn::Contact", "a02064.html", null ],
+    [ "mc_rbdyn::Contact", "a02060.html", null ],
     [ "mc_solver::ContactMsg", "a02652.html", null ],
     [ "mc_solver::utils::ContactWrenchMatrixToLambdaMatrix", "a02676.html", null ],
     [ "mc_control::ControllerClient", "a01840.html", null ],
-    [ "mc_control::ControllerResetData", "a01964.html", null ],
+    [ "mc_control::ControllerResetData", "a01960.html", null ],
     [ "mc_control::ControllerServer", "a01844.html", null ],
     [ "mc_rtc::DataStore", "a02236.html", null ],
     [ "mc_control::fsm::ParallelState::DelayedState", "a01908.html", null ],
@@ -183,12 +182,12 @@ var hierarchy =
       [ "mc_rtc::LoaderException", "a02484.html", null ]
     ] ],
     [ "mc_control::fsm::Executor", "a01860.html", null ],
-    [ "mc_filter::ExponentialMovingAverage< VectorT >", "a01976.html", null ],
-    [ "mc_filter::ExponentialMovingAverage< Eigen::Vector3d >", "a01976.html", null ],
-    [ "mc_rbdyn::lipm_stabilizer::FDQPWeights", "a02084.html", null ],
+    [ "mc_filter::ExponentialMovingAverage< VectorT >", "a01972.html", null ],
+    [ "mc_filter::ExponentialMovingAverage< Eigen::Vector3d >", "a01972.html", null ],
+    [ "mc_rbdyn::lipm_stabilizer::FDQPWeights", "a02080.html", null ],
     [ "mc_rtc::log::FlatLog", "a02504.html", null ],
-    [ "mc_rbdyn::Flexibility", "a02072.html", null ],
-    [ "mc_rbdyn::ForceSensor", "a02076.html", null ],
+    [ "mc_rbdyn::Flexibility", "a02068.html", null ],
+    [ "mc_rbdyn::ForceSensor", "a02072.html", null ],
     [ "mc_rtc::gui::FormElement< Derived, element >", "a02324.html", null ],
     [ "mc_rtc::gui::FormElement< FormArrayInput< T >, Elements::ArrayInput >", "a02324.html", [
       [ "mc_rtc::gui::FormArrayInput< T >", "a02332.html", null ]
@@ -212,41 +211,41 @@ var hierarchy =
     [ "mc_rtc::log::GetLogType< T >", "a02520.html", null ],
     [ "mc_rtc::log::GetLogType< std::vector< double, A > >", "a02524.html", null ],
     [ "Global", "a02852.html", null ],
-    [ "mc_control::MCGlobalController::GlobalConfiguration", "a01948.html", null ],
-    [ "mc_control::GlobalPlugin", "a01940.html", null ],
+    [ "mc_control::MCGlobalController::GlobalConfiguration", "a01944.html", null ],
+    [ "mc_control::GlobalPlugin", "a01936.html", null ],
     [ "mc_control::Gripper", "a01932.html", null ],
-    [ "mc_rbdyn::RobotModule::Gripper", "a02156.html", null ],
+    [ "mc_rbdyn::RobotModule::Gripper", "a02152.html", null ],
     [ "mc_solver::GenericLoader< Derived, T >::Handle", "a02612.html", null ],
     [ "integral_constant", null, [
-      [ "mc_rbdyn::details::are_strings< T, Args... >", "a02144.html", null ]
+      [ "mc_rbdyn::details::are_strings< T, Args... >", "a02140.html", null ]
     ] ],
     [ "is_base_of", null, [
       [ "mc_solver::utils::IsUpdate< T >", "a02688.html", null ]
     ] ],
     [ "is_same", null, [
-      [ "mc_rbdyn::details::are_strings< T >", "a02140.html", null ]
+      [ "mc_rbdyn::details::are_strings< T >", "a02136.html", null ]
     ] ],
     [ "mc_rtc::log::is_serializable< T >", "a02528.html", null ],
     [ "mc_rtc::internal::lambda_traits< T >", "a02212.html", null ],
     [ "mc_rtc::internal::lambda_traits< RetT(C::*)(Args...) const >", "a02216.html", null ],
     [ "mc_rtc::internal::lambda_traits< RetT(C::*)(Args...)>", "a02220.html", null ],
-    [ "mc_filter::LeakyIntegrator< VectorT >", "a01980.html", null ],
-    [ "mc_filter::LeakyIntegrator< Eigen::Vector3d >", "a01980.html", null ],
+    [ "mc_filter::LeakyIntegrator< VectorT >", "a01976.html", null ],
+    [ "mc_filter::LeakyIntegrator< Eigen::Vector3d >", "a01976.html", null ],
     [ "mc_rtc::gui::LineConfig", "a02456.html", null ],
     [ "mc_rtc::Loader", "a02492.html", null ],
     [ "mc_rtc::LoaderSandboxData< T >", "a02500.html", null ],
     [ "mc_rtc::Logger", "a02516.html", null ],
     [ "mc_rtc::log::LogWriter< T >", "a02536.html", null ],
-    [ "mc_filter::LowPass< T >", "a01984.html", [
-      [ "mc_filter::LowPassFiniteDifferences< T >", "a01988.html", null ]
+    [ "mc_filter::LowPass< T >", "a01980.html", [
+      [ "mc_filter::LowPassFiniteDifferences< T >", "a01984.html", null ]
     ] ],
-    [ "mc_filter::LowPass< sva::MotionVec >", "a01984.html", null ],
+    [ "mc_filter::LowPass< sva::MotionVec >", "a01980.html", null ],
     [ "mc_rtc::LTDLHandle", "a02488.html", null ],
-    [ "mc_control::MCController", "a01968.html", [
+    [ "mc_control::MCController", "a01964.html", [
       [ "mc_control::fsm::Controller", "a01852.html", null ],
-      [ "mc_control::MCPythonController", "a01960.html", null ]
+      [ "mc_control::MCPythonController", "a01956.html", null ]
     ] ],
-    [ "mc_control::MCGlobalController", "a01944.html", null ],
+    [ "mc_control::MCGlobalController", "a01940.html", null ],
     [ "mc_rtc::MessagePackBuilder", "a02540.html", null ],
     [ "mc_tasks::MetaTask", "a02784.html", [
       [ "mc_tasks::AddRemoveContactTask", "a02708.html", [
@@ -304,7 +303,7 @@ var hierarchy =
         ] ]
       ] ]
     ] ],
-    [ "mc_rbdyn::Mimic", "a02108.html", null ],
+    [ "mc_rbdyn::Mimic", "a02104.html", null ],
     [ "noncopyable", null, [
       [ "mc_rtc::ObjectLoader< T >", "a02480.html", null ],
       [ "mc_rtc::ObjectLoader< mc_control::GlobalPlugin >", "a02480.html", null ],
@@ -316,39 +315,40 @@ var hierarchy =
       ] ]
     ] ],
     [ "mc_rtc::ObjectLoader< T >::ObjectDeleter", "a02496.html", null ],
-    [ "mc_observers::Observer", "a02012.html", [
-      [ "mc_observers::BodySensorObserver", "a01996.html", null ],
-      [ "mc_observers::EncoderObserver", "a02000.html", null ],
-      [ "mc_observers::KinematicInertialPoseObserver", "a02008.html", [
-        [ "mc_observers::KinematicInertialObserver", "a02004.html", null ]
+    [ "mc_observers::Observer", "a02008.html", [
+      [ "mc_observers::BodySensorObserver", "a01992.html", null ],
+      [ "mc_observers::EncoderObserver", "a01996.html", null ],
+      [ "mc_observers::KinematicInertialPoseObserver", "a02004.html", [
+        [ "mc_observers::KinematicInertialObserver", "a02000.html", null ]
       ] ]
     ] ],
-    [ "mc_observers::ObserverLoader", "a02016.html", null ],
+    [ "mc_observers::ObserverLoader", "a02012.html", null ],
     [ "mc_rtc::gui::plot::impl::Ordinate< GetT >", "a02372.html", [
       [ "mc_rtc::gui::plot::impl::OrdinateWithColor< GetT, GetColor >", "a02376.html", null ]
     ] ],
-    [ "mc_planning::Pendulum", "a02020.html", null ],
-    [ "mc_rbdyn::Plane", "a02120.html", null ],
+    [ "mc_planning::Pendulum", "a02016.html", null ],
+    [ "mc_rbdyn::Plane", "a02116.html", null ],
     [ "mc_rtc::gui::PointConfig", "a02468.html", null ],
     [ "mc_rtc::gui::plot::impl::Polygon< GetT >", "a02380.html", null ],
     [ "mc_rtc::gui::plot::PolygonDescription", "a02396.html", null ],
-    [ "mc_rbdyn::PolygonInterpolator", "a02124.html", null ],
+    [ "mc_rbdyn::PolygonInterpolator", "a02120.html", null ],
     [ "mc_rtc::gui::plot::impl::Polygons< GetT >", "a02384.html", null ],
-    [ "mc_control::PythonRWCallback", "a01956.html", null ],
-    [ "mc_solver::QPContactPtr", "a02056.html", null ],
-    [ "mc_solver::QPContactPtrWPoints", "a02060.html", null ],
+    [ "mc_control::PythonRWCallback", "a01952.html", null ],
+    [ "mc_solver::QPContactPtr", "a02052.html", null ],
+    [ "mc_solver::QPContactPtrWPoints", "a02056.html", null ],
     [ "mc_solver::QPResultMsg", "a02656.html", null ],
     [ "mc_solver::QPSolver", "a02668.html", null ],
-    [ "mc_rbdyn::QuadraticGenerator", "a02116.html", null ],
+    [ "mc_rbdyn::QuadraticGenerator", "a02112.html", null ],
     [ "mc_rtc::gui::plot::Range", "a02388.html", null ],
     [ "mc_rtc::log::FlatLog::record", "a02508.html", null ],
     [ "mc_rtc::gui::details::ReturnType< GetT >", "a02276.html", null ],
-    [ "mc_rbdyn::Robot", "a02132.html", null ],
-    [ "mc_rbdyn::RobotLoader", "a02148.html", null ],
-    [ "mc_rbdyn::RobotModule", "a02152.html", null ],
+    [ "mc_rbdyn::Robot", "a02128.html", null ],
+    [ "mc_rbdyn::RobotLoader", "a02144.html", null ],
+    [ "mc_rbdyn::RobotModule", "a02148.html", null ],
     [ "mc_solver::RobotMsg", "a02660.html", null ],
     [ "mc_rbdyn::Robots", "a02160.html", null ],
-    [ "mc_control::SimulationContactPair", "a01972.html", null ],
+    [ "mc_rbdyn::RobotModule::Gripper::Safety", "a02156.html", null ],
+    [ "mc_control::SimulationContactPair", "a01968.html", null ],
     [ "mc_tasks::SmoothTask< objT >", "a02816.html", null ],
     [ "mc_trajectory::Spline< T, WaypointsT >", "a02848.html", null ],
     [ "mc_trajectory::Spline< Eigen::Matrix3d, std::vector< std::pair< double, Eigen::Matrix3d > > >", "a02848.html", [
@@ -361,7 +361,7 @@ var hierarchy =
       [ "mc_trajectory::ExactCubic", "a02840.html", null ]
     ] ],
     [ "mc_rbdyn::Springs", "a02164.html", null ],
-    [ "mc_rbdyn::lipm_stabilizer::StabilizerConfiguration", "a02092.html", null ],
+    [ "mc_rbdyn::lipm_stabilizer::StabilizerConfiguration", "a02088.html", null ],
     [ "mc_control::fsm::State", "a01868.html", [
       [ "mc_control::fsm::AddRemoveContactState", "a01876.html", null ],
       [ "mc_control::fsm::Grippers", "a01880.html", null ],
@@ -376,24 +376,24 @@ var hierarchy =
       [ "mc_control::fsm::StabilizerStandingState", "a01920.html", null ]
     ] ],
     [ "mc_rtc::gui::StateBuilder", "a02424.html", null ],
-    [ "mc_filter::StationaryOffset< VectorT >", "a01992.html", null ],
-    [ "mc_filter::StationaryOffset< Eigen::Vector3d >", "a01992.html", null ],
+    [ "mc_filter::StationaryOffset< VectorT >", "a01988.html", null ],
+    [ "mc_filter::StationaryOffset< Eigen::Vector3d >", "a01988.html", null ],
     [ "mc_rbdyn::Surface", "a02168.html", [
-      [ "mc_rbdyn::CylindricalSurface", "a02068.html", null ],
-      [ "mc_rbdyn::GripperSurface", "a02080.html", null ],
-      [ "mc_rbdyn::PlanarSurface", "a02112.html", null ]
+      [ "mc_rbdyn::CylindricalSurface", "a02064.html", null ],
+      [ "mc_rbdyn::GripperSurface", "a02076.html", null ],
+      [ "mc_rbdyn::PlanarSurface", "a02108.html", null ]
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "a01900.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "a02184.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "a02192.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "a02192.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "a02184.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "a01924.html", null ],
     [ "mc_control::fsm::TransitionMap", "a01928.html", null ],
     [ "true_type", null, [
-      [ "mc_rbdyn::details::are_strings< Args >", "a02136.html", null ]
+      [ "mc_rbdyn::details::are_strings< Args >", "a02132.html", null ]
     ] ],
     [ "mc_solver::utils::UpdateNrVarsData", "a02696.html", [
       [ "mc_solver::utils::UpdateNrVarsLambda", "a02704.html", [
@@ -420,7 +420,7 @@ var hierarchy =
     ] ],
     [ "mc_solver::ZMP", "a02664.html", null ],
     [ "mc_tasks::lipm_stabilizer::ZMPCC", "a02772.html", null ],
-    [ "mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration", "a02100.html", null ],
+    [ "mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration", "a02096.html", null ],
     [ "ElementT", null, [
       [ "mc_rtc::gui::CallbackElement< ElementT, Callback >", "a02300.html", [
         [ "mc_rtc::gui::VoidCallbackElement< ElementT, Callback >", "a02308.html", null ]

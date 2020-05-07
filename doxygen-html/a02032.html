@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rbdyn::Collision Struct Reference</title>
+<title>mc_rbdyn::CompoundJointConstraintDescription Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,269 +70,99 @@ $(document).ready(function(){initNavTree('a02032.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a02029.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::Collision Struct Reference</div>  </div>
+<div class="title">mc_rbdyn::CompoundJointConstraintDescription Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;mc_rbdyn/Collision.h&gt;</code></p>
+<p>Describe a compound joint constraint.  
+ <a href="a02032.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_rbdyn/CompoundJointConstraintDescription.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:afaef9be2f1209c8cc63876f13b8da184"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#afaef9be2f1209c8cc63876f13b8da184">Collision</a> ()</td></tr>
-<tr class="separator:afaef9be2f1209c8cc63876f13b8da184"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a212f22fc390d0f873dc67244cdbdbce7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#a212f22fc390d0f873dc67244cdbdbce7">Collision</a> (const std::string &amp;b1, const std::string &amp;b2, double i, double s, double d)</td></tr>
-<tr class="separator:a212f22fc390d0f873dc67244cdbdbce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a664a8719f81b8fee2d2b26cd3cf645ab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#a664a8719f81b8fee2d2b26cd3cf645ab">isNone</a> ()</td></tr>
-<tr class="memdesc:a664a8719f81b8fee2d2b26cd3cf645ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Damping (0 is automatic.  <a href="#a664a8719f81b8fee2d2b26cd3cf645ab">More...</a><br /></td></tr>
-<tr class="separator:a664a8719f81b8fee2d2b26cd3cf645ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab32d2891597a9ec0d7f76e3dd0723a9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#aab32d2891597a9ec0d7f76e3dd0723a9">operator==</a> (const <a class="el" href="a02032.html">Collision</a> &amp;rhs) const</td></tr>
-<tr class="separator:aab32d2891597a9ec0d7f76e3dd0723a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f990041663f252046812111a6791048"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#a4f990041663f252046812111a6791048">operator!=</a> (const <a class="el" href="a02032.html">Collision</a> &amp;rhs) const</td></tr>
-<tr class="separator:a4f990041663f252046812111a6791048"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a169addbd06a09743b06287121884f027"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#a169addbd06a09743b06287121884f027">body1</a></td></tr>
-<tr class="separator:a169addbd06a09743b06287121884f027"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afde353de6419a4e248eec0851f664968"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#afde353de6419a4e248eec0851f664968">body2</a></td></tr>
-<tr class="memdesc:afde353de6419a4e248eec0851f664968"><td class="mdescLeft">&#160;</td><td class="mdescRight">First body in the constraint.  <a href="#afde353de6419a4e248eec0851f664968">More...</a><br /></td></tr>
-<tr class="separator:afde353de6419a4e248eec0851f664968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e96ac27cda155ffddb1222ff08f012c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#a4e96ac27cda155ffddb1222ff08f012c">iDist</a></td></tr>
-<tr class="memdesc:a4e96ac27cda155ffddb1222ff08f012c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second body in the constraint.  <a href="#a4e96ac27cda155ffddb1222ff08f012c">More...</a><br /></td></tr>
-<tr class="separator:a4e96ac27cda155ffddb1222ff08f012c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2853ab9ab669747303ccda6b22bb7d77"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#a2853ab9ab669747303ccda6b22bb7d77">sDist</a></td></tr>
-<tr class="memdesc:a2853ab9ab669747303ccda6b22bb7d77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interaction distance.  <a href="#a2853ab9ab669747303ccda6b22bb7d77">More...</a><br /></td></tr>
-<tr class="separator:a2853ab9ab669747303ccda6b22bb7d77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affd388406c44197c32f6685e64d7bdb9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#affd388406c44197c32f6685e64d7bdb9">damping</a></td></tr>
-<tr class="memdesc:affd388406c44197c32f6685e64d7bdb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security distance.  <a href="#affd388406c44197c32f6685e64d7bdb9">More...</a><br /></td></tr>
-<tr class="separator:affd388406c44197c32f6685e64d7bdb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc963a5996bfafc4e1e0675e9db6b6a"><td class="memItemLeft" align="right" valign="top">EIGEN_MAKE_ALIGNED_OPERATOR_NEW std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#a4fc963a5996bfafc4e1e0675e9db6b6a">j1</a></td></tr>
+<tr class="separator:a4fc963a5996bfafc4e1e0675e9db6b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9819775fec0daea6ce39b6979ef153d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#ac9819775fec0daea6ce39b6979ef153d">j2</a></td></tr>
+<tr class="separator:ac9819775fec0daea6ce39b6979ef153d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c937c01687684763d1d040626ca9dcb"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#a8c937c01687684763d1d040626ca9dcb">p1</a></td></tr>
+<tr class="separator:a8c937c01687684763d1d040626ca9dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cc1f94178b76862c60dd6d6c86ddb07"><td class="memItemLeft" align="right" valign="top">Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02032.html#a0cc1f94178b76862c60dd6d6c86ddb07">p2</a></td></tr>
+<tr class="separator:a0cc1f94178b76862c60dd6d6c86ddb07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="afaef9be2f1209c8cc63876f13b8da184"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afaef9be2f1209c8cc63876f13b8da184">&#9670;&nbsp;</a></span>Collision() <span class="overload">[1/2]</span></h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Describe a compound joint constraint. </p>
+<p>This defines:</p><ol type="1">
+<li>a pair of joint names (q1, q2)</li>
+<li>a pair of 2D points (p1, p2)</li>
+</ol>
+<p>The constraint is that: </p><p class="formulaDsp">
+\[ (q - p1) \times (p2 - p1) \leqslant 0 \]
+</p>
+<p>Where \( q = \begin{bmatrix} q1 q2 \end{bmatrix} \) </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4fc963a5996bfafc4e1e0675e9db6b6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fc963a5996bfafc4e1e0675e9db6b6a">&#9670;&nbsp;</a></span>j1</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">mc_rbdyn::Collision::Collision </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">EIGEN_MAKE_ALIGNED_OPERATOR_NEW std::string mc_rbdyn::CompoundJointConstraintDescription::j1</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a212f22fc390d0f873dc67244cdbdbce7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a212f22fc390d0f873dc67244cdbdbce7">&#9670;&nbsp;</a></span>Collision() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_rbdyn::Collision::Collision </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>b1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>b2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>i</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>d</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p class="reference">Referenced by <a class="el" href="a02036.html#a24281b69d10bef2a02ccc3f57f5c1508">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;::save()</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a664a8719f81b8fee2d2b26cd3cf645ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a664a8719f81b8fee2d2b26cd3cf645ab">&#9670;&nbsp;</a></span>isNone()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_rbdyn::Collision::isNone </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Damping (0 is automatic. </p>
-
-<p class="reference">References <a class="el" href="a03783.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>, and <a class="el" href="a00715.html#aca0a2bc620d221c02c834716d875c1e0">mc_rbdyn::operator&lt;&lt;()</a>.</p>
-
-</div>
-</div>
-<a id="a4f990041663f252046812111a6791048"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f990041663f252046812111a6791048">&#9670;&nbsp;</a></span>operator!=()</h2>
+<a id="ac9819775fec0daea6ce39b6979ef153d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9819775fec0daea6ce39b6979ef153d">&#9670;&nbsp;</a></span>j2</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_rbdyn::Collision::operator!= </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02032.html">Collision</a> &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
+          <td class="memname">std::string mc_rbdyn::CompoundJointConstraintDescription::j2</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aab32d2891597a9ec0d7f76e3dd0723a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab32d2891597a9ec0d7f76e3dd0723a9">&#9670;&nbsp;</a></span>operator==()</h2>
+<a id="a8c937c01687684763d1d040626ca9dcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c937c01687684763d1d040626ca9dcb">&#9670;&nbsp;</a></span>p1</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_rbdyn::Collision::operator== </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02032.html">Collision</a> &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
+          <td class="memname">Eigen::Vector2d mc_rbdyn::CompoundJointConstraintDescription::p1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="reference">Referenced by <a class="el" href="a02036.html#a24281b69d10bef2a02ccc3f57f5c1508">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;::save()</a>.</p>
+
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a169addbd06a09743b06287121884f027"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a169addbd06a09743b06287121884f027">&#9670;&nbsp;</a></span>body1</h2>
+<a id="a0cc1f94178b76862c60dd6d6c86ddb07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0cc1f94178b76862c60dd6d6c86ddb07">&#9670;&nbsp;</a></span>p2</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string mc_rbdyn::Collision::body1</td>
+          <td class="memname">Eigen::Vector2d mc_rbdyn::CompoundJointConstraintDescription::p2</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="afde353de6419a4e248eec0851f664968"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afde353de6419a4e248eec0851f664968">&#9670;&nbsp;</a></span>body2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string mc_rbdyn::Collision::body2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>First body in the constraint. </p>
-
-</div>
-</div>
-<a id="affd388406c44197c32f6685e64d7bdb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affd388406c44197c32f6685e64d7bdb9">&#9670;&nbsp;</a></span>damping</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rbdyn::Collision::damping</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Security distance. </p>
-
-</div>
-</div>
-<a id="a4e96ac27cda155ffddb1222ff08f012c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e96ac27cda155ffddb1222ff08f012c">&#9670;&nbsp;</a></span>iDist</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rbdyn::Collision::iDist</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Second body in the constraint. </p>
-
-</div>
-</div>
-<a id="a2853ab9ab669747303ccda6b22bb7d77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2853ab9ab669747303ccda6b22bb7d77">&#9670;&nbsp;</a></span>sDist</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rbdyn::Collision::sDist</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Interaction distance. </p>
+<p class="reference">Referenced by <a class="el" href="a02036.html#a24281b69d10bef2a02ccc3f57f5c1508">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;::save()</a>.</p>
 
 </div>
 </div>
@@ -342,8 +172,8 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00715.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02032.html">Collision</a></li>
-    <li class="footer">Generated on Wed May 6 2020 09:20:18 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00714.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02032.html">CompoundJointConstraintDescription</a></li>
+    <li class="footer">Generated on Thu May 7 2020 03:22:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

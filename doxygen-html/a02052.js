@@ -1,5 +1,6 @@
 var a02052 =
 [
-    [ "load", "a02052.html#a1693666583895fbbd09a39081383914e", null ],
-    [ "save", "a02052.html#a5bd43b00507933f99b76646f50ed0fde", null ]
+    [ "QPContactPtr", "a02052.html#ae43784e3317dd1ab1d0d8f42926e5de7", null ],
+    [ "bilateralContact", "a02052.html#a31a08f61bfa921fa79dde45a30f72aa9", null ],
+    [ "unilateralContact", "a02052.html#a8edb8058d39c00e880534c7d416819f2", null ]
 ];

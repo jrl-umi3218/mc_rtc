@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_filter::LowPassFiniteDifferences&lt; T &gt; Struct Template Reference</title>
+<title>mc_filter::StationaryOffset&lt; VectorT &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,116 +70,66 @@ $(document).ready(function(){initNavTree('a01988.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="a01985.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_filter::LowPassFiniteDifferences&lt; T &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_filter::StationaryOffset&lt; VectorT &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Low-pass velocity filter from series of position measurements.  
+<p>Remove stationary offset from an input signal.  
  <a href="a01988.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_filter/LowPassFiniteDifferences.h&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mc_filter::LowPassFiniteDifferences&lt; T &gt;:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a01988.png" usemap="#mc_5Ffilter::LowPassFiniteDifferences_3C_20T_20_3E_map" alt=""/>
-  <map id="mc_5Ffilter::LowPassFiniteDifferences_3C_20T_20_3E_map" name="mc_5Ffilter::LowPassFiniteDifferences_3C_20T_20_3E_map">
-<area href="a01984.html" title="Low-pass filter from series of velocity measurements. " alt="mc_filter::LowPass&lt; T &gt;" shape="rect" coords="0,0,244,24"/>
-</map>
- </div></div>
+<p><code>#include &lt;mc_filter/StationaryOffset.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:aaac75c58b8f9680abe5bd377c9701253"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#aaac75c58b8f9680abe5bd377c9701253">LowPassT</a> = <a class="el" href="a01984.html">LowPass</a>&lt; T &gt;</td></tr>
-<tr class="separator:aaac75c58b8f9680abe5bd377c9701253"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6b34f60855856174042323741e8ca777"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#a6b34f60855856174042323741e8ca777">LowPassFiniteDifferences</a> (double <a class="el" href="a01984.html#a41bcea9e9de194a6816f03cacbd534dd">dt</a>, double period)</td></tr>
-<tr class="memdesc:a6b34f60855856174042323741e8ca777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with cutoff period.  <a href="#a6b34f60855856174042323741e8ca777">More...</a><br /></td></tr>
-<tr class="separator:a6b34f60855856174042323741e8ca777"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e407b95655d11d8cc0e07b127670771"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#a2e407b95655d11d8cc0e07b127670771">reset</a> (const T &amp;pos, const T &amp;vel)</td></tr>
-<tr class="memdesc:a2e407b95655d11d8cc0e07b127670771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset filter to initial rest value.  <a href="#a2e407b95655d11d8cc0e07b127670771">More...</a><br /></td></tr>
-<tr class="separator:a2e407b95655d11d8cc0e07b127670771"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48566df5537776a9c6fa06de4181fada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#a48566df5537776a9c6fa06de4181fada">update</a> (const T &amp;newPos)</td></tr>
-<tr class="memdesc:a48566df5537776a9c6fa06de4181fada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update velocity estimate from new position value.  <a href="#a48566df5537776a9c6fa06de4181fada">More...</a><br /></td></tr>
-<tr class="separator:a48566df5537776a9c6fa06de4181fada"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f494156496ade7966576d36e01da12d"><td class="memItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#a8f494156496ade7966576d36e01da12d">prevValue</a> () const</td></tr>
-<tr class="separator:a8f494156496ade7966576d36e01da12d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_a01984"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a01984')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a01984.html">mc_filter::LowPass&lt; T &gt;</a></td></tr>
-<tr class="memitem:ae3ddcbbc84aae62aad621a14a91c39bf inherit pub_methods_a01984"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01984.html#ae3ddcbbc84aae62aad621a14a91c39bf">LowPass</a> (double <a class="el" href="a01984.html#a41bcea9e9de194a6816f03cacbd534dd">dt</a>, double period=0)</td></tr>
-<tr class="memdesc:ae3ddcbbc84aae62aad621a14a91c39bf inherit pub_methods_a01984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with cutoff period.  <a href="a01984.html#ae3ddcbbc84aae62aad621a14a91c39bf">More...</a><br /></td></tr>
-<tr class="separator:ae3ddcbbc84aae62aad621a14a91c39bf inherit pub_methods_a01984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac48741a383af10509d4678c5a0673f3a inherit pub_methods_a01984"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01984.html#ac48741a383af10509d4678c5a0673f3a">cutoffPeriod</a> () const</td></tr>
-<tr class="memdesc:ac48741a383af10509d4678c5a0673f3a inherit pub_methods_a01984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get cutoff period.  <a href="a01984.html#ac48741a383af10509d4678c5a0673f3a">More...</a><br /></td></tr>
-<tr class="separator:ac48741a383af10509d4678c5a0673f3a inherit pub_methods_a01984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3c92851291e84d2347271125877dc0c inherit pub_methods_a01984"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01984.html#ac3c92851291e84d2347271125877dc0c">cutoffPeriod</a> (double period)</td></tr>
-<tr class="memdesc:ac3c92851291e84d2347271125877dc0c inherit pub_methods_a01984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set cutoff period.  <a href="a01984.html#ac3c92851291e84d2347271125877dc0c">More...</a><br /></td></tr>
-<tr class="separator:ac3c92851291e84d2347271125877dc0c inherit pub_methods_a01984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9ccdd55e5d7f3beabcf4c26bcea9620 inherit pub_methods_a01984"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01984.html#af9ccdd55e5d7f3beabcf4c26bcea9620">reset</a> (const T &amp;value)</td></tr>
-<tr class="memdesc:af9ccdd55e5d7f3beabcf4c26bcea9620 inherit pub_methods_a01984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset position to an initial rest value.  <a href="a01984.html#af9ccdd55e5d7f3beabcf4c26bcea9620">More...</a><br /></td></tr>
-<tr class="separator:af9ccdd55e5d7f3beabcf4c26bcea9620 inherit pub_methods_a01984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03ab891a2b1f5cd2fd2398b7016ba633 inherit pub_methods_a01984"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01984.html#a03ab891a2b1f5cd2fd2398b7016ba633">update</a> (const T &amp;newValue)</td></tr>
-<tr class="memdesc:a03ab891a2b1f5cd2fd2398b7016ba633 inherit pub_methods_a01984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update velocity estimate from new position value.  <a href="a01984.html#a03ab891a2b1f5cd2fd2398b7016ba633">More...</a><br /></td></tr>
-<tr class="separator:a03ab891a2b1f5cd2fd2398b7016ba633 inherit pub_methods_a01984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a543781fd1c5ec7b653de6e2189de8fdb inherit pub_methods_a01984"><td class="memItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01984.html#a543781fd1c5ec7b653de6e2189de8fdb">eval</a> () const</td></tr>
-<tr class="memdesc:a543781fd1c5ec7b653de6e2189de8fdb inherit pub_methods_a01984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get filtered velocity.  <a href="a01984.html#a543781fd1c5ec7b653de6e2189de8fdb">More...</a><br /></td></tr>
-<tr class="separator:a543781fd1c5ec7b653de6e2189de8fdb inherit pub_methods_a01984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41bcea9e9de194a6816f03cacbd534dd inherit pub_methods_a01984"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01984.html#a41bcea9e9de194a6816f03cacbd534dd">dt</a> () const</td></tr>
-<tr class="separator:a41bcea9e9de194a6816f03cacbd534dd inherit pub_methods_a01984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a04124d30b5fc9745746a89f4dcad802e"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#a04124d30b5fc9745746a89f4dcad802e">prevValue_</a></td></tr>
-<tr class="separator:a04124d30b5fc9745746a89f4dcad802e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_a01984"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a01984')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a01984.html">mc_filter::LowPass&lt; T &gt;</a></td></tr>
-<tr class="memitem:a54232494fa4fa74a08d85acf3f95ab7a inherit pro_attribs_a01984"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01984.html#a54232494fa4fa74a08d85acf3f95ab7a">dt_</a> = 0.005</td></tr>
-<tr class="separator:a54232494fa4fa74a08d85acf3f95ab7a inherit pro_attribs_a01984"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa24fa819655846548ac382ba218e051b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#aa24fa819655846548ac382ba218e051b">StationaryOffset</a> (double dt, double <a class="el" href="a01988.html#ac19e584e7e9172a67709b2187f533069">timeConstant</a>, const VectorT &amp;initValue=VectorT::Zero())</td></tr>
+<tr class="memdesc:aa24fa819655846548ac382ba218e051b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aa24fa819655846548ac382ba218e051b">More...</a><br /></td></tr>
+<tr class="separator:aa24fa819655846548ac382ba218e051b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9dfa7c0425d04a71c179ee05f477d0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#ac9dfa7c0425d04a71c179ee05f477d0a">update</a> (const VectorT &amp;value)</td></tr>
+<tr class="memdesc:ac9dfa7c0425d04a71c179ee05f477d0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update input signal value.  <a href="#ac9dfa7c0425d04a71c179ee05f477d0a">More...</a><br /></td></tr>
+<tr class="separator:ac9dfa7c0425d04a71c179ee05f477d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5db8a63c61b7305d04f3fcd20793ba79"><td class="memItemLeft" align="right" valign="top">const VectorT &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#a5db8a63c61b7305d04f3fcd20793ba79">eval</a> () const</td></tr>
+<tr class="memdesc:a5db8a63c61b7305d04f3fcd20793ba79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get output value where the stationary offset has been filtered.  <a href="#a5db8a63c61b7305d04f3fcd20793ba79">More...</a><br /></td></tr>
+<tr class="separator:a5db8a63c61b7305d04f3fcd20793ba79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa529e044d21dfc42d5a5e6ff8938a7c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#aa529e044d21dfc42d5a5e6ff8938a7c6">reset</a> (const VectorT &amp;initValue)</td></tr>
+<tr class="memdesc:aa529e044d21dfc42d5a5e6ff8938a7c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset everything to an initial value.  <a href="#aa529e044d21dfc42d5a5e6ff8938a7c6">More...</a><br /></td></tr>
+<tr class="separator:aa529e044d21dfc42d5a5e6ff8938a7c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac19e584e7e9172a67709b2187f533069"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#ac19e584e7e9172a67709b2187f533069">timeConstant</a> () const</td></tr>
+<tr class="memdesc:ac19e584e7e9172a67709b2187f533069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get time constant of the filter.  <a href="#ac19e584e7e9172a67709b2187f533069">More...</a><br /></td></tr>
+<tr class="separator:ac19e584e7e9172a67709b2187f533069"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19bbac77cc974f0b7463e493965d5999"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#a19bbac77cc974f0b7463e493965d5999">timeConstant</a> (double T)</td></tr>
+<tr class="memdesc:a19bbac77cc974f0b7463e493965d5999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update time constant.  <a href="#a19bbac77cc974f0b7463e493965d5999">More...</a><br /></td></tr>
+<tr class="separator:a19bbac77cc974f0b7463e493965d5999"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd7e9222057cfac1eb12fa155e4c97d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01988.html#afd7e9222057cfac1eb12fa155e4c97d8">saturation</a> (double limit)</td></tr>
+<tr class="memdesc:afd7e9222057cfac1eb12fa155e4c97d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set output saturation; disable by providing a negative value.  <a href="#afd7e9222057cfac1eb12fa155e4c97d8">More...</a><br /></td></tr>
+<tr class="separator:afd7e9222057cfac1eb12fa155e4c97d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename T&gt;<br />
-struct mc_filter::LowPassFiniteDifferences&lt; T &gt;</h3>
+<div class="textblock"><h3>template&lt;typename VectorT&gt;<br />
+struct mc_filter::StationaryOffset&lt; VectorT &gt;</h3>
 
-<p>Low-pass velocity filter from series of position measurements. </p>
-<p>Expects T to have:</p><ul>
-<li>T::Zero() static method </li>
+<p>Remove stationary offset from an input signal. </p>
+<p>Expects VectorT to act as a vector (typically Eigen::Vector3d), supporting:</p><ul>
+<li>VectorT::Zero() static member function</li>
+<li>VectorT::setZero() member</li>
+<li>VectorT should also respect the requirements of <a class="el" href="a01972.html" title="Exponential Moving Average. ">ExponentialMovingAverage</a> </li>
 </ul>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="aaac75c58b8f9680abe5bd377c9701253"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaac75c58b8f9680abe5bd377c9701253">&#9670;&nbsp;</a></span>LowPassT</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa24fa819655846548ac382ba218e051b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa24fa819655846548ac382ba218e051b">&#9670;&nbsp;</a></span>StationaryOffset()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a01988.html">mc_filter::LowPassFiniteDifferences</a>&lt; T &gt;::<a class="el" href="a01988.html#aaac75c58b8f9680abe5bd377c9701253">LowPassT</a> =  <a class="el" href="a01984.html">LowPass</a>&lt;T&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6b34f60855856174042323741e8ca777"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b34f60855856174042323741e8ca777">&#9670;&nbsp;</a></span>LowPassFiniteDifferences()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename VectorT&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01988.html">mc_filter::LowPassFiniteDifferences</a>&lt; T &gt;::<a class="el" href="a01988.html">LowPassFiniteDifferences</a> </td>
+          <td class="memname"><a class="el" href="a01988.html">mc_filter::StationaryOffset</a>&lt; VectorT &gt;::<a class="el" href="a01988.html">StationaryOffset</a> </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>dt</em>, </td>
@@ -188,7 +138,13 @@ template&lt;typename T &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>period</em>&#160;</td>
+          <td class="paramname"><em>timeConstant</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const VectorT &amp;&#160;</td>
+          <td class="paramname"><em>initValue</em> = <code>VectorT::Zero()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -203,33 +159,32 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Constructor with cutoff period. </p>
+<p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dt</td><td>Sampling period.</td></tr>
-    <tr><td class="paramname">period</td><td>Cutoff period. </td></tr>
+    <tr><td class="paramname">dt</td><td>Time in [s] between two readings.</td></tr>
+    <tr><td class="paramname">timeConstant</td><td>Length of recent-past window used to evaluate the stationary offset.</td></tr>
+    <tr><td class="paramname">initValue</td><td>Initial value of the input signal. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="reference">References <a class="el" href="a01984.html#af9ccdd55e5d7f3beabcf4c26bcea9620">mc_filter::LowPass&lt; T &gt;::reset()</a>.</p>
-
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8f494156496ade7966576d36e01da12d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f494156496ade7966576d36e01da12d">&#9670;&nbsp;</a></span>prevValue()</h2>
+<a id="a5db8a63c61b7305d04f3fcd20793ba79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5db8a63c61b7305d04f3fcd20793ba79">&#9670;&nbsp;</a></span>eval()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename VectorT&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const T&amp; <a class="el" href="a01988.html">mc_filter::LowPassFiniteDifferences</a>&lt; T &gt;::prevValue </td>
+          <td class="memname">const VectorT&amp; <a class="el" href="a01988.html">mc_filter::StationaryOffset</a>&lt; VectorT &gt;::eval </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -242,75 +197,26 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="reference">References <a class="el" href="a01988.html#a04124d30b5fc9745746a89f4dcad802e">mc_filter::LowPassFiniteDifferences&lt; T &gt;::prevValue_</a>.</p>
+<p>Get output value where the stationary offset has been filtered. </p>
 
 </div>
 </div>
-<a id="a2e407b95655d11d8cc0e07b127670771"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e407b95655d11d8cc0e07b127670771">&#9670;&nbsp;</a></span>reset()</h2>
+<a id="aa529e044d21dfc42d5a5e6ff8938a7c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa529e044d21dfc42d5a5e6ff8938a7c6">&#9670;&nbsp;</a></span>reset()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename VectorT&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="a01988.html">mc_filter::LowPassFiniteDifferences</a>&lt; T &gt;::reset </td>
+          <td class="memname">void <a class="el" href="a01988.html">mc_filter::StationaryOffset</a>&lt; VectorT &gt;::reset </td>
           <td>(</td>
-          <td class="paramtype">const T &amp;&#160;</td>
-          <td class="paramname"><em>pos</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const T &amp;&#160;</td>
-          <td class="paramname"><em>vel</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reset filter to initial rest value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pos</td><td>Initial position. </td></tr>
-    <tr><td class="paramname">vel</td><td>Initial velocity. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="reference">References <a class="el" href="a01988.html#a04124d30b5fc9745746a89f4dcad802e">mc_filter::LowPassFiniteDifferences&lt; T &gt;::prevValue_</a>, and <a class="el" href="a01984.html#af9ccdd55e5d7f3beabcf4c26bcea9620">mc_filter::LowPass&lt; T &gt;::reset()</a>.</p>
-
-</div>
-</div>
-<a id="a48566df5537776a9c6fa06de4181fada"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48566df5537776a9c6fa06de4181fada">&#9670;&nbsp;</a></span>update()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a01988.html">mc_filter::LowPassFiniteDifferences</a>&lt; T &gt;::update </td>
-          <td>(</td>
-          <td class="paramtype">const T &amp;&#160;</td>
-          <td class="paramname"><em>newPos</em></td><td>)</td>
+          <td class="paramtype">const VectorT &amp;&#160;</td>
+          <td class="paramname"><em>initValue</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -321,42 +227,152 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Update velocity estimate from new position value. </p>
+<p>Reset everything to an initial value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newPos</td><td>New observed position. </td></tr>
+    <tr><td class="paramname">initValue</td><td>Initial value from which to restart the filter. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="reference">References <a class="el" href="a01984.html#a41bcea9e9de194a6816f03cacbd534dd">mc_filter::LowPass&lt; T &gt;::dt()</a>, <a class="el" href="a01988.html#a04124d30b5fc9745746a89f4dcad802e">mc_filter::LowPassFiniteDifferences&lt; T &gt;::prevValue_</a>, and <a class="el" href="a01984.html#a03ab891a2b1f5cd2fd2398b7016ba633">mc_filter::LowPass&lt; T &gt;::update()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a01988.html#aa24fa819655846548ac382ba218e051b">mc_filter::StationaryOffset&lt; Eigen::Vector3d &gt;::StationaryOffset()</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a04124d30b5fc9745746a89f4dcad802e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04124d30b5fc9745746a89f4dcad802e">&#9670;&nbsp;</a></span>prevValue_</h2>
+<a id="afd7e9222057cfac1eb12fa155e4c97d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd7e9222057cfac1eb12fa155e4c97d8">&#9670;&nbsp;</a></span>saturation()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T &gt; </div>
+template&lt;typename VectorT&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T <a class="el" href="a01988.html">mc_filter::LowPassFiniteDifferences</a>&lt; T &gt;::prevValue_</td>
+          <td class="memname">void <a class="el" href="a01988.html">mc_filter::StationaryOffset</a>&lt; VectorT &gt;::saturation </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>limit</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a01988.html#a8f494156496ade7966576d36e01da12d">mc_filter::LowPassFiniteDifferences&lt; T &gt;::prevValue()</a>, <a class="el" href="a01988.html#a2e407b95655d11d8cc0e07b127670771">mc_filter::LowPassFiniteDifferences&lt; T &gt;::reset()</a>, and <a class="el" href="a01988.html#a48566df5537776a9c6fa06de4181fada">mc_filter::LowPassFiniteDifferences&lt; T &gt;::update()</a>.</p>
+<p>Set output saturation; disable by providing a negative value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">limit</td><td>Output will saturate between -limit and +limit. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac19e584e7e9172a67709b2187f533069"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac19e584e7e9172a67709b2187f533069">&#9670;&nbsp;</a></span>timeConstant() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VectorT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="a01988.html">mc_filter::StationaryOffset</a>&lt; VectorT &gt;::timeConstant </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get time constant of the filter. </p>
+
+</div>
+</div>
+<a id="a19bbac77cc974f0b7463e493965d5999"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19bbac77cc974f0b7463e493965d5999">&#9670;&nbsp;</a></span>timeConstant() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VectorT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a01988.html">mc_filter::StationaryOffset</a>&lt; VectorT &gt;::timeConstant </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>T</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update time constant. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">T</td><td>New time constant of the filter. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac9dfa7c0425d04a71c179ee05f477d0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9dfa7c0425d04a71c179ee05f477d0a">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename VectorT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a01988.html">mc_filter::StationaryOffset</a>&lt; VectorT &gt;::update </td>
+          <td>(</td>
+          <td class="paramtype">const VectorT &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update input signal value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>New value. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -366,8 +382,8 @@ template&lt;typename T &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00716.html">mc_filter</a></li><li class="navelem"><a class="el" href="a01988.html">LowPassFiniteDifferences</a></li>
-    <li class="footer">Generated on Wed May 6 2020 09:20:18 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00715.html">mc_filter</a></li><li class="navelem"><a class="el" href="a01988.html">StationaryOffset</a></li>
+    <li class="footer">Generated on Thu May 7 2020 03:22:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

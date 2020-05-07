@@ -70,23 +70,24 @@ $(document).ready(function(){initNavTree('a01936.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_control::Gripper::Config Member List</div>  </div>
+<div class="title">mc_control::GlobalPlugin Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01936.html">mc_control::Gripper::Config</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a01936.html">mc_control::GlobalPlugin</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01936.html#a8d5f701aba2e36bed8e03806ac35e28a">actualCommandDiffTrigger</a></td><td class="entry"><a class="el" href="a01936.html">mc_control::Gripper::Config</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01936.html#ae08797a5f9cba8108cadeed41ca4a165">overCommandLimitIterN</a></td><td class="entry"><a class="el" href="a01936.html">mc_control::Gripper::Config</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01936.html#a5a54f79ab7fc20b3009362fc247c3a8c">percentVMax</a></td><td class="entry"><a class="el" href="a01936.html">mc_control::Gripper::Config</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01936.html#a2e1c84bb64483af6431c41b20e87bf5f">releaseSafetyOffset</a></td><td class="entry"><a class="el" href="a01936.html">mc_control::Gripper::Config</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01936.html#ab661e381f418ad5f9afa4adf25b4f282">after</a>(mc_control::MCGlobalController &amp;controller)=0</td><td class="entry"><a class="el" href="a01936.html">mc_control::GlobalPlugin</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01936.html#a83ce36f99de7b4a3e7af152ed88e0f5b">before</a>(mc_control::MCGlobalController &amp;controller)=0</td><td class="entry"><a class="el" href="a01936.html">mc_control::GlobalPlugin</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01936.html#acd8832c0335bbf2493bd04697b721bd7">init</a>(mc_control::MCGlobalController &amp;controller, const mc_rtc::Configuration &amp;config)=0</td><td class="entry"><a class="el" href="a01936.html">mc_control::GlobalPlugin</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01936.html#a034ddfcb8958c36c5812cdb7e0a2e9ca">reset</a>(mc_control::MCGlobalController &amp;controller)=0</td><td class="entry"><a class="el" href="a01936.html">mc_control::GlobalPlugin</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01936.html#ae68386345dfc2a1820747a566d37c4af">~GlobalPlugin</a>()=default</td><td class="entry"><a class="el" href="a01936.html">mc_control::GlobalPlugin</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed May 6 2020 09:20:18 for mc_rtc by
+    <li class="footer">Generated on Thu May 7 2020 03:22:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

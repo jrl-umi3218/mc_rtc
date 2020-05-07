@@ -86,7 +86,7 @@ $(document).ready(function(){initNavTree('a02772.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a1949eb437a14ae9ceb04a1ed238fa998"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02772.html#a1949eb437a14ae9ceb04a1ed238fa998">ZMPCCConfiguration</a> = <a class="el" href="a02100.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a></td></tr>
+<tr class="memitem:a1949eb437a14ae9ceb04a1ed238fa998"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02772.html#a1949eb437a14ae9ceb04a1ed238fa998">ZMPCCConfiguration</a> = <a class="el" href="a02096.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a></td></tr>
 <tr class="separator:a1949eb437a14ae9ceb04a1ed238fa998"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -138,7 +138,7 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:af7d8d84e9eabf8762d42feae2ce8457d"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02772.html#af7d8d84e9eabf8762d42feae2ce8457d">error_</a> = Eigen::Vector3d::Zero()</td></tr>
 <tr class="memdesc:af7d8d84e9eabf8762d42feae2ce8457d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error between distributed and measured ZMP.  <a href="#af7d8d84e9eabf8762d42feae2ce8457d">More...</a><br /></td></tr>
 <tr class="separator:af7d8d84e9eabf8762d42feae2ce8457d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb470a80e8c6b811cbe485350f83d15b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01980.html">mc_filter::LeakyIntegrator</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02772.html#aeb470a80e8c6b811cbe485350f83d15b">integrator_</a></td></tr>
+<tr class="memitem:aeb470a80e8c6b811cbe485350f83d15b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01976.html">mc_filter::LeakyIntegrator</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02772.html#aeb470a80e8c6b811cbe485350f83d15b">integrator_</a></td></tr>
 <tr class="memdesc:aeb470a80e8c6b811cbe485350f83d15b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leaky integrator for the CoM offset added by <a class="el" href="a02772.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>.  <a href="#aeb470a80e8c6b811cbe485350f83d15b">More...</a><br /></td></tr>
 <tr class="separator:aeb470a80e8c6b811cbe485350f83d15b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29b2c8d74fda4601ddc13b86b6466b7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02772.html#a29b2c8d74fda4601ddc13b86b6466b7f">enabled_</a> = true</td></tr>
@@ -155,7 +155,7 @@ Protected Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a02772.html#a1949eb437a14ae9ceb04a1ed238fa998">mc_tasks::lipm_stabilizer::ZMPCC::ZMPCCConfiguration</a> =  <a class="el" href="a02100.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a></td>
+          <td class="memname">using <a class="el" href="a02772.html#a1949eb437a14ae9ceb04a1ed238fa998">mc_tasks::lipm_stabilizer::ZMPCC::ZMPCCConfiguration</a> =  <a class="el" href="a02096.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -323,7 +323,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>this configuration may be modified interactively by the GUI elements </dd></dl>
 
-<p class="reference">References <a class="el" href="a00717.html#ac413b7125d296374adc252995e63570d">mc_filter::utils::clampInPlaceAndWarn()</a>, and <a class="el" href="a02100.html#a1d42904ddf94ae3ac2660f01dd5e8ed9">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::maxCoMOffset</a>.</p>
+<p class="reference">References <a class="el" href="a00716.html#ac413b7125d296374adc252995e63570d">mc_filter::utils::clampInPlaceAndWarn()</a>, and <a class="el" href="a02096.html#a1d42904ddf94ae3ac2660f01dd5e8ed9">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::maxCoMOffset</a>.</p>
 
 </div>
 </div>
@@ -671,7 +671,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01980.html">mc_filter::LeakyIntegrator</a>&lt;Eigen::Vector3d&gt; mc_tasks::lipm_stabilizer::ZMPCC::integrator_</td>
+          <td class="memname"><a class="el" href="a01976.html">mc_filter::LeakyIntegrator</a>&lt;Eigen::Vector3d&gt; mc_tasks::lipm_stabilizer::ZMPCC::integrator_</td>
         </tr>
       </table>
   </td>
@@ -692,7 +692,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00712.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00713.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a02772.html">ZMPCC</a></li>
-    <li class="footer">Generated on Wed May 6 2020 09:20:19 for mc_rtc by
+    <li class="footer">Generated on Thu May 7 2020 03:22:09 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

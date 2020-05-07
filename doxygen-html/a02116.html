@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rbdyn::QuadraticGenerator Struct Reference</title>
+<title>mc_rbdyn::Plane Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,86 +70,45 @@ $(document).ready(function(){initNavTree('a02116.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a02113.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::QuadraticGenerator Struct Reference</div>  </div>
+<div class="title">mc_rbdyn::Plane Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;mc_rbdyn/polygon_utils.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a40b29a7315dee567088c1db1c49108c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02116.html#a40b29a7315dee567088c1db1c49108c6">QuadraticGenerator</a> (double start, double end, unsigned int nrSteps, unsigned int proportion=4)</td></tr>
-<tr class="separator:a40b29a7315dee567088c1db1c49108c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33ad0aaa5c9df283c15376186e1defd0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02116.html#a33ad0aaa5c9df283c15376186e1defd0">next</a> (double &amp;percentOut, double &amp;speedOut)</td></tr>
-<tr class="separator:a33ad0aaa5c9df283c15376186e1defd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ad8cba2015c957fc2f09367e269b33a07"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02116.html#ad8cba2015c957fc2f09367e269b33a07">normal</a></td></tr>
+<tr class="separator:ad8cba2015c957fc2f09367e269b33a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c864cca3648d188ffc463ee9cdb2fc6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02116.html#a8c864cca3648d188ffc463ee9cdb2fc6">offset</a></td></tr>
+<tr class="separator:a8c864cca3648d188ffc463ee9cdb2fc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a40b29a7315dee567088c1db1c49108c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40b29a7315dee567088c1db1c49108c6">&#9670;&nbsp;</a></span>QuadraticGenerator()</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ad8cba2015c957fc2f09367e269b33a07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8cba2015c957fc2f09367e269b33a07">&#9670;&nbsp;</a></span>normal</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mc_rbdyn::QuadraticGenerator::QuadraticGenerator </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>start</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>end</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>nrSteps</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>proportion</em> = <code>4</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">Eigen::Vector3d mc_rbdyn::Plane::normal</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a33ad0aaa5c9df283c15376186e1defd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33ad0aaa5c9df283c15376186e1defd0">&#9670;&nbsp;</a></span>next()</h2>
+<a id="a8c864cca3648d188ffc463ee9cdb2fc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c864cca3648d188ffc463ee9cdb2fc6">&#9670;&nbsp;</a></span>offset</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_rbdyn::QuadraticGenerator::next </td>
-          <td>(</td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>percentOut</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>speedOut</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">double mc_rbdyn::Plane::offset</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -162,8 +121,8 @@ Public Member Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00715.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02116.html">QuadraticGenerator</a></li>
-    <li class="footer">Generated on Wed May 6 2020 09:20:18 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00714.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02116.html">Plane</a></li>
+    <li class="footer">Generated on Thu May 7 2020 03:22:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

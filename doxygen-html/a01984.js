@@ -1,11 +1,9 @@
 var a01984 =
 [
-    [ "LowPass", "a01984.html#ae3ddcbbc84aae62aad621a14a91c39bf", null ],
-    [ "cutoffPeriod", "a01984.html#ac48741a383af10509d4678c5a0673f3a", null ],
-    [ "cutoffPeriod", "a01984.html#ac3c92851291e84d2347271125877dc0c", null ],
-    [ "dt", "a01984.html#a41bcea9e9de194a6816f03cacbd534dd", null ],
-    [ "eval", "a01984.html#a543781fd1c5ec7b653de6e2189de8fdb", null ],
-    [ "reset", "a01984.html#af9ccdd55e5d7f3beabcf4c26bcea9620", null ],
-    [ "update", "a01984.html#a03ab891a2b1f5cd2fd2398b7016ba633", null ],
-    [ "dt_", "a01984.html#a54232494fa4fa74a08d85acf3f95ab7a", null ]
+    [ "LowPassT", "a01984.html#aaac75c58b8f9680abe5bd377c9701253", null ],
+    [ "LowPassFiniteDifferences", "a01984.html#a6b34f60855856174042323741e8ca777", null ],
+    [ "prevValue", "a01984.html#a8f494156496ade7966576d36e01da12d", null ],
+    [ "reset", "a01984.html#a2e407b95655d11d8cc0e07b127670771", null ],
+    [ "update", "a01984.html#a48566df5537776a9c6fa06de4181fada", null ],
+    [ "prevValue_", "a01984.html#a04124d30b5fc9745746a89f4dcad802e", null ]
 ];

@@ -1,10 +1,15 @@
 var a01972 =
 [
-    [ "SimulationContactPair", "a01972.html#a074d699740f8b69b15c5fdbdde5519c0", null ],
-    [ "update", "a01972.html#aeb88b53261805f73d79e348835e44c65", null ],
-    [ "envSch", "a01972.html#a4a31ea1a5854da861e8a4f1c827386d8", null ],
-    [ "envSurface", "a01972.html#a2b50f1a3fa514431d9c5552bf88f0181", null ],
-    [ "pair", "a01972.html#a1b9a7de72470d0d2d433a7c3f9843ad0", null ],
-    [ "robotSch", "a01972.html#ac7198289925ffc6917bcdf14848bcde8", null ],
-    [ "robotSurface", "a01972.html#a6580a421bf730ccc06b9a3777d480466", null ]
+    [ "ExponentialMovingAverage", "a01972.html#a156a26de235d293b4e94cb1f269dd16c", null ],
+    [ "append", "a01972.html#afc5e32731c162cecc484c71b1cd6680f", null ],
+    [ "eval", "a01972.html#a59a37436a454f4caa5d9ba49ab85b2e8", null ],
+    [ "reset", "a01972.html#a4fe8efb515654281aa77b87296449f89", null ],
+    [ "saturation", "a01972.html#abc199c7a1935a35f01882c9ce6f355e4", null ],
+    [ "timeConstant", "a01972.html#a25e06aceff6cb86deaba24edc060ef8f", null ],
+    [ "timeConstant", "a01972.html#a5e116fb401af8c027896173066d8b8ed", null ],
+    [ "alpha_", "a01972.html#accd3db44b24084922b2d1915e378b2fb", null ],
+    [ "average_", "a01972.html#adaad48a146f8e945da36b18c0e9c4f8a", null ],
+    [ "dt_", "a01972.html#a6a235570200c501307ebc666fcd81e20", null ],
+    [ "saturation_", "a01972.html#aa39c03dbafb64fa46f4be54499b3ed48", null ],
+    [ "timeConstant_", "a01972.html#a08b8eaf1a64cf2abc37a27311db4923e", null ]
 ];

@@ -29,6 +29,7 @@ var a02668 =
     [ "removeTask", "a02668.html#a59755b6d2a453830d66a662767ff3923", null ],
     [ "removeTask", "a02668.html#a28e05133ff619c24f30a376e951fde51", null ],
     [ "removeTask", "a02668.html#ab9c66bd9fbc6687dccd60727db474c53", null ],
+    [ "result", "a02668.html#a6ac47f4b98ba6a10a14e6f229b677a0a", null ],
     [ "result", "a02668.html#a14b25f17d47d3f23079d557fd8d2fc6a", null ],
     [ "robot", "a02668.html#a07536ec6c134bd3f335a382a0a87d55e", null ],
     [ "robot", "a02668.html#a9de399f8ca81b31588579ac59deb8d44", null ],

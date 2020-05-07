@@ -18,11 +18,11 @@ var searchData=
   ['getlogtype_3c_20std_3a_3avector_3c_20double_2c_20a_20_3e_20_3e',['GetLogType&lt; std::vector&lt; double, A &gt; &gt;',['../a02524.html',1,'mc_rtc::log']]],
   ['gjk',['GJK',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00782.html',1,'']]],
   ['global',['Global',['../a02852.html',1,'']]],
-  ['globalconfiguration',['GlobalConfiguration',['../a01948.html',1,'mc_control::MCGlobalController']]],
-  ['globalplugin',['GlobalPlugin',['../a01940.html',1,'mc_control']]],
-  ['gripper',['Gripper',['../a01932.html',1,'mc_control::Gripper'],['../a02156.html',1,'mc_rbdyn::RobotModule::Gripper']]],
+  ['globalconfiguration',['GlobalConfiguration',['../a01944.html',1,'mc_control::MCGlobalController']]],
+  ['globalplugin',['GlobalPlugin',['../a01936.html',1,'mc_control']]],
+  ['gripper',['Gripper',['../a01932.html',1,'mc_control::Gripper'],['../a02152.html',1,'mc_rbdyn::RobotModule::Gripper']]],
   ['grippers',['Grippers',['../a01880.html',1,'mc_control::fsm']]],
-  ['grippersurface',['GripperSurface',['../a02080.html',1,'mc_rbdyn']]],
+  ['grippersurface',['GripperSurface',['../a02076.html',1,'mc_rbdyn']]],
   ['grippertorqueconstr',['GripperTorqueConstr',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00900.html',1,'tasks::qp']]],
   ['grippertorquetask',['GripperTorqueTask',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01172.html',1,'tasks::qp']]]
 ];

@@ -1,20 +1,19 @@
 var a01996 =
 [
-    [ "Update", "a01996.html#ace7a5ef240bc42d89053419e8718eba3", [
-      [ "Control", "a01996.html#ace7a5ef240bc42d89053419e8718eba3aa1595abbb4c3a326636dd178757cd6c1", null ],
-      [ "Estimator", "a01996.html#ace7a5ef240bc42d89053419e8718eba3ada2a1b654dd8965375b17b81a0874e1d", null ]
+    [ "Update", "a01996.html#ab23dff7bf325e5a4a3fcf84d13fa62b2", [
+      [ "Control", "a01996.html#ab23dff7bf325e5a4a3fcf84d13fa62b2aa1595abbb4c3a326636dd178757cd6c1", null ],
+      [ "Estimator", "a01996.html#ab23dff7bf325e5a4a3fcf84d13fa62b2ada2a1b654dd8965375b17b81a0874e1d", null ],
+      [ "None", "a01996.html#ab23dff7bf325e5a4a3fcf84d13fa62b2a6adf97f83acf6453d4a6a4b1070f3754", null ]
     ] ],
-    [ "BodySensorObserver", "a01996.html#aad52d430f0c328c986a14d2a8a9a7b17", null ],
-    [ "addToGUI", "a01996.html#abf71106c03fdf82b9e342a51bd7f4ea6", null ],
-    [ "addToLogger", "a01996.html#a164f25654c0fc7ef6d08e5c052260445", null ],
-    [ "posW", "a01996.html#a40a80d57f8974b3af7d4f65df95161ab", null ],
-    [ "removeFromLogger", "a01996.html#aa36833218c888dbeee8d98e4994d43f1", null ],
-    [ "reset", "a01996.html#a23564250186a2e8780df9150945dad63", null ],
-    [ "run", "a01996.html#a2a497aef03e071004c926032776ac520", null ],
-    [ "updateRobots", "a01996.html#aa499d558eec971e714a924f1fb9d0722", null ],
-    [ "velW", "a01996.html#a96afc25baaad80aa4c09d6619eb3be56", null ],
-    [ "fbSensorName_", "a01996.html#a66d2fa568fd183d424b8b45488fe5c87", null ],
-    [ "posW_", "a01996.html#a7b67ccbf5ae607a9ed7227d64825d4fe", null ],
-    [ "updateFrom_", "a01996.html#a41e24212545815c92909fc647cfd4d75", null ],
-    [ "velW_", "a01996.html#a4d5cc646377a58ef243bf1d6b8c10f5e", null ]
+    [ "EncoderObserver", "a01996.html#ae041a35fb0a73ebdbe7bbea9e1346155", null ],
+    [ "addToLogger", "a01996.html#a2a2f2d12d8ea8643e3a2ad1e910aa892", null ],
+    [ "removeFromLogger", "a01996.html#af71d87a052f0e72a00198643ab760a11", null ],
+    [ "reset", "a01996.html#a2934c6f44a6b49aae0e8e412b04d37c1", null ],
+    [ "run", "a01996.html#ad65144731e89fc2d6ba40c39e9d5b691", null ],
+    [ "updateRobots", "a01996.html#af72093790abd36ada558ed00cb0414a0", null ],
+    [ "encodersVelocity_", "a01996.html#a836476dda18a176da54e14ede5f0eabd", null ],
+    [ "logEstimation_", "a01996.html#a53abfb8ea362389b0a08a268bc9ac268", null ],
+    [ "posUpdate_", "a01996.html#a8b1666591ee20b8a1f45f7766b5ec694", null ],
+    [ "prevEncoders_", "a01996.html#a81e5682d74e14df7b3b65c6344b49cb0", null ],
+    [ "velUpdate_", "a01996.html#a6da1c395f9ebe746776910c6713c21d4", null ]
 ];

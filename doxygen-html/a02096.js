@@ -1,5 +1,7 @@
 var a02096 =
 [
-    [ "load", "a02096.html#a6f8a65b949b2129b60545644f984db59", null ],
-    [ "save", "a02096.html#a4e91cd76b79b671e4049c8444cf1e3f4", null ]
+    [ "comAdmittance", "a02096.html#ad6b1427db5969e53c93eda40b82c29c0", null ],
+    [ "integratorLeakRate", "a02096.html#a3c05d238cf8b0b2803e502985898c9ca", null ],
+    [ "maxCoMAdmitance", "a02096.html#ab4355cd8a898d9fb511b6820b4573902", null ],
+    [ "maxCoMOffset", "a02096.html#a1d42904ddf94ae3ac2660f01dd5e8ed9", null ]
 ];

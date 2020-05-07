@@ -2,7 +2,7 @@ var searchData=
 [
   ['element',['Element',['../a02292.html',1,'mc_rtc::gui']]],
   ['elementid',['ElementId',['../a01836.html',1,'mc_control']]],
-  ['encoderobserver',['EncoderObserver',['../a02000.html',1,'mc_observers']]],
+  ['encoderobserver',['EncoderObserver',['../a01996.html',1,'mc_observers']]],
   ['endeffectortask',['EndEffectorTask',['../a02744.html',1,'mc_tasks']]],
   ['entry',['entry',['../a02512.html',1,'mc_rtc::log::FlatLog']]],
   ['enumclasshash',['EnumClassHash',['../a02768.html',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
@@ -18,6 +18,6 @@ var searchData=
   ['exactcubictrajectorytask',['ExactCubicTrajectoryTask',['../a02748.html',1,'mc_tasks']]],
   ['exception',['Exception',['../a02200.html',1,'mc_rtc::Configuration']]],
   ['executor',['Executor',['../a01860.html',1,'mc_control::fsm']]],
-  ['exponentialmovingaverage',['ExponentialMovingAverage',['../a01976.html',1,'mc_filter']]],
-  ['exponentialmovingaverage_3c_20eigen_3a_3avector3d_20_3e',['ExponentialMovingAverage&lt; Eigen::Vector3d &gt;',['../a01976.html',1,'mc_filter']]]
+  ['exponentialmovingaverage',['ExponentialMovingAverage',['../a01972.html',1,'mc_filter']]],
+  ['exponentialmovingaverage_3c_20eigen_3a_3avector3d_20_3e',['ExponentialMovingAverage&lt; Eigen::Vector3d &gt;',['../a01972.html',1,'mc_filter']]]
 ];

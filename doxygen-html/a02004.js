@@ -1,14 +1,13 @@
 var a02004 =
 [
-    [ "KinematicInertialObserver", "a02004.html#a165a77caf0652ffe0388127ceafe7ba6", null ],
-    [ "addToGUI", "a02004.html#a8d79052ede7702b4e1271aa45f8c17e4", null ],
-    [ "addToLogger", "a02004.html#a70349dda9da00837225afa919fdc9ce7", null ],
-    [ "removeFromGUI", "a02004.html#aee19bc2e4f9457e9df7e60fa5f562769", null ],
-    [ "removeFromLogger", "a02004.html#ab7a34a69d1337573093b19cce5f4442e", null ],
-    [ "reset", "a02004.html#ae964341c760e3f942152f39d4d596432", null ],
-    [ "reset", "a02004.html#a218d679b8851235ad18b2a49b2c71e01", null ],
-    [ "run", "a02004.html#a2c4b4fe83ab2ad282f02ad6c093e1be6", null ],
-    [ "updateBodySensor", "a02004.html#a70199d5e62d4869778cd91e5e1f1bdee", null ],
-    [ "updateRobots", "a02004.html#ae46ba5b39b85a8b8e271b8b9c63a9a3b", null ],
-    [ "velW", "a02004.html#a2c973c62cabf96b73042047669579a64", null ]
+    [ "KinematicInertialPoseObserver", "a02004.html#a0fe74faab4da1913b5e271bbf6a7d1ed", null ],
+    [ "addToLogger", "a02004.html#a2ef97a314ad3f21392694e585ff89582", null ],
+    [ "estimateOrientation", "a02004.html#a6b6a2d32b41691feec87fbff77276731", null ],
+    [ "estimatePosition", "a02004.html#af4516c687fb2683eea570e5afc926165", null ],
+    [ "posW", "a02004.html#ae0059d688bf9a9864199b4f8bece7e3e", null ],
+    [ "removeFromLogger", "a02004.html#adbd72a6d4f7f24086bb399c556aef15c", null ],
+    [ "reset", "a02004.html#a5564591fc150e119fbfe35991031c7da", null ],
+    [ "run", "a02004.html#a91574e17a50e7d77a05835335accc0ec", null ],
+    [ "updateBodySensor", "a02004.html#a143ebfe1847c460ee63c5ec2b8ec5047", null ],
+    [ "updateRobots", "a02004.html#a4c4e67e7605e46a446caaf2fd6525b7c", null ]
 ];

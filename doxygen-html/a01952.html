@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_control::ControllerResetData Class Reference</title>
+<title>mc_control::PythonRWCallback Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -73,38 +73,45 @@ $(document).ready(function(){initNavTree('a01952.html','');});
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a01949.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_control::ControllerResetData Class Reference</div>  </div>
+<div class="title">mc_control::PythonRWCallback Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Contains information allowing the controller to start smoothly from the current state of the robot.  
- <a href="a01952.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_control/MCController.h&gt;</code></p>
+<p><code>#include &lt;mc_control/mc_python_controller.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ac3dbbf827ccf63e00f0f7c7be7f32539"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01952.html#ac3dbbf827ccf63e00f0f7c7be7f32539">q</a></td></tr>
-<tr class="memdesc:ac3dbbf827ccf63e00f0f7c7be7f32539"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains free flyer + joints state information.  <a href="#ac3dbbf827ccf63e00f0f7c7be7f32539">More...</a><br /></td></tr>
-<tr class="separator:ac3dbbf827ccf63e00f0f7c7be7f32539"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cdae0b0b750ab031e2abbb122d93aa1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01952.html#a6cdae0b0b750ab031e2abbb122d93aa1">success</a></td></tr>
+<tr class="separator:a6cdae0b0b750ab031e2abbb122d93aa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f171792f487d5b8b30aa5cad17305fc"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01952.html#a2f171792f487d5b8b30aa5cad17305fc">out</a></td></tr>
+<tr class="separator:a2f171792f487d5b8b30aa5cad17305fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains information allowing the controller to start smoothly from the current state of the robot. </p>
-<dl class="section note"><dt>Note</dt><dd>For now, this only contains the state of the robot (free flyer and joints state) </dd></dl>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="ac3dbbf827ccf63e00f0f7c7be7f32539"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3dbbf827ccf63e00f0f7c7be7f32539">&#9670;&nbsp;</a></span>q</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a2f171792f487d5b8b30aa5cad17305fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f171792f487d5b8b30aa5cad17305fc">&#9670;&nbsp;</a></span>out</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const std::vector&lt;std::vector&lt;double&gt; &gt;&amp; mc_control::ControllerResetData::q</td>
+          <td class="memname">std::string mc_control::PythonRWCallback::out</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Contains free flyer + joints state information. </p>
+</div>
+</div>
+<a id="a6cdae0b0b750ab031e2abbb122d93aa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cdae0b0b750ab031e2abbb122d93aa1">&#9670;&nbsp;</a></span>success</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::PythonRWCallback::success</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -114,8 +121,8 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00697.html">mc_control</a></li><li class="navelem"><a class="el" href="a01952.html">ControllerResetData</a></li>
-    <li class="footer">Generated on Wed May 6 2020 09:17:43 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00709.html">mc_control</a></li><li class="navelem"><a class="el" href="a01952.html">PythonRWCallback</a></li>
+    <li class="footer">Generated on Thu May 7 2020 03:22:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

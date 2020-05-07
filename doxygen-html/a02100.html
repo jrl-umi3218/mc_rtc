@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration Struct Reference</title>
+<title>mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,98 +70,84 @@ $(document).ready(function(){initNavTree('a02100.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="a02097.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration Struct Reference</div>  </div>
+<div class="title">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
+<p>Read force distribution QP weights from configuration.  
+ <a href="a02100.html#details">More...</a></p>
+
 <p><code>#include &lt;mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ad6b1427db5969e53c93eda40b82c29c0"><td class="memItemLeft" align="right" valign="top">EIGEN_MAKE_ALIGNED_OPERATOR_NEW Eigen::Vector2d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02100.html#ad6b1427db5969e53c93eda40b82c29c0">comAdmittance</a> = Eigen::Vector2d::Zero()</td></tr>
-<tr class="memdesc:ad6b1427db5969e53c93eda40b82c29c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Admittance gains for CoM admittance control.  <a href="#ad6b1427db5969e53c93eda40b82c29c0">More...</a><br /></td></tr>
-<tr class="separator:ad6b1427db5969e53c93eda40b82c29c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c05d238cf8b0b2803e502985898c9ca"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02100.html#a3c05d238cf8b0b2803e502985898c9ca">integratorLeakRate</a> = 0.1</td></tr>
-<tr class="memdesc:a3c05d238cf8b0b2803e502985898c9ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leak rate.  <a href="#a3c05d238cf8b0b2803e502985898c9ca">More...</a><br /></td></tr>
-<tr class="separator:a3c05d238cf8b0b2803e502985898c9ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d42904ddf94ae3ac2660f01dd5e8ed9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02100.html#a1d42904ddf94ae3ac2660f01dd5e8ed9">maxCoMOffset</a> = 0.05</td></tr>
-<tr class="memdesc:a1d42904ddf94ae3ac2660f01dd5e8ed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum CoM offset due to admittance control in [m].  <a href="#a1d42904ddf94ae3ac2660f01dd5e8ed9">More...</a><br /></td></tr>
-<tr class="separator:a1d42904ddf94ae3ac2660f01dd5e8ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4355cd8a898d9fb511b6820b4573902"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02100.html#ab4355cd8a898d9fb511b6820b4573902">maxCoMAdmitance</a> = 20</td></tr>
-<tr class="memdesc:ab4355cd8a898d9fb511b6820b4573902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum admittance for CoM admittance control.  <a href="#ab4355cd8a898d9fb511b6820b4573902">More...</a><br /></td></tr>
-<tr class="separator:ab4355cd8a898d9fb511b6820b4573902"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a424041a72a1aab6e27b6b8c9115041bb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02096.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02100.html#a424041a72a1aab6e27b6b8c9115041bb">load</a> (const <a class="el" href="a02196.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="separator:a424041a72a1aab6e27b6b8c9115041bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dc93d8923aa1b6251a7c61acf5332c7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02196.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02100.html#a9dc93d8923aa1b6251a7c61acf5332c7">save</a> (const <a class="el" href="a02096.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a> &amp;zmpcc)</td></tr>
+<tr class="separator:a9dc93d8923aa1b6251a7c61acf5332c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="ad6b1427db5969e53c93eda40b82c29c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6b1427db5969e53c93eda40b82c29c0">&#9670;&nbsp;</a></span>comAdmittance</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;&gt;<br />
+struct mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;</h3>
+
+<p>Read force distribution QP weights from configuration. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a424041a72a1aab6e27b6b8c9115041bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a424041a72a1aab6e27b6b8c9115041bb">&#9670;&nbsp;</a></span>load()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">EIGEN_MAKE_ALIGNED_OPERATOR_NEW Eigen::Vector2d mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::comAdmittance = Eigen::Vector2d::Zero()</td>
+          <td class="memname">static <a class="el" href="a02096.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a> <a class="el" href="a02172.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a02096.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a> &gt;::load </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02196.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Admittance gains for CoM admittance control. </p>
-
-<p class="reference">Referenced by <a class="el" href="a02104.html#a424041a72a1aab6e27b6b8c9115041bb">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::load()</a>, and <a class="el" href="a02104.html#a9dc93d8923aa1b6251a7c61acf5332c7">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::save()</a>.</p>
+<p class="reference">References <a class="el" href="a02096.html#ad6b1427db5969e53c93eda40b82c29c0">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::comAdmittance</a>, <a class="el" href="a02196.html#a6488f8ecfa643aebe3c77e8fd4218160">mc_rtc::Configuration::has()</a>, <a class="el" href="a02096.html#a3c05d238cf8b0b2803e502985898c9ca">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::integratorLeakRate</a>, and <a class="el" href="a02096.html#a1d42904ddf94ae3ac2660f01dd5e8ed9">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::maxCoMOffset</a>.</p>
 
 </div>
 </div>
-<a id="a3c05d238cf8b0b2803e502985898c9ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c05d238cf8b0b2803e502985898c9ca">&#9670;&nbsp;</a></span>integratorLeakRate</h2>
+<a id="a9dc93d8923aa1b6251a7c61acf5332c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dc93d8923aa1b6251a7c61acf5332c7">&#9670;&nbsp;</a></span>save()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::integratorLeakRate = 0.1</td>
+          <td class="memname">static <a class="el" href="a02196.html">mc_rtc::Configuration</a> <a class="el" href="a02172.html">mc_rtc::ConfigurationLoader</a>&lt; <a class="el" href="a02096.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a> &gt;::save </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02096.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a> &amp;&#160;</td>
+          <td class="paramname"><em>zmpcc</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Leak rate. </p>
-
-<p class="reference">Referenced by <a class="el" href="a02104.html#a424041a72a1aab6e27b6b8c9115041bb">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::load()</a>, and <a class="el" href="a02104.html#a9dc93d8923aa1b6251a7c61acf5332c7">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::save()</a>.</p>
-
-</div>
-</div>
-<a id="ab4355cd8a898d9fb511b6820b4573902"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4355cd8a898d9fb511b6820b4573902">&#9670;&nbsp;</a></span>maxCoMAdmitance</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::maxCoMAdmitance = 20</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Maximum admittance for CoM admittance control. </p>
-
-</div>
-</div>
-<a id="a1d42904ddf94ae3ac2660f01dd5e8ed9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d42904ddf94ae3ac2660f01dd5e8ed9">&#9670;&nbsp;</a></span>maxCoMOffset</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::maxCoMOffset = 0.05</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Maximum CoM offset due to admittance control in [m]. </p>
-
-<p class="reference">Referenced by <a class="el" href="a02772.html#a63c6fb35d5efd1595a1ead7be388c0df">mc_tasks::lipm_stabilizer::ZMPCC::configure()</a>, <a class="el" href="a02104.html#a424041a72a1aab6e27b6b8c9115041bb">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::load()</a>, and <a class="el" href="a02104.html#a9dc93d8923aa1b6251a7c61acf5332c7">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;::save()</a>.</p>
+<p class="reference">References <a class="el" href="a02196.html#a6a28ad4e71394b56e27687e9d64a8cda">mc_rtc::Configuration::add()</a>, <a class="el" href="a02096.html#ad6b1427db5969e53c93eda40b82c29c0">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::comAdmittance</a>, <a class="el" href="a02096.html#a3c05d238cf8b0b2803e502985898c9ca">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::integratorLeakRate</a>, and <a class="el" href="a02096.html#a1d42904ddf94ae3ac2660f01dd5e8ed9">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::maxCoMOffset</a>.</p>
 
 </div>
 </div>
@@ -171,8 +157,8 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00715.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00722.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a02100.html">ZMPCCConfiguration</a></li>
-    <li class="footer">Generated on Wed May 6 2020 09:20:18 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00711.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02100.html">ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;</a></li>
+    <li class="footer">Generated on Thu May 7 2020 03:22:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

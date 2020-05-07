@@ -1,13 +1,7 @@
 var a02032 =
 [
-    [ "Collision", "a02032.html#afaef9be2f1209c8cc63876f13b8da184", null ],
-    [ "Collision", "a02032.html#a212f22fc390d0f873dc67244cdbdbce7", null ],
-    [ "isNone", "a02032.html#a664a8719f81b8fee2d2b26cd3cf645ab", null ],
-    [ "operator!=", "a02032.html#a4f990041663f252046812111a6791048", null ],
-    [ "operator==", "a02032.html#aab32d2891597a9ec0d7f76e3dd0723a9", null ],
-    [ "body1", "a02032.html#a169addbd06a09743b06287121884f027", null ],
-    [ "body2", "a02032.html#afde353de6419a4e248eec0851f664968", null ],
-    [ "damping", "a02032.html#affd388406c44197c32f6685e64d7bdb9", null ],
-    [ "iDist", "a02032.html#a4e96ac27cda155ffddb1222ff08f012c", null ],
-    [ "sDist", "a02032.html#a2853ab9ab669747303ccda6b22bb7d77", null ]
+    [ "j1", "a02032.html#a4fc963a5996bfafc4e1e0675e9db6b6a", null ],
+    [ "j2", "a02032.html#ac9819775fec0daea6ce39b6979ef153d", null ],
+    [ "p1", "a02032.html#a8c937c01687684763d1d040626ca9dcb", null ],
+    [ "p2", "a02032.html#a0cc1f94178b76862c60dd6d6c86ddb07", null ]
 ];

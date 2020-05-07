@@ -1,9 +1,10 @@
 var a01988 =
 [
-    [ "LowPassT", "a01988.html#aaac75c58b8f9680abe5bd377c9701253", null ],
-    [ "LowPassFiniteDifferences", "a01988.html#a6b34f60855856174042323741e8ca777", null ],
-    [ "prevValue", "a01988.html#a8f494156496ade7966576d36e01da12d", null ],
-    [ "reset", "a01988.html#a2e407b95655d11d8cc0e07b127670771", null ],
-    [ "update", "a01988.html#a48566df5537776a9c6fa06de4181fada", null ],
-    [ "prevValue_", "a01988.html#a04124d30b5fc9745746a89f4dcad802e", null ]
+    [ "StationaryOffset", "a01988.html#aa24fa819655846548ac382ba218e051b", null ],
+    [ "eval", "a01988.html#a5db8a63c61b7305d04f3fcd20793ba79", null ],
+    [ "reset", "a01988.html#aa529e044d21dfc42d5a5e6ff8938a7c6", null ],
+    [ "saturation", "a01988.html#afd7e9222057cfac1eb12fa155e4c97d8", null ],
+    [ "timeConstant", "a01988.html#ac19e584e7e9172a67709b2187f533069", null ],
+    [ "timeConstant", "a01988.html#a19bbac77cc974f0b7463e493965d5999", null ],
+    [ "update", "a01988.html#ac9dfa7c0425d04a71c179ee05f477d0a", null ]
 ];

@@ -281,6 +281,10 @@
           
             
             
+            <a id="mc_rbdyn_Mimic_link" href="#collapse_mc_rbdyn_Mimic" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="mc_rbdyn/Mimic" aria-controls="collapse_mc_rbdyn_Mimic">Mimic</a>
+          
+            
+            
             <a id="mc_rbdyn_PlanarSurfacePtr_link" href="#collapse_mc_rbdyn_PlanarSurfacePtr" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="mc_rbdyn/PlanarSurfacePtr" aria-controls="collapse_mc_rbdyn_PlanarSurfacePtr">PlanarSurfacePtr</a>
           
             
@@ -298,6 +302,10 @@
             
             
             <a id="mc_rbdyn_RobotModuleGripper_link" href="#collapse_mc_rbdyn_RobotModuleGripper" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="mc_rbdyn/RobotModuleGripper" aria-controls="collapse_mc_rbdyn_RobotModuleGripper">RobotModule::Gripper</a>
+          
+            
+            
+            <a id="mc_rbdyn_RobotModuleGripperSafety_link" href="#collapse_mc_rbdyn_RobotModuleGripperSafety" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="mc_rbdyn/RobotModuleGripperSafety" aria-controls="collapse_mc_rbdyn_RobotModuleGripperSafety">RobotModule::Gripper::Safety</a>
           
             
             
@@ -33310,6 +33318,40 @@ Stabilizer::GoHalfSitting:
   
   
   
+  <td>robot</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>If ommited, the state applies to the main robot</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
   <td>grippers</td>
   
   <td>
@@ -39651,6 +39693,504 @@ configs:
 
       
     
+      
+        
+        
+        
+        
+        
+        
+  
+  
+  
+  <div id="collapse_mc_rbdyn_RobotModuleGripperSafety" class="collapse collapseSchema" style="position:sticky; top: 65px;">
+    
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule::Gripper::Safety</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>percentVMax</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.25</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>actualCommandDiffTrigger</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.14</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>releaseSafetyOffset</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.034</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>overCommandLimitIterN</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-integer">integer &ge; 1</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">5</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_mc_rbdyn_RobotModuleGripperSafety_example" aria-expanded="false" aria-controls="collapse_mc_rbdyn_RobotModuleGripperSafety_example">Example</button>
+      </div>
+      <div id="collapse_mc_rbdyn_RobotModuleGripperSafety_example" class="collapse">
+        <div class="card-body">
+          <ul class="nav nav-tabs" id="mc_rbdyn_RobotModuleGripperSafety_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="mc-rbdyn-robotmodulegrippersafety-examplejsonjsonTab" data-toggle="tab" href="#mc-rbdyn-robotmodulegrippersafety-examplejsonjsonTabContent" role="tab" aria-controls="mc-rbdyn-robotmodulegrippersafety-examplejsonjsonTabContent" aria-selected="true">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="mc-rbdyn-robotmodulegrippersafety-exampleyamlyamlTab" data-toggle="tab" href="#mc-rbdyn-robotmodulegrippersafety-exampleyamlyamlTabContent" role="tab" aria-controls="mc-rbdyn-robotmodulegrippersafety-exampleyamlyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="mc_rbdyn_RobotModuleGripperSafety_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="mc-rbdyn-robotmodulegrippersafety-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-robotmodulegrippersafety-examplejsonjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"percentVMax"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"actualCommandDiffTrigger"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.14</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="err">deg.</span><span class="w">
+  </span><span class="nl">"releaseSafetyOffset"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.034</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="err">deg.</span><span class="w">
+  </span><span class="nl">"overCommandLimitIterN"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="mc_rbdyn_RobotModuleGripperSafety_examplejsonCopySource" class="offscreen" aria-hidden=true>{
+  "percentVMax": 0.25,
+  "actualCommandDiffTrigger": 0.14, // 8 deg.
+  "releaseSafetyOffset": 0.034, // 2 deg.
+  "overCommandLimitIterN": 5
+}</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#mc_rbdyn_RobotModuleGripperSafety_examplejsonCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="mc-rbdyn-robotmodulegrippersafety-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-robotmodulegrippersafety-exampleyamlyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">percentVMax</span><span class="pi">:</span> <span class="m">0.25</span>
+<span class="na">actualCommandDiffTrigger</span><span class="pi">:</span> <span class="m">0.14</span> <span class="c1"># 8 deg.</span>
+<span class="na">releaseSafetyOffset</span><span class="pi">:</span> <span class="m">0.034</span> <span class="c1"># 2 deg.</span>
+<span class="na">overCommandLimitIterN</span><span class="pi">:</span> <span class="s">5</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="mc_rbdyn_RobotModuleGripperSafety_exampleyamlCopySource" class="offscreen" aria-hidden=true>percentVMax: 0.25
+actualCommandDiffTrigger: 0.14 # 8 deg.
+releaseSafetyOffset: 0.034 # 2 deg.
+overCommandLimitIterN: 5</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#mc_rbdyn_RobotModuleGripperSafety_exampleyamlCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      
+        
+        
+        
+        
+        
+        
+  
+  
+  
+  <div id="collapse_mc_rbdyn_Mimic" class="collapse collapseSchema" style="position:sticky; top: 65px;">
+    
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::Mimic</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>name</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>joint</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>multiplier</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">1</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>offset</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_mc_rbdyn_Mimic_example" aria-expanded="false" aria-controls="collapse_mc_rbdyn_Mimic_example">Example</button>
+      </div>
+      <div id="collapse_mc_rbdyn_Mimic_example" class="collapse">
+        <div class="card-body">
+          <ul class="nav nav-tabs" id="mc_rbdyn_Mimic_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="mc-rbdyn-mimic-examplejsonjsonTab" data-toggle="tab" href="#mc-rbdyn-mimic-examplejsonjsonTabContent" role="tab" aria-controls="mc-rbdyn-mimic-examplejsonjsonTabContent" aria-selected="true">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="mc-rbdyn-mimic-exampleyamlyamlTab" data-toggle="tab" href="#mc-rbdyn-mimic-exampleyamlyamlTabContent" role="tab" aria-controls="mc-rbdyn-mimic-exampleyamlyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="mc_rbdyn_Mimic_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="mc-rbdyn-mimic-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-mimic-examplejsonjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LHAND_J0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"joint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LARM_J7"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"multiplier"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"offset"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="mc_rbdyn_Mimic_examplejsonCopySource" class="offscreen" aria-hidden=true>{
+  "name": "LHAND_J0",
+  "joint": "LARM_J7",
+  "multiplier": -1,
+  "offset": 0
+}</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#mc_rbdyn_Mimic_examplejsonCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="mc-rbdyn-mimic-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-mimic-exampleyamlyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">name</span><span class="pi">:</span> <span class="s">LHAND_J0</span>
+<span class="na">joint</span><span class="pi">:</span> <span class="s">LARM_J7</span>
+<span class="na">multiplier</span><span class="pi">:</span> <span class="s">-1</span>
+<span class="na">offset</span><span class="pi">:</span> <span class="s">0</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="mc_rbdyn_Mimic_exampleyamlCopySource" class="offscreen" aria-hidden=true>name: LHAND_J0
+joint: LARM_J7
+multiplier: -1
+offset: 0</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#mc_rbdyn_Mimic_exampleyamlCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
       
         
         
@@ -47856,6 +48396,391 @@ planarPoints:
 
 
 
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>safety</td>
+  
+  <td colspan="2">
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapsemc_rbdyn_RobotModule_PROP_grippers_PROP_safety" aria-expanded="false" aria-controls="collapsemc_rbdyn_RobotModule_PROP_grippers_PROP_safety">mc_rbdyn::RobotModule::Gripper::Safety</a>
+  
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapsemc_rbdyn_RobotModule_PROP_grippers_PROP_safety">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule::Gripper::Safety</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>percentVMax</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.25</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>actualCommandDiffTrigger</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.14</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>releaseSafetyOffset</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.034</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>overCommandLimitIterN</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-integer">integer &ge; 1</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">5</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>mimics</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapsemc_rbdyn_RobotModule_PROP_grippers_PROP_mimics" aria-expanded="false" aria-controls="collapsemc_rbdyn_RobotModule_PROP_grippers_PROP_mimics">mc_rbdyn::Mimic</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapsemc_rbdyn_RobotModule_PROP_grippers_PROP_mimics">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::Mimic</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>name</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>joint</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>multiplier</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">1</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>offset</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
 
 </tbody>
 </table>
@@ -48054,6 +48979,195 @@ planarPoints:
   </td>
   
 </tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>gripperSafety</td>
+  
+  <td colspan="2">
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapsemc_rbdyn_RobotModule_PROP_gripperSafety" aria-expanded="false" aria-controls="collapsemc_rbdyn_RobotModule_PROP_gripperSafety">mc_rbdyn::RobotModule::Gripper::Safety</a>
+  
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapsemc_rbdyn_RobotModule_PROP_gripperSafety">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule::Gripper::Safety</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>percentVMax</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.25</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>actualCommandDiffTrigger</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.14</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>releaseSafetyOffset</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.034</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>overCommandLimitIterN</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-integer">integer &ge; 1</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">5</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
 
 
 
@@ -50056,6 +51170,391 @@ X_p_f:
   </td>
   
 </tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>safety</td>
+  
+  <td colspan="2">
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapsemc_rbdyn_RobotModuleGripper_PROP_safety" aria-expanded="false" aria-controls="collapsemc_rbdyn_RobotModuleGripper_PROP_safety">mc_rbdyn::RobotModule::Gripper::Safety</a>
+  
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapsemc_rbdyn_RobotModuleGripper_PROP_safety">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule::Gripper::Safety</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>percentVMax</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.25</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>actualCommandDiffTrigger</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.14</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>releaseSafetyOffset</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.034</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>overCommandLimitIterN</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-integer">integer &ge; 1</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">5</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>mimics</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapsemc_rbdyn_RobotModuleGripper_PROP_mimics" aria-expanded="false" aria-controls="collapsemc_rbdyn_RobotModuleGripper_PROP_mimics">mc_rbdyn::Mimic</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapsemc_rbdyn_RobotModuleGripper_PROP_mimics">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">mc_rbdyn::Mimic</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>name</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>joint</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>multiplier</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">1</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>offset</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0</span>
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
 
 
 

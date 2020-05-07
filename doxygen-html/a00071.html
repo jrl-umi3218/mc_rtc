@@ -71,17 +71,14 @@ $(document).ready(function(){initNavTree('a00071.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">generic_gripper.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03768.html">mc_control/api.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00179.html">mc_rbdyn/Mimic.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00203.html">mc_rbdyn/Robots.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00230.html">mc_rtc/constants.h</a>&gt;</code><br />
-<code>#include &lt;boost/math/constants/constants.hpp&gt;</code><br />
-<code>#include &lt;algorithm&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a03772.html">mc_control/api.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00197.html">mc_rbdyn/RobotModule.h</a>&gt;</code><br />
 <code>#include &lt;map&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -91,19 +88,20 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01932.html">mc_control::Gripper</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A robot's gripper reprensentation.  <a href="a01932.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01936.html">mc_control::Gripper::Config</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-controllable parameters for the gripper.  <a href="a01936.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00711"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00711.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00711"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02196.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00715.html">mc_rbdyn</a> objects. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00714"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00714.html">mc_rtc::gui</a></td></tr>
+<tr class="memitem:a00714"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00714.html">mc_rbdyn</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00709"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00709.html">mc_control</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a67d3b51822d3e7d0c56d9af675f9eaa1"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00709.html#a67d3b51822d3e7d0c56d9af675f9eaa1">mc_control::GripperPtr</a> = std::unique_ptr&lt; Gripper &gt;</td></tr>
+<tr class="separator:a67d3b51822d3e7d0c56d9af675f9eaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39b3dee4f4017bab0f389d9bfd7877dc"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00709.html#a39b3dee4f4017bab0f389d9bfd7877dc">mc_control::GripperRef</a> = std::reference_wrapper&lt; Gripper &gt;</td></tr>
+<tr class="separator:a39b3dee4f4017bab0f389d9bfd7877dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -112,7 +110,7 @@ Namespaces</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8a948ff1aa35df8f7730fc54bf71041a.html">mc_control</a></li><li class="navelem"><a class="el" href="a00071.html">generic_gripper.h</a></li>
-    <li class="footer">Generated on Wed May 6 2020 09:20:18 for mc_rtc by
+    <li class="footer">Generated on Thu May 7 2020 03:22:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

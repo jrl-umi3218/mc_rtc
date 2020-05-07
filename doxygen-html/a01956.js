@@ -1,5 +1,8 @@
 var a01956 =
 [
-    [ "out", "a01956.html#a2f171792f487d5b8b30aa5cad17305fc", null ],
-    [ "success", "a01956.html#a6cdae0b0b750ab031e2abbb122d93aa1", null ]
+    [ "MCPythonController", "a01956.html#a032e887f83331f4138a8b4125010930a", null ],
+    [ "reset", "a01956.html#a9f6c69c9b96a4fadd5f94d7500d633d7", null ],
+    [ "run", "a01956.html#a3700ef59c7492c0be19158e991ccf6e6", null ],
+    [ "reset_callback", "a01956.html#a912a0dc9659948113b9eca0605c2cd12", null ],
+    [ "run_callback", "a01956.html#ac76e53f48809f9cede138425a0b7aac9", null ]
 ];
