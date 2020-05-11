@@ -14,8 +14,8 @@
     "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
     "displaySamples": { "type": "number", "minimum": 1 },
 
-    "targetSurface": 
-    { 
+    "targetSurface":
+    {
       "title": "Target relative to surface specification",
       "type": "object",
       "properties":
@@ -24,11 +24,11 @@
         "surface" : { "type": "string" },
         "translation": { "$ref": "/../../Eigen/Vector3d.json" },
         "rotation": { "$ref": "/../../Eigen/Matrix3d.json" },
-        "controlPoints": 
-        { 
-          "type": "array", 
+        "controlPoints":
+        {
+          "type": "array",
           "description": "Position waypoints relative to the target surface",
-          "items": { "$ref": "/../../Eigen/Vector3d.json" } 
+          "items": { "$ref": "/../../Eigen/Vector3d.json" }
         },
         "oriWaypoints":
         {
@@ -48,29 +48,31 @@
     },
     "target":
     {
-      "title": "Target relative to world surface specification",
-      "type": "object",
-      "properties":
-      {
-        "controlPoints": { "type": "array", "items": { "$ref": "/../../Eigen/Vector3d.json" } },
-        "oriWaypoints":
+      "$ref": "/../../SpaceVecAlg/PTransformd.json",
+      "description": "Target relative to world"
+    },
+    "controlPoints":
+    {
+      "type": "array",
+      "description": "Control points relative to world",
+      "items": { "$ref": "/../../Eigen/Vector3d.json" }
+    },
+    "oriWaypoints":
+    {
+      "type": "array",
+      "description": "Orientation waypoints (pairs of time and orientation) relative to the target surface",
+      "items":
+      [
         {
-          "type": "array",
-          "description": "List of pair of time point and orientation relative to the surface",
-          "items":
-          [
-            {
-              "type": "number"
-            },
-            {
-              "$ref": "/../../Eigen/Matrix3d.json"
-            }
-          ]
+          "type": "number"
+        },
+        {
+          "$ref": "/../../Eigen/Matrix3d.json"
         }
-      }
+      ]
     },
     "activeJoints": { "type": "array", "items": { "type": "string" } },
     "unactiveJoints": { "type": "array", "items": { "type": "string" } }
   },
-  "required": ["type", "surface"]
+  "required": ["type", "surface", "duration", "stiffness", "weight"]
 }

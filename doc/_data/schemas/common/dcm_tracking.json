@@ -7,9 +7,12 @@
     "gains":
     {
       "type": "object",
-      "prop": { "type": "number", "minimum": 0 },
-      "integral": { "type": "number", "minimum": 0 },
-      "deriv": { "type": "number", "minimum": 0 }
+      "properties":
+      {
+        "prop": { "type": "number", "minimum": 0 },
+        "integral": { "type": "number", "minimum": 0 },
+        "deriv": { "type": "number", "minimum": 0 }
+      }
     },
     "derivator_time_constant": { "type": "number", "minimum": 0 },
     "integrator_time_constant": { "type": "number", "minimum": 0 }
