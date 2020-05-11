@@ -2,7 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include <mc_control/SimulationContactSensor.h>
+#include <mc_control/SimulationContactPair.h>
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Robots.h>
 
@@ -11,7 +11,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpedantic"
 #pragma GCC diagnostic ignored "-Wconversion"
-#pragma GCC diagnostic ignored "-Wunknown-pragma"
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 
 mc_rbdyn::Robots & get_robots()
@@ -23,7 +23,7 @@ mc_rbdyn::Robots & get_robots()
   }
   mc_rbdyn::RobotLoader::clear();
   mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   auto env = mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
                                                      std::string("ground"));
   robots_ptr = mc_rbdyn::loadRobots({rm, env});
@@ -37,7 +37,7 @@ static void BM_Creation(benchmark::State & state)
   auto & env = robots.env();
   while(state.KeepRunning())
   {
-    mc_control::SimulationContactPair pair(robot.surfaces().at("LFullSole"), env.surfaces().at("AllGround"));
+    mc_control::SimulationContactPair pair(robot.surfaces().at("LeftFoot"), env.surfaces().at("AllGround"));
   }
 }
 BENCHMARK(BM_Creation)->Unit(benchmark::kMicrosecond);
@@ -48,7 +48,7 @@ static void BM_Update(benchmark::State & state)
   auto & robot = robots.robot();
   auto & env = robots.env();
 
-  mc_control::SimulationContactPair pair(robot.surfaces().at("LFullSole"), env.surfaces().at("AllGround"));
+  mc_control::SimulationContactPair pair(robot.surfaces().at("LeftFoot"), env.surfaces().at("AllGround"));
 
   while(state.KeepRunning())
   {

@@ -1,6 +1,7 @@
 type: lipm_stabilizer
 robotIndex: 0
 enabled: true
+contacts: [Left, Right]
 
 ###########################
 ## Stabilizer configuration

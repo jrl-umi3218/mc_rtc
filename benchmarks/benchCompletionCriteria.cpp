@@ -23,7 +23,7 @@ mc_rbdyn::Robots & get_robots()
   {
     return *robots_ptr;
   }
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   robots_ptr = mc_rbdyn::loadRobot(*rm);
   return *robots_ptr;
 }
@@ -49,7 +49,7 @@ static void BM_DirectTimeout(benchmark::State & state)
 {
   unsigned int tick = 0;
   double timeout = 5.0;
-  unsigned int target = std::ceil(timeout / dt);
+  unsigned int target = static_cast<unsigned>(std::ceil(timeout / dt));
   bool b;
   std::string o;
   while(state.KeepRunning())
@@ -72,7 +72,7 @@ static void BM_Timeout(benchmark::State & state)
   mc_rtc::Configuration config;
   config.add("timeout", timeout);
   mc_control::CompletionCriteria criteria;
-  criteria.configure(dt, config);
+  criteria.configure(task, dt, config);
   bool b;
   while(state.KeepRunning())
   {
@@ -140,7 +140,7 @@ static void BM_EvalAndSpeedOrTimeout(benchmark::State & state)
     return c;
   }());
   mc_control::CompletionCriteria criteria;
-  criteria.configure(dt, config);
+  criteria.configure(task, dt, config);
   while(state.KeepRunning())
   {
     b = criteria.completed(task);
@@ -157,7 +157,7 @@ static void BM_TimeoutConfigure(benchmark::State & state)
   mc_control::CompletionCriteria criteria;
   while(state.KeepRunning())
   {
-    criteria.configure(dt, config);
+    criteria.configure(task, dt, config);
   }
 }
 BENCHMARK(BM_TimeoutConfigure);
@@ -192,9 +192,9 @@ static void BM_EvalAndSpeedOrTimeoutConfigure(benchmark::State & state)
   mc_control::CompletionCriteria criteria;
   while(state.KeepRunning())
   {
-    criteria.configure(dt, config);
+    criteria.configure(task, dt, config);
   }
 }
 BENCHMARK(BM_EvalAndSpeedOrTimeoutConfigure);
 
-BENCHMARK_MAIN();
+BENCHMARK_MAIN()
