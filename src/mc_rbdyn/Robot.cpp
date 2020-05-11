@@ -1150,7 +1150,7 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
     LOG_WARNING("[MC_RTC_DEPRECATED]" + p
                 + " \"robotIndex\" will be deprecated in future versions, use \"robot: <robot "
                   "name>\" instead");
-    const size_t robotIndex = config(robotIndexKey);
+    const unsigned int robotIndex = config(robotIndexKey);
     if(robotIndex < robots.size())
     {
       return robots.robot(robotIndex);
