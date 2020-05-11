@@ -4,8 +4,8 @@
   "properties":
   {
     "type": { "enum": ["collision"], "type": "string" },
-    "r1Index": { "type": "number", "minimum": 0 },
-    "r2Index": { "type": "number", "minimum": 0 },
+    "r1": { "type": "string", "default": "MainRobot", "description": "Name of first robot involved in the collision" },
+    "r2": { "type": "string", "default": "MainRobot", "description": "Name of second robot involved in the collision" },
     "useCommon":
     {
       "type": "boolean",
@@ -28,5 +28,5 @@
       }
     }
   },
-  "required": ["type", "r1Index", "r2Index"]
+  "required": ["type"]
 }

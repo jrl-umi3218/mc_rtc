@@ -104,7 +104,7 @@ void configure_pos_task(std::shared_ptr<mc_tasks::PositionTask> & t,
   }
   if(config.has("relative") && config("relative").has("position"))
   {
-    const auto & robot = solver.robot(config("robotIndex"));
+    const auto & robot = robotFromConfig(config, solver.robots(), t->name());
     std::string s1 = config("relative")("s1");
     std::string s2 = config("relative")("s2");
     Eigen::Vector3d position = config("relative")("position");
@@ -148,7 +148,7 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
   }
   if(config.has("relative") && config("relative").has("orientation"))
   {
-    const auto & robot = solver.robot(config("robotIndex"));
+    const auto & robot = robotFromConfig(config, solver.robots(), "orientation");
     std::string s1 = config("relative")("s1");
     std::string s2 = config("relative")("s2");
     Eigen::Matrix3d orientation = config("relative")("orientation");
@@ -179,7 +179,8 @@ void configure_ori_task(std::shared_ptr<mc_tasks::OrientationTask> & t,
 
 mc_tasks::MetaTaskPtr load_orientation_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  auto t = std::make_shared<mc_tasks::OrientationTask>(config("body"), solver.robots(), config("robotIndex"));
+  auto t = std::make_shared<mc_tasks::OrientationTask>(config("body"), solver.robots(),
+                                                       robotIndexFromConfig(config, solver.robots(), "orientation"));
   configure_ori_task(t, solver, config, true);
   t->load(solver, config);
   return t;
@@ -187,15 +188,15 @@ mc_tasks::MetaTaskPtr load_orientation_task(mc_solver::QPSolver & solver, const 
 
 mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
+  const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "position");
   std::shared_ptr<mc_tasks::PositionTask> t = nullptr;
   if(config.has("bodyPoint"))
   {
-    t = std::make_shared<mc_tasks::PositionTask>(config("body"), config("bodyPoint"), solver.robots(),
-                                                 config("robotIndex"));
+    t = std::make_shared<mc_tasks::PositionTask>(config("body"), config("bodyPoint"), solver.robots(), robotIndex);
   }
   else
   {
-    t = std::make_shared<mc_tasks::PositionTask>(config("body"), solver.robots(), config("robotIndex"));
+    t = std::make_shared<mc_tasks::PositionTask>(config("body"), solver.robots(), robotIndex);
   }
   configure_pos_task(t, solver, config, true);
   t->load(solver, config);
@@ -204,15 +205,15 @@ mc_tasks::MetaTaskPtr load_position_task(mc_solver::QPSolver & solver, const mc_
 
 mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
+  const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "body6d");
   std::shared_ptr<mc_tasks::EndEffectorTask> t = nullptr;
   if(config.has("bodyPoint"))
   {
-    t = std::make_shared<mc_tasks::EndEffectorTask>(config("body"), config("bodyPoint"), solver.robots(),
-                                                    config("robotIndex"));
+    t = std::make_shared<mc_tasks::EndEffectorTask>(config("body"), config("bodyPoint"), solver.robots(), robotIndex);
   }
   else
   {
-    t = std::make_shared<mc_tasks::EndEffectorTask>(config("body"), solver.robots(), config("robotIndex"));
+    t = std::make_shared<mc_tasks::EndEffectorTask>(config("body"), solver.robots(), robotIndex);
   }
   configure_pos_task(t->positionTask, solver, config, false);
   configure_ori_task(t->orientationTask, solver, config, false);
@@ -222,15 +223,16 @@ mc_tasks::MetaTaskPtr load_ef_task(mc_solver::QPSolver & solver, const mc_rtc::C
 
 mc_tasks::MetaTaskPtr load_relef_task(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
+  const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "relBody6d");
   std::shared_ptr<mc_tasks::RelativeEndEffectorTask> t = nullptr;
   if(config.has("bodyPoint"))
   {
     t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), config("bodyPoint"), solver.robots(),
-                                                            config("robotIndex"), config("relBody"));
+                                                            robotIndex, config("relBody"));
   }
   else
   {
-    t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), solver.robots(), config("robotIndex"),
+    t = std::make_shared<mc_tasks::RelativeEndEffectorTask>(config("body"), solver.robots(), robotIndex,
                                                             config("relBody"));
   }
   configure_pos_task(t->positionTask, solver, config, false);

@@ -302,8 +302,9 @@ namespace
 static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "collision",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto ret = std::make_shared<mc_solver::CollisionsConstraint>(solver.robots(), config("r1Index"),
-                                                                   config("r2Index"), solver.dt());
+      auto ret = std::make_shared<mc_solver::CollisionsConstraint>(
+          solver.robots(), robotIndexFromConfig(config, solver.robots(), "collision", false, "r1Index", "r1", ""),
+          robotIndexFromConfig(config, solver.robots(), "collision", false, "r2Index", "r2", ""), solver.dt());
       if(ret->r1Index == ret->r2Index)
       {
         if(config("useCommon", false))

@@ -1,5 +1,4 @@
 type: lookAtSurface
-robotIndex: 0
 body: bodyName
 bodyVector: [1.0, 0.0, 0.0]
 surfaceRobotIndex: 0

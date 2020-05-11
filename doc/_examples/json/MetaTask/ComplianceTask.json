@@ -1,6 +1,5 @@
 {
   "type": "compliance",
-  "robotIndex": 0,
   "body": "r_arm",
   "wrench":
   {

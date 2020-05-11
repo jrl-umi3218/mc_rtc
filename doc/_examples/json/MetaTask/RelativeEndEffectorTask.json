@@ -1,6 +1,5 @@
 {
   "type": "relBody6d",
-  "robotIndex": 0,
   "body": "bodyName",
   "relBody": "relBodyName",
   "orientation": [1.0, 0.0, 0.0,

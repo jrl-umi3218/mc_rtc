@@ -6,7 +6,7 @@
     "type": { "enum": ["lipm_stabilizer"], "type": "string" },
     "name": { "type": "string" },
 
-    "robotIndex": { "type": "integer", "minimum": 0 },
+    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
     "leftFootSurface": { "type": "string" },
     "rightFootSurface": { "type": "string" },
     "torsoBodyName": { "type": "string" },
@@ -71,5 +71,5 @@
       }
     }
   },
-  "required": ["type", "robotIndex", "contacts"]
+  "required": ["type", "contacts"]
 }

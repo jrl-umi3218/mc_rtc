@@ -17,7 +17,6 @@
 ###
 ---
 type: lipm_stabilizer
-robotIndex: 0
 contacts: [Left, Right]
 Left:
   rotation: [0,0,0]
@@ -50,7 +49,6 @@ jvrc1:
 ###
 ---
 type: lipm_stabilizer
-robotIndex: 0
 enabled: true
 
 # Global configuration

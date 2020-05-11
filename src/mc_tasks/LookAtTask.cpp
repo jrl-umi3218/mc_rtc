@@ -89,7 +89,7 @@ static auto registered_lookat = mc_tasks::MetaTaskLoader::register_load_function
     "lookAt",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t = std::make_shared<mc_tasks::LookAtTask>(config("body"), config("bodyVector"), solver.robots(),
-                                                      config("robotIndex"));
+                                                      robotIndexFromConfig(config, solver.robots(), "lookAt"));
       if(config.has("weight"))
       {
         t->weight(config("weight"));
@@ -118,7 +118,7 @@ static auto registered_lookat = mc_tasks::MetaTaskLoader::register_load_function
       }
       if(config.has("relativeVector"))
       {
-        auto bodyPos = solver.robot(config("robotIndex")).posW();
+        auto bodyPos = solver.robots().robot(robotNameFromConfig(config, solver.robots(), t->name())).posW();
         bodyPos.translation() = Eigen::Vector3d::Zero();
         Eigen::Vector3d v = config("relativeVector");
         sva::PTransformd target{v};

@@ -119,6 +119,7 @@ namespace
 static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "compoundJoint",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      return std::make_shared<mc_solver::CompoundJointConstraint>(solver.robots(), config("robotIndex"), solver.dt());
+      return std::make_shared<mc_solver::CompoundJointConstraint>(
+          solver.robots(), robotIndexFromConfig(config, solver.robots(), "compoundJoint"), solver.dt());
     });
 }

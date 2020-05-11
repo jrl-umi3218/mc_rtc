@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["lookAt"] },
     "name": { "type": "string" },
-    "robotIndex": { "type": "integer", "minimum": 0 },
+    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
     "body": { "type": "string" },
     "bodyVector": { "$ref": "/../../Eigen/Vector3d.json" },
     "targetPos": { "$ref": "/../../Eigen/Vector3d.json" },
@@ -22,5 +22,5 @@
     "activeJoints": { "type": "array", "items": { "type": "string" } },
     "unactiveJoints": { "type": "array", "items": { "type": "string" } }
   },
-  "required": ["type", "robotIndex", "body", "bodyVector"]
+  "required": ["type", "body", "bodyVector"]
 }

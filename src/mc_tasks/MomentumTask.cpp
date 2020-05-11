@@ -85,7 +85,8 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "momentum",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::MomentumTask>(solver.robots(), config("robotIndex"));
+      auto robotIndex = robotIndexFromConfig(config, solver.robots(), "MomentumTask");
+      auto t = std::make_shared<mc_tasks::MomentumTask>(solver.robots(), robotIndex);
       t->load(solver, config);
       return t;
     });

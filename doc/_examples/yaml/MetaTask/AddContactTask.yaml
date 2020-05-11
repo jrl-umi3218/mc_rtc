@@ -2,8 +2,8 @@ type: addContact
 contact:
   r1Surface: surf1
   r2Surface: surf2
-  r1Index: 0
-  r2Index: 1
+  r1: jvrc1
+  r2: robot2
   isFixed: false
 speed: 0.05
 stiffness: 1.0

@@ -71,7 +71,8 @@ namespace
 static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
     "CoMIncPlane",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto ret = std::make_shared<mc_solver::CoMIncPlaneConstr>(solver.robots(), config("robotIndex"), solver.dt());
+      auto ret = std::make_shared<mc_solver::CoMIncPlaneConstr>(
+          solver.robots(), robotIndexFromConfig(config, solver.robots(), "CoMIncPlane"), solver.dt());
       return ret;
     });
 }

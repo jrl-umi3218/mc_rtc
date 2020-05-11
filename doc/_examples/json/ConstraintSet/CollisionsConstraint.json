@@ -1,7 +1,7 @@
 {
   "type": "collision",
-  "r1Index": 0,
-  "r2Index": 0,
+  "r1": "jvrc1",
+  "r2": "otherRobot",
   "collisions": [
     {
       "body1": "b1",

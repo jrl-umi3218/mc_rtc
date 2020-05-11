@@ -885,7 +885,7 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "lipm_stabilizer",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      unsigned robotIndex = config("robotIndex", 0u);
+      unsigned robotIndex = robotIndexFromConfig(config, solver.robots(), "lipm_stabilizer");
       const auto & robot = solver.robots().robot(robotIndex);
 
       // Load default configuration from robot module

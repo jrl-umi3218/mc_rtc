@@ -1096,4 +1096,82 @@ mc_control::Gripper & Robot::gripper(const std::string & gripper)
   return *grippers_.at(gripper);
 }
 
+unsigned int robotIndexFromConfig(const mc_rtc::Configuration & config,
+                                  const mc_rbdyn::Robots & robots,
+                                  const std::string & prefix,
+                                  bool required,
+                                  const std::string & robotIndexKey,
+                                  const std::string & robotNameKey,
+                                  const std::string & defaultRobotName)
+{
+  const auto & robot = robotFromConfig(config, robots, prefix, required, robotIndexKey, robotNameKey, defaultRobotName);
+  return robot.robotIndex();
+}
+
+std::string robotNameFromConfig(const mc_rtc::Configuration & config,
+                                const mc_rbdyn::Robots & robots,
+                                const std::string & prefix,
+                                bool required,
+                                const std::string & robotIndexKey,
+                                const std::string & robotNameKey,
+                                const std::string & defaultRobotName)
+{
+  const auto & robot = robotFromConfig(config, robots, prefix, required, robotIndexKey, robotNameKey, defaultRobotName);
+  return robot.name();
+}
+
+const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
+                                        const mc_rbdyn::Robots & robots,
+                                        const std::string & prefix,
+                                        bool required,
+                                        const std::string & robotIndexKey,
+                                        const std::string & robotNameKey,
+                                        const std::string & defaultRobotName)
+{
+  auto p = std::string{""};
+  if(prefix.size())
+  {
+    p = "[" + prefix + "] ";
+  }
+  if(config.has(robotNameKey))
+  {
+    const std::string & robotName = config(robotNameKey);
+    if(robots.hasRobot(robotName))
+    {
+      return robots.robot(robotName);
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, p + "No robot named " << robotName << " in this controller");
+    }
+  }
+  else if(config.has(robotIndexKey))
+  {
+    LOG_WARNING("[MC_RTC_DEPRECATED]" + p
+                + " \"robotIndex\" will be deprecated in future versions, use \"robot: <robot "
+                  "name>\" instead");
+    const unsigned int robotIndex = config(robotIndexKey);
+    if(robotIndex < robots.size())
+    {
+      return robots.robot(robotIndex);
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, p + "No robot with index " << robotIndex << " in this controller ("
+                                                                         << robots.size() << " robots loaded)");
+    }
+  }
+  else
+  {
+    if(!required)
+    {
+      return defaultRobotName.size() ? robots.robot(defaultRobotName) : robots.robot();
+    }
+    else
+    {
+      LOG_ERROR_AND_THROW(std::runtime_error, p + "\"robotName\" is required.");
+    }
+  }
+}
+
 } // namespace mc_rbdyn

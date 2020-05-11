@@ -1,6 +1,5 @@
 {
    "type": "lipm_stabilizer",
-   "robotIndex": 0,
    "contacts": [ "Left", "Right" ],
    "Left": {
       "rotation": [ 0, 0, 0 ],
@@ -26,7 +25,6 @@
 
 {
    "type": "lipm_stabilizer",
-   "robotIndex": 0,
    "enabled": true,
    "friction": 0.8,
    "fdqp_weights": {

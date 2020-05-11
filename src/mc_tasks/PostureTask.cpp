@@ -240,8 +240,8 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "posture",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t =
-          std::make_shared<mc_tasks::PostureTask>(solver, config("robotIndex"), config("stiffness"), config("weight"));
+      const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "posture");
+      auto t = std::make_shared<mc_tasks::PostureTask>(solver, robotIndex, config("stiffness"), config("weight"));
       t->load(solver, config);
       if(config.has("posture"))
       {

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changes
+
+- [FSM] Deprecates the use of `robotIndex` in favor of robot name `robot`
+
 ## [1.3.0] - 2020-05-07
 
 ### Added

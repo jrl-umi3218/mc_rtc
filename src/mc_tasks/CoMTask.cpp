@@ -47,7 +47,7 @@ void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c
     std::vector<std::string> surfaces = config("above");
     auto com = this->com();
     Eigen::Vector3d target = Eigen::Vector3d::Zero();
-    auto & robot = solver.robot(config("robotIndex"));
+    auto & robot = robotFromConfig(config, solver.robots(), name());
     for(const auto & s : surfaces)
     {
       target += robot.surface(s).X_0_s(robot).translation();
@@ -115,7 +115,8 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "com",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::CoMTask>(solver.robots(), config("robotIndex"));
+      auto robotIndex = robotIndexFromConfig(config, solver.robots(), "CoMTask");
+      auto t = std::make_shared<mc_tasks::CoMTask>(solver.robots(), robotIndex);
       t->load(solver, config);
       return t;
     });

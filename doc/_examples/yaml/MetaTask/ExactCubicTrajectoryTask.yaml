@@ -1,7 +1,6 @@
 LeftHandTrajectory:
   type: exact_cubic_trajectory
   surface: LeftHand
-  robotIndex: 0
   stiffness: 10000.0
   duration: 15.0
   weight: 100
@@ -14,7 +13,7 @@ LeftHandTrajectory:
         - timeout: 3.0
         - speed: 1e-2
   targetSurface:
-    robotIndex: 1
+    robot: TargetRobotName 
     surface: Left
     translation: [0.05, -0.05, -0.025]
     rotation: [0.0, -1.57, 0.0]

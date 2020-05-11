@@ -58,7 +58,8 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "lookAtTF",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t = std::make_shared<mc_tasks::LookAtTFTask>(config("body"), config("bodyVector"), config("sourceFrame"),
-                                                        config("targetFrame"), solver.robots(), config("robotIndex"));
+                                                        config("targetFrame"), solver.robots(),
+                                                        robotIndexFromConfig(config, solver.robots(), "lookAtTF"));
       if(config.has("weight"))
       {
         t->weight(config("weight"));
