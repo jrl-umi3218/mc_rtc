@@ -1,7 +1,7 @@
 {
   "type": "collision",
-  "r1Name": "jvrc1",
-  "r2Name": "otherRobot",
+  "r1": "jvrc1",
+  "r2": "otherRobot",
   "collisions": [
     {
       "body1": "b1",

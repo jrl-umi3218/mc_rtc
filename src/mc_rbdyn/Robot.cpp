@@ -1104,9 +1104,8 @@ unsigned int robotIndexFromConfig(const mc_rtc::Configuration & config,
                                   const std::string & robotNameKey,
                                   const std::string & defaultRobotName)
 {
-  const auto & robotName =
-      robotNameFromConfig(config, robots, prefix, required, robotIndexKey, robotNameKey, defaultRobotName);
-  return robots.robot(robotName).robotIndex();
+  const auto & robot = robotFromConfig(config, robots, prefix, required, robotIndexKey, robotNameKey, defaultRobotName);
+  return robot.robotIndex();
 }
 
 std::string robotNameFromConfig(const mc_rtc::Configuration & config,

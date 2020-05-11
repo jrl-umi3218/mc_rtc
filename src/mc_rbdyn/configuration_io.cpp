@@ -901,9 +901,8 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModulePtr>::save(const 
 mc_rbdyn::Contact ConfigurationLoader<mc_rbdyn::Contact>::load(const mc_rtc::Configuration & config,
                                                                const mc_rbdyn::Robots & robots)
 {
-  const auto r1Index = robotIndexFromConfig(config, robots, "contact", false, "r1Index", "r1Name");
-  const auto r2Index =
-      robotIndexFromConfig(config, robots, "contact", false, "r2Index", "r2Name", robots.robot(1).name());
+  const auto r1Index = robotIndexFromConfig(config, robots, "contact", false, "r1Index", "r1");
+  const auto r2Index = robotIndexFromConfig(config, robots, "contact", false, "r2Index", "r2", robots.robot(1).name());
   sva::PTransformd X_r2s_r1s = sva::PTransformd::Identity();
   bool isFixed = config("isFixed");
   if(isFixed)
