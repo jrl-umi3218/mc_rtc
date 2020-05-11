@@ -1,5 +1,5 @@
 {
   "type": "momentum",
-  "robotIndex": 0,
+  "robot": "jvrc1",
   "momentum": [0, 0, 0, 0, 0, 10]
 }
