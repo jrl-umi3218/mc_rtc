@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::constants Namespace Reference</title>
+<title>mc_rtc::internal Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,151 +70,141 @@ $(document).ready(function(){initNavTree('a00728.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::constants Namespace Reference</div>  </div>
+<div class="title">mc_rtc::internal Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02181.html">_has_configuration_load_object</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: T <a class="el" href="a02173.html#a3e8685e2cdb83f2ec06ab4e231a653ae">ConfigurationLoader&lt;T&gt;::load(const mc_rtc::Configuration &amp;)</a>; is a valid function or not.  <a href="a02181.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02189.html">_has_configuration_save_object</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: <a class="el" href="a02197.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> <a class="el" href="a02173.html#ac516ceb726f94bd4e5a32ad25f1178c2">mc_rtc::ConfigurationLoader&lt;T&gt;::save</a>(const T&amp;, Args ...); is a valid construct or not.  <a href="a02189.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02229.html">Allocator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocator&lt;T&gt; is std::allocator&lt;T&gt; for usual types.  <a href="a02229.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02233.html">Allocator&lt; T, typename T::eigen_aligned_operator_new_marker_type &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocator&lt;T&gt; is Eigen::aligned_allocator for EIGEN_MAKE_ALIGNED_OPERATOR_NEW types.  <a href="a02233.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02225.html">args_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bend usual C++ rules to deduct the argument types in call.  <a href="a02225.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02185.html">has_configuration_load_object</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02193.html">has_configuration_save_object</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02213.html">lambda_traits</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract return type and argument types from a lambda by accessing ::operator()  <a href="a02213.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02217.html">lambda_traits&lt; RetT(C::*)(Args...) const &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization that matches non-mutable lambda.  <a href="a02217.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02221.html">lambda_traits&lt; RetT(C::*)(Args...)&gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization that matches mutable lambda.  <a href="a02221.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a357fd1ef503f568cf436fbda923472cf"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00728.html#a357fd1ef503f568cf436fbda923472cf">toDeg</a> (const double degrees)</td></tr>
-<tr class="memdesc:a357fd1ef503f568cf436fbda923472cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts degrees to radians.  <a href="#a357fd1ef503f568cf436fbda923472cf">More...</a><br /></td></tr>
-<tr class="separator:a357fd1ef503f568cf436fbda923472cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ca6e1fbd563bfd79d6484a3295d08bd"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00728.html#a2ca6e1fbd563bfd79d6484a3295d08bd">toRad</a> (const double rad)</td></tr>
-<tr class="memdesc:a2ca6e1fbd563bfd79d6484a3295d08bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts radians to degrees.  <a href="#a2ca6e1fbd563bfd79d6484a3295d08bd">More...</a><br /></td></tr>
-<tr class="separator:a2ca6e1fbd563bfd79d6484a3295d08bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a04b344c34834432afcfcc1ac86bff22c"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00728.html#a04b344c34834432afcfcc1ac86bff22c">GRAVITY</a> = 9.80665</td></tr>
-<tr class="separator:a04b344c34834432afcfcc1ac86bff22c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf271123cee2ac958b9ae0f9220ea422"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00728.html#acf271123cee2ac958b9ae0f9220ea422">gravity</a> = Eigen::Vector3d{0., 0., <a class="el" href="a00728.html#a04b344c34834432afcfcc1ac86bff22c">GRAVITY</a>}</td></tr>
-<tr class="memdesc:acf271123cee2ac958b9ae0f9220ea422"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; Gravity positive along the vertical axis  <a href="#acf271123cee2ac958b9ae0f9220ea422">More...</a><br /></td></tr>
-<tr class="separator:acf271123cee2ac958b9ae0f9220ea422"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaaeaab7136aa7d17fa172fde905c2cc7"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00728.html#aaaeaab7136aa7d17fa172fde905c2cc7">vertical</a> = Eigen::Vector3d{0., 0., 1.}</td></tr>
-<tr class="separator:aaaeaab7136aa7d17fa172fde905c2cc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cb2b2837ea283890b185cfef0631602"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00728.html#a8cb2b2837ea283890b185cfef0631602">PI</a> = static_cast&lt;double&gt;(<a class="el" href="a00230.html#aebdd4427aa2148313c07b0eedad449ad">EIGEN_PI</a>)</td></tr>
-<tr class="separator:a8cb2b2837ea283890b185cfef0631602"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a759676405e1815363e6d9094dd1919b1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a759676405e1815363e6d9094dd1919b1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00728.html#a759676405e1815363e6d9094dd1919b1">is_valid_hash</a> (std::size_t h)</td></tr>
+<tr class="separator:a759676405e1815363e6d9094dd1919b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memTemplParams" colspan="2">template&lt;typename T , typename U , typename... Args&gt; </td></tr>
+<tr class="memitem:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00728.html#a0f0cc0f5914bc62d93b19fda0ed53e75">is_valid_hash</a> (std::size_t h)</td></tr>
+<tr class="separator:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af017e274f3cf4699850fdbf753d07fa2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00359.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00728.html#af017e274f3cf4699850fdbf753d07fa2">demangle</a> (const char *name)</td></tr>
+<tr class="separator:af017e274f3cf4699850fdbf753d07fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f9098d8e8055ca6d2d02b576714b9f2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a8f9098d8e8055ca6d2d02b576714b9f2"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00728.html#a8f9098d8e8055ca6d2d02b576714b9f2">type_name</a> ()</td></tr>
+<tr class="separator:a8f9098d8e8055ca6d2d02b576714b9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a357fd1ef503f568cf436fbda923472cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a357fd1ef503f568cf436fbda923472cf">&#9670;&nbsp;</a></span>toDeg()</h2>
+<a id="af017e274f3cf4699850fdbf753d07fa2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af017e274f3cf4699850fdbf753d07fa2">&#9670;&nbsp;</a></span>demangle()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr double mc_rtc::constants::toDeg </td>
+          <td class="memname"><a class="el" href="a00359.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string mc_rtc::internal::demangle </td>
           <td>(</td>
-          <td class="paramtype">const double&#160;</td>
-          <td class="paramname"><em>degrees</em></td><td>)</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts degrees to radians. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">degrees</td><td>Angle in degrees</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Angle in radians </dd></dl>
-
-<p class="reference">References <a class="el" href="a00728.html#a8cb2b2837ea283890b185cfef0631602">PI</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00728.html#a0f0cc0f5914bc62d93b19fda0ed53e75">is_valid_hash()</a>, and <a class="el" href="a00728.html#a8f9098d8e8055ca6d2d02b576714b9f2">type_name()</a>.</p>
 
 </div>
 </div>
-<a id="a2ca6e1fbd563bfd79d6484a3295d08bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ca6e1fbd563bfd79d6484a3295d08bd">&#9670;&nbsp;</a></span>toRad()</h2>
+<a id="a759676405e1815363e6d9094dd1919b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a759676405e1815363e6d9094dd1919b1">&#9670;&nbsp;</a></span>is_valid_hash() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">constexpr double mc_rtc::constants::toRad </td>
+          <td class="memname">bool mc_rtc::internal::is_valid_hash </td>
           <td>(</td>
-          <td class="paramtype">const double&#160;</td>
-          <td class="paramname"><em>rad</em></td><td>)</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>h</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts radians to degrees. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">rad</td><td>Angle in radians</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Angle in degrees </dd></dl>
+<p class="reference">Referenced by <a class="el" href="a02237.html#ad1fe100eb7cb874c226ff76ed64f3cfe">mc_rtc::DataStore::name()</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a04b344c34834432afcfcc1ac86bff22c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04b344c34834432afcfcc1ac86bff22c">&#9670;&nbsp;</a></span>GRAVITY</h2>
+<a id="a0f0cc0f5914bc62d93b19fda0ed53e75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f0cc0f5914bc62d93b19fda0ed53e75">&#9670;&nbsp;</a></span>is_valid_hash() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename U , typename... Args&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">constexpr double mc_rtc::constants::GRAVITY = 9.80665</td>
+          <td class="memname">bool mc_rtc::internal::is_valid_hash </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>h</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p class="reference">References <a class="el" href="a00728.html#af017e274f3cf4699850fdbf753d07fa2">demangle()</a>, and <a class="el" href="a00359.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>.</p>
+
 </div>
 </div>
-<a id="acf271123cee2ac958b9ae0f9220ea422"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf271123cee2ac958b9ae0f9220ea422">&#9670;&nbsp;</a></span>gravity</h2>
+<a id="a8f9098d8e8055ca6d2d02b576714b9f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f9098d8e8055ca6d2d02b576714b9f2">&#9670;&nbsp;</a></span>type_name()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Eigen::Vector3d mc_rtc::constants::gravity = Eigen::Vector3d{0., 0., <a class="el" href="a00728.html#a04b344c34834432afcfcc1ac86bff22c">GRAVITY</a>}</td>
+          <td class="memname">std::string mc_rtc::internal::type_name </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>&lt; Gravity positive along the vertical axis </p>
-
-<p class="reference">Referenced by <a class="el" href="a02072.html#af437477c82db35d456f99ebef763b8a4">mc_rbdyn::ForceSensor::couple()</a>.</p>
-
-</div>
-</div>
-<a id="a8cb2b2837ea283890b185cfef0631602"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cb2b2837ea283890b185cfef0631602">&#9670;&nbsp;</a></span>PI</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr double mc_rtc::constants::PI = static_cast&lt;double&gt;(<a class="el" href="a00230.html#aebdd4427aa2148313c07b0eedad449ad">EIGEN_PI</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a00728.html#a357fd1ef503f568cf436fbda923472cf">toDeg()</a>.</p>
-
-</div>
-</div>
-<a id="aaaeaab7136aa7d17fa172fde905c2cc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaaeaab7136aa7d17fa172fde905c2cc7">&#9670;&nbsp;</a></span>vertical</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::Vector3d mc_rtc::constants::vertical = Eigen::Vector3d{0., 0., 1.}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p class="reference">References <a class="el" href="a00728.html#af017e274f3cf4699850fdbf753d07fa2">demangle()</a>.</p>
 
 </div>
 </div>
@@ -224,8 +214,8 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00711.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00728.html">constants</a></li>
-    <li class="footer">Generated on Thu May 7 2020 03:48:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00712.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00728.html">internal</a></li>
+    <li class="footer">Generated on Mon May 11 2020 10:49:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

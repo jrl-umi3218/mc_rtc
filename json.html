@@ -11552,21 +11552,24 @@ configs:
   
   
   
-  <td>r1Index</td>
+  <td>r1</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer</span>
+      <span class="text-string">string</span>
     
     
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">0</span>
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of first robot involved in the contact</small></span>
   </td>
   
 </tr>
@@ -11585,21 +11588,24 @@ configs:
   
   
   
-  <td>r2Index</td>
+  <td>r2</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer</span>
+      <span class="text-string">string</span>
     
     
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">1</span>
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">First extra robot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of second robot involved in the contact</small></span>
   </td>
   
 </tr>
@@ -27705,19 +27711,24 @@ Pause_5s:
   
   
   
-  <td>robotIndex</td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -32991,7 +33002,6 @@ Pause_5s:
     </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
     </span><span class="nl">"StabilizerConfig"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lipm_stabilizer"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="nl">"leftFootSurface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFootCenter"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"rightFootSurface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RightFootCenter"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -33054,7 +33064,6 @@ Pause_5s:
     "stiffness": 5,
     "StabilizerConfig": {
       "type": "lipm_stabilizer",
-      "robotIndex": 0,
       "leftFootSurface": "LeftFootCenter",
       "rightFootSurface": "RightFootCenter",
       "enabled": true,
@@ -40289,21 +40298,24 @@ offset: 0</pre>
   
   
   
-  <td>r1Index</td>
+  <td>r1</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer</span>
+      <span class="text-string">string</span>
     
     
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">0</span>
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of first robot involved in the contact</small></span>
   </td>
   
 </tr>
@@ -40322,21 +40334,24 @@ offset: 0</pre>
   
   
   
-  <td>r2Index</td>
+  <td>r2</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer</span>
+      <span class="text-string">string</span>
     
     
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">1</span>
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">First extra robot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of second robot involved in the contact</small></span>
   </td>
   
 </tr>
@@ -40865,8 +40880,8 @@ offset: 0</pre>
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"r1Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surf1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"r2Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surf2"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"r1Index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"r2Index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"r1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"r2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"robot2"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"friction"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7</span><span class="p">,</span><span class="w">
   </span><span class="nl">"isFixed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
@@ -40878,8 +40893,8 @@ offset: 0</pre>
   <pre id="mc_rbdyn_Contact_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "r1Surface": "surf1",
   "r2Surface": "surf2",
-  "r1Index": 0,
-  "r2Index": 1,
+  "r1": "jvrc1",
+  "r2": "robot2",
   "friction": 0.7,
   "isFixed": false
 }</pre>
@@ -55737,19 +55752,24 @@ dynamics: true</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot affected by this constraint</small></span>
   </td>
   
 </tr>
@@ -56235,7 +56255,6 @@ dynamics: true</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boundedSpeed"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"constraints"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"body0"</span><span class="p">,</span><span class="w">
@@ -56255,7 +56274,6 @@ dynamics: true</pre>
   
   <pre id="ConstraintSet_BoundedSpeedConstr_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "boundedSpeed",
-  "robotIndex": 0,
   "constraints": [
   {
     "body": "body0",
@@ -56384,19 +56402,24 @@ constraints:
   
   
   
-  <td><strong>r1Index</strong></td>
+  <td>r1</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-number">number &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of first robot involved in the collision</small></span>
   </td>
   
 </tr>
@@ -56415,19 +56438,24 @@ constraints:
   
   
   
-  <td><strong>r2Index</strong></td>
+  <td>r2</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-number">number &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of second robot involved in the collision</small></span>
   </td>
   
 </tr>
@@ -56774,8 +56802,8 @@ constraints:
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collision"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"r1Index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"r2Index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"r1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"r2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"otherRobot"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"collisions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"body1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b1"</span><span class="p">,</span><span class="w">
@@ -56800,8 +56828,8 @@ constraints:
   
   <pre id="ConstraintSet_CollisionsConstraint_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "collision",
-  "r1Index": 0,
-  "r2Index": 0,
+  "r1": "jvrc1",
+  "r2": "otherRobot",
   "collisions": [
     {
       "body1": "b1",
@@ -56947,19 +56975,24 @@ collisions:
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot affected by this constraint</small></span>
   </td>
   
 </tr>
@@ -57007,8 +57040,7 @@ collisions:
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
-  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CoMIncPlane"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CoMIncPlane"</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
   </div>
@@ -57016,8 +57048,7 @@ collisions:
 
   
   <pre id="ConstraintSet_CoMIncPlaneConstr_examplejsonCopySource" class="offscreen" aria-hidden=true>{
-  "type": "CoMIncPlane",
-  "robotIndex": 0
+  "type": "CoMIncPlane"
 }</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#ConstraintSet_CoMIncPlaneConstr_examplejsonCopySource">Copy to clipboard</button>
 
@@ -57123,19 +57154,24 @@ robotIndex: 0</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot affected by this constraint</small></span>
   </td>
   
 </tr>
@@ -57262,7 +57298,6 @@ robotIndex: 0</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kinematics"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"damper"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">],</span><span class="w">
   </span><span class="nl">"velocityPercent"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
@@ -57273,7 +57308,6 @@ robotIndex: 0</pre>
   
   <pre id="ConstraintSet_KinematicsConstraint_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "kinematics",
-  "robotIndex": 0,
   "damper": [0.1, 0.01, 0.5],
   "velocityPercent": 0.5
 }</pre>
@@ -57385,19 +57419,24 @@ velocityPercent: 0.5</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot affected by this constraint</small></span>
   </td>
   
 </tr>
@@ -57557,7 +57596,6 @@ velocityPercent: 0.5</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dynamics"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"damper"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">],</span><span class="w">
   </span><span class="nl">"velocityPercent"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w">
   </span><span class="nl">"infTorque"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -57569,7 +57607,6 @@ velocityPercent: 0.5</pre>
   
   <pre id="ConstraintSet_DynamicsConstraint_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "dynamics",
-  "robotIndex": 0,
   "damper": [0.1, 0.01, 0.5],
   "velocityPercent": 0.5,
   "infTorque": false
@@ -58647,19 +58684,24 @@ infTorque: false</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -59552,7 +59594,6 @@ infTorque: false</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"body6d"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bodyName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"orientation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
                   </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
@@ -59566,7 +59607,6 @@ infTorque: false</pre>
   
   <pre id="MetaTask_EndEffectorTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "body6d",
-  "robotIndex": 0,
   "body": "bodyName",
   "orientation": [1.0, 0.0, 0.0,
                   0.0, 1.0, 0.0,
@@ -59586,7 +59626,6 @@ infTorque: false</pre>
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">body6d</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">bodyName</span>
 <span class="na">orientation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
               <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
@@ -59598,7 +59637,6 @@ infTorque: false</pre>
 
   
   <pre id="MetaTask_EndEffectorTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: body6d
-robotIndex: 0
 body: bodyName
 orientation: [1.0, 0.0, 0.0,
               0.0, 1.0, 0.0,
@@ -59718,19 +59756,24 @@ position: [0.0, 0.0, 0.0]</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -63619,7 +63662,6 @@ position: [0.0, 0.0, 0.0]</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lipm_stabilizer"</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
    </span><span class="nl">"contacts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"Left"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Right"</span><span class="w"> </span><span class="p">],</span><span class="w">
    </span><span class="nl">"Left"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"rotation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">],</span><span class="w">
@@ -63645,7 +63687,6 @@ position: [0.0, 0.0, 0.0]</pre>
 
 </span><span class="p">{</span><span class="w">
    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lipm_stabilizer"</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
    </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
    </span><span class="nl">"friction"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8</span><span class="p">,</span><span class="w">
    </span><span class="nl">"fdqp_weights"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -63723,7 +63764,6 @@ position: [0.0, 0.0, 0.0]</pre>
   
   <pre id="MetaTask_LIPMStabilizerTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
    "type": "lipm_stabilizer",
-   "robotIndex": 0,
    "contacts": [ "Left", "Right" ],
    "Left": {
       "rotation": [ 0, 0, 0 ],
@@ -63749,7 +63789,6 @@ position: [0.0, 0.0, 0.0]</pre>
 
 {
    "type": "lipm_stabilizer",
-   "robotIndex": 0,
    "enabled": true,
    "friction": 0.8,
    "fdqp_weights": {
@@ -63851,7 +63890,6 @@ position: [0.0, 0.0, 0.0]</pre>
 <span class="c1">###</span>
 <span class="nn">---</span>
 <span class="na">type</span><span class="pi">:</span> <span class="s">lipm_stabilizer</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">contacts</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Left</span><span class="pi">,</span> <span class="nv">Right</span><span class="pi">]</span>
 <span class="na">Left</span><span class="pi">:</span>
   <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">]</span>
@@ -63884,7 +63922,6 @@ position: [0.0, 0.0, 0.0]</pre>
 <span class="c1">###</span>
 <span class="nn">---</span>
 <span class="na">type</span><span class="pi">:</span> <span class="s">lipm_stabilizer</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">enabled</span><span class="pi">:</span> <span class="no">true</span>
 
 <span class="c1"># Global configuration</span>
@@ -63970,7 +64007,6 @@ position: [0.0, 0.0, 0.0]</pre>
 ###
 ---
 type: lipm_stabilizer
-robotIndex: 0
 contacts: [Left, Right]
 Left:
   rotation: [0,0,0]
@@ -64003,7 +64039,6 @@ jvrc1:
 ###
 ---
 type: lipm_stabilizer
-robotIndex: 0
 enabled: true
 
 # Global configuration
@@ -64179,19 +64214,24 @@ other_robot:
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -65115,7 +65155,6 @@ other_robot:
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"relBody6d"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bodyName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"relBody"</span><span class="p">:</span><span class="w"> </span><span class="s2">"relBodyName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"orientation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
@@ -65130,7 +65169,6 @@ other_robot:
   
   <pre id="MetaTask_RelativeEndEffectorTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "relBody6d",
-  "robotIndex": 0,
   "body": "bodyName",
   "relBody": "relBodyName",
   "orientation": [1.0, 0.0, 0.0,
@@ -65151,7 +65189,6 @@ other_robot:
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">relBody6d</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">bodyName</span>
 <span class="na">relBody</span><span class="pi">:</span> <span class="s">relBodyName</span>
 <span class="na">orientation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
@@ -65164,7 +65201,6 @@ other_robot:
 
   
   <pre id="MetaTask_RelativeEndEffectorTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: relBody6d
-robotIndex: 0
 body: bodyName
 relBody: relBodyName
 orientation: [1.0, 0.0, 0.0,
@@ -65285,19 +65321,24 @@ position: [0.0, 0.0, 0.0]</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -65582,19 +65623,24 @@ position: [0.0, 0.0, 0.0]</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this surface is attached</small></span>
   </td>
   
 </tr>
@@ -66802,7 +66848,6 @@ position: [0.0, 0.0, 0.0]</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admittance"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFootCenter"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"targetPose"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -66824,11 +66869,10 @@ position: [0.0, 0.0, 0.0]</pre>
 </span><span class="p">}</span><span class="err">,</span><span class="w">
 </span><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admittance"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFootCenter"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"targetSurface"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TargetRobot"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"target_surface_name"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"offset_translation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">],</span><span class="w">
     </span><span class="nl">"offset_rotation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.14</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w">
@@ -66851,7 +66895,6 @@ position: [0.0, 0.0, 0.0]</pre>
   
   <pre id="MetaTask_AdmittanceTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "admittance",
-  "robotIndex": 0,
   "surface": "LeftFootCenter",
   "targetPose":
   {
@@ -66873,11 +66916,10 @@ position: [0.0, 0.0, 0.0]</pre>
 },
 {
   "type": "admittance",
-  "robotIndex": 0,
   "surface": "LeftFootCenter",
   "targetSurface":
   {
-    "robotIndex": 1,
+    "robot": "TargetRobot",
     "surface": "target_surface_name",
     "offset_translation": [0.0, 0.0, 0.1],
     "offset_rotation": [3.14, 0.0, 0.0]
@@ -66907,7 +66949,6 @@ position: [0.0, 0.0, 0.0]</pre>
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">type</span><span class="pi">:</span> <span class="s">admittance</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftFootCenter</span>
 <span class="na">targetPose</span><span class="pi">:</span>
   <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
@@ -66922,10 +66963,9 @@ position: [0.0, 0.0, 0.0]</pre>
   <span class="na">force</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0005</span><span class="pi">]</span>
 <span class="nn">---</span>
 <span class="na">type</span><span class="pi">:</span> <span class="s">admittance</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftFootCenter</span>
 <span class="na">targetSurface</span><span class="pi">:</span>
-  <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">robot</span><span class="pi">:</span> <span class="s">TargetRobotName</span> 
   <span class="na">surface</span><span class="pi">:</span> <span class="s">target_surface_name</span>
   <span class="na">offset_translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">]</span>
   <span class="na">offset_rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">3.14</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
@@ -66942,7 +66982,6 @@ position: [0.0, 0.0, 0.0]</pre>
   
   <pre id="MetaTask_AdmittanceTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>---
 type: admittance
-robotIndex: 0
 surface: LeftFootCenter
 targetPose:
   rotation: [1.0, 0.0, 0.0,
@@ -66957,10 +66996,9 @@ admittance:
   force: [0.0, 0.0, 0.0005]
 ---
 type: admittance
-robotIndex: 0
 surface: LeftFootCenter
 targetSurface:
-  robotIndex: 1
+  robot: TargetRobotName 
   surface: target_surface_name
   offset_translation: [0.0, 0.0, 0.1]
   offset_rotation: [3.14, 0.0, 0.0]
@@ -67084,19 +67122,24 @@ admittance:
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -67571,7 +67614,7 @@ admittance:
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"momentum"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"momentum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
@@ -67581,7 +67624,7 @@ admittance:
   
   <pre id="MetaTask_MomentumTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "momentum",
-  "robotIndex": 0,
+  "robot": "jvrc1",
   "momentum": [0, 0, 0, 0, 0, 10]
 }</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_MomentumTask_examplejsonCopySource">Copy to clipboard</button>
@@ -67597,7 +67640,7 @@ admittance:
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">momentum</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
+<span class="na">robot</span><span class="pi">:</span> <span class="s">jvrc1</span>
 <span class="na">momentum</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">]</span></code></pre></figure>
 
   </div>
@@ -67605,7 +67648,7 @@ admittance:
 
   
   <pre id="MetaTask_MomentumTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: momentum
-robotIndex: 0
+robot: jvrc1
 momentum: [0, 0, 0, 0, 0, 10]</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_MomentumTask_exampleyamlCopySource">Copy to clipboard</button>
 
@@ -67721,19 +67764,24 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -68215,7 +68263,6 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"com"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"com"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.71</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
@@ -68225,7 +68272,6 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
   
   <pre id="MetaTask_CoMTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "com",
-  "robotIndex": 0,
   "com": [0.0, 0.0, 0.71]
 }</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_CoMTask_examplejsonCopySource">Copy to clipboard</button>
@@ -68241,7 +68287,6 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">com</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.71</span><span class="pi">]</span></code></pre></figure>
 
   </div>
@@ -68249,7 +68294,6 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
 
   
   <pre id="MetaTask_CoMTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: com
-robotIndex: 0
 com: [0.0, 0.0, 0.71]</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_CoMTask_exampleyamlCopySource">Copy to clipboard</button>
 
@@ -68365,19 +68409,24 @@ com: [0.0, 0.0, 0.71]</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -68975,19 +69024,24 @@ com: [0.0, 0.0, 0.71]</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this surface is attached</small></span>
   </td>
   
 </tr>
@@ -69455,7 +69509,6 @@ com: [0.0, 0.0, 0.71]</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cop"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFootCenter"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"pose"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -69474,12 +69527,10 @@ com: [0.0, 0.0, 0.71]</pre>
 </span><span class="p">}</span><span class="err">,</span><span class="w">
 </span><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cop"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftFootCenter"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"cop"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
   </span><span class="nl">"targetSurface"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
     </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"target_surface_name"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"offset_translation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">],</span><span class="w">
     </span><span class="nl">"offset_rotation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.14</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w">
@@ -69498,7 +69549,6 @@ com: [0.0, 0.0, 0.71]</pre>
   
   <pre id="MetaTask_CoPTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "cop",
-  "robotIndex": 0,
   "surface": "LeftFootCenter",
   "pose":
   {
@@ -69517,12 +69567,10 @@ com: [0.0, 0.0, 0.71]</pre>
 },
 {
   "type": "cop",
-  "robotIndex": 0,
   "surface": "LeftFootCenter",
   "cop": [2.0, 0.0],
   "targetSurface":
   {
-    "robotIndex": 1,
     "surface": "target_surface_name",
     "offset_translation": [0.0, 0.0, 0.1],
     "offset_rotation": [3.14, 0.0, 0.0]
@@ -69548,7 +69596,6 @@ com: [0.0, 0.0, 0.71]</pre>
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">type</span><span class="pi">:</span> <span class="s">cop</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftFootCenter</span>
 <span class="na">pose</span><span class="pi">:</span>
   <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
@@ -69562,11 +69609,10 @@ com: [0.0, 0.0, 0.71]</pre>
   <span class="na">force</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0005</span><span class="pi">]</span>
 <span class="nn">---</span>
 <span class="na">type</span><span class="pi">:</span> <span class="s">cop</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftFootCenter</span>
 <span class="na">cop</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">2.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
 <span class="na">targetSurface</span><span class="pi">:</span>
-  <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">robot</span><span class="pi">:</span> <span class="s">TargetRobotName</span> 
   <span class="na">surface</span><span class="pi">:</span> <span class="s">target_surface_name</span>
   <span class="na">offset_translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">]</span>
   <span class="na">offset_rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">3.14</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
@@ -69581,7 +69627,6 @@ com: [0.0, 0.0, 0.71]</pre>
   
   <pre id="MetaTask_CoPTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>---
 type: cop
-robotIndex: 0
 surface: LeftFootCenter
 pose:
   rotation: [1.0, 0.0, 0.0,
@@ -69595,11 +69640,10 @@ admittance:
   force: [0.0, 0.0, 0.0005]
 ---
 type: cop
-robotIndex: 0
 surface: LeftFootCenter
 cop: [2.0, 0.0]
 targetSurface:
-  robotIndex: 1
+  robot: TargetRobotName 
   surface: target_surface_name
   offset_translation: [0.0, 0.0, 0.1]
   offset_rotation: [3.14, 0.0, 0.0]
@@ -69721,19 +69765,24 @@ admittance:
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -70313,7 +70362,6 @@ admittance:
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"orientation"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bodyName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"orientation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
                   </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">
@@ -70326,7 +70374,6 @@ admittance:
   
   <pre id="MetaTask_OrientationTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "orientation",
-  "robotIndex": 0,
   "body": "bodyName",
   "orientation": [1.0, 0.0, 0.0,
                   0.0, 1.0, 0.0,
@@ -70345,7 +70392,6 @@ admittance:
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">orientation</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">bodyName</span>
 <span class="na">orientation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
               <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
@@ -70356,7 +70402,6 @@ admittance:
 
   
   <pre id="MetaTask_OrientationTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: orientation
-robotIndex: 0
 body: bodyName
 orientation: [1.0, 0.0, 0.0,
               0.0, 1.0, 0.0,
@@ -70475,19 +70520,24 @@ orientation: [1.0, 0.0, 0.0,
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -70999,7 +71049,6 @@ orientation: [1.0, 0.0, 0.0,
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gaze"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"h_link"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"X_b_gaze"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -71016,7 +71065,6 @@ orientation: [1.0, 0.0, 0.0,
   
   <pre id="MetaTask_GazeTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "gaze",
-  "robotIndex": 0,
   "body": "h_link",
   "X_b_gaze":
   {
@@ -71039,7 +71087,6 @@ orientation: [1.0, 0.0, 0.0,
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">gaze</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">h_link</span>
 <span class="na">X_b_gaze</span><span class="pi">:</span>
   <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
@@ -71052,7 +71099,6 @@ orientation: [1.0, 0.0, 0.0,
 
   
   <pre id="MetaTask_GazeTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: gaze
-robotIndex: 0
 body: h_link
 X_b_gaze:
   rotation: [1.0, 0.0, 0.0,
@@ -71173,19 +71219,24 @@ X_b_gaze:
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -71634,7 +71685,6 @@ X_b_gaze:
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vectorOrientation"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bodyName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyVector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
   </span><span class="nl">"targetVector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w">
@@ -71646,7 +71696,6 @@ X_b_gaze:
   
   <pre id="MetaTask_VectorOrientationTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "vectorOrientation",
-  "robotIndex": 0,
   "body": "bodyName",
   "bodyVector": [0.0, 0.0, 0.0],
   "targetVector": [0.0, 0.0, 0.0]
@@ -71664,7 +71713,6 @@ X_b_gaze:
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">vectorOrientation</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">bodyName</span>
 <span class="na">bodyVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
 <span class="na">targetVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span></code></pre></figure>
@@ -71674,7 +71722,6 @@ X_b_gaze:
 
   
   <pre id="MetaTask_VectorOrientationTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: vectorOrientation
-robotIndex: 0
 body: bodyName
 bodyVector: [0.0, 0.0, 0.0]
 targetVector: [0.0, 0.0, 0.0]</pre>
@@ -71792,19 +71839,24 @@ targetVector: [0.0, 0.0, 0.0]</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -72302,7 +72354,6 @@ targetVector: [0.0, 0.0, 0.0]</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"posture"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"posture"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
@@ -72319,7 +72370,6 @@ targetVector: [0.0, 0.0, 0.0]</pre>
   
   <pre id="MetaTask_PostureTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "posture",
-  "robotIndex": 0,
   "stiffness": 1.0,
   "weight": 1.0,
   "posture": [
@@ -72342,7 +72392,6 @@ targetVector: [0.0, 0.0, 0.0]</pre>
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">posture</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">stiffness</span><span class="pi">:</span> <span class="m">1.0</span>
 <span class="na">weight</span><span class="pi">:</span> <span class="m">1.0</span>
 <span class="na">posture</span><span class="pi">:</span>
@@ -72356,7 +72405,6 @@ targetVector: [0.0, 0.0, 0.0]</pre>
 
   
   <pre id="MetaTask_PostureTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: posture
-robotIndex: 0
 stiffness: 1.0
 weight: 1.0
 posture:
@@ -72478,19 +72526,24 @@ posture:
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -73128,7 +73181,6 @@ posture:
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"position"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bodyName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
@@ -73139,7 +73191,6 @@ posture:
   
   <pre id="MetaTask_PositionTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "position",
-  "robotIndex": 0,
   "body": "bodyName",
   "position": [0.0, 0.0, 0.0]
 }</pre>
@@ -73156,7 +73207,6 @@ posture:
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">position</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">bodyName</span>
 <span class="na">position</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span></code></pre></figure>
 
@@ -73165,7 +73215,6 @@ posture:
 
   
   <pre id="MetaTask_PositionTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: position
-robotIndex: 0
 body: bodyName
 position: [0.0, 0.0, 0.0]</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_PositionTask_exampleyamlCopySource">Copy to clipboard</button>
@@ -73388,21 +73437,24 @@ position: [0.0, 0.0, 0.0]</pre>
   
   
   
-  <td>r1Index</td>
+  <td>r1</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer</span>
+      <span class="text-string">string</span>
     
     
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">0</span>
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of first robot involved in the contact</small></span>
   </td>
   
 </tr>
@@ -73421,21 +73473,24 @@ position: [0.0, 0.0, 0.0]</pre>
   
   
   
-  <td>r2Index</td>
+  <td>r2</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer</span>
+      <span class="text-string">string</span>
     
     
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">1</span>
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">First extra robot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of second robot involved in the contact</small></span>
   </td>
   
 </tr>
@@ -74140,8 +74195,8 @@ position: [0.0, 0.0, 0.0]</pre>
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"r1Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surf1"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"r2Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surf2"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"r1Index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"r2Index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"robot2"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"isFixed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
@@ -74159,8 +74214,8 @@ position: [0.0, 0.0, 0.0]</pre>
   {
     "r1Surface": "surf1",
     "r2Surface": "surf2",
-    "r1Index": 0,
-    "r2Index": 1,
+    "r1": "jvrc1",
+    "r2": "robot2",
     "isFixed": false
   },
   "speed": 0.05,
@@ -74318,19 +74373,24 @@ weight: 100.0</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -74777,7 +74837,6 @@ weight: 100.0</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lookAtTF"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bodyName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyVector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w">
   </span><span class="nl">"sourceFrame"</span><span class="p">:</span><span class="w"> </span><span class="s2">"robot_map"</span><span class="p">,</span><span class="w">
@@ -74790,7 +74849,6 @@ weight: 100.0</pre>
   
   <pre id="MetaTask_LookAtTFTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "lookAtTF",
-  "robotIndex": 0,
   "body": "bodyName",
   "bodyVector": [1, 0, 0],
   "sourceFrame": "robot_map",
@@ -74809,7 +74867,6 @@ weight: 100.0</pre>
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">lookAtTF</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">bodyName</span>
 <span class="na">bodyVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">]</span>
 <span class="na">sourceFrame</span><span class="pi">:</span> <span class="s">robot_map</span>
@@ -74820,7 +74877,6 @@ weight: 100.0</pre>
 
   
   <pre id="MetaTask_LookAtTFTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: lookAtTF
-robotIndex: 0
 body: bodyName
 bodyVector: [1, 0, 0]
 sourceFrame: robot_map
@@ -74939,19 +74995,24 @@ targetFrame: target_name</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -75272,7 +75333,6 @@ targetFrame: target_name</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pbvs"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surfaceName"</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
@@ -75282,7 +75342,6 @@ targetFrame: target_name</pre>
   
   <pre id="MetaTask_PBVSTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "pbvs",
-  "robotIndex": 0,
   "surface": "surfaceName"
 }</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_PBVSTask_examplejsonCopySource">Copy to clipboard</button>
@@ -75298,7 +75357,6 @@ targetFrame: target_name</pre>
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">pbvs</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">surfaceName</span></code></pre></figure>
 
   </div>
@@ -75306,7 +75364,6 @@ targetFrame: target_name</pre>
 
   
   <pre id="MetaTask_PBVSTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: pbvs
-robotIndex: 0
 surface: surfaceName</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_PBVSTask_exampleyamlCopySource">Copy to clipboard</button>
 
@@ -75420,19 +75477,24 @@ surface: surfaceName</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -76012,7 +76074,6 @@ surface: surfaceName</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lookAt"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bodyName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyVector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
   </span><span class="nl">"targetPos"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w">
@@ -76024,7 +76085,6 @@ surface: surfaceName</pre>
   
   <pre id="MetaTask_LookAtTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "lookAt",
-  "robotIndex": 0,
   "body": "bodyName",
   "bodyVector": [1.0, 0.0, 0.0],
   "targetPos": [0.0, 0.0, 0.0]
@@ -76042,7 +76102,6 @@ surface: surfaceName</pre>
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">lookAt</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">bodyName</span>
 <span class="na">bodyVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
 <span class="na">targetPos</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span></code></pre></figure>
@@ -76052,7 +76111,6 @@ surface: surfaceName</pre>
 
   
   <pre id="MetaTask_LookAtTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: lookAt
-robotIndex: 0
 body: bodyName
 bodyVector: [1.0, 0.0, 0.0]
 targetPos: [0.0, 0.0, 0.0]</pre>
@@ -76170,19 +76228,24 @@ targetPos: [0.0, 0.0, 0.0]</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -76820,7 +76883,6 @@ targetPos: [0.0, 0.0, 0.0]</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lookAtSurface"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bodyName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyVector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
   </span><span class="nl">"surfaceRobotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
@@ -76833,7 +76895,6 @@ targetPos: [0.0, 0.0, 0.0]</pre>
   
   <pre id="MetaTask_LookAtSurfaceTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "lookAtSurface",
-  "robotIndex": 0,
   "body": "bodyName",
   "bodyVector": [1.0, 0.0, 0.0],
   "surfaceRobotIndex": 0,
@@ -76852,7 +76913,6 @@ targetPos: [0.0, 0.0, 0.0]</pre>
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">lookAtSurface</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">bodyName</span>
 <span class="na">bodyVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
 <span class="na">surfaceRobotIndex</span><span class="pi">:</span> <span class="m">0</span>
@@ -76863,7 +76923,6 @@ targetPos: [0.0, 0.0, 0.0]</pre>
 
   
   <pre id="MetaTask_LookAtSurfaceTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: lookAtSurface
-robotIndex: 0
 body: bodyName
 bodyVector: [1.0, 0.0, 0.0]
 surfaceRobotIndex: 0
@@ -77088,21 +77147,24 @@ surface: targetSurfaceName</pre>
   
   
   
-  <td>r1Index</td>
+  <td>r1</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer</span>
+      <span class="text-string">string</span>
     
     
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">0</span>
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of first robot involved in the contact</small></span>
   </td>
   
 </tr>
@@ -77121,21 +77183,24 @@ surface: targetSurfaceName</pre>
   
   
   
-  <td>r2Index</td>
+  <td>r2</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer</span>
+      <span class="text-string">string</span>
     
     
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-integer">1</span>
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">First extra robot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of second robot involved in the contact</small></span>
   </td>
   
 </tr>
@@ -77840,8 +77905,8 @@ surface: targetSurfaceName</pre>
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"r1Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surf1"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"r2Surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surf2"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"r1Index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"r2Index"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"r2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"robot2"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"isFixed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="nl">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w">
@@ -77859,8 +77924,8 @@ surface: targetSurfaceName</pre>
   {
     "r1Surface": "surf1",
     "r2Surface": "surf2",
-    "r1Index": 0,
-    "r2Index": 1,
+    "r1": "jvrc1",
+    "r2": "robot2",
     "isFixed": false
   },
   "speed": 0.05,
@@ -77883,8 +77948,8 @@ surface: targetSurfaceName</pre>
 <span class="na">contact</span><span class="pi">:</span>
   <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">surf1</span>
   <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">surf2</span>
-  <span class="na">r1Index</span><span class="pi">:</span> <span class="m">0</span>
-  <span class="na">r2Index</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
+  <span class="na">r2</span><span class="pi">:</span> <span class="s">robot2</span>
   <span class="na">isFixed</span><span class="pi">:</span> <span class="no">false</span>
 <span class="na">speed</span><span class="pi">:</span> <span class="m">0.05</span>
 <span class="na">stiffness</span><span class="pi">:</span> <span class="m">1.0</span>
@@ -77898,8 +77963,8 @@ surface: targetSurfaceName</pre>
 contact:
   r1Surface: surf1
   r2Surface: surf2
-  r1Index: 0
-  r2Index: 1
+  r1: jvrc1
+  r2: robot2
   isFixed: false
 speed: 0.05
 stiffness: 1.0
@@ -78018,19 +78083,24 @@ weight: 100.0</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -78312,19 +78382,24 @@ weight: 100.0</pre>
   
   
   
-  <td>robotIndex</td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot on which this surface is defined</small></span>
   </td>
   
 </tr>
@@ -79041,7 +79116,6 @@ weight: 100.0</pre>
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bspline_trajectory"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftHand"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mf">10000.0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">15.0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -79051,7 +79125,7 @@ weight: 100.0</pre>
     </span><span class="p">{</span><span class="nl">"AND"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.0</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mi">1e-2</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
     </span><span class="nl">"targetSurface"</span><span class="p">:</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TargetRobot"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Left"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"translation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.05</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.025</span><span class="p">],</span><span class="w">
       </span><span class="nl">"rotation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-1.57</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
@@ -79078,7 +79152,6 @@ weight: 100.0</pre>
   {
     "type": "bspline_trajectory",
     "surface": "LeftHand",
-    "robotIndex": 0,
     "stiffness": 10000.0,
     "duration": 15.0,
     "weight": 100,
@@ -79088,7 +79161,7 @@ weight: 100.0</pre>
     {"AND": [ { "timeout": 3.0 }, { "speed": 1e-2 } ] } ] },
     "targetSurface":
     {
-      "robotIndex": 1,
+      "robot": "TargetRobot",
       "surface": "Left",
       "translation": [0.05, -0.05, -0.025],
       "rotation": [0.0, -1.57, 0.0],
@@ -79120,7 +79193,6 @@ weight: 100.0</pre>
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LeftHandTrajectory</span><span class="pi">:</span>
   <span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
   <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftHand</span>
-  <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
   <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10000.0</span>
   <span class="na">duration</span><span class="pi">:</span> <span class="m">15.0</span>
   <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
@@ -79133,7 +79205,7 @@ weight: 100.0</pre>
         <span class="pi">-</span> <span class="na">timeout</span><span class="pi">:</span> <span class="m">3.0</span>
         <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="s">1e-2</span>
   <span class="na">targetSurface</span><span class="pi">:</span>
-    <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">1</span>
+    <span class="na">robot</span><span class="pi">:</span> <span class="s">TargetRobotName</span> 
     <span class="na">surface</span><span class="pi">:</span> <span class="s">Left</span>
     <span class="na">translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.05</span><span class="pi">,</span> <span class="nv">-0.05</span><span class="pi">,</span> <span class="nv">-0.025</span><span class="pi">]</span>
     <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">-1.57</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
@@ -79155,7 +79227,6 @@ weight: 100.0</pre>
   <pre id="MetaTask_BSplineTrajectoryTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>LeftHandTrajectory:
   type: bspline_trajectory
   surface: LeftHand
-  robotIndex: 0
   stiffness: 10000.0
   duration: 15.0
   weight: 100
@@ -79168,7 +79239,7 @@ weight: 100.0</pre>
         - timeout: 3.0
         - speed: 1e-2
   targetSurface:
-    robotIndex: 1
+    robot: TargetRobotName 
     surface: Left
     translation: [0.05, -0.05, -0.025]
     rotation: [0.0, -1.57, 0.0]
@@ -79296,19 +79367,24 @@ weight: 100.0</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -79975,19 +80051,24 @@ weight: 100.0</pre>
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this surface is attached</small></span>
   </td>
   
 </tr>
@@ -80219,6 +80300,259 @@ weight: 100.0</pre>
       
 <table class="table table-borderless table-hover object-property">
 <tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>s1</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>s2</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>target</strong></td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_SurfaceTransformTask_PROP_relative_PROP_target" aria-expanded="false" aria-controls="collapseMetaTask_SurfaceTransformTask_PROP_relative_PROP_target">sva::PTransformd</a>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Either rotation or translation can be ommited if the other is present</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_SurfaceTransformTask_PROP_relative_PROP_target">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">sva::PTransformd</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Either rotation or translation can be ommited if the other is present</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>rotation</strong></td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_SurfaceTransformTask_PROP_relative_PROP_target_PROP_rotation" aria-expanded="false" aria-controls="collapseMetaTask_SurfaceTransformTask_PROP_relative_PROP_target_PROP_rotation">Eigen::Matrix3d</a>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_SurfaceTransformTask_PROP_relative_PROP_target_PROP_rotation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Matrix3d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[9]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>translation</strong></td>
+  
+  <td colspan="2">
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_SurfaceTransformTask_PROP_relative_PROP_target_PROP_translation" aria-expanded="false" aria-controls="collapseMetaTask_SurfaceTransformTask_PROP_relative_PROP_target_PROP_translation">Eigen::Vector3d</a>
+  
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_SurfaceTransformTask_PROP_relative_PROP_target_PROP_translation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
 
 
 </tbody>
@@ -80518,7 +80852,6 @@ weight: 100.0</pre>
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surfaceTransform"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surfaceName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"target"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -80530,11 +80863,10 @@ weight: 100.0</pre>
 </span><span class="p">}</span><span class="err">,</span><span class="w">
 </span><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surfaceTransform"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"surfaceName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"targetSurface"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TargetRobot"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"target_surface_name"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"offset_translation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">],</span><span class="w">
     </span><span class="nl">"offset_rotation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">3.14</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w">
@@ -80547,7 +80879,6 @@ weight: 100.0</pre>
   
   <pre id="MetaTask_SurfaceTransformTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "surfaceTransform",
-  "robotIndex": 0,
   "surface": "surfaceName",
   "target":
   {
@@ -80559,11 +80890,10 @@ weight: 100.0</pre>
 },
 {
   "type": "surfaceTransform",
-  "robotIndex": 0,
   "surface": "surfaceName",
   "targetSurface":
   {
-    "robotIndex": 1,
+    "robot": "TargetRobot",
     "surface": "target_surface_name",
     "offset_translation": [0.0, 0.0, 0.1],
     "offset_rotation": [3.14, 0.0, 0.0]
@@ -80583,7 +80913,6 @@ weight: 100.0</pre>
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">type</span><span class="pi">:</span> <span class="s">surfaceTransform</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">surfaceName</span>
 <span class="na">target</span><span class="pi">:</span>
   <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span>
@@ -80592,10 +80921,9 @@ weight: 100.0</pre>
   <span class="na">translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
 <span class="nn">---</span>
 <span class="na">type</span><span class="pi">:</span> <span class="s">surfaceTransform</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">surfaceName</span>
 <span class="na">targetSurface</span><span class="pi">:</span>
-  <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">robot</span><span class="pi">:</span> <span class="s">TargetRobotName</span> 
   <span class="na">surface</span><span class="pi">:</span> <span class="s">target_surface_name</span>
   <span class="na">offset_translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.1</span><span class="pi">]</span>
   <span class="na">offset_rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">3.14</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span></code></pre></figure>
@@ -80606,7 +80934,6 @@ weight: 100.0</pre>
   
   <pre id="MetaTask_SurfaceTransformTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>---
 type: surfaceTransform
-robotIndex: 0
 surface: surfaceName
 target:
   rotation: [1.0, 0.0, 0.0,
@@ -80615,10 +80942,9 @@ target:
   translation: [0.0, 0.0, 0.0]
 ---
 type: surfaceTransform
-robotIndex: 0
 surface: surfaceName
 targetSurface:
-  robotIndex: 1
+  robot: TargetRobotName 
   surface: target_surface_name
   offset_translation: [0.0, 0.0, 0.1]
   offset_rotation: [3.14, 0.0, 0.0]</pre>
@@ -80736,19 +81062,24 @@ targetSurface:
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -81467,7 +81798,6 @@ targetSurface:
 
 <figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"compliance"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"r_arm"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"wrench"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
@@ -81482,7 +81812,6 @@ targetSurface:
   
   <pre id="MetaTask_ComplianceTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
   "type": "compliance",
-  "robotIndex": 0,
   "body": "r_arm",
   "wrench":
   {
@@ -81503,7 +81832,6 @@ targetSurface:
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">compliance</span>
-<span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">r_arm</span>
 <span class="na">wrench</span><span class="pi">:</span>
   <span class="na">couple</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
@@ -81514,7 +81842,6 @@ targetSurface:
 
   
   <pre id="MetaTask_ComplianceTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: compliance
-robotIndex: 0
 body: r_arm
 wrench:
   couple: [0.0, 0.0, 0.0]
@@ -81633,19 +81960,24 @@ wrench:
   
   
   
-  <td><strong>robotIndex</strong></td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot to which this task applies</small></span>
   </td>
   
 </tr>
@@ -81927,19 +82259,24 @@ wrench:
   
   
   
-  <td>robotIndex</td>
+  <td>robot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-integer">integer &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of robot on which this surface is defined</small></span>
   </td>
   
 </tr>
@@ -82949,7 +83286,6 @@ wrench:
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exact_cubic_trajectory"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LeftHand"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mf">10000.0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="mf">15.0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -82959,7 +83295,7 @@ wrench:
     </span><span class="p">{</span><span class="nl">"AND"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.0</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mi">1e-2</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
     </span><span class="nl">"targetSurface"</span><span class="p">:</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"robotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TargetRobot"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Left"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"translation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.05</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.025</span><span class="p">],</span><span class="w">
       </span><span class="nl">"rotation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-1.57</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
@@ -82990,7 +83326,6 @@ wrench:
   {
     "type": "exact_cubic_trajectory",
     "surface": "LeftHand",
-    "robotIndex": 0,
     "stiffness": 10000.0,
     "duration": 15.0,
     "weight": 100,
@@ -83000,7 +83335,7 @@ wrench:
     {"AND": [ { "timeout": 3.0 }, { "speed": 1e-2 } ] } ] },
     "targetSurface":
     {
-      "robotIndex": 1,
+      "robot": "TargetRobot",
       "surface": "Left",
       "translation": [0.05, -0.05, -0.025],
       "rotation": [0.0, -1.57, 0.0],
@@ -83036,7 +83371,6 @@ wrench:
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">LeftHandTrajectory</span><span class="pi">:</span>
   <span class="na">type</span><span class="pi">:</span> <span class="s">exact_cubic_trajectory</span>
   <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftHand</span>
-  <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
   <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10000.0</span>
   <span class="na">duration</span><span class="pi">:</span> <span class="m">15.0</span>
   <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
@@ -83049,7 +83383,7 @@ wrench:
         <span class="pi">-</span> <span class="na">timeout</span><span class="pi">:</span> <span class="m">3.0</span>
         <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="s">1e-2</span>
   <span class="na">targetSurface</span><span class="pi">:</span>
-    <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">1</span>
+    <span class="na">robot</span><span class="pi">:</span> <span class="s">TargetRobotName</span> 
     <span class="na">surface</span><span class="pi">:</span> <span class="s">Left</span>
     <span class="na">translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.05</span><span class="pi">,</span> <span class="nv">-0.05</span><span class="pi">,</span> <span class="nv">-0.025</span><span class="pi">]</span>
     <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">-1.57</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
@@ -83071,7 +83405,6 @@ wrench:
   <pre id="MetaTask_ExactCubicTrajectoryTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>LeftHandTrajectory:
   type: exact_cubic_trajectory
   surface: LeftHand
-  robotIndex: 0
   stiffness: 10000.0
   duration: 15.0
   weight: 100
@@ -83084,7 +83417,7 @@ wrench:
         - timeout: 3.0
         - speed: 1e-2
   targetSurface:
-    robotIndex: 1
+    robot: TargetRobotName 
     surface: Left
     translation: [0.05, -0.05, -0.025]
     rotation: [0.0, -1.57, 0.0]

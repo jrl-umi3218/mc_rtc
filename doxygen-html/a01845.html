@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_control::ControllerServer Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01848.html','');});
+$(document).ready(function(){initNavTree('a01845.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,32 +69,158 @@ $(document).ready(function(){initNavTree('a01848.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="a01842.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_control::fsm::Contact Member List</div>  </div>
+<div class="title">mc_control::ControllerServer Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01848.html">mc_control::fsm::Contact</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01848.html#a63c45626b5b52b6f6be29663c10a8613">Contact</a>(const std::string &amp;r1, const std::string &amp;r2, const std::string &amp;r1Surface, const std::string &amp;r2Surface, double friction=mc_rbdyn::Contact::defaultFriction, const Eigen::Vector6d &amp;dof=Eigen::Vector6d::Ones())</td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01848.html#a46d54c4d75fe306846531e8c436fa6f7">Contact</a>()=default</td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01848.html#abf05b8825daf19dd4cff5630b7268e7e">dof</a></td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">mutable</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01848.html#a2d8289fa5ded9a7df86e5c85d03e4435">friction</a></td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">mutable</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01848.html#a6936e7692e199d18b9c7906c70414313">from_mc_rbdyn</a>(const Controller &amp;, const mc_rbdyn::Contact &amp;)</td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01848.html#a770914b6bd76f3cd0b4c42c950073328">operator!=</a>(const Contact &amp;rhs) const</td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01848.html#a63027fea5b27ea98fb1c39aa78c56fed">operator&lt;</a>(const Contact &amp;rhs) const</td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01848.html#a19a8a477e8c16ad944a32c12401ceb25">operator==</a>(const Contact &amp;rhs) const</td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01848.html#a9984ba81a2a54cc3216911a4a7c23bb7">r1</a></td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01848.html#ac21f685a8adc12fb0a3015851023ae08">r1Surface</a></td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01848.html#a426b803fa1191501cc273d05b2f4d7e7">r2</a></td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01848.html#a19bb1febaf343d980f6de167b004d8bb">r2Surface</a></td><td class="entry"><a class="el" href="a01848.html">mc_control::fsm::Contact</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>Serves data and allow interaction with the controllers.  
+ <a href="a01845.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_control/ControllerServer.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ac13be9e36cf38cb6bdde4cc8b4b19250"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01845.html#ac13be9e36cf38cb6bdde4cc8b4b19250">ControllerServer</a> (double dt, double server_dt, const std::vector&lt; std::string &gt; &amp;pub_bind_uri, const std::vector&lt; std::string &gt; &amp;pull_bind_uri)</td></tr>
+<tr class="memdesc:ac13be9e36cf38cb6bdde4cc8b4b19250"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac13be9e36cf38cb6bdde4cc8b4b19250">More...</a><br /></td></tr>
+<tr class="separator:ac13be9e36cf38cb6bdde4cc8b4b19250"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4ef79cfb9afe739ee67b64b66969f97"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01845.html#aa4ef79cfb9afe739ee67b64b66969f97">~ControllerServer</a> ()</td></tr>
+<tr class="separator:aa4ef79cfb9afe739ee67b64b66969f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a734ffb48f73a37374b9b51c4c7655507"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01845.html#a734ffb48f73a37374b9b51c4c7655507">handle_requests</a> (<a class="el" href="a02425.html">mc_rtc::gui::StateBuilder</a> &amp;gui_builder)</td></tr>
+<tr class="memdesc:a734ffb48f73a37374b9b51c4c7655507"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle requests made by the GUI users.  <a href="#a734ffb48f73a37374b9b51c4c7655507">More...</a><br /></td></tr>
+<tr class="separator:a734ffb48f73a37374b9b51c4c7655507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38c2d4255f3f4db5c9315f3c7468b87f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01845.html#a38c2d4255f3f4db5c9315f3c7468b87f">publish</a> (<a class="el" href="a02425.html">mc_rtc::gui::StateBuilder</a> &amp;gui_builder)</td></tr>
+<tr class="memdesc:a38c2d4255f3f4db5c9315f3c7468b87f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publish the current GUI state.  <a href="#a38c2d4255f3f4db5c9315f3c7468b87f">More...</a><br /></td></tr>
+<tr class="separator:a38c2d4255f3f4db5c9315f3c7468b87f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Serves data and allow interaction with the controllers. </p>
+<ul>
+<li>Uses a PUB socket to send the data stream</li>
+<li>Uses a PULL socket to handle requests </li>
+</ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ac13be9e36cf38cb6bdde4cc8b4b19250"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac13be9e36cf38cb6bdde4cc8b4b19250">&#9670;&nbsp;</a></span>ControllerServer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_control::ControllerServer::ControllerServer </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>server_dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>pub_bind_uri</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>pull_bind_uri</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt</td><td>Controller timestep</td></tr>
+    <tr><td class="paramname">server_dt</td><td>Publication timestep</td></tr>
+    <tr><td class="paramname">pub_bind_uri</td><td>List of URI the PUB socket should bind to</td></tr>
+    <tr><td class="paramname">pull_bind_uri</td><td>List of URI the PULL socket should bind to</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Check nanomsg documentation for supported protocols </p>
+
+</div>
+</div>
+<a id="aa4ef79cfb9afe739ee67b64b66969f97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4ef79cfb9afe739ee67b64b66969f97">&#9670;&nbsp;</a></span>~ControllerServer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_control::ControllerServer::~ControllerServer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a734ffb48f73a37374b9b51c4c7655507"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a734ffb48f73a37374b9b51c4c7655507">&#9670;&nbsp;</a></span>handle_requests()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_control::ControllerServer::handle_requests </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02425.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
+          <td class="paramname"><em>gui_builder</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Handle requests made by the GUI users. </p>
+
+</div>
+</div>
+<a id="a38c2d4255f3f4db5c9315f3c7468b87f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38c2d4255f3f4db5c9315f3c7468b87f">&#9670;&nbsp;</a></span>publish()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_control::ControllerServer::publish </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02425.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
+          <td class="paramname"><em>gui_builder</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Publish the current GUI state. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu May 7 2020 03:48:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00710.html">mc_control</a></li><li class="navelem"><a class="el" href="a01845.html">ControllerServer</a></li>
+    <li class="footer">Generated on Mon May 11 2020 10:49:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

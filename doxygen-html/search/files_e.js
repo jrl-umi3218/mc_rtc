@@ -6,7 +6,7 @@ var searchData=
   ['planarsurface_2eh',['PlanarSurface.h',['../a00182.html',1,'']]],
   ['plot_2eh',['plot.h',['../a00299.html',1,'']]],
   ['point3d_2eh',['Point3D.h',['../a00302.html',1,'']]],
-  ['polygon_2eh',['Polygon.h',['../a03820.html',1,'(Global Namespace)'],['../a00290.html',1,'(Global Namespace)']]],
+  ['polygon_2eh',['Polygon.h',['../a03821.html',1,'(Global Namespace)'],['../a00290.html',1,'(Global Namespace)']]],
   ['polygon_5futils_2eh',['polygon_utils.h',['../a00185.html',1,'']]],
   ['polygoninterpolator_2eh',['PolygonInterpolator.h',['../a00188.html',1,'']]],
   ['polygons_2eh',['Polygons.h',['../a00293.html',1,'']]],
@@ -16,5 +16,5 @@ var searchData=
   ['posturetask_2eh',['PostureTask.h',['../a00479.html',1,'']]],
   ['ptransform_2eh',['PTransform.h',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00053.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00053.html',1,'(Global Namespace)']]],
   ['pythonstate_2eh',['PythonState.h',['../a00026.html',1,'']]],
-  ['types_2eh',['types.h',['../a03829.html',1,'']]]
+  ['types_2eh',['types.h',['../a03830.html',1,'']]]
 ];

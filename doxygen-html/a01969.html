@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_control::SimulationContactPair Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01972.html','');});
+$(document).ready(function(){initNavTree('a01969.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,32 +69,174 @@ $(document).ready(function(){initNavTree('a01972.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="a01966.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_filter::ExponentialMovingAverage&lt; VectorT &gt; Member List</div>  </div>
+<div class="title">mc_control::SimulationContactPair Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01972.html#accd3db44b24084922b2d1915e378b2fb">alpha_</a></td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01972.html#afc5e32731c162cecc484c71b1cd6680f">append</a>(const VectorT &amp;value)</td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01972.html#adaad48a146f8e945da36b18c0e9c4f8a">average_</a></td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01972.html#a6a235570200c501307ebc666fcd81e20">dt_</a></td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01972.html#a59a37436a454f4caa5d9ba49ab85b2e8">eval</a>() const</td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01972.html#a156a26de235d293b4e94cb1f269dd16c">ExponentialMovingAverage</a>(double dt, double timeConstant, const VectorT &amp;initValue=VectorT::Zero())</td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01972.html#a4fe8efb515654281aa77b87296449f89">reset</a>(const VectorT &amp;initVal)</td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01972.html#abc199c7a1935a35f01882c9ce6f355e4">saturation</a>(double limit)</td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01972.html#aa39c03dbafb64fa46f4be54499b3ed48">saturation_</a></td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01972.html#a25e06aceff6cb86deaba24edc060ef8f">timeConstant</a>() const</td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01972.html#a5e116fb401af8c027896173066d8b8ed">timeConstant</a>(double T)</td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01972.html#a08b8eaf1a64cf2abc37a27311db4923e">timeConstant_</a></td><td class="entry"><a class="el" href="a01972.html">mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-</table></div><!-- contents -->
+<p><code>#include &lt;mc_control/SimulationContactPair.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a074d699740f8b69b15c5fdbdde5519c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01969.html#a074d699740f8b69b15c5fdbdde5519c0">SimulationContactPair</a> (const std::shared_ptr&lt; <a class="el" href="a02169.html">mc_rbdyn::Surface</a> &gt; &amp;<a class="el" href="a01969.html#a6580a421bf730ccc06b9a3777d480466">robotSurface</a>, const std::shared_ptr&lt; <a class="el" href="a02169.html">mc_rbdyn::Surface</a> &gt; &amp;<a class="el" href="a01969.html#a2b50f1a3fa514431d9c5552bf88f0181">envSurface</a>)</td></tr>
+<tr class="separator:a074d699740f8b69b15c5fdbdde5519c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb88b53261805f73d79e348835e44c65"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01969.html#aeb88b53261805f73d79e348835e44c65">update</a> (const <a class="el" href="a02129.html">mc_rbdyn::Robot</a> &amp;robot, const <a class="el" href="a02129.html">mc_rbdyn::Robot</a> &amp;env)</td></tr>
+<tr class="separator:aeb88b53261805f73d79e348835e44c65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a6580a421bf730ccc06b9a3777d480466"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02169.html">mc_rbdyn::Surface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01969.html#a6580a421bf730ccc06b9a3777d480466">robotSurface</a></td></tr>
+<tr class="separator:a6580a421bf730ccc06b9a3777d480466"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b50f1a3fa514431d9c5552bf88f0181"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02169.html">mc_rbdyn::Surface</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01969.html#a2b50f1a3fa514431d9c5552bf88f0181">envSurface</a></td></tr>
+<tr class="separator:a2b50f1a3fa514431d9c5552bf88f0181"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7198289925ffc6917bcdf14848bcde8"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01969.html#ac7198289925ffc6917bcdf14848bcde8">robotSch</a></td></tr>
+<tr class="separator:ac7198289925ffc6917bcdf14848bcde8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a31ea1a5854da861e8a4f1c827386d8"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01969.html#a4a31ea1a5854da861e8a4f1c827386d8">envSch</a></td></tr>
+<tr class="separator:a4a31ea1a5854da861e8a4f1c827386d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b9a7de72470d0d2d433a7c3f9843ad0"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00762.html">sch::CD_Pair</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01969.html#a1b9a7de72470d0d2d433a7c3f9843ad0">pair</a></td></tr>
+<tr class="separator:a1b9a7de72470d0d2d433a7c3f9843ad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a074d699740f8b69b15c5fdbdde5519c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a074d699740f8b69b15c5fdbdde5519c0">&#9670;&nbsp;</a></span>SimulationContactPair()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_control::SimulationContactPair::SimulationContactPair </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="a02169.html">mc_rbdyn::Surface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>robotSurface</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="a02169.html">mc_rbdyn::Surface</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>envSurface</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aeb88b53261805f73d79e348835e44c65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb88b53261805f73d79e348835e44c65">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_control::SimulationContactPair::update </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02129.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a02129.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>env</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4a31ea1a5854da861e8a4f1c827386d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a31ea1a5854da861e8a4f1c827386d8">&#9670;&nbsp;</a></span>envSch</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a>&gt; mc_control::SimulationContactPair::envSch</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2b50f1a3fa514431d9c5552bf88f0181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b50f1a3fa514431d9c5552bf88f0181">&#9670;&nbsp;</a></span>envSurface</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="a02169.html">mc_rbdyn::Surface</a>&gt; mc_control::SimulationContactPair::envSurface</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1b9a7de72470d0d2d433a7c3f9843ad0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b9a7de72470d0d2d433a7c3f9843ad0">&#9670;&nbsp;</a></span>pair</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00762.html">sch::CD_Pair</a> mc_control::SimulationContactPair::pair</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac7198289925ffc6917bcdf14848bcde8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7198289925ffc6917bcdf14848bcde8">&#9670;&nbsp;</a></span>robotSch</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">sch::S_Object</a>&gt; mc_control::SimulationContactPair::robotSch</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6580a421bf730ccc06b9a3777d480466"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6580a421bf730ccc06b9a3777d480466">&#9670;&nbsp;</a></span>robotSurface</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="a02169.html">mc_rbdyn::Surface</a>&gt; mc_control::SimulationContactPair::robotSurface</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu May 7 2020 03:48:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00710.html">mc_control</a></li><li class="navelem"><a class="el" href="a01969.html">SimulationContactPair</a></li>
+    <li class="footer">Generated on Mon May 11 2020 10:49:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::internal Namespace Reference</title>
+<title>sch::mc_rbdyn Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,141 +70,119 @@ $(document).ready(function(){initNavTree('a00727.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::internal Namespace Reference</div>  </div>
+<div class="title">sch::mc_rbdyn Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html">_has_configuration_load_object</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: T <a class="el" href="a02172.html#a3e8685e2cdb83f2ec06ab4e231a653ae">ConfigurationLoader&lt;T&gt;::load(const mc_rtc::Configuration &amp;)</a>; is a valid function or not.  <a href="a02180.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02188.html">_has_configuration_save_object</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: <a class="el" href="a02196.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> <a class="el" href="a02172.html#ac516ceb726f94bd4e5a32ad25f1178c2">mc_rtc::ConfigurationLoader&lt;T&gt;::save</a>(const T&amp;, Args ...); is a valid construct or not.  <a href="a02188.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02228.html">Allocator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocator&lt;T&gt; is std::allocator&lt;T&gt; for usual types.  <a href="a02228.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02232.html">Allocator&lt; T, typename T::eigen_aligned_operator_new_marker_type &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocator&lt;T&gt; is Eigen::aligned_allocator for EIGEN_MAKE_ALIGNED_OPERATOR_NEW types.  <a href="a02232.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02224.html">args_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bend usual C++ rules to deduct the argument types in call.  <a href="a02224.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02184.html">has_configuration_load_object</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02192.html">has_configuration_save_object</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html">lambda_traits</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract return type and argument types from a lambda by accessing ::operator()  <a href="a02212.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02216.html">lambda_traits&lt; RetT(C::*)(Args...) const &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization that matches non-mutable lambda.  <a href="a02216.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02220.html">lambda_traits&lt; RetT(C::*)(Args...)&gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization that matches mutable lambda.  <a href="a02220.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a759676405e1815363e6d9094dd1919b1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a759676405e1815363e6d9094dd1919b1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00727.html#a759676405e1815363e6d9094dd1919b1">is_valid_hash</a> (std::size_t h)</td></tr>
-<tr class="separator:a759676405e1815363e6d9094dd1919b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memTemplParams" colspan="2">template&lt;typename T , typename U , typename... Args&gt; </td></tr>
-<tr class="memitem:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00727.html#a0f0cc0f5914bc62d93b19fda0ed53e75">is_valid_hash</a> (std::size_t h)</td></tr>
-<tr class="separator:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af017e274f3cf4699850fdbf753d07fa2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00359.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html#af017e274f3cf4699850fdbf753d07fa2">demangle</a> (const char *name)</td></tr>
-<tr class="separator:af017e274f3cf4699850fdbf753d07fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f9098d8e8055ca6d2d02b576714b9f2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8f9098d8e8055ca6d2d02b576714b9f2"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00727.html#a8f9098d8e8055ca6d2d02b576714b9f2">type_name</a> ()</td></tr>
-<tr class="separator:a8f9098d8e8055ca6d2d02b576714b9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c0ffcdf6b05980ab8ca56474c431bc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html#a3c0ffcdf6b05980ab8ca56474c431bc7">transform</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">S_Object</a> &amp;obj, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;t)</td></tr>
+<tr class="separator:a3c0ffcdf6b05980ab8ca56474c431bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30354c6b845b9f2c2bf59342c84f9e0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00902.html">STP_BV</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html#a30354c6b845b9f2c2bf59342c84f9e0d">STPBV</a> (const std::string &amp;filename)</td></tr>
+<tr class="separator:a30354c6b845b9f2c2bf59342c84f9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d8bc5539da072c12d1f76bc317f8af3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00870.html">S_Polyhedron</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html#a1d8bc5539da072c12d1f76bc317f8af3">Polyhedron</a> (const std::string &amp;filename)</td></tr>
+<tr class="separator:a1d8bc5539da072c12d1f76bc317f8af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e193a456c2d3dab3ad5f12ed049e3b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html#a8e193a456c2d3dab3ad5f12ed049e3b1">distance</a> (<a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00762.html">CD_Pair</a> &amp;pair, Eigen::Vector3d &amp;p1, Eigen::Vector3d &amp;p2)</td></tr>
+<tr class="separator:a8e193a456c2d3dab3ad5f12ed049e3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="af017e274f3cf4699850fdbf753d07fa2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af017e274f3cf4699850fdbf753d07fa2">&#9670;&nbsp;</a></span>demangle()</h2>
+<a id="a8e193a456c2d3dab3ad5f12ed049e3b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e193a456c2d3dab3ad5f12ed049e3b1">&#9670;&nbsp;</a></span>distance()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00359.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string mc_rtc::internal::demangle </td>
+          <td class="memname"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> double sch::mc_rbdyn::distance </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00762.html">CD_Pair</a> &amp;&#160;</td>
+          <td class="paramname"><em>pair</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>p1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>p2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a00727.html#a0f0cc0f5914bc62d93b19fda0ed53e75">is_valid_hash()</a>, and <a class="el" href="a00727.html#a8f9098d8e8055ca6d2d02b576714b9f2">type_name()</a>.</p>
-
 </div>
 </div>
-<a id="a759676405e1815363e6d9094dd1919b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a759676405e1815363e6d9094dd1919b1">&#9670;&nbsp;</a></span>is_valid_hash() <span class="overload">[1/2]</span></h2>
+<a id="a1d8bc5539da072c12d1f76bc317f8af3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d8bc5539da072c12d1f76bc317f8af3">&#9670;&nbsp;</a></span>Polyhedron()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_rtc::internal::is_valid_hash </td>
+          <td class="memname"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00870.html">S_Polyhedron</a>* sch::mc_rbdyn::Polyhedron </td>
           <td>(</td>
-          <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>h</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a02236.html#ad1fe100eb7cb874c226ff76ed64f3cfe">mc_rtc::DataStore::name()</a>.</p>
-
 </div>
 </div>
-<a id="a0f0cc0f5914bc62d93b19fda0ed53e75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f0cc0f5914bc62d93b19fda0ed53e75">&#9670;&nbsp;</a></span>is_valid_hash() <span class="overload">[2/2]</span></h2>
+<a id="a30354c6b845b9f2c2bf59342c84f9e0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30354c6b845b9f2c2bf59342c84f9e0d">&#9670;&nbsp;</a></span>STPBV()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename U , typename... Args&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_rtc::internal::is_valid_hash </td>
+          <td class="memname"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> <a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00902.html">STP_BV</a>* sch::mc_rbdyn::STPBV </td>
           <td>(</td>
-          <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>h</em></td><td>)</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">References <a class="el" href="a00727.html#af017e274f3cf4699850fdbf753d07fa2">demangle()</a>, and <a class="el" href="a00359.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>.</p>
-
 </div>
 </div>
-<a id="a8f9098d8e8055ca6d2d02b576714b9f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f9098d8e8055ca6d2d02b576714b9f2">&#9670;&nbsp;</a></span>type_name()</h2>
+<a id="a3c0ffcdf6b05980ab8ca56474c431bc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c0ffcdf6b05980ab8ca56474c431bc7">&#9670;&nbsp;</a></span>transform()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::string mc_rtc::internal::type_name </td>
+          <td class="memname"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> void sch::mc_rbdyn::transform </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="elRef" doxygen="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag:https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/" href="https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00838.html">S_Object</a> &amp;&#160;</td>
+          <td class="paramname"><em>obj</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> &amp;&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p class="reference">References <a class="el" href="a00727.html#af017e274f3cf4699850fdbf753d07fa2">demangle()</a>.</p>
 
 </div>
 </div>
@@ -214,8 +192,8 @@ template&lt;typename T &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00711.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00727.html">internal</a></li>
-    <li class="footer">Generated on Thu May 7 2020 03:48:46 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00726.html">sch</a></li><li class="navelem"><a class="el" href="a00727.html">mc_rbdyn</a></li>
+    <li class="footer">Generated on Mon May 11 2020 10:49:02 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

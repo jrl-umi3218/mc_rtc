@@ -1,6 +1,28 @@
 var a00713 =
 [
-    [ "internal", "a00740.html", "a00740" ],
-    [ "StabilizerTask", "a02764.html", "a02764" ],
-    [ "ZMPCC", "a02772.html", "a02772" ]
+    [ "force", "a00739.html", "a00739" ],
+    [ "lipm_stabilizer", "a00714.html", "a00714" ],
+    [ "AddContactTask", "a02713.html", "a02713" ],
+    [ "AddRemoveContactTask", "a02709.html", "a02709" ],
+    [ "BSplineTrajectoryTask", "a02725.html", "a02725" ],
+    [ "CoMTask", "a02733.html", "a02733" ],
+    [ "EndEffectorTask", "a02745.html", "a02745" ],
+    [ "ExactCubicTrajectoryTask", "a02749.html", "a02749" ],
+    [ "GazeTask", "a02753.html", "a02753" ],
+    [ "LookAtSurfaceTask", "a02777.html", "a02777" ],
+    [ "LookAtTask", "a02781.html", "a02781" ],
+    [ "MetaTask", "a02785.html", "a02785" ],
+    [ "MetaTaskLoader", "a02789.html", "a02789" ],
+    [ "MomentumTask", "a02793.html", "a02793" ],
+    [ "OrientationTask", "a02797.html", "a02797" ],
+    [ "PositionBasedVisServoTask", "a02801.html", "a02801" ],
+    [ "PositionTask", "a02805.html", "a02805" ],
+    [ "PostureTask", "a02809.html", "a02809" ],
+    [ "RelativeEndEffectorTask", "a02813.html", "a02813" ],
+    [ "RemoveContactTask", "a02717.html", "a02717" ],
+    [ "SmoothTask", "a02817.html", "a02817" ],
+    [ "SplineTrajectoryTask", "a02821.html", "a02821" ],
+    [ "SurfaceTransformTask", "a02825.html", "a02825" ],
+    [ "TrajectoryTaskGeneric", "a02829.html", "a02829" ],
+    [ "VectorOrientationTask", "a02833.html", "a02833" ]
 ];
