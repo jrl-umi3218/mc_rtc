@@ -14,11 +14,10 @@ namespace fsm
 
 /** Implements a simple Message state to display debug information in the FSM
  *
- * This states does nothing for a while then exits with "OK"
+ * Messages can be shown in the CLI as LOG_* macro calls, or in the GUI as Label
+ * elements.
  *
- * Configuration options:
- * - type: one of [info, error, warning, success] corresponding to the LOG_* macros
- * - message: the string to display
+ * This state always outputs "OK" and is always completed.
  */
 struct MC_CONTROL_FSM_STATE_DLLAPI MessageState : State
 {
@@ -31,8 +30,14 @@ struct MC_CONTROL_FSM_STATE_DLLAPI MessageState : State
   void teardown(Controller &) override;
 
 protected:
+  std::string prefix_;
   std::string message_;
   std::string type_ = "info";
+  bool log_ = true;
+
+  bool gui_ = false;
+  std::vector<std::string> category_;
+  std::string labelName_;
 };
 
 } // namespace fsm

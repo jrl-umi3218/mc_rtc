@@ -4,5 +4,14 @@
    "base": "Message",
    "type": "warning",
    "message": "Warning: the following action may be dangerous"
+ },
+ "GUIMessage":
+ {
+   "base": "Message",
+   "gui": true,
+   "log": false,
+   "category": ["Action"],
+   "prefix": "Vision check",
+   "message": "Please check that the object has successfully been detected."
  }
 }

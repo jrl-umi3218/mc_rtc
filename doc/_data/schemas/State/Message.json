@@ -3,12 +3,16 @@
   [
     {
       "title": "fsm::Message",
-      "description": "Prints a message to the terminal",
+      "description": "Prints a message to the terminal and/or the GUI",
       "type": "object",
       "properties":
       {
-        "message": { "type": "string", "description": "Message to display" },
-        "type": { "enum": ["info", "success", "warning", "error"], "type": "string", "default": "info" }
+        "message": { "type": "string", "default": "", "description": "Message to display" },
+        "prefix": { "type": "string", "default": "State name", "description": "Prefix message, name of the GUI label" },
+        "log": { "type": "boolean", "default": true, "description": "True to display in the terminal" },
+        "log_type": { "enum": ["info", "success", "warning", "error"], "type": "string", "default": "info", "description": "Type of message to log (corresponding to the LOG_* macros)" },
+        "gui": { "type": "boolean", "default": false, "description": "True to display in the GUI" },
+        "gui_category": { "type": "array", "items": { "type": "string" }, "description": "Category in which the message will be added (when empty, displays at the top of the GUI)" }
       },
       "required": []
     },
