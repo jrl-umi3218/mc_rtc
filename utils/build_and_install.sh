@@ -30,6 +30,7 @@ WITH_HRP4="false"
 WITH_HRP5="false"
 BUILD_TYPE="RelWithDebInfo"
 BUILD_TESTING="true"
+BUILD_BENCHMARKS="false"
 INSTALL_SYSTEM_DEPENDENCIES="true"
 CLONE_ONLY="false"
 SKIP_UPDATE="false"
@@ -108,6 +109,7 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --source-dir               (-s) PATH          : the directory used to clone everything             (default $SOURCE_DIR)
     --build-type                    Type          : the build type to use                              (default $BUILD_TYPE)
     --build-testing                 {true, false} : whether to build and run unit tests                (default $BUILD_TESTING)
+    --build-benchmarks              {true, false} : whether to build and run benchmarks                (default $BUILD_BENCHMARKS)
     --build-core               (-j) N             : number of cores used for building                  (default $BUILD_CORE)
     --with-lssol                                  : enable LSSOL (requires multi-contact group access) (default $WITH_LSSOL)
     --with-hrp2                                   : enable HRP2 (requires mc-hrp2 group access)        (default $WITH_HRP2)
@@ -227,6 +229,12 @@ do
         check_true_false --build-testing "$BUILD_TESTING"
         ;;
 
+        --build-benchmarks)
+        i=$(($i+1))
+        BUILD_BENCHMARKS="${!i}"
+        check_true_false --build-benchmarks "$BUILD_BENCHMARKS"
+        ;;
+
         --install-system-dependencies)
         i=$(($i+1))
         INSTALL_SYSTEM_DEPENDENCIES="${!i}"
@@ -318,6 +326,7 @@ readonly BUILD_TYPE
 readonly INSTALL_SYSTEM_DEPENDENCIES
 readonly BUILD_CORE
 readonly BUILD_TESTING
+readonly BUILD_BENCHMARKS
 readonly CLONE_ONLY
 readonly WITH_LSSOL
 readonly WITH_HRP2
@@ -386,6 +395,7 @@ echo_log "   BUILD_TYPE=$BUILD_TYPE"
 echo_log "   INSTALL_SYSTEM_DEPENDENCIES=$INSTALL_SYSTEM_DEPENDENCIES"
 echo_log "   BUILD_CORE=$BUILD_CORE"
 echo_log "   BUILD_TESTING=$BUILD_TESTING"
+echo_log "   BUILD_BENCHMARKS=$BUILD_BENCHMARKS"
 echo_log "   CLONE_ONLY=$CLONE_ONLY"
 echo_log "   WITH_LSSOL=$WITH_LSSOL"
 echo_log "   WITH_HRP2=$WITH_HRP2"
@@ -1020,6 +1030,12 @@ then
 else
   BUILD_TESTING_OPTION=OFF
 fi
+if $BUILD_BENCHMARKS
+then
+  BUILD_BENCHMARKS_OPTION=ON
+else
+  BUILD_BENCHMARKS_OPTION=OFF
+fi
 if ! $WITH_ROS_SUPPORT
 then
   CMAKE_ADDITIONAL_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS} -DDISABLE_ROS=ON"
@@ -1027,6 +1043,7 @@ fi
 exec_log cmake ../ -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
                    -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
                    -DBUILD_TESTING:BOOL=${BUILD_TESTING_OPTION} \
+                   -DBUILD_BENCHMARKS:BOOL=${BUILD_BENCHMARKS_OPTION} \
                    -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
                    -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
                    -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
@@ -1039,7 +1056,6 @@ if $BUILD_TESTING
 then
   test_project mc_rtc mc_rtc
 fi
-
 echo_log "-- [SUCCESS] Successfully built mc_rtc"
 
 ##############################

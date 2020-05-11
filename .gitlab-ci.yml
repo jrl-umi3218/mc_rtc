@@ -5,7 +5,7 @@ variables:
   GITE_PACKAGES: "multi-contact/eigen-lssol multi-contact/tasks-packaging#topic/CIPackaging multi-contact/mc_env_description#karim_drc"
   MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl hrg/daily"
   ROS_DISTRO: "indigo"
-  CMAKE_ADDITIONAL_OPTIONS: "-DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_PYTHON_INTERFACE:BOOL=OFF -DYAML_BUILD_SHARED_LIBS:BOOL=ON"
+  CMAKE_ADDITIONAL_OPTIONS: "-DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_PYTHON_INTERFACE:BOOL=OFF -DYAML_BUILD_SHARED_LIBS:BOOL=ON -DBUILD_BENCHMARKS=ON"
   DO_COVERAGE_ON_BRANCH: ""
   DO_CPPCHECK_ON_BRANCH: ""
 

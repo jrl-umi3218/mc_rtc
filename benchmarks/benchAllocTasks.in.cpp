@@ -22,7 +22,7 @@ BENCHMARK(BM_AllocSurfaceTransformTask);
 
 static void BM_SurfaceTransformTaskFromConfig(benchmark::State & state)
 {
-  mc_rtc::Configuration config("config.yaml");
+  mc_rtc::Configuration config("@CMAKE_CURRENT_SOURCE_DIR@/config.yaml");
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   auto robots = mc_rbdyn::loadRobot(*rm);
   mc_solver::QPSolver solver{robots, 0.005};
@@ -50,7 +50,7 @@ BENCHMARK(BM_AllocStabilizerTask);
 
 static void BM_StabilizerTaskFromConfig(benchmark::State & state)
 {
-  mc_rtc::Configuration config("config_lipm.yaml");
+  mc_rtc::Configuration config("@CMAKE_CURRENT_SOURCE_DIR@/config_lipm.yaml");
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   auto robots = mc_rbdyn::loadRobot(*rm);
   mc_solver::QPSolver solver{robots, 0.005};
@@ -63,4 +63,4 @@ static void BM_StabilizerTaskFromConfig(benchmark::State & state)
 
 BENCHMARK(BM_StabilizerTaskFromConfig);
 
-BENCHMARK_MAIN();
+BENCHMARK_MAIN()

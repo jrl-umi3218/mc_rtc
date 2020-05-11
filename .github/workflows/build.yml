@@ -84,7 +84,7 @@ jobs:
         then
           ./build_and_install.sh --user-input false --with-python-support false --build-testing false
         else
-          ./build_and_install.sh --user-input false
+          ./build_and_install.sh --user-input false --build-benchmarks true
         fi
     - name: Install dependencies
       uses: jrl-umi3218/github-actions/install-dependencies@master
@@ -131,6 +131,7 @@ jobs:
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
+        options: -DBUILD_BENCHMARKS:BOOL=ON
     - name: Build with ROS
       if: (matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04') && matrix.build-type != 'script'
       run: |
@@ -158,7 +159,7 @@ jobs:
         popd
         pushd .
         cd build
-        cmake ../ && make -j2 && sudo make install || exit 1
+        cmake -DBUILD_BENCHMARKS:BOOL=ON ../ && make -j2 && sudo make install || exit 1
         popd
     - name: Upload documentation
       # Only run on master branch and for one configuration
