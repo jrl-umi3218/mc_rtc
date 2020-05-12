@@ -197,4 +197,4 @@ static void BM_EvalAndSpeedOrTimeoutConfigure(benchmark::State & state)
 }
 BENCHMARK(BM_EvalAndSpeedOrTimeoutConfigure);
 
-BENCHMARK_MAIN()
+BENCHMARK_MAIN();

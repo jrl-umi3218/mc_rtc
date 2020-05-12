@@ -44,4 +44,4 @@ static void BM_RobotCopy(benchmark::State & state)
 }
 BENCHMARK(BM_RobotCopy)->Unit(benchmark::kMicrosecond);
 
-BENCHMARK_MAIN()
+BENCHMARK_MAIN();

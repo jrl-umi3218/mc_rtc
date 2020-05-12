@@ -63,4 +63,4 @@ static void BM_StabilizerTaskFromConfig(benchmark::State & state)
 
 BENCHMARK(BM_StabilizerTaskFromConfig);
 
-BENCHMARK_MAIN()
+BENCHMARK_MAIN();
