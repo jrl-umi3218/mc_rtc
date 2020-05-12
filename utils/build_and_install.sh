@@ -17,27 +17,27 @@ SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
 readonly PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
 
 #default settings
-INSTALL_PREFIX="/usr/local"
-WITH_ROS_SUPPORT="true"
-WITH_PYTHON_SUPPORT="true"
-PYTHON_USER_INSTALL="false"
-PYTHON_FORCE_PYTHON2="false"
-PYTHON_FORCE_PYTHON3="false"
-PYTHON_BUILD_PYTHON2_AND_PYTHON3="false"
-WITH_LSSOL="false"
-WITH_HRP2="false"
-WITH_HRP4="false"
-WITH_HRP5="false"
-BUILD_TYPE="RelWithDebInfo"
-BUILD_TESTING="true"
-BUILD_BENCHMARKS="false"
-INSTALL_SYSTEM_DEPENDENCIES="true"
-CLONE_ONLY="false"
-SKIP_UPDATE="false"
+export INSTALL_PREFIX="/usr/local"
+export WITH_ROS_SUPPORT="true"
+export WITH_PYTHON_SUPPORT="true"
+export PYTHON_USER_INSTALL="false"
+export PYTHON_FORCE_PYTHON2="false"
+export PYTHON_FORCE_PYTHON3="false"
+export PYTHON_BUILD_PYTHON2_AND_PYTHON3="false"
+export WITH_LSSOL="false"
+export WITH_HRP2="false"
+export WITH_HRP4="false"
+export WITH_HRP5="false"
+export BUILD_TYPE="RelWithDebInfo"
+export BUILD_TESTING="true"
+export BUILD_BENCHMARKS="false"
+export INSTALL_SYSTEM_DEPENDENCIES="true"
+export CLONE_ONLY="false"
+export SKIP_UPDATE="false"
 # This configuration option lets the script choose what to do when local git repositories are in
 # an unclean state (have local changes). The default false will stop the script with an error.
 # If true, the repository will be compiled as-is without trying to fetch the remote changes.
-SKIP_DIRTY_UPDATE="false"
+export SKIP_DIRTY_UPDATE="false"
 if command -v nproc > /dev/null
 then
    BUILD_CORE=`nproc`
@@ -47,7 +47,7 @@ fi
 export CMAKE_BUILD_PARALLEL_LEVEL=${BUILD_CORE}
 LOG_PATH="/tmp"
 BUILD_LOGFILE="$LOG_PATH/build_and_install_warnings-`date +%Y-%m-%d-%H-%M-%S`.log"
-ASK_USER_INPUT="true"
+export ASK_USER_INPUT="true"
 
 readonly TEE=`which tee`
 
