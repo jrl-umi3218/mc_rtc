@@ -163,7 +163,10 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
     }
   }
   /** Create contacts */
-  contacts_ = config("contacts", ContactSet{});
+  if(config.has("contacts"))
+  {
+    contacts_ = config("contacts");
+  }
   contacts_changed_ = true;
   /** Load more states if they are provided in the configuration */
   if(config.has("states"))
