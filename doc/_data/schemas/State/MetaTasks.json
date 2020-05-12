@@ -1,28 +1,19 @@
 {
-  "title": "fsm::MetaTasks",
-  "description": "Create and run multiple tasks until their completion criteria is reached",
-  "type": "object",
-  "properties":
-  {
-    "tasks": { "type": "object", "description": "Keys are the name of the tasks and values are MetaTask objects with an optional completion criteria" },
-    "outputs": { "type": "array", "items": { "type": "string" }, "description": "List of tasks names from which the completion criteria will be used to generate the state's output.<br /><ul><li>output=\"OK\" if empty</li><li>Otherwise the output will be of the form \"Taks1=citeria1, Task2=criteria2...\" where \"criteria1\" and \"criteria2\" correspond to the output string of the tasks' completion criteria (e.g. \"timeout AND speed\").</li></ul>" },
-    "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                     "description": "Add the specified contacts during the state's start"  },
-    "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                        "description": "Remove the specified contacts during the state's start"  },
-    "AddContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                          "description": "Add the specified contacts during the state's teardown"  },
-    "RemoveContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                             "description": "Remove the specified contacts during the state's teardown"  },
-    "AddColissions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                       "description": "Add the specified collisions during the state's start" },
-    "RemoveColissions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                          "description": "Remove the specified collisions during the state's start" },
-    "AddColissionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                            "description": "Add the specified collisions during the state's teardown" },
-    "RemoveColissionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                               "description": "Remove the specified collisions during the state's teardown" },
-    "RemovePostureTask": { "type": "boolean", "default": false, "description": "If true, remove the main robot posture task at the state's start"}
-  },
-  "required": []
+  "allOf":
+  [
+    {
+      "title": "fsm::MetaTasks",
+      "description": "Create and run multiple tasks until their completion criteria is reached",
+      "type": "object",
+      "properties":
+      {
+        "tasks": { "type": "object", "description": "Keys are the name of the tasks and values are MetaTask objects with an optional completion criteria" },
+        "outputs": { "type": "array", "items": { "type": "string" }, "description": "List of tasks names from which the completion criteria will be used to generate the state's output.<br /><ul><li>output=\"OK\" if empty</li><li>Otherwise the output will be of the form \"Taks1=citeria1, Task2=criteria2...\" where \"criteria1\" and \"criteria2\" correspond to the output string of the tasks' completion criteria (e.g. \"timeout AND speed\").</li></ul>" }
+      },
+      "required": []
+    },
+    {
+      "$ref": "/../../common/State.json"
+    }
+  ]
 }

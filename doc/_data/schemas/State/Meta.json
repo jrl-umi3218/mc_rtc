@@ -1,42 +1,33 @@
 {
-  "title": "fsm::Meta",
-  "description": "Plays its own FSM",
-  "type": "object",
-  "properties":
-  {
-    "Managed": { "type": "boolean", "default": false, "description": "If true, this state does not handle transitions by itself"},
-    "StepByStep": { "type": "boolean", "description": "Affects the StepByStep transition behaviour<br/>If not set, inherits the setting from its parent FSM" },
-    "transitions": { "type": "array", "description": "A transition map, required if Managed is false",
-      "items":
+  "allOf":
+  [
+    {
+      "title": "fsm::Meta",
+      "description": "Plays its own FSM",
+      "type": "object",
+      "properties":
       {
-        "type": "array",
-        "items":
-        {
-          "type": "string"
+        "Managed": { "type": "boolean", "default": false, "description": "If true, this state does not handle transitions by itself"},
+        "StepByStep": { "type": "boolean", "description": "Affects the StepByStep transition behaviour<br/>If not set, inherits the setting from its parent FSM" },
+        "transitions": { "type": "array", "description": "A transition map, required if Managed is false",
+          "items":
+          {
+            "type": "array",
+            "items":
+            {
+              "type": "string"
+            },
+            "minItems": 3,
+            "maxItems": 4
+          }
         },
-        "minItems": 3,
-        "maxItems": 4
-      }
+        "category": { "type": "array", "items": { "type": "string" }, "description": "Overrides the default GUI category (i.e. {\"FSM\", name})" },
+        "configs": { "type": "object", "description": "Override configuration for the state running inside this FSM" }
+      },
+      "required": []
     },
-    "category": { "type": "array", "items": { "type": "string" }, "description": "Overrides the default GUI category (i.e. {\"FSM\", name})" },
-    "configs": { "type": "object", "description": "Override configuration for the state running inside this FSM" },
-    "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                     "description": "Add the specified contacts during the state's start"  },
-    "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                        "description": "Remove the specified contacts during the state's start"  },
-    "AddContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                          "description": "Add the specified contacts during the state's teardown"  },
-    "RemoveContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                             "description": "Remove the specified contacts during the state's teardown"  },
-    "AddColissions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                       "description": "Add the specified collisions during the state's start" },
-    "RemoveColissions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                          "description": "Remove the specified collisions during the state's start" },
-    "AddColissionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                            "description": "Add the specified collisions during the state's teardown" },
-    "RemoveColissionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                               "description": "Remove the specified collisions during the state's teardown" },
-    "RemovePostureTask": { "type": "boolean", "default": false, "description": "If true, remove the main robot posture task at the state's start"}
-  },
-  "required": []
+    {
+      "$ref": "/../../common/State.json"
+    }
+  ]
 }
