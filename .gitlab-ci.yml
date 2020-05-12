@@ -1,6 +1,6 @@
 variables:
   CI_TOOL: gitlab-ci
-  APT_DEPENDENCIES: "cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev python-enum34"
+  APT_DEPENDENCIES: "cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev python-enum34 libbenchmark-dev"
   GIT_DEPENDENCIES: "jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jbeder/yaml-cpp jrl-umi3218/RBDyn jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/eigen-quadprog jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.8.1"
   GITE_PACKAGES: "multi-contact/eigen-lssol multi-contact/tasks-packaging#topic/CIPackaging multi-contact/mc_env_description#karim_drc"
   MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl hrg/daily"
