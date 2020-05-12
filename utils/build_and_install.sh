@@ -295,29 +295,6 @@ then
 else
   PYTHON_BUILD_PYTHON2_AND_PYTHON3=OFF
 fi
-#make settings readonly
-readonly INSTALL_PREFIX
-readonly SOURCE_DIR
-readonly WITH_ROS_SUPPORT
-readonly WITH_PYTHON_SUPPORT
-readonly WITH_PYTHON_SUPPORT
-readonly PYTHON_FORCE_PYTHON2
-readonly PYTHON_FORCE_PYTHON3
-readonly PYTHON_BUILD_PYTHON2_AND_PYTHON3
-readonly BUILD_TYPE
-readonly INSTALL_SYSTEM_DEPENDENCIES
-readonly BUILD_CORE
-readonly BUILD_TESTING
-readonly BUILD_BENCHMARKS
-readonly CLONE_ONLY
-readonly WITH_LSSOL
-readonly WITH_HRP2
-readonly WITH_HRP4
-readonly WITH_HRP5
-readonly SKIP_UPDATE
-readonly SKIP_DIRTY_UPDATE
-readonly BUILD_LOGFILE
-readonly ASK_USER_INPUT
 if $CLONE_ONLY
 then
   readonly NOT_CLONE_ONLY=false
@@ -325,7 +302,6 @@ else
   readonly NOT_CLONE_ONLY=true
 fi
 
-ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
 
 alias git_clone="git clone --recursive"
 git_update()
@@ -365,7 +341,7 @@ echo_log "========================================"
 echo_log ""
 echo_log "-- Build and install log for mc_rtc generated on `date +%Y-%m-%d-%H:%M:%S`"
 echo "-- Log file will be written to $BUILD_LOGFILE "
-echo_log "-- Building with the following options:"
+echo_log "-- Requested installation with the following options:"
 echo_log "   INSTALL_PREFIX=$INSTALL_PREFIX"
 echo_log "   SOURCE_DIR=$SOURCE_DIR"
 echo_log "   WITH_ROS_SUPPORT=$WITH_ROS_SUPPORT"
@@ -407,11 +383,25 @@ install_apt()
     exec_log sudo apt-get update
     exec_log sudo apt-get -y install ${TO_INSTALL}
   fi
+  exit_if_error "-- [ERROR] Could not install one of the following packages ${TO_INSTALL}."
 }
 
 ##################################################
 ## Extra OS/Distribution specific configuration ##
 ##################################################
+echo_log ""
+echo_log "========================"
+echo_log "== System information =="
+echo_log "========================"
+echo_log ""
+if [ $OS = Ubuntu ]
+then
+  exec_log lsb_release -a
+fi
+exec_log cmake --version
+exec_log python --version
+
+echo_log "-- Loading extra configuration for $OSTYPE"
 if [[ $OSTYPE == "darwin"* ]]
 then
   . $this_dir/config_build_and_install.macos.sh
@@ -429,6 +419,59 @@ else
   # Assume Windows
   . $this_dir/config_build_and_install.windows.sh
 fi
+
+ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
+
+
+#make settings readonly
+readonly INSTALL_PREFIX
+readonly SOURCE_DIR
+readonly WITH_PYTHON_SUPPORT
+readonly WITH_PYTHON_SUPPORT
+readonly PYTHON_FORCE_PYTHON2
+readonly PYTHON_FORCE_PYTHON3
+readonly PYTHON_BUILD_PYTHON2_AND_PYTHON3
+readonly BUILD_TYPE
+readonly INSTALL_SYSTEM_DEPENDENCIES
+readonly BUILD_CORE
+readonly BUILD_TESTING
+readonly BUILD_BENCHMARKS
+readonly CLONE_ONLY
+readonly WITH_LSSOL
+readonly WITH_HRP2
+readonly WITH_HRP4
+readonly WITH_HRP5
+readonly SKIP_UPDATE
+readonly SKIP_DIRTY_UPDATE
+readonly BUILD_LOGFILE
+readonly ASK_USER_INPUT
+
+echo_log "-- Installing with the following options:"
+echo_log "   INSTALL_PREFIX=$INSTALL_PREFIX"
+echo_log "   SOURCE_DIR=$SOURCE_DIR"
+echo_log "   WITH_ROS_SUPPORT=$WITH_ROS_SUPPORT"
+echo_log "   WITH_PYTHON_SUPPORT=$WITH_PYTHON_SUPPORT"
+echo_log "   PYTHON_FORCE_PYTHON2=$PYTHON_FORCE_PYTHON2"
+echo_log "   PYTHON_FORCE_PYTHON3=$PYTHON_FORCE_PYTHON3"
+echo_log "   PYTHON_BUILD_PYTHON2_AND_PYTHON3=$PYTHON_BUILD_PYTHON2_AND_PYTHON3"
+echo_log "   BUILD_TYPE=$BUILD_TYPE"
+echo_log "   INSTALL_SYSTEM_DEPENDENCIES=$INSTALL_SYSTEM_DEPENDENCIES"
+echo_log "   BUILD_CORE=$BUILD_CORE"
+echo_log "   BUILD_TESTING=$BUILD_TESTING"
+echo_log "   BUILD_BENCHMARKS=$BUILD_BENCHMARKS"
+echo_log "   CLONE_ONLY=$CLONE_ONLY"
+echo_log "   WITH_LSSOL=$WITH_LSSOL"
+echo_log "   WITH_HRP2=$WITH_HRP2"
+echo_log "   WITH_HRP4=$WITH_HRP4"
+echo_log "   WITH_HRP5=$WITH_HRP5"
+echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
+echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
+echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
+echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
+echo_log "   ROS_DISTRO=$ROS_DISTRO"
+echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
+echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
+
 
 
 ###################################
@@ -499,18 +542,6 @@ fi
 echo_log ""
 echo_log "-- [SUCCESS] Successfully installed system dependencies"
 echo_log ""
-
-echo_log ""
-echo_log "========================"
-echo_log "== System information =="
-echo_log "========================"
-echo_log ""
-if [ $OS = Ubuntu ]
-then
-  exec_log lsb_release -a
-fi
-exec_log cmake --version
-exec_log python --version
 
 ########################
 ##  -- Install ROS --  #
