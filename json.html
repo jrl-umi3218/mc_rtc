@@ -677,7 +677,7 @@
   
   
   
-  <td>stiffness</td>
+  <td><strong>stiffness</strong></td>
   
   <td colspan="2">
     
@@ -708,7 +708,7 @@
   
   
   
-  <td>duration</td>
+  <td><strong>duration</strong></td>
   
   <td colspan="2">
     
@@ -739,7 +739,7 @@
   
   
   
-  <td>weight</td>
+  <td><strong>weight</strong></td>
   
   <td colspan="2">
     
@@ -1571,13 +1571,121 @@
   
   <td>target</td>
   
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ExactCubicTrajectoryTask_PROP_target" aria-expanded="false" aria-controls="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target">sva::PTransformd</a>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Target relative to world</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">sva::PTransformd</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Either rotation or translation can be ommited if the other is present</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>rotation</strong></td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_rotation" aria-expanded="false" aria-controls="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_rotation">Eigen::Matrix3d</a>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_rotation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Matrix3d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[9]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>translation</strong></td>
+  
   <td colspan="2">
     
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_translation" aria-expanded="false" aria-controls="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_translation">Eigen::Vector3d</a>
   
-  
-    
-    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ExactCubicTrajectoryTask_PROP_target" aria-expanded="false" aria-controls="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target">Target relative to world surface specification</a>
-    
   
 
 
@@ -1586,12 +1694,12 @@
 </tr>
 
   
-    <tr class="collapse" id="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target">
-      <td colspan="3">
-        
+  <tr class="collapse" id="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_translation">
+    <td colspan="3">
+      
 <div class="card card-schema">
   <div class="card-header">
-    <h6 class="text-primary font-weight-bold">Target relative to world surface specification</h6>
+    <h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6>
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -1599,8 +1707,47 @@
   <div class="card-body">
     
       
-<table class="table table-borderless table-hover object-property">
-<tbody>
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
 
   
   
@@ -1638,7 +1785,7 @@
   
     
     
-  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_controlPoints1" aria-expanded="false" aria-controls="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_controlPoints1">Eigen::Vector3d</a>
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ExactCubicTrajectoryTask_PROP_controlPoints1" aria-expanded="false" aria-controls="collapseMetaTask_ExactCubicTrajectoryTask_PROP_controlPoints1">Eigen::Vector3d</a>
   
   
 
@@ -1652,13 +1799,13 @@
 
   </td>
   <td>
-    <span class="text-secondary"><small>Position control points pairs of time and position relative to world frame</small></span>
+    <span class="text-secondary"><small>List of pair of time point and position relative to world</small></span>
   </td>
   
 </tr>
 
   
-  <tr class="collapse" id="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_controlPoints1">
+  <tr class="collapse" id="collapseMetaTask_ExactCubicTrajectoryTask_PROP_controlPoints1">
     <td colspan="3">
       
 <div class="card card-schema">
@@ -1733,7 +1880,7 @@
   
     
     
-  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_oriWaypoints1" aria-expanded="false" aria-controls="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_oriWaypoints1">Eigen::Matrix3d</a>
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ExactCubicTrajectoryTask_PROP_oriWaypoints1" aria-expanded="false" aria-controls="collapseMetaTask_ExactCubicTrajectoryTask_PROP_oriWaypoints1">Eigen::Matrix3d</a>
   
   
 
@@ -1747,13 +1894,13 @@
 
   </td>
   <td>
-    <span class="text-secondary"><small>Orientation waypoints (pairs of time and orientation) relative to the world frame</small></span>
+    <span class="text-secondary"><small>Orientation waypoints (pairs of time and orientation) relative to the target surface</small></span>
   </td>
   
 </tr>
 
   
-  <tr class="collapse" id="collapseMetaTask_ExactCubicTrajectoryTask_PROP_target_PROP_oriWaypoints1">
+  <tr class="collapse" id="collapseMetaTask_ExactCubicTrajectoryTask_PROP_oriWaypoints1">
     <td colspan="3">
       
 <div class="card card-schema">
@@ -1788,22 +1935,6 @@
     </td>
   </tr>
   
-
-
-
-
-
-</tbody>
-</table>
-
-    
-  </div>
-</div>
-
-
-      </td>
-    </tr>
-    
 
 
 
@@ -6243,6 +6374,99 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
 <table class="table table-borderless table-hover object-property">
 <tbody>
 
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>prop</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>integral</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>deriv</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
 
 </tbody>
 </table>
@@ -8350,6 +8574,99 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
       
 <table class="table table-borderless table-hover object-property">
 <tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>prop</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>integral</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>deriv</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
 
 
 </tbody>
@@ -22537,7 +22854,7 @@ admittance:
   
   
   
-  <td>stiffness</td>
+  <td><strong>stiffness</strong></td>
   
   <td colspan="2">
     
@@ -22568,7 +22885,7 @@ admittance:
   
   
   
-  <td>duration</td>
+  <td><strong>duration</strong></td>
   
   <td colspan="2">
     
@@ -22599,7 +22916,7 @@ admittance:
   
   
   
-  <td>weight</td>
+  <td><strong>weight</strong></td>
   
   <td colspan="2">
     
@@ -23158,29 +23475,29 @@ admittance:
   
   <td>target</td>
   
-  <td colspan="2">
+  <td>
     
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_BSplineTrajectoryTask_PROP_target" aria-expanded="false" aria-controls="collapseMetaTask_BSplineTrajectoryTask_PROP_target">sva::PTransformd</a>
   
-  
-    
-    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_BSplineTrajectoryTask_PROP_target" aria-expanded="false" aria-controls="collapseMetaTask_BSplineTrajectoryTask_PROP_target">Target relative to world surface specification</a>
-    
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Target relative to world</small></span>
   </td>
   
 </tr>
 
   
-    <tr class="collapse" id="collapseMetaTask_BSplineTrajectoryTask_PROP_target">
-      <td colspan="3">
-        
+  <tr class="collapse" id="collapseMetaTask_BSplineTrajectoryTask_PROP_target">
+    <td colspan="3">
+      
 <div class="card card-schema">
   <div class="card-header">
-    <h6 class="text-primary font-weight-bold">Target relative to world surface specification</h6>
+    <h6 class="text-primary font-weight-bold">sva::PTransformd</h6>
     <div class="float-right">
-      <small class="text-muted text-right"></small>
+      <small class="text-muted text-right">Either rotation or translation can be ommited if the other is present</small>
     </div>
   </div>
   <div class="card-body">
@@ -23200,9 +23517,156 @@ admittance:
   
   
   
-  <td>controlPoints</td>
+  <td><strong>rotation</strong></td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_rotation" aria-expanded="false" aria-controls="collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_rotation">Eigen::Matrix3d</a>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_rotation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Matrix3d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right">Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[9]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>translation</strong></td>
   
   <td colspan="2">
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_translation" aria-expanded="false" aria-controls="collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_translation">Eigen::Vector3d</a>
+  
+  
+
+
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_translation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>controlPoints</td>
+  
+  <td>
     
   
   
@@ -23210,7 +23674,7 @@ admittance:
     <span class="text-secondary">array</span>&nbsp;
 
   
-  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_controlPoints" aria-expanded="false" aria-controls="collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_controlPoints">Eigen::Vector3d</a>
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_BSplineTrajectoryTask_PROP_controlPoints" aria-expanded="false" aria-controls="collapseMetaTask_BSplineTrajectoryTask_PROP_controlPoints">Eigen::Vector3d</a>
   
   
 
@@ -23221,11 +23685,14 @@ admittance:
 
 
   </td>
+  <td>
+    <span class="text-secondary"><small>Control points relative to world</small></span>
+  </td>
   
 </tr>
 
   
-  <tr class="collapse" id="collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_controlPoints">
+  <tr class="collapse" id="collapseMetaTask_BSplineTrajectoryTask_PROP_controlPoints">
     <td colspan="3">
       
 <div class="card card-schema">
@@ -23300,7 +23767,7 @@ admittance:
   
     
     
-  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_oriWaypoints1" aria-expanded="false" aria-controls="collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_oriWaypoints1">Eigen::Matrix3d</a>
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_BSplineTrajectoryTask_PROP_oriWaypoints1" aria-expanded="false" aria-controls="collapseMetaTask_BSplineTrajectoryTask_PROP_oriWaypoints1">Eigen::Matrix3d</a>
   
   
 
@@ -23314,13 +23781,13 @@ admittance:
 
   </td>
   <td>
-    <span class="text-secondary"><small>List of pair of time point and orientation relative to the surface</small></span>
+    <span class="text-secondary"><small>Orientation waypoints (pairs of time and orientation) relative to the target surface</small></span>
   </td>
   
 </tr>
 
   
-  <tr class="collapse" id="collapseMetaTask_BSplineTrajectoryTask_PROP_target_PROP_oriWaypoints1">
+  <tr class="collapse" id="collapseMetaTask_BSplineTrajectoryTask_PROP_oriWaypoints1">
     <td colspan="3">
       
 <div class="card card-schema">
@@ -23355,22 +23822,6 @@ admittance:
     </td>
   </tr>
   
-
-
-
-
-
-</tbody>
-</table>
-
-    
-  </div>
-</div>
-
-
-      </td>
-    </tr>
-    
 
 
 
@@ -50284,6 +50735,99 @@ configs:
       
 <table class="table table-borderless table-hover object-property">
 <tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>prop</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>integral</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>deriv</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
 
 
 </tbody>
