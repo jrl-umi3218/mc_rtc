@@ -32,11 +32,9 @@ struct MC_CONTROL_FSM_STATE_DLLAPI MessageState : State
 protected:
   std::string prefix_;
   std::string message_;
-  std::string type_ = "info";
-  bool log_ = true;
-
+  std::string logType_ = "info";
   bool gui_ = false;
-  std::vector<std::string> category_;
+  std::vector<std::string> guiCategory_;
   std::string labelName_;
 };
 

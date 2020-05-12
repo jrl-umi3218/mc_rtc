@@ -15,56 +15,64 @@ void MessageState::configure(const mc_rtc::Configuration & config)
 {
   config("prefix", prefix_);
   config("message", message_);
-  config("log", log_);
-  config("log_type", type_);
-  config("gui", gui_);
-  config("gui_category", category_);
+  config("log", logType_);
+  if(config.has("gui"))
+  {
+    gui_ = true;
+    guiCategory_ = config("gui");
+  }
 }
 
 void MessageState::start(Controller & ctl)
 {
-  std::transform(type_.begin(), type_.end(), type_.begin(), [](unsigned char c) { return std::tolower(c); });
+  std::transform(logType_.begin(), logType_.end(), logType_.begin(), [](unsigned char c) { return std::tolower(c); });
 
-  if(log_)
+  if(logType_.size())
   {
+    std::string prefix;
     std::string message;
     if(prefix_.size())
     {
-      message += "[" + name() + "::" + prefix_ + "] ";
+      prefix = "[" + name() + "::" + prefix_ + "] ";
     }
     else
     {
-      message += "[" + name() + "]";
+      prefix = "[" + name() + "] ";
     }
+    message = prefix + message_;
 
-    if(type_ == "info")
+    if(logType_ == "info")
     {
       LOG_INFO(message);
     }
-    else if(type_ == "success")
+    else if(logType_ == "success")
     {
       LOG_SUCCESS(message);
     }
-    else if(type_ == "warning")
+    else if(logType_ == "warning")
     {
       LOG_WARNING(message);
     }
-    else if(type_ == "error")
+    else if(logType_ == "error")
     {
       LOG_ERROR(message);
+    }
+    else if(logType_ == "none")
+    { /* Do not log anything to the terminal */
+    }
+    else
+    {
+      LOG_ERROR(prefix << " Provided log type " << logType_
+                       << " is invalid, assuming info. Supported types are [info, success, warning, error, none]");
+      LOG_INFO(message);
     }
   }
 
   if(gui_)
   {
     labelName_ = prefix_.size() ? prefix_ : name();
-    ctl.gui()->addElement(category_,
+    ctl.gui()->addElement(guiCategory_,
                           mc_rtc::gui::Label(labelName_, [this]() -> const std::string & { return message_; }));
-  }
-  else
-  {
-    LOG_WARNING("[" << name() << "] Unknown type: " << type_ << ", treating as INFO")
-    LOG_INFO(message_);
   }
   output("OK");
 }
@@ -78,7 +86,7 @@ void MessageState::teardown(Controller & ctl)
 {
   if(gui_)
   {
-    ctl.gui()->removeElement(category_, labelName_);
+    ctl.gui()->removeElement(guiCategory_, labelName_);
   }
 }
 
