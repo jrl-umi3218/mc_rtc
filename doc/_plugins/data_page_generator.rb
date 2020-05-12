@@ -90,7 +90,9 @@ module Jekyll
           end
           if category != "definitions"
             parent[key_out] = site.data["schemas"][category][name].dup()
-            parent[key_out]["REF"] = "#{category}.#{name}"
+            if parent[key_out].has_key?("title")
+              parent[key_out]["REF"] = "#{category}.#{name}"
+            end
           else
             parent[key_out] = root[category][name].dup()
           end
@@ -108,7 +110,7 @@ module Jekyll
 
     def generate(site)
       menu = {}
-      default_order = ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks", "mc_rbdyn_urdf", "mc_rbdyn", "ConstraintSet", "MetaTask"]
+      default_order = ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks", "mc_rbdyn_urdf", "mc_rbdyn", "ConstraintSet", "MetaTask", "State"]
       default_order.each { |name|
         menu[name] = {}
       }
