@@ -344,10 +344,6 @@ else
 fi
 
 ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
-if $BUILD_BENCHMARKS
-then
-  APT_DEPENDENCIES="$APT_DEPENDENCIES libbenchmark-dev"
-fi
 
 alias git_clone="git clone --recursive"
 git_update()

@@ -112,7 +112,7 @@ jobs:
             - path: jbeder/yaml-cpp
               ref: 29dcf92f870ee51cce8d68f8fcfe228942e8dfe1
             - path: google/benchmark
-              ref: 1.3.0
+              ref: v1.3.0
         github: |
           - path: humanoid-path-planner/hpp-spline
             ref: v4.7.0

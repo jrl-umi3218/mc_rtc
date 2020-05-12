@@ -50,7 +50,7 @@ mc_rtc_extra_steps()
       sed -i -e's@QWT_INSTALL_PREFIX    = /usr/local/qwt-$$QWT_VERSION@QWT_INSTALL_PREFIX = /usr/local@' qwtconfig.pri
       sed -i -e's@QWT_INSTALL_HEADERS   = $${QWT_INSTALL_PREFIX}/include@QWT_INSTALL_HEADERS = $${QWT_INSTALL_PREFIX}/include/qwt@' qwtconfig.pri
       qmake
-      make -j`nproc`
+      make -j${BUILD_CORE}
       sudo make install
     fi
   fi
