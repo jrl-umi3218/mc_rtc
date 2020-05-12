@@ -51,7 +51,7 @@ option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
 option(DISABLE_ROS "Do not build with ROS support (even if ROS was found)" OFF)
 
-add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer)
+add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer thread)
 add_project_dependency(Tasks REQUIRED)
 add_project_dependency(mc_rbdyn_urdf REQUIRED)
 add_project_dependency(eigen-quadprog REQUIRED)
