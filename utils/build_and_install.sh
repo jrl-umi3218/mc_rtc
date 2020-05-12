@@ -85,24 +85,6 @@ mc_rtc_extra_steps()
   true
 }
 
-if [[ $OSTYPE == "darwin"* ]]
-then
-  . $this_dir/config_build_and_install.macos.sh
-elif [[ $OSTYPE == "linux-gnu" ]]
-then
-  if [ -f $this_dir/config_build_and_install.`lsb_release -sc`.sh ]
-  then
-    . $this_dir/config_build_and_install.`lsb_release -sc`.sh
-  else
-    ROS_DISTRO=""
-    APT_DEPENDENCIES=""
-    ROS_APT_DEPENDENCIES=""
-  fi
-else
-  # Assume Windows
-  . $this_dir/config_build_and_install.windows.sh
-fi
-
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --help                     (-h)               : print this help
     --install-prefix           (-i) PATH          : the directory used to install everything           (default $INSTALL_PREFIX)
@@ -426,6 +408,28 @@ install_apt()
     exec_log sudo apt-get -y install ${TO_INSTALL}
   fi
 }
+
+##################################################
+## Extra OS/Distribution specific configuration ##
+##################################################
+if [[ $OSTYPE == "darwin"* ]]
+then
+  . $this_dir/config_build_and_install.macos.sh
+elif [[ $OSTYPE == "linux-gnu" ]]
+then
+  if [ -f $this_dir/config_build_and_install.`lsb_release -sc`.sh ]
+  then
+    . $this_dir/config_build_and_install.`lsb_release -sc`.sh
+  else
+    ROS_DISTRO=""
+    APT_DEPENDENCIES=""
+    ROS_APT_DEPENDENCIES=""
+  fi
+else
+  # Assume Windows
+  . $this_dir/config_build_and_install.windows.sh
+fi
+
 
 ###################################
 #  --  APT/Brew dependencies  --  #
