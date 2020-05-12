@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["momentum"], "type": "string" },
     "name": { "type": "string" },
-    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
+    "robot": { "$ref": "/../../common/MetaTask_robot.json" },
 
     "momentum": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
 

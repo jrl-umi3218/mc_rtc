@@ -4,7 +4,7 @@
   "properties":
   {
     "type": { "enum": ["kinematics"], "type": "string" },
-    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot affected by this constraint"},
+    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" },
     "damper":
     {
       "type": "array",

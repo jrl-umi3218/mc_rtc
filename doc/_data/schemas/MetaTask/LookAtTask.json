@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["lookAt"] },
     "name": { "type": "string" },
-    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
+    "robot": { "$ref": "/../../common/MetaTask_robot.json" },
     "body": { "type": "string" },
     "bodyVector": { "$ref": "/../../Eigen/Vector3d.json" },
     "targetPos": { "$ref": "/../../Eigen/Vector3d.json" },

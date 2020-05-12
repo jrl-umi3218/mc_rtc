@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["gaze"], "type": "string" },
     "name": { "type": "string" },
-    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
+    "robot": { "$ref": "/../../common/MetaTask_robot.json" },
     "body": { "type": "string" },
     "X_b_gaze": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
 

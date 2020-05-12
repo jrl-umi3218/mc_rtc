@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["com"], "type": "string" },
     "name": { "type": "string" },
-    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
+    "robot": { "$ref": "/../../common/MetaTask_robot.json" },
     "com": { "$ref": "/../../Eigen/Vector3d.json" },
     "move_com": { "$ref": "/../../Eigen/Vector3d.json" },
     "offset": { "$ref": "/../../Eigen/Vector3d.json" },

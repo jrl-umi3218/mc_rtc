@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["posture"], "type": "string" },
     "name": { "type": "string" },
-    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
+    "robot": { "$ref": "/../../common/MetaTask_robot.json" },
     "stiffness": { "type": "number", "minimum": 0},
     "weight": { "type": "number", "minimum": 0},
     "posture": { "type": "array", "items": { "type": "array", "items": { "type": "number" } } },

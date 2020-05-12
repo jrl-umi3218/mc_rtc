@@ -5,7 +5,7 @@
   {
     "type": { "enum": ["pbvs"], "type": "string" },
     "name": { "type": "string" },
-    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
+    "robot": { "$ref": "/../../common/MetaTask_robot.json" },
     "surface": { "type": "string" },
 
     "stiffness": { "type": "number", "minimum": 0},
