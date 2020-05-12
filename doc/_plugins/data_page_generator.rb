@@ -3,6 +3,8 @@
 # (c) 2014-2016 Adolfo Villafiorita
 # Distributed under the conditions of the MIT License
 
+require 'active_support/core_ext/hash/deep_merge'
+
 module Jekyll
 
   module Sanitizer
@@ -56,6 +58,28 @@ module Jekyll
 
   class SchemaPagesGenerator < Generator
     safe true
+
+    def resolveAllOf(schema)
+      if schema.is_a?(Array)
+        schema.each_index{ | index |
+          schema[index] = resolveAllOf(schema[index])
+        }
+        return schema
+      end
+      if not schema.is_a?(Hash)
+        return schema
+      end
+      if schema.has_key?("allOf")
+        schema["allOf"].each_index{ | index |
+          resolveAllOf(schema["allOf"][index])
+          schema = schema.deep_merge(schema["allOf"][index])
+        }
+        schema.delete("allOf");
+      end
+      schema.each{ | key, value |
+        schema[key] = resolveAllOf(schema[key])
+      }
+    end
 
     def resolveRef(site, schema, parent = nil, key_out = nil, root = nil)
       if root == nil
@@ -119,6 +143,8 @@ module Jekyll
           menu[category] = {}
           schemas.each { |name, schema|
             resolveRef(site, schema)
+            schema = resolveAllOf(schema)
+            site.data["schemas"][category][name] = schema
             menu[category][name] = {}
             menu[category][name]["active"] = false
             menu[category][name]["display"] = schema["title"].split("::").drop(1).join("::")
