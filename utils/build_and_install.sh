@@ -363,9 +363,6 @@ echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
 echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
 echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
 echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
-echo_log "   ROS_DISTRO=$ROS_DISTRO"
-echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
-echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
 
 install_apt()
 {
@@ -409,6 +406,7 @@ elif [[ $OSTYPE == "linux-gnu" ]]
 then
   if [ -f $this_dir/config_build_and_install.`lsb_release -sc`.sh ]
   then
+    ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
     . $this_dir/config_build_and_install.`lsb_release -sc`.sh
   else
     ROS_DISTRO=""
@@ -419,8 +417,6 @@ else
   # Assume Windows
   . $this_dir/config_build_and_install.windows.sh
 fi
-
-ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
 
 
 #make settings readonly
