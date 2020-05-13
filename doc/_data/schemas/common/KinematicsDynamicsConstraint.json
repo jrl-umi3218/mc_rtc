@@ -1,0 +1,24 @@
+{
+  "properties":
+  {
+    "type": { "enum": ["kinematics", "dynamics"] },
+    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" },
+    "damper":
+    {
+      "type": "array",
+      "items":
+      {
+        "type": "number",
+        "minItems": 3,
+        "maxItems": 3
+      }
+    },
+    "velocityPercent":
+    {
+      "description": "Ignored if damper is absent.",
+      "type": "number",
+      "default": "0.5"
+    }
+  },
+  "required": ["type"]
+}

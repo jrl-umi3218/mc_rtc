@@ -3,7 +3,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["boundedSpeed"], "type": "string" },
+    "type": { "enum": ["boundedSpeed"] },
     "robot": { "$ref": "/../../common/ConstraintSet_robot.json" },
     "constraints":
     {

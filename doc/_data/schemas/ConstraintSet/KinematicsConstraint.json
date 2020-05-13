@@ -1,24 +1,16 @@
 {
-  "title": "mc_solver::KinematicsConstraint",
-  "type": "object",
-  "properties":
-  {
-    "type": { "enum": ["kinematics"], "type": "string" },
-    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" },
-    "damper":
+  "allOf":
+  [
     {
-      "type": "array",
-      "items":
-      {
-        "type": "number"
-      }
+      "$ref": "../../common/KinematicsDynamicsConstraint.json"
     },
-    "velocityPercent":
     {
-      "description": "Ignored if damper is absent.",
-      "type": "number",
-      "default": "0.5"
+      "title": "mc_solver::KinematicsConstraint",
+      "type": "object",
+      "properties":
+      {
+        "type": { "enum": ["kinematics"] }
+      }
     }
-  },
-  "required": ["type"]
+  ]
 }

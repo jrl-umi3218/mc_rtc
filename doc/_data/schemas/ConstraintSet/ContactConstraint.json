@@ -3,7 +3,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["contact"], "type": "string" },
+    "type": { "enum": ["contact"] },
     "contactType":
     {
       "description": "Defaults to velocity if absent",

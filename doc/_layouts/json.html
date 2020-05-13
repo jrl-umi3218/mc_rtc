@@ -1,5 +1,6 @@
 ---
 layout: default
+use_mathjax: true
 ---
 
 <div class="row">
@@ -22,6 +23,9 @@ layout: default
           {% endfor %}
         </div>
       </div>
+    {% endfor %}
+    {% for link in page.links %}
+     <a href="{{ link[1] }}" class="list-group-item list-group-item-category">{% octicon chevron-right %} {{ link[0] }}</a>
     {% endfor %}
     </div>
   </div>

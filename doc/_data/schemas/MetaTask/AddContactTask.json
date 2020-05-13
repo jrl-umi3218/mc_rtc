@@ -3,7 +3,7 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["addContact"], "type": "string" },
+    "type": { "enum": ["addContact"] },
     "name": { "type": "string" },
     "contact": { "$ref": "/../../mc_rbdyn/Contact.json" },
     "speed": { "type": "number", "minimum": 0},

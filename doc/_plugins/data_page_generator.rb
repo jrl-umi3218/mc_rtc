@@ -23,19 +23,36 @@ module Jekyll
   class AllSchemasPage < Page
     include Sanitizer
 
-    def initialize(site, base, menu, schemas)
+    def display_category(category)
+      return @categories.include?(category)
+    end
+
+    def initialize(site, base, out, schemas, categories, links = {})
       @site = site
       @base = base
       @dir = '/'
-      @name = 'json.html'
+      @name = out
+      @categories = categories
+
+      menu = {}
+      categories.each{ |category|
+        menu[category] = {}
+        schemas[category].each { |name, schema|
+          menu[category][name] = {
+            "active" => false,
+            "display" => schema["title"].split("::").drop(1).join("::")
+          }
+        }
+      }
 
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), "json.html")
       self.data['title'] = 'Schema documentation'
       self.data['menu'] = menu
       self.data['all_schemas'] = {}
+      self.data['links'] = links
       schemas.each { |category, cat_schemas|
-        if category != "common"
+        if display_category(category)
           self.data['all_schemas'][category] = {}
           cat_schemas.each { |name, schema|
             self.data['all_schemas'][category][name] = {}
@@ -88,7 +105,7 @@ module Jekyll
       if not schema.is_a?(Hash)
         if schema.is_a?(Array)
           schema.each_index{ | index |
-            resolveRef(site, schema[index], schema, index, root)
+            resolveRef(site, schema[index], schema, index, schema[index])
           }
         end
         return
@@ -133,25 +150,18 @@ module Jekyll
     end
 
     def generate(site)
-      menu = {}
-      default_order = ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks", "mc_rbdyn_urdf", "mc_rbdyn", "ConstraintSet", "MetaTask", "State"]
-      default_order.each { |name|
-        menu[name] = {}
-      }
       site.data["schemas"].each { |category, schemas|
         if category != "common"
-          menu[category] = {}
           schemas.each { |name, schema|
             resolveRef(site, schema)
             schema = resolveAllOf(schema)
             site.data["schemas"][category][name] = schema
-            menu[category][name] = {}
-            menu[category][name]["active"] = false
-            menu[category][name]["display"] = schema["title"].split("::").drop(1).join("::")
           }
         end
       }
-      site.pages << AllSchemasPage.new(site, site.source, menu, site.data["schemas"])
+      default_categories = ["mc_rbdyn", "ConstraintSet", "MetaTask", "State"]
+      site.pages << AllSchemasPage.new(site, site.source, 'json.html', site.data["schemas"], default_categories, {"All objects" => 'json-full.html'})
+      site.pages << AllSchemasPage.new(site, site.source, 'json-full.html', site.data["schemas"], ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks", "mc_rbdyn_urdf"] + default_categories)
     end
   end
 

@@ -1,29 +1,21 @@
 {
-  "title": "mc_solver::DynamicsConstraint",
-  "type": "object",
-  "properties":
-  {
-    "type": { "enum": ["dynamics"], "type": "string" },
-    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" },
-    "damper":
+  "allOf":
+  [
     {
-      "type": "array",
-      "items":
+      "$ref": "../../common/KinematicsDynamicsConstraint.json"
+    },
+    {
+      "title": "mc_solver::DynamicsConstraint",
+      "type": "object",
+      "properties":
       {
-        "type": "number"
+        "type": { "enum": ["dynamics"] },
+        "infTorque":
+        {
+          "type": "boolean",
+          "default": "false"
+        }
       }
-    },
-    "velocityPercent":
-    {
-      "description": "Ignored if damper is absent.",
-      "type": "number",
-      "default": "0.5"
-    },
-    "infTorque":
-    {
-      "type": "boolean",
-      "default": "false"
     }
-  },
-  "required": ["type"]
+  ]
 }
