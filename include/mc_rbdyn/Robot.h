@@ -506,7 +506,7 @@ public:
   const ForceSensor & bodyForceSensor(const std::string & body) const;
 
   /**
-   * @brief Looks for a force sensor from a body up the kinematic chain until the floating base.
+   * @brief Looks for a force sensor from a body up the kinematic chain until the root.
    *
    * @param body Name of body indirectly attached to the sensor
    *
@@ -520,7 +520,7 @@ public:
   const ForceSensor & findBodyForceSensor(const std::string & body) const;
 
   /**
-   * @brief Looks for a force sensor from a surface up the kinematic chain until the floating base.
+   * @brief Looks for a force sensor from a surface up the kinematic chain until the root.
    *
    * @param surface Name of surface indirectly attached to the sensor
    *
