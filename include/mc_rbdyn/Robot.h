@@ -512,7 +512,7 @@ public:
    *
    * @return The sensor to which the body is indirectly attached
    *
-   * @throws If no sensor is found between the body and the floating base
+   * @throws If no sensor is found between the body and the root
    */
   ForceSensor & findBodyForceSensor(const std::string & body);
 
@@ -526,7 +526,7 @@ public:
    *
    * @return The sensor to which the surface is indirectly attached
    *
-   * @throws If no sensor is found between the surface and the floating base
+   * @throws If no sensor is found between the surface and the root
    */
   ForceSensor & findSurfaceForceSensor(const std::string & surface);
 
