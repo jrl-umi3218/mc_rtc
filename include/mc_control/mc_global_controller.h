@@ -395,7 +395,7 @@ public:
 
 public:
   /*! \brief Store the controller configuration */
-  struct GlobalConfiguration
+  struct MC_CONTROL_DLLAPI GlobalConfiguration
   {
     GlobalConfiguration(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm);
 
