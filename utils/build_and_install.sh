@@ -406,8 +406,8 @@ elif [[ $OSTYPE == "linux-gnu" ]]
 then
   if [ -f $this_dir/config_build_and_install.`lsb_release -sc`.sh ]
   then
-    ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
     . $this_dir/config_build_and_install.`lsb_release -sc`.sh
+    ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
   else
     ROS_DISTRO=""
     APT_DEPENDENCIES=""
