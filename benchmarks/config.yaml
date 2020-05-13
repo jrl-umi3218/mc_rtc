@@ -1,5 +1,5 @@
 type: surfaceTransform
-robotIndex: 0
+robot: jvrc1
 surface: LeftFootCenter
 target:
   rotation: [1.0, 0.0, 0.0,

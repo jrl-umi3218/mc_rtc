@@ -11,13 +11,15 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpedantic"
 #pragma GCC diagnostic ignored "-Wconversion"
-#pragma GCC diagnostic ignored "-Wunknown-pragma"
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 
 const double dt = 0.005;
 
 mc_rbdyn::Robots & get_robots()
 {
+  // XXX silence missing calibration file warning
+  std::cerr.rdbuf(nullptr);
   static std::shared_ptr<mc_rbdyn::Robots> robots_ptr = nullptr;
   if(robots_ptr)
   {
@@ -85,7 +87,7 @@ static void BM_DirectEvalAndSpeedOrTimeout(benchmark::State & state)
 {
   unsigned int tick = 0;
   double timeout = 5.0;
-  unsigned int target = std::ceil(timeout / dt);
+  unsigned int target = static_cast<unsigned>(std::ceil(timeout / dt));
   bool b;
   std::string o;
   double norm = 1e-3;

@@ -1,5 +1,5 @@
 type: lipm_stabilizer
-robotIndex: 0
+robot: jvrc1
 enabled: true
 contacts: [Left, Right]
 

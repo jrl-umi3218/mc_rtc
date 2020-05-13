@@ -7,60 +7,57 @@
 
 #include "benchmark/benchmark.h"
 
-static void BM_AllocSurfaceTransformTask(benchmark::State & state)
+class AllocTaskFixture : public benchmark::Fixture
 {
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
-  mc_rbdyn::Robots robots;
-  robots.load(*rm);
+public:
+  void SetUp(const ::benchmark::State &)
+  {
+    // XXX silence error output
+    std::cerr.rdbuf(nullptr);
+    auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
+    solver.robots().load(*rm);
+    solver.realRobots(std::make_shared<mc_rbdyn::Robots>(solver.robots()));
+  }
+
+  void TearDown(const ::benchmark::State &) {}
+
+  mc_solver::QPSolver solver{0.005};
+};
+
+BENCHMARK_F(AllocTaskFixture, AllocSurfaceTransformTask)(benchmark::State & state)
+{
   for(auto _ : state)
   {
-    auto task = std::make_shared<mc_tasks::SurfaceTransformTask>("LeftFoot", robots, 0);
+    auto task = std::make_shared<mc_tasks::SurfaceTransformTask>("LeftFoot", solver.robots(), 0);
   }
 }
 
-BENCHMARK(BM_AllocSurfaceTransformTask);
-
-static void BM_SurfaceTransformTaskFromConfig(benchmark::State & state)
+BENCHMARK_F(AllocTaskFixture, SurfaceTransformTaskFromConfig)(benchmark::State & state)
 {
   mc_rtc::Configuration config("@CMAKE_CURRENT_SOURCE_DIR@/config.yaml");
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
-  auto robots = mc_rbdyn::loadRobot(*rm);
-  mc_solver::QPSolver solver{robots, 0.005};
   for(auto _ : state)
   {
     auto task = mc_tasks::MetaTaskLoader::load<mc_tasks::SurfaceTransformTask>(solver, config);
   }
 }
 
-BENCHMARK(BM_SurfaceTransformTaskFromConfig);
-
-static void BM_AllocStabilizerTask(benchmark::State & state)
+BENCHMARK_F(AllocTaskFixture, StabilizerTask)(benchmark::State & state)
 {
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
-  auto robots = mc_rbdyn::loadRobot(*rm);
-  mc_solver::QPSolver solver{robots, 0.005};
   for(auto _ : state)
   {
-    auto task = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(*robots, *robots, 0, "LeftFoot",
-                                                                            "RightFoot", "WAIST_R_S", solver.dt());
+    auto & robots = solver.robots();
+    auto task = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(robots, robots, 0, "LeftFoot", "RightFoot",
+                                                                            "WAIST_R_S", solver.dt());
   }
 }
 
-BENCHMARK(BM_AllocStabilizerTask);
-
-static void BM_StabilizerTaskFromConfig(benchmark::State & state)
+BENCHMARK_F(AllocTaskFixture, StabilizerTaskFromConfig)(benchmark::State & state)
 {
   mc_rtc::Configuration config("@CMAKE_CURRENT_SOURCE_DIR@/config_lipm.yaml");
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
-  auto robots = mc_rbdyn::loadRobot(*rm);
-  mc_solver::QPSolver solver{robots, 0.005};
-  solver.realRobots(robots);
   for(auto _ : state)
   {
     auto task = mc_tasks::MetaTaskLoader::load<mc_tasks::lipm_stabilizer::StabilizerTask>(solver, config);
   }
 }
-
-BENCHMARK(BM_StabilizerTaskFromConfig);
 
 BENCHMARK_MAIN();
