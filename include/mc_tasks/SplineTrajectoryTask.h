@@ -144,9 +144,14 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
   /**
    * @brief Allows to pause the task
    *
+   * This feature is mainly intended to allow starting the task in paused state
+   * to allow adjusting the parameters of the trajectory before its execution.
+   * Use with care in other contexts.
+   *
    * @warning Pausing sets the task's desired velocity and acceleration to zero, which
-   * will suddently stop the motion. Avoid pausing during high-speed
-   * trajectories.
+   * will suddently stop the motion. Unpausing causes the motion to resume
+   * at the current speed along the trajectory.
+   * Avoid pausing/resuming during high-speed trajectories.
    *
    * @param paused True to pause the task, False to resume.
    */

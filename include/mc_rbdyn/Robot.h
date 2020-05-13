@@ -236,6 +236,11 @@ public:
 
   /** Compute the gravity-free wrench in surface frame
    *
+   * @note If the surface is indirectly attached to the sensor (i.e there are
+   * joints in-between), then the kinematic transformation will be taken into
+   * account but the effect of bodies in-between is not accounted for in the
+   * returned wrench.
+   *
    * @param surfaceName A surface attached to a force sensor
    *
    * @return Measured wrench in surface frame
@@ -245,6 +250,11 @@ public:
   sva::ForceVecd surfaceWrench(const std::string & surfaceName) const;
 
   /** Compute the gravity-free wrench in body frame
+   *
+   * @note If the body is indirectly attached to the sensor (i.e there are
+   * joints in-between), then the kinematic transformation will be taken into
+   * account but the effect of bodies in-between is not accounted for in the
+   * returned wrench.
    *
    * @param bodyName A body attached to a force sensor
    *
@@ -498,7 +508,7 @@ public:
   /**
    * @brief Looks for a force sensor from a body up the kinematic chain until the floating base.
    *
-   * @param body Body name indirectly attached to the sensor
+   * @param body Name of body indirectly attached to the sensor
    *
    * @return The sensor to which the body is indirectly attached
    *
@@ -508,6 +518,20 @@ public:
 
   /** Const variant */
   const ForceSensor & findBodyForceSensor(const std::string & body) const;
+
+  /**
+   * @brief Looks for a force sensor from a surface up the kinematic chain until the floating base.
+   *
+   * @param surface Name of surface indirectly attached to the sensor
+   *
+   * @return The sensor to which the surface is indirectly attached
+   *
+   * @throws If no sensor is found between the surface and the floating base
+   */
+  ForceSensor & findSurfaceForceSensor(const std::string & surface);
+
+  /** Const variant */
+  const ForceSensor & findSurfaceForceSensor(const std::string & surface) const;
 
   /** Returns all force sensors */
   std::vector<ForceSensor> & forceSensors();
