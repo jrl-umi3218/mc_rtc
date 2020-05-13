@@ -17,17 +17,17 @@
           "items": { "$ref": "#/definitions/number_pair" }
         }
       },
-      "required": ["type", "name", "bodyName", "X_b_s", "materialName", "planarPoints"],
-      "definitions":
-      {
-        "number_pair":
-        {
-          "type": "array",
-          "items": { "type": "number" },
-          "minItems": 2,
-          "maxItems": 2
-        }
-      }
+      "required": ["type", "name", "bodyName", "X_b_s", "materialName", "planarPoints"]
     }
-  ]
+  ],
+  "definitions":
+  {
+    "number_pair":
+    {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 2,
+      "maxItems": 2
+    }
+  }
 }

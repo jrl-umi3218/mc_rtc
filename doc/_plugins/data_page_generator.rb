@@ -105,7 +105,7 @@ module Jekyll
       if not schema.is_a?(Hash)
         if schema.is_a?(Array)
           schema.each_index{ | index |
-            resolveRef(site, schema[index], schema, index, schema[index])
+            resolveRef(site, schema[index], schema, index, root)
           }
         end
         return
