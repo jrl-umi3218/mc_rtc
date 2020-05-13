@@ -8,7 +8,6 @@ mc_rtc_extra_steps()
     # install google benchmark library
     git clone https://github.com/google/benchmark.git $SOURCE_DIR/benchmark
     cd $SOURCE_DIR/benchmark
-    git checkout v1.3.0 -b v1.3.0
     mkdir build && cd build
     cmake  -DBENCHMARK_ENABLE_GTEST_TESTS:BOOL=OFF ..
     make -j${BUILD_CORE}

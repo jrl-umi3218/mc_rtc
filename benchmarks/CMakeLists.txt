@@ -14,8 +14,7 @@ macro(mc_rtc_benchmark NAME)
   else()
     message(FATAL_ERROR "Cannot add mc_rtc_test: neither ${NAME}.cpp nor ${NAME}.in.cpp exists in ${CMAKE_CURRENT_SOURCE_DIR}")
   endif()
-  # Linking with Boost::thread fixes an issue with pthread
-  target_link_libraries(${NAME} benchmark::benchmark Boost::thread ${ARGN})
+  target_link_libraries(${NAME} benchmark::benchmark ${ARGN})
   generate_msvc_dot_user_file(${NAME})
   # Add benchmark as unit-test
   if(${BUILD_TESTING})
