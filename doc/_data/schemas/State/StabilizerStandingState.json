@@ -1,41 +1,32 @@
 {
-  "title": "fsm::StabilizerStandingState",
-  "description": "Simple state managing the LIPM Stabilizer",
-  "type": "object",
-  "properties":
-  {
-    "StabilizerConfig": { "$ref": "/../common/StabilizerTask.json" },
-    "stiffness": { "type": "number", "minimum": 0, "description": "Stiffness of CoM target" },
-    "damping": { "type": "number", "minimum": 0, "description": "Damping of CoM target (default=2*sqrt(stiffness))" },
-    "above": { "type": "string", "description": "Put CoM over the special frames LeftAnkle, RightAnkle or Center, or any other valid surface on the robot"},
-    "com": { "$ref": "/../../Eigen/Vector3d.json", "description": "Target CoM position"},
-    "completion":
+  "allOf":
+  [
     {
+      "title": "fsm::StabilizerStandingState",
+      "description": "Simple state managing the LIPM Stabilizer",
       "type": "object",
-      "title": "Completion criteria for the state",
-      "description": "Completion criteria for the state",
       "properties":
       {
-        "dcmEval": { "$ref": "/../../Eigen/Vector3d.json", "description": "Outputs 'OK' when the dcm error is under this threshold."}
-      }
+        "StabilizerConfig": { "$ref": "/../common/StabilizerTask.json" },
+        "stiffness": { "type": "number", "minimum": 0, "description": "Stiffness of CoM target" },
+        "damping": { "type": "number", "minimum": 0, "description": "Damping of CoM target (default=2*sqrt(stiffness))" },
+        "above": { "type": "string", "description": "Put CoM over the special frames LeftAnkle, RightAnkle or Center, or any other valid surface on the robot"},
+        "com": { "$ref": "/../../Eigen/Vector3d.json", "description": "Target CoM position"},
+        "completion":
+        {
+          "type": "object",
+          "title": "Completion criteria for the state",
+          "description": "Completion criteria for the state",
+          "properties":
+          {
+            "dcmEval": { "$ref": "/../../Eigen/Vector3d.json", "description": "Outputs 'OK' when the dcm error is under this threshold."}
+          }
+        }
+      },
+      "required": []
     },
-    "AddContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                     "description": "Add the specified contacts during the state's start"  },
-    "RemoveContacts": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                        "description": "Remove the specified contacts during the state's start"  },
-    "AddContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                          "description": "Add the specified contacts during the state's teardown"  },
-    "RemoveContactsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_contact.json" },
-                             "description": "Remove the specified contacts during the state's teardown"  },
-    "AddColissions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                       "description": "Add the specified collisions during the state's start" },
-    "RemoveColissions": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                          "description": "Remove the specified collisions during the state's start" },
-    "AddColissionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                            "description": "Add the specified collisions during the state's teardown" },
-    "RemoveColissionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
-                               "description": "Remove the specified collisions during the state's teardown" },
-    "RemovePostureTask": { "type": "boolean", "default": false, "description": "If true, remove the main robot posture task at the state's start"}
-  },
-  "required": []
+    {
+      "$ref": "/../../common/State.json"
+    }
+  ]
 }

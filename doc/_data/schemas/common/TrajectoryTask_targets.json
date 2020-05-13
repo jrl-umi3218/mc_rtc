@@ -1,0 +1,62 @@
+{
+  "properties":
+  {
+    "targetSurface":
+    {
+      "title": "Target relative to surface specification",
+      "type": "object",
+      "properties":
+      {
+        "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot on which this surface is defined"},
+        "surface" : { "type": "string" },
+        "translation": { "$ref": "/../../Eigen/Vector3d.json" },
+        "rotation": { "$ref": "/../../Eigen/Matrix3d.json" },
+        "controlPoints":
+        {
+          "type": "array",
+          "description": "Position waypoints relative to the target surface",
+          "items": { "$ref": "/../../Eigen/Vector3d.json" }
+        },
+        "oriWaypoints":
+        {
+          "type": "array",
+          "description": "Orientation waypoints (pairs of time and orientation) relative to the target surface",
+          "items":
+          [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "/../../Eigen/Matrix3d.json"
+            }
+          ]
+        }
+      }
+    },
+    "target":
+    {
+      "$ref": "/../../SpaceVecAlg/PTransformd.json",
+      "description": "Target relative to world<br/>Ignored if targetSurface is specified, required otherwise"
+    },
+    "controlPoints":
+    {
+      "type": "array",
+      "description": "Control points relative to world",
+      "items": { "$ref": "/../../Eigen/Vector3d.json" }
+    },
+    "oriWaypoints":
+    {
+      "type": "array",
+      "description": "Orientation waypoints (pairs of time and orientation) relative to the target surface",
+      "items":
+      [
+        {
+          "type": "number"
+        },
+        {
+          "$ref": "/../../Eigen/Matrix3d.json"
+        }
+      ]
+    }
+  }
+}

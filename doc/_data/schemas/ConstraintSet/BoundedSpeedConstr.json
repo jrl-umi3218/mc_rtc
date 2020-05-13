@@ -3,8 +3,8 @@
   "type": "object",
   "properties":
   {
-    "type": { "enum": ["boundedSpeed"], "type": "string" },
-    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot affected by this constraint"},
+    "type": { "enum": ["boundedSpeed"] },
+    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" },
     "constraints":
     {
       "type": "array",

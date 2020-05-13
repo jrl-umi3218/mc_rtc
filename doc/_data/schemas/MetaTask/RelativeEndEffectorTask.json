@@ -1,32 +1,38 @@
 {
   "title": "mc_tasks::RelativeEndEffectorTask",
   "type": "object",
-  "properties":
-  {
-    "type": { "enum": ["relBody6d"], "type": "string" },
-    "name": { "type": "string" },
-    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
-    "body": { "type": "string" },
-    "relBody": { "type": "string" },
-    "bodyPoint": { "$ref": "/../../Eigen/Vector3d.json" },
-
-    "orientation": { "$ref": "/../../Eigen/Matrix3d.json" },
-    "position": { "$ref": "/../../Eigen/Vector3d.json" },
-
-    "relative": { "$ref": "/../../common/relative.json" },
-
-    "orientationStiffness": { "type": "number", "minimum": 0},
-    "orientationWeight": { "type": "number", "minimum": 0},
-
-    "positionStiffness": { "type": "number", "minimum": 0},
-    "positionWeight": { "type": "number", "minimum": 0},
-
-    "stiffness": { "type": "number", "minimum": 0},
-    "damping": { "type": "number", "minimum": 0},
-    "weight": { "type": "number", "minimum": 0},
-    "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
-    "activeJoints": { "type": "array", "items": { "type": "string" } },
-    "unactiveJoints": { "type": "array", "items": { "type": "string" } }
-  },
+  "allOf":
+  [
+    {
+      "$ref": "/../../common/MetaTask_common.json"
+    },
+    {
+      "$ref": "/../../common/MetaTask_body.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "enum": ["relBody6d"] },
+        "relBody": { "type": "string", "description": "Body relative to which this task's target is applied" },
+        "bodyPoint": { "$ref": "/../../Eigen/Vector3d.json" },
+        "orientation": { "$ref": "/../../Eigen/Matrix3d.json" },
+        "position": { "$ref": "/../../Eigen/Vector3d.json" },
+        "relative": { "$ref": "/../../common/relative.json" },
+        "orientationStiffness": { "type": "number", "minimum": 0},
+        "orientationWeight": { "type": "number", "minimum": 0},
+        "positionStiffness": { "type": "number", "minimum": 0},
+        "positionWeight": { "type": "number", "minimum": 0}
+      }
+    },
+    {
+      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+      }
+    }
+  ],
   "required": ["type", "body", "relBody"]
 }

@@ -1,20 +1,27 @@
 {
   "title": "mc_tasks::Momentum",
   "type": "object",
-  "properties":
-  {
-    "type": { "enum": ["momentum"], "type": "string" },
-    "name": { "type": "string" },
-    "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot to which this task applies"},
-
-    "momentum": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
-
-    "stiffness": { "type": "number", "minimum": 0},
-    "damping": { "type": "number", "minimum": 0},
-    "weight": { "type": "number", "minimum": 0},
-    "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
-    "activeJoints": { "type": "array", "items": { "type": "string" } },
-    "unactiveJoints": { "type": "array", "items": { "type": "string" } }
-  },
+  "allOf":
+  [
+    {
+      "$ref": "/../../common/MetaTask_common.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "enum": ["momentum"] },
+        "momentum": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" }
+      }
+    },
+    {
+      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+      }
+    }
+  ],
   "required": ["type"]
 }

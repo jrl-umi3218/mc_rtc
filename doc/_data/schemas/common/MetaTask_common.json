@@ -1,0 +1,17 @@
+{
+  "properties":
+  {
+    "type": {},
+    "name":
+    {
+      "type": "string",
+      "description": "Name of the task"
+    },
+    "robot":
+    {
+      "type": "string",
+      "default": "MainRobot",
+      "description": "Name of the robot to which this task applies"
+    }
+  }
+}

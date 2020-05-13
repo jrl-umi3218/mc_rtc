@@ -1,16 +1,19 @@
 {
-  "title": "mc_rbdyn::CylindricalSurfacePtr",
-  "type": "object",
-  "properties":
-  {
-    "type": { "enum": ["cylindrical"] },
-    "name": { "type": "string" },
-    "bodyName": { "type": "string" },
-    "X_b_s": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-    "materialName": { "type": "string" },
-    "radius": { "type": "number" },
-    "width": { "type": "number" }
-  },
-  "required": ["type", "name", "bodyName", "X_b_s", "materialName", "radius", "width"],
-  "additionalProperties": false
+  "allOf":
+  [
+    {
+      "$ref": "/../../common/Surface.json"
+    },
+    {
+      "title": "mc_rbdyn::CylindricalSurfacePtr",
+      "type": "object",
+      "properties":
+      {
+        "type": { "enum": ["cylindrical"] },
+        "radius": { "type": "number" },
+        "width": { "type": "number" }
+      },
+      "required": ["type", "name", "bodyName", "X_b_s", "materialName", "radius", "width"]
+    }
+  ]
 }
