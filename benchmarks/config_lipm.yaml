@@ -1,0 +1,55 @@
+type: lipm_stabilizer
+robot: jvrc1
+enabled: true
+contacts: [Left, Right]
+
+###########################
+## Stabilizer configuration
+###########################
+# Default values for these robot-specific parameters are set in the corresponding robot module.
+# You may choose to override any of them here, with due caution.
+jvrc1:
+  leftFootSurface: LeftFootCenter
+  rightFootSurface: RightFootCenter
+  friction: 0.8
+  torsoBodyName: WAIST_R_S
+  # Configuration  of the QP tasks used by the stabilizer
+  tasks:
+    com:
+      stiffness: [1000, 1000, 100]
+      weight: 1000
+      height: 0.87
+      max_height: 0.92
+      min_height: 0.6
+    contact:
+      damping: 300
+      stiffness: 1
+      weight: 10000
+
+  # Weights for the force-distribution QP
+  fdqp_weights:
+    net_wrench: 10000
+    ankle_torque: 100
+    pressure: 1
+
+  # Vertical drift frequency
+  vdc:
+    frequency: 1
+    stiffness: 1000
+
+  # Admittance coefficients (force-control)
+  admittance:
+    com: [0, 0]
+    cop: [0.001, 0.001]
+
+  ########################
+  # Gains for DCM tracking
+  ########################
+  # These are the main gains of the stabilizer.
+  dcm_tracking:
+    gains:
+      prop: 3
+      integral: 20
+      deriv: 0.5
+    derivator_time_constant: 5
+    integrator_time_constant: 30

@@ -2,7 +2,15 @@
  "WarningDebugMessage":
  {
    "base": "Message",
-   "type": "warning",
+   "log": "warning",
    "message": "Warning: the following action may be dangerous"
+ },
+ "GUIMessage":
+ {
+   "base": "Message",
+   "gui": ["Action"],
+   "log": "none",
+   "prefix": "Vision check",
+   "message": "Please check that the object has successfully been detected."
  }
 }

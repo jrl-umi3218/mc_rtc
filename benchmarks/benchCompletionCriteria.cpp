@@ -11,19 +11,21 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wpedantic"
 #pragma GCC diagnostic ignored "-Wconversion"
-#pragma GCC diagnostic ignored "-Wunknown-pragma"
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 
 const double dt = 0.005;
 
 mc_rbdyn::Robots & get_robots()
 {
+  // XXX silence missing calibration file warning
+  std::cerr.rdbuf(nullptr);
   static std::shared_ptr<mc_rbdyn::Robots> robots_ptr = nullptr;
   if(robots_ptr)
   {
     return *robots_ptr;
   }
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   robots_ptr = mc_rbdyn::loadRobot(*rm);
   return *robots_ptr;
 }
@@ -49,7 +51,7 @@ static void BM_DirectTimeout(benchmark::State & state)
 {
   unsigned int tick = 0;
   double timeout = 5.0;
-  unsigned int target = std::ceil(timeout / dt);
+  unsigned int target = static_cast<unsigned>(std::ceil(timeout / dt));
   bool b;
   std::string o;
   while(state.KeepRunning())
@@ -72,7 +74,7 @@ static void BM_Timeout(benchmark::State & state)
   mc_rtc::Configuration config;
   config.add("timeout", timeout);
   mc_control::CompletionCriteria criteria;
-  criteria.configure(dt, config);
+  criteria.configure(task, dt, config);
   bool b;
   while(state.KeepRunning())
   {
@@ -85,7 +87,7 @@ static void BM_DirectEvalAndSpeedOrTimeout(benchmark::State & state)
 {
   unsigned int tick = 0;
   double timeout = 5.0;
-  unsigned int target = std::ceil(timeout / dt);
+  unsigned int target = static_cast<unsigned>(std::ceil(timeout / dt));
   bool b;
   std::string o;
   double norm = 1e-3;
@@ -140,7 +142,7 @@ static void BM_EvalAndSpeedOrTimeout(benchmark::State & state)
     return c;
   }());
   mc_control::CompletionCriteria criteria;
-  criteria.configure(dt, config);
+  criteria.configure(task, dt, config);
   while(state.KeepRunning())
   {
     b = criteria.completed(task);
@@ -157,7 +159,7 @@ static void BM_TimeoutConfigure(benchmark::State & state)
   mc_control::CompletionCriteria criteria;
   while(state.KeepRunning())
   {
-    criteria.configure(dt, config);
+    criteria.configure(task, dt, config);
   }
 }
 BENCHMARK(BM_TimeoutConfigure);
@@ -192,7 +194,7 @@ static void BM_EvalAndSpeedOrTimeoutConfigure(benchmark::State & state)
   mc_control::CompletionCriteria criteria;
   while(state.KeepRunning())
   {
-    criteria.configure(dt, config);
+    criteria.configure(task, dt, config);
   }
 }
 BENCHMARK(BM_EvalAndSpeedOrTimeoutConfigure);

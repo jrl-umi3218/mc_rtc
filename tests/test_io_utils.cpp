@@ -17,6 +17,10 @@ BOOST_AUTO_TEST_CASE(TestIOUtils)
   std::vector<std::string> emptyVec{};
   BOOST_CHECK(to_string(emptyVec) == "");
 
+  std::vector<double> vecOfDouble{2, 3, 4};
+  BOOST_CHECK(to_string(vecOfDouble, ", ", 2) == "2.00, 3.00, 4.00");
+  BOOST_CHECK(!to_string(std::vector<double>{42, 42, 42}).empty());
+
   struct TestStruct
   {
     using value_type = int;

@@ -5,6 +5,7 @@
   "properties":
   {
     "weight": { "type": "number", "minimum": 0 },
-    "stiffness": { "type": "number", "minimum": 0 }
+    "stiffness": { "type": "number", "minimum": 0 },
+    "pitch": { "type": "number", "default": 0 }
   }
 }

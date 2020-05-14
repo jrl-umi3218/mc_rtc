@@ -1,0 +1,8 @@
+type: surfaceTransform
+robot: jvrc1
+surface: LeftFootCenter
+target:
+  rotation: [1.0, 0.0, 0.0,
+             0.0, 1.0, 0.0,
+             0.0, 0.0, 1.0]
+  translation: [0.0, 0.0, 0.0]

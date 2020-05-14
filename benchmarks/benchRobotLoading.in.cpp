@@ -7,34 +7,43 @@
 
 #include "benchmark/benchmark.h"
 
-static void BM_RobotModuleLoading(benchmark::State & state)
+class RobotLoadingFixture : public benchmark::Fixture
 {
-  mc_rbdyn::RobotLoader::clear();
-  mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
+public:
+  void SetUp(const ::benchmark::State &)
+  {
+    // XXX silence error output
+    std::cerr.rdbuf(nullptr);
+
+    mc_rbdyn::RobotLoader::clear();
+    mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
+  }
+
+  void TearDown(const ::benchmark::State &) {}
+};
+
+BENCHMARK_DEFINE_F(RobotLoadingFixture, RobotModuleLoading)(benchmark::State & state)
+{
   while(state.KeepRunning())
   {
-    auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+    auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   }
 }
-BENCHMARK(BM_RobotModuleLoading)->Unit(benchmark::kMicrosecond);
+BENCHMARK_REGISTER_F(RobotLoadingFixture, RobotModuleLoading)->Unit(benchmark::kMicrosecond);
 
-static void BM_RobotCreation(benchmark::State & state)
+BENCHMARK_DEFINE_F(RobotLoadingFixture, RobotCreation)(benchmark::State & state)
 {
-  mc_rbdyn::RobotLoader::clear();
-  mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   while(state.KeepRunning())
   {
     auto robots = mc_rbdyn::loadRobot(*rm);
   }
 }
-BENCHMARK(BM_RobotCreation)->Unit(benchmark::kMicrosecond);
+BENCHMARK_REGISTER_F(RobotLoadingFixture, RobotCreation)->Unit(benchmark::kMicrosecond);
 
-static void BM_RobotCopy(benchmark::State & state)
+BENCHMARK_DEFINE_F(RobotLoadingFixture, RobotCopy)(benchmark::State & state)
 {
-  mc_rbdyn::RobotLoader::clear();
-  mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
-  auto rm = mc_rbdyn::RobotLoader::get_robot_module("HRP2DRC");
+  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   auto robots_ptr = mc_rbdyn::loadRobot(*rm);
   const auto & robots = *robots_ptr;
   while(state.KeepRunning())
@@ -42,6 +51,6 @@ static void BM_RobotCopy(benchmark::State & state)
     auto robots_copy = robots;
   }
 }
-BENCHMARK(BM_RobotCopy)->Unit(benchmark::kMicrosecond);
+BENCHMARK_REGISTER_F(RobotLoadingFixture, RobotCopy)->Unit(benchmark::kMicrosecond);
 
 BENCHMARK_MAIN();

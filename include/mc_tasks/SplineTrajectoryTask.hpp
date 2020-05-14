@@ -6,6 +6,7 @@
 
 #include <mc_tasks/SplineTrajectoryTask.h>
 
+#include <mc_rtc/gui/Checkbox.h>
 #include <mc_rtc/gui/Rotation.h>
 #include <mc_rtc/gui/Transform.h>
 
@@ -98,28 +99,35 @@ void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver &)
   spline.samplingPoints(samples_);
   spline.update();
 
-  // Interpolate position
-  auto res = spline.splev(currTime_, 2);
-  Eigen::Vector3d & pos = res[0];
-  Eigen::Vector3d & vel = res[1];
-  Eigen::Vector3d & acc = res[2];
+  if(!paused_)
+  {
+    // Interpolate position
+    auto res = spline.splev(currTime_, 2);
+    Eigen::Vector3d & pos = res[0];
+    Eigen::Vector3d & vel = res[1];
+    Eigen::Vector3d & acc = res[2];
 
-  // Interpolate orientation
-  Eigen::Matrix3d ori_target = oriSpline_.eval(currTime_);
-  sva::PTransformd target(ori_target, pos);
+    // Interpolate orientation
+    Eigen::Matrix3d ori_target = oriSpline_.eval(currTime_);
+    sva::PTransformd target(ori_target, pos);
 
-  // Set the trajectory tracking task targets from the trajectory.
-  Eigen::VectorXd refVel(6);
-  Eigen::VectorXd refAcc(6);
-  refVel.head<3>() = Eigen::Vector3d::Zero();
-  refVel.tail<3>() = vel;
-  refAcc.head<3>() = Eigen::Vector3d::Zero();
-  refAcc.tail<3>() = acc;
-  this->refVel(refVel);
-  this->refAccel(refAcc);
-  this->refPose(target);
-
-  currTime_ = std::min(currTime_ + timeStep_, duration_);
+    // Set the trajectory tracking task targets from the trajectory.
+    Eigen::VectorXd refVel(6);
+    Eigen::VectorXd refAcc(6);
+    refVel.head<3>() = Eigen::Vector3d::Zero();
+    refVel.tail<3>() = vel;
+    refAcc.head<3>() = Eigen::Vector3d::Zero();
+    refAcc.tail<3>() = acc;
+    this->refVel(refVel);
+    this->refAccel(refAcc);
+    this->refPose(target);
+    currTime_ = std::min(currTime_ + timeStep_, duration_);
+  }
+  else
+  {
+    this->refVel(Eigen::Vector6d::Zero());
+    this->refAccel(Eigen::Vector6d::Zero());
+  }
 }
 
 template<typename Derived>
@@ -242,6 +250,8 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
   TrajectoryTask::addToGUI(gui);
 
   auto & spline = static_cast<Derived &>(*this).spline();
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Checkbox("Paused", [this]() { return paused_; }, [this]() { paused_ = !paused_; }));
   gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("Surface pose", [this]() {
                    const auto & robot = this->robots.robot(rIndex_);
                    return robot.surface(surfaceName_).X_0_s(robot);

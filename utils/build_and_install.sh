@@ -17,26 +17,27 @@ SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
 readonly PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
 
 #default settings
-INSTALL_PREFIX="/usr/local"
-WITH_ROS_SUPPORT="true"
-WITH_PYTHON_SUPPORT="true"
-PYTHON_USER_INSTALL="false"
-PYTHON_FORCE_PYTHON2="false"
-PYTHON_FORCE_PYTHON3="false"
-PYTHON_BUILD_PYTHON2_AND_PYTHON3="false"
-WITH_LSSOL="false"
-WITH_HRP2="false"
-WITH_HRP4="false"
-WITH_HRP5="false"
-BUILD_TYPE="RelWithDebInfo"
-BUILD_TESTING="true"
-INSTALL_SYSTEM_DEPENDENCIES="true"
-CLONE_ONLY="false"
-SKIP_UPDATE="false"
+export INSTALL_PREFIX="/usr/local"
+export WITH_ROS_SUPPORT="true"
+export WITH_PYTHON_SUPPORT="true"
+export PYTHON_USER_INSTALL="false"
+export PYTHON_FORCE_PYTHON2="false"
+export PYTHON_FORCE_PYTHON3="false"
+export PYTHON_BUILD_PYTHON2_AND_PYTHON3="false"
+export WITH_LSSOL="false"
+export WITH_HRP2="false"
+export WITH_HRP4="false"
+export WITH_HRP5="false"
+export BUILD_TYPE="RelWithDebInfo"
+export BUILD_TESTING="true"
+export BUILD_BENCHMARKS="false"
+export INSTALL_SYSTEM_DEPENDENCIES="true"
+export CLONE_ONLY="false"
+export SKIP_UPDATE="false"
 # This configuration option lets the script choose what to do when local git repositories are in
 # an unclean state (have local changes). The default false will stop the script with an error.
 # If true, the repository will be compiled as-is without trying to fetch the remote changes.
-SKIP_DIRTY_UPDATE="false"
+export SKIP_DIRTY_UPDATE="false"
 if command -v nproc > /dev/null
 then
    BUILD_CORE=`nproc`
@@ -46,7 +47,7 @@ fi
 export CMAKE_BUILD_PARALLEL_LEVEL=${BUILD_CORE}
 LOG_PATH="/tmp"
 BUILD_LOGFILE="$LOG_PATH/build_and_install_warnings-`date +%Y-%m-%d-%H-%M-%S`.log"
-ASK_USER_INPUT="true"
+export ASK_USER_INPUT="true"
 
 readonly TEE=`which tee`
 
@@ -84,30 +85,13 @@ mc_rtc_extra_steps()
   true
 }
 
-if [[ $OSTYPE == "darwin"* ]]
-then
-  . $this_dir/config_build_and_install.macos.sh
-elif [[ $OSTYPE == "linux-gnu" ]]
-then
-  if [ -f $this_dir/config_build_and_install.`lsb_release -sc`.sh ]
-  then
-    . $this_dir/config_build_and_install.`lsb_release -sc`.sh
-  else
-    ROS_DISTRO=""
-    APT_DEPENDENCIES=""
-    ROS_APT_DEPENDENCIES=""
-  fi
-else
-  # Assume Windows
-  . $this_dir/config_build_and_install.windows.sh
-fi
-
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --help                     (-h)               : print this help
     --install-prefix           (-i) PATH          : the directory used to install everything           (default $INSTALL_PREFIX)
     --source-dir               (-s) PATH          : the directory used to clone everything             (default $SOURCE_DIR)
     --build-type                    Type          : the build type to use                              (default $BUILD_TYPE)
     --build-testing                 {true, false} : whether to build and run unit tests                (default $BUILD_TESTING)
+    --build-benchmarks              {true, false} : whether to build and run benchmarks                (default $BUILD_BENCHMARKS)
     --build-core               (-j) N             : number of cores used for building                  (default $BUILD_CORE)
     --with-lssol                                  : enable LSSOL (requires multi-contact group access) (default $WITH_LSSOL)
     --with-hrp2                                   : enable HRP2 (requires mc-hrp2 group access)        (default $WITH_HRP2)
@@ -227,6 +211,12 @@ do
         check_true_false --build-testing "$BUILD_TESTING"
         ;;
 
+        --build-benchmarks)
+        i=$(($i+1))
+        BUILD_BENCHMARKS="${!i}"
+        check_true_false --build-benchmarks "$BUILD_BENCHMARKS"
+        ;;
+
         --install-system-dependencies)
         i=$(($i+1))
         INSTALL_SYSTEM_DEPENDENCIES="${!i}"
@@ -305,28 +295,6 @@ then
 else
   PYTHON_BUILD_PYTHON2_AND_PYTHON3=OFF
 fi
-#make settings readonly
-readonly INSTALL_PREFIX
-readonly SOURCE_DIR
-readonly WITH_ROS_SUPPORT
-readonly WITH_PYTHON_SUPPORT
-readonly WITH_PYTHON_SUPPORT
-readonly PYTHON_FORCE_PYTHON2
-readonly PYTHON_FORCE_PYTHON3
-readonly PYTHON_BUILD_PYTHON2_AND_PYTHON3
-readonly BUILD_TYPE
-readonly INSTALL_SYSTEM_DEPENDENCIES
-readonly BUILD_CORE
-readonly BUILD_TESTING
-readonly CLONE_ONLY
-readonly WITH_LSSOL
-readonly WITH_HRP2
-readonly WITH_HRP4
-readonly WITH_HRP5
-readonly SKIP_UPDATE
-readonly SKIP_DIRTY_UPDATE
-readonly BUILD_LOGFILE
-readonly ASK_USER_INPUT
 if $CLONE_ONLY
 then
   readonly NOT_CLONE_ONLY=false
@@ -334,7 +302,6 @@ else
   readonly NOT_CLONE_ONLY=true
 fi
 
-ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
 
 alias git_clone="git clone --recursive"
 git_update()
@@ -374,7 +341,7 @@ echo_log "========================================"
 echo_log ""
 echo_log "-- Build and install log for mc_rtc generated on `date +%Y-%m-%d-%H:%M:%S`"
 echo "-- Log file will be written to $BUILD_LOGFILE "
-echo_log "-- Building with the following options:"
+echo_log "-- Requested installation with the following options:"
 echo_log "   INSTALL_PREFIX=$INSTALL_PREFIX"
 echo_log "   SOURCE_DIR=$SOURCE_DIR"
 echo_log "   WITH_ROS_SUPPORT=$WITH_ROS_SUPPORT"
@@ -386,6 +353,7 @@ echo_log "   BUILD_TYPE=$BUILD_TYPE"
 echo_log "   INSTALL_SYSTEM_DEPENDENCIES=$INSTALL_SYSTEM_DEPENDENCIES"
 echo_log "   BUILD_CORE=$BUILD_CORE"
 echo_log "   BUILD_TESTING=$BUILD_TESTING"
+echo_log "   BUILD_BENCHMARKS=$BUILD_BENCHMARKS"
 echo_log "   CLONE_ONLY=$CLONE_ONLY"
 echo_log "   WITH_LSSOL=$WITH_LSSOL"
 echo_log "   WITH_HRP2=$WITH_HRP2"
@@ -395,9 +363,6 @@ echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
 echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
 echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
 echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
-echo_log "   ROS_DISTRO=$ROS_DISTRO"
-echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
-echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
 
 install_apt()
 {
@@ -415,7 +380,95 @@ install_apt()
     exec_log sudo apt-get update
     exec_log sudo apt-get -y install ${TO_INSTALL}
   fi
+  exit_if_error "-- [ERROR] Could not install one of the following packages ${TO_INSTALL}."
 }
+
+##################################################
+## Extra OS/Distribution specific configuration ##
+##################################################
+echo_log ""
+echo_log "========================"
+echo_log "== System information =="
+echo_log "========================"
+echo_log ""
+if [ $OS = Ubuntu ]
+then
+  exec_log lsb_release -a
+fi
+exec_log cmake --version
+exec_log python --version
+
+echo_log "-- Loading extra configuration for $OSTYPE"
+if [[ $OSTYPE == "darwin"* ]]
+then
+  . $this_dir/config_build_and_install.macos.sh
+elif [[ $OSTYPE == "linux-gnu" ]]
+then
+  if [ -f $this_dir/config_build_and_install.`lsb_release -sc`.sh ]
+  then
+    . $this_dir/config_build_and_install.`lsb_release -sc`.sh
+    ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
+  else
+    ROS_DISTRO=""
+    APT_DEPENDENCIES=""
+    ROS_APT_DEPENDENCIES=""
+  fi
+else
+  # Assume Windows
+  . $this_dir/config_build_and_install.windows.sh
+fi
+
+
+#make settings readonly
+readonly INSTALL_PREFIX
+readonly SOURCE_DIR
+readonly WITH_PYTHON_SUPPORT
+readonly WITH_PYTHON_SUPPORT
+readonly PYTHON_FORCE_PYTHON2
+readonly PYTHON_FORCE_PYTHON3
+readonly PYTHON_BUILD_PYTHON2_AND_PYTHON3
+readonly BUILD_TYPE
+readonly INSTALL_SYSTEM_DEPENDENCIES
+readonly BUILD_CORE
+readonly BUILD_TESTING
+readonly BUILD_BENCHMARKS
+readonly CLONE_ONLY
+readonly WITH_LSSOL
+readonly WITH_HRP2
+readonly WITH_HRP4
+readonly WITH_HRP5
+readonly SKIP_UPDATE
+readonly SKIP_DIRTY_UPDATE
+readonly BUILD_LOGFILE
+readonly ASK_USER_INPUT
+
+echo_log "-- Installing with the following options:"
+echo_log "   INSTALL_PREFIX=$INSTALL_PREFIX"
+echo_log "   SOURCE_DIR=$SOURCE_DIR"
+echo_log "   WITH_ROS_SUPPORT=$WITH_ROS_SUPPORT"
+echo_log "   WITH_PYTHON_SUPPORT=$WITH_PYTHON_SUPPORT"
+echo_log "   PYTHON_FORCE_PYTHON2=$PYTHON_FORCE_PYTHON2"
+echo_log "   PYTHON_FORCE_PYTHON3=$PYTHON_FORCE_PYTHON3"
+echo_log "   PYTHON_BUILD_PYTHON2_AND_PYTHON3=$PYTHON_BUILD_PYTHON2_AND_PYTHON3"
+echo_log "   BUILD_TYPE=$BUILD_TYPE"
+echo_log "   INSTALL_SYSTEM_DEPENDENCIES=$INSTALL_SYSTEM_DEPENDENCIES"
+echo_log "   BUILD_CORE=$BUILD_CORE"
+echo_log "   BUILD_TESTING=$BUILD_TESTING"
+echo_log "   BUILD_BENCHMARKS=$BUILD_BENCHMARKS"
+echo_log "   CLONE_ONLY=$CLONE_ONLY"
+echo_log "   WITH_LSSOL=$WITH_LSSOL"
+echo_log "   WITH_HRP2=$WITH_HRP2"
+echo_log "   WITH_HRP4=$WITH_HRP4"
+echo_log "   WITH_HRP5=$WITH_HRP5"
+echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
+echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
+echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
+echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
+echo_log "   ROS_DISTRO=$ROS_DISTRO"
+echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
+echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
+
+
 
 ###################################
 #  --  APT/Brew dependencies  --  #
@@ -485,18 +538,6 @@ fi
 echo_log ""
 echo_log "-- [SUCCESS] Successfully installed system dependencies"
 echo_log ""
-
-echo_log ""
-echo_log "========================"
-echo_log "== System information =="
-echo_log "========================"
-echo_log ""
-if [ $OS = Ubuntu ]
-then
-  exec_log lsb_release -a
-fi
-exec_log cmake --version
-exec_log python --version
 
 ########################
 ##  -- Install ROS --  #
@@ -797,7 +838,7 @@ if $CLONE_ONLY
 then
   echo_log "-- [INFO] The script was executed with CLONE_ONLY=true, stopping now."
   echo_log "   Use CLONE_ONLY=false if you wish to build and install."
-  return
+  exit 0
 fi
 
 echo_log ""
@@ -1020,6 +1061,12 @@ then
 else
   BUILD_TESTING_OPTION=OFF
 fi
+if $BUILD_BENCHMARKS
+then
+  BUILD_BENCHMARKS_OPTION=ON
+else
+  BUILD_BENCHMARKS_OPTION=OFF
+fi
 if ! $WITH_ROS_SUPPORT
 then
   CMAKE_ADDITIONAL_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS} -DDISABLE_ROS=ON"
@@ -1027,6 +1074,7 @@ fi
 exec_log cmake ../ -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
                    -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
                    -DBUILD_TESTING:BOOL=${BUILD_TESTING_OPTION} \
+                   -DBUILD_BENCHMARKS:BOOL=${BUILD_BENCHMARKS_OPTION} \
                    -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
                    -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
                    -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
@@ -1039,7 +1087,6 @@ if $BUILD_TESTING
 then
   test_project mc_rtc mc_rtc
 fi
-
 echo_log "-- [SUCCESS] Successfully built mc_rtc"
 
 ##############################

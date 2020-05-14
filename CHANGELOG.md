@@ -5,6 +5,15 @@
 ### Changes
 
 - [FSM] Deprecates the use of `robotIndex` in favor of robot name `robot`
+- `bodyWrench` and `surfaceWrench` can now be computed with joints between the sensor and body/surface
+- `Message` state can be used to display messages in the GUI as well as the CLI
+- Benchmarks can now be compiled and run with the `build_and_install.sh` script
+
+### Added
+- New benchmark for task allocation performance
+
+### Fixes
+- Fix and upgrade benchmarks compilation
 
 ## [1.3.0] - 2020-05-07
 

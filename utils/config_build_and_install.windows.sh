@@ -25,7 +25,7 @@ build_system_dependency()
     cmake ../ -DCMAKE_BUILD_TYPE=$BUILD_TYPE         \
               -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX \
               -DBUILD_TESTING:BOOL=OFF               \
-              -DGEOS_ENABLE_TESTS=False
+              ${@:3}
     cmake --build . --config ${BUILD_TYPE}
     if [ $? -ne 0 ]
     then
@@ -45,7 +45,8 @@ mc_rtc_extra_steps()
 {
   build_system_dependency eigenteam/eigen-git-mirror 3.3.7 "$SOURCE_DIR/eigen"
   build_system_dependency leethomason/tinyxml2 7.1.0 "$SOURCE_DIR/tinyxml2"
-  build_system_dependency libgeos/geos master "$SOURCE_DIR/geos"
+  build_system_dependency libgeos/geos master "$SOURCE_DIR/geos" -DGEOS_ENABLE_TESTS=False
   build_system_dependency nanomsg/nanomsg 1.1.5 "$SOURCE_DIR/nanomsg"
   build_system_dependency jbeder/yaml-cpp 29dcf92f870ee51cce8d68f8fcfe228942e8dfe1 "$SOURCE_DIR/yaml-cpp"
+  build_system_dependency google/benchmark master "$SOURCE_DIR/benchmark" -DBENCHMARK_ENABLE_GTEST_TESTS:BOOL=OFF
 }

@@ -82,9 +82,9 @@ jobs:
         cd utils
         if [[ "${{ matrix.os }}" == "windows-latest" ]]
         then
-          ./build_and_install.sh --user-input false --with-python-support false --build-testing false
+          ./build_and_install.sh --user-input false --with-python-support false --build-testing false --build-benchmarks true
         else
-          ./build_and_install.sh --user-input false
+          ./build_and_install.sh --user-input false --build-benchmarks true
         fi
     - name: Install dependencies
       uses: jrl-umi3218/github-actions/install-dependencies@master

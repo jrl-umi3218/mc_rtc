@@ -172,6 +172,7 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       t->load(solver, config);
       const auto displaySamples = config("displaySamples", t->displaySamples());
       t->displaySamples(displaySamples);
+      t->pause(config("paused", false));
       return t;
     });
 }
