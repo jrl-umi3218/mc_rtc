@@ -5103,37 +5103,6 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
 
 
 
-  
-  
-  
-  
-  
-  <tr>
-  
-  
-  
-  
-  
-  <td>pitch</td>
-  
-  <td colspan="2">
-    
-  
-  
-    
-      <span class="text-number">number</span>
-    
-    
-  
-
-
-  </td>
-  
-</tr>
-
-
-
-
 
 </tbody>
 </table>
@@ -5245,6 +5214,39 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
     
       <span class="text-number">number &ge; 0</span>
     
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>pitch</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0</span>
     
   
 
@@ -7304,37 +7306,6 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
 
 
 
-  
-  
-  
-  
-  
-  <tr>
-  
-  
-  
-  
-  
-  <td>pitch</td>
-  
-  <td colspan="2">
-    
-  
-  
-    
-      <span class="text-number">number</span>
-    
-    
-  
-
-
-  </td>
-  
-</tr>
-
-
-
-
 
 </tbody>
 </table>
@@ -7446,6 +7417,39 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
     
       <span class="text-number">number &ge; 0</span>
     
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>pitch</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0</span>
     
   
 
@@ -42221,37 +42225,6 @@ configs:
 
 
 
-  
-  
-  
-  
-  
-  <tr>
-  
-  
-  
-  
-  
-  <td>pitch</td>
-  
-  <td colspan="2">
-    
-  
-  
-    
-      <span class="text-number">number</span>
-    
-    
-  
-
-
-  </td>
-  
-</tr>
-
-
-
-
 
 </tbody>
 </table>
@@ -42363,6 +42336,39 @@ configs:
     
       <span class="text-number">number &ge; 0</span>
     
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>pitch</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0</span>
     
   
 
@@ -53778,7 +53784,7 @@ Example4:
   <div class="card-header">
     <h6 class="text-primary font-weight-bold">fsm::Message</h6>
     <div class="float-right">
-      <small class="text-muted text-right">Prints a message to the terminal</small>
+      <small class="text-muted text-right">Prints a message to the terminal and/or the GUI</small>
     </div>
   </div>
   <div class="card-body">
@@ -53786,6 +53792,132 @@ Example4:
       
 <table class="table table-borderless table-hover object-property">
 <tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>log</td>
+  
+  <td>
+    
+  
+  
+    <span class="text-secondary">enum&nbsp;</span>
+  
+  
+    <span class="text-string">string</span>&nbsp;
+  
+  
+    <span class="text-enum">info</span>&nbsp;
+  
+    <span class="text-enum">success</span>&nbsp;
+  
+    <span class="text-enum">warning</span>&nbsp;
+  
+    <span class="text-enum">error</span>&nbsp;
+  
+    <span class="text-enum">none</span>&nbsp;
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Type of message to log (default=info):<ul><li>type matches the corresponding LOG_* macro name</li><li>Use "none" to disable terminal logging</li></small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>gui</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Category in which the message will be added. <ul><li>When absent, do not show in the GUI</li><li>Empty array displays at the top of the GUI</li><li>Otherwise displays in the provided category</li></small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>prefix</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">State name</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Prefix message, name of the GUI label</small></span>
+  </td>
+  
+</tr>
+
+
+
 
   
   
@@ -53808,52 +53940,14 @@ Example4:
       <span class="text-string">string</span>
     
     
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string"></span>
+    
   
 
 
   </td>
   <td>
     <span class="text-secondary"><small>Message to display</small></span>
-  </td>
-  
-</tr>
-
-
-
-
-  
-  
-  
-  
-  
-  <tr>
-  
-  
-  
-  
-  
-  <td>type</td>
-  
-  <td colspan="2">
-    
-  
-  
-    <span class="text-secondary">enum&nbsp;</span>
-  
-  
-    <span class="text-string">string</span>&nbsp;
-  
-  
-    <span class="text-enum">info</span>&nbsp;
-  
-    <span class="text-enum">success</span>&nbsp;
-  
-    <span class="text-enum">warning</span>&nbsp;
-  
-    <span class="text-enum">error</span>&nbsp;
-  
-
-
   </td>
   
 </tr>
@@ -56656,8 +56750,16 @@ Example4:
  </span><span class="nl">"WarningDebugMessage"</span><span class="p">:</span><span class="w">
  </span><span class="p">{</span><span class="w">
    </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Message"</span><span class="p">,</span><span class="w">
-   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"warning"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"log"</span><span class="p">:</span><span class="w"> </span><span class="s2">"warning"</span><span class="p">,</span><span class="w">
    </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Warning: the following action may be dangerous"</span><span class="w">
+ </span><span class="p">},</span><span class="w">
+ </span><span class="nl">"GUIMessage"</span><span class="p">:</span><span class="w">
+ </span><span class="p">{</span><span class="w">
+   </span><span class="nl">"base"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Message"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"gui"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Action"</span><span class="p">],</span><span class="w">
+   </span><span class="nl">"log"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"prefix"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Vision check"</span><span class="p">,</span><span class="w">
+   </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Please check that the object has successfully been detected."</span><span class="w">
  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
@@ -56669,8 +56771,16 @@ Example4:
  "WarningDebugMessage":
  {
    "base": "Message",
-   "type": "warning",
+   "log": "warning",
    "message": "Warning: the following action may be dangerous"
+ },
+ "GUIMessage":
+ {
+   "base": "Message",
+   "gui": ["Action"],
+   "log": "none",
+   "prefix": "Vision check",
+   "message": "Please check that the object has successfully been detected."
  }
 }</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#State_Message_examplejsonCopySource">Copy to clipboard</button>
@@ -56688,8 +56798,14 @@ Example4:
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
 <span class="na">WarningDebugMessage</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">Message</span>
-  <span class="na">type</span><span class="pi">:</span> <span class="s">warning</span>
-  <span class="na">message</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Warning:</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">following</span><span class="nv"> </span><span class="s">action</span><span class="nv"> </span><span class="s">may</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">dangerous'</span></code></pre></figure>
+  <span class="na">log</span><span class="pi">:</span> <span class="s">warning</span>
+  <span class="na">message</span><span class="pi">:</span> <span class="s1">'</span><span class="s">Warning:</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">following</span><span class="nv"> </span><span class="s">action</span><span class="nv"> </span><span class="s">may</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">dangerous'</span>
+<span class="na">GUIMessage</span><span class="pi">:</span>
+  <span class="na">base</span><span class="pi">:</span> <span class="s">Message</span>
+  <span class="na">gui</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">Action"</span><span class="pi">]</span>
+  <span class="na">log</span><span class="pi">:</span> <span class="s">none</span>
+  <span class="na">prefix</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Vision</span><span class="nv"> </span><span class="s">check"</span>
+  <span class="na">message</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Please</span><span class="nv"> </span><span class="s">check</span><span class="nv"> </span><span class="s">that</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">object</span><span class="nv"> </span><span class="s">has</span><span class="nv"> </span><span class="s">successfully</span><span class="nv"> </span><span class="s">been</span><span class="nv"> </span><span class="s">detected."</span></code></pre></figure>
 
   </div>
 </div>
@@ -56698,8 +56814,14 @@ Example4:
   <pre id="State_Message_exampleyamlCopySource" class="offscreen" aria-hidden=true>---
 WarningDebugMessage:
   base: Message
-  type: warning
-  message: 'Warning: the following action may be dangerous'</pre>
+  log: warning
+  message: 'Warning: the following action may be dangerous'
+GUIMessage:
+  base: Message
+  gui: ["Action"]
+  log: none
+  prefix: "Vision check"
+  message: "Please check that the object has successfully been detected."</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#State_Message_exampleyamlCopySource">Copy to clipboard</button>
 
 

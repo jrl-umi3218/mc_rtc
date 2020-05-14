@@ -8,7 +8,7 @@ var searchData=
   ['sphereapproxim',['SphereApproxim',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a50488b6de166145f7320dc22de55de99',1,'sch']]],
   ['spline_5fconstraints_5ft',['spline_constraints_t',['../a02841.html#af3fc53f8154ef0226149e69b9bfd8485',1,'mc_trajectory::ExactCubic']]],
   ['spline_5fderiv_5fconstraint_5ft',['spline_deriv_constraint_t',['../a02841.html#a1fffcee3002474517dd513904de9ea77',1,'mc_trajectory::ExactCubic']]],
-  ['splinetrajectorybase',['SplineTrajectoryBase',['../a02749.html#adc53d700518e4c9bf22a193cd0115a2a',1,'mc_tasks::ExactCubicTrajectoryTask::SplineTrajectoryBase()'],['../a02821.html#a649052a5fbf326990d2b3d20ec66ab19',1,'mc_tasks::SplineTrajectoryTask::SplineTrajectoryBase()']]],
+  ['splinetrajectorybase',['SplineTrajectoryBase',['../a02725.html#a81d5a557b19cceddeb5fe7911db9dceb',1,'mc_tasks::BSplineTrajectoryTask::SplineTrajectoryBase()'],['../a02821.html#a649052a5fbf326990d2b3d20ec66ab19',1,'mc_tasks::SplineTrajectoryTask::SplineTrajectoryBase()']]],
   ['stateptr',['StatePtr',['../a00711.html#a4c42d903de4c4a1e5ad50c37bc2d547a',1,'mc_control::fsm']]],
   ['stn_5fvvr',['STN_VVR',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a43b208a34398f097c2c7e5cb780c5da6',1,'sch']]],
   ['storage_5ft',['storage_t',['../a02609.html#afc58a28dae04a63aa3ed180a654ec223',1,'mc_solver::GenericLoader']]],

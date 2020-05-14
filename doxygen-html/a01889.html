@@ -138,10 +138,18 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
+<tr class="memitem:a32f3abf8754efc147187ae3eb00e8ed4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01889.html#a32f3abf8754efc147187ae3eb00e8ed4">prefix_</a></td></tr>
+<tr class="separator:a32f3abf8754efc147187ae3eb00e8ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58da17ef00e79d1a799b39a4cb10e186"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01889.html#a58da17ef00e79d1a799b39a4cb10e186">message_</a></td></tr>
 <tr class="separator:a58da17ef00e79d1a799b39a4cb10e186"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa04d8dfdb2e5c1fd243ead220677eae"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01889.html#aaa04d8dfdb2e5c1fd243ead220677eae">type_</a> = &quot;info&quot;</td></tr>
-<tr class="separator:aaa04d8dfdb2e5c1fd243ead220677eae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17d7efa8afe689d0859dbc2c353a857d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01889.html#a17d7efa8afe689d0859dbc2c353a857d">logType_</a> = &quot;info&quot;</td></tr>
+<tr class="separator:a17d7efa8afe689d0859dbc2c353a857d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19e4c8d49c2b042b5e5b75064b4a5925"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01889.html#a19e4c8d49c2b042b5e5b75064b4a5925">gui_</a> = false</td></tr>
+<tr class="separator:a19e4c8d49c2b042b5e5b75064b4a5925"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8548ec14b74cdb3585fe4605bdca0b9"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01889.html#ae8548ec14b74cdb3585fe4605bdca0b9">guiCategory_</a></td></tr>
+<tr class="separator:ae8548ec14b74cdb3585fe4605bdca0b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19f38c0a2486d70b98b287fd201581cf"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01889.html#a19f38c0a2486d70b98b287fd201581cf">labelName_</a></td></tr>
+<tr class="separator:a19f38c0a2486d70b98b287fd201581cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_a01869"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a01869')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a01869.html">mc_control::fsm::State</a></td></tr>
 <tr class="memitem:ad5e8acab9275900efb0a32ffaf155bed inherit pro_attribs_a01869"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02197.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01869.html#ad5e8acab9275900efb0a32ffaf155bed">add_contacts_config_</a></td></tr>
 <tr class="separator:ad5e8acab9275900efb0a32ffaf155bed inherit pro_attribs_a01869"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,11 +179,8 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a simple Message state to display debug information in the FSM. </p>
-<p>This states does nothing for a while then exits with "OK"</p>
-<p>Configuration options:</p><ul>
-<li>type: one of [info, error, warning, success] corresponding to the LOG_* macros</li>
-<li>message: the string to display </li>
-</ul>
+<p>Messages can be shown in the CLI as LOG_* macro calls, or in the GUI as Label elements.</p>
+<p>This state always outputs "OK" and is always completed. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a803539f968b698dc20c1e393072a8328"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a803539f968b698dc20c1e393072a8328">&#9670;&nbsp;</a></span>configure()</h2>
@@ -288,7 +293,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -300,6 +305,94 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a19e4c8d49c2b042b5e5b75064b4a5925"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19e4c8d49c2b042b5e5b75064b4a5925">&#9670;&nbsp;</a></span>gui_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::fsm::MessageState::gui_ = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae8548ec14b74cdb3585fe4605bdca0b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8548ec14b74cdb3585fe4605bdca0b9">&#9670;&nbsp;</a></span>guiCategory_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_control::fsm::MessageState::guiCategory_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a19f38c0a2486d70b98b287fd201581cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19f38c0a2486d70b98b287fd201581cf">&#9670;&nbsp;</a></span>labelName_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_control::fsm::MessageState::labelName_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a17d7efa8afe689d0859dbc2c353a857d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17d7efa8afe689d0859dbc2c353a857d">&#9670;&nbsp;</a></span>logType_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_control::fsm::MessageState::logType_ = &quot;info&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a58da17ef00e79d1a799b39a4cb10e186"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a58da17ef00e79d1a799b39a4cb10e186">&#9670;&nbsp;</a></span>message_</h2>
 
@@ -322,8 +415,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="aaa04d8dfdb2e5c1fd243ead220677eae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa04d8dfdb2e5c1fd243ead220677eae">&#9670;&nbsp;</a></span>type_</h2>
+<a id="a32f3abf8754efc147187ae3eb00e8ed4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32f3abf8754efc147187ae3eb00e8ed4">&#9670;&nbsp;</a></span>prefix_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -332,7 +425,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string mc_control::fsm::MessageState::type_ = &quot;info&quot;</td>
+          <td class="memname">std::string mc_control::fsm::MessageState::prefix_</td>
         </tr>
       </table>
   </td>
@@ -351,7 +444,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00710.html">mc_control</a></li><li class="navelem"><a class="el" href="a00711.html">fsm</a></li><li class="navelem"><a class="el" href="a01889.html">MessageState</a></li>
-    <li class="footer">Generated on Wed May 13 2020 12:50:11 for mc_rtc by
+    <li class="footer">Generated on Thu May 14 2020 02:58:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

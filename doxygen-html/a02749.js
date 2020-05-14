@@ -1,6 +1,5 @@
 var a02749 =
 [
-    [ "SplineTrajectoryBase", "a02749.html#adc53d700518e4c9bf22a193cd0115a2a", null ],
     [ "ExactCubicTrajectoryTask", "a02749.html#ad27477a0f30c373765213f5e8288963e", null ],
     [ "addToGUI", "a02749.html#a1f68add7b8b70b9b6878bb0d72c0c6e7", null ],
     [ "constraints", "a02749.html#a14e12359f28675ec224ec009ae75b174", null ],

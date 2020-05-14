@@ -78,6 +78,7 @@ $(document).ready(function(){initNavTree('a00329.html','');});
 <div class="contents">
 <div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;functional&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -90,10 +91,14 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af3e679ba397e7cc785dc34928ce83d37"><td class="memTemplParams" colspan="2">template&lt;typename Container &gt; </td></tr>
-<tr class="memitem:af3e679ba397e7cc785dc34928ce83d37"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00734.html#af3e679ba397e7cc785dc34928ce83d37">mc_rtc::io::to_string</a> (const Container &amp;c, const std::string &amp;delimiter=&quot;, &quot;)</td></tr>
-<tr class="memdesc:af3e679ba397e7cc785dc34928ce83d37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a container to a string.  <a href="a00734.html#af3e679ba397e7cc785dc34928ce83d37">More...</a><br /></td></tr>
-<tr class="separator:af3e679ba397e7cc785dc34928ce83d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af24adad562092ccd4f760a38c86fcf95"><td class="memTemplParams" colspan="2">template&lt;typename Container , typename std::enable_if&lt;!std::is_arithmetic&lt; typename Container::value_type &gt;::value, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:af24adad562092ccd4f760a38c86fcf95"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00734.html#af24adad562092ccd4f760a38c86fcf95">mc_rtc::io::to_string</a> (const Container &amp;c, const std::string &amp;delimiter=&quot;, &quot;)</td></tr>
+<tr class="memdesc:af24adad562092ccd4f760a38c86fcf95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a container to a string.  <a href="a00734.html#af24adad562092ccd4f760a38c86fcf95">More...</a><br /></td></tr>
+<tr class="separator:af24adad562092ccd4f760a38c86fcf95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38fc0c2f37aa3befdc6ab09b25c11f1f"><td class="memTemplParams" colspan="2">template&lt;typename Container , typename std::enable_if&lt; std::is_arithmetic&lt; typename Container::value_type &gt;::value, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:a38fc0c2f37aa3befdc6ab09b25c11f1f"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00734.html#a38fc0c2f37aa3befdc6ab09b25c11f1f">mc_rtc::io::to_string</a> (const Container &amp;c, const std::string &amp;delimiter=&quot;, &quot;, const unsigned precision=std::numeric_limits&lt; typename Container::value_type &gt;::digits10)</td></tr>
+<tr class="memdesc:a38fc0c2f37aa3befdc6ab09b25c11f1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variant of <a class="el" href="a00734.html#to_string">to_string</a> that converts numeric types to string.  <a href="a00734.html#a38fc0c2f37aa3befdc6ab09b25c11f1f">More...</a><br /></td></tr>
+<tr class="separator:a38fc0c2f37aa3befdc6ab09b25c11f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a288c60b8869f856d23c8a94ac085438e"><td class="memTemplParams" colspan="2">template&lt;typename Container , typename Callback , typename std::enable_if&lt;!std::is_convertible&lt; Callback, std::string &gt;::value, int &gt;::type  = 0&gt; </td></tr>
 <tr class="memitem:a288c60b8869f856d23c8a94ac085438e"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00734.html#a288c60b8869f856d23c8a94ac085438e">mc_rtc::io::to_string</a> (const Container &amp;c, Callback &amp;&amp;get_value, const std::string &amp;delimiter=&quot;, &quot;)</td></tr>
 <tr class="memdesc:a288c60b8869f856d23c8a94ac085438e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a container to a string.  <a href="a00734.html#a288c60b8869f856d23c8a94ac085438e">More...</a><br /></td></tr>
@@ -106,7 +111,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00329.html">io_utils.h</a></li>
-    <li class="footer">Generated on Wed May 13 2020 12:50:10 for mc_rtc by
+    <li class="footer">Generated on Thu May 14 2020 02:58:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

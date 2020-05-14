@@ -1957,8 +1957,16 @@
       <type>std::string</type>
       <name>to_string</name>
       <anchorfile>a00734.html</anchorfile>
-      <anchor>af3e679ba397e7cc785dc34928ce83d37</anchor>
+      <anchor>af24adad562092ccd4f760a38c86fcf95</anchor>
       <arglist>(const Container &amp;c, const std::string &amp;delimiter=&quot;, &quot;)</arglist>
+      <docanchor file="a00734">to_string</docanchor>
+    </member>
+    <member kind="function">
+      <type>std::string</type>
+      <name>to_string</name>
+      <anchorfile>a00734.html</anchorfile>
+      <anchor>a38fc0c2f37aa3befdc6ab09b25c11f1f</anchor>
+      <arglist>(const Container &amp;c, const std::string &amp;delimiter=&quot;, &quot;, const unsigned precision=std::numeric_limits&lt; typename Container::value_type &gt;::digits10)</arglist>
     </member>
     <member kind="function">
       <type>std::string</type>
@@ -5542,6 +5550,13 @@
     <name>mc_tasks::BSplineTrajectoryTask</name>
     <filename>a02725.html</filename>
     <base>SplineTrajectoryTask&lt; BSplineTrajectoryTask &gt;</base>
+    <member kind="typedef">
+      <type>SplineTrajectoryTask&lt; BSplineTrajectoryTask &gt;</type>
+      <name>SplineTrajectoryBase</name>
+      <anchorfile>a02725.html</anchorfile>
+      <anchor>a81d5a557b19cceddeb5fe7911db9dceb</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="typedef">
       <type>mc_trajectory::BSpline::waypoints_t</type>
       <name>waypoints_t</name>
@@ -11136,13 +11151,6 @@
     <name>mc_tasks::ExactCubicTrajectoryTask</name>
     <filename>a02749.html</filename>
     <base>SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</base>
-    <member kind="typedef">
-      <type>SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</type>
-      <name>SplineTrajectoryBase</name>
-      <anchorfile>a02749.html</anchorfile>
-      <anchor>adc53d700518e4c9bf22a193cd0115a2a</anchor>
-      <arglist></arglist>
-    </member>
     <member kind="function">
       <type></type>
       <name>ExactCubicTrajectoryTask</name>
@@ -16672,6 +16680,13 @@
     </member>
     <member kind="variable" protection="protected">
       <type>std::string</type>
+      <name>prefix_</name>
+      <anchorfile>a01889.html</anchorfile>
+      <anchor>a32f3abf8754efc147187ae3eb00e8ed4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::string</type>
       <name>message_</name>
       <anchorfile>a01889.html</anchorfile>
       <anchor>a58da17ef00e79d1a799b39a4cb10e186</anchor>
@@ -16679,9 +16694,30 @@
     </member>
     <member kind="variable" protection="protected">
       <type>std::string</type>
-      <name>type_</name>
+      <name>logType_</name>
       <anchorfile>a01889.html</anchorfile>
-      <anchor>aaa04d8dfdb2e5c1fd243ead220677eae</anchor>
+      <anchor>a17d7efa8afe689d0859dbc2c353a857d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>gui_</name>
+      <anchorfile>a01889.html</anchorfile>
+      <anchor>a19e4c8d49c2b042b5e5b75064b4a5925</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>guiCategory_</name>
+      <anchorfile>a01889.html</anchorfile>
+      <anchor>ae8548ec14b74cdb3585fe4605bdca0b9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::string</type>
+      <name>labelName_</name>
+      <anchorfile>a01889.html</anchorfile>
+      <anchor>a19f38c0a2486d70b98b287fd201581cf</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -21092,6 +21128,34 @@
       <arglist>(const std::string &amp;body) const</arglist>
     </member>
     <member kind="function">
+      <type>ForceSensor &amp;</type>
+      <name>findBodyForceSensor</name>
+      <anchorfile>a02129.html</anchorfile>
+      <anchor>a7e14cf2bdc70b09694f20ce361951f3a</anchor>
+      <arglist>(const std::string &amp;body)</arglist>
+    </member>
+    <member kind="function">
+      <type>const ForceSensor &amp;</type>
+      <name>findBodyForceSensor</name>
+      <anchorfile>a02129.html</anchorfile>
+      <anchor>a663bbb5cbdd28846262d23e2def39e83</anchor>
+      <arglist>(const std::string &amp;body) const</arglist>
+    </member>
+    <member kind="function">
+      <type>ForceSensor &amp;</type>
+      <name>findSurfaceForceSensor</name>
+      <anchorfile>a02129.html</anchorfile>
+      <anchor>a42d6eaf5f5a8bb51c29a400a29897d1d</anchor>
+      <arglist>(const std::string &amp;surface)</arglist>
+    </member>
+    <member kind="function">
+      <type>const ForceSensor &amp;</type>
+      <name>findSurfaceForceSensor</name>
+      <anchorfile>a02129.html</anchorfile>
+      <anchor>a2afa3baa0fc7aab41ca8e1670d4f13d3</anchor>
+      <arglist>(const std::string &amp;surface) const</arglist>
+    </member>
+    <member kind="function">
       <type>std::vector&lt; ForceSensor &gt; &amp;</type>
       <name>forceSensors</name>
       <anchorfile>a02129.html</anchorfile>
@@ -21735,6 +21799,34 @@
       <anchorfile>a02129.html</anchorfile>
       <anchor>a7d8ac9af47c038fda22f721e9c1d3a89</anchor>
       <arglist>(const std::string &amp;body) const</arglist>
+    </member>
+    <member kind="function">
+      <type>ForceSensor &amp;</type>
+      <name>findBodyForceSensor</name>
+      <anchorfile>a02129.html</anchorfile>
+      <anchor>a7e14cf2bdc70b09694f20ce361951f3a</anchor>
+      <arglist>(const std::string &amp;body)</arglist>
+    </member>
+    <member kind="function">
+      <type>const ForceSensor &amp;</type>
+      <name>findBodyForceSensor</name>
+      <anchorfile>a02129.html</anchorfile>
+      <anchor>a663bbb5cbdd28846262d23e2def39e83</anchor>
+      <arglist>(const std::string &amp;body) const</arglist>
+    </member>
+    <member kind="function">
+      <type>ForceSensor &amp;</type>
+      <name>findSurfaceForceSensor</name>
+      <anchorfile>a02129.html</anchorfile>
+      <anchor>a42d6eaf5f5a8bb51c29a400a29897d1d</anchor>
+      <arglist>(const std::string &amp;surface)</arglist>
+    </member>
+    <member kind="function">
+      <type>const ForceSensor &amp;</type>
+      <name>findSurfaceForceSensor</name>
+      <anchorfile>a02129.html</anchorfile>
+      <anchor>a2afa3baa0fc7aab41ca8e1670d4f13d3</anchor>
+      <arglist>(const std::string &amp;surface) const</arglist>
     </member>
     <member kind="function">
       <type>std::vector&lt; ForceSensor &gt; &amp;</type>
@@ -24141,6 +24233,20 @@
       <anchor>ab6c7b78884488afa4df3bc6e7db18353</anchor>
       <arglist>() const</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>pause</name>
+      <anchorfile>a02821.html</anchorfile>
+      <anchor>aea7ce56cb05ec2f4fa98d4980e9cd356</anchor>
+      <arglist>(bool paused)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>pause</name>
+      <anchorfile>a02821.html</anchorfile>
+      <anchor>a5f8841fa4606b3b4629f1e91933aaca8</anchor>
+      <arglist>() const</arglist>
+    </member>
     <member kind="function" protection="protected">
       <type>void</type>
       <name>refPose</name>
@@ -24223,6 +24329,13 @@
       <name>oriWp_</name>
       <anchorfile>a02821.html</anchorfile>
       <anchor>a8bc85c80baae71fc2dcc41a577edb1d1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>paused_</name>
+      <anchorfile>a02821.html</anchorfile>
+      <anchor>af5a5ee124caa955429dbe83416c8b8d3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -24363,6 +24476,20 @@
       <anchor>ab6c7b78884488afa4df3bc6e7db18353</anchor>
       <arglist>() const</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>pause</name>
+      <anchorfile>a02821.html</anchorfile>
+      <anchor>aea7ce56cb05ec2f4fa98d4980e9cd356</anchor>
+      <arglist>(bool paused)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>pause</name>
+      <anchorfile>a02821.html</anchorfile>
+      <anchor>a5f8841fa4606b3b4629f1e91933aaca8</anchor>
+      <arglist>() const</arglist>
+    </member>
     <member kind="function" protection="protected">
       <type>void</type>
       <name>refPose</name>
@@ -24445,6 +24572,13 @@
       <name>oriWp_</name>
       <anchorfile>a02821.html</anchorfile>
       <anchor>a8bc85c80baae71fc2dcc41a577edb1d1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>paused_</name>
+      <anchorfile>a02821.html</anchorfile>
+      <anchor>af5a5ee124caa955429dbe83416c8b8d3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -24585,6 +24719,20 @@
       <anchor>ab6c7b78884488afa4df3bc6e7db18353</anchor>
       <arglist>() const</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>pause</name>
+      <anchorfile>a02821.html</anchorfile>
+      <anchor>aea7ce56cb05ec2f4fa98d4980e9cd356</anchor>
+      <arglist>(bool paused)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>pause</name>
+      <anchorfile>a02821.html</anchorfile>
+      <anchor>a5f8841fa4606b3b4629f1e91933aaca8</anchor>
+      <arglist>() const</arglist>
+    </member>
     <member kind="function" protection="protected">
       <type>void</type>
       <name>refPose</name>
@@ -24667,6 +24815,13 @@
       <name>oriWp_</name>
       <anchorfile>a02821.html</anchorfile>
       <anchor>a8bc85c80baae71fc2dcc41a577edb1d1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>paused_</name>
+      <anchorfile>a02821.html</anchorfile>
+      <anchor>af5a5ee124caa955429dbe83416c8b8d3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -32039,8 +32194,16 @@
       <type>std::string</type>
       <name>to_string</name>
       <anchorfile>a00734.html</anchorfile>
-      <anchor>af3e679ba397e7cc785dc34928ce83d37</anchor>
+      <anchor>af24adad562092ccd4f760a38c86fcf95</anchor>
       <arglist>(const Container &amp;c, const std::string &amp;delimiter=&quot;, &quot;)</arglist>
+      <docanchor file="a00734">to_string</docanchor>
+    </member>
+    <member kind="function">
+      <type>std::string</type>
+      <name>to_string</name>
+      <anchorfile>a00734.html</anchorfile>
+      <anchor>a38fc0c2f37aa3befdc6ab09b25c11f1f</anchor>
+      <arglist>(const Container &amp;c, const std::string &amp;delimiter=&quot;, &quot;, const unsigned precision=std::numeric_limits&lt; typename Container::value_type &gt;::digits10)</arglist>
     </member>
     <member kind="function">
       <type>std::string</type>

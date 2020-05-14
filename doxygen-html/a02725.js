@@ -1,5 +1,6 @@
 var a02725 =
 [
+    [ "SplineTrajectoryBase", "a02725.html#a81d5a557b19cceddeb5fe7911db9dceb", null ],
     [ "waypoints_t", "a02725.html#a669d5fdec2578c135db701bba1727403", null ],
     [ "BSplineTrajectoryTask", "a02725.html#aeb967476c50f3838e13951e0f3d9527c", null ],
     [ "addToGUI", "a02725.html#a5c4c24081d3cfc9ba7d61097f97c968e", null ],

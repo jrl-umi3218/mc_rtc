@@ -111,8 +111,9 @@ var searchData=
   ['grippertorquetask',['GripperTorqueTask',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01172.html',1,'tasks::qp::GripperTorqueTask'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01172.html#abd65c8e12ea38c8ca91a0caa344166f0',1,'tasks::qp::GripperTorqueTask::GripperTorqueTask()']]],
   ['gui',['gui',['../a01965.html#abb942edc92a7d47993ea5d1ad78e58e9',1,'mc_control::MCController::gui()'],['../a02669.html#ac015f44b8b157dafe8303dd295e10e8d',1,'mc_solver::QPSolver::gui(std::shared_ptr&lt; mc_rtc::gui::StateBuilder &gt; gui)'],['../a02669.html#aaff0d1437fd451774eb7a306b2c5d464',1,'mc_solver::QPSolver::gui() const']]],
   ['gui_2eh',['gui.h',['../a00326.html',1,'']]],
-  ['gui_5f',['gui_',['../a01965.html#a5761e783caf225454e03628b2533fc13',1,'mc_control::MCController']]],
+  ['gui_5f',['gui_',['../a01889.html#a19e4c8d49c2b042b5e5b75064b4a5925',1,'mc_control::fsm::MessageState::gui_()'],['../a01965.html#a5761e783caf225454e03628b2533fc13',1,'mc_control::MCController::gui_()']]],
   ['gui_5fserver_5fpub_5furis',['gui_server_pub_uris',['../a01945.html#a669bd8f5926553a0091c2f2118d5d5cb',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['gui_5fserver_5frep_5furis',['gui_server_rep_uris',['../a01945.html#a86b0d00d5943bf98a345f513b03f5388',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
-  ['gui_5ftimestep',['gui_timestep',['../a01945.html#aefc4cb0145c34e7595b346186ed8a2d6',1,'mc_control::MCGlobalController::GlobalConfiguration']]]
+  ['gui_5ftimestep',['gui_timestep',['../a01945.html#aefc4cb0145c34e7595b346186ed8a2d6',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
+  ['guicategory_5f',['guiCategory_',['../a01889.html#ae8548ec14b74cdb3585fe4605bdca0b9',1,'mc_control::fsm::MessageState']]]
 ];

@@ -491,6 +491,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7d8ac9af47c038fda22f721e9c1d3a89"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02073.html">ForceSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02129.html#a7d8ac9af47c038fda22f721e9c1d3a89">bodyForceSensor</a> (const std::string &amp;body) const</td></tr>
 <tr class="memdesc:a7d8ac9af47c038fda22f721e9c1d3a89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const variant.  <a href="#a7d8ac9af47c038fda22f721e9c1d3a89">More...</a><br /></td></tr>
 <tr class="separator:a7d8ac9af47c038fda22f721e9c1d3a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e14cf2bdc70b09694f20ce361951f3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02073.html">ForceSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02129.html#a7e14cf2bdc70b09694f20ce361951f3a">findBodyForceSensor</a> (const std::string &amp;body)</td></tr>
+<tr class="memdesc:a7e14cf2bdc70b09694f20ce361951f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Looks for a force sensor from a body up the kinematic chain until the root.  <a href="#a7e14cf2bdc70b09694f20ce361951f3a">More...</a><br /></td></tr>
+<tr class="separator:a7e14cf2bdc70b09694f20ce361951f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a663bbb5cbdd28846262d23e2def39e83"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02073.html">ForceSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02129.html#a663bbb5cbdd28846262d23e2def39e83">findBodyForceSensor</a> (const std::string &amp;body) const</td></tr>
+<tr class="memdesc:a663bbb5cbdd28846262d23e2def39e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const variant.  <a href="#a663bbb5cbdd28846262d23e2def39e83">More...</a><br /></td></tr>
+<tr class="separator:a663bbb5cbdd28846262d23e2def39e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42d6eaf5f5a8bb51c29a400a29897d1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02073.html">ForceSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02129.html#a42d6eaf5f5a8bb51c29a400a29897d1d">findSurfaceForceSensor</a> (const std::string &amp;<a class="el" href="a02129.html#aa4b724e51881215dd4293f9578656755">surface</a>)</td></tr>
+<tr class="memdesc:a42d6eaf5f5a8bb51c29a400a29897d1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Looks for a force sensor from a surface up the kinematic chain until the root.  <a href="#a42d6eaf5f5a8bb51c29a400a29897d1d">More...</a><br /></td></tr>
+<tr class="separator:a42d6eaf5f5a8bb51c29a400a29897d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2afa3baa0fc7aab41ca8e1670d4f13d3"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02073.html">ForceSensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02129.html#a2afa3baa0fc7aab41ca8e1670d4f13d3">findSurfaceForceSensor</a> (const std::string &amp;<a class="el" href="a02129.html#aa4b724e51881215dd4293f9578656755">surface</a>) const</td></tr>
+<tr class="memdesc:a2afa3baa0fc7aab41ca8e1670d4f13d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const variant.  <a href="#a2afa3baa0fc7aab41ca8e1670d4f13d3">More...</a><br /></td></tr>
+<tr class="separator:a2afa3baa0fc7aab41ca8e1670d4f13d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9ece4044d66c5fb62667f7dc91dd6d4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a02073.html">ForceSensor</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02129.html#aa9ece4044d66c5fb62667f7dc91dd6d4">forceSensors</a> ()</td></tr>
 <tr class="memdesc:aa9ece4044d66c5fb62667f7dc91dd6d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns all force sensors.  <a href="#aa9ece4044d66c5fb62667f7dc91dd6d4">More...</a><br /></td></tr>
 <tr class="separator:aa9ece4044d66c5fb62667f7dc91dd6d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -954,10 +966,11 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The attached sensor</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">If</td><td>no sensor is attached to this body </td></tr>
+    <tr><td class="paramname">If</td><td>no sensor is directly attached to this body</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>if the body in indirectly attached to a body, use <a class="el" href="a02129.html#a7e14cf2bdc70b09694f20ce361951f3a" title="Looks for a force sensor from a body up the kinematic chain until the root. ">findBodyForceSensor()</a> instead </dd></dl>
 
 </div>
 </div>
@@ -1450,6 +1463,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Compute the gravity-free wrench in body frame. </p>
+<dl class="section note"><dt>Note</dt><dd>If the body is indirectly attached to the sensor (i.e there are joints in-between), then the kinematic transformation will be taken into account but the effect of bodies in-between is not accounted for in the returned wrench.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bodyName</td><td>A body attached to a force sensor</td></tr>
@@ -1917,6 +1931,112 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Apply Euler integration to <code>mbc</code> using the robot's <a class="el" href="a02129.html#a79bdab3efcd9ada4d2b3aefa53374af1" title="Access MultiBody representation of the robot. ">mb()</a> and <code>step</code> timestep. </p>
+
+</div>
+</div>
+<a id="a7e14cf2bdc70b09694f20ce361951f3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e14cf2bdc70b09694f20ce361951f3a">&#9670;&nbsp;</a></span>findBodyForceSensor() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02073.html">ForceSensor</a>&amp; mc_rbdyn::Robot::findBodyForceSensor </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>body</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Looks for a force sensor from a body up the kinematic chain until the root. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">body</td><td>Name of body indirectly attached to the sensor</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The sensor to which the body is indirectly attached</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>no sensor is found between the body and the root </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a663bbb5cbdd28846262d23e2def39e83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a663bbb5cbdd28846262d23e2def39e83">&#9670;&nbsp;</a></span>findBodyForceSensor() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a02073.html">ForceSensor</a>&amp; mc_rbdyn::Robot::findBodyForceSensor </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>body</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Const variant. </p>
+
+</div>
+</div>
+<a id="a42d6eaf5f5a8bb51c29a400a29897d1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42d6eaf5f5a8bb51c29a400a29897d1d">&#9670;&nbsp;</a></span>findSurfaceForceSensor() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02073.html">ForceSensor</a>&amp; mc_rbdyn::Robot::findSurfaceForceSensor </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>surface</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Looks for a force sensor from a surface up the kinematic chain until the root. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">surface</td><td>Name of surface indirectly attached to the sensor</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The sensor to which the surface is indirectly attached</dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>no sensor is found between the surface and the root </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2afa3baa0fc7aab41ca8e1670d4f13d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2afa3baa0fc7aab41ca8e1670d4f13d3">&#9670;&nbsp;</a></span>findSurfaceForceSensor() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a02073.html">ForceSensor</a>&amp; mc_rbdyn::Robot::findSurfaceForceSensor </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>surface</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Const variant. </p>
 
 </div>
 </div>
@@ -3244,6 +3364,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Compute the gravity-free wrench in surface frame. </p>
+<dl class="section note"><dt>Note</dt><dd>If the surface is indirectly attached to the sensor (i.e there are joints in-between), then the kinematic transformation will be taken into account but the effect of bodies in-between is not accounted for in the returned wrench.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">surfaceName</td><td>A surface attached to a force sensor</td></tr>
@@ -3775,7 +3896,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00715.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a02129.html">Robot</a></li>
-    <li class="footer">Generated on Wed May 13 2020 12:50:11 for mc_rtc by
+    <li class="footer">Generated on Thu May 14 2020 02:58:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
