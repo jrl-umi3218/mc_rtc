@@ -559,6 +559,13 @@ public:
   template<typename T>
   bool hasDevice(const std::string & name) const;
 
+  /** Alias for \see hasDevice */
+  template<typename T>
+  inline bool hasSensor(const std::string & name) const
+  {
+    return hasDevice<T>(name);
+  }
+
   /** Get a generic device of type T named name
    *
    * The reference returned by this function is remains valid
@@ -580,8 +587,28 @@ public:
     return const_cast<T &>(const_cast<const Robot *>(this)->device<T>(name));
   }
 
+  /** Alias for \see device */
+  template<typename T>
+  inline const T & sensor(const std::string & name) const
+  {
+    return device<T>(name);
+  }
+
+  /** Alias for \see device */
+  template<typename T>
+  inline T & sensor(const std::string & name)
+  {
+    return device<T>(name);
+  }
+
   /** Add a generic device to the robot */
   void addDevice(DevicePtr device);
+
+  /** Alias for \see addDevice */
+  inline void addSensor(SensorPtr sensor)
+  {
+    addDevice(std::move(sensor));
+  }
 
   /** @} */
   /* End of Devices group */
