@@ -4,11 +4,7 @@
 
 #pragma once
 
-#include <mc_rbdyn/api.h>
-
-#include <SpaceVecAlg/SpaceVecAlg>
-
-#include <memory>
+#include <mc_rbdyn/Device.h>
 
 namespace mc_rbdyn
 {
@@ -24,7 +20,7 @@ struct ForceSensorCalibData;
  * and the current reading of said sensor. If the appropriate data is
  * provided, a gravity-free reading can be provided.
  */
-struct MC_RBDYN_DLLAPI ForceSensor
+struct MC_RBDYN_DLLAPI ForceSensor : public Device
 {
 public:
   /** Default constructor, this does not represent a valid force sensor */
@@ -45,22 +41,31 @@ public:
   ForceSensor(const std::string & name, const std::string & parentBodyName, const sva::PTransformd & X_p_f);
 
   /** Destructor */
-  ~ForceSensor();
-
-  /** Return the name of the sensor */
-  const std::string & name() const;
+  ~ForceSensor() noexcept override;
 
   /** Return the sensor's parent body */
-  const std::string & parentBody() const;
+  inline const std::string & parentBody() const
+  {
+    return Device::parent();
+  }
 
   /** Return the transformation from the parent body to the sensor (model) */
-  const sva::PTransformd & X_p_f() const;
+  inline const sva::PTransformd & X_p_f() const
+  {
+    return Device::X_p_s();
+  }
 
   /** Return the sensor pose in the inertial frame (convenience function) */
-  const sva::PTransformd X_0_f(const mc_rbdyn::Robot & robot) const;
+  inline sva::PTransformd X_0_f(const mc_rbdyn::Robot & robot) const
+  {
+    return Device::X_0_s(robot);
+  }
 
   /** Return the current wrench */
-  const sva::ForceVecd & wrench() const;
+  inline const sva::ForceVecd & wrench() const
+  {
+    return wrench_;
+  }
 
   /** Return the force reading
    *
@@ -84,7 +89,10 @@ public:
    *
    * @param wrench New wrench reading
    */
-  void wrench(const sva::ForceVecd & wrench);
+  inline void wrench(const sva::ForceVecd & wrench)
+  {
+    wrench_ = wrench;
+  }
 
   /** Return a gravity-free wrench in sensor frame
    *
@@ -93,7 +101,7 @@ public:
    * @returns A gravity-free reading of the wrench
    *
    */
-  const sva::ForceVecd wrenchWithoutGravity(const mc_rbdyn::Robot & robot) const;
+  sva::ForceVecd wrenchWithoutGravity(const mc_rbdyn::Robot & robot) const;
 
   /** Return measured wrench in the inertial frame
    *
@@ -148,11 +156,10 @@ public:
 
   /** @} */
   /* End of Calibration group */
-private:
-  std::string name_;
-  std::string parentBody_;
-  sva::PTransformd X_p_f_;
 
+  DevicePtr clone() const override;
+
+private:
   sva::ForceVecd wrench_;
 
   std::shared_ptr<detail::ForceSensorCalibData> calibration_;

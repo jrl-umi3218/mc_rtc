@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -542,6 +542,77 @@ public:
   /** @} */
   /* End of Force sensors group */
 
+  /** @name Devices
+   *
+   * These functions are related to generic devices handling
+   *
+   * @{
+   */
+
+  /** Returns true if a generic device of type T and named name exists in the robot
+   *
+   * \param name Name of the device
+   *
+   * \tparam T Type of device requested
+   *
+   */
+  template<typename T>
+  bool hasDevice(const std::string & name) const;
+
+  /** Alias for \see hasDevice */
+  template<typename T>
+  inline bool hasSensor(const std::string & name) const
+  {
+    return hasDevice<T>(name);
+  }
+
+  /** Get a generic device of type T named name
+   *
+   * The reference returned by this function is remains valid
+   *
+   * \param name Name of the device
+   *
+   * \tparam T type of the device requested
+   *
+   * \throws If the device does not exist or does not have the right type
+   *
+   */
+  template<typename T>
+  const T & device(const std::string & name) const;
+
+  /** Non-const variant */
+  template<typename T>
+  T & device(const std::string & name)
+  {
+    return const_cast<T &>(const_cast<const Robot *>(this)->device<T>(name));
+  }
+
+  /** Alias for \see device */
+  template<typename T>
+  inline const T & sensor(const std::string & name) const
+  {
+    return device<T>(name);
+  }
+
+  /** Alias for \see device */
+  template<typename T>
+  inline T & sensor(const std::string & name)
+  {
+    return device<T>(name);
+  }
+
+  /** Add a generic device to the robot */
+  void addDevice(DevicePtr device);
+
+  /** Alias for \see addDevice */
+  inline void addSensor(SensorPtr sensor)
+  {
+    addDevice(std::move(sensor));
+  }
+
+  /** @} */
+  /* End of Devices group */
+
   /** Check if a surface \p surface exists
    *
    * \returns True if the surface exists, false otherwise
@@ -742,21 +813,25 @@ private:
   /** Hold all body sensors */
   BodySensorVector bodySensors_;
   /** Correspondance between body sensor's name and body sensor index*/
-  std::map<std::string, size_t> bodySensorsIndex_;
+  std::unordered_map<std::string, size_t> bodySensorsIndex_;
   /** Correspondance between bodies' names and attached body sensors */
-  std::map<std::string, size_t> bodyBodySensors_;
+  std::unordered_map<std::string, size_t> bodyBodySensors_;
   Springs springs_;
   std::vector<std::vector<Eigen::VectorXd>> tlPoly_;
   std::vector<std::vector<Eigen::VectorXd>> tuPoly_;
   std::vector<Flexibility> flexibility_;
   /** Correspondance between force sensor's name and force sensor index */
-  std::map<std::string, size_t> forceSensorsIndex_;
+  std::unordered_map<std::string, size_t> forceSensorsIndex_;
   /** Correspondance between bodies' names and attached force sensors */
   std::map<std::string, size_t> bodyForceSensors_;
   /** Grippers attached to this robot */
   std::unordered_map<std::string, mc_control::GripperPtr> grippers_;
   /** Grippers reference for this robot */
   std::vector<mc_control::GripperRef> grippersRef_;
+  /** Hold all devices that are neither force sensors nor body sensors */
+  DevicePtrVector devices_;
+  /** Correspondance between a device's name and a device index */
+  std::unordered_map<std::string, size_t> devicesIndex_;
 
 protected:
   /** Invoked by Robots parent instance after mb/mbc/mbg/RobotModule are stored
@@ -867,3 +942,5 @@ void loadPolyTorqueBoundsData(const std::string & file, Robot & robot);
 */
 
 } // namespace mc_rbdyn
+
+#include <mc_rbdyn/Robot.hpp>

@@ -27,7 +27,21 @@
 namespace mc_rbdyn
 {
 
-/* TODO Functions are declared const here but most implementations will likely not respect the constness */
+/** Holds a vector of unique pointers
+ *
+ * This enables copy operation by cloning the devices
+ */
+struct DevicePtrVector : public std::vector<DevicePtr>
+{
+  inline DevicePtrVector() = default;
+
+  MC_RBDYN_DLLAPI DevicePtrVector(const DevicePtrVector & v);
+  MC_RBDYN_DLLAPI DevicePtrVector & operator=(const DevicePtrVector & v);
+
+  inline DevicePtrVector(DevicePtrVector && v) = default;
+  inline DevicePtrVector & operator=(DevicePtrVector && v) = default;
+};
+
 struct MC_RBDYN_DLLAPI RobotModule
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -406,6 +420,12 @@ struct MC_RBDYN_DLLAPI RobotModule
     return _real_urdf;
   }
 
+  /** Returns a list of non standard sensors supported by this module */
+  inline const DevicePtrVector & devices() const
+  {
+    return _devices;
+  }
+
   /** Path to the robot's description package */
   std::string path;
   /** (default) Name of the robot */
@@ -462,6 +482,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   mc_rbdyn::lipm_stabilizer::StabilizerConfiguration _lipmStabilizerConfig;
   /** \see real_urdf() */
   std::string _real_urdf;
+  /** \see sensors() */
+  DevicePtrVector _devices;
 };
 
 typedef std::shared_ptr<RobotModule> RobotModulePtr;

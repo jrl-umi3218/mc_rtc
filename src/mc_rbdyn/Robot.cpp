@@ -244,6 +244,13 @@ Robot::Robot(Robots & robots,
     bodyBodySensors_[bS.parentBody()] = i;
   }
 
+  devices_ = module_.devices();
+  for(size_t i = 0; i < devices_.size(); ++i)
+  {
+    const auto & d = devices_[i];
+    devicesIndex_[d->name()] = i;
+  }
+
   refJointOrder_ = module_.ref_joint_order();
   refJointIndexToMBCIndex_.resize(refJointOrder_.size());
   for(size_t i = 0; i < refJointOrder_.size(); ++i)
@@ -1230,6 +1237,16 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
       LOG_ERROR_AND_THROW(std::runtime_error, p + "\"robotName\" is required.");
     }
   }
+}
+
+void Robot::addDevice(DevicePtr device)
+{
+  if(devicesIndex_.count(device->name()))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "You cannot have multiple generic sensor with the same name in a robot");
+  }
+  devices_.push_back(std::move(device));
+  devicesIndex_[device->name()] = devices_.size() - 1;
 }
 
 } // namespace mc_rbdyn
