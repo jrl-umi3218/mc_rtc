@@ -1,6 +1,5 @@
 var a00317 =
 [
-    [ "TrajectoryImpl", "a02441.html", "a02441" ],
-    [ "Trajectory", "a00317.html#a062a5442d4cabf7a31d7f83008751a6a", null ],
-    [ "Trajectory", "a00317.html#aa175899f8868d419050975dc9f79ed97", null ]
+    [ "StringInputImpl", "a02451.html", "a02451" ],
+    [ "StringInput", "a00317.html#a4f8c1eb018c71e856f48cee90d7ea65d", null ]
 ];

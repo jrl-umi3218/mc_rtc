@@ -1,6 +1,6 @@
 var a00702 =
 [
-    [ "internal", "a00729.html", "a00729" ],
-    [ "StabilizerTask", "a02753.html", "a02753" ],
-    [ "ZMPCC", "a02761.html", "a02761" ]
+    [ "robotFromConfig", "a00702.html#ga70b316b2f0c0caf547e160e74c2a029d", null ],
+    [ "robotIndexFromConfig", "a00702.html#gaf9b711ec2baa5684b8f422d740464b5f", null ],
+    [ "robotNameFromConfig", "a00702.html#ga40325ac769295d23f270976eead26245", null ]
 ];

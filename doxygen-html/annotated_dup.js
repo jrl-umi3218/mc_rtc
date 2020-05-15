@@ -1,16 +1,16 @@
 var annotated_dup =
 [
-    [ "geos", "a00723.html", null ],
-    [ "mc_control", "a00710.html", "a00710" ],
-    [ "mc_filter", "a00716.html", "a00716" ],
-    [ "mc_observers", "a00718.html", "a00718" ],
-    [ "mc_planning", "a00719.html", "a00719" ],
-    [ "mc_rbdyn", "a00715.html", "a00715" ],
-    [ "mc_rtc", "a00712.html", "a00712" ],
-    [ "mc_solver", "a00720.html", "a00720" ],
-    [ "mc_tasks", "a00713.html", "a00713" ],
-    [ "mc_trajectory", "a00742.html", "a00742" ],
-    [ "sch", "a00726.html", null ],
-    [ "Collision", "a02857.html", null ],
-    [ "Global", "a02853.html", null ]
+    [ "geos", "a00729.html", null ],
+    [ "mc_control", "a00716.html", "a00716" ],
+    [ "mc_filter", "a00722.html", "a00722" ],
+    [ "mc_observers", "a00724.html", "a00724" ],
+    [ "mc_planning", "a00725.html", "a00725" ],
+    [ "mc_rbdyn", "a00721.html", "a00721" ],
+    [ "mc_rtc", "a00718.html", "a00718" ],
+    [ "mc_solver", "a00726.html", "a00726" ],
+    [ "mc_tasks", "a00719.html", "a00719" ],
+    [ "mc_trajectory", "a00748.html", "a00748" ],
+    [ "sch", "a00732.html", null ],
+    [ "Collision", "a02871.html", null ],
+    [ "Global", "a02867.html", null ]
 ];

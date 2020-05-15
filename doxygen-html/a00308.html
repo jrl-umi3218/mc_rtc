@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Schema.h File Reference</title>
+<title>Rotation.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -74,31 +74,40 @@ $(document).ready(function(){initNavTree('a00308.html','');});
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Schema.h File Reference</div>  </div>
+<div class="title">Rotation.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00260.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00260.html">mc_rtc/gui/details/traits.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00263.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00299.html">mc_rtc/gui/types.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02421.html">mc_rtc::gui::SchemaImpl&lt; Callback &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should display a form using the data provided in the configured schema folder.  <a href="a02421.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02427.html">mc_rtc::gui::RotationROImpl&lt; GetT &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotation display a widget that shows the rotation.  <a href="a02427.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02431.html">mc_rtc::gui::RotationImpl&lt; GetT, SetT &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotation display a widget that shows the rotation.  <a href="a02431.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00712"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00712.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00712"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02197.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00715.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memitem:a00718"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00718"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a02211.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00721.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00730"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00730.html">mc_rtc::gui</a></td></tr>
+<tr class="memitem:a00736"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html">mc_rtc::gui</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0c892f6b2ba9e06d4bda32a16b76b75b"><td class="memTemplParams" colspan="2">template&lt;typename Callback &gt; </td></tr>
-<tr class="memitem:a0c892f6b2ba9e06d4bda32a16b76b75b"><td class="memTemplItemLeft" align="right" valign="top">SchemaImpl&lt; Callback &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00730.html#a0c892f6b2ba9e06d4bda32a16b76b75b">mc_rtc::gui::Schema</a> (const std::string &amp;name, const std::string &amp;schema, Callback cb)</td></tr>
-<tr class="memdesc:a0c892f6b2ba9e06d4bda32a16b76b75b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to create a Schema element.  <a href="a00730.html#a0c892f6b2ba9e06d4bda32a16b76b75b">More...</a><br /></td></tr>
-<tr class="separator:a0c892f6b2ba9e06d4bda32a16b76b75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dc809d7e99978fe3f5e2439d1a20771"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
+<tr class="memitem:a9dc809d7e99978fe3f5e2439d1a20771"><td class="memTemplItemLeft" align="right" valign="top">RotationROImpl&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00736.html#a9dc809d7e99978fe3f5e2439d1a20771">mc_rtc::gui::Rotation</a> (const std::string &amp;name, GetT get_fn)</td></tr>
+<tr class="memdesc:a9dc809d7e99978fe3f5e2439d1a20771"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to create a Rotation element (read-only)  <a href="a00736.html#a9dc809d7e99978fe3f5e2439d1a20771">More...</a><br /></td></tr>
+<tr class="separator:a9dc809d7e99978fe3f5e2439d1a20771"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6440392ea4b48778f6d4012e0400ee5b"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
+<tr class="memitem:a6440392ea4b48778f6d4012e0400ee5b"><td class="memTemplItemLeft" align="right" valign="top">RotationImpl&lt; GetT, SetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00736.html#a6440392ea4b48778f6d4012e0400ee5b">mc_rtc::gui::Rotation</a> (const std::string &amp;name, GetT get_fn, SetT set_fn)</td></tr>
+<tr class="memdesc:a6440392ea4b48778f6d4012e0400ee5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to create a Rotation element (writable)  <a href="a00736.html#a6440392ea4b48778f6d4012e0400ee5b">More...</a><br /></td></tr>
+<tr class="separator:a6440392ea4b48778f6d4012e0400ee5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -106,8 +115,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00308.html">Schema.h</a></li>
-    <li class="footer">Generated on Thu May 14 2020 02:58:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00308.html">Rotation.h</a></li>
+    <li class="footer">Generated on Fri May 15 2020 11:56:19 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

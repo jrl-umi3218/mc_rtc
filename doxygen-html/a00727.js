@@ -1,7 +1,10 @@
 var a00727 =
 [
-    [ "AdmittanceTask", "a02709.html", "a02709" ],
-    [ "ComplianceTask", "a02717.html", "a02717" ],
-    [ "CoPTask", "a02725.html", "a02725" ],
-    [ "DampingTask", "a02729.html", "a02729" ]
+    [ "Abscissa", "a02363.html", "a02363" ],
+    [ "AbscissaOrdinate", "a02367.html", "a02367" ],
+    [ "AbscissaOrdinateWithColor", "a02371.html", "a02371" ],
+    [ "Ordinate", "a02375.html", "a02375" ],
+    [ "OrdinateWithColor", "a02379.html", "a02379" ],
+    [ "Polygon", "a02383.html", "a02383" ],
+    [ "Polygons", "a02387.html", "a02387" ]
 ];

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Robots.h File Reference</title>
+<title>RobotModuleMacros.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,51 +70,137 @@ $(document).ready(function(){initNavTree('a00203.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Robots.h File Reference</div>  </div>
+<div class="title">RobotModuleMacros.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03824.html">mc_rbdyn/Robot.h</a>&gt;</code><br />
-<code>#include &lt;mc/rtc/deprecated.hh&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00200.html">mc_rbdyn/RobotModule.h</a>&gt;</code><br />
+<code>#include &lt;mc_rtc/version.h&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02161.html">mc_rbdyn::Robots</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00715"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html">mc_rbdyn</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:acaac690d2e96da3b8254fecefe1cccf9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#acaac690d2e96da3b8254fecefe1cccf9">mc_rbdyn::loadRobot</a> (const RobotModule &amp;module, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:acaac690d2e96da3b8254fecefe1cccf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f3fbf6971706876454da1142aadb193"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a7f3fbf6971706876454da1142aadb193">mc_rbdyn::loadRobot</a> (const RobotModule &amp;module, const std::string &amp;surfaceDir, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:a7f3fbf6971706876454da1142aadb193"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90beb4c07fba317439956363ae429538"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a90beb4c07fba317439956363ae429538">mc_rbdyn::loadRobots</a> (const std::vector&lt; std::shared_ptr&lt; RobotModule &gt;&gt; &amp;modules)</td></tr>
-<tr class="separator:a90beb4c07fba317439956363ae429538"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1506cb6d1d95f69cae2f1a6c072fa406"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a1506cb6d1d95f69cae2f1a6c072fa406">mc_rbdyn::loadRobots</a> (const std::vector&lt; std::shared_ptr&lt; RobotModule &gt;&gt; &amp;modules, const std::vector&lt; std::string &gt; &amp;surfaceDirs)</td></tr>
-<tr class="separator:a1506cb6d1d95f69cae2f1a6c072fa406"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afad00246a5238eb31795027c0acad7a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#afad00246a5238eb31795027c0acad7a9">mc_rbdyn::loadRobotAndEnv</a> (const RobotModule &amp;module, const RobotModule &amp;envModule, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:afad00246a5238eb31795027c0acad7a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21e283b3c61bc0db909f2a950bf4384a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> MC_RTC_DEPRECATED std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a21e283b3c61bc0db909f2a950bf4384a">mc_rbdyn::loadRobotAndEnv</a> (const RobotModule &amp;module, const std::string &amp;surfaceDir, const RobotModule &amp;envModule, const std::string &amp;envSurfaceDir, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:a21e283b3c61bc0db909f2a950bf4384a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e415d422767b48828fbf2e282b66041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03788.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::shared_ptr&lt; Robots &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html#a8e415d422767b48828fbf2e282b66041">mc_rbdyn::loadRobotFromUrdf</a> (const std::string &amp;name, const std::string &amp;urdf, bool withVirtualLinks=true, const std::vector&lt; std::string &gt; &amp;filteredLinks={}, bool fixed=false, <a class="elRef" doxygen="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag:https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/" href="https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#a259dde998fab6de957995eedfdb4d179">sva::PTransformd</a> *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
-<tr class="separator:a8e415d422767b48828fbf2e282b66041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a8ff1f95ceab073746f8203ca23fbb3cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#a8ff1f95ceab073746f8203ca23fbb3cd">ROBOT_MODULE_CHECK_VERSION</a>(NAME)</td></tr>
+<tr class="memdesc:a8ff1f95ceab073746f8203ca23fbb3cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple compile-time versus run-time version checking macro.  <a href="#a8ff1f95ceab073746f8203ca23fbb3cd">More...</a><br /></td></tr>
+<tr class="separator:a8ff1f95ceab073746f8203ca23fbb3cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefdd7a13affe8001b4bf38b8e94fcd50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#aefdd7a13affe8001b4bf38b8e94fcd50">ROBOT_MODULE_COMMON</a>(NAME)</td></tr>
+<tr class="separator:aefdd7a13affe8001b4bf38b8e94fcd50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61416168a2a0e73c18a99a7da049df9a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#a61416168a2a0e73c18a99a7da049df9a">ROBOT_MODULE_DEFAULT_CONSTRUCTOR</a>(NAME,  TYPE)</td></tr>
+<tr class="separator:a61416168a2a0e73c18a99a7da049df9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a835eb9cb28d7a07e5fb285241d7e7b08"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#a835eb9cb28d7a07e5fb285241d7e7b08">ROBOT_MODULE_CANONIC_CONSTRUCTOR</a>(NAME,  TYPE)</td></tr>
+<tr class="separator:a835eb9cb28d7a07e5fb285241d7e7b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a835eb9cb28d7a07e5fb285241d7e7b08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a835eb9cb28d7a07e5fb285241d7e7b08">&#9670;&nbsp;</a></span>ROBOT_MODULE_CANONIC_CONSTRUCTOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ROBOT_MODULE_CANONIC_CONSTRUCTOR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TYPE&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span>                                                                  \</div><div class="line">  {                                                                           \</div><div class="line">    ROBOT_MODULE_COMMON(NAME)                                                 \</div><div class="line">    ROBOT_MODULE_API <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> create_args_required()                      \</div><div class="line">    {                                                                         \</div><div class="line">      return 3;                                                               \</div><div class="line">    }                                                                         \</div><div class="line">    ROBOT_MODULE_API <a class="code" href="a02163.html">mc_rbdyn::RobotModule</a> * create(<span class="keyword">const</span> std::string &amp;,      \</div><div class="line">                                                    <span class="keyword">const</span> std::string &amp; path, \</div><div class="line">                                                    <span class="keyword">const</span> std::string &amp; name) \</div><div class="line">    {                                                                         \</div><div class="line">      return <span class="keyword">new</span> TYPE(path, name);                                            \</div><div class="line">    }                                                                         \</div><div class="line">  }</div><div class="ttc" id="a02163_html"><div class="ttname"><a href="a02163.html">mc_rbdyn::RobotModule</a></div><div class="ttdef"><b>Definition:</b> RobotModule.h:45</div></div>
+</div><!-- fragment --><p>ROBOT_MODULE_CANONIC_CONSTRUCTOR Declare an external symbol for creation using the cannonical constructor (const string &amp;, const string &amp;) Also declare destruction symbol Exclusive of ROBOT_MODULE_DEFAULT_CONSTRUCTOR </p>
+
+</div>
+</div>
+<a id="a8ff1f95ceab073746f8203ca23fbb3cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ff1f95ceab073746f8203ca23fbb3cd">&#9670;&nbsp;</a></span>ROBOT_MODULE_CHECK_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ROBOT_MODULE_CHECK_VERSION</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span>(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                 \</div><div class="line">  {                                                                                                               \</div><div class="line">    LOG_ERROR(NAME &lt;&lt; <span class="stringliteral">&quot; was compiled with &quot;</span> &lt;&lt; mc_rtc::MC_RTC_VERSION &lt;&lt; <span class="stringliteral">&quot; but mc_rtc is currently at version &quot;</span>   \</div><div class="line">                   &lt;&lt; mc_rtc::version() &lt;&lt; <span class="stringliteral">&quot;, you might experience subtle issues and should recompile your code&quot;</span>) \</div><div class="line">  }</div></div><!-- fragment -->
+<p>A simple compile-time versus run-time version checking macro. </p>
+<p>If you are not relying on ROBOT_MODULE_DEFAULT_CONSTRUCTOR or ROBOT_MODULE_CANONIC_CONSTRUCTOR you should use this in your MC_RTC_ROBOT_MODULE implementation </p>
+
+</div>
+</div>
+<a id="aefdd7a13affe8001b4bf38b8e94fcd50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefdd7a13affe8001b4bf38b8e94fcd50">&#9670;&nbsp;</a></span>ROBOT_MODULE_COMMON</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ROBOT_MODULE_COMMON</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><a class="code" href="a00200.html#a983157fccbdda235351228ec75cbd167">ROBOT_MODULE_API</a> <span class="keywordtype">void</span> MC_RTC_ROBOT_MODULE(std::vector&lt;std::string&gt; &amp; names) \</div><div class="line">  {                                                                           \</div><div class="line">    ROBOT_MODULE_CHECK_VERSION(NAME)                                          \</div><div class="line">    names = {NAME};                                                           \</div><div class="line">  }                                                                           \</div><div class="line">  ROBOT_MODULE_API <span class="keywordtype">void</span> destroy(<a class="code" href="a02163.html">mc_rbdyn::RobotModule</a> * ptr)                  \</div><div class="line">  {                                                                           \</div><div class="line">    delete ptr;                                                               \</div><div class="line">  }</div><div class="ttc" id="a02163_html"><div class="ttname"><a href="a02163.html">mc_rbdyn::RobotModule</a></div><div class="ttdef"><b>Definition:</b> RobotModule.h:45</div></div>
+<div class="ttc" id="a00200_html_a983157fccbdda235351228ec75cbd167"><div class="ttname"><a href="a00200.html#a983157fccbdda235351228ec75cbd167">ROBOT_MODULE_API</a></div><div class="ttdeci">#define ROBOT_MODULE_API</div><div class="ttdef"><b>Definition:</b> RobotModule.h:508</div></div>
+</div><!-- fragment --><p>ROBOT_MODULE_COMMON Declare a destroy symbol and CLASS_NAME symbol Constructor should be declared by the user </p>
+
+</div>
+</div>
+<a id="a61416168a2a0e73c18a99a7da049df9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61416168a2a0e73c18a99a7da049df9a">&#9670;&nbsp;</a></span>ROBOT_MODULE_DEFAULT_CONSTRUCTOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ROBOT_MODULE_DEFAULT_CONSTRUCTOR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TYPE&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span>                                                             \</div><div class="line">  {                                                                      \</div><div class="line">    ROBOT_MODULE_COMMON(NAME)                                            \</div><div class="line">    ROBOT_MODULE_API <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> create_args_required()                 \</div><div class="line">    {                                                                    \</div><div class="line">      return 1;                                                          \</div><div class="line">    }                                                                    \</div><div class="line">    ROBOT_MODULE_API <a class="code" href="a02163.html">mc_rbdyn::RobotModule</a> * create(<span class="keyword">const</span> std::string &amp;) \</div><div class="line">    {                                                                    \</div><div class="line">      return <span class="keyword">new</span> TYPE();                                                 \</div><div class="line">    }                                                                    \</div><div class="line">  }</div><div class="ttc" id="a02163_html"><div class="ttname"><a href="a02163.html">mc_rbdyn::RobotModule</a></div><div class="ttdef"><b>Definition:</b> RobotModule.h:45</div></div>
+</div><!-- fragment --><p>ROBOT_MODULE_DEFAULT_CONSTRUCTOR Declare an external symbol for creation using a default constructor Also declare destruction symbol Exclusive of ROBOT_MODULE_CANONIC_CONSTRUCTOR </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00203.html">Robots.h</a></li>
-    <li class="footer">Generated on Thu May 14 2020 02:58:45 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00203.html">RobotModuleMacros.h</a></li>
+    <li class="footer">Generated on Fri May 15 2020 11:56:19 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
