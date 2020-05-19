@@ -14,7 +14,11 @@
 #include <mc_rbdyn/api.h>
 #include <mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h>
 
+#include <mc/rtc/deprecated.hh>
+
 #include <mc_rtc/constants.h>
+
+#include <mc_rbdyn_urdf/urdf.h>
 
 #include <RBDyn/parsers/common.h>
 
@@ -40,6 +44,27 @@ struct DevicePtrVector : public std::vector<DevicePtr>
 
   inline DevicePtrVector(DevicePtrVector && v) = default;
   inline DevicePtrVector & operator=(DevicePtrVector && v) = default;
+};
+
+/** Holds a map from body's names to visual representations
+ *
+ * Provide a conversion operator for backward compatibility
+ */
+struct VisualMap : public std::map<std::string, std::vector<rbd::parsers::Visual>>
+{
+  inline VisualMap() = default;
+
+  inline VisualMap(const VisualMap & v) = default;
+  inline VisualMap & operator=(const VisualMap & v) = default;
+
+  inline VisualMap(VisualMap && v) = default;
+  inline VisualMap & operator=(VisualMap && v) = default;
+
+  using std::map<std::string, std::vector<rbd::parsers::Visual>>::operator=;
+
+  MC_RTC_DEPRECATED MC_RBDYN_DLLAPI VisualMap(const std::map<std::string, std::vector<mc_rbdyn_urdf::Visual>> & rhs);
+  MC_RTC_DEPRECATED MC_RBDYN_DLLAPI VisualMap & operator=(
+      const std::map<std::string, std::vector<mc_rbdyn_urdf::Visual>> & rhs);
 };
 
 struct MC_RBDYN_DLLAPI RobotModule
@@ -186,6 +211,9 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /** Construct from a parser result */
   RobotModule(const std::string & name, const rbd::parsers::ParserResult & res);
+
+  /** \deprecated{Use rbd::parsers version instead } */
+  MC_RTC_DEPRECATED RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res);
 
   /** Initialize the module from a parser resul
    *
@@ -387,6 +415,9 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   void boundsFromURDF(const rbd::parsers::Limits & limits);
 
+  /** \deprecated{Use rbd::parsers version instead} */
+  MC_RTC_DEPRECATED void boundsFromURDF(const mc_rbdyn_urdf::Limits & limits);
+
   /** Add missing elements to the current module stance
    *
    * If joints are present in the MultiBody but absent from the default stance,
@@ -462,7 +493,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** \see stpbvHull() */
   std::map<std::string, std::pair<std::string, std::string>> _stpbvHull;
   /** Holds visual representation of bodies in the robot */
-  std::map<std::string, std::vector<rbd::parsers::Visual>> _visual;
+  VisualMap _visual;
   /** \see collisionTransforms() */
   std::map<std::string, sva::PTransformd> _collisionTransforms;
   /** \see flexibility() */
@@ -505,6 +536,9 @@ typedef std::shared_ptr<RobotModule> RobotModulePtr;
  *
  */
 RobotModule::bounds_t MC_RBDYN_DLLAPI urdf_limits_to_bounds(const rbd::parsers::Limits & limits);
+
+/** \deprecated{Use rbd::parsers version instead} */
+RobotModule::bounds_t MC_RTC_DEPRECATED MC_RBDYN_DLLAPI urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits);
 
 using RobotModuleVector = std::vector<RobotModule, Eigen::aligned_allocator<RobotModule>>;
 

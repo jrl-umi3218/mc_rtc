@@ -37,11 +37,104 @@ DevicePtrVector & DevicePtrVector::operator=(const DevicePtrVector & v)
   return *this;
 }
 
+VisualMap::VisualMap(const std::map<std::string, std::vector<mc_rbdyn_urdf::Visual>> & rhs)
+{
+  *this = rhs;
+}
+
+VisualMap & VisualMap::operator=(const std::map<std::string, std::vector<mc_rbdyn_urdf::Visual>> & rhs)
+{
+  auto box = [](const mc_rbdyn_urdf::Geometry::Box & box) {
+    rbd::parsers::Geometry::Box ret;
+    ret.size.setConstant(box.size);
+    return ret;
+  };
+  auto cylinder = [](const mc_rbdyn_urdf::Geometry::Cylinder & c) {
+    rbd::parsers::Geometry::Cylinder ret;
+    ret.radius = c.radius;
+    ret.length = c.length;
+    return ret;
+  };
+  auto sphere = [](const mc_rbdyn_urdf::Geometry::Sphere & sphere) {
+    rbd::parsers::Geometry::Sphere ret;
+    ret.radius = sphere.radius;
+    return ret;
+  };
+  auto mesh = [](const mc_rbdyn_urdf::Geometry::Mesh & mesh) {
+    rbd::parsers::Geometry::Mesh ret;
+    ret.filename = mesh.filename;
+    ret.scale = mesh.scale;
+    return ret;
+  };
+  auto convertGeometry = [&box, &cylinder, &sphere, &mesh](const mc_rbdyn_urdf::Geometry & geom) {
+    rbd::parsers::Geometry ret;
+    switch(geom.type)
+    {
+      case mc_rbdyn_urdf::Geometry::BOX:
+        ret.type = rbd::parsers::Geometry::BOX;
+        ret.data = box(boost::get<mc_rbdyn_urdf::Geometry::Box>(geom.data));
+        break;
+      case mc_rbdyn_urdf::Geometry::CYLINDER:
+        ret.type = rbd::parsers::Geometry::CYLINDER;
+        ret.data = cylinder(boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(geom.data));
+        break;
+      case mc_rbdyn_urdf::Geometry::SPHERE:
+        ret.type = rbd::parsers::Geometry::SPHERE;
+        ret.data = sphere(boost::get<mc_rbdyn_urdf::Geometry::Sphere>(geom.data));
+        break;
+      case mc_rbdyn_urdf::Geometry::MESH:
+        ret.type = rbd::parsers::Geometry::MESH;
+        ret.data = mesh(boost::get<mc_rbdyn_urdf::Geometry::Mesh>(geom.data));
+        break;
+      default:
+        break;
+    };
+    return ret;
+  };
+  auto convertVisual = [&convertGeometry](const mc_rbdyn_urdf::Visual & v) {
+    rbd::parsers::Visual ret;
+    ret.name = v.name;
+    ret.origin = v.origin;
+    ret.geometry = convertGeometry(v.geometry);
+    return ret;
+  };
+  this->clear();
+  for(const auto & p : rhs)
+  {
+    std::transform(p.second.begin(), p.second.end(), (*this)[p.first].begin(), convertVisual);
+  }
+  return *this;
+}
+
+static inline rbd::parsers::Limits from_mc_rbdyn_urdf(const mc_rbdyn_urdf::Limits & limits)
+{
+  rbd::parsers::Limits l;
+  l.lower = limits.lower;
+  l.upper = limits.upper;
+  l.velocity = limits.velocity;
+  l.torque = limits.torque;
+  return l;
+}
+
 RobotModule::RobotModule(const std::string & name, const rbd::parsers::ParserResult & res)
 : RobotModule("/CREATED/BY/MC/RTC/", name)
 {
   rsdf_dir = "";
   init(res);
+}
+
+RobotModule::RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res)
+: RobotModule("/CREATED/BY/MC/RTC/", name)
+{
+  LOG_WARNING("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf")
+  mb = res.mb;
+  mbc = res.mbc;
+  mbg = res.mbg;
+  _collisionTransforms = res.collision_tf;
+  boundsFromURDF(res.limits);
+  _visual = res.visual;
+  make_default_ref_joint_order();
+  expand_stance();
 }
 
 void RobotModule::init(const rbd::parsers::ParserResult & res)
@@ -123,6 +216,12 @@ void RobotModule::boundsFromURDF(const rbd::parsers::Limits & limits)
   };
 }
 
+void RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits & limits)
+{
+  LOG_WARNING("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf")
+  boundsFromURDF(from_mc_rbdyn_urdf(limits));
+}
+
 void RobotModule::expand_stance()
 {
   for(const auto & j : mb.joints())
@@ -168,6 +267,12 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
   ret.push_back(convert(limits.torque));
   ret.push_back(limits.torque);
   return ret;
+}
+
+RobotModule::bounds_t urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits)
+{
+  LOG_WARNING("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf")
+  return urdf_limits_to_bounds(from_mc_rbdyn_urdf(limits));
 }
 
 } // namespace mc_rbdyn

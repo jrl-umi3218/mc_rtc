@@ -9,6 +9,7 @@
 - `Message` state can be used to display messages in the GUI as well as the CLI
 - Benchmarks can now be compiled and run with the `build_and_install.sh` script
 - Use RBDyn::Parsers instead of mc\_rbdyn\_urdf
+- Functions that use mc\_rbdyn\_urdf were kept for backwards compatibility, they will be removed in a later release
 
 ### Added
 - New benchmark for task allocation performance

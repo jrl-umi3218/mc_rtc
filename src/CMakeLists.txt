@@ -173,7 +173,7 @@ set(mc_rbdyn_HDR
 
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
 set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
-target_link_libraries(mc_rbdyn PUBLIC RBDyn::Parsers Tasks::Tasks mc_rtc_loader mc_rtc_utils GEOS::geos)
+target_link_libraries(mc_rbdyn PUBLIC mc_rbdyn_urdf::mc_rbdyn_urdf RBDyn::Parsers Tasks::Tasks mc_rtc_loader mc_rtc_utils GEOS::geos)
 # qhull
 target_include_directories(mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull/src")
 target_link_libraries(mc_rbdyn PRIVATE qhullcpp qhullstatic_r)
