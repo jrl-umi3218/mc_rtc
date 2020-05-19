@@ -101,7 +101,7 @@ VisualMap & VisualMap::operator=(const std::map<std::string, std::vector<mc_rbdy
   this->clear();
   for(const auto & p : rhs)
   {
-    std::transform(p.second.begin(), p.second.end(), (*this)[p.first].begin(), convertVisual);
+    std::transform(p.second.begin(), p.second.end(), std::back_inserter((*this)[p.first]), convertVisual);
   }
   return *this;
 }
