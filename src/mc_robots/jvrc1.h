@@ -6,8 +6,6 @@
 
 #include <mc_rbdyn/RobotModule.h>
 
-#include <mc_rbdyn_urdf/urdf.h>
-
 #include "api.h"
 
 namespace mc_robots

@@ -8,6 +8,7 @@
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/FK.h>
+#include <RBDyn/parsers/urdf.h>
 
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
@@ -360,8 +361,7 @@ Robot & Robots::loadFromUrdf(const std::string & name,
                              sva::PTransformd * base,
                              const std::string & baseName)
 {
-  mc_rbdyn_urdf::URDFParserResult res =
-      mc_rbdyn_urdf::rbdyn_from_urdf(urdf, fixed, filteredLinks, true, "", withVirtualLinks);
+  auto res = rbd::parsers::from_urdf(urdf, fixed, filteredLinks, true, "", withVirtualLinks);
 
   mc_rbdyn::RobotModule module(name, res);
 

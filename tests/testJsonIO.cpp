@@ -296,47 +296,54 @@ mc_rbdyn::RobotModule make_ref()
   return rm;
 }
 
-namespace mc_rbdyn_urdf
+namespace rbd
 {
 
-bool operator==(const mc_rbdyn_urdf::Geometry::Box & lhs, const mc_rbdyn_urdf::Geometry::Box & rhs)
+namespace parsers
+{
+
+bool operator==(const Geometry::Box & lhs, const Geometry::Box & rhs)
 {
   return lhs.size == rhs.size;
 }
 
-bool operator==(const mc_rbdyn_urdf::Geometry::Cylinder & lhs, const mc_rbdyn_urdf::Geometry::Cylinder & rhs)
+bool operator==(const Geometry::Cylinder & lhs, const Geometry::Cylinder & rhs)
 {
   return lhs.radius == rhs.radius && lhs.length == rhs.length;
 }
 
-bool operator==(const mc_rbdyn_urdf::Geometry::Sphere & lhs, const mc_rbdyn_urdf::Geometry::Sphere & rhs)
+bool operator==(const Geometry::Sphere & lhs, const Geometry::Sphere & rhs)
 {
   return lhs.radius == rhs.radius;
 }
 
-bool operator==(const mc_rbdyn_urdf::Geometry::Mesh & lhs, const mc_rbdyn_urdf::Geometry::Mesh & rhs)
+bool operator==(const Geometry::Mesh & lhs, const Geometry::Mesh & rhs)
 {
   return lhs.filename == rhs.filename && lhs.scale == rhs.scale;
 }
 
-bool operator==(const mc_rbdyn_urdf::Geometry & lhs, const mc_rbdyn_urdf::Geometry & rhs)
+bool operator==(const Geometry::Superellipsoid & lhs, const Geometry::Superellipsoid & rhs)
+{
+  return lhs.size == rhs.size && lhs.epsilon1 == rhs.epsilon1 && lhs.epsilon2 == rhs.epsilon2;
+}
+
+bool operator==(const Geometry & lhs, const Geometry & rhs)
 {
   bool ret = lhs.type == rhs.type;
   if(ret)
   {
     switch(lhs.type)
     {
-      case mc_rbdyn_urdf::Geometry::Type::BOX:
-        return boost::get<mc_rbdyn_urdf::Geometry::Box>(lhs.data) == boost::get<mc_rbdyn_urdf::Geometry::Box>(rhs.data);
-      case mc_rbdyn_urdf::Geometry::Type::CYLINDER:
-        return boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(lhs.data)
-               == boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(rhs.data);
-      case mc_rbdyn_urdf::Geometry::Type::SPHERE:
-        return boost::get<mc_rbdyn_urdf::Geometry::Sphere>(lhs.data)
-               == boost::get<mc_rbdyn_urdf::Geometry::Sphere>(rhs.data);
-      case mc_rbdyn_urdf::Geometry::Type::MESH:
-        return boost::get<mc_rbdyn_urdf::Geometry::Mesh>(lhs.data)
-               == boost::get<mc_rbdyn_urdf::Geometry::Mesh>(rhs.data);
+      case Geometry::Type::BOX:
+        return boost::get<Geometry::Box>(lhs.data) == boost::get<Geometry::Box>(rhs.data);
+      case Geometry::Type::CYLINDER:
+        return boost::get<Geometry::Cylinder>(lhs.data) == boost::get<Geometry::Cylinder>(rhs.data);
+      case Geometry::Type::SPHERE:
+        return boost::get<Geometry::Sphere>(lhs.data) == boost::get<Geometry::Sphere>(rhs.data);
+      case Geometry::Type::MESH:
+        return boost::get<Geometry::Mesh>(lhs.data) == boost::get<Geometry::Mesh>(rhs.data);
+      case Geometry::Type::SUPERELLIPSOID:
+        return boost::get<Geometry::Superellipsoid>(lhs.data) == boost::get<Geometry::Superellipsoid>(rhs.data);
       default:
         break;
     }
@@ -344,12 +351,14 @@ bool operator==(const mc_rbdyn_urdf::Geometry & lhs, const mc_rbdyn_urdf::Geomet
   return ret;
 }
 
-bool operator==(const mc_rbdyn_urdf::Visual & lhs, const mc_rbdyn_urdf::Visual & rhs)
+bool operator==(const Visual & lhs, const Visual & rhs)
 {
   return lhs.name == rhs.name && lhs.origin == rhs.origin && lhs.geometry == rhs.geometry;
 }
 
-} // namespace mc_rbdyn_urdf
+} // namespace parsers
+
+} // namespace rbd
 
 namespace mc_rbdyn
 {

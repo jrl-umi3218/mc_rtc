@@ -5,6 +5,8 @@
 #include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/configuration_io.h>
 
+#include <RBDyn/parsers/urdf.h>
+
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
@@ -598,32 +600,31 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper::Safety
   return config;
 }
 
-mc_rbdyn_urdf::Geometry::Box ConfigurationLoader<mc_rbdyn_urdf::Geometry::Box>::load(
-    const mc_rtc::Configuration & config)
+rbd::parsers::Geometry::Box ConfigurationLoader<rbd::parsers::Geometry::Box>::load(const mc_rtc::Configuration & config)
 {
-  mc_rbdyn_urdf::Geometry::Box b;
+  rbd::parsers::Geometry::Box b;
   b.size = config("size");
   return b;
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Box>::save(const mc_rbdyn_urdf::Geometry::Box & b)
+mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Geometry::Box>::save(const rbd::parsers::Geometry::Box & b)
 {
   mc_rtc::Configuration config;
   config.add("size", b.size);
   return config;
 }
 
-mc_rbdyn_urdf::Geometry::Cylinder ConfigurationLoader<mc_rbdyn_urdf::Geometry::Cylinder>::load(
+rbd::parsers::Geometry::Cylinder ConfigurationLoader<rbd::parsers::Geometry::Cylinder>::load(
     const mc_rtc::Configuration & config)
 {
-  mc_rbdyn_urdf::Geometry::Cylinder c;
+  rbd::parsers::Geometry::Cylinder c;
   c.radius = config("radius");
   c.length = config("length");
   return c;
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Cylinder>::save(
-    const mc_rbdyn_urdf::Geometry::Cylinder & c)
+mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Geometry::Cylinder>::save(
+    const rbd::parsers::Geometry::Cylinder & c)
 {
   mc_rtc::Configuration config;
   config.add("radius", c.radius);
@@ -631,32 +632,31 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Cylinder>::sa
   return config;
 }
 
-mc_rbdyn_urdf::Geometry::Sphere ConfigurationLoader<mc_rbdyn_urdf::Geometry::Sphere>::load(
+rbd::parsers::Geometry::Sphere ConfigurationLoader<rbd::parsers::Geometry::Sphere>::load(
     const mc_rtc::Configuration & config)
 {
-  mc_rbdyn_urdf::Geometry::Sphere s;
+  rbd::parsers::Geometry::Sphere s;
   s.radius = config("radius");
   return s;
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Sphere>::save(
-    const mc_rbdyn_urdf::Geometry::Sphere & s)
+mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Geometry::Sphere>::save(const rbd::parsers::Geometry::Sphere & s)
 {
   mc_rtc::Configuration config;
   config.add("radius", s.radius);
   return config;
 }
 
-mc_rbdyn_urdf::Geometry::Mesh ConfigurationLoader<mc_rbdyn_urdf::Geometry::Mesh>::load(
+rbd::parsers::Geometry::Mesh ConfigurationLoader<rbd::parsers::Geometry::Mesh>::load(
     const mc_rtc::Configuration & config)
 {
-  mc_rbdyn_urdf::Geometry::Mesh m;
+  rbd::parsers::Geometry::Mesh m;
   m.filename = static_cast<std::string>(config("filename"));
   m.scale = config("scale");
   return m;
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Mesh>::save(const mc_rbdyn_urdf::Geometry::Mesh & m)
+mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Geometry::Mesh>::save(const rbd::parsers::Geometry::Mesh & m)
 {
   mc_rtc::Configuration config;
   config.add("filename", m.filename);
@@ -664,52 +664,81 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry::Mesh>::save(c
   return config;
 }
 
-mc_rbdyn_urdf::Geometry ConfigurationLoader<mc_rbdyn_urdf::Geometry>::load(const mc_rtc::Configuration & config)
+rbd::parsers::Geometry::Superellipsoid ConfigurationLoader<rbd::parsers::Geometry::Superellipsoid>::load(
+    const mc_rtc::Configuration & config)
 {
-  mc_rbdyn_urdf::Geometry geom;
+  rbd::parsers::Geometry::Superellipsoid s;
+  s.size = config("size");
+  s.epsilon1 = config("epsilon1");
+  s.epsilon2 = config("epsilon2");
+  return s;
+}
+
+mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Geometry::Superellipsoid>::save(
+    const rbd::parsers::Geometry::Superellipsoid & s)
+{
+  mc_rtc::Configuration config;
+  config.add("size", s.size);
+  config.add("epsilon1", s.epsilon1);
+  config.add("epsilon2", s.epsilon2);
+  return config;
+}
+
+rbd::parsers::Geometry ConfigurationLoader<rbd::parsers::Geometry>::load(const mc_rtc::Configuration & config)
+{
+  rbd::parsers::Geometry geom;
   if(config.has("box"))
   {
-    geom.type = mc_rbdyn_urdf::Geometry::Type::BOX;
-    mc_rbdyn_urdf::Geometry::Box b = config("box");
+    geom.type = rbd::parsers::Geometry::Type::BOX;
+    rbd::parsers::Geometry::Box b = config("box");
     geom.data = b;
   }
   else if(config.has("cylinder"))
   {
-    geom.type = mc_rbdyn_urdf::Geometry::Type::CYLINDER;
-    mc_rbdyn_urdf::Geometry::Cylinder b = config("cylinder");
+    geom.type = rbd::parsers::Geometry::Type::CYLINDER;
+    rbd::parsers::Geometry::Cylinder b = config("cylinder");
     geom.data = b;
   }
   else if(config.has("sphere"))
   {
-    geom.type = mc_rbdyn_urdf::Geometry::Type::SPHERE;
-    mc_rbdyn_urdf::Geometry::Sphere b = config("sphere");
+    geom.type = rbd::parsers::Geometry::Type::SPHERE;
+    rbd::parsers::Geometry::Sphere b = config("sphere");
     geom.data = b;
   }
   else if(config.has("mesh"))
   {
-    geom.type = mc_rbdyn_urdf::Geometry::Type::MESH;
-    mc_rbdyn_urdf::Geometry::Mesh b = config("mesh");
+    geom.type = rbd::parsers::Geometry::Type::MESH;
+    rbd::parsers::Geometry::Mesh b = config("mesh");
     geom.data = b;
+  }
+  else if(config.has("superellipsoid"))
+  {
+    geom.type = rbd::parsers::Geometry::Type::SUPERELLIPSOID;
+    rbd::parsers::Geometry::Superellipsoid s = config("superellipsoid");
+    geom.data = s;
   }
   return geom;
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry>::save(const mc_rbdyn_urdf::Geometry & geom)
+mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Geometry>::save(const rbd::parsers::Geometry & geom)
 {
   mc_rtc::Configuration config;
   switch(geom.type)
   {
-    case mc_rbdyn_urdf::Geometry::Type::BOX:
-      config.add("box", boost::get<mc_rbdyn_urdf::Geometry::Box>(geom.data));
+    case rbd::parsers::Geometry::Type::BOX:
+      config.add("box", boost::get<rbd::parsers::Geometry::Box>(geom.data));
       break;
-    case mc_rbdyn_urdf::Geometry::Type::CYLINDER:
-      config.add("cylinder", boost::get<mc_rbdyn_urdf::Geometry::Cylinder>(geom.data));
+    case rbd::parsers::Geometry::Type::CYLINDER:
+      config.add("cylinder", boost::get<rbd::parsers::Geometry::Cylinder>(geom.data));
       break;
-    case mc_rbdyn_urdf::Geometry::Type::SPHERE:
-      config.add("sphere", boost::get<mc_rbdyn_urdf::Geometry::Sphere>(geom.data));
+    case rbd::parsers::Geometry::Type::SPHERE:
+      config.add("sphere", boost::get<rbd::parsers::Geometry::Sphere>(geom.data));
       break;
-    case mc_rbdyn_urdf::Geometry::Type::MESH:
-      config.add("mesh", boost::get<mc_rbdyn_urdf::Geometry::Mesh>(geom.data));
+    case rbd::parsers::Geometry::Type::MESH:
+      config.add("mesh", boost::get<rbd::parsers::Geometry::Mesh>(geom.data));
+      break;
+    case rbd::parsers::Geometry::Type::SUPERELLIPSOID:
+      config.add("superellipsoid", boost::get<rbd::parsers::Geometry::Superellipsoid>(geom.data));
       break;
     default:
       break;
@@ -717,12 +746,12 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Geometry>::save(const m
   return config;
 }
 
-mc_rbdyn_urdf::Visual ConfigurationLoader<mc_rbdyn_urdf::Visual>::load(const mc_rtc::Configuration & config)
+rbd::parsers::Visual ConfigurationLoader<rbd::parsers::Visual>::load(const mc_rtc::Configuration & config)
 {
   return {config("name"), config("origin"), config("geometry")};
 }
 
-mc_rtc::Configuration ConfigurationLoader<mc_rbdyn_urdf::Visual>::save(const mc_rbdyn_urdf::Visual & vis)
+mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Visual>::save(const rbd::parsers::Visual & vis)
 {
   mc_rtc::Configuration config;
   config.add("name", vis.name);
@@ -745,32 +774,19 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     rm.mb = config("mb");
     rm.mbc = config("mbc");
     rm._bounds = config("bounds");
-    rm._visual = config("visuals");
+    rm._visual = static_cast<std::map<std::string, std::vector<rbd::parsers::Visual>>>(config("visuals"));
     rm._collisionTransforms = config("collisionTransforms");
   }
   else
   {
     auto filteredLinks = config("filteredLinks", std::vector<std::string>{});
     auto fixed = config("fixed", false);
-    std::ifstream ifs(rm.urdf_path);
-    if(ifs.is_open())
+    if(!bfs::exists(rm.urdf_path))
     {
-      std::stringstream urdf;
-      urdf << ifs.rdbuf();
-      auto res = mc_rbdyn_urdf::rbdyn_from_urdf(urdf.str(), fixed, filteredLinks);
-      rm.mb = res.mb;
-      rm.mbc = res.mbc;
-      rm.mbg = res.mbg;
-      rm._visual = res.visual;
-      rm._collisionTransforms = res.collision_tf;
-      rm._bounds = mc_rbdyn::urdf_limits_to_bounds(res.limits);
+      LOG_ERROR_AND_THROW(std::runtime_error, "Could not open model for " << rm.name << " at " << rm.urdf_path)
     }
-    else
-    {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Could not open URDF model for " << rm.name << " at " << rm.urdf_path)
-    }
+    rm.init(rbd::parsers::from_urdf_file(rm.urdf_path, fixed));
   }
-
   /* Default values work fine for those */
   if(config.has("rsdf_dir"))
   {

@@ -101,7 +101,6 @@ Building from sources on other platforms is not well documented at the moment. I
 - [eigen-lssol](https://gite.lirmm.fr/multi-contact/eigen-lssol)
 - [sch-core](https://github.com/jrl-umi3218/sch-core)
 - [Tasks](https://github.com/jrl-umi3218/Tasks)
-- [mc\_rbdyn\_urdf](https://github.com/jrl-umi3218/mc_rbdyn_urdf)
 - [mc_rtc_data](https://github.com/jrl-umi3218/mc_rtc_data)
 
 mc\_rtc also has a ROS plugin that enables automated robot's status publication as ROS topics and facilitate the integration with ROS tools (e.g. RViZ), to build this you will need:

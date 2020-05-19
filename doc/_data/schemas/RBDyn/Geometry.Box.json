@@ -1,5 +1,5 @@
 {
-  "title": "mc_rbdyn_urdf::Geometry::Box",
+  "title": "rbd::parsers::Geometry::Box",
   "type": "object",
   "properties":
   {

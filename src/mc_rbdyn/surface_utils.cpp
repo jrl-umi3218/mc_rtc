@@ -9,7 +9,7 @@
 #include <mc_rbdyn/surface_utils.h>
 
 // For some dom manipulations
-#include <mc_rbdyn_urdf/urdf.h>
+#include <RBDyn/parsers/urdf.h>
 
 #include <boost/filesystem.hpp>
 
@@ -23,8 +23,8 @@ namespace mc_rbdyn
 
 inline sva::PTransformd tfFromOriginDom(const tinyxml2::XMLElement & dom)
 {
-  Eigen::Vector3d xyz = mc_rbdyn_urdf::attrToVector(dom, "xyz");
-  Eigen::Vector3d rpy = mc_rbdyn_urdf::attrToVector(dom, "rpy");
+  Eigen::Vector3d xyz = rbd::parsers::attrToVector(dom, "xyz");
+  Eigen::Vector3d rpy = rbd::parsers::attrToVector(dom, "rpy");
   return sva::PTransformd(rpyToMat(rpy), xyz);
 }
 
@@ -53,7 +53,7 @@ inline void readRSDF(const std::string & rsdf_string, std::vector<std::shared_pt
     tinyxml2::XMLElement * pointdom = pdom->FirstChildElement("points")->FirstChildElement("point");
     while(pointdom)
     {
-      std::vector<double> pdata = mc_rbdyn_urdf::attrToList(*pointdom, "xy");
+      std::vector<double> pdata = rbd::parsers::attrToList(*pointdom, "xy");
       points.push_back(std::pair<double, double>(pdata[0], pdata[1]));
       pointdom = pointdom->NextSiblingElement("point");
     }

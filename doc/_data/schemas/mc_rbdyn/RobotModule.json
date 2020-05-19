@@ -40,7 +40,7 @@
       "type": "object",
       "patternProperties":
       {
-        "*": { "type": "array", "items": { "$ref" : "/../../mc_rbdyn_urdf/Visual.json" } }
+        "*": { "type": "array", "items": { "$ref" : "/../../RBDyn/Visual.json" } }
       }
     },
     "collisionTransforms":

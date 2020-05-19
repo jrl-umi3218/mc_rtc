@@ -1,11 +1,11 @@
 {
-  "title": "mc_rbdyn_urdf::Visual",
+  "title": "rbd::parsers::Visual",
   "type": "object",
   "properties":
   {
     "name": { "type": "string" },
     "origin": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-    "geometry": { "$ref": "/../../mc_rbdyn_urdf/Geometry.json" }
+    "geometry": { "$ref": "/../../RBDyn/Geometry.json" }
   },
   "required": ["name", "origin", "geometry"],
   "additionalProperties": false

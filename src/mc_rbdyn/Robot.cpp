@@ -12,8 +12,6 @@
 #include <mc_rtc/constants.h>
 #include <mc_rtc/logging.h>
 
-#include <mc_rbdyn_urdf/urdf.h>
-
 #include <RBDyn/CoM.h>
 #include <RBDyn/EulerIntegration.h>
 #include <RBDyn/FA.h>
