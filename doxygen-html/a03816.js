@@ -1,9 +1,13 @@
 var a03816 =
 [
-    [ "MC_RTC_GUI_DLLAPI", "a03816.html#a0154310cb006fb3f499c367ca3e861a8", null ],
-    [ "MC_RTC_GUI_DLLEXPORT", "a03816.html#a14ad7305617c58803f8ce0c7541bb508", null ],
-    [ "MC_RTC_GUI_DLLIMPORT", "a03816.html#a9365441c6f8e61e9f8c39bb75c617b43", null ],
-    [ "MC_RTC_GUI_DLLLOCAL", "a03816.html#a0480d192b9c9ae9d9d88bf17771118b2", null ],
-    [ "MC_RTC_GUI_LOCAL", "a03816.html#aa7fe5afca945e356848d1a6b156528fa", null ],
-    [ "MC_RTC_GUI_VERSION", "a03816.html#a3c227096c22154059e88b20b7cd202bc", null ]
+    [ "MC_OBSERVER_DLLAPI", "a03816.html#a5f92e3e5bb50345181ceaa0fdc4ed310", null ],
+    [ "MC_OBSERVER_DLLEXPORT", "a03816.html#a71f5d19aecb89bc7ff66ea90cbec91d3", null ],
+    [ "MC_OBSERVER_DLLIMPORT", "a03816.html#a5ec028a59707a198d06a6b92110d7ee1", null ],
+    [ "MC_OBSERVER_DLLLOCAL", "a03816.html#a933db9b3406c8c221ba3ee7f689e7511", null ],
+    [ "MC_OBSERVER_LOCAL", "a03816.html#ad87f4c4e93529fdbfdd4a95ef34bbd7a", null ],
+    [ "MC_OBSERVERS_DLLAPI", "a03816.html#adde8be25d8f40acd541ed21395a5c73a", null ],
+    [ "MC_OBSERVERS_DLLEXPORT", "a03816.html#a584f0147ac169a854c258384854bd841", null ],
+    [ "MC_OBSERVERS_DLLIMPORT", "a03816.html#a0193ed43a7a8a2bca1082d339d28651e", null ],
+    [ "MC_OBSERVERS_DLLLOCAL", "a03816.html#a55268a03db41d5270bf2614681e1eb51", null ],
+    [ "MC_OBSERVERS_LOCAL", "a03816.html#a094cf177ee9875b67aca0d123880fe86", null ]
 ];

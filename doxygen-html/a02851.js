@@ -1,10 +1,17 @@
 var a02851 =
 [
-    [ "bezier_curve_t", "a02851.html#a58fe236423f0abd51af3cdcb50017a47", null ],
-    [ "waypoints_t", "a02851.html#ada383daeac50ae7ac8b720c6096289f5", null ],
-    [ "BSpline", "a02851.html#a905828c45debcac32ddbd35718a138a1", null ],
-    [ "addToGUI", "a02851.html#a206f674c4f9e666083f9aa96b27b7628", null ],
-    [ "sampleTrajectory", "a02851.html#ac34c7879cd2d0a941a6b303c366d16f4", null ],
-    [ "splev", "a02851.html#ae72e0f0db1744ff5a1e7ea8c8a832d5a", null ],
-    [ "update", "a02851.html#ab70108d4c7af3ce67b487bcbe11cab5d", null ]
+    [ "VectorOrientationTask", "a02851.html#ac24b6093fa849811dd07a0ab2ace17c0", null ],
+    [ "VectorOrientationTask", "a02851.html#a60f2e467ea49160a0037f8aa2470bdbc", null ],
+    [ "actual", "a02851.html#a0755b43ee0cbc12ba4fccd7008098ecf", null ],
+    [ "addToGUI", "a02851.html#aef3c3a8b836ba15e7bd062d841399ad4", null ],
+    [ "addToLogger", "a02851.html#ae2ea06fdeee5903edcbfb8da2bd55af4", null ],
+    [ "body", "a02851.html#a9531e6144e6dd8823951374d95397d27", null ],
+    [ "bodyVector", "a02851.html#ae066b3584e94bfca4abe3f93e2d826c4", null ],
+    [ "bodyVector", "a02851.html#a92edeb5ec1b0291f9909f98e8522c37e", null ],
+    [ "removeFromLogger", "a02851.html#a077b7176cf69a042e7c31b7dd5a76490", null ],
+    [ "reset", "a02851.html#a04b7aba6c4e4d4abd746c19e12c650e6", null ],
+    [ "targetVector", "a02851.html#a8a2c67e86c6867c837129bb81834ccf4", null ],
+    [ "targetVector", "a02851.html#a9773f23cd1f91fa767b7c3ae49b6cb3d", null ],
+    [ "bIndex", "a02851.html#a59e4464e07872bfd5e5cbe19cb6b2948", null ],
+    [ "bodyName", "a02851.html#aff910f1c3ed3b698c50408dfb66eb7c0", null ]
 ];

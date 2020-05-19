@@ -1,15 +1,9 @@
 var a03831 =
 [
-    [ "ConfigurationLoader", "a02187.html", "a02187" ],
-    [ "ConfigurationLoader< void >", "a02191.html", "a02191" ],
-    [ "_has_configuration_load_object", "a02195.html", "a02195" ],
-    [ "has_configuration_load_object", "a02199.html", null ],
-    [ "_has_configuration_save_object", "a02203.html", "a02203" ],
-    [ "has_configuration_save_object", "a02207.html", null ],
-    [ "Configuration", "a02211.html", "a02211" ],
-    [ "Exception", "a02215.html", "a02215" ],
-    [ "ConfigurationArrayIterator", "a02223.html", "a02223" ],
-    [ "operator<<", "a03831.html#a24679a5c44564f7b7426cca4533300bf", null ],
-    [ "Configuration", "a03831.html#a9b620c9005d103e65363b518ba6dca23", null ],
-    [ "ConfigurationArrayIterator", "a03831.html#a781ea11d3b3f97742187d5910b74edfd", null ]
+    [ "MC_SOLVER_DLLAPI", "a03831.html#a1f670c9ef41bde54578a3afc8fd75445", null ],
+    [ "MC_SOLVER_DLLEXPORT", "a03831.html#a24ff42006c016a5adc79aec2a1dfc0fe", null ],
+    [ "MC_SOLVER_DLLIMPORT", "a03831.html#a85361305f43d765074b5a82afaa82487", null ],
+    [ "MC_SOLVER_DLLLOCAL", "a03831.html#ae3c35da4cb012ab2f6caea5696a56dae", null ],
+    [ "MC_SOLVER_LOCAL", "a03831.html#ad2b85045fbd2243b5745829691239595", null ],
+    [ "MC_SOLVER_VERSION", "a03831.html#ae4634b29539fd982b8b83c15830c1c37", null ]
 ];

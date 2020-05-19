@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::internal::lambda_traits&lt; RetT(C::*)(Args...) const &gt; Struct Template Reference</title>
+<title>mc_rtc::Configuration::Exception Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,39 +70,160 @@ $(document).ready(function(){initNavTree('a02219.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="a02216.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::internal::lambda_traits&lt; RetT(C::*)(Args...) const &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_rtc::Configuration::Exception Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Specialization that matches non-mutable lambda.  
+<p><a class="el" href="a02219.html" title="Exception thrown by this class when something bad occurs. ">Exception</a> thrown by this class when something bad occurs.  
  <a href="a02219.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_rtc/DataStore.h&gt;</code></p>
+<p><code>#include &lt;mc_rtc/Configuration.h&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mc_rtc::Configuration::Exception:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="a02219.png" usemap="#mc_5Frtc::Configuration::Exception_map" alt=""/>
+  <map id="mc_5Frtc::Configuration::Exception_map" name="mc_5Frtc::Configuration::Exception_map">
+</map>
+ </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:ac1c1ac09e955e6e155ee38a3114908c3"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02219.html#ac1c1ac09e955e6e155ee38a3114908c3">fn_t</a> = std::function&lt; RetT(Args...)&gt;</td></tr>
-<tr class="separator:ac1c1ac09e955e6e155ee38a3114908c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a5fbc7e52e1f5e239e11916b19378c146"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02219.html#a5fbc7e52e1f5e239e11916b19378c146">Exception</a> (const std::string &amp;<a class="el" href="a02219.html#ace2b3bb5680e1528a1ebe8da64a409e0">msg</a>)</td></tr>
+<tr class="memdesc:a5fbc7e52e1f5e239e11916b19378c146"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a5fbc7e52e1f5e239e11916b19378c146">More...</a><br /></td></tr>
+<tr class="separator:a5fbc7e52e1f5e239e11916b19378c146"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a262aab07d1d6f5b9b121e5af5fddfc11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02219.html#a262aab07d1d6f5b9b121e5af5fddfc11">~Exception</a> () noexcept</td></tr>
+<tr class="separator:a262aab07d1d6f5b9b121e5af5fddfc11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02a511274c6edbdfcf14ecc723a495c5"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02219.html#a02a511274c6edbdfcf14ecc723a495c5">what</a> () const noexcept override</td></tr>
+<tr class="separator:a02a511274c6edbdfcf14ecc723a495c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab026ea13c4e83beee1d4ee93da90eb1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02219.html#ab026ea13c4e83beee1d4ee93da90eb1c">silence</a> () noexcept</td></tr>
+<tr class="separator:ab026ea13c4e83beee1d4ee93da90eb1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ace2b3bb5680e1528a1ebe8da64a409e0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02219.html#ace2b3bb5680e1528a1ebe8da64a409e0">msg</a></td></tr>
+<tr class="separator:ace2b3bb5680e1528a1ebe8da64a409e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename C, typename RetT, typename... Args&gt;<br />
-struct mc_rtc::internal::lambda_traits&lt; RetT(C::*)(Args...) const &gt;</h3>
-
-<p>Specialization that matches non-mutable lambda. </p>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="ac1c1ac09e955e6e155ee38a3114908c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1c1ac09e955e6e155ee38a3114908c3">&#9670;&nbsp;</a></span>fn_t</h2>
+<div class="textblock"><p><a class="el" href="a02219.html" title="Exception thrown by this class when something bad occurs. ">Exception</a> thrown by this class when something bad occurs. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a5fbc7e52e1f5e239e11916b19378c146"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fbc7e52e1f5e239e11916b19378c146">&#9670;&nbsp;</a></span>Exception()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename C , typename RetT , typename... Args&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a02215.html">mc_rtc::internal::lambda_traits</a>&lt; RetT(C::*)(Args...) const &gt;::<a class="el" href="a02219.html#ac1c1ac09e955e6e155ee38a3114908c3">fn_t</a> =  std::function&lt;RetT(Args...)&gt;</td>
+          <td class="memname">mc_rtc::Configuration::Exception::Exception </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td>The message that will be returned by <a class="el" href="a02219.html#a02a511274c6edbdfcf14ecc723a495c5">what()</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a262aab07d1d6f5b9b121e5af5fddfc11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a262aab07d1d6f5b9b121e5af5fddfc11">&#9670;&nbsp;</a></span>~Exception()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rtc::Configuration::Exception::~Exception </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab026ea13c4e83beee1d4ee93da90eb1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab026ea13c4e83beee1d4ee93da90eb1c">&#9670;&nbsp;</a></span>silence()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rtc::Configuration::Exception::silence </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a02215.html#a945df64f7246385258b1d6190566586f">mc_rtc::Configuration::at()</a>, <a class="el" href="a00718.html#ac1107b5d5bcf197a41add86ce445c866">mc_rtc::fromVectorOrElement()</a>, and <a class="el" href="a02215.html#a4bd14911f7201bfc8d7ae644ceed153f">mc_rtc::Configuration::operator()()</a>.</p>
+
+</div>
+</div>
+<a id="a02a511274c6edbdfcf14ecc723a495c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02a511274c6edbdfcf14ecc723a495c5">&#9670;&nbsp;</a></span>what()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const char* mc_rtc::Configuration::Exception::what </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ace2b3bb5680e1528a1ebe8da64a409e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace2b3bb5680e1528a1ebe8da64a409e0">&#9670;&nbsp;</a></span>msg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_rtc::Configuration::Exception::msg</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -115,8 +236,8 @@ template&lt;typename C , typename RetT , typename... Args&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00706.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00722.html">internal</a></li><li class="navelem"><a class="el" href="a02219.html">lambda_traits&lt; RetT(C::*)(Args...) const &gt;</a></li>
-    <li class="footer">Generated on Fri May 15 2020 11:53:49 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00718.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02215.html">Configuration</a></li><li class="navelem"><a class="el" href="a02219.html">Exception</a></li>
+    <li class="footer">Generated on Tue May 19 2020 10:23:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

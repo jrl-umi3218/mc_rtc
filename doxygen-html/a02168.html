@@ -70,29 +70,27 @@ $(document).ready(function(){initNavTree('a02171.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_rbdyn::RobotModule::Gripper::Safety Member List</div>  </div>
+<div class="title">mc_rbdyn::RobotModule::Gripper Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02171.html#a2a4bf1ff512e79166cf636fe3b556965">actualCommandDiffTrigger</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02171.html#a4d905fe3f8e145803a512c078408da2c">DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02171.html#a4c51f2971f6867bb737b48cfbe389169">DEFAULT_OVER_COMMAND_LIMIT_ITER_N</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02171.html#a504d3086fb274f2e70a80821e9fe11c6">DEFAULT_PERCENT_VMAX</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02171.html#a2d05528318c8cb3f09e7708fa7466d53">DEFAULT_RELEASE_OFFSET</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02171.html#abc220529be43405fe7ce241a436568ce">overCommandLimitIterN</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02171.html#a8556afeb181b6a2f843c5d644591e1bb">percentVMax</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02171.html#af60b48d54cac8b27249a3f0031b588cd">releaseSafetyOffset</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02171.html#a2b38f18523213a233bff74f28f1a40c6">Safety</a>()</td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02171.html#a8dd63f7c20eda1e3f4f891a8d4171095">Safety</a>(double percentVMax, double actualCommandDiffTrigger=DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER, double releaseSafetyOffset=DEFAULT_RELEASE_OFFSET, unsigned int overCommandLimitIterN=DEFAULT_OVER_COMMAND_LIMIT_ITER_N)</td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02171.html#a095ecf4ebd9b675117bf1c5b45f093ca">Gripper</a>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits)</td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02171.html#a3fa8ce090be890c8fd518592fe65b25e">Gripper</a>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits, const Safety &amp;safety)</td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02171.html#acbbf290bba17b0b3becaf8c84da9c066">Gripper</a>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits, const Safety &amp;safety, const std::vector&lt; Mimic &gt; &amp;mimics)</td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02171.html#a8ed52bd8f3d7ce552f62843c352b3d9c">joints</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02171.html#ada9b553ac4484e6920c981bf71a92368">mimics</a>() const</td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02171.html#a4c63d69cf61ff0c5ae634a549eadecd1">name</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02171.html#a61df660109da82ecf0cb5cb476525045">reverse_limits</a></td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02171.html#ae5dccc3ca07db76cec2cd0e70cc0bff5">safety</a>() const</td><td class="entry"><a class="el" href="a02171.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri May 15 2020 11:56:19 for mc_rtc by
+    <li class="footer">Generated on Tue May 19 2020 10:23:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

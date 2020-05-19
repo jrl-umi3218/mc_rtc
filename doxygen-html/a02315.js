@@ -1,7 +1,8 @@
 var a02315 =
 [
-    [ "CallbackElement", "a02315.html#a26a8cb0f6a61d3442fca7f11d29f57d2", null ],
-    [ "CallbackElement", "a02315.html#ae9ef12835522d27b5d1a55210b0c973c", null ],
-    [ "handleRequest", "a02315.html#a405f276989aeae1fd599f46e0458e10f", null ],
-    [ "cb_", "a02315.html#a872fb77b757c4074529ce4847ba4dc17", null ]
+    [ "DataElement", "a02315.html#a65d486d790fd684f1fdd422a36a4b662", null ],
+    [ "DataElement", "a02315.html#a16c128617f3f6e4bc2257f811721e92d", null ],
+    [ "write", "a02315.html#a9f5405a5613389910551ed9e86e35b9b", null ],
+    [ "write_size", "a02315.html#af0401db3e91435848055af583ec602f4", null ],
+    [ "get_fn_", "a02315.html#a8a959ac2e5e7551b29b81b77034ea255", null ]
 ];

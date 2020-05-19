@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils::UpdateNrVarsData Struct Reference</title>
+<title>mc_solver::utils::UpdateForce Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,60 +70,81 @@ $(document).ready(function(){initNavTree('a02711.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="a02708.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils::UpdateNrVarsData Struct Reference</div>  </div>
+<div class="title">mc_solver::utils::UpdateForce Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This struct provides common data for UpdateNrVars* classes.  
- <a href="a02711.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_solver/utils/UpdateNrVars.h&gt;</code></p>
+<p><code>#include &lt;mc_solver/utils/Update.h&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for mc_solver::utils::UpdateNrVarsData:</div>
+Inheritance diagram for mc_solver::utils::UpdateForce:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="a02711.png" usemap="#mc_5Fsolver::utils::UpdateNrVarsData_map" alt=""/>
-  <map id="mc_5Fsolver::utils::UpdateNrVarsData_map" name="mc_5Fsolver::utils::UpdateNrVarsData_map">
-<area href="a02719.html" title="This struct provides an implement for updateNrVars for a lambda-based constraint. ..." alt="mc_solver::utils::UpdateNrVarsLambda" shape="rect" coords="666,56,1100,80"/>
-<area href="a02715.html" title="This struct provides an implementation for updateNrVars for a robot-based constraint. " alt="mc_solver::utils::UpdateNrVarsRobot" shape="rect" coords="1110,56,1544,80"/>
-<area href="a02699.html" alt="mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;" shape="rect" coords="666,112,1100,136"/>
-<area href="a02687.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Equality, utils::UpdateLambda &gt;" shape="rect" coords="0,168,434,192"/>
-<area href="a02687.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::GenInequality, utils::UpdateLambda &gt;" shape="rect" coords="444,168,878,192"/>
-<area href="a02687.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateLambda &gt;" shape="rect" coords="888,168,1322,192"/>
-<area href="a02707.html" alt="mc_solver::utils::UpdateForce" shape="rect" coords="1776,168,2210,192"/>
-<area href="a02607.html" alt="mc_solver::utils::EqualityConstraint&lt; utils::UpdateLambda &gt;" shape="rect" coords="0,224,434,248"/>
-<area href="a02631.html" alt="mc_solver::utils::GenInequalityConstraint&lt; utils::UpdateLambda &gt;" shape="rect" coords="444,224,878,248"/>
-<area href="a02647.html" alt="mc_solver::utils::InequalityConstraint&lt; utils::UpdateLambda &gt;" shape="rect" coords="888,224,1322,248"/>
-<area href="a02687.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Equality, utils::UpdateForce &gt;" shape="rect" coords="1332,224,1766,248"/>
-<area href="a02687.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::GenInequality, utils::UpdateForce &gt;" shape="rect" coords="1776,224,2210,248"/>
-<area href="a02687.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateForce &gt;" shape="rect" coords="2220,224,2654,248"/>
-<area href="a02615.html" title="Helper class to write an equality constraint for Tasks. " alt="mc_solver::EqualityConstraintLambda" shape="rect" coords="0,280,434,304"/>
-<area href="a02639.html" title="Helper class to write a general inequality constraint for Tasks. " alt="mc_solver::GenInequalityConstraintLambda" shape="rect" coords="444,280,878,304"/>
-<area href="a02655.html" title="Helper class to write an inequality constraint for Tasks. " alt="mc_solver::InequalityConstraintLambda" shape="rect" coords="888,280,1322,304"/>
-<area href="a02607.html" alt="mc_solver::utils::EqualityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="1332,280,1766,304"/>
-<area href="a02631.html" alt="mc_solver::utils::GenInequalityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="1776,280,2210,304"/>
-<area href="a02647.html" alt="mc_solver::utils::InequalityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="2220,280,2654,304"/>
-<area href="a02619.html" title="Helper class to write an equality constraint for Tasks. " alt="mc_solver::EqualityConstraintForce" shape="rect" coords="1332,336,1766,360"/>
-<area href="a02643.html" title="Helper class to write a general inequality constraint for Tasks. " alt="mc_solver::GenInequalityConstraintForce" shape="rect" coords="1776,336,2210,360"/>
-<area href="a02659.html" title="Helper class to write an inequality constraint for Tasks. " alt="mc_solver::InequalityConstraintForce" shape="rect" coords="2220,336,2654,360"/>
+  <img src="a02711.png" usemap="#mc_5Fsolver::utils::UpdateForce_map" alt=""/>
+  <map id="mc_5Fsolver::utils::UpdateForce_map" name="mc_5Fsolver::utils::UpdateForce_map">
+<area href="a02703.html" alt="mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;" shape="rect" coords="434,112,858,136"/>
+<area href="a02723.html" title="This struct provides an implement for updateNrVars for a lambda-based constraint. ..." alt="mc_solver::utils::UpdateNrVarsLambda" shape="rect" coords="217,56,641,80"/>
+<area href="a02699.html" alt="mc_solver::utils::UpdateTag" shape="rect" coords="651,56,1075,80"/>
+<area href="a02715.html" title="This struct provides common data for UpdateNrVars* classes. " alt="mc_solver::utils::UpdateNrVarsData" shape="rect" coords="217,0,641,24"/>
+<area href="a02691.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Equality, utils::UpdateForce &gt;" shape="rect" coords="0,224,424,248"/>
+<area href="a02691.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::GenInequality, utils::UpdateForce &gt;" shape="rect" coords="434,224,858,248"/>
+<area href="a02691.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateForce &gt;" shape="rect" coords="868,224,1292,248"/>
+<area href="a02611.html" alt="mc_solver::utils::EqualityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="0,280,424,304"/>
+<area href="a02635.html" alt="mc_solver::utils::GenInequalityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="434,280,858,304"/>
+<area href="a02651.html" alt="mc_solver::utils::InequalityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="868,280,1292,304"/>
+<area href="a02623.html" title="Helper class to write an equality constraint for Tasks. " alt="mc_solver::EqualityConstraintForce" shape="rect" coords="0,336,424,360"/>
+<area href="a02647.html" title="Helper class to write a general inequality constraint for Tasks. " alt="mc_solver::GenInequalityConstraintForce" shape="rect" coords="434,336,858,360"/>
+<area href="a02663.html" title="Helper class to write an inequality constraint for Tasks. " alt="mc_solver::InequalityConstraintForce" shape="rect" coords="868,336,1292,360"/>
 </map>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a3c4a15ad329aedecdfd932aaffe4ff76"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02711.html#a3c4a15ad329aedecdfd932aaffe4ff76">nrVars_</a></td></tr>
-<tr class="separator:a3c4a15ad329aedecdfd932aaffe4ff76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7940f913dbc5037ed042609f685bfaa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02711.html#ac7940f913dbc5037ed042609f685bfaa">ABegin_</a></td></tr>
-<tr class="separator:ac7940f913dbc5037ed042609f685bfaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:ac7cfe8520ea50dc9cbf285f433769d11"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02711.html#ac7cfe8520ea50dc9cbf285f433769d11">UpdateForce</a> (const <a class="el" href="a02687.html">mc_solver::QPSolver</a> &amp;solver, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00964.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
+<tr class="separator:ac7cfe8520ea50dc9cbf285f433769d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a147dd26742af4a2879ffdead8b3ab93d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02711.html#a147dd26742af4a2879ffdead8b3ab93d">updateImpl</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01064.html">tasks::qp::SolverData</a> &amp;)</td></tr>
+<tr class="separator:a147dd26742af4a2879ffdead8b3ab93d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02703"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02703')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02703.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td></tr>
+<tr class="memitem:ad172325243564a16279d9392bd86efa5 inherit pro_methods_a02703"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#ad172325243564a16279d9392bd86efa5">Update</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:ad172325243564a16279d9392bd86efa5 inherit pro_methods_a02703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a806d3dc017b28e570dfa268a32a55600 inherit pro_methods_a02703"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#a806d3dc017b28e570dfa268a32a55600">Update</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00964.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
+<tr class="separator:a806d3dc017b28e570dfa268a32a55600 inherit pro_methods_a02703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8ad71dd3414ee8bccc766c7bc8b4dc3 inherit pro_methods_a02703"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#ab8ad71dd3414ee8bccc766c7bc8b4dc3">~Update</a> ()</td></tr>
+<tr class="separator:ab8ad71dd3414ee8bccc766c7bc8b4dc3 inherit pro_methods_a02703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02703"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#a8f658eb01d91768ab6a4e9b095a894de">compute</a> ()=0</td></tr>
+<tr class="memdesc:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should be overriden to update the constraint matrix and vector(s)  <a href="a02703.html#a8f658eb01d91768ab6a4e9b095a894de">More...</a><br /></td></tr>
+<tr class="separator:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02703"><td class="memItemLeft" align="right" valign="top">virtual const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#adcc1dc8dc0563b2e14f962f26afbfa5f">A</a> () const=0</td></tr>
+<tr class="memdesc:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should be overriden to provide A in the desired operation space.  <a href="a02703.html#adcc1dc8dc0563b2e14f962f26afbfa5f">More...</a><br /></td></tr>
+<tr class="separator:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab889dcd5361a420fe976146c40f56533 inherit pro_methods_a02703"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#ab889dcd5361a420fe976146c40f56533">updateImpl</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01064.html">tasks::qp::SolverData</a> &amp;)</td></tr>
+<tr class="separator:ab889dcd5361a420fe976146c40f56533 inherit pro_methods_a02703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02723"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02723')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02723.html">mc_solver::utils::UpdateNrVarsLambda</a></td></tr>
+<tr class="memitem:a9d6f46e4b6e93b51903495758aecd406 inherit pro_methods_a02723"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02723.html#a9d6f46e4b6e93b51903495758aecd406">UpdateNrVarsLambda</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00964.html">tasks::qp::ContactId</a> &amp;cid)</td></tr>
+<tr class="separator:a9d6f46e4b6e93b51903495758aecd406 inherit pro_methods_a02723"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c7ce960742e1844186550b503af6207 inherit pro_methods_a02723"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02723.html#a3c7ce960742e1844186550b503af6207">updateNrVarsImpl</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01064.html">tasks::qp::SolverData</a> &amp;data)</td></tr>
+<tr class="separator:a3c7ce960742e1844186550b503af6207 inherit pro_methods_a02723"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_attribs_a02703"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02703')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02703.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td></tr>
+<tr class="memitem:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02703"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02703.html#a6ba3138c342b7e4efa2328ac11930706">AFull_</a></td></tr>
+<tr class="memdesc:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02703"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the full size matrix.  <a href="a02703.html#a6ba3138c342b7e4efa2328ac11930706">More...</a><br /></td></tr>
+<tr class="separator:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02723"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02723')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02723.html">mc_solver::utils::UpdateNrVarsLambda</a></td></tr>
+<tr class="memitem:a855dd9e41399b5a6271e9b4e02576b23 inherit pro_attribs_a02723"><td class="memItemLeft" align="right" valign="top"><a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00964.html">tasks::qp::ContactId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02723.html#a855dd9e41399b5a6271e9b4e02576b23">cid_</a></td></tr>
+<tr class="separator:a855dd9e41399b5a6271e9b4e02576b23 inherit pro_attribs_a02723"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02715"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02715')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02715.html">mc_solver::utils::UpdateNrVarsData</a></td></tr>
+<tr class="memitem:a3c4a15ad329aedecdfd932aaffe4ff76 inherit pro_attribs_a02715"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02715.html#a3c4a15ad329aedecdfd932aaffe4ff76">nrVars_</a></td></tr>
+<tr class="separator:a3c4a15ad329aedecdfd932aaffe4ff76 inherit pro_attribs_a02715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7940f913dbc5037ed042609f685bfaa inherit pro_attribs_a02715"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02715.html#ac7940f913dbc5037ed042609f685bfaa">ABegin_</a></td></tr>
+<tr class="separator:ac7940f913dbc5037ed042609f685bfaa inherit pro_attribs_a02715"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This struct provides common data for UpdateNrVars* classes. </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="ac7940f913dbc5037ed042609f685bfaa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7940f913dbc5037ed042609f685bfaa">&#9670;&nbsp;</a></span>ABegin_</h2>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ac7cfe8520ea50dc9cbf285f433769d11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7cfe8520ea50dc9cbf285f433769d11">&#9670;&nbsp;</a></span>UpdateForce()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -132,7 +153,21 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int mc_solver::utils::UpdateNrVarsData::ABegin_</td>
+          <td class="memname">mc_solver::utils::UpdateForce::UpdateForce </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02687.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00964.html">tasks::qp::ContactId</a> &amp;&#160;</td>
+          <td class="paramname"><em>cid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -144,8 +179,9 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a3c4a15ad329aedecdfd932aaffe4ff76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c4a15ad329aedecdfd932aaffe4ff76">&#9670;&nbsp;</a></span>nrVars_</h2>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a147dd26742af4a2879ffdead8b3ab93d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a147dd26742af4a2879ffdead8b3ab93d">&#9670;&nbsp;</a></span>updateImpl()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -154,7 +190,27 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int mc_solver::utils::UpdateNrVarsData::nrVars_</td>
+          <td class="memname">void mc_solver::utils::UpdateForce::updateImpl </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="elRef" doxygen="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag:https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/" href="https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01064.html">tasks::qp::SolverData</a> &amp;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -172,8 +228,8 @@ Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00726.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00744.html">utils</a></li><li class="navelem"><a class="el" href="a02711.html">UpdateNrVarsData</a></li>
-    <li class="footer">Generated on Fri May 15 2020 11:56:20 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00726.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00744.html">utils</a></li><li class="navelem"><a class="el" href="a02711.html">UpdateForce</a></li>
+    <li class="footer">Generated on Tue May 19 2020 10:23:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

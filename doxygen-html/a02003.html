@@ -92,7 +92,7 @@ Inheritance diagram for mc_observers::EncoderObserver:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae041a35fb0a73ebdbe7bbea9e1346155"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02003.html#ae041a35fb0a73ebdbe7bbea9e1346155">EncoderObserver</a> (const std::string &amp;<a class="el" href="a02015.html#a5faf70047c2be78645564f90a8053bff">name</a>, double <a class="el" href="a02015.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>, const <a class="el" href="a02211.html">mc_rtc::Configuration</a> &amp;config={})</td></tr>
+<tr class="memitem:ae041a35fb0a73ebdbe7bbea9e1346155"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02003.html#ae041a35fb0a73ebdbe7bbea9e1346155">EncoderObserver</a> (const std::string &amp;<a class="el" href="a02015.html#a5faf70047c2be78645564f90a8053bff">name</a>, double <a class="el" href="a02015.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>, const <a class="el" href="a02215.html">mc_rtc::Configuration</a> &amp;config={})</td></tr>
 <tr class="memdesc:ae041a35fb0a73ebdbe7bbea9e1346155"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize observer.  <a href="#ae041a35fb0a73ebdbe7bbea9e1346155">More...</a><br /></td></tr>
 <tr class="separator:ae041a35fb0a73ebdbe7bbea9e1346155"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2934c6f44a6b49aae0e8e412b04d37c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02003.html#a2934c6f44a6b49aae0e8e412b04d37c1">reset</a> (const <a class="el" href="a01971.html">mc_control::MCController</a> &amp;ctl) override</td></tr>
@@ -101,17 +101,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad65144731e89fc2d6ba40c39e9d5b691"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02003.html#ad65144731e89fc2d6ba40c39e9d5b691">run</a> (const <a class="el" href="a01971.html">mc_control::MCController</a> &amp;ctl) override</td></tr>
 <tr class="memdesc:ad65144731e89fc2d6ba40c39e9d5b691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes encoder velocity by finite differences of position.  <a href="#ad65144731e89fc2d6ba40c39e9d5b691">More...</a><br /></td></tr>
 <tr class="separator:ad65144731e89fc2d6ba40c39e9d5b691"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af72093790abd36ada558ed00cb0414a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02003.html#af72093790abd36ada558ed00cb0414a0">updateRobots</a> (const <a class="el" href="a01971.html">mc_control::MCController</a> &amp;ctl, <a class="el" href="a02175.html">mc_rbdyn::Robots</a> &amp;realRobots) override</td></tr>
+<tr class="memitem:af72093790abd36ada558ed00cb0414a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02003.html#af72093790abd36ada558ed00cb0414a0">updateRobots</a> (const <a class="el" href="a01971.html">mc_control::MCController</a> &amp;ctl, <a class="el" href="a02179.html">mc_rbdyn::Robots</a> &amp;realRobots) override</td></tr>
 <tr class="memdesc:af72093790abd36ada558ed00cb0414a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the real robot from the estimator state, depending on its configuration:  <a href="#af72093790abd36ada558ed00cb0414a0">More...</a><br /></td></tr>
 <tr class="separator:af72093790abd36ada558ed00cb0414a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a2f2d12d8ea8643e3a2ad1e910aa892"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02003.html#a2a2f2d12d8ea8643e3a2ad1e910aa892">addToLogger</a> (const <a class="el" href="a01971.html">mc_control::MCController</a> &amp;ctl, <a class="el" href="a02531.html">mc_rtc::Logger</a> &amp;) override</td></tr>
+<tr class="memitem:a2a2f2d12d8ea8643e3a2ad1e910aa892"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02003.html#a2a2f2d12d8ea8643e3a2ad1e910aa892">addToLogger</a> (const <a class="el" href="a01971.html">mc_control::MCController</a> &amp;ctl, <a class="el" href="a02535.html">mc_rtc::Logger</a> &amp;) override</td></tr>
 <tr class="memdesc:a2a2f2d12d8ea8643e3a2ad1e910aa892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add observer to the logger.  <a href="#a2a2f2d12d8ea8643e3a2ad1e910aa892">More...</a><br /></td></tr>
 <tr class="separator:a2a2f2d12d8ea8643e3a2ad1e910aa892"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af71d87a052f0e72a00198643ab760a11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02003.html#af71d87a052f0e72a00198643ab760a11">removeFromLogger</a> (<a class="el" href="a02531.html">mc_rtc::Logger</a> &amp;) override</td></tr>
+<tr class="memitem:af71d87a052f0e72a00198643ab760a11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02003.html#af71d87a052f0e72a00198643ab760a11">removeFromLogger</a> (<a class="el" href="a02535.html">mc_rtc::Logger</a> &amp;) override</td></tr>
 <tr class="memdesc:af71d87a052f0e72a00198643ab760a11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove observer from logger.  <a href="#af71d87a052f0e72a00198643ab760a11">More...</a><br /></td></tr>
 <tr class="separator:af71d87a052f0e72a00198643ab760a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_a02015"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02015')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02015.html">mc_observers::Observer</a></td></tr>
-<tr class="memitem:a0f9f2d8b07a93f2fe3b55e48406835d3 inherit pub_methods_a02015"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02015.html#a0f9f2d8b07a93f2fe3b55e48406835d3">Observer</a> (const std::string &amp;<a class="el" href="a02015.html#a5faf70047c2be78645564f90a8053bff">name</a>, double <a class="el" href="a02015.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>, const <a class="el" href="a02211.html">mc_rtc::Configuration</a> &amp;config={})</td></tr>
+<tr class="memitem:a0f9f2d8b07a93f2fe3b55e48406835d3 inherit pub_methods_a02015"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02015.html#a0f9f2d8b07a93f2fe3b55e48406835d3">Observer</a> (const std::string &amp;<a class="el" href="a02015.html#a5faf70047c2be78645564f90a8053bff">name</a>, double <a class="el" href="a02015.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>, const <a class="el" href="a02215.html">mc_rtc::Configuration</a> &amp;config={})</td></tr>
 <tr class="separator:a0f9f2d8b07a93f2fe3b55e48406835d3 inherit pub_methods_a02015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe80cec7744a72c627f17990a74e890b inherit pub_methods_a02015"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02015.html#afe80cec7744a72c627f17990a74e890b">~Observer</a> ()</td></tr>
 <tr class="separator:afe80cec7744a72c627f17990a74e890b inherit pub_methods_a02015"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,10 +119,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5faf70047c2be78645564f90a8053bff inherit pub_methods_a02015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a862e1f350e7b57da34f15824d21d1d37 inherit pub_methods_a02015"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02015.html#a862e1f350e7b57da34f15824d21d1d37">dt</a> () const</td></tr>
 <tr class="separator:a862e1f350e7b57da34f15824d21d1d37 inherit pub_methods_a02015"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0957402752e8564b876c86f305ebbe2f inherit pub_methods_a02015"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02015.html#a0957402752e8564b876c86f305ebbe2f">addToGUI</a> (const <a class="el" href="a01971.html">mc_control::MCController</a> &amp;, <a class="el" href="a02439.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
+<tr class="memitem:a0957402752e8564b876c86f305ebbe2f inherit pub_methods_a02015"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02015.html#a0957402752e8564b876c86f305ebbe2f">addToGUI</a> (const <a class="el" href="a01971.html">mc_control::MCController</a> &amp;, <a class="el" href="a02443.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
 <tr class="memdesc:a0957402752e8564b876c86f305ebbe2f inherit pub_methods_a02015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add observer information the GUI.  <a href="a02015.html#a0957402752e8564b876c86f305ebbe2f">More...</a><br /></td></tr>
 <tr class="separator:a0957402752e8564b876c86f305ebbe2f inherit pub_methods_a02015"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a261f51b20ca1d1a57500ae40b6e4093b inherit pub_methods_a02015"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02015.html#a261f51b20ca1d1a57500ae40b6e4093b">removeFromGUI</a> (<a class="el" href="a02439.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
+<tr class="memitem:a261f51b20ca1d1a57500ae40b6e4093b inherit pub_methods_a02015"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02015.html#a261f51b20ca1d1a57500ae40b6e4093b">removeFromGUI</a> (<a class="el" href="a02443.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
 <tr class="memdesc:a261f51b20ca1d1a57500ae40b6e4093b inherit pub_methods_a02015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove observer from gui.  <a href="a02015.html#a261f51b20ca1d1a57500ae40b6e4093b">More...</a><br /></td></tr>
 <tr class="separator:a261f51b20ca1d1a57500ae40b6e4093b inherit pub_methods_a02015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae17bf0ca1911dea768788e63bf0d45b0 inherit pub_methods_a02015"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02015.html#ae17bf0ca1911dea768788e63bf0d45b0">desc</a> () const</td></tr>
@@ -222,7 +222,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a02211.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="a02215.html">mc_rtc::Configuration</a> &amp;&#160;</td>
           <td class="paramname"><em>config</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
@@ -256,7 +256,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a02531.html">mc_rtc::Logger</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02535.html">mc_rtc::Logger</a> &amp;&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -291,7 +291,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void mc_observers::EncoderObserver::removeFromLogger </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a02531.html">mc_rtc::Logger</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02535.html">mc_rtc::Logger</a> &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -400,7 +400,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a02175.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02179.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
           <td class="paramname"><em>realRobots</em>&#160;</td>
         </tr>
         <tr>
@@ -554,7 +554,7 @@ Protected Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00724.html">mc_observers</a></li><li class="navelem"><a class="el" href="a02003.html">EncoderObserver</a></li>
-    <li class="footer">Generated on Fri May 15 2020 11:56:19 for mc_rtc by
+    <li class="footer">Generated on Tue May 19 2020 10:23:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

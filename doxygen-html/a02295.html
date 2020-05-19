@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::gui::details::CheckReturnType&lt; GetT, Args &gt; Struct Template Reference</title>
+<title>mc_rtc::gui::details::ReturnType&lt; GetT &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,50 +70,41 @@ $(document).ready(function(){initNavTree('a02295.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="a02292.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::gui::details::CheckReturnType&lt; GetT, Args &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_rtc::gui::details::ReturnType&lt; GetT &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Check the return type of a getter function.  
+<p>Get the return type of a getter function.  
  <a href="a02295.html#details">More...</a></p>
 
 <p><code>#include &lt;mc_rtc/gui/details/traits.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:a1cd446713edcf2fe36d5ac75ab1a46ce"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02295.html#a1cd446713edcf2fe36d5ac75ab1a46ce">value</a> = false</td></tr>
-<tr class="separator:a1cd446713edcf2fe36d5ac75ab1a46ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a291be608e98513ddcf10a3131ba17974"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02295.html#a291be608e98513ddcf10a3131ba17974">type</a> = typename std::decay&lt; decltype(std::declval&lt; GetT &gt;()())&gt;::<a class="el" href="a02295.html#a291be608e98513ddcf10a3131ba17974">type</a></td></tr>
+<tr class="separator:a291be608e98513ddcf10a3131ba17974"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename GetT, typename... Args&gt;<br />
-struct mc_rtc::gui::details::CheckReturnType&lt; GetT, Args &gt;</h3>
+<div class="textblock"><h3>template&lt;typename GetT&gt;<br />
+struct mc_rtc::gui::details::ReturnType&lt; GetT &gt;</h3>
 
-<p>Check the return type of a getter function. </p>
-<p>value is true if GetT() returns one of the provided argument types </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a1cd446713edcf2fe36d5ac75ab1a46ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1cd446713edcf2fe36d5ac75ab1a46ce">&#9670;&nbsp;</a></span>value</h2>
+<p>Get the return type of a getter function. </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a291be608e98513ddcf10a3131ba17974"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a291be608e98513ddcf10a3131ba17974">&#9670;&nbsp;</a></span>type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename GetT , typename... Args&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
+template&lt;typename GetT&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool <a class="el" href="a02295.html">mc_rtc::gui::details::CheckReturnType</a>&lt; GetT, Args &gt;::value = false</td>
+          <td class="memname">using <a class="el" href="a02295.html">mc_rtc::gui::details::ReturnType</a>&lt; GetT &gt;::<a class="el" href="a02295.html#a291be608e98513ddcf10a3131ba17974">type</a> =  typename std::decay&lt;decltype(std::declval&lt;GetT&gt;()())&gt;::<a class="el" href="a02295.html#a291be608e98513ddcf10a3131ba17974">type</a></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 </div>
@@ -124,8 +115,8 @@ template&lt;typename GetT , typename... Args&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00718.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00736.html">gui</a></li><li class="navelem"><a class="el" href="a00737.html">details</a></li><li class="navelem"><a class="el" href="a02295.html">CheckReturnType</a></li>
-    <li class="footer">Generated on Fri May 15 2020 11:56:19 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00718.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00736.html">gui</a></li><li class="navelem"><a class="el" href="a00737.html">details</a></li><li class="navelem"><a class="el" href="a02295.html">ReturnType</a></li>
+    <li class="footer">Generated on Tue May 19 2020 10:23:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

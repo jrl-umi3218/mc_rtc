@@ -20,8 +20,9 @@ var a00721 =
     [ "QuadraticGenerator", "a02123.html", "a02123" ],
     [ "Robot", "a02139.html", "a02139" ],
     [ "RobotLoader", "a02155.html", "a02155" ],
-    [ "RobotModule", "a02163.html", "a02163" ],
-    [ "Robots", "a02175.html", "a02175" ],
-    [ "Springs", "a02179.html", "a02179" ],
-    [ "Surface", "a02183.html", "a02183" ]
+    [ "RobotModule", "a02167.html", "a02167" ],
+    [ "Robots", "a02179.html", "a02179" ],
+    [ "Springs", "a02183.html", "a02183" ],
+    [ "Surface", "a02187.html", "a02187" ],
+    [ "VisualMap", "a02163.html", "a02163" ]
 ];

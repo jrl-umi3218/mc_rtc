@@ -1,7 +1,8 @@
 var a02271 =
 [
-    [ "ArrowImpl", "a02271.html#aa433a79021362f7338be283a44f58cf6", null ],
-    [ "ArrowImpl", "a02271.html#a477913abc68cc99cddaf4496166dc412", null ],
-    [ "handleRequest", "a02271.html#a106e8180fe61c6a91023ffb29f06ee98", null ],
-    [ "write", "a02271.html#a3d992464bca9a200b481434aecc0c7a5", null ]
+    [ "ArrowROImpl", "a02271.html#a2931391d13181c75b69b122a0977a4a3", null ],
+    [ "ArrowROImpl", "a02271.html#ab3973c42d423404df611627b43a1197f", null ],
+    [ "write", "a02271.html#a7840f5c07db4b91e69e7a4b54fcc1a4f", null ],
+    [ "write_size", "a02271.html#a057d3112dd2282d30d59514ce55fdb3f", null ],
+    [ "type", "a02271.html#a20358219220c836e9e56f425c9f33390", null ]
 ];

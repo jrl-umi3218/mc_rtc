@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['b',['b',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00862.html#a0c264091669014b48326ef999c54ff13',1,'sch::PolyhedronTriangle::b()'],['../a02467.html#a19f305fdd38fecd3a8fb92282afd9291',1,'mc_rtc::gui::Color::b()']]],
+  ['b',['b',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00862.html#a0c264091669014b48326ef999c54ff13',1,'sch::PolyhedronTriangle::b()'],['../a02471.html#a19f305fdd38fecd3a8fb92282afd9291',1,'mc_rtc::gui::Color::b()']]],
   ['b1',['b1',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00770.html#acf5cec3715b997ac6a16320527ca89b6',1,'sch::CD_SimplexKeptPoints']]],
   ['b1index',['b1Index',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00944.html#a060e74dde561d3e2b2b744c7e413b4bb',1,'tasks::qp::ContactConstr::ContactData']]],
   ['b2',['b2',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00770.html#a002b48706ced2c2d24de628768aba606',1,'sch::CD_SimplexKeptPoints']]],
@@ -14,16 +14,16 @@ var searchData=
   ['bigsphere',['BIGSPHERE',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#aaa9a2e71c9a9687a84c75aa15b75f384a79d68d1e7ce2544bcc02887372df84c4',1,'sch']]],
   ['bilateralcontact',['bilateralContact',['../a02059.html#a31a08f61bfa921fa79dde45a30f72aa9',1,'mc_solver::QPContactPtr']]],
   ['binary_5farchive',['BINARY_ARCHIVE',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#aec0f4168a7c3d90bebc8db0c1f6c8fa9a3dd05585336ccf671c6058e2782b549c',1,'sch']]],
-  ['bindex',['bIndex',['../a02811.html#abfd25888b1dc814b280d5443506fe258',1,'mc_tasks::OrientationTask::bIndex()'],['../a02819.html#a922a7fc03cfcae2c0cdb403952a49c5c',1,'mc_tasks::PositionTask::bIndex()'],['../a02847.html#a59e4464e07872bfd5e5cbe19cb6b2948',1,'mc_tasks::VectorOrientationTask::bIndex()']]],
-  ['black',['Black',['../a02467.html#a30bf9fd63c97d6aafcba351ef24623ce',1,'mc_rtc::gui::Color']]],
-  ['blue',['Blue',['../a02467.html#a5a61a49e6fc3a4164027706e24071ae3',1,'mc_rtc::gui::Color']]],
+  ['bindex',['bIndex',['../a02815.html#abfd25888b1dc814b280d5443506fe258',1,'mc_tasks::OrientationTask::bIndex()'],['../a02823.html#a922a7fc03cfcae2c0cdb403952a49c5c',1,'mc_tasks::PositionTask::bIndex()'],['../a02851.html#a59e4464e07872bfd5e5cbe19cb6b2948',1,'mc_tasks::VectorOrientationTask::bIndex()']]],
+  ['black',['Black',['../a02471.html#a30bf9fd63c97d6aafcba351ef24623ce',1,'mc_rtc::gui::Color']]],
+  ['blue',['Blue',['../a02471.html#a5a61a49e6fc3a4164027706e24071ae3',1,'mc_rtc::gui::Color']]],
   ['body1',['body1',['../a02035.html#a169addbd06a09743b06287121884f027',1,'mc_rbdyn::Collision']]],
   ['body2',['body2',['../a02035.html#afde353de6419a4e248eec0851f664968',1,'mc_rbdyn::Collision']]],
-  ['bodyid',['bodyId',['../a02723.html#a8846f1a33c20ed70bf425b49027aba12',1,'mc_tasks::AddRemoveContactTask']]],
-  ['bodyindex',['bodyIndex',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00988.html#abd85910b4e703019994cc83af67770ac',1,'tasks::qp::MotionConstrCommon::ContactData::bodyIndex()'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00940.html#a74063f68fc100833abeafd911ffaae50',1,'tasks::qp::ContactConstr::ContactSideData::bodyIndex()'],['../a02759.html#aab6f5903d901833f87f887c1285e7f98',1,'mc_tasks::EndEffectorTask::bodyIndex()']]],
+  ['bodyid',['bodyId',['../a02727.html#a8846f1a33c20ed70bf425b49027aba12',1,'mc_tasks::AddRemoveContactTask']]],
+  ['bodyindex',['bodyIndex',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00988.html#abd85910b4e703019994cc83af67770ac',1,'tasks::qp::MotionConstrCommon::ContactData::bodyIndex()'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00940.html#a74063f68fc100833abeafd911ffaae50',1,'tasks::qp::ContactConstr::ContactSideData::bodyIndex()'],['../a02763.html#aab6f5903d901833f87f887c1285e7f98',1,'mc_tasks::EndEffectorTask::bodyIndex()']]],
   ['bodyindex_5f',['bodyIndex_',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01200.html#a298e38439bbefa80e02f53ffbda17771',1,'tasks::TransformTaskCommon']]],
-  ['bodyname',['bodyName',['../a02759.html#af41ef875b2819415282f6e416345e992',1,'mc_tasks::EndEffectorTask::bodyName()'],['../a02811.html#a97da00bdf087f04a99473553efaa6390',1,'mc_tasks::OrientationTask::bodyName()'],['../a02819.html#ab5a74d25feb1e33ed9895903b23886fc',1,'mc_tasks::PositionTask::bodyName()'],['../a02847.html#aff910f1c3ed3b698c50408dfb66eb7c0',1,'mc_tasks::VectorOrientationTask::bodyName()']]],
+  ['bodyname',['bodyName',['../a02763.html#af41ef875b2819415282f6e416345e992',1,'mc_tasks::EndEffectorTask::bodyName()'],['../a02815.html#a97da00bdf087f04a99473553efaa6390',1,'mc_tasks::OrientationTask::bodyName()'],['../a02823.html#ab5a74d25feb1e33ed9895903b23886fc',1,'mc_tasks::PositionTask::bodyName()'],['../a02851.html#aff910f1c3ed3b698c50408dfb66eb7c0',1,'mc_tasks::VectorOrientationTask::bodyName()']]],
   ['box',['BOX',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00588.html#a991c06d670537792e7834e72140c9730a45a2c7a3c24d93db15c6772f3c6448be',1,'mc_rbdyn_urdf::Geometry']]],
-  ['bspline',['bspline',['../a02739.html#ac881b5b505b63c5e89bec2e598c767e0',1,'mc_tasks::BSplineTrajectoryTask::bspline()'],['../a02763.html#a825212a1055ad43955b8284562905f13',1,'mc_tasks::ExactCubicTrajectoryTask::bspline()']]],
+  ['bspline',['bspline',['../a02743.html#ac881b5b505b63c5e89bec2e598c767e0',1,'mc_tasks::BSplineTrajectoryTask::bspline()'],['../a02767.html#a825212a1055ad43955b8284562905f13',1,'mc_tasks::ExactCubicTrajectoryTask::bspline()']]],
   ['buffer',['buffer',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00886.html#a53646145e2a8adb56661a2ebaac43cb8',1,'sch::s_toruslinkedBV']]]
 ];

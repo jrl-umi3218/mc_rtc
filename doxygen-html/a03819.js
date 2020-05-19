@@ -1,9 +1,9 @@
 var a03819 =
 [
-    [ "MC_SOLVER_DLLAPI", "a03819.html#a1f670c9ef41bde54578a3afc8fd75445", null ],
-    [ "MC_SOLVER_DLLEXPORT", "a03819.html#a24ff42006c016a5adc79aec2a1dfc0fe", null ],
-    [ "MC_SOLVER_DLLIMPORT", "a03819.html#a85361305f43d765074b5a82afaa82487", null ],
-    [ "MC_SOLVER_DLLLOCAL", "a03819.html#ae3c35da4cb012ab2f6caea5696a56dae", null ],
-    [ "MC_SOLVER_LOCAL", "a03819.html#ad2b85045fbd2243b5745829691239595", null ],
-    [ "MC_SOLVER_VERSION", "a03819.html#ae4634b29539fd982b8b83c15830c1c37", null ]
+    [ "MC_PLANNING_DLLAPI", "a03819.html#a3adede9987330f98fe6a52abdfb955f5", null ],
+    [ "MC_PLANNING_DLLEXPORT", "a03819.html#a6a868413b6c5bddd02aeef2f6a0ef5c8", null ],
+    [ "MC_PLANNING_DLLIMPORT", "a03819.html#a7ef3aedb0867986ac977b43fdd7cf21f", null ],
+    [ "MC_PLANNING_DLLLOCAL", "a03819.html#aff1ad001b6bf5fdb9fb19cd51c97a75e", null ],
+    [ "MC_PLANNING_LOCAL", "a03819.html#a73898c9a3a9215937de16e50d4e504a3", null ],
+    [ "MC_PLANNING_VERSION", "a03819.html#aca946837554c98dec168efee18c95e5c", null ]
 ];

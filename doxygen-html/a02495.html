@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::ObjectLoader&lt; T &gt; Class Template Reference</title>
+<title>mc_rtc::gui::XYThetaImpl&lt; GetT, SetT &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,155 +70,160 @@ $(document).ready(function(){initNavTree('a02495.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="a02492.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::ObjectLoader&lt; T &gt; Class Template Reference</div>  </div>
+<div class="title">mc_rtc::gui::XYThetaImpl&lt; GetT, SetT &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>ltdl wrapper for factory-like classes  
+<p>An XYTheta element represents an oriented point in the XY plane.  
  <a href="a02495.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_rtc/loader.h&gt;</code></p>
+<p><code>#include &lt;mc_rtc/gui/XYTheta.h&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for mc_rtc::ObjectLoader&lt; T &gt;:</div>
+Inheritance diagram for mc_rtc::gui::XYThetaImpl&lt; GetT, SetT &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="a02495.png" usemap="#mc_5Frtc::ObjectLoader_3C_20T_20_3E_map" alt=""/>
-  <map id="mc_5Frtc::ObjectLoader_3C_20T_20_3E_map" name="mc_5Frtc::ObjectLoader_3C_20T_20_3E_map">
+  <img src="a02495.png" usemap="#mc_5Frtc::gui::XYThetaImpl_3C_20GetT_2C_20SetT_20_3E_map" alt=""/>
+  <map id="mc_5Frtc::gui::XYThetaImpl_3C_20GetT_2C_20SetT_20_3E_map" name="mc_5Frtc::gui::XYThetaImpl_3C_20GetT_2C_20SetT_20_3E_map">
+<area href="a02323.html" title="Saves typing for the most common case. " alt="mc_rtc::gui::CommonInputImpl&lt; GetT, SetT &gt;" shape="rect" coords="0,168,350,192"/>
+<area href="a02319.html" alt="mc_rtc::gui::CallbackElement&lt; DataElement&lt; GetT &gt;, SetT &gt;" shape="rect" coords="0,112,350,136"/>
+<area href="a02315.html" title="A generic element to write data to the GUI. " alt="mc_rtc::gui::DataElement&lt; GetT &gt;" shape="rect" coords="0,56,350,80"/>
+<area href="a02311.html" title="Element is the common class for every element&#39;s type available in the GUI. " alt="mc_rtc::gui::Element" shape="rect" coords="0,0,350,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02511.html">ObjectDeleter</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a78852c55af0f996b628466db4f6ae828"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#a78852c55af0f996b628466db4f6ae828">unique_ptr</a> = std::unique_ptr&lt; T, <a class="el" href="a02511.html">ObjectDeleter</a> &gt;</td></tr>
-<tr class="separator:a78852c55af0f996b628466db4f6ae828"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af60c459a8ffc58fb8329669bd3967bcb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#af60c459a8ffc58fb8329669bd3967bcb">ObjectLoader</a> (const std::string &amp;<a class="el" href="a02495.html#aab1c409baa5b97ec1e5b58242c572fbe">class_name</a>, const std::vector&lt; std::string &gt; &amp;paths, bool <a class="el" href="a02495.html#a2ed489dea742157c337ac078e99f6dc3">enable_sandbox</a>, bool <a class="el" href="a02495.html#ac2b5e003d3ccd4958a32a83f1981754c">verbose</a>, <a class="el" href="a02507.html#ae88a2f28e5fa458257316949fd08a539">Loader::callback_t</a> cb=<a class="el" href="a02507.html#a2569410b656743e1d955a9aafc7ee793">Loader::default_cb</a>)</td></tr>
-<tr class="memdesc:af60c459a8ffc58fb8329669bd3967bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create <a class="el" href="a02495.html" title="ltdl wrapper for factory-like classes ">ObjectLoader</a> instance.  <a href="#af60c459a8ffc58fb8329669bd3967bcb">More...</a><br /></td></tr>
-<tr class="separator:af60c459a8ffc58fb8329669bd3967bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8dd305a8add6473f847951f6fcc6bf0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#a8dd305a8add6473f847951f6fcc6bf0c">~ObjectLoader</a> ()</td></tr>
-<tr class="memdesc:a8dd305a8add6473f847951f6fcc6bf0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a8dd305a8add6473f847951f6fcc6bf0c">More...</a><br /></td></tr>
-<tr class="separator:a8dd305a8add6473f847951f6fcc6bf0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0739f917476b8d1af3c3de7b32c1d1b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#aa0739f917476b8d1af3c3de7b32c1d1b">has_object</a> (const std::string &amp;name) const</td></tr>
-<tr class="memdesc:aa0739f917476b8d1af3c3de7b32c1d1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the loader has the name object.  <a href="#aa0739f917476b8d1af3c3de7b32c1d1b">More...</a><br /></td></tr>
-<tr class="separator:aa0739f917476b8d1af3c3de7b32c1d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acab918dfa002205a257be3c638f94ff2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#acab918dfa002205a257be3c638f94ff2">objects</a> () const</td></tr>
-<tr class="memdesc:acab918dfa002205a257be3c638f94ff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the list of available objects.  <a href="#acab918dfa002205a257be3c638f94ff2">More...</a><br /></td></tr>
-<tr class="separator:acab918dfa002205a257be3c638f94ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42d500b49baacc44c189bb53264a5185"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#a42d500b49baacc44c189bb53264a5185">load_libraries</a> (const std::vector&lt; std::string &gt; &amp;paths, <a class="el" href="a02507.html#ae88a2f28e5fa458257316949fd08a539">Loader::callback_t</a> cb=<a class="el" href="a02507.html#a2569410b656743e1d955a9aafc7ee793">Loader::default_cb</a>)</td></tr>
-<tr class="memdesc:a42d500b49baacc44c189bb53264a5185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load libraries from the paths provided.  <a href="#a42d500b49baacc44c189bb53264a5185">More...</a><br /></td></tr>
-<tr class="separator:a42d500b49baacc44c189bb53264a5185"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33bbdbec8644e9b0e09077f076c88b0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#a33bbdbec8644e9b0e09077f076c88b0b">clear</a> ()</td></tr>
-<tr class="memdesc:a33bbdbec8644e9b0e09077f076c88b0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all loaded libraries.  <a href="#a33bbdbec8644e9b0e09077f076c88b0b">More...</a><br /></td></tr>
-<tr class="separator:a33bbdbec8644e9b0e09077f076c88b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6747e5d8a42e424da0e89f2f2ed8363"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#ae6747e5d8a42e424da0e89f2f2ed8363">enable_sandboxing</a> (bool <a class="el" href="a02495.html#a2ed489dea742157c337ac078e99f6dc3">enable_sandbox</a>)</td></tr>
-<tr class="memdesc:ae6747e5d8a42e424da0e89f2f2ed8363"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/disable sandboxing.  <a href="#ae6747e5d8a42e424da0e89f2f2ed8363">More...</a><br /></td></tr>
-<tr class="separator:ae6747e5d8a42e424da0e89f2f2ed8363"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae9bc7b4461a90a191a7c1bd8f82fc7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#aae9bc7b4461a90a191a7c1bd8f82fc7e">set_verbosity</a> (bool <a class="el" href="a02495.html#ac2b5e003d3ccd4958a32a83f1981754c">verbose</a>)</td></tr>
-<tr class="memdesc:aae9bc7b4461a90a191a7c1bd8f82fc7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the verbosity.  <a href="#aae9bc7b4461a90a191a7c1bd8f82fc7e">More...</a><br /></td></tr>
-<tr class="separator:aae9bc7b4461a90a191a7c1bd8f82fc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0fb7a187ae96e784f32978127824fd8"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:ab0fb7a187ae96e784f32978127824fd8"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02495.html#ab0fb7a187ae96e784f32978127824fd8">create_object</a> (const std::string &amp;name, Args... args)</td></tr>
-<tr class="memdesc:ab0fb7a187ae96e784f32978127824fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new object of type name.  <a href="#ab0fb7a187ae96e784f32978127824fd8">More...</a><br /></td></tr>
-<tr class="separator:ab0fb7a187ae96e784f32978127824fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0215e4d220b8e17862a1f1e0dcc42ad"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:af0215e4d220b8e17862a1f1e0dcc42ad"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="a02495.html#a78852c55af0f996b628466db4f6ae828">unique_ptr</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02495.html#af0215e4d220b8e17862a1f1e0dcc42ad">create_unique_object</a> (const std::string &amp;name, Args... args)</td></tr>
-<tr class="memdesc:af0215e4d220b8e17862a1f1e0dcc42ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new object of type name.  <a href="#af0215e4d220b8e17862a1f1e0dcc42ad">More...</a><br /></td></tr>
-<tr class="separator:af0215e4d220b8e17862a1f1e0dcc42ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6de2e9a332b75b696ddbd1167dc31d1b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#a6de2e9a332b75b696ddbd1167dc31d1b">XYThetaImpl</a> (const std::string &amp;<a class="el" href="a02311.html#a4f1f84cbf9bafb94cd41824712565f5a">name</a>, GetT get_fn, SetT set_fn)</td></tr>
+<tr class="separator:a6de2e9a332b75b696ddbd1167dc31d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a247757b0f4f2f7537cd966304f6395fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#a247757b0f4f2f7537cd966304f6395fc">write</a> (<a class="el" href="a02559.html">mc_rtc::MessagePackBuilder</a> &amp;builder)</td></tr>
+<tr class="separator:a247757b0f4f2f7537cd966304f6395fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad69684bdac6275e7cd47e84f786cac2d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#ad69684bdac6275e7cd47e84f786cac2d">XYThetaImpl</a> ()</td></tr>
+<tr class="memdesc:ad69684bdac6275e7cd47e84f786cac2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid element.  <a href="#ad69684bdac6275e7cd47e84f786cac2d">More...</a><br /></td></tr>
+<tr class="separator:ad69684bdac6275e7cd47e84f786cac2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a02323"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02323')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02323.html">mc_rtc::gui::CommonInputImpl&lt; GetT, SetT &gt;</a></td></tr>
+<tr class="memitem:a1d18c6be098836d8c4dc9cd9bcae1072 inherit pub_methods_a02323"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02323.html#a1d18c6be098836d8c4dc9cd9bcae1072">CommonInputImpl</a> (const std::string &amp;<a class="el" href="a02311.html#a4f1f84cbf9bafb94cd41824712565f5a">name</a>, GetT get_fn, SetT set_fn)</td></tr>
+<tr class="separator:a1d18c6be098836d8c4dc9cd9bcae1072 inherit pub_methods_a02323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee87ac9fbe3573e62fd457a0065118e8 inherit pub_methods_a02323"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02323.html#aee87ac9fbe3573e62fd457a0065118e8">CommonInputImpl</a> ()</td></tr>
+<tr class="memdesc:aee87ac9fbe3573e62fd457a0065118e8 inherit pub_methods_a02323"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid element.  <a href="a02323.html#aee87ac9fbe3573e62fd457a0065118e8">More...</a><br /></td></tr>
+<tr class="separator:aee87ac9fbe3573e62fd457a0065118e8 inherit pub_methods_a02323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a02319"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02319')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02319.html">mc_rtc::gui::CallbackElement&lt; DataElement&lt; GetT &gt;, SetT &gt;</a></td></tr>
+<tr class="memitem:a405f276989aeae1fd599f46e0458e10f inherit pub_methods_a02319"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02319.html#a405f276989aeae1fd599f46e0458e10f">handleRequest</a> (const <a class="el" href="a02215.html">mc_rtc::Configuration</a> &amp;data)</td></tr>
+<tr class="separator:a405f276989aeae1fd599f46e0458e10f inherit pub_methods_a02319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26a8cb0f6a61d3442fca7f11d29f57d2 inherit pub_methods_a02319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02319.html#a26a8cb0f6a61d3442fca7f11d29f57d2">CallbackElement</a> (const std::string &amp;<a class="el" href="a02311.html#a4f1f84cbf9bafb94cd41824712565f5a">name</a>, SetT cb, Args &amp;&amp;... args)</td></tr>
+<tr class="separator:a26a8cb0f6a61d3442fca7f11d29f57d2 inherit pub_methods_a02319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9ef12835522d27b5d1a55210b0c973c inherit pub_methods_a02319"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02319.html#ae9ef12835522d27b5d1a55210b0c973c">CallbackElement</a> ()</td></tr>
+<tr class="memdesc:ae9ef12835522d27b5d1a55210b0c973c inherit pub_methods_a02319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid element.  <a href="a02319.html#ae9ef12835522d27b5d1a55210b0c973c">More...</a><br /></td></tr>
+<tr class="separator:ae9ef12835522d27b5d1a55210b0c973c inherit pub_methods_a02319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a02315"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02315')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02315.html">mc_rtc::gui::DataElement&lt; GetT &gt;</a></td></tr>
+<tr class="memitem:a9f5405a5613389910551ed9e86e35b9b inherit pub_methods_a02315"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02315.html#a9f5405a5613389910551ed9e86e35b9b">write</a> (<a class="el" href="a02559.html">mc_rtc::MessagePackBuilder</a> &amp;builder)</td></tr>
+<tr class="separator:a9f5405a5613389910551ed9e86e35b9b inherit pub_methods_a02315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65d486d790fd684f1fdd422a36a4b662 inherit pub_methods_a02315"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02315.html#a65d486d790fd684f1fdd422a36a4b662">DataElement</a> (const std::string &amp;<a class="el" href="a02311.html#a4f1f84cbf9bafb94cd41824712565f5a">name</a>, GetT get_fn)</td></tr>
+<tr class="memdesc:a65d486d790fd684f1fdd422a36a4b662 inherit pub_methods_a02315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="a02315.html#a65d486d790fd684f1fdd422a36a4b662">More...</a><br /></td></tr>
+<tr class="separator:a65d486d790fd684f1fdd422a36a4b662 inherit pub_methods_a02315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16c128617f3f6e4bc2257f811721e92d inherit pub_methods_a02315"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02315.html#a16c128617f3f6e4bc2257f811721e92d">DataElement</a> ()</td></tr>
+<tr class="memdesc:a16c128617f3f6e4bc2257f811721e92d inherit pub_methods_a02315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid element.  <a href="a02315.html#a16c128617f3f6e4bc2257f811721e92d">More...</a><br /></td></tr>
+<tr class="separator:a16c128617f3f6e4bc2257f811721e92d inherit pub_methods_a02315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a02311"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02311')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02311.html">mc_rtc::gui::Element</a></td></tr>
+<tr class="memitem:a4f1f84cbf9bafb94cd41824712565f5a inherit pub_methods_a02311"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02311.html#a4f1f84cbf9bafb94cd41824712565f5a">name</a> () const</td></tr>
+<tr class="memdesc:a4f1f84cbf9bafb94cd41824712565f5a inherit pub_methods_a02311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the element.  <a href="a02311.html#a4f1f84cbf9bafb94cd41824712565f5a">More...</a><br /></td></tr>
+<tr class="separator:a4f1f84cbf9bafb94cd41824712565f5a inherit pub_methods_a02311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2e559a17ad52901a5e726ca03f300c6 inherit pub_methods_a02311"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02311.html#ad2e559a17ad52901a5e726ca03f300c6">id</a> () const</td></tr>
+<tr class="memdesc:ad2e559a17ad52901a5e726ca03f300c6 inherit pub_methods_a02311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the stack id of an element (also referred to as SID)  <a href="a02311.html#ad2e559a17ad52901a5e726ca03f300c6">More...</a><br /></td></tr>
+<tr class="separator:ad2e559a17ad52901a5e726ca03f300c6 inherit pub_methods_a02311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a000ffd25b2fe0b3b36ad02b44cd190c3 inherit pub_methods_a02311"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02311.html#a000ffd25b2fe0b3b36ad02b44cd190c3">id</a> (int idIn)</td></tr>
+<tr class="memdesc:a000ffd25b2fe0b3b36ad02b44cd190c3 inherit pub_methods_a02311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the stack id of an element.  <a href="a02311.html#a000ffd25b2fe0b3b36ad02b44cd190c3">More...</a><br /></td></tr>
+<tr class="separator:a000ffd25b2fe0b3b36ad02b44cd190c3 inherit pub_methods_a02311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8e71ecce7dab695777a1a11faf119f7 inherit pub_methods_a02311"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02311.html#ab8e71ecce7dab695777a1a11faf119f7">write</a> (<a class="el" href="a02559.html">mc_rtc::MessagePackBuilder</a> &amp;)</td></tr>
+<tr class="memdesc:ab8e71ecce7dab695777a1a11faf119f7 inherit pub_methods_a02311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the widget to a <a class="el" href="a02559.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a>.  <a href="a02311.html#ab8e71ecce7dab695777a1a11faf119f7">More...</a><br /></td></tr>
+<tr class="separator:ab8e71ecce7dab695777a1a11faf119f7 inherit pub_methods_a02311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00f7fa6be59c8cc61304d35e7dd2a914 inherit pub_methods_a02311"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02311.html#a00f7fa6be59c8cc61304d35e7dd2a914">handleRequest</a> (const <a class="el" href="a02215.html">mc_rtc::Configuration</a> &amp;)</td></tr>
+<tr class="memdesc:a00f7fa6be59c8cc61304d35e7dd2a914 inherit pub_methods_a02311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take care of answering request from the client.  <a href="a02311.html#a00f7fa6be59c8cc61304d35e7dd2a914">More...</a><br /></td></tr>
+<tr class="separator:a00f7fa6be59c8cc61304d35e7dd2a914 inherit pub_methods_a02311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a086e5b72ef29fb83ebba494135f0f579 inherit pub_methods_a02311"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02311.html#a086e5b72ef29fb83ebba494135f0f579">Element</a> ()</td></tr>
+<tr class="memdesc:a086e5b72ef29fb83ebba494135f0f579 inherit pub_methods_a02311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid element, used for Python bindings.  <a href="a02311.html#a086e5b72ef29fb83ebba494135f0f579">More...</a><br /></td></tr>
+<tr class="separator:a086e5b72ef29fb83ebba494135f0f579 inherit pub_methods_a02311"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a0dce6e455c174537d988c115dc31ce80"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:a0dce6e455c174537d988c115dc31ce80"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02495.html#a0dce6e455c174537d988c115dc31ce80">create</a> (const std::string &amp;name, Args... args)</td></tr>
-<tr class="memdesc:a0dce6e455c174537d988c115dc31ce80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal function creates a raw pointer then build a shared or unique pointer accordingly.  <a href="#a0dce6e455c174537d988c115dc31ce80">More...</a><br /></td></tr>
-<tr class="separator:a0dce6e455c174537d988c115dc31ce80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ada9a5e8aafdff45f17263ae02a574970"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#ada9a5e8aafdff45f17263ae02a574970">write_size</a> ()</td></tr>
+<tr class="separator:ada9a5e8aafdff45f17263ae02a574970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_a02315"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_a02315')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="a02315.html">mc_rtc::gui::DataElement&lt; GetT &gt;</a></td></tr>
+<tr class="memitem:af0401db3e91435848055af583ec602f4 inherit pub_static_methods_a02315"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02315.html#af0401db3e91435848055af583ec602f4">write_size</a> ()</td></tr>
+<tr class="separator:af0401db3e91435848055af583ec602f4 inherit pub_static_methods_a02315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_methods_a02311"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_a02311')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="a02311.html">mc_rtc::gui::Element</a></td></tr>
+<tr class="memitem:adb2f99cc312bfc645254b2cecd9f9c27 inherit pub_static_methods_a02311"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02311.html#adb2f99cc312bfc645254b2cecd9f9c27">write_size</a> ()</td></tr>
+<tr class="memdesc:adb2f99cc312bfc645254b2cecd9f9c27 inherit pub_static_methods_a02311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the size of the array representing the widget in the MessagePack.  <a href="a02311.html#adb2f99cc312bfc645254b2cecd9f9c27">More...</a><br /></td></tr>
+<tr class="separator:adb2f99cc312bfc645254b2cecd9f9c27 inherit pub_static_methods_a02311"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:aab1c409baa5b97ec1e5b58242c572fbe"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#aab1c409baa5b97ec1e5b58242c572fbe">class_name</a></td></tr>
-<tr class="separator:aab1c409baa5b97ec1e5b58242c572fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ed489dea742157c337ac078e99f6dc3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#a2ed489dea742157c337ac078e99f6dc3">enable_sandbox</a></td></tr>
-<tr class="separator:a2ed489dea742157c337ac078e99f6dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2b5e003d3ccd4958a32a83f1981754c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#ac2b5e003d3ccd4958a32a83f1981754c">verbose</a></td></tr>
-<tr class="separator:ac2b5e003d3ccd4958a32a83f1981754c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c219f5a809cfc139409874145d76a20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02507.html#a9c2401890571dbbde00eda2fb1e87710">Loader::handle_map_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#a5c219f5a809cfc139409874145d76a20">handles_</a></td></tr>
-<tr class="separator:a5c219f5a809cfc139409874145d76a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a716eefa0204ce8e39886323aaad00a02"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <a class="el" href="a02511.html">ObjectDeleter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#a716eefa0204ce8e39886323aaad00a02">deleters_</a></td></tr>
-<tr class="separator:a716eefa0204ce8e39886323aaad00a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a3db5a65e4c481b435a71e15ac8715c26"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02495.html#a3db5a65e4c481b435a71e15ac8715c26">type</a> = <a class="el" href="a00736.html#a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386">Elements::XYTheta</a></td></tr>
+<tr class="separator:a3db5a65e4c481b435a71e15ac8715c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_a02311"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02311')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02311.html">mc_rtc::gui::Element</a></td></tr>
+<tr class="memitem:a6fcb5cd1168ebfd6b9dc8830df21956f inherit pro_methods_a02311"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02311.html#a6fcb5cd1168ebfd6b9dc8830df21956f">Element</a> (const std::string &amp;<a class="el" href="a02311.html#a4f1f84cbf9bafb94cd41824712565f5a">name</a>)</td></tr>
+<tr class="separator:a6fcb5cd1168ebfd6b9dc8830df21956f inherit pro_methods_a02311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02319"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02319')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02319.html">mc_rtc::gui::CallbackElement&lt; DataElement&lt; GetT &gt;, SetT &gt;</a></td></tr>
+<tr class="memitem:a872fb77b757c4074529ce4847ba4dc17 inherit pro_attribs_a02319"><td class="memItemLeft" align="right" valign="top">SetT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02319.html#a872fb77b757c4074529ce4847ba4dc17">cb_</a></td></tr>
+<tr class="separator:a872fb77b757c4074529ce4847ba4dc17 inherit pro_attribs_a02319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02315"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02315')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02315.html">mc_rtc::gui::DataElement&lt; GetT &gt;</a></td></tr>
+<tr class="memitem:a8a959ac2e5e7551b29b81b77034ea255 inherit pro_attribs_a02315"><td class="memItemLeft" align="right" valign="top">GetT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02315.html#a8a959ac2e5e7551b29b81b77034ea255">get_fn_</a></td></tr>
+<tr class="separator:a8a959ac2e5e7551b29b81b77034ea255 inherit pro_attribs_a02315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02311"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02311')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02311.html">mc_rtc::gui::Element</a></td></tr>
+<tr class="memitem:a7b365cbe4764d76aafa03495be0ecd5d inherit pro_attribs_a02311"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02311.html#a7b365cbe4764d76aafa03495be0ecd5d">name_</a></td></tr>
+<tr class="separator:a7b365cbe4764d76aafa03495be0ecd5d inherit pro_attribs_a02311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a208ba439700a31e9ff94abc76a466472 inherit pro_attribs_a02311"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02311.html#a208ba439700a31e9ff94abc76a466472">id_</a></td></tr>
+<tr class="separator:a208ba439700a31e9ff94abc76a466472 inherit pro_attribs_a02311"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename T&gt;<br />
-class mc_rtc::ObjectLoader&lt; T &gt;</h3>
+<div class="textblock"><h3>template&lt;typename GetT, typename SetT&gt;<br />
+struct mc_rtc::gui::XYThetaImpl&lt; GetT, SetT &gt;</h3>
 
-<p>ltdl wrapper for factory-like classes </p>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a78852c55af0f996b628466db4f6ae828"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78852c55af0f996b628466db4f6ae828">&#9670;&nbsp;</a></span>unique_ptr</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::<a class="el" href="a02495.html#a78852c55af0f996b628466db4f6ae828">unique_ptr</a> =  std::unique_ptr&lt;T, <a class="el" href="a02511.html">ObjectDeleter</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="af60c459a8ffc58fb8329669bd3967bcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af60c459a8ffc58fb8329669bd3967bcb">&#9670;&nbsp;</a></span>ObjectLoader()</h2>
+<p>An XYTheta element represents an oriented point in the XY plane. </p>
+<p>Altitude can be provided optionally.</p>
+<p>This element is editable</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">GetT</td><td>Should return a double array of size 3 (x, y, theta) or 4 (x, y, theta, z) </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a6de2e9a332b75b696ddbd1167dc31d1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6de2e9a332b75b696ddbd1167dc31d1b">&#9670;&nbsp;</a></span>XYThetaImpl() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename GetT, typename SetT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::<a class="el" href="a02495.html">ObjectLoader</a> </td>
+          <td class="memname"><a class="el" href="a02495.html">mc_rtc::gui::XYThetaImpl</a>&lt; GetT, SetT &gt;::<a class="el" href="a02495.html">XYThetaImpl</a> </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>class_name</em>, </td>
+          <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>paths</em>, </td>
+          <td class="paramtype">GetT&#160;</td>
+          <td class="paramname"><em>get_fn</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable_sandbox</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>verbose</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a02507.html#ae88a2f28e5fa458257316949fd08a539">Loader::callback_t</a>&#160;</td>
-          <td class="paramname"><em>cb</em> = <code><a class="el" href="a02507.html#a2569410b656743e1d955a9aafc7ee793">Loader::default_cb</a></code>&#160;</td>
+          <td class="paramtype">SetT&#160;</td>
+          <td class="paramname"><em>set_fn</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -226,463 +231,123 @@ template&lt;typename T&gt; </div>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Create <a class="el" href="a02495.html" title="ltdl wrapper for factory-like classes ">ObjectLoader</a> instance. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">class_name</td><td>Symbol used to distinguish the relevant libraries</td></tr>
-    <tr><td class="paramname">paths</td><td>directories searched for libraries</td></tr>
-    <tr><td class="paramname">enable_sandbox</td><td>If true, creation function called from the loaded modules are sandboxed allowing to recover from otherwise fatal crashes</td></tr>
-    <tr><td class="paramname">verbose</td><td>If true, output some warning information</td></tr>
-    <tr><td class="paramname">cb</td><td>Function called when a new object is loaded </td></tr>
-  </table>
-  </dd>
-</dl>
-
 </div>
 </div>
-<a id="a8dd305a8add6473f847951f6fcc6bf0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8dd305a8add6473f847951f6fcc6bf0c">&#9670;&nbsp;</a></span>~ObjectLoader()</h2>
+<a id="ad69684bdac6275e7cd47e84f786cac2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad69684bdac6275e7cd47e84f786cac2d">&#9670;&nbsp;</a></span>XYThetaImpl() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename GetT, typename SetT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::~<a class="el" href="a02495.html">ObjectLoader</a> </td>
+          <td class="memname"><a class="el" href="a02495.html">mc_rtc::gui::XYThetaImpl</a>&lt; GetT, SetT &gt;::<a class="el" href="a02495.html">XYThetaImpl</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Destructor. </p>
+<p>Invalid element. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a33bbdbec8644e9b0e09077f076c88b0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33bbdbec8644e9b0e09077f076c88b0b">&#9670;&nbsp;</a></span>clear()</h2>
+<a id="a247757b0f4f2f7537cd966304f6395fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a247757b0f4f2f7537cd966304f6395fc">&#9670;&nbsp;</a></span>write()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::clear </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Remove all loaded libraries. </p>
-
-</div>
-</div>
-<a id="a0dce6e455c174537d988c115dc31ce80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0dce6e455c174537d988c115dc31ce80">&#9670;&nbsp;</a></span>create()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<div class="memtemplate">
-template&lt;typename... Args&gt; </div>
+template&lt;typename GetT, typename SetT&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T* <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::create </td>
+          <td class="memname">void <a class="el" href="a02495.html">mc_rtc::gui::XYThetaImpl</a>&lt; GetT, SetT &gt;::write </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a02559.html">mc_rtc::MessagePackBuilder</a> &amp;&#160;</td>
+          <td class="paramname"><em>builder</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">Args...&#160;</td>
-          <td class="paramname"><em>args</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Internal function creates a raw pointer then build a shared or unique pointer accordingly. </p>
+<p class="reference">References <a class="el" href="a02559.html#ab7c6cb64330027b2fec8e69d218a866d">mc_rtc::MessagePackBuilder::write()</a>, and <a class="el" href="a02315.html#a9f5405a5613389910551ed9e86e35b9b">mc_rtc::gui::DataElement&lt; GetT &gt;::write()</a>.</p>
 
 </div>
 </div>
-<a id="ab0fb7a187ae96e784f32978127824fd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0fb7a187ae96e784f32978127824fd8">&#9670;&nbsp;</a></span>create_object()</h2>
+<a id="ada9a5e8aafdff45f17263ae02a574970"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada9a5e8aafdff45f17263ae02a574970">&#9670;&nbsp;</a></span>write_size()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
-<div class="memtemplate">
-template&lt;typename... Args&gt; </div>
+template&lt;typename GetT, typename SetT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::shared_ptr&lt;T&gt; <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::create_object </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Args...&#160;</td>
-          <td class="paramname"><em>args</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create a new object of type name. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>the object's name </td></tr>
-    <tr><td class="paramname">Args</td><td>argument required by the constructor </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>a shared pointer properly equipped to destroy the pointer </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="a02499.html" title="Exception thrown by loader interface. ">LoaderException</a></td><td>throw if the name does not exist or if symbol resolution fails </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="af0215e4d220b8e17862a1f1e0dcc42ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0215e4d220b8e17862a1f1e0dcc42ad">&#9670;&nbsp;</a></span>create_unique_object()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<div class="memtemplate">
-template&lt;typename... Args&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02495.html#a78852c55af0f996b628466db4f6ae828">unique_ptr</a> <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::create_unique_object </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Args...&#160;</td>
-          <td class="paramname"><em>args</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create a new object of type name. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>the object's name</td></tr>
-    <tr><td class="paramname">Args</td><td>arguments required by the constructor</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>a unique pointer with a destructor provided by the library</dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="a02499.html" title="Exception thrown by loader interface. ">LoaderException</a></td><td>if the name does not exist or if symbol resolution fails </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ae6747e5d8a42e424da0e89f2f2ed8363"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6747e5d8a42e424da0e89f2f2ed8363">&#9670;&nbsp;</a></span>enable_sandboxing()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::enable_sandboxing </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>enable_sandbox</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Enable/disable sandboxing. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">enable_sandbox</td><td>If true, object's creation is done in a sandbox environment </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aa0739f917476b8d1af3c3de7b32c1d1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0739f917476b8d1af3c3de7b32c1d1b">&#9670;&nbsp;</a></span>has_object()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::has_object </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns true if the loader has the name object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>Name to be tested </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a42d500b49baacc44c189bb53264a5185"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42d500b49baacc44c189bb53264a5185">&#9670;&nbsp;</a></span>load_libraries()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::load_libraries </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
-          <td class="paramname"><em>paths</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a02507.html#ae88a2f28e5fa458257316949fd08a539">Loader::callback_t</a>&#160;</td>
-          <td class="paramname"><em>cb</em> = <code><a class="el" href="a02507.html#a2569410b656743e1d955a9aafc7ee793">Loader::default_cb</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Load libraries from the paths provided. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">paths</td><td>directories searched for libraries </td></tr>
-    <tr><td class="paramname">verbose</td><td>If true, output some warning information </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="acab918dfa002205a257be3c638f94ff2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acab918dfa002205a257be3c638f94ff2">&#9670;&nbsp;</a></span>objects()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;std::string&gt; <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::objects </td>
+          <td class="memname">static constexpr size_t <a class="el" href="a02495.html">mc_rtc::gui::XYThetaImpl</a>&lt; GetT, SetT &gt;::write_size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns the list of available objects. </p>
-<dl class="section return"><dt>Returns</dt><dd>A list of available objects </dd></dl>
-
-</div>
-</div>
-<a id="aae9bc7b4461a90a191a7c1bd8f82fc7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae9bc7b4461a90a191a7c1bd8f82fc7e">&#9670;&nbsp;</a></span>set_verbosity()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::set_verbosity </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>verbose</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
-<p>Set the verbosity. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">verbose</td><td>If true, loader will be more verbose </td></tr>
-  </table>
-  </dd>
-</dl>
+<p class="reference">References <a class="el" href="a02315.html#af0401db3e91435848055af583ec602f4">mc_rtc::gui::DataElement&lt; GetT &gt;::write_size()</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="aab1c409baa5b97ec1e5b58242c572fbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab1c409baa5b97ec1e5b58242c572fbe">&#9670;&nbsp;</a></span>class_name</h2>
+<a id="a3db5a65e4c481b435a71e15ac8715c26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3db5a65e4c481b435a71e15ac8715c26">&#9670;&nbsp;</a></span>type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename GetT, typename SetT&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::string <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::class_name</td>
+          <td class="memname">constexpr auto <a class="el" href="a02495.html">mc_rtc::gui::XYThetaImpl</a>&lt; GetT, SetT &gt;::type = <a class="el" href="a00736.html#a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386">Elements::XYTheta</a></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a716eefa0204ce8e39886323aaad00a02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a716eefa0204ce8e39886323aaad00a02">&#9670;&nbsp;</a></span>deleters_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::map&lt;std::string, <a class="el" href="a02511.html">ObjectDeleter</a>&gt; <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::deleters_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2ed489dea742157c337ac078e99f6dc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ed489dea742157c337ac078e99f6dc3">&#9670;&nbsp;</a></span>enable_sandbox</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::enable_sandbox</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5c219f5a809cfc139409874145d76a20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c219f5a809cfc139409874145d76a20">&#9670;&nbsp;</a></span>handles_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02507.html#a9c2401890571dbbde00eda2fb1e87710">Loader::handle_map_t</a> <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::handles_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac2b5e003d3ccd4958a32a83f1981754c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2b5e003d3ccd4958a32a83f1981754c">&#9670;&nbsp;</a></span>verbose</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="a02495.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::verbose</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -695,8 +360,8 @@ template&lt;typename T&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00718.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02495.html">ObjectLoader</a></li>
-    <li class="footer">Generated on Fri May 15 2020 11:56:19 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00718.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00736.html">gui</a></li><li class="navelem"><a class="el" href="a02495.html">XYThetaImpl</a></li>
+    <li class="footer">Generated on Tue May 19 2020 10:23:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

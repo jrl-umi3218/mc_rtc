@@ -643,27 +643,12 @@
 
 <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#include "MyRobot.h"
 </span>
-<span class="cp">#include &lt;fstream&gt;
+<span class="cp">#include &lt;RBDyn/parsers/urdf.h&gt;
 </span>
 <span class="c1">// MY_PATH can be provided by CMake for example</span>
 <span class="n">MyRobotModule</span><span class="o">::</span><span class="n">MyRobotModule</span><span class="p">(</span><span class="kt">bool</span> <span class="n">fixed</span><span class="p">)</span> <span class="o">:</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span><span class="p">(</span><span class="n">MY_PATH</span><span class="p">,</span> <span class="s">"my_robot"</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">ifs</span><span class="p">(</span><span class="n">urdf_path</span><span class="p">);</span>
-  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ifs</span><span class="p">.</span><span class="n">is_open</span><span class="p">())</span>
-  <span class="p">{</span>
-    <span class="n">LOG_ERROR_AND_THROW</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">,</span> <span class="s">"Could not load MyRobot model at "</span> <span class="o">&lt;&lt;</span> <span class="n">urdf_path</span><span class="p">)</span>
-  <span class="p">}</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">stringstream</span> <span class="n">urdf</span><span class="p">;</span>
-  <span class="n">urdf</span> <span class="o">&lt;&lt;</span> <span class="n">ifs</span><span class="p">.</span><span class="n">rdbuf</span><span class="p">();</span>
-  <span class="n">mc_rbdyn_urdf</span><span class="o">::</span><span class="n">URDFParserResult</span> <span class="n">res</span> <span class="o">=</span> <span class="n">mc_rbdyn_urdf</span><span class="o">::</span><span class="n">rbdyn_from_urdf</span><span class="p">(</span><span class="n">urdf</span><span class="p">.</span><span class="n">str</span><span class="p">(),</span> <span class="n">fixed</span><span class="p">);</span>
-  <span class="n">mb</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">mb</span><span class="p">;</span>
-  <span class="n">mbc</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">mbc</span><span class="p">;</span>
-  <span class="n">mbg</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">mbg</span><span class="p">;</span>
-  <span class="n">boundsFromURDF</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">limits</span><span class="p">);</span>
-  <span class="n">_collisionTransforms</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">collision_tf</span><span class="p">;</span>
-
-  <span class="n">expand_stance</span><span class="p">();</span>
-  <span class="n">make_default_ref_joint_order</span><span class="p">();</span>
+  <span class="n">init</span><span class="p">(</span><span class="n">rbd</span><span class="o">::</span><span class="n">parsers</span><span class="o">::</span><span class="n">from_urdf_file</span><span class="p">(</span><span class="n">urdf_path</span><span class="p">));</span>
 
   <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">default_q</span> <span class="o">=</span> <span class="p">{</span><span class="o">-</span><span class="mf">0.38</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.72</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.33</span><span class="p">,</span>  <span class="o">-</span><span class="mf">0.38</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.72</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.33</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>
                                    <span class="mf">0.13</span><span class="p">,</span>  <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">,</span>    <span class="o">-</span><span class="mf">0.052</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.17</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>   <span class="o">-</span><span class="mf">0.52</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>   <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>    <span class="mf">0.</span><span class="p">,</span>
@@ -700,7 +685,7 @@
 </div>
 
 
-<p>See <a href="/mc_rtc/doxygen.html#a02163" target="blank_">mc_rbdyn::RobotModule</a> documentation for all members that can be provided.</p>
+<p>See <a href="/mc_rtc/doxygen.html#a02167" target="blank_">mc_rbdyn::RobotModule</a> documentation for all members that can be provided.</p>
 
 <p></p>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::gui::Element Struct Reference</title>
+<title>mc_rtc::gui::details::CheckReturnType&lt; GetT, T, Args... &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,362 +70,42 @@ $(document).ready(function(){initNavTree('a02307.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="a02304.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::gui::Element Struct Reference</div>  </div>
+<div class="title">mc_rtc::gui::details::CheckReturnType&lt; GetT, T, Args... &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="a02307.html" title="Element is the common class for every element&#39;s type available in the GUI. ">Element</a> is the common class for every element's type available in the GUI.  
- <a href="a02307.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_rtc/gui/elements.h&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mc_rtc::gui::Element:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a02307.png" usemap="#mc_5Frtc::gui::Element_map" alt=""/>
-  <map id="mc_5Frtc::gui::Element_map" name="mc_5Frtc::gui::Element_map">
-<area href="a02315.html" alt="mc_rtc::gui::CallbackElement&lt; Element, Callback &gt;" shape="rect" coords="0,56,374,80"/>
-<area href="a02267.html" title="Arrow should display an arrow from the point at the start to the point at the end. " alt="mc_rtc::gui::ArrowROImpl&lt; GetStart, GetEnd &gt;" shape="rect" coords="768,56,1142,80"/>
-<area href="a02311.html" title="A generic element to write data to the GUI. " alt="mc_rtc::gui::DataElement&lt; GetT &gt;" shape="rect" coords="1152,56,1526,80"/>
-<area href="a02327.html" title="Force should display a force vector in 3D environment. " alt="mc_rtc::gui::ForceROImpl&lt; GetForce, GetSurface &gt;" shape="rect" coords="1920,56,2294,80"/>
-<area href="a02335.html" title="Create a user-defined form. " alt="mc_rtc::gui::FormImpl&lt; Callback &gt;" shape="rect" coords="384,112,758,136"/>
-<area href="a02435.html" title="Should display a form using the data provided in the configured schema folder. " alt="mc_rtc::gui::SchemaImpl&lt; Callback &gt;" shape="rect" coords="384,168,758,192"/>
-<area href="a02323.html" alt="mc_rtc::gui::VoidCallbackElement&lt; Element, Callback &gt;" shape="rect" coords="384,224,758,248"/>
-<area href="a02271.html" alt="mc_rtc::gui::ArrowImpl&lt; GetStart, SetStart, GetEnd, SetEnd &gt;" shape="rect" coords="768,112,1142,136"/>
-<area href="a02315.html" alt="mc_rtc::gui::CallbackElement&lt; DataElement&lt; GetT &gt;, Callback &gt;" shape="rect" coords="1536,112,1910,136"/>
-<area href="a02315.html" alt="mc_rtc::gui::CallbackElement&lt; DataElement&lt; GetT &gt;, SetT &gt;" shape="rect" coords="1536,168,1910,192"/>
-<area href="a02363.html" title="Label should display data. " alt="mc_rtc::gui::LabelImpl&lt; GetT &gt;" shape="rect" coords="1536,224,1910,248"/>
-<area href="a02415.html" title="Point3D should display a 3D point in the environment. " alt="mc_rtc::gui::Point3DROImpl&lt; GetT &gt;" shape="rect" coords="1536,280,1910,304"/>
-<area href="a02423.html" title="Polygon should display a polygon or a set of polygons. " alt="mc_rtc::gui::PolygonImpl&lt; GetT &gt;" shape="rect" coords="1536,336,1910,360"/>
-<area href="a02427.html" title="Rotation display a widget that shows the rotation. " alt="mc_rtc::gui::RotationROImpl&lt; GetT &gt;" shape="rect" coords="1536,392,1910,416"/>
-<area href="a02455.html" title="Trajectory can represent a pre-defined trajectory or a real-time trajectory depending on type of data..." alt="mc_rtc::gui::TrajectoryImpl&lt; GetT &gt;" shape="rect" coords="1536,448,1910,472"/>
-<area href="a02459.html" title="Transform display a widget that shows a 6D frame. " alt="mc_rtc::gui::TransformROImpl&lt; GetT &gt;" shape="rect" coords="1536,504,1910,528"/>
-<area href="a02487.html" title="An XYTheta element represents an oriented point in the XY plane. " alt="mc_rtc::gui::XYThetaROImpl&lt; GetT &gt;" shape="rect" coords="1536,560,1910,584"/>
-<area href="a02331.html" alt="mc_rtc::gui::ForceImpl&lt; GetForce, GetSurface, SetForce &gt;" shape="rect" coords="1920,112,2294,136"/>
-</map>
- </div></div>
+<p><code>#include &lt;mc_rtc/gui/details/traits.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a4f1f84cbf9bafb94cd41824712565f5a"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#a4f1f84cbf9bafb94cd41824712565f5a">name</a> () const</td></tr>
-<tr class="memdesc:a4f1f84cbf9bafb94cd41824712565f5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the element.  <a href="#a4f1f84cbf9bafb94cd41824712565f5a">More...</a><br /></td></tr>
-<tr class="separator:a4f1f84cbf9bafb94cd41824712565f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2e559a17ad52901a5e726ca03f300c6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#ad2e559a17ad52901a5e726ca03f300c6">id</a> () const</td></tr>
-<tr class="memdesc:ad2e559a17ad52901a5e726ca03f300c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the stack id of an element (also referred to as SID)  <a href="#ad2e559a17ad52901a5e726ca03f300c6">More...</a><br /></td></tr>
-<tr class="separator:ad2e559a17ad52901a5e726ca03f300c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a000ffd25b2fe0b3b36ad02b44cd190c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#a000ffd25b2fe0b3b36ad02b44cd190c3">id</a> (int idIn)</td></tr>
-<tr class="memdesc:a000ffd25b2fe0b3b36ad02b44cd190c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the stack id of an element.  <a href="#a000ffd25b2fe0b3b36ad02b44cd190c3">More...</a><br /></td></tr>
-<tr class="separator:a000ffd25b2fe0b3b36ad02b44cd190c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8e71ecce7dab695777a1a11faf119f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#ab8e71ecce7dab695777a1a11faf119f7">write</a> (<a class="el" href="a02555.html">mc_rtc::MessagePackBuilder</a> &amp;)</td></tr>
-<tr class="memdesc:ab8e71ecce7dab695777a1a11faf119f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the widget to a <a class="el" href="a02555.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a>.  <a href="#ab8e71ecce7dab695777a1a11faf119f7">More...</a><br /></td></tr>
-<tr class="separator:ab8e71ecce7dab695777a1a11faf119f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00f7fa6be59c8cc61304d35e7dd2a914"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#a00f7fa6be59c8cc61304d35e7dd2a914">handleRequest</a> (const <a class="el" href="a02211.html">mc_rtc::Configuration</a> &amp;)</td></tr>
-<tr class="memdesc:a00f7fa6be59c8cc61304d35e7dd2a914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take care of answering request from the client.  <a href="#a00f7fa6be59c8cc61304d35e7dd2a914">More...</a><br /></td></tr>
-<tr class="separator:a00f7fa6be59c8cc61304d35e7dd2a914"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a086e5b72ef29fb83ebba494135f0f579"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#a086e5b72ef29fb83ebba494135f0f579">Element</a> ()</td></tr>
-<tr class="memdesc:a086e5b72ef29fb83ebba494135f0f579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid element, used for Python bindings.  <a href="#a086e5b72ef29fb83ebba494135f0f579">More...</a><br /></td></tr>
-<tr class="separator:a086e5b72ef29fb83ebba494135f0f579"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:adb2f99cc312bfc645254b2cecd9f9c27"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#adb2f99cc312bfc645254b2cecd9f9c27">write_size</a> ()</td></tr>
-<tr class="memdesc:adb2f99cc312bfc645254b2cecd9f9c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the size of the array representing the widget in the MessagePack.  <a href="#adb2f99cc312bfc645254b2cecd9f9c27">More...</a><br /></td></tr>
-<tr class="separator:adb2f99cc312bfc645254b2cecd9f9c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a6fcb5cd1168ebfd6b9dc8830df21956f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#a6fcb5cd1168ebfd6b9dc8830df21956f">Element</a> (const std::string &amp;<a class="el" href="a02307.html#a4f1f84cbf9bafb94cd41824712565f5a">name</a>)</td></tr>
-<tr class="separator:a6fcb5cd1168ebfd6b9dc8830df21956f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:a7b365cbe4764d76aafa03495be0ecd5d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#a7b365cbe4764d76aafa03495be0ecd5d">name_</a></td></tr>
-<tr class="separator:a7b365cbe4764d76aafa03495be0ecd5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a208ba439700a31e9ff94abc76a466472"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#a208ba439700a31e9ff94abc76a466472">id_</a></td></tr>
-<tr class="separator:a208ba439700a31e9ff94abc76a466472"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ae2a3213c436d7248322db80b601c9747"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html#ae2a3213c436d7248322db80b601c9747">value</a> = <a class="el" href="a02299.html">CheckReturnType</a>&lt;GetT, T&gt;::value || <a class="el" href="a02299.html">CheckReturnType</a>&lt;GetT, Args...&gt;::value</td></tr>
+<tr class="separator:ae2a3213c436d7248322db80b601c9747"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="a02307.html" title="Element is the common class for every element&#39;s type available in the GUI. ">Element</a> is the common class for every element's type available in the GUI. </p>
-<p>Since we use static polymorphism in the <a class="el" href="a02439.html">StateBuilder</a> we don't need to make any functions virtual </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a086e5b72ef29fb83ebba494135f0f579"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a086e5b72ef29fb83ebba494135f0f579">&#9670;&nbsp;</a></span>Element() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_rtc::gui::Element::Element </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Invalid element, used for Python bindings. </p>
-
-</div>
-</div>
-<a id="a6fcb5cd1168ebfd6b9dc8830df21956f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fcb5cd1168ebfd6b9dc8830df21956f">&#9670;&nbsp;</a></span>Element() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_rtc::gui::Element::Element </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a00f7fa6be59c8cc61304d35e7dd2a914"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00f7fa6be59c8cc61304d35e7dd2a914">&#9670;&nbsp;</a></span>handleRequest()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_rtc::gui::Element::handleRequest </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02211.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Take care of answering request from the client. </p>
-
-</div>
-</div>
-<a id="ad2e559a17ad52901a5e726ca03f300c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2e559a17ad52901a5e726ca03f300c6">&#9670;&nbsp;</a></span>id() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int mc_rtc::gui::Element::id </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Access the stack id of an element (also referred to as SID) </p>
-<p>Elements that should be displayed on the same line share the same id </p>
-
-</div>
-</div>
-<a id="a000ffd25b2fe0b3b36ad02b44cd190c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a000ffd25b2fe0b3b36ad02b44cd190c3">&#9670;&nbsp;</a></span>id() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_rtc::gui::Element::id </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>idIn</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Set the stack id of an element. </p>
-
-</div>
-</div>
-<a id="a4f1f84cbf9bafb94cd41824712565f5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f1f84cbf9bafb94cd41824712565f5a">&#9670;&nbsp;</a></span>name()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string&amp; mc_rtc::gui::Element::name </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Name of the element. </p>
-
-<p class="reference">Referenced by <a class="el" href="a00736.html#ad70775c90f4b00f10abc4c5a5721e557">mc_rtc::gui::ArrayInput()</a>, <a class="el" href="a00736.html#a308b0967f9f6dc43f0f27bcc7d1c2b69">mc_rtc::gui::ArrayLabel()</a>, <a class="el" href="a00736.html#aae7d8d2d90a01712f0f57ba5f5ec0faf">mc_rtc::gui::Arrow()</a>, <a class="el" href="a00736.html#a7d2e7edd5eaf913a973c519cdd6affa2">mc_rtc::gui::Button()</a>, <a class="el" href="a00736.html#afc7e12ae3accc04250d14da90634986b">mc_rtc::gui::Checkbox()</a>, <a class="el" href="a00736.html#aea7948a0427bfd1acd2a28803e5559e1">mc_rtc::gui::ComboInput()</a>, <a class="el" href="a00736.html#a5baa34dd8ac370b60f3ffbf0b2fd9dda">mc_rtc::gui::DataComboInput()</a>, <a class="el" href="a00736.html#a1dfaa55db99fac62693744326d7f1cb9">mc_rtc::gui::Force()</a>, <a class="el" href="a00736.html#a94d2215e324dad2adb958327c16bf167">mc_rtc::gui::Form()</a>, <a class="el" href="a00736.html#ac4f13804b0853d4e3ee9d53afed5b06c">mc_rtc::gui::IntegerInput()</a>, <a class="el" href="a00736.html#a4b4617f09036971e7ccbf6917ee37c19">mc_rtc::gui::Label()</a>, <a class="el" href="a00736.html#a42ba0a1ea0c4890a7941cf76892e1268">mc_rtc::gui::NumberInput()</a>, <a class="el" href="a00736.html#a5c6714af47a8cb199c7345ed1c2e8ffe">mc_rtc::gui::NumberSlider()</a>, <a class="el" href="a00736.html#ac40c7c59cc19e0fe7be9d8a5a8564f74">mc_rtc::gui::Point3D()</a>, <a class="el" href="a00736.html#ac7c7c596bdb09e8c01e26e8fb53ce360">mc_rtc::gui::Polygon()</a>, <a class="el" href="a00736.html#a9dc809d7e99978fe3f5e2439d1a20771">mc_rtc::gui::Rotation()</a>, <a class="el" href="a00736.html#a0c892f6b2ba9e06d4bda32a16b76b75b">mc_rtc::gui::Schema()</a>, <a class="el" href="a00736.html#a4f8c1eb018c71e856f48cee90d7ea65d">mc_rtc::gui::StringInput()</a>, <a class="el" href="a00736.html#a062a5442d4cabf7a31d7f83008751a6a">mc_rtc::gui::Trajectory()</a>, <a class="el" href="a00736.html#aa5342b74063b005e6a03efd66adef74e">mc_rtc::gui::Transform()</a>, and <a class="el" href="a00736.html#aaaa2ebe2ecb490f266fe541318646561">mc_rtc::gui::XYTheta()</a>.</p>
-
-</div>
-</div>
-<a id="ab8e71ecce7dab695777a1a11faf119f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8e71ecce7dab695777a1a11faf119f7">&#9670;&nbsp;</a></span>write()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_rtc::gui::Element::write </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02555.html">mc_rtc::MessagePackBuilder</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Write the widget to a <a class="el" href="a02555.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a>. </p>
-<p>Writes nothing, the default data is written by GUIState since it knows if the sid is relevant. </p>
-
-<p class="reference">Referenced by <a class="el" href="a02327.html#a57c555bb17d91446dfa6fc4b3c3721f1">mc_rtc::gui::ForceROImpl&lt; GetForce, GetSurface &gt;::write()</a>, and <a class="el" href="a02267.html#a7840f5c07db4b91e69e7a4b54fcc1a4f">mc_rtc::gui::ArrowROImpl&lt; GetStart, GetEnd &gt;::write()</a>.</p>
-
-</div>
-</div>
-<a id="adb2f99cc312bfc645254b2cecd9f9c27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb2f99cc312bfc645254b2cecd9f9c27">&#9670;&nbsp;</a></span>write_size()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static constexpr size_t mc_rtc::gui::Element::write_size </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns the size of the array representing the widget in the MessagePack. </p>
-<p>By default, it includes the widget name, type and SID. </p>
-
-<p class="reference">Referenced by <a class="el" href="a02327.html#a482f092b89cba7f1e6441d796104d013">mc_rtc::gui::ForceROImpl&lt; GetForce, GetSurface &gt;::write_size()</a>, <a class="el" href="a02267.html#a057d3112dd2282d30d59514ce55fdb3f">mc_rtc::gui::ArrowROImpl&lt; GetStart, GetEnd &gt;::write_size()</a>, and <a class="el" href="a02311.html#af0401db3e91435848055af583ec602f4">mc_rtc::gui::DataElement&lt; GetT &gt;::write_size()</a>.</p>
-
-</div>
-</div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a208ba439700a31e9ff94abc76a466472"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a208ba439700a31e9ff94abc76a466472">&#9670;&nbsp;</a></span>id_</h2>
+<a id="ae2a3213c436d7248322db80b601c9747"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2a3213c436d7248322db80b601c9747">&#9670;&nbsp;</a></span>value</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename GetT , typename T , typename... Args&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int mc_rtc::gui::Element::id_</td>
+          <td class="memname">constexpr bool <a class="el" href="a02299.html">mc_rtc::gui::details::CheckReturnType</a>&lt; GetT, T, Args... &gt;::value = <a class="el" href="a02299.html">CheckReturnType</a>&lt;GetT, T&gt;::value || <a class="el" href="a02299.html">CheckReturnType</a>&lt;GetT, Args...&gt;::value</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7b365cbe4764d76aafa03495be0ecd5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b365cbe4764d76aafa03495be0ecd5d">&#9670;&nbsp;</a></span>name_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string mc_rtc::gui::Element::name_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a02339.html#a9b887e1e07e7a194efa05748f8ec289c">mc_rtc::gui::FormElement&lt; FormArrayInput&lt; T &gt;, Elements::ArrayInput &gt;::write()</a>.</p>
 
 </div>
 </div>
@@ -435,8 +115,8 @@ Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00718.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00736.html">gui</a></li><li class="navelem"><a class="el" href="a02307.html">Element</a></li>
-    <li class="footer">Generated on Fri May 15 2020 11:56:19 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00718.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00736.html">gui</a></li><li class="navelem"><a class="el" href="a00737.html">details</a></li><li class="navelem"><a class="el" href="a02307.html">CheckReturnType&lt; GetT, T, Args... &gt;</a></li>
+    <li class="footer">Generated on Tue May 19 2020 10:23:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

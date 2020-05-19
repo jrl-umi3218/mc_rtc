@@ -70,22 +70,23 @@ $(document).ready(function(){initNavTree('a02591.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_solver::ConstraintSet Member List</div>  </div>
+<div class="title">mc_solver::CompoundJointConstraint Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02591.html">mc_solver::ConstraintSet</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a02591.html">mc_solver::CompoundJointConstraint</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02591.html#a8b2739907caaeb5d49ccaedc1665e3ca">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver)=0</td><td class="entry"><a class="el" href="a02591.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02591.html#aa7a3302adccb4d3183e829fd2754b75a">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver)=0</td><td class="entry"><a class="el" href="a02591.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02591.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02591.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02591.html#ab5c96ef4ac5e418eed9e07ad0be00064">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02591.html">mc_solver::CompoundJointConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02591.html#a6bab2c52e39b3c37781091ff0477b554">CompoundJointConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double dt)</td><td class="entry"><a class="el" href="a02591.html">mc_solver::CompoundJointConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02591.html#af01c6fabfd9fb7f818d62693aaaac1ed">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02591.html">mc_solver::CompoundJointConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02595.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02595.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri May 15 2020 11:56:19 for mc_rtc by
+    <li class="footer">Generated on Tue May 19 2020 10:23:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

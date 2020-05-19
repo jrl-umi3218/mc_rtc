@@ -70,29 +70,22 @@ $(document).ready(function(){initNavTree('a02595.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_solver::ConstraintSetLoader Member List</div>  </div>
+<div class="title">mc_solver::ConstraintSet Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02595.html">mc_solver::ConstraintSetLoader</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a02595.html">mc_solver::ConstraintSet</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02623.html#a5da6be5874e61bd328a5452dda08950c">load</a>(mc_solver::QPSolver &amp;solver, const std::string &amp;file)</td><td class="entry"><a class="el" href="a02623.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02623.html#a13b1f947ca0b22d2985f580ec57caf85">load</a>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config)</td><td class="entry"><a class="el" href="a02623.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02623.html#a5236104825bda3a24cc3645e0e3bf448">load</a>(mc_solver::QPSolver &amp;solver, const std::string &amp;file)</td><td class="entry"><a class="el" href="a02623.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02623.html#ab10c87faa2a1fb4721163c6a479fdd78">load</a>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config)</td><td class="entry"><a class="el" href="a02623.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02623.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a> typedef</td><td class="entry"><a class="el" href="a02623.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02623.html#ac24012d951d6a04490b05a64f5ccf620">register_load_function</a>(const std::string &amp;type, load_fun fn)</td><td class="entry"><a class="el" href="a02623.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02595.html#a96dbeec49975b75e093f8074822fc5dd">storage</a>()</td><td class="entry"><a class="el" href="a02595.html">mc_solver::ConstraintSetLoader</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02623.html#afc58a28dae04a63aa3ed180a654ec223">storage_t</a> typedef</td><td class="entry"><a class="el" href="a02623.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02623.html#adb735279d914086553de0a21285126e4">T_ptr</a> typedef</td><td class="entry"><a class="el" href="a02623.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02623.html#a35fcd3b9f4280a31049089aa57b54330">unregister_load_function</a>(const std::string &amp;type)</td><td class="entry"><a class="el" href="a02623.html">mc_solver::GenericLoader&lt; ConstraintSetLoader, ConstraintSet &gt;</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02595.html#a8b2739907caaeb5d49ccaedc1665e3ca">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver)=0</td><td class="entry"><a class="el" href="a02595.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02595.html#aa7a3302adccb4d3183e829fd2754b75a">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver)=0</td><td class="entry"><a class="el" href="a02595.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02595.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02595.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri May 15 2020 11:56:19 for mc_rtc by
+    <li class="footer">Generated on Tue May 19 2020 10:23:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
