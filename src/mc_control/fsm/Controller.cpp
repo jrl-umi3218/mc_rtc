@@ -34,6 +34,14 @@ namespace mc_control
 namespace fsm
 {
 
+namespace
+{
+/** Always pick a steady clock */
+using clock = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
+                                        std::chrono::high_resolution_clock,
+                                        std::chrono::steady_clock>::type;
+} // namespace
+
 Contact Contact::from_mc_rbdyn(const Controller & ctl, const mc_rbdyn::Contact & contact)
 {
   return {ctl.robots().robot(contact.r1Index()).name(), ctl.robots().robot(contact.r2Index()).name(),
@@ -196,7 +204,9 @@ bool Controller::run(mc_solver::FeedbackType fType)
       robots_idx_[r.name()] = r.robotIndex();
     }
   }
+  auto startUpdateContacts = clock::now();
   updateContacts();
+  updateContacts_dt_ = clock::now() - startUpdateContacts;
   executor_.run(*this, idle_keep_state_);
   if(!executor_.running())
   {
@@ -224,7 +234,9 @@ void Controller::reset(const ControllerResetData & data)
   {
     robot().posW(config()("init_pos"));
   }
+  auto startUpdateContacts = clock::now();
   updateContacts();
+  updateContacts_dt_ = clock::now() - startUpdateContacts;
 
   /** GUI information */
   if(gui_)
@@ -268,6 +280,7 @@ void Controller::reset(const ControllerResetData & data)
                           mc_rtc::gui::FormNumberInput{"Friction", false, mc_rbdyn::Contact::defaultFriction},
                           mc_rtc::gui::FormArrayInput<Eigen::Vector6d>{"dof", false, Eigen::Vector6d::Ones()}));
   }
+  logger().addLogEntry("perf_FSM_UpdateContacts", [this]() { return updateContacts_dt_.count(); });
   startIdleState();
 }
 

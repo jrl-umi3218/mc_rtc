@@ -9,6 +9,7 @@
 #include <mc_control/fsm/StateFactory.h>
 #include <mc_control/fsm/TransitionMap.h>
 
+#include <chrono>
 #include <memory>
 
 namespace mc_control
@@ -38,7 +39,7 @@ struct MC_CONTROL_FSM_DLLAPI Executor
    *
    * \param name Name of the executor, empty for the main executor
    *
-   * \param category Categry under which the executor will appear in the GUI,
+   * \param category Category under which the executor will appear in the GUI,
    * defaults to {"FSM"} for the main executor and {"FSM", name} for other
    * executors
    *
@@ -134,6 +135,7 @@ struct MC_CONTROL_FSM_DLLAPI Executor
   bool read_write_msg(std::string & msg, std::string & out);
 
 private:
+  using duration_ms = std::chrono::duration<double, std::milli>;
   /** Configuration passed at construction, can hold specific states' configuration */
   mc_rtc::Configuration config_;
   /** Name of the executor */
@@ -165,6 +167,13 @@ private:
   bool complete_ = false;
   /** Name of the next state */
   std::string next_state_ = "";
+
+  /** Monitor state's creation performance */
+  duration_ms state_create_dt_{0};
+  /** Monitor state's run performance */
+  duration_ms state_run_dt_{0};
+  /** Monitor state's teardown performance */
+  duration_ms state_teardown_dt_{0};
 
 private:
   /** Complete execution */

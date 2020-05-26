@@ -294,6 +294,10 @@ private:
   bool running_ = false;
   /** Main executor */
   Executor executor_;
+
+  using duration_ms = std::chrono::duration<double, std::milli>;
+  /** Monitor updateContacts runtime */
+  duration_ms updateContacts_dt_{0};
 };
 
 } // namespace fsm
