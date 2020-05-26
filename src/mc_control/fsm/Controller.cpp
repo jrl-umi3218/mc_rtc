@@ -431,7 +431,7 @@ std::shared_ptr<mc_tasks::PostureTask> Controller::getPostureTask(const std::str
 void Controller::addContact(const Contact & c)
 {
   bool inserted;
-  std::set<Contact>::iterator it;
+  ContactSet::iterator it;
   std::tie(it, inserted) = contacts_.insert(c);
   contacts_changed_ |= inserted;
   if(!inserted)
