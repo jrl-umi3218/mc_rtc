@@ -19,11 +19,11 @@ from functools import partial
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-import ui
-from mc_log_data import Data
-from mc_log_tab import MCLogTab
-from mc_log_types import LineStyle, TextWithFontSize, GraphLabels, ColorsSchemeConfiguration, PlotType
-from mc_log_utils import InitDialogWithOkCancel
+from . import ui
+from .mc_log_data import Data
+from .mc_log_tab import MCLogTab
+from .mc_log_types import LineStyle, TextWithFontSize, GraphLabels, ColorsSchemeConfiguration, PlotType
+from .mc_log_utils import InitDialogWithOkCancel
 
 try:
   import mc_rbdyn

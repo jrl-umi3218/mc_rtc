@@ -30,9 +30,13 @@ from mpl_toolkits.mplot3d import Axes3D
 from collections import OrderedDict
 from math import asin, atan2
 
-from mc_log_types import LineStyle, PlotSide, PlotType
-import mc_log_ui
-from mc_log_utils import InitDialogWithOkCancel
+from .mc_log_types import LineStyle, PlotSide, PlotType
+from . import mc_log_ui
+from .mc_log_utils import InitDialogWithOkCancel
+
+import sys
+if sys.version_info[0] > 2:
+    unicode = str
 
 
 class GenerateRangeDialog(QtWidgets.QDialog):

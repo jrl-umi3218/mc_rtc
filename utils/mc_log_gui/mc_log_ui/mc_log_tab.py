@@ -6,11 +6,11 @@
 
 from PyQt5 import QtCore, QtWidgets
 
-import ui
+from . import ui
 
-from mc_log_plotcanvas import PlotFigure, PlotCanvasWithToolbar
-from mc_log_types import LineStyle, PlotType
-from mc_log_utils import InitDialogWithOkCancel
+from .mc_log_plotcanvas import PlotFigure, PlotCanvasWithToolbar
+from .mc_log_types import LineStyle, PlotType
+from .mc_log_utils import InitDialogWithOkCancel
 
 from functools import partial
 
