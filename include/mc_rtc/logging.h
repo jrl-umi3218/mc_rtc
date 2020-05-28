@@ -4,13 +4,13 @@
 
 #pragma once
 
+#include <mc_rtc/utils_api.h>
+
 #include <iostream>
 
-#include <spdlog/async.h>
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/fmt/ostr.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
-#include <spdlog/spdlog.h>
+#include <spdlog/logger.h>
 
 namespace mc_rtc
 {
@@ -21,59 +21,11 @@ namespace log
 namespace details
 {
 
-inline spdlog::logger & success()
-{
-  static auto success = []() {
-    if(spdlog::get("success"))
-    {
-      return spdlog::get("success");
-    }
-    auto success = spdlog::create_async_nb<spdlog::sinks::stdout_color_sink_mt>("success");
-    success->set_pattern("%^[success]%$ %v");
-    auto sink = static_cast<spdlog::sinks::stdout_color_sink_mt *>(success->sinks().back().get());
-#ifndef WIN32
-    sink->set_color(spdlog::level::info, "\033[01;32m"); // bold green
-#else
-    sink->set_color(spdlog::level::info, sink->BOLD | sink->GREEN);
-#endif
-    return success;
-  }();
-  return *success;
-}
+MC_RTC_UTILS_DLLAPI spdlog::logger & success();
 
-inline spdlog::logger & info()
-{
-  static auto info = []() {
-    if(spdlog::get("info"))
-    {
-      return spdlog::get("info");
-    }
-    auto info = spdlog::create_async_nb<spdlog::sinks::stdout_color_sink_mt>("info");
-    info->set_pattern("%^[info]%$ %v");
-    auto sink = static_cast<spdlog::sinks::stdout_color_sink_mt *>(info->sinks().back().get());
-#ifndef WIN32
-    sink->set_color(spdlog::level::info, "\033[01;34m"); // bold cyan
-#else
-    sink->set_color(spdlog::level::info, sink->BOLD | sink->CYAN);
-#endif
-    return info;
-  }();
-  return *info;
-}
+MC_RTC_UTILS_DLLAPI spdlog::logger & info();
 
-inline spdlog::logger & cerr()
-{
-  static auto cerr = []() {
-    if(spdlog::get("cerr"))
-    {
-      return spdlog::get("cerr");
-    }
-    auto cerr = spdlog::create_async_nb<spdlog::sinks::stderr_color_sink_mt>("cerr");
-    cerr->set_pattern("[%^%l%$] %v");
-    return cerr;
-  }();
-  return *cerr;
-}
+MC_RTC_UTILS_DLLAPI spdlog::logger & cerr();
 
 } // namespace details
 
@@ -100,13 +52,13 @@ void warning(Args &&... args)
 template<typename... Args>
 void info(Args &&... args)
 {
-  details::info().warn(std::forward<Args>(args)...);
+  details::info().info(std::forward<Args>(args)...);
 }
 
 template<typename... Args>
 void success(Args &&... args)
 {
-  details::success().warn(std::forward<Args>(args)...);
+  details::success().info(std::forward<Args>(args)...);
 }
 
 } // namespace log

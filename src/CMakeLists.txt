@@ -83,6 +83,7 @@ set(mc_rtc_utils_SRC
   mc_rtc/iterate_binary_log.cpp
   mc_rtc/Logger.cpp
   mc_rtc/MessagePackBuilder.cpp
+  mc_rtc/logging.cpp
 )
 
 set(mc_rtc_utils_HDR
