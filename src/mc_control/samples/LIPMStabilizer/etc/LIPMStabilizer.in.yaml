@@ -13,20 +13,17 @@ StepByStep: false
 IdleKeepState: true
 # Where to look for state libraries
 StatesLibraries:
-- "@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states"
+- "@LIPMStabilizer_STATES_INSTALL_PREFIX@"
 # Where to look for state files
 StatesFiles:
-- "@MC_CONTROLLER_INSTALL_PREFIX@/fsm/states/data"
+- "@LIPMStabilizer_STATES_DATA_INSTALL_PREFIX@"
 # If true, state factory will be more verbose
 VerboseStateFactory: false
 
 # Additional robots to load
 robots:
   ground:
-    module: env
-    params:
-    - "@AROBASE@MC_ENV_DESCRIPTION@AROBASE@"
-    - ground
+    module: env/ground
 # General constraints, always on
 constraints:
 - type: contact
@@ -38,7 +35,7 @@ collisions:
 - type: collision
   useMinimal: true
 # Initial set of contacts
-contacts: {}
+contacts: []
 hrp2_drc:
   posture:
     stiffness: 1.0
@@ -401,7 +398,7 @@ transitions:
 - [Stabilizer::GoCenter, OK, Stabilizer::Standing]
 
 # # Initial state
-init: Pause_2s
+init: @LIPMStabilizer_INIT_STATE@
 
 
 # Specific configuration for each observer
