@@ -309,26 +309,24 @@ git_update()
   git pull origin $1 && git submodule sync && git submodule update --init --recursive
 }
 
-SUDO_CMD='sudo -E'
-if [ ! -d $INSTALL_PREFIX ]
-then
-  mkdir -p $INSTALL_PREFIX
-fi
-if [ -w $INSTALL_PREFIX ]
-then
-  SUDO_CMD=
-  PYTHON_USER_INSTALL=ON
-fi
-if [ ! -d $SOURCE_DIR ]
-then
-  mkdir -p $SOURCE_DIR
-fi
-
-export PATH=$INSTALL_PREFIX/bin:$PATH
-export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH
-export DYLD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$DYLD_LIBRARY_PATH
-export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
-export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:$PYTHONPATH
+install_apt()
+{
+  TO_INSTALL=
+  for pkg in $*
+  do
+    has_package=`dpkg -l ${pkg} 2> /dev/null |grep "^ii" > /dev/null`
+    if [ $? -ne 0 ]
+    then
+      TO_INSTALL="$TO_INSTALL $pkg"
+    fi
+  done
+  if [ "${TO_INSTALL}" != "" ]
+  then
+    exec_log sudo apt-get update
+    exec_log sudo apt-get -y install ${TO_INSTALL}
+  fi
+  exit_if_error "-- [ERROR] Could not install one of the following packages ${TO_INSTALL}."
+}
 
 touch $BUILD_LOGFILE
 exit_if_error "-- [ERROR] Could not create log file $BUILD_LOGFILE"
@@ -363,25 +361,6 @@ echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
 echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
 echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
 echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
-
-install_apt()
-{
-  TO_INSTALL=
-  for pkg in $*
-  do
-    has_package=`dpkg -l ${pkg} 2> /dev/null |grep "^ii" > /dev/null`
-    if [ $? -ne 0 ]
-    then
-      TO_INSTALL="$TO_INSTALL $pkg"
-    fi
-  done
-  if [ "${TO_INSTALL}" != "" ]
-  then
-    exec_log sudo apt-get update
-    exec_log sudo apt-get -y install ${TO_INSTALL}
-  fi
-  exit_if_error "-- [ERROR] Could not install one of the following packages ${TO_INSTALL}."
-}
 
 ##################################################
 ## Extra OS/Distribution specific configuration ##
@@ -418,6 +397,26 @@ else
   . $this_dir/config_build_and_install.windows.sh
 fi
 
+SUDO_CMD='sudo -E'
+if [ ! -d $INSTALL_PREFIX ]
+then
+  mkdir -p $INSTALL_PREFIX
+fi
+if [ -w $INSTALL_PREFIX ]
+then
+  SUDO_CMD=
+  PYTHON_USER_INSTALL=ON
+fi
+if [ ! -d $SOURCE_DIR ]
+then
+  mkdir -p $SOURCE_DIR
+fi
+
+export PATH=$INSTALL_PREFIX/bin:$PATH
+export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$DYLD_LIBRARY_PATH
+export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
+export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:$PYTHONPATH
 
 #make settings readonly
 readonly INSTALL_PREFIX
@@ -467,8 +466,7 @@ echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
 echo_log "   ROS_DISTRO=$ROS_DISTRO"
 echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
 echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
-
-
+echo_log "   SUDO_CMD=$SUDO_CMD"
 
 ###################################
 #  --  APT/Brew dependencies  --  #
