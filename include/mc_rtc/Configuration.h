@@ -1291,8 +1291,11 @@ void MC_RTC_UTILS_DLLAPI Configuration::operator()(const std::string & key, std:
 /*! \brief Ostream operator */
 MC_RTC_UTILS_DLLAPI std::ostream & operator<<(std::ostream & os, const mc_rtc::Configuration & c);
 
+namespace fmt
+{
+
 template<>
-struct fmt::formatter<mc_rtc::Configuration> : public formatter<string_view>
+struct formatter<mc_rtc::Configuration> : public formatter<string_view>
 {
   template<typename FormatContext>
   auto format(const mc_rtc::Configuration & c, FormatContext & ctx) -> decltype(ctx.out())
@@ -1300,3 +1303,5 @@ struct fmt::formatter<mc_rtc::Configuration> : public formatter<string_view>
     return formatter<string_view>::format(static_cast<std::string>(c), ctx);
   }
 };
+
+} // namespace fmt
