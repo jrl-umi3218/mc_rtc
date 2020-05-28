@@ -12,6 +12,10 @@ namespace mc_rtc
 namespace gui
 {
 
+// Repeat static constexpr declarations
+// See https://stackoverflow.com/q/8016780
+constexpr int8_t StateBuilder::PROTOCOL_VERSION;
+
 const Color Color::White = Color(1, 1, 1, 1);
 const Color Color::Black = Color(0, 0, 0, 1);
 const Color Color::Red = Color(1, 0, 0, 1);
