@@ -15,7 +15,7 @@ set(BINDINGS_LIBRARIES
   mc_control_client
 )
 if(WIN32)
-  list(APPEND BINDINGS_LIBRARIES ltdl RBDyn::RBDyn Tasks::Tasks)
+  list(APPEND BINDINGS_LIBRARIES ltdl RBDyn::RBDyn Tasks::Tasks spdlog::spdlog)
 endif()
 
 add_cython_bindings(mc_rtc

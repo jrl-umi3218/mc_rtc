@@ -15,6 +15,9 @@
 namespace bfs = boost::filesystem;
 
 #ifdef WIN32
+
+#include <Windows.h>
+
 namespace
 {
 
@@ -76,7 +79,7 @@ bool LTDLHandle::open()
   {
     mc_rtc::log::info("Attempt to open {}", path_);
 #ifdef WIN32
-    mc_rtc::log::info("Search path: " << rpath_);
+    mc_rtc::log::info("Search path: {}", rpath_);
 #endif
   }
 #ifdef WIN32
