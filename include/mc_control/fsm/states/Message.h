@@ -14,7 +14,7 @@ namespace fsm
 
 /** Implements a simple Message state to display debug information in the FSM
  *
- * Messages can be shown in the CLI as LOG_* macro calls, or in the GUI as Label
+ * Messages can be shown in the CLI as mc_rtc::log calls, or in the GUI as Label
  * elements.
  *
  * This state always outputs "OK" and is always completed.

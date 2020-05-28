@@ -6,16 +6,111 @@
 
 #include <iostream>
 
-#ifndef WIN32
+#include <spdlog/async.h>
+#include <spdlog/fmt/fmt.h>
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace mc_rtc
 {
 
-constexpr auto OUT_NONE = "\033[00m";
-constexpr auto OUT_BLUE = "\033[01;34m";
-constexpr auto OUT_GREEN = "\033[01;32m";
-constexpr auto OUT_PURPLE = "\033[01;35m";
-constexpr auto OUT_RED = "\033[01;31m";
+namespace log
+{
+
+namespace details
+{
+
+inline spdlog::logger & success()
+{
+  static auto success = []() {
+    auto success = spdlog::create_async_nb<spdlog::sinks::stdout_color_sink_mt>("cout");
+    success->set_pattern("%^[success]%$ %v");
+    auto sink = static_cast<spdlog::sinks::stdout_color_sink_mt *>(success->sinks().back().get());
+#ifndef WIN32
+    sink->set_color(spdlog::level::info, "\033[01;32m"); // bold green
+#else
+    sink->set_color(spdlog::level::info, sink->BOLD | sink->GREEN);
+#endif
+    return success;
+  }();
+  return *success;
+}
+
+inline spdlog::logger & info()
+{
+  static auto success = []() {
+    auto success = spdlog::create_async_nb<spdlog::sinks::stdout_color_sink_mt>("cout");
+    success->set_pattern("%^[info]%$ %v");
+    auto sink = static_cast<spdlog::sinks::stdout_color_sink_mt *>(success->sinks().back().get());
+#ifndef WIN32
+    sink->set_color(spdlog::level::info, "\033[01;34m"); // bold cyan
+#else
+    sink->set_color(spdlog::level::info, sink->BOLD | sink->CYAN);
+#endif
+    return success;
+  }();
+  return *success;
+}
+
+inline spdlog::logger & cerr()
+{
+  static auto cerr = []() {
+    auto cerr = spdlog::create_async_nb<spdlog::sinks::stderr_color_sink_mt>("cerr");
+    cerr->set_pattern("[%^%l%$] %v");
+    return cerr;
+  }();
+  return *cerr;
+}
+
+} // namespace details
+
+template<typename ExceptionT, typename... Args>
+void error_and_throw[[noreturn]](Args &&... args)
+{
+  auto message = fmt::format(std::forward<Args>(args)...);
+  details::cerr().critical(message);
+  throw ExceptionT(message);
+}
+
+template<typename... Args>
+void error(Args &&... args)
+{
+  details::cerr().error(std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+void warning(Args &&... args)
+{
+  details::cerr().warn(std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+void info(Args &&... args)
+{
+  details::info().warn(std::forward<Args>(args)...);
+}
+
+template<typename... Args>
+void success(Args &&... args)
+{
+  details::success().warn(std::forward<Args>(args)...);
+}
+
+} // namespace log
+
+} // namespace mc_rtc
+
+/*
+#ifndef WIN32
+
+ namespace mc_rtc
+{
+
+ constexpr auto OUT_NONE = "\033[00m";
+ constexpr auto OUT_BLUE = "\033[01;34m";
+ constexpr auto OUT_GREEN = "\033[01;32m";
+ constexpr auto OUT_PURPLE = "\033[01;35m";
+ constexpr auto OUT_RED = "\033[01;31m";
 
 } // namespace mc_rtc
 
@@ -27,14 +122,14 @@ constexpr auto OUT_RED = "\033[01;31m";
 #else
 
 #  include <windows.h>
-namespace mc_rtc
+ namespace mc_rtc
 {
-static const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-constexpr auto OUT_NONE = 15;
-constexpr auto OUT_BLUE = 11;
-constexpr auto OUT_GREEN = 10;
-constexpr auto OUT_PURPLE = 13;
-constexpr auto OUT_RED = 12;
+ static const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+ constexpr auto OUT_NONE = 15;
+ constexpr auto OUT_BLUE = 11;
+ constexpr auto OUT_GREEN = 10;
+ constexpr auto OUT_PURPLE = 13;
+ constexpr auto OUT_RED = 12;
 } // namespace mc_rtc
 
 #  define LOG_ERROR(args)                                       \
@@ -66,3 +161,4 @@ constexpr auto OUT_RED = 12;
     LOG_ERROR(strstrm.str())                      \
     throw exception_type(strstrm.str());          \
   }
+*/

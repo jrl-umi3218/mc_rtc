@@ -89,7 +89,7 @@ bool Executor::run(Controller & ctl, bool keep_state)
     if(state_)
     {
       state_->stop(ctl);
-      LOG_WARNING("Interrupted " << curr_state_)
+      mc_rtc::log::warning("Interrupted {}", curr_state_);
       complete(ctl, false);
     }
   }
@@ -112,7 +112,7 @@ bool Executor::run(Controller & ctl, bool keep_state)
     {
       ready_ = true;
       state_output_ = state_->output();
-      LOG_SUCCESS("Completed " << curr_state_ << " - output: " << state_output_)
+      mc_rtc::log::success("Completed {} - output: {}", curr_state_, state_output_);
     }
     if(managed_)
     {
@@ -207,7 +207,7 @@ void Executor::next(Controller & ctl)
   }
   ready_ = false;
   transition_triggered_ = false;
-  LOG_SUCCESS("Starting state " << next_state_)
+  mc_rtc::log::success("Starting state {}", next_state_);
   if(state_)
   {
     auto state_teardown_start = clock::now();
@@ -247,7 +247,7 @@ bool Executor::resume(const std::string & state)
 {
   if(!interrupt_triggered_ && state_ && !ready_)
   {
-    LOG_WARNING(curr_state_ << " interrupted to  resume " << state)
+    mc_rtc::log::warning("{} interrupted to  resume {}", curr_state_, state);
   }
   complete_ = false;
   interrupt_triggered_ = true;

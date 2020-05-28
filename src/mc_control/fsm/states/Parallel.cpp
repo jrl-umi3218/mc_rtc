@@ -58,13 +58,13 @@ void ParallelState::start(Controller & ctl)
   std::vector<std::string> states = config_("states");
   if(states.size() == 0)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "ParallelState requires at least one state to run")
+    mc_rtc::log::error_and_throw<std::runtime_error>("ParallelState requires at least one state to run");
   }
   for(const auto & s : states)
   {
     if(!ctl.factory().hasState(s))
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, name() + ": " + s + " is not available")
+      mc_rtc::log::error_and_throw<std::runtime_error>("{}: {} is not available", name(), s);
     }
   }
   // Check validity of output states names
@@ -73,10 +73,9 @@ void ParallelState::start(Controller & ctl)
   {
     if(std::find(states.begin(), states.end(), sName) == states.end())
     {
-      LOG_ERROR_AND_THROW(std::runtime_error,
-                          "[" << name() << "] Invalid output state name " << sName
-                              << ". It should be one of the following states: " << mc_rtc::io::to_string(states)
-                              << ". Check your \"outputs\" configuration.");
+      mc_rtc::log::error_and_throw<std::runtime_error>("[{}] Invalid output state name {}. It should be one of the "
+                                                       "following states: {}. Check your \"outputs\" configuration.",
+                                                       name(), sName, mc_rtc::io::to_string(states));
     }
   }
   auto states_config = config_("configs", mc_rtc::Configuration{});

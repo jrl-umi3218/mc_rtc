@@ -98,22 +98,22 @@ public:
       }
       else
       {
-        LOG_ERROR_AND_THROW(mc_rtc::LoaderException, "Aliases can only handle 1 to 3 parameters")
+        mc_rtc::log::error_and_throw<mc_rtc::LoaderException>("Aliases can only handle 1 to 3 parameters");
       }
     }
     else
     {
       if(!robot_loader->has_object(name))
       {
-        LOG_ERROR("Cannot load the requested robot: " << name
-                                                      << "\nIt is neither a valid alias nor a known exported robot")
-        std::cout << "Available robots:\n";
+        mc_rtc::log::error(
+            "Cannot load the requested robot: {}\nIt is neither a valid alias nor a known exported robot", name);
+        mc_rtc::log::info("Available robots:");
         mtx.unlock();
         for(const auto & r : available_robots())
         {
-          std::cout << "- " << r << "\n";
+          mc_rtc::log::info("- {}", r);
         }
-        LOG_ERROR_AND_THROW(mc_rtc::LoaderException, "Cannot load the requested robot: " << name)
+        mc_rtc::log::error_and_throw<mc_rtc::LoaderException>("Cannot load the requested robot: {}", name);
       }
       rm = robot_loader->create_object(name, args...);
     }

@@ -101,7 +101,7 @@ struct Allocator<T, typename T::eigen_aligned_operator_new_marker_type> : public
  * auto & data2 = store.get<std::vector<double>>("Data");
  * data2.push_back(0);
  * // vector now has size 5
- * LOG_INFO(data.size());
+ * log::info(data.size());
  * \endcode
  *
  * When retrieving an object using get<Type>, checks are performed to ensure that
@@ -230,8 +230,7 @@ struct DataStore
     auto & data = datas_[name];
     if(data.buffer)
     {
-      LOG_ERROR_AND_THROW(std::runtime_error,
-                          "[" << name_ << "] An object named " << name << " already exists on the datastore.");
+      log::error_and_throw<std::runtime_error>("[{}] An object named {} already exists on the datastore.", name_, name);
     }
     data.allocate<T>(name_, name);
     new(data.buffer.get()) T(std::forward<Args>(args)...);
@@ -269,8 +268,7 @@ struct DataStore
     auto & data = datas_[name];
     if(data.buffer)
     {
-      LOG_ERROR_AND_THROW(std::runtime_error,
-                          "[" << name_ << "] An object named " << name << " already exists on the datastore.");
+      log::error_and_throw<std::runtime_error>("[{}] An object named {} already exists on the datastore.", name_, name);
     }
     data.allocate<T>(name_, name);
     new(data.buffer.get()) T{std::forward<Args>(args)...};
@@ -338,7 +336,7 @@ struct DataStore
     auto it = datas_.find(name);
     if(it == datas_.end())
     {
-      LOG_ERROR("[" << name_ << "] Failed to remove element \"" << name << "\" (element does not exist)");
+      log::error("[{}] Failed to remove element \"{}\" (element does not exist)", name_, name);
       return;
     }
     datas_.erase(it);
@@ -393,8 +391,8 @@ private:
     {
       if(buffer)
       {
-        LOG_ERROR_AND_THROW(std::runtime_error,
-                            "[" << name_ << "] An object named " << name << " already exists on the datastore.");
+        log::error_and_throw<std::runtime_error>("[{}] An object named {} already exists on the datastore.", name_,
+                                                 name);
       }
       buffer.reset(reinterpret_cast<uint8_t *>(internal::Allocator<T>().allocate(1)));
     }
@@ -418,9 +416,9 @@ private:
   {
     if(!data.same(typeid(T).hash_code()))
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Object for key \"" << name
-                                                  << "\" does not have the same type as the stored type. "
-                                                  << "Stored " << data.type() << " but requested " << type_name<T>());
+      log::error_and_throw<std::runtime_error>(
+          "[{} Object for key \"{}\" does not have the same type as the stored type. Stored {} but requested {}.",
+          name_, name, data.type(), type_name<T>());
     }
     return *(reinterpret_cast<T *>(data.buffer.get()));
   }
@@ -432,10 +430,9 @@ private:
     using fn_t = std::function<RetT(FuncArgsT...)>;
     if(!data.same(typeid(fn_t).hash_code()))
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] Function for key \"" << name
-                                                  << "\" does not have the same signature as the requested one. "
-                                                  << "Stored " << data.type() << " but requested "
-                                                  << type_name<fn_t>());
+      log::error_and_throw<std::runtime_error>("[{}] Function for key \"{}\" does not have the same signature as the "
+                                               "requested one. Stored {} but requested ",
+                                               name_, name, data.type(), type_name<fn_t>());
     }
     auto & fn = *(reinterpret_cast<fn_t *>(data.buffer.get()));
     return fn(std::forward<ArgsT>(args)...);
@@ -452,7 +449,7 @@ private:
     const auto it = datas_.find(name);
     if(it == datas_.end())
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[" << name_ << "] No key \"" << name << "\"");
+      log::error_and_throw<std::runtime_error>("[{}] No key \"{}\"", name_, name);
     }
     return it->second;
   }

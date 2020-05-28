@@ -45,7 +45,7 @@ public:
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
     solver().addTask(comTask);
 
-    LOG_SUCCESS("Created TestOrientationTaskController")
+    mc_rtc::log::success("Created TestOrientationTaskController");
   }
 
   virtual bool run() override

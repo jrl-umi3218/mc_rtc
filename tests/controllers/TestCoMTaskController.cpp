@@ -37,7 +37,7 @@ public:
     comTask->stiffness(10);
     solver().addTask(comTask);
 
-    LOG_SUCCESS("Created TestCoMTaskController")
+    mc_rtc::log::success("Created TestCoMTaskController");
   }
 
   virtual bool run() override

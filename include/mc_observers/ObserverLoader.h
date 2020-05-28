@@ -114,7 +114,7 @@ private:
       }
       catch(const mc_rtc::LoaderException & exc)
       {
-        LOG_ERROR("Failed to initialize ObserverLoader: " << exc.what())
+        mc_rtc::log::error("Failed to initialize ObserverLoader: {}", exc.what());
         throw(exc);
       }
     }

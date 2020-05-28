@@ -52,7 +52,7 @@ struct LowPass
   {
     if(period < 2 * dt_)
     {
-      LOG_WARNING("Time constant must be at least twice the timestep (Nyquist–Shannon sampling theorem)");
+      mc_rtc::log::warning("Time constant must be at least twice the timestep (Nyquist–Shannon sampling theorem)");
       period = 2 * dt_;
     }
     cutoffPeriod_ = period;

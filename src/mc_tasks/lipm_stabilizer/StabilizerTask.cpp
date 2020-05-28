@@ -114,21 +114,21 @@ void StabilizerTask::reset()
 
 void StabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "dimWeight not implemented for task " << type_);
+  mc_rtc::log::error_and_throw<std::runtime_error>("dimWeight not implemented for task {}", type_);
 }
 
 Eigen::VectorXd StabilizerTask::dimWeight() const
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "dimWeight not implemented for task " << type_);
+  mc_rtc::log::error_and_throw<std::runtime_error>("dimWeight not implemented for task {}", type_);
 }
 
 void StabilizerTask::selectActiveJoints(mc_solver::QPSolver & /* solver */,
                                         const std::vector<std::string> & /* activeJointsName */,
                                         const std::map<std::string, std::vector<std::array<int, 2>>> & /* activeDofs */)
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_
-                                                  << " does not implement selectActiveJoints. Please configure it "
-                                                     "through the stabilizer configuration instead");
+  mc_rtc::log::error_and_throw<std::runtime_error>("Task {} does not implement selectActiveJoints. Please configure it "
+                                                   "through the stabilizer configuration instead",
+                                                   name_);
 }
 
 void StabilizerTask::selectUnactiveJoints(
@@ -136,16 +136,18 @@ void StabilizerTask::selectUnactiveJoints(
     const std::vector<std::string> & /* unactiveJointsName */,
     const std::map<std::string, std::vector<std::array<int, 2>>> & /* unactiveDofs */)
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_
-                                                  << " does not implement selectUnactiveJoints. Please configure it "
-                                                     "through the stabilizer configuration instead.");
+  mc_rtc::log::error_and_throw<std::runtime_error>(
+      "Task {} does not implement selectUnactiveJoints. Please configure it "
+      "through the stabilizer configuration instead.",
+      name_);
 }
 
 void StabilizerTask::resetJointsSelector(mc_solver::QPSolver & /* solver */)
 {
-  LOG_ERROR_AND_THROW(std::runtime_error, "Task " << name_
-                                                  << " does not implement resetJointsSelector. Please configure it "
-                                                     "through the stabilizer configuration instead.");
+  mc_rtc::log::error_and_throw<std::runtime_error>(
+      "Task {} does not implement resetJointsSelector. Please configure it "
+      "through the stabilizer configuration instead.",
+      name_);
 }
 
 Eigen::VectorXd StabilizerTask::eval() const
@@ -198,7 +200,7 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
     // Remove previous contacts
     for(const auto contactT : contactTasks)
     {
-      LOG_INFO(name() + ": Removing contact " << contactT->surface());
+      mc_rtc::log::info("{}: Removing contact {}", name(), contactT->surface());
       MetaTask::removeFromLogger(*contactT, *solver.logger());
       MetaTask::removeFromSolver(*contactT, solver);
     }
@@ -208,7 +210,7 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
     for(const auto contactState : addContacts_)
     {
       auto footTask = footTasks[contactState];
-      LOG_INFO(name() + ": Adding contact " << footTask->surface());
+      mc_rtc::log::info("{}: Adding contact {}", name(), footTask->surface());
       MetaTask::addToSolver(*footTask, solver);
       MetaTask::addToLogger(*footTask, *solver.logger());
       contactTasks.push_back(footTask);
@@ -248,7 +250,7 @@ void StabilizerTask::update(mc_solver::QPSolver & solver)
 
 void StabilizerTask::enable()
 {
-  LOG_INFO("[StabilizerTask] enabled");
+  mc_rtc::log::info("[StabilizerTask] enabled");
   // Reset DCM integrator when enabling the stabilizer.
   // While idle, it will accumulate a lot of error, and would case the robot to
   // move suddently to compensate it otherwise
@@ -262,7 +264,7 @@ void StabilizerTask::enable()
 
 void StabilizerTask::disable()
 {
-  LOG_INFO("[StabilizerTask] disabled");
+  mc_rtc::log::info("[StabilizerTask] disabled");
   // Save current configuration to be reused when re-enabling
   lastConfig_ = c_;
   // Set the stabilizer gains to zero
@@ -279,7 +281,7 @@ void StabilizerTask::disable()
 
 void StabilizerTask::reconfigure()
 {
-  LOG_INFO("[StabilizerTask] reconfigured to the last commited configuration");
+  mc_rtc::log::info("[StabilizerTask] reconfigured to the last commited configuration");
   configure(defaultConfig_);
   enable();
 }
@@ -425,8 +427,9 @@ void StabilizerTask::setContacts(const ContactDescriptionVector & contacts)
 {
   if(contacts.empty())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "[StabilizerTask] Cannot set contacts from an empty list, the stabilizer "
-                                            "requires at least one contact to be set.");
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[StabilizerTask] Cannot set contacts from an empty list, the stabilizer "
+        "requires at least one contact to be set.");
   }
   contacts_.clear();
 
@@ -758,7 +761,7 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   bool solutionFound = qpSolver_.solve(Q, c, A_eq, b_eq, A_ineq, b_ineq, /* isDecomp = */ false);
   if(!solutionFound)
   {
-    LOG_ERROR("[StabilizerTask] DS force distribution QP: solver found no solution");
+    mc_rtc::log::error("[StabilizerTask] DS force distribution QP: solver found no solution");
     return;
   }
 
@@ -814,7 +817,7 @@ void StabilizerTask::saturateWrench(const sva::ForceVecd & desiredWrench,
   bool solutionFound = qpSolver_.solve(Q, c, A_eq, b_eq, A_ineq, b_ineq, /* isDecomp = */ true);
   if(!solutionFound)
   {
-    LOG_ERROR("[StabilizerTask] SS force distribution QP: solver found no solution");
+    mc_rtc::log::error("[StabilizerTask] SS force distribution QP: solver found no solution");
     return;
   }
 

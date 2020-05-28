@@ -56,8 +56,8 @@ GazeTask::GazeTask(const std::string & bodyName,
   check_parameters(robots, robotIndex, bodyName);
   if(point3d.z() <= 0)
   {
-    LOG_ERROR_AND_THROW(std::logic_error,
-                        "[mc_tasks::GazeTask] Expects the depth estimate to be >0, provided " << point3d.z());
+    mc_rtc::log::error_and_throw<std::logic_error>(
+        "[mc_tasks::GazeTask] Expects the depth estimate to be >0, provided {}", point3d.z());
   }
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, point3d, X_b_gaze);
   type_ = "gaze";
@@ -83,8 +83,9 @@ void GazeTask::error(const Eigen::Vector3d & point3d, const Eigen::Vector2d & po
   }
   else
   {
-    LOG_WARNING("GazeTask expects the depth estimate to be >0, provided "
-                << point3d.z() << ": ignoring error update for this iteration");
+    mc_rtc::log::warning(
+        "GazeTask expects the depth estimate to be >0, provided {}: ignoring error update for this iteration",
+        point3d.z());
   }
 }
 

@@ -54,9 +54,9 @@ bounds_t bounds(const rbd::MultiBody & mb, const rm_bounds_t & bounds)
         auto & b = res.back();
         if(b_ref.size() != b.size())
         {
-          LOG_ERROR_AND_THROW(std::runtime_error, name << " provided bound size (" << b_ref.size() << ")"
-                                                       << " different from expected size (" << b.size() << ")"
-                                                       << " for joint " << j.name())
+          mc_rtc::log::error_and_throw<std::runtime_error>(
+              "{} provided bound size ({}) different from expected size ({}) for joint {}", name, b_ref.size(),
+              b.size(), j.name());
         }
         res.back() = bound_in.at(j.name());
       }
@@ -150,10 +150,9 @@ Robot::Robot(Robots & robots,
         const auto & jQ = stance.at(j.name());
         if(initQ[i].size() != jQ.size())
         {
-          LOG_ERROR_AND_THROW(std::runtime_error, "Missmatch between RobotModule stance for joint "
-                                                      << j.name() << std::endl
-                                                      << "Stance provides " << jQ.size() << " values but should be "
-                                                      << initQ[i].size())
+          mc_rtc::log::error_and_throw<std::runtime_error>(
+              "Missmatch between RobotModule stance for joint {}\nStance provides {} values but should be {}", j.name(),
+              jQ.size(), initQ[i].size());
         }
         initQ[i] = jQ;
       }
@@ -180,9 +179,9 @@ Robot::Robot(Robots & robots,
 
   if(module_.bounds().size() != 6)
   {
-    LOG_ERROR_AND_THROW(std::invalid_argument, "The bounds of robotmodule '"
-                                                   << module_.name << "' have a size of " << module_.bounds().size()
-                                                   << " instead of 6 (ql, qu, vl, vu, tl, tu).")
+    mc_rtc::log::error_and_throw<std::invalid_argument>(
+        "The bounds of robotmodule \"{}\" have a size of {} instead of 6 (ql, qu, vl, vu, tl, tu).", module_.name,
+        module_.bounds().size());
   }
   std::tie(ql_, qu_, vl_, vu_, tl_, tu_) = bounds(mb(), module_.bounds());
 
@@ -209,8 +208,8 @@ Robot::Robot(Robots & robots,
     }
     else if(module_.rsdf_dir.size())
     {
-      LOG_ERROR("RSDF directory (" << module_.rsdf_dir << ") specified by RobotModule for " << module_.name
-                                   << " does not exist")
+      mc_rtc::log::error("RSDF directory ({}) specified by RobotModule for {} does not exist.", module_.rsdf_dir,
+                         module_.name);
     }
   }
 
@@ -285,9 +284,8 @@ Robot::Robot(Robots & robots,
       urdf = urdfSS.str();
       return urdf;
     }
-    LOG_ERROR("Could not open urdf file " << urdfPath << " for robot " << module_.name
-                                          << ", cannot initialize grippers")
-    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize grippers")
+    mc_rtc::log::error("Could not open urdf file {} for robot {}, cannot initialize grippers", urdfPath, module_.name);
+    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize grippers");
   };
   for(const auto & gripper : module_.grippers())
   {
@@ -784,7 +782,8 @@ const ForceSensor & Robot::findBodyForceSensor(const std::string & body) const
     }
     nextIndex = mb().parent(nextIndex);
   }
-  LOG_ERROR_AND_THROW(std::runtime_error, "No force sensor (directly or indirectly) attached to body " << body);
+  mc_rtc::log::error_and_throw<std::runtime_error>("No force sensor (directly or indirectly) attached to body {}",
+                                                   body);
 }
 
 ForceSensor & Robot::findBodyForceSensor(const std::string & body)
@@ -832,7 +831,7 @@ const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
 {
   if(!hasSurface(sName))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No surface named " << sName << " found in robot " << this->name())
+    mc_rtc::log::error_and_throw<std::runtime_error>("No surface named {} found in robot {}", sName, this->name());
   }
   return *(surfaces_.at(sName));
 }
@@ -866,8 +865,7 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
 {
   if(convexes_.count(cName) == 0)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "No convex named " << cName << " found in this robot (" << this->name_ << ")")
+    mc_rtc::log::error_and_throw<std::runtime_error>("No convex named {} found in robot {}", cName, this->name_);
   }
   return convexes_.at(cName);
 }
@@ -879,7 +877,7 @@ void Robot::addConvex(const std::string & cName,
 {
   if(convexes_.count(cName))
   {
-    LOG_ERROR("Attempted to add a convex named " << cName << " that already exists in " << name())
+    mc_rtc::log::error("Attempted to add a convex named {} that already exists in {}", cName, name());
     return;
   }
   convexes_[cName] = {body, convex};
@@ -900,7 +898,7 @@ const sva::PTransformd & Robot::bodyTransform(const std::string & bName) const
 {
   if(!hasBody(bName))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No body transform with name " << bName << " found in this robot")
+    mc_rtc::log::error_and_throw<std::runtime_error>("No body transform with name {} found in this robot", bName);
   }
   return bodyTransforms_[bodyIndexByName(bName)];
 }
@@ -919,7 +917,7 @@ const sva::PTransformd & Robot::collisionTransform(const std::string & cName) co
 {
   if(collisionTransforms_.count(cName) == 0)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No collision transform with name " << cName << " found in this robot")
+    mc_rtc::log::error_and_throw<std::runtime_error>("No collision transform with name {} found in this robot", cName);
   }
   return collisionTransforms_.at(cName);
 }
@@ -955,9 +953,9 @@ void Robot::loadRSDFFromDir(const std::string & surfaceDir)
     }
     else
     {
-      LOG_WARNING("Loaded surface " << sp->name() << " attached to body " << sp->bodyName()
-                                    << " from RSDF but the robot " << name()
-                                    << " has no such body, discard this surface to avoid future problems...")
+      mc_rtc::log::warning("Loaded surface {} attached to body {} from RSDF but the robot {} has no such body, discard "
+                           "this surface to avoid future problems...",
+                           sp->name(), sp->bodyName(), name());
     }
   }
   fixSurfaces();
@@ -1033,8 +1031,8 @@ void Robot::posW(const sva::PTransformd & pt)
   }
   else
   {
-    LOG_ERROR_AND_THROW(std::logic_error,
-                        "The root pose can only be changed for robots with a free flyer or a fixed joint as joint(0)");
+    mc_rtc::log::error_and_throw<std::logic_error>(
+        "The root pose can only be changed for robots with a free flyer or a fixed joint as joint(0)");
   }
 }
 
@@ -1053,7 +1051,7 @@ void Robot::velW(const sva::MotionVecd & vel)
   }
   else
   {
-    LOG_WARNING("You cannot set the base velocity on a fixed-base robot")
+    mc_rtc::log::warning("You cannot set the base velocity on a fixed-base robot");
   }
 }
 
@@ -1081,8 +1079,9 @@ void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) co
     }
     else
     {
-      LOG_WARNING("Could not copy the convex "
-                  << cH.first << " as it's not an sch::S_Polyhedron object, send complaint to mc_rtc maintainers...")
+      mc_rtc::log::warning("Could not copy the convex {} as it's not an sch::S_Polyhedron object, send complaint to "
+                           "mc_rtc maintainers...",
+                           cH.first);
     }
   }
   fixSCH(robot, robot.convexes_, robot.collisionTransforms_);
@@ -1102,8 +1101,8 @@ mc_rbdyn::Surface & Robot::copySurface(const std::string & sName, const std::str
 {
   if(hasSurface(name))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        name << " already exists within this robot. Cannot overwrite an existing surface")
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "{} already exists within robot {}. Cannot overwrite an existing surface", name, this->name_);
   }
   const Surface & surf = surface(sName);
   SurfacePtr nSurf = surf.copy();
@@ -1116,13 +1115,13 @@ void mc_rbdyn::Robot::addSurface(SurfacePtr surface, bool doNotReplace)
 {
   if(!hasBody(surface->bodyName()))
   {
-    LOG_WARNING("Surface " << surface->name() << " attached to body " << surface->bodyName() << " but the robot "
-                           << name() << " has no such body.")
+    mc_rtc::log::warning("Surface {} attached to body {} but robot {} has no such body.", surface->name(),
+                         surface->bodyName(), name());
     return;
   }
   if(hasSurface(surface->name()) && doNotReplace)
   {
-    LOG_WARNING("Surface " << surface->name() << " already exists for the robot " << name() << ".")
+    mc_rtc::log::warning("Surface {} already exists for the robot {}.", surface->name(), name());
     return;
   }
   surfaces_[surface->name()] = std::move(surface);
@@ -1154,7 +1153,7 @@ mc_control::Gripper & Robot::gripper(const std::string & gripper)
 {
   if(!grippers_.count(gripper))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No gripper named " << gripper << " in robot " << name());
+    mc_rtc::log::error_and_throw<std::runtime_error>("No gripper named {} in robot {}", gripper, name());
   }
   return *grippers_.at(gripper);
 }
@@ -1205,14 +1204,14 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
     }
     else
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, p + "No robot named " << robotName << " in this controller");
+      mc_rtc::log::error_and_throw<std::runtime_error>("{} No robot named {} in this controller", p, robotName);
     }
   }
   else if(config.has(robotIndexKey))
   {
-    LOG_WARNING("[MC_RTC_DEPRECATED]" + p
-                + " \"robotIndex\" will be deprecated in future versions, use \"robot: <robot "
-                  "name>\" instead");
+    mc_rtc::log::warning("[MC_RTC_DEPRECATED]{} \"robotIndex\" will be deprecated in future versions, use \"robot: "
+                         "<robot name>\" instead",
+                         p);
     const unsigned int robotIndex = config(robotIndexKey);
     if(robotIndex < robots.size())
     {
@@ -1220,8 +1219,8 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
     }
     else
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, p + "No robot with index " << robotIndex << " in this controller ("
-                                                                         << robots.size() << " robots loaded)");
+      mc_rtc::log::error_and_throw<std::runtime_error>("{}No robot with index {} in this controller ({} robots loaded)",
+                                                       p, robotIndex, robots.size());
     }
   }
   else
@@ -1232,7 +1231,7 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
     }
     else
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, p + "\"robotName\" is required.");
+      mc_rtc::log::error_and_throw<std::runtime_error>("{} \"robotName\" is required.", p);
     }
   }
 }
@@ -1241,7 +1240,8 @@ void Robot::addDevice(DevicePtr device)
 {
   if(devicesIndex_.count(device->name()))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "You cannot have multiple generic sensor with the same name in a robot");
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "You cannot have multiple generic sensor with the same name in a robot");
   }
   devices_.push_back(std::move(device));
   devicesIndex_[device->name()] = devices_.size() - 1;

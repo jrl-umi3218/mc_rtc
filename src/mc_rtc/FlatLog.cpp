@@ -91,13 +91,13 @@ void FlatLog::appendFlat(const std::string & f)
   auto fpath = bfs::path(f);
   if(!bfs::exists(f) || !bfs::is_regular(f))
   {
-    LOG_ERROR("Could not open log " << f)
+    log::error("Could not open log {}", f);
     return;
   }
   std::ifstream ifs(f, std::ifstream::binary);
   if(!ifs.is_open())
   {
-    LOG_ERROR("Failed to open " << f)
+    log::error("Failed to open {}", f);
     return;
   }
   size_t size = 0;
@@ -184,7 +184,7 @@ std::set<LogType> FlatLog::types(const std::string & entry) const
 {
   if(!has(entry))
   {
-    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    log::error("No entry named {} in the loaded log", entry);
     return {};
   }
   std::set<LogType> ret;
@@ -200,7 +200,7 @@ LogType FlatLog::type(const std::string & entry) const
 {
   if(!has(entry))
   {
-    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    log::error("No entry named {} in the loaded log", entry);
     return {};
   }
   for(const auto & r : at(entry))

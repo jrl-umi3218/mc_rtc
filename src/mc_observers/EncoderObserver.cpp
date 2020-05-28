@@ -26,8 +26,8 @@ EncoderObserver::EncoderObserver(const std::string & name, double dt, const mc_r
   }
   else
   {
-    LOG_WARNING("[EncoderObserver] Invalid configuration value for UpdatePosition (valid values are [control, sensor, "
-                "none]), using default behaviour (updating joint velocity from estimator) ");
+    mc_rtc::log::warning("[EncoderObserver] Invalid configuration value for UpdatePosition (valid values are [control, "
+                         "sensor, none]), using default behaviour (updating joint velocity from estimator) ");
     posUpdate_ = Update::Estimator;
   }
 
@@ -46,8 +46,9 @@ EncoderObserver::EncoderObserver(const std::string & name, double dt, const mc_r
   }
   else
   {
-    LOG_WARNING("[EncoderObserver] Invalid configuration value for UpdateVelocity (valid values are [control, sensor, "
-                "none]), using default behaviour (updating joint velocity from estimator) ");
+    mc_rtc::log::warning("[EncoderObserver] Invalid configuration value for UpdateVelocity (valid values are [control, "
+                         "sensor, none]), using default behaviour (updating joint velocity from estimator) ");
+    ;
     velUpdate_ = Update::Estimator;
   }
 
@@ -61,7 +62,8 @@ void EncoderObserver::reset(const mc_control::MCController & ctl)
   const auto & enc = ctl.robot().encoderValues();
   if(enc.empty() && (posUpdate_ == Update::Estimator || velUpdate_ == Update::Estimator))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "[EncoderObserver] requires the robot to have encoder measurements")
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[EncoderObserver] requires the robot to have encoder measurements");
   }
 
   if(!enc.empty())

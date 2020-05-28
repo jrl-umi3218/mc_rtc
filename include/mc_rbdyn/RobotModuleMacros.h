@@ -17,11 +17,12 @@
  * MC_RTC_ROBOT_MODULE implementation
  *
  */
-#define ROBOT_MODULE_CHECK_VERSION(NAME)                                                                          \
-  if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                 \
-  {                                                                                                               \
-    LOG_ERROR(NAME << " was compiled with " << mc_rtc::MC_RTC_VERSION << " but mc_rtc is currently at version "   \
-                   << mc_rtc::version() << ", you might experience subtle issues and should recompile your code") \
+#define ROBOT_MODULE_CHECK_VERSION(NAME)                                                                             \
+  if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                    \
+  {                                                                                                                  \
+    mc_rtc::log::error("{} was compiled with {} but mc_rtc is currently at version {}, you might experience subtle " \
+                       "issues and should recompile your code",                                                      \
+                       NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version());                                             \
   }
 
 /*! ROBOT_MODULE_COMMON
@@ -59,9 +60,8 @@
   }
 
 /*! ROBOT_MODULE_CANONIC_CONSTRUCTOR
- * Declare an external symbol for creation using the cannonical constructor (const string &, const string &)
- * Also declare destruction symbol
- * Exclusive of ROBOT_MODULE_DEFAULT_CONSTRUCTOR
+ * Declare an external symbol for creation using the cannonical constructor (const string &, const
+ * string &) Also declare destruction symbol Exclusive of ROBOT_MODULE_DEFAULT_CONSTRUCTOR
  */
 #define ROBOT_MODULE_CANONIC_CONSTRUCTOR(NAME, TYPE)                          \
   extern "C"                                                                  \

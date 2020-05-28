@@ -25,7 +25,7 @@ SymT LTDLHandle::get_symbol(const std::string & name)
     const char * error = lt_dlerror();
     if(verbose_)
     {
-      LOG_WARNING("Could not get symbol " << name << " in library " << path_ << "\n" << error)
+      mc_rtc::log::warning("Could not get symbol {} in library {}\n{}", name, path_, error);
     }
   }
   return ret;
@@ -110,7 +110,8 @@ T * ObjectLoader<T>::create(const std::string & name, Args... args)
 {
   if(!has_object(name))
   {
-    LOG_ERROR_AND_THROW(LoaderException, "Requested creation of object named " << name << " which has not been loaded")
+    mc_rtc::log::error_and_throw<LoaderException>("Requested creation of object named {} which has not been loaded",
+                                                  name);
   }
   unsigned int args_passed = 1 + sizeof...(Args);
   unsigned int args_required = args_passed;
@@ -121,15 +122,15 @@ T * ObjectLoader<T>::create(const std::string & name, Args... args)
   }
   if(args_passed != args_required)
   {
-    LOG_ERROR_AND_THROW(LoaderException, args_passed << " arguments passed to create function of " << name
-                                                     << " which expects " << args_required)
+    mc_rtc::log::error_and_throw<LoaderException>("{} arguments passed to create function of {} which excepts {}",
+                                                  args_passed, name, args_required);
   }
   auto create_fn =
       handles_[name]->template get_symbol<T * (*)(const std::string &, const typename std::decay<Args>::type &...)>(
           "create");
   if(create_fn == nullptr)
   {
-    LOG_ERROR_AND_THROW(LoaderException, "Failed to resolve create symbol in " << handles_[name]->path() << "\n")
+    mc_rtc::log::error_and_throw<LoaderException>("Failed to resolve create symbol in {}", handles_[name]->path());
   }
   T * ptr = nullptr;
   if(enable_sandbox)
@@ -142,14 +143,14 @@ T * ObjectLoader<T>::create(const std::string & name, Args... args)
   }
   if(ptr == nullptr)
   {
-    LOG_ERROR_AND_THROW(LoaderException, "Call to create for object " << name << " failed")
+    mc_rtc::log::error_and_throw<LoaderException>("Call to create for object {} failed", name);
   }
   if(!deleters_.count(name))
   {
     auto delete_fn = handles_[name]->template get_symbol<void (*)(T *)>("destroy");
     if(delete_fn == nullptr)
     {
-      LOG_ERROR_AND_THROW(LoaderException, "Symbol destroy not found in " << handles_[name]->path() << "\n")
+      mc_rtc::log::error_and_throw<LoaderException>("Symbol destroy not found in {}", handles_[name]->path());
     }
     deleters_[name] = ObjectDeleter(delete_fn);
   }

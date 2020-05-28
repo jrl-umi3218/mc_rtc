@@ -47,7 +47,7 @@ public:
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
     solver().addTask(comTask);
 
-    LOG_SUCCESS("Created TestEndEffectorTaskController")
+    mc_rtc::log::success("Created TestEndEffectorTaskController");
   }
 
   virtual bool run() override

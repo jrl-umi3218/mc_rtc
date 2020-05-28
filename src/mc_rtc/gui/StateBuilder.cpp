@@ -70,8 +70,8 @@ void StateBuilder::removeCategory(const std::vector<std::string> & category)
 {
   if(category.size() == 0)
   {
-    LOG_ERROR("You are not allowed to remove the root of the state")
-    LOG_WARNING("Call clear() if this was your intent")
+    mc_rtc::log::error("You are not allowed to remove the root of the state");
+    mc_rtc::log::warning("Call clear() if this was your intent");
     return;
   }
   std::pair<bool, Category &> cat = getCategory(category, true);
@@ -173,7 +173,7 @@ bool StateBuilder::handleRequest(const std::vector<std::string> & category,
   std::tie(found, cat_) = getCategory(category, false);
   if(!found)
   {
-    LOG_ERROR("No category " << cat2str(category))
+    mc_rtc::log::error("No category {}", cat2str(category));
     return false;
   }
   Category & cat = cat_;
@@ -181,7 +181,7 @@ bool StateBuilder::handleRequest(const std::vector<std::string> & category,
                          [&name](const ElementStore & el) { return el().name() == name; });
   if(it == cat.elements.end())
   {
-    LOG_ERROR("No element " << name << " in category " << cat2str(category))
+    mc_rtc::log::error("No element {} in category {}", name, cat2str(category));
     return false;
   }
   ElementStore & el = *it;
@@ -192,8 +192,8 @@ bool StateBuilder::handleRequest(const std::vector<std::string> & category,
   }
   catch(const mc_rtc::Configuration::Exception & exc)
   {
-    LOG_ERROR("Failed to handle request for " << cat2str(category) << "/" << name << "\n" << exc.what())
-    LOG_WARNING(data.dump(true))
+    mc_rtc::log::error("Failed to handle request for {}/{}\n{}", cat2str(category), name, exc.what());
+    mc_rtc::log::warning(data.dump(true));
     return false;
   }
 }

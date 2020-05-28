@@ -68,7 +68,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
                        }
                        catch(...)
                        {
-                         LOG_ERROR("Failed to load MetaTask from request\n" << config.dump(true))
+                         mc_rtc::log::error("Failed to load MetaTask from request\n{}", config.dump(true));
                        }
                      }));
   }
@@ -81,7 +81,7 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   selfCollisionConstraint.addCollisions(solver(), robots_modules[0]->minimalSelfCollisions());
   compoundJointConstraint.reset(new mc_solver::CompoundJointConstraint(robots(), 0, timeStep));
   postureTask = std::make_shared<mc_tasks::PostureTask>(solver(), 0, 10.0, 5.0);
-  LOG_INFO("MCController(base) ready")
+  mc_rtc::log::info("MCController(base) ready");
 }
 
 MCController::~MCController() {}
@@ -161,7 +161,7 @@ bool MCController::resetObservers()
   }
   if(!pipelineObservers_.empty())
   {
-    LOG_SUCCESS("Observers: " << pipelineDesc);
+    mc_rtc::log::success("Observers: {}", pipelineDesc);
   }
   return true;
 }
@@ -175,7 +175,7 @@ bool MCController::runObservers()
     bool r = observer->run(*this);
     if(!r)
     {
-      LOG_ERROR("Observer " << observer->name() << " failed to run");
+      mc_rtc::log::error("Observer {} failed to run", observer->name());
       return false;
     }
     if(updateRobots)
@@ -195,7 +195,7 @@ bool MCController::run(mc_solver::FeedbackType fType)
 {
   if(!qpsolver->run(fType))
   {
-    LOG_ERROR("QP failed to run()")
+    mc_rtc::log::error("QP failed to run()");
     return false;
   }
   qpsolver->fillTorque(dynamicsConstraint);
@@ -206,7 +206,7 @@ bool MCController::runClosedLoop()
 {
   if(!qpsolver->runClosedLoop(real_robots))
   {
-    LOG_ERROR("QP failed to run()")
+    mc_rtc::log::error("QP failed to run()");
     return false;
   }
   qpsolver->fillTorque(dynamicsConstraint);
@@ -224,10 +224,9 @@ void MCController::reset(const ControllerResetData & reset_data)
   supported_robots(supported);
   if(supported.size() && std::find(supported.cbegin(), supported.cend(), robot().name()) == supported.end())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "[MCController] The main robot "
-                                                << robot().name()
-                                                << " is not supported by this controller. Supported robots are: ["
-                                                << mc_rtc::io::to_string(supported) << "].");
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[MCController] The main robot {} is not supported by this controller. Supported robots are: [{}]",
+        robot().name(), mc_rtc::io::to_string(supported));
   }
 
   robot().mbc().zero(robot().mb());

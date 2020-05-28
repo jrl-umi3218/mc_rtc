@@ -54,7 +54,7 @@ std::vector<const T *> FlatLog::getRaw(const std::string & entry) const
 {
   if(!has(entry))
   {
-    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    log::error("No entry named {} in the loaded log", entry);
     return {};
   }
   std::vector<const T *> ret;
@@ -72,7 +72,7 @@ std::vector<T> FlatLog::get(const std::string & entry, const T & def) const
 {
   if(!has(entry))
   {
-    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    log::error("No entry named {} in the loaded log", entry);
     return {};
   }
   const auto & data = at(entry);
@@ -89,7 +89,7 @@ inline std::vector<bool> FlatLog::get(const std::string & entry, const bool & de
 {
   if(!has(entry))
   {
-    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    log::error("No entry named {} in the loaded log", entry);
     return {};
   }
   const auto & data = at(entry);
@@ -110,7 +110,7 @@ std::vector<T> FlatLog::get(const std::string & entry) const
 {
   if(!has(entry))
   {
-    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    log::error("No entry named {} in the loaded log", entry);
     return {};
   }
   const auto & data = at(entry);
@@ -128,7 +128,7 @@ std::vector<T> FlatLog::get(const std::string & entry) const
   }
   if(start_i == data.size())
   {
-    LOG_ERROR(entry << " was not logged as the requested data type")
+    log::error("{} was not logged as the requested data type", entry);
     return ret;
   }
   ret.resize(start_i, def);
@@ -157,13 +157,13 @@ const T * FlatLog::getRaw(const std::string & entry, size_t i) const
 {
   if(!has(entry))
   {
-    LOG_ERROR("No entry named " << entry << " in the loaded log")
+    log::error("No entry named {} in the loaded log", entry);
     return nullptr;
   }
   const auto & data = at(entry);
   if(i >= data.size())
   {
-    LOG_ERROR("Requested data (" << entry << ") out of available range (" << i << ", available: " << data.size() << ")")
+    log::error("Requested data ({}) out of available range ({}, available: {})", entry, i, data.size());
     return nullptr;
   }
   return details::record_cast<T>(data[i]);

@@ -23,7 +23,7 @@ void InterpolatedRotation::waypoint(size_t idx, const Eigen::Matrix3d & ori)
 {
   if(idx >= waypoints_.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No waypoint with index " << idx);
+    mc_rtc::log::error_and_throw<std::runtime_error>("No waypoint with index {}", idx);
   }
   waypoints_[idx].second = ori;
   needsUpdate_ = true;
@@ -33,7 +33,7 @@ const waypoint_t & InterpolatedRotation::waypoint(size_t idx) const
 {
   if(idx >= waypoints_.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No waypoint with index " << idx);
+    mc_rtc::log::error_and_throw<std::runtime_error>("No waypoint with index {}", idx);
   }
   return waypoints_[idx];
 }

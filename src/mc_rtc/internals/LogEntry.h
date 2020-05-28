@@ -26,7 +26,7 @@ inline LogType logTypeFromNode(mpack_node_t node)
                 "LogType should be an int32_t like thing");
   if(mpack_node_type(node) != mpack_type_int && mpack_node_type(node) != mpack_type_uint)
   {
-    LOG_ERROR("Stored LogType is not an integer")
+    log::error("Stored LogType is not an integer");
     return LogType::None;
   }
   return LogType(mpack_node_i32(node));
@@ -325,7 +325,7 @@ inline FlatLog::record recordFromNode(mpack_node_t node, bool extract_data, size
 {
   if(mpack_node_type(node) != mpack_type_array || mpack_node_array_length(node) == 1)
   {
-    LOG_ERROR("Failed to read record from MessagePack node")
+    log::error("Failed to read record from MessagePack node");
     return {};
   }
   auto type = logTypeFromNode(node, idx);
@@ -348,21 +348,21 @@ struct LogEntry : mpack_tree_t
     mpack_tree_parse(this);
     if(mpack_tree_error(this) != mpack_ok)
     {
-      LOG_ERROR("Failed to parse MessagePack data store into the log")
+      log::error("Failed to parse MessagePack data store into the log");
       valid_ = false;
       return;
     }
     root_ = mpack_tree_root(this);
     if(mpack_node_type(root_) != mpack_type_array || mpack_node_array_length(root_) != 2)
     {
-      LOG_ERROR("MessagePack stored data does not appear to be an array of size 2")
+      log::error("MessagePack stored data does not appear to be an array of size 2");
       if(mpack_node_type(root_) != mpack_type_array)
       {
-        LOG_WARNING("Not an array")
+        log::warning("Not an array");
       }
       else
       {
-        LOG_WARNING("Array of size: " << mpack_node_array_length(root_))
+        log::warning("Array of size: {}", mpack_node_array_length(root_));
       }
       valid_ = false;
       return;
@@ -379,7 +379,7 @@ struct LogEntry : mpack_tree_t
         auto k = mpack_node_array_at(keys, i);
         if(mpack_node_type(k) != mpack_type_str)
         {
-          LOG_ERROR("A key was not a string in log entries")
+          log::error("A key was not a string in log entries");
           valid_ = false;
           return;
         }
@@ -388,14 +388,14 @@ struct LogEntry : mpack_tree_t
     }
     else
     {
-      LOG_ERROR("MessagePack stored data has keys that are neither an array nor nil")
+      log::error("MessagePack stored data has keys that are neither an array nor nil");
       valid_ = false;
       return;
     }
     auto records = mpack_node_array_at(root_, 1);
     if(mpack_node_type(records) != mpack_type_array)
     {
-      LOG_ERROR("MessagePack stored records are not in an array")
+      log::error("MessagePack stored records are not in an array");
       valid_ = false;
       return;
     }
@@ -487,7 +487,7 @@ private:
       case mpack_type_nil:
       case mpack_type_missing:
       default:
-        LOG_ERROR("This data should not appear in a log")
+        log::error("This data should not appear in a log");
         break;
     };
   }

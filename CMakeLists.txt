@@ -91,6 +91,9 @@ set_target_properties(mc_rtc_3rd_party::RapidJSON PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR}/3rd-party/RapidJSON
 )
 
+# spdlog
+add_project_dependency(spdlog 1.6.1 REQUIRED)
+
 macro(find_description_package PACKAGE)
   set(PACKAGE_PATH_VAR "${PACKAGE}_PATH")
   string(TOUPPER "${PACKAGE_PATH_VAR}" PACKAGE_PATH_VAR)

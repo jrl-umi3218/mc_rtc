@@ -21,7 +21,7 @@ void test_fromVectorOrElement(const ElemT & elem,
   vectorConf.add("vectorNonConvertible", wrongVec);
   vectorConf.add("elem", elem);
   vectorConf.add("elemNonConvertible", wrongElem);
-  LOG_INFO(vectorConf.dump(true));
+  mc_rtc::log::info(vectorConf.dump(true));
 
   VecT elemVec{elem};
 

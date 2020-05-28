@@ -44,7 +44,7 @@ std::vector<Eigen::Vector3d> BSpline::splev(double t, unsigned int der)
 {
   if(spline == nullptr)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Invalide BSpline: there should be at least two waypoints");
+    mc_rtc::log::error_and_throw<std::runtime_error>("Invalide BSpline: there should be at least two waypoints");
   }
   std::vector<Eigen::Vector3d> pts;
   pts.reserve(der + 1);
@@ -59,7 +59,7 @@ std::vector<Eigen::Vector3d> BSpline::sampleTrajectory()
 {
   if(samplingPoints_ < 1)
   {
-    LOG_ERROR("There should be at least 1 sample");
+    mc_rtc::log::error("There should be at least 1 sample");
     return {};
   }
   std::vector<Eigen::Vector3d> traj;

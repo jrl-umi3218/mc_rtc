@@ -116,7 +116,7 @@ public:
     using base_t = typename std::decay<ret_t>::type;
     if(log_entries_.count(name))
     {
-      LOG_ERROR("Already logging an entry named " << name)
+      log::error("Already logging an entry named {}", name);
       return;
     }
     log_entries_changed_ = true;

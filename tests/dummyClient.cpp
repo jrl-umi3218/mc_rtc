@@ -54,7 +54,7 @@ void DummyControllerClient::join()
 
 void DummyControllerClient::category(const std::vector<std::string> & category, const std::string & name)
 {
-  LOG_INFO("Create new category " << name << " in " << cat2str(category))
+  mc_rtc::log::info("Create new category {} in {}", name, cat2str(category));
 }
 
 int main()

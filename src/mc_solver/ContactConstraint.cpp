@@ -25,8 +25,8 @@ ContactConstraint::ContactConstraint(double timeStep, ContactType contactType, b
   }
   else
   {
-    LOG_ERROR("Trying to create a contact constraint from an unknown contact constraint type")
-    LOG_ERROR_AND_THROW(std::runtime_error, std::string("bad constraint type"))
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Trying to create a contact constraint from an unknown contact constraint type");
   }
   if(dynamics)
   {
@@ -78,8 +78,8 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
       }
       else if(cTypeStr != "velocity")
       {
-        LOG_ERROR("Stored contact type for contact constraint not recognized, default to velocity")
-        LOG_WARNING("(Read: " << cTypeStr << ", expect one of: acceleration, velocity, position)")
+        mc_rtc::log::error("Stored contact type for contact constraint not recognized, default to velocity");
+        mc_rtc::log::warning("(Read: {}, expect one of: acceleration, velocity, position)", cTypeStr);
       }
       bool dynamics = config("dynamics", true);
       return std::make_shared<mc_solver::ContactConstraint>(solver.dt(), cType, dynamics);

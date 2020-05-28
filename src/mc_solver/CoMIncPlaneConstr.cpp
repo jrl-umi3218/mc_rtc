@@ -48,8 +48,8 @@ void CoMIncPlaneConstr::set_planes(QPSolver & solver,
   {
     if(speeds.size() != 0 && (normalsDots.size() != speeds.size() || planes.size() != speeds.size()))
     {
-      // LOG_WARNING("set_planes: speeds size > 0 but different from normalsDots or planes, acting as if speeds were not
-      // provided")
+      mc_rtc::log::warning("set_planes: speeds size > 0 but different from normalsDots or planes, acting as if speeds "
+                           "were not provided");
     }
     for(size_t i = 0; i < planes.size(); ++i)
     {

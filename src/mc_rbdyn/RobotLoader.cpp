@@ -44,7 +44,7 @@ void mc_rbdyn::RobotLoader::load_aliases(const std::string & fname)
 {
   if(verbose_)
   {
-    LOG_INFO("[RobotLoader] Loading aliases from " << fname)
+    mc_rtc::log::info("[RobotLoader] Loading aliases from {}", fname);
   }
   mc_rtc::Configuration data(fname);
   try
@@ -54,13 +54,13 @@ void mc_rbdyn::RobotLoader::load_aliases(const std::string & fname)
     {
       if(robot_loader->has_object(a.first))
       {
-        LOG_WARNING("Aliases declaration " << a.first << " in " << fname
-                                           << " would shadow library declaration, discarding this alias")
+        mc_rtc::log::warning("Aliases declaration {} in {} would shadow library declaration, discarding this alias",
+                             a.first, fname);
         continue;
       }
       else if(aliases.count(a.first))
       {
-        LOG_WARNING("Aliases " << a.first << " was already declared, new declaration from " << fname << " will prevail")
+        mc_rtc::log::warning("Aliases {} was already declared, new declaration from {} will prevail", a.first, fname);
       }
       if(a.second.size())
       {
@@ -72,14 +72,14 @@ void mc_rbdyn::RobotLoader::load_aliases(const std::string & fname)
       }
       if(verbose_)
       {
-        LOG_INFO("New alias " << a.first << ": " << data(a.first).dump(true, true))
+        mc_rtc::log::info("New alias {}: {}", a.first, data(a.first).dump(true, true));
       }
     }
   }
   catch(mc_rtc::Configuration::Exception & exc)
   {
-    LOG_ERROR("Loading of RobotModule aliases file: " << fname << " failed")
-    LOG_WARNING(exc.what())
+    mc_rtc::log::error("Loading of RobotModule aliases file: {} failed", fname);
+    mc_rtc::log::warning(exc.what());
     exc.silence();
   }
 }
@@ -133,7 +133,7 @@ void mc_rbdyn::RobotLoader::init(bool skip_default_path)
     }
     catch(const mc_rtc::LoaderException & exc)
     {
-      LOG_ERROR("Failed to initialize RobotLoader: " << exc.what())
+      mc_rtc::log::error("Failed to initialize RobotLoader: {}", exc.what());
       throw(exc);
     }
   }

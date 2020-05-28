@@ -29,9 +29,10 @@ Contact::Contact(const mc_rbdyn::Robot & robot,
   const auto & surface = robot.surface(surfaceName);
   if(surface.type() != "planar")
   {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "LIPMStabilizer contact expects a planar surface attached to the robot's ankle. Surface "
-                            << surfaceName << " with type " << surface.type() << " not supported");
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "LIPMStabilizer contact expects a planar surface attached to the robot's ankle. Surface {} "
+        "with type {} not supported",
+        surfaceName, surface.type());
   }
 
   surfacePose_ = surfacePose;
@@ -110,7 +111,8 @@ HrepXd Contact::hrep(const Eigen::Vector3d & vertical) const
   localHrepVec << halfLength_, halfLength_, halfWidth_, halfWidth_;
   if((normal() - vertical).norm() > 1e-3)
   {
-    LOG_WARNING("Contact is not horizontal");
+    mc_rtc::log::warning("Contact is not horizontal");
+    ;
   }
   const sva::PTransformd & X_0_c = surfacePose_;
   worldHrepMat = localHrepMat * X_0_c.rotation().topLeftCorner<2, 2>();

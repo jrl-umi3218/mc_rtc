@@ -126,7 +126,7 @@ RobotModule::RobotModule(const std::string & name, const rbd::parsers::ParserRes
 RobotModule::RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res)
 : RobotModule("/CREATED/BY/MC/RTC/", name)
 {
-  LOG_WARNING("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf")
+  mc_rtc::log::warning("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf");
   mb = res.mb;
   mbc = res.mbc;
   mbg = res.mbg;
@@ -218,7 +218,7 @@ void RobotModule::boundsFromURDF(const rbd::parsers::Limits & limits)
 
 void RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits & limits)
 {
-  LOG_WARNING("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf")
+  mc_rtc::log::warning("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf");
   boundsFromURDF(from_mc_rbdyn_urdf(limits));
 }
 
@@ -271,7 +271,7 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
 
 RobotModule::bounds_t urdf_limits_to_bounds(const mc_rbdyn_urdf::Limits & limits)
 {
-  LOG_WARNING("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf")
+  mc_rtc::log::warning("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf");
   return urdf_limits_to_bounds(from_mc_rbdyn_urdf(limits));
 }
 

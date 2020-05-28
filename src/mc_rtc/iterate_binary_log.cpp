@@ -21,20 +21,20 @@ bool iterate_binary_log(const std::string & f,
   auto fpath = bfs::path(f);
   if(!bfs::exists(f) || !bfs::is_regular(f))
   {
-    LOG_ERROR("Could not open log " << f << ", file does not exist")
+    log::error("Could not open log {}, file does not exist", f);
     return false;
   }
   std::ifstream ifs(f, std::ifstream::binary);
   if(!ifs.is_open())
   {
-    LOG_ERROR("Failed to open " << f)
+    log::error("Failed to open {}", f);
     return false;
   }
   std::vector<char> buffer(1024);
   ifs.read(buffer.data(), sizeof(mc_rtc::Logger::magic));
   if(memcmp(buffer.data(), &mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic)) != 0)
   {
-    LOG_ERROR("Log " << f << " is not a valid mc_rtc binary log (Invalid magic number)")
+    log::error("Log {} is not a valid mc_rtc binary log (Invalid magic number)", f);
     return false;
   }
   size_t t_index = 0;
@@ -74,12 +74,12 @@ bool iterate_binary_log(const std::string & f,
       }
       if(t_index == log.keys().size())
       {
-        LOG_ERROR("Request time key: " << time << " not found in log")
+        log::error("Request time key: {} not found in log", time);
         return false;
       }
       if(log.records()[t_index].type != LogType::Double)
       {
-        LOG_ERROR("Time key: " << time << " not recording double")
+        log::error("Time key: {} not recording double", time);
         return false;
       }
     }
