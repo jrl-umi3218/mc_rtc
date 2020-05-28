@@ -10,6 +10,7 @@
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
 
 namespace mc_rtc
 {
@@ -23,7 +24,11 @@ namespace details
 inline spdlog::logger & success()
 {
   static auto success = []() {
-    auto success = spdlog::create_async_nb<spdlog::sinks::stdout_color_sink_mt>("cout");
+    if(spdlog::get("success"))
+    {
+      return spdlog::get("success");
+    }
+    auto success = spdlog::create_async_nb<spdlog::sinks::stdout_color_sink_mt>("success");
     success->set_pattern("%^[success]%$ %v");
     auto sink = static_cast<spdlog::sinks::stdout_color_sink_mt *>(success->sinks().back().get());
 #ifndef WIN32
@@ -38,23 +43,31 @@ inline spdlog::logger & success()
 
 inline spdlog::logger & info()
 {
-  static auto success = []() {
-    auto success = spdlog::create_async_nb<spdlog::sinks::stdout_color_sink_mt>("cout");
-    success->set_pattern("%^[info]%$ %v");
-    auto sink = static_cast<spdlog::sinks::stdout_color_sink_mt *>(success->sinks().back().get());
+  static auto info = []() {
+    if(spdlog::get("info"))
+    {
+      return spdlog::get("info");
+    }
+    auto info = spdlog::create_async_nb<spdlog::sinks::stdout_color_sink_mt>("info");
+    info->set_pattern("%^[info]%$ %v");
+    auto sink = static_cast<spdlog::sinks::stdout_color_sink_mt *>(info->sinks().back().get());
 #ifndef WIN32
     sink->set_color(spdlog::level::info, "\033[01;34m"); // bold cyan
 #else
     sink->set_color(spdlog::level::info, sink->BOLD | sink->CYAN);
 #endif
-    return success;
+    return info;
   }();
-  return *success;
+  return *info;
 }
 
 inline spdlog::logger & cerr()
 {
   static auto cerr = []() {
+    if(spdlog::get("cerr"))
+    {
+      return spdlog::get("cerr");
+    }
     auto cerr = spdlog::create_async_nb<spdlog::sinks::stderr_color_sink_mt>("cerr");
     cerr->set_pattern("[%^%l%$] %v");
     return cerr;
