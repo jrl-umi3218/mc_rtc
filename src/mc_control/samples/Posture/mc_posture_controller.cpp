@@ -27,7 +27,7 @@ MCPostureController::MCPostureController(std::shared_ptr<mc_rbdyn::RobotModule> 
   qpsolver->setContacts({});
 
   postureTask->stiffness(1.0);
-  mc_rtc::log::success("MCPostureController init done {}", this);
+  mc_rtc::log::success("MCPostureController init done");
 }
 
 bool MCPostureController::run()

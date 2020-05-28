@@ -107,7 +107,7 @@ std::pair<size_t, size_t> getRange(const mc_rtc::log::FlatLog & log, const std::
 {
   if(!log.has(key))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No entry named " << key << " in log")
+    mc_rtc::log::error_and_throw<std::runtime_error>("No entry named {} in log", key);
   }
   size_t start = 0;
   size_t end = 0;
@@ -123,7 +123,7 @@ std::pair<size_t, size_t> getRange(const mc_rtc::log::FlatLog & log, const std::
   }
   if(start == end)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, key << " does not look like a valid time entry")
+    mc_rtc::log::error_and_throw<std::runtime_error>("{} does not look like a valid time entry", key);
   }
   return {start, end};
 }

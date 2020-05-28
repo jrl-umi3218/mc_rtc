@@ -19,7 +19,7 @@ inline std::map<std::string, mc_rtc::log::LogType> entries(const mc_rtc::log::Fl
     }
     else
     {
-      LOG_WARNING(e << " cannot be converted into a flat log")
+      mc_rtc::log::warning("{} cannot be converted into a flat log", e);
     }
   }
   return ret;

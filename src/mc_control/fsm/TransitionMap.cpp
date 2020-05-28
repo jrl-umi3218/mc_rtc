@@ -51,7 +51,7 @@ void TransitionMap::init(const StateFactory & factory, const mc_rtc::Configurati
   {
     if(t.size() < 3 || t.size() > 4)
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("One of the transition entry is not valid")
+      mc_rtc::log::error_and_throw<std::runtime_error>("One of the transition entry is not valid");
     }
     auto str2type = [](const std::string & in) {
       if(in == "StepByStep")

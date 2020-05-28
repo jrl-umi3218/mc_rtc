@@ -22,7 +22,7 @@
     mc_rtc::log::error(                                                                                          \
         "{} was compiled with {} but mc_rtc is currently at version {}, you might experience subtle issues and " \
         "should recompile your code",                                                                            \
-        NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version())                                                         \
+        NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version());                                                        \
   }
 
 #define EXPORT_OBSERVER_MODULE(NAME, TYPE)                                                    \

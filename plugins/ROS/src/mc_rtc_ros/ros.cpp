@@ -200,7 +200,7 @@ void RobotPublisherImpl::init(const mc_rbdyn::Robot & robot, bool use_real)
   std::ifstream ifs(urdf_path);
   if(!ifs.is_open())
   {
-    LOG_ERROR(robot.name() << " URDF: " << urdf_path << " is not readable")
+    mc_rtc::log::error("{} URDF: {} is not readable", robot.name(), urdf_path);
     return;
   }
   std::stringstream urdf;
@@ -316,7 +316,7 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
 
   if(!msgs.push(data))
   {
-    LOG_ERROR("Full ROS message publishing queue")
+    mc_rtc::log::error("Full ROS message publishing queue");
   }
 }
 
@@ -374,8 +374,8 @@ void RobotPublisherImpl::publishThread()
       }
       catch(const ros::serialization::StreamOverrunException & e)
       {
-        LOG_ERROR("EXCEPTION WHILE PUBLISHING STATE")
-        LOG_WARNING(e.what())
+        mc_rtc::log::error("EXCEPTION WHILE PUBLISHING STATE");
+        mc_rtc::log::warning(e.what());
       }
     }
     rt.sleep();
@@ -393,7 +393,7 @@ inline bool ros_init(const std::string & name)
   ros::init(argc, argv, name.c_str(), ros::init_options::NoSigintHandler);
   if(!ros::master::check())
   {
-    LOG_WARNING("ROS master is not available, continue without ROS functionalities")
+    mc_rtc::log::warning("ROS master is not available, continue without ROS functionalities");
     return false;
   }
   return true;

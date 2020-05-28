@@ -95,7 +95,7 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   }
   catch(mc_rtc::LoaderException & exc)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize controller loader")
+    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize controller loader");
   }
   if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(), "HalfSitPose")
      == config.enabled_controllers.end())

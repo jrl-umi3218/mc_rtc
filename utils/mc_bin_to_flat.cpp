@@ -433,7 +433,7 @@ void mc_bin_to_flat(const std::string & in, const std::string & out)
         utils::write<std::vector<double>>(log, entry, ofs);
         break;
       default:
-        LOG_ERROR("Cannot convert " << entry << " into the flat format")
+        mc_rtc::log::error("Cannot convert {} into the flat format", entry);
         break;
     }
   }
