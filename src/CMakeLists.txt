@@ -59,23 +59,6 @@ add_custom_command(OUTPUT ${VERSION_HEADER}
   DEPENDS ${MC_RTC_ALL_FILES}
 )
 
-set(mc_rtc_loader_SRC
-  "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp"
-  mc_rtc/version.cpp
-)
-
-set(mc_rtc_loader_HDR
-  "${VERSION_HEADER}"
-  ../include/mc_rtc/loader.h
-  ../include/mc_rtc/loader_api.h
-)
-
-add_library(mc_rtc_loader SHARED ${mc_rtc_loader_SRC} ${mc_rtc_loader_HDR})
-set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
-target_include_directories(mc_rtc_loader PRIVATE "${PROJECT_BINARY_DIR}/include/mc_rtc")
-target_link_libraries(mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking ${LTDL})
-install_mc_rtc_lib(mc_rtc_loader)
-
 set(mc_rtc_utils_SRC
   mc_rtc/Configuration.cpp
   mc_rtc/DataStore.cpp
@@ -84,9 +67,11 @@ set(mc_rtc_utils_SRC
   mc_rtc/Logger.cpp
   mc_rtc/MessagePackBuilder.cpp
   mc_rtc/logging.cpp
+  mc_rtc/version.cpp
 )
 
 set(mc_rtc_utils_HDR
+  "${VERSION_HEADER}"
   mc_rtc/internals/json.h
   mc_rtc/internals/yaml.h
   mc_rtc/internals/LogEntry.h
@@ -112,6 +97,21 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   target_link_libraries(mc_rtc_utils PUBLIC atomic)
 endif()
 install_mc_rtc_lib(mc_rtc_utils)
+
+set(mc_rtc_loader_SRC
+  "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc/loader.cpp"
+)
+
+set(mc_rtc_loader_HDR
+  ../include/mc_rtc/loader.h
+  ../include/mc_rtc/loader_api.h
+)
+
+add_library(mc_rtc_loader SHARED ${mc_rtc_loader_SRC} ${mc_rtc_loader_HDR})
+set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
+target_include_directories(mc_rtc_loader PRIVATE "${PROJECT_BINARY_DIR}/include/mc_rtc")
+target_link_libraries(mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking ${LTDL} mc_rtc_utils)
+install_mc_rtc_lib(mc_rtc_loader)
 
 set(mc_rbdyn_SRC
 mc_rbdyn/SCHAddon.cpp
