@@ -53,7 +53,9 @@ static auto registered_lookat_surface = mc_tasks::MetaTaskLoader::register_load_
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       auto t = std::make_shared<mc_tasks::LookAtSurfaceTask>(
           solver.robots(), robotIndexFromConfig(config, solver.robots(), "lookAtSurface"), config("body"),
-          config("bodyVector"), config("surfaceRobotIndex"), config("surface"));
+          config("bodyVector"),
+          robotIndexFromConfig(config, solver.robots(), "lookAtSurface", false, "surfaceRobotIndex", "surfaceRobot"),
+          config("surface"));
       if(config.has("weight"))
       {
         t->weight(config("weight"));

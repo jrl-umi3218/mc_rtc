@@ -2,6 +2,6 @@
   "type": "lookAtSurface",
   "body": "bodyName",
   "bodyVector": [1.0, 0.0, 0.0],
-  "surfaceRobotIndex": 0,
+  "surfaceRobot": "targetRobot",
   "surface": "targetSurfaceName"
 }

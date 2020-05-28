@@ -1,5 +1,6 @@
 {
   "title": "mc_tasks::LookAtSurfaceTask",
+  "description": "Aligns a unit vector expressed in body coordinates with a target unit vector from the body to a surface.<br/>Example: Align a camera's viewing direction with a surface on a desired object to look at it.",
   "type": "object",
   "allOf":
   [
@@ -13,9 +14,22 @@
       "properties":
       {
         "type": { "enum": ["lookAtSurface"] },
-        "bodyVector": { "$ref": "/../../Eigen/Vector3d.json" },
-        "surfaceRobotIndex": { "type": "number", "minimum": 0},
-        "surface": { "type": "string" },
+        "bodyVector":
+        {
+          "$ref": "/../../Eigen/Vector3d.json",
+          "description": "Unit vector in body frame representing the direction that will be aligned with the target vector (unit vector from body to surface)"
+        },
+        "surfaceRobot":
+        {
+          "type": "string",
+          "default": "MainRobot",
+          "description": "Name of the robot to which the desired surface is attached"
+        },
+        "surface":
+        {
+          "type": "string",
+          "description": "Surface to use as target. The target is a unit vector from the controlled body towards this surface."
+        },
         "offset": { "$ref": "/../../SpaceVecAlg/PTransformd.json" }
       }
     },
@@ -29,5 +43,5 @@
       }
     }
   ],
-  "required": ["type", "body", "bodyVector", "surfaceRobotIndex", "surface" ]
+  "required": ["type", "body", "bodyVector", "surface" ]
 }
