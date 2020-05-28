@@ -759,7 +759,7 @@ check_and_clone_git_dependency()
 }
 
 # If the dependencies have already been cloned, check if the local state of the repository is clean before upgrading
-GIT_DEPENDENCIES="humanoid-path-planner/hpp-spline#v4.7.0 jrl-umi3218/SpaceVecAlg jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
+GIT_DEPENDENCIES="gabime/spdlog@v1.6.1 humanoid-path-planner/hpp-spline#v4.7.0 jrl-umi3218/SpaceVecAlg jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
 for repo in $GIT_DEPENDENCIES; do
   check_and_clone_git_dependency $repo $SOURCE_DIR
 done
@@ -934,7 +934,6 @@ build_git_dependency_configure_and_build()
                     -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
                     -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
                     -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
-                    -DBUILD_PYTHON_INTERFACE:BOOL=OFF \
                     ${CMAKE_ADDITIONAL_OPTIONS}
   exit_if_error "-- [ERROR] CMake configuration failed for $git_dep"
   build_project $git_dep
@@ -984,7 +983,12 @@ build_catkin_workspace()
 ##  --  GIT dependencies  --  #
 ###############################
 
-build_git_dependency_no_test humanoid-path-planner/hpp-spline#v4.7.0
+export OLD_CMAKE_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS}"
+export CMAKE_ADDITIONAL_OPTIONS="-DSPDLOG_BUILD_EXAMPLE:BOOL=OFF -DSPDLOG_BUILD_SHARED:BOOL=ON ${CMAKE_ADDITIONAL_OPTIONS}"
+build_git_dependency_no_test gabime/spdlog
+export CMAKE_ADDITIONAL_OPTIONS="-DBUILD_PYTHON_INTERFACE:BOOL=OFF ${OLD_CMAKE_OPTIONS}"
+build_git_dependency_no_test humanoid-path-planner/hpp-spline
+export CMAKE_ADDITIONAL_OPTIONS="${OLD_CMAKE_OPTIONS}"
 if [ "x$WITH_PYTHON_SUPPORT" == xON ]
 then
   build_git_dependency jrl-umi3218/Eigen3ToPython eigen
