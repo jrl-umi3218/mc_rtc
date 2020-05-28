@@ -315,9 +315,9 @@
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># In the constructor
-</span><span class="bp">self</span><span class="o">.</span><span class="n">qpsolver</span><span class="o">.</span><span class="n">setContacts</span><span class="p">([</span>
-  <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">),</span>
-  <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">setContacts</span><span class="p">([</span>
+  <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">),</span>
+  <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
 <span class="p">])</span></code></pre></figure>
 
   </div>
@@ -405,12 +405,12 @@
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Import the mc_tasks module
 </span><span class="kn">import</span> <span class="nn">mc_tasks</span>
 <span class="c1"># In the constructor, create the task and add it to the problem
-</span><span class="bp">self</span><span class="o">.</span><span class="n">comTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">.</span><span class="n">CoMTask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">qpsolver</span><span class="o">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="p">)</span>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">comTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">CoMTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">comTask</span><span class="p">)</span>
 <span class="c1"># Reduce the posture task stiffness
-</span><span class="bp">self</span><span class="o">.</span><span class="n">postureTask</span><span class="o">.</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">stiffness</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="c1"># In the reset callback, reset the task to the current CoM
-</span><span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></code></pre></figure>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">comTask</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span></code></pre></figure>
 
   </div>
 </div>
@@ -492,11 +492,11 @@
     <span class="c1"># self.comZero is obtained by doing:
 </span>    <span class="c1"># self.comZero = self.comTask.com()
 </span>    <span class="c1"># in the reset function after doing the CoM task reset
-</span>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comDown</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="o">.</span><span class="n">com</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comZero</span> <span class="o">-</span> <span class="n">eigen</span><span class="o">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
+</span>    <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">comDown</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">comTask</span><span class="p">.</span><span class="n">com</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">comZero</span> <span class="o">-</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="o">.</span><span class="n">com</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comZero</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">comDown</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">comDown</span></code></pre></figure>
+        <span class="bp">self</span><span class="p">.</span><span class="n">comTask</span><span class="p">.</span><span class="n">com</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">comZero</span><span class="p">)</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">comDown</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">.</span><span class="n">comDown</span></code></pre></figure>
 
   </div>
 </div>
@@ -556,8 +556,8 @@
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comTask</span><span class="o">.</span><span class="nb">eval</span><span class="p">()</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">switch_com_target</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">comTask</span><span class="p">.</span><span class="nb">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">:</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">switch_com_target</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">True</span></code></pre></figure>
 
   </div>

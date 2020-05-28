@@ -320,7 +320,7 @@ Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> 
 <p>You can also open the log in Python:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">mc_log_ui</span>
-<span class="n">log</span> <span class="o">=</span> <span class="n">mc_log_ui</span><span class="o">.</span><span class="n">read_log</span><span class="p">(</span><span class="s">'/tmp/mylog.bin'</span><span class="p">)</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">mc_log_ui</span><span class="p">.</span><span class="n">read_log</span><span class="p">(</span><span class="s">'/tmp/mylog.bin'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Then <code class="highlighter-rouge">log</code> is a Python dictionary where the keys are the entries you see in the tree of mc_log_ui (e.g. if you logged an <code class="highlighter-rouge">Eigen::Vector3d</code> called <code class="highlighter-rouge">v3d</code> then you get <code class="highlighter-rouge">v3d_x</code>, <code class="highlighter-rouge">v3d_y</code> and <code class="highlighter-rouge">v3d_z</code>) and the values are numpy arrays so you can do anything with it.</p>

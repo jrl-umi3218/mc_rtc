@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_rtc::log::callback_is_serializable&lt; T &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02527.html','');});
+$(document).ready(function(){initNavTree('a02524.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,29 +69,104 @@ $(document).ready(function(){initNavTree('a02527.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="a02521.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::log::FlatLog::record Member List</div>  </div>
+<div class="title">mc_rtc::log::callback_is_serializable&lt; T &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02527.html">mc_rtc::log::FlatLog::record</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02527.html#a74d58f27e34799a1650342340dc35d0a">data</a></td><td class="entry"><a class="el" href="a02527.html">mc_rtc::log::FlatLog::record</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02527.html#a447e5c16c3e286bb51a0a90b0f4ef182">operator=</a>(const record &amp;)=delete</td><td class="entry"><a class="el" href="a02527.html">mc_rtc::log::FlatLog::record</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02527.html#af03a9665af14ae1a3a0545ea86d94804">operator=</a>(record &amp;&amp;)=default</td><td class="entry"><a class="el" href="a02527.html">mc_rtc::log::FlatLog::record</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02527.html#a1189082dce7ec759c42e551534f5b158">record</a>()</td><td class="entry"><a class="el" href="a02527.html">mc_rtc::log::FlatLog::record</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02527.html#a687a3142850022473bc2724a024a2597">record</a>(LogType t, unique_void_ptr &amp;&amp;d)</td><td class="entry"><a class="el" href="a02527.html">mc_rtc::log::FlatLog::record</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02527.html#ad2377ca354cb3b3d61500c1eee451d69">record</a>(const record &amp;)=delete</td><td class="entry"><a class="el" href="a02527.html">mc_rtc::log::FlatLog::record</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02527.html#afb9458b8f743e9f2e8ce8ee0911e38c8">record</a>(record &amp;&amp;)=default</td><td class="entry"><a class="el" href="a02527.html">mc_rtc::log::FlatLog::record</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02527.html#a0796a1bb292299608b539563b87a8610">type</a></td><td class="entry"><a class="el" href="a02527.html">mc_rtc::log::FlatLog::record</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02527.html#a4e556fb8cf1154c39f535f18bbbbf2a0">unique_void_ptr</a> typedef</td><td class="entry"><a class="el" href="a02527.html">mc_rtc::log::FlatLog::record</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>Type-traits for callables that returns a serializable type.  
+ <a href="a02524.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_rtc/log/utils.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a38207f8c1014c4e1b2ebb310e3ceb551"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02524.html#a38207f8c1014c4e1b2ebb310e3ceb551">ret_type</a> = typename std::result_of&lt; T()&gt;::type</td></tr>
+<tr class="separator:a38207f8c1014c4e1b2ebb310e3ceb551"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36029a9801c5ca972f21e626ea554174"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02524.html#a36029a9801c5ca972f21e626ea554174">base_type</a> = typename std::decay&lt; <a class="el" href="a02524.html#a38207f8c1014c4e1b2ebb310e3ceb551">ret_type</a> &gt;::type</td></tr>
+<tr class="separator:a36029a9801c5ca972f21e626ea554174"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:aad0ab42aac325e0fa19a1a82d853288b"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02524.html#aad0ab42aac325e0fa19a1a82d853288b">value</a> = <a class="el" href="a02520.html">is_serializable</a>&lt;<a class="el" href="a02524.html#a36029a9801c5ca972f21e626ea554174">base_type</a>&gt;::value</td></tr>
+<tr class="separator:aad0ab42aac325e0fa19a1a82d853288b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename T&gt;<br />
+struct mc_rtc::log::callback_is_serializable&lt; T &gt;</h3>
+
+<p>Type-traits for callables that returns a serializable type. </p>
+<p>value is true if T() return type (after decaying) is serializable </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a36029a9801c5ca972f21e626ea554174"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36029a9801c5ca972f21e626ea554174">&#9670;&nbsp;</a></span>base_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a02524.html">mc_rtc::log::callback_is_serializable</a>&lt; T &gt;::<a class="el" href="a02524.html#a36029a9801c5ca972f21e626ea554174">base_type</a> =  typename std::decay&lt;<a class="el" href="a02524.html#a38207f8c1014c4e1b2ebb310e3ceb551">ret_type</a>&gt;::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a38207f8c1014c4e1b2ebb310e3ceb551"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38207f8c1014c4e1b2ebb310e3ceb551">&#9670;&nbsp;</a></span>ret_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a02524.html">mc_rtc::log::callback_is_serializable</a>&lt; T &gt;::<a class="el" href="a02524.html#a38207f8c1014c4e1b2ebb310e3ceb551">ret_type</a> =  typename std::result_of&lt;T()&gt;::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="aad0ab42aac325e0fa19a1a82d853288b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad0ab42aac325e0fa19a1a82d853288b">&#9670;&nbsp;</a></span>value</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool <a class="el" href="a02524.html">mc_rtc::log::callback_is_serializable</a>&lt; T &gt;::value = <a class="el" href="a02520.html">is_serializable</a>&lt;<a class="el" href="a02524.html#a36029a9801c5ca972f21e626ea554174">base_type</a>&gt;::value</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue May 19 2020 15:59:19 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00718.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00741.html">log</a></li><li class="navelem"><a class="el" href="a02524.html">callback_is_serializable</a></li>
+    <li class="footer">Generated on Thu May 28 2020 04:07:30 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

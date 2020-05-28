@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['load_5ffun',['load_fun',['../a02627.html#a02dbea2e4a083ed146cea53d7b648483',1,'mc_solver::GenericLoader']]],
-  ['lowpasst',['LowPassT',['../a01991.html#aaac75c58b8f9680abe5bd377c9701253',1,'mc_filter::LowPassFiniteDifferences']]],
-  ['ltdlhandleptr',['LTDLHandlePtr',['../a00718.html#a04f4430d990b320f494b3a21112c7e3a',1,'mc_rtc']]]
+  ['matrix3x3',['Matrix3x3',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#ad62be10192b061dcae7b013d0f5e194e',1,'sch']]],
+  ['matrix4x4',['Matrix4x4',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a3041e1b0d9a898938dd026b1bd3d4112',1,'sch']]],
+  ['metataskptr',['MetaTaskPtr',['../a00719.html#a3ce36af538f25151dc006eb3d50e8b3d',1,'mc_tasks']]]
 ];

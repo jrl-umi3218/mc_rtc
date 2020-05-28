@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_tasks::lipm_stabilizer::ZMPCC Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02767.html','');});
+$(document).ready(function(){initNavTree('a02764.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,115 +69,630 @@ $(document).ready(function(){initNavTree('a02767.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="a02761.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_tasks::ExactCubicTrajectoryTask Member List</div>  </div>
+<div class="title">mc_tasks::lipm_stabilizer::ZMPCC Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02767.html#a1f68add7b8b70b9b6878bb0d72c0c6e7">addToGUI</a>(mc_rtc::gui::StateBuilder &amp;gui) override</td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02803.html#a73ce0e373c9cf7f5b8db6745c46c3ef4">mc_tasks::MetaTask::addToGUI</a>(MetaTask &amp;t, mc_rtc::gui::StateBuilder &amp;gui)</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#aa7147dba544550aa616caa164a40209a">addToLogger</a>(mc_rtc::Logger &amp;logger) override</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02803.html#ac29af31e9eb526d06b6d4ec1d2f3d5bb">mc_tasks::MetaTask::addToLogger</a>(MetaTask &amp;t, mc_rtc::Logger &amp;logger)</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#a95d2b8b64b8f57fd92bbe82f98a4ec8e">addToSolver</a>(mc_solver::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02803.html#a6f753630a5e0aca76308b4d652e62277">mc_tasks::MetaTask::addToSolver</a>(MetaTask &amp;t, mc_solver::QPSolver &amp;solver)</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02767.html#a825212a1055ad43955b8284562905f13">bspline</a></td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a552e7c8b7ef80649a462476c30ef6cc6">buildCompletionCriteria</a>(double dt, const mc_rtc::Configuration &amp;config) const override</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02767.html#a14e12359f28675ec224ec009ae75b174">constraints</a>(const Eigen::Vector3d &amp;init_vel, const Eigen::Vector3d &amp;init_acc, const Eigen::Vector3d &amp;end_vel, const Eigen::Vector3d &amp;end_acc)</td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a848034873f24f9e38dcc12d657e04741">controlPoints</a>()</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#a221a83c509eb1b24df8a96a6eb4ac7da">currTime_</a></td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a82155cafc3a49ae1218ebd02e45c08b2">damping</a>(double damping)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a0c4ccf6b3221b8b5f3de002b2eaf663b">damping</a>(const Eigen::VectorXd &amp;damping)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a6c2aaa9a80d595b564c0bf982662ee72">damping</a>() const</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a7d35bbf3041054f4cd69aa772c2f5d9b">dimDamping</a>() const</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a869ba83dfc87a3f4d29625d84231d804">dimStiffness</a>() const</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#aa8050ca9492c78eb14d0ab1750b90421">dimWeight</a>(const Eigen::VectorXd &amp;dimW) override</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a501a30432b64fcb91f8cd5eeb1881d39">dimWeight</a>() const override</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#a49b467df085bf4289a5c90276be9e9d9">displaySamples</a>(unsigned s)</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#ab6c7b78884488afa4df3bc6e7db18353">displaySamples</a>() const</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#a47c76bbfd6ed1275bfada4c8b238af4d">duration_</a></td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02803.html#a5d90bfa419602be569c6098e822cdb0d">ensureHasJoints</a>(const mc_rbdyn::Robot &amp;robot, const std::vector&lt; std::string &gt; &amp;joints, const std::string &amp;prefix)</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a89a472bd695ceec1bbbe1b932ec014fa">errorT</a></td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a46526962a3e24819c84aa77182abdb7f">eval</a>() const override</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#ae456950d2eafdbc888d0a92b0d87f66a">evalTracking</a>() const</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02767.html#ad27477a0f30c373765213f5e8288963e">ExactCubicTrajectoryTask</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, const std::string &amp;surfaceName, double duration, double stiffness, double weight, const sva::PTransformd &amp;target, const std::vector&lt; std::pair&lt; double, Eigen::Vector3d &gt;&gt; &amp;posWp={}, const Eigen::Vector3d &amp;init_vel=Eigen::Vector3d::Zero(), const Eigen::Vector3d &amp;init_acc=Eigen::Vector3d::Zero(), const Eigen::Vector3d &amp;end_vel=Eigen::Vector3d::Zero(), const Eigen::Vector3d &amp;end_acc=Eigen::Vector3d::Zero(), const std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt;&gt; &amp;oriWp={})</td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a57652be181ca173ac4a7fa8e8fa33509">finalize</a>(Args &amp;&amp;... args)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02767.html#a7468619f2b047add1ee8a018daafb4f5">initialPose_</a></td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#ab58684bba10bad5cbcbe7414e04fb6f1">inSolver_</a></td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a446992512e198c8292d758d5ec6c044b">jac</a>() const</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a8de1586c9761e5f14d1d66c7e6a09fbf">load</a>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config) override</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02803.html#aa98468771424ad14d60915a6b52e927b">name</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02803.html#a94831a7f067fdd5b05e03e83bfc4166b">name</a>() const</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02803.html#a6e55f0bff9a3d49ba0b92e0a4dff9a6f">name_</a></td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a1cbf0f303b3ece9dc97cfe33cef66045">normalAcc</a>() const</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a99908fd6b6923222cd523025bd2e1c23">oriSpline_</a></td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#ae50ea72643de837337187120c989c42b">oriWaypoints</a>(const std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt;&gt; &amp;oriWp)</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a8bc85c80baae71fc2dcc41a577edb1d1">oriWp_</a></td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#aea7ce56cb05ec2f4fa98d4980e9cd356">pause</a>(bool paused)</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a5f8841fa4606b3b4629f1e91933aaca8">pause</a>() const</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#af5a5ee124caa955429dbe83416c8b8d3">paused_</a></td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02767.html#ad8ed139887005e36a8ae46295ebecf60">posWaypoints</a>(const std::vector&lt; std::pair&lt; double, Eigen::Vector3d &gt;&gt; &amp;posWp)</td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a161a905db0c9a784de4e11ff07d5b064">refAccel</a>(const Eigen::VectorXd &amp;accel)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a834542365fd040ef9b29142329d9b573">refAccel</a>() const</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a597121365d28a8e2ff4f8c550a5ac81c">refAccel_</a></td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a6d3a61eea75bf5fa5125564e9d5752e2">refPose</a>(const sva::PTransformd &amp;pose)</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#a3b6ce55a9a60ddf211b8221be9507603">refPose</a>() const</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a4f8873db735f6c3cbb37761999059cdc">refVel</a>(const Eigen::VectorXd &amp;vel)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a2f59cefb29eab9e55ceb6295e105de1b">refVel</a>() const</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a9ceb455c41f015c22deaec76b8bd928e">refVel_</a></td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02803.html#a44d85f3f65abc8a5f8965efec40ebe7d">removeFromGUI</a>(mc_rtc::gui::StateBuilder &amp;)</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02803.html#a780d496b8148d863b2aa0462abcba525">removeFromGUI</a>(MetaTask &amp;t, mc_rtc::gui::StateBuilder &amp;gui)</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#a415719c2bcc08727bbaa09b5c3172188">removeFromLogger</a>(mc_rtc::Logger &amp;logger) override</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02803.html#a256b3b8d5c00bc81ef7726f536f79bfb">mc_tasks::MetaTask::removeFromLogger</a>(MetaTask &amp;t, mc_rtc::Logger &amp;logger)</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02803.html#af374c0658624a4cb7a6a9f900ab9f69a">mc_tasks::MetaTask::removeFromSolver</a>(MetaTask &amp;t, mc_solver::QPSolver &amp;solver)</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a400018484b0f1d1799e02a1af09b8167">reset</a>() override</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a28bd17d1de6e94cc16c84ec4057f763f">resetJointsSelector</a>()</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a3db0df307cb2a7d9aeb8d8b4afc1c138">resetJointsSelector</a>(mc_solver::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a3c68bc924e1df10c374363d0aaaa15ca">rIndex</a></td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#ab5848b8fafba3f0791e5286718cce390">rIndex_</a></td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a77260d6774cb69d24d22e53890e7fa16">robots</a></td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a55ddc08175e2c18024ba3aba28c9caa7">samples_</a></td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a568cbb2dd1a32fa24a3d257dbc7f7ab7">selectActiveJoints</a>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a401e0e9e9dc4acade920f05779540078">selectActiveJoints</a>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a17f76beb2ace280540b5687701343fa8">selectUnactiveJoints</a>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#aad2277ab64458789c4b2e278cf7ff6c7">selectUnactiveJoints</a>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a418d47e753fc31eb16454bd4e3d8fd2d">setGains</a>(double stiffness, double damping)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a67e5b618af03d13ba68512d2e0b9bc0e">setGains</a>(const Eigen::VectorXd &amp;stiffness, const Eigen::VectorXd &amp;damping)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#aee6254ed615e98f3b2d96a76fac08166">speed</a>() const override</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02767.html#a9e72a177388b55ed2773d1906bd28f9e">spline</a>() const</td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02767.html#a1aa0b41fae9369d28c6d1b7240a5df6f">spline</a>()</td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a649052a5fbf326990d2b3d20ec66ab19">SplineTrajectoryBase</a> typedef</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#a24faf75e67bb09033e53d780455257f2">SplineTrajectoryTask</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, const std::string &amp;surfaceName, double duration, double stiffness, double weight, const Eigen::Matrix3d &amp;target, const std::vector&lt; std::pair&lt; double, Eigen::Matrix3d &gt;&gt; &amp;oriWp={})</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02767.html#a9bf87cb2f5679ce3181d696adad0a9d6">SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">friend</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a38374ba4bc699b91a3f49cbc9bcf2f11">stiffness</a>(double stiffness)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#ae901348ef6b40b04af30f6796714b4ff">stiffness</a>(const Eigen::VectorXd &amp;stiffness)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#abb15c105235008d7c43b813f581c1c92">stiffness</a>() const</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#abc56ce5c0be70edcccba265b5a94284c">surfaceName_</a></td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02767.html#ad67859df04ed0798685ebac9fbe56f95">target</a>(const Eigen::Vector3d &amp;target)</td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02767.html#a75a88ee3535fe98bd5206d8c4a7a4f54">target</a>() const</td><td class="entry"><a class="el" href="a02767.html">mc_tasks::ExactCubicTrajectoryTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#a2f94ae2cfc7521582ffd1b5720bda580">SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;::target</a>(const sva::PTransformd &amp;target)</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a0f4207fc91c4eedd0617759dd4c92ab8">timeElapsed</a>() const</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02839.html#a2efc437fba8274cbbdc46fce7f9e6856">timeStep_</a></td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#a477fb8de593f7ccaaea505e9e11229f7">TrajectoryBase</a> typedef</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a779f644750cc4acd6692681dd255ea06">trajectoryT_</a></td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a8a14f83ca09f800540bae6ce5b29c376">TrajectoryTask</a> typedef</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a3b341ee69d33864500eb7e0f68ffe599">TrajectoryTaskGeneric</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness, double weight)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02803.html#ac090b29eae1954585e32572d40731ca1">type</a>() const</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02803.html#addf8dbe10befa2b37c8e7ea386561775">type_</a></td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02839.html#a6b58c786b84e0d4f82f6e434589c0e80">update</a>(mc_solver::QPSolver &amp;) override</td><td class="entry"><a class="el" href="a02839.html">mc_tasks::SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02803.html#a570ef153c01abad5d5642b7a16f44d79">mc_tasks::MetaTask::update</a>(MetaTask &amp;t, mc_solver::QPSolver &amp;solver)</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02847.html#ae4bc16bb954fcdc7c75870b594eb2548">weight</a>(double w)</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#addeac3a07caaeef74f6f62c7509767c9">weight</a>() const</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02803.html#aea3e513dfe137830b38272336451b8cc">~MetaTask</a>()</td><td class="entry"><a class="el" href="a02803.html">mc_tasks::MetaTask</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02847.html#a723271227584b9a8af649ce887d9c947">~TrajectoryTaskGeneric</a>()</td><td class="entry"><a class="el" href="a02847.html">mc_tasks::TrajectoryTaskGeneric&lt; tasks::qp::TransformTask &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-</table></div><!-- contents -->
+<p>ZMP Compensation Control (<a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>)  
+ <a href="a02764.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_tasks/lipm_stabilizer/ZMPCC.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a1949eb437a14ae9ceb04a1ed238fa998"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a1949eb437a14ae9ceb04a1ed238fa998">ZMPCCConfiguration</a> = <a class="el" href="a02080.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a></td></tr>
+<tr class="separator:a1949eb437a14ae9ceb04a1ed238fa998"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a337c9b157af0808f644a5ca5a212540b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a337c9b157af0808f644a5ca5a212540b">reset</a> ()</td></tr>
+<tr class="memdesc:a337c9b157af0808f644a5ca5a212540b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets everything to zero.  <a href="#a337c9b157af0808f644a5ca5a212540b">More...</a><br /></td></tr>
+<tr class="separator:a337c9b157af0808f644a5ca5a212540b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdb0bbf4b891e1b1f980b49094d65f3d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#acdb0bbf4b891e1b1f980b49094d65f3d">enabled</a> (bool state)</td></tr>
+<tr class="memdesc:acdb0bbf4b891e1b1f980b49094d65f3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>.  <a href="#acdb0bbf4b891e1b1f980b49094d65f3d">More...</a><br /></td></tr>
+<tr class="separator:acdb0bbf4b891e1b1f980b49094d65f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93c9cac97f5aed86b1188a82e9e250dc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a93c9cac97f5aed86b1188a82e9e250dc">enabled</a> () const</td></tr>
+<tr class="memdesc:a93c9cac97f5aed86b1188a82e9e250dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> compensation is enabled.  <a href="#a93c9cac97f5aed86b1188a82e9e250dc">More...</a><br /></td></tr>
+<tr class="separator:a93c9cac97f5aed86b1188a82e9e250dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63c6fb35d5efd1595a1ead7be388c0df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a63c6fb35d5efd1595a1ead7be388c0df">configure</a> (<a class="el" href="a02764.html#a1949eb437a14ae9ceb04a1ed238fa998">ZMPCCConfiguration</a> &amp;<a class="el" href="a02764.html#a281bb3e9109c0c16fdbaf7911ed98ec5">config</a>)</td></tr>
+<tr class="memdesc:a63c6fb35d5efd1595a1ead7be388c0df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> parameters.  <a href="#a63c6fb35d5efd1595a1ead7be388c0df">More...</a><br /></td></tr>
+<tr class="separator:a63c6fb35d5efd1595a1ead7be388c0df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a281bb3e9109c0c16fdbaf7911ed98ec5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02764.html#a1949eb437a14ae9ceb04a1ed238fa998">ZMPCCConfiguration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a281bb3e9109c0c16fdbaf7911ed98ec5">config</a> () const</td></tr>
+<tr class="memdesc:a281bb3e9109c0c16fdbaf7911ed98ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> configuration.  <a href="#a281bb3e9109c0c16fdbaf7911ed98ec5">More...</a><br /></td></tr>
+<tr class="separator:a281bb3e9109c0c16fdbaf7911ed98ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a616fc85f14d61c0e6294489bad2e8e0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a616fc85f14d61c0e6294489bad2e8e0a">update</a> (const Eigen::Vector3d &amp;distribZMP, const Eigen::Vector3d &amp;measuredZMP, const sva::PTransformd &amp;zmpFrame, double dt)</td></tr>
+<tr class="memdesc:a616fc85f14d61c0e6294489bad2e8e0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute CoM offset due to <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> compensation.  <a href="#a616fc85f14d61c0e6294489bad2e8e0a">More...</a><br /></td></tr>
+<tr class="separator:a616fc85f14d61c0e6294489bad2e8e0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aada037584c879e69d66e658653912815"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#aada037584c879e69d66e658653912815">apply</a> (Eigen::Vector3d &amp;com, Eigen::Vector3d &amp;comd, Eigen::Vector3d &amp;comdd)</td></tr>
+<tr class="memdesc:aada037584c879e69d66e658653912815"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> in-place to the com.  <a href="#aada037584c879e69d66e658653912815">More...</a><br /></td></tr>
+<tr class="separator:aada037584c879e69d66e658653912815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6a76ddd8651adac9e8772a9ef2ca396"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#aa6a76ddd8651adac9e8772a9ef2ca396">addToGUI</a> (<a class="el" href="a02416.html">mc_rtc::gui::StateBuilder</a> &amp;gui, const std::vector&lt; std::string &gt; &amp;category)</td></tr>
+<tr class="separator:aa6a76ddd8651adac9e8772a9ef2ca396"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf1a26be8c1a383107550957a6d40b13"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#adf1a26be8c1a383107550957a6d40b13">removeFromGUI</a> (<a class="el" href="a02416.html">mc_rtc::gui::StateBuilder</a> &amp;gui, const std::vector&lt; std::string &gt; &amp;category)</td></tr>
+<tr class="separator:adf1a26be8c1a383107550957a6d40b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35c033fbff0a99c72d70751d62f2a0b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a35c033fbff0a99c72d70751d62f2a0b0">addToLogger</a> (<a class="el" href="a02508.html">mc_rtc::Logger</a> &amp;logger, const std::string &amp;name)</td></tr>
+<tr class="separator:a35c033fbff0a99c72d70751d62f2a0b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d4e0e9eaf138dfaa82dfea9c08495e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a9d4e0e9eaf138dfaa82dfea9c08495e4">removeFromLogger</a> (<a class="el" href="a02508.html">mc_rtc::Logger</a> &amp;logger, const std::string &amp;name)</td></tr>
+<tr class="separator:a9d4e0e9eaf138dfaa82dfea9c08495e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a22b7b347161460c0ac0ac763fea70afe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02764.html#a1949eb437a14ae9ceb04a1ed238fa998">ZMPCCConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a22b7b347161460c0ac0ac763fea70afe">config_</a></td></tr>
+<tr class="memdesc:a22b7b347161460c0ac0ac763fea70afe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration of <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> gains and parameters.  <a href="#a22b7b347161460c0ac0ac763fea70afe">More...</a><br /></td></tr>
+<tr class="separator:a22b7b347161460c0ac0ac763fea70afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9860625ea9c4d86a42378e66afc72699"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a9860625ea9c4d86a42378e66afc72699">comAccel_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="memdesc:a9860625ea9c4d86a42378e66afc72699"><td class="mdescLeft">&#160;</td><td class="mdescRight">Additional CoM acceleration from <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>.  <a href="#a9860625ea9c4d86a42378e66afc72699">More...</a><br /></td></tr>
+<tr class="separator:a9860625ea9c4d86a42378e66afc72699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2da2e9aad02100150a009ff6b411b765"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a2da2e9aad02100150a009ff6b411b765">comOffset_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="memdesc:a2da2e9aad02100150a009ff6b411b765"><td class="mdescLeft">&#160;</td><td class="mdescRight">Additional CoM position offset from <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>.  <a href="#a2da2e9aad02100150a009ff6b411b765">More...</a><br /></td></tr>
+<tr class="separator:a2da2e9aad02100150a009ff6b411b765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2395abc9208874ea125454fce9e6981b"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a2395abc9208874ea125454fce9e6981b">comVel_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="memdesc:a2395abc9208874ea125454fce9e6981b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Additional CoM velocity from <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>.  <a href="#a2395abc9208874ea125454fce9e6981b">More...</a><br /></td></tr>
+<tr class="separator:a2395abc9208874ea125454fce9e6981b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7d8d84e9eabf8762d42feae2ce8457d"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#af7d8d84e9eabf8762d42feae2ce8457d">error_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="memdesc:af7d8d84e9eabf8762d42feae2ce8457d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error between distributed and measured ZMP.  <a href="#af7d8d84e9eabf8762d42feae2ce8457d">More...</a><br /></td></tr>
+<tr class="separator:af7d8d84e9eabf8762d42feae2ce8457d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb470a80e8c6b811cbe485350f83d15b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01956.html">mc_filter::LeakyIntegrator</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#aeb470a80e8c6b811cbe485350f83d15b">integrator_</a></td></tr>
+<tr class="memdesc:aeb470a80e8c6b811cbe485350f83d15b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Leaky integrator for the CoM offset added by <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>.  <a href="#aeb470a80e8c6b811cbe485350f83d15b">More...</a><br /></td></tr>
+<tr class="separator:aeb470a80e8c6b811cbe485350f83d15b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29b2c8d74fda4601ddc13b86b6466b7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02764.html#a29b2c8d74fda4601ddc13b86b6466b7f">enabled_</a> = true</td></tr>
+<tr class="separator:a29b2c8d74fda4601ddc13b86b6466b7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>ZMP Compensation Control (<a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>) </p>
+<p>CoM admittance based on ZMP Compensation Control. This approach is based on Section 6.2.2 of Dr Nagasaka's PhD thesis "体幹位置コンプライアンス制御によるモデル誤差吸収" (1999) from <a href="https://sites.google.com/site/humanoidchannel/home/publication">https://sites.google.com/site/humanoidchannel/home/publication</a>. </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a1949eb437a14ae9ceb04a1ed238fa998"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1949eb437a14ae9ceb04a1ed238fa998">&#9670;&nbsp;</a></span>ZMPCCConfiguration</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a02764.html#a1949eb437a14ae9ceb04a1ed238fa998">mc_tasks::lipm_stabilizer::ZMPCC::ZMPCCConfiguration</a> =  <a class="el" href="a02080.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa6a76ddd8651adac9e8772a9ef2ca396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6a76ddd8651adac9e8772a9ef2ca396">&#9670;&nbsp;</a></span>addToGUI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::ZMPCC::addToGUI </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02416.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
+          <td class="paramname"><em>gui</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>category</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a35c033fbff0a99c72d70751d62f2a0b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35c033fbff0a99c72d70751d62f2a0b0">&#9670;&nbsp;</a></span>addToLogger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::ZMPCC::addToLogger </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02508.html">mc_rtc::Logger</a> &amp;&#160;</td>
+          <td class="paramname"><em>logger</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aada037584c879e69d66e658653912815"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aada037584c879e69d66e658653912815">&#9670;&nbsp;</a></span>apply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::ZMPCC::apply </td>
+          <td>(</td>
+          <td class="paramtype">Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>com</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>comd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>comdd</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Apply <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> in-place to the com. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">com</td><td>Desired CoM position </td></tr>
+    <tr><td class="paramname">comd</td><td>Desired CoM velocity </td></tr>
+    <tr><td class="paramname">comdd</td><td>Desired CoM acceleration </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a281bb3e9109c0c16fdbaf7911ed98ec5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a281bb3e9109c0c16fdbaf7911ed98ec5">&#9670;&nbsp;</a></span>config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a02764.html#a1949eb437a14ae9ceb04a1ed238fa998">ZMPCCConfiguration</a>&amp; mc_tasks::lipm_stabilizer::ZMPCC::config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> configuration. </p>
+
+</div>
+</div>
+<a id="a63c6fb35d5efd1595a1ead7be388c0df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63c6fb35d5efd1595a1ead7be388c0df">&#9670;&nbsp;</a></span>configure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::ZMPCC::configure </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02764.html#a1949eb437a14ae9ceb04a1ed238fa998">ZMPCCConfiguration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Configures <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> parameters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td><a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> parameters</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>this configuration may be modified interactively by the GUI elements </dd></dl>
+
+<p class="reference">References <a class="el" href="a00723.html#ac413b7125d296374adc252995e63570d">mc_filter::utils::clampInPlaceAndWarn()</a>, and <a class="el" href="a02080.html#a1d42904ddf94ae3ac2660f01dd5e8ed9">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration::maxCoMOffset</a>.</p>
+
+</div>
+</div>
+<a id="acdb0bbf4b891e1b1f980b49094d65f3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdb0bbf4b891e1b1f980b49094d65f3d">&#9670;&nbsp;</a></span>enabled() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::ZMPCC::enabled </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable/Disable <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">state</td><td>Whether zmpcc is enabled<ul>
+<li>true: compute <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> compensation</li>
+<li>false: <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> compensation gains are set to zero, and the integrator gradually leaks to zero </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a93c9cac97f5aed86b1188a82e9e250dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93c9cac97f5aed86b1188a82e9e250dc">&#9670;&nbsp;</a></span>enabled() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_tasks::lipm_stabilizer::ZMPCC::enabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns whether <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> compensation is enabled. </p>
+
+</div>
+</div>
+<a id="adf1a26be8c1a383107550957a6d40b13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf1a26be8c1a383107550957a6d40b13">&#9670;&nbsp;</a></span>removeFromGUI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::ZMPCC::removeFromGUI </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02416.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
+          <td class="paramname"><em>gui</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>category</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9d4e0e9eaf138dfaa82dfea9c08495e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d4e0e9eaf138dfaa82dfea9c08495e4">&#9670;&nbsp;</a></span>removeFromLogger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::ZMPCC::removeFromLogger </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02508.html">mc_rtc::Logger</a> &amp;&#160;</td>
+          <td class="paramname"><em>logger</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a337c9b157af0808f644a5ca5a212540b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a337c9b157af0808f644a5ca5a212540b">&#9670;&nbsp;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::ZMPCC::reset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resets everything to zero. </p>
+
+</div>
+</div>
+<a id="a616fc85f14d61c0e6294489bad2e8e0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a616fc85f14d61c0e6294489bad2e8e0a">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::ZMPCC::update </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>distribZMP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>measuredZMP</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
+          <td class="paramname"><em>zmpFrame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute CoM offset due to <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> compensation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">distribZMP</td><td>Distributed ZMP target </td></tr>
+    <tr><td class="paramname">measuredZMP</td><td>Measured ZMP </td></tr>
+    <tr><td class="paramname">zmpFrame</td><td>Frame in which the ZMP is computed </td></tr>
+    <tr><td class="paramname">dt</td><td>Control timestep </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a9860625ea9c4d86a42378e66afc72699"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9860625ea9c4d86a42378e66afc72699">&#9670;&nbsp;</a></span>comAccel_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::ZMPCC::comAccel_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Additional CoM acceleration from <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>. </p>
+
+</div>
+</div>
+<a id="a2da2e9aad02100150a009ff6b411b765"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2da2e9aad02100150a009ff6b411b765">&#9670;&nbsp;</a></span>comOffset_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::ZMPCC::comOffset_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Additional CoM position offset from <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>. </p>
+
+</div>
+</div>
+<a id="a2395abc9208874ea125454fce9e6981b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2395abc9208874ea125454fce9e6981b">&#9670;&nbsp;</a></span>comVel_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::ZMPCC::comVel_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Additional CoM velocity from <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>. </p>
+
+</div>
+</div>
+<a id="a22b7b347161460c0ac0ac763fea70afe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22b7b347161460c0ac0ac763fea70afe">&#9670;&nbsp;</a></span>config_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02764.html#a1949eb437a14ae9ceb04a1ed238fa998">ZMPCCConfiguration</a> mc_tasks::lipm_stabilizer::ZMPCC::config_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Configuration of <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a> gains and parameters. </p>
+
+</div>
+</div>
+<a id="a29b2c8d74fda4601ddc13b86b6466b7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29b2c8d74fda4601ddc13b86b6466b7f">&#9670;&nbsp;</a></span>enabled_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_tasks::lipm_stabilizer::ZMPCC::enabled_ = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af7d8d84e9eabf8762d42feae2ce8457d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7d8d84e9eabf8762d42feae2ce8457d">&#9670;&nbsp;</a></span>error_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::ZMPCC::error_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Error between distributed and measured ZMP. </p>
+
+</div>
+</div>
+<a id="aeb470a80e8c6b811cbe485350f83d15b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb470a80e8c6b811cbe485350f83d15b">&#9670;&nbsp;</a></span>integrator_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01956.html">mc_filter::LeakyIntegrator</a>&lt;Eigen::Vector3d&gt; mc_tasks::lipm_stabilizer::ZMPCC::integrator_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Leaky integrator for the CoM offset added by <a class="el" href="a02764.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue May 19 2020 15:59:19 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00719.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00720.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a02764.html">ZMPCC</a></li>
+    <li class="footer">Generated on Thu May 28 2020 04:07:30 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

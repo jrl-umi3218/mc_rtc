@@ -344,7 +344,7 @@
   <li>
     <p><strong>Inheritance</strong> is also supported, but you need to explicitly provide the type of your object’s parent classes to be able to retrieve them later. Here is a very simple example showing how to store and use objects using inheritance and polymorphic member functions.</p>
 
-    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">A</span>
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">A</span>
 <span class="p">{</span>
   <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">hello</span><span class="p">()</span> <span class="k">const</span>
   <span class="p">{</span>
@@ -356,7 +356,7 @@
   <span class="p">}</span>
 <span class="p">};</span>
 
-<span class="k">struct</span> <span class="n">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
+<span class="k">struct</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
 <span class="p">{</span>
   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">hello</span><span class="p">()</span> <span class="k">const</span> <span class="k">override</span>
   <span class="p">{</span>

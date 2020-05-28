@@ -27,7 +27,6 @@ var searchData=
   ['smallvector3t_2eh',['SmallVector3T.h',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00044.html',1,'']]],
   ['smallvector4t_2eh',['SmallVector4T.h',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00047.html',1,'']]],
   ['smoothtask_2eh',['SmoothTask.h',['../a00491.html',1,'']]],
-  ['spacevecalg',['SpaceVecAlg',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00059.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00059.html',1,'(Global Namespace)']]],
   ['spline_2eh',['Spline.h',['../a00515.html',1,'']]],
   ['spline_5futils_2eh',['spline_utils.h',['../a00518.html',1,'']]],
   ['splinetrajectorytask_2eh',['SplineTrajectoryTask.h',['../a00494.html',1,'']]],

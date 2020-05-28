@@ -13561,7 +13561,7 @@ position: [0.0, 0.0, 0.0]</pre>
   <div class="card-header">
     <h6 class="text-primary font-weight-bold">mc_tasks::LookAtSurfaceTask</h6>
     <div class="float-right">
-      <small class="text-muted text-right"></small>
+      <small class="text-muted text-right">Aligns a unit vector expressed in body coordinates with a target unit vector from the body to a surface.<br/>Example: Align a camera's viewing direction with a surface on a desired object to look at it.</small>
     </div>
   </div>
   <div class="card-body">
@@ -13719,13 +13719,16 @@ position: [0.0, 0.0, 0.0]</pre>
   
   <td><strong>bodyVector</strong></td>
   
-  <td colspan="2">
+  <td>
     
   <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_LookAtSurfaceTask_PROP_bodyVector" aria-expanded="false" aria-controls="collapseMetaTask_LookAtSurfaceTask_PROP_bodyVector">Eigen::Vector3d</a>
   
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Unit vector in body frame representing the direction that will be aligned with the target vector (unit vector from body to surface)</small></span>
   </td>
   
 </tr>
@@ -13781,19 +13784,24 @@ position: [0.0, 0.0, 0.0]</pre>
   
   
   
-  <td><strong>surfaceRobotIndex</strong></td>
+  <td>surfaceRobot</td>
   
-  <td colspan="2">
+  <td>
     
   
   
     
-      <span class="text-number">number &ge; 0</span>
+      <span class="text-string">string</span>
     
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
     
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the robot to which the desired surface is attached</small></span>
   </td>
   
 </tr>
@@ -13814,7 +13822,7 @@ position: [0.0, 0.0, 0.0]</pre>
   
   <td><strong>surface</strong></td>
   
-  <td colspan="2">
+  <td>
     
   
   
@@ -13825,6 +13833,9 @@ position: [0.0, 0.0, 0.0]</pre>
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Surface to use as target. The target is a unit vector from the controlled body towards this surface.</small></span>
   </td>
   
 </tr>
@@ -14327,7 +14338,7 @@ position: [0.0, 0.0, 0.0]</pre>
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lookAtSurface"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"body"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bodyName"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"bodyVector"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
-  </span><span class="nl">"surfaceRobotIndex"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"surfaceRobot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"targetRobot"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"targetSurfaceName"</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
@@ -14339,7 +14350,7 @@ position: [0.0, 0.0, 0.0]</pre>
   "type": "lookAtSurface",
   "body": "bodyName",
   "bodyVector": [1.0, 0.0, 0.0],
-  "surfaceRobotIndex": 0,
+  "surfaceRobot": "targetRobot",
   "surface": "targetSurfaceName"
 }</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_LookAtSurfaceTask_examplejsonCopySource">Copy to clipboard</button>
@@ -14357,7 +14368,7 @@ position: [0.0, 0.0, 0.0]</pre>
 <figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">lookAtSurface</span>
 <span class="na">body</span><span class="pi">:</span> <span class="s">bodyName</span>
 <span class="na">bodyVector</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
-<span class="na">surfaceRobotIndex</span><span class="pi">:</span> <span class="m">0</span>
+<span class="na">surfaceRobot</span><span class="pi">:</span> <span class="s">targetRobot</span>
 <span class="na">surface</span><span class="pi">:</span> <span class="s">targetSurfaceName</span></code></pre></figure>
 
   </div>
@@ -14367,7 +14378,7 @@ position: [0.0, 0.0, 0.0]</pre>
   <pre id="MetaTask_LookAtSurfaceTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: lookAtSurface
 body: bodyName
 bodyVector: [1.0, 0.0, 0.0]
-surfaceRobotIndex: 0
+surfaceRobot: targetRobot
 surface: targetSurfaceName</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_LookAtSurfaceTask_exampleyamlCopySource">Copy to clipboard</button>
 

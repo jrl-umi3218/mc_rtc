@@ -1,10 +1,21 @@
 var searchData=
 [
-  ['rbinertiad',['RBInertiad',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#ac56f2d381429fa55047d24d79ac9ae82',1,'sva::RBInertiad()'],['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00067.html#ac56f2d381429fa55047d24d79ac9ae82',1,'sva::RBInertiad()']]],
-  ['rbinfo',['rbInfo',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01252.html#a75ccd14f42390a90f4fa913647844840',1,'tasks::RelativeDistTask']]],
-  ['ret_5ftype',['ret_type',['../a02551.html#a38207f8c1014c4e1b2ebb310e3ceb551',1,'mc_rtc::log::callback_is_serializable']]],
-  ['returntypet',['ReturnTypeT',['../a00737.html#a62d70a1c5467de8404eceee15a80da68',1,'mc_rtc::gui::details']]],
-  ['reverse_5fiterator',['reverse_iterator',['../a02179.html#a1869fe884d98ff31d558ae3fea4420db',1,'mc_rbdyn::Robots']]],
-  ['robotmoduleptr',['RobotModulePtr',['../a00721.html#af67e459a90b9a864418fca7d55d959a3',1,'mc_rbdyn']]],
-  ['robotmodulevector',['RobotModuleVector',['../a00721.html#a95605f5cb57b7c5b39027072bedbbc04',1,'mc_rbdyn']]]
+  ['s_5fobjectptr',['S_ObjectPtr',['../a02112.html#a28270fdeec598bc23d8761191a6226d4',1,'mc_rbdyn::Robot']]],
+  ['s_5fobjecttimestamp',['S_ObjectTimeStamp',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#ab167976403857dc3577c4cd022c6c13f',1,'sch']]],
+  ['scalar',['Scalar',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a23db84571b7527634d5e5d5fd69995e6',1,'sch']]],
+  ['sensor',['Sensor',['../a00721.html#a243aca157f29f1aebb2c1210ac166a83',1,'mc_rbdyn']]],
+  ['sensorptr',['SensorPtr',['../a00721.html#aa1e86054c466a23bfdcb3470f71c8aad',1,'mc_rbdyn']]],
+  ['serialize_5ffn',['serialize_fn',['../a02508.html#a6fd0d1237a81647e462f7af2b4225d5e',1,'mc_rtc::Logger']]],
+  ['size_5ftype',['size_type',['../a02152.html#a264d2ce2a02a54afc9ecf14a06f0f268',1,'mc_rbdyn::Robots']]],
+  ['sphereapproxim',['SphereApproxim',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a50488b6de166145f7320dc22de55de99',1,'sch']]],
+  ['spline_5fconstraints_5ft',['spline_constraints_t',['../a02832.html#af3fc53f8154ef0226149e69b9bfd8485',1,'mc_trajectory::ExactCubic']]],
+  ['spline_5fderiv_5fconstraint_5ft',['spline_deriv_constraint_t',['../a02832.html#a1fffcee3002474517dd513904de9ea77',1,'mc_trajectory::ExactCubic']]],
+  ['splinetrajectorybase',['SplineTrajectoryBase',['../a02716.html#a81d5a557b19cceddeb5fe7911db9dceb',1,'mc_tasks::BSplineTrajectoryTask::SplineTrajectoryBase()'],['../a02812.html#a649052a5fbf326990d2b3d20ec66ab19',1,'mc_tasks::SplineTrajectoryTask::SplineTrajectoryBase()']]],
+  ['stateptr',['StatePtr',['../a00717.html#a4c42d903de4c4a1e5ad50c37bc2d547a',1,'mc_control::fsm']]],
+  ['stn_5fvvr',['STN_VVR',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a43b208a34398f097c2c7e5cb780c5da6',1,'sch']]],
+  ['storage_5ft',['storage_t',['../a02600.html#afc58a28dae04a63aa3ed180a654ec223',1,'mc_solver::GenericLoader']]],
+  ['stp_5fcircle',['STP_Circle',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#ae46e0ff886e55423b0e240b172cf46bf',1,'sch']]],
+  ['stp_5fstbvdata',['STP_STBVData',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a386e496f31b5959dc743fcb86b42b513',1,'sch']]],
+  ['stp_5fvvr',['STP_VVR',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#abbeaad29b70f4c43093dcb7daecf9b02',1,'sch']]],
+  ['surfaceptr',['SurfacePtr',['../a00721.html#a848cf0b2e8f6ca6f18ceba1769d9a426',1,'mc_rbdyn']]]
 ];

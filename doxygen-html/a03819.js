@@ -1,9 +1,7 @@
 var a03819 =
 [
-    [ "MC_PLANNING_DLLAPI", "a03819.html#a3adede9987330f98fe6a52abdfb955f5", null ],
-    [ "MC_PLANNING_DLLEXPORT", "a03819.html#a6a868413b6c5bddd02aeef2f6a0ef5c8", null ],
-    [ "MC_PLANNING_DLLIMPORT", "a03819.html#a7ef3aedb0867986ac977b43fdd7cf21f", null ],
-    [ "MC_PLANNING_DLLLOCAL", "a03819.html#aff1ad001b6bf5fdb9fb19cd51c97a75e", null ],
-    [ "MC_PLANNING_LOCAL", "a03819.html#a73898c9a3a9215937de16e50d4e504a3", null ],
-    [ "MC_PLANNING_VERSION", "a03819.html#aca946837554c98dec168efee18c95e5c", null ]
+    [ "QPContactPtr", "a02032.html", "a02032" ],
+    [ "QPContactPtrWPoints", "a02036.html", "a02036" ],
+    [ "Contact", "a02040.html", "a02040" ],
+    [ "computePoints", "a03819.html#a736c36f68b3eff9f08124c8b1a58cba3", null ]
 ];

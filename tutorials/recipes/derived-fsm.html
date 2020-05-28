@@ -293,7 +293,7 @@
 
 <p>A way to simplify the controller access above is to derive the <code class="highlighter-rouge">mc_control::fsm::State</code> class so that your state already access your own controller class. See the following snippet below:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">State</span> <span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">State</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">State</span> <span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">State</span>
 <span class="p">{</span>
   <span class="kt">void</span> <span class="n">start</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">controller</span><span class="p">)</span> <span class="k">final</span>
   <span class="p">{</span>
@@ -318,7 +318,7 @@
 
 <p>You can use this technique to implement the FSM behaviour differently, see the following example:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">State</span> <span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">State</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">State</span> <span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">State</span>
 <span class="p">{</span>
   <span class="kt">void</span> <span class="n">start</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">controller</span><span class="p">)</span> <span class="k">override</span>
   <span class="p">{</span>

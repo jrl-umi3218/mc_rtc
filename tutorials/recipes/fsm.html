@@ -581,7 +581,7 @@
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span>
 <span class="p">{</span>
-  <span class="k">struct</span> <span class="n">MyState</span> <span class="o">:</span> <span class="k">public</span> <span class="n">State</span>
+  <span class="k">struct</span> <span class="nc">MyState</span> <span class="o">:</span> <span class="k">public</span> <span class="n">State</span>
   <span class="p">{</span>
     <span class="kt">void</span> <span class="n">configure</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
 
@@ -624,7 +624,7 @@
 
 <p>The FSM uses a lighter form of the contact structure which has the following definition:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">Contact</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">Contact</span>
 <span class="p">{</span>
   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r1</span><span class="p">;</span>
   <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">r2</span><span class="p">;</span>

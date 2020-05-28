@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['globalpluginptr',['GlobalPluginPtr',['../a00716.html#a077624dc5665df1a3e145d0283e10c78',1,'mc_control']]],
-  ['gripperptr',['GripperPtr',['../a00716.html#a67d3b51822d3e7d0c56d9af675f9eaa1',1,'mc_control']]],
-  ['gripperref',['GripperRef',['../a00716.html#a39b3dee4f4017bab0f389d9bfd7877dc',1,'mc_control']]]
+  ['handle_5fmap_5ft',['handle_map_t',['../a02484.html#a9c2401890571dbbde00eda2fb1e87710',1,'mc_rtc::Loader']]],
+  ['hrepxd',['HrepXd',['../a00720.html#af644950088ef46324f20a7214021a824',1,'mc_tasks::lipm_stabilizer']]]
 ];

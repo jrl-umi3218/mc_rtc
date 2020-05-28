@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ptransform',['PTransform',['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00627.html#afd10841a85903063ea3c0cca84c209cd',1,'sva::ForceVec::PTransform()'],['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00635.html#afd10841a85903063ea3c0cca84c209cd',1,'sva::MotionVec::PTransform()'],['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00627.html#afd10841a85903063ea3c0cca84c209cd',1,'sva::ForceVec::PTransform()'],['https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/a00635.html#afd10841a85903063ea3c0cca84c209cd',1,'sva::MotionVec::PTransform()']]]
+  ['qpsolver',['QPSolver',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01043.html#ab0c5d51bf80dcd62721abff05ce12961',1,'tasks::qp::SolverData']]]
 ];

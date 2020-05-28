@@ -309,11 +309,11 @@ log file is created pointing to the latest created log.</p>
 <p>The Python interface is very similar:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Add a log entry
-</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">()</span><span class="o">.</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
 <span class="c1"># Remove data
-</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">()</span><span class="o">.</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">)</span>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">)</span>
 <span class="c1"># Using partial to invoke a controller method
-</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">()</span><span class="o">.</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">))</span>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"my_entry"</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">get_data</span><span class="p">))</span>
 </code></pre></div></div>
 
 <h4 id="performance-concern">Performance concern</h4>

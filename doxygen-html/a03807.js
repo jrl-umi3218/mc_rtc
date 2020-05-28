@@ -1,9 +1,9 @@
 var a03807 =
 [
-    [ "MC_CONTROL_DLLAPI", "a03807.html#a167861c5d95139886801b242d6d0115f", null ],
-    [ "MC_CONTROL_DLLEXPORT", "a03807.html#a3ab2eb8965ce5e6d787aecf3e46d3be0", null ],
-    [ "MC_CONTROL_DLLIMPORT", "a03807.html#a93d9bb1f3f36bbffb00cf015b0bb0e37", null ],
-    [ "MC_CONTROL_DLLLOCAL", "a03807.html#a5fd14ed2320e3cbe50d19d4ada5b64a7", null ],
-    [ "MC_CONTROL_LOCAL", "a03807.html#aaef3a5c95b86a2ae0592bfafaec89185", null ],
-    [ "MC_CONTROL_VERSION", "a03807.html#a22df2857d14ed04f3b639527d08f7740", null ]
+    [ "MC_TASKS_DLLAPI", "a03807.html#a54b6b62a72f51c6877ce5f6855eae009", null ],
+    [ "MC_TASKS_DLLEXPORT", "a03807.html#a6f58d55d50caa4b695e9ae0db68a84e3", null ],
+    [ "MC_TASKS_DLLIMPORT", "a03807.html#a1ca51f7fba6e50050fa71ee00906116e", null ],
+    [ "MC_TASKS_DLLLOCAL", "a03807.html#a88d2b44a0ab87ccac98cac02f5bc0220", null ],
+    [ "MC_TASKS_LOCAL", "a03807.html#a6fad7ce5639c7536227a82e08f06c0e5", null ],
+    [ "MC_TASKS_VERSION", "a03807.html#a47ff1b35f32c422f53ffee9a1a5d2de4", null ]
 ];

@@ -394,11 +394,11 @@ sub-section can be seen from the parent.</p>
 <span class="c1"># retrieve a bool
 </span><span class="n">b</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
 <span class="c1"># v is an eigen.Vector3d object
-</span><span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"v"</span><span class="p">,</span> <span class="n">eigen</span><span class="o">.</span><span class="n">Vector3d</span><span class="p">)</span>
+</span><span class="n">v</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"v"</span><span class="p">,</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">)</span>
 <span class="c1"># retrieve a bool with a default value of False
 </span><span class="n">b</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"b"</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
 <span class="c1"># retrieve a list of eigen.Vector3d objects
-</span><span class="n">vlist</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"vlist"</span><span class="p">,</span> <span class="p">[</span><span class="n">eigen</span><span class="o">.</span><span class="n">Vector3d</span><span class="p">])</span>
+</span><span class="n">vlist</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"vlist"</span><span class="p">,</span> <span class="p">[</span><span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">])</span>
 <span class="c1"># retrieve a list of float with a default value
 </span><span class="n">flist</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"flist"</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">])</span>
 </code></pre></div></div>
@@ -524,8 +524,8 @@ a C++ only feature for now.</p>
 <p>It works by adding a specialization template in the <code class="highlighter-rouge">mc_rtc</code>
 namespace of the following form:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;&gt;</span>
-<span class="k">struct</span> <span class="n">ConfigurationLoader</span><span class="o">&lt;</span><span class="n">MyType</span><span class="o">&gt;</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="p">&gt;</span>
+<span class="k">struct</span> <span class="nc">ConfigurationLoader</span><span class="o">&lt;</span><span class="n">MyType</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">static</span> <span class="n">MyType</span> <span class="n">load</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">);</span>
 
@@ -541,8 +541,8 @@ All declarations can be found in
 <p>The saving function supports optional arguments so, the
 following is a valid specialization:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;&gt;</span>
-<span class="k">struct</span> <span class="n">ConfigurationLoader</span><span class="o">&lt;</span><span class="n">MyType</span><span class="o">&gt;</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="p">&gt;</span>
+<span class="k">struct</span> <span class="nc">ConfigurationLoader</span><span class="o">&lt;</span><span class="n">MyType</span><span class="o">&gt;</span>
 <span class="p">{</span>
   <span class="k">static</span> <span class="n">MyType</span> <span class="n">load</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">);</span>
 

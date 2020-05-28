@@ -317,10 +317,10 @@
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Import the mc_tasks module
 </span><span class="kn">import</span> <span class="nn">mc_tasks</span>
 <span class="c1"># In the constructor, create the task and add it to the problem
-</span><span class="bp">self</span><span class="o">.</span><span class="n">efTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">.</span><span class="n">EndEffectorTask</span><span class="p">(</span><span class="s">"l_wrist"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">qpsolver</span><span class="o">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">efTask</span><span class="p">)</span>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">efTask</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">EndEffectorTask</span><span class="p">(</span><span class="s">"l_wrist"</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">efTask</span><span class="p">)</span>
 <span class="c1"># In the reset callback, reset the task to the current EF position
-</span><span class="bp">self</span><span class="o">.</span><span class="n">efTask</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></code></pre></figure>
+</span><span class="bp">self</span><span class="p">.</span><span class="n">efTask</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span></code></pre></figure>
 
   </div>
 </div>
@@ -376,9 +376,9 @@
   <div class="card-body">
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Get the current objective
-</span><span class="n">pt</span> <span class="o">=</span> <span class="n">efTask</span><span class="o">.</span><span class="n">get_ef_pose</span><span class="p">()</span>
+</span><span class="n">pt</span> <span class="o">=</span> <span class="n">efTask</span><span class="p">.</span><span class="n">get_ef_pose</span><span class="p">()</span>
 <span class="c1"># Update the rotation and position objective
-</span><span class="n">efTask</span><span class="o">.</span><span class="n">set_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="o">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="o">.</span><span class="n">RotY</span><span class="p">(</span><span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">eigen</span><span class="o">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)))</span></code></pre></figure>
+</span><span class="n">efTask</span><span class="p">.</span><span class="n">set_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">RotY</span><span class="p">(</span><span class="o">-</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)))</span></code></pre></figure>
 
   </div>
 </div>

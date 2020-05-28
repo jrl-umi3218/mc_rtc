@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['robot',['Robot',['../a02179.html#ad03b49f51df2ba1d492ced03d923fdd0',1,'mc_rbdyn::Robots']]],
-  ['robots',['Robots',['../a02139.html#a7ea6242bb22401bac23542e1db3a74ed',1,'mc_rbdyn::Robot']]]
+  ['splinetrajectorytask_3c_20bsplinetrajectorytask_20_3e',['SplineTrajectoryTask&lt; BSplineTrajectoryTask &gt;',['../a02716.html#ac5eeec3b2af2e5d3a329daf981453a2e',1,'mc_tasks::BSplineTrajectoryTask']]],
+  ['splinetrajectorytask_3c_20exactcubictrajectorytask_20_3e',['SplineTrajectoryTask&lt; ExactCubicTrajectoryTask &gt;',['../a02740.html#a9bf87cb2f5679ce3181d696adad0a9d6',1,'mc_tasks::ExactCubicTrajectoryTask']]]
 ];

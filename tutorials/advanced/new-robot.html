@@ -351,10 +351,10 @@
 
 <span class="n">path</span> <span class="o">=</span> <span class="s">"/path/to/description"</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s">"name"</span>
-<span class="n">env</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
 <span class="c1"># object will load the robot with a floating base
-</span><span class="nb">object</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"object"</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></code></pre></figure>
+</span><span class="nb">object</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"object"</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></code></pre></figure>
 
   </div>
 </div>
@@ -483,10 +483,10 @@
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">mc_rbdyn</span>
 
 <span class="n">json_path</span> <span class="o">=</span> <span class="s">"/path/to/file.json"</span>
-<span class="n">rm_json</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">json_path</span><span class="p">)</span>
+<span class="n">rm_json</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">json_path</span><span class="p">)</span>
 
 <span class="n">yaml_path</span> <span class="o">=</span> <span class="s">"/path/to/file.yaml"</span>
-<span class="n">rm_yaml</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="o">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">yaml_path</span><span class="p">)</span></code></pre></figure>
+<span class="n">rm_yaml</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"json"</span><span class="p">,</span> <span class="n">yaml_path</span><span class="p">)</span></code></pre></figure>
 
   </div>
 </div>
@@ -597,7 +597,7 @@
 <span class="cp">#include &lt;mc_rbdyn/RobotModule.h&gt;
 #include &lt;mc_robots/api.h&gt;
 </span>
-<span class="k">struct</span> <span class="n">MC_ROBOTS_DLLAPI</span> <span class="n">MyRobotModule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span>
+<span class="k">struct</span> <span class="nc">MC_ROBOTS_DLLAPI</span> <span class="n">MyRobotModule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModule</span>
 <span class="p">{</span>
 <span class="nl">public:</span>
   <span class="n">MyRobotModule</span><span class="p">(</span><span class="kt">bool</span> <span class="n">fixed</span><span class="p">);</span>
@@ -685,7 +685,7 @@
 </div>
 
 
-<p>See <a href="/mc_rtc/doxygen.html#a02167" target="blank_">mc_rbdyn::RobotModule</a> documentation for all members that can be provided.</p>
+<p>See <a href="/mc_rtc/doxygen.html#a02140" target="blank_">mc_rbdyn::RobotModule</a> documentation for all members that can be provided.</p>
 
 <p></p>
 
