@@ -6,7 +6,10 @@
 
 from PyQt5 import QtCore, QtWidgets
 
-from . import ui
+try:
+  from . import ui
+except ImportError:
+  import ui
 
 from .mc_log_plotcanvas import PlotFigure, PlotCanvasWithToolbar
 from .mc_log_types import LineStyle, PlotType

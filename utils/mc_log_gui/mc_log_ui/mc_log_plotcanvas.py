@@ -31,7 +31,10 @@ from collections import OrderedDict
 from math import asin, atan2
 
 from .mc_log_types import LineStyle, PlotSide, PlotType
-from . import mc_log_ui
+try:
+  from . import mc_log_ui
+except ImportError:
+  import mc_log_ui
 from .mc_log_utils import InitDialogWithOkCancel
 
 import sys
