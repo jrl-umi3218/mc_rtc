@@ -16,7 +16,7 @@ namespace bfs = boost::filesystem;
 
 #ifdef WIN32
 
-#include <Windows.h>
+#  include <Windows.h>
 
 namespace
 {
