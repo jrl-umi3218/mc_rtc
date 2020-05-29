@@ -92,6 +92,7 @@ set(mc_rtc_utils_HDR
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
+target_include_directories(mc_rtc_utils PRIVATE "${PROJECT_BINARY_DIR}/include/mc_rtc")
 target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::filesystem Boost::disable_autolinking yaml-cpp spdlog::spdlog PRIVATE mc_rtc_3rd_party::RapidJSON mpack)
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
   target_link_libraries(mc_rtc_utils PUBLIC atomic)
@@ -109,7 +110,6 @@ set(mc_rtc_loader_HDR
 
 add_library(mc_rtc_loader SHARED ${mc_rtc_loader_SRC} ${mc_rtc_loader_HDR})
 set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
-target_include_directories(mc_rtc_loader PRIVATE "${PROJECT_BINARY_DIR}/include/mc_rtc")
 target_link_libraries(mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking ${LTDL} mc_rtc_utils)
 install_mc_rtc_lib(mc_rtc_loader)
 
