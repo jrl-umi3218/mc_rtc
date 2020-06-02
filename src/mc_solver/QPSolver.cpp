@@ -163,7 +163,11 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
   {
     for(const auto & contact : contacts_)
     {
-      logger_->removeLogEntry("contact_" + contact.r1Surface()->name() + "_" + contact.r2Surface()->name());
+      const std::string & r1 = robots().robot(contact.r1Index()).name();
+      const std::string & r1S = contact.r1Surface()->name();
+      const std::string & r2 = robots().robot(contact.r2Index()).name();
+      const std::string & r2S = contact.r2Surface()->name();
+      logger_->removeLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S);
     }
   }
   contacts_ = contacts;
@@ -171,7 +175,11 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
   {
     for(const auto & contact : contacts_)
     {
-      logger_->addLogEntry("contact_" + contact.r1Surface()->name() + "_" + contact.r2Surface()->name(),
+      const std::string & r1 = robots().robot(contact.r1Index()).name();
+      const std::string & r1S = contact.r1Surface()->name();
+      const std::string & r2 = robots().robot(contact.r2Index()).name();
+      const std::string & r2S = contact.r2Surface()->name();
+      logger_->addLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S,
                            [this, &contact]() { return desiredContactForce(contact); });
     }
   }
