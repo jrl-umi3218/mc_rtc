@@ -9244,6 +9244,13 @@
       <arglist>(std::shared_ptr&lt; mc_rbdyn::RobotModule &gt; rm, double dt, const mc_rtc::Configuration &amp;config)</arglist>
     </member>
     <member kind="function">
+      <type></type>
+      <name>~Controller</name>
+      <anchorfile>a01832.html</anchorfile>
+      <anchor>a18c01ab44c3b2b9ab7025e6999a78e43</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>run</name>
       <anchorfile>a01832.html</anchorfile>

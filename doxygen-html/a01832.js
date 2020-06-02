@@ -1,6 +1,7 @@
 var a01832 =
 [
     [ "Controller", "a01832.html#a5e0523baab1c8ec0905f7715115d41c6", null ],
+    [ "~Controller", "a01832.html#a18c01ab44c3b2b9ab7025e6999a78e43", null ],
     [ "addCollisions", "a01832.html#a93448016e3467364e352d87cdb0dae89", null ],
     [ "addContact", "a01832.html#afc21d62af737dc80c7b62b1fbc9c742e", null ],
     [ "contactConstraint", "a01832.html#afc0ff4e1c1bec2352684291698b467dd", null ],
