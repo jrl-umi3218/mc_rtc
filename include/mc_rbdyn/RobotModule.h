@@ -215,7 +215,7 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** \deprecated{Use rbd::parsers version instead } */
   MC_RTC_DEPRECATED RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFParserResult & res);
 
-  /** Initialize the module from a parser resul
+  /** Initialize the module from a parser result
    *
    * - Initialize mb, mbc and mbg
    * - Initial limits

@@ -177,6 +177,11 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
   executor_.init(*this, config_);
 }
 
+Controller::~Controller()
+{
+  executor_.teardown(*this);
+}
+
 bool Controller::run()
 {
   return run(mc_solver::FeedbackType::None);

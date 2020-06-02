@@ -186,6 +186,20 @@ configure_file("${PROJECT_SOURCE_DIR}/src/mc_control/samples/FSM/etc/FSM.in.conf
 file(GENERATE OUTPUT "${TEST_CONTROLLER_PATH}/etc/FSM.conf" INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf")
 unset(AROBASE)
 
+# Test LIPMStabilizer controller execution
+# Runs open-loop, does not check stability, only that it is runnable
+controller_sample_test_run(LIPMStabilizer "/src" 1000)
+set(AROBASE "@")
+set(LIPMStabilizer_STATES_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/src/mc_control/fsm/states/")
+if(CMAKE_CONFIGURATION_TYPES)
+  set(LIPMStabilizer_STATES_INSTALL_PREFIX "${LIPMStabilizer_STATES_INSTALL_PREFIX}/$<CONFIGURATION>")
+endif()
+set(LIPMStabilizer_STATES_DATA_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}/src/mc_control/fsm/states/data/")
+set(LIPMStabilizer_INIT_STATE "LIPMStabilizer::Standing")
+configure_file("${PROJECT_SOURCE_DIR}/src/mc_control/samples/LIPMStabilizer/etc/LIPMStabilizer.in.yaml" "${CMAKE_CURRENT_BINARY_DIR}/etc/LIPMStabilizer.yaml")
+file(GENERATE OUTPUT "${TEST_CONTROLLER_PATH}/etc/LIPMStabilizer.yaml" INPUT "${CMAKE_CURRENT_BINARY_DIR}/etc/LIPMStabilizer.yaml")
+unset(AROBASE)
+
 set(ENABLED_OBSERVERS "")
 set(RUN_OBSERVERS "")
 set(UPDATE_OBSERVERS "")

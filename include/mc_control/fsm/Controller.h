@@ -88,6 +88,8 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
 
   Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, const mc_rtc::Configuration & config);
 
+  ~Controller() override;
+
   bool run() override;
 
   /** Can be called in derived class to run the FSM with a different feedback strategy

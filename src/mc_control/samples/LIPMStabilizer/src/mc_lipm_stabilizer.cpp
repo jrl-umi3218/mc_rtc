@@ -10,13 +10,3 @@ LIPMStabilizerController::LIPMStabilizerController(mc_rbdyn::RobotModulePtr rm,
 : mc_control::fsm::Controller(rm, dt, config)
 {
 }
-
-bool LIPMStabilizerController::run()
-{
-  return mc_control::fsm::Controller::run();
-}
-
-void LIPMStabilizerController::reset(const mc_control::ControllerResetData & reset_data)
-{
-  mc_control::fsm::Controller::reset(reset_data);
-}
