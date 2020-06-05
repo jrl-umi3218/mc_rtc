@@ -469,7 +469,7 @@ protected:
                      internal::Contact,
                      EnumClassHash,
                      std::equal_to<ContactState>,
-                     Eigen::aligned_allocator<std::pair<ContactState, internal::Contact>>>
+                     Eigen::aligned_allocator<std::pair<const ContactState, internal::Contact>>>
       contacts_;
   std::vector<ContactState> addContacts_; /**< Contacts to add to the QPSolver when the task is inserted */
   std::unordered_map<ContactState, std::shared_ptr<mc_tasks::force::CoPTask>, EnumClassHash> footTasks;
