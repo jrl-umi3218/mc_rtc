@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['phase',['Phase',['../a01896.html#a28b4bbcf2a082a21bdb917678feda880',1,'mc_control::fsm::SlidingFootContactState']]],
-  ['plot',['Plot',['../a00738.html#ae8d436e1212bee55dfdb14d50b0d6be9',1,'mc_rtc::gui::plot']]],
-  ['policy',['Policy',['../a02508.html#a0fefb36635930cf5a9db966442756b9b',1,'mc_rtc::Logger']]]
+  ['update',['Update',['../a01774.html#ace7a5ef240bc42d89053419e8718eba3',1,'mc_observers::BodySensorObserver::Update()'],['../a01778.html#ab23dff7bf325e5a4a3fcf84d13fa62b2',1,'mc_observers::EncoderObserver::Update()']]]
 ];

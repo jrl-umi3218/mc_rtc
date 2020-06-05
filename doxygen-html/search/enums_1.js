@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['cd_5fsimplextype',['CD_SimplexType',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a930a706e3c80e6ede6f68e34809da11b',1,'sch']]],
-  ['contacttype',['ContactType',['../a02576.html#aa1038fc325c517503d2f68a3feec1c30',1,'mc_solver::ContactConstraint']]]
+  ['elements',['Elements',['../a00736.html#a32d283e5c35e7fd7dcddbc0199bfdc06',1,'mc_rtc::gui']]],
+  ['elementsstacking',['ElementsStacking',['../a00736.html#a649ddcaedb769dede3922fa845e71ca4',1,'mc_rtc::gui']]]
 ];

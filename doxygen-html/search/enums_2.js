@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['elements',['Elements',['../a00736.html#a32d283e5c35e7fd7dcddbc0199bfdc06',1,'mc_rtc::gui']]],
-  ['elementsstacking',['ElementsStacking',['../a00736.html#a649ddcaedb769dede3922fa845e71ca4',1,'mc_rtc::gui']]]
+  ['linestyle',['LineStyle',['../a00736.html#a23166295a3983f35cb0fa510b4c156c9',1,'mc_rtc::gui']]],
+  ['logtype',['LogType',['../a00741.html#ae623e7dc6e6722fd48752713664b3549',1,'mc_rtc::log']]]
 ];

@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['qld_2eh',['QLD.h',['/usr/local/share/doc/eigen-qld/doxygen-html/a00014.html',1,'']]],
-  ['qlddirect_2eh',['QLDDirect.h',['/usr/local/share/doc/eigen-qld/doxygen-html/a00017.html',1,'']]],
   ['qldqpsolver_2eh',['QLDQPSolver.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00029.html',1,'']]],
   ['qpconstr_2eh',['QPConstr.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00038.html',1,'']]],
   ['qpcontactconstr_2eh',['QPContactConstr.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00041.html',1,'']]],
@@ -11,6 +9,5 @@ var searchData=
   ['qpsolver_2eh',['QPSolver.h',['../a00410.html',1,'(Global Namespace)'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00050.html',1,'(Global Namespace)']]],
   ['qpsolverdata_2eh',['QPSolverData.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00053.html',1,'']]],
   ['qptasks_2eh',['QPTasks.h',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00056.html',1,'']]],
-  ['quadprog_2eh',['QuadProg.h',['/usr/local/share/doc/eigen-quadprog/doxygen-html/a00011.html',1,'']]],
-  ['quaterniont_2eh',['QuaternionT.h',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00032.html',1,'']]]
+  ['quadprog_2eh',['QuadProg.h',['/usr/local/share/doc/eigen-quadprog/doxygen-html/a00011.html',1,'']]]
 ];

@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['value_5ftype',['value_type',['../a02152.html#a857c321c4be0d8fa2443e4a8c2afaa27',1,'mc_rbdyn::Robots']]],
-  ['vector',['Vector',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00798.html#afdfb94c0efeea9d9ccbf98a9cc146def',1,'CD_Matrix::Vector3T::Vector()'],['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00798.html#afdfb94c0efeea9d9ccbf98a9cc146def',1,'Vector3T&lt; Scalar, false &gt;::Vector()']]],
-  ['vector3',['Vector3',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a26a421e6cdc08aedcfc5b9c68277f657',1,'sch']]],
-  ['vector3normoptimized',['Vector3NormOptimized',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a49d67c4c14d4386acdf2f084e68d4700',1,'sch']]],
-  ['vector4',['Vector4',['https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/a00148.html#a4054ebd9c67e205f14399d288090905b',1,'sch']]]
+  ['w_5fget_5ffn',['w_get_fn',['../a02614.html#a5a0447137eacf8f3c534ecc568b5aec1',1,'mc_tasks::SmoothTask']]],
+  ['w_5fset_5ffn',['w_set_fn',['../a02614.html#ad0b3cad2b0a949faddd0259779446d7f',1,'mc_tasks::SmoothTask']]],
+  ['waypoint_5ft',['waypoint_t',['../a02638.html#a5e665c15b2b296658f1ec80caf0499e0',1,'mc_trajectory::ExactCubic::waypoint_t()'],['../a02642.html#acbce3f9de05b28314ad0f61bb753d940',1,'mc_trajectory::InterpolatedRotation::waypoint_t()']]],
+  ['waypoints_5ft',['waypoints_t',['../a02518.html#a669d5fdec2578c135db701bba1727403',1,'mc_tasks::BSplineTrajectoryTask::waypoints_t()'],['../a02634.html#ada383daeac50ae7ac8b720c6096289f5',1,'mc_trajectory::BSpline::waypoints_t()']]]
 ];
