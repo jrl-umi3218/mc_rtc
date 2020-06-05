@@ -25963,10 +25963,10 @@
       <arglist>(mc_solver::QPSolver &amp;solver)</arglist>
     </member>
     <member kind="variable" protection="protected">
-      <type>std::unordered_map&lt; ContactState, internal::Contact, EnumClassHash, std::equal_to&lt; ContactState &gt;, Eigen::aligned_allocator&lt; std::pair&lt; ContactState, internal::Contact &gt; &gt; &gt;</type>
+      <type>std::unordered_map&lt; ContactState, internal::Contact, EnumClassHash, std::equal_to&lt; ContactState &gt;, Eigen::aligned_allocator&lt; std::pair&lt; const ContactState, internal::Contact &gt; &gt; &gt;</type>
       <name>contacts_</name>
       <anchorfile>a02562.html</anchorfile>
-      <anchor>a7cb31308740745d467c63247d1f42bd1</anchor>
+      <anchor>ac03c45acb87ced70cf86b77ac9bd20ac</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">

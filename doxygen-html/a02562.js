@@ -46,7 +46,7 @@ var a02562 =
     [ "comdTarget_", "a02562.html#aa3aac681a66c5968dde54b17f47d27fd", null ],
     [ "comTarget_", "a02562.html#af6f2964c1be8b168193c80636bc0b583", null ],
     [ "comTask", "a02562.html#a0878448d283b4e2aa4a0dae3aff044cf", null ],
-    [ "contacts_", "a02562.html#a7cb31308740745d467c63247d1f42bd1", null ],
+    [ "contacts_", "a02562.html#ac03c45acb87ced70cf86b77ac9bd20ac", null ],
     [ "contactTasks", "a02562.html#ac619cfcd7785d886845a724f361f8e71", null ],
     [ "dcmAverageError_", "a02562.html#aa588b56d52973ccad6a81e719f669614", null ],
     [ "dcmDerivator_", "a02562.html#a0238d047704d0cdaca32fe09153e4688", null ],
