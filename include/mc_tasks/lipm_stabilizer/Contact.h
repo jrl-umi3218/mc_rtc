@@ -14,6 +14,8 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include <Eigen/StdVector>
+
 #include <cmath>
 
 namespace mc_tasks
@@ -40,6 +42,10 @@ namespace internal
  */
 struct MC_TASKS_DLLAPI Contact
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+  Contact() = default;
+
   /**
    * @brief Constructs a contact from a surface attached to the ankle frame of a robot
    *
@@ -228,6 +234,17 @@ private:
 };
 
 } // namespace internal
+
+struct MC_TASKS_DLLAPI ContactDescription
+{
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+  ContactState first;
+  internal::Contact second;
+};
+
+using ContactDescriptionVector = std::vector<ContactDescription, Eigen::aligned_allocator<ContactDescription>>;
+
 } // namespace lipm_stabilizer
 } // namespace mc_tasks
 

@@ -43,6 +43,7 @@ namespace lipm_stabilizer
  */
 struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
   static constexpr double MAX_AVERAGE_DCM_ERROR = 0.05; /**< Maximum average (integral) DCM error in [m] */
   static constexpr double MAX_COP_ADMITTANCE = 0.1; /**< Maximum CoP admittance for foot damping control */
@@ -189,7 +190,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * contact's dofs along the x and y rotations and z translation need to be
    * free.
    */
-  void setContacts(const std::vector<std::pair<ContactState, internal::Contact>> & contacts);
+  void setContacts(const ContactDescriptionVector & contacts);
 
   /**
    * @brief Helper to set contacts with a provided target pose
@@ -464,7 +465,12 @@ protected:
       return static_cast<std::size_t>(t);
     }
   };
-  std::unordered_map<ContactState, internal::Contact, EnumClassHash> contacts_;
+  std::unordered_map<ContactState,
+                     internal::Contact,
+                     EnumClassHash,
+                     std::equal_to<ContactState>,
+                     Eigen::aligned_allocator<std::pair<ContactState, internal::Contact>>>
+      contacts_;
   std::vector<ContactState> addContacts_; /**< Contacts to add to the QPSolver when the task is inserted */
   std::unordered_map<ContactState, std::shared_ptr<mc_tasks::force::CoPTask>, EnumClassHash> footTasks;
   std::vector<std::shared_ptr<mc_tasks::force::CoPTask>> contactTasks;

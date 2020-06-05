@@ -328,7 +328,7 @@ void StabilizerTask::load(mc_solver::QPSolver &, const mc_rtc::Configuration & c
 {
   double height = 0;
   // Load contacts
-  std::vector<std::pair<ContactState, Contact>> contactsToAdd;
+  ContactDescriptionVector contactsToAdd;
   if(config.has("contacts"))
   {
     const auto & contacts = config("contacts");
@@ -399,7 +399,7 @@ void StabilizerTask::checkGains()
 
 void StabilizerTask::setContacts(const std::vector<ContactState> & contacts)
 {
-  std::vector<std::pair<ContactState, Contact>> addContacts;
+  ContactDescriptionVector addContacts;
   for(const auto contact : contacts)
   {
     addContacts.push_back({contact,
@@ -411,7 +411,7 @@ void StabilizerTask::setContacts(const std::vector<ContactState> & contacts)
 
 void StabilizerTask::setContacts(const std::vector<std::pair<ContactState, sva::PTransformd>> & contacts)
 {
-  std::vector<std::pair<ContactState, Contact>> addContacts;
+  ContactDescriptionVector addContacts;
   for(const auto contact : contacts)
   {
     addContacts.push_back({contact.first, {robot(), footTasks[contact.first]->surface(), contact.second, c_.friction}});
@@ -419,7 +419,7 @@ void StabilizerTask::setContacts(const std::vector<std::pair<ContactState, sva::
   setContacts(addContacts);
 }
 
-void StabilizerTask::setContacts(const std::vector<std::pair<ContactState, Contact>> & contacts)
+void StabilizerTask::setContacts(const ContactDescriptionVector & contacts)
 {
   if(contacts.empty())
   {
