@@ -167,8 +167,8 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       }
 
       std::shared_ptr<mc_tasks::ExactCubicTrajectoryTask> t = std::make_shared<mc_tasks::ExactCubicTrajectoryTask>(
-          solver.robots(), robotIndex, config("surface"), config("duration"), config("stiffness"), config("weight"),
-          finalTarget_, waypoints, init_vel, init_acc, end_vel, end_acc, oriWp);
+          solver.robots(), robotIndex, config("surface"), config("duration", 10), config("stiffness", 100),
+          config("weight", 500), finalTarget_, waypoints, init_vel, init_acc, end_vel, end_acc, oriWp);
       t->load(solver, config);
       const auto displaySamples = config("displaySamples", t->displaySamples());
       t->displaySamples(displaySamples);

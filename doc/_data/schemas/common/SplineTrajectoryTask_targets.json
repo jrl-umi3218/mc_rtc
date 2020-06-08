@@ -3,7 +3,8 @@
   {
     "targetSurface":
     {
-      "title": "Target relative to surface specification",
+      "title": "Relative Target",
+      "description": "All targets/waypoints are defined in target surface frame",
       "type": "object",
       "properties":
       {
@@ -14,17 +15,17 @@
         "controlPoints":
         {
           "type": "array",
-          "description": "Position waypoints relative to the target surface",
+          "description": "Position waypoints",
           "items": { "$ref": "/../../Eigen/Vector3d.json" }
         },
         "oriWaypoints":
         {
           "type": "array",
-          "description": "Orientation waypoints (pairs of time and orientation) relative to the target surface",
+          "description": "Orientation waypoints (pairs of time and orientation)",
           "items":
           [
             {
-              "type": "number"
+              "type": "number", "description": "time (<=duration)"
             },
             {
               "$ref": "/../../Eigen/Matrix3d.json"
@@ -47,11 +48,11 @@
     "oriWaypoints":
     {
       "type": "array",
-      "description": "Orientation waypoints (pairs of time and orientation) relative to the target surface",
+      "description": "Orientation waypoints (pairs of time and orientation) relative to the world",
       "items":
       [
         {
-          "type": "number"
+          "type": "number",  "description": "time (<= duration)"
         },
         {
           "$ref": "/../../Eigen/Matrix3d.json"

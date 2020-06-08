@@ -1,0 +1,23 @@
+{
+  "properties":
+  {
+    "controlPoints":
+    {
+      "type": "array",
+      "description": "Position waypoints (pairs of time and position)",
+      "items":
+      [
+        {
+          "type": "number", "description": "Waypoint's time (<= duration)"
+        },
+        {
+          "$ref": "/../../Eigen/Vector3d.json", "description": "Waypoint's position"
+        }
+      ]
+    },
+    "init_vel": { "$ref": "/../../Eigen/Vector3d.json", "default": "[0,0,0]", "description": "Initial velocity" },
+    "init_acc": { "$ref": "/../../Eigen/Vector3d.json", "default": "[0,0,0]", "description": "Initial acceleration" },
+    "end_vel": { "$ref": "/../../Eigen/Vector3d.json", "default":  "[0,0,0]", "description": "Final velocity" },
+    "end_acc": { "$ref": "/../../Eigen/Vector3d.json", "default":  "[0,0,0]", "description": "Final acceleration" }
+  }
+}
