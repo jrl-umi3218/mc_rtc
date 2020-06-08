@@ -38,7 +38,12 @@ static auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
 static auto em =
     mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"));
 static auto robots = mc_rbdyn::loadRobotAndEnv(*rm, *em);
-static mc_solver::QPSolver solver(robots, 0.005);
+static std::unique_ptr<mc_solver::QPSolver> solver_ptr = [](std::shared_ptr<mc_rbdyn::Robots> robots) {
+  std::unique_ptr<mc_solver::QPSolver> solver(new mc_solver::QPSolver(robots, 0.005));
+  solver->realRobots(robots);
+  return solver;
+}(robots);
+static mc_solver::QPSolver & solver = *solver_ptr;
 
 static const bfs::path EXAMPLE_PATH = "@EXAMPLE_PATH@";
 static const bfs::path JSON_EXAMPLES = EXAMPLE_PATH / "json" / "MetaTask";
