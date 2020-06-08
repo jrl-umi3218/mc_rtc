@@ -13,6 +13,8 @@
       "properties":
       {
         "type": { "enum": ["gaze"] },
+        "weight": { "default": 500 },
+        "stiffness": { "default": 2 },
         "X_b_gaze": { 
           "$ref": "/../../SpaceVecAlg/PTransformd.json",
           "default": "Identity",

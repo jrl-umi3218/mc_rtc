@@ -6,6 +6,7 @@
   {
     "target": { "type": "array", "items": { "type": "number" }, "description": "Target of active joints in the gripper" },
     "opening": { "type": "number", "mininimum": 0, "maximum": 1, "description": "Target opening of the gripper" },
+    "percentVMAX": { "type": "number", "mininimum": 0, "maximum": 1, "default": 0.25, "description": "Gripper opening speed as a percentage of the maximum velocity" },
     "safety":
     {
       "type": "object",

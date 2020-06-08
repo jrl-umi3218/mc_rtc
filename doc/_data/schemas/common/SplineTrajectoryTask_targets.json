@@ -37,18 +37,18 @@
     "target":
     {
       "$ref": "/../../SpaceVecAlg/PTransformd.json",
-      "description": "Target relative to world<br/>Ignored if targetSurface is specified, required otherwise"
+      "description": "Target relative to world. <i>Ignored if targetSurface is specified, required otherwise</i>"
     },
     "controlPoints":
     {
       "type": "array",
-      "description": "Control points relative to world",
+      "description": "Control points relative to world. <i>Ignored if targetSurface is specified</i>",
       "items": { "$ref": "/../../Eigen/Vector3d.json" }
     },
     "oriWaypoints":
     {
       "type": "array",
-      "description": "Orientation waypoints (pairs of time and orientation) relative to the world",
+      "description": "Orientation waypoints (pairs of time and orientation) relative to the world. <i>Ignored if targetSurface is specified</i>",
       "items":
       [
         {

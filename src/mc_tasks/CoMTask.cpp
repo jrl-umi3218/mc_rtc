@@ -38,10 +38,6 @@ void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c
   {
     this->com(config("com"));
   }
-  if(config.has("move_com"))
-  {
-    this->move_com(config("move_com"));
-  }
   if(config.has("above"))
   {
     std::vector<std::string> surfaces = config("above");
@@ -55,8 +51,13 @@ void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c
     target /= static_cast<double>(surfaces.size());
     this->com({target.x(), target.y(), com.z()});
   }
+  if(config.has("move_com"))
+  {
+    this->move_com(config("move_com"));
+  }
   if(config.has("offset"))
   {
+    LOG_WARNING("[MC_RTC_DEPRECATED][" + name() + "] The \"offset\" property is deprecated, use move_com instead");
     Eigen::Vector3d offset = config("offset", Eigen::Vector3d::Zero().eval());
     this->com(this->com() + offset);
   }

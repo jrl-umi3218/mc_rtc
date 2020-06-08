@@ -1,6 +1,7 @@
 {
   "title": "mc_tasks::CoPTask",
   "type": "object",
+  "description": "This task control the center of pressure (CoP) of a robot surface attached to a force sensor.<br/>- Force measurements are used in an admittance control law to compute the velocity of the surface motion to bring the measured CoP to its desired target position.<br/>- Only axes where the admittance gains are non null will be affected by force control. Along all other axes, the reference position and velocity will be tracked.<br/>- High stiffness/Low damping will favor position control (targetPose/targetSurface)<br/>- Low stiffness/High damping will favour velocity control.<br />- Use [low-stiffness/high-damping/non-zero admittance gains] to achieve force control along one of the controlled surface axis.",
   "allOf":
   [
     {
@@ -13,12 +14,12 @@
       "properties":
       {
         "type": { "enum": ["cop"] },
-        "admittance": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
-        "cop": { "$ref": "/../../Eigen/Vector2d.json" },
-        "force": { "$ref": "/../../Eigen/Vector3d.json" },
+        "admittance": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "Admittance gains. Non-zero gains will be used to compute which surface velocity to apply in order to move the CoP towards its target" },
+        "cop": { "$ref": "/../../Eigen/Vector2d.json", "description": "Desired CoP in controlled surface frame" },
+        "force": { "$ref": "/../../Eigen/Vector3d.json", "description": "Desired force in controlled surface frame"},
         "targetPose":
         {
-          "description": "Ignored if targetSurface is specified",
+          "description": "Ignored if targetSurface is specified. Provides a reference world pose for the controlled surface",
           "$ref": "/../../SpaceVecAlg/PTransformd.json"
         },
         "targetSurface":
@@ -33,6 +34,9 @@
     {
       "properties":
       {
+        "weight": { "default": 1000 },
+        "stiffness": { "default": 5, "description": "Task's stiffness (affects position control)"},
+        "damping": { "description": "Task's damping (affects velocity/force control)." },
         "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
       }
     }

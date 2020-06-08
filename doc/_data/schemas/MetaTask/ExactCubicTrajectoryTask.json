@@ -30,6 +30,7 @@
       {
         "targetSurface":
         {
+          "description": "All targets/waypoints are defined in target surface frame. <i>If present, all world targets are ignored</i>",
           "$ref": "/../../common/ExactCubicTrajectoryTask_targets.json"
         }
       }

@@ -1,5 +1,6 @@
 {
   "title": "mc_tasks::lipm_stabilizer::StabilizerTask",
+  "description": "The stabilizer task attempts to make the real system track as best as possible the desired state of the CoM (position, velocity, acceleration) and ZMP based on the LIPM model. The reference desired dynamic state must be valid, and continuous (i.e obtained from a walking MPC). A suitable state observation pipeline is required to observe the CoM position and velocity and ZMP of the real system (e.g [Encoder, KinematicInertialObserver]). Default gains are defined in the RobotModule and may be overriden from configuration:",
   "type": "object",
   "properties":
   {
