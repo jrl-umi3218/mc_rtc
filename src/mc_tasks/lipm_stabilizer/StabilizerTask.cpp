@@ -898,9 +898,9 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
         stabiConf.load(config(robot.name()));
       }
 
-      auto t = std::make_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
-          solver.robots(), solver.realRobots(), robotIndex, stabiConf.leftFootSurface, stabiConf.rightFootSurface,
-          stabiConf.torsoBodyName, solver.dt());
+      auto t = std::allocate_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
+          Eigen::aligned_allocator<mc_tasks::lipm_stabilizer::StabilizerTask>{}, solver.robots(), solver.realRobots(),
+          robotIndex, stabiConf.leftFootSurface, stabiConf.rightFootSurface, stabiConf.torsoBodyName, solver.dt());
       t->reset();
       t->configure(stabiConf);
       t->load(solver, config);
