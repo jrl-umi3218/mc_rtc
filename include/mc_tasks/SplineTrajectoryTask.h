@@ -23,7 +23,7 @@ namespace mc_tasks
  * implement the functionalites specific to the curve. You need to at least
  * implement:
  * - spline() accessors
- * - target() accessors/setters
+ * - targetPos() accessors/setters
  * The spline itself (as returned by spline()) should at least implement:
  * - update() triggers the curve computation if needed (if waypoints/constraints
  *   changed)
@@ -163,6 +163,18 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
   inline bool pause() const
   {
     return paused_;
+  }
+
+  /* @brief Returns the current time along the trajectory */
+  inline double currentTime() const
+  {
+    return currTime_;
+  }
+
+  /** @brief Returns the trajectory's duration */
+  inline double duration() const
+  {
+    return duration_;
   }
 
 protected:
