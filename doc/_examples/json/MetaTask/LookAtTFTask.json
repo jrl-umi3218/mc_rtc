@@ -1,6 +1,6 @@
 {
   "type": "lookAtTF",
-  "body": "bodyName",
+  "body": "dcamera",
   "bodyVector": [1, 0, 0],
   "sourceFrame": "robot_map",
   "targetFrame": "target_name"

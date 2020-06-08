@@ -21,8 +21,18 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
 : TrajectoryTaskGeneric<tasks::qp::VectorOrientationTask>(robots, robotIndex, stiffness, weight), bodyName(bodyName),
   bIndex(0)
 {
+  if(robotIndex >= robots.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::VectorOrientationTask] No robot with index "
+                                                << robotIndex << ", " << robots.size() << " robots loaded");
+  }
+  const auto & robot = robots.robot(robotIndex);
+  if(!robot.hasBody(bodyName))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "[mc_tasks::VectorOrientationTask] No body named " << bodyName << " in " << robot.name());
+  }
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, targetVector);
-  const mc_rbdyn::Robot & robot = robots.robot(rIndex);
   bIndex = robot.bodyIndexByName(bodyName);
   type_ = "vectorOrientation";
   name_ = "vector_orientation_" + robot.name() + "_" + bodyName;

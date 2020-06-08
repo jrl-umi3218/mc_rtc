@@ -14,27 +14,8 @@
 #   By default the current estimated contact surface pose from the real robot
 #   is used as the reference contact frame. You may override this behaviour by providing
 #   `Left` or `Right` entries with the desired contact targets.
-###
----
-type: lipm_stabilizer
-contacts: [Left, Right]
-Left:
-  rotation: [0,0,0]
-  height: 0
-Right:
-  rotation: [0,0,0]
-  height: 0
-
-jvrc1:
-  dcm_tracking:
-    gains:
-      prop: 4
-      integral: 10
-      deriv: 0.5
-    derivator_time_constant: 1
-    integrator_time_constant: 10
-
-
+#
+# The JSON example shows such a simple configuration
 ###
 # More complete example with most of the possible configurations.
 # See the JSON schema for a full list of available members
@@ -47,12 +28,19 @@ jvrc1:
 # the default gains with your own, do not expect those to behave well.
 # Please refer to the RobotModule for valid default gains.
 ###
----
 type: lipm_stabilizer
 enabled: true
 
 # Global configuration
 friction: 0.8
+
+contacts: [Left, Right]
+Left:
+  rotation: [0,0,0]
+  height: 0
+Right:
+  rotation: [0,0,0]
+  height: 0
 
 # Weights for the force-distribution QP
 fdqp_weights:
@@ -75,12 +63,11 @@ vdc:
   frequency: 1
   stiffness: 1000
 
-
 # Configuration specific to jvrc1.
 jvrc1:
   leftFootSurface: LeftFootCenter
   rightFootSurface: RightFootCenter
-  torsoBodyName: CHEST_LINK1
+  torsoBodyName: WAIST_R_S
   tasks:
     com:
       active_joints:

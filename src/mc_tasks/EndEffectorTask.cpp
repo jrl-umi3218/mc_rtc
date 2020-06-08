@@ -26,7 +26,17 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName,
                                  double weight)
 : robots(robots), robotIndex(robotIndex), bodyName(bodyName)
 {
-  const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
+  if(robotIndex >= robots.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::EndEffectorTask] No robot with index "
+                                                << robotIndex << ", " << robots.size() << " robots loaded");
+  }
+  const auto & robot = robots.robot(robotIndex);
+  if(!robot.hasBody(bodyName))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "[mc_tasks::EndEffectorTask] No body named " << bodyName << " in " << robot.name());
+  }
   bodyIndex = robot.bodyIndexByName(bodyName);
   sva::PTransformd bpw = robot.mbc().bodyPosW[bodyIndex];
 

@@ -1,6 +1,6 @@
 {
   "type": "body6d",
-  "body": "bodyName",
+  "body": "r_wrist",
   "orientation": [1.0, 0.0, 0.0,
                   0.0, 1.0, 0.0,
                   0.0, 0.0, 1.0],

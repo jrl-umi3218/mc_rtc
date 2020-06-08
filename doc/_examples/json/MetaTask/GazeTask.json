@@ -1,6 +1,6 @@
 {
   "type": "gaze",
-  "body": "h_link",
+  "body": "dcamera",
   "X_b_gaze":
   {
     "rotation": [1.0, 0.0, 0.0,

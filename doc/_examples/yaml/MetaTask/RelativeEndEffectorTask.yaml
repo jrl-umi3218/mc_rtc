@@ -1,6 +1,6 @@
 type: relBody6d
-body: bodyName
-relBody: relBodyName
+body: r_wrist
+relBody: l_wrist
 orientation: [1.0, 0.0, 0.0,
               0.0, 1.0, 0.0,
               0.0, 0.0, 1.0]

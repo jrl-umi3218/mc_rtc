@@ -1,7 +1,7 @@
 {
   "type": "lookAtSurface",
-  "body": "bodyName",
+  "body": "dcamera",
   "bodyVector": [1.0, 0.0, 0.0],
-  "surfaceRobot": "targetRobot",
-  "surface": "targetSurfaceName"
+  "surfaceRobot": "ground",
+  "surface": "AllGround"
 }

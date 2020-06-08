@@ -1,16 +1,7 @@
----
 type: surfaceTransform
-surface: surfaceName
-target:
-  rotation: [1.0, 0.0, 0.0,
-             0.0, 1.0, 0.0,
-             0.0, 0.0, 1.0]
-  translation: [0.0, 0.0, 0.0]
----
-type: surfaceTransform
-surface: surfaceName
+surface: LeftFoot
 targetSurface:
-  robot: TargetRobotName 
-  surface: target_surface_name
+  robot: ground
+  surface: AllGround
   offset_translation: [0.0, 0.0, 0.1]
   offset_rotation: [3.14, 0.0, 0.0]

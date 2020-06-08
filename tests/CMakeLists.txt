@@ -57,6 +57,7 @@ MACRO(mc_rtc_test NAME)
   target_link_libraries(${NAME} PUBLIC Boost::unit_test_framework Boost::disable_autolinking ${ARGN})
   target_compile_definitions(${NAME} PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
   target_include_directories(${NAME} PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
+  target_include_directories(${NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
   set_target_properties(${NAME} PROPERTIES FOLDER tests/framework)
   add_test(${NAME} ${NAME})
   # Adding a project configuration file (for MSVC only)
@@ -75,6 +76,8 @@ mc_rtc_test(testDataStore mc_rtc_utils mc_rbdyn)
 mc_rtc_test(test_mc_rtc_utils mc_rtc_utils)
 mc_rtc_test(testConfigurationHelpers mc_rtc_utils)
 mc_rtc_test(test_io_utils mc_rtc_utils)
+get_filename_component(EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../doc/_examples" ABSOLUTE)
+mc_rtc_test(testSchemaExamples mc_tasks)
 
 ###########################
 # -- FSM related tests -- #

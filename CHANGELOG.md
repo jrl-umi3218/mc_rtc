@@ -10,6 +10,7 @@
 - Benchmarks can now be compiled and run with the `build_and_install.sh` script
 - Use RBDyn::Parsers instead of mc\_rbdyn\_urdf
 - Functions that use mc\_rbdyn\_urdf were kept for backwards compatibility, they will be removed in a later release
+- Improve error reporting when some tasks parameters are not set correctly
 
 ### Added
 - New benchmark for task allocation performance

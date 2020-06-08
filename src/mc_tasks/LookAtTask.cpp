@@ -30,7 +30,7 @@ LookAtTask::LookAtTask(const std::string & bodyName,
                        double weight)
 : VectorOrientationTask(bodyName, bodyVector, robots, robotIndex, stiffness, weight)
 {
-  const mc_rbdyn::Robot & robot = robots.robot(rIndex);
+  const auto & robot = robots.robot(robotIndex);
   bIndex = robot.bodyIndexByName(bodyName);
   type_ = "lookAt";
   name_ = "look_at_" + robot.name() + "_" + bodyName;
