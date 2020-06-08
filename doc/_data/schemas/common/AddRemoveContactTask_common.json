@@ -1,0 +1,11 @@
+{
+  "properties":
+  {
+    "name": { "type": "string", "description": "Name of the task"},
+    "contact": { "$ref": "/../../mc_rbdyn/Contact.json", "description": "Contact to establish or remove. The tasks controls the first robot \"r1\"." },
+    "speed": { "type": "number", "minimum": 0, "default": 0.01,  "description": "Speed at which the contact surface \"r1Surface\" moves along the normal \"T_0_s\"."},
+    "stiffness": { "type": "number", "minimum": 0, "default": 2, "description": "Task's stiffness"},
+    "weight": { "type": "number", "minimum": 0, "default": 1000, "description": "Task's weight"},
+    "T_0_s": { "$ref": "/../../Eigen/Vector3d.json", "description": "If provided, overrides the chosen normal direction (default: direction of the z axis of \"r1Surface\")" }
+  }
+}

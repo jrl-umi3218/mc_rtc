@@ -18,6 +18,12 @@
           "type": "string",
           "default": "MainRobot",
           "description": "Ignored if surface is specified"
+        },
+        "X_b_s":
+        {
+          "$ref": "/../../SpaceVecAlg/PTransformd.json",
+          "default": "Identity",
+          "description": "Transformation from the controlled body to the surface being controlled. Only used if the \"body\" property is specified."
         }
       }
     },

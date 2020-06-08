@@ -8,9 +8,9 @@
       "properties":
       {
         "type": { "enum": ["addContact", "removeContact", "compliance"], "description": "Type of contact action"},
-        "speed": { "type": "number", "minimum": 0 },
-        "weight": { "type": "number", "minimum": 0 },
-        "stiffness": { "type": "number", "minimum": 0 },
+        "speed": { "type": "number", "minimum": 0, "default": 0.01 },
+        "weight": { "type": "number", "minimum": 0, "default": 1000 },
+        "stiffness": { "type": "number", "minimum": 0, "default": 2 },
         "contact": { "$ref": "/../../mc_rbdyn/Contact.json" },
         "useCoM": { "type": "boolean", "default": true, "description": "When true, this state will add a CoM task configured with the parameters in the \"com\" section"},
         "com" : { "$ref": "/../../common/CoMTask.json", "description": "Optional: If useCoM=true, adds a CoM task with these parameters, otherwise no CoM task will be added"}
