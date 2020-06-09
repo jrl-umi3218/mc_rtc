@@ -4,14 +4,14 @@
     "targetSurface":
     {
       "title": "Relative Target",
-      "description": "All targets/waypoints are defined in target surface frame",
+      "description": "Target and waypoints defined in target surface frame",
       "type": "object",
       "properties":
       {
         "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot on which this surface is defined"},
-        "surface" : { "type": "string" },
-        "translation": { "$ref": "/../../Eigen/Vector3d.json" },
-        "rotation": { "$ref": "/../../Eigen/Matrix3d.json" },
+        "surface" : { "type": "string", "description": "Surface on the robot." },
+        "translation": { "$ref": "/../../Eigen/Vector3d.json", "description": "Offset in translation wrt to the target robot's surface"  },
+        "rotation": { "$ref": "/../../Eigen/Matrix3d.json", "description": "Offset in rotation wrt to the target robot's surface"   },
         "controlPoints":
         {
           "type": "array",
@@ -48,7 +48,7 @@
     "oriWaypoints":
     {
       "type": "array",
-      "description": "Orientation waypoints (pairs of time and orientation) relative to the world. <i>Ignored if targetSurface is specified</i>",
+      "description": "Orientation waypoints relative to world (pairs of time and orientation) relative to the world. <i>Ignored if targetSurface is specified</i>",
       "items":
       [
         {

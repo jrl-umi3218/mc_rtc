@@ -23,19 +23,6 @@
       "$ref": "/../../common/SplineTrajectoryTask_common.json"
     },
     {
-      "$ref": "/../../common/SplineTrajectoryTask_targets.json"
-    },
-    {
-      "properties":
-      {
-        "targetSurface":
-        {
-          "description": "All targets/waypoints are defined in target surface frame. <i>If present, all world targets are ignored</i>",
-          "$ref": "/../../common/ExactCubicTrajectoryTask_targets.json"
-        }
-      }
-    },
-    {
       "$ref": "/../../common/ExactCubicTrajectoryTask_targets.json"
     }
   ],
