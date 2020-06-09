@@ -1,5 +1,5 @@
 type: orientation
-body: bodyName
-orientation: [1.0, 0.0, 0.0,
-              0.0, 1.0, 0.0,
-              0.0, 0.0, 1.0]
+body: r_wrist
+# Rotation expressed as RPY (in radian)
+# May also be expressed as quaternion or rotation matrix
+orientation: [0.0, 0.0, 0.0]

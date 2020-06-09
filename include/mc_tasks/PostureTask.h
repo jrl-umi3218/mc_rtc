@@ -15,7 +15,7 @@ namespace mc_tasks
 struct MC_TASKS_DLLAPI PostureTask : public MetaTask
 {
 public:
-  PostureTask(const mc_solver::QPSolver & solver, unsigned int rIndex, double stiffness, double weight);
+  PostureTask(const mc_solver::QPSolver & solver, unsigned int rIndex, double stiffness = 1, double weight = 10);
 
   void reset() override;
 

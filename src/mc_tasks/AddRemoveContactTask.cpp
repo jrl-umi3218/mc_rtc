@@ -201,7 +201,8 @@ mc_tasks::MetaTaskPtr load_add_remove_contact_task(mc_solver::QPSolver & solver,
     T_0_s = config("T_0_s");
     userT_0_s = &T_0_s;
   }
-  return std::make_shared<T>(solver, contact, config("speed"), config("stiffness"), config("weight"), userT_0_s);
+  return std::make_shared<T>(solver, contact, config("speed", 0.01), config("stiffness", 2.), config("weight", 1000.),
+                             userT_0_s);
 }
 
 static auto ac_registered =

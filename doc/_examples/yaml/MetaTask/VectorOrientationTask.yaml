@@ -1,4 +1,4 @@
 type: vectorOrientation
-body: bodyName
+body: dcamera
 bodyVector: [0.0, 0.0, 0.0]
 targetVector: [0.0, 0.0, 0.0]

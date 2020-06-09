@@ -23,6 +23,8 @@
     {
       "properties":
       {
+        "weight": { "default": 500 },
+        "stiffness": { "default": 2 },
         "dimWeight": { "$ref": "/../../Eigen/Vector3d.json" }
       }
     }

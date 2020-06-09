@@ -1,5 +1,5 @@
 type: compliance
-body: r_arm
+body: L_WRIST_Y_S
 wrench:
   couple: [0.0, 0.0, 0.0]
   force: [0.0, 0.0, 0.0]

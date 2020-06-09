@@ -5,11 +5,14 @@
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_tasks/AddRemoveContactTask.h>
+#include <mc_tasks/BSplineTrajectoryTask.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/ComplianceTask.h>
+#include <mc_tasks/ExactCubicTrajectoryTask.h>
 #include <mc_tasks/GazeTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/PositionBasedVisServoTask.h>
+#include <mc_tasks/PostureTask.h>
 #include <mc_tasks/RelativeEndEffectorTask.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 #include <mc_tasks/VectorOrientationTask.h>
@@ -537,6 +540,128 @@ struct TaskTester<mc_tasks::VectorOrientationTask>
   double weight = fabs(rnd());
 };
 
+template<>
+struct TaskTester<mc_tasks::PostureTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto ret = std::make_shared<mc_tasks::PostureTask>(solver, 0, stiffness, weight);
+    return ret;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "posture");
+    config.add("robotIndex", 0);
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p, const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::PostureTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::PostureTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+  }
+
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+};
+
+template<>
+struct TaskTester<mc_tasks::BSplineTrajectoryTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto ret = std::make_shared<mc_tasks::BSplineTrajectoryTask>(*robots, 0, "LeftFoot", d, stiffness, weight, target);
+    return ret;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "bspline_trajectory");
+    config.add("robotIndex", 0);
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    config.add("duration", d);
+    config.add("surface", "LeftFoot");
+    config.add("target", target);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p, const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::BSplineTrajectoryTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::BSplineTrajectoryTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->duration(), loaded->duration(), 1e-6);
+    BOOST_CHECK(ref->target().rotation().isApprox(loaded->target().rotation(), 1e-6));
+    BOOST_CHECK(ref->target().translation().isApprox(loaded->target().translation(), 1e-6));
+  }
+
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+  double d = fabs(rnd());
+  sva::PTransformd target = random_pt();
+};
+
+template<>
+struct TaskTester<mc_tasks::ExactCubicTrajectoryTask>
+{
+  mc_tasks::MetaTaskPtr make_ref()
+  {
+    auto ret =
+        std::make_shared<mc_tasks::ExactCubicTrajectoryTask>(*robots, 0, "LeftFoot", d, stiffness, weight, target);
+    return ret;
+  }
+
+  std::string json()
+  {
+    mc_rtc::Configuration config;
+    config.add("type", "exact_cubic_trajectory");
+    config.add("robotIndex", 0);
+    config.add("stiffness", stiffness);
+    config.add("weight", weight);
+    config.add("duration", d);
+    config.add("surface", "LeftFoot");
+    config.add("target", target);
+    auto ret = getTmpFile();
+    config.save(ret);
+    return ret;
+  }
+
+  void check(const mc_tasks::MetaTaskPtr & ref_p, const mc_tasks::MetaTaskPtr & loaded_p)
+  {
+    auto ref = std::dynamic_pointer_cast<mc_tasks::ExactCubicTrajectoryTask>(ref_p);
+    auto loaded = std::dynamic_pointer_cast<mc_tasks::ExactCubicTrajectoryTask>(loaded_p);
+    BOOST_REQUIRE(ref);
+    BOOST_REQUIRE(loaded);
+    BOOST_CHECK_CLOSE(ref->stiffness(), loaded->stiffness(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->weight(), loaded->weight(), 1e-6);
+    BOOST_CHECK_CLOSE(ref->duration(), loaded->duration(), 1e-6);
+    BOOST_CHECK(ref->target().rotation().isApprox(loaded->target().rotation(), 1e-6));
+    BOOST_CHECK(ref->target().translation().isApprox(loaded->target().translation(), 1e-6));
+  }
+
+  double stiffness = fabs(rnd());
+  double weight = fabs(rnd());
+  double d = fabs(rnd());
+  sva::PTransformd target = random_pt();
+};
+
 typedef boost::mpl::list<mc_tasks::CoMTask,
                          mc_tasks::AddContactTask,
                          mc_tasks::RemoveContactTask,
@@ -548,7 +673,10 @@ typedef boost::mpl::list<mc_tasks::CoMTask,
                          mc_tasks::GazeTask,
                          mc_tasks::PositionBasedVisServoTask,
                          mc_tasks::SurfaceTransformTask,
-                         mc_tasks::VectorOrientationTask>
+                         mc_tasks::VectorOrientationTask,
+                         mc_tasks::PostureTask,
+                         mc_tasks::BSplineTrajectoryTask,
+                         mc_tasks::ExactCubicTrajectoryTask>
     test_types;
 
 BOOST_AUTO_TEST_CASE_TEMPLATE(TestMetaTaskLoader, T, test_types)

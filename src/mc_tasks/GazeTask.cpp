@@ -9,6 +9,25 @@
 namespace mc_tasks
 {
 
+namespace
+{
+
+void check_parameters(const mc_rbdyn::Robots & robots, unsigned int robotIndex, const std::string & bodyName)
+{
+  if(robotIndex >= robots.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::GazeTask] No robot with index "
+                                                << robotIndex << ", " << robots.size() << " robots loaded");
+  }
+  if(!robots.robot(robotIndex).hasBody(bodyName))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "[mc_tasks::GazeTask] No body named " << bodyName << " in " << robots.robot(robotIndex).name());
+  }
+}
+
+} // namespace
+
 GazeTask::GazeTask(const std::string & bodyName,
                    const Eigen::Vector2d & point2d,
                    double depthEstimate,
@@ -19,6 +38,7 @@ GazeTask::GazeTask(const std::string & bodyName,
                    double weight)
 : TrajectoryTaskGeneric<tasks::qp::GazeTask>(robots, robotIndex, stiffness, weight)
 {
+  check_parameters(robots, robotIndex, bodyName);
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, point2d, depthEstimate, X_b_gaze);
   type_ = "gaze";
   name_ = "gaze_" + robots.robot(robotIndex).name() + "_" + bodyName;
@@ -33,9 +53,11 @@ GazeTask::GazeTask(const std::string & bodyName,
                    double weight)
 : TrajectoryTaskGeneric<tasks::qp::GazeTask>(robots, robotIndex, stiffness, weight)
 {
+  check_parameters(robots, robotIndex, bodyName);
   if(point3d.z() <= 0)
   {
-    LOG_ERROR_AND_THROW(std::logic_error, "GazeTask expects the depth estimate to be >0, provided " << point3d.z());
+    LOG_ERROR_AND_THROW(std::logic_error,
+                        "[mc_tasks::GazeTask] Expects the depth estimate to be >0, provided " << point3d.z());
   }
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, point3d, X_b_gaze);
   type_ = "gaze";
@@ -74,9 +96,9 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "gaze",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t =
-          std::make_shared<mc_tasks::GazeTask>(config("body"), Eigen::Vector3d{0, 0, 1}, config("X_b_gaze"),
-                                               solver.robots(), robotIndexFromConfig(config, solver.robots(), "gaze"));
+      auto t = std::make_shared<mc_tasks::GazeTask>(config("body"), Eigen::Vector3d{0, 0, 1},
+                                                    config("X_b_gaze", sva::PTransformd::Identity()), solver.robots(),
+                                                    robotIndexFromConfig(config, solver.robots(), "gaze"));
       t->load(solver, config);
       return t;
     });

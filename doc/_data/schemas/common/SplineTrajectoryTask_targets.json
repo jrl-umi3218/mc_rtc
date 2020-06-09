@@ -1,0 +1,63 @@
+{
+  "properties":
+  {
+    "targetSurface":
+    {
+      "title": "Relative Target",
+      "description": "Target and waypoints defined in target surface frame",
+      "type": "object",
+      "properties":
+      {
+        "robot": { "type": "string", "default": "MainRobot", "description": "Name of robot on which this surface is defined"},
+        "surface" : { "type": "string", "description": "Surface on the robot." },
+        "translation": { "$ref": "/../../Eigen/Vector3d.json", "description": "Offset in translation wrt to the target robot's surface"  },
+        "rotation": { "$ref": "/../../Eigen/Matrix3d.json", "description": "Offset in rotation wrt to the target robot's surface"   },
+        "controlPoints":
+        {
+          "type": "array",
+          "description": "Position waypoints",
+          "items": { "$ref": "/../../Eigen/Vector3d.json" }
+        },
+        "oriWaypoints":
+        {
+          "type": "array",
+          "description": "Orientation waypoints (pairs of time and orientation)",
+          "items":
+          [
+            {
+              "type": "number", "description": "time (<=duration)"
+            },
+            {
+              "$ref": "/../../Eigen/Matrix3d.json"
+            }
+          ]
+        }
+      }
+    },
+    "target":
+    {
+      "$ref": "/../../SpaceVecAlg/PTransformd.json",
+      "description": "Target relative to world. <i>Ignored if targetSurface is specified, required otherwise</i>"
+    },
+    "controlPoints":
+    {
+      "type": "array",
+      "description": "Control points relative to world. <i>Ignored if targetSurface is specified</i>",
+      "items": { "$ref": "/../../Eigen/Vector3d.json" }
+    },
+    "oriWaypoints":
+    {
+      "type": "array",
+      "description": "Orientation waypoints relative to world (pairs of time and orientation) relative to the world. <i>Ignored if targetSurface is specified</i>",
+      "items":
+      [
+        {
+          "type": "number",  "description": "time (<= duration)"
+        },
+        {
+          "$ref": "/../../Eigen/Matrix3d.json"
+        }
+      ]
+    }
+  }
+}

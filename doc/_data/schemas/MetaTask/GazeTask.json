@@ -13,7 +13,13 @@
       "properties":
       {
         "type": { "enum": ["gaze"] },
-        "X_b_gaze": { "$ref": "/../../SpaceVecAlg/PTransformd.json" }
+        "weight": { "default": 500 },
+        "stiffness": { "default": 2 },
+        "X_b_gaze": { 
+          "$ref": "/../../SpaceVecAlg/PTransformd.json",
+          "default": "Identity",
+          "description": "Transformation between the camera link and the parent body."
+        }
       }
     },
     {
@@ -26,5 +32,5 @@
       }
     }
   ],
-  "required": ["type", "body", "X_b_gaze"]
+  "required": ["type", "body"]
 }

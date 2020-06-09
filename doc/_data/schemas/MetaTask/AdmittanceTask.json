@@ -13,6 +13,8 @@
       "properties":
       {
         "type": { "enum": ["admittance"] },
+        "weight": { "default": 1000},
+        "stiffness": { "default": 5 },
         "pose": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
         "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
         "wrench": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },

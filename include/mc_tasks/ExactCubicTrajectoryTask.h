@@ -104,12 +104,10 @@ protected:
   /*! \brief Sets the curve target pose
    * \param target Target pose for the curve
    */
-  void target(const Eigen::Vector3d & target);
-  /*! \brief Gets the target position of the curve
-   *
-   * \returns target position
-   */
-  Eigen::Vector3d target() const;
+  void targetPos(const Eigen::Vector3d & target);
+
+  /** \brief Returns the curve's target position */
+  const Eigen::Vector3d & targetPos() const;
 
 protected:
   mc_trajectory::ExactCubic bspline;

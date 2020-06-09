@@ -1,22 +1,11 @@
 {
   "type": "surfaceTransform",
-  "surface": "surfaceName",
+  "surface": "LeftFoot",
   "target":
   {
-    "rotation": [1.0, 0.0, 0.0,
-                 0.0, 1.0, 0.0,
-                 0.0, 0.0, 1.0],
+    // Rotation expressed as RPY (in radian)
+    // May also be expressed as quaternion or rotation matrix
+    "rotation":    [0.0, 0.0, 0.0],
     "translation": [0.0, 0.0, 0.0]
-  }
-},
-{
-  "type": "surfaceTransform",
-  "surface": "surfaceName",
-  "targetSurface":
-  {
-    "robot": "TargetRobot",
-    "surface": "target_surface_name",
-    "offset_translation": [0.0, 0.0, 0.1],
-    "offset_rotation": [3.14, 0.0, 0.0]
   }
 }

@@ -5,33 +5,26 @@
   "allOf":
   [
     {
+      "properties":
+      {
+        "type": { "enum": ["bspline_trajectory"] }
+      }
+    },
+    {
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
       "$ref": "/../../common/MetaTask_surface.json"
     },
     {
-      "properties":
-      {
-        "type": { "enum": ["bspline_trajectory"] },
-        "duration": { "type": "number", "minimum": 0 },
-        "stiffness": { "type": "number", "minimum": 0 },
-        "weight": { "type": "number", "minimum": 0 },
-        "displaySamples": { "type": "number", "minimum": 1 }
-      }
-    },
-    {
-      "$ref": "/../../common/TrajectoryTask_targets.json"
-    },
-    {
       "$ref": "/../../common/TrajectoryTaskGeneric.json"
     },
     {
-      "properties":
-      {
-        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
-      }
+      "$ref": "/../../common/SplineTrajectoryTask_common.json"
+    },
+    {
+      "$ref": "/../../common/SplineTrajectoryTask_targets.json"
     }
   ],
-  "required": ["type", "surface", "duration", "stiffness", "weight"]
+  "required": ["type", "surface"]
 }

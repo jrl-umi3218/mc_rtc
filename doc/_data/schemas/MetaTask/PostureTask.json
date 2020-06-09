@@ -39,9 +39,11 @@
     {
       "properties":
       {
+        "weight": { "default": 10 },
+        "stiffness": { "default": 1 },
         "dimWeight": { "$ref": "/../../Eigen/VectorXd.json", "description": "Ignored by PostureTask" }
       }
     }
   ],
-  "required": ["type", "stiffness", "weight"]
+  "required": ["type"]
 }

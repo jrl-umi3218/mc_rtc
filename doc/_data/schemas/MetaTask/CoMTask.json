@@ -1,27 +1,24 @@
 {
   "title": "mc_tasks::CoMTask",
   "type": "object",
+  "description": "Task that manages the robot's center of mass (CoM).<br />Targets are loaded in the following order: current com position -> com -> above -> move_com. For example if you wish to move the CoM 2cm left of the right foot, you can combine \"above: RightFoot\" and \"move_com: [0,0.02,0]\". When no target is provided, the current CoM position is targeted.",
   "allOf":
   [
     {
       "$ref": "/../../common/MetaTask_common.json"
     },
     {
-      "properties":
-      {
-        "type": { "enum": ["com"] },
-        "com": { "$ref": "/../../Eigen/Vector3d.json" },
-        "move_com": { "$ref": "/../../Eigen/Vector3d.json" },
-        "offset": { "$ref": "/../../Eigen/Vector3d.json" }
-      }
-    },
-    {
       "$ref": "/../../common/TrajectoryTaskGeneric.json"
     },
     {
+      "$ref": "/../../common/CoMTask.json"
+    },
+    {
       "properties":
       {
-        "dimWeight": { "$ref": "/../../Eigen/Vector3d.json" }
+        "type": { "enum": ["com"] },
+        "stiffness": { "default": 5},
+        "weight": { "default": 100}
       }
     }
   ],

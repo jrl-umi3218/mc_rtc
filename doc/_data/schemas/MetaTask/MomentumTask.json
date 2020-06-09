@@ -10,6 +10,8 @@
       "properties":
       {
         "type": { "enum": ["momentum"] },
+        "weight": { "default": 500 },
+        "stiffness": { "default": 2 },
         "momentum": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" }
       }
     },

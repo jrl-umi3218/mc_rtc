@@ -1,0 +1,10 @@
+ {
+   "properties":
+   {
+     "weight": { "type": "number", "minimum": 0, "default": 500, "description": "Task's weight. Note that the trajectory task tends to severely constrain the robot motion and may significantly interfere with other tasks when it is given too much importance." },
+     "stiffness": { "type": "number", "minimum": 0, "default": 100, "description": "Tasks's stiffness. Contrary to most tasks, the stiffness here is expected to be high, as the trajectory task will track small errors. It is not uncommon to use a stiffness of 1000 or more if tracking accuracy is important.<br/><b>Warning:</b> Be careful to avoid discontinuities in the trajectory (e.g while manipulating the targets from the GUI), as the high tracking stiffness could generate fast motions."},
+     "duration": { "type": "number", "minimum": 0, "default": 10, "description": "Task's duration. Note, you may use the \"timeElapsed: true\" completion criteria." },
+     "displaySamples": { "type": "number", "minimum": 1, "default": 20, "description": "Number of points to sample along the trajectory for visual display" },
+      "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+   }
+ }

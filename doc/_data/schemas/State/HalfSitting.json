@@ -7,8 +7,8 @@
       "type": "object",
       "properties":
       {
-        "stiffness": { "type": "number", "minimum": 0, "description": "Stiffness of the posture task" },
-        "eval": { "type": "number", "minimum": 0, "description": "Threshold on posture eval after which the state is considered completed" }
+        "stiffness": { "type": "number", "minimum": 0, "default": 1, "description": "Stiffness of the posture task" },
+        "eval": { "type": "number", "minimum": 0, "description": "Threshold on posture eval after which the state is considered completed. If absent, the state is always considered completed." }
       },
       "required": []
     },

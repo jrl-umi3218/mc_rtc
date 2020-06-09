@@ -1,9 +1,9 @@
 {
   "type": "relBody6d",
-  "body": "bodyName",
-  "relBody": "relBodyName",
-  "orientation": [1.0, 0.0, 0.0,
-                  0.0, 1.0, 0.0,
-                  0.0, 0.0, 1.0],
+  "body": "r_wrist",
+  "relBody": "l_wrist",
+  // Rotation expressed as RPY (in radian)
+  // May also be expressed as quaternion or rotation matrix
+  "orientation": [0.0, 0.0, 0.0],
   "position": [0.0, 0.0, 0.0]
 }

@@ -22,6 +22,28 @@ std::function<double(double)> clamper(double value)
   return clamp;
 }
 
+const mc_rbdyn::ForceSensor & getSensor(const mc_rbdyn::Robots & robots,
+                                        unsigned int robotIndex,
+                                        const std::string & body)
+{
+  if(robotIndex >= robots.size())
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::ComplianceTask] No robot with index "
+                                                << robotIndex << ", " << robots.size() << " robots loaded");
+  }
+  const auto & robot = robots.robot(robotIndex);
+  if(!robot.hasBody(body))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error,
+                        "[mc_tasks::ComplianceTask] No body named " << body << " in " << robot.name());
+  }
+  if(!robot.bodyHasForceSensor(body))
+  {
+    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::ComplianceTask] No force sensor attached to " << body)
+  }
+  return robot.bodyForceSensor(body);
+}
+
 } // namespace
 
 ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
@@ -36,15 +58,10 @@ ComplianceTask::ComplianceTask(const mc_rbdyn::Robots & robots,
                                std::pair<double, double> forceGain,
                                std::pair<double, double> torqueGain)
 : wrench_(Eigen::Vector6d::Zero()), obj_(Eigen::Vector6d::Zero()), error_(Eigen::Vector6d::Zero()),
-  errorD_(Eigen::Vector6d::Zero()), robots_(robots), rIndex_(robotIndex),
-  sensor_(robots_.robot(rIndex_).bodyForceSensor(body)), timestep_(timestep), forceThresh_(forceThresh),
-  torqueThresh_(torqueThresh), forceGain_(forceGain), torqueGain_(torqueGain), dof_(dof)
+  errorD_(Eigen::Vector6d::Zero()), robots_(robots), rIndex_(robotIndex), sensor_(getSensor(robots, robotIndex, body)),
+  timestep_(timestep), forceThresh_(forceThresh), torqueThresh_(torqueThresh), forceGain_(forceGain),
+  torqueGain_(torqueGain), dof_(dof)
 {
-  const auto & robot = robots.robot(robotIndex);
-  if(!robot.bodyHasForceSensor(body))
-  {
-    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::ComplianceTask] No force sensor attached to " << body)
-  }
   efTask_ = std::make_shared<EndEffectorTask>(body, robots, robotIndex, stiffness, weight);
   clampTrans_ = clamper(0.01);
   clampRot_ = clamper(0.1);

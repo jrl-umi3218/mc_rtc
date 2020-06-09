@@ -1,12 +1,9 @@
 {
-  "title": "CoM",
-  "description": "CoM Task properties",
   "type": "object",
   "properties":
   {
-    "com": { "$ref": "/../../Eigen/Vector3d.json" },
-    "move_com": { "$ref": "/../../Eigen/Vector3d.json" },
-    "offset": { "$ref": "/../../Eigen/Vector3d.json" },
+    "com": { "$ref": "/../../Eigen/Vector3d.json", "description": "Desired position of the CoM (world frame)" },
+    "move_com": { "$ref": "/../../Eigen/Vector3d.json", "description": "Move the desired CoM position (world frame)" },
     "weight": { "type": "number", "minimum": 0},
     "stiffness": { "type": "number", "minimum": 0},
     "damping": { "type": "number", "minimum": 0},

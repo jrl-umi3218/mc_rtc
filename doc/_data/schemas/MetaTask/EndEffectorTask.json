@@ -17,10 +17,10 @@
         "orientation": { "$ref": "/../../Eigen/Matrix3d.json" },
         "position": { "$ref": "/../../Eigen/Vector3d.json" },
         "relative": { "$ref": "/../../common/relative.json" },
-        "orientationStiffness": { "type": "number", "minimum": 0},
-        "orientationWeight": { "type": "number", "minimum": 0},
-        "positionStiffness": { "type": "number", "minimum": 0},
-        "positionWeight": { "type": "number", "minimum": 0}
+        "orientationStiffness": { "type": "number", "minimum": 0, "default": 2},
+        "orientationWeight": { "type": "number", "minimum": 0, "default": 1000},
+        "positionStiffness": { "type": "number", "minimum": 0, "default": 2},
+        "positionWeight": { "type": "number", "minimum": 0, "default": 1000}
       }
     },
     {

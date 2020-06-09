@@ -1,9 +1,15 @@
 {
   "title": "mc_tasks::ExactCubicTrajectoryTask",
-  "description": "Follow an exact cubic curve (passing exactly through waypoints with initial/final velocity and acceleration constraints)",
+  "description": "Follow an exact cubic curve (passing exactly through waypoints with initial/final velocity and acceleration constraints)<br/>All targets and waypoints are defined in world frame, except when using \"targetSurface\". In that case they are defined in target surface frame.",
   "type": "object",
   "allOf":
   [
+    {
+      "properties":
+      {
+        "type": { "enum": ["exact_cubic_trajectory"] }
+      }
+    },
     {
       "$ref": "/../../common/MetaTask_common.json"
     },
@@ -11,27 +17,14 @@
       "$ref": "/../../common/MetaTask_surface.json"
     },
     {
-      "properties":
-      {
-        "type": { "enum": ["exact_cubic_trajectory"] },
-        "duration": { "type": "number", "minimum": 0 },
-        "stiffness": { "type": "number", "minimum": 0 },
-        "weight": { "type": "number", "minimum": 0 },
-        "displaySamples": { "type": "number", "minimum": 1 }
-      }
-    },
-    {
-      "$ref": "/../../common/TrajectoryTask_targets.json"
-    },
-    {
       "$ref": "/../../common/TrajectoryTaskGeneric.json"
     },
     {
-      "properties":
-      {
-        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
-      }
+      "$ref": "/../../common/SplineTrajectoryTask_common.json"
+    },
+    {
+      "$ref": "/../../common/ExactCubicTrajectoryTask_targets.json"
     }
   ],
-  "required": ["type", "surface", "duration", "stiffness", "weight"]
+  "required": ["type", "surface"]
 }

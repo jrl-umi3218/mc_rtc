@@ -59,9 +59,9 @@ public:
                        std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
                        mc_rbdyn::Contact & contact,
                        double direction,
-                       double speed,
-                       double stiffness,
-                       double weight,
+                       double speed = 0.01,
+                       double stiffness = 2,
+                       double weight = 1000,
                        Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief General constructor with self-managed bounded speed constraint
@@ -86,9 +86,9 @@ public:
   AddRemoveContactTask(mc_solver::QPSolver & solver,
                        mc_rbdyn::Contact & contact,
                        double direction,
-                       double speed,
-                       double stiffness,
-                       double weight,
+                       double speed = 0.01,
+                       double stiffness = 2,
+                       double weight = 1000,
                        Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief Set the displacement direction
@@ -196,17 +196,17 @@ public:
   AddContactTask(mc_rbdyn::Robots & robots,
                  std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
                  mc_rbdyn::Contact & contact,
-                 double speed,
-                 double stiffness,
-                 double weight,
+                 double speed = 0.01,
+                 double stiffness = 2,
+                 double weight = 1000,
                  Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief Constructor (self-managed speed constraint) */
   AddContactTask(mc_solver::QPSolver & solver,
                  mc_rbdyn::Contact & contact,
-                 double speed,
-                 double stiffness,
-                 double weight,
+                 double speed = 0.01,
+                 double stiffness = 2,
+                 double weight = 1000,
                  Eigen::Vector3d * userT_0_s = nullptr);
 };
 
@@ -223,17 +223,17 @@ public:
   RemoveContactTask(mc_rbdyn::Robots & robots,
                     std::shared_ptr<mc_solver::BoundedSpeedConstr> constSpeedConstr,
                     mc_rbdyn::Contact & contact,
-                    double speed,
-                    double stiffness,
-                    double weight,
+                    double speed = 0.01,
+                    double stiffness = 2,
+                    double weight = 1000,
                     Eigen::Vector3d * userT_0_s = nullptr);
 
   /*! \brief Constructor (self-managed speed constraint) */
   RemoveContactTask(mc_solver::QPSolver & solver,
                     mc_rbdyn::Contact & contact,
-                    double speed,
-                    double stiffness,
-                    double weight,
+                    double speed = 0.01,
+                    double stiffness = 2,
+                    double weight = 1000,
                     Eigen::Vector3d * userT_0_s = nullptr);
 };
 
