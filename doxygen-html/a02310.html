@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::Logger Struct Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02310.html','');});
+$(document).ready(function(){initNavTree('a02313.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,432 +69,31 @@ $(document).ready(function(){initNavTree('a02310.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
-<a href="a02307.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::Logger Struct Reference</div>  </div>
+<div class="title">mc_rtc::Logger Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Logs controller data to disk.  
- <a href="a02310.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_rtc/log/Logger.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a0fefb36635930cf5a9db966442756b9b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02310.html#a0fefb36635930cf5a9db966442756b9b">Policy</a> { <br />
-&#160;&#160;<a class="el" href="a02310.html#a0fefb36635930cf5a9db966442756b9ba1515271d5edd3952e5aa146109a98e78">Policy::NON_THREADED</a> = 0, 
-<br />
-&#160;&#160;<a class="el" href="a02310.html#a0fefb36635930cf5a9db966442756b9ba1ba1ba2bd2141794d82c4363b7e533f7">Policy::THREADED</a> = 1
-<br />
- }<tr class="memdesc:a0fefb36635930cf5a9db966442756b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines available policies for the logger.  <a href="a02310.html#a0fefb36635930cf5a9db966442756b9b">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:a0fefb36635930cf5a9db966442756b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fd0d1237a81647e462f7af2b4225d5e"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(<a class="el" href="a02334.html">mc_rtc::MessagePackBuilder</a> &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02310.html#a6fd0d1237a81647e462f7af2b4225d5e">serialize_fn</a></td></tr>
-<tr class="memdesc:a6fd0d1237a81647e462f7af2b4225d5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function that fills LogData vectors.  <a href="#a6fd0d1237a81647e462f7af2b4225d5e">More...</a><br /></td></tr>
-<tr class="separator:a6fd0d1237a81647e462f7af2b4225d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a18ce85d2d7612f7029b47a3931c72316"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02310.html#a18ce85d2d7612f7029b47a3931c72316">Logger</a> (const <a class="el" href="a02310.html#a0fefb36635930cf5a9db966442756b9b">Policy</a> &amp;policy, const std::string &amp;directory, const std::string &amp;tmpl)</td></tr>
-<tr class="memdesc:a18ce85d2d7612f7029b47a3931c72316"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a18ce85d2d7612f7029b47a3931c72316">More...</a><br /></td></tr>
-<tr class="separator:a18ce85d2d7612f7029b47a3931c72316"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7692f0ca12a02805cba83a9422de5a4e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02310.html#a7692f0ca12a02805cba83a9422de5a4e">~Logger</a> ()</td></tr>
-<tr class="memdesc:a7692f0ca12a02805cba83a9422de5a4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a7692f0ca12a02805cba83a9422de5a4e">More...</a><br /></td></tr>
-<tr class="separator:a7692f0ca12a02805cba83a9422de5a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a986b2719c1337aa9d1e84e2b0b34481c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02310.html#a986b2719c1337aa9d1e84e2b0b34481c">setup</a> (const <a class="el" href="a02310.html#a0fefb36635930cf5a9db966442756b9b">Policy</a> &amp;policy, const std::string &amp;directory, const std::string &amp;tmpl)</td></tr>
-<tr class="memdesc:a986b2719c1337aa9d1e84e2b0b34481c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup the constructor configuration.  <a href="#a986b2719c1337aa9d1e84e2b0b34481c">More...</a><br /></td></tr>
-<tr class="separator:a986b2719c1337aa9d1e84e2b0b34481c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a6f0685999b14f4bf67cd30dce03413"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02310.html#a7a6f0685999b14f4bf67cd30dce03413">start</a> (const std::string &amp;ctl_name, double timestep, bool resume=false)</td></tr>
-<tr class="memdesc:a7a6f0685999b14f4bf67cd30dce03413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start logging.  <a href="#a7a6f0685999b14f4bf67cd30dce03413">More...</a><br /></td></tr>
-<tr class="separator:a7a6f0685999b14f4bf67cd30dce03413"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec88caf27ebb9c9615ed4fd51d9ccd98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02310.html#aec88caf27ebb9c9615ed4fd51d9ccd98">log</a> ()</td></tr>
-<tr class="memdesc:aec88caf27ebb9c9615ed4fd51d9ccd98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log controller's data.  <a href="#aec88caf27ebb9c9615ed4fd51d9ccd98">More...</a><br /></td></tr>
-<tr class="separator:aec88caf27ebb9c9615ed4fd51d9ccd98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fe9ebf879c471ae7741170c9e0d6933"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a1fe9ebf879c471ae7741170c9e0d6933"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02310.html#a1fe9ebf879c471ae7741170c9e0d6933">addLogEntry</a> (const std::string &amp;name, T get_fn, typename std::enable_if&lt; <a class="el" href="a02326.html">mc_rtc::log::callback_is_serializable</a>&lt; T &gt;::value &gt;::type *=0)</td></tr>
-<tr class="memdesc:a1fe9ebf879c471ae7741170c9e0d6933"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a log entry into the log.  <a href="#a1fe9ebf879c471ae7741170c9e0d6933">More...</a><br /></td></tr>
-<tr class="separator:a1fe9ebf879c471ae7741170c9e0d6933"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b1427e1251ebbd90947468fc4bdf964"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02310.html#a2b1427e1251ebbd90947468fc4bdf964">removeLogEntry</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:a2b1427e1251ebbd90947468fc4bdf964"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a log entry from the log.  <a href="#a2b1427e1251ebbd90947468fc4bdf964">More...</a><br /></td></tr>
-<tr class="separator:a2b1427e1251ebbd90947468fc4bdf964"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb0d9597ada6a67eb2a89fcda8c74e7d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02310.html#aeb0d9597ada6a67eb2a89fcda8c74e7d">t</a> () const</td></tr>
-<tr class="memdesc:aeb0d9597ada6a67eb2a89fcda8c74e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the time elapsed since the controller start.  <a href="#aeb0d9597ada6a67eb2a89fcda8c74e7d">More...</a><br /></td></tr>
-<tr class="separator:aeb0d9597ada6a67eb2a89fcda8c74e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:ae70a958cf17138f9b726740deab0d34c"><td class="memItemLeft" align="right" valign="top">static const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02310.html#ae70a958cf17138f9b726740deab0d34c">magic</a> [4]</td></tr>
-<tr class="memdesc:ae70a958cf17138f9b726740deab0d34c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Magic number used to identify binary logs.  <a href="#ae70a958cf17138f9b726740deab0d34c">More...</a><br /></td></tr>
-<tr class="separator:ae70a958cf17138f9b726740deab0d34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Logs controller data to disk. </p>
-<p>The user can select a desired logging policy that will impact the behaviour of this class.</p>
-<p>See <a class="el" href="a02310.html#a0fefb36635930cf5a9db966442756b9b" title="Defines available policies for the logger. ">mc_rtc::Logger::Policy</a> documentation for details on available policies </p>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a6fd0d1237a81647e462f7af2b4225d5e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fd0d1237a81647e462f7af2b4225d5e">&#9670;&nbsp;</a></span>serialize_fn</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::function&lt;void(<a class="el" href="a02334.html">mc_rtc::MessagePackBuilder</a> &amp;)&gt; <a class="el" href="a02310.html#a6fd0d1237a81647e462f7af2b4225d5e">mc_rtc::Logger::serialize_fn</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function that fills LogData vectors. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="a0fefb36635930cf5a9db966442756b9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0fefb36635930cf5a9db966442756b9b">&#9670;&nbsp;</a></span>Policy</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a02310.html#a0fefb36635930cf5a9db966442756b9b">mc_rtc::Logger::Policy</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Defines available policies for the logger. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0fefb36635930cf5a9db966442756b9ba1515271d5edd3952e5aa146109a98e78"></a>NON_THREADED&#160;</td><td class="fielddoc"><p>Non-threaded policy. </p>
-<p>Using this policy, the logging disk operations are done in the same thread as the global controller running thread, this is well suited for simulations and environments where you can guarantee a very fast access to the disk (e.g. logging to a ramdisk) </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a0fefb36635930cf5a9db966442756b9ba1ba1ba2bd2141794d82c4363b7e533f7"></a>THREADED&#160;</td><td class="fielddoc"><p>Threaded policy. </p>
-<p>Using this policy, the logging disk operations are done in a separate thread from the global controller running thread. As a result, some buffering occurs and you might lose some data if the controller crashes. This is intended for real-time environments. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a18ce85d2d7612f7029b47a3931c72316"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18ce85d2d7612f7029b47a3931c72316">&#9670;&nbsp;</a></span>Logger()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_rtc::Logger::Logger </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02310.html#a0fefb36635930cf5a9db966442756b9b">Policy</a> &amp;&#160;</td>
-          <td class="paramname"><em>policy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>directory</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>tmpl</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">policy</td><td>The chosen logging policy</td></tr>
-    <tr><td class="paramname">directory</td><td>Path to the directory where log files will be stored</td></tr>
-    <tr><td class="paramname">tmpl</td><td>Log file template </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a7692f0ca12a02805cba83a9422de5a4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7692f0ca12a02805cba83a9422de5a4e">&#9670;&nbsp;</a></span>~Logger()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_rtc::Logger::~Logger </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Destructor. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1fe9ebf879c471ae7741170c9e0d6933"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fe9ebf879c471ae7741170c9e0d6933">&#9670;&nbsp;</a></span>addLogEntry()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_rtc::Logger::addLogEntry </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>get_fn</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">typename std::enable_if&lt; <a class="el" href="a02326.html">mc_rtc::log::callback_is_serializable</a>&lt; T &gt;::value &gt;::type *&#160;</td>
-          <td class="paramname"> = <code>0</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add a log entry into the log. </p>
-<p>This function only accepts callable objects that returns a l/rvalue to a serializable object.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>Name of the log entry, this should be unique at any given time but the same key can be re-used during the logger's life</td></tr>
-    <tr><td class="paramname">get_fn</td><td>A function that provides data that should be logged </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="reference">References <a class="el" href="a00356.html#ac6c926a2075cbaa39c4e9d12a2cac7e2">LOG_ERROR</a>, and <a class="el" href="a02330.html#ac76dfb54b68fb04d65d6fcb1cb6e061d">mc_rtc::log::LogWriter&lt; T &gt;::write()</a>.</p>
-
-</div>
-</div>
-<a id="aec88caf27ebb9c9615ed4fd51d9ccd98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec88caf27ebb9c9615ed4fd51d9ccd98">&#9670;&nbsp;</a></span>log()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_rtc::Logger::log </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Log controller's data. </p>
-<p>Print controller data to the log. </p>
-
-</div>
-</div>
-<a id="a2b1427e1251ebbd90947468fc4bdf964"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b1427e1251ebbd90947468fc4bdf964">&#9670;&nbsp;</a></span>removeLogEntry()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_rtc::Logger::removeLogEntry </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Remove a log entry from the log. </p>
-<p>This has no effect if the log entry does not exist.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>Name of the entry </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a986b2719c1337aa9d1e84e2b0b34481c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a986b2719c1337aa9d1e84e2b0b34481c">&#9670;&nbsp;</a></span>setup()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_rtc::Logger::setup </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02310.html#a0fefb36635930cf5a9db966442756b9b">Policy</a> &amp;&#160;</td>
-          <td class="paramname"><em>policy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>directory</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>tmpl</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Setup the constructor configuration. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">policy</td><td>The chosen logging policy</td></tr>
-    <tr><td class="paramname">directory</td><td>Path to the directory where log files will be stored</td></tr>
-    <tr><td class="paramname">tmpl</td><td>Log file template </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a7a6f0685999b14f4bf67cd30dce03413"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a6f0685999b14f4bf67cd30dce03413">&#9670;&nbsp;</a></span>start()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_rtc::Logger::start </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>ctl_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>timestep</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>resume</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Start logging. </p>
-<p>Print the file header to the log. This should be called at initialization or when a controller switch occurs</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ctl_name</td><td>Name of the running controller</td></tr>
-    <tr><td class="paramname">timestep</td><td>Time increment for the log time entry</td></tr>
-    <tr><td class="paramname">resume</td><td>If true, start the time entry at the current value, otherwise, start at 0 </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aeb0d9597ada6a67eb2a89fcda8c74e7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb0d9597ada6a67eb2a89fcda8c74e7d">&#9670;&nbsp;</a></span>t()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rtc::Logger::t </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return the time elapsed since the controller start. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="ae70a958cf17138f9b726740deab0d34c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae70a958cf17138f9b726740deab0d34c">&#9670;&nbsp;</a></span>magic</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint8_t mc_rtc::Logger::magic[4]</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Magic number used to identify binary logs. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a02313.html">mc_rtc::Logger</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a02313.html#a1fe9ebf879c471ae7741170c9e0d6933">addLogEntry</a>(const std::string &amp;name, T get_fn, typename std::enable_if&lt; mc_rtc::log::callback_is_serializable&lt; T &gt;::value &gt;::type *=0)</td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02313.html#aec88caf27ebb9c9615ed4fd51d9ccd98">log</a>()</td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02313.html#a18ce85d2d7612f7029b47a3931c72316">Logger</a>(const Policy &amp;policy, const std::string &amp;directory, const std::string &amp;tmpl)</td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02313.html#ae70a958cf17138f9b726740deab0d34c">magic</a></td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02313.html#a0fefb36635930cf5a9db966442756b9b">Policy</a> enum name</td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02313.html#a2b1427e1251ebbd90947468fc4bdf964">removeLogEntry</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02313.html#a6fd0d1237a81647e462f7af2b4225d5e">serialize_fn</a> typedef</td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02313.html#a986b2719c1337aa9d1e84e2b0b34481c">setup</a>(const Policy &amp;policy, const std::string &amp;directory, const std::string &amp;tmpl)</td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02313.html#a7a6f0685999b14f4bf67cd30dce03413">start</a>(const std::string &amp;ctl_name, double timestep, bool resume=false)</td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02313.html#aeb0d9597ada6a67eb2a89fcda8c74e7d">t</a>() const</td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02313.html#a7692f0ca12a02805cba83a9422de5a4e">~Logger</a>()</td><td class="entry"><a class="el" href="a02313.html">mc_rtc::Logger</a></td><td class="entry"></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00718.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02310.html">Logger</a></li>
-    <li class="footer">Generated on Mon Jun 8 2020 03:51:46 for mc_rtc by
+    <li class="footer">Generated on Tue Jun 9 2020 11:59:25 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

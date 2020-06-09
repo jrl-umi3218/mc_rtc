@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::gui::details Namespace Reference</title>
+<title>mc_rtc::internal Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -71,48 +71,114 @@ $(document).ready(function(){initNavTree('a00737.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::gui::details Namespace Reference</div>  </div>
+<div class="title">mc_rtc::internal Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02074.html">CheckReturnType</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the return type of a getter function.  <a href="a02074.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01977.html">_has_configuration_load_object</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: T <a class="el" href="a01969.html#a3e8685e2cdb83f2ec06ab4e231a653ae">ConfigurationLoader&lt;T&gt;::load(const mc_rtc::Configuration &amp;)</a>; is a valid function or not.  <a href="a01977.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02078.html">CheckReturnType&lt; GetT, T &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01985.html">_has_configuration_save_object</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: <a class="el" href="a01993.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> <a class="el" href="a01969.html#ac516ceb726f94bd4e5a32ad25f1178c2">mc_rtc::ConfigurationLoader&lt;T&gt;::save</a>(const T&amp;, Args ...); is a valid construct or not.  <a href="a01985.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02082.html">CheckReturnType&lt; GetT, T, Args... &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02025.html">Allocator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocator&lt;T&gt; is std::allocator&lt;T&gt; for usual types.  <a href="a02025.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02070.html">ReturnType</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the return type of a getter function.  <a href="a02070.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02029.html">Allocator&lt; T, typename T::eigen_aligned_operator_new_marker_type &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocator&lt;T&gt; is Eigen::aligned_allocator for EIGEN_MAKE_ALIGNED_OPERATOR_NEW types.  <a href="a02029.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02021.html">args_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bend usual C++ rules to deduct the argument types in call.  <a href="a02021.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01981.html">has_configuration_load_object</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01989.html">has_configuration_save_object</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02009.html">lambda_traits</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract return type and argument types from a lambda by accessing ::operator()  <a href="a02009.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02013.html">lambda_traits&lt; RetT(C::*)(Args...) const &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization that matches non-mutable lambda.  <a href="a02013.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02017.html">lambda_traits&lt; RetT(C::*)(Args...)&gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization that matches mutable lambda.  <a href="a02017.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a62d70a1c5467de8404eceee15a80da68"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:a62d70a1c5467de8404eceee15a80da68"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00737.html#a62d70a1c5467de8404eceee15a80da68">ReturnTypeT</a> = typename <a class="el" href="a02070.html">ReturnType</a>&lt; GetT &gt;::type</td></tr>
-<tr class="memdesc:a62d70a1c5467de8404eceee15a80da68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper.  <a href="#a62d70a1c5467de8404eceee15a80da68">More...</a><br /></td></tr>
-<tr class="separator:a62d70a1c5467de8404eceee15a80da68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a759676405e1815363e6d9094dd1919b1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a759676405e1815363e6d9094dd1919b1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00737.html#a759676405e1815363e6d9094dd1919b1">is_valid_hash</a> (std::size_t h)</td></tr>
+<tr class="separator:a759676405e1815363e6d9094dd1919b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memTemplParams" colspan="2">template&lt;typename T , typename U , typename... Args&gt; </td></tr>
+<tr class="memitem:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00737.html#a0f0cc0f5914bc62d93b19fda0ed53e75">is_valid_hash</a> (std::size_t h)</td></tr>
+<tr class="separator:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af017e274f3cf4699850fdbf753d07fa2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00365.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00737.html#af017e274f3cf4699850fdbf753d07fa2">demangle</a> (const char *name)</td></tr>
+<tr class="separator:af017e274f3cf4699850fdbf753d07fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a62d70a1c5467de8404eceee15a80da68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62d70a1c5467de8404eceee15a80da68">&#9670;&nbsp;</a></span>ReturnTypeT</h2>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="af017e274f3cf4699850fdbf753d07fa2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af017e274f3cf4699850fdbf753d07fa2">&#9670;&nbsp;</a></span>demangle()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename GetT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00737.html#a62d70a1c5467de8404eceee15a80da68">mc_rtc::gui::details::ReturnTypeT</a> = typedef typename <a class="el" href="a02070.html">ReturnType</a>&lt;GetT&gt;::type</td>
+          <td class="memname"><a class="el" href="a00365.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string mc_rtc::internal::demangle </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Helper. </p>
+<p class="reference">Referenced by <a class="el" href="a00721.html#a8fb61bc6391bc9cd0ef2aa0efff2d641">mc_rtc::type_name()</a>.</p>
+
+</div>
+</div>
+<a id="a759676405e1815363e6d9094dd1919b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a759676405e1815363e6d9094dd1919b1">&#9670;&nbsp;</a></span>is_valid_hash() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::internal::is_valid_hash </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>h</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a02033.html#ad1fe100eb7cb874c226ff76ed64f3cfe">mc_rtc::DataStore::name()</a>.</p>
+
+</div>
+</div>
+<a id="a0f0cc0f5914bc62d93b19fda0ed53e75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f0cc0f5914bc62d93b19fda0ed53e75">&#9670;&nbsp;</a></span>is_valid_hash() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename U , typename... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rtc::internal::is_valid_hash </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>h</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -122,8 +188,8 @@ template&lt;typename GetT &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00718.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00736.html">gui</a></li><li class="navelem"><a class="el" href="a00737.html">details</a></li>
-    <li class="footer">Generated on Mon Jun 8 2020 03:51:47 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00721.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00737.html">internal</a></li>
+    <li class="footer">Generated on Tue Jun 9 2020 11:59:25 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

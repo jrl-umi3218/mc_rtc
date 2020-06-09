@@ -70,23 +70,28 @@ $(document).ready(function(){initNavTree('a03602.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver/msg/ZMP.h File Reference</div>  </div>
+<div class="title">mc_rbdyn/ZMP.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;vector&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a03554.html">mc_rbdyn/api.h</a>&gt;</code><br />
+<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02458.html">mc_solver::ZMP</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00726"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html">mc_solver</a></td></tr>
+<tr class="memitem:a00724"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00724.html">mc_rbdyn</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a329453006944dae96fa60d86dca66db8"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d <a class="el" href="a03554.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00724.html#a329453006944dae96fa60d86dca66db8">mc_rbdyn::zmp</a> (const sva::ForceVecd &amp;netTotalWrench, const Eigen::Vector3d &amp;plane_p, const Eigen::Vector3d &amp;plane_n, double minimalNetNormalForce=1.)</td></tr>
+<tr class="memdesc:a329453006944dae96fa60d86dca66db8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actual ZMP computation from net total wrench and the ZMP plane.  <a href="a00724.html#a329453006944dae96fa60d86dca66db8">More...</a><br /></td></tr>
+<tr class="separator:a329453006944dae96fa60d86dca66db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9d4155584b04e51fdb5c24f5739fc24"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d <a class="el" href="a03554.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00724.html#aa9d4155584b04e51fdb5c24f5739fc24">mc_rbdyn::zmp</a> (const sva::ForceVecd &amp;netTotalWrench, const sva::PTransformd &amp;zmpFrame, double minimalNetNormalForce=1.)</td></tr>
+<tr class="memdesc:aa9d4155584b04e51fdb5c24f5739fc24"><td class="mdescLeft">&#160;</td><td class="mdescRight">ZMP computation from net total wrench and a frame.  <a href="a00724.html#aa9d4155584b04e51fdb5c24f5739fc24">More...</a><br /></td></tr>
+<tr class="separator:aa9d4155584b04e51fdb5c24f5739fc24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -94,8 +99,8 @@ Namespaces</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fad12f0f0b10f75a80792b958ab0d808.html">mc_solver</a></li><li class="navelem"><a class="el" href="dir_334ef0e5d85f2880d776f6f4efef6326.html">msg</a></li><li class="navelem"><a class="el" href="a03602.html">ZMP.h</a></li>
-    <li class="footer">Generated on Mon Jun 8 2020 03:51:46 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a03602.html">ZMP.h</a></li>
+    <li class="footer">Generated on Tue Jun 9 2020 11:59:24 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

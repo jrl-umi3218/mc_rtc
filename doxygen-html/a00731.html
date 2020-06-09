@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rbdyn::details Namespace Reference</title>
+<title>mc_rbdyn::lipm_stabilizer Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,59 +70,31 @@ $(document).ready(function(){initNavTree('a00731.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::details Namespace Reference</div>  </div>
+<div class="title">mc_rbdyn::lipm_stabilizer Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01918.html">are_strings</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01869.html">FDQPWeights</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Weights for force distribution quadratic program (FDQP).  <a href="a01869.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01922.html">are_strings&lt; T &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01877.html">StabilizerConfiguration</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration of the LIPMStabilizer.  <a href="a01877.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01926.html">are_strings&lt; T, Args... &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01885.html">ZMPCCConfiguration</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a71fcd7fe46e75452f9c6302bb1c40412"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a71fcd7fe46e75452f9c6302bb1c40412"><td class="memTemplItemLeft" align="right" valign="top">std::conditional&lt; std::is_same&lt; std::string, T &gt;::value, const std::string &amp;, std::string &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00731.html#a71fcd7fe46e75452f9c6302bb1c40412">to_string</a> (const T &amp;value)</td></tr>
-<tr class="separator:a71fcd7fe46e75452f9c6302bb1c40412"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a71fcd7fe46e75452f9c6302bb1c40412"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71fcd7fe46e75452f9c6302bb1c40412">&#9670;&nbsp;</a></span>to_string()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::conditional&lt;std::is_same&lt;std::string, T&gt;::value, const std::string &amp;, std::string&gt;::type mc_rbdyn::details::to_string </td>
-          <td>(</td>
-          <td class="paramtype">const T &amp;&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a00723.html#aab0443f3755eb02422bb0ed23308f220">mc_filter::utils::clampAndWarn()</a>, <a class="el" href="a00723.html#aae7592fcc8c4adee0d0108bc9ffba659">mc_filter::utils::clampInPlaceAndWarn()</a>, and <a class="el" href="a01930.html#ad660aedc7dbf7cd0cd0e60da5fffe4c2">mc_rbdyn::RobotLoader::get_robot_module()</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00721.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00731.html">details</a></li>
-    <li class="footer">Generated on Mon Jun 8 2020 03:51:46 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00724.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00731.html">lipm_stabilizer</a></li>
+    <li class="footer">Generated on Tue Jun 9 2020 11:59:25 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
