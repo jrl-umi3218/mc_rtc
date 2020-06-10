@@ -408,11 +408,13 @@ install_mc_rtc_lib(mc_tasks)
 
 set(mc_planning_SRC
 mc_planning/Pendulum.cpp
+mc_planning/LinearTimeInvariantInvertedPendulum.cpp
 )
 
 set(mc_planning_HDR
 ../include/mc_planning/Pendulum.h
 ../include/mc_planning/api.h
+../include/mc_planning/LinearTimeInvariantInvertedPendulum.h
 )
 
 add_library(mc_planning SHARED ${mc_planning_SRC} ${mc_planning_HDR})
