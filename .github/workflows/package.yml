@@ -5,6 +5,9 @@ on:
     types:
     - package-master
     - package-release
+  pull_request:
+    branches:
+    - "**"
   push:
     paths-ignore:
     - ".gitlab-ci.yml"

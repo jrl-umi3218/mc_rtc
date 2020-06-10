@@ -20,6 +20,9 @@ name: Package mc_rtc
 on:
   repository_dispatch:
     types: [package-master, package-release]
+  pull_request:
+    branches:
+    - "**"
   push:
     paths-ignore:
       # Changes to those files don't mandate rebuilding a package
