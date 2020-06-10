@@ -6,6 +6,8 @@
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_tasks/CoMTask.h>
 
+#include <spdlog/spdlog.h>
+
 #include "benchmark/benchmark.h"
 
 #pragma GCC diagnostic push
@@ -18,8 +20,7 @@ const double dt = 0.005;
 
 mc_rbdyn::Robots & get_robots()
 {
-  // XXX silence missing calibration file warning
-  std::cerr.rdbuf(nullptr);
+  spdlog::set_level(spdlog::level::err);
   static std::shared_ptr<mc_rbdyn::Robots> robots_ptr = nullptr;
   if(robots_ptr)
   {

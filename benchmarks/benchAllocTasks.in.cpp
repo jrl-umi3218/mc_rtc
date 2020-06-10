@@ -5,6 +5,8 @@
 #include <mc_tasks/SurfaceTransformTask.h>
 #include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
 
+#include <spdlog/spdlog.h>
+
 #include "benchmark/benchmark.h"
 
 class AllocTaskFixture : public benchmark::Fixture
@@ -12,8 +14,7 @@ class AllocTaskFixture : public benchmark::Fixture
 public:
   void SetUp(const ::benchmark::State &)
   {
-    // XXX silence error output
-    std::cerr.rdbuf(nullptr);
+    spdlog::set_level(spdlog::level::err);
     auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
     solver.robots().load(*rm);
     solver.realRobots(std::make_shared<mc_rbdyn::Robots>(solver.robots()));
