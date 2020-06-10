@@ -1,22 +1,45 @@
----
 name: Package mc_rtc
+
+# On any branch/pull request it will:
+# - Build packages for selected Debian/Ubuntu distros
+#
+# On master, it will additionally:
+# - Build packages for selected Debian/Ubuntu distro
+# - Upload the packages to https://dl.bintray.com/gergondet/multi-contact-head
+#
+# On tagged versions it will:
+# - Create a GitHub release draft
+# - Attach the sources to the release
+# - Build packages for selected Debian/Ubuntu distro
+# - Upload the packages to https://dl.bintray.com/gergondet/multi-contact
+#
+# On package-master trigger, it will rebuild and upload the latest master package
+#
+# On package-release trigger, it will rebuild and upload the latest release package
+
 on:
   repository_dispatch:
-    types:
-    - package-master
-    - package-release
+    types: [package-master, package-release]
   push:
     paths-ignore:
-    - ".gitlab-ci.yml"
-    - ".jrl-ci"
-    - doc/**
-    - README.md
-    - ".github/workflows/build.yml"
+      # Changes to those files don't mandate rebuilding a package
+      - ".gitlab-ci.yml"
+      - ".jrl-ci"
+      - "doc/**"
+      - "README.md"
+      - ".github/workflows/build.yml"
     branches:
-    - "**"
+      - '**'
     tags:
-    - v*
+      - v*
+
 jobs:
+  # For a given tag vX.Y.Z, this checks:
+  # - set(PROJECT_VERSION X.Y.Z) in CMakeLists.txt
+  # - version X.Y.Z in debian/changelog
+  # If these checks fail, the tag is automatically deleted
+  #
+  # This job does not run on the master branch
   check-tag:
     runs-on: ubuntu-18.04
     steps:
@@ -44,39 +67,36 @@ jobs:
     - name: Notify tag deletion
       uses: archive/github-actions-slack@master
       with:
-        slack-bot-user-oauth-access-token: "${{ secrets.SLACK_BOT_TOKEN }}"
-        slack-channel: "#ci"
-        slack-text: |
+        slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_TOKEN }}
+        slack-channel: '#ci'
+        slack-text: >
           Tag *${{ github.ref }}* in *${{ github.repository }}* was deleted:
             ${{ env.REJECTION}}
       if: failure()
     - name: Create release
       uses: jrl-umi3218/github-actions/create-release@master
       with:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        tag: "${{ env.RELEASE_TAG }}"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ env.RELEASE_TAG }}
       if: startsWith(github.ref, 'refs/tags/')
+  # This job build binary packages for Ubuntu
   build-packages:
     needs: check-tag
     strategy:
       fail-fast: false
-      matrix:
-        dist:
-        - xenial
-        - bionic
-        - focal
-        arch:
-        - i386
-        - amd64
+      matrix: &package-matrix
+        dist: [xenial, bionic, focal]
+        arch: [i386, amd64]
         exclude:
-        - dist: focal
-          arch: i386
+          - dist: focal
+            arch: i386
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
-    - name: Choose extra mirror
+    - &choose-extra-mirror
+      name: Choose extra mirror
       run: |
         # We upload in all conditions except when building on PR or branch other than master
         export PACKAGE_UPLOAD=true
@@ -116,70 +136,26 @@ jobs:
     - name: Build package
       uses: jrl-umi3218/github-actions/build-package-native@master
       with:
-        dist: "${{ matrix.dist }}"
-        arch: "${{ matrix.arch }}"
-        other-mirrors: "${{ env.EXTRA_MIRROR }}"
-        other-gpg-keys: '0x892EA6EE273707C6495A6FB6220D644C64666806'
+        dist: ${{ matrix.dist }}
+        arch: ${{ matrix.arch }}
+        other-mirrors: ${{ env.EXTRA_MIRROR }}
+        other-gpg-keys: "0x892EA6EE273707C6495A6FB6220D644C64666806"
     - uses: actions/upload-artifact@v1
       with:
         name: packages-${{ matrix.dist }}-${{ matrix.arch }}
-        path: "/tmp/packages-${{ matrix.dist }}-${{ matrix.arch }}/"
+        path: /tmp/packages-${{ matrix.dist }}-${{ matrix.arch }}/
       if: env.PACKAGE_UPLOAD == 'true'
+  # This job upload binary packages for Ubuntu
   upload-packages:
     needs: build-packages
     strategy:
       max-parallel: 1
       fail-fast: false
-      matrix:
-        dist:
-        - xenial
-        - bionic
-        - focal
-        arch:
-        - i386
-        - amd64
-        exclude:
-        - dist: focal
-          arch: i386
+      matrix: *package-matrix
     runs-on: ubuntu-18.04
     steps:
-    - name: Choose extra mirror
-      run: |
-        # We upload in all conditions except when building on PR or branch other than master
-        export PACKAGE_UPLOAD=true
-        if ${{ startsWith(github.ref, 'refs/tags/') }}
-        then
-          export USE_HEAD=false
-        elif [ "${{ github.event.action }}" == "package-master" ]
-        then
-          export USE_HEAD=true
-        elif [ "${{ github.event.action }}" == "package-release" ]
-        then
-          export USE_HEAD=false
-          export REF=`git tag --sort=committerdate --list 'v[0-9]*'|tail -1`
-          git checkout $REF
-          git submodule sync && git submodule update
-        else
-          export REF=`echo ${{ github.ref }} | sed -e 's@refs/[a-z]*/@@'`
-          export USE_HEAD=true
-          if [ $REF != "master" ]
-          then
-            export PACKAGE_UPLOAD=false
-          fi
-        fi
-        if $USE_HEAD
-        then
-          echo "::set-env name=BINTRAY_REPO::multi-contact-head"
-          echo "::set-env name=BINTRAY_VERSION::HEAD"
-          echo "::set-env name=EXTRA_MIRROR::https://dl.bintray.com/gergondet/multi-contact-head"
-          echo "::set-env name=PACKAGE_JOB::package-master"
-        else
-          echo "::set-env name=BINTRAY_REPO::multi-contact-release"
-          echo "::set-env name=BINTRAY_VERSION::${REF}"
-          echo "::set-env name=EXTRA_MIRROR::https://dl.bintray.com/gergondet/multi-contact-release"
-          echo "::set-env name=PACKAGE_JOB::package-release"
-        fi
-        echo "::set-env name=PACKAGE_UPLOAD::${PACKAGE_UPLOAD}"
+    - name: Set upload parameters
+      <<: *choose-extra-mirror
     - name: Download packages
       uses: actions/download-artifact@v1
       with:
@@ -188,20 +164,21 @@ jobs:
     - name: Upload
       uses: jrl-umi3218/github-actions/upload-package@master
       with:
-        dist: "${{ matrix.dist }}"
-        arch: "${{ matrix.arch }}"
+        dist: ${{ matrix.dist }}
+        arch: ${{ matrix.arch }}
         subject: gergondet
-        repo: "${{ env.BINTRAY_REPO }}"
+        repo: ${{ env.BINTRAY_REPO }}
         package: |
           name: mc-rtc
           desc: "mc_rtc is an interface for simulated and real robotic systems suitable for real-time control.  It provides programmers with a simple interface to build versatile controllers as well as a set of tools to help with the development of said controllers."
           licenses: [BSD 2-Clause]
           vcs_url: https://github.com/jrl-umi3218/mc_rtc
-        version: "${{ env.BINTRAY_VERSION }}"
+        version: ${{ env.BINTRAY_VERSION }}
         path: packages-${{ matrix.dist }}-${{ matrix.arch }}
-        BINTRAY_API_KEY: "${{ secrets.BINTRAY_API_KEY }}"
-        GPG_PASSPHRASE: "${{ secrets.GPG_PASSPHRASE }}"
+        BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
+        GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       if: env.PACKAGE_UPLOAD == 'true'
+  # This job triggers a mirror sync and dependent rebuilds
   mirror-sync-and-trigger:
     needs: upload-packages
     runs-on: ubuntu-18.04
@@ -209,47 +186,11 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
-    - name: Choose extra mirror
-      run: |
-        # We upload in all conditions except when building on PR or branch other than master
-        export PACKAGE_UPLOAD=true
-        if ${{ startsWith(github.ref, 'refs/tags/') }}
-        then
-          export USE_HEAD=false
-        elif [ "${{ github.event.action }}" == "package-master" ]
-        then
-          export USE_HEAD=true
-        elif [ "${{ github.event.action }}" == "package-release" ]
-        then
-          export USE_HEAD=false
-          export REF=`git tag --sort=committerdate --list 'v[0-9]*'|tail -1`
-          git checkout $REF
-          git submodule sync && git submodule update
-        else
-          export REF=`echo ${{ github.ref }} | sed -e 's@refs/[a-z]*/@@'`
-          export USE_HEAD=true
-          if [ $REF != "master" ]
-          then
-            export PACKAGE_UPLOAD=false
-          fi
-        fi
-        if $USE_HEAD
-        then
-          echo "::set-env name=BINTRAY_REPO::multi-contact-head"
-          echo "::set-env name=BINTRAY_VERSION::HEAD"
-          echo "::set-env name=EXTRA_MIRROR::https://dl.bintray.com/gergondet/multi-contact-head"
-          echo "::set-env name=PACKAGE_JOB::package-master"
-        else
-          echo "::set-env name=BINTRAY_REPO::multi-contact-release"
-          echo "::set-env name=BINTRAY_VERSION::${REF}"
-          echo "::set-env name=EXTRA_MIRROR::https://dl.bintray.com/gergondet/multi-contact-release"
-          echo "::set-env name=PACKAGE_JOB::package-release"
-        fi
-        echo "::set-env name=PACKAGE_UPLOAD::${PACKAGE_UPLOAD}"
+    - name: Set repository parameters
+      <<: *choose-extra-mirror
     - name: Request mirror sync
-      run: 'curl -ugergondet:${{ secrets.BINTRAY_API_KEY }} --header "X-GPG-PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}" -X POST https://api.bintray.com/calc_metadata/gergondet/${{ env.BINTRAY_REPO }}
-
-'
+      run: |
+        curl -ugergondet:${{ secrets.BINTRAY_API_KEY }} --header "X-GPG-PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}" -X POST https://api.bintray.com/calc_metadata/gergondet/${{ env.BINTRAY_REPO }}
       if: env.PACKAGE_UPLOAD == 'true'
     - name: Trigger dependents rebuild
       run: |
