@@ -54,8 +54,10 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   name_ = type_ + "_" + robots.robot(robotIndex).name();
 
   comTask.reset(new mc_tasks::CoMTask(robots, robotIndex_));
-  auto leftCoP = std::make_shared<mc_tasks::force::CoPTask>(leftSurface, robots, robotIndex_);
-  auto rightCoP = std::make_shared<mc_tasks::force::CoPTask>(rightSurface, robots, robotIndex_);
+  auto leftCoP = std::allocate_shared<mc_tasks::force::CoPTask>(Eigen::aligned_allocator<mc_tasks::force::CoPTask>{},
+                                                                leftSurface, robots, robotIndex_);
+  auto rightCoP = std::allocate_shared<mc_tasks::force::CoPTask>(Eigen::aligned_allocator<mc_tasks::force::CoPTask>{},
+                                                                 rightSurface, robots, robotIndex_);
   footTasks[ContactState::Left] = leftCoP;
   footTasks[ContactState::Right] = rightCoP;
 

@@ -131,8 +131,9 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "cop",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
-      auto t = std::make_shared<mc_tasks::force::CoPTask>(config("surface"), solver.robots(),
-                                                          robotIndexFromConfig(config, solver.robots(), "cop"));
+      auto t = std::allocate_shared<mc_tasks::force::CoPTask>(Eigen::aligned_allocator<mc_tasks::force::CoPTask>{},
+                                                              config("surface"), solver.robots(),
+                                                              robotIndexFromConfig(config, solver.robots(), "cop"));
       if(config.has("admittance"))
       {
         t->admittance(config("admittance"));
