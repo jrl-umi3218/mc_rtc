@@ -23,14 +23,14 @@ VectorOrientationTask::VectorOrientationTask(const std::string & bodyName,
 {
   if(robotIndex >= robots.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::VectorOrientationTask] No robot with index "
-                                                << robotIndex << ", " << robots.size() << " robots loaded");
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[mc_tasks::VectorOrientationTask] No robot with index {}, robots.size() {}", robotIndex, robots.size());
   }
   const auto & robot = robots.robot(robotIndex);
   if(!robot.hasBody(bodyName))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "[mc_tasks::VectorOrientationTask] No body named " << bodyName << " in " << robot.name());
+    mc_rtc::log::error_and_throw<std::runtime_error>("[mc_tasks::VectorOrientationTask] No body named {} in {}",
+                                                     bodyName, robot.name());
   }
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, bodyVector, targetVector);
   bIndex = robot.bodyIndexByName(bodyName);

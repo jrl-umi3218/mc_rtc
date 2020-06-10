@@ -57,7 +57,8 @@ void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c
   }
   if(config.has("offset"))
   {
-    LOG_WARNING("[MC_RTC_DEPRECATED][" + name() + "] The \"offset\" property is deprecated, use move_com instead");
+    mc_rtc::log::warning("[MC_RTC_DEPRECATED][" + name()
+                         + "] The \"offset\" property is deprecated, use move_com instead");
     Eigen::Vector3d offset = config("offset", Eigen::Vector3d::Zero().eval());
     this->com(this->com() + offset);
   }
