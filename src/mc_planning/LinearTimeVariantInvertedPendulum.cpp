@@ -1,46 +1,52 @@
-// g++ test_mat_mal.cpp -o test_mat -g -Wall -I.. -I../.. -I/usr/include/eigen3
-// -I/home/morisawa/openrtp/include/OpenHRP-3.1 -lm -lhrpUtil-3.1
-
-#include <mc_planning/LinearTimeInvariantInvertedPendulum.h>
+#include <mc_planning/LinearTimeVariantInvertedPendulum.h>
 #include <mc_rtc/constants.h>
-#include <iostream>
-// #include <Math/MathFunction.h>
-// #include <Math/Physics.h>
+#include <mc_rtc/logging.h>
 
 namespace cst = mc_rtc::constants;
 
 namespace mc_planning
 {
 
-LinearTimeVariantInvertedPendulum::LinearTimeVariantInvertedPendulum(void) {}
+LinearTimeVariantInvertedPendulum::LinearTimeVariantInvertedPendulum() {}
 
-LinearTimeVariantInvertedPendulum::LinearTimeVariantInvertedPendulum(double dt, int n_preview, int weight_resolution)
+LinearTimeVariantInvertedPendulum::LinearTimeVariantInvertedPendulum(double dt,
+                                                                     unsigned n_preview,
+                                                                     unsigned weight_resolution)
 {
   Initialize(dt, n_preview, weight_resolution);
 }
 
-void LinearTimeVariantInvertedPendulum::Initialize(double dt, int n_preview, int weight_resolution)
+void LinearTimeVariantInvertedPendulum::Initialize(double dt, unsigned n_preview, unsigned weight_resolution)
 {
   m_dt = dt;
   m_n_current = n_preview;
   if(n_preview == 0)
   {
-    m_n_current = lround(1.6 / m_dt);
+    m_n_current = static_cast<unsigned>(lround(1.6 / m_dt));
   }
   m_n_preview2 = n_preview * 2 + 1;
 
   if(weight_resolution == 0)
   {
     weight_resolution = 20000;
+    mc_rtc::log::warning("[LinearTimeVariantInvertedPendulum::Initialize] Invalid weight resolution, using {} instead",
+                         weight_resolution);
   }
-
   m_wk.resize(weight_resolution);
   m_shk.resize(weight_resolution);
   m_chk.resize(weight_resolution);
 
-  m_dh = (double)weight_resolution / 800.0;
-  for(int i = 0; i < weight_resolution; i++)
+  /// XXX why divided by 800?
+  // 25
+  m_dh = static_cast<double>(weight_resolution) / 800.0;
+  for(unsigned i = 0; i < weight_resolution; i++)
   {
+    // Pendulum is h = w2/g
+    // Precomputes values from height between
+    // h min = 0.001 / G ~= 0.0001m
+    // to
+    // h max = (0.001+20000/800)/G = 2.5m
+    // FIXME Max height depends on weight resolution!
     double w2 = 0.001 + (double)i / m_dh;
     m_wk[i] = sqrt(w2);
     m_shk[i] = sinh(m_wk[i] * dt);
@@ -62,22 +68,31 @@ LinearTimeVariantInvertedPendulum::~LinearTimeVariantInvertedPendulum() {}
 
 void LinearTimeVariantInvertedPendulum::init_m22(double waist_height)
 {
-  int h = lround(cst::GRAVITY * m_dh / waist_height);
+  // XXX why this index?
+  unsigned h = static_cast<unsigned>(lround(cst::GRAVITY * m_dh / waist_height));
 
+  // A_k
   Matrix22 m;
   m << m_chk[h], m_shk[h] / m_wk[h], m_wk[h] * m_shk[h], m_chk[h];
 
-  for(int i = 0; i < m_n_preview2; i++) m_A.push_front(m);
+  for(unsigned i = 0; i < m_n_preview2; i++)
+  {
+    m_A.push_front(m);
+  }
 }
 
 void LinearTimeVariantInvertedPendulum::init_v2(double waist_height)
 {
-  int h = lround(cst::GRAVITY * m_dh / waist_height);
+  // XXX why this indeThis is something x?
+  unsigned h = static_cast<unsigned>(lround(cst::GRAVITY * m_dh / waist_height));
 
   Vector2 v;
   v << 1 - m_chk[h], -m_wk[h] * m_shk[h];
 
-  for(int i = 0; i < m_n_preview2; i++) m_B.push_front(v);
+  for(unsigned i = 0; i < m_n_preview2; i++)
+  {
+    m_B.push_front(v);
+  }
 }
 
 void LinearTimeVariantInvertedPendulum::initMatrices(double waist_height)
@@ -86,11 +101,14 @@ void LinearTimeVariantInvertedPendulum::initMatrices(double waist_height)
   init_v2(waist_height);
 }
 
-void LinearTimeVariantInvertedPendulum::update(void)
+void LinearTimeVariantInvertedPendulum::update()
 {
   // set newest matrices
   {
-    int h = lround(m_w2[m_n_preview2 - 1] * m_dh);
+    // XXX
+    // What does this index represent?
+    // Why?
+    unsigned h = static_cast<unsigned>(lround(m_w2[m_n_preview2 - 1] * m_dh));
     const double & w = m_wk[h];
     const double & ch = m_chk[h];
     const double & sh = m_shk[h];
@@ -103,16 +121,16 @@ void LinearTimeVariantInvertedPendulum::update(void)
     m_B.push_back(Bnew);
   }
 
-  for(int i = 0; i < m_n_current; i++)
+  for(unsigned i = 0; i < m_n_current; i++)
   {
-    int h = lround(m_w2[i] * m_dh);
+    unsigned h = static_cast<unsigned>(lround(m_w2[i] * m_dh));
     m_w[i] = m_wk[h];
   }
 
   // update future matrices
-  for(int i = m_n_current; i < m_n_preview2 - 1; i++)
+  for(unsigned i = m_n_current; i < m_n_preview2 - 1; i++)
   {
-    int h = lround(m_w2[i] * m_dh);
+    auto h = static_cast<unsigned>(lround(m_w2[i] * m_dh));
     const double & w = m_wk[h];
     const double & ch = m_chk[h];
     const double & sh = m_shk[h];
@@ -138,18 +156,21 @@ void LinearTimeVariantInvertedPendulum::update(void)
       -m_An[0](1, 1) * (m_An[0](0, 0) * Xg(0) - Xg(1) + Bsum(0)) / m_An[0](0, 1) + m_An[0](1, 0) * Xg(0) + Bsum(1);
 
   m_X[0] << Xg(0), Vg(0); // set initial states
-  for(int i = 0; i < m_n_preview2 - 1; i++) m_X[i + 1] = (m_A[i] * m_X[i] + m_B[i] * m_p_ref(i)).eval();
+  for(unsigned i = 0; i < m_n_preview2 - 1; i++)
+  {
+    m_X[i + 1] = (m_A[i] * m_X[i] + m_B[i] * m_p_ref(i)).eval();
+  }
 }
 
-void LinearTimeVariantInvertedPendulum::generate(hrp::dvector & cog_pos,
-                                                 hrp::dvector & cog_vel,
-                                                 hrp::dvector & cog_acc,
-                                                 hrp::dvector & p_ref)
+void LinearTimeVariantInvertedPendulum::generate(Eigen::VectorXd & cog_pos,
+                                                 Eigen::VectorXd & cog_vel,
+                                                 Eigen::VectorXd & cog_acc,
+                                                 Eigen::VectorXd & p_ref)
 {
   // update future matrices
-  for(int i = 0; i < m_n_preview2; i++)
+  for(unsigned i = 0; i < m_n_preview2; i++)
   {
-    int h = lround(m_w2[i] * m_dh);
+    auto h = static_cast<unsigned>(lround(m_w2[i] * m_dh));
     const double & w = m_wk[h];
     const double & ch = m_chk[h];
     const double & sh = m_shk[h];
@@ -175,7 +196,7 @@ void LinearTimeVariantInvertedPendulum::generate(hrp::dvector & cog_pos,
       -m_An[0](1, 1) * (m_An[0](0, 0) * Xg(0) - Xg(1) + Bsum(0)) / m_An[0](0, 1) + m_An[0](1, 0) * Xg(0) + Bsum(1);
 
   Vector2 X(Xg(0), Vg(0));
-  for(int i = 0; i < m_n_preview2 - 1; i++)
+  for(unsigned i = 0; i < m_n_preview2 - 1; i++)
   {
     cog_pos(i) = X(0);
     cog_vel(i) = X(1);
@@ -190,46 +211,16 @@ void LinearTimeVariantInvertedPendulum::generate(hrp::dvector & cog_pos,
   p_ref(m_n_preview2 - 1) = m_p_ref(m_n_preview2 - 1);
 }
 
-void LinearTimeVariantInvertedPendulum::getState(int n_time,
-                                                 double & cog_pos,
-                                                 double & cog_vel,
-                                                 double & cog_acc,
-                                                 double & p,
-                                                 double & pdot)
+LinearTimeVariantInvertedPendulum::State LinearTimeVariantInvertedPendulum::getState(int n_time) const
 {
-  p = m_p_ref(m_n_current + n_time);
-  pdot = (p - m_p_ref[m_n_current + n_time - 1]) / m_dt;
-  cog_pos = m_X[m_n_current + n_time](0);
-  cog_vel = m_X[m_n_current + n_time](1);
-  cog_acc = m_w2[m_n_current + n_time] * (cog_pos - p);
-}
-
-void LinearTimeVariantInvertedPendulum::getState(int n_time,
-                                                 double & cog_pos,
-                                                 double & cog_vel,
-                                                 double & cog_acc,
-                                                 double & p)
-{
-  double pdot;
-  getState(n_time, cog_pos, cog_vel, cog_acc, p, pdot);
-}
-
-void LinearTimeVariantInvertedPendulum::getState(int n_time, double & cog_pos, double & cog_vel, double & cog_acc)
-{
-  double p, pdot;
-  getState(n_time, cog_pos, cog_vel, cog_acc, p, pdot);
-}
-
-void LinearTimeVariantInvertedPendulum::getState(int n_time, double & cog_pos, double & cog_vel)
-{
-  double cog_acc, p, pdot;
-  getState(n_time, cog_pos, cog_vel, cog_acc, p, pdot);
-}
-
-void LinearTimeVariantInvertedPendulum::getState(int n_time, double & cog_pos)
-{
-  double cog_vel, cog_acc, p, pdot;
-  getState(n_time, cog_pos, cog_vel, cog_acc, p, pdot);
+  const auto t = static_cast<unsigned>(static_cast<int>(m_n_current) + n_time);
+  State s;
+  s.p = m_p_ref(t);
+  s.pdot = (s.p - m_p_ref[t - 1]) / m_dt;
+  s.cog_pos = m_X[t](0);
+  s.cog_vel = m_X[t](1);
+  s.cog_acc = m_w2[t] * (s.cog_pos - s.p);
+  return s;
 }
 
 } // namespace mc_planning
