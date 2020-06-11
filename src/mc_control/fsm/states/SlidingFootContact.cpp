@@ -97,9 +97,8 @@ void SlidingFootContactState::start(Controller & ctl)
     gui->addElement({"FSM"},
                     mc_rtc::gui::Button("Report offset",
                                         [this]() {
-                                          std::cout << "New offset "
-                                                    << (com_offset_ + comTask_->com() - com_target0).transpose()
-                                                    << std::endl;
+                                          mc_rtc::log::info("New offset {}",
+                                                            (com_offset_ + comTask_->com() - com_target0).transpose());
                                         }),
                     mc_rtc::gui::Button("Free foot Z",
                                         [this, &ctl]() {
@@ -270,13 +269,11 @@ void SlidingFootContactState::teardown(Controller & ctl)
     auto gui = ctl.gui();
     if(gui)
     {
-      std::cout << "Remove elements?" << std::endl;
       gui->removeElement({"#FSM#"}, "SLIDE!");
       gui->removeElement({"#FSM#"}, "Report offset");
       gui->removeElement({"#FSM#"}, "Sliding target");
       gui->removeElement({"#FSM#"}, "Next foot");
       gui->removeElement({"#FSM#"}, "Free foot Z");
-      std::cout << "OK" << std::endl;
     }
   }
   ctl.solver().removeTask(comTask_);

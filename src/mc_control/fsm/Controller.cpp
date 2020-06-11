@@ -466,7 +466,8 @@ void Controller::addContact(const Contact & c)
   }
   else
   {
-    mc_rtc::log::info("[FSM] Add contact {}::{}/{}::{}", c.r1, c.r1Surface, c.r2, c.r2Surface);
+    mc_rtc::log::info("[FSM] Add contact {}::{}/{}::{} (DoF: {})", c.r1, c.r1Surface, c.r2, c.r2Surface,
+                      c.dof.transpose());
   }
 }
 

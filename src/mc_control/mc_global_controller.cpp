@@ -13,6 +13,7 @@
 #include <mc_rtc/gui/Form.h>
 #include <mc_rtc/gui/Label.h>
 #include <mc_rtc/gui/NumberInput.h>
+#include <mc_rtc/io_utils.h>
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/EulerIntegration.h>
@@ -441,14 +442,7 @@ bool MCGlobalController::run()
     else
     {
       controller_->stop();
-      mc_rtc::log::info("Reset with q[0]");
-      std::cout << controller_->robot().mbc().q[0][0] << " ";
-      std::cout << controller_->robot().mbc().q[0][1] << " ";
-      std::cout << controller_->robot().mbc().q[0][2] << " ";
-      std::cout << controller_->robot().mbc().q[0][3] << " ";
-      std::cout << controller_->robot().mbc().q[0][4] << " ";
-      std::cout << controller_->robot().mbc().q[0][5] << " ";
-      std::cout << controller_->robot().mbc().q[0][6] << std::endl;
+      mc_rtc::log::info("Reset with q[0] = {}", mc_rtc::io::to_string(controller_->robot().mbc().q[0], ", ", 5));
       for(const auto & g : controller_->robot().grippersByName())
       {
         next_controller_->robot().gripper(g.first).reset(*g.second);
