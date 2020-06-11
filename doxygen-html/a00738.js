@@ -1,4 +1,4 @@
 var a00738 =
 [
-    [ "Contact", "a02541.html", "a02541" ]
+    [ "formatter< mc_rtc::Configuration >", "a02015.html", "a02015" ]
 ];

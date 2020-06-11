@@ -1,7 +1,8 @@
 var a00020 =
 [
-    [ "Contact", "a01633.html", "a01633" ],
-    [ "Controller", "a01637.html", "a01637" ],
-    [ "ConfigurationLoader< mc_control::fsm::Contact >", "a01641.html", "a01641" ],
-    [ "ContactSet", "a00020.html#aca87ebca97bbd8350345078660965c73", null ]
+    [ "Contact", "a01635.html", "a01635" ],
+    [ "hash< mc_control::fsm::Contact >", "a01639.html", "a01639" ],
+    [ "Controller", "a01643.html", "a01643" ],
+    [ "ConfigurationLoader< mc_control::fsm::Contact >", "a01647.html", "a01647" ],
+    [ "ContactSet", "a00020.html#ad410c6443a64d561960fe4bd490154d9", null ]
 ];
