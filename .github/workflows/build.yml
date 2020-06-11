@@ -143,8 +143,11 @@ jobs:
         if [ "${{ matrix.os }}" = "ubuntu-16.04" ]
         then
           export ROS_DISTRO="kinetic"
-        else
+        elif [ "${{ matrix.os }}" = "ubuntu-18.04" ]
+        then
           export ROS_DISTRO="melodic"
+        else
+          export ROS_DISTRO="noetic"
         fi
         sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
         wget http://packages.ros.org/ros.key -O - | sudo apt-key add -

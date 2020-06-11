@@ -136,17 +136,50 @@ jobs:
           echo "::set-env name=PACKAGE_JOB::package-release"
         fi
         echo "::set-env name=PACKAGE_UPLOAD::${PACKAGE_UPLOAD}"
+    - name: Setup ROS packages
+      run: |
+        set -x
+        export PACKAGES_OUT=/tmp/packages-${{ matrix.dist }}-${{ matrix.arch }}
+        export ROS_DISTRO=""
+        if [ "${{ matrix.dist }}" = "xenial" ]
+        then
+          export ROS_DISTRO="kinetic"
+          export PACKAGES_OUT=${PACKAGES_OUT}-${ROS_DISTRO}
+        fi
+        if [ "${{ matrix.dist }}" = "bionic" -a "${{ matrix.arch }}" = "amd64" ]
+        then
+          export ROS_DISTRO="melodic"
+          export PACKAGES_OUT=${PACKAGES_OUT}-${ROS_DISTRO}
+        fi
+        if [ "${{ matrix.dist }}" = "focal" -a "${{ matrix.arch }}" = "amd64" ]
+        then
+          export ROS_DISTRO="noetic"
+          export PACKAGES_OUT=${PACKAGES_OUT}-${ROS_DISTRO}
+        fi
+        echo "::set-env name=ROS_DISTRO::${ROS_DISTRO}"
+        echo "::set-env name=PACKAGES_OUT::${PACKAGES_OUT}"
+        if [ "${ROS_DISTRO}" != "" ]
+        then
+          sed -e"s/@ROS_DISTRO@/${ROS_DISTRO}/" debian/control.ros | tee -a debian/control
+          sed -i -e"s/# ros-@ROS_DISTRO@/ ros-${ROS_DISTRO}/" debian/control
+          cat debian/control
+          sed -i -e"s/@ROS_DISTRO@/${ROS_DISTRO}/" debian/rules
+          sed -i -e"s/#export/export/" debian/rules
+          cat debian/rules
+          cp debian/ros-ROS_DISTRO-mc-rtc-plugin.install debian/ros-${ROS_DISTRO}-mc-rtc-plugin.install
+        fi
     - name: Build package
       uses: jrl-umi3218/github-actions/build-package-native@master
       with:
         dist: ${{ matrix.dist }}
         arch: ${{ matrix.arch }}
+        ros-distro: ${{ env.ROS_DISTRO }}
         other-mirrors: ${{ env.EXTRA_MIRROR }}
         other-gpg-keys: "0x892EA6EE273707C6495A6FB6220D644C64666806"
     - uses: actions/upload-artifact@v1
       with:
         name: packages-${{ matrix.dist }}-${{ matrix.arch }}
-        path: /tmp/packages-${{ matrix.dist }}-${{ matrix.arch }}/
+        path: ${{ env.PACKAGES_OUT }}
       if: env.PACKAGE_UPLOAD == 'true'
   # This job upload binary packages for Ubuntu
   upload-packages:
