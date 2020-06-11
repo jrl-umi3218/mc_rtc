@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.4.0] - 2020-06-11
+
 ### Changes
 
 - [FSM] Deprecates the use of `robotIndex` in favor of robot name `robot`
@@ -138,7 +140,8 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.4.0
 [1.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.3.0
 [1.2.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.2.1
 [1.2.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.2.0

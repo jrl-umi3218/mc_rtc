@@ -1,3 +1,9 @@
+mc-rtc (1.4.0-1ubuntu1) unstable; urgency=medium
+
+  * Update upstream: see CHANGELOG.md
+
+ -- Pierre Gergondet <pierre.gergondet+ppa@gmail.com>  Thu, 11 Jun 2020 11:27:41 +0800
+
 mc-rtc (1.3.0-1ubuntu1) unstable; urgency=medium
 
   * Update upstream: see CHANGELOG.md
