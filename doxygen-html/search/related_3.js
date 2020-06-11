@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['qpsolver',['QPSolver',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00845.html#ab0c5d51bf80dcd62721abff05ce12961',1,'tasks::qp::SolverData']]]
+  ['robot',['Robot',['../a01672.html#ad03b49f51df2ba1d492ced03d923fdd0',1,'mc_rbdyn::Robots']]],
+  ['robots',['Robots',['../a01632.html#a7ea6242bb22401bac23542e1db3a74ed',1,'mc_rbdyn::Robot']]]
 ];

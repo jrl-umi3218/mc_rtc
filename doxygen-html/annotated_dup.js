@@ -13,8 +13,8 @@ var annotated_dup =
     [ "mc_trajectory", "a00753.html", "a00753" ],
     [ "sch", "a00735.html", null ],
     [ "std", null, [
-      [ "hash< mc_control::fsm::Contact >", "a01639.html", "a01639" ]
+      [ "hash< mc_control::fsm::Contact >", "a01348.html", "a01348" ]
     ] ],
-    [ "Collision", "a02667.html", null ],
-    [ "Global", "a02663.html", null ]
+    [ "Collision", "a02376.html", null ],
+    [ "Global", "a02372.html", null ]
 ];

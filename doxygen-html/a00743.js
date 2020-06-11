@@ -1,10 +1,10 @@
 var a00743 =
 [
-    [ "Abscissa", "a02167.html", "a02167" ],
-    [ "AbscissaOrdinate", "a02171.html", "a02171" ],
-    [ "AbscissaOrdinateWithColor", "a02175.html", "a02175" ],
-    [ "Ordinate", "a02179.html", "a02179" ],
-    [ "OrdinateWithColor", "a02183.html", "a02183" ],
-    [ "Polygon", "a02187.html", "a02187" ],
-    [ "Polygons", "a02191.html", "a02191" ]
+    [ "Abscissa", "a01876.html", "a01876" ],
+    [ "AbscissaOrdinate", "a01880.html", "a01880" ],
+    [ "AbscissaOrdinateWithColor", "a01884.html", "a01884" ],
+    [ "Ordinate", "a01888.html", "a01888" ],
+    [ "OrdinateWithColor", "a01892.html", "a01892" ],
+    [ "Polygon", "a01896.html", "a01896" ],
+    [ "Polygons", "a01900.html", "a01900" ]
 ];

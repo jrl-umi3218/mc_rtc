@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_rtc::internal::args_t&lt; T &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01743.html','');});
+$(document).ready(function(){initNavTree('a01740.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,22 +69,104 @@ $(document).ready(function(){initNavTree('a01743.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="a01737.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_control::PythonRWCallback Member List</div>  </div>
+<div class="title">mc_rtc::internal::args_t&lt; T &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01743.html">mc_control::PythonRWCallback</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01743.html#a2f171792f487d5b8b30aa5cad17305fc">out</a></td><td class="entry"><a class="el" href="a01743.html">mc_control::PythonRWCallback</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01743.html#a6cdae0b0b750ab031e2abbb122d93aa1">success</a></td><td class="entry"><a class="el" href="a01743.html">mc_control::PythonRWCallback</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>Bend usual C++ rules to deduct the argument types in call.  
+ <a href="a01740.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_rtc/DataStore.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a5b8154625caf14c4dcc919d071c7ba46"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01740.html#a5b8154625caf14c4dcc919d071c7ba46">decay_t</a> = typename std::decay&lt; T &gt;::<a class="el" href="a01740.html#a0b4ee875f9490a7d6bef544143160904">type</a></td></tr>
+<tr class="separator:a5b8154625caf14c4dcc919d071c7ba46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b4ee875f9490a7d6bef544143160904"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01740.html#a0b4ee875f9490a7d6bef544143160904">type</a> = typename std::conditional&lt; <a class="el" href="a01740.html#a63d9d0405b36451f9c9441f71e3642f6">is_arithmetic</a>, <a class="el" href="a01740.html#a5b8154625caf14c4dcc919d071c7ba46">decay_t</a>, T &gt;::<a class="el" href="a01740.html#a0b4ee875f9490a7d6bef544143160904">type</a></td></tr>
+<tr class="separator:a0b4ee875f9490a7d6bef544143160904"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a63d9d0405b36451f9c9441f71e3642f6"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01740.html#a63d9d0405b36451f9c9441f71e3642f6">is_arithmetic</a> = std::is_arithmetic&lt;<a class="el" href="a01740.html#a5b8154625caf14c4dcc919d071c7ba46">decay_t</a>&gt;::value</td></tr>
+<tr class="separator:a63d9d0405b36451f9c9441f71e3642f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename T&gt;<br />
+struct mc_rtc::internal::args_t&lt; T &gt;</h3>
+
+<p>Bend usual C++ rules to deduct the argument types in call. </p>
+<p>Normally when passing an lvalue to a template function, T &amp;&amp; will be T &amp;. In our case, for arithmetic types (typically double) we far more often want T so this traits changes the deduction rule for those types </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a5b8154625caf14c4dcc919d071c7ba46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b8154625caf14c4dcc919d071c7ba46">&#9670;&nbsp;</a></span>decay_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a01740.html">mc_rtc::internal::args_t</a>&lt; T &gt;::<a class="el" href="a01740.html#a5b8154625caf14c4dcc919d071c7ba46">decay_t</a> =  typename std::decay&lt;T&gt;::<a class="el" href="a01740.html#a0b4ee875f9490a7d6bef544143160904">type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0b4ee875f9490a7d6bef544143160904"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b4ee875f9490a7d6bef544143160904">&#9670;&nbsp;</a></span>type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a01740.html">mc_rtc::internal::args_t</a>&lt; T &gt;::<a class="el" href="a01740.html#a0b4ee875f9490a7d6bef544143160904">type</a> =  typename std::conditional&lt;<a class="el" href="a01740.html#a63d9d0405b36451f9c9441f71e3642f6">is_arithmetic</a>, <a class="el" href="a01740.html#a5b8154625caf14c4dcc919d071c7ba46">decay_t</a>, T&gt;::<a class="el" href="a01740.html#a0b4ee875f9490a7d6bef544143160904">type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a63d9d0405b36451f9c9441f71e3642f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63d9d0405b36451f9c9441f71e3642f6">&#9670;&nbsp;</a></span>is_arithmetic</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr bool <a class="el" href="a01740.html">mc_rtc::internal::args_t</a>&lt; T &gt;::is_arithmetic = std::is_arithmetic&lt;<a class="el" href="a01740.html#a5b8154625caf14c4dcc919d071c7ba46">decay_t</a>&gt;::value</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Thu Jun 11 2020 04:24:55 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00721.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00737.html">internal</a></li><li class="navelem"><a class="el" href="a01740.html">args_t</a></li>
+    <li class="footer">Generated on Thu Jun 11 2020 09:19:00 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -1,24 +1,11 @@
 var searchData=
 [
-  ['parallelstate',['ParallelState',['../a01695.html',1,'mc_control::fsm']]],
-  ['pausestate',['PauseState',['../a01703.html',1,'mc_control::fsm']]],
-  ['pendulum',['Pendulum',['../a01807.html',1,'mc_planning']]],
-  ['pidtask',['PIDTask',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00865.html',1,'tasks::qp']]],
-  ['planarsurface',['PlanarSurface',['../a01903.html',1,'mc_rbdyn']]],
-  ['plane',['Plane',['../a01911.html',1,'mc_rbdyn']]],
-  ['point3dimpl',['Point3DImpl',['../a02211.html',1,'mc_rtc::gui']]],
-  ['point3droimpl',['Point3DROImpl',['../a02207.html',1,'mc_rtc::gui']]],
-  ['pointconfig',['PointConfig',['../a02275.html',1,'mc_rtc::gui']]],
-  ['polygon',['Polygon',['../a02187.html',1,'mc_rtc::gui::plot::impl']]],
-  ['polygondescription',['PolygonDescription',['../a02203.html',1,'mc_rtc::gui::plot']]],
-  ['polygonimpl',['PolygonImpl',['../a02215.html',1,'mc_rtc::gui']]],
-  ['polygoninterpolator',['PolygonInterpolator',['../a01915.html',1,'mc_rbdyn']]],
-  ['polygons',['Polygons',['../a02191.html',1,'mc_rtc::gui::plot::impl']]],
-  ['polytorquebound',['PolyTorqueBound',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00641.html',1,'tasks']]],
-  ['positionbasedvisservotask',['PositionBasedVisServoTask',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00929.html',1,'tasks::qp::PositionBasedVisServoTask'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01005.html',1,'tasks::PositionBasedVisServoTask'],['../a02611.html',1,'mc_tasks::PositionBasedVisServoTask']]],
-  ['positiontask',['PositionTask',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00901.html',1,'tasks::qp::PositionTask'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00973.html',1,'tasks::PositionTask'],['../a02615.html',1,'mc_tasks::PositionTask']]],
-  ['positivelambda',['PositiveLambda',['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00757.html',1,'tasks::qp']]],
-  ['posturetask',['PostureTask',['../a02619.html',1,'mc_tasks::PostureTask'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a00893.html',1,'tasks::qp::PostureTask'],['https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/a01009.html',1,'tasks::PostureTask']]],
-  ['pythonrwcallback',['PythonRWCallback',['../a01743.html',1,'mc_control']]],
-  ['pythonstate',['PythonState',['../a01655.html',1,'mc_control::fsm']]]
+  ['qpcontactptr',['QPContactPtr',['../a01552.html',1,'mc_solver']]],
+  ['qpcontactptrwpoints',['QPContactPtrWPoints',['../a01556.html',1,'mc_solver']]],
+  ['qpresultmsg',['QPResultMsg',['../a02172.html',1,'mc_solver']]],
+  ['qpsolver',['QPSolver',['../a02184.html',1,'mc_solver']]],
+  ['quadprogcommon',['QuadProgCommon',['/usr/local/share/doc/eigen-quadprog/doxygen-html/a00563.html',1,'Eigen']]],
+  ['quadprogdense',['QuadProgDense',['/usr/local/share/doc/eigen-quadprog/doxygen-html/a00567.html',1,'Eigen']]],
+  ['quadprogsparse',['QuadProgSparse',['/usr/local/share/doc/eigen-quadprog/doxygen-html/a00571.html',1,'Eigen']]],
+  ['quadraticgenerator',['QuadraticGenerator',['../a01616.html',1,'mc_rbdyn']]]
 ];
