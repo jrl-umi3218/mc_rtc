@@ -72,8 +72,7 @@ rbd::Joint::Type ConfigurationLoader<rbd::Joint::Type>::load(const mc_rtc::Confi
   {
     return rbd::Joint::Type::Fixed;
   }
-  LOG_ERROR(type << " was stored as joint type, cannot comprehend that")
-  LOG_ERROR_AND_THROW(std::runtime_error, "Invalid joint type stored")
+  mc_rtc::log::error_and_throw<std::runtime_error>("{} was stored as joint type, cannot comprehend that", type);
 }
 
 mc_rtc::Configuration ConfigurationLoader<rbd::Joint::Type>::save(const rbd::Joint::Type & type)
@@ -104,8 +103,7 @@ mc_rtc::Configuration ConfigurationLoader<rbd::Joint::Type>::save(const rbd::Joi
       typeStr = "fixed";
       break;
     default:
-      LOG_ERROR("Cannot serialize joint type " << type)
-      LOG_ERROR_AND_THROW(std::runtime_error, "Invalid joint type to ConfigurationLoader<rbd::Joint::Type>::save")
+      mc_rtc::log::error_and_throw<std::runtime_error>("Cannot serialize joint type {}", type);
   }
   config.add("type", typeStr);
   return config;
@@ -176,8 +174,7 @@ std::shared_ptr<mc_rbdyn::Surface> ConfigurationLoader<std::shared_ptr<mc_rbdyn:
                                                       config("materialName"), config("pointsFromOrigin"),
                                                       config("X_b_motor"), config("motorMaxTorque"));
   }
-  LOG_ERROR("Unknown surface type stored " << type)
-  LOG_ERROR_AND_THROW(std::runtime_error, "Invalid surface type stored")
+  mc_rtc::log::error_and_throw<std::runtime_error>("Unknown surface type stored {}", type);
 }
 
 mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::save(
@@ -209,8 +206,7 @@ mc_rtc::Configuration ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::s
   }
   else
   {
-    LOG_ERROR("Cannot serialize Surface of type " << s->type())
-    LOG_ERROR_AND_THROW(std::runtime_error, "Invalid surface type")
+    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot serialize a surface of type {}", s->type());
   }
   return config;
 }
@@ -221,8 +217,7 @@ std::shared_ptr<mc_rbdyn::PlanarSurface> ConfigurationLoader<std::shared_ptr<mc_
   std::string type = config("type");
   if(type != "planar")
   {
-    LOG_ERROR("Tried to deserialize a non-planar surface into a planar surface")
-    LOG_ERROR_AND_THROW(std::runtime_error, "Wrong surface types")
+    mc_rtc::log::error_and_throw<std::runtime_error>("Tried to deserialize a non-planar surface into a planar surface");
   }
   return std::static_pointer_cast<mc_rbdyn::PlanarSurface>(
       ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
@@ -240,8 +235,8 @@ std::shared_ptr<mc_rbdyn::CylindricalSurface> ConfigurationLoader<std::shared_pt
   std::string type = config("type");
   if(type != "cylindrical")
   {
-    LOG_ERROR("Tried to deserialize a non-cylindrical surface into a cylindrical surface")
-    LOG_ERROR_AND_THROW(std::runtime_error, "Wrong surface types")
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Tried to deserialize a non-cylindrical surface into a cylindrical surface");
   }
   return std::static_pointer_cast<mc_rbdyn::CylindricalSurface>(
       ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
@@ -259,8 +254,8 @@ std::shared_ptr<mc_rbdyn::GripperSurface> ConfigurationLoader<std::shared_ptr<mc
   std::string type = config("type");
   if(type != "gripper")
   {
-    LOG_ERROR("Tried to deserialize a non-gripper surface into a gripper surface")
-    LOG_ERROR_AND_THROW(std::runtime_error, "Wrong surface types")
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Tried to deserialize a non-gripper surface into a gripper surface");
   }
   return std::static_pointer_cast<mc_rbdyn::GripperSurface>(
       ConfigurationLoader<std::shared_ptr<mc_rbdyn::Surface>>::load(config));
@@ -440,9 +435,8 @@ Eigen::Matrix<double, 6, Eigen::Dynamic> ConfigurationLoader<Eigen::Matrix<doubl
   auto data = config("data");
   if(static_cast<Eigen::DenseIndex>(data.size()) != 6 * m.cols())
   {
-    LOG_ERROR_AND_THROW(mc_rtc::Configuration::Exception,
-                        "Stored data size (" << data.size() << ") is different from the expected size ("
-                                             << 6 * m.cols())
+    mc_rtc::log::error_and_throw<mc_rtc::Configuration::Exception>(
+        "Stored data size ({}) is different from the expected size ({})", data.size(), 6 * m.cols());
   }
   for(Eigen::DenseIndex i = 0; i < 6; ++i)
   {
@@ -783,7 +777,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     auto fixed = config("fixed", false);
     if(!bfs::exists(rm.urdf_path))
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Could not open model for " << rm.name << " at " << rm.urdf_path)
+      mc_rtc::log::error_and_throw<std::runtime_error>("Could not open model for {} at {}", rm.name, rm.urdf_path);
     }
     rm.init(rbd::parsers::from_urdf_file(rm.urdf_path, fixed));
   }

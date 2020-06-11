@@ -100,8 +100,8 @@ inline bool fromYAMLSequence(const YAML::Node & node, Configuration out)
       if(!try_push<bool>(ni, out) && !try_push<int64_t>(ni, out) && !try_push<uint64_t>(ni, out)
          && !try_push<double>(ni, out) && !try_push<std::string>(ni, out))
       {
-        LOG_ERROR("Could not convert YAML node in a provided Sequence")
-        LOG_WARNING("Scalar value: " << ni.Scalar())
+        log::error("Could not convert YAML node in a provided Sequence");
+        log::warning("Scalar value: {}", ni.Scalar());
         return false;
       }
     }
@@ -121,7 +121,7 @@ inline bool fromYAMLSequence(const YAML::Node & node, Configuration out)
     }
     else
     {
-      LOG_ERROR("Undefined or Null node in loaded YAML data")
+      log::error("Undefined or Null node in loaded YAML data");
       return false;
     }
   }
@@ -139,8 +139,8 @@ inline bool fromYAMLMap(const YAML::Node & node, Configuration out)
       if(!try_add<bool>(n, out, key) && !try_add<int64_t>(n, out, key) && !try_add<uint64_t>(n, out, key)
          && !try_add<double>(n, out, key) && !try_add<std::string>(n, out, key))
       {
-        LOG_ERROR("Could not convert YAML node in a provided Map")
-        LOG_WARNING("Key: " << key << ", Scalar value: " << n.Scalar())
+        log::error("Could not convert YAML node in a provided Map");
+        log::warning("Key: {}, Scalar value: {}", key, n.Scalar());
         return false;
       }
     }
@@ -160,7 +160,7 @@ inline bool fromYAMLMap(const YAML::Node & node, Configuration out)
     }
     else
     {
-      LOG_ERROR("Undefined or Null node in loaded YAML data")
+      log::error("Undefined or Null node in loaded YAML data");
       return false;
     }
   }
@@ -188,7 +188,7 @@ inline bool YAMLToJSON(const YAML::Node & node, Configuration & out)
   }
   else
   {
-    LOG_ERROR("Cannot convert from YAML if the root type is not a map or a sequence")
+    log::error("Cannot convert from YAML if the root type is not a map or a sequence");
     return false;
   }
 }
@@ -212,8 +212,8 @@ inline bool loadYAMLData(const char * data, Configuration & out)
   }
   catch(const YAML::ParserException & exc)
   {
-    LOG_ERROR("Encountered an error while parsing YAML data")
-    LOG_WARNING("Error on line " << (exc.mark.line + 1) << ", column " << (exc.mark.column + 1) << ": " << exc.msg)
+    log::error("Encountered an error while parsing YAML data");
+    log::warning("Error on line {}, column {}: {}", exc.mark.line + 1, exc.mark.column + 1, exc.msg);
   }
   return false;
 }
@@ -236,13 +236,13 @@ inline bool loadYAMLDocument(const std::string & path, Configuration & out)
   }
   catch(const YAML::BadFile & exc)
   {
-    LOG_ERROR("Failed to open controller configuration file: " << path)
-    LOG_WARNING(exc.msg)
+    log::error("Failed to open controller configuration file: {}", path);
+    log::warning(exc.msg);
   }
   catch(const YAML::ParserException & exc)
   {
-    LOG_ERROR("Encountered an error while parsing YAML file: " << path)
-    LOG_WARNING("Error on line " << (exc.mark.line + 1) << ", column " << (exc.mark.column + 1) << ": " << exc.msg)
+    log::error("Encountered an error while parsing YAML file: {}", path);
+    log::warning("Error on line {}, column {}: {}", exc.mark.line + 1, exc.mark.column + 1, exc.msg);
   }
   return false;
 }
@@ -321,7 +321,7 @@ inline std::string dumpYAML(const mc_rtc::Configuration & in)
   dumpYAML(in, out);
   if(!out.good())
   {
-    LOG_ERROR("YAML dump error:\n" << out.GetLastError())
+    log::error("YAML dump error:\n{}", out.GetLastError());
   }
   return out.c_str();
 }
@@ -331,7 +331,7 @@ inline void saveYAML(const std::string & path, const mc_rtc::Configuration & in)
   std::ofstream ofs(path);
   if(!ofs)
   {
-    LOG_ERROR("Failed to open " << path << " for writing")
+    log::error("Failed to open {} for writing", path);
     return;
   }
   ofs << dumpYAML(in) << "\n";

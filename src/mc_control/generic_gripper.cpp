@@ -116,8 +116,8 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
         return i;
       }
     }
-    LOG_ERROR_AND_THROW(std::runtime_error, "Active joint " << joint << " for " << robot.name()
-                                                            << " is not part of the reference joint order");
+    mc_rtc::log::error_and_throw<std::runtime_error>("Active joint {} for {} is not part of the reference joint order",
+                                                     joint, robot.name());
   };
   for(size_t i = 0; i < jointNames.size(); ++i)
   {
@@ -140,7 +140,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
     }
     else
     {
-      LOG_ERROR("Gripper active joint " << name << " is not part of the loaded robot, limits are unknown")
+      mc_rtc::log::error("Gripper active joint {} is not part of the loaded robot, limits are unknown", name);
       closeP.push_back(-0.01);
       openP.push_back(0.01);
       vmax.push_back(0);
@@ -159,7 +159,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
         return i;
       }
     }
-    LOG_ERROR_AND_THROW(std::runtime_error, "Trying to mimic non existant joint: " << joint)
+    mc_rtc::log::error_and_throw<std::runtime_error>("Trying to mimic non existant joint: {}", joint);
   };
   for(const auto & m : mimics)
   {
@@ -326,7 +326,7 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string
       overCommandLimitIter[i]++;
       if(overCommandLimitIter[i] == config_.overCommandLimitIterN)
       {
-        LOG_WARNING("Gripper safety triggered on " << names[i])
+        mc_rtc::log::warning("Gripper safety triggered on {}", names[i]);
         overCommandLimit[i] = true;
         if(reversed)
         {

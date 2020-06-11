@@ -65,7 +65,7 @@ QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep)
 {
   if(timeStep <= 0)
   {
-    LOG_ERROR_AND_THROW(std::invalid_argument, "timeStep has to be > 0! timeStep = " << timeStep)
+    mc_rtc::log::error_and_throw<std::invalid_argument>("timeStep has to be > 0! timeStep = {}", timeStep);
   }
 }
 
@@ -104,7 +104,7 @@ void QPSolver::addTask(mc_tasks::MetaTask * task)
     {
       addTaskToGUI(task);
     }
-    LOG_INFO("Added task " << task->name())
+    mc_rtc::log::info("Added task {}", task->name());
   }
 }
 
@@ -130,7 +130,7 @@ void QPSolver::removeTask(mc_tasks::MetaTask * task)
     {
       task->removeFromGUI(*gui_);
     }
-    LOG_INFO("Removed task " << task->name())
+    mc_rtc::log::info("Removed task {}", task->name());
     metaTasks_.erase(it);
     shPtrTasksStorage.erase(std::remove_if(shPtrTasksStorage.begin(), shPtrTasksStorage.end(),
                                            [task](const std::shared_ptr<void> & p) { return task == p.get(); }),
@@ -163,7 +163,11 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
   {
     for(const auto & contact : contacts_)
     {
-      logger_->removeLogEntry("contact_" + contact.r1Surface()->name() + "_" + contact.r2Surface()->name());
+      const std::string & r1 = robots().robot(contact.r1Index()).name();
+      const std::string & r1S = contact.r1Surface()->name();
+      const std::string & r2 = robots().robot(contact.r2Index()).name();
+      const std::string & r2S = contact.r2Surface()->name();
+      logger_->removeLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S);
     }
   }
   contacts_ = contacts;
@@ -171,7 +175,11 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
   {
     for(const auto & contact : contacts_)
     {
-      logger_->addLogEntry("contact_" + contact.r1Surface()->name() + "_" + contact.r2Surface()->name(),
+      const std::string & r1 = robots().robot(contact.r1Index()).name();
+      const std::string & r1S = contact.r1Surface()->name();
+      const std::string & r2 = robots().robot(contact.r2Index()).name();
+      const std::string & r2S = contact.r2Surface()->name();
+      logger_->addLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S,
                            [this, &contact]() { return desiredContactForce(contact); });
     }
   }
@@ -252,13 +260,13 @@ const sva::ForceVecd QPSolver::desiredContactForce(const mc_rbdyn::Contact & con
     }
     else
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "QPSolver - cannot compute desired contact force for surface "
-                                                  << contact.r1Surface()->name());
+      mc_rtc::log::error_and_throw<std::runtime_error>("QPSolver - cannot compute desired contact force for surface {}",
+                                                       contact.r1Surface()->name());
     }
   }
   else
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "QPSolver - cannot handle cases where qp_contact.first != -1");
+    mc_rtc::log::error_and_throw<std::runtime_error>("QPSolver - cannot handle cases where qp_contact.first != -1");
   }
 }
 
@@ -277,7 +285,7 @@ bool QPSolver::run(FeedbackType fType)
       success = runJointsFeedback(true);
       break;
     default:
-      LOG_ERROR("FeedbackType set to unknown value")
+      mc_rtc::log::error("FeedbackType set to unknown value");
       break;
   }
   if(success)
@@ -597,8 +605,8 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
         {"Contacts", "Add"},
         mc_rtc::gui::Form("Add contact",
                           [this](const mc_rtc::Configuration & data) {
-                            LOG_INFO("Add contact " << data("R0") << "::" << data("R0 surface") << "/" << data("R1")
-                                                    << "::" << data("R1 surface"))
+                            mc_rtc::log::info("Add contact {}::{}/{}::{}", data("R0"), data("R0 surface"), data("R1"),
+                                              data("R1 surface"));
                             auto str2idx = [this](const std::string & rName) {
                               for(const auto & r : robots())
                               {
@@ -607,7 +615,7 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
                                   return r.robotIndex();
                                 }
                               }
-                              LOG_ERROR("The robot name you provided does not match any in the solver")
+                              mc_rtc::log::error("The robot name you provided does not match any in the solver");
                               return static_cast<unsigned int>(robots().size());
                             };
                             unsigned int r0Index = str2idx(data("R0"));

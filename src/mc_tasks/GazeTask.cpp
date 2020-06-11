@@ -16,13 +16,13 @@ void check_parameters(const mc_rbdyn::Robots & robots, unsigned int robotIndex, 
 {
   if(robotIndex >= robots.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::GazeTask] No robot with index "
-                                                << robotIndex << ", " << robots.size() << " robots loaded");
+    mc_rtc::log::error_and_throw<std::runtime_error>("[mc_tasks::GazeTask] No robot with index {}, robots.size() {}",
+                                                     robotIndex, robots.size());
   }
   if(!robots.robot(robotIndex).hasBody(bodyName))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "[mc_tasks::GazeTask] No body named " << bodyName << " in " << robots.robot(robotIndex).name());
+    mc_rtc::log::error_and_throw<std::runtime_error>("[mc_tasks::GazeTask] No body named {} in {}", bodyName,
+                                                     robots.robot(robotIndex).name());
   }
 }
 
@@ -56,8 +56,8 @@ GazeTask::GazeTask(const std::string & bodyName,
   check_parameters(robots, robotIndex, bodyName);
   if(point3d.z() <= 0)
   {
-    LOG_ERROR_AND_THROW(std::logic_error,
-                        "[mc_tasks::GazeTask] Expects the depth estimate to be >0, provided " << point3d.z());
+    mc_rtc::log::error_and_throw<std::logic_error>(
+        "[mc_tasks::GazeTask] Expects the depth estimate to be >0, provided {}", point3d.z());
   }
   finalize(robots.mbs(), static_cast<int>(rIndex), bodyName, point3d, X_b_gaze);
   type_ = "gaze";
@@ -83,8 +83,9 @@ void GazeTask::error(const Eigen::Vector3d & point3d, const Eigen::Vector2d & po
   }
   else
   {
-    LOG_WARNING("GazeTask expects the depth estimate to be >0, provided "
-                << point3d.z() << ": ignoring error update for this iteration");
+    mc_rtc::log::warning(
+        "GazeTask expects the depth estimate to be >0, provided {}: ignoring error update for this iteration",
+        point3d.z());
   }
 }
 

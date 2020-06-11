@@ -112,6 +112,9 @@ jobs:
             - path: jbeder/yaml-cpp
               ref: 29dcf92f870ee51cce8d68f8fcfe228942e8dfe1
         github: |
+          - path: gabime/spdlog
+            ref: v1.6.1
+            options: -DSPDLOG_BUILD_EXAMPLE:BOOL=OFF -DSPDLOG_BUILD_SHARED:BOOL=ON
           - path: humanoid-path-planner/hpp-spline
             ref: v4.7.0
             options: -DBUILD_PYTHON_INTERFACE:BOOL=OFF

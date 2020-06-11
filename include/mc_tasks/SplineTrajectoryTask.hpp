@@ -141,7 +141,7 @@ void SplineTrajectoryTask<Derived>::dimWeight(const Eigen::VectorXd & dimW)
 {
   if(dimW.size() != 6)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "SplineTrajectoryTask dimWeight should be a Vector6d!");
+    mc_rtc::log::error_and_throw<std::runtime_error>("SplineTrajectoryTask dimWeight should be a Vector6d!");
   }
   TrajectoryBase::dimWeight(dimW);
 }

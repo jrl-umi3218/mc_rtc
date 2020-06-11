@@ -35,13 +35,13 @@ const T & Robot::device(const std::string & name) const
   auto it = devicesIndex_.find(name);
   if(it == devicesIndex_.end())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No sensor named " << name << " in " << this->name());
+    mc_rtc::log::error_and_throw<std::runtime_error>("No sensor named {} in {}", name, this->name());
   }
   auto ptr = dynamic_cast<T *>(devices_[it->second].get());
   if(!ptr)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        name << " sensor type did not match the requested one: " << mc_rtc::type_name<T>())
+    mc_rtc::log::error_and_throw<std::runtime_error>("{} sensor type did not match the requested one: {}", name,
+                                                     mc_rtc::type_name<T>());
   }
   return *ptr;
 }

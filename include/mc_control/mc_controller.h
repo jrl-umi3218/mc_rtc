@@ -17,11 +17,12 @@
  * implementation
  *
  */
-#define CONTROLLER_CHECK_VERSION(NAME)                                                                            \
-  if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                 \
-  {                                                                                                               \
-    LOG_ERROR(NAME << " was compiled with " << mc_rtc::MC_RTC_VERSION << " but mc_rtc is currently at version "   \
-                   << mc_rtc::version() << ", you might experience subtle issues and should recompile your code") \
+#define CONTROLLER_CHECK_VERSION(NAME)                                                                               \
+  if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                    \
+  {                                                                                                                  \
+    mc_rtc::log::error("{} was compiled with {} but mc_rtc is currently at version {}, you might experience subtle " \
+                       "issues and should recompile your code",                                                      \
+                       NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version());                                             \
   }
 
 /** Provides a handle to construct the controller with Json config */

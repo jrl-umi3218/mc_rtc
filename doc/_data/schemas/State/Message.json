@@ -7,7 +7,7 @@
       "type": "object",
       "properties":
       {
-        "log": { "enum": ["info", "success", "warning", "error", "none"], "type": "string", "default": "info", "description": "Type of message to log (default=info):<ul><li>type matches the corresponding LOG_* macro name</li><li>Use \"none\" to disable terminal logging</li>" },
+        "log": { "enum": ["info", "success", "warning", "error", "none"], "type": "string", "default": "info", "description": "Type of message to log (default=info):<ul><li>type matches the corresponding mc_rtc::log function.</li><li>Use \"none\" to disable terminal logging</li>" },
         "gui": { "type": "array", "items": { "type": "string" }, "description": "Category in which the message will be added. <ul><li>When absent, do not show in the GUI</li><li>Empty array displays at the top of the GUI</li><li>Otherwise displays in the provided category</li>" },
         "prefix": { "type": "string", "default": "State name", "description": "Prefix message, name of the GUI label" },
         "message": { "type": "string", "default": "", "description": "Message to display" }

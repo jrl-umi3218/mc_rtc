@@ -59,7 +59,6 @@ void State::start_(Controller & ctl)
     ContactSet removeContacts = remove_contacts_config_;
     for(const auto & c : removeContacts)
     {
-      std::cout << "Remove contact " << c.r1Surface << "/" << c.r2Surface << std::endl;
       ctl.removeContact(c);
     }
   }
@@ -68,7 +67,6 @@ void State::start_(Controller & ctl)
     ContactSet addContacts = add_contacts_config_;
     for(const auto & c : addContacts)
     {
-      std::cout << "Add contact " << c.r1Surface << "/" << c.r2Surface << " (dof: " << c.dof.transpose() << ")\n";
       ctl.addContact(c);
     }
   }
@@ -125,7 +123,6 @@ void State::teardown_(Controller & ctl)
     ContactSet removeContacts = remove_contacts_after_config_;
     for(const auto & c : removeContacts)
     {
-      std::cout << "Remove contact " << c.r1Surface << "/" << c.r2Surface << std::endl;
       ctl.removeContact(c);
     }
   }
@@ -134,7 +131,6 @@ void State::teardown_(Controller & ctl)
     ContactSet addContacts = add_contacts_after_config_;
     for(const auto & c : addContacts)
     {
-      std::cout << "Add contact " << c.r1Surface << "/" << c.r2Surface << " (dof: " << c.dof.transpose() << ")\n";
       ctl.addContact(c);
     }
   }

@@ -182,7 +182,7 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume)
        << ".bin";
     // clang-format on
     bfs::path log_path = impl_->directory / bfs::path(ss.str().c_str());
-    LOG_INFO("Will log controller outputs to " << log_path)
+    log::info("Will log controller outputs to {}", log_path.string());
     return log_path;
   };
   auto log_path = get_log_path();
@@ -200,11 +200,11 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume)
     bfs::create_symlink(log_path, log_sym_path, ec);
     if(!ec)
     {
-      LOG_INFO("Updated latest log symlink: " << log_sym_path)
+      log::info("Updated latest log symlink: {}", log_sym_path.string());
     }
     else
     {
-      LOG_INFO("Failed to create latest log symlink: " << ec.message())
+      log::info("Failed to create latest log symlink: {}", ec.message());
     }
   }
   if(impl_->log_.is_open())
@@ -225,7 +225,7 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume)
   else
   {
     impl_->valid_ = false;
-    LOG_ERROR("Failed to open log file " << log_path)
+    log::error("Failed to open log file {}", log_path.string());
   }
   // Force rewrite of the log header
   log_entries_changed_ = true;

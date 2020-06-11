@@ -166,7 +166,8 @@ public:
   {
     if((maxLinearVel.array() <= 0.).any())
     {
-      LOG_ERROR("discarding maxLinearVel update as it is not positive");
+      mc_rtc::log::error("discarding maxLinearVel update as it is not positive");
+      ;
       return;
     }
     maxLinearVel_ = maxLinearVel;
@@ -177,7 +178,8 @@ public:
   {
     if((maxAngularVel.array() <= 0.).any())
     {
-      LOG_ERROR("discarding maxAngularVel update as it is not positive");
+      mc_rtc::log::error("discarding maxAngularVel update as it is not positive");
+      ;
       return;
     }
     maxAngularVel_ = maxAngularVel;

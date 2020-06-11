@@ -26,8 +26,8 @@ void Grippers::start(Controller & ctl)
     if(!ctl.robots().hasRobot(config_("robot")))
     {
       std::string robot = config_("robot");
-      LOG_WARNING("[FSM::" << name() << "] Configured for robot " << robot
-                           << " but this robot is not part of the controller")
+      mc_rtc::log::warning("[FSM::{}] Configured for robot {} but this robot is not part of the controller", name(),
+                           robot);
       return;
     }
     rIndex = ctl.robots().robotIndex(config_("robot"));
@@ -40,7 +40,7 @@ void Grippers::start(Controller & ctl)
     {
       if(ctl_grippers.count(g) == 0)
       {
-        LOG_WARNING("[FSM::" << name() << "] " << g << " is not a known gripper")
+        mc_rtc::log::warning("[FSM::{}] {} is not a known gripper", name(), g);
         continue;
       }
       auto & gripper = ctl_grippers.at(g);
@@ -56,9 +56,9 @@ void Grippers::start(Controller & ctl)
         std::vector<double> target = grippers(g)("target");
         if(gripper->curPosition().size() != target.size())
         {
-          LOG_WARNING("[FSM::" << name() << "] Provided target for " << g
-                               << " does not have the correct size (expected: " << gripper->curPosition().size()
-                               << ", got: " << target.size() << ")")
+          mc_rtc::log::warning(
+              "[FSM::{}] Provided target for {} does not have the correct size (expected: {}, got: {})", name(), g,
+              gripper->curPosition().size(), target.size());
           continue;
         }
         gripper->setTargetQ(target);
@@ -66,7 +66,7 @@ void Grippers::start(Controller & ctl)
       }
       else
       {
-        LOG_WARNING("[FSM::" << name() << "] " << g << " has no opening or target specified")
+        mc_rtc::log::warning("[FSM::{}] {} has no opening or target specified", name(), g);
         continue;
       }
 

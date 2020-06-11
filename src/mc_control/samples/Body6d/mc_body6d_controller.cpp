@@ -35,11 +35,10 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   }
   else
   {
-    LOG_ERROR("MCBody6dController does not support robot " << robot().name())
-    LOG_ERROR_AND_THROW(std::runtime_error, "MCBody6dController does not support your robot")
+    mc_rtc::log::error_and_throw<std::runtime_error>("MCBody6dController does not support robot {}", robot().name());
   }
 
-  LOG_SUCCESS("MCBody6dController init done")
+  mc_rtc::log::success("MCBody6dController init done");
   if(robot().hasBody("RARM_LINK7"))
   {
     efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", robots(), robots().robotIndex(), 2.0, 1e5));
@@ -50,8 +49,7 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   }
   else
   {
-    LOG_ERROR("MCBody6dController does not support robot " << robot().name())
-    LOG_ERROR_AND_THROW(std::runtime_error, "MCBody6dController does not support your robot")
+    mc_rtc::log::error_and_throw<std::runtime_error>("MCBody6dController does not support robot {}", robot().name());
   }
   solver().addTask(efTask);
   comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));

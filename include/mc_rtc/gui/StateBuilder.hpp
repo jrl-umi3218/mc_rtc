@@ -37,8 +37,8 @@ void StateBuilder::addElementImpl(const std::vector<std::string> & category,
                          [&element](const ElementStore & el) { return el().name() == element.name(); });
   if(it != cat.elements.end())
   {
-    LOG_ERROR("An element named " << element.name() << " already exists in " << cat2str(category))
-    LOG_WARNING("Discarding request to add this element")
+    log::error("An element named {} already exists in {}", element.name(), cat2str(category));
+    log::warning("Discarding request to add this element");
     return;
   }
   cat.elements.emplace_back(element, cat, stacking);
@@ -132,8 +132,8 @@ void StateBuilder::addXYPlot(const std::string & name,
   static_assert(plot::is_2d<T, Args...>(), "All provided plots in an XY plot must provide 2d data");
   if(plots_.count(name) != 0)
   {
-    LOG_ERROR("A plot titled " << name << " is still active")
-    LOG_WARNING("Discarding request to add this plot")
+    log::error("A plot titled {} is still active", name);
+    log::warning("Discarding request to add this plot");
     return;
   }
   // One entry for the type, the plot id, the name, the x and y axis configs, the data and one entry per plot
@@ -176,8 +176,8 @@ void StateBuilder::addPlot(const std::string & name,
   static_assert(plot::is_not_Abscissa<Args...>(), "Only one Abscissa can be provided to addPlot");
   if(plots_.count(name) != 0)
   {
-    LOG_ERROR("A plot titled " << name << " is still active")
-    LOG_WARNING("Discarding request to add this plot")
+    log::error("A plot titled {} is still active", name);
+    log::warning("Discarding request to add this plot");
     return;
   }
   // One entry for the type, the plot id, the name, the abscissa and both axis configs plus one entry per plot

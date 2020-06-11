@@ -175,7 +175,7 @@ int split(int argc, char * argv[])
       ofs.open(ss.str(), std::ofstream::binary);
       if(!ofs)
       {
-        LOG_ERROR("Failed to open " << ss.str() << " for writing")
+        mc_rtc::log::error("Failed to open {} for writing", ss.str());
         return false;
       }
       ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
@@ -314,7 +314,7 @@ int extract(int argc, char * argv[])
         ofs.open(nfile, std::ofstream::binary);
         if(!ofs)
         {
-          LOG_ERROR("Failed to open " << nfile << "for writing")
+          mc_rtc::log::error("Failed to open {} for writing", nfile);
           return false;
         }
         ofs.write((const char *)&mc_rtc::Logger::magic, sizeof(mc_rtc::Logger::magic));
@@ -444,7 +444,7 @@ int convert(int argc, char * argv[])
     }
     if(format != ".bag" && format != ".csv" && format != ".flat")
     {
-      LOG_ERROR("Unsupported format " << format)
+      mc_rtc::log::error("Unsupported format {}", format);
       format = "";
     }
   }
@@ -452,7 +452,7 @@ int convert(int argc, char * argv[])
   {
     if(format.size() && format != ext)
     {
-      LOG_WARNING("Command-line specified format clashes with file extension, trusting the provided format")
+      mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
     else
     {
@@ -463,7 +463,7 @@ int convert(int argc, char * argv[])
   {
     if(format.size() && format != ext)
     {
-      LOG_WARNING("Command-line specified format clashes with file extension, trusting the provided format")
+      mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
     else
     {
@@ -474,7 +474,7 @@ int convert(int argc, char * argv[])
   {
     if(format.size() && format != ext)
     {
-      LOG_WARNING("Command-line specified format clashes with file extension, trusting the provided format")
+      mc_rtc::log::warning("Command-line specified format clashes with file extension, trusting the provided format");
     }
     else
     {
@@ -486,12 +486,12 @@ int convert(int argc, char * argv[])
     if(ext.size() == 0 && format.size())
     {
       out_p.replace_extension(format);
-      LOG_INFO("Conversion will be output to " << out_p)
+      mc_rtc::log::info("Conversion will be output to {}", out_p);
     }
   }
   if(!format.size())
   {
-    LOG_ERROR("Could not deduce the desired output format")
+    mc_rtc::log::error("Could not deduce the desired output format");
     return 1;
   }
   if(format == ".flat")
@@ -515,7 +515,7 @@ int convert(int argc, char * argv[])
     }
     else
     {
-      LOG_ERROR("mc_rtc is not build with ROS support, bag conversion is not available")
+      mc_rtc::log::error("mc_rtc is not build with ROS support, bag conversion is not available");
     }
   }
   return 0;

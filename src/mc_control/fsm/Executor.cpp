@@ -16,6 +16,14 @@ namespace mc_control
 namespace fsm
 {
 
+namespace
+{
+/** Always pick a steady clock */
+using clock = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
+                                        std::chrono::high_resolution_clock,
+                                        std::chrono::steady_clock>::type;
+} // namespace
+
 void Executor::init(Controller & ctl,
                     const mc_rtc::Configuration & config,
                     const std::string & name,
@@ -65,6 +73,12 @@ void Executor::init(Controller & ctl,
     log_entry += "_Main";
   }
   ctl.logger().addLogEntry(log_entry, [this]() { return curr_state_; });
+  ctl.logger().addLogEntry("perf_" + log_entry, [this]() {
+    return state_create_dt_.count() + state_run_dt_.count() + state_teardown_dt_.count();
+  });
+  ctl.logger().addLogEntry("perf_" + log_entry + "_create", [this]() { return state_create_dt_.count(); });
+  ctl.logger().addLogEntry("perf_" + log_entry + "_run", [this]() { return state_run_dt_.count(); });
+  ctl.logger().addLogEntry("perf_" + log_entry + "_teardown", [this]() { return state_teardown_dt_.count(); });
 }
 
 bool Executor::run(Controller & ctl, bool keep_state)
@@ -75,24 +89,30 @@ bool Executor::run(Controller & ctl, bool keep_state)
     if(state_)
     {
       state_->stop(ctl);
-      LOG_WARNING("Interrupted " << curr_state_)
+      mc_rtc::log::warning("Interrupted {}", curr_state_);
       complete(ctl, false);
     }
   }
 
   // FIXME ready is used to avoid a potential "yoyo" effect here, i.e. if a
   // state estimated it was completed once, the future estimations don't matter
+  state_create_dt_ = duration_ms::zero();
+  state_run_dt_ = duration_ms::zero();
+  state_teardown_dt_ = duration_ms::zero();
   if(state_)
   {
+    auto start_run = clock::now();
     if(!(state_->run(ctl) || ready_))
     {
+      state_run_dt_ = clock::now() - start_run;
       return false;
     }
+    state_run_dt_ = clock::now() - start_run;
     if(!ready_)
     {
       ready_ = true;
       state_output_ = state_->output();
-      LOG_SUCCESS("Completed " << curr_state_ << " - output: " << state_output_)
+      mc_rtc::log::success("Completed {} - output: {}", curr_state_, state_output_);
     }
     if(managed_)
     {
@@ -151,14 +171,19 @@ void Executor::teardown(Controller & ctl)
     log_entry += "_Main";
   }
   ctl.logger().removeLogEntry(log_entry);
+  ctl.logger().removeLogEntry("perf_" + log_entry + "_create");
+  ctl.logger().removeLogEntry("perf_" + log_entry + "_run");
+  ctl.logger().removeLogEntry("perf_" + log_entry + "_teardown");
 }
 
 bool Executor::complete(Controller & ctl, bool keep_state)
 {
   if(!keep_state)
   {
+    auto start_teardown = clock::now();
     state_->teardown_(ctl);
     state_ = nullptr;
+    state_teardown_dt_ = clock::now() - start_teardown;
   }
   ready_ = true;
   return true;
@@ -182,19 +207,25 @@ void Executor::next(Controller & ctl)
   }
   ready_ = false;
   transition_triggered_ = false;
-  LOG_SUCCESS("Starting state " << next_state_)
+  mc_rtc::log::success("Starting state {}", next_state_);
   if(state_)
   {
+    auto state_teardown_start = clock::now();
     state_->teardown_(ctl);
     ctl.resetPostures();
+    state_teardown_dt_ = clock::now() - state_teardown_start;
   }
   if(config_.has("configs") && config_("configs").has(next_state_))
   {
+    auto state_create_start = clock::now();
     state_ = ctl.factory().create(next_state_, ctl, config_("configs")(next_state_));
+    state_create_dt_ = clock::now() - state_create_start;
   }
   else
   {
+    auto state_create_start = clock::now();
     state_ = ctl.factory().create(next_state_, ctl);
+    state_create_dt_ = clock::now() - state_create_start;
   }
   auto gui = ctl.gui();
   if(gui)
@@ -216,7 +247,7 @@ bool Executor::resume(const std::string & state)
 {
   if(!interrupt_triggered_ && state_ && !ready_)
   {
-    LOG_WARNING(curr_state_ << " interrupted to  resume " << state)
+    mc_rtc::log::warning("{} interrupted to  resume {}", curr_state_, state);
   }
   complete_ = false;
   interrupt_triggered_ = true;

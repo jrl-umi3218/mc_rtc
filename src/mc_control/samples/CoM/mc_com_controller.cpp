@@ -46,8 +46,7 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
   }
   else
   {
-    LOG_ERROR("MCCoMController does not support robot " << robot().name())
-    LOG_ERROR_AND_THROW(std::runtime_error, "MCCoMController does not support your robot")
+    mc_rtc::log::error_and_throw<std::runtime_error>("MCCoMController does not support robot {}", robot().name());
   }
 }
 

@@ -43,28 +43,29 @@ void MessageState::start(Controller & ctl)
 
     if(logType_ == "info")
     {
-      LOG_INFO(message);
+      mc_rtc::log::info(message);
     }
     else if(logType_ == "success")
     {
-      LOG_SUCCESS(message);
+      mc_rtc::log::success(message);
     }
     else if(logType_ == "warning")
     {
-      LOG_WARNING(message);
+      mc_rtc::log::warning(message);
     }
     else if(logType_ == "error")
     {
-      LOG_ERROR(message);
+      mc_rtc::log::error(message);
     }
     else if(logType_ == "none")
     { /* Do not log anything to the terminal */
     }
     else
     {
-      LOG_ERROR(prefix << " Provided log type " << logType_
-                       << " is invalid, assuming info. Supported types are [info, success, warning, error, none]");
-      LOG_INFO(message);
+      mc_rtc::log::error("{} Provided log type {} is invalid, assuming info. Supported types are [info, success, "
+                         "warning, error, none]",
+                         prefix, logType_);
+      mc_rtc::log::info(message);
     }
   }
 

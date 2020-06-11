@@ -38,8 +38,8 @@ void SlidingFootContactState::configure(const mc_rtc::Configuration & config)
 
 void SlidingFootContactState::start(Controller & ctl)
 {
-  LOG_ERROR("Enter state with CoM offset " << com_offset_.transpose())
-  LOG_ERROR("Enter state with CoM sliding offset " << com_offset_sliding_.transpose())
+  mc_rtc::log::error("Enter state with CoM offset {}", com_offset_.transpose());
+  mc_rtc::log::error("Enter state with CoM sliding offset {}", com_offset_sliding_.transpose());
   comTask_ = std::make_shared<mc_tasks::CoMTask>(ctl.robots(), 0, 10.0, 2000.0);
   comTask_->dimWeight(Eigen::Vector3d{1.0, 1.0, 1.0});
   comTask_->move_com({0, 0, move_com_z_});
@@ -97,9 +97,8 @@ void SlidingFootContactState::start(Controller & ctl)
     gui->addElement({"FSM"},
                     mc_rtc::gui::Button("Report offset",
                                         [this]() {
-                                          std::cout << "New offset "
-                                                    << (com_offset_ + comTask_->com() - com_target0).transpose()
-                                                    << std::endl;
+                                          mc_rtc::log::info("New offset {}",
+                                                            (com_offset_ + comTask_->com() - com_target0).transpose());
                                         }),
                     mc_rtc::gui::Button("Free foot Z",
                                         [this, &ctl]() {
@@ -113,7 +112,7 @@ void SlidingFootContactState::start(Controller & ctl)
                                               slidingContactId_, dof.asDiagonal());
                                           if(!res)
                                           {
-                                            LOG_ERROR("Failed to set dof contact for " << slidingSurface_)
+                                            mc_rtc::log::error("Failed to set dof contact for {}", slidingSurface_);
                                           }
                                           ctl.contactConstraint().contactConstr->updateDofContacts();
                                           ctl.solver().addTask(copSlidingFootTask_);
@@ -127,7 +126,7 @@ void SlidingFootContactState::start(Controller & ctl)
                       {
                         if(next_ == "")
                         {
-                          LOG_ERROR("SELECT NEXT SLIDING FEET")
+                          mc_rtc::log::error("SELECT NEXT SLIDING FEET");
                         }
                         else
                         {
@@ -170,8 +169,7 @@ bool SlidingFootContactState::run(Controller & ctl)
         copSlidingFootTask_->targetPose(t);
         comTask_->stiffness(2.0);
         comTask_->weight(1000.0);
-        // LOG_INFO("SlidingFoot::" << slidingSurface_ << " enable adjust sliding force")
-        LOG_INFO("SlidingFoot::" << slidingSurface_ << " sliding now")
+        mc_rtc::log::info("SlidingFoot::{} sliding now", slidingSurface_);
       }
       break;
     case Phase::ADJUST_SLIDING_FORCE:
@@ -200,9 +198,8 @@ bool SlidingFootContactState::run(Controller & ctl)
         copSlidingFootTask_->targetPose(t);
         comTask_->stiffness(2.0);
         comTask_->weight(1000.0);
-        LOG_INFO("SlidingFoot::" << slidingSurface_
-                                 << " move foot (force: " << copSlidingFootTask_->measuredWrench().force().z()
-                                 << "N, target: " << slidingForceTarget_ << "N)")
+        mc_rtc::log::info("SlidingFoot::{} move foot (force: {}N, target: {}N)", slidingSurface_,
+                          copSlidingFootTask_->measuredWrench().force().z(), slidingForceTarget_);
       }
       break;
     case Phase::SLIDE_FOOT:
@@ -216,11 +213,11 @@ bool SlidingFootContactState::run(Controller & ctl)
         resetAndRestoreBalance(ctl);
         if(tick_ > 2000)
         {
-          LOG_WARNING("SlidingFoot::" << slidingSurface_ << " timeout")
+          mc_rtc::log::warning("SlidingFoot::{} timeout", slidingSurface_);
         }
-        LOG_ERROR("eval: " << copSlidingFootTask_->eval().segment(3, 2).norm() << ", tick: " << tick_)
-        LOG_ERROR("speed: " << copSlidingFootTask_->speed().segment(3, 2).norm() << ", tick: " << tick_)
-        LOG_INFO("SlidingFoot::" << slidingSurface_ << " restore balance")
+        mc_rtc::log::error("eval: {}, tick: {}", copSlidingFootTask_->eval().segment(3, 2).norm(), tick_);
+        mc_rtc::log::error("speed: {}, tick: {}", copSlidingFootTask_->speed().segment(3, 2).norm(), tick_);
+        mc_rtc::log::info("SlidingFoot::{} restore balance", slidingSurface_);
         tick_ = 0;
         phase_ = Phase::BALANCE;
       }
@@ -230,7 +227,7 @@ bool SlidingFootContactState::run(Controller & ctl)
       if(tick_ > 400)
       {
         phase_ = Phase::REGULATE_FOOT_ORIENTATION;
-        LOG_INFO("Start to regulate sliding foot orientation")
+        mc_rtc::log::info("Start to regulate sliding foot orientation");
         tick_ = 0;
         ctl.solver().addTask(copSlidingFootTask_);
         copSlidingFootTask_->admittance({{5e-3, 5e-3, 0}, {0, 0, 0}});
@@ -272,13 +269,11 @@ void SlidingFootContactState::teardown(Controller & ctl)
     auto gui = ctl.gui();
     if(gui)
     {
-      std::cout << "Remove elements?" << std::endl;
       gui->removeElement({"#FSM#"}, "SLIDE!");
       gui->removeElement({"#FSM#"}, "Report offset");
       gui->removeElement({"#FSM#"}, "Sliding target");
       gui->removeElement({"#FSM#"}, "Next foot");
       gui->removeElement({"#FSM#"}, "Free foot Z");
-      std::cout << "OK" << std::endl;
     }
   }
   ctl.solver().removeTask(comTask_);
@@ -305,7 +300,7 @@ tasks::qp::ContactId SlidingFootContactState::getContactId(Controller & ctl, con
       return c.contactId(ctl.robots());
     }
   }
-  LOG_ERROR_AND_THROW(std::runtime_error, "Failed to find contact id for " << s)
+  mc_rtc::log::error_and_throw<std::runtime_error>("Failed to find contact id for {}", s);
 }
 
 void SlidingFootContactState::setHandDofContact(Controller & ctl)
@@ -318,7 +313,7 @@ void SlidingFootContactState::setHandDofContact(Controller & ctl)
     auto res = ctl.contactConstraint().contactConstr->addDofContact(cId, dof.asDiagonal());
     if(!res)
     {
-      LOG_ERROR("Failed to add dof contact on hand")
+      mc_rtc::log::error("Failed to add dof contact on hand");
     }
     ctl.contactConstraint().contactConstr->updateDofContacts();
   }
@@ -344,7 +339,7 @@ void SlidingFootContactState::controlCoM(Controller &)
       com_init_z_ = comTask_->com().z();
     }
     com_target0.z() = com_init_z_ + com_offset_.z();
-    LOG_ERROR("Applied CoM offset: " << com_offset_.transpose())
+    mc_rtc::log::error("Applied CoM offset: {}", com_offset_.transpose());
     initial_com = comTask_->com();
     comTask_->com(com_target0);
     forceDistChanged_ = false;

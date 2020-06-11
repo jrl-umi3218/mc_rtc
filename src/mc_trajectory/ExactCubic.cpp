@@ -53,7 +53,7 @@ void ExactCubic::waypoint(size_t idx, const point_t & waypoint)
 {
   if(idx >= waypoints_.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Cannot modify waypoint with index " << idx);
+    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot modify waypoint with index {}", idx);
   }
   waypoints_[idx].second = waypoint;
   needsUpdate_ = true;
@@ -63,7 +63,7 @@ void ExactCubic::waypoint(size_t idx, double t)
 {
   if(idx >= waypoints_.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Cannot modify waypoint with index " << idx);
+    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot modify waypoint with index {}", idx);
   }
   waypoints_[idx].first = t;
   needsUpdate_ = true;
@@ -73,7 +73,7 @@ double ExactCubic::waypointTime(size_t idx) const
 {
   if(idx >= waypoints_.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No waypoint with index " << idx);
+    mc_rtc::log::error_and_throw<std::runtime_error>("No waypoint with index {}", idx);
   }
   return waypoints_[idx].first;
 }
@@ -82,7 +82,7 @@ const waypoint_t & ExactCubic::waypoint(size_t idx) const
 {
   if(idx >= waypoints_.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No waypoint with index " << idx);
+    mc_rtc::log::error_and_throw<std::runtime_error>("No waypoint with index {}", idx);
   }
   return waypoints_[idx];
 }
@@ -131,7 +131,8 @@ std::vector<Eigen::Vector3d> ExactCubic::sampleTrajectory()
 {
   if(samplingPoints_ < 1)
   {
-    LOG_ERROR("There should be at least 1 sample");
+    mc_rtc::log::error("There should be at least 1 sample");
+    ;
     return {};
   }
   std::vector<Eigen::Vector3d> traj;

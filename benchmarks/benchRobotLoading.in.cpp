@@ -5,6 +5,8 @@
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Robots.h>
 
+#include <spdlog/spdlog.h>
+
 #include "benchmark/benchmark.h"
 
 class RobotLoadingFixture : public benchmark::Fixture
@@ -12,11 +14,15 @@ class RobotLoadingFixture : public benchmark::Fixture
 public:
   void SetUp(const ::benchmark::State &)
   {
-    // XXX silence error output
-    std::cerr.rdbuf(nullptr);
-
-    mc_rbdyn::RobotLoader::clear();
-    mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+    static bool initialized = []() {
+      spdlog::set_level(spdlog::level::err);
+      mc_rbdyn::RobotLoader::clear();
+      mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
+      return true;
+    }();
+#pragma GCC diagnostic pop
   }
 
   void TearDown(const ::benchmark::State &) {}

@@ -15,6 +15,9 @@
 namespace bfs = boost::filesystem;
 
 #ifdef WIN32
+
+#  include <Windows.h>
+
 namespace
 {
 
@@ -55,7 +58,7 @@ LTDLHandle::LTDLHandle(const std::string & class_name,
   {
     if(verbose_)
     {
-      LOG_INFO("Found matching class name symbol " << class_name)
+      mc_rtc::log::info("Found matching class name symbol {}", class_name);
     }
     get_classes(classes_);
   }
@@ -74,9 +77,9 @@ bool LTDLHandle::open()
   }
   if(verbose_)
   {
-    LOG_INFO("Attempt to open " << path_)
+    mc_rtc::log::info("Attempt to open {}", path_);
 #ifdef WIN32
-    LOG_INFO("Search path: " << rpath_)
+    mc_rtc::log::info("Search path: {}", rpath_);
 #endif
   }
 #ifdef WIN32
@@ -87,7 +90,7 @@ bool LTDLHandle::open()
   {
     if(verbose_)
     {
-      LOG_INFO("Opening " << path_ << " in global mode")
+      mc_rtc::log::info("Opening {} in global mode", path_);
     }
     lt_dladvise advise;
     lt_dladvise_init(&advise);
@@ -109,7 +112,7 @@ bool LTDLHandle::open()
     /* Discard the "file not found" error as it only indicates that we tried to load something other than a library */
     if(strcmp(error, "file not found") != 0)
     {
-      LOG_WARNING("Failed to load " << path_ << "\n" << error)
+      mc_rtc::log::warning("Failed to load {}\n{}", path_, error);
     }
   }
 #ifdef WIN32
@@ -139,7 +142,7 @@ bool Loader::init()
     if(err != 0)
     {
       std::string error = lt_dlerror();
-      LOG_ERROR_AND_THROW(LoaderException, "Failed to initialize ltdl" << std::endl << error)
+      mc_rtc::log::error_and_throw<LoaderException>("Failed to initialize ltdl\n{}", error);
     }
   }
   ++init_count_;
@@ -155,7 +158,7 @@ bool Loader::close()
     if(err != 0)
     {
       std::string error = lt_dlerror();
-      LOG_ERROR_AND_THROW(LoaderException, "Failed to close ltdl" << std::endl << error)
+      mc_rtc::log::error_and_throw<LoaderException>("Failed to close ltdl\n{}", error);
     }
   }
   return true;
@@ -184,7 +187,7 @@ void Loader::load_libraries(const std::string & class_name,
     {
       if(verbose)
       {
-        LOG_WARNING("Tried to load libraries from " << path << " which does not exist")
+        mc_rtc::log::warning("Tried to load libraries from {} which does not exist", path);
       }
       continue;
     }
@@ -212,9 +215,9 @@ void Loader::load_libraries(const std::string & class_name,
             {
               if(verbose)
               {
-                LOG_WARNING("Multiple files export the same name " << cn << " (new declaration in " << p.string()
-                                                                   << ", previous declaration in " << out[cn]->path()
-                                                                   << ")")
+                mc_rtc::log::warning(
+                    "Multiple files export the same name {} (new declaration in {}, previous declaration in {})", cn,
+                    p.string(), out[cn]->path());
               }
               continue;
             }

@@ -22,7 +22,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   std::string globalPath(mc_rtc::CONF_PATH);
   if(bfs::exists(globalPath))
   {
-    LOG_INFO("Loading default global configuration " << globalPath);
+    mc_rtc::log::info("Loading default global configuration {}", globalPath);
     config.load(globalPath);
   }
 
@@ -39,13 +39,13 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   if(bfs::exists(config_path))
   {
-    LOG_INFO("Loading additional global configuration " << config_path)
+    mc_rtc::log::info("Loading additional global configuration {}", config_path);
     config.load(config_path.string());
   }
   // Load extra configuration
   if(bfs::exists(conf))
   {
-    LOG_INFO("Loading additional global configuration " << conf)
+    mc_rtc::log::info("Loading additional global configuration {}", conf);
     config.load(conf);
   }
 
@@ -74,7 +74,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
     catch(const mc_rtc::LoaderException & exc)
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to update robot module path(s)")
+      mc_rtc::log::error_and_throw<std::runtime_error>("Failed to update robot module path(s)");
     }
   }
   if(rm)
@@ -94,14 +94,13 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         }
         catch(const mc_rtc::LoaderException & exc)
         {
-          LOG_ERROR("Failed to create " << robot_name << " to use as a main robot")
-          LOG_ERROR_AND_THROW(std::runtime_error, "Failed to create robot")
+          mc_rtc::log::error_and_throw<std::runtime_error>("Failed to create {} to use as a main robot", robot_name);
         }
       }
       else
       {
-        LOG_ERROR("Trying to use " << robot_name << " as main robot but this robot cannot be loaded")
-        LOG_ERROR_AND_THROW(std::runtime_error, "Main robot not available")
+        mc_rtc::log::error_and_throw<std::runtime_error>(
+            "Trying to use {} as main robot but this robot cannot be loaded", robot_name);
       }
     }
     else
@@ -130,14 +129,14 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         }
         catch(const mc_rtc::LoaderException &)
         {
-          LOG_ERROR("Failed to create main robot using parameters " << config("MainRobot").dump())
-          LOG_ERROR_AND_THROW(std::runtime_error, "Failed to create robot")
+          mc_rtc::log::error_and_throw<std::runtime_error>("Failed to create main robot using parameters {}",
+                                                           config("MainRobot").dump());
         }
       }
       else
       {
-        LOG_ERROR("Trying to use " << params[0] << " as main robot but this robot cannot be loaded")
-        LOG_ERROR_AND_THROW(std::runtime_error, "Main robot not available")
+        mc_rtc::log::error_and_throw<std::runtime_error>(
+            "Trying to use {} as main robot but this robot cannot be loaded", params[0]);
       }
     }
   }
@@ -165,7 +164,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
     catch(const mc_rtc::LoaderException & exc)
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to update observer module path(s)")
+      mc_rtc::log::error_and_throw<std::runtime_error>("Failed to update observer module path(s)");
     }
   }
 
@@ -231,7 +230,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
       append_plugin(p, false);
     }
   }
-  LOG_INFO("Enabled plugins: " << plugin_str)
+  mc_rtc::log::info("Enabled plugins: {}", plugin_str);
 
   ///////////////////
   //  Controllers  //
@@ -248,7 +247,8 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   else
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Enabled entry in mc_rtc must contain at least one controller name");
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Enabled entry in mc_rtc must contain at least one controller name");
   }
   config("Default", initial_controller);
 
@@ -270,7 +270,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
     else
     {
-      LOG_WARNING("Unrecognized LogPolicy entry, will default to non-threaded")
+      mc_rtc::log::warning("Unrecognized LogPolicy entry, will default to non-threaded");
       log_policy = mc_rtc::Logger::Policy::NON_THREADED;
     }
   }
@@ -312,8 +312,9 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         auto check_port = [&protocol, &used_ports](unsigned int port) {
           if(std::find(used_ports.begin(), used_ports.end(), port) != used_ports.end())
           {
-            LOG_ERROR("Port " << port << " configured for protocol " << protocol
-                              << " is alread used by another protocol. Expect things to go badly.")
+            mc_rtc::log::error(
+                "Port {} configured for protocol {} is alread used by another protocol. Expect things to go badly.",
+                port, protocol);
           }
         };
         check_port(ports.first);
@@ -344,21 +345,21 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   if(enable_gui_server)
   {
-    LOG_INFO("GUI server enabled")
-    LOG_INFO("Will serve data on:")
+    mc_rtc::log::info("GUI server enabled");
+    mc_rtc::log::info("Will serve data on:");
     for(const auto & pub_uri : gui_server_pub_uris)
     {
-      LOG_INFO("- " << pub_uri)
+      mc_rtc::log::info("- {}", pub_uri);
     }
-    LOG_INFO("Will handle requests on:")
+    mc_rtc::log::info("Will handle requests on:");
     for(const auto & rep_uri : gui_server_rep_uris)
     {
-      LOG_INFO("- " << rep_uri)
+      mc_rtc::log::info("- {}", rep_uri);
     }
   }
   else
   {
-    LOG_INFO("GUI server disabled")
+    mc_rtc::log::info("GUI server disabled");
   }
 }
 
@@ -397,14 +398,14 @@ void load_configs(const std::string & desc,
       bfs::path global = conf_or_yaml(bfs::path(p) / "etc" / (name + ".conf"));
       if(bfs::exists(global))
       {
-        LOG_INFO("Loading additional " << desc << " configuration: " << global)
+        mc_rtc::log::info("Loading additional {} configuration: {}", desc, global);
         c.load(global.string());
       }
     }
     bfs::path local = conf_or_yaml(user_path / (name + ".conf"));
     if(bfs::exists(local))
     {
-      LOG_INFO("Loading additional " << desc << " configuration: " << local)
+      mc_rtc::log::info("Loading additional {} configuration: {}", desc, local);
       c.load(local.string());
     }
     configs[name] = c;

@@ -28,14 +28,14 @@ PositionTask::PositionTask(const std::string & bodyName,
 {
   if(robotIndex >= robots.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::PositionTask] No robot with index "
-                                                << robotIndex << ", " << robots.size() << " robots loaded");
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[mc_tasks::PositionTask] No robot with index {}, robots.size() {}", robotIndex, robots.size());
   }
   const auto & robot = robots.robot(robotIndex);
   if(!robot.hasBody(bodyName))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "[mc_tasks::PositionTask] No body named " << bodyName << " in " << robot.name());
+    mc_rtc::log::error_and_throw<std::runtime_error>("[mc_tasks::PositionTask] No body named {} in {}", bodyName,
+                                                     robot.name());
   }
   bIndex = robot.bodyIndexByName(bodyName);
 

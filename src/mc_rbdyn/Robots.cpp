@@ -126,7 +126,7 @@ unsigned int Robots::robotIndex(const std::string & name) const
   }
   else
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No robot named " << name);
+    mc_rtc::log::error_and_throw<std::runtime_error>("No robot named {}", name);
   }
 }
 
@@ -167,8 +167,7 @@ const Robot & Robots::robot(size_t idx) const
 {
   if(idx >= robots_.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "No robot with index " << idx << " (" << robots_.size() << " robots loaded)")
+    mc_rtc::log::error_and_throw<std::runtime_error>("No robot with index {} ({} robots loaded)", idx, robots_.size());
   }
   return robots_[idx];
 }
@@ -187,7 +186,7 @@ const Robot & Robots::robot(const std::string & name) const
   }
   else
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No robot named " << name);
+    mc_rtc::log::error_and_throw<std::runtime_error>("No robot named {}", name);
   }
 }
 
@@ -217,7 +216,7 @@ void Robots::removeRobot(const std::string & name)
   }
   else
   {
-    LOG_ERROR("Did not find a robot named " << name << " to remove")
+    mc_rtc::log::error("Did not find a robot named {} to remove", name);
   }
 }
 
@@ -225,7 +224,7 @@ void Robots::removeRobot(unsigned int idx)
 {
   if(idx >= robots_.size())
   {
-    LOG_ERROR("Cannot remove a robot at index " << idx << " because there is " << robots_.size() << " robots loaded")
+    mc_rtc::log::error("Cannot remove a robot at index {} because there is {} robots loaded", idx, robots_.size());
     return;
   }
   robot_modules_.erase(robot_modules_.begin() + idx);

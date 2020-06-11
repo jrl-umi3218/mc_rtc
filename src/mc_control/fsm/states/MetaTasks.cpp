@@ -54,11 +54,10 @@ void MetaTasksState::start(Controller & ctl)
   {
     if(!tasks_configs_.count(tName))
     {
-      LOG_ERROR_AND_THROW(
-          std::runtime_error,
-          "[" << name() << "] Invalid output task name " << tName << ": should be one of the following tasks: "
-              << mc_rtc::io::to_string(tasks_, [](const mc_tasks::MetaTaskPtr & t) { return t->name(); })
-              << ". Check your \"outputs\" configuration.");
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "[{}] Invalid output task name {}: should be one of the following tasks: {}. Check your \"outputs\" "
+          "configuration.",
+          name(), tName, mc_rtc::io::to_string(tasks_, [](const mc_tasks::MetaTaskPtr & t) { return t->name(); }));
     }
     else
     {
@@ -95,7 +94,7 @@ bool MetaTasksState::run(Controller &)
           }
           out += t.name() + "=" + crit.output();
         }
-        LOG_INFO("Completed " << t.name() << " (" << crit.output() << ")")
+        mc_rtc::log::info("Completed {} ({})", t.name(), crit.output());
       }
       if(out.empty())
       {

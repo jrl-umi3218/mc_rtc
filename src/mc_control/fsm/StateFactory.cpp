@@ -85,10 +85,10 @@ void resolve(StateFactory & factory, std::vector<UDState> & states)
   }
   if(states.size() != 0)
   {
-    LOG_ERROR("Some states could not be loaded as their base is not available, check for typos or cycles")
+    mc_rtc::log::error("Some states could not be loaded as their base is not available, check for typos or cycles");
     for(const auto & s : states)
     {
-      LOG_WARNING("- " << s.state << " (base: " << s.base << ")")
+      mc_rtc::log::warning("- {} (base: {})", s.state, s.base);
     }
   }
 }
@@ -104,7 +104,7 @@ void load_ud(StateFactory & factory,
     std::string base = config("base", std::string(""));
     if(base.empty())
     {
-      LOG_ERROR("Attempted to load state " << s.first << " but no base is specified in the configuration")
+      mc_rtc::log::error("Attempted to load state {} but no base is specified in the configuration", s.first);
       continue;
     }
     if(factory.hasState(base) || factory.load_with_loader(base))
@@ -122,7 +122,7 @@ void load_file(StateFactory & factory, const std::string & file, std::vector<UDS
 {
   if(verbose)
   {
-    LOG_INFO("Load " << file)
+    mc_rtc::log::info("Load {}", file);
   }
   std::map<std::string, mc_rtc::Configuration> states = mc_rtc::Configuration(file);
   load_ud(factory, states, ud_states);
@@ -155,7 +155,7 @@ void StateFactory::load_files(const std::vector<std::string> & files)
   {
     if(bfs::is_directory(f))
     {
-      LOG_INFO("Looking for state files in " << f)
+      mc_rtc::log::info("Looking for state files in {}", f);
       load_dir(*this, f, ud_states, verbose);
     }
     else
@@ -166,7 +166,7 @@ void StateFactory::load_files(const std::vector<std::string> & files)
       }
       else
       {
-        LOG_WARNING("State file " << f << " does not exist")
+        mc_rtc::log::warning("State file {} does not exist", f);
       }
     }
   }
@@ -190,15 +190,15 @@ void StateFactory::load(const std::string & name, const std::string & base, cons
 {
   if(!hasState(base) && !load_with_loader(base))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Cannot create a state using a base " << base << " that does not exist")
+    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot create a state using a base {} that does not exist", base);
   }
   if(hasState(name))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "State " << name << " already exists")
+    mc_rtc::log::error_and_throw<std::runtime_error>("State {} already exists", name);
   }
   if(verbose)
   {
-    LOG_INFO("New state from file: " << name << " (base: " << base << ")")
+    mc_rtc::log::info("New state from file: {} (base: {})", name, base);
   }
   states_.push_back(name);
   states_factories_[name] = [config, base](StateFactory & f) {
@@ -226,7 +226,7 @@ StatePtr StateFactory::create(const std::string & state,
   StatePtr ret = create(state);
   if(!ret)
   {
-    LOG_ERROR("Creation of " << state << " state failed")
+    mc_rtc::log::error("Creation of {} state failed", state);
     return nullptr;
   }
   ret->name(state);
@@ -242,7 +242,7 @@ StatePtr StateFactory::create(const std::string & state)
 {
   if(!hasState(state))
   {
-    LOG_ERROR("Attempted to create unavailable state " << state)
+    mc_rtc::log::error("Attempted to create unavailable state {}", state);
     return nullptr;
   }
   if(has_object(state))
@@ -271,12 +271,12 @@ bool StateFactory::load_with_loader(const std::string & state)
   std::string arg = state.substr(sharp + 1);
   if(!has_object(loader))
   {
-    LOG_ERROR("Cannot create state " << state << ", loader " << loader << " has not been loaded")
+    mc_rtc::log::error("Cannot create state {}, loader {} has not been loaded", state, loader);
     return false;
   }
   if(verbose)
   {
-    LOG_INFO("New state: " << state << " provided by loader: " << loader)
+    mc_rtc::log::info("New state: {} provided by loader: {}", state, loader);
   }
   states_.push_back(state);
   states_factories_[state] = [loader, arg](StateFactory & factory) { return factory.create_object(loader, arg); };
@@ -292,7 +292,7 @@ void StateFactory::update(const std::string & cn)
 {
   if(verbose)
   {
-    LOG_INFO("New state from library: " << cn)
+    mc_rtc::log::info("New state from library: {}", cn);
   }
   states_.push_back(cn);
 }

@@ -145,7 +145,7 @@ private:
 : {base_init}
 {{
 {min_code}
-  LOG_SUCCESS("{controller_name} init done " << this)
+  mc_rtc::log::success("{controller_name} init done ");
 }}
 
 bool {controller_class_name}::run()

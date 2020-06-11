@@ -28,7 +28,7 @@ int main(int argc, char * argv[])
   {
     out = in;
     out.replace_extension(".yaml");
-    LOG_INFO("Output conversion to " << out)
+    mc_rtc::log::info("Output conversion to {}", out);
   }
   mc_rtc::Configuration conf(in.string());
   conf.save(out.string());

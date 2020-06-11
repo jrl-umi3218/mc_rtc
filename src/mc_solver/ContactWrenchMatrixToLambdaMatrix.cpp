@@ -24,8 +24,8 @@ ContactWrenchMatrixToLambdaMatrix::ContactWrenchMatrixToLambdaMatrix(const mc_so
   auto qp_c = solver.contactById(id);
   if(qp_c.first == -1)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "[ContactWrenchMatrixToLambdaMatrix] Provided contact has not been added to the solver yet")
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[ContactWrenchMatrixToLambdaMatrix] Provided contact has not been added to the solver yet");
   }
   const auto & contact = qp_c.second;
   const auto & cones = contact.r1Cones;

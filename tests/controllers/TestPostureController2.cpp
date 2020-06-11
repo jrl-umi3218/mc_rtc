@@ -31,7 +31,7 @@ public:
     BOOST_CHECK(robot().hasJoint("NECK_P"));
     BOOST_CHECK_NO_THROW(head_joint_index = robot().jointIndexByName("NECK_P"));
     head_joint_target = std::min(std::abs(robot().ql()[head_joint_index][0]), robot().qu()[head_joint_index][0]) - 0.1;
-    LOG_SUCCESS("Created TestPostureController")
+    mc_rtc::log::success("Created TestPostureController");
   }
 
   virtual bool run() override

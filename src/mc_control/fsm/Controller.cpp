@@ -34,6 +34,14 @@ namespace mc_control
 namespace fsm
 {
 
+namespace
+{
+/** Always pick a steady clock */
+using clock = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
+                                        std::chrono::high_resolution_clock,
+                                        std::chrono::steady_clock>::type;
+} // namespace
+
 Contact Contact::from_mc_rbdyn(const Controller & ctl, const mc_rbdyn::Contact & contact)
 {
   return {ctl.robots().robot(contact.r1Index()).name(), ctl.robots().robot(contact.r2Index()).name(),
@@ -56,7 +64,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
       const auto & name = cr.first;
       if(robots_idx_.count(name))
       {
-        LOG_ERROR_AND_THROW(std::runtime_error, "FSM controller cannot have two robots with the same name")
+        mc_rtc::log::error_and_throw<std::runtime_error>("FSM controller cannot have two robots with the same name");
       }
       std::string module = cr.second("module");
       auto params = cr.second("params", std::vector<std::string>{});
@@ -75,21 +83,21 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
       }
       else
       {
-        LOG_ERROR_AND_THROW(std::runtime_error,
-                            "FSM controller only handles robot modules that require two parameters at most")
+        mc_rtc::log::error_and_throw<std::runtime_error>(
+            "FSM controller only handles robot modules that require two parameters at most");
       }
       if(!rm)
       {
-        LOG_ERROR_AND_THROW(std::runtime_error, "Failed to load " << name << " as specified in configuration");
+        mc_rtc::log::error_and_throw<std::runtime_error>("Failed to load {} as specified in configuration", name);
       }
       auto & r = loadRobot(rm, name);
       robots_idx_[name] = r.robotIndex();
       r.posW(cr.second("init_pos", sva::PTransformd::Identity()));
     }
-    LOG_INFO("Robots loaded in FSM controller:")
+    mc_rtc::log::info("Robots loaded in FSM controller:");
     for(const auto & r : robots())
     {
-      LOG_INFO("- " << r.name())
+      mc_rtc::log::info("- {}", r.name());
     }
   }
   /** Load global constraints (robots' kinematics/dynamics constraints and contact constraint */
@@ -107,7 +115,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
     }
     if(!contact_constraint_)
     {
-      LOG_WARNING("No contact constraint loaded from the FSM configuration")
+      mc_rtc::log::warning("No contact constraint loaded from the FSM configuration");
     }
   }
   /** Load collision managers */
@@ -196,7 +204,9 @@ bool Controller::run(mc_solver::FeedbackType fType)
       robots_idx_[r.name()] = r.robotIndex();
     }
   }
+  auto startUpdateContacts = clock::now();
   updateContacts();
+  updateContacts_dt_ = clock::now() - startUpdateContacts;
   executor_.run(*this, idle_keep_state_);
   if(!executor_.running())
   {
@@ -224,7 +234,9 @@ void Controller::reset(const ControllerResetData & data)
   {
     robot().posW(config()("init_pos"));
   }
+  auto startUpdateContacts = clock::now();
   updateContacts();
+  updateContacts_dt_ = clock::now() - startUpdateContacts;
 
   /** GUI information */
   if(gui_)
@@ -268,6 +280,7 @@ void Controller::reset(const ControllerResetData & data)
                           mc_rtc::gui::FormNumberInput{"Friction", false, mc_rbdyn::Contact::defaultFriction},
                           mc_rtc::gui::FormArrayInput<Eigen::Vector6d>{"dof", false, Eigen::Vector6d::Ones()}));
   }
+  logger().addLogEntry("perf_FSM_UpdateContacts", [this]() { return updateContacts_dt_.count(); });
   startIdleState();
 }
 
@@ -323,13 +336,13 @@ void Controller::updateContacts()
       {
         const auto availableRobots =
             mc_rtc::io::to_string(robots(), [](const mc_rbdyn::Robot & r) { return r.name(); });
-        LOG_ERROR_AND_THROW(std::runtime_error, "Failed to add contact: no robot named "
-                                                    << robotName << " (available: " << availableRobots << ")");
+        mc_rtc::log::error_and_throw<std::runtime_error>(
+            "Failed to add contact: no robot named {} (available robots: {})", robotName, availableRobots);
       }
       if(!robot(robotName).hasSurface(surfaceName))
       {
-        LOG_ERROR_AND_THROW(std::runtime_error,
-                            "Failed to add contact: no surface named " << surfaceName << " in robot " << robotName);
+        mc_rtc::log::error_and_throw<std::runtime_error>("Failed to add contact: no surface named {} in robot {}",
+                                                         surfaceName, robotName);
       }
     };
     for(const auto & c : contacts_)
@@ -364,7 +377,7 @@ void Controller::addCollisions(const std::string & r1,
   {
     if(robots_idx_.count(r1) * robots_idx_.count(r2) == 0)
     {
-      LOG_ERROR("Try to add collision for robot " << r1 << " and " << r2 << " which are not involved in this FSM")
+      mc_rtc::log::error("Try to add collision for robot {} and {} which are not involved in this FSM", r1, r2);
       return;
     }
     collision_constraints_[{r1, r2}] =
@@ -373,10 +386,10 @@ void Controller::addCollisions(const std::string & r1,
     solver().addConstraintSet(*collision_constraints_[{r1, r2}]);
   }
   auto & cc = collision_constraints_[{r1, r2}];
-  LOG_INFO("[FSM] Add collisions " << r1 << "/" << r2)
+  mc_rtc::log::info("[FSM] Add collisions {}/{}", r1, r2);
   for(const auto & c : collisions)
   {
-    LOG_INFO("[FSM] - " << r1 << "::" << c.body1 << "/" << r2 << "::" << c.body2)
+    mc_rtc::log::info("[FSM] - {}::{}/{}::{}", r1, c.body1, r2, c.body2);
   }
   cc->addCollisions(solver(), collisions);
 }
@@ -390,10 +403,10 @@ void Controller::removeCollisions(const std::string & r1,
     return;
   }
   auto & cc = collision_constraints_[{r1, r2}];
-  LOG_INFO("[FSM] Remove collisions " << r1 << "/" << r2)
+  mc_rtc::log::info("[FSM] Remove collisions {}/{}", r1, r2);
   for(const auto & c : collisions)
   {
-    LOG_INFO("[FSM] - " << r1 << "::" << c.body1 << "/" << r2 << "::" << c.body2)
+    mc_rtc::log::info("[FSM] - {}::{}/{}::{}", r1, c.body1, r2, c.body2);
   }
   cc->removeCollisions(solver(), collisions);
 }
@@ -405,7 +418,7 @@ void Controller::removeCollisions(const std::string & r1, const std::string & r2
     return;
   }
   auto & cc = collision_constraints_[{r1, r2}];
-  LOG_INFO("[FSM] Remove all collisions " << r1 << "/" << r2)
+  mc_rtc::log::info("[FSM] Remove all collisions {}/{}", r1, r2);
   cc->reset();
 }
 
@@ -431,29 +444,30 @@ std::shared_ptr<mc_tasks::PostureTask> Controller::getPostureTask(const std::str
 void Controller::addContact(const Contact & c)
 {
   bool inserted;
-  std::set<Contact>::iterator it;
+  ContactSet::iterator it;
   std::tie(it, inserted) = contacts_.insert(c);
   contacts_changed_ |= inserted;
   if(!inserted)
   {
     if(it->dof != c.dof)
     {
-      LOG_INFO("[FSM] Changed contact DoF " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface
-                                            << " to " << c.dof.transpose())
+      mc_rtc::log::info("[FSM] Changed contact DoF {}::{}/{}::{} to {}", c.r1, c.r1Surface, c.r2, c.r2Surface,
+                        c.dof.transpose());
       it->dof = c.dof;
       contacts_changed_ = true;
     }
     if(it->friction != c.friction)
     {
-      LOG_INFO("[FSM] Changed contact friction " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface
-                                                 << " to " << c.friction)
+      mc_rtc::log::info("[FSM] Changed contact friction {}::{}/{}::{} to {}", c.r1, c.r1Surface, c.r2, c.r2Surface,
+                        c.friction);
       it->friction = c.friction;
       contacts_changed_ = true;
     }
   }
   else
   {
-    LOG_INFO("[FSM] Add contact " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface)
+    mc_rtc::log::info("[FSM] Add contact {}::{}/{}::{} (DoF: {})", c.r1, c.r1Surface, c.r2, c.r2Surface,
+                      c.dof.transpose());
   }
 }
 
@@ -462,7 +476,7 @@ void Controller::removeContact(const Contact & c)
   contacts_changed_ |= static_cast<bool>(contacts_.erase(c));
   if(contacts_changed_)
   {
-    LOG_INFO("[FSM] Remove contact " << c.r1 << "::" << c.r1Surface << "/" << c.r2 << "::" << c.r2Surface)
+    mc_rtc::log::info("[FSM] Remove contact {}::{}/{}::{}", c.r1, c.r1Surface, c.r2, c.r2Surface);
   }
 }
 
@@ -487,7 +501,7 @@ bool Controller::resume(const std::string & state)
 {
   if(!factory_.hasState(state))
   {
-    LOG_ERROR("Cannot play unloaded state: " << state)
+    mc_rtc::log::error("Cannot play unloaded state: {}", state);
     return false;
   }
   return executor_.resume(state);

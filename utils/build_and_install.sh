@@ -309,26 +309,24 @@ git_update()
   git pull origin $1 && git submodule sync && git submodule update --init --recursive
 }
 
-SUDO_CMD='sudo -E'
-if [ ! -d $INSTALL_PREFIX ]
-then
-  mkdir -p $INSTALL_PREFIX
-fi
-if [ -w $INSTALL_PREFIX ]
-then
-  SUDO_CMD=
-  PYTHON_USER_INSTALL=ON
-fi
-if [ ! -d $SOURCE_DIR ]
-then
-  mkdir -p $SOURCE_DIR
-fi
-
-export PATH=$INSTALL_PREFIX/bin:$PATH
-export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH
-export DYLD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$DYLD_LIBRARY_PATH
-export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
-export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:$PYTHONPATH
+install_apt()
+{
+  TO_INSTALL=
+  for pkg in $*
+  do
+    has_package=`dpkg -l ${pkg} 2> /dev/null |grep "^ii" > /dev/null`
+    if [ $? -ne 0 ]
+    then
+      TO_INSTALL="$TO_INSTALL $pkg"
+    fi
+  done
+  if [ "${TO_INSTALL}" != "" ]
+  then
+    exec_log sudo apt-get update
+    exec_log sudo apt-get -y install ${TO_INSTALL}
+  fi
+  exit_if_error "-- [ERROR] Could not install one of the following packages ${TO_INSTALL}."
+}
 
 touch $BUILD_LOGFILE
 exit_if_error "-- [ERROR] Could not create log file $BUILD_LOGFILE"
@@ -363,25 +361,6 @@ echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
 echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
 echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
 echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
-
-install_apt()
-{
-  TO_INSTALL=
-  for pkg in $*
-  do
-    has_package=`dpkg -l ${pkg} 2> /dev/null |grep "^ii" > /dev/null`
-    if [ $? -ne 0 ]
-    then
-      TO_INSTALL="$TO_INSTALL $pkg"
-    fi
-  done
-  if [ "${TO_INSTALL}" != "" ]
-  then
-    exec_log sudo apt-get update
-    exec_log sudo apt-get -y install ${TO_INSTALL}
-  fi
-  exit_if_error "-- [ERROR] Could not install one of the following packages ${TO_INSTALL}."
-}
 
 ##################################################
 ## Extra OS/Distribution specific configuration ##
@@ -418,6 +397,26 @@ else
   . $this_dir/config_build_and_install.windows.sh
 fi
 
+SUDO_CMD='sudo -E'
+if [ ! -d $INSTALL_PREFIX ]
+then
+  mkdir -p $INSTALL_PREFIX
+fi
+if [ -w $INSTALL_PREFIX ]
+then
+  SUDO_CMD=
+  PYTHON_USER_INSTALL=ON
+fi
+if [ ! -d $SOURCE_DIR ]
+then
+  mkdir -p $SOURCE_DIR
+fi
+
+export PATH=$INSTALL_PREFIX/bin:$PATH
+export LD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$LD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH=$INSTALL_PREFIX/lib:$DYLD_LIBRARY_PATH
+export PKG_CONFIG_PATH=$INSTALL_PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
+export PYTHONPATH=$INSTALL_PREFIX/lib/python$PYTHON_VERSION/site-packages:$PYTHONPATH
 
 #make settings readonly
 readonly INSTALL_PREFIX
@@ -467,8 +466,7 @@ echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
 echo_log "   ROS_DISTRO=$ROS_DISTRO"
 echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
 echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
-
-
+echo_log "   SUDO_CMD=$SUDO_CMD"
 
 ###################################
 #  --  APT/Brew dependencies  --  #
@@ -759,7 +757,7 @@ check_and_clone_git_dependency()
 }
 
 # If the dependencies have already been cloned, check if the local state of the repository is clean before upgrading
-GIT_DEPENDENCIES="humanoid-path-planner/hpp-spline#v4.7.0 jrl-umi3218/SpaceVecAlg jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
+GIT_DEPENDENCIES="gabime/spdlog#v1.6.1 humanoid-path-planner/hpp-spline#v4.7.0 jrl-umi3218/SpaceVecAlg jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
 for repo in $GIT_DEPENDENCIES; do
   check_and_clone_git_dependency $repo $SOURCE_DIR
 done
@@ -934,7 +932,6 @@ build_git_dependency_configure_and_build()
                     -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
                     -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
                     -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
-                    -DBUILD_PYTHON_INTERFACE:BOOL=OFF \
                     ${CMAKE_ADDITIONAL_OPTIONS}
   exit_if_error "-- [ERROR] CMake configuration failed for $git_dep"
   build_project $git_dep
@@ -984,7 +981,12 @@ build_catkin_workspace()
 ##  --  GIT dependencies  --  #
 ###############################
 
-build_git_dependency_no_test humanoid-path-planner/hpp-spline#v4.7.0
+export OLD_CMAKE_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS}"
+export CMAKE_ADDITIONAL_OPTIONS="-DSPDLOG_BUILD_EXAMPLE:BOOL=OFF -DSPDLOG_BUILD_SHARED:BOOL=ON ${CMAKE_ADDITIONAL_OPTIONS}"
+build_git_dependency_no_test gabime/spdlog
+export CMAKE_ADDITIONAL_OPTIONS="-DBUILD_PYTHON_INTERFACE:BOOL=OFF ${OLD_CMAKE_OPTIONS}"
+build_git_dependency_no_test humanoid-path-planner/hpp-spline
+export CMAKE_ADDITIONAL_OPTIONS="${OLD_CMAKE_OPTIONS}"
 if [ "x$WITH_PYTHON_SUPPORT" == xON ]
 then
   build_git_dependency jrl-umi3218/Eigen3ToPython eigen

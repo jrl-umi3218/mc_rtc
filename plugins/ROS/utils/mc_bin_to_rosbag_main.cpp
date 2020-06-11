@@ -12,7 +12,7 @@ namespace bfs = boost::filesystem;
 
 void usage(char * p)
 {
-  LOG_ERROR("Usage: " << p << " [bin] ([bag]) (dt=0.005)")
+  mc_rtc::log::error("Usage: {} [bin] ([bag]) (dt=0.005)", p);
 }
 
 int main(int argc, char * argv[])
@@ -33,10 +33,10 @@ int main(int argc, char * argv[])
     out = bfs::path(argv[1]).filename().replace_extension(".bag").string();
     if(out == in)
     {
-      LOG_ERROR("Please specify a different output name")
+      mc_rtc::log::error("Please specify a different output name");
       return 1;
     }
-    LOG_INFO("Output converted log to " << out)
+    mc_rtc::log::info("Output converted log to {}", out);
   }
   double dt = 0.005;
   if(argc > 3)

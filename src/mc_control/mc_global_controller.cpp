@@ -13,6 +13,7 @@
 #include <mc_rtc/gui/Form.h>
 #include <mc_rtc/gui/Label.h>
 #include <mc_rtc/gui/NumberInput.h>
+#include <mc_rtc/io_utils.h>
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/EulerIntegration.h>
@@ -53,12 +54,12 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     }
     else
     {
-      LOG_ERROR("Observer " << observerName << " requested in \"EnabledObservers\" configuration but not available");
-      LOG_INFO("Note common reasons for this error include:\n"
-               "\t- The observer name does not match the name exported by EXPORT_OBSERVER_MODULE\n"
-               "\t- The library is not in a path read by mc_rtc\n"
-               "\t- The constuctor segfaults\n"
-               "\t- The library hasn't been properly linked");
+      mc_rtc::log::error("Observer {} requested in \"EnabledObservers\" configuration but not available", observerName);
+      mc_rtc::log::info("Note common reasons for this error include:\n"
+                        "\t- The observer name does not match the name exported by EXPORT_OBSERVER_MODULE\n"
+                        "\t- The library is not in a path read by mc_rtc\n"
+                        "\t- The constuctor segfaults\n"
+                        "\t- The library hasn't been properly linked");
     }
   }
 
@@ -71,8 +72,7 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   }
   catch(mc_rtc::LoaderException & exc)
   {
-    LOG_ERROR("Failed to initialize plugin loader")
-    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize plugin loader")
+    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize plugin loader");
   }
   for(const auto & plugin : config.global_plugins)
   {
@@ -82,8 +82,8 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     }
     catch(mc_rtc::LoaderException & exc)
     {
-      LOG_ERROR("Global plugin " << plugin
-                                 << " failed to load, functions provided by this plugin will not be available")
+      mc_rtc::log::error("Global plugin {} failed to load, functions provided by this plugin will not be available",
+                         plugin);
     }
   }
 
@@ -96,8 +96,7 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   }
   catch(mc_rtc::LoaderException & exc)
   {
-    LOG_ERROR("Failed to initialize controller loader")
-    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize controller loader")
+    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize controller loader");
   }
   if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(), "HalfSitPose")
      == config.enabled_controllers.end())
@@ -117,13 +116,14 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   next_controller_ = nullptr;
   if(current_ctrl == "" || controller_ == nullptr)
   {
-    LOG_ERROR("No controller selected or selected controller is not enabled, please check your configuration file")
-    LOG_INFO("Note common reasons for this error include:\n"
-             "\t- The controller name does not match the name exported by CONTROLLER_CONSTRUCTOR\n"
-             "\t- The controller library is not in a path read by mc_rtc\n"
-             "\t- The controller constuctor segfaults\n"
-             "\t- The controller library hasn't been properly linked");
-    LOG_ERROR_AND_THROW(std::runtime_error, "No controller enabled")
+    mc_rtc::log::error(
+        "No controller selected or selected controller is not enabled, please check your configuration file");
+    mc_rtc::log::info("Note common reasons for this error include:\n"
+                      "\t- The controller name does not match the name exported by CONTROLLER_CONSTRUCTOR\n"
+                      "\t- The controller library is not in a path read by mc_rtc\n"
+                      "\t- The controller constuctor segfaults\n"
+                      "\t- The controller library hasn't been properly linked");
+    mc_rtc::log::error_and_throw<std::runtime_error>("No controller enabled");
   }
   else
   {
@@ -141,7 +141,8 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   {
     if(config.gui_server_pub_uris.size() == 0)
     {
-      LOG_WARNING("GUI server is enabled but not configured to bind to anything, acting as if it was disabled.")
+      mc_rtc::log::warning(
+          "GUI server is enabled but not configured to bind to anything, acting as if it was disabled.");
     }
     else
     {
@@ -415,7 +416,7 @@ bool MCGlobalController::run()
         observer->removeFromGUI(*controller_->gui());
       }
     }
-    LOG_INFO("Switching controllers")
+    mc_rtc::log::info("Switching controllers");
     if(controller_)
     {
       for(auto & bs : next_controller_->robot().bodySensors())
@@ -441,14 +442,7 @@ bool MCGlobalController::run()
     else
     {
       controller_->stop();
-      LOG_INFO("Reset with q[0]")
-      std::cout << controller_->robot().mbc().q[0][0] << " ";
-      std::cout << controller_->robot().mbc().q[0][1] << " ";
-      std::cout << controller_->robot().mbc().q[0][2] << " ";
-      std::cout << controller_->robot().mbc().q[0][3] << " ";
-      std::cout << controller_->robot().mbc().q[0][4] << " ";
-      std::cout << controller_->robot().mbc().q[0][5] << " ";
-      std::cout << controller_->robot().mbc().q[0][6] << std::endl;
+      mc_rtc::log::info("Reset with q[0] = {}", mc_rtc::io::to_string(controller_->robot().mbc().q[0], ", ", 5));
       for(const auto & g : controller_->robot().grippersByName())
       {
         next_controller_->robot().gripper(g.first).reset(*g.second);
@@ -584,7 +578,7 @@ void MCGlobalController::setGripperTargetQ(const std::string & robot,
   }
   catch(const std::exception &)
   {
-    LOG_ERROR("Cannot set gripper opening for non-existing gripper " << name << " in " << robot)
+    mc_rtc::log::error("Cannot set gripper opening for non-existing gripper {} in {}", name, robot);
   }
 }
 
@@ -606,7 +600,7 @@ void MCGlobalController::setGripperOpenPercent(const std::string & robot, const 
   }
   catch(const std::exception &)
   {
-    LOG_ERROR("Cannot set gripper opening for non-existing gripper " << name << " in " << robot)
+    mc_rtc::log::error("Cannot set gripper opening for non-existing gripper {} in {}", name, robot);
   }
 }
 
@@ -624,7 +618,7 @@ bool MCGlobalController::AddController(const std::string & name)
 {
   if(controllers.count(name))
   {
-    LOG_WARNING("Controller " << name << " already enabled")
+    mc_rtc::log::warning("Controller {} already enabled", name);
     return false;
   }
   std::string controller_name = name;
@@ -637,7 +631,7 @@ bool MCGlobalController::AddController(const std::string & name)
   }
   if(controller_loader->has_object(controller_name))
   {
-    LOG_INFO("Create controller " << controller_name)
+    mc_rtc::log::info("Create controller {}", controller_name);
     if(controller_subname != "")
     {
       controllers[name] =
@@ -699,17 +693,17 @@ bool MCGlobalController::AddController(const std::string & name)
       }
       else
       {
-        LOG_ERROR_AND_THROW(std::runtime_error,
-                            "Controller " << controller_name << " requested observer " << observerName
-                                          << " but this observer is not available. Please make sure that it is in your "
-                                             "\"EnabledObservers\" configuration, and that is was properly loaded.");
+        mc_rtc::log::error_and_throw<std::runtime_error>(
+            "Controller {} requested observer {} but this observer is not available. Please make sure that it is in "
+            "your \"EnabledObservers\" configuration, and that is was properly loaded.",
+            controller_name, observerName);
       }
     }
     return true;
   }
   else
   {
-    LOG_WARNING("Controller " << name << " enabled in configuration but not available");
+    mc_rtc::log::warning("Controller {} enabled in configuration but not available", name);
     return false;
   }
 }
@@ -728,7 +722,7 @@ bool MCGlobalController::AddController(const std::string & name, std::shared_ptr
 {
   if(controllers.count(name) || !controller)
   {
-    LOG_WARNING("Controller " << name << " already enabled or invalid pointer passed")
+    mc_rtc::log::warning("Controller {} already enabled or invalid pointer passed", name);
     return false;
   }
   controllers[name] = controller;
@@ -752,11 +746,11 @@ bool MCGlobalController::EnableController(const std::string & name)
   {
     if(name == current_ctrl)
     {
-      LOG_ERROR(name << " controller already enabled.")
+      mc_rtc::log::error("{} controller already enabled.", name);
     }
     else
     {
-      LOG_ERROR(name << " controller not enabled.")
+      mc_rtc::log::error("{} controller not enabled.", name);
     }
     return false;
   }

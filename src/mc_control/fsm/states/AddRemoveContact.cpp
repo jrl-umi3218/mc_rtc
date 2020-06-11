@@ -88,10 +88,10 @@ struct AddRemoveContactStateImpl
       }
       else
       {
-        LOG_ERROR("AddRemoveContactState configured with compliant task but surface "
-                  << contact.r1Surface()->name() << " is attached to body " << body
-                  << " which does not have a force sensor.")
-        LOG_WARNING("Defaulting to simulated contact sensor")
+        mc_rtc::log::error("AddRemoveContactState configured with compliant task but surface {} is attached to body {} "
+                           "which does not have a force sensor.",
+                           contact.r1Surface()->name(), body);
+        mc_rtc::log::warning("Defaulting to simulated contact sensor");
         config_.add("type", "addContact");
         isCompliant = false;
         if(!config_.has("stiffness"))
@@ -145,7 +145,7 @@ struct AddRemoveContactStateImpl
     }
     else
     {
-      LOG_INFO("AddRemoveContactState has nothing to do here")
+      mc_rtc::log::info("AddRemoveContactState has nothing to do here");
     }
   }
 };
@@ -234,11 +234,11 @@ void AddRemoveContactStateImplHelper<mc_tasks::AddContactTask>::make_run_impl(Ad
       {
         if(d <= 0)
         {
-          LOG_INFO("Geometric contact detected")
+          mc_rtc::log::info("Geometric contact detected");
         }
         else
         {
-          LOG_INFO("Force contact detected")
+          mc_rtc::log::info("Force contact detected");
         }
         ctl.addContact(*fsm_contact_);
         auto t = std::static_pointer_cast<mc_tasks::AddContactTask>(impl.task_);

@@ -283,7 +283,7 @@ size_t MessagePackBuilder::finish()
 {
   if(mpack_writer_destroy(impl_.get()) != mpack_ok)
   {
-    LOG_ERROR("Failed to convert to MessagePack")
+    log::error("Failed to convert to MessagePack");
     return 0;
   }
   return mpack_writer_buffer_used(impl_.get());

@@ -50,12 +50,13 @@ inline double clampAndWarn(double value, double lower, double upper, const std::
 {
   if(value > upper)
   {
-    LOG_WARNING(label << " clamped to " << upper);
+    mc_rtc::log::warning("{} clamped to{}", label, upper);
+    ;
     return upper;
   }
   else if(value < lower)
   {
-    LOG_WARNING(label << " clamped to " << lower);
+    mc_rtc::log::warning("{} clamped to {}", label, lower);
     return lower;
   }
   else

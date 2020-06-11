@@ -28,18 +28,18 @@ const mc_rbdyn::ForceSensor & getSensor(const mc_rbdyn::Robots & robots,
 {
   if(robotIndex >= robots.size())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::ComplianceTask] No robot with index "
-                                                << robotIndex << ", " << robots.size() << " robots loaded");
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[mc_tasks::ComplianceTask] No robot with index {}, robots.size() {}", robotIndex, robots.size());
   }
   const auto & robot = robots.robot(robotIndex);
   if(!robot.hasBody(body))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error,
-                        "[mc_tasks::ComplianceTask] No body named " << body << " in " << robot.name());
+    mc_rtc::log::error_and_throw<std::runtime_error>("[mc_tasks::ComplianceTask] No body named {} in {}", body,
+                                                     robot.name());
   }
   if(!robot.bodyHasForceSensor(body))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "[mc_tasks::ComplianceTask] No force sensor attached to " << body)
+    mc_rtc::log::error_and_throw<std::runtime_error>("[mc_tasks::ComplianceTask] No force sensor attached to {}", body);
   }
   return robot.bodyForceSensor(body);
 }

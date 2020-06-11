@@ -19,7 +19,8 @@ MCTextController::MCTextController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
 {
   if(!config.has("Text"))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No entries relative to the Text controller in the loaded configuration")
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "No entries relative to the Text controller in the loaded configuration");
   }
   config_ = config("Text");
 }
@@ -29,11 +30,11 @@ void MCTextController::reset(const mc_control::ControllerResetData & data)
   mc_control::MCController::reset(data);
   if(!config_.has("constraints"))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No constraints in the provided text file")
+    mc_rtc::log::error_and_throw<std::runtime_error>("No constraints in the provided text file");
   }
   if(!config_.has("tasks"))
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "No tasks in the provided text file");
+    mc_rtc::log::error_and_throw<std::runtime_error>("No tasks in the provided text file");
   }
   for(const auto & c : config_("constraints"))
   {

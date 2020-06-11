@@ -335,12 +335,12 @@ BOOST_AUTO_TEST_CASE(TestRemove)
   {
     Object(const std::string & name) : name_(name)
     {
-      LOG_SUCCESS("Object " << name_ << " constructed");
+      mc_rtc::log::success("Object {} constructed", name_);
     }
 
     ~Object()
     {
-      LOG_SUCCESS("Object " << name_ << " destructed");
+      mc_rtc::log::success("Object {} destructed", name_);
     }
     std::string name_;
   };

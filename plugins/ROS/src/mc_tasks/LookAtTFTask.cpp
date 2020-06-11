@@ -40,7 +40,7 @@ void LookAtTFTask::update(mc_solver::QPSolver &)
   }
   catch(tf2::TransformException & ex)
   {
-    LOG_ERROR("TF2 exception in " << name() << ":\n" << ex.what());
+    mc_rtc::log::error("TF2 exception in {}:\n{}", name(), ex.what());
     return;
   }
   Eigen::Vector3d target;

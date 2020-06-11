@@ -15,7 +15,9 @@
 #include <mc/rtc/deprecated.hh>
 #include <memory>
 #include <set>
+#include <spdlog/fmt/fmt.h>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 namespace mc_rtc
@@ -375,6 +377,34 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     if(v.isArray())
     {
       std::set<T, C, A> ret;
+      for(size_t i = 0; i < v.size(); ++i)
+      {
+        auto ins = ret.insert(Configuration(v[i]));
+        if(!ins.second)
+        {
+          throw Configuration::Exception("Stored Json set does not hold unique values");
+        }
+      }
+      return ret;
+    }
+    else
+    {
+      throw Configuration::Exception("Stored Json value is not an array");
+    }
+  }
+
+  /*! \brief Retrieve an unordered set of objects
+   *
+   * \throws If the underlying value is not an array, if the member of the
+   * array do not meet the requirement of the set key type or if the elements
+   * in the array are not unique
+   */
+  template<typename T, typename H = std::hash<T>, typename E = std::equal_to<T>, typename A = std::allocator<T>>
+  operator std::unordered_set<T, H, E, A>() const
+  {
+    if(v.isArray())
+    {
+      std::unordered_set<T, H, E, A> ret;
       for(size_t i = 0; i < v.size(); ++i)
       {
         auto ins = ret.insert(Configuration(v[i]));
@@ -1061,6 +1091,28 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
   }
 
+  /*! \brief Add an unordered set into the JSON document
+   *
+   * Overwrites existing content if any.
+   *
+   * \param key Key of the element
+   *
+   * \param value Set of elements to add
+   */
+  template<typename T,
+           typename H = std::hash<T>,
+           typename E = std::equal_to<T>,
+           typename A = std::allocator<T>,
+           typename... Args>
+  void add(const std::string & key, const std::unordered_set<T, H, E, A> & value, Args &&... args)
+  {
+    Configuration v = array(key, value.size());
+    for(const auto & v : value)
+    {
+      v.push(*v, std::forward<Args>(args)...);
+    }
+  }
+
   /*! \brief User-defined conversion
    *
    * Requires the existence of:
@@ -1153,6 +1205,28 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
   }
 
+  /*! \brief Push an unordered set into the JSON document
+   *
+   * Overwrites existing content if any.
+   *
+   * \param key Key of the element
+   *
+   * \param value Set of elements to add
+   */
+  template<typename T,
+           typename H = std::hash<T>,
+           typename E = std::equal_to<T>,
+           typename A = std::allocator<T>,
+           typename... Args>
+  void push(const std::unordered_set<T, H, E, A> & value, Args &&... args)
+  {
+    Configuration v = array(value.size());
+    for(const auto & v : value)
+    {
+      v.push(*v, std::forward<Args>(args)...);
+    }
+  }
+
   /** Remove a given element
    *
    *  Has no effect if the element is not present.
@@ -1216,3 +1290,18 @@ void MC_RTC_UTILS_DLLAPI Configuration::operator()(const std::string & key, std:
 
 /*! \brief Ostream operator */
 MC_RTC_UTILS_DLLAPI std::ostream & operator<<(std::ostream & os, const mc_rtc::Configuration & c);
+
+namespace fmt
+{
+
+template<>
+struct formatter<mc_rtc::Configuration> : public formatter<string_view>
+{
+  template<typename FormatContext>
+  auto format(const mc_rtc::Configuration & c, FormatContext & ctx) -> decltype(ctx.out())
+  {
+    return formatter<string_view>::format(static_cast<std::string>(c), ctx);
+  }
+};
+
+} // namespace fmt

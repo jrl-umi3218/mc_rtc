@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <mc_rtc/loader_api.h>
+#include <mc_rtc/utils_api.h>
 
 #include <string>
 
@@ -19,6 +19,6 @@ namespace mc_rtc
 
   constexpr auto MC_RTC_VERSION = "@MC_RTC_VERSION@";
 
-  std::string MC_RTC_LOADER_DLLAPI version();
+  std::string MC_RTC_UTILS_DLLAPI version();
 
 } // namespace mc_rtc

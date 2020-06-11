@@ -9,6 +9,8 @@
 #include <mc_tasks/EndEffectorTask.h>
 #include <mc_tasks/PostureTask.h>
 
+#include <functional>
+
 namespace mc_control
 {
 
@@ -67,7 +69,40 @@ struct MC_CONTROL_FSM_DLLAPI Contact
   static Contact from_mc_rbdyn(const Controller &, const mc_rbdyn::Contact &);
 };
 
-using ContactSet = std::set<Contact, std::less<Contact>, Eigen::aligned_allocator<Contact>>;
+} // namespace fsm
+
+} // namespace mc_control
+
+namespace std
+{
+
+template<>
+struct hash<mc_control::fsm::Contact>
+{
+  std::size_t operator()(const mc_control::fsm::Contact & c) const noexcept
+  {
+    auto h = std::hash<std::string>{}(c.r1);
+    // Same as boost::hash_combine
+    auto hash_combine = [&h](const std::string & value) {
+      h ^= std::hash<std::string>{}(value) + 0x9e3779b9 + (h << 6) + (h >> 2);
+    };
+    hash_combine(c.r1Surface);
+    hash_combine(c.r2);
+    hash_combine(c.r2Surface);
+    return h;
+  }
+};
+
+} // namespace std
+
+namespace mc_control
+{
+
+namespace fsm
+{
+
+using ContactSet =
+    std::unordered_set<Contact, std::hash<Contact>, std::equal_to<Contact>, Eigen::aligned_allocator<Contact>>;
 
 /** \class Controller
  *
@@ -259,6 +294,10 @@ private:
   bool running_ = false;
   /** Main executor */
   Executor executor_;
+
+  using duration_ms = std::chrono::duration<double, std::milli>;
+  /** Monitor updateContacts runtime */
+  duration_ms updateContacts_dt_{0};
 };
 
 } // namespace fsm

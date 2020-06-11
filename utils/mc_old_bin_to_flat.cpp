@@ -175,7 +175,7 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
   std::ifstream ifs(file, std::ifstream::binary);
   if(!ifs.is_open())
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, file << " could not be opened!")
+    mc_rtc::log::error_and_throw<std::runtime_error>("{} could not be opened!", file);
   }
   std::vector<std::string> current_keys;
   std::vector<std::string> empty_keys;
@@ -392,7 +392,7 @@ void writeFlatLog(const std::unordered_map<std::string, std::shared_ptr<LogLine>
 
 void usage(const char * bin)
 {
-  LOG_ERROR("Usage: " << bin << " [bin] ([flat])")
+  mc_rtc::log::error("Usage: {} [bin] ([flat])", bin);
 }
 
 int main(int argc, char * argv[])
@@ -413,10 +413,10 @@ int main(int argc, char * argv[])
     out = bfs::path(argv[1]).filename().replace_extension(".flat").string();
     if(out == in)
     {
-      LOG_ERROR("Please specify a different output name")
+      mc_rtc::log::error("Please specify a different output name");
       return 1;
     }
-    LOG_INFO("Output converted log to " << out)
+    mc_rtc::log::info("Output converted log to {}", out);
   }
   writeFlatLog(readLog(in), out);
   return 0;

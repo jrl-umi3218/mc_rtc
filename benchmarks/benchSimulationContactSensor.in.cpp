@@ -6,6 +6,8 @@
 #include <mc_rbdyn/RobotLoader.h>
 #include <mc_rbdyn/Robots.h>
 
+#include <spdlog/spdlog.h>
+
 #include "benchmark/benchmark.h"
 
 class SimulationContactPairFixture : public benchmark::Fixture
@@ -13,6 +15,7 @@ class SimulationContactPairFixture : public benchmark::Fixture
 public:
   void SetUp(const ::benchmark::State &)
   {
+    spdlog::set_level(spdlog::level::err);
     mc_rbdyn::RobotLoader::clear();
     mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
     auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");

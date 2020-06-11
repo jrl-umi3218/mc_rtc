@@ -19,7 +19,7 @@ MyFirstController::MyFirstController(mc_rbdyn::RobotModulePtr rm, double dt, con
   solver().addTask(comTask);
   postureTask->stiffness(1);
 
-  LOG_SUCCESS("MyFirstController init done " << this)
+  mc_rtc::log::success("MyFirstController init done");
 }
 
 bool MyFirstController::run()

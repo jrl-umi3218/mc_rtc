@@ -38,9 +38,9 @@ void BodySensorObserver::reset(const mc_control::MCController & ctl)
   {
     if(!ctl.robot().hasBodySensor(fbSensorName_))
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[BodySensorObserver] Bodysensor "
-                                                  << fbSensorName_ << " is requested but does not exist in robot "
-                                                  << ctl.robot().name());
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "[BodySensorObserver] Bodysensor {} is requested but does not exist in robot {}", fbSensorName_,
+          ctl.robot().name());
     }
   }
   run(ctl);

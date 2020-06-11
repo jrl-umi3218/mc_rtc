@@ -50,7 +50,7 @@ bool MyController::run()
   {
     if(comTask->eval().norm() < 5e-2 && comTask->speed().norm() < 1e-4)
     {
-      LOG_SUCCESS("Moved the CoM")
+      mc_rtc::log::success("Moved the CoM");
       moved_com = true;
       solver().setContacts({
         mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
@@ -64,7 +64,7 @@ bool MyController::run()
   {
     if(footTask->eval().norm() < 5e-2 && footTask->speed().norm() < 1e-4)
     {
-      LOG_SUCCESS("Moved the left foot")
+      mc_rtc::log::success("Moved the left foot");
       moved_left_foot = true;
       solver().setContacts({
           mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
@@ -144,7 +144,7 @@ bool MyController::run()
   {
     if(comTask->eval().norm() < 5e-2 && comTask->speed().norm() < 1e-4)
     {
-      LOG_SUCCESS("Moved the CoM")
+      mc_rtc::log::success("Moved the CoM");
       moved_com = true;
       solver().setContacts({
         mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
@@ -166,7 +166,7 @@ bool MyController::run()
     double rf_z = robot().surfacePose("RightFoot").translation().z();
     if(lf_z > rf_z + 0.05)
     {
-      LOG_SUCCESS("Left foot contact removed")
+      mc_rtc::log::success("Left foot contact removed");
       removed_left_foot = true;
       solver().removeTask(aRContactTask);
       solver().addTask(footTask);
@@ -178,7 +178,7 @@ bool MyController::run()
   {
     if(footTask->eval().norm() < 5e-2 && footTask->speed().norm() < 1e-4)
     {
-      LOG_SUCCESS("Moved the left foot")
+      mc_rtc::log::success("Moved the left foot");
       moved_left_foot = true;
       solver().removeTask(footTask);
       mc_rbdyn::Contact addContact(robots(), "LeftFoot", "AllGround");
@@ -198,7 +198,7 @@ bool MyController::run()
     double rf_z = robot().surfacePose("RightFoot").translation().z();
     if(fabs(lf_z - rf_z) < 1e-4)
     {
-      LOG_SUCCESS("Added left foot")
+      mc_rtc::log::success("Added left foot");
       added_left_foot = true;
       solver().removeTask(aRContactTask);
       solver().setContacts({

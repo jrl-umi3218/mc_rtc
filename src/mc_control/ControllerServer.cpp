@@ -22,14 +22,14 @@ ControllerServer::ControllerServer(double dt,
     socket = nn_socket(AF_SP, proto);
     if(socket < 0)
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize " << name)
+      mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize {}", name);
     }
     for(const auto & uri : uris)
     {
       int ret = nn_bind(socket, uri.c_str());
       if(ret < 0)
       {
-        LOG_ERROR_AND_THROW(std::runtime_error, "Failed to bind " << name << " to uri: " << uri)
+        mc_rtc::log::error_and_throw<std::runtime_error>("Failed to bind {} to uri: {}", name, uri);
       }
     }
   };
@@ -56,7 +56,7 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
       auto err = nn_errno();
       if(err != EAGAIN)
       {
-        LOG_ERROR("ControllerServer failed to receive requested with errno: " << err)
+        mc_rtc::log::error("ControllerServer failed to receive requested with errno: {}", err);
       }
     }
     else
@@ -67,7 +67,7 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
       auto data = config("data", mc_rtc::Configuration{});
       if(!gui_builder.handleRequest(category, name, data))
       {
-        LOG_ERROR("Invokation of the following method failed" << std::endl << config.dump(true) << std::endl)
+        mc_rtc::log::error("Invokation of the following method failed\n{}\n", config.dump(true));
       }
       nn_freemsg(buf);
     }

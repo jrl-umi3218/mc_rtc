@@ -22,11 +22,12 @@ QuadraticGenerator::QuadraticGenerator(double start, double end, unsigned int nr
 {
   if(nrSteps_ % proportion != 0)
   {
-    LOG_WARNING("nrSteps is not divisible by proportion, rounding it up to the nearest multiple");
-    LOG_WARNING(nrSteps);
+    mc_rtc::log::warning("nrSteps is not divisible by proportion, rounding it up to the nearest multiple");
+    mc_rtc::log::warning(nrSteps);
     nrSteps_ += proportion - (nrSteps_ % proportion);
   }
-  LOG_WARNING(nrSteps_);
+  mc_rtc::log::warning(nrSteps_);
+  ;
   t1 = nrSteps_ / proportion;
   t2 = nrSteps_ / proportion * (proportion - 1);
   max_speed = (double)proportion / (proportion - 1);
@@ -69,7 +70,7 @@ std::vector<Plane> planes_from_polygon(const std::shared_ptr<geos::geom::Geometr
   geos::geom::Polygon * polygon = dynamic_cast<geos::geom::Polygon *>(geometry.get());
   if(polygon == nullptr)
   {
-    LOG_ERROR("Could not cast geos::geom::Geometry to geos::geom::Polygon");
+    mc_rtc::log::error("Could not cast geos::geom::Geometry to geos::geom::Polygon");
     return res;
   }
   auto seq = polygon->getExteriorRing()->getCoordinates();

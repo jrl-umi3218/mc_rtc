@@ -53,8 +53,8 @@ void BoundedSpeedConstr::addBoundedSpeed(QPSolver & solver,
   }
   else
   {
-    LOG_ERROR("Could not add bounded speed constraint for body " << bodyName << " since it does not exist in robot "
-                                                                 << solver.robots().robot(robotIndex).name())
+    mc_rtc::log::error("Could not add bounded speed constraint for body {} since it does not exist in robot {}",
+                       bodyName, solver.robots().robot(robotIndex).name());
   }
 }
 
@@ -69,8 +69,8 @@ bool BoundedSpeedConstr::removeBoundedSpeed(QPSolver & solver, const std::string
   }
   else
   {
-    LOG_ERROR("Could not remove bounded speed constraint for body " << bodyName << " since it does not exist in robot "
-                                                                    << solver.robots().robot(robotIndex).name())
+    mc_rtc::log::error("Could not remove bounded speed constraint for body {} since it does not exist in robot {}",
+                       bodyName, solver.robots().robot(robotIndex).name());
   }
   return r;
 }
@@ -110,7 +110,7 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
           }
           else
           {
-            LOG_ERROR("No speed or lowerSpeed/upperSpeed entry for bounded speed constraint on " << bName)
+            mc_rtc::log::error("No speed or lowerSpeed/upperSpeed entry for bounded speed constraint on {}", bName);
           }
         }
       }

@@ -105,7 +105,7 @@ Configuration::Exception::~Exception() noexcept
 {
   if(msg.size())
   {
-    LOG_ERROR(msg)
+    log::error(msg);
   }
 }
 
@@ -506,7 +506,7 @@ void Configuration::load(const std::string & path)
       target.SetObject();
       if(!mc_rtc::internal::loadYAMLDocument(path, *this))
       {
-        LOG_WARNING("Configuration dump until the attempted conversion:\n" << this->dump(true))
+        log::warning("Configuration dump until the attempted conversion:\n{}", this->dump(true));
       }
     }
     else

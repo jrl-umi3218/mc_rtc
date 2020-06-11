@@ -1,11 +1,11 @@
 variables:
   CI_TOOL: gitlab-ci
   APT_DEPENDENCIES: "cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev python-enum34"
-  GIT_DEPENDENCIES: "jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jbeder/yaml-cpp jrl-umi3218/RBDyn jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/eigen-quadprog jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.8.1"
+  GIT_DEPENDENCIES: "jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jbeder/yaml-cpp jrl-umi3218/RBDyn jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/eigen-quadprog jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.8.1 gabime/spdlog#v1.6.1"
   GITE_PACKAGES: "multi-contact/eigen-lssol multi-contact/tasks-packaging#topic/CIPackaging multi-contact/mc_env_description#karim_drc"
   MASTER_PPA: "v-launchpad-jochen-sprickerhof-de/pcl hrg/daily"
   ROS_DISTRO: "indigo"
-  CMAKE_ADDITIONAL_OPTIONS: "-DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_PYTHON_INTERFACE:BOOL=OFF -DYAML_BUILD_SHARED_LIBS:BOOL=ON"
+  CMAKE_ADDITIONAL_OPTIONS: "-DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_PYTHON_INTERFACE:BOOL=OFF -DYAML_BUILD_SHARED_LIBS:BOOL=ON -DSPDLOG_BUILD_SHARED:BOOL=ON -DSPDLOG_BUILD_EXAMPLE:BOOL=OFF"
   DO_COVERAGE_ON_BRANCH: ""
   DO_CPPCHECK_ON_BRANCH: ""
 
@@ -34,7 +34,7 @@ build_debian:
     - ./.jrl-ci/dependencies/eigen-3.3
     - rm -rf $HOME/.cmake/packages/Eigen3/
     - export APT_DEPENDENCIES="cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev"
-    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jbeder/yaml-cpp#yaml-cpp-0.5.3 jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/eigen-quadprog jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.8.1"
+    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jbeder/yaml-cpp#yaml-cpp-0.5.3 jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/eigen-quadprog jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.8.1 gabime/spdlog#v1.6.1"
     - export MASTER_PPA=""
     - export ROS_GIT_DEPENDENCIES="git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data"
     - mkdir -p /tmp/_ci/catkin_dep_ws/src
@@ -74,8 +74,8 @@ build_gcc_ros_debug:
   stage: build
   script:
     - export APT_DEPENDENCIES="cython python-pip python-coverage python-numpy python-nose libtinyxml2-dev libboost-all-dev libjsoncpp-dev libgeos++-dev libgeos-dev qhull-bin libqhull-dev libltdl-dev libeigen3-dev"
-    - export CMAKE_ADDITIONAL_OPTIONS="-DCMAKE_BUILD_TYPE=Debug -DBUILD_PYTHON_INTERFACE:BOOL=OFF -DYAML_BUILD_SHARED_LIBS:BOOL=ON"
-    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jbeder/yaml-cpp jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/eigen-quadprog jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.8.1"
+    - export CMAKE_ADDITIONAL_OPTIONS="-DCMAKE_BUILD_TYPE=Debug -DBUILD_PYTHON_INTERFACE:BOOL=OFF -DYAML_BUILD_SHARED_LIBS:BOOL=ON -DSPDLOG_BUILD_SHARED:BOOL=ON -DSPDLOG_BUILD_EXAMPLE:BOOL=OFF"
+    - export GIT_DEPENDENCIES="jrl-umi3218/Eigen3ToPython jrl-umi3218/SpaceVecAlg jbeder/yaml-cpp jrl-umi3218/eigen-qld git@gite.lirmm.fr:multi-contact/eigen-lssol.git jrl-umi3218/eigen-quadprog jrl-umi3218/sch-core jrl-umi3218/sch-core-python jrl-umi3218/RBDyn jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf nanomsg/nanomsg humanoid-path-planner/hpp-spline#v4.8.1 gabime/spdlog#v1.6.1"
     - ./.jrl-ci/run before_install
     - ./.jrl-ci/dependencies/catkin
     - export MASTER_PPA=""
@@ -113,45 +113,6 @@ build_with_script:
     - GCC
   allow_failure: true
 
-pages:
-  stage: pages
-  only:
-    - master
-  before_script:
-    - git submodule update --quiet --init --recursive
-    # In Docker dpkg is setup to remove all documentation :-D
-    - rm -f /etc/dpkg/dpkg.cfg.d/excludes
-    - apt-get update && apt-get install -qq software-properties-common && add-apt-repository -y ppa:pierre-gergondet+ppa/multi-contact-unstable && apt-get install -qq ruby-dev ruby-bundler libxml2-dev doxygen libboost-test-dev libboost-timer-dev libboost-program-options-dev libboost-filesystem-dev libgeos++-dev libgeos-dev libltdl-dev libtasks-qld-dev libmc-rbdyn-urdf-dev libnanomsg-dev libyaml-cpp-dev wget gfortran || exit 1
-    - mkdir -p /usr/share/doc/SpaceVecAlg/doxygen-html && cd /usr/share/doc/SpaceVecAlg/doxygen-html && wget https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/SpaceVecAlg.doxytag
-    - mkdir -p /usr/share/doc/RBDyn/doxygen-html && cd /usr/share/doc/RBDyn/doxygen-html && wget https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/RBDyn.doxytag
-    - mkdir -p /usr/share/doc/Tasks/doxygen-html && cd /usr/share/doc/Tasks/doxygen-html && wget https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/Tasks.doxytag
-    - mkdir -p /usr/share/doc/sch-core/doxygen-html && cd /usr/share/doc/sch-core/doxygen-html && wget https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/sch-core.doxytag
-    - mkdir -p /usr/share/doc/mc_rbdyn_urdf/doxygen-html && cd /usr/share/doc/mc_rbdyn_urdf/doxygen-html && wget https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag
-    - mkdir -p /tmp/_ci/src
-    - cd /tmp/_ci/src && git clone --recursive https://github.com/humanoid-path-planner/hpp-spline && mkdir -p hpp-spline/build && cd hpp-spline/build && cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING:BOOL=OFF -DBUILD_PYTHON_INTERFACE:BOOL=OFF && make install || exit 1
-    - cd /tmp/_ci/src && git clone --recursive git@gite.lirmm.fr:multi-contact/mc_rtc_ros_data && mkdir -p mc_rtc_ros_data/build && cd mc_rtc_ros_data/build && cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING:BOOL=OFF && make install || exit 1
-    - cd /tmp/_ci/src && git clone --recursive https://github.com/jrl-umi3218/eigen-quadprog && mkdir -p eigen-quadprog/build && cd eigen-quadprog/build && cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_TESTING:BOOL=OFF && make install || exit 1
-    - mkdir -p /tmp/_ci/build && cd /tmp/_ci/build
-    - cmake $CI_PROJECT_DIR -DPYTHON_BINDING=OFF -DBUILD_TESTING=OFF
-    - make doc
-    - cp -r doc/doxygen-html $CI_PROJECT_DIR/doc/
-    - cd $CI_PROJECT_DIR/doc/doxygen-html
-    - find . -type f -print0 | xargs -0 sed -i -e's@/usr/share/doc/SpaceVecAlg/doxygen-html/@https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/@g'
-    - find . -type f -print0 | xargs -0 sed -i -e's@/usr/share/doc/RBDyn/doxygen-html/@https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/@g'
-    - find . -type f -print0 | xargs -0 sed -i -e's@/usr/share/doc/Tasks/doxygen-html/@https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/@g'
-    - find . -type f -print0 | xargs -0 sed -i -e's@/usr/share/doc/sch-core/doxygen-html/@https://jrl-umi3218.github.io/sch-core/doxygen/HEAD/@g'
-    - find . -type f -print0 | xargs -0 sed -i -e's@/usr/share/doc/mc_rbdyn_urdf/doxygen-html/@https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/@g'
-    - cd $CI_PROJECT_DIR/doc
-    - bundle install --path vendor
-  script:
-    - bundle exec jekyll build --trace -d $CI_PROJECT_DIR/public -b /mc_rtc
-  tags:
-    - clang-format
-  artifacts:
-    paths:
-      - public
-
 stages:
   - clang-format
   - build
-  - pages

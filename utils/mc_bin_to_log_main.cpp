@@ -11,7 +11,7 @@ namespace bfs = boost::filesystem;
 
 void usage(const char * bin)
 {
-  LOG_ERROR("Usage: " << bin << " [bin] ([log])")
+  mc_rtc::log::error("Usage: {} [bin] ([log])", bin);
 }
 
 int main(int argc, char * argv[])
@@ -32,10 +32,10 @@ int main(int argc, char * argv[])
     out = bfs::path(argv[1]).filename().replace_extension(".csv").string();
     if(out == in)
     {
-      LOG_ERROR("Please specify a different output name")
+      mc_rtc::log::error("Please specify a different output name");
       return 1;
     }
-    LOG_INFO("Output converted log to " << out)
+    mc_rtc::log::info("Output converted log to {}", out);
   }
   mc_bin_to_log(in, out);
   return 0;

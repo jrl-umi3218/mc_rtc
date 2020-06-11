@@ -42,7 +42,7 @@ MCHalfSitPoseController::MCHalfSitPoseController(std::shared_ptr<mc_rbdyn::Robot
   qpsolver->addTask(postureTask.get());
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->setContacts({});
-  LOG_SUCCESS("MCHalfSitPoseController init done " << this)
+  mc_rtc::log::success("MCHalfSitPoseController init done");
 }
 
 void MCHalfSitPoseController::reset(const ControllerResetData & reset_data)

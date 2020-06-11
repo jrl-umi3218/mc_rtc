@@ -46,23 +46,23 @@ void init_socket(int & socket, int proto, const std::string & uri, const std::st
   socket = nn_socket(AF_SP, proto);
   if(socket < 0)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to initialize " << name)
+    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize {}", name);
   }
   int ret = nn_connect(socket, uri.c_str());
   if(ret < 0)
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Failed to connect " << name << " to uri: " << uri)
+    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to connect {} to uri: {}", name, uri);
   }
   else
   {
-    LOG_INFO("Connected " << name << " to " << uri)
+    mc_rtc::log::info("Connected {} to {}", name, uri);
   }
   if(proto == NN_SUB)
   {
     int err = nn_setsockopt(socket, NN_SUB, NN_SUB_SUBSCRIBE, "", 0);
     if(err < 0)
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "Failed to set subscribe option on SUB socket")
+      mc_rtc::log::error_and_throw<std::runtime_error>("Failed to set subscribe option on SUB socket");
     }
   }
 }
@@ -124,14 +124,15 @@ void ControllerClient::start()
         auto err = nn_errno();
         if(err != EAGAIN)
         {
-          LOG_ERROR("ControllerClient failed to receive with errno: " << err)
+          mc_rtc::log::error("ControllerClient failed to receive with errno: {}", err);
         }
       }
       else if(recv > 0)
       {
         if(recv > static_cast<int>(buff.size()))
         {
-          LOG_WARNING("Receive buffer was too small to receive the latest state message, will resize for next time")
+          mc_rtc::log::warning(
+              "Receive buffer was too small to receive the latest state message, will resize for next time");
           buff.resize(2 * buff.size());
           continue;
         }
@@ -184,8 +185,8 @@ void ControllerClient::handle_gui_state(mc_rtc::Configuration state)
   int version = state[0];
   if(version != mc_rtc::gui::StateBuilder::PROTOCOL_VERSION)
   {
-    LOG_ERROR("Receive message, version: " << version << " but I can only handle version: "
-                                           << mc_rtc::gui::StateBuilder::PROTOCOL_VERSION)
+    mc_rtc::log::error("Receive message, version: {} but I can only handle version: {}", version,
+                       mc_rtc::gui::StateBuilder::PROTOCOL_VERSION);
     handle_category({}, "", {});
     stopped();
     return;
@@ -306,22 +307,22 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
         handle_xytheta(id, data);
         break;
       default:
-        LOG_ERROR("Type " << static_cast<int>(type) << " is not handlded by this ControllerClient")
+        mc_rtc::log::error("Type {} is not handlded by this ControllerClient", static_cast<int>(type));
         break;
     };
   }
   catch(const mc_rtc::Configuration::Exception & exc)
   {
-    LOG_ERROR("Deserialization of GUI entry " << id.name << " in category " << cat2str(id.category) << " went wrong...")
-    LOG_WARNING("Data was: " << std::endl << data.dump(true))
-    LOG_WARNING("mc_rtc::Configuration exception was: " << std::endl << exc.what())
+    mc_rtc::log::error("Deserialization of GUI entry {} in category {} went wrong...", id.name, cat2str(id.category));
+    mc_rtc::log::warning("Data was:\n{}", data.dump(true));
+    mc_rtc::log::warning("mc_rtc::Configuration exception was:\n", exc.what());
   }
 }
 
 void ControllerClient::default_impl(const std::string & type, const ElementId & id)
 {
-  LOG_WARNING("This implementation of ControllerClient does not handle " << type << " GUI needed by "
-                                                                         << cat2str(id.category) << "/" << id.name)
+  mc_rtc::log::warning("This implementation of ControllerClient does not handle GUI needed by {}/{}", type,
+                       cat2str(id.category), id.name);
 }
 
 void ControllerClient::handle_point3d(const ElementId & id, const mc_rtc::Configuration & data)
@@ -406,9 +407,9 @@ void ControllerClient::handle_polygon(const ElementId & id, const mc_rtc::Config
     }
     catch(mc_rtc::Configuration::Exception & exc)
     {
-      LOG_ERROR("Could not deserialize polygon, supported data is vector<vector<Eigen::Vector3d>> or "
-                "vector<Eigen::Vector3d>");
-      LOG_ERROR(exc.what());
+      mc_rtc::log::error("Could not deserialize polygon, supported data is vector<vector<Eigen::Vector3d>> or "
+                         "vector<Eigen::Vector3d>");
+      mc_rtc::log::error(exc.what());
       exc.silence();
     }
   }
@@ -504,7 +505,8 @@ void ControllerClient::handle_xytheta(const ElementId & id, const mc_rtc::Config
   bool ro = data[4];
   if(vec.size() < 3)
   {
-    LOG_ERROR("Could not deserialize xytheta element. Expected VectorXd of size 3 or 4 (x, y, theta, [altitude])");
+    mc_rtc::log::error(
+        "Could not deserialize xytheta element. Expected VectorXd of size 3 or 4 (x, y, theta, [altitude])");
     return;
   }
 
@@ -561,7 +563,7 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
         form_data_combo_input(id, name, required, el[3], el[4]);
         break;
       default:
-        LOG_ERROR("Form cannot handle element of type " << static_cast<int>(type))
+        mc_rtc::log::error("Form cannot handle element of type {}", static_cast<int>(type));
     }
   }
 }
@@ -578,7 +580,7 @@ void ControllerClient::handle_plot(const mc_rtc::Configuration & plot)
       handle_xy_plot(plot);
       break;
     default:
-      LOG_ERROR("This client implementation only handles standard and XY plots")
+      mc_rtc::log::error("This client implementation only handles standard and XY plots");
   }
 }
 
@@ -709,8 +711,8 @@ void ControllerClient::handle_standard_plot(const mc_rtc::Configuration & plot)
     }
     else
     {
-      LOG_ERROR("Cannot handle provided data in " << title << ":")
-      LOG_WARNING(y_.dump(true, true))
+      mc_rtc::log::error("Cannot handle provided data in {}:", title);
+      mc_rtc::log::warning(y_.dump(true, true));
     }
   }
   end_plot(id);
@@ -752,8 +754,8 @@ void ControllerClient::handle_xy_plot(const mc_rtc::Configuration & plot)
     }
     else
     {
-      LOG_ERROR("Cannot handle provided data in " << title << ":")
-      LOG_WARNING(y_.dump(true, true))
+      mc_rtc::log::error("Cannot handle provided data in {}:", title);
+      mc_rtc::log::warning(y_.dump(true, true));
     }
   }
   end_plot(id);

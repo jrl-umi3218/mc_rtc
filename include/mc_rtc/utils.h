@@ -31,7 +31,7 @@ public:
   {
     if(!tail_.is_lock_free())
     {
-      LOG_WARNING("Your platform does not support std::atomic_size_t as lock free operations")
+      mc_rtc::log::warning("Your platform does not support std::atomic_size_t as lock free operations");
     }
   }
 

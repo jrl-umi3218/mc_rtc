@@ -83,11 +83,11 @@ int sandbox(void * args)
       data.complete = false;
       if(jmp_res == SIGSEGV || jmp_res == SIGILL)
       {
-        LOG_ERROR("Loaded constructor segfaulted")
+        mc_rtc::log::error("Loaded constructor segfaulted");
       }
       else
       {
-        LOG_ERROR("Loaded constructor raised a floating-point exception")
+        mc_rtc::log::error("Loaded constructor raised a floating-point exception");
       }
     }
     signal(SIGSEGV, SIG_DFL);
@@ -96,7 +96,7 @@ int sandbox(void * args)
   }
   catch(...)
   {
-    LOG_ERROR("Loaded constructor threw an exception")
+    mc_rtc::log::error("Loaded constructor threw an exception");
     data.ret = nullptr;
   }
   _exit(0);

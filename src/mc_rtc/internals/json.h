@@ -66,13 +66,13 @@ inline bool loadData(const char * data, RapidJSONDocument & document, const std:
     ss << "Position: " << res.Offset();
     if(path.size())
     {
-      LOG_ERROR("Failed to read configuration file: " << path)
+      log::error("Failed to read configuration file: {}", path);
     }
     else
     {
-      LOG_ERROR("Failed to read raw json data: " << data)
+      log::error("Failed to read raw json data: {}", data);
     }
-    LOG_WARNING(ss.str())
+    log::warning(ss.str());
     return false;
   }
   return true;
@@ -94,7 +94,7 @@ inline bool loadDocument(const std::string & path, RapidJSONDocument & document)
   std::ifstream ifs(path);
   if(!ifs.is_open())
   {
-    LOG_ERROR("Failed to open controller configuration file: " << path)
+    log::error("Failed to open controller configuration file: {}", path);
     return false;
   }
   std::stringstream json;
@@ -240,7 +240,7 @@ void fromMessagePack(mc_rtc::Configuration config, const std::string & key, mpac
       fromMessagePackMap(config.add(key), node);
       break;
     default:
-      LOG_ERROR_AND_THROW(std::runtime_error, "Unsupported type in MessagePack")
+      log::error_and_throw<std::runtime_error>("Unsupported type in MessagePack");
   }
 }
 
@@ -279,7 +279,7 @@ void fromMessagePack(mc_rtc::Configuration config, mpack_node_t node)
       fromMessagePackMap(config.object(), node);
       break;
     default:
-      LOG_ERROR_AND_THROW(std::runtime_error, "Unsupported type in MessagePack")
+      log::error_and_throw<std::runtime_error>("Unsupported type in MessagePack");
   }
 }
 
@@ -308,7 +308,7 @@ inline void fromMessagePack(mc_rtc::Configuration & config, const char * data, s
   mpack_tree_parse(&tree);
   if(mpack_tree_error(&tree) != mpack_ok)
   {
-    LOG_ERROR("Failed to parse MessagePack data")
+    log::error("Failed to parse MessagePack data");
     return;
   }
   auto root = mpack_tree_root(&tree);
@@ -323,7 +323,7 @@ inline void fromMessagePack(mc_rtc::Configuration & config, const char * data, s
   }
   else
   {
-    LOG_ERROR("Cannot convert from MessagePack if the root type is not a map or an array")
+    log::error("Cannot convert from MessagePack if the root type is not a map or an array");
   }
   mpack_tree_destroy(&tree);
 }
@@ -340,7 +340,7 @@ inline void saveDocument(const std::string & path, RapidJSONValue & document, bo
   std::ofstream ofs(path);
   if(!ofs)
   {
-    LOG_ERROR("Failed to open " << path << " for writing")
+    log::error("Failed to open {} for writing", path);
     return;
   }
   ofs << dumpDocument(document, pretty);

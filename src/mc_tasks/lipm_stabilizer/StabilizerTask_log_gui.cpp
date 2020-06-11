@@ -91,8 +91,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Debug"});
   gui.addElement({"Tasks", name_, "Debug"}, Button("Dump configuration", [this]() {
-                   LOG_INFO("[LIPMStabilizerTask] configuration (YAML)");
-                   LOG_INFO(c_.save().dump(true, true));
+                   mc_rtc::log::info("[LIPMStabilizerTask] configuration (YAML)");
+                   mc_rtc::log::info(c_.save().dump(true, true));
                  }));
 
   gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,

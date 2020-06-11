@@ -205,8 +205,8 @@ void TrajectoryTaskGeneric<T>::selectActiveJoints(
 {
   if(inSolver_)
   {
-    LOG_WARNING("selectActiveJoints(names) ignored: use selectActiveJoints(solver, names) for a task already added to "
-                "the solver");
+    mc_rtc::log::warning("selectActiveJoints(names) ignored: use selectActiveJoints(solver, names) for a task already "
+                         "added to the solver");
     return;
   }
   if(checkJoints)
@@ -246,10 +246,10 @@ void TrajectoryTaskGeneric<T>::selectUnactiveJoints(
 {
   if(inSolver_)
   {
-    LOG_WARNING(
-        name()
-        + "::selectUnactiveJoints(names) ignored: use selectUnactiveJoints(solver, names) for a task already added "
-          "to the solver");
+    mc_rtc::log::warning(
+        "{}::selectUnactiveJoints(names) ignored: use selectUnactiveJoints(solver, names) for a task already added "
+        "to the solver",
+        name());
     return;
   }
   if(checkJoints)
@@ -286,9 +286,9 @@ void TrajectoryTaskGeneric<T>::resetJointsSelector()
 {
   if(inSolver_)
   {
-    LOG_WARNING(
-        name()
-        + "::resetJointsSelector() ignored: use resetJointsSelector(solver) for a task already added to the solver");
+    mc_rtc::log::warning(
+        "{}::resetJointsSelector() ignored: use resetJointsSelector(solver) for a task already added to the solver",
+        name());
     return;
   }
   selectorT_ = nullptr;

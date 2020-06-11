@@ -42,7 +42,7 @@ public:
     std::ifstream strm(filename);
     if(!strm.is_open())
     {
-      LOG_ERROR("Could not open " << filename)
+      mc_rtc::log::error("Could not open {}", filename);
       return;
     }
 
@@ -54,13 +54,13 @@ public:
       strm >> temp;
       if(!strm.good())
       {
-        LOG_ERROR_AND_THROW(std::invalid_argument, "[ForceSensorCalibData] Invalid calibration file "
-                                                       << filename << ". " << dataRequirements())
+        mc_rtc::log::error_and_throw<std::invalid_argument>("[ForceSensorCalibData] Invalid calibration file {}. {}",
+                                                            filename, dataRequirements());
       }
       if(strm.eof())
       {
-        LOG_ERROR_AND_THROW(std::invalid_argument, "[ForceSensorCalibData] Calibration file "
-                                                       << filename << " too short. " << dataRequirements())
+        mc_rtc::log::error_and_throw<std::invalid_argument>(
+            "[ForceSensorCalibData] Calibration file {} is too short. {}", filename, dataRequirements());
       }
       X(i) = temp;
     }
@@ -143,7 +143,7 @@ void ForceSensor::loadCalibrator(const std::string & calib_file, const Eigen::Ve
 {
   if(!bfs::exists(calib_file))
   {
-    LOG_WARNING("No calibration file " << calib_file << " found for force sensor " << name());
+    mc_rtc::log::warning("No calibration file {} found for force sensor {}", calib_file, name());
     return;
   }
   else

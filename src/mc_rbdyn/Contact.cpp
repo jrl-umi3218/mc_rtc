@@ -110,7 +110,7 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
 
     if(newRobotSurfPoly == 0)
     {
-      LOG_INFO(robotSurface.name() << " and " << envSurface.name() << " surfaces don't intersect")
+      mc_rtc::log::info("{} and {} surfaces don't intersect", robotSurface.name(), envSurface.name());
       return robotSurface.points();
     }
     std::vector<sva::PTransformd> res;
@@ -122,8 +122,8 @@ std::vector<sva::PTransformd> computePoints(const mc_rbdyn::Surface & robotSurfa
     }
     return res;
   }
-  LOG_ERROR_AND_THROW(std::runtime_error, "Surfaces " << robotSurface.name() << " and " << envSurface.name()
-                                                      << " have incompatible types for contact")
+  mc_rtc::log::error_and_throw<std::runtime_error>("Surfaces {} and {} have incompatible types for contact",
+                                                   robotSurface.name(), envSurface.name());
 }
 
 Contact::Contact(const mc_rbdyn::Robots & robots,
@@ -423,7 +423,7 @@ mc_solver::QPContactPtr Contact::taskContact(const mc_rbdyn::Robots & /*robots*/
   }
   else
   {
-    LOG_ERROR_AND_THROW(std::runtime_error, "Robot's contact surface is neither planar nor gripper")
+    mc_rtc::log::error_and_throw<std::runtime_error>("Robot's contact surface is neither planar nor gripper");
   }
 
   return res;
