@@ -409,12 +409,18 @@ install_mc_rtc_lib(mc_tasks)
 set(mc_planning_SRC
 mc_planning/Pendulum.cpp
 mc_planning/LinearTimeVariantInvertedPendulum.cpp
+mc_planning/LinearControl3.cpp
+mc_planning/LIPMControlByPoleAssign.cpp
+mc_planning/LIPMControlByPoleAssignWithExternalForce.cpp
 )
 
 set(mc_planning_HDR
 ../include/mc_planning/Pendulum.h
 ../include/mc_planning/api.h
 ../include/mc_planning/LinearTimeVariantInvertedPendulum.h
+../include/mc_planning/LinearControl3.h
+../include/mc_planning/LIPMControlByPoleAssign.h
+../include/mc_planning/LIPMControlByPoleAssignWithExternalForce.h
 )
 
 add_library(mc_planning SHARED ${mc_planning_SRC} ${mc_planning_HDR})
