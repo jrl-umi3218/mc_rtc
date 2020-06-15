@@ -6,7 +6,7 @@ namespace mc_planning
 namespace linear_control_system
 {
 
-class LIPMControlByPoleAssignWithExternalForce : public LIPMControlByPoleAssign
+class MC_PLANNING_DLLAPI LIPMControlByPoleAssignWithExternalForce : public LIPMControlByPoleAssign
 {
 private:
   Eigen::Vector3d B2;

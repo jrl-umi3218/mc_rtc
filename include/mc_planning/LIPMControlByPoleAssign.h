@@ -6,7 +6,7 @@ namespace mc_planning
 namespace linear_control_system
 {
 
-class LIPMControlByPoleAssign : public LinearControl3
+class MC_PLANNING_DLLAPI LIPMControlByPoleAssign : public LinearControl3
 {
 public:
   void setStateVariables(double x_, double v_, double p_)

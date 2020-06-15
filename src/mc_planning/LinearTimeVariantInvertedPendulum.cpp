@@ -7,6 +7,9 @@ namespace cst = mc_rtc::constants;
 namespace mc_planning
 {
 
+namespace linear_control_system
+{
+
 LinearTimeVariantInvertedPendulum::LinearTimeVariantInvertedPendulum() {}
 
 LinearTimeVariantInvertedPendulum::LinearTimeVariantInvertedPendulum(double dt,
@@ -222,5 +225,21 @@ LinearTimeVariantInvertedPendulum::State LinearTimeVariantInvertedPendulum::getS
   s.cog_acc = m_w2[t] * (s.cog_pos - s.p);
   return s;
 }
+
+void LinearTimeVariantInvertedPendulum::getState(int n_time,
+                                                 double & cog_pos,
+                                                 double & cog_vel,
+                                                 double & cog_acc,
+                                                 double & p,
+                                                 double & pdot)
+{
+  p = m_p_ref(m_n_current + n_time);
+  pdot = (p - m_p_ref[m_n_current + n_time - 1]) / m_dt;
+  cog_pos = m_X[m_n_current + n_time](0);
+  cog_vel = m_X[m_n_current + n_time](1);
+  cog_acc = m_w2[m_n_current + n_time] * (cog_pos - p);
+}
+
+} // namespace linear_control_system
 
 } // namespace mc_planning

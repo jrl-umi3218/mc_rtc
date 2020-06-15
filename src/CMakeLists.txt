@@ -412,6 +412,8 @@ mc_planning/LinearTimeVariantInvertedPendulum.cpp
 mc_planning/LinearControl3.cpp
 mc_planning/LIPMControlByPoleAssign.cpp
 mc_planning/LIPMControlByPoleAssignWithExternalForce.cpp
+mc_planning/MathFunction.cpp
+mc_planning/State.cpp
 )
 
 set(mc_planning_HDR
@@ -421,6 +423,9 @@ set(mc_planning_HDR
 ../include/mc_planning/LinearControl3.h
 ../include/mc_planning/LIPMControlByPoleAssign.h
 ../include/mc_planning/LIPMControlByPoleAssignWithExternalForce.h
+../include/mc_planning/InterpolatorBase.h
+../include/mc_planning/CubicSplineBase.h
+../include/mc_planning/ClampedCubicSpline.h
 )
 
 add_library(mc_planning SHARED ${mc_planning_SRC} ${mc_planning_HDR})

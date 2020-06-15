@@ -22,6 +22,9 @@
 namespace mc_planning
 {
 
+namespace linear_control_system
+{
+
 /**
  * @brief Reference CoM position and velocity trajectory generation.
  *
@@ -140,6 +143,16 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
    */
   State getState(int n_time) const;
 
+  /*! @brief to get generated CoG/ZMP states
+   * @param[in]  n_time is the time in range of[-n_preview:n_preview], current time is 0
+   * @param[out]  cog_pos is position of COG
+   * @param[out]  cog_vel is velocity of COG
+   * @param[out]  cog_acc is acceleration of COG
+   * @param[in]  p is position of ZMP
+   * @param[in]  pdot is velocity of ZMP
+   */
+  void getState(int n_time, double & cog_pos, double & cog_vel, double & cog_acc, double & p, double & pdot);
+
   /** XXX Unused by MultiContact COG generation
    */
   void generate(Eigen::VectorXd & cog_pos,
@@ -178,7 +191,7 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
    *
    * @param k Index of the value in range \f$ [0, M] \f$
    */
-  double w2(unsigned k) const
+  double & w2(unsigned k)
   {
     return m_w2[k];
   }
@@ -248,5 +261,7 @@ protected:
   Eigen::VectorXd m_w2; ///< \f$ \omega_k^2 \f$
   Eigen::VectorXd m_w; ///< \f$ \omega \f$
 };
+
+} // namespace linear_control_system
 
 } // namespace mc_planning
