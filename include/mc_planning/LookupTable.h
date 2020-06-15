@@ -95,7 +95,7 @@ struct MC_PLANNING_DLLAPI LookupTable
     }
     else
     {
-      assert(x < min_ && x > max_);
+      assert(x < min_ || x > max_);
     }
     auto h = std::min(static_cast<size_t>(lround((x - min_) * rangeConversion_)), maxIndex_);
     return table_[h];
