@@ -7,7 +7,7 @@
 
 using namespace mc_planning::motion_interpolator;
 
-const double waist_height = 0.8;
+constexpr double waist_height = 0.8;
 constexpr int X = 0;
 constexpr int Y = 1;
 constexpr int Z = 2;
@@ -22,8 +22,7 @@ generator::generator(int n_preview, double dt)
   m_Pcalpha_out(Eigen::Vector3d::Zero()), m_Pcalpha_motion_out(Eigen::Vector3d::Zero()), m_n_preview(n_preview),
   m_n_steps(0), m_dt(dt), m_omega_valpha(0.0), m_mass(60.0)
 {
-  // setInterpolator<int>(m_ComInterp, "clamped-cubic-spline", m_dt);
-  m_ComInterp = new ClampedCubicSpline<int>(1.0, m_dt / 2);
+  m_ComInterp = std::make_shared<ClampedCubicSpline<int>>(1.0, m_dt / 2);
 
   m_ipm_long[X].Initialize(m_dt, m_n_preview, 20000);
   m_ipm_long[Y].Initialize(m_dt, m_n_preview, 20000);
@@ -45,20 +44,8 @@ generator::generator(int n_preview, double dt)
   m_COG_ideal.P << 0.0, 0.0, waist_height;
 }
 
-generator::~generator()
-{
-  delete m_ComInterp;
-}
-
 void generator::setupCOGHeight(int n_current)
 {
-#if 0
-  for( int i = 0 ; i <= 25; i++ ){
-    double t = (double)i * 36.0 * m_dt;
-    double waist = 0.2 * sin(2.0 * M_PI * t) + waist_height;
-    m_ComInterp->push_back(i * 40 + 620,  waist);
-  }
-#endif
   if(n_current == 0)
   {
     m_ComInterp->push_back(0.0, waist_height);

@@ -12,7 +12,7 @@ namespace mc_planning
 class generator
 {
 private:
-  motion_interpolator::InterpolatorBase<int> * m_ComInterp;
+  std::shared_ptr<motion_interpolator::InterpolatorBase<int>> m_ComInterp;
 
   StatePVA m_COG_ideal_pre, m_COG_ideal, m_COG_cmp;
   StatePVA m_COG_out;
@@ -36,7 +36,7 @@ private:
   Eigen::VectorXd m_cog_height;
   Eigen::VectorXd m_cog_dot_height;
   Eigen::VectorXd m_cog_ddot_height;
-  std::vector<Eigen::Vector3d> m_steps;
+  std::vector<Eigen::Vector3d> m_steps; ///< (time, com_x, com_y)
 
   void setupCOGHeight(int n_current);
 
@@ -126,8 +126,6 @@ public:
   }
 
   generator(int n_preview, double dt);
-
-  ~generator();
 
   void generate(int n_time);
 };
