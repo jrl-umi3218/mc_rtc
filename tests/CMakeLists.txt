@@ -136,3 +136,8 @@ target_link_libraries(dummyServer PUBLIC mc_control)
 mc_rtc_test(test_filters mc_filter SpaceVecAlg::SpaceVecAlg)
 
 mc_rtc_test(test_interpolation mc_control)
+
+#####################################
+# -- Temporary HMC-related tests -- #
+#####################################
+mc_rtc_test(test_hmc mc_planning)

@@ -12,7 +12,9 @@
  */
 #pragma once
 
+#include <mc_planning/LookupTable.h>
 #include <mc_planning/api.h>
+#include <mc_rtc/logging.h>
 #include <boost/circular_buffer.hpp>
 #include <Eigen/Core>
 #include <vector>
