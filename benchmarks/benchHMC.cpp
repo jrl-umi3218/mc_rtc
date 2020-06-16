@@ -13,7 +13,7 @@ static void BM_cosh_lookuptable(benchmark::State & state)
   auto omega = [](double h) { return std::sqrt(mc_rtc::constants::GRAVITY / h); };
   double dt = 0.005;
   auto table =
-      mc_planning::LookupTable<double>(20000, omega(2.5), omega(0.01), [dt](double x) { return cosh(x) * dt; });
+      mc_planning::LookupTable<double>(20000, omega(2.5), omega(0.01), [dt](double x) { return cosh(x * dt); });
 
   static std::random_device rd;
   static std::mt19937_64 gen(rd());
@@ -49,7 +49,7 @@ static void BM_cosh(benchmark::State & state)
     val = dis(gen);
     for(int i = 0; i < 10000; ++i)
     {
-      benchmark::DoNotOptimize(res = cosh(val) * dt);
+      benchmark::DoNotOptimize(res = cosh(val * dt));
     }
   }
   state.SetItemsProcessed(10000 * state.iterations());
