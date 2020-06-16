@@ -42,72 +42,72 @@ private:
 
   void setupTimeTrajectories(int n_current);
 
-  void generateTrajectories(void);
+  void generateTrajectories();
 
 public:
-  const Eigen::Vector3d & IdealCOGPosition(void) const
+  const Eigen::Vector3d & IdealCOGPosition() const
   {
     return m_COG_ideal.P;
   }
-  const Eigen::Vector3d & IdealCOGVelocity(void) const
+  const Eigen::Vector3d & IdealCOGVelocity() const
   {
     return m_COG_ideal.V;
   }
-  const Eigen::Vector3d & IdealCOGAcceleration(void) const
+  const Eigen::Vector3d & IdealCOGAcceleration() const
   {
     return m_COG_ideal.Vdot;
   }
 
-  const Eigen::Vector3d & CompensatedCOGPosition(void) const
+  const Eigen::Vector3d & CompensatedCOGPosition() const
   {
     return m_COG_cmp.P;
   }
-  const Eigen::Vector3d & CompensatedCOGVelocity(void) const
+  const Eigen::Vector3d & CompensatedCOGVelocity() const
   {
     return m_COG_cmp.V;
   }
-  const Eigen::Vector3d & CompensatedCOGAcceleration(void) const
+  const Eigen::Vector3d & CompensatedCOGAcceleration() const
   {
     return m_COG_cmp.Vdot;
   }
 
-  const Eigen::Vector3d & OutputCOGPosition(void) const
+  const Eigen::Vector3d & OutputCOGPosition() const
   {
     return m_COG_out.P;
   }
-  const Eigen::Vector3d & OutputCOGVelocity(void) const
+  const Eigen::Vector3d & OutputCOGVelocity() const
   {
     return m_COG_out.V;
   }
-  const Eigen::Vector3d & OutputCOGAcceleration(void) const
+  const Eigen::Vector3d & OutputCOGAcceleration() const
   {
     return m_COG_out.Vdot;
   }
 
-  const Eigen::Vector3d & IdealZMPPosition(void) const
+  const Eigen::Vector3d & IdealZMPPosition() const
   {
     return m_Pcalpha_ideal;
   }
-  const Eigen::Vector3d & IdealZMPVelocity(void) const
+  const Eigen::Vector3d & IdealZMPVelocity() const
   {
     return m_Vcalpha_ideal;
   }
 
-  const Eigen::Vector3d & CompensatedZMPPosition(void) const
+  const Eigen::Vector3d & CompensatedZMPPosition() const
   {
     return m_Pcalpha_cmp;
   }
-  const Eigen::Vector3d & CompensatedZMPVelocity(void) const
+  const Eigen::Vector3d & CompensatedZMPVelocity() const
   {
     return m_Vcalpha_cmp;
   }
 
-  const Eigen::Vector3d & OutputZMPPosition(void) const
+  const Eigen::Vector3d & OutputZMPPosition() const
   {
     return m_Pcalpha_out;
   }
 
-  const std::vector<Eigen::Vector3d> & Steps(void) const
+  const std::vector<Eigen::Vector3d> & Steps() const
   {
     return m_steps;
   }

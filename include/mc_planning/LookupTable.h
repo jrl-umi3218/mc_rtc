@@ -39,6 +39,23 @@ struct MC_PLANNING_DLLAPI LookupTable
 {
   /**
    * @brief Evaluate and store given function results
+   * @see create(size_t resolution, const T & min, const T & max, MappingFunction f)
+   */
+  template<typename MappingFunction>
+  LookupTable(size_t resolution, const T & min, const T & max, MappingFunction f)
+  {
+    create(resolution, min, max, f);
+  }
+
+  /**
+   * @brief Default constructor
+   *
+   * To initialize the lookup table, call create(size_t resolution, const T & min, const T & max, MappingFunction f)
+   */
+  LookupTable(){};
+
+  /**
+   * @brief Evaluate and store given function results
    *
    * \f[ [f(min), ..., f(max)] \in T^\mbox{resolution} \f]
    *
@@ -48,10 +65,9 @@ struct MC_PLANNING_DLLAPI LookupTable
    * @param f Function to evaluate
    */
   template<typename MappingFunction>
-  LookupTable(size_t resolution, const T & min, const T & max, MappingFunction f)
-  : table_(resolution), min_(min), max_(max)
+  void create(size_t resolution, const T & min, const T & max, MappingFunction f)
   {
-    if(min_ > max_)
+    if(min > max)
     {
       mc_rtc::log::error_and_throw<std::runtime_error>("[LookupTable] Invalid range (min {} > max {})", min, max);
     }
@@ -60,6 +76,9 @@ struct MC_PLANNING_DLLAPI LookupTable
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "[LookupTable] Resolution cannot be equal to zero (strictly positive)");
     }
+    table_.resize(resolution);
+    min_ = min;
+    max_ = max;
     T oldrange = static_cast<T>(resolution);
     T newrange = (max - min);
     T fracRange = newrange / oldrange;

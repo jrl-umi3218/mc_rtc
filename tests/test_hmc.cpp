@@ -36,8 +36,8 @@ BOOST_AUTO_TEST_CASE(TestLookupTable)
     // robot (from 0.001m to 3m height)
     auto omega = [](double h) { return std::sqrt(mc_rtc::constants::GRAVITY / h); };
     double dt = 0.005;
-    testLookupTable([dt](double x) { return cosh(x) * dt; }, omega(2.5), omega(0.01), 100000, 100000);
-    testLookupTable([](double x) { return sinh(x); }, omega(2.5), omega(0.01), 100000, 100000);
+    testLookupTable([dt](double x) { return cosh(x * dt); }, omega(2.5), omega(0.01), 100000, 100000);
+    testLookupTable([dt](double x) { return sinh(x * dt); }, omega(2.5), omega(0.01), 100000, 100000);
   }
 
   {

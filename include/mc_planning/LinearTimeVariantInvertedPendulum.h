@@ -103,23 +103,39 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
    * @param dt Timestep
    * @param n_preview Number of future preview elements. The full size of the
    * preview windows from past to future will be (2*n_preview+1)
+   * @param minHeight for the pendulum (used for LookupTable optimizations)
+   * @param maxHeight for the pendulum
    * @param weight_resolution Number of data points to pre-compute for
-   * \f$ \omega, cosh(\omega), sinh(\omega) \f$ for height in a given range.
-   * This is used to optimize the otherwise costly computation of these
+   * \f$ \omega, cosh(\omega), sinh(\omega) \f$ for height in a given range
+   * [minHeight, maxHeight]. This is used to optimize the otherwise costly computation of these
    * constants.
    */
-  LinearTimeVariantInvertedPendulum(double dt, unsigned n_preview = 0, unsigned weight_resolution = 20000);
+  LinearTimeVariantInvertedPendulum(double dt,
+                                    unsigned n_preview = 0,
+                                    unsigned weight_resolution = 20000,
+                                    double minHeight = 0.01,
+                                    double maxHeight = 2.5);
   virtual ~LinearTimeVariantInvertedPendulum();
 
-  void Initialize(double dt, unsigned n_preview = 0, unsigned weight_resolution = 20000);
+  void Initialize(double dt,
+                  unsigned n_preview = 0,
+                  unsigned weight_resolution = 20000,
+                  double minHeight = 0.01,
+                  double maxHeight = 2.5);
 
-  /** XXX What does it initialize exactly?
-   * @param waist_height
+  /**
+   * @brief Initialize the discretized system matrices with constant pendulum height
+Pre-computed table from .
+
+   *
+   * Initalizes \f$ A_k \f$, \f$ B_k \f$
+   *
+   * @param waist_height Pendulum height (constant over the preview window)
    */
   void initMatrices(double waist_height);
 
   /**
-   * @brief Computes the reference CoM state (position and velocity)
+   * @brief Computes the reference CoM state online (position and velocity)
    *
    * Fills m_A, m_B, m_An, m_Bn, m_X
    * Requires p_ref() and w2() to be filled first.
@@ -153,7 +169,8 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
    */
   void getState(int n_time, double & cog_pos, double & cog_vel, double & cog_acc, double & p, double & pdot);
 
-  /** XXX Unused by MultiContact COG generation
+  /**
+   * Generate full trajectory (only used for tests)
    */
   void generate(Eigen::VectorXd & cog_pos,
                 Eigen::VectorXd & cog_vel,
@@ -209,45 +226,13 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
     return m_w[k];
   }
 
-private:
-  /** Fill m_A
-   *
-   * XXX with what? unclear...
-   *
-   * @param waist_height
-   */
-  inline void init_m22(double waist_height);
-  /** Fill m_B
-   *
-   * XXX with what? unclear...
-   *
-   * @param waist_height
-   */
-  inline void init_v2(double waist_height);
-
 protected:
   using Matrix22 = Eigen::Matrix<double, 2, 2>;
   using Vector2 = Eigen::Matrix<double, 2, 1>;
 
   double m_dt; ///< Timstep
-  double m_dh;
   unsigned m_n_current; ///< Index of current time (center of the preview window)
   unsigned m_n_preview2; ///< Preview window size \f$ (2*\mbox{m_n_current})+1 \f$
-
-  /** @name Computation optimizations
-   * These values are pre-computed to speed-up computations.
-   *
-   * FIXME this makes the code hard to read, and too specialized for HRP use-case.
-   * Values are pre-computed assuming the typical range of heights likely for HRP
-   * robots.
-   * There is no check to see if we get outside of this range, this could break
-   * down for other use-cases
-   */
-  ///@{
-  std::vector<double> m_wk; ///< \f$ \omega_k \f$
-  std::vector<double> m_shk; ///< \f$ sinh(\omega_k * dt) \f$
-  std::vector<double> m_chk; ///< \f$ cosh(\omega_k * dt) \f$
-  ///@}
 
   boost::circular_buffer<Matrix22, Eigen::aligned_allocator<Matrix22>> m_A; ///< \f$ A_k \f$
   boost::circular_buffer<Vector2, Eigen::aligned_allocator<Vector2>> m_B; ///< \f$ B_k \f$
@@ -260,6 +245,15 @@ protected:
 
   Eigen::VectorXd m_w2; ///< \f$ \omega_k^2 \f$
   Eigen::VectorXd m_w; ///< \f$ \omega \f$
+
+  /**
+   * @name Lookup tables for optimized computation of cosh, sinh and sqrt
+   **/
+  ///@{
+  LookupTable<double> wTable_; ///< Pre-computed table from \f$ \omega^2 \rightarrow sqrt(\omega^2) \f$
+  LookupTable<double> chkTable_; ///< Pre-computed table from \f$ \omega^2 \rightarrow cosh(sqrt(\omega^2) * dt) \f$
+  LookupTable<double> shkTable_; ///< Pre-computed table from \f$ \omega^2 \rightarrow sinh(sqrt(\omega^2) * dt) \f$
+  ///@}
 };
 
 } // namespace linear_control_system

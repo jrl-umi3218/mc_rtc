@@ -14,13 +14,26 @@ LinearTimeVariantInvertedPendulum::LinearTimeVariantInvertedPendulum() {}
 
 LinearTimeVariantInvertedPendulum::LinearTimeVariantInvertedPendulum(double dt,
                                                                      unsigned n_preview,
-                                                                     unsigned weight_resolution)
+                                                                     unsigned weight_resolution,
+                                                                     double minHeight,
+                                                                     double maxHeight)
 {
-  Initialize(dt, n_preview, weight_resolution);
+  Initialize(dt, n_preview, weight_resolution, minHeight, maxHeight);
 }
 
-void LinearTimeVariantInvertedPendulum::Initialize(double dt, unsigned n_preview, unsigned weight_resolution)
+void LinearTimeVariantInvertedPendulum::Initialize(double dt,
+                                                   unsigned n_preview,
+                                                   unsigned weight_resolution,
+                                                   double minHeight,
+                                                   double maxHeight)
 {
+  if(weight_resolution == 0)
+  {
+    mc_rtc::log::error_and_throw<std::invalid_argument>("[LinearTimeVariantInvertedPendulum::Initialize] Invalid "
+                                                        "weight resolution {} (must be >0, recommended value 20000) ",
+                                                        weight_resolution);
+  }
+
   m_dt = dt;
   m_n_current = n_preview;
   if(n_preview == 0)
@@ -29,32 +42,16 @@ void LinearTimeVariantInvertedPendulum::Initialize(double dt, unsigned n_preview
   }
   m_n_preview2 = n_preview * 2 + 1;
 
-  if(weight_resolution == 0)
-  {
-    weight_resolution = 20000;
-    mc_rtc::log::warning("[LinearTimeVariantInvertedPendulum::Initialize] Invalid weight resolution, using {} instead",
-                         weight_resolution);
-  }
-  m_wk.resize(weight_resolution);
-  m_shk.resize(weight_resolution);
-  m_chk.resize(weight_resolution);
-
-  /// XXX why divided by 800?
-  // 25
-  m_dh = static_cast<double>(weight_resolution) / 800.0;
-  for(unsigned i = 0; i < weight_resolution; i++)
-  {
-    // Pendulum is h = w2/g
-    // Precomputes values from height between
-    // h min = 0.001 / G ~= 0.0001m
-    // to
-    // h max = (0.001+20000/800)/G = 2.5m
-    // FIXME Max height depends on weight resolution!
-    double w2 = 0.001 + (double)i / m_dh;
-    m_wk[i] = sqrt(w2);
-    m_shk[i] = sinh(m_wk[i] * dt);
-    m_chk[i] = cosh(m_wk[i] * dt);
-  }
+  /** Create lookup tables for sqrt(w2), cosh(w*dt), sinh(w*dt) */
+  auto omega2 = [](double h) { return mc_rtc::constants::GRAVITY / h; };
+  auto omega = [](double w2) { return std::sqrt(w2); };
+  auto chk = [this](double w2) { return cosh(wTable_(w2) * m_dt); };
+  auto shk = [this](double w2) { return sinh(wTable_(w2) * m_dt); };
+  double minOmega2 = omega2(maxHeight);
+  double maxOmega2 = omega2(minHeight);
+  wTable_.create(weight_resolution, minOmega2, maxOmega2, omega);
+  chkTable_.create(weight_resolution, minOmega2, maxOmega2, chk);
+  shkTable_.create(weight_resolution, minOmega2, maxOmega2, shk);
 
   m_A.resize(m_n_preview2, Matrix22::Identity());
   m_An.resize(m_n_preview2, Matrix22::Identity());
@@ -69,52 +66,48 @@ void LinearTimeVariantInvertedPendulum::Initialize(double dt, unsigned n_preview
 
 LinearTimeVariantInvertedPendulum::~LinearTimeVariantInvertedPendulum() {}
 
-void LinearTimeVariantInvertedPendulum::init_m22(double waist_height)
-{
-  // XXX why this index?
-  unsigned h = static_cast<unsigned>(lround(cst::GRAVITY * m_dh / waist_height));
-
-  // A_k
-  Matrix22 m;
-  m << m_chk[h], m_shk[h] / m_wk[h], m_wk[h] * m_shk[h], m_chk[h];
-
-  for(unsigned i = 0; i < m_n_preview2; i++)
-  {
-    m_A.push_front(m);
-  }
-}
-
-void LinearTimeVariantInvertedPendulum::init_v2(double waist_height)
-{
-  // XXX why this indeThis is something x?
-  unsigned h = static_cast<unsigned>(lround(cst::GRAVITY * m_dh / waist_height));
-
-  Vector2 v;
-  v << 1 - m_chk[h], -m_wk[h] * m_shk[h];
-
-  for(unsigned i = 0; i < m_n_preview2; i++)
-  {
-    m_B.push_front(v);
-  }
-}
-
 void LinearTimeVariantInvertedPendulum::initMatrices(double waist_height)
 {
-  init_m22(waist_height);
-  init_v2(waist_height);
+  const double w2 = cst::GRAVITY / waist_height;
+
+  // Initialize A matrix corresponding to the given pendulum height
+  const double w = wTable_(w2);
+  const double ch = chkTable_(w2);
+  const double sh = shkTable_(w2);
+
+  auto init_m22 = [&]() {
+    Eigen::Matrix2d A;
+    A << ch, sh / w, w * sh, ch;
+
+    // Initialize the whole preview window at constant height
+    for(unsigned i = 0; i < m_n_preview2; i++)
+    {
+      m_A.push_front(A);
+    }
+  };
+
+  auto init_v2 = [&]() {
+    Vector2 v;
+    v << 1 - ch, -w * sh;
+
+    for(unsigned i = 0; i < m_n_preview2; i++)
+    {
+      m_B.push_front(v);
+    }
+  };
+
+  init_m22();
+  init_v2();
 }
 
 void LinearTimeVariantInvertedPendulum::update()
 {
   // set newest matrices
   {
-    // XXX
-    // What does this index represent?
-    // Why?
-    unsigned h = static_cast<unsigned>(lround(m_w2[m_n_preview2 - 1] * m_dh));
-    const double & w = m_wk[h];
-    const double & ch = m_chk[h];
-    const double & sh = m_shk[h];
+    double w2 = m_w2[m_n_preview2 - 1];
+    const double w = wTable_(w2);
+    const double ch = chkTable_(w2);
+    const double sh = shkTable_(w2);
     m_w[m_n_preview2 - 1] = w;
     Matrix22 Anew;
     Anew << ch, sh / w, w * sh, ch;
@@ -126,17 +119,16 @@ void LinearTimeVariantInvertedPendulum::update()
 
   for(unsigned i = 0; i < m_n_current; i++)
   {
-    unsigned h = static_cast<unsigned>(lround(m_w2[i] * m_dh));
-    m_w[i] = m_wk[h];
+    m_w[i] = wTable_(m_w2[i]);
   }
 
   // update future matrices
   for(unsigned i = m_n_current; i < m_n_preview2 - 1; i++)
   {
-    auto h = static_cast<unsigned>(lround(m_w2[i] * m_dh));
-    const double & w = m_wk[h];
-    const double & ch = m_chk[h];
-    const double & sh = m_shk[h];
+    const double w2 = m_w2[i];
+    const double w = wTable_(w2);
+    const double ch = chkTable_(w2);
+    const double sh = shkTable_(w2);
     m_w[i] = w;
     m_A[i] << ch, sh / w, w * sh, ch;
     m_B[i] << 1 - ch, -w * sh;
@@ -173,10 +165,10 @@ void LinearTimeVariantInvertedPendulum::generate(Eigen::VectorXd & cog_pos,
   // update future matrices
   for(unsigned i = 0; i < m_n_preview2; i++)
   {
-    auto h = static_cast<unsigned>(lround(m_w2[i] * m_dh));
-    const double & w = m_wk[h];
-    const double & ch = m_chk[h];
-    const double & sh = m_shk[h];
+    const double w2 = m_w2[i];
+    const double w = wTable_(w2);
+    const double ch = chkTable_(w2);
+    const double sh = shkTable_(w2);
     m_w[i] = w;
     m_A[i] << ch, sh / w, w * sh, ch;
     m_B[i] << 1 - ch, -w * sh;

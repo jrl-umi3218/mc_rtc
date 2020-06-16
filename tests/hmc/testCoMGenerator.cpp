@@ -18,18 +18,19 @@ int main(void)
   generator com_traj(n_preview, dt);
 
   // Trajectory of size 2*n_preview+1
-  auto steps = com_traj.Steps();
-  com_traj.push_back(Vector3((double)n_preview * dt, -0.2, 0.0));
-  com_traj.push_back(steps.back() + Vector3{(double)n_preview * dt, 0.0, 0.0});
-  com_traj.push_back(steps.back() + Vector3{0.1, 0.0, 0.0});
-  com_traj.push_back(steps.back() + Vector3{1.6, 0.0, 0.0});
-  com_traj.push_back(steps.back() + Vector3{0.1, 0.2, 0.095});
-  com_traj.push_back(steps.back() + Vector3{1.6, 0.0, 0.0});
-  com_traj.push_back(steps.back() + Vector3{0.1, 0.0, -0.19});
-  com_traj.push_back(steps.back() + Vector3{1.6, 0.0, 0.0});
-  com_traj.push_back(steps.back() + Vector3{0.1, -0.2, 0.095});
-  com_traj.push_back(steps.back() + Vector3{(double)n_preview * dt, 0.0, 0.0});
-  com_traj.push_back(steps.back() + Vector3{(double)n_preview * dt, 0.0, 0.0});
+  std::vector<Eigen::Vector3d> steps;
+  steps.push_back(Vector3((double)n_preview * dt, -0.2, 0.0));
+  steps.push_back(steps.back() + Vector3{(double)n_preview * dt, 0.0, 0.0});
+  steps.push_back(steps.back() + Vector3{0.1, 0.0, 0.0});
+  steps.push_back(steps.back() + Vector3{1.6, 0.0, 0.0});
+  steps.push_back(steps.back() + Vector3{0.1, 0.2, 0.095});
+  steps.push_back(steps.back() + Vector3{1.6, 0.0, 0.0});
+  steps.push_back(steps.back() + Vector3{0.1, 0.0, -0.19});
+  steps.push_back(steps.back() + Vector3{1.6, 0.0, 0.0});
+  steps.push_back(steps.back() + Vector3{0.1, -0.2, 0.095});
+  steps.push_back(steps.back() + Vector3{(double)n_preview * dt, 0.0, 0.0});
+  steps.push_back(steps.back() + Vector3{(double)n_preview * dt, 0.0, 0.0});
+  com_traj.setStesps(steps);
 
   mc_rtc::Logger logger(mc_rtc::Logger::Policy::NON_THREADED, "/tmp", "mc_rtc-test");
   logger.addLogEntry("IdealCOGPosition", [&com_traj]() { return com_traj.IdealCOGPosition(); });
