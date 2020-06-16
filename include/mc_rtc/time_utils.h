@@ -11,7 +11,10 @@ namespace mc_rtc
  * @ class measure
  * @ brief Class to measure the execution time of a callable
  */
-template<typename TimeT = std::chrono::duration<double, std::milli>, class ClockT = std::chrono::system_clock>
+template<typename TimeT = std::chrono::duration<double, std::milli>,
+         class ClockT = typename std::conditional<std::chrono::high_resolution_clock::is_steady,
+                                                  std::chrono::high_resolution_clock,
+                                                  std::chrono::steady_clock>::type>
 struct measure
 {
   /**
