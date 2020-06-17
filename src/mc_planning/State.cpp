@@ -20,7 +20,7 @@ namespace mc_planning
 {
 
 ////////////////////////////////////////////////////////////
-StateP::StateP(void)
+StateP::StateP()
 {
   StateP::Initialize();
 }
@@ -45,7 +45,7 @@ std::ostream & operator<<(std::ostream & os, const StateP & s)
   return os;
 }
 
-void StateP::Initialize(void)
+void StateP::Initialize()
 {
   P.setZero();
 }
@@ -56,7 +56,7 @@ void StateP::Copy(const StateP & i_state)
 }
 
 ////////////////////////////////////////////////////////////
-StatePV::StatePV(void)
+StatePV::StatePV()
 {
   StatePV::Initialize();
 }
@@ -82,7 +82,7 @@ std::ostream & operator<<(std::ostream & os, const StatePV & s)
   return os;
 }
 
-void StatePV::Initialize(void)
+void StatePV::Initialize()
 {
   StateP::Initialize();
   V.setZero();
@@ -95,7 +95,7 @@ void StatePV::Copy(const StatePV & i_state)
 }
 
 ////////////////////////////////////////////////////////////
-StatePVA::StatePVA(void)
+StatePVA::StatePVA()
 {
   StatePVA::Initialize();
 }
@@ -124,7 +124,7 @@ std::ostream & operator<<(std::ostream & os, const StatePVA & s)
   return os;
 }
 
-void StatePVA::Initialize(void)
+void StatePVA::Initialize()
 {
   StatePV::Initialize();
   Vdot.setZero();

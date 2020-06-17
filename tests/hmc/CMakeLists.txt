@@ -1,2 +1,2 @@
-add_executable(generator testCoMGenerator.cpp generator.cpp)
+add_executable(generator testCoMGenerator.cpp)
 target_link_libraries(generator PUBLIC mc_planning)

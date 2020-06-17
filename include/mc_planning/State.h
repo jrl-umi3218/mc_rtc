@@ -24,7 +24,7 @@ public:
   /**
      @brief constructor
   */
-  StateP(void);
+  StateP();
 
   StateP(const Eigen::Vector3d & p);
 
@@ -34,7 +34,7 @@ public:
 
   friend std::ostream & operator<<(std::ostream & os, const StateP & s);
 
-  void Initialize(void);
+  void Initialize();
 
   void Copy(const StateP & i_state);
 };
@@ -47,7 +47,7 @@ public:
   /**
      @brief constructor
   */
-  StatePV(void);
+  StatePV();
 
   StatePV(const Eigen::Vector3d & p, const Eigen::Vector3d & v);
 
@@ -57,7 +57,7 @@ public:
 
   friend std::ostream & operator<<(std::ostream & os, const StatePV & s);
 
-  void Initialize(void);
+  void Initialize();
 
   void Copy(const StatePV & i_state);
 };
@@ -70,7 +70,7 @@ public:
   /**
      @brief constructor
   */
-  StatePVA(void);
+  StatePVA();
 
   StatePVA(const Eigen::Vector3d & p, const Eigen::Vector3d & v, const Eigen::Vector3d & a);
 
@@ -80,7 +80,7 @@ public:
 
   friend std::ostream & operator<<(std::ostream & os, const StatePVA & s);
 
-  void Initialize(void);
+  void Initialize();
 
   void Copy(const StatePVA & i_state);
 };

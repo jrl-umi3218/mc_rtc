@@ -1,6 +1,7 @@
+#include <mc_planning/generator.h>
+#include <mc_rtc/io_utils.h>
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/time_utils.h>
-#include "generator.h"
 
 using namespace mc_planning;
 using Vector3 = Eigen::Vector3d;
@@ -29,8 +30,12 @@ int main(void)
   steps.push_back(steps.back() + Vector3{1.6, 0.0, 0.0});
   steps.push_back(steps.back() + Vector3{0.1, -0.2, 0.095});
   steps.push_back(steps.back() + Vector3{(double)n_preview * dt, 0.0, 0.0});
+  // Repeat last step for computations
   steps.push_back(steps.back() + Vector3{(double)n_preview * dt, 0.0, 0.0});
-  com_traj.setStesps(steps);
+  com_traj.setSteps(steps);
+  mc_rtc::log::info(
+      "Desired steps:\nTime\tCoM X\tCoM Y\n{}",
+      mc_rtc::io::to_string(steps, [](const Eigen::Vector3d & v) -> Eigen::RowVector3d { return v; }, "\n"));
 
   mc_rtc::Logger logger(mc_rtc::Logger::Policy::NON_THREADED, "/tmp", "mc_rtc-test");
   logger.addLogEntry("IdealCOGPosition", [&com_traj]() { return com_traj.IdealCOGPosition(); });

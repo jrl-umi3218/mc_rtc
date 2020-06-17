@@ -1,9 +1,7 @@
-#include "generator.h"
 #include <mc_planning/MathFunction.h>
+#include <mc_planning/generator.h>
 #include <mc_rtc/constants.h>
-#include <iostream>
-// #include <Math/MathFunction.h>
-// #include <Math/Physics.h>
+#include <mc_rtc/logging.h>
 
 using namespace mc_planning::motion_interpolator;
 
@@ -44,8 +42,12 @@ generator::generator(int n_preview, double dt)
   m_COG_ideal.P << 0.0, 0.0, waist_height;
 }
 
+// n_current index of the start of the preview window
 void generator::setupCOGHeight(int n_current)
 {
+  // The first time, initialize the whole trajectory
+  // with constant waist height
+  // Ignores lateral sway during the trajectory?
   if(n_current == 0)
   {
     m_ComInterp->push_back(0.0, waist_height);
@@ -53,12 +55,14 @@ void generator::setupCOGHeight(int n_current)
     m_ComInterp->update();
   }
 
+  // Time window from past to future
   for(int n_step = -m_n_preview; n_step <= m_n_preview; n_step++)
   {
     m_ComInterp->get(n_current + n_step + m_n_preview, m_cog_height[n_step + m_n_preview],
                      m_cog_dot_height[n_step + m_n_preview], m_cog_ddot_height[n_step + m_n_preview]);
   }
 
+  // Interpolated value at current time
   m_COG_ideal.P(Z) = m_cog_height[m_n_preview];
   m_COG_ideal.V(Z) = m_cog_dot_height[m_n_preview];
   m_COG_ideal.Vdot(Z) = m_cog_ddot_height[m_n_preview];
@@ -71,27 +75,29 @@ void generator::setupTimeTrajectories(int n_current)
   int n_steps_loop = m_n_steps;
   for(int i = 0; i < m_n_preview * 2 + 1; i++)
   {
-    px_ref(i) = 0.0;
-    py_ref(i) = 0.0;
     m_virtual_height[X](i) = 0.0;
     m_virtual_height[Y](i) = 0.0;
 
-    double tm = (double)(i + n_current) * m_dt;
-    if(tm >= m_steps[n_steps_loop](0))
+    double tm = static_cast<double>(i + n_current) * m_dt;
+    const auto & currStep = m_steps[n_steps_loop];
+    const auto & nextStep = m_steps[n_steps_loop + 1];
+    const double currTime = currStep(0);
+    const double nextTime = nextStep(0);
+    if(tm >= currTime)
     {
-      px_ref(i) = m_steps[n_steps_loop](1)
-                  + (m_steps[n_steps_loop + 1](1) - m_steps[n_steps_loop](1))
-                        * polynomial3((tm - m_steps[n_steps_loop](0))
-                                      / (m_steps[n_steps_loop + 1](0) - m_steps[n_steps_loop](0)));
-      py_ref(i) = m_steps[n_steps_loop](2)
-                  + (m_steps[n_steps_loop + 1](2) - m_steps[n_steps_loop](2))
-                        * polynomial3((tm - m_steps[n_steps_loop](0))
-                                      / (m_steps[n_steps_loop + 1](0) - m_steps[n_steps_loop](0)));
+      // 1: Step CoM x, 2: Step CoM Y
+      auto refXY = [&](const Eigen::Index axis) {
+        return currStep(axis)
+               + (nextStep(axis) - currStep(axis)) * polynomial3((tm - currTime) / (nextTime - currTime));
+      };
+
+      px_ref(i) = refXY(1);
+      py_ref(i) = refXY(2);
     }
     else
     {
-      px_ref(i) = m_steps[n_steps_loop + 1](1);
-      py_ref(i) = m_steps[n_steps_loop + 1](2);
+      px_ref(i) = nextStep(1);
+      py_ref(i) = nextStep(2);
     }
 
     m_ipm_long[X].w2(i) =
@@ -99,9 +105,12 @@ void generator::setupTimeTrajectories(int n_current)
     m_ipm_long[Y].w2(i) =
         (mc_rtc::constants::GRAVITY + m_cog_ddot_height[i]) / (m_cog_height[i] - m_virtual_height[Y](i));
 
-    if(n_steps_loop < m_steps.size() - 1)
+    // We need one future step for computations, increment only
+    // till the second to last step
+    if(n_steps_loop < m_steps.size() - 2)
     {
-      if(tm >= m_steps[n_steps_loop + 1](0)) n_steps_loop++;
+      // If current time is after the next step time, move to next step
+      if(tm >= nextTime) n_steps_loop++;
     }
   }
 
@@ -112,33 +121,32 @@ void generator::setupTimeTrajectories(int n_current)
   {
     if(tm_cur > m_steps[m_n_steps + 1](0)) m_n_steps++;
   }
-
-#if 0
-  std::cout << "time=" << (double)n_current*m_dt << std::endl;
-  std::cout << "cog_height=" << m_cog_height.transpose() << std::endl;
-  std::cout << "vr_height=" << m_virtual_height[X].transpose() << std::endl;
-#endif
-#if 0
-  std::cout << "time=" << (double)n_current*m_dt << std::endl;
-  std::cout << "cog_height=" << m_cog_height[m_n_preview] << std::endl;
-  std::cout << "vr_height=" << m_virtual_height[X][m_n_preview] << std::endl;
-  std::cout << "p_ref=" << px_ref[m_n_preview] << "," << py_ref[m_n_preview] << std::endl;
-#endif
 }
 
 void generator::generateTrajectories(void)
 {
   StatePV COG_ideal_pre_next(m_COG_ideal.P, m_COG_ideal.V);
   Eigen::Vector3d Pcalpha_ideal_pre_next(m_Pcalpha_ideal);
-  for(int axis = X; axis <= Y; axis++)
-  {
+
+  /**
+   * Computes long-term trajectory
+   */
+  auto computeLongTerm = [&](int axis) {
     m_ipm_long[axis].update();
 
+    // Current time
     m_ipm_long[axis].getState(0, m_COG_ideal_pre.P(axis), m_COG_ideal_pre.V(axis), m_COG_ideal_pre.Vdot(axis),
                               m_Pcalpha_ideal_pre(axis), m_Vcalpha_ideal_pre(axis));
+    // Next timestep
     m_ipm_long[axis].getState(1, m_COG_ideal.P(axis), m_COG_ideal.V(axis), m_COG_ideal.Vdot(axis),
                               m_Pcalpha_ideal(axis), m_Vcalpha_ideal(axis));
+  };
 
+  /**
+   * Compute short term trajectory
+   * Depends on the long term trajectory results
+   **/
+  auto computeShortTerm = [&](int axis) {
     double omega2 = m_ipm_long[axis].w2(m_n_preview);
     double omega = sqrt(omega2);
     m_ipm_short[axis].setSystemMatrices(omega * m_poles[axis](0), omega * m_poles[axis](1), m_poles[axis](2), omega2,
@@ -152,7 +160,15 @@ void generator::generateTrajectories(void)
     double Fext = 0.0;
     m_ipm_short[axis].update(Fext, m_dt);
     m_ipm_short[axis].getStateVariables(m_COG_cmp.P(axis), m_COG_cmp.V(axis), m_Pcalpha_cmp(axis), m_Vcalpha_cmp(axis));
-  }
+  };
+
+  auto computeTrajectories = [&](int axis) {
+    computeLongTerm(axis);
+    computeShortTerm(axis);
+  };
+
+  computeTrajectories(X);
+  computeTrajectories(Y);
 
   m_COG_out.P = m_COG_ideal.P + m_COG_cmp.P;
   m_COG_out.V = m_COG_ideal.V + m_COG_cmp.V;
@@ -167,14 +183,15 @@ void generator::generate(int n_time)
   setupCOGHeight(n_time);
   setupTimeTrajectories(n_time);
   generateTrajectories();
+}
 
-#if 0
-  std::cout << "COG_out = " << m_COG_out.P.transpose() << std::endl;
-  std::cout << "Pcalpha_out = " << m_Pcalpha_out.transpose() << std::endl;
-
-  std::cout << "VCOGdot_ideal = " << m_COG_ideal.Vdot.transpose() << std::endl;
-  std::cout << "VCOGdot_cmp = " << m_COG_cmp.Vdot.transpose() << std::endl;
-#endif
+void generator::push_back(const Eigen::Vector3d & step)
+{
+  if(step(0) <= m_steps.back()(0))
+  {
+    mc_rtc::log::error("Invalid step time ({} <= {})", step(0), m_steps.back()(0));
+  }
+  m_steps.push_back(step);
 }
 
 } // namespace mc_planning
