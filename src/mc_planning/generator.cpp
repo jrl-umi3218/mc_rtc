@@ -5,7 +5,6 @@
 
 using namespace mc_planning::motion_interpolator;
 
-constexpr double waist_height = 0.8;
 constexpr int X = 0;
 constexpr int Y = 1;
 constexpr int Z = 2;
@@ -13,13 +12,14 @@ constexpr int Z = 2;
 namespace mc_planning
 {
 
-generator::generator(int n_preview, double dt)
+generator::generator(int n_preview, double dt, double mass, double waist_height)
 : m_ComInterp(NULL), m_Pcalpha_ideal_pre(Eigen::Vector3d::Zero()), m_Pcalpha_ideal(Eigen::Vector3d::Zero()),
   m_Pcalpha_cmp(Eigen::Vector3d::Zero()), m_Vcalpha_ideal_pre(Eigen::Vector3d::Zero()),
   m_Vcalpha_ideal(Eigen::Vector3d::Zero()), m_Vcalpha_cmp(Eigen::Vector3d::Zero()),
   m_Pcalpha_out(Eigen::Vector3d::Zero()), m_Pcalpha_motion_out(Eigen::Vector3d::Zero()), m_n_preview(n_preview),
-  m_n_steps(0), m_dt(dt), m_omega_valpha(0.0), m_mass(60.0)
+  m_n_steps(0), m_dt(dt), m_omega_valpha(0.0), m_mass(mass), m_waist_height(waist_height)
 {
+  mc_rtc::log::info("Creating generator with mass={}, waist_height={}", mass, waist_height);
   m_ComInterp = std::make_shared<ClampedCubicSpline<int>>(1.0, m_dt / 2);
 
   m_ipm_long[X].Initialize(m_dt, m_n_preview, 20000);
@@ -50,8 +50,8 @@ void generator::setupCOGHeight(int n_current)
   // Ignores lateral sway during the trajectory?
   if(n_current == 0)
   {
-    m_ComInterp->push_back(0.0, waist_height);
-    m_ComInterp->push_back(lround(m_steps.back()(0) / m_dt), waist_height);
+    m_ComInterp->push_back(0.0, m_waist_height);
+    m_ComInterp->push_back(lround(m_steps.back()(0) / m_dt), m_waist_height);
     m_ComInterp->update();
   }
 
@@ -180,6 +180,10 @@ void generator::generateTrajectories(void)
 
 void generator::generate(int n_time)
 {
+  if(m_steps.empty())
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("[generator] No reference provided, call setSteps()");
+  }
   setupCOGHeight(n_time);
   setupTimeTrajectories(n_time);
   generateTrajectories();
@@ -194,4 +198,26 @@ void generator::push_back(const Eigen::Vector3d & step)
   m_steps.push_back(step);
 }
 
-} // namespace mc_planning
+void generator::addToLogger(mc_rtc::Logger & logger)
+{
+  // clang-format off
+  logger.addLogEntry("generator_IdealCOGPosition",       [this]() { return this->IdealCOGPosition(); });
+  logger.addLogEntry("generator_CompensatedCOGPosition", [this]() { return this->CompensatedCOGPosition(); });
+  logger.addLogEntry("generator_OutputCOGPosition",      [this]() { return this->OutputCOGPosition(); });
+  logger.addLogEntry("generator_IdealZMPPosition",       [this]() { return this->IdealZMPPosition(); });
+  logger.addLogEntry("generator_CompensatedZMPPosition", [this]() { return this->CompensatedZMPPosition(); });
+  logger.addLogEntry("generator_OutputZMPPosition",      [this]() { return this->OutputZMPPosition(); });
+  // clang-format on
+}
+
+void generator::removeFromLogger(mc_rtc::Logger & logger)
+{
+  logger.removeLogEntry("generator_IdealCOGPosition");
+  logger.removeLogEntry("generator_CompensatedCOGPosition");
+  logger.removeLogEntry("generator_OutputCOGPosition");
+  logger.removeLogEntry("generator_IdealZMPPosition");
+  logger.removeLogEntry("generator_CompensatedZMPPosition");
+  logger.removeLogEntry("generator_OutputZMPPosition");
+}
+
+} /* namespace mc_planning */

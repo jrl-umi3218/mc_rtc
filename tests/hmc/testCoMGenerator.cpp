@@ -38,13 +38,8 @@ int main(void)
       mc_rtc::io::to_string(steps, [](const Eigen::Vector3d & v) -> Eigen::RowVector3d { return v; }, "\n"));
 
   mc_rtc::Logger logger(mc_rtc::Logger::Policy::NON_THREADED, "/tmp", "mc_rtc-test");
-  logger.addLogEntry("IdealCOGPosition", [&com_traj]() { return com_traj.IdealCOGPosition(); });
-  logger.addLogEntry("CompensatedCOGPosition", [&com_traj]() { return com_traj.CompensatedCOGPosition(); });
-  logger.addLogEntry("OutputCOGPosition", [&com_traj]() { return com_traj.OutputCOGPosition(); });
-  logger.addLogEntry("IdealZMPPosition", [&com_traj]() { return com_traj.IdealZMPPosition(); });
-  logger.addLogEntry("CompensatedZMPPosition", [&com_traj]() { return com_traj.CompensatedZMPPosition(); });
-  logger.addLogEntry("OutputZMPPosition", [&com_traj]() { return com_traj.OutputZMPPosition(); });
   logger.start("CoMGenerator", dt);
+  com_traj.addToLogger(logger);
 
   int n_loop = lround(com_traj.Steps().back()(0) / dt) - n_preview;
   /*
@@ -57,8 +52,9 @@ int main(void)
       logger.log();
     }
   };
+  com_traj.removeFromLogger(logger);
 
-  auto duration = mc_rtc::measure_ms::duration(comGeneration).count();
+  auto duration = mc_rtc::measure_ms::execution(comGeneration).count();
   mc_rtc::log::info("calc time = {} (ms)", duration);
   mc_rtc::log::info("ave. calc time = {} (ms)", duration / static_cast<double>(n_loop));
   mc_rtc::log::success("end of com trajectory generation");

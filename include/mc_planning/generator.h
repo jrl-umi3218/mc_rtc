@@ -6,13 +6,13 @@
 #include <mc_planning/LIPMControlByPoleAssignWithExternalForce.h>
 #include <mc_planning/LinearTimeVariantInvertedPendulum.h>
 #include <mc_planning/State.h>
+#include <mc_rtc/log/Logger.h>
 
 namespace mc_planning
 {
 
 /**
- * @brief Utility class to generate long and short term trajectories for the
- * CoM.
+ * @brief Utility class to generate long and short term trajectories for the CoM.
  *
  * Generate trajectories as introduced in:
  * **Online 3D CoM Trajectory Generation for Multi-Contact Locomotion Synchronizing Contact**, *Mitsuharu Morisawa et
@@ -26,8 +26,10 @@ struct MC_PLANNING_DLLAPI generator
    * @param n_preview Size of the future preview window. The full preview window
    * goes from future to past with size `2*n_preview+1`
    * @param dt
+   * @mass Robot mass
+   * @waist_height Initial height of the waist (constant for now)
    */
-  generator(int n_preview, double dt);
+  generator(int n_preview, double dt, double mass = 60, double waist_height = 0.8);
 
   /**
    * @brief Generate the long and short term trajectories
@@ -35,6 +37,15 @@ struct MC_PLANNING_DLLAPI generator
    * @param n_time current time
    */
   void generate(int n_time);
+
+  /**
+   * @brief Add to Logger
+   */
+  void addToLogger(mc_rtc::Logger & logger);
+  /**
+   * @brief Remove from Logger
+   */
+  void removeFromLogger(mc_rtc::Logger & logger);
 
   /**
    * @brief Desired steps
@@ -53,6 +64,7 @@ struct MC_PLANNING_DLLAPI generator
   void setSteps(const std::vector<Eigen::Vector3d> & steps)
   {
     m_steps = steps;
+    m_n_steps = 0;
   }
 
   /**
@@ -182,6 +194,7 @@ private:
   double m_dt; ///< Timestep
   double m_omega_valpha;
   double m_mass; ///< Robot mass
+  double m_waist_height; ///< Height of the weight (constant for now)
 
   linear_control_system::LinearTimeVariantInvertedPendulum m_ipm_long[2];
   linear_control_system::LIPMControlByPoleAssignWithExternalForce m_ipm_short[2];
