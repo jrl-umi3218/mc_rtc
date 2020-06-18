@@ -39,8 +39,12 @@ void StabilizerStandingTrackCoM::start(mc_control::fsm::Controller & ctl)
 bool StabilizerStandingTrackCoM::run(mc_control::fsm::Controller & ctl)
 {
   // Update anchor frame for the KinematicInertial observer
-  ctl.anchorFrame(stabilizerTask_->anchorFrame());
-  ctl.anchorFrameReal(stabilizerTask_->anchorFrameReal());
+  ctl.datastore().remove("KinematicAnchorFrame::" + ctl.robot().name());
+  ctl.datastore().make_call("KinematicAnchorFrame::" + ctl.robot().name(),
+                          [this](const mc_rbdyn::Robot & robot)
+                          {
+                            return stabilizerTask_->anchorFrame(robot);
+                          });
   output("OK");
   return false;
 }
@@ -48,6 +52,21 @@ bool StabilizerStandingTrackCoM::run(mc_control::fsm::Controller & ctl)
 void StabilizerStandingTrackCoM::teardown(mc_control::fsm::Controller & ctl)
 {
   ctl.datastore().remove("StabilizerStandingTrackCoM::target");
+
+  ctl.datastore().remove("KinematicAnchorFrame::" + ctl.robot().name());
+
+  // Ensure that the anchor frame remains continuous even after this state has
+  // been destroyed
+  double leftFootRatio = stabilizerTask_->leftFootRatio();
+  std::string leftSurface = stabilizerTask_->footSurface(mc_tasks::lipm_stabilizer::ContactState::Left);
+  std::string rightSurface = stabilizerTask_->footSurface(mc_tasks::lipm_stabilizer::ContactState::Right);
+  ctl.datastore().make_call("KinematicAnchorFrame::" + ctl.robot().name(),
+                          [leftFootRatio, leftSurface, rightSurface](const mc_rbdyn::Robot & robot)
+                          {
+                            return sva::interpolate(robot.surfacePose(leftSurface),
+                                                    robot.surfacePose(rightSurface),
+                                                    leftFootRatio);
+                          });
 }
 
 } /* mc_samples */

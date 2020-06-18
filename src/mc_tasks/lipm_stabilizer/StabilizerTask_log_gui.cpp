@@ -371,16 +371,22 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   MC_RTC_LOG_HELPER(name_ + "_left_foot_ratio", leftFootRatio_);
 
   // Stabilizer targets
-  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_com", comTarget_);
-  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_comd", comdTarget_);
-  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_comdd", comddTarget_);
-  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_dcm", dcmTarget_);
-  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_omega", omega_);
-  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_zmp", zmpTarget_);
-  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_zmpd", zmpdTarget_);
-  MC_RTC_LOG_HELPER(name_ + "_target_stabilizer_zmp", distribZMP_);
+  MC_RTC_LOG_HELPER(name_ + "_reference_com", comRef_);
+  MC_RTC_LOG_HELPER(name_ + "_reference_comd", comdRef_);
+  MC_RTC_LOG_HELPER(name_ + "_reference_comdd", comddRef_);
+  MC_RTC_LOG_HELPER(name_ + "_reference_dcm", dcmRef_);
+  MC_RTC_LOG_HELPER(name_ + "_reference_omega", omega_);
+  MC_RTC_LOG_HELPER(name_ + "_reference_zmp", zmpRef_);
 
-  logger.addLogEntry(name_ + "_contactState", this, [this]() -> int {
+  // Stabilizer results
+  MC_RTC_LOG_HELPER(name_ + "_stabilized_com", comTarget_);
+  MC_RTC_LOG_HELPER(name_ + "_stabilized_comd", comdTarget_);
+  MC_RTC_LOG_HELPER(name_ + "_stabilized_comdd", comddTarget_);
+  MC_RTC_LOG_HELPER(name_ + "_stabilized_dcm", dcmTarget_);
+  MC_RTC_LOG_HELPER(name_ + "_stabilized_zmp", zmpTarget_);
+
+  logger.addLogEntry(name_ + "_contactState", this,
+    [this]() -> double {
     if(inDoubleSupport())
       return 0;
     else if(inContact(ContactState::Left))
