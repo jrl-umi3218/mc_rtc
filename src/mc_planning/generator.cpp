@@ -18,23 +18,19 @@ generator::generator(unsigned n_preview, double dt, double mass, double waist_he
 {
   mc_rtc::log::info("Creating generator with mass={}, waist_height={}", mass, waist_height);
 
-  m_ipm_long[X].Initialize(m_dt, m_n_preview, 20000);
-  m_ipm_long[Y].Initialize(m_dt, m_n_preview, 20000);
-  m_ipm_short[X].Initialize();
-  m_ipm_short[Y].Initialize();
+  auto initialize = [this, &waist_height](unsigned X) {
+    m_ipm_long[X].Initialize(m_dt, m_n_preview, 20000);
+    m_ipm_short[X].Initialize();
+    m_poles[X] << 1.0, 1.0, 150.0;
+    m_virtual_height[X].setZero(m_n_preview * 2 + 1);
+    m_ipm_long[X].initMatrices(waist_height);
+  };
+  initialize(X);
+  initialize(Y);
 
-  m_poles[X] << 1.0, 1.0, 150.0;
-  m_poles[Y] << 1.0, 1.0, 150.0;
-
-  m_virtual_height[X].setZero(m_n_preview * 2 + 1);
-  m_virtual_height[Y].setZero(m_n_preview * 2 + 1);
   m_cog_height.setZero(m_n_preview * 2 + 1);
   m_cog_dot_height.setZero(m_n_preview * 2 + 1);
   m_cog_ddot_height.setZero(m_n_preview * 2 + 1);
-
-  m_ipm_long[X].initMatrices(waist_height);
-  m_ipm_long[Y].initMatrices(waist_height);
-
   m_COG_ideal.P << 0.0, 0.0, waist_height;
 }
 
@@ -54,9 +50,9 @@ void generator::setupCOGHeight(unsigned n_current)
   for(unsigned n_step = 0; n_step < 2 * m_n_preview + 1; ++n_step)
   {
     // clang-format off
-    m_ComInterp->get(n_current + n_step      ,
-                     m_cog_height[n_step     ],
-                     m_cog_dot_height[n_step ],
+    m_ComInterp->get(n_current + n_step,
+                     m_cog_height[n_step],
+                     m_cog_dot_height[n_step],
                      m_cog_ddot_height[n_step]);
     //clang-format on
   }
@@ -77,24 +73,28 @@ void generator::setupTimeTrajectories(unsigned n_current)
     m_virtual_height[X](i) = 0.0;
     m_virtual_height[Y](i) = 0.0;
 
-    double tm = static_cast<double>(i + n_current) * m_dt;
-    const auto & currStep = m_steps[n_steps_loop];
+    const double currTime = static_cast<double>(i + n_current) * m_dt;
+    const auto & prevStep = m_steps[n_steps_loop];
     const auto & nextStep = m_steps[n_steps_loop + 1];
-    const double currTime = currStep(0);
+    const double prevTime = prevStep(0);
     const double nextTime = nextStep(0);
-    if(tm >= currTime)
+
+    if(currTime >= prevTime && currTime < nextTime)
     {
-      // 1: Step CoM x, 2: Step CoM Y
-      auto refXY = [&](const Eigen::Index axis) {
-        return currStep(axis)
-               + (nextStep(axis) - currStep(axis)) * polynomial3((tm - currTime) / (nextTime - currTime));
+      /**
+       * @brief Interpolates the reference ZMP from one step to the next
+       * @param axis 1: Step CoM x, 2: Step CoM Y
+       */
+      auto interpolateRefXY = [&](const Eigen::Index axis) {
+        return prevStep(axis)
+               + (nextStep(axis) - prevStep(axis)) * polynomial3((currTime - prevTime) / (nextTime - prevTime));
       };
 
-      px_ref(i) = refXY(1);
-      py_ref(i) = refXY(2);
+      px_ref(i) = interpolateRefXY(1);
+      py_ref(i) = interpolateRefXY(2);
     }
     else
-    {
+    { /* No previous step provided, start with the ZMP at the next step */
       px_ref(i) = nextStep(1);
       py_ref(i) = nextStep(2);
     }
@@ -109,20 +109,20 @@ void generator::setupTimeTrajectories(unsigned n_current)
     if(n_steps_loop < m_steps.size() - 2)
     {
       // If current time is after the next step time, move to next step
-      if(tm >= nextTime) n_steps_loop++;
+      if(currTime >= nextTime) n_steps_loop++;
     }
   }
 
   m_Pcalpha_ideal(Z) = (m_virtual_height[X](m_n_preview) + m_virtual_height[Y](m_n_preview)) / 2.0;
 
   double tm_cur = (double)n_current * m_dt;
-  if(m_n_steps < m_steps.size() - 1)
+  if(m_n_steps < m_steps.size() - 2)
   {
     if(tm_cur > m_steps[m_n_steps + 1](0)) m_n_steps++;
   }
 }
 
-void generator::generateTrajectories(void)
+void generator::generateTrajectories()
 {
   StatePV COG_ideal_pre_next(m_COG_ideal.P, m_COG_ideal.V);
   Eigen::Vector3d Pcalpha_ideal_pre_next(m_Pcalpha_ideal);
@@ -144,6 +144,10 @@ void generator::generateTrajectories(void)
   /**
    * Compute short term trajectory
    * Depends on the long term trajectory results
+   *
+   * Generates the CoM and ZMP modification to be applied to the ideal long-term so that the short term
+   * - m_COG_cmp: Modification of the ideal CoG state (position and velocity)
+   * - m_Pcalpha_cmp: Modifiecation of the ideal ZMP state (position and velocity)
    **/
   auto computeShortTerm = [&](unsigned axis) {
     double omega2 = m_ipm_long[axis].w2(m_n_preview);
@@ -161,20 +165,30 @@ void generator::generateTrajectories(void)
     m_ipm_short[axis].getStateVariables(m_COG_cmp.P(axis), m_COG_cmp.V(axis), m_Pcalpha_cmp(axis), m_Vcalpha_cmp(axis));
   };
 
+  /** @brief Computes both long-term and short-term trajectories */
   auto computeTrajectories = [&](unsigned axis) {
     computeLongTerm(axis);
     computeShortTerm(axis);
   };
 
+  /**
+   * Computes the desired output CoG and ZMP state composed
+   * of the ideal long-term trajectory output modified by the short-term
+   * trajectory to ensure continuity
+   */
+  auto applyShortTermCompensation = [this]()
+  {
+    m_COG_out.P = m_COG_ideal.P + m_COG_cmp.P;
+    m_COG_out.V = m_COG_ideal.V + m_COG_cmp.V;
+    m_COG_out.Vdot = m_COG_ideal.Vdot + m_COG_cmp.Vdot;
+
+    m_Pcalpha_out = m_Pcalpha_ideal + m_Pcalpha_cmp;
+    m_Pcalpha_motion_out = m_Pcalpha_out + m_Vcalpha_ideal * m_omega_valpha * m_dt;
+  };
+
   computeTrajectories(X);
   computeTrajectories(Y);
-
-  m_COG_out.P = m_COG_ideal.P + m_COG_cmp.P;
-  m_COG_out.V = m_COG_ideal.V + m_COG_cmp.V;
-  m_COG_out.Vdot = m_COG_ideal.Vdot + m_COG_cmp.Vdot;
-
-  m_Pcalpha_out = m_Pcalpha_ideal + m_Pcalpha_cmp;
-  m_Pcalpha_motion_out = m_Pcalpha_out + m_Vcalpha_ideal * m_omega_valpha * m_dt;
+  applyShortTermCompensation();
 }
 
 void generator::generate(unsigned n_time)

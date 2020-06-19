@@ -22,20 +22,23 @@ void CoMTrajectoryGeneration_Initial::start(mc_control::fsm::Controller & ctl)
   rightFootPos_ = ctl.robot().surfacePose("RightFootCenter").translation();
   feetCenterPos_ = (leftFootPos_ + rightFootPos_)/2;
 
-  double leftY = leftFootPos_.y();
-  double rightY = rightFootPos_.y();
+  double leftY = leftFootPos_.y()-0.04;
+  double rightY = rightFootPos_.y()+0.04;
   double centerY = feetCenterPos_.y();
+  const Eigen::Vector3d & currCoM = ctl.robot().com();
   //clang-format off
   m_steps =
   {
-    {0.0, 0.0, 0.0},
-    {2.0, 0.0, 0.0},
-    {3.5, 0.0, rightY},
+    {0.0, currCoM.x(), currCoM.y()},
+    {0.2, 0.0, centerY},
+    {2,   0.0, centerY},
+    {2.2, 0.0, rightY},
     {4,   0.0, rightY},
-    {5.5, 0.0, leftY},
-    {7,   0.0, rightY},
-    {9,   0.0, centerY},
-    {10,  0.0, centerY}
+    {4.2, 0.0, leftY},
+    {6,   0.0, leftY},
+    {6.2, 0.0, rightY},
+    {8,   0.0, rightY},
+    {8.2, 0.0, centerY}
   };
   //clang-format on
 
@@ -52,35 +55,72 @@ void CoMTrajectoryGeneration_Initial::start(mc_control::fsm::Controller & ctl)
   ctl.gui()->addPlot(
   "Trajectory (Y)",
   mc_rtc::gui::plot::X("t", [this]() { return t_; }),
-  mc_rtc::gui::plot::Y("Output CoM", [this]() { return comGenerator_->OutputCOGPosition().y(); }, Color::Green),
-  mc_rtc::gui::plot::Y("Ideal  CoM", [this]() { return comGenerator_->IdealCOGPosition().y(); }, Color::Green, Style::Dashed),
+  mc_rtc::gui::plot::Y("Output CoM", [this]() { return comGenerator_->OutputCOGPosition().y(); }, Color::Magenta),
+  mc_rtc::gui::plot::Y("Ideal  CoM", [this]() { return comGenerator_->IdealCOGPosition().y(); }, Color::Red, Style::Dashed),
   mc_rtc::gui::plot::Y("Output ZMP", [this]() { return comGenerator_->OutputZMPPosition().y(); }, Color::Blue),
-  mc_rtc::gui::plot::Y("Ideal  ZMP", [this]() { return comGenerator_->IdealZMPPosition().y(); }, Color::Blue, Style::Dashed));
+  mc_rtc::gui::plot::Y("Ideal  ZMP", [this]() { return comGenerator_->IdealZMPPosition().y(); }, Color::Cyan, Style::Dashed));
 
   ctl.gui()->addElement({"CoMTrajectoryGeneration"},
   mc_rtc::gui::Button("Left",
-                      [this]()
+                      [this,leftY]()
                       {
                         const auto & curr = t_;
-                        m_steps.clear();
-                        m_steps.push_back(Eigen::Vector3d{curr+3, 0, leftFootPos_.y()});
-                        comGenerator_->steps(m_steps);
+                        comGenerator_->changeFutureSteps(iter_,
+                                                         {
+                                                          Eigen::Vector3d{curr + previewTime_ + 0.8, 0, leftY},
+                                                         });
                         updateSteps();
                       }),
   mc_rtc::gui::Button("Right",
-                      [this]()
+                      [this,rightY]()
                       {
                         const auto & curr = t_;
-                        m_steps.clear();
-                        m_steps.push_back(Eigen::Vector3d{curr+3, 0, rightFootPos_.y()});
+                        comGenerator_->changeFutureSteps(iter_,
+                                                         {
+                                                          Eigen::Vector3d{curr + previewTime_ + 0.8, 0, rightY},
+                                                         });
                         updateSteps();
                       }),
   mc_rtc::gui::Button("Center",
-                      [this]()
+                      [this,centerY]()
                       {
                         const auto & curr = t_;
-                        m_steps.clear();
-                        m_steps.push_back(Eigen::Vector3d{curr+3, 0, feetCenterPos_.y()});
+                        comGenerator_->changeFutureSteps(iter_,
+                                                         {
+                                                          Eigen::Vector3d{curr + previewTime_ + 0.8, 0, centerY},
+                                                         });
+                        updateSteps();
+                        }),
+  mc_rtc::gui::Button("Left-Right-Left",
+                      [this,centerY,leftY,rightY]()
+                      {
+                        const auto & curr = t_;
+                        comGenerator_->changeFutureSteps(iter_,
+                                                         {
+                                                          Eigen::Vector3d{curr + previewTime_ + 0.2, 0, leftY},
+                                                          Eigen::Vector3d{curr + previewTime_ + 2, 0, leftY},
+                                                          Eigen::Vector3d{curr + previewTime_ + 2.2, 0, rightY},
+                                                          Eigen::Vector3d{curr + previewTime_ + 4, 0, rightY},
+                                                          Eigen::Vector3d{curr + previewTime_ + 4.2, 0, centerY},
+                                                         });
+                        updateSteps();
+                        }),
+  mc_rtc::gui::Button("Left-Right-Left (x10)",
+                      [this,centerY,leftY,rightY]()
+                      {
+                        const auto & curr = t_;
+                        std::vector<Eigen::Vector3d> futureSteps;
+                        auto startT = curr;
+                        for (int i = 0; i < 10; ++i)
+                        {
+                          futureSteps.push_back(Eigen::Vector3d{startT + previewTime_ + 0.2, 0, leftY});
+                          futureSteps.push_back(Eigen::Vector3d{startT + previewTime_ + 2, 0, leftY});
+                          futureSteps.push_back(Eigen::Vector3d{startT + previewTime_ + 2.2, 0, rightY});
+                          futureSteps.push_back(Eigen::Vector3d{startT + previewTime_ + 4, 0, rightY});
+                          startT += 4;
+                        }
+                        futureSteps.push_back(Eigen::Vector3d{startT + previewTime_ + 0.2, 0, centerY});
+                        comGenerator_->changeFutureSteps(iter_, futureSteps);
                         updateSteps();
                         })
   );
@@ -94,10 +134,6 @@ void CoMTrajectoryGeneration_Initial::start(mc_control::fsm::Controller & ctl)
 
 void CoMTrajectoryGeneration_Initial::updateSteps()
 {
-  // Repeat last element
-  m_steps.push_back(m_steps.back());
-  m_steps.back()(0) += previewTime_;
-  comGenerator_->steps(m_steps);
   mc_rtc::log::info("Current time: {}", t_);
   mc_rtc::log::info(
       "Desired steps:\nTime\tCoM X\tCoM Y\n{}",
@@ -106,23 +142,19 @@ void CoMTrajectoryGeneration_Initial::updateSteps()
 
 bool CoMTrajectoryGeneration_Initial::run(mc_control::fsm::Controller & ctl)
 {
-  if(t_ < m_steps.back()(0))
+  /* Generate trajectory starting at iter_ time (start of the past preview window)
+   * The trajectory result is computed for the current time (iter_+previewSize_)
+   */
+  auto generateTrajectory = [this]()
   {
-    auto generateTrajectory = [this]()
-    {
-      comGenerator_->generate(iter_);
-    };
-    generationTime_ = mc_rtc::measure_ms::execution(generateTrajectory).count();
+    comGenerator_->generate(iter_);
+  };
+  generationTime_ = mc_rtc::measure_ms::execution(generateTrajectory).count();
 
-    if(ctl.datastore().has("StabilizerStandingTrackCoM::target"))
-    {
-      ctl.datastore().call("StabilizerStandingTrackCoM::target", comGenerator_->OutputCOGPosition(), comGenerator_->OutputCOGVelocity(), comGenerator_->OutputCOGAcceleration(), comGenerator_->OutputZMPPosition());
-    }
-  }
-  else
+  // Provide targets to the stabilizer (running in another state)
+  if(ctl.datastore().has("StabilizerStandingTrackCoM::target"))
   {
-    // mc_rtc::log::info("No more target");
-    generationTime_ = 0;
+    ctl.datastore().call("StabilizerStandingTrackCoM::target", comGenerator_->OutputCOGPosition(), comGenerator_->OutputCOGVelocity(), comGenerator_->OutputCOGAcceleration(), comGenerator_->OutputZMPPosition());
   }
 
   iter_++;

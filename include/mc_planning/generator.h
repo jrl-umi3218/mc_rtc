@@ -68,7 +68,40 @@ struct MC_PLANNING_DLLAPI generator
   void steps(const std::vector<Eigen::Vector3d> & steps)
   {
     m_steps = steps;
+    // Ensure that the trajectory is valid after the last step
+    m_steps.push_back(steps.back());
     m_n_steps = 0;
+  }
+
+  /**
+   * @brief WIP: Change future steps and ensures continuous trajectory
+   *
+   * @param n_time Start of the preview window
+   * @param futureSteps Future steps
+   */
+  void changeFutureSteps(unsigned n_time, const std::vector<Eigen::Vector3d> & futureSteps)
+  {
+    // Find step corresponding to the start time
+    auto startTime = n_time * m_dt;
+    std::vector<Eigen::Vector3d> newSteps;
+    for(unsigned i = 0; i < m_steps.size(); ++i)
+    {
+      const auto & step = m_steps[i];
+      if(step(0) < startTime + m_n_preview * m_dt)
+      {
+        // XXX should also discard old useless ones
+        newSteps.push_back(step);
+      }
+    }
+    // Repeat last step (ensures interpolation passes through current desired
+    // ZMP
+    newSteps.push_back({(n_time + m_n_preview) * m_dt, newSteps.back().y(), newSteps.back().z()});
+    m_n_steps++;
+    // Add new future steps
+    std::copy(futureSteps.begin(), futureSteps.end(), std::back_inserter(newSteps));
+    // Repeat last element to keep trajectory valid after time is elapsed
+    newSteps.push_back(newSteps.back());
+    steps(newSteps);
   }
 
   /**

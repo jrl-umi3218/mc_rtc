@@ -96,19 +96,16 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+  /**
+   * @brief Default constructor
+   *
+   * You must call Initialize() before use
+   */
   LinearTimeVariantInvertedPendulum();
+
   /**
    * @brief Initialization
-   *
-   * @param dt Timestep
-   * @param n_preview Number of future preview elements. The full size of the
-   * preview windows from past to future will be (2*n_preview+1)
-   * @param minHeight for the pendulum (used for LookupTable optimizations)
-   * @param maxHeight for the pendulum
-   * @param weight_resolution Number of data points to pre-compute for
-   * \f$ \omega, cosh(\omega), sinh(\omega) \f$ for height in a given range
-   * [minHeight, maxHeight]. This is used to optimize the otherwise costly computation of these
-   * constants.
+   * Calls Initialize()
    */
   LinearTimeVariantInvertedPendulum(double dt,
                                     unsigned n_preview = 0,
@@ -117,6 +114,18 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
                                     double maxHeight = 2.5);
   virtual ~LinearTimeVariantInvertedPendulum();
 
+  /**
+   * @brief Initialization
+   *
+   * @param dt Timestep @param n_preview Number of future preview elements. The full size of the
+   * preview windows from past to future will be (2*n_preview+1)
+   * @param minHeight for the pendulum (used for LookupTable optimizations)
+   * @param maxHeight for the pendulum
+   * @param weight_resolution Number of data points to pre-compute for
+   * \f$ \omega, cosh(\omega), sinh(\omega) \f$ for height in a given range
+   * [minHeight, maxHeight]. This is used to optimize the otherwise costly computation of these
+   * functions.
+   */
   void Initialize(double dt,
                   unsigned n_preview = 0,
                   unsigned weight_resolution = 20000,
@@ -125,8 +134,6 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
 
   /**
    * @brief Initialize the discretized system matrices with constant pendulum height
-Pre-computed table from .
-
    *
    * Initalizes \f$ A_k \f$, \f$ B_k \f$
    *
