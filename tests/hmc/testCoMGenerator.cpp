@@ -7,11 +7,7 @@ using namespace mc_planning;
 using Vector3 = Eigen::Vector3d;
 
 constexpr double dt = 0.005;
-const int n_preview = lround(1.6 / dt);
-
-constexpr int X = 0;
-constexpr int Y = 1;
-constexpr int Z = 2;
+const unsigned n_preview = static_cast<unsigned>(std::lround(1.6 / dt));
 
 int main(void)
 {
@@ -32,7 +28,7 @@ int main(void)
   steps.push_back(steps.back() + Vector3{(double)n_preview * dt, 0.0, 0.0});
   // Repeat last step for computations
   steps.push_back(steps.back() + Vector3{(double)n_preview * dt, 0.0, 0.0});
-  com_traj.setSteps(steps);
+  com_traj.steps(steps);
   mc_rtc::log::info(
       "Desired steps:\nTime\tCoM X\tCoM Y\n{}",
       mc_rtc::io::to_string(steps, [](const Eigen::Vector3d & v) -> Eigen::RowVector3d { return v; }, "\n"));
@@ -41,23 +37,24 @@ int main(void)
   logger.start("CoMGenerator", dt);
   com_traj.addToLogger(logger);
 
-  int n_loop = lround(com_traj.Steps().back()(0) / dt) - n_preview;
+  unsigned n_loop = static_cast<unsigned>(std::lround(com_traj.steps().back()(0) / dt) - n_preview);
+  mc_rtc::log::info("n_loop {}", n_loop);
   /*
    * Generate the CoM trajectory based on the parameters in com_traj
    */
   auto comGeneration = [&]() {
-    for(int loop = 0; loop <= n_loop; loop++)
+    for(unsigned loop = 0; loop <= n_loop; loop++)
     {
       com_traj.generate(loop);
       logger.log();
     }
   };
-  com_traj.removeFromLogger(logger);
 
   auto duration = mc_rtc::measure_ms::execution(comGeneration).count();
   mc_rtc::log::info("calc time = {} (ms)", duration);
   mc_rtc::log::info("ave. calc time = {} (ms)", duration / static_cast<double>(n_loop));
   mc_rtc::log::success("end of com trajectory generation");
 
+  com_traj.removeFromLogger(logger);
   return 0;
 }

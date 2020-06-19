@@ -157,7 +157,7 @@ Pre-computed table from .
   /*! @brief Get generated CoG/ZMP states
    * @param n_time is the time in range of[-n_preview:n_preview], current time is 0
    */
-  State getState(int n_time) const;
+  State getState(unsigned n_time) const;
 
   /*! @brief to get generated CoG/ZMP states
    * @param[in]  n_time is the time in range of[-n_preview:n_preview], current time is 0
@@ -167,7 +167,7 @@ Pre-computed table from .
    * @param[in]  p is position of ZMP
    * @param[in]  pdot is velocity of ZMP
    */
-  void getState(int n_time, double & cog_pos, double & cog_vel, double & cog_acc, double & p, double & pdot);
+  void getState(unsigned n_time, double & cog_pos, double & cog_vel, double & cog_acc, double & p, double & pdot);
 
   /**
    * Generate full trajectory (only used for tests)

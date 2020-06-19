@@ -206,9 +206,9 @@ void LinearTimeVariantInvertedPendulum::generate(Eigen::VectorXd & cog_pos,
   p_ref(m_n_preview2 - 1) = m_p_ref(m_n_preview2 - 1);
 }
 
-LinearTimeVariantInvertedPendulum::State LinearTimeVariantInvertedPendulum::getState(int n_time) const
+LinearTimeVariantInvertedPendulum::State LinearTimeVariantInvertedPendulum::getState(unsigned n_time) const
 {
-  const auto t = static_cast<unsigned>(static_cast<int>(m_n_current) + n_time);
+  const auto t = m_n_current + n_time;
   State s;
   s.p = m_p_ref(t);
   s.pdot = (s.p - m_p_ref[t - 1]) / m_dt;
@@ -218,7 +218,7 @@ LinearTimeVariantInvertedPendulum::State LinearTimeVariantInvertedPendulum::getS
   return s;
 }
 
-void LinearTimeVariantInvertedPendulum::getState(int n_time,
+void LinearTimeVariantInvertedPendulum::getState(unsigned n_time,
                                                  double & cog_pos,
                                                  double & cog_vel,
                                                  double & cog_acc,

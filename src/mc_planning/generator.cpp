@@ -12,15 +12,11 @@ constexpr int Z = 2;
 namespace mc_planning
 {
 
-generator::generator(int n_preview, double dt, double mass, double waist_height)
-: m_ComInterp(NULL), m_Pcalpha_ideal_pre(Eigen::Vector3d::Zero()), m_Pcalpha_ideal(Eigen::Vector3d::Zero()),
-  m_Pcalpha_cmp(Eigen::Vector3d::Zero()), m_Vcalpha_ideal_pre(Eigen::Vector3d::Zero()),
-  m_Vcalpha_ideal(Eigen::Vector3d::Zero()), m_Vcalpha_cmp(Eigen::Vector3d::Zero()),
-  m_Pcalpha_out(Eigen::Vector3d::Zero()), m_Pcalpha_motion_out(Eigen::Vector3d::Zero()), m_n_preview(n_preview),
-  m_n_steps(0), m_dt(dt), m_omega_valpha(0.0), m_mass(mass), m_waist_height(waist_height)
+generator::generator(unsigned n_preview, double dt, double mass, double waist_height)
+: m_ComInterp(std::make_shared<ClampedCubicSpline<unsigned>>(1.0, dt / 2.)), m_n_preview(n_preview), m_dt(dt),
+  m_mass(mass), m_waist_height(waist_height)
 {
   mc_rtc::log::info("Creating generator with mass={}, waist_height={}", mass, waist_height);
-  m_ComInterp = std::make_shared<ClampedCubicSpline<int>>(1.0, m_dt / 2);
 
   m_ipm_long[X].Initialize(m_dt, m_n_preview, 20000);
   m_ipm_long[Y].Initialize(m_dt, m_n_preview, 20000);
@@ -42,24 +38,27 @@ generator::generator(int n_preview, double dt, double mass, double waist_height)
   m_COG_ideal.P << 0.0, 0.0, waist_height;
 }
 
-// n_current index of the start of the preview window
-void generator::setupCOGHeight(int n_current)
+void generator::setupCOGHeight(unsigned n_current)
 {
   // The first time, initialize the whole trajectory
   // with constant waist height
   // Ignores lateral sway during the trajectory?
   if(n_current == 0)
   {
-    m_ComInterp->push_back(0.0, m_waist_height);
-    m_ComInterp->push_back(lround(m_steps.back()(0) / m_dt), m_waist_height);
+    m_ComInterp->push_back(0u, m_waist_height);
+    m_ComInterp->push_back(static_cast<unsigned>(std::lround(m_steps.back()(0) / m_dt)), m_waist_height);
     m_ComInterp->update();
   }
 
   // Time window from past to future
-  for(int n_step = -m_n_preview; n_step <= m_n_preview; n_step++)
+  for(unsigned n_step = 0; n_step < 2 * m_n_preview + 1; ++n_step)
   {
-    m_ComInterp->get(n_current + n_step + m_n_preview, m_cog_height[n_step + m_n_preview],
-                     m_cog_dot_height[n_step + m_n_preview], m_cog_ddot_height[n_step + m_n_preview]);
+    // clang-format off
+    m_ComInterp->get(n_current + n_step      ,
+                     m_cog_height[n_step     ],
+                     m_cog_dot_height[n_step ],
+                     m_cog_ddot_height[n_step]);
+    //clang-format on
   }
 
   // Interpolated value at current time
@@ -68,12 +67,12 @@ void generator::setupCOGHeight(int n_current)
   m_COG_ideal.Vdot(Z) = m_cog_ddot_height[m_n_preview];
 }
 
-void generator::setupTimeTrajectories(int n_current)
+void generator::setupTimeTrajectories(unsigned n_current)
 {
   Eigen::VectorXd & px_ref = m_ipm_long[X].p_ref();
   Eigen::VectorXd & py_ref = m_ipm_long[Y].p_ref();
-  int n_steps_loop = m_n_steps;
-  for(int i = 0; i < m_n_preview * 2 + 1; i++)
+  unsigned n_steps_loop = m_n_steps;
+  for(unsigned i = 0; i < m_n_preview * 2 + 1; i++)
   {
     m_virtual_height[X](i) = 0.0;
     m_virtual_height[Y](i) = 0.0;
@@ -131,7 +130,7 @@ void generator::generateTrajectories(void)
   /**
    * Computes long-term trajectory
    */
-  auto computeLongTerm = [&](int axis) {
+  auto computeLongTerm = [&](unsigned axis) {
     m_ipm_long[axis].update();
 
     // Current time
@@ -146,7 +145,7 @@ void generator::generateTrajectories(void)
    * Compute short term trajectory
    * Depends on the long term trajectory results
    **/
-  auto computeShortTerm = [&](int axis) {
+  auto computeShortTerm = [&](unsigned axis) {
     double omega2 = m_ipm_long[axis].w2(m_n_preview);
     double omega = sqrt(omega2);
     m_ipm_short[axis].setSystemMatrices(omega * m_poles[axis](0), omega * m_poles[axis](1), m_poles[axis](2), omega2,
@@ -162,7 +161,7 @@ void generator::generateTrajectories(void)
     m_ipm_short[axis].getStateVariables(m_COG_cmp.P(axis), m_COG_cmp.V(axis), m_Pcalpha_cmp(axis), m_Vcalpha_cmp(axis));
   };
 
-  auto computeTrajectories = [&](int axis) {
+  auto computeTrajectories = [&](unsigned axis) {
     computeLongTerm(axis);
     computeShortTerm(axis);
   };
@@ -178,7 +177,7 @@ void generator::generateTrajectories(void)
   m_Pcalpha_motion_out = m_Pcalpha_out + m_Vcalpha_ideal * m_omega_valpha * m_dt;
 }
 
-void generator::generate(int n_time)
+void generator::generate(unsigned n_time)
 {
   if(m_steps.empty())
   {

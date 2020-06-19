@@ -42,7 +42,7 @@ void CoMTrajectoryGeneration_Initial::start(mc_control::fsm::Controller & ctl)
   comGenerator_ = std::make_shared<mc_planning::generator>(previewSize_, m_dt, ctl.robot().mass(),
                                                            waist_height);
   comGenerator_->addToLogger(ctl.logger());
-  comGenerator_->setSteps(m_steps);
+  comGenerator_->steps(m_steps);
   mc_rtc::log::info(
       "Desired steps:\nTime\tCoM X\tCoM Y\n{}",
       mc_rtc::io::to_string(m_steps, [](const Eigen::Vector3d & v) -> Eigen::RowVector3d { return v; }, "\n"));
@@ -64,7 +64,7 @@ void CoMTrajectoryGeneration_Initial::start(mc_control::fsm::Controller & ctl)
                         const auto & curr = t_;
                         m_steps.clear();
                         m_steps.push_back(Eigen::Vector3d{curr+3, 0, leftFootPos_.y()});
-                        comGenerator_->setSteps(m_steps);
+                        comGenerator_->steps(m_steps);
                         updateSteps();
                       }),
   mc_rtc::gui::Button("Right",
@@ -97,11 +97,11 @@ void CoMTrajectoryGeneration_Initial::updateSteps()
   // Repeat last element
   m_steps.push_back(m_steps.back());
   m_steps.back()(0) += previewTime_;
-  comGenerator_->setSteps(m_steps);
+  comGenerator_->steps(m_steps);
   mc_rtc::log::info("Current time: {}", t_);
   mc_rtc::log::info(
       "Desired steps:\nTime\tCoM X\tCoM Y\n{}",
-      mc_rtc::io::to_string(comGenerator_->Steps(), [](const Eigen::Vector3d & v) -> Eigen::RowVector3d { return v; }, "\n"));
+      mc_rtc::io::to_string(comGenerator_->steps(), [](const Eigen::Vector3d & v) -> Eigen::RowVector3d { return v; }, "\n"));
 }
 
 bool CoMTrajectoryGeneration_Initial::run(mc_control::fsm::Controller & ctl)

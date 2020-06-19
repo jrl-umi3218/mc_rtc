@@ -17,6 +17,10 @@ namespace mc_planning
  * Generate trajectories as introduced in:
  * **Online 3D CoM Trajectory Generation for Multi-Contact Locomotion Synchronizing Contact**, *Mitsuharu Morisawa et
  * al., IROS 2018*
+ *
+ * @see mc_planning::linear_control_system::LinearTimeVariantInvertedPendulum long-term trajectory generation
+ * @see mc_planning::linear_control_system::LIPMControlByPoleAssignWithExternalForce short-term trajectory generation to
+ * continuously track the long-term trajectory
  */
 struct MC_PLANNING_DLLAPI generator
 {
@@ -29,14 +33,14 @@ struct MC_PLANNING_DLLAPI generator
    * @mass Robot mass
    * @waist_height Initial height of the waist (constant for now)
    */
-  generator(int n_preview, double dt, double mass = 60, double waist_height = 0.8);
+  generator(unsigned n_preview, double dt, double mass = 60, double waist_height = 0.8);
 
   /**
    * @brief Generate the long and short term trajectories
    *
    * @param n_time current time
    */
-  void generate(int n_time);
+  void generate(unsigned n_time);
 
   /**
    * @brief Add to Logger
@@ -51,7 +55,7 @@ struct MC_PLANNING_DLLAPI generator
    * @brief Desired steps
    * @see setSteps(const std::vector<Eigen::Vector3d> & steps)
    */
-  const std::vector<Eigen::Vector3d> & Steps() const
+  const std::vector<Eigen::Vector3d> & steps() const
   {
     return m_steps;
   }
@@ -61,7 +65,7 @@ struct MC_PLANNING_DLLAPI generator
    *
    * @param steps Desired steps from which the trajectory will be generated
    */
-  void setSteps(const std::vector<Eigen::Vector3d> & steps)
+  void steps(const std::vector<Eigen::Vector3d> & steps)
   {
     m_steps = steps;
     m_n_steps = 0;
@@ -80,6 +84,43 @@ struct MC_PLANNING_DLLAPI generator
    * @name Accessors
    */
   ///@{
+
+  /**
+   * @brief Sets the poles for the short-term trajectory
+   *
+   * Typical values range from \f$ [1,1,150] \f$ to \f$ [1,1,300] \f$.
+   * The bigger the poles are, the more the faster the short-term trajectory
+   * will converge to the long-term trajectory. Too high a value could lead to
+   * jerk when the long-term trajectory is not continuous
+   *
+   * @param poles Poles for the short-term trajectory
+   */
+  void polesX(const Eigen::Vector3d & poles)
+  {
+    m_poles[0] = poles;
+  }
+
+  /** @brief Gets the short-term trajectory poles */
+  const Eigen::Vector3d & polesX() const
+  {
+    return m_poles[0];
+  }
+
+  /**
+   * @brief Sets the poles for the short-term trajectory
+   *
+   * @see polesX(const Eigen::Vector3d & poles)
+   */
+  void polesY(const Eigen::Vector3d & poles)
+  {
+    m_poles[0] = poles;
+  }
+
+  /** @brief Gets the short-term trajectory poles */
+  const Eigen::Vector3d & polesY() const
+  {
+    return m_poles[0];
+  }
   const Eigen::Vector3d & IdealCOGPosition() const
   {
     return m_COG_ideal.P;
@@ -152,7 +193,7 @@ private:
    *
    * @param n_current Index of the start of the preview window
    */
-  void setupCOGHeight(int n_current);
+  void setupCOGHeight(unsigned n_current);
 
   /**
    * @brief Setup reference trajectories based on the desired steps
@@ -161,7 +202,7 @@ private:
    *
    * @param n_current Index of the start of the preview window
    */
-  void setupTimeTrajectories(int n_current);
+  void setupTimeTrajectories(unsigned n_current);
 
   /**
    * @brief Solve long and short term trajectories from the reference time
@@ -172,7 +213,7 @@ private:
   void generateTrajectories();
 
 private:
-  std::shared_ptr<motion_interpolator::InterpolatorBase<int>> m_ComInterp;
+  std::shared_ptr<motion_interpolator::InterpolatorBase<unsigned>> m_ComInterp = nullptr;
 
   StatePVA m_COG_ideal_pre;
   /**
@@ -184,23 +225,35 @@ private:
   StatePVA m_COG_cmp;
   StatePVA m_COG_out;
 
-  Eigen::Vector3d m_Pcalpha_ideal_pre, m_Pcalpha_ideal, m_Pcalpha_cmp;
-  Eigen::Vector3d m_Vcalpha_ideal_pre, m_Vcalpha_ideal, m_Vcalpha_cmp;
-  Eigen::Vector3d m_Pcalpha_out;
-  Eigen::Vector3d m_Pcalpha_motion_out;
+  /**
+   * @name ZMP-related
+   * @{
+   */
+  Eigen::Vector3d m_Pcalpha_ideal_pre = Eigen::Vector3d::Zero();
+  Eigen::Vector3d m_Pcalpha_ideal = Eigen::Vector3d::Zero();
+  Eigen::Vector3d m_Pcalpha_cmp = Eigen::Vector3d::Zero();
+  Eigen::Vector3d m_Vcalpha_ideal_pre = Eigen::Vector3d::Zero();
+  Eigen::Vector3d m_Vcalpha_ideal = Eigen::Vector3d::Zero();
+  Eigen::Vector3d m_Vcalpha_cmp = Eigen::Vector3d::Zero();
+  Eigen::Vector3d m_Pcalpha_out = Eigen::Vector3d::Zero();
+  Eigen::Vector3d m_Pcalpha_motion_out = Eigen::Vector3d::Zero();
+  /// @}
 
-  int m_n_preview; ///< Size of the future preview window. The full preview is 2*m_n_preview+1
-  int m_n_steps; ///< Current step
-  double m_dt; ///< Timestep
-  double m_omega_valpha;
-  double m_mass; ///< Robot mass
+  unsigned m_n_preview = 0; ///< Size of the future preview window. The full preview is 2*m_n_preview+1
+  unsigned m_n_steps = 0; ///< Current step
+  double m_dt = 0.005; ///< Timestep
+  double m_omega_valpha = 0.0;
+  double m_mass = 60.; ///< Robot mass
   double m_waist_height; ///< Height of the weight (constant for now)
 
-  linear_control_system::LinearTimeVariantInvertedPendulum m_ipm_long[2];
-  linear_control_system::LIPMControlByPoleAssignWithExternalForce m_ipm_short[2];
-  Eigen::Vector3d m_poles[2];
+  std::array<linear_control_system::LinearTimeVariantInvertedPendulum, 2> m_ipm_long;
+  std::array<linear_control_system::LIPMControlByPoleAssignWithExternalForce, 2> m_ipm_short;
+  /**< Poles for the short-term trajectory.
+   * Typical range [1,1,150] ... [1,1,300]
+   */
+  std::array<Eigen::Vector3d, 2> m_poles = {Eigen::Vector3d{1., 1., 150.}, Eigen::Vector3d{1., 1., 150.}};
 
-  Eigen::VectorXd m_virtual_height[2];
+  std::array<Eigen::VectorXd, 2> m_virtual_height;
   Eigen::VectorXd m_cog_height; ///< CoM height
   Eigen::VectorXd m_cog_dot_height; ///< CoM velocity
   Eigen::VectorXd m_cog_ddot_height; ///< CoM acceleration
