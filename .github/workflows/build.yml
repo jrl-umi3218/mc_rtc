@@ -225,11 +225,11 @@ jobs:
         git commit -m "Website from commit ${GITHUB_SHA}"
         git push origin gh-pages
         popd
-    - name: Slack Notification
-      if: failure()
-      uses: archive/github-actions-slack@master
-      with:
-        slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_TOKEN }}
-        slack-channel: '#ci'
-        slack-text: >
-          [mc_rtc] Build *${{ matrix.os }}/${{ matrix.build-type }} (${{ matrix.compiler }})* failed on ${{ github.ref }}
+    # - name: Slack Notification
+    #   if: failure()
+    #   uses: archive/github-actions-slack@master
+    #   with:
+    #     slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_TOKEN }}
+    #     slack-channel: '#ci'
+    #     slack-text: >
+    #       [mc_rtc] Build *${{ matrix.os }}/${{ matrix.build-type }} (${{ matrix.compiler }})* failed on ${{ github.ref }}
