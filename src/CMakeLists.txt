@@ -417,17 +417,20 @@ mc_planning/State.cpp
 mc_planning/generator.cpp # XXX should it be there?
 )
 
+set(mc_planning_HDR_DIR
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/mc_planning>$<INSTALL_INTERFACE:include/mc_planning>)
+
 set(mc_planning_HDR
-../include/mc_planning/Pendulum.h
-../include/mc_planning/api.h
-../include/mc_planning/LinearTimeVariantInvertedPendulum.h
-../include/mc_planning/LinearControl3.h
-../include/mc_planning/LIPMControlByPoleAssign.h
-../include/mc_planning/LIPMControlByPoleAssignWithExternalForce.h
-../include/mc_planning/InterpolatorBase.h
-../include/mc_planning/CubicSplineBase.h
-../include/mc_planning/ClampedCubicSpline.h
-../include/mc_planning/generator.h
+  ${mc_planning_HDR_DIR}/Pendulum.h
+  ${mc_planning_HDR_DIR}/api.h
+  ${mc_planning_HDR_DIR}/LinearTimeVariantInvertedPendulum.h
+  ${mc_planning_HDR_DIR}/LinearControl3.h
+  ${mc_planning_HDR_DIR}/LIPMControlByPoleAssign.h
+  ${mc_planning_HDR_DIR}/LIPMControlByPoleAssignWithExternalForce.h
+  ${mc_planning_HDR_DIR}/InterpolatorBase.h
+  ${mc_planning_HDR_DIR}/CubicSplineBase.h
+  ${mc_planning_HDR_DIR}/ClampedCubicSpline.h
+  ${mc_planning_HDR_DIR}/generator.h
 )
 
 add_library(mc_planning SHARED ${mc_planning_SRC} ${mc_planning_HDR})
