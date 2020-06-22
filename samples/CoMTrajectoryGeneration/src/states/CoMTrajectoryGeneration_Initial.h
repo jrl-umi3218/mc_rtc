@@ -31,13 +31,16 @@ struct CoMTrajectoryGeneration_Initial : mc_control::fsm::State
     double t_ = 0; ///< Time elapsed since started
     double generationTime_ = 0; ///< Time spent generating the trajectory
 
+    double delay_ = 0.5; ///< Delay before moving manually
+    double transition_ = 0.2; ///< Transition time between steps (interpolation)
+
     Eigen::Vector3d leftFootPos_ = Eigen::Vector3d::Zero();
     Eigen::Vector3d rightFootPos_ = Eigen::Vector3d::Zero();
     Eigen::Vector3d feetCenterPos_ = Eigen::Vector3d::Zero();
 
 private:
   std::shared_ptr<mc_planning::generator> comGenerator_;
-  std::vector<Eigen::Vector3d> m_steps; ///< (time, com_x, com_y)
+  mc_planning::PreviewSteps<Eigen::Vector2d> steps_; ///< Foot steps defined as time, ZMP_x, ZMP_y
 };
 
 } /* mc_samples */

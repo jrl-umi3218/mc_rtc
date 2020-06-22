@@ -42,7 +42,7 @@ void generator::setupCOGHeight(unsigned n_current)
   if(n_current == 0)
   {
     m_ComInterp->push_back(0u, m_waist_height);
-    m_ComInterp->push_back(static_cast<unsigned>(std::lround(m_steps.back()(0) / m_dt)), m_waist_height);
+    m_ComInterp->push_back(static_cast<unsigned>(std::lround(m_steps.back().t() / m_dt)), m_waist_height);
     m_ComInterp->update();
   }
 
@@ -65,38 +65,38 @@ void generator::setupCOGHeight(unsigned n_current)
 
 void generator::setupTimeTrajectories(unsigned n_current)
 {
+  m_steps.nextWindow(n_current * m_dt);
   Eigen::VectorXd & px_ref = m_ipm_long[X].p_ref();
   Eigen::VectorXd & py_ref = m_ipm_long[Y].p_ref();
-  unsigned n_steps_loop = m_n_steps;
   for(unsigned i = 0; i < m_n_preview * 2 + 1; i++)
   {
     m_virtual_height[X](i) = 0.0;
     m_virtual_height[Y](i) = 0.0;
 
     const double currTime = static_cast<double>(i + n_current) * m_dt;
-    const auto & prevStep = m_steps[n_steps_loop];
-    const auto & nextStep = m_steps[n_steps_loop + 1];
-    const double prevTime = prevStep(0);
-    const double nextTime = nextStep(0);
+    // Move to next step if necessary
+    m_steps.update(currTime);
+    const auto & prevStep = m_steps.previous();
 
-    if(currTime >= prevTime && currTime < nextTime)
+    if(!m_steps.isLastStep())
     {
+      const auto & nextStep = m_steps.next();
       /**
        * @brief Interpolates the reference ZMP from one step to the next
-       * @param axis 1: Step CoM x, 2: Step CoM Y
+       * @param axis 0: Step CoM x, 0: Step CoM Y
        */
       auto interpolateRefXY = [&](const Eigen::Index axis) {
-        return prevStep(axis)
-               + (nextStep(axis) - prevStep(axis)) * polynomial3((currTime - prevTime) / (nextTime - prevTime));
+        return prevStep.step()(axis)
+               + (nextStep.step()(axis) - prevStep.step()(axis)) * polynomial3((currTime - prevStep.t()) / (nextStep.t() - prevStep.t()));
       };
 
-      px_ref(i) = interpolateRefXY(1);
-      py_ref(i) = interpolateRefXY(2);
+      px_ref(i) = interpolateRefXY(0);
+      py_ref(i) = interpolateRefXY(1);
     }
     else
     { /* No previous step provided, start with the ZMP at the next step */
-      px_ref(i) = nextStep(1);
-      py_ref(i) = nextStep(2);
+      px_ref(i) = prevStep.step().x();
+      py_ref(i) = prevStep.step().y();
     }
 
     m_ipm_long[X].w2(i) =
@@ -104,22 +104,9 @@ void generator::setupTimeTrajectories(unsigned n_current)
     m_ipm_long[Y].w2(i) =
         (mc_rtc::constants::GRAVITY + m_cog_ddot_height[i]) / (m_cog_height[i] - m_virtual_height[Y](i));
 
-    // We need one future step for computations, increment only
-    // till the second to last step
-    if(n_steps_loop < m_steps.size() - 2)
-    {
-      // If current time is after the next step time, move to next step
-      if(currTime >= nextTime) n_steps_loop++;
-    }
   }
 
   m_Pcalpha_ideal(Z) = (m_virtual_height[X](m_n_preview) + m_virtual_height[Y](m_n_preview)) / 2.0;
-
-  double tm_cur = (double)n_current * m_dt;
-  if(m_n_steps < m_steps.size() - 2)
-  {
-    if(tm_cur > m_steps[m_n_steps + 1](0)) m_n_steps++;
-  }
 }
 
 void generator::generateTrajectories()
@@ -193,44 +180,37 @@ void generator::generateTrajectories()
 
 void generator::generate(unsigned n_time)
 {
-  if(m_steps.empty())
+  if(!m_steps.isValid())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[generator] No reference provided, call setSteps()");
+    mc_rtc::log::error_and_throw<std::runtime_error>("[generator] Invalid reference provided, call steps()");
   }
   setupCOGHeight(n_time);
   setupTimeTrajectories(n_time);
   generateTrajectories();
 }
 
-void generator::push_back(const Eigen::Vector3d & step)
-{
-  if(step(0) <= m_steps.back()(0))
-  {
-    mc_rtc::log::error("Invalid step time ({} <= {})", step(0), m_steps.back()(0));
-  }
-  m_steps.push_back(step);
-}
-
 void generator::addToLogger(mc_rtc::Logger & logger)
 {
   // clang-format off
+  // Requested ideal trajectories
   logger.addLogEntry("generator_IdealCOGPosition",       [this]() { return this->IdealCOGPosition(); });
-  logger.addLogEntry("generator_CompensatedCOGPosition", [this]() { return this->CompensatedCOGPosition(); });
-  logger.addLogEntry("generator_OutputCOGPosition",      [this]() { return this->OutputCOGPosition(); });
   logger.addLogEntry("generator_IdealZMPPosition",       [this]() { return this->IdealZMPPosition(); });
-  logger.addLogEntry("generator_CompensatedZMPPosition", [this]() { return this->CompensatedZMPPosition(); });
+  // Generated trajectories
+  logger.addLogEntry("generator_OutputCOGPosition",      [this]() { return this->OutputCOGPosition(); });
   logger.addLogEntry("generator_OutputZMPPosition",      [this]() { return this->OutputZMPPosition(); });
+  logger.addLogEntry("generator_CompensatedCOGPosition", [this]() { return this->CompensatedCOGPosition(); });
+  logger.addLogEntry("generator_CompensatedZMPPosition", [this]() { return this->CompensatedZMPPosition(); });
   // clang-format on
 }
 
 void generator::removeFromLogger(mc_rtc::Logger & logger)
 {
   logger.removeLogEntry("generator_IdealCOGPosition");
-  logger.removeLogEntry("generator_CompensatedCOGPosition");
-  logger.removeLogEntry("generator_OutputCOGPosition");
   logger.removeLogEntry("generator_IdealZMPPosition");
-  logger.removeLogEntry("generator_CompensatedZMPPosition");
+  logger.removeLogEntry("generator_OutputCOGPosition");
   logger.removeLogEntry("generator_OutputZMPPosition");
+  logger.removeLogEntry("generator_CompensatedCOGPosition");
+  logger.removeLogEntry("generator_CompensatedZMPPosition");
 }
 
 } /* namespace mc_planning */

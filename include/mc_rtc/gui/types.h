@@ -120,6 +120,7 @@ struct MC_RTC_GUI_DLLAPI Color
   static const Color Yellow;
   static const Color Gray;
   static const Color LightGray;
+  static const Color Purple;
   static const std::map<std::string, Color> ColorMap;
 };
 } // namespace gui
