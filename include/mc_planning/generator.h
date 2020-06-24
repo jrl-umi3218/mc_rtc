@@ -16,6 +16,7 @@ template<typename Step>
 struct TimedStep
 {
   TimedStep(double t, const Step & step) noexcept : t_(t), step_(step) {}
+  TimedStep() noexcept {}
 
   const double & t() const noexcept
   {
@@ -75,7 +76,7 @@ struct TimedStep
   }
 
 protected:
-  double t_;
+  double t_ = 0;
   Step step_;
 };
 
@@ -280,7 +281,6 @@ struct MC_PLANNING_DLLAPI PreviewSteps
     {
       previous_ = steps_.begin();
       next_ = std::next(previous_);
-      mc_rtc::log::info("Init {}, {}", previous_->t(), next_->t());
     }
   }
 
@@ -309,14 +309,8 @@ struct MC_PLANNING_DLLAPI PreviewSteps
   {
     if(!isLastStep() && t >= next_->t())
     {
-      // mc_rtc::log::info("Change step");
       previous_ = next_;
       ++next_;
-      // if(next_ == steps_.end())
-      // { // only happens when the end of the step plan is in the current preview horizon (rare)
-      //   next_ = previous_;
-      // }
-      // mc_rtc::log::info("After Change step: {}, {}", previous().t(), next().t());
     }
   }
 
@@ -348,14 +342,10 @@ struct MC_PLANNING_DLLAPI PreviewSteps
 
     previous_ = steps_.begin();
     next_ = std::next(previous_);
-    // mc_rtc::log::info("Rewinding for next window: prev {}, next {}", previous(), next());
   }
 
   /**
    * @brief Returns the previous step w.r.t last call to update(double t)
-   *
-   * @warning If no next step is available, then next() = previous(). You can
-   * check whether this is the last step ahead of time by calling isLastStep()
    *
    * @return Next step
    */
@@ -367,14 +357,21 @@ struct MC_PLANNING_DLLAPI PreviewSteps
   /**
    * @brief Returns the next step w.r.w last call to update(double t)
    *
-   * @warning If no next step is available, then next() = previous(). You can
-   * check whether this is the last step ahead of time by calling isLastStep()
+   * @throws std::runtime_error If no next step is available. Use isLastStep()
+   * to check beforehand.
    *
    * @return Next step
    */
-  const TimedStep<Step> & next() const noexcept
+  const TimedStep<Step> & next() const
   {
-    return *next_;
+    if(!isLastStep())
+    {
+      return *next_;
+    }
+    else
+    {
+      mc_rtc::log::error_and_throw<std::runtime_error>("Can't access a step past the end");
+    }
   }
   /** @} */ // end of group real-time
 

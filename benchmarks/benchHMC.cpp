@@ -3,6 +3,7 @@
  */
 
 #include <mc_planning/LookupTable.h>
+#include <mc_planning/generator.h>
 #include <mc_rtc/constants.h>
 #include "benchmark/benchmark.h"
 #include <random>
@@ -32,6 +33,7 @@ static void BM_cosh_lookuptable(benchmark::State & state)
   }
   state.SetItemsProcessed(10000 * state.iterations());
 }
+BENCHMARK(BM_cosh_lookuptable);
 
 static void BM_cosh(benchmark::State & state)
 {
@@ -54,9 +56,111 @@ static void BM_cosh(benchmark::State & state)
   }
   state.SetItemsProcessed(10000 * state.iterations());
 }
-
-// Register the function as a benchmark
-BENCHMARK(BM_cosh_lookuptable);
 BENCHMARK(BM_cosh);
+
+class PreviewStepsFixture : public benchmark::Fixture
+{
+  using PreviewSteps = mc_planning::PreviewSteps<Eigen::Vector2d>;
+
+public:
+  void SetUp(const ::benchmark::State &)
+  {
+    steps = std::make_shared<PreviewSteps>();
+    steps->add({0, {0.0, 0.0}});
+    steps->add({1.5, {0.0, 1.5}});
+    steps->add({1.6, {0.0, 1.6}});
+    steps->add({2.9, {0.0, 2.9}});
+    steps->add({3.0, {0.0, 3.0}});
+    steps->add({5.0, {0.0, 3.0}});
+    steps->add({10.0, {0.0, 3.0}});
+    steps->initialize();
+  }
+
+  void TearDown(const ::benchmark::State &) {}
+
+  static constexpr unsigned nIter()
+  {
+    return n_loop * (2 * n_preview + 1);
+  }
+
+  std::shared_ptr<PreviewSteps> steps;
+  static constexpr double dt = 0.005;
+  static constexpr unsigned n_loop = 15. / dt;
+  static constexpr unsigned n_preview = 1.6 / dt;
+};
+
+BENCHMARK_DEFINE_F(PreviewStepsFixture, BM_PreviewSteps)(benchmark::State & state)
+{
+  while(state.KeepRunning())
+  {
+    for(unsigned loop = 0; loop <= n_loop; loop++)
+    {
+      auto previewStart = loop * dt;
+      steps->nextWindow(previewStart);
+
+      for(unsigned previewWindow = loop; previewWindow < loop + 2 * n_preview + 1; ++previewWindow)
+      {
+        double t = previewWindow * dt;
+        steps->update(t);
+
+        if(!steps->isLastStep())
+        {
+          mc_planning::TimedStep<Eigen::Vector2d> prev, next;
+          benchmark::DoNotOptimize(prev = steps->previous());
+          benchmark::DoNotOptimize(next = steps->next());
+        }
+      }
+    }
+  }
+  state.SetItemsProcessed(PreviewStepsFixture::nIter() * state.iterations());
+}
+BENCHMARK_REGISTER_F(PreviewStepsFixture, BM_PreviewSteps)->Unit(benchmark::kMicrosecond);
+
+class GeneratorFixture : public benchmark::Fixture
+{
+public:
+  using Generator = mc_planning::generator;
+  using PreviewSteps = mc_planning::PreviewSteps<Eigen::Vector2d>;
+  void SetUp(const ::benchmark::State &)
+  {
+    steps.add({(double)n_preview * dt, {-0.2, 0.0}});
+    steps.addRelative({(double)n_preview * dt, {0.0, 0.0}});
+    steps.addRelative({0.1, {0.0, 0.0}});
+    steps.addRelative({1.6, {0.0, 0.0}});
+    steps.addRelative({0.1, {0.2, 0.095}});
+    steps.addRelative({1.6, {0.0, 0.0}});
+    steps.addRelative({0.1, {0.0, -0.19}});
+    steps.addRelative({1.6, {0.0, 0.0}});
+    steps.addRelative({0.1, {-0.2, 0.095}});
+    steps.addRelative({(double)n_preview * dt, {0.0, 0.0}});
+    steps.initialize();
+    generator = std::make_shared<Generator>(n_preview, dt);
+    generator->steps(steps);
+
+    n_loop = static_cast<unsigned>(std::lround(steps.back().t() / dt) - n_preview);
+  }
+
+  void TearDown(const ::benchmark::State &) {}
+
+  std::shared_ptr<Generator> generator;
+  PreviewSteps steps;
+  static constexpr double dt = 0.005;
+  unsigned n_loop = 15. / dt;
+  static constexpr unsigned n_preview = 1.6 / dt;
+};
+
+BENCHMARK_DEFINE_F(GeneratorFixture, BM_Generator)(benchmark::State & state)
+{
+  for(auto _ : state)
+  {
+    for(unsigned loop = 0; loop <= n_loop; loop++)
+    {
+      generator->generate(loop);
+    }
+  }
+  state.SetItemsProcessed(n_loop * state.iterations());
+}
+BENCHMARK_REGISTER_F(GeneratorFixture, BM_Generator)->Unit(benchmark::kMicrosecond);
+
 // Run the benchmark
 BENCHMARK_MAIN();
