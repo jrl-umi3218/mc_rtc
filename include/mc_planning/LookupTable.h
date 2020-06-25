@@ -33,6 +33,9 @@ namespace mc_planning
  *   linear generation of values in the min-max range. Whenever possible, it is
  *   recommended to choose a conservative upper boundary.
  * - Always rigourously evaluate accuracy for each specific use-case.
+ * - This implementation makes no assumption on the underlying structure of the
+ *   function. Better results and perfomance could be achieved by exploiting
+ *   these properties (such as symetry, non-uniform argument distribution, etc)
  */
 template<typename T, bool CheckBounds = true>
 struct MC_PLANNING_DLLAPI LookupTable
@@ -42,9 +45,9 @@ struct MC_PLANNING_DLLAPI LookupTable
    * @see create(size_t resolution, const T & min, const T & max, MappingFunction f)
    */
   template<typename MappingFunction>
-  LookupTable(size_t resolution, const T & min, const T & max, MappingFunction f)
+  LookupTable(size_t resolution, const T & min, const T & max, MappingFunction f, const std::string & name = "")
   {
-    create(resolution, min, max, f);
+    create(resolution, min, max, f, name);
   }
 
   /**
@@ -52,7 +55,7 @@ struct MC_PLANNING_DLLAPI LookupTable
    *
    * To initialize the lookup table, call create(size_t resolution, const T & min, const T & max, MappingFunction f)
    */
-  LookupTable(){};
+  LookupTable() noexcept {};
 
   /**
    * @brief Evaluate and store given function results
@@ -63,18 +66,22 @@ struct MC_PLANNING_DLLAPI LookupTable
    * @param min Minimum argument value
    * @param max Maximum argument value
    * @param f Function to evaluate
+   * @param name Human-readable description of the stored function (used for
+   * error reporting)
    */
   template<typename MappingFunction>
-  void create(size_t resolution, const T & min, const T & max, MappingFunction f)
+  void create(size_t resolution, const T & min, const T & max, MappingFunction f, const std::string & name = "")
   {
+    name_ = name;
+    prefix_ = "[LookupTable]" + name_.size() ? "[" + name_ + "] " : " ";
     if(min > max)
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("[LookupTable] Invalid range (min {} > max {})", min, max);
+      mc_rtc::log::error_and_throw<std::runtime_error>(prefix_ + "Invalid range (min {} > max {})", min, max);
     }
     if(resolution == 0)
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
-          "[LookupTable] Resolution cannot be equal to zero (strictly positive)");
+      mc_rtc::log::error_and_throw<std::runtime_error>(prefix_
+                                                       + "Resolution cannot be equal to zero (strictly positive)");
     }
     table_.resize(resolution);
     min_ = min;
@@ -106,15 +113,23 @@ struct MC_PLANNING_DLLAPI LookupTable
   {
     if(CheckBounds)
     {
-      if(x < min_ || x > max_)
+      if(table_.empty() || x < min_ || x > max_)
       {
-        mc_rtc::log::error_and_throw<std::runtime_error>("[LookupTable] Out of bound access ({} <= {} <= {})", min_, x,
-                                                         max_);
+        if(table_.empty())
+        {
+          mc_rtc::log::error_and_throw<std::runtime_error>(
+              prefix_ + "Uninitialized table. Please call create() before use.", min_, x, max_);
+        }
+        else
+        {
+          mc_rtc::log::error_and_throw<std::runtime_error>(prefix_ + "Out of bound access ({} <= {} <= {})", min_, x,
+                                                           max_);
+        }
       }
     }
     else
     {
-      assert(x < min_ || x > max_);
+      assert(table_.empty() || x < min_ || x > max_);
     }
     auto h = std::min(static_cast<size_t>(lround((x - min_) * rangeConversion_)), maxIndex_);
     return table_[h];
@@ -124,7 +139,9 @@ protected:
   std::vector<T> table_;
   T min_, max_;
   T rangeConversion_;
-  size_t maxIndex_;
+  size_t maxIndex_ = 0;
+  std::string name_ = {};
+  std::string prefix_ = {};
 };
 
 } // namespace mc_planning
