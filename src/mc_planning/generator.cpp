@@ -103,7 +103,6 @@ void generator::setupTimeTrajectories(unsigned n_current)
         (mc_rtc::constants::GRAVITY + m_cog_ddot_height[i]) / (m_cog_height[i] - m_virtual_height[X](i));
     m_ipm_long[Y].w2(i) =
         (mc_rtc::constants::GRAVITY + m_cog_ddot_height[i]) / (m_cog_height[i] - m_virtual_height[Y](i));
-
   }
 
   m_Pcalpha_ideal(Z) = (m_virtual_height[X](m_n_preview) + m_virtual_height[Y](m_n_preview)) / 2.0;

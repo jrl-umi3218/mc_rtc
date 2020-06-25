@@ -431,6 +431,7 @@ set(mc_planning_HDR
   ${mc_planning_HDR_DIR}/CubicSplineBase.h
   ${mc_planning_HDR_DIR}/ClampedCubicSpline.h
   ${mc_planning_HDR_DIR}/generator.h
+  ${mc_planning_HDR_DIR}/PreviewSteps.h
 )
 
 add_library(mc_planning SHARED ${mc_planning_SRC} ${mc_planning_HDR})
