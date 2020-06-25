@@ -389,14 +389,7 @@ struct MC_PLANNING_DLLAPI PreviewSteps
     if(t >= back().t()) return back();
     auto it =
         std::find_if(steps_.rbegin(), steps_.rend(), [&t](const TimedStep<Step> & step) { return step.t() <= t; });
-    if(it != steps_.rend())
-    {
-      return *it;
-    }
-    else
-    {
-      return *steps_.begin();
-    }
+    return (it != steps_.rend()) ? *it : front();
   }
 
   /**
@@ -407,16 +400,13 @@ struct MC_PLANNING_DLLAPI PreviewSteps
    * @note This function is not intended for real-time performace and has a
    * complexity in `O(steps)`.
    *
-   * @return Nearest future footstep with time <= t
+   * @return Nearest future footstep with step.time > t, or last element if t is
+   * later than the last step
    */
-  const TimedStep<Step> & next(double t) const noexcept
+  const TimedStep<Step> & next(double t) const
   {
-    auto it = std::find_if(steps_.begin(), steps_.end(), [&t](const TimedStep<Step> & step) { return step.t() >= t; });
-    if(it != steps_.end())
-    {
-      return *it;
-    }
-    return previous();
+    auto it = std::find_if(steps_.begin(), steps_.end(), [&t](const TimedStep<Step> & step) { return step.t() > t; });
+    return (it != steps_.end()) ? *it : back();
   }
 
   const PreviewStepsSet & steps() const noexcept

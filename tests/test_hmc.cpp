@@ -153,12 +153,12 @@ BOOST_AUTO_TEST_CASE(TestPreviewStepsSequential)
   std::cout << "Steps:\n" << mc_rtc::io::to_string(steps.steps(), "\n") << std::endl;
 
   double dt = 0.005;
-  unsigned n_loop = 5. / dt;
-  unsigned n_preview = 1.6 / dt;
+  unsigned n_loop = (unsigned)std::lround(5. / dt);
+  unsigned n_preview = (unsigned)std::lround(1.6 / dt);
   for(unsigned loop = 0; loop <= n_loop; loop++)
   {
     auto previewStart = loop * dt;
-    mc_rtc::log::success("Start of new preview window at time: {:.3f}", previewStart);
+    // mc_rtc::log::success("Start of new preview window at time: {:.3f}", previewStart);
     stepsSeq.nextWindow(previewStart);
 
     for(unsigned previewWindow = loop; previewWindow < loop + 2 * n_preview + 1; ++previewWindow)
