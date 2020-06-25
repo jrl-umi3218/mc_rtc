@@ -8,6 +8,7 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <mc_planning/PreviewWindow.h>
 #include <mc_planning/generator.h>
 #include <mc_rtc/io_utils.h>
 
@@ -186,4 +187,45 @@ BOOST_AUTO_TEST_CASE(TestPreviewStepsSequential)
       }
     }
   }
+}
+
+BOOST_AUTO_TEST_CASE(TestPreviewWindow)
+{
+  using namespace mc_planning;
+
+  CenteredPreviewWindow window(1.6, 0.005);
+  BOOST_REQUIRE_EQUAL(window.startTime(), 0.);
+  BOOST_REQUIRE_EQUAL(window.endTime(), 3.2);
+  BOOST_REQUIRE_EQUAL(window.indexFromTime(0), 0);
+  BOOST_REQUIRE_EQUAL(window.timeFromIndex(0), 0);
+  BOOST_REQUIRE_EQUAL(window.timeFromIndex(1), 0.005);
+  BOOST_REQUIRE_EQUAL(window.indexFromTime(0.005), 1);
+  BOOST_REQUIRE_EQUAL(window.timeFromIndex(10), 0.05);
+
+  {
+    CenteredPreviewWindow window(1.6, 0.005, 3.2);
+    CenteredPreviewWindow window2(1.6, 0.005);
+    window2.startAt(3.2);
+    BOOST_REQUIRE_EQUAL(window.startTime(), window2.startTime());
+  }
+
+  auto test = [&](double preview_time, double dt, double start) {
+    CenteredPreviewWindow window(preview_time, dt);
+    window.startAt(start);
+    unsigned i = window.indexFromTime(start);
+    BOOST_REQUIRE_EQUAL(i, std::lround(start / dt));
+    for(const auto & w : window)
+    {
+      // mc_rtc::log::info("Window element with index: {}, time: {:.3f}", w.index(), w.time());
+      BOOST_REQUIRE_EQUAL(w.index(), i);
+      BOOST_REQUIRE_EQUAL(w.time(), i * dt);
+      BOOST_REQUIRE_EQUAL(window.indexFromTime(window.timeFromIndex(w.index())), w.index());
+      BOOST_REQUIRE_EQUAL(window.timeFromIndex(window.indexFromTime(w.time())), w.time());
+      ++i;
+    }
+  };
+  test(1.6, 0.005, 0);
+  test(1.6, 0.005, 1.5);
+  test(1.6, 0.002, 0);
+  test(1.6, 0.002, 1.5);
 }
