@@ -7,24 +7,44 @@
 namespace mc_planning
 {
 
-unsigned PreviewElement::index() const noexcept
+PreviewWindowView CenteredPreviewWindow::all(Index startIndex) const noexcept
+{
+  return PreviewWindowView{*this, startIndex, Index{0}, fullSize_};
+}
+
+PreviewWindowView CenteredPreviewWindow::all(Time startTime) const noexcept
+{
+  return PreviewWindowView{*this, index(startTime), Index{0}, fullSize_};
+}
+
+// PreviewWindowView CenteredPreviewWindow::past(Index startIndex) const noexcept
+// {
+//   return PreviewWindowView{*this, startIndex, halfSize_};
+// }
+
+// PreviewWindowView CenteredPreviewWindow::future(Index startIndex) const noexcept
+// {
+//   return PreviewWindowView{*this, startIndex+halfSize_, startIndex+fullSize_};
+// }
+
+Index PreviewElement::index() const noexcept
 {
   return index_;
 }
 
-double PreviewElement::time() const noexcept
+Time PreviewElement::time() const noexcept
 {
-  return window_.timeFromIndex(index_);
+  return window_.time(Index(index_));
 }
 
-unsigned PreviewElement::localIndex() const noexcept
+Index PreviewElement::localIndex() const noexcept
 {
-  return index_ - window_.startIndex();
+  return Index{index_ - window_.startIndex()};
 }
 
-double PreviewElement::localTime() const noexcept
+Time PreviewElement::localTime() const noexcept
 {
-  return window_.timeFromIndex(index_ - window_.startIndex());
+  return window_.time(Index(index_ - window_.startIndex()));
 }
 
 } // namespace mc_planning

@@ -287,7 +287,6 @@ private:
 
 private:
   CenteredPreviewWindow preview_; ///< Iteratable preview window and parameters
-  CenteredPreviewWindow previewZero_; ///< Iteratable preview window and parameters
   std::shared_ptr<motion_interpolator::InterpolatorBase<unsigned>> m_ComInterp = nullptr;
 
   StatePVA m_COG_ideal_pre;

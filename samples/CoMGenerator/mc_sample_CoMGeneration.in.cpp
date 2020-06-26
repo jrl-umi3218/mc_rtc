@@ -39,7 +39,7 @@ int main(int, char **)
   logger.start("CoMGenerator", dt);
   com_traj.addToLogger(logger);
 
-  unsigned n_loop = preview.indexFromTime(com_traj.steps().back().t()) - preview.halfSize();
+  unsigned n_loop = preview.index(Time(com_traj.steps().back().t())) - preview.halfSize();
 
   /*
    * Generate the CoM trajectory based on the parameters in com_traj

@@ -194,23 +194,24 @@ BOOST_AUTO_TEST_CASE(TestPreviewWindow)
 
   {
     CenteredPreviewWindow window(0.015, 0.005);
+    auto view = window.all(Index(0)); // View on the preview window starting at time 0
     BOOST_REQUIRE_EQUAL(window.duration(), 0.03);
     BOOST_REQUIRE_EQUAL(window.halfDuration(), 0.015);
     BOOST_REQUIRE_EQUAL(window.halfSize(), 3); // n
     BOOST_REQUIRE_EQUAL(window.size(), 7); // 2*n+1
-    BOOST_REQUIRE_EQUAL(window.startIndex(), 0);
-    BOOST_REQUIRE_EQUAL(window.startTime(), 0);
-    BOOST_REQUIRE_EQUAL(window.endIndex(), 6); // Array of size 7, last index is 6
-    BOOST_REQUIRE_EQUAL(window.endTime(), 0.03);
-    auto end = *window.end();
+    BOOST_REQUIRE_EQUAL(view.startIndex(), 0);
+    BOOST_REQUIRE_EQUAL(view.startTime(), 0);
+    BOOST_REQUIRE_EQUAL(view.endIndex(), 6); // Array of size 7, last index is 6
+    BOOST_REQUIRE_EQUAL(view.endTime(), 0.03);
+    auto end = *view.end();
     BOOST_REQUIRE_EQUAL(end.localIndex(), 7); // Iterator end is one element after the end
     BOOST_REQUIRE_EQUAL(end.localTime(), 0.035); // Iterator end is one element after the end
     BOOST_REQUIRE_EQUAL(end.index(), 7); // Iterator end is one element after the end
     BOOST_REQUIRE_EQUAL(end.time(), 0.035); // Iterator end is one element after the end
-    auto start = *window.begin();
+    auto start = *view.begin();
     BOOST_REQUIRE_EQUAL(start.localIndex(), 0);
     BOOST_REQUIRE_EQUAL(start.localTime(), 0.0);
-    for(const auto w : window)
+    for(const auto w : view)
     {
       mc_rtc::log::info("index {}, local time {:.3f}, global index {}, global time {:.3f}", w.localIndex(),
                         w.localTime(), w.index(), w.time());
@@ -218,69 +219,42 @@ BOOST_AUTO_TEST_CASE(TestPreviewWindow)
       BOOST_REQUIRE(w.localIndex() <= 6);
       BOOST_REQUIRE(w.index() <= 6);
     }
-  }
 
-  {
-    CenteredPreviewWindow window(0.015, 0.005);
-    window.startAtTime(10);
-    BOOST_REQUIRE_EQUAL(window.duration(), 0.03);
-    BOOST_REQUIRE_EQUAL(window.halfDuration(), 0.015);
-    BOOST_REQUIRE_EQUAL(window.halfSize(), 3); // n
-    BOOST_REQUIRE_EQUAL(window.size(), 7); // 2*n+1
-    BOOST_REQUIRE_EQUAL(window.startTime(), 10);
-    BOOST_REQUIRE_EQUAL(window.endTime(), 10.03);
-    auto end = *window.end();
-    BOOST_REQUIRE_EQUAL(end.localIndex(), 7); // Iterator end is one element after the end
-    BOOST_REQUIRE_EQUAL(end.localTime(), 0.035); // Iterator end is one element after the end
-    auto start = *window.begin();
-    BOOST_REQUIRE_EQUAL(start.localIndex(), 0);
-    BOOST_REQUIRE_EQUAL(start.localTime(), 0.0);
-    for(const auto w : window)
-    {
-      mc_rtc::log::info("local index {}, local time {:.3f}, global index {}, global time {:.3f}", w.localIndex(),
-                        w.localTime(), w.index(), w.time());
+    { // Test a view starting at time 10
+      auto view10 = window.all(Time(10));
+      BOOST_REQUIRE_EQUAL(view10.startTime(), 10);
+      BOOST_REQUIRE_EQUAL(view10.endTime(), 10.03);
+      auto end = *view10.end();
+      BOOST_REQUIRE_EQUAL(end.localIndex(), 7); // Iterator end is one element after the end
+      BOOST_REQUIRE_EQUAL(end.localTime(), 0.035); // Iterator end is one element after the end
+      auto start = *view10.begin();
+      BOOST_REQUIRE_EQUAL(start.localIndex(), 0);
+      BOOST_REQUIRE_EQUAL(start.localTime(), 0.0);
+      for(const auto w : view10)
+      {
+        mc_rtc::log::info("local index {}, local time {:.3f}, global index {}, global time {:.3f}", w.localIndex(),
+                          w.localTime(), w.index(), w.time());
 
-      BOOST_REQUIRE(w.localIndex() <= 6);
+        BOOST_REQUIRE(w.localIndex() <= 6);
+      }
     }
-  }
-
-  {
-    CenteredPreviewWindow window(1.6, 0.005);
-    BOOST_REQUIRE_EQUAL(window.startTime(), 0.);
-    BOOST_REQUIRE_EQUAL(window.endTime(), 3.2);
-    BOOST_REQUIRE_EQUAL(window.duration(), 3.2);
-    BOOST_REQUIRE_EQUAL(window.halfDuration(), 1.6);
-    BOOST_REQUIRE_EQUAL(window.halfSize(), (unsigned)std::lround(1.6 / 0.005));
-    BOOST_REQUIRE_EQUAL(window.size(), (unsigned)std::lround(3.2 / 0.005) + 1);
-    BOOST_REQUIRE_EQUAL(window.indexFromTime(0), 0);
-    BOOST_REQUIRE_EQUAL(window.timeFromIndex(0), 0);
-    BOOST_REQUIRE_EQUAL(window.timeFromIndex(1), 0.005);
-    BOOST_REQUIRE_EQUAL(window.indexFromTime(0.005), 1);
-    BOOST_REQUIRE_EQUAL(window.timeFromIndex(10), 0.05);
-  }
-
-  {
-    CenteredPreviewWindow window(1.6, 0.005, 3.2);
-    CenteredPreviewWindow window2(1.6, 0.005);
-    window2.startAtTime(3.2);
-    BOOST_REQUIRE_EQUAL(window.startTime(), window2.startTime());
   }
 
   auto test = [&](double preview_time, double dt, double start) {
     CenteredPreviewWindow window(preview_time, dt);
-    window.startAtTime(start);
-    unsigned i = window.indexFromTime(start);
+    unsigned i = window.index(Time(start));
     BOOST_REQUIRE_EQUAL(i, std::lround(start / dt));
-    for(const auto & w : window)
+    for(const auto & w : window.all(Time(start)))
     {
       // mc_rtc::log::info("Window element with index: {}, time: {:.3f}", w.localIndex(), w.localTime());
       BOOST_REQUIRE_EQUAL(w.index(), i);
       BOOST_REQUIRE_EQUAL(w.time(), i * dt);
-      BOOST_REQUIRE_EQUAL(window.indexFromTime(window.timeFromIndex(w.index())), w.index());
-      BOOST_REQUIRE_EQUAL(window.timeFromIndex(window.indexFromTime(w.time())), w.time());
+      BOOST_REQUIRE_EQUAL(window.index(window.time(w.index())), w.index());
+      BOOST_REQUIRE_EQUAL(window.time(window.index(w.time())), w.time());
       ++i;
     }
   };
+
   test(1.6, 0.005, 0);
   test(1.6, 0.005, 1.5);
   test(1.6, 0.002, 0);

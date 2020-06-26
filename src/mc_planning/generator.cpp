@@ -13,8 +13,7 @@ namespace mc_planning
 {
 
 generator::generator(const CenteredPreviewWindow & preview, double mass, double waist_height)
-: preview_(preview), previewZero_(preview),
-  m_ComInterp(std::make_shared<ClampedCubicSpline<unsigned>>(1.0, preview_.dt() / 2.)), m_mass(mass),
+: preview_(preview), m_ComInterp(std::make_shared<ClampedCubicSpline<unsigned>>(1.0, preview_.dt() / 2.)), m_mass(mass),
   m_waist_height(waist_height)
 {
   mc_rtc::log::info("Creating generator with mass={}, waist_height={}", mass, waist_height);
@@ -44,11 +43,11 @@ void generator::setupCOGHeight(unsigned n_current)
   if(n_current == 0)
   {
     m_ComInterp->push_back(0u, m_waist_height);
-    m_ComInterp->push_back(preview_.indexFromTime(m_steps.back().t()), m_waist_height);
+    m_ComInterp->push_back(preview_.index(Time(m_steps.back().t())), m_waist_height);
     m_ComInterp->update();
   }
 
-  for(const auto & step : preview_.iterateFromIndex(0))
+  for(const auto & step : preview_.all(Index(0)))
   {
     // clang-format off
     auto n = step.index();
@@ -57,7 +56,7 @@ void generator::setupCOGHeight(unsigned n_current)
   }
 
   // Interpolated value at current time
-  unsigned current = previewZero_.currentIndex();
+  unsigned current = preview_.center();
   m_COG_ideal.P(Z) = m_cog_height[current];
   m_COG_ideal.V(Z) = m_cog_dot_height[current];
   m_COG_ideal.Vdot(Z) = m_cog_ddot_height[current];
@@ -65,15 +64,15 @@ void generator::setupCOGHeight(unsigned n_current)
 
 void generator::setupTimeTrajectories(unsigned n_current)
 {
-  m_steps.nextWindow(preview_.startTime());
+  auto currentPreview = preview_.all(Index(n_current));
+  m_steps.nextWindow(currentPreview.startTime());
   Eigen::VectorXd & px_ref = m_ipm_long[X].p_ref();
   Eigen::VectorXd & py_ref = m_ipm_long[Y].p_ref();
 
-  // for(unsigned i = 0; i < preview_.size(); i++)
-  for(const auto & current : preview_)
+  for(const auto & current : currentPreview)
   {
     unsigned i = current.localIndex();
-    const double currTime = current.time(); //preview_.timeFromIndex(i + n_current);
+    const double currTime = current.time();
 
     m_virtual_height[X](i) = 0.0;
     m_virtual_height[Y](i) = 0.0;
@@ -108,7 +107,7 @@ void generator::setupTimeTrajectories(unsigned n_current)
         (mc_rtc::constants::GRAVITY + m_cog_ddot_height[i]) / (m_cog_height[i] - m_virtual_height[Y](i));
   }
 
-  unsigned current = previewZero_.currentIndex();
+  unsigned current = preview_.center();
   m_Pcalpha_ideal(Z) = (m_virtual_height[X](current) + m_virtual_height[Y](current)) / 2.0;
 }
 
@@ -140,7 +139,7 @@ void generator::generateTrajectories()
    * - m_Pcalpha_cmp: Modifiecation of the ideal ZMP state (position and velocity)
    **/
   auto computeShortTerm = [&](unsigned axis) {
-    unsigned current = previewZero_.currentIndex();
+    unsigned current = preview_.center();
     double omega2 = m_ipm_long[axis].w2(current);
     double omega = sqrt(omega2);
     m_ipm_short[axis].setSystemMatrices(omega * m_poles[axis](0), omega * m_poles[axis](1), m_poles[axis](2), omega2,
@@ -188,7 +187,6 @@ void generator::generate(unsigned n_time)
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("[generator] Invalid reference provided, call steps()");
   }
-  preview_.startAtIndex(n_time);
   setupCOGHeight(n_time);
   setupTimeTrajectories(n_time);
   generateTrajectories();

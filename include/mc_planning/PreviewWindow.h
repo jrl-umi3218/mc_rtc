@@ -11,6 +11,60 @@ namespace mc_planning
 {
 
 struct CenteredPreviewWindow;
+struct PreviewWindowView;
+
+namespace internal
+{
+
+/**
+ * @brief Provides a stronger type to disallow implicit conversions
+ *
+ * See https://foonathan.net/2016/10/strong-typedefs/
+ */
+template<class Tag, typename T>
+class strong_typedef
+{
+public:
+  strong_typedef() : value_() {}
+
+  explicit strong_typedef(const T & value) : value_(value) {}
+
+  explicit strong_typedef(T && value) noexcept(std::is_nothrow_move_constructible<T>::value) : value_(std::move(value))
+  {
+  }
+
+  // Allow implicit conversion to T
+  operator T &() noexcept
+  {
+    return value_;
+  }
+
+  // Allow implicit conversion to T const
+  operator const T &() const noexcept
+  {
+    return value_;
+  }
+
+  friend void swap(strong_typedef & a, strong_typedef & b) noexcept
+  {
+    using std::swap;
+    swap(static_cast<T &>(a), static_cast<T &>(b));
+  }
+
+private:
+  T value_;
+};
+
+} // namespace internal
+
+struct Time : internal::strong_typedef<Time, double>
+{
+  using strong_typedef::strong_typedef; // make constructors available
+};
+struct Index : internal::strong_typedef<Time, unsigned>
+{
+  using strong_typedef::strong_typedef; // make constructors available
+};
 
 /**
  * @brief Element returned by CenteredPreviewWindow::iterator providing the current
@@ -24,44 +78,34 @@ struct MC_PLANNING_DLLAPI PreviewElement
    * @param window Preview window to which this element refers to
    * @param index Global index of the element
    */
-  explicit PreviewElement(const CenteredPreviewWindow & window, unsigned index) noexcept
-  : window_(window), index_(index)
-  {
-  }
+  explicit PreviewElement(const PreviewWindowView & window, Index index) noexcept : window_(window), index_(index) {}
+
+  explicit PreviewElement(const PreviewWindowView & window, unsigned index) noexcept : window_(window), index_(index) {}
 
   /**
    * @brief Returns the global index starting at `window.startIndex()`
    */
-  unsigned index() const noexcept;
+  Index index() const noexcept;
   /**
    * @brief Returns the time corresponding to index()
    */
-  double time() const noexcept;
+  Time time() const noexcept;
 
   /**
    * @brief Returns the index local to the preview window
    *
    * @return Index between \f$ [0, 2*N] \f$ where `N` is the preview size
    */
-  unsigned localIndex() const noexcept;
+  Index localIndex() const noexcept;
 
   /**
    * @brief Returns the time corresponding to localIndex()
    */
-  double localTime() const noexcept;
-
-  /**
-   * @brief Reference to the preview window from which this element was
-   * generated
-   */
-  const CenteredPreviewWindow & window() const noexcept
-  {
-    return window_;
-  }
+  Time localTime() const noexcept;
 
 protected:
-  const CenteredPreviewWindow & window_; ///< Window being iterated over
-  unsigned index_; ///< Global index
+  const PreviewWindowView & window_; ///< Window being iterated over
+  Index index_{0u}; ///< Global index
 };
 
 /**
@@ -112,9 +156,6 @@ protected:
  */
 struct MC_PLANNING_DLLAPI CenteredPreviewWindow
 {
-  using iterator = RangeElementIterator<PreviewElement, CenteredPreviewWindow, false>;
-  using const_iterator = RangeElementIterator<PreviewElement, CenteredPreviewWindow, true>;
-
   /**
    * @brief Constructs a window of duration `2*halfTime` with the current
    * element at the center.
@@ -123,10 +164,125 @@ struct MC_PLANNING_DLLAPI CenteredPreviewWindow
    * @param dt Timesep
    * @param startTime Time at which the window starts
    */
-  explicit CenteredPreviewWindow(double halfTime, double dt, const double startTime = 0.) noexcept
+  explicit CenteredPreviewWindow(Time halfTime, Time dt) noexcept
   : halfSize_(static_cast<unsigned>(std::lround(halfTime / dt))), fullSize_(2 * halfSize_ + 1), dt_(dt)
   {
-    startAtTime(startTime);
+  }
+
+  explicit CenteredPreviewWindow(double halfTime, double dt) noexcept : CenteredPreviewWindow(Time{halfTime}, Time{dt})
+  {
+  }
+
+  /**
+   * @brief Timestep
+   */
+  Time dt() const noexcept
+  {
+    return dt_;
+  }
+
+  /**
+   * @brief Number of future or past elements.
+   *
+   * The preview window is of size `2*halfSize_+1`
+   */
+  Index halfSize() const noexcept
+  {
+    return halfSize_;
+  }
+
+  /**
+   * @brief Duration corresponding to halfSize()
+   */
+  Time halfDuration() const noexcept
+  {
+    return Time{halfSize_ * dt_};
+  }
+
+  /**
+   * @brief Full size of the preview window
+   */
+  Index size() const noexcept
+  {
+    return fullSize_;
+  }
+
+  /**
+   * @brief Full duration of the preview window
+   */
+  Time duration() const noexcept
+  {
+    return Time{(size() - 1) * dt_};
+  }
+
+  /**
+   * @brief Converts between time and index
+   *
+   * @param t Time
+   *
+   * @return Index corresponding to the provided time
+   */
+  Index index(Time t) const noexcept
+  {
+    return Index{static_cast<unsigned>(std::lround(t / dt_))};
+  }
+
+  /**
+   * @brief Converts between index and time
+   *
+   * @param index Index
+   *
+   * @return Time corresponding to the provided index
+   */
+  Time time(Index index) const noexcept
+  {
+    return Time{index * dt_};
+  }
+
+  Index center()
+  {
+    return halfSize_;
+  }
+
+  PreviewWindowView all(Index index) const noexcept;
+  PreviewWindowView all(Time startTime) const noexcept;
+  // PreviewWindowView past(Index startIndex) const noexcept;
+  // PreviewWindowView future(Index startIndex) const noexcept;
+
+protected:
+  Index halfSize_{0u}; ///< Number of future or past element
+  Index fullSize_{0u}; ///< 2*halfSize_+1
+  Time dt_{0.005}; ///< Timestep
+};
+
+struct PreviewWindowView
+{
+  using iterator = RangeElementIterator<PreviewElement, PreviewWindowView, false>;
+  using const_iterator = RangeElementIterator<PreviewElement, PreviewWindowView, true>;
+
+  explicit PreviewWindowView(const CenteredPreviewWindow & window,
+                             Index absoluteStart,
+                             Index localStart,
+                             Index localEnd)
+  : window_(window), absoluteStart_(absoluteStart), localStart_(localStart), localEnd_(localEnd)
+  {
+  }
+
+  Index index(Time t) const noexcept
+  {
+    return window_.index(t);
+  }
+
+  /**
+   * @brief Converts between index and time
+   *
+   * @param index Index
+   *
+   * @return Time corresponding to the provided index
+   */
+  Time time(Index index) const noexcept
+  {
+    return window_.time(index);
   }
 
   /**
@@ -150,187 +306,61 @@ struct MC_PLANNING_DLLAPI CenteredPreviewWindow
   {
     return const_iterator{*this, endIndex() + 1};
   }
-
-  /**
-   * @brief Iterate over a copy of the preview window
-   *
-   * The preview window constains only the window parameters and is cheap to
-   * copy.
-   *
-   * @param startTime Time from which to iterate
-   *
-   * @return A copy of the preview window starting at time startTime
-   */
-  CenteredPreviewWindow iterateFromTime(double startTime) const noexcept
-  {
-    CenteredPreviewWindow w = *this;
-    w.startAtTime(startTime);
-    return w;
-  }
-
-  /**
-   * @brief Iterate over a copy of the preview window
-   *
-   * The preview window constains only the window parameters and is cheap to
-   * copy.
-   *
-   * @param startIndex Index from which to iterate
-   *
-   * @return A copy of the preview window starting at index startIndex
-   */
-  CenteredPreviewWindow iterateFromIndex(unsigned startIndex) const noexcept
-  {
-    CenteredPreviewWindow w = *this;
-    w.startAtIndex(startIndex);
-    return w;
-  }
-
-  /**
-   * @brief Generate a copy of the current preview window
-   */
-  CenteredPreviewWindow copy() const noexcept
-  {
-    return *this;
-  }
   // @}
-
-  /**
-   * @brief Start the preview window at the provided time
-   *
-   * @param t Time at which the window starts
-   */
-  void startAtTime(double t) noexcept
-  {
-    start_ = indexFromTime(t);
-  }
-
-  /**
-   * @brief Start the preview window at the provided index
-   */
-  void startAtIndex(unsigned index) noexcept
-  {
-    start_ = index;
-  }
 
   /**
    * @brief Time at the start of the preview window
    */
-  inline double startTime() const noexcept
+  inline Time startTime() const noexcept
   {
-    return start_ * dt_;
+    return Time{absoluteStart_ * window_.dt()};
   }
 
   /**
    * @brief Index of the start of the preview window
    */
-  unsigned startIndex() const noexcept
+  Index startIndex() const noexcept
   {
-    return start_;
+    return absoluteStart_;
   }
 
-  /**
-   * @brief Time at the center of the preview window
-   */
-  double currentTime() const noexcept
-  {
-    return (start_ + halfSize_) * dt_;
-  }
+  // /**
+  //  * @brief Time at the center of the preview window
+  //  */
+  // Time currentTime() const noexcept
+  // {
+  //   return (start_ + window_.halfSize()) * window_.dt();
+  // }
+
+  // /**
+  //  * @brief Index of the center of the preview window
+  //  */
+  // Index currentIndex() const noexcept
+  // {
+  //   return start_ + window_.halfSize();
+  // }
 
   /**
-   * @brief Index of the center of the preview window
+   * @brief Index of the end of the preview window
    */
-  unsigned currentIndex() const noexcept
+  Time endTime() const noexcept
   {
-    return start_ + halfSize_;
+    return Time{endIndex() * window_.dt()};
   }
 
   /**
    * @brief Index of the end of the preview window
    */
-  double endTime() const noexcept
+  Index endIndex() const noexcept
   {
-    return endIndex() * dt_;
-  }
-
-  /**
-   * @brief Index of the end of the preview window
-   */
-  unsigned endIndex() const noexcept
-  {
-    return start_ + fullSize_ - 1;
-  }
-
-  /**
-   * @brief Converts between time and index
-   *
-   * @param t Time
-   *
-   * @return Index corresponding to the provided time
-   */
-  unsigned indexFromTime(double t) const noexcept
-  {
-    return static_cast<unsigned>(std::lround(t / dt_));
-  }
-
-  /**
-   * @brief Converts between index and time
-   *
-   * @param index Index
-   *
-   * @return Time corresponding to the provided index
-   */
-  double timeFromIndex(unsigned index) const noexcept
-  {
-    return index * dt_;
-  }
-
-  /**
-   * @brief Timestep
-   */
-  double dt() const noexcept
-  {
-    return dt_;
-  }
-
-  /**
-   * @brief Number of future or past elements.
-   *
-   * The preview window is of size `2*halfSize_+1`
-   */
-  unsigned halfSize() const noexcept
-  {
-    return halfSize_;
-  }
-
-  /**
-   * @brief Duration corresponding to halfSize()
-   */
-  double halfDuration() const noexcept
-  {
-    return halfSize_ * dt_;
-  }
-
-  /**
-   * @brief Full size of the preview window
-   */
-  unsigned size() const noexcept
-  {
-    return fullSize_;
-  }
-
-  /**
-   * @brief Full duration of the preview window
-   */
-  double duration() const noexcept
-  {
-    return (size() - 1) * dt_;
+    return Index{absoluteStart_ + window_.size() - 1};
   }
 
 protected:
-  unsigned halfSize_ = 0; ///< Number of future or past element
-  unsigned fullSize_ = 0; ///< 2*halfSize_+1
-  unsigned start_ = 0; ///< Index at which the window starts
-  double dt_ = 0.005; ///< Timestep
+  const CenteredPreviewWindow & window_; ///< Preview window parameters
+  Index absoluteStart_{0}; ///< Index at which the view starts
+  Index localStart_{0}; ///< Index within the preview window where it starts
+  Index localEnd_{0}; ///< Index past end of the view
 };
 
 } // namespace mc_planning
