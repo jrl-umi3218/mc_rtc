@@ -49,9 +49,9 @@ void LinearTimeVariantInvertedPendulum::Initialize(double dt,
   auto shk = [this](double w2) { return sinh(wTable_(w2) * m_dt); };
   double minOmega2 = omega2(maxHeight);
   double maxOmega2 = omega2(minHeight);
-  wTable_.create(weight_resolution, minOmega2, maxOmega2, omega);
-  chkTable_.create(weight_resolution, minOmega2, maxOmega2, chk);
-  shkTable_.create(weight_resolution, minOmega2, maxOmega2, shk);
+  wTable_.create(weight_resolution, minOmega2, maxOmega2, omega, "omega^2 -> sqrt(w2)");
+  chkTable_.create(weight_resolution, minOmega2, maxOmega2, chk, "omega^2 -> cosh(sqrt(omega^2 * dt)");
+  shkTable_.create(weight_resolution, minOmega2, maxOmega2, shk, "omega^2 -> sinh(sqrt(omega^2 * dt)");
 
   m_A.resize(m_n_preview2, Matrix22::Identity());
   m_An.resize(m_n_preview2, Matrix22::Identity());

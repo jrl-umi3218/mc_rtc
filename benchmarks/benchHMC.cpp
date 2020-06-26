@@ -121,10 +121,13 @@ class GeneratorFixture : public benchmark::Fixture
 public:
   using Generator = mc_planning::generator;
   using PreviewSteps = mc_planning::PreviewSteps<Eigen::Vector2d>;
+  using CenteredPreviewWindow = mc_planning::CenteredPreviewWindow;
+  GeneratorFixture() : preview(1.6, dt) {}
+
   void SetUp(const ::benchmark::State &)
   {
-    steps.add({(double)n_preview * dt, {-0.2, 0.0}});
-    steps.addRelative({(double)n_preview * dt, {0.0, 0.0}});
+    steps.add({preview.halfDuration(), {-0.2, 0.0}});
+    steps.addRelative({preview.halfDuration(), {0.0, 0.0}});
     steps.addRelative({0.1, {0.0, 0.0}});
     steps.addRelative({1.6, {0.0, 0.0}});
     steps.addRelative({0.1, {0.2, 0.095}});
@@ -132,20 +135,21 @@ public:
     steps.addRelative({0.1, {0.0, -0.19}});
     steps.addRelative({1.6, {0.0, 0.0}});
     steps.addRelative({0.1, {-0.2, 0.095}});
-    steps.addRelative({(double)n_preview * dt, {0.0, 0.0}});
+    steps.addRelative({preview.halfDuration(), {0.0, 0.0}});
     steps.initialize();
-    generator = std::make_shared<Generator>(n_preview, dt);
+    generator = std::make_shared<Generator>(preview);
     generator->steps(steps);
 
-    n_loop = static_cast<unsigned>(std::lround(steps.back().t() / dt) - n_preview);
+    n_loop = preview.indexFromTime(steps.back().t());
   }
 
   void TearDown(const ::benchmark::State &) {}
 
   std::shared_ptr<Generator> generator;
+  CenteredPreviewWindow preview;
   PreviewSteps steps;
   static constexpr double dt = 0.005;
-  unsigned n_loop = 15. / dt;
+  unsigned n_loop = 0.;
   static constexpr unsigned n_preview = 1.6 / dt;
 };
 

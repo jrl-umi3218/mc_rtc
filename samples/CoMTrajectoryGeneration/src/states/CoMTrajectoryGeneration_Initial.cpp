@@ -13,8 +13,7 @@ void CoMTrajectoryGeneration_Initial::configure(const mc_rtc::Configuration & co
 
 void CoMTrajectoryGeneration_Initial::start(mc_control::fsm::Controller & ctl)
 {
-  m_dt = ctl.timeStep;
-  previewSize_ = static_cast<unsigned>(lround(previewTime_ / m_dt));
+  preview_ = mc_planning::CenteredPreviewWindow(previewTime_, ctl.timeStep);
   /// XXX should this be CoM height or waist height?
   double waist_height = ctl.realRobot().com().z();
 
@@ -43,7 +42,7 @@ void CoMTrajectoryGeneration_Initial::start(mc_control::fsm::Controller & ctl)
   steps_.initialize();
   //clang-format on
 
-  comGenerator_ = std::make_shared<mc_planning::generator>(previewSize_, m_dt, ctl.robot().mass(),
+  comGenerator_ = std::make_shared<mc_planning::generator>(preview_, ctl.robot().mass(),
                                                            waist_height);
   comGenerator_->addToLogger(ctl.logger());
   comGenerator_->steps(steps_);
@@ -161,7 +160,7 @@ bool CoMTrajectoryGeneration_Initial::run(mc_control::fsm::Controller & ctl)
   }
 
   iter_++;
-  t_ += m_dt;
+  t_ += ctl.timeStep;
   output("OK");
   return false;
 }

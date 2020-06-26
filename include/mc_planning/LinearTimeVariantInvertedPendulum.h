@@ -117,7 +117,8 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
   /**
    * @brief Initialization
    *
-   * @param dt Timestep @param n_preview Number of future preview elements. The full size of the
+   * @param dt Timestep
+   * @param n_preview Number of future preview elements. The full size of the
    * preview windows from past to future will be (2*n_preview+1)
    * @param minHeight for the pendulum (used for LookupTable optimizations)
    * @param maxHeight for the pendulum

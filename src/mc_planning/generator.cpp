@@ -12,25 +12,27 @@ constexpr int Z = 2;
 namespace mc_planning
 {
 
-generator::generator(unsigned n_preview, double dt, double mass, double waist_height)
-: m_ComInterp(std::make_shared<ClampedCubicSpline<unsigned>>(1.0, dt / 2.)), m_n_preview(n_preview), m_dt(dt),
-  m_mass(mass), m_waist_height(waist_height)
+generator::generator(const CenteredPreviewWindow & preview, double mass, double waist_height)
+: preview_(preview), previewZero_(preview),
+  m_ComInterp(std::make_shared<ClampedCubicSpline<unsigned>>(1.0, preview_.dt() / 2.)), m_mass(mass),
+  m_waist_height(waist_height)
 {
   mc_rtc::log::info("Creating generator with mass={}, waist_height={}", mass, waist_height);
 
-  auto initialize = [this, &waist_height](unsigned X) {
-    m_ipm_long[X].Initialize(m_dt, m_n_preview, 20000);
-    m_ipm_short[X].Initialize();
+  auto initialize = [this, &waist_height](unsigned axis) {
+    m_ipm_long[axis].Initialize(preview_.dt(), preview_.halfSize(), 20000);
+    m_ipm_short[axis].Initialize();
     m_poles[X] << 1.0, 1.0, 150.0;
-    m_virtual_height[X].setZero(m_n_preview * 2 + 1);
-    m_ipm_long[X].initMatrices(waist_height);
+    m_virtual_height[axis].setZero(preview_.size());
+    m_ipm_long[axis].initMatrices(waist_height);
   };
   initialize(X);
   initialize(Y);
 
-  m_cog_height.setZero(m_n_preview * 2 + 1);
-  m_cog_dot_height.setZero(m_n_preview * 2 + 1);
-  m_cog_ddot_height.setZero(m_n_preview * 2 + 1);
+  auto previewSize = preview_.size();
+  m_cog_height.setZero(previewSize);
+  m_cog_dot_height.setZero(previewSize);
+  m_cog_ddot_height.setZero(previewSize);
   m_COG_ideal.P << 0.0, 0.0, waist_height;
 }
 
@@ -42,42 +44,43 @@ void generator::setupCOGHeight(unsigned n_current)
   if(n_current == 0)
   {
     m_ComInterp->push_back(0u, m_waist_height);
-    m_ComInterp->push_back(static_cast<unsigned>(std::lround(m_steps.back().t() / m_dt)), m_waist_height);
+    m_ComInterp->push_back(preview_.indexFromTime(m_steps.back().t()), m_waist_height);
     m_ComInterp->update();
   }
 
-  // Time window from past to future
-  for(unsigned n_step = 0; n_step < 2 * m_n_preview + 1; ++n_step)
+  for(const auto & step : preview_.iterateFromIndex(0))
   {
     // clang-format off
-    m_ComInterp->get(n_current + n_step,
-                     m_cog_height[n_step],
-                     m_cog_dot_height[n_step],
-                     m_cog_ddot_height[n_step]);
+    auto n = step.index();
+    m_ComInterp->get(n_current + n, m_cog_height[n], m_cog_dot_height[n], m_cog_ddot_height[n]);
     //clang-format on
   }
 
   // Interpolated value at current time
-  m_COG_ideal.P(Z) = m_cog_height[m_n_preview];
-  m_COG_ideal.V(Z) = m_cog_dot_height[m_n_preview];
-  m_COG_ideal.Vdot(Z) = m_cog_ddot_height[m_n_preview];
+  unsigned current = previewZero_.currentIndex();
+  m_COG_ideal.P(Z) = m_cog_height[current];
+  m_COG_ideal.V(Z) = m_cog_dot_height[current];
+  m_COG_ideal.Vdot(Z) = m_cog_ddot_height[current];
 }
 
 void generator::setupTimeTrajectories(unsigned n_current)
 {
-  m_steps.nextWindow(n_current * m_dt);
+  m_steps.nextWindow(preview_.startTime());
   Eigen::VectorXd & px_ref = m_ipm_long[X].p_ref();
   Eigen::VectorXd & py_ref = m_ipm_long[Y].p_ref();
-  for(unsigned i = 0; i < m_n_preview * 2 + 1; i++)
+
+  // for(unsigned i = 0; i < preview_.size(); i++)
+  for(const auto & current : preview_)
   {
+    unsigned i = current.localIndex();
+    const double currTime = current.time(); //preview_.timeFromIndex(i + n_current);
+
     m_virtual_height[X](i) = 0.0;
     m_virtual_height[Y](i) = 0.0;
 
-    const double currTime = static_cast<double>(i + n_current) * m_dt;
     // Move to next step if necessary
     m_steps.update(currTime);
     const auto & prevStep = m_steps.previous();
-
     if(!m_steps.isLastStep())
     {
       const auto & nextStep = m_steps.next();
@@ -105,7 +108,8 @@ void generator::setupTimeTrajectories(unsigned n_current)
         (mc_rtc::constants::GRAVITY + m_cog_ddot_height[i]) / (m_cog_height[i] - m_virtual_height[Y](i));
   }
 
-  m_Pcalpha_ideal(Z) = (m_virtual_height[X](m_n_preview) + m_virtual_height[Y](m_n_preview)) / 2.0;
+  unsigned current = previewZero_.currentIndex();
+  m_Pcalpha_ideal(Z) = (m_virtual_height[X](current) + m_virtual_height[Y](current)) / 2.0;
 }
 
 void generator::generateTrajectories()
@@ -136,7 +140,8 @@ void generator::generateTrajectories()
    * - m_Pcalpha_cmp: Modifiecation of the ideal ZMP state (position and velocity)
    **/
   auto computeShortTerm = [&](unsigned axis) {
-    double omega2 = m_ipm_long[axis].w2(m_n_preview);
+    unsigned current = previewZero_.currentIndex();
+    double omega2 = m_ipm_long[axis].w2(current);
     double omega = sqrt(omega2);
     m_ipm_short[axis].setSystemMatrices(omega * m_poles[axis](0), omega * m_poles[axis](1), m_poles[axis](2), omega2,
                                         m_mass);
@@ -147,7 +152,7 @@ void generator::generateTrajectories()
 
     m_ipm_short[axis].setStateVariables(m_COG_cmp.P(axis), m_COG_cmp.V(axis), m_Pcalpha_cmp(axis));
     double Fext = 0.0;
-    m_ipm_short[axis].update(Fext, m_dt);
+    m_ipm_short[axis].update(Fext, preview_.dt());
     m_ipm_short[axis].getStateVariables(m_COG_cmp.P(axis), m_COG_cmp.V(axis), m_Pcalpha_cmp(axis), m_Vcalpha_cmp(axis));
   };
 
@@ -169,7 +174,7 @@ void generator::generateTrajectories()
     m_COG_out.Vdot = m_COG_ideal.Vdot + m_COG_cmp.Vdot;
 
     m_Pcalpha_out = m_Pcalpha_ideal + m_Pcalpha_cmp;
-    m_Pcalpha_motion_out = m_Pcalpha_out + m_Vcalpha_ideal * m_omega_valpha * m_dt;
+    m_Pcalpha_motion_out = m_Pcalpha_out + m_Vcalpha_ideal * m_omega_valpha * preview_.dt();
   };
 
   computeTrajectories(X);
@@ -183,6 +188,7 @@ void generator::generate(unsigned n_time)
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("[generator] Invalid reference provided, call steps()");
   }
+  preview_.startAtIndex(n_time);
   setupCOGHeight(n_time);
   setupTimeTrajectories(n_time);
   generateTrajectories();

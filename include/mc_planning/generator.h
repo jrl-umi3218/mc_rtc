@@ -3,6 +3,7 @@
 #include <mc_planning/LIPMControlByPoleAssignWithExternalForce.h>
 #include <mc_planning/LinearTimeVariantInvertedPendulum.h>
 #include <mc_planning/PreviewSteps.h>
+#include <mc_planning/PreviewWindow.h>
 #include <mc_planning/State.h>
 #include <mc_rtc/log/Logger.h>
 #include <list>
@@ -28,13 +29,11 @@ struct MC_PLANNING_DLLAPI generator
   /**
    * @brief Construct a simple trajectory generator
    *
-   * @param n_preview Size of the future preview window. The full preview window
-   * goes from future to past with size `2*n_preview+1`
-   * @param dt
+   * @param preview Preview window parameters (size, timestep)
    * @mass Robot mass
    * @waist_height Initial height of the waist (constant for now)
    */
-  generator(unsigned n_preview, double dt, double mass = 60, double waist_height = 0.8);
+  generator(const CenteredPreviewWindow & preview, double mass = 60, double waist_height = 0.8);
 
   /**
    * @brief Generate the long and short term trajectories
@@ -218,6 +217,8 @@ private:
   void generateTrajectories();
 
 private:
+  CenteredPreviewWindow preview_; ///< Iteratable preview window and parameters
+  CenteredPreviewWindow previewZero_; ///< Iteratable preview window and parameters
   std::shared_ptr<motion_interpolator::InterpolatorBase<unsigned>> m_ComInterp = nullptr;
 
   StatePVA m_COG_ideal_pre;
@@ -244,8 +245,6 @@ private:
   Eigen::Vector3d m_Pcalpha_motion_out = Eigen::Vector3d::Zero();
   /// @}
 
-  unsigned m_n_preview = 0; ///< Size of the future preview window. The full preview is 2*m_n_preview+1
-  double m_dt = 0.005; ///< Timestep
   double m_omega_valpha = 0.0;
   double m_mass = 60.; ///< Robot mass
   double m_waist_height; ///< Height of the weight (constant for now)

@@ -21,12 +21,11 @@ struct CoMTrajectoryGeneration_Initial : mc_control::fsm::State
     void updateSteps();
 
  private:
-    double previewTime_ = 1.6; ///< Preview horizon half-time [s]
+    mc_planning::CenteredPreviewWindow preview_{0,0};
     Eigen::Vector3d polesX_ = {1.0, 1.0, 150.0};
     Eigen::Vector3d polesY_ = {1.0, 1.0, 150.0};
+    double previewTime_ = 1.6;
 
-    double m_dt = 0.005; ///< Timestep (for convenience)
-    unsigned previewSize_ = 0; ///< Size of the preview window
     unsigned iter_ = 0; ///< Number of iterations elapsed since started
     double t_ = 0; ///< Time elapsed since started
     double generationTime_ = 0; ///< Time spent generating the trajectory

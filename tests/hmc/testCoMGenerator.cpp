@@ -6,17 +6,18 @@
 using namespace mc_planning;
 using Vector3 = Eigen::Vector3d;
 
-constexpr double dt = 0.005;
-const unsigned n_preview = static_cast<unsigned>(std::lround(1.6 / dt));
-
 int main(void)
 {
-  // Trajectory of size 2*n_preview+1
-  generator com_traj(n_preview, dt);
+  double dt = 0.005;
+  CenteredPreviewWindow preview(1.6, dt);
 
+  // Trajectory of size 2*n_preview+1
+  generator com_traj(preview);
+
+  auto prev_time = preview.halfDuration();
   PreviewSteps<Eigen::Vector2d> steps;
-  steps.add({(double)n_preview * dt, {-0.2, 0.0}});
-  steps.addRelative({(double)n_preview * dt, {0.0, 0.0}});
+  steps.add({prev_time, {-0.2, 0.0}});
+  steps.addRelative({prev_time, {0.0, 0.0}});
   steps.addRelative({0.1, {0.0, 0.0}});
   steps.addRelative({1.6, {0.0, 0.0}});
   steps.addRelative({0.1, {0.2, 0.095}});
@@ -24,7 +25,7 @@ int main(void)
   steps.addRelative({0.1, {0.0, -0.19}});
   steps.addRelative({1.6, {0.0, 0.0}});
   steps.addRelative({0.1, {-0.2, 0.095}});
-  steps.addRelative({(double)n_preview * dt, {0.0, 0.0}});
+  steps.addRelative({prev_time, {0.0, 0.0}});
   steps.initialize();
 
   com_traj.steps(steps);
@@ -34,7 +35,7 @@ int main(void)
   logger.start("CoMGenerator", dt);
   com_traj.addToLogger(logger);
 
-  unsigned n_loop = static_cast<unsigned>(std::lround(com_traj.steps().back().t() / dt) - n_preview);
+  unsigned n_loop = preview.indexFromTime(com_traj.steps().back().t()) - preview.halfSize();
   mc_rtc::log::info("n_loop {}", n_loop);
   /*
    * Generate the CoM trajectory based on the parameters in com_traj
