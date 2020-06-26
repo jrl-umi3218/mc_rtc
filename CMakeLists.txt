@@ -33,6 +33,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(${PROJECT_NAME} C CXX)
 set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
+set(DOXYGEN_EXAMPLE_PATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DOCDIR}/doxygen-html/examples")
 
 option(GENERATE_COVERAGE "Generate coverage data" FALSE)
 if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")

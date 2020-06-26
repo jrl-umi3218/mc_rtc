@@ -1,3 +1,7 @@
+// This sample was generated from @MC_RTC_SAMPLE_PATH@
+// You can try it by running:
+//   $ @MC_RTC_SAMPLE_COMMAND@
+
 #include <mc_planning/generator.h>
 #include <mc_rtc/io_utils.h>
 #include <mc_rtc/log/Logger.h>

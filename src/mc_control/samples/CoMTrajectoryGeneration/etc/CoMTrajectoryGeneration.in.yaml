@@ -8,12 +8,10 @@ StepByStep: false
 IdleKeepState: true
 # Where to look for state libraries
 StatesLibraries: 
-- "@MC_STATES_DEFAULT_INSTALL_PREFIX@"
-- "@MC_STATES_INSTALL_PREFIX@"
+- "@CoMTrajectoryGeneration_STATES_INSTALL_PREFIX@"
 # Where to look for state files
 StatesFiles:
-- "@MC_STATES_DEFAULT_INSTALL_PREFIX@/data"
-- "@MC_STATES_INSTALL_PREFIX@/data"
+- "@CoMTrajectoryGeneration_STATES_INSTALL_PREFIX@/data"
 # If true, state factory will be more verbose
 VerboseStateFactory: false
 # Additional robots to load

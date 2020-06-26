@@ -1,6 +1,8 @@
 #include "CoMTrajectoryGeneration.h"
 
-CoMTrajectoryGeneration::CoMTrajectoryGeneration(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
+CoMTrajectoryGeneration::CoMTrajectoryGeneration(mc_rbdyn::RobotModulePtr rm,
+                                                 double dt,
+                                                 const mc_rtc::Configuration & config)
 : mc_control::fsm::Controller(rm, dt, config)
 {
 
@@ -23,5 +25,3 @@ void CoMTrajectoryGeneration::reset(const mc_control::ControllerResetData & rese
                                                     0.5);
                           });
 }
-
-

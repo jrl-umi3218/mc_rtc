@@ -1,6 +1,6 @@
 #include "StabilizerStandingTrackCoM.h"
-#include "../CoMTrajectoryGeneration.h"
 #include <mc_rtc/io_utils.h>
+#include "../CoMTrajectoryGeneration.h"
 
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
@@ -29,12 +29,10 @@ void StabilizerStandingTrackCoM::start(mc_control::fsm::Controller & ctl)
   stabilizerTask_->staticTarget(ctl.realRobot().com());
 
   ctl.datastore().make_call("StabilizerStandingTrackCoM::target",
-                            [this](const Eigen::Vector3d & com, const Eigen::Vector3d & comd, const Eigen::Vector3d & comdd, const Eigen::Vector3d & zmp)
-                            {
-                              stabilizerTask_->target(com, comd, comdd, zmp);
-                            });
+                            [this](const Eigen::Vector3d & com, const Eigen::Vector3d & comd,
+                                   const Eigen::Vector3d & comdd,
+                                   const Eigen::Vector3d & zmp) { stabilizerTask_->target(com, comd, comdd, zmp); });
 }
-
 
 bool StabilizerStandingTrackCoM::run(mc_control::fsm::Controller & ctl)
 {
@@ -69,6 +67,6 @@ void StabilizerStandingTrackCoM::teardown(mc_control::fsm::Controller & ctl)
                           });
 }
 
-} /* mc_samples */
+} // namespace mc_samples
 
 EXPORT_SINGLE_STATE("StabilizerStandingTrackCoM", mc_samples::StabilizerStandingTrackCoM)

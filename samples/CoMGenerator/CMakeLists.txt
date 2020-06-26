@@ -1,0 +1,1 @@
+add_example_doc(mc_sample_CoMGeneration mc_planning)
