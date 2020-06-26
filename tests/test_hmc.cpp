@@ -212,7 +212,8 @@ BOOST_AUTO_TEST_CASE(TestPreviewWindow)
     BOOST_REQUIRE_EQUAL(start.localTime(), 0.0);
     for(const auto w : window)
     {
-      mc_rtc::log::info("index {}, local time {:.3f}, global index {}, global time {:.3f}", w.localIndex(), w.localTime(), w.index(), w.time());
+      mc_rtc::log::info("index {}, local time {:.3f}, global index {}, global time {:.3f}", w.localIndex(),
+                        w.localTime(), w.index(), w.time());
 
       BOOST_REQUIRE(w.localIndex() <= 6);
       BOOST_REQUIRE(w.index() <= 6);
@@ -236,7 +237,8 @@ BOOST_AUTO_TEST_CASE(TestPreviewWindow)
     BOOST_REQUIRE_EQUAL(start.localTime(), 0.0);
     for(const auto w : window)
     {
-      mc_rtc::log::info("local index {}, local time {:.3f}, global index {}, global time {:.3f}", w.localIndex(), w.localTime(), w.index(), w.time());
+      mc_rtc::log::info("local index {}, local time {:.3f}, global index {}, global time {:.3f}", w.localIndex(),
+                        w.localTime(), w.index(), w.time());
 
       BOOST_REQUIRE(w.localIndex() <= 6);
     }

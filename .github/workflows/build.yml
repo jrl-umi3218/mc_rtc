@@ -209,6 +209,7 @@ jobs:
         pushd .
         cd doc
         cp -r /usr/local/share/doc/mc_rtc/doxygen-html .
+        cp -r images doxygen-html
         find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/SpaceVecAlg/doxygen-html/@https://jrl-umi3218.github.io/SpaceVecAlg/doxygen/HEAD/@g'
         find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/RBDyn/doxygen-html/@https://jrl-umi3218.github.io/RBDyn/doxygen/HEAD/@g'
         find . -type f -print0 | xargs -0 sed -i -e's@/usr/local/share/doc/Tasks/doxygen-html/@https://jrl-umi3218.github.io/Tasks/doxygen/HEAD/@g'

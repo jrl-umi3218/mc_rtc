@@ -12,7 +12,6 @@ unsigned PreviewElement::index() const noexcept
   return index_;
 }
 
-
 double PreviewElement::time() const noexcept
 {
   return window_.timeFromIndex(index_);
