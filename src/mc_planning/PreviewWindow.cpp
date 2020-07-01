@@ -9,23 +9,53 @@ namespace mc_planning
 
 PreviewWindowView CenteredPreviewWindow::all(Index startIndex) const noexcept
 {
-  return PreviewWindowView{*this, startIndex, Index{0}, fullSize_};
+  return PreviewWindowView{*this, startIndex, Index{0}, fullSize_ - 1u};
 }
 
 PreviewWindowView CenteredPreviewWindow::all(Time startTime) const noexcept
 {
-  return PreviewWindowView{*this, index(startTime), Index{0}, fullSize_};
+  return PreviewWindowView{*this, index(startTime), Index{0}, fullSize_ - 1u};
 }
 
-// PreviewWindowView CenteredPreviewWindow::past(Index startIndex) const noexcept
-// {
-//   return PreviewWindowView{*this, startIndex, halfSize_};
-// }
+PreviewWindowView CenteredPreviewWindow::past(Index startIndex) const noexcept
+{
+  return PreviewWindowView{*this, startIndex, Index{0}, halfSize() - 1u};
+}
 
-// PreviewWindowView CenteredPreviewWindow::future(Index startIndex) const noexcept
-// {
-//   return PreviewWindowView{*this, startIndex+halfSize_, startIndex+fullSize_};
-// }
+PreviewWindowView CenteredPreviewWindow::past(Time startTime) const noexcept
+{
+  return PreviewWindowView{*this, index(startTime), Index{0}, halfSize() - 1u};
+}
+
+PreviewWindowView CenteredPreviewWindow::pastInclusive(Index startIndex) const noexcept
+{
+  return PreviewWindowView{*this, startIndex, Index{0}, Index{halfSize()}};
+}
+
+PreviewWindowView CenteredPreviewWindow::pastInclusive(Time startTime) const noexcept
+{
+  return PreviewWindowView{*this, index(startTime), Index{0}, Index{halfSize()}};
+}
+
+PreviewWindowView CenteredPreviewWindow::future(Index startIndex) const noexcept
+{
+  return PreviewWindowView{*this, startIndex, halfSize() + 1u, fullSize_ - 1u};
+}
+
+PreviewWindowView CenteredPreviewWindow::future(Time startTime) const noexcept
+{
+  return PreviewWindowView{*this, index(startTime), halfSize() + 1u, fullSize_ - 1u};
+}
+
+PreviewWindowView CenteredPreviewWindow::futureInclusive(Index startIndex) const noexcept
+{
+  return PreviewWindowView{*this, startIndex, halfSize(), fullSize_ - 1u};
+}
+
+PreviewWindowView CenteredPreviewWindow::futureInclusive(Time startTime) const noexcept
+{
+  return PreviewWindowView{*this, index(startTime), halfSize(), fullSize_ - 1u};
+}
 
 Index PreviewElement::index() const noexcept
 {

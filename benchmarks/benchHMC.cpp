@@ -140,7 +140,7 @@ public:
     generator = std::make_shared<Generator>(preview);
     generator->steps(steps);
 
-    n_loop = preview.indexFromTime(steps.back().t());
+    n_loop = preview.index(mc_planning::Time(steps.back().t()));
   }
 
   void TearDown(const ::benchmark::State &) {}
