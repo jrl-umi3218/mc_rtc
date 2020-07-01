@@ -34,6 +34,9 @@ class MCLogTreeWidgetItem(QtWidgets.QTreeWidgetItem):
   def displayText(self, value):
     self._displayText = value
     self.setText(0, self._displayText)
+  @property
+  def legendText(self):
+    return self.actualText.replace(self.originalText, self.displayText)
 
 class TreeView(object):
   def __init__(self, name = None, parent = None, dataName = None):
@@ -122,7 +125,7 @@ class FilterRightClick(QtCore.QObject):
     return False
 
 class SpecialPlot(object):
-  def __init__(self, name, figure, idx, special_id):
+  def __init__(self, name, figure, idx, special_id, label = None):
     self.figure = figure
     self.idx = idx
     self.name = name
@@ -134,16 +137,25 @@ class SpecialPlot(object):
       self.remove = self.figure.remove_plot_right
     if special_id == "diff":
       self.__plot = self.__add_diff
+      self.label = " diff"
     elif special_id == "rpy":
       self.__plot = self.__add_rpy
+      self.label = " rpy"
     elif special_id == "r":
       self.__plot = self.__add_roll
+      self.label = " roll"
     elif special_id == "p":
       self.__plot = self.__add_pitch
+      self.label = " pitch"
     elif special_id == "y":
       self.__plot = self.__add_yaw
+      self.label = " yaw"
     else:
       print("Cannot handle this special plot: {}".format(special_id))
+    if label is not None:
+      self.label = label
+    else:
+      self.label = self.name + self.label
     self.plot()
   def __add_diff(self):
     added = filter(lambda x: re.match("{}($|_.*$)".format(self.name), x) is not None, self.figure.data.keys())
@@ -153,6 +165,8 @@ class SpecialPlot(object):
       add_fn = self.figure.add_diff_plot_right
     for a in added:
       label = "{}_diff".format(a)
+      if len(added) == 1 and self.label is not None:
+        label = self.label
       if add_fn(self.figure.x_data, a, label):
         self.added.append(label)
   def __add_rpy(self):
@@ -187,10 +201,10 @@ class SpecialPlot(object):
     self.__plot()
 
 class RemoveSpecialPlotButton(SpecialPlot, QtWidgets.QPushButton):
-  def __init__(self, name, logtab, idx, special_id):
+  def __init__(self, name, logtab, idx, special_id, label = None):
     self.logtab = logtab
-    SpecialPlot.__init__(self, name, logtab.ui.canvas, idx, special_id)
-    QtWidgets.QPushButton.__init__(self, u"Remove {} {} plot".format(name, special_id), logtab)
+    SpecialPlot.__init__(self, name, logtab.ui.canvas, idx, special_id, label)
+    QtWidgets.QPushButton.__init__(self, u"Remove {} plot".format(self.label), logtab)
     self.clicked.connect(self.on_clicked)
     if idx == 0:
       self.layout = logtab.ui.y1SelectorLayout
@@ -531,7 +545,7 @@ class MCLogTab(QtWidgets.QWidget):
           return itm.value()
         itm += 1
       return None
-    legends = [itm.actualText.replace(itm.originalText, itm.displayText) for itm in [ find_item(s) for s in selected ] ]
+    legends = [itm.legendText for itm in [ find_item(s) for s in selected ] ]
     for s,l in zip(selected, legends):
       if s not in prevSelected:
         add_fn(self.x_data, s, l)
@@ -570,7 +584,7 @@ class MCLogTab(QtWidgets.QWidget):
     menu = QtWidgets.QMenu(ySelector)
     addedAction = False
     action = QtWidgets.QAction(u"Plot diff".format(item.actualText), menu)
-    action.triggered.connect(lambda: RemoveSpecialPlotButton(item.actualText, self, idx, "diff"))
+    action.triggered.connect(lambda: RemoveSpecialPlotButton(item.actualText, self, idx, "diff", item.legendText + "_diff"))
     menu.addAction(action)
     s = re.match('^(.*)_q?[wxyz]$', item.actualText)
     if s is not None:
@@ -775,9 +789,9 @@ class MCLogTab(QtWidgets.QWidget):
         y_diff_data_labels[1] += [ '{}_{}'.format(y2_diff_label, j) ]
     tab = MCLogTab.MakePlot(parent, PlotType.TIME, 't', y_data[0], y_data[1], y_data_labels[0], y_data_labels[1])
     for y, y_label in zip(y_diff_data[0], y_diff_data_labels[0]):
-      tab.ui.canvas.add_diff_plot_left(tab.x_data, y, y_label)
+      RemoveSpecialPlotButton(y, tab, 0, "diff", y_label)
     for y, y_label in zip(y_diff_data[1], y_diff_data_labels[1]):
-      tab.ui.canvas.add_diff_plot_right(tab.x_data, y, y_label)
+      RemoveSpecialPlotButton(y, tab, 1, "diff", y_label)
     title = ''
     def updateTitle(title, nTitle):
       if len(title):

@@ -1040,7 +1040,7 @@ class MCLogUI(QtWidgets.QMainWindow):
         ("Error/Torque", "error_q", "tauIn", None, None),
         ("Encoders velocity", None, None, "qIn", None),
         ("Command velocity", None, None, "qOut", None),
-        ("Encoders/Commands velocity", None, None, "qIn", "qOut"),
+        ("Encoders velocity/Commands velocity", None, None, "qIn", "qOut"),
         ("Encoders/Encoders velocity", "qIn", None, None, "qIn"),
         ("Command/Command velocity", "qOut", None, None, "qOut"),
         ]
