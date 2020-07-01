@@ -1035,6 +1035,7 @@ class MCLogUI(QtWidgets.QMainWindow):
         ("Error", "error_q", None, None, None),
         ("Sensor torques", "tauIn", None, None, None),
         ("Command torques", "tauOut", None, None, None),
+        ("Sensor/Command torques", "tauIn", "tauOut", None, None),
         ("Encoders/Commands", "qIn", "qOut", None, None),
         ("Error/Torque", "error_q", "tauIn", None, None),
         ("Encoders velocity", None, None, "qIn", None),
