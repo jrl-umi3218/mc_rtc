@@ -288,6 +288,12 @@ private:
 private:
   CenteredPreviewWindow preview_; ///< Iteratable preview window and parameters
   std::shared_ptr<motion_interpolator::InterpolatorBase<unsigned>> m_ComInterp = nullptr;
+  std::array<linear_control_system::LinearTimeVariantInvertedPendulum, 2> m_ipm_long;
+  std::array<linear_control_system::LIPMControlByPoleAssignWithExternalForce, 2> m_ipm_short;
+  /**< Poles for the short-term trajectory.
+   * Typical range [1,1,150] ... [1,1,300]
+   */
+  std::array<Eigen::Vector3d, 2> m_poles = {Eigen::Vector3d{1., 1., 150.}, Eigen::Vector3d{1., 1., 150.}};
 
   StatePVA m_COG_ideal_pre;
   /**
@@ -316,13 +322,6 @@ private:
   double m_omega_valpha = 0.0;
   double m_mass = 60.; ///< Robot mass
   double m_waist_height; ///< Height of the weight (constant for now)
-
-  std::array<linear_control_system::LinearTimeVariantInvertedPendulum, 2> m_ipm_long;
-  std::array<linear_control_system::LIPMControlByPoleAssignWithExternalForce, 2> m_ipm_short;
-  /**< Poles for the short-term trajectory.
-   * Typical range [1,1,150] ... [1,1,300]
-   */
-  std::array<Eigen::Vector3d, 2> m_poles = {Eigen::Vector3d{1., 1., 150.}, Eigen::Vector3d{1., 1., 150.}};
 
   std::array<Eigen::VectorXd, 2> m_virtual_height;
   Eigen::VectorXd m_cog_height; ///< CoM height

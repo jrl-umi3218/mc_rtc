@@ -13,6 +13,7 @@
 #pragma once
 
 #include <mc_planning/LookupTable.h>
+#include <mc_planning/PreviewWindow.h>
 #include <mc_planning/api.h>
 #include <mc_rtc/logging.h>
 #include <boost/circular_buffer.hpp>
@@ -97,24 +98,6 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
   /**
-   * @brief Default constructor
-   *
-   * You must call Initialize() before use
-   */
-  LinearTimeVariantInvertedPendulum();
-
-  /**
-   * @brief Initialization
-   * Calls Initialize()
-   */
-  LinearTimeVariantInvertedPendulum(double dt,
-                                    unsigned n_preview = 0,
-                                    unsigned weight_resolution = 20000,
-                                    double minHeight = 0.01,
-                                    double maxHeight = 2.5);
-  virtual ~LinearTimeVariantInvertedPendulum();
-
-  /**
    * @brief Initialization
    *
    * @param dt Timestep
@@ -127,11 +110,10 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
    * [minHeight, maxHeight]. This is used to optimize the otherwise costly computation of these
    * functions.
    */
-  void Initialize(double dt,
-                  unsigned n_preview = 0,
-                  unsigned weight_resolution = 20000,
-                  double minHeight = 0.01,
-                  double maxHeight = 2.5);
+  LinearTimeVariantInvertedPendulum(const CenteredPreviewWindow & window,
+                                    unsigned weight_resolution = 20000,
+                                    double minHeight = 0.01,
+                                    double maxHeight = 2.5);
 
   /**
    * @brief Initialize the discretized system matrices with constant pendulum height
@@ -235,12 +217,9 @@ struct MC_PLANNING_DLLAPI LinearTimeVariantInvertedPendulum
   }
 
 protected:
+  const CenteredPreviewWindow window_;
   using Matrix22 = Eigen::Matrix<double, 2, 2>;
   using Vector2 = Eigen::Matrix<double, 2, 1>;
-
-  double m_dt; ///< Timstep
-  unsigned m_n_current; ///< Index of current time (center of the preview window)
-  unsigned m_n_preview2; ///< Preview window size \f$ (2*\mbox{m_n_current})+1 \f$
 
   boost::circular_buffer<Matrix22, Eigen::aligned_allocator<Matrix22>> m_A; ///< \f$ A_k \f$
   boost::circular_buffer<Vector2, Eigen::aligned_allocator<Vector2>> m_B; ///< \f$ B_k \f$

@@ -200,6 +200,7 @@ BOOST_AUTO_TEST_CASE(TestPreviewWindow)
       BOOST_REQUIRE_EQUAL(window.halfDuration(), 0.015);
       BOOST_REQUIRE_EQUAL(window.halfSize(), 3); // n
       BOOST_REQUIRE_EQUAL(window.size(), 7); // 2*n+1
+      BOOST_REQUIRE_EQUAL(window.last(), 6); // 2*n+1
       BOOST_REQUIRE_EQUAL(view.startIndex(), 0);
       BOOST_REQUIRE_EQUAL(view.startTime(), 0);
       BOOST_REQUIRE_EQUAL(view.endIndex(), 6); // Array of size 7, last index is 6

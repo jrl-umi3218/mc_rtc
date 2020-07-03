@@ -13,13 +13,17 @@ namespace mc_planning
 {
 
 generator::generator(const CenteredPreviewWindow & preview, double mass, double waist_height)
-: preview_(preview), m_ComInterp(std::make_shared<ClampedCubicSpline<unsigned>>(1.0, preview_.dt() / 2.)), m_mass(mass),
-  m_waist_height(waist_height)
+: preview_(preview), m_ComInterp(std::make_shared<ClampedCubicSpline<unsigned>>(1.0, preview_.dt() / 2.)),
+  // XXX Should be only one computation for both to speed up computation
+  m_ipm_long{
+      linear_control_system::LinearTimeVariantInvertedPendulum(preview, 20000),
+      linear_control_system::LinearTimeVariantInvertedPendulum(preview, 20000),
+  },
+  m_mass(mass), m_waist_height(waist_height)
 {
   mc_rtc::log::info("Creating generator with mass={}, waist_height={}", mass, waist_height);
 
   auto initialize = [this, &waist_height](unsigned axis) {
-    m_ipm_long[axis].Initialize(preview_.dt(), preview_.halfSize(), 20000);
     m_ipm_short[axis].Initialize();
     m_poles[X] << 1.0, 1.0, 150.0;
     m_virtual_height[axis].setZero(preview_.size());
@@ -29,6 +33,7 @@ generator::generator(const CenteredPreviewWindow & preview, double mass, double 
   initialize(Y);
 
   auto previewSize = preview_.size();
+  mc_rtc::log::info("Initializing with size {} ", previewSize);
   m_cog_height.setZero(previewSize);
   m_cog_dot_height.setZero(previewSize);
   m_cog_ddot_height.setZero(previewSize);
@@ -47,12 +52,10 @@ void generator::setupCOGHeight(unsigned n_current)
     m_ComInterp->update();
   }
 
-  for(const auto & step : preview_.all(Index(0)))
+  for(const auto & step : preview_.all())
   {
-    // clang-format off
     auto n = step.index();
     m_ComInterp->get(n_current + n, m_cog_height[n], m_cog_dot_height[n], m_cog_ddot_height[n]);
-    //clang-format on
   }
 
   // Interpolated value at current time
@@ -89,7 +92,8 @@ void generator::setupTimeTrajectories(unsigned n_current)
        */
       auto interpolateRefXY = [&](const Eigen::Index axis) {
         return prevStep.step()(axis)
-               + (nextStep.step()(axis) - prevStep.step()(axis)) * polynomial3((currTime - prevStep.t()) / (nextStep.t() - prevStep.t()));
+               + (nextStep.step()(axis) - prevStep.step()(axis))
+                     * polynomial3((currTime - prevStep.t()) / (nextStep.t() - prevStep.t()));
       };
 
       px_ref(i) = interpolateRefXY(0);
@@ -166,8 +170,7 @@ void generator::generateTrajectories()
    * of the ideal long-term trajectory output modified by the short-term
    * trajectory to ensure continuity
    */
-  auto applyShortTermCompensation = [this]()
-  {
+  auto applyShortTermCompensation = [this]() {
     m_COG_out.P = m_COG_ideal.P + m_COG_cmp.P;
     m_COG_out.V = m_COG_ideal.V + m_COG_cmp.V;
     m_COG_out.Vdot = m_COG_ideal.Vdot + m_COG_cmp.Vdot;

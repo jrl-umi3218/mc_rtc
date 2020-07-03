@@ -239,9 +239,16 @@ struct MC_PLANNING_DLLAPI CenteredPreviewWindow
     return Time{index * dt_};
   }
 
+  /** Index of the central element */
   Index center() const noexcept
   {
     return halfSize_;
+  }
+
+  /** Index of last element */
+  Index last() const noexcept
+  {
+    return fullSize_ - 1u;
   }
 
   /**
@@ -258,22 +265,32 @@ struct MC_PLANNING_DLLAPI CenteredPreviewWindow
   PreviewWindowView all(Index index) const noexcept;
   /** All preview elements with a preview window starting at provided time */
   PreviewWindowView all(Time startTime) const noexcept;
+  /** All preview elements with a preview window starting at index 0 */
+  PreviewWindowView all() const noexcept;
   /** Past preview elements (excluding present) with a preview window starting at provided index */
   PreviewWindowView past(Index index) const noexcept;
   /** Past preview elements (excluding present) with a preview window starting at provided time */
   PreviewWindowView past(Time startTime) const noexcept;
+  /** Past preview elements (excluding present) with a preview window starting at index 0 */
+  PreviewWindowView past() const noexcept;
   /** Past preview elements (including present) with a preview window starting at provided index */
   PreviewWindowView pastInclusive(Index index) const noexcept;
   /** Past preview elements (including present) with a preview window starting at provided index */
   PreviewWindowView pastInclusive(Time startTime) const noexcept;
+  /** Past preview elements (including present) with a preview window starting at index 0 */
+  PreviewWindowView pastInclusive() const noexcept;
   /** Future preview elements (excluding present) with a preview window starting at provided index */
   PreviewWindowView future(Index index) const noexcept;
   /** Future preview elements (excluding present) with a preview window starting at provided time */
   PreviewWindowView future(Time startTime) const noexcept;
+  /** Future preview elements (excluding present) with a preview window starting at index 0 */
+  PreviewWindowView future() const noexcept;
   /** Future preview elements (including present) with a preview window starting at provided index */
   PreviewWindowView futureInclusive(Index index) const noexcept;
   /** Future preview elements (including present) with a preview window starting at provided time */
   PreviewWindowView futureInclusive(Time startTime) const noexcept;
+  /** Future preview elements (including present) with a preview window starting at index 0 */
+  PreviewWindowView futureInclusive() const noexcept;
   /// @}
 
 protected:
