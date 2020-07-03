@@ -141,3 +141,14 @@ mc_rtc_test(test_interpolation mc_control)
 # -- Temporary HMC-related tests -- #
 #####################################
 mc_rtc_test(test_hmc mc_planning)
+
+#######################################
+# -- Regression tests against logs -- #
+#######################################
+# Compares excecutable samples against logs of their expected exection
+# These tests require network access to download the log files
+# Failing of these tests may occur if the methods are changed on purpose. In that case the
+# new expected log should be updated.
+if(NOT ${DISABLE_LOG_REGRESSION_TESTS})
+  add_subdirectory(log_tests)
+endif()
