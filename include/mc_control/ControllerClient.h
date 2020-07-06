@@ -343,6 +343,18 @@ protected:
     default_impl("XYTheta", id);
   }
 
+  /** Called when a table starts */
+  virtual void table_start(const ElementId & id, const std::vector<std::string> & /*header*/)
+  {
+    default_impl("Table", id);
+  }
+
+  /** Called for each element appearing in the table identified by \p id */
+  virtual void table_row(const ElementId & /*id*/, const std::vector<std::string> & /*data*/) {}
+
+  /** Called to close a table identified by \p id */
+  virtual void table_end(const ElementId & /*id*/) {}
+
   /** Should display a form to send schema-based request to the server
    *
    * \p schema is the schema directory relative to mc_rtc JSON schema installation
@@ -628,6 +640,11 @@ private:
 
   /** Handle XY plot */
   void handle_xy_plot(const mc_rtc::Configuration & plot);
+
+  /** Handle Table details */
+  void handle_table(const ElementId & id,
+                    const std::vector<std::string> & header,
+                    const std::vector<mc_rtc::Configuration> & data);
 };
 
 } // namespace mc_control

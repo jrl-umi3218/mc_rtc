@@ -180,6 +180,8 @@ struct TestServer
   Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
   sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
   double t_ = 0.0;
+  std::vector<std::string> table_header = {"1", "2", "3"};
+  std::vector<std::vector<double>> table_data = {{1, 1, 1}, {2, 4, 8}, {3, 9, 27}};
   FakeZMPGraph graph_;
 };
 
@@ -191,6 +193,28 @@ TestServer::TestServer() : xythetaz_(4)
   polygon_.push_back({-1, -1, 0});
   polygon_.push_back({-1, 1, 0});
 
+  builder.addElement({"Table"},
+                     mc_rtc::gui::Table("Static", {"A", "B", "C"},
+                                        []() -> std::vector<std::tuple<std::string, double, int>> {
+                                          return {{"Hello", 4.2, -4}, {"World", 0.2, 4}, {"!", 0.0, 42}};
+                                        }),
+                     mc_rtc::gui::Table("Dynamic", [this]() { return table_header; }, [this]() { return table_data; }),
+                     mc_rtc::gui::Button("Add row", [this]() {
+                       size_t i = table_header.size() + 1;
+                       table_header.push_back(std::to_string(i));
+                       for(size_t j = 1; j <= table_header.size(); ++j)
+                       {
+                         if(table_data.size() < j)
+                         {
+                           table_data.emplace_back();
+                         }
+                         auto & data = table_data[j - 1];
+                         for(size_t k = data.size(); k < table_header.size(); ++k)
+                         {
+                           data.push_back(std::pow(j, k + 1));
+                         }
+                       }
+                     }));
   auto data = builder.data();
   data.add("DataComboInput", std::vector<std::string>{"Choice A", "Choice B", "Choice C", "Obiwan Kenobi"});
   data.add("robots", std::vector<std::string>{"Goldorak", "Astro"});
