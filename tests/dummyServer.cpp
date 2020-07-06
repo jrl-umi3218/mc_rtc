@@ -196,7 +196,9 @@ TestServer::TestServer() : xythetaz_(4)
   builder.addElement({"Table"},
                      mc_rtc::gui::Table("Static", {"A", "B", "C"},
                                         []() -> std::vector<std::tuple<std::string, double, int>> {
-                                          return {{"Hello", 4.2, -4}, {"World", 0.2, 4}, {"!", 0.0, 42}};
+                                          return {std::make_tuple<std::string, double, int>("Hello", 4.2, -4),
+                                                  std::make_tuple<std::string, double, int>("World", 0.2, 4),
+                                                  std::make_tuple<std::string, double, int>("!", 0.0, 42)};
                                         }),
                      mc_rtc::gui::Table("Dynamic", [this]() { return table_header; }, [this]() { return table_data; }),
                      mc_rtc::gui::Button("Add row", [this]() {
