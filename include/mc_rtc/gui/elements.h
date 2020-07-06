@@ -39,7 +39,8 @@ enum class Elements
   Polygon,
   Force,
   Arrow,
-  XYTheta
+  XYTheta,
+  Table
 };
 
 /** Element is the common class for every element's type available in the

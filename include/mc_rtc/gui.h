@@ -26,6 +26,7 @@
 #include <mc_rtc/gui/Rotation.h>
 #include <mc_rtc/gui/Schema.h>
 #include <mc_rtc/gui/StringInput.h>
+#include <mc_rtc/gui/Table.h>
 #include <mc_rtc/gui/Trajectory.h>
 #include <mc_rtc/gui/Transform.h>
 #include <mc_rtc/gui/XYTheta.h>

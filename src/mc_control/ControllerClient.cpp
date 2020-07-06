@@ -306,6 +306,9 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
       case Elements::XYTheta:
         handle_xytheta(id, data);
         break;
+      case Elements::Table:
+        handle_table(id, data.at(3, std::vector<std::string>{}), data.at(4, std::vector<mc_rtc::Configuration>{}));
+        break;
       default:
         mc_rtc::log::error("Type {} is not handlded by this ControllerClient", static_cast<int>(type));
         break;
@@ -321,7 +324,7 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
 
 void ControllerClient::default_impl(const std::string & type, const ElementId & id)
 {
-  mc_rtc::log::warning("This implementation of ControllerClient does not handle GUI needed by {}/{}", type,
+  mc_rtc::log::warning("This implementation of ControllerClient does not handle {} GUI needed by {}/{}", type,
                        cat2str(id.category), id.name);
 }
 
@@ -759,6 +762,32 @@ void ControllerClient::handle_xy_plot(const mc_rtc::Configuration & plot)
     }
   }
   end_plot(id);
+}
+
+void ControllerClient::handle_table(const ElementId & id,
+                                    const std::vector<std::string> & header,
+                                    const std::vector<mc_rtc::Configuration> & data)
+{
+  table_start(id, header);
+  std::vector<std::string> data_str;
+  for(size_t i = 0; i < data.size(); ++i)
+  {
+    const auto & c = data[i];
+    auto c_size = c.size();
+    if(!c_size)
+    {
+      mc_rtc::log::error("Table {} (category: {}) is excepting an array of array in data", id.name,
+                         cat2str(id.category));
+      continue;
+    }
+    data_str.resize(c_size);
+    for(size_t j = 0; j < c_size; ++j)
+    {
+      data_str[j] = c.at(j, c[j].dump());
+    }
+    table_row(id, data_str);
+  }
+  table_end(id);
 }
 
 } // namespace mc_control

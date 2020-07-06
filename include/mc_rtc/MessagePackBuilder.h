@@ -218,6 +218,15 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
     finish_array();
   }
 
+  /** Write an std::tuple<Args...> */
+  template<typename... Args>
+  void write(const std::tuple<Args...> & t)
+  {
+    start_array(sizeof...(Args));
+    write_impl<0>(t);
+    finish_array();
+  }
+
   /** @} */
   /* End Add data to the MessagePack section (containers) */
 
@@ -260,6 +269,19 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
 private:
   /** Hide MessagePack implementation choice in pimpl pattern */
   std::unique_ptr<MessagePackBuilderImpl> impl_;
+
+  template<size_t i,
+           typename... Args,
+           typename std::enable_if<i<sizeof...(Args), int>::type = 0> void write_impl(const std::tuple<Args...> & t)
+  {
+    write(std::get<i>(t));
+    write_impl<i + 1>(t);
+  }
+
+  template<size_t i, typename... Args, typename std::enable_if<i >= sizeof...(Args), int>::type = 0>
+  void write_impl(const std::tuple<Args...> &)
+  {
+  }
 };
 
 } // namespace mc_rtc
