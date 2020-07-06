@@ -1,6 +1,7 @@
 var a00320 =
 [
-    [ "TrajectoryImpl", "a01956.html", "a01956" ],
-    [ "Trajectory", "a00320.html#a062a5442d4cabf7a31d7f83008751a6a", null ],
-    [ "Trajectory", "a00320.html#aa175899f8868d419050975dc9f79ed97", null ]
+    [ "TableImpl", "a01959.html", "a01959" ],
+    [ "StaticTableImpl", "a01963.html", "a01963" ],
+    [ "Table", "a00320.html#a5d44ab8c8d46b705c245ba949a841226", null ],
+    [ "Table", "a00320.html#a275dbf8923840b302733adbdbba1c1ad", null ]
 ];

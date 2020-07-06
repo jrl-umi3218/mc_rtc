@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Trajectory.h File Reference</title>
+<title>Table.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -74,7 +74,7 @@ $(document).ready(function(){initNavTree('a00320.html','');});
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Trajectory.h File Reference</div>  </div>
+<div class="title">Table.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="a00260.html">mc_rtc/gui/details/traits.h</a>&gt;</code><br />
@@ -83,28 +83,31 @@ $(document).ready(function(){initNavTree('a00320.html','');});
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01956.html">mc_rtc::gui::TrajectoryImpl&lt; GetT &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trajectory can represent a pre-defined trajectory or a real-time trajectory depending on type of data returned by the callback.  <a href="a01956.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01959.html">mc_rtc::gui::TableImpl&lt; GetHeader, GetData &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Table should display a table of heterogeneous data.  <a href="a01959.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01963.html">mc_rtc::gui::StaticTableImpl&lt; GetData &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Table should display a table of heterogeneous data.  <a href="a01963.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00721"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00721.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00721"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01708.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00724.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memitem:a00724"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00724.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00724"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01711.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00727.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00740"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00740.html">mc_rtc::gui</a></td></tr>
+<tr class="memitem:a00743"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html">mc_rtc::gui</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a062a5442d4cabf7a31d7f83008751a6a"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:a062a5442d4cabf7a31d7f83008751a6a"><td class="memTemplItemLeft" align="right" valign="top">TrajectoryImpl&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00740.html#a062a5442d4cabf7a31d7f83008751a6a">mc_rtc::gui::Trajectory</a> (const std::string &amp;name, GetT get_fn)</td></tr>
-<tr class="memdesc:a062a5442d4cabf7a31d7f83008751a6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function helper to get a <a class="el" href="a01956.html" title="Trajectory can represent a pre-defined trajectory or a real-time trajectory depending on type of data...">TrajectoryImpl</a>.  <a href="a00740.html#a062a5442d4cabf7a31d7f83008751a6a">More...</a><br /></td></tr>
-<tr class="separator:a062a5442d4cabf7a31d7f83008751a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa175899f8868d419050975dc9f79ed97"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
-<tr class="memitem:aa175899f8868d419050975dc9f79ed97"><td class="memTemplItemLeft" align="right" valign="top">TrajectoryImpl&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00740.html#aa175899f8868d419050975dc9f79ed97">mc_rtc::gui::Trajectory</a> (const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</td></tr>
-<tr class="memdesc:aa175899f8868d419050975dc9f79ed97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function helper to get a <a class="el" href="a01956.html" title="Trajectory can represent a pre-defined trajectory or a real-time trajectory depending on type of data...">TrajectoryImpl</a>.  <a href="a00740.html#aa175899f8868d419050975dc9f79ed97">More...</a><br /></td></tr>
-<tr class="separator:aa175899f8868d419050975dc9f79ed97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d44ab8c8d46b705c245ba949a841226"><td class="memTemplParams" colspan="2">template&lt;typename GetData &gt; </td></tr>
+<tr class="memitem:a5d44ab8c8d46b705c245ba949a841226"><td class="memTemplItemLeft" align="right" valign="top">StaticTableImpl&lt; GetData &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00743.html#a5d44ab8c8d46b705c245ba949a841226">mc_rtc::gui::Table</a> (const std::string &amp;name, std::vector&lt; std::string &gt; header, GetData get_data_fn)</td></tr>
+<tr class="memdesc:a5d44ab8c8d46b705c245ba949a841226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to a get a <a class="el" href="a01963.html" title="Table should display a table of heterogeneous data. ">StaticTableImpl</a>.  <a href="a00743.html#a5d44ab8c8d46b705c245ba949a841226">More...</a><br /></td></tr>
+<tr class="separator:a5d44ab8c8d46b705c245ba949a841226"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a275dbf8923840b302733adbdbba1c1ad"><td class="memTemplParams" colspan="2">template&lt;typename GetHeader , typename GetData &gt; </td></tr>
+<tr class="memitem:a275dbf8923840b302733adbdbba1c1ad"><td class="memTemplItemLeft" align="right" valign="top">TableImpl&lt; GetHeader, GetData &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00743.html#a275dbf8923840b302733adbdbba1c1ad">mc_rtc::gui::Table</a> (const std::string &amp;name, GetHeader get_header_fn, GetData get_data_fn)</td></tr>
+<tr class="memdesc:a275dbf8923840b302733adbdbba1c1ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to get a <a class="el" href="a01959.html" title="Table should display a table of heterogeneous data. ">TableImpl</a>.  <a href="a00743.html#a275dbf8923840b302733adbdbba1c1ad">More...</a><br /></td></tr>
+<tr class="separator:a275dbf8923840b302733adbdbba1c1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -112,8 +115,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00320.html">Trajectory.h</a></li>
-    <li class="footer">Generated on Mon Jul 6 2020 09:42:24 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00320.html">Table.h</a></li>
+    <li class="footer">Generated on Mon Jul 6 2020 14:52:00 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

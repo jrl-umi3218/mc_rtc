@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>QPSolver.h File Reference</title>
+<title>QPResult.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -71,92 +71,35 @@ $(document).ready(function(){initNavTree('a00410.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">QPSolver.h File Reference</div>  </div>
+<div class="title">QPResult.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03245.html">mc_rbdyn/Contact.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00206.html">mc_rbdyn/Robots.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00380.html">mc_solver/ConstraintSet.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00389.html">mc_solver/DynamicsConstraint.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03230.html">mc_solver/api.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00407.html">mc_solver/msg/QPResult.h</a>&gt;</code><br />
-<code>#include &lt;Tasks/QPSolver.h&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a03259.html">mc_solver/msg/Contact.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03271.html">mc_solver/msg/Robot.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03283.html">mc_solver/msg/ZMP.h</a>&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02184.html">mc_solver::QPSolver</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a tasks::qp::QPSolver instance.  <a href="a02184.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02183.html">mc_solver::QPResultMsg</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00722"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00722.html">mc_tasks</a></td></tr>
+<tr class="memitem:a00732"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00732.html">mc_solver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00721"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00721.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00721"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01708.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00724.html">mc_rbdyn</a> objects. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00740"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00740.html">mc_rtc::gui</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00729"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00729.html">mc_solver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ac7485dcc8d256a6f197ed7802687f252"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00410.html#ac7485dcc8d256a6f197ed7802687f252">None</a></td></tr>
-<tr class="memdesc:ac7485dcc8d256a6f197ed7802687f252"><td class="mdescLeft">&#160;</td><td class="mdescRight">No feedback, i.e.  <a href="#ac7485dcc8d256a6f197ed7802687f252">More...</a><br /></td></tr>
-<tr class="separator:ac7485dcc8d256a6f197ed7802687f252"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe16a7652eeda60792bb24b8bce8455c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00410.html#afe16a7652eeda60792bb24b8bce8455c">Joints</a></td></tr>
-<tr class="memdesc:afe16a7652eeda60792bb24b8bce8455c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use encoder values for actuated joints.  <a href="#afe16a7652eeda60792bb24b8bce8455c">More...</a><br /></td></tr>
-<tr class="separator:afe16a7652eeda60792bb24b8bce8455c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="afe16a7652eeda60792bb24b8bce8455c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe16a7652eeda60792bb24b8bce8455c">&#9670;&nbsp;</a></span>Joints</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Joints</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Use encoder values for actuated joints. </p>
-
-</div>
-</div>
-<a id="ac7485dcc8d256a6f197ed7802687f252"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7485dcc8d256a6f197ed7802687f252">&#9670;&nbsp;</a></span>None</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">None</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>No feedback, i.e. </p>
-<p>open-loop control </p>
-
-<p class="reference">Referenced by <a class="el" href="a02184.html#a91e043a96e0de999c337b15ea8f8a62f">mc_solver::QPSolver::removeConstraint()</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fad12f0f0b10f75a80792b958ab0d808.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00410.html">QPSolver.h</a></li>
-    <li class="footer">Generated on Mon Jul 6 2020 09:42:24 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fad12f0f0b10f75a80792b958ab0d808.html">mc_solver</a></li><li class="navelem"><a class="el" href="dir_334ef0e5d85f2880d776f6f4efef6326.html">msg</a></li><li class="navelem"><a class="el" href="a00410.html">QPResult.h</a></li>
+    <li class="footer">Generated on Mon Jul 6 2020 14:52:00 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

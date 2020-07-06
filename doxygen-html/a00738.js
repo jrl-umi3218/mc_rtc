@@ -1,4 +1,4 @@
 var a00738 =
 [
-    [ "formatter< mc_rtc::Configuration >", "a01724.html", "a01724" ]
+    [ "mc_rbdyn", "a00739.html", null ]
 ];

@@ -1,4 +1,4 @@
 var modules =
 [
-    [ "Helpers to obtain robot index/name from configuration", "a00717.html", "a00717" ]
+    [ "Helpers to obtain robot index/name from configuration", "a00720.html", "a00720" ]
 ];

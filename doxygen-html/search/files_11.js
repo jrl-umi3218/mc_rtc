@@ -4,14 +4,14 @@ var searchData=
   ['schema_2eh',['Schema.h',['../a00311.html',1,'']]],
   ['simulationcontactpair_2eh',['SimulationContactPair.h',['../a00095.html',1,'']]],
   ['slidingfootcontact_2eh',['SlidingFootContact.h',['../a00059.html',1,'']]],
-  ['smoothtask_2eh',['SmoothTask.h',['../a00491.html',1,'']]],
-  ['spline_2eh',['Spline.h',['../a00515.html',1,'']]],
-  ['spline_5futils_2eh',['spline_utils.h',['../a00518.html',1,'']]],
-  ['splinetrajectorytask_2eh',['SplineTrajectoryTask.h',['../a00494.html',1,'']]],
+  ['smoothtask_2eh',['SmoothTask.h',['../a00494.html',1,'']]],
+  ['spline_2eh',['Spline.h',['../a00518.html',1,'']]],
+  ['spline_5futils_2eh',['spline_utils.h',['../a00521.html',1,'']]],
+  ['splinetrajectorytask_2eh',['SplineTrajectoryTask.h',['../a00497.html',1,'']]],
   ['springs_2eh',['Springs.h',['../a00215.html',1,'']]],
   ['stabilizerconfiguration_2eh',['StabilizerConfiguration.h',['../a00176.html',1,'']]],
   ['stabilizerstandingstate_2eh',['StabilizerStandingState.h',['../a00062.html',1,'']]],
-  ['stabilizertask_2eh',['StabilizerTask.h',['../a00455.html',1,'']]],
+  ['stabilizertask_2eh',['StabilizerTask.h',['../a00458.html',1,'']]],
   ['state_2eh',['State.h',['../a00029.html',1,'']]],
   ['statebuilder_2eh',['StateBuilder.h',['../a00314.html',1,'']]],
   ['statefactory_2eh',['StateFactory.h',['../a00032.html',1,'']]],
@@ -20,5 +20,5 @@ var searchData=
   ['surface_2eh',['Surface.h',['../a00218.html',1,'']]],
   ['surface_5fhull_2eh',['surface_hull.h',['../a00221.html',1,'']]],
   ['surface_5futils_2eh',['surface_utils.h',['../a00224.html',1,'']]],
-  ['surfacetransformtask_2eh',['SurfaceTransformTask.h',['../a00497.html',1,'']]]
+  ['surfacetransformtask_2eh',['SurfaceTransformTask.h',['../a00500.html',1,'']]]
 ];

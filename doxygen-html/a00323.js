@@ -1,7 +1,6 @@
 var a00323 =
 [
-    [ "TransformROImpl", "a01960.html", "a01960" ],
-    [ "TransformImpl", "a01964.html", "a01964" ],
-    [ "Transform", "a00323.html#aa5342b74063b005e6a03efd66adef74e", null ],
-    [ "Transform", "a00323.html#a96cb90761dce6d6e3441d779e7184847", null ]
+    [ "TrajectoryImpl", "a01967.html", "a01967" ],
+    [ "Trajectory", "a00323.html#a062a5442d4cabf7a31d7f83008751a6a", null ],
+    [ "Trajectory", "a00323.html#aa175899f8868d419050975dc9f79ed97", null ]
 ];

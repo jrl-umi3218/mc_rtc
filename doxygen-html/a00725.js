@@ -1,8 +1,28 @@
 var a00725 =
 [
-    [ "ExponentialMovingAverage", "a01472.html", "a01472" ],
-    [ "LeakyIntegrator", "a01476.html", "a01476" ],
-    [ "LowPass", "a01480.html", "a01480" ],
-    [ "LowPassFiniteDifferences", "a01484.html", "a01484" ],
-    [ "StationaryOffset", "a01488.html", "a01488" ]
+    [ "force", "a00753.html", "a00753" ],
+    [ "lipm_stabilizer", "a00726.html", "a00726" ],
+    [ "AddContactTask", "a02239.html", "a02239" ],
+    [ "AddRemoveContactTask", "a02235.html", "a02235" ],
+    [ "BSplineTrajectoryTask", "a02251.html", "a02251" ],
+    [ "CoMTask", "a02259.html", "a02259" ],
+    [ "EndEffectorTask", "a02271.html", "a02271" ],
+    [ "ExactCubicTrajectoryTask", "a02275.html", "a02275" ],
+    [ "GazeTask", "a02279.html", "a02279" ],
+    [ "LookAtSurfaceTask", "a02307.html", "a02307" ],
+    [ "LookAtTask", "a02311.html", "a02311" ],
+    [ "MetaTask", "a02315.html", "a02315" ],
+    [ "MetaTaskLoader", "a02319.html", "a02319" ],
+    [ "MomentumTask", "a02323.html", "a02323" ],
+    [ "OrientationTask", "a02327.html", "a02327" ],
+    [ "PositionBasedVisServoTask", "a02331.html", "a02331" ],
+    [ "PositionTask", "a02335.html", "a02335" ],
+    [ "PostureTask", "a02339.html", "a02339" ],
+    [ "RelativeEndEffectorTask", "a02343.html", "a02343" ],
+    [ "RemoveContactTask", "a02243.html", "a02243" ],
+    [ "SmoothTask", "a02347.html", "a02347" ],
+    [ "SplineTrajectoryTask", "a02351.html", "a02351" ],
+    [ "SurfaceTransformTask", "a02355.html", "a02355" ],
+    [ "TrajectoryTaskGeneric", "a02359.html", "a02359" ],
+    [ "VectorOrientationTask", "a02363.html", "a02363" ]
 ];

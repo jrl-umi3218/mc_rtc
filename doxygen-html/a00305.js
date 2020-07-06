@@ -1,7 +1,7 @@
 var a00305 =
 [
-    [ "Point3DROImpl", "a01916.html", "a01916" ],
-    [ "Point3DImpl", "a01920.html", "a01920" ],
+    [ "Point3DROImpl", "a01919.html", "a01919" ],
+    [ "Point3DImpl", "a01923.html", "a01923" ],
     [ "Point3D", "a00305.html#ac40c7c59cc19e0fe7be9d8a5a8564f74", null ],
     [ "Point3D", "a00305.html#a0c1802e2d8623ee22fffc408e69eaf56", null ],
     [ "Point3D", "a00305.html#ad2db10f53541f7b6a925d724023de7ee", null ],

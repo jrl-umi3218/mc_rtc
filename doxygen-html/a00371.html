@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>CollisionsConstraint.h File Reference</title>
+<title>BoundedSpeedConstr.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -73,28 +73,22 @@ $(document).ready(function(){initNavTree('a00371.html','');});
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">CollisionsConstraint.h File Reference</div>  </div>
+<div class="title">BoundedSpeedConstr.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00146.html">mc_rbdyn/Collision.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03245.html">mc_rbdyn/Contact.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00206.html">mc_rbdyn/Robots.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00380.html">mc_solver/ConstraintSet.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00413.html">mc_solver/QPSolver.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03241.html">mc_solver/api.h</a>&gt;</code><br />
 <code>#include &lt;Tasks/QPConstr.h&gt;</code><br />
-<code>#include &lt;set&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html">mc_solver::CollisionsConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a collision constraint between two robots.  <a href="a02068.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02072.html">mc_solver::RobotEnvCollisionsConstraint</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility class for the very common-case of (robot,env) scenarios.  <a href="a02072.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02075.html">mc_solver::BoundedSpeedConstr</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around tasks::qp::BoundedSpeedConstr.  <a href="a02075.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00729"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00729.html">mc_solver</a></td></tr>
+<tr class="memitem:a00732"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00732.html">mc_solver</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
@@ -103,8 +97,8 @@ Namespaces</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fad12f0f0b10f75a80792b958ab0d808.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00371.html">CollisionsConstraint.h</a></li>
-    <li class="footer">Generated on Mon Jul 6 2020 09:42:24 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_fad12f0f0b10f75a80792b958ab0d808.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00371.html">BoundedSpeedConstr.h</a></li>
+    <li class="footer">Generated on Mon Jul 6 2020 14:52:00 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
