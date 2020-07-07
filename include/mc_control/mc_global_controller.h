@@ -117,6 +117,23 @@ public:
    */
   void init(const std::vector<double> & initq);
 
+  /**
+   * @brief Initialize robot attitude from encoders and the floating base attitude
+   *
+   * @param initq Initial joints configuration
+   * @param initAttitude Attitude of the floating base provided as
+   *        a quaternion [qw, qx, qy, qz, tx, ty, tz]
+   */
+  void init(const std::vector<double> & initq, std::array<double, 7> & initAttitude);
+
+  /**
+   * @brief Initialize robot attitude from encoders and the floating base attitude
+   *
+   * @param initq Initial joints configuration
+   * @param initAttitude Attitude of the floating base
+   */
+  void init(const std::vector<double> & initq, const sva::PTransformd & intitAttitude);
+
   /** @name Sensing
    *
    * These functions are used to communicate sensors' information to the
@@ -393,6 +410,20 @@ public:
    *
    */
   void refreshLog();
+
+private:
+  /**
+   * @brief Initializes the robot from provided encoder values
+   * @param initq Encoder values for all actuated joints
+   */
+  void initEncoders(const std::vector<double> & initq);
+  /**
+   * @brief Initializes controller, observers and plugins
+   *
+   * The robot state must be properly initialized prior to calling this
+   * function.
+   */
+  void initController();
 
 public:
   /*! \brief Returns true if the controller is running
