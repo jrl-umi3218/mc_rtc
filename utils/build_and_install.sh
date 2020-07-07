@@ -370,7 +370,7 @@ echo_log "========================"
 echo_log "== System information =="
 echo_log "========================"
 echo_log ""
-if [ $OS = Ubuntu ]
+if [[ $OSTYPE == "linux-gnu" ]]
 then
   exec_log lsb_release -a
 fi
@@ -386,7 +386,7 @@ then
   if [ -f $this_dir/config_build_and_install.`lsb_release -sc`.sh ]
   then
     . $this_dir/config_build_and_install.`lsb_release -sc`.sh
-    ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite python-catkin-lint ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
+    ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
   else
     ROS_DISTRO=""
     APT_DEPENDENCIES=""
@@ -512,7 +512,7 @@ then
 elif [[ $OSTYPE == "linux-gnu" ]]
 then
   export OS=$(lsb_release -si)
-  if [ $OS = Ubuntu ]
+  if [ $OS = Ubuntu -o $OS = Debian ]
   then
     if $INSTALL_SYSTEM_DEPENDENCIES && $NOT_CLONE_ONLY
     then
@@ -548,7 +548,7 @@ then
   echo_log "================================"
   if [ ! -e /opt/ros/${ROS_DISTRO}/setup.bash ] && $NOT_CLONE_ONLY
   then
-    if [ $OS = Ubuntu ]
+    if [ $OS = Ubuntu -o $OS = Debian ]
     then
       sudo mkdir -p /etc/apt/sources.list.d/
       sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -c -s` main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -558,7 +558,7 @@ then
       exit_failure
     fi
   fi
-  if [ $OS = Ubuntu ]
+  if [ $OS = Ubuntu -o $OS = Debian ]
   then
     install_apt $ROS_APT_DEPENDENCIES
   fi
@@ -883,7 +883,7 @@ build_project()
 
 test_project()
 {
-  exec_log ctest -C ${BUILD_TYPE}
+  exec_log ctest -V -C ${BUILD_TYPE}
   if [ $? -ne 0 ]
   then
     if [ ! -z $2 ]
@@ -906,7 +906,7 @@ test_project()
       exec_log ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE}
       exit_if_error "[ERROR] Build failed for $1"
       exit_if_error "-- [ERROR] Installation failed for $1"
-      exec_log ctest -C ${BUILD_TYPE}
+      exec_log ctest -V -C ${BUILD_TYPE}
       exit_if_error "-- [ERROR] Testing is still failing for $1, please investigate deeper"
     else
       echo_log "-- [ERROR] Testing failed for $1"

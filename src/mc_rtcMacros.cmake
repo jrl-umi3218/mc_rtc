@@ -107,6 +107,8 @@ macro(find_description_package PACKAGE)
   else()
     set(${PACKAGE_PATH_VAR} "${${PACKAGE}_INSTALL_PREFIX}")
   endif()
+  # Cleanup the path provided by CMake
+  get_filename_component(${PACKAGE_PATH_VAR} "${${PACKAGE_PATH_VAR}}" REALPATH)
   message("-- Found ${PACKAGE}: ${${PACKAGE_PATH_VAR}}")
 endmacro()
 

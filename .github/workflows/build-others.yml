@@ -1,0 +1,52 @@
+name: CI of mc_rtc with Docker
+
+# This workflow checks the build-and-install script on base docker images
+
+on:
+  push:
+    paths-ignore:
+      # Changes to those files don't mandate running CI
+      - ".gitlab-ci.yml"
+      - ".jrl-ci"
+      - ".github/workflows/package.yml"
+      - "debian/**"
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["debian:buster", "ubuntu:focal"]
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Build within Docker
+      run: |
+        echo "::group::Setup Dockerfile"
+        mkdir -p /tmp/mc-rtc-docker
+        cp -r `pwd` /tmp/mc-rtc-docker/source
+        cp .github/workflows/docker/Dockerfile /tmp/mc-rtc-docker
+        cd /tmp/mc-rtc-docker
+        sed -i -e's/@BASE_IMAGE@/${{ matrix.os }}/' Dockerfile
+        echo "::endgroup::"
+        echo "::group::Dockerfile used to build mc_rtc"
+        cat Dockerfile
+        echo "::endgroup::"
+        echo "::group::Build"
+        docker build -t mc-rtc-ci-${{matrix.os}} .
+        echo "::endgroup::"
+    - name: Slack Notification
+      if: failure()
+      uses: archive/github-actions-slack@master
+      with:
+        slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_TOKEN }}
+        slack-channel: '#ci'
+        slack-text: >
+          [mc_rtc] Build *${{ matrix.os }}* failed on ${{ github.ref }}

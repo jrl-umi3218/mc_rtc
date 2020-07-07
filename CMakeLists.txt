@@ -46,6 +46,7 @@ option(TREAT_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
 option(DISABLE_CONTROLLER_TESTS "Disable controller unit tests" OFF)
 option(DISABLE_ROBOT_TESTS "Disable RobotModule unit tests" OFF)
+option(ENABLE_FAST_TESTS "Run controllers tests for a few iterations" OFF)
 
 option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
@@ -107,6 +108,8 @@ macro(find_description_package PACKAGE)
   else()
     set(${PACKAGE_PATH_VAR} "${${PACKAGE}_INSTALL_PREFIX}")
   endif()
+  # Cleanup the path provided by CMake
+  get_filename_component(${PACKAGE_PATH_VAR} "${${PACKAGE_PATH_VAR}}" REALPATH)
   message("-- Found ${PACKAGE}: ${${PACKAGE_PATH_VAR}}")
 endmacro()
 
