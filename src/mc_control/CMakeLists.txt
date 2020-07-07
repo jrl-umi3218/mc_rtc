@@ -18,6 +18,7 @@ if(${BUILD_CONTROLLER_SAMPLES})
   add_subdirectory(samples/Text)
   add_subdirectory(samples/FSM)
   add_subdirectory(samples/LIPMStabilizer)
+  add_subdirectory(samples/Admittance)
 endif()
 
 add_subdirectory(HalfSitPose)
