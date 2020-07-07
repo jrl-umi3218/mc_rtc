@@ -46,6 +46,7 @@ option(TREAT_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
 option(DISABLE_CONTROLLER_TESTS "Disable controller unit tests" OFF)
 option(DISABLE_ROBOT_TESTS "Disable RobotModule unit tests" OFF)
+option(ENABLE_FAST_TESTS "Run controllers tests for a few iterations" OFF)
 
 option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
