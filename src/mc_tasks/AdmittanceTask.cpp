@@ -31,7 +31,7 @@ AdmittanceTask::AdmittanceTask(const std::string & surfaceName,
   surface_(robots.robot(robotIndex).surface(surfaceName))
 {
   const auto & robot = robots.robot(robotIndex);
-  if(!robot.hasForceSensor(robot.surface(surfaceName).bodyName()))
+  if(!robot.surfaceHasIndirectForceSensor(surfaceName))
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
         "[mc_tasks::AdmittanceTask] Surface {} does not have a force sensor attached", surfaceName);
