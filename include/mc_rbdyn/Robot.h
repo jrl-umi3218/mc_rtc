@@ -536,9 +536,6 @@ public:
    *
    * @see ForceSensor & indirectBodyForceSensor(const std::string & body);
    * To get a sensor directly or indirectly attached to the body.
-   *
-   * @note if the body in indirectly attached to a body, use
-   * findBodyForceSensor() instead
    */
   ForceSensor & bodyForceSensor(const std::string & body);
 
@@ -555,9 +552,6 @@ public:
    *
    * @see ForceSensor & indirectBodyForceSensor(const std::string & surface);
    * To get a sensor directly or indirectly attached to the surface.
-   *
-   * @note if the surface in indirectly attached to a surface, use
-   * findBodyForceSensor() instead
    */
   ForceSensor & surfaceForceSensor(const std::string & surfaceName);
   /** Const variant */
@@ -920,14 +914,14 @@ protected:
   void fixCollisionTransforms();
 
   /**
-   * @brief Finds the name of a force sensor directly or indirectly attached to
-   * a body
+   * @brief Finds the name of the body to which a force sensor is attached,
+   * starting from the provided body and going up the kinematic tree.
    *
    * @param bodyName Name of the body to which the sensor is attached
    *
-   * @return Sensor name when found. Empty string otherwise
+   * @return Body name to which the sensor is attached when found. Empty string otherwise
    */
-  std::string findBodyForceSensorName(const std::string & bodyName) const;
+  std::string findIndirectForceSensorBodyName(const std::string & bodyName) const;
 
 private:
   Robot(const Robot &) = delete;

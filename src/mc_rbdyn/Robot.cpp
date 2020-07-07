@@ -737,7 +737,7 @@ bool Robot::bodyHasForceSensor(const std::string & body) const
 
 bool Robot::bodyHasIndirectForceSensor(const std::string & body) const
 {
-  return bodyHasForceSensor(body) || findBodyForceSensorName(body).size();
+  return bodyHasForceSensor(body) || findIndirectForceSensorBodyName(body).size();
 }
 
 bool Robot::surfaceHasForceSensor(const std::string & surfaceName) const
@@ -780,7 +780,7 @@ const ForceSensor & Robot::surfaceForceSensor(const std::string & surfaceName) c
   return bodyForceSensor(surface(surfaceName).bodyName());
 }
 
-std::string Robot::findBodyForceSensorName(const std::string & body) const
+std::string Robot::findIndirectForceSensorBodyName(const std::string & body) const
 {
   int nextIndex = mb().bodyIndexByName().at(body);
   while(nextIndex >= 0)
@@ -797,13 +797,13 @@ std::string Robot::findBodyForceSensorName(const std::string & body) const
 
 const ForceSensor & Robot::indirectBodyForceSensor(const std::string & body) const
 {
-  const auto name = findBodyForceSensorName(body);
-  if(name.empty())
+  const auto bodyName = findIndirectForceSensorBodyName(body);
+  if(bodyName.empty())
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("No force sensor (directly or indirectly) attached to body {}",
                                                      body);
   }
-  return forceSensor(name);
+  return bodyForceSensor(bodyName);
 }
 
 ForceSensor & Robot::indirectBodyForceSensor(const std::string & body)
