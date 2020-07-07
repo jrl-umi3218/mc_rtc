@@ -30,10 +30,11 @@ jobs:
     - name: Build within Docker
       run: |
         echo "::group::Setup Dockerfile"
-        SOURCE_FOLDER=`pwd`
-        cd .github/workflows/docker
+        mkdir -p /tmp/mc-rtc-docker
+        cp -r `pwd` /tmp/mc-rtc-docker/source
+        cp .github/workflows/docker/Dockerfile /tmp/mc-rtc-docker
+        cd /tmp/mc-rtc-docker
         sed -i -e's/@BASE_IMAGE@/${{ matrix.os }}/' Dockerfile
-        sed -i -e"s#@SOURCE_FOLDER@#${SOURCE_FOLDER}#" Dockerfile
         echo "::endgroup::"
         echo "::group::Dockerfile used to build mc_rtc"
         cat Dockerfile
