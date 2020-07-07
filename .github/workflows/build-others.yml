@@ -33,7 +33,7 @@ jobs:
         SOURCE_FOLDER=`pwd`
         cd .github/workflows/docker
         sed -i -e's/@BASE_IMAGE@/${{ matrix.os }}/' Dockerfile
-        sed -i -e"s/@SOURCE_FOLDER@/${SOURCE_FOLDER}/" Dockerfile
+        sed -i -e"s#@SOURCE_FOLDER@#${SOURCE_FOLDER}#" Dockerfile
         echo "::endgroup::"
         echo "::group::Dockerfile used to build mc_rtc"
         cat Dockerfile
