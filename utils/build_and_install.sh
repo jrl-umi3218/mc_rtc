@@ -883,7 +883,7 @@ build_project()
 
 test_project()
 {
-  exec_log ctest -C ${BUILD_TYPE}
+  exec_log ctest -V -C ${BUILD_TYPE}
   if [ $? -ne 0 ]
   then
     if [ ! -z $2 ]
@@ -906,7 +906,7 @@ test_project()
       exec_log ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE}
       exit_if_error "[ERROR] Build failed for $1"
       exit_if_error "-- [ERROR] Installation failed for $1"
-      exec_log ctest -C ${BUILD_TYPE}
+      exec_log ctest -V -C ${BUILD_TYPE}
       exit_if_error "-- [ERROR] Testing is still failing for $1, please investigate deeper"
     else
       echo_log "-- [ERROR] Testing failed for $1"
