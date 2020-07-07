@@ -7,6 +7,9 @@ on:
       - ".gitlab-ci.yml"
       - ".jrl-ci"
       - ".github/workflows/package.yml"
+      - ".github/workflows/sources/*"
+      - ".github/workflows/build-others.yml"
+      - ".github/workflows/docker/*"
       - "debian/**"
     branches:
       - '**'
