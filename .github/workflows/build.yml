@@ -132,11 +132,18 @@ jobs:
           - path: jrl-umi3218/mc_rtc_data
           - path: jrl-umi3218/eigen-quadprog
     - name: Build and test
-      if: matrix.build-type != 'script'
+      if: matrix.build-type == 'RelWithDebInfo' || (matrix.build-type == 'Debug' && github.ref == 'refs/heads/master')
       uses: jrl-umi3218/github-actions/build-cmake-project@master
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
+    - name: Build and test (Debug/Fast tests)
+      if: matrix.build-type == 'Debug' && github.ref != 'refs/heads/master'
+      uses: jrl-umi3218/github-actions/build-cmake-project@master
+      with:
+        compiler: ${{ matrix.compiler }}
+        build-type: ${{ matrix.build-type }}
+        options: '-DENABLE_FAST_TESTS:BOOL=ON'
     - name: Build with ROS
       if: (matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04') && matrix.build-type != 'script'
       run: |
