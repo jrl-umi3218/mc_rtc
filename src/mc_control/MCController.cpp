@@ -54,8 +54,8 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   qpsolver->gui(gui_);
   for(auto rm : robots_modules)
   {
-    loadRobot(rm->name, rm, robots());
-    loadRobot(rm->name, rm, realRobots());
+    loadRobot(rm, rm->name, robots());
+    loadRobot(rm, rm->name, realRobots());
   }
 
   if(gui_)
@@ -87,8 +87,13 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
 
 MCController::~MCController() {}
 
-mc_rbdyn::Robot & MCController::loadRobot(const std::string & name,
-                                          const mc_rbdyn::RobotModulePtr rm,
+mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name)
+{
+  return loadRobot(rm, name, robots());
+}
+
+mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
+                                          const std::string & name,
                                           mc_rbdyn::Robots & robots)
 {
   assert(rm);
@@ -224,8 +229,8 @@ void MCController::reset(const ControllerResetData & reset_data)
   robot().mbc().zero(robot().mb());
   robot().mbc().q = reset_data.q;
   postureTask->posture(reset_data.q);
-  rbd::forwardKinematics(robot().mb(), robot().mbc());
-  rbd::forwardVelocity(robot().mb(), robot().mbc());
+  robot().forwardKinematics();
+  robot().forwardVelocity();
 }
 
 const mc_rbdyn::Robot & MCController::robot() const

@@ -179,7 +179,7 @@ std::string MCGlobalController::current_controller() const
   return current_ctrl;
 }
 
-void MCGlobalController::init(const std::vector<double> & initq, std::array<double, 7> & initAttitude)
+void MCGlobalController::init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude)
 {
   Eigen::Quaterniond q{initAttitude[0], initAttitude[1], initAttitude[2], initAttitude[3]};
   Eigen::Vector3d t{initAttitude[4], initAttitude[5], initAttitude[6]};
@@ -198,7 +198,7 @@ void MCGlobalController::init(const std::vector<double> & initq)
   initEncoders(initq);
 
   auto & q = robot().mbc().q;
-  // Configure initial attitude
+  // Configure initial attitude (requires FK to be computed)
   if(config.init_attitude_from_sensor)
   {
     auto initAttitude = [this](const mc_rbdyn::BodySensor & sensor) {
@@ -232,11 +232,13 @@ void MCGlobalController::init(const std::vector<double> & initq)
   }
   else
   {
-    mc_rtc::log::info("Initializing attitude from robot module");
+    mc_rtc::log::info("Initializing attitude from robot module: q=[{}]",
+                      mc_rtc::io::to_string(robot().module().default_attitude(), ", ", 3));
     if(q[0].size() == 7)
     {
-      const auto & initAttitude = config.main_robot_module->default_attitude();
+      const auto & initAttitude = robot().module().default_attitude();
       q[0] = {std::begin(initAttitude), std::end(initAttitude)};
+      robot().forwardKinematics();
     }
   }
   initController();

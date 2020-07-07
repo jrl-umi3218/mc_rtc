@@ -124,7 +124,7 @@ public:
    * @param initAttitude Attitude of the floating base provided as
    *        a quaternion [qw, qx, qy, qz, tx, ty, tz]
    */
-  void init(const std::vector<double> & initq, std::array<double, 7> & initAttitude);
+  void init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude);
 
   /**
    * @brief Initialize robot attitude from encoders and the floating base attitude

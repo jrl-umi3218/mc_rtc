@@ -43,7 +43,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI ControllerResetData
 {
   /** Contains free flyer + joints state information */
-  const std::vector<std::vector<double>> & q;
+  const std::vector<std::vector<double>> q;
 };
 
 struct MCGlobalController;
@@ -274,6 +274,16 @@ public:
    */
   mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
 
+  /** Load an additional robot into the controller
+   *
+   * \param name Name of the robot
+   * \param rm RobotModule used to load the robot
+   * \param robots Robots in which this robot will be loaded
+   *
+   * \returns The loaded robot
+   */
+  mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name, mc_rbdyn::Robots & robots);
+
   /** Remove a robot from the controller
    *
    * \param name Name of the robot to remove
@@ -326,16 +336,6 @@ protected:
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules,
                double dt,
                const mc_rtc::Configuration & config);
-
-  /** Load an additional robot into the controller
-   *
-   * \param name Name of the robot
-   * \param rm RobotModule used to load the robot
-   * \param robots Robots in which this robot will be loaded
-   *
-   * \returns The loaded robot
-   */
-  mc_rbdyn::Robot & loadRobot(const std::string & name, const mc_rbdyn::RobotModulePtr rm, mc_rbdyn::Robots & robots);
 
 protected:
   /** QP solver */
