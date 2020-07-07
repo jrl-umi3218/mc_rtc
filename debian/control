@@ -97,10 +97,11 @@ Package: mc-rtc-utils
 Section: science
 Architecture: any
 Depends: libmc-rtc1 (= ${binary:Version}),
-         python-git,
+         python-git | python3-git,
          python-mc-rtc,
-         python-matplotlib,
-         python-pyqt5,
+         python3-mc-rtc,
+         python-matplotlib | python3-matplotlib,
+         python-pyqt5 | python3-pyqt5,
          ${shlibs:Depends},
          ${misc:Depends}
 Description: mc-rtc - Utilities
