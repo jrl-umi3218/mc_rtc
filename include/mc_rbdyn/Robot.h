@@ -460,7 +460,8 @@ public:
 
   /** Check if a force sensor exists
    *
-   * @param name Name of the sensor
+   * @param name Name of the body to which the sensor is attached directly or
+   * indirectly (with joints in-between the body and the sensor)
    *
    * @returns True if the sensor exists, false otherwise
    */
@@ -468,7 +469,10 @@ public:
 
   /** Check if the body has a force sensor attached to it
    *
-   * @param body Name of the body
+   * @param body Name of the body to which the sensor is directly attached
+   *
+   * @see hasForceSensor(const std::string &) if you wish to check whether a
+   * sensor is indirectly attached
    *
    * @returns True if the body has a force sensor attached to it, false
    * otherwise
