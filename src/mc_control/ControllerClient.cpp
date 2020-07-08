@@ -307,7 +307,8 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
         handle_xytheta(id, data);
         break;
       case Elements::Table:
-        handle_table(id, data.at(3, std::vector<std::string>{}), data.at(4, std::vector<mc_rtc::Configuration>{}));
+        handle_table(id, data.at(3, std::vector<std::string>{}), data.at(5, std::vector<std::string>{}),
+                     data.at(4, std::vector<mc_rtc::Configuration>{}));
         break;
       default:
         mc_rtc::log::error("Type {} is not handlded by this ControllerClient", static_cast<int>(type));
@@ -766,8 +767,50 @@ void ControllerClient::handle_xy_plot(const mc_rtc::Configuration & plot)
 
 void ControllerClient::handle_table(const ElementId & id,
                                     const std::vector<std::string> & header,
+                                    const std::vector<std::string> & format,
                                     const std::vector<mc_rtc::Configuration> & data)
 {
+  auto format_data = [&](const mc_rtc::Configuration & entry, size_t i) {
+    const auto & f = i < format.size() ? format[i] : "{}";
+    if(entry[i].size()) // likely a string
+    {
+      try
+      {
+        return fmt::format(f, entry.at(i, entry[i].dump()));
+      }
+      catch(const fmt::format_error & error)
+      {
+        mc_rtc::log::warning("Failed to format data ({}) with the given format ({}) (error: {})", entry[i].dump(), f,
+                             error.what());
+      }
+    }
+    else
+    {
+      try
+      {
+        return fmt::format(f, static_cast<double>(entry[i]));
+      }
+      catch(mc_rtc::Configuration::Exception & exc)
+      {
+        exc.silence();
+        try
+        {
+          return fmt::format(f, entry[i].dump());
+        }
+        catch(const fmt::format_error & error)
+        {
+          mc_rtc::log::warning("Failed to format data ({}) with the given format ({}) (error: {})", entry[i].dump(), f,
+                               error.what());
+        }
+      }
+      catch(const fmt::format_error & error)
+      {
+        mc_rtc::log::warning("Failed to format data ({}) with the given format ({}) (error: {})", entry[i].dump(), f,
+                             error.what());
+      }
+    }
+    return entry.at(i, entry[i].dump());
+  };
   table_start(id, header);
   std::vector<std::string> data_str;
   for(size_t i = 0; i < data.size(); ++i)
@@ -783,7 +826,7 @@ void ControllerClient::handle_table(const ElementId & id,
     data_str.resize(c_size);
     for(size_t j = 0; j < c_size; ++j)
     {
-      data_str[j] = c.at(j, c[j].dump());
+      data_str[j] = format_data(c, j);
     }
     table_row(id, data_str);
   }
