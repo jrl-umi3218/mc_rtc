@@ -19,4 +19,6 @@ struct MC_CONTROL_DLLAPI AdmittanceSampleController : public mc_control::fsm::Co
   {
     out = {"jvrc1"};
   }
+ protected:
+  double t_ = 0; ///< Elapsed time since the controller started
 };
