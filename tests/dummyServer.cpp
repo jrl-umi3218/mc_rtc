@@ -156,6 +156,8 @@ struct TestServer
   template<typename T>
   void add_demo_plot(const std::string & name, T callback);
 
+  void make_table(size_t s);
+
   mc_control::ControllerServer server{1.0, 1.0, {"ipc:///tmp/mc_rtc_pub.ipc"}, {"ipc:///tmp/mc_rtc_rep.ipc"}};
   DummyProvider provider;
   mc_rtc::gui::StateBuilder builder;
@@ -180,8 +182,14 @@ struct TestServer
   Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
   sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
   double t_ = 0.0;
-  std::vector<std::string> table_header = {"1", "2", "3"};
-  std::vector<std::vector<double>> table_data = {{1, 1, 1}, {2, 4, 8}, {3, 9, 27}};
+  std::vector<std::string> table_header;
+  std::vector<std::string> table_format;
+  std::vector<std::vector<double>> table_data;
+  std::vector<std::string> static_table_header = {"A", "B", "C"};
+  std::vector<std::tuple<std::string, double, int>> static_table_data = {
+      std::make_tuple<std::string, double, int>("Hello", 4.2001, -4),
+      std::make_tuple<std::string, double, int>("World", 0.2001, 4),
+      std::make_tuple<std::string, double, int>("!", 0.0001, 42)};
   FakeZMPGraph graph_;
 };
 
@@ -193,30 +201,16 @@ TestServer::TestServer() : xythetaz_(4)
   polygon_.push_back({-1, -1, 0});
   polygon_.push_back({-1, 1, 0});
 
+  make_table(3);
+
   builder.addElement({"Table"},
-                     mc_rtc::gui::Table("Static", {"A", "B", "C"},
-                                        []() -> std::vector<std::tuple<std::string, double, int>> {
-                                          return {std::make_tuple<std::string, double, int>("Hello", 4.2, -4),
-                                                  std::make_tuple<std::string, double, int>("World", 0.2, 4),
-                                                  std::make_tuple<std::string, double, int>("!", 0.0, 42)};
-                                        }),
+                     mc_rtc::gui::Table("Static", static_table_header, [this]() { return static_table_data; }),
+                     mc_rtc::gui::Table("Static formatted", static_table_header, {"s: {}", "d: {:0.2f}", "i: {:0.0f}"},
+                                        [this]() { return static_table_data; }),
                      mc_rtc::gui::Table("Dynamic", [this]() { return table_header; }, [this]() { return table_data; }),
-                     mc_rtc::gui::Button("Add row", [this]() {
-                       size_t i = table_header.size() + 1;
-                       table_header.push_back(std::to_string(i));
-                       for(size_t j = 1; j <= table_header.size(); ++j)
-                       {
-                         if(table_data.size() < j)
-                         {
-                           table_data.emplace_back();
-                         }
-                         auto & data = table_data[j - 1];
-                         for(size_t k = data.size(); k < table_header.size(); ++k)
-                         {
-                           data.push_back(std::pow(j, k + 1));
-                         }
-                       }
-                     }));
+                     mc_rtc::gui::Table("Dynamic formatted", [this]() { return table_header; },
+                                        [this]() { return table_format; }, [this]() { return table_data; }),
+                     mc_rtc::gui::Button("Add row", [this]() { make_table(table_data.size() + 1); }));
   auto data = builder.data();
   data.add("DataComboInput", std::vector<std::string>{"Choice A", "Choice B", "Choice C", "Obiwan Kenobi"});
   data.add("robots", std::vector<std::string>{"Goldorak", "Astro"});
@@ -445,6 +439,32 @@ void TestServer::publish()
   server.handle_requests(builder);
   server.publish(builder);
   t_ += 0.05;
+}
+
+void TestServer::make_table(size_t s)
+{
+  std::vector<std::string> header;
+  std::vector<std::string> format;
+  std::vector<std::vector<double>> data;
+  for(size_t i = 1; i <= s; ++i)
+  {
+    header.push_back(std::to_string(i));
+    format.push_back("{:0." + std::to_string(i) + "f}");
+  }
+  double d = 1.1;
+  for(size_t i = 1; i <= s; ++i)
+  {
+    data.emplace_back();
+    auto & vec = data.back();
+    for(size_t j = 1; j <= s; ++j)
+    {
+      vec.push_back(std::pow(d, j));
+    }
+    d += 1.1;
+  }
+  table_header = std::move(header);
+  table_format = std::move(format);
+  table_data = std::move(data);
 }
 
 int main()

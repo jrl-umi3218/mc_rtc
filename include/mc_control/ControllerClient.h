@@ -644,6 +644,7 @@ private:
   /** Handle Table details */
   void handle_table(const ElementId & id,
                     const std::vector<std::string> & header,
+                    const std::vector<std::string> & format,
                     const std::vector<mc_rtc::Configuration> & data);
 };
 

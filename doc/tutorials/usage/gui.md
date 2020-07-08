@@ -219,7 +219,24 @@ XYTheta("XYThetaOnGround", [this] -> std::array<double, 3> { return {x, y, theta
 XYTheta("XYTheta", [this] -> std::array<double, 4> { return {x, y, theta, z}; });
 ```
 
-#### `Form`
+##### `Table`
+
+This element allows to display a table with arbitrary data in it. The data callback must return an object that could be represented as an array of array such as an `std::vector<std::vector<double>>` or an `std::vector<std::tuple<X, Y, Z>>`
+
+```cpp
+// Table with a fixed header
+Table("Simple table", {"X", "Y", "Z"}, [this]() -> const std::vector<Eigen::Vector3d> & { return points_; });
+// Table with a fixed header and formatting information
+Table("Simple with format", {"X", "Y", "Z"}, {"{:0.3f}", "{:0.3f}", "{:0.3f}"}, [this]() { return data_; });
+// Table with a dynamic header
+Table("Dynamic table", [this]() { return header_; }, [this]() { return data_; });
+// Table with a dynamic header + formatting
+Table("Dynamic with format", [this]() { return header_; }, [this]() { return format_; }, [this]() { return data_; });
+```
+
+It is your reponsibility to ensure that the header, format and data sizes are coherent although the client should be relatively resilient when they are not. Format strings must follow the rules of [{fmt}](https://fmt.dev/latest/syntax.html).
+
+##### `Form`
 
 The `Form` element allows to build a more complexe dialog for interaction with the user. A form is itself composed of elements, the `Form` creation looks like the following:
 
