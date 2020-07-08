@@ -103,7 +103,7 @@ states:
         displaySamples: 100
         target:
           translation: [0.45, -0.4, 1.1]
-          rotation: [0, 0, 1.57]
+          rotation: [1.57, 0, 1.57]
         controlPoints: [[0.17, -0.5, 0.85]]
         # oriWaypoints: [[3.5, [-1.57,  0, 1.57]]]
         completion:
@@ -116,19 +116,19 @@ states:
       RightHandAdmittance:
         type: admittance
         surface: RightGripper 
-        stiffness: [10, 10, 10, 10, 1, 10]
-        damping: [6.3, 6.3, 6.3, 6.3, 300, 6.3]
-        admittance: [0,0,0,0,0.001,0]
+        stiffness: [10, 10, 10, 10, 10, 1]
+        damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
+        admittance: [0,0,0,0,0,0.001]
         maxVel:
           linear: [0.2, 0.2, 0.5]
           angular: [0.2, 0.2, 0.2]
         wrench:
-         force: [0, 20, 0]
+         force: [0, 0, -20]
          couple: [0, 0, 0]
-        targetRotation: [0, 0, 1.57]
+        targetRotation: [1.57, 0, 1.57]
         completion:
           wrench:
-            force: [.nan, 20, .nan]
+            force: [.nan, .nan, -20]
             couple: [.nan, .nan, .nan]
 
   # Update wall position along the x world axis based on the current position of the gripper surface
@@ -156,11 +156,11 @@ states:
     tasks:
       RightHandAdmittance:
         wrench:
-         force: [0, 0, 0]
+         force: [0, 0, -1]
          couple: [0, 0, 0]
         completion:
           wrench:
-            force: [.nan, 2, .nan]
+            force: [.nan, .nan, -1]
             couple: [.nan, .nan, .nan]
 
   # Move hand 10cm back
