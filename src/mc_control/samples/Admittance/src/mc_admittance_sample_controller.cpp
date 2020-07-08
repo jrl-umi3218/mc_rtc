@@ -24,19 +24,18 @@ void AdmittanceSampleController::reset(const mc_control::ControllerResetData & r
       {"Forces"},
       mc_rtc::gui::Force("RightGripper", handForceConfig,
                          [this]() { return robot().forceSensor("RightHandForceSensor").worldWrench(robot()); },
-                         [this]() { return robot().surface("RightGripper").X_0_s(robot()); })
-      );
+                         [this]() { return robot().surface("RightGripper").X_0_s(robot()); }));
 
   using Color = mc_rtc::gui::Color;
-  gui()->addPlot("Wrenches without gravity (t)",
-                 mc_rtc::gui::plot::X({"t", {t_ + 0, t_ + 10}}, [this]() { return t_; }),
-                 mc_rtc::gui::plot::Y("Wrenches(z)", [this]() { return robot().surfaceWrench("RightGripper").force().z(); },
-                                      Color::Blue));
+  gui()->addPlot(
+      "Wrenches without gravity (t)", mc_rtc::gui::plot::X({"t", {t_ + 0, t_ + 10}}, [this]() { return t_; }),
+      mc_rtc::gui::plot::Y("Wrenches(z)", [this]() { return robot().surfaceWrench("RightGripper").force().z(); },
+                           Color::Blue));
 }
 
 bool AdmittanceSampleController::run()
 {
-  t_+=timeStep;
+  t_ += timeStep;
   // Update anchor frame for the KinematicInertial observer
   anchorFrame(sva::interpolate(robot().surfacePose("RightFoot"), robot().surfacePose("LeftFoot"), 0.5));
   anchorFrameReal(sva::interpolate(realRobot().surfacePose("RightFoot"), realRobot().surfacePose("LeftFoot"), 0.5));
