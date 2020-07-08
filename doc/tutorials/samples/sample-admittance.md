@@ -2,7 +2,7 @@
 layout: tutorials
 ---
 
-This tutorial explains usage and concepts of the `AdmittanceSample` sample controller provided with the framework. This sample demonstrates the use of the {% doxygen mc_tasks::force::AdmittanceTask %} to regulate forces on `JVR1` hand while pushing against a wall.
+This tutorial explains usage and concepts of the `AdmittanceSample` sample controller provided with the framework. This sample demonstrates the use of the {% doxygen mc_tasks::force::AdmittanceTask %} to regulate forces on `JVRC1` hand while pushing against a wall.
 
 This controller follows the following steps:
 
@@ -16,11 +16,11 @@ This controller follows the following steps:
 
 ## Running the controller
 
-Sources for this sample are located in `src/mc_control/samples/Admittance` with the following main files:
-- `etc/AdmittanceSample.in.yaml`: FSM YAML Configuration (see this [tutorial]({{site.baseurl}}/tutorials/recipes/fsm.html))
-- `src/states/UpdateWall.[h/cpp]`: C++ state that updates the wall position according to the robot's gripper position
+Sources for this sample are located in [src/mc_control/samples/Admittance](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance) with the following main files:
+- [etc/AdmittanceSample.in.yaml](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/etc/AdmittanceSample.in.yaml): FSM YAML Configuration (see this [tutorial]({{site.baseurl}}/tutorials/recipes/fsm.html))
+- [src/states/UpdateWall.h](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpcdateWall.h), [src/states/UpdateWall.cpp](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpcdateWall.cpp): C++ state that updates the wall position according to the robot's gripper position
 
-To run the sample, you need a dynamic simulator in order to simulate the force sensors. This tutorial is intended to be used with the {% link mc_openrtm %} and {% link Choreonoid %}, and the provided simulation file `sim_mc_wall.cnoid`. If you use another simulator, you will need to adapt the instructions, and create a scene with a wall `55cm` away from the robot.
+To run the sample, you need a dynamic simulator in order to simulate the force sensors. This tutorial is intended to be used with {% link mc_openrtm %} and {% link Choreonoid %}, and the provided simulation file `sim_mc_wall.cnoid`. If you use another simulator, you will need to adapt the instructions, and create a scene with a wall `55cm` away from the robot.
 
 First, you need the following `~/.config/mc_rtc/mc_rtc.yaml` file:
 
@@ -36,7 +36,7 @@ Then to run the sample, use:
 $ (roscore &) # Ensure you have a roscore running (for rviz visualization)
 $ cd /usr/local/share/hrpsys/samples/JVRC1
 $ choreonoid sim_mc_wall.cnoid
-$ roslauch mc_rtc_ticker controler_display.launch
+$ roslaunch mc_rtc_ticker controler_display.launch
 ```
 
 Then start the simulation by clicking on the green arrow in Choreonoid's interface. You should see the following output:
@@ -45,7 +45,7 @@ Then start the simulation by clicking on the green arrow in Choreonoid's interfa
   <video src="https://seafile.lirmm.fr/seafhttp/files/421a3d60-386d-47cb-87d0-8da2dafe5494/sample-admittance.mp4" controls />
 </div>
 
-The following graph depicts the results of the force tracking along the gripper's `z` axis. Note the spike at `t=6s` corresponding to an impact between the gripper and the wall. About `1s` later, the force target of `-20N` is realized, and tracked for a few seconds. Then the pressure is released. You might also have noticed that the measured force is not null, even when the end-effector is not yet in contact. What you're seeing here is the effect of the gripper's mas on the force-sensor measurements. In practice, you are expected to provide calibration files for your robot to be loaded by {% doxygen mc_rbdyn::ForceSensor %} so that the gripper's effect can be ignored.
+The following graph depicts the results of the force tracking along the gripper's `z` axis. Note the spike at `t=6s` corresponding to an impact between the gripper and the wall. About `1s` later, the force target of `-20N` is realized, and tracked for a few seconds. Then the pressure is released.
 
 <img src="img/admittance.svg" alt="admittance results" class="img-fluid" />
 
@@ -130,7 +130,7 @@ Next, the `RightHandPushAdmittance` state uses the {% doxygen mc_tasks::Admittan
         surface: RightGripper 
         # Tracks the forces along the normal axis of the gripper surface with an admittance coefficient of 0.001
         # Note the high-damping and low stiffness on that axis.
-        # All other axis are position controlled and will keep the current gripper position as far as possible
+        # All other axis are position controlled and will keep the current gripper position as much as possible 
         admittance: [0,0,0,0,0,0.001]
         stiffness: [10, 10, 10, 10, 10, 1]
         damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
@@ -189,7 +189,7 @@ In the next state's, we will use this updated wall position to ensure collision 
 
 ### Going back to the initial posture
 
-The remainder of the FSM is dedicated to getting the robot back to its initial configuration. First, to ensure a smooth transition, we release the pressure on the hand with the `RightHandReleaseAdmittance` until it reaches close to zero force, and then move the hand `10cm` backwards relative to its current position. Finally, we use the {% doxygen mc_control::fsm::HalfSittingState %} state to go back to the initial halfsitting posture. As we do not explicitly specify the hand motion, there is a risk that the hand could collide with the wall. To prevent this, we add a collision constraint between the hand and the wall:
+The remainder of the FSM is dedicated to getting the robot back to its initial configuration. First, to ensure a smooth transition, we release the pressure on the hand with the `RightHandReleaseAdmittance` until it reaches close to zero force, and then move the hand `10cm` backwards relative to its current position. Finally, we use the {% doxygen mc_control::fsm::HalfSittingState %} state to go back to the initial halfsitting posture. As we do not explicitly specify the hand motion, there is a risk that the hand could collide with the wall while going back to the half-sitting posture. To prevent this, we add a collision constraint between the hand and the wall:
 
 ```cpp
   RightHandMoveBack:

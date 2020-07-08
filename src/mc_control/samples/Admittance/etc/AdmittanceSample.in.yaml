@@ -32,7 +32,7 @@ robots:
 # General constraints, always on
 constraints:
 - type: contact
-- type: kinematics
+- type: dynamics
   damper: [0.1, 0.01, 0.5]
 - type: compoundJoint
 # Collision constraint

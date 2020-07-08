@@ -7,14 +7,6 @@
 #include <mc_control/CompletionCriteria.h>
 #include <mc_control/fsm/State.h>
 
-namespace mc_control
-{
-namespace fsm
-{
-struct Controller;
-} // namespace fsm
-} // namespace mc_control
-
 /*
  * Move an environment robot pose according to another robot's surface
  */
