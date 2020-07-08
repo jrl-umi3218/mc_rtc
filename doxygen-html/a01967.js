@@ -1,8 +1,7 @@
 var a01967 =
 [
-    [ "TrajectoryImpl", "a01967.html#aa5739c5b73ee002d3bd0857c1daf5695", null ],
-    [ "TrajectoryImpl", "a01967.html#ad07155be02930a5f4ca5ad25527f5180", null ],
-    [ "write", "a01967.html#ab4ad9750f804e593ee1fcc52e35ff0e1", null ],
-    [ "write_size", "a01967.html#addbe3e273eb652e9b31e8fb2d15d0738", null ],
-    [ "type", "a01967.html#ad6c1b7129408a35fa938b3a4e594e669", null ]
+    [ "StaticTableImpl", "a01967.html#a53e7fd555139aa959ce1b1888cdea868", null ],
+    [ "write", "a01967.html#aa1637233b6dfef48f4df4d34280865f8", null ],
+    [ "write_size", "a01967.html#a4c18cb0b2d452e4578ae4ee8150171db", null ],
+    [ "type", "a01967.html#a85d2e883cbe84a8eb19f9ff1099bcc84", null ]
 ];

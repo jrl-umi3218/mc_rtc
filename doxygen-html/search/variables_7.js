@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['g',['g',['../a01979.html#acf401312f7e9a75003519e34206904f6',1,'mc_rtc::gui::Color']]],
+  ['g',['g',['../a01983.html#acf401312f7e9a75003519e34206904f6',1,'mc_rtc::gui::Color']]],
   ['geometry',['geometry',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00587.html#a256eb0c67962f0e49c743df3314bef56',1,'mc_rbdyn_urdf::Visual']]],
   ['get_5ffn_5f',['get_fn_',['../a01815.html#a8a959ac2e5e7551b29b81b77034ea255',1,'mc_rtc::gui::DataElement::get_fn_()'],['../a01891.html#a6e0a97eb4969b6d697f5e3d4f957d886',1,'mc_rtc::gui::plot::impl::Ordinate::get_fn_()']]],
   ['get_5fx_5ffn_5f',['get_x_fn_',['../a01883.html#a06bb63c46c89243d82cbcb4a7323a3cb',1,'mc_rtc::gui::plot::impl::AbscissaOrdinate']]],
@@ -10,8 +10,8 @@ var searchData=
   ['global_5fplugins',['global_plugins',['../a01447.html#a9b7cb460139df0aa576f76bfb45e4bc2',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['goal_5f',['goal_',['../a01415.html#aabaccc34e1562ea3f396dc2105274b44',1,'mc_control::fsm::PauseState']]],
   ['gravity',['GRAVITY',['../a00742.html#a04b344c34834432afcfcc1ac86bff22c',1,'mc_rtc::constants::GRAVITY()'],['../a00742.html#acf271123cee2ac958b9ae0f9220ea422',1,'mc_rtc::constants::gravity()']]],
-  ['gray',['Gray',['../a01979.html#a4f74e46e6c7c8bcc08298e143ffeb25d',1,'mc_rtc::gui::Color']]],
-  ['green',['Green',['../a01979.html#abdba78af0ed851bf27d15fed39883f8f',1,'mc_rtc::gui::Color']]],
+  ['gray',['Gray',['../a01983.html#a4f74e46e6c7c8bcc08298e143ffeb25d',1,'mc_rtc::gui::Color']]],
+  ['green',['Green',['../a01983.html#abdba78af0ed851bf27d15fed39883f8f',1,'mc_rtc::gui::Color']]],
   ['grippers_5f',['grippers_',['../a01383.html#abd9bd9863a30fad30f940c0a6baeecab',1,'mc_control::fsm::Grippers']]],
   ['gui_5f',['gui_',['../a01391.html#a19e4c8d49c2b042b5e5b75064b4a5925',1,'mc_control::fsm::MessageState::gui_()'],['../a01467.html#a5761e783caf225454e03628b2533fc13',1,'mc_control::MCController::gui_()']]],
   ['gui_5fserver_5fpub_5furis',['gui_server_pub_uris',['../a01447.html#a669bd8f5926553a0091c2f2118d5d5cb',1,'mc_control::MCGlobalController::GlobalConfiguration']]],

@@ -13,10 +13,10 @@ var searchData=
   ['x_5fp_5ff',['X_p_f',['../a01579.html#a707f4a4c8178f9a626cdf802f744cd5e',1,'mc_rbdyn::ForceSensor']]],
   ['x_5fp_5fs',['X_p_s',['../a01571.html#a018981488a410e62be4605726f953507',1,'mc_rbdyn::Device']]],
   ['x_5fr2s_5fr1s',['X_r2s_r1s',['../a01563.html#a9deb8f52a9ea07b222b22102326589a3',1,'mc_rbdyn::Contact::X_r2s_r1s() const'],['../a01563.html#a24d2d5e3381e4e863bea3c3d5f66b9c5',1,'mc_rbdyn::Contact::X_r2s_r1s(const sva::PTransformd &amp;in)']]],
-  ['xmax',['xmax',['../a02283.html#adee46fe7d5c7596d13f2288c92a7a0c8',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
-  ['xmin',['xmin',['../a02283.html#a2c628b2b87c83e06392028092bd89107',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
+  ['xmax',['xmax',['../a02287.html#adee46fe7d5c7596d13f2288c92a7a0c8',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
+  ['xmin',['xmin',['../a02287.html#a2c628b2b87c83e06392028092bd89107',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
   ['xy',['XY',['../a00745.html#aff7557ff1a45292b67d02328c81bdde6',1,'mc_rtc::gui::plot::XY(const std::string &amp;name, GetXT get_x_fn, GetYT get_y_fn, Color color, Style style=Style::Solid, Side side=Side::Left)'],['../a00745.html#a93ee6aaded7dfd640df87a78e649062d',1,'mc_rtc::gui::plot::XY(const std::string &amp;name, GetXT get_x_fn, GetYT get_y_fn, GetColor get_color_fn, Style style=Style::Solid, Side side=Side::Left)']]],
   ['xytheta',['xytheta',['../a01339.html#a16b34b76a04260ab27ba965dbd6af346',1,'mc_control::ControllerClient::xytheta()'],['../a00743.html#aaaa2ebe2ecb490f266fe541318646561',1,'mc_rtc::gui::XYTheta(const std::string &amp;name, GetT get_fn)'],['../a00743.html#a98fa40132858d1d9c0091acb36ce9f32',1,'mc_rtc::gui::XYTheta(const std::string &amp;name, GetT get_fn, SetT set_fn)']]],
-  ['xythetaimpl',['XYThetaImpl',['../a02003.html#a6de2e9a332b75b696ddbd1167dc31d1b',1,'mc_rtc::gui::XYThetaImpl::XYThetaImpl(const std::string &amp;name, GetT get_fn, SetT set_fn)'],['../a02003.html#ad69684bdac6275e7cd47e84f786cac2d',1,'mc_rtc::gui::XYThetaImpl::XYThetaImpl()']]],
-  ['xythetaroimpl',['XYThetaROImpl',['../a01999.html#ac0153847ff6a36d76c47cae5292be192',1,'mc_rtc::gui::XYThetaROImpl::XYThetaROImpl(const std::string &amp;name, GetT get_fn)'],['../a01999.html#a17aa4be99cbd7e12a198638912b80726',1,'mc_rtc::gui::XYThetaROImpl::XYThetaROImpl()']]]
+  ['xythetaimpl',['XYThetaImpl',['../a02007.html#a6de2e9a332b75b696ddbd1167dc31d1b',1,'mc_rtc::gui::XYThetaImpl::XYThetaImpl(const std::string &amp;name, GetT get_fn, SetT set_fn)'],['../a02007.html#ad69684bdac6275e7cd47e84f786cac2d',1,'mc_rtc::gui::XYThetaImpl::XYThetaImpl()']]],
+  ['xythetaroimpl',['XYThetaROImpl',['../a02003.html#ac0153847ff6a36d76c47cae5292be192',1,'mc_rtc::gui::XYThetaROImpl::XYThetaROImpl(const std::string &amp;name, GetT get_fn)'],['../a02003.html#a17aa4be99cbd7e12a198638912b80726',1,'mc_rtc::gui::XYThetaROImpl::XYThetaROImpl()']]]
 ];

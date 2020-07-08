@@ -1,5 +1,5 @@
 var a02291 =
 [
-    [ "load", "a02291.html#a1528be809a0f45f51c25a46722a101bb", null ],
-    [ "save", "a02291.html#a569fbb0c9f4777d08b28cad40479fb7f", null ]
+    [ "first", "a02291.html#a720106ef8ea5446eee2a582d7d52eb2c", null ],
+    [ "second", "a02291.html#a8dad298937c721041146a906fdbddb68", null ]
 ];

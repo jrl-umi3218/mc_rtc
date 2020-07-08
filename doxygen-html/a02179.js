@@ -1,13 +1,10 @@
 var a02179 =
 [
-    [ "mu", "a02179.html#a9e1941c9323f825326c7f8d64fac14ac", null ],
-    [ "nr_generators", "a02179.html#a5c34937b82f901be184a1de7ae8d1dd9", null ],
-    [ "r1_body", "a02179.html#ad8c4a5aae685b15b8dffeddcb01aa9f7", null ],
-    [ "r1_index", "a02179.html#a91f4355799d2e97441538f28adf25071", null ],
-    [ "r1_points", "a02179.html#a7ffb13c3e88fdefbdf8ad51aab184c16", null ],
-    [ "r1_surface", "a02179.html#a7af4dca57bbecf5e3397e7ea4f11a360", null ],
-    [ "r2_body", "a02179.html#a30084dbbeaca445a811e2b169344919d", null ],
-    [ "r2_index", "a02179.html#aaaa28b666db138b8073c87f0367408ea", null ],
-    [ "r2_surface", "a02179.html#a7d179ea79ffefc9a499c3300b4fba396", null ],
-    [ "X_b1_b2", "a02179.html#a0c97419447f414150d56fb8cc8ea791e", null ]
+    [ "KinematicsConstraint", "a02179.html#ae4fa119dd4f6643ea9bfd6e71d100e48", null ],
+    [ "KinematicsConstraint", "a02179.html#a89801271d9d8e8288c6be32b13970f3f", null ],
+    [ "KinematicsConstraint", "a02179.html#a9772713ef63997c2ff16a754cdf34401", null ],
+    [ "addToSolver", "a02179.html#af5b445df5cd29d199cfda9031d5a468f", null ],
+    [ "removeFromSolver", "a02179.html#a559d44b398969ebc1c69f0ffd80a3569", null ],
+    [ "damperJointLimitsConstr", "a02179.html#a3febf798804706fce1efe1eac46c16f9", null ],
+    [ "jointLimitsConstr", "a02179.html#ab113d21083add766566decba27631820", null ]
 ];

@@ -1,6 +1,6 @@
 var a02103 =
 [
-    [ "~ConstraintSet", "a02103.html#ad979bb11e0faeba2c10d36d5a4c46e00", null ],
-    [ "addToSolver", "a02103.html#a8b2739907caaeb5d49ccaedc1665e3ca", null ],
-    [ "removeFromSolver", "a02103.html#aa7a3302adccb4d3183e829fd2754b75a", null ]
+    [ "CompoundJointConstraint", "a02103.html#a6bab2c52e39b3c37781091ff0477b554", null ],
+    [ "addToSolver", "a02103.html#ab5c96ef4ac5e418eed9e07ad0be00064", null ],
+    [ "removeFromSolver", "a02103.html#af01c6fabfd9fb7f818d62693aaaac1ed", null ]
 ];

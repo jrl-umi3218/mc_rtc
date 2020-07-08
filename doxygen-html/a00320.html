@@ -83,11 +83,14 @@ $(document).ready(function(){initNavTree('a00320.html','');});
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01959.html">mc_rtc::gui::TableImpl&lt; GetHeader, GetData &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01959.html">mc_rtc::gui::details::TableImpl&lt; GetHeader, GetData &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Table should display a table of heterogeneous data.  <a href="a01959.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01963.html">mc_rtc::gui::StaticTableImpl&lt; GetData &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01963.html">mc_rtc::gui::details::FormattedTableImpl&lt; GetHeader, GetFormat, GetData &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Table should display a table of heterogeneous data.  <a href="a01963.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01967.html">mc_rtc::gui::details::StaticTableImpl&lt; GetData &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Table should display a table of heterogeneous data.  <a href="a01967.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -97,17 +100,27 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00743"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html">mc_rtc::gui</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00744"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html">mc_rtc::gui::details</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5d44ab8c8d46b705c245ba949a841226"><td class="memTemplParams" colspan="2">template&lt;typename GetData &gt; </td></tr>
-<tr class="memitem:a5d44ab8c8d46b705c245ba949a841226"><td class="memTemplItemLeft" align="right" valign="top">StaticTableImpl&lt; GetData &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00743.html#a5d44ab8c8d46b705c245ba949a841226">mc_rtc::gui::Table</a> (const std::string &amp;name, std::vector&lt; std::string &gt; header, GetData get_data_fn)</td></tr>
-<tr class="memdesc:a5d44ab8c8d46b705c245ba949a841226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to a get a <a class="el" href="a01963.html" title="Table should display a table of heterogeneous data. ">StaticTableImpl</a>.  <a href="a00743.html#a5d44ab8c8d46b705c245ba949a841226">More...</a><br /></td></tr>
-<tr class="separator:a5d44ab8c8d46b705c245ba949a841226"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a275dbf8923840b302733adbdbba1c1ad"><td class="memTemplParams" colspan="2">template&lt;typename GetHeader , typename GetData &gt; </td></tr>
-<tr class="memitem:a275dbf8923840b302733adbdbba1c1ad"><td class="memTemplItemLeft" align="right" valign="top">TableImpl&lt; GetHeader, GetData &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00743.html#a275dbf8923840b302733adbdbba1c1ad">mc_rtc::gui::Table</a> (const std::string &amp;name, GetHeader get_header_fn, GetData get_data_fn)</td></tr>
-<tr class="memdesc:a275dbf8923840b302733adbdbba1c1ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to get a <a class="el" href="a01959.html" title="Table should display a table of heterogeneous data. ">TableImpl</a>.  <a href="a00743.html#a275dbf8923840b302733adbdbba1c1ad">More...</a><br /></td></tr>
-<tr class="separator:a275dbf8923840b302733adbdbba1c1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05cd899ebf8c1a1bf56acd3f44ce0b57"><td class="memTemplParams" colspan="2">template&lt;typename GetData &gt; </td></tr>
+<tr class="memitem:a05cd899ebf8c1a1bf56acd3f44ce0b57"><td class="memTemplItemLeft" align="right" valign="top">details::StaticTableImpl&lt; GetData &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00743.html#a05cd899ebf8c1a1bf56acd3f44ce0b57">mc_rtc::gui::Table</a> (const std::string &amp;name, std::vector&lt; std::string &gt; header, GetData get_data_fn)</td></tr>
+<tr class="memdesc:a05cd899ebf8c1a1bf56acd3f44ce0b57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to a get a StaticTableImpl.  <a href="a00743.html#a05cd899ebf8c1a1bf56acd3f44ce0b57">More...</a><br /></td></tr>
+<tr class="separator:a05cd899ebf8c1a1bf56acd3f44ce0b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d55934be28cf780ebdd662095eb5d1a"><td class="memTemplParams" colspan="2">template&lt;typename GetData &gt; </td></tr>
+<tr class="memitem:a2d55934be28cf780ebdd662095eb5d1a"><td class="memTemplItemLeft" align="right" valign="top">details::StaticTableImpl&lt; GetData &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00743.html#a2d55934be28cf780ebdd662095eb5d1a">mc_rtc::gui::Table</a> (const std::string &amp;name, std::vector&lt; std::string &gt; header, std::vector&lt; std::string &gt; format, GetData get_data_fn)</td></tr>
+<tr class="memdesc:a2d55934be28cf780ebdd662095eb5d1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to a get a StaticTableImpl with format.  <a href="a00743.html#a2d55934be28cf780ebdd662095eb5d1a">More...</a><br /></td></tr>
+<tr class="separator:a2d55934be28cf780ebdd662095eb5d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25d7b1c4f525b8357ff241d726e506b2"><td class="memTemplParams" colspan="2">template&lt;typename GetHeader , typename GetData &gt; </td></tr>
+<tr class="memitem:a25d7b1c4f525b8357ff241d726e506b2"><td class="memTemplItemLeft" align="right" valign="top">details::TableImpl&lt; GetHeader, GetData &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00743.html#a25d7b1c4f525b8357ff241d726e506b2">mc_rtc::gui::Table</a> (const std::string &amp;name, GetHeader get_header_fn, GetData get_data_fn)</td></tr>
+<tr class="memdesc:a25d7b1c4f525b8357ff241d726e506b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to get a TableImpl.  <a href="a00743.html#a25d7b1c4f525b8357ff241d726e506b2">More...</a><br /></td></tr>
+<tr class="separator:a25d7b1c4f525b8357ff241d726e506b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6785282ae9524556f7069b9a87076eef"><td class="memTemplParams" colspan="2">template&lt;typename GetHeader , typename GetFormat , typename GetData &gt; </td></tr>
+<tr class="memitem:a6785282ae9524556f7069b9a87076eef"><td class="memTemplItemLeft" align="right" valign="top">details::FormattedTableImpl&lt; GetHeader, GetFormat, GetData &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00743.html#a6785282ae9524556f7069b9a87076eef">mc_rtc::gui::Table</a> (const std::string &amp;name, GetHeader get_header_fn, GetFormat get_format_fn, GetData get_data_fn)</td></tr>
+<tr class="memdesc:a6785282ae9524556f7069b9a87076eef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to get a FormattedTableImpl.  <a href="a00743.html#a6785282ae9524556f7069b9a87076eef">More...</a><br /></td></tr>
+<tr class="separator:a6785282ae9524556f7069b9a87076eef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -116,7 +129,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00320.html">Table.h</a></li>
-    <li class="footer">Generated on Tue Jul 7 2020 11:19:01 for mc_rtc by
+    <li class="footer">Generated on Wed Jul 8 2020 07:14:48 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

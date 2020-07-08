@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['vectororientationtask',['VectorOrientationTask',['../a02363.html',1,'mc_tasks']]],
+  ['vectororientationtask',['VectorOrientationTask',['../a02367.html',1,'mc_tasks']]],
   ['visual',['Visual',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00587.html',1,'mc_rbdyn_urdf']]],
   ['visualmap',['VisualMap',['../a01659.html',1,'mc_rbdyn']]],
   ['voidcallbackelement',['VoidCallbackElement',['../a01827.html',1,'mc_rtc::gui']]],

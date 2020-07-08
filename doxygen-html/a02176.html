@@ -70,29 +70,27 @@ $(document).ready(function(){initNavTree('a02179.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">mc_solver::ContactMsg Member List</div>  </div>
+<div class="title">mc_solver::KinematicsConstraint Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02179.html">mc_solver::ContactMsg</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="a02179.html">mc_solver::KinematicsConstraint</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02179.html#a9e1941c9323f825326c7f8d64fac14ac">mu</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02179.html#a5c34937b82f901be184a1de7ae8d1dd9">nr_generators</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02179.html#ad8c4a5aae685b15b8dffeddcb01aa9f7">r1_body</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02179.html#a91f4355799d2e97441538f28adf25071">r1_index</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02179.html#a7ffb13c3e88fdefbdf8ad51aab184c16">r1_points</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02179.html#a7af4dca57bbecf5e3397e7ea4f11a360">r1_surface</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02179.html#a30084dbbeaca445a811e2b169344919d">r2_body</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02179.html#aaaa28b666db138b8073c87f0367408ea">r2_index</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02179.html#a7d179ea79ffefc9a499c3300b4fba396">r2_surface</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02179.html#a0c97419447f414150d56fb8cc8ea791e">X_b1_b2</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::ContactMsg</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02179.html#af5b445df5cd29d199cfda9031d5a468f">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02179.html">mc_solver::KinematicsConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02179.html#a3febf798804706fce1efe1eac46c16f9">damperJointLimitsConstr</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02179.html#ab113d21083add766566decba27631820">jointLimitsConstr</a></td><td class="entry"><a class="el" href="a02179.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02179.html#ae4fa119dd4f6643ea9bfd6e71d100e48">KinematicsConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double timeStep)</td><td class="entry"><a class="el" href="a02179.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02179.html#a89801271d9d8e8288c6be32b13970f3f">KinematicsConstraint</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double timeStep, const std::array&lt; double, 3 &gt; &amp;damper, double velocityPercent=1.0)</td><td class="entry"><a class="el" href="a02179.html">mc_solver::KinematicsConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02179.html#a9772713ef63997c2ff16a754cdf34401">KinematicsConstraint</a>()</td><td class="entry"><a class="el" href="a02179.html">mc_solver::KinematicsConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02179.html#a559d44b398969ebc1c69f0ffd80a3569">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02179.html">mc_solver::KinematicsConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02107.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02107.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 7 2020 11:19:02 for mc_rtc by
+    <li class="footer">Generated on Wed Jul 8 2020 07:14:49 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
