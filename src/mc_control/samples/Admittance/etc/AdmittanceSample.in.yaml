@@ -25,7 +25,9 @@ robots:
   wall:
     module: env/ground
     init_pos:
-      translation: [0.55, 0.0, 0.0]
+      # The wall position is put 5cm in front of choreonoid's one to
+      # demonstrate updating it using kinematics information in UpdateWallFromKinematics state
+      translation: [0.50, 0.0, 0.0]
       rotation: [0.0, -1.57, 0.0]
 # General constraints, always on
 constraints:
@@ -82,16 +84,6 @@ states:
   RightHandToWall:
     base: StandingBase
     tasks:
-      CoM:
-        type: com
-        above: [LeftFoot, RightFoot]
-        weight: 2000
-        stiffness: 5
-      KeepChest:
-        type: orientation
-        body: WAIST_R_S
-        weight: 100
-        stiffness: 1
       RightHandTrajectory:
         type: bspline_trajectory
         setupMode: false
@@ -115,7 +107,7 @@ states:
     tasks:
       RightHandAdmittance:
         type: admittance
-        surface: RightGripper 
+        surface: RightGripper
         stiffness: [10, 10, 10, 10, 10, 1]
         damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
         admittance: [0,0,0,0,0,0.001]
@@ -131,17 +123,6 @@ states:
             force: [.nan, .nan, -20]
             couple: [.nan, .nan, .nan]
 
-  # Update wall position along the x world axis based on the current position of the gripper surface
-  # This is used to adjust the model wall position according to the position where the robot touched the real
-  # wall. We exploit this later for collision avoidance between the hand and the wall
-  UpdateWallFromKinematics:
-    base: Parallel 
-    states: [RightHandPushAdmittance, UpdateWall]
-    configs:
-      UpdateWall:
-        surface: RightGripper
-        moveRobot: wall
-
   # Regulate force to 20N for 5 seconds
   RightHandKeepAdmittance:
     base: Parallel
@@ -149,8 +130,20 @@ states:
     configs:
       Pause:
         duration: 5
-        
-  # Decrease applied force until we reach near zero force 
+
+  # Update wall position along the x world axis based on the current position of the gripper surface
+  # This is used to adjust the model wall position according to the position where the robot touched the real
+  # wall. We exploit this later for collision avoidance between the hand and the wall
+  UpdateWallFromKinematics:
+    base: Parallel
+    states: [RightHandPushAdmittance, UpdateWall]
+    configs:
+      UpdateWall:
+        body: R_LINDEX_S
+        moveRobot: wall
+
+
+  # Decrease applied force until we reach near zero force
   RightHandReleaseAdmittance:
     base: RightHandPushAdmittance
     tasks:
@@ -204,14 +197,14 @@ states:
 
 transitions:
 - [RightHandToWall,            OK, RightHandPushAdmittance, Auto]
-- [RightHandPushAdmittance,    OK, UpdateWallFromKinematics, Auto]
-- [UpdateWallFromKinematics,   OK, RightHandKeepAdmittance, Auto]
-- [RightHandKeepAdmittance,    OK, RightHandReleaseAdmittance, Auto]
+- [RightHandPushAdmittance,    OK, RightHandKeepAdmittance, Auto]
+- [RightHandKeepAdmittance,    OK, UpdateWallFromKinematics, Auto]
+- [UpdateWallFromKinematics,   OK, RightHandReleaseAdmittance, Auto]
 - [RightHandReleaseAdmittance, OK, RightHandMoveBack, Auto]
 - [RightHandMoveBack,          OK, StandingHalfSitting, Auto]
 
 # Initial state
-init: RightHandToWall 
+init: RightHandToWall
 
 # Observers pipeline
 RunObservers: [Encoder, KinematicInertial]

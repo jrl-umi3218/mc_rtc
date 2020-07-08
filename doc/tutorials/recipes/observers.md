@@ -273,7 +273,7 @@ In Rviz, create a new robot with the following parameters:
 
 # Creating your own Observer
 
-All observers must inherit from `mc_observers::Observer` ([doc]({{site_base}}/mc_rtc/doxygen.html#a01940)) and implement the following `virtual` functions:
+All observers must inherit from {% doxygen mc_observers::Observer %} and implement the following `virtual` functions:
 
 - `virtual void reset (const mc_control::MCController &ctl)` : reset the observers state
 - `virtual bool run (const mc_control::MCController &ctl)` : estimate the state, but does not update the real robot instance
