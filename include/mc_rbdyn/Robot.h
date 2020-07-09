@@ -466,14 +466,51 @@ public:
    */
   bool hasForceSensor(const std::string & name) const;
 
-  /** Check if the body has a force sensor attached to it
+  /** Check if the body has a force sensor directly attached to it
    *
-   * @param body Name of the body
+   * @param body Name of the body to which the sensor is directly attached
+   *
+   * @see bodyHasIndirectForceSensor(const std::string &) if you wish to check whether a
+   * sensor is indirectly attached to a body
    *
    * @returns True if the body has a force sensor attached to it, false
    * otherwise
    */
   bool bodyHasForceSensor(const std::string & body) const;
+
+  /**
+   * @brief Checks if the surface has a force sensor directly attached to it
+   *
+   * @param surface Name of the surface to which the sensor is directly attached
+   *
+   * @see surfaceHasIndirectForceSensor(const std::string &) if you wish to check whether a
+   * sensor is indirectly attached to a body
+   *
+   * @return True if the surface has a force sensor attached to it, false
+   * otherwise
+   */
+  bool surfaceHasForceSensor(const std::string & surface) const;
+
+  /** Check if the body has a force sensor attached to it (directly or
+   * indirectly)
+   *
+   * @param body Name of the body to which the sensor is (directly or
+   * indirectly) attached
+   *
+   * @returns True if the body has a force sensor attached to it, false
+   * otherwise
+   */
+  bool bodyHasIndirectForceSensor(const std::string & body) const;
+
+  /** Check if the surface has a force sensor attached to it (directly or
+   * indirectly)
+   *
+   * @param surface Name of the surface to which the sensor is directly attached
+   *
+   * @returns True if the surface has a force sensor attached to it, false
+   * otherwise
+   */
+  bool surfaceHasIndirectForceSensor(const std::string & surface) const;
 
   /** Return a force sensor by name
    *
@@ -497,30 +534,49 @@ public:
    *
    * @throws If no sensor is directly attached to this body
    *
-   * @note if the body in indirectly attached to a body, use
-   * findBodyForceSensor() instead
+   * @see ForceSensor & indirectBodyForceSensor(const std::string & body);
+   * To get a sensor directly or indirectly attached to the body.
    */
   ForceSensor & bodyForceSensor(const std::string & body);
 
   /** Const variant */
   const ForceSensor & bodyForceSensor(const std::string & body) const;
 
-  /**
-   * @brief Looks for a force sensor from a body up the kinematic chain until the root.
+  /** Return a force sensor attached to the provided surface
    *
-   * @param body Name of body indirectly attached to the sensor
+   * @param surface Name of the surface to which the sensor is attached
+   *
+   * @return The attached sensor
+   *
+   * @throws If no sensor is directly attached to this surface
+   *
+   * @see ForceSensor & indirectBodyForceSensor(const std::string & surface);
+   * To get a sensor directly or indirectly attached to the surface.
+   */
+  ForceSensor & surfaceForceSensor(const std::string & surfaceName);
+  /** Const variant */
+  const ForceSensor & surfaceForceSensor(const std::string & surfaceName) const;
+
+  /**
+   * @brief Return a force sensor directly or indirectly attached to a body
+   *
+   * When the sensor is not directly attached to the body, look up the kinematic chain until the root until a sensor is
+   * found.
    *
    * @return The sensor to which the body is indirectly attached
    *
    * @throws If no sensor is found between the body and the root
    */
-  ForceSensor & findBodyForceSensor(const std::string & body);
+  ForceSensor & indirectBodyForceSensor(const std::string & body);
 
   /** Const variant */
-  const ForceSensor & findBodyForceSensor(const std::string & body) const;
+  const ForceSensor & indirectBodyForceSensor(const std::string & body) const;
 
   /**
-   * @brief Looks for a force sensor from a surface up the kinematic chain until the root.
+   * @brief Return a force sensor directly or indirectly attached to a surface
+   *
+   * When the sensor is not directly attached to the surface, look up the kinematic chain until the root until a sensor
+   * is found.
    *
    * @param surface Name of surface indirectly attached to the sensor
    *
@@ -528,10 +584,10 @@ public:
    *
    * @throws If no sensor is found between the surface and the root
    */
-  ForceSensor & findSurfaceForceSensor(const std::string & surface);
+  ForceSensor & indirectSurfaceForceSensor(const std::string & surface);
 
   /** Const variant */
-  const ForceSensor & findSurfaceForceSensor(const std::string & surface) const;
+  const ForceSensor & indirectSurfaceForceSensor(const std::string & surface) const;
 
   /** Returns all force sensors */
   std::vector<ForceSensor> & forceSensors();
@@ -856,6 +912,16 @@ protected:
 
   /** Used to set the collision transforms correctly */
   void fixCollisionTransforms();
+
+  /**
+   * @brief Finds the name of the body to which a force sensor is attached,
+   * starting from the provided body and going up the kinematic tree.
+   *
+   * @param bodyName Name of the body to which the sensor is attached
+   *
+   * @return Body name to which the sensor is attached when found. Empty string otherwise
+   */
+  std::string findIndirectForceSensorBodyName(const std::string & bodyName) const;
 
 private:
   Robot(const Robot &) = delete;

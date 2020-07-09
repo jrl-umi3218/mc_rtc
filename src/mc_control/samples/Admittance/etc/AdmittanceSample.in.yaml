@@ -1,0 +1,211 @@
+###
+# Sample usage of the AdmittanceTask
+###
+---
+## If true, the FSM transitions are managed by an external tool
+Managed: false
+# If true and the FSM is self-managed, transitions should be triggered
+StepByStep: false
+# Change idle behaviour, if true the state is kept until transition,
+# otherwise the FSM holds the last state until transition
+IdleKeepState: true
+# Where to look for state libraries
+StatesLibraries:
+- "@MC_STATES_INSTALL_PREFIX@"
+- "@Admittance_STATES_INSTALL_PREFIX@"
+# Where to look for state files
+StatesFiles:
+- "@MC_STATES_INSTALL_PREFIX@/data"
+- "@Admittance_STATES_INSTALL_PREFIX@/data"
+
+# Additional robots to load
+robots:
+  ground:
+    module: env/ground
+  wall:
+    module: env/ground
+    init_pos:
+      # The wall position is put 5cm in front of choreonoid's one to
+      # demonstrate updating it using kinematics information in UpdateWallFromKinematics state
+      translation: [0.50, 0.0, 0.0]
+      rotation: [0.0, -1.57, 0.0]
+# General constraints, always on
+constraints:
+- type: contact
+- type: dynamics
+  damper: [0.1, 0.01, 0.5]
+- type: compoundJoint
+# Collision constraint
+collisions:
+- type: collision
+  useMinimal: true
+- type: collision
+  r1: jvrc1
+  r2: wall
+  collisions:
+    - body1: L_WRIST_Y_S
+      body2: ground
+      iDist: 0.5
+      sDist: 0.02
+      damping: 0.0
+# Initial set of contacts
+contacts:
+- r1: jvrc1
+  r1Surface: LeftFoot
+  r2: ground
+  r2Surface: AllGround
+- r1: jvrc1
+  r1Surface: RightFoot
+  r2: ground
+  r2Surface: AllGround
+jvrc1:
+  posture:
+    stiffness: 1.0
+    weight: 10.0
+
+# Implement some additional text states
+states:
+  # Keep the CoM centered between the feet, and the chest upright
+  StandingBase:
+    base: MetaTasks
+    tasks:
+      CoM:
+        type: com
+        above: [LeftFoot, RightFoot]
+        weight: 2000
+        stiffness: 5
+      KeepChest:
+        type: orientation
+        body: WAIST_R_S
+        weight: 100
+        stiffness: 1
+
+  # Trajectory to bring hand close to the wall
+  RightHandToWall:
+    base: StandingBase
+    tasks:
+      RightHandTrajectory:
+        type: bspline_trajectory
+        setupMode: false
+        surface: RightGripper
+        weight: 1000
+        stiffness: 50
+        duration: 4
+        dimWeight: [1,1,1, 1, 0.5, 0.5]
+        displaySamples: 100
+        target:
+          translation: [0.45, -0.4, 1.1]
+          rotation: [1.57, 0, 1.57]
+        controlPoints: [[0.17, -0.5, 0.85]]
+        # oriWaypoints: [[3.5, [-1.57,  0, 1.57]]]
+        completion:
+          timeElapsed: true
+
+  # Increase applied force until we reach 20N
+  RightHandPushAdmittance:
+    base: StandingBase
+    tasks:
+      RightHandAdmittance:
+        type: admittance
+        surface: RightGripper
+        stiffness: [10, 10, 10, 10, 10, 1]
+        damping: [6.3, 6.3, 6.3, 6.3, 6.3, 300]
+        admittance: [0,0,0,0,0,0.001]
+        maxVel:
+          linear: [0.2, 0.2, 0.5]
+          angular: [0.2, 0.2, 0.2]
+        wrench:
+         force: [0, 0, -20]
+         couple: [0, 0, 0]
+        targetRotation: [1.57, 0, 1.57]
+        completion:
+          wrench:
+            force: [.nan, .nan, -20]
+            couple: [.nan, .nan, .nan]
+
+  # Regulate force to 20N for 5 seconds
+  RightHandKeepAdmittance:
+    base: Parallel
+    states: [RightHandPushAdmittance, Pause]
+    configs:
+      Pause:
+        duration: 5
+
+  # Update wall position along the x world axis based on the current position of the gripper surface
+  # This is used to adjust the model wall position according to the position where the robot touched the real
+  # wall. We exploit this later for collision avoidance between the hand and the wall
+  UpdateWallFromKinematics:
+    base: Parallel
+    states: [RightHandPushAdmittance, UpdateWall]
+    configs:
+      UpdateWall:
+        body: R_LINDEX_S
+        moveRobot: wall
+
+
+  # Decrease applied force until we reach near zero force
+  RightHandReleaseAdmittance:
+    base: RightHandPushAdmittance
+    tasks:
+      RightHandAdmittance:
+        wrench:
+         force: [0, 0, -1]
+         couple: [0, 0, 0]
+        completion:
+          wrench:
+            force: [.nan, .nan, -1]
+            couple: [.nan, .nan, .nan]
+
+  # Move hand 10cm back
+  # Add collision avoidance between right hand and the wall.
+  # Note that the wall position was updated using UpdateWallFromKinematics and thus corresponds to the actual wall position
+  RightHandMoveBack:
+    base: StandingBase
+    tasks:
+      RightHandMoveBack:
+        type: surfaceTransform
+        weight: 1000
+        stiffness: 5
+        surface: RightGripper
+        moveWorld:
+          translation: [-0.1, 0, 0]
+          rotation: [0,0,0]
+        completion:
+          AND:
+           - eval: 0.01
+           - speed: 0.01
+    AddCollisionsAfter:
+      - r1: jvrc1
+        r2: wall
+        collisions:
+          - body1: R_WRIST_Y_S
+            body2: ground
+            iDist: 0.15
+            sDist: 0.05
+            damping: 0.0
+
+  # Go back to halfsitting
+  StandingHalfSitting:
+    base: Parallel
+    states: [StandingBase, HalfSitting]
+    configs:
+      HalfSitting:
+        stiffness: 5
+        completion:
+          eval: 0.01
+
+
+transitions:
+- [RightHandToWall,            OK, RightHandPushAdmittance, Auto]
+- [RightHandPushAdmittance,    OK, RightHandKeepAdmittance, Auto]
+- [RightHandKeepAdmittance,    OK, UpdateWallFromKinematics, Auto]
+- [UpdateWallFromKinematics,   OK, RightHandReleaseAdmittance, Auto]
+- [RightHandReleaseAdmittance, OK, RightHandMoveBack, Auto]
+- [RightHandMoveBack,          OK, StandingHalfSitting, Auto]
+
+# Initial state
+init: RightHandToWall
+
+# Observers pipeline
+RunObservers: [Encoder, KinematicInertial]
+UpdateObservers: [Encoder, KinematicInertial]

@@ -530,46 +530,31 @@ Eigen::Vector3d Robot::comAcceleration() const
 
 sva::ForceVecd Robot::bodyWrench(const std::string & bodyName) const
 {
-  if(hasForceSensor(bodyName))
-  {
+  if(bodyHasForceSensor(bodyName))
+  { // Faster computation when there is a force sensor directly attached to the body
     const auto & fs = bodyForceSensor(bodyName);
     sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
-    sva::PTransformd X_fsactual_surf = fs.X_fsactual_parent();
-    return X_fsactual_surf.dualMul(w_fsactual);
+    sva::PTransformd X_fsactual_body = fs.X_fsactual_parent();
+    return X_fsactual_body.dualMul(w_fsactual);
   }
   else
   { /* If a force sensor is not directly attached to the body,
        attempt to find it up the kinematic tree */
-    const auto & fs = findBodyForceSensor(bodyName);
+    const auto & fs = indirectBodyForceSensor(bodyName);
     sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
     const auto & X_0_body = bodyPosW(bodyName);
     const auto & X_0_parent = bodyPosW(fs.parentBody());
     const auto X_parent_body = X_0_body * X_0_parent.inv();
-    sva::PTransformd X_fsactual_surf = X_parent_body * fs.X_fsactual_parent();
-    return X_fsactual_surf.dualMul(w_fsactual);
+    sva::PTransformd X_fsactual_body = X_parent_body * fs.X_fsactual_parent();
+    return X_fsactual_body.dualMul(w_fsactual);
   }
 }
 
 sva::ForceVecd Robot::surfaceWrench(const std::string & surfaceName) const
 {
-  const auto & bodyName = surface(surfaceName).bodyName();
-  if(hasForceSensor(bodyName))
-  {
-    const auto & fs = bodyForceSensor(bodyName);
-    sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
-    sva::PTransformd X_fsactual_surf = surface(surfaceName).X_b_s() * fs.X_fsactual_parent();
-    return X_fsactual_surf.dualMul(w_fsactual);
-  }
-  else
-  { /* If a force sensor is not directly attached to the body,
-       attempt to find it up the kinematic tree */
-    const auto & fs = findBodyForceSensor(bodyName);
-    sva::ForceVecd w_fsactual = fs.wrenchWithoutGravity(*this);
-    const auto & X_0_fsParent = bodyPosW(fs.parentBody());
-    const auto X_fsParent_surf = surface(surfaceName).X_0_s(*this) * X_0_fsParent.inv();
-    sva::PTransformd X_fsactual_surf = X_fsParent_surf * fs.X_fsactual_parent();
-    return X_fsactual_surf.dualMul(w_fsactual);
-  }
+  const auto & surface = this->surface(surfaceName);
+  const auto & bodyName = surface.bodyName();
+  return surface.X_b_s().dualMul(bodyWrench(bodyName));
 }
 
 Eigen::Vector2d Robot::cop(const std::string & surfaceName, double min_pressure) const
@@ -750,6 +735,21 @@ bool Robot::bodyHasForceSensor(const std::string & body) const
   return bodyForceSensors_.count(body) != 0;
 }
 
+bool Robot::bodyHasIndirectForceSensor(const std::string & body) const
+{
+  return bodyHasForceSensor(body) || findIndirectForceSensorBodyName(body).size();
+}
+
+bool Robot::surfaceHasForceSensor(const std::string & surfaceName) const
+{
+  return bodyHasForceSensor(surface(surfaceName).bodyName());
+}
+
+bool Robot::surfaceHasIndirectForceSensor(const std::string & surfaceName) const
+{
+  return bodyHasIndirectForceSensor(surface(surfaceName).bodyName());
+}
+
 ForceSensor & Robot::forceSensor(const std::string & name)
 {
   return const_cast<ForceSensor &>(static_cast<const Robot *>(this)->forceSensor(name));
@@ -770,7 +770,17 @@ const ForceSensor & Robot::bodyForceSensor(const std::string & body) const
   return forceSensors_.at(bodyForceSensors_.at(body));
 }
 
-const ForceSensor & Robot::findBodyForceSensor(const std::string & body) const
+ForceSensor & Robot::surfaceForceSensor(const std::string & surfaceName)
+{
+  return bodyForceSensor(surface(surfaceName).bodyName());
+}
+
+const ForceSensor & Robot::surfaceForceSensor(const std::string & surfaceName) const
+{
+  return bodyForceSensor(surface(surfaceName).bodyName());
+}
+
+std::string Robot::findIndirectForceSensorBodyName(const std::string & body) const
 {
   int nextIndex = mb().bodyIndexByName().at(body);
   while(nextIndex >= 0)
@@ -778,28 +788,37 @@ const ForceSensor & Robot::findBodyForceSensor(const std::string & body) const
     const auto & b = mb().body(nextIndex);
     if(bodyHasForceSensor(b.name()))
     {
-      return bodyForceSensor(b.name());
+      return b.name();
     }
     nextIndex = mb().parent(nextIndex);
   }
-  mc_rtc::log::error_and_throw<std::runtime_error>("No force sensor (directly or indirectly) attached to body {}",
-                                                   body);
+  return std::string{};
 }
 
-ForceSensor & Robot::findBodyForceSensor(const std::string & body)
+const ForceSensor & Robot::indirectBodyForceSensor(const std::string & body) const
 {
-  return const_cast<ForceSensor &>(static_cast<const Robot *>(this)->bodyForceSensor(body));
+  const auto bodyName = findIndirectForceSensorBodyName(body);
+  if(bodyName.empty())
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("No force sensor (directly or indirectly) attached to body {}",
+                                                     body);
+  }
+  return bodyForceSensor(bodyName);
 }
 
-const ForceSensor & Robot::findSurfaceForceSensor(const std::string & surface) const
+ForceSensor & Robot::indirectBodyForceSensor(const std::string & body)
 {
-  const auto & bodyName = this->surface(surface).bodyName();
-  return findBodyForceSensor(bodyName);
+  return const_cast<ForceSensor &>(static_cast<const Robot *>(this)->indirectBodyForceSensor(body));
 }
 
-ForceSensor & Robot::findSurfaceForceSensor(const std::string & surface)
+const ForceSensor & Robot::indirectSurfaceForceSensor(const std::string & surfaceName) const
 {
-  return const_cast<ForceSensor &>(static_cast<const Robot *>(this)->findSurfaceForceSensor(surface));
+  return indirectBodyForceSensor(surface(surfaceName).bodyName());
+}
+
+ForceSensor & Robot::indirectSurfaceForceSensor(const std::string & surface)
+{
+  return const_cast<ForceSensor &>(static_cast<const Robot *>(this)->indirectSurfaceForceSensor(surface));
 }
 
 bool Robot::hasSurface(const std::string & surface) const

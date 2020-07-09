@@ -115,6 +115,14 @@
       id: com-constraint
       title: Constraining the accessible region of the CoM
 -
+  id: samples
+  title: Samples
+  desc: This section explains the sample controllers
+  tutorials:
+    -
+      id: sample-admittance
+      title: Admittance sample controller
+-
   id: advanced
   title: Advanced topics
   desc: These tutorials cover specific topics that most user should not have to deal with.
