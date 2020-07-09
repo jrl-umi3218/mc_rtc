@@ -1,0 +1,509 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Admittance sample controller - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col">
+        <ul>
+          
+          <li>Introduction</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework usage</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+              
+            
+          </ul>
+          
+          <li>Framework tools</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+              
+            
+          </ul>
+          
+          <li>Control recipes</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-main-states.html">Main FSM states</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/datastore.html">DataStore: Sharing Objects</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/observers.html">Using the observers pipeline</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">Using the LIPM Stabilizer</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+              
+            
+          </ul>
+          
+          <li>Samples</li>
+          <ul>
+            
+              
+              <li><strong>Admittance sample controller</strong></li>
+                
+              
+            
+          </ul>
+          
+          <li>Advanced topics</li>
+          <ul>
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+              
+            
+              
+              <li><a href="/mc_rtc/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+              
+            
+          </ul>
+          
+        </ul>
+      </div>
+      <div class="col-9">
+        <h1>Admittance sample controller</h1>
+
+        <p>This tutorial explains usage and concepts of the <code class="highlighter-rouge">AdmittanceSample</code> sample controller provided with the framework. This sample demonstrates the use of the <a href="/mc_rtc/doxygen.html#a02251" target="blank_">mc_tasks::force::AdmittanceTask</a> to regulate forces on <code class="highlighter-rouge">JVRC1</code> hand while pushing against a wall.</p>
+
+<p>This controller follows the following steps:</p>
+
+<ol>
+  <li>Trajectory to place the hand in front of the wall</li>
+  <li>Use of <code class="highlighter-rouge">AdmittanceTask</code> to establish contact</li>
+  <li>Regulation of the normal force to <code class="highlighter-rouge">20N</code></li>
+  <li>Updating the wall position according to kinematics</li>
+  <li>Decreasing the force to prepare for releasing the hand</li>
+  <li>Moving hand back</li>
+  <li>Going back to halfsitting posture (with hand-wall collision avoidance)</li>
+</ol>
+
+<h2 id="running-the-controller">Running the controller</h2>
+
+<p>Sources for this sample are located in <a href="https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance">src/mc_control/samples/Admittance</a> with the following main files:</p>
+<ul>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/etc/AdmittanceSample.in.yaml">etc/AdmittanceSample.in.yaml</a>: FSM YAML Configuration (see this <a href="/mc_rtc/tutorials/recipes/fsm.html">tutorial</a>)</li>
+  <li><a href="https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpcdateWall.h">src/states/UpdateWall.h</a>, <a href="https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpcdateWall.cpp">src/states/UpdateWall.cpp</a>: C++ state that updates the wall position according to the robot’s gripper position</li>
+</ul>
+
+<p>To run the sample, you need a dynamic simulator in order to simulate the force sensors. This tutorial is intended to be used with <a href="https://github.com/jrl-umi3218/mc_openrtm" target="blank_">mc_openrtm</a> and <a href="https://choreonoid.org/en/" target="blank_">Choreonoid</a>, and the provided simulation file <code class="highlighter-rouge">sim_mc_wall.cnoid</code>. If you use another simulator, you will need to adapt the instructions, and create a scene with a wall <code class="highlighter-rouge">55cm</code> away from the robot.</p>
+
+<p>First, you need the following <code class="highlighter-rouge">~/.config/mc_rtc/mc_rtc.yaml</code> file:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">AdmittanceSample</span>
+<span class="na">Timestep</span><span class="pi">:</span> <span class="m">0.005</span>
+</code></pre></div></div>
+
+<p>Then to run the sample, use:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="o">(</span>roscore &amp;<span class="o">)</span> <span class="c"># Ensure you have a roscore running (for rviz visualization)</span>
+<span class="nv">$ </span><span class="nb">cd</span> /usr/local/share/hrpsys/samples/JVRC1
+<span class="nv">$ </span>choreonoid sim_mc_wall.cnoid
+<span class="nv">$ </span>roslaunch mc_rtc_ticker controler_display.launch
+</code></pre></div></div>
+
+<p>Then start the simulation by clicking on the green arrow in Choreonoid’s interface. You should see the following output:</p>
+
+<div class="embed-responsive embed-responsive-16by9">
+  <video src="https://seafile.lirmm.fr/seafhttp/files/421a3d60-386d-47cb-87d0-8da2dafe5494/sample-admittance.mp4" controls="" />
+</div>
+
+<p>The following graph depicts the results of the force tracking along the gripper’s <code class="highlighter-rouge">z</code> axis. Note the spike at <code class="highlighter-rouge">t=6s</code> corresponding to an impact between the gripper and the wall. About <code class="highlighter-rouge">1s</code> later, the force target of <code class="highlighter-rouge">-20N</code> is realized, and tracked for a few seconds. Then the pressure is released.</p>
+
+<p><img src="img/admittance.svg" alt="admittance results" class="img-fluid" /></p>
+
+<h2 id="explanations">Explanations</h2>
+
+<p>Most of this sample is achieved by describing the states and task’s objective in the FSM configuration <code class="highlighter-rouge">etc/AdmittanceSample.in.yaml</code>. First, a transition map describes how the transitions between state occur.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">transitions</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandToWall</span><span class="pi">,</span>            <span class="nv">OK</span><span class="pi">,</span> <span class="nv">RightHandPushAdmittance</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandPushAdmittance</span><span class="pi">,</span>    <span class="nv">OK</span><span class="pi">,</span> <span class="nv">RightHandKeepAdmittance</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandKeepAdmittance</span><span class="pi">,</span>    <span class="nv">OK</span><span class="pi">,</span> <span class="nv">UpdateWallFromKinematics</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">UpdateWallFromKinematics</span><span class="pi">,</span>   <span class="nv">OK</span><span class="pi">,</span> <span class="nv">RightHandReleaseAdmittance</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandReleaseAdmittance</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">RightHandMoveBack</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="pi">[</span><span class="nv">RightHandMoveBack</span><span class="pi">,</span>          <span class="nv">OK</span><span class="pi">,</span> <span class="nv">StandingHalfSitting</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+
+<span class="c1"># Initial state</span>
+<span class="na">init</span><span class="pi">:</span> <span class="s">RightHandToWall</span> 
+</code></pre></div></div>
+
+<p>You should have easily recognized the main steps of the sample just by reading this transition map. Now let’s look at what the main states are doing.</p>
+
+<h3 id="standingbase-managing-the-com-and-chest">StandingBase: Managing the CoM and Chest</h3>
+
+<p>During the whole experiment, we want the robot’s CoM to remain centered between the feet. This is achieved by using a <a href="/mc_rtc/doxygen.html#a02263" target="blank_">mc_tasks::CoMTask</a>. Additionally, we add an <a href="/mc_rtc/doxygen.html#a02331" target="blank_">mc_tasks::OrientationTask</a> on the robot’s chest to prevent it from moving too much and provide a more human-like motion. This state is used as the base state for all other states in the FSM, thus every state will inherit this behaviour.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Keep the CoM centered between the feet, and the chest upright</span>
+  <span class="na">StandingBase</span><span class="pi">:</span>
+    <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
+    <span class="na">tasks</span><span class="pi">:</span>
+      <span class="na">CoM</span><span class="pi">:</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
+        <span class="na">above</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">LeftFoot</span><span class="pi">,</span> <span class="nv">RightFoot</span><span class="pi">]</span>
+        <span class="na">weight</span><span class="pi">:</span> <span class="m">2000</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">KeepChest</span><span class="pi">:</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">orientation</span>
+        <span class="na">body</span><span class="pi">:</span> <span class="s">WAIST_R_S</span>
+        <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">1</span>
+</code></pre></div></div>
+
+<h3 id="righthandtowall-hand-trajectory">RightHandToWall: Hand trajectory</h3>
+
+<p>Next, we want to move the hand to a location in front of the robot near the wall. To do so, we use the <a href="/mc_rtc/doxygen.html#a02255" target="blank_">mc_tasks::BSplineTrajectoryTask</a>, that provides a bspline trajectory paremetrized in terms of waypoints in both position and orientation. The task controls a desired robot surface to follow this trajectory.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Trajectory to bring hand close to the wall</span>
+  <span class="na">RightHandToWall</span><span class="pi">:</span>
+    <span class="na">base</span><span class="pi">:</span> <span class="s">StandingBase</span>
+    <span class="na">tasks</span><span class="pi">:</span>
+      <span class="c1"># inherits CoM and KeepChest tasks from StandingBase state</span>
+      <span class="c1"># and adds a bspline_trajectory task</span>
+      <span class="na">RightHandTrajectory</span><span class="pi">:</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
+        <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
+        <span class="na">weight</span><span class="pi">:</span> <span class="m">1000</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
+        <span class="na">duration</span><span class="pi">:</span> <span class="m">4</span>
+        <span class="na">dimWeight</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1</span><span class="pi">,</span><span class="nv">1</span><span class="pi">,</span><span class="nv">1</span><span class="pi">,</span> <span class="nv">1</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
+        <span class="na">displaySamples</span><span class="pi">:</span> <span class="m">100</span>
+        <span class="na">target</span><span class="pi">:</span>
+          <span class="na">translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.45</span><span class="pi">,</span> <span class="nv">-0.4</span><span class="pi">,</span> <span class="nv">1.1</span><span class="pi">]</span>
+          <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.57</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">1.57</span><span class="pi">]</span>
+        <span class="na">controlPoints</span><span class="pi">:</span> <span class="pi">[[</span><span class="nv">0.17</span><span class="pi">,</span> <span class="nv">-0.5</span><span class="pi">,</span> <span class="nv">0.85</span><span class="pi">]]</span>
+        <span class="na">completion</span><span class="pi">:</span>
+          <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
+
+<h3 id="admittance-force-control">Admittance: force control</h3>
+
+<p>Next, the <code class="highlighter-rouge">RightHandPushAdmittance</code> state uses the mc_tasks::AdmittanceTask to regulate the normal force on the hand and establish contact with the wall. The admittance task works by computing a desired end-effector velocity based on the error between the measured wrench (from force-torque sensor) and the desired wrench. The <code class="highlighter-rouge">admittance</code> coefficient regulates how fast the end-effector moves depending on the magnitude of the error along that axis. Note that in order for the task to track velocity, you want to configure it to have low-stiffness (position control) and high-damping (velocity control) along the directions where you wish to track forces. Also note that all wrenches are expressed in surface frame (here the <code class="highlighter-rouge">RightGripper</code> surface frame).</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Increase applied force until we reach 20N</span>
+  <span class="na">RightHandPushAdmittance</span><span class="pi">:</span>
+    <span class="na">base</span><span class="pi">:</span> <span class="s">StandingBase</span>
+    <span class="na">tasks</span><span class="pi">:</span>
+      <span class="na">RightHandAdmittance</span><span class="pi">:</span>
+        <span class="na">type</span><span class="pi">:</span> <span class="s">admittance</span>
+        <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span> 
+        <span class="c1"># Tracks the forces along the normal axis of the gripper surface with an admittance coefficient of 0.001</span>
+        <span class="c1"># Note the high-damping and low stiffness on that axis.</span>
+        <span class="c1"># All other axis are position controlled and will keep the current gripper position as much as possible </span>
+        <span class="na">admittance</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0</span><span class="pi">,</span><span class="nv">0.001</span><span class="pi">]</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">10</span><span class="pi">,</span> <span class="nv">1</span><span class="pi">]</span>
+        <span class="na">damping</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">6.3</span><span class="pi">,</span> <span class="nv">300</span><span class="pi">]</span>
+        <span class="na">maxVel</span><span class="pi">:</span>
+          <span class="na">linear</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
+          <span class="na">angular</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.2</span><span class="pi">,</span> <span class="nv">0.2</span><span class="pi">]</span>
+        <span class="c1"># Target a desired force of 20N along the Z axis of the gripper surface</span>
+        <span class="na">wrench</span><span class="pi">:</span>
+         <span class="na">force</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">-20</span><span class="pi">]</span>
+         <span class="na">couple</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">]</span>
+        <span class="c1"># Rotate the gripper such that the fingers point towards the wall  </span>
+        <span class="na">targetRotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">1.57</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">1.57</span><span class="pi">]</span>
+        <span class="c1"># The task will complete one a force of -20N has been reached. All other axes are ignored.</span>
+        <span class="na">completion</span><span class="pi">:</span>
+          <span class="na">wrench</span><span class="pi">:</span>
+            <span class="na">force</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">.nan</span><span class="pi">,</span> <span class="nv">.nan</span><span class="pi">,</span> <span class="nv">-20</span><span class="pi">]</span>
+            <span class="na">couple</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">.nan</span><span class="pi">,</span> <span class="nv">.nan</span><span class="pi">,</span> <span class="nv">.nan</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>The next state <code class="highlighter-rouge">RightHandKeepAdmittance</code> uses the ParallelState (<a href="/mc_rtc/doxygen.html#a01407" target="blank_">mc_control::fsm::ParallelState</a>) to keep the previous state running for a given duration. While the state is running, it’ll attempt to keep the applied force constant. Thus if you push the robot forward, the hand will move backwards to reduce the applied force, if you pull the robot, the opposite will occur.</p>
+
+<h3 id="update-wall-position-from-kinematics">Update wall position from kinematics</h3>
+
+<p>The admittance task described above will cause the gripper to move towards the wall until the desired force has been reached. In our controller, we assumed the wall position to be at:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">robots</span><span class="pi">:</span>
+  <span class="na">wall</span><span class="pi">:</span>
+    <span class="na">module</span><span class="pi">:</span> <span class="s">env/ground</span> <span class="c1"># reuse the ground model, but rotate it vertically to simulate a wall</span>
+    <span class="na">init_pos</span><span class="pi">:</span>
+      <span class="c1"># The wall position is put 5cm in front of choreonoid's one</span>
+      <span class="na">translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.50</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
+      <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">-1.57</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>However, this expected position does not necessarily match the actual wall position: the robot might be starting from a slightly different configuration than expected. However, we know, thanks to the previous admittance states that the robot’s gripper has reached the wall. This information can be exploited to update our model’s wall position accordingly by exploiting the robot kinematics (and assuming non-slippage of the contacts). This is the role of the <code class="highlighter-rouge">UpdateWall</code> state implemented in C++. It reads the current estimated position of the robot’s fingertips, and updates the wall position such that the fingertips are in contact with it.</p>
+
+<p>Note that this state uses the robot state observed by the <a href="/mc_rtc/doxygen.html#a01503" target="blank_">mc_observers::KinematicInertialObserver</a> to determine the actual hand position of the real robot (see the <a href="/mc_rtc/tutorials/recipes/observers.html">observers’ tutorial</a>).</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">UpdateWall</span><span class="o">::</span><span class="n">start</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// [...] read YAML configuration parameters</span>
+
+  <span class="c1">// Get the estimated pose of the fingers of the JVRC1 robot</span>
+  <span class="c1">// As estimated by the state observation pipeline </span>
+  <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">bodyPose</span> <span class="o">=</span> <span class="n">ctl</span><span class="p">.</span><span class="n">realRobots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="n">rName</span><span class="p">).</span><span class="n">bodyPosW</span><span class="p">(</span><span class="n">bName</span><span class="p">);</span>
+  <span class="c1">// Move the wall position along the x axis to match the fingertip's position</span>
+  <span class="k">auto</span> <span class="n">posW</span> <span class="o">=</span> <span class="n">ctl</span><span class="p">.</span><span class="n">robot</span><span class="p">(</span><span class="n">moveRobotName</span><span class="p">).</span><span class="n">posW</span><span class="p">();</span>
+  <span class="n">posW</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">x</span><span class="p">()</span> <span class="o">=</span> <span class="n">bodyPose</span><span class="p">.</span><span class="n">translation</span><span class="p">().</span><span class="n">x</span><span class="p">();</span>
+  <span class="n">ctl</span><span class="p">.</span><span class="n">robot</span><span class="p">(</span><span class="n">moveRobotName</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">posW</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In the next state’s, we will use this updated wall position to ensure collision avoidance with the hand while going back to the initial posture.</p>
+
+<h3 id="going-back-to-the-initial-posture">Going back to the initial posture</h3>
+
+<p>The remainder of the FSM is dedicated to getting the robot back to its initial configuration. First, to ensure a smooth transition, we release the pressure on the hand with the <code class="highlighter-rouge">RightHandReleaseAdmittance</code> until it reaches close to zero force, and then move the hand <code class="highlighter-rouge">10cm</code> backwards relative to its current position. Finally, we use the <a href="/mc_rtc/doxygen.html#a01387" target="blank_">mc_control::fsm::HalfSittingState</a> state to go back to the initial halfsitting posture. As we do not explicitly specify the hand motion, there is a risk that the hand could collide with the wall while going back to the half-sitting posture. To prevent this, we add a collision constraint between the hand and the wall:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nl">RightHandMoveBack:</span>
+    <span class="n">base</span><span class="o">:</span> <span class="n">StandingBase</span>
+    <span class="n">AddCollisionsAfter</span><span class="o">:</span>
+      <span class="o">-</span> <span class="n">r1</span><span class="o">:</span> <span class="n">jvrc1</span>
+        <span class="n">r2</span><span class="o">:</span> <span class="n">wall</span>
+        <span class="n">collisions</span><span class="o">:</span>
+          <span class="o">-</span> <span class="n">body1</span><span class="o">:</span> <span class="n">R_WRIST_Y_S</span>
+            <span class="n">body2</span><span class="o">:</span> <span class="n">ground</span>
+            <span class="n">iDist</span><span class="o">:</span> <span class="mf">0.15</span>
+            <span class="n">sDist</span><span class="o">:</span> <span class="mf">0.05</span>
+            <span class="n">damping</span><span class="o">:</span> <span class="mf">0.0</span>
+    <span class="n">tasks</span><span class="o">:</span>
+    <span class="cp"># [...]
+</span></code></pre></div></div>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/advanced/new-interface.html">Next tutorial: Implement a new mc_rtc interface</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

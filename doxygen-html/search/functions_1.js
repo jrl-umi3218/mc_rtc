@@ -9,6 +9,7 @@ var searchData=
   ['bodyforcesensor',['bodyForceSensor',['../a01635.html#a49efc5c9284a39c13647ff5500138d33',1,'mc_rbdyn::Robot::bodyForceSensor(const std::string &amp;body)'],['../a01635.html#a7d8ac9af47c038fda22f721e9c1d3a89',1,'mc_rbdyn::Robot::bodyForceSensor(const std::string &amp;body) const']]],
   ['bodyhasbodysensor',['bodyHasBodySensor',['../a01635.html#a558d26564bdb4888db21b2ae13d32f39',1,'mc_rbdyn::Robot']]],
   ['bodyhasforcesensor',['bodyHasForceSensor',['../a01635.html#a183b8dbcdcda9c179b83c780bccea04b',1,'mc_rbdyn::Robot']]],
+  ['bodyhasindirectforcesensor',['bodyHasIndirectForceSensor',['../a01635.html#af0f6539a36fe9c2e4dc05b1ef3765963',1,'mc_rbdyn::Robot']]],
   ['bodyindex',['bodyIndex',['../a01683.html#a1ac46d99ec12cfb01e58745b5a364588',1,'mc_rbdyn::Surface']]],
   ['bodyindexbyname',['bodyIndexByName',['../a01635.html#a5309b5ef9bb5b91bf0f1adb59813bde4',1,'mc_rbdyn::Robot']]],
   ['bodyname',['bodyName',['../a01683.html#a9dbcfd0f33b37801a81c2229a84466e8',1,'mc_rbdyn::Surface']]],

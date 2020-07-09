@@ -21522,6 +21522,27 @@
       <arglist>(const std::string &amp;body) const</arglist>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>surfaceHasForceSensor</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>a7fb66cf0e07c2f24d9329cce0f6e5d3b</anchor>
+      <arglist>(const std::string &amp;surface) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>bodyHasIndirectForceSensor</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>af0f6539a36fe9c2e4dc05b1ef3765963</anchor>
+      <arglist>(const std::string &amp;body) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>surfaceHasIndirectForceSensor</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>ae05708ca15a7afb1c1b24315f4468356</anchor>
+      <arglist>(const std::string &amp;surface) const</arglist>
+    </member>
+    <member kind="function">
       <type>ForceSensor &amp;</type>
       <name>forceSensor</name>
       <anchorfile>a01635.html</anchorfile>
@@ -21551,30 +21572,44 @@
     </member>
     <member kind="function">
       <type>ForceSensor &amp;</type>
-      <name>findBodyForceSensor</name>
+      <name>surfaceForceSensor</name>
       <anchorfile>a01635.html</anchorfile>
-      <anchor>a7e14cf2bdc70b09694f20ce361951f3a</anchor>
+      <anchor>ac4bfab32c0f157b828a70134f1ffe985</anchor>
+      <arglist>(const std::string &amp;surfaceName)</arglist>
+    </member>
+    <member kind="function">
+      <type>const ForceSensor &amp;</type>
+      <name>surfaceForceSensor</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>ace64ab0161e9b00e262b408733d19629</anchor>
+      <arglist>(const std::string &amp;surfaceName) const</arglist>
+    </member>
+    <member kind="function">
+      <type>ForceSensor &amp;</type>
+      <name>indirectBodyForceSensor</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>a901f76e997eccaa20ef748302229edf6</anchor>
       <arglist>(const std::string &amp;body)</arglist>
     </member>
     <member kind="function">
       <type>const ForceSensor &amp;</type>
-      <name>findBodyForceSensor</name>
+      <name>indirectBodyForceSensor</name>
       <anchorfile>a01635.html</anchorfile>
-      <anchor>a663bbb5cbdd28846262d23e2def39e83</anchor>
+      <anchor>a0c2ceb538921611b7b50a50634859e5f</anchor>
       <arglist>(const std::string &amp;body) const</arglist>
     </member>
     <member kind="function">
       <type>ForceSensor &amp;</type>
-      <name>findSurfaceForceSensor</name>
+      <name>indirectSurfaceForceSensor</name>
       <anchorfile>a01635.html</anchorfile>
-      <anchor>a42d6eaf5f5a8bb51c29a400a29897d1d</anchor>
+      <anchor>a4733eee02a2b700c1e5ab9796f92b26b</anchor>
       <arglist>(const std::string &amp;surface)</arglist>
     </member>
     <member kind="function">
       <type>const ForceSensor &amp;</type>
-      <name>findSurfaceForceSensor</name>
+      <name>indirectSurfaceForceSensor</name>
       <anchorfile>a01635.html</anchorfile>
-      <anchor>a2afa3baa0fc7aab41ca8e1670d4f13d3</anchor>
+      <anchor>a77d7387d7242da1e7c42420583dce311</anchor>
       <arglist>(const std::string &amp;surface) const</arglist>
     </member>
     <member kind="function">
@@ -21681,6 +21716,13 @@
       <anchorfile>a01635.html</anchorfile>
       <anchor>a005d9859a7272ac6dbcab9c31aef8092</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>std::string</type>
+      <name>findIndirectForceSensorBodyName</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>adec9236c7e0a6848e0fb76704ea64372</anchor>
+      <arglist>(const std::string &amp;bodyName) const</arglist>
     </member>
     <member kind="friend">
       <type>friend struct</type>
@@ -22251,6 +22293,27 @@
       <arglist>(const std::string &amp;body) const</arglist>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>surfaceHasForceSensor</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>a7fb66cf0e07c2f24d9329cce0f6e5d3b</anchor>
+      <arglist>(const std::string &amp;surface) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>bodyHasIndirectForceSensor</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>af0f6539a36fe9c2e4dc05b1ef3765963</anchor>
+      <arglist>(const std::string &amp;body) const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>surfaceHasIndirectForceSensor</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>ae05708ca15a7afb1c1b24315f4468356</anchor>
+      <arglist>(const std::string &amp;surface) const</arglist>
+    </member>
+    <member kind="function">
       <type>ForceSensor &amp;</type>
       <name>forceSensor</name>
       <anchorfile>a01635.html</anchorfile>
@@ -22280,30 +22343,44 @@
     </member>
     <member kind="function">
       <type>ForceSensor &amp;</type>
-      <name>findBodyForceSensor</name>
+      <name>surfaceForceSensor</name>
       <anchorfile>a01635.html</anchorfile>
-      <anchor>a7e14cf2bdc70b09694f20ce361951f3a</anchor>
+      <anchor>ac4bfab32c0f157b828a70134f1ffe985</anchor>
+      <arglist>(const std::string &amp;surfaceName)</arglist>
+    </member>
+    <member kind="function">
+      <type>const ForceSensor &amp;</type>
+      <name>surfaceForceSensor</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>ace64ab0161e9b00e262b408733d19629</anchor>
+      <arglist>(const std::string &amp;surfaceName) const</arglist>
+    </member>
+    <member kind="function">
+      <type>ForceSensor &amp;</type>
+      <name>indirectBodyForceSensor</name>
+      <anchorfile>a01635.html</anchorfile>
+      <anchor>a901f76e997eccaa20ef748302229edf6</anchor>
       <arglist>(const std::string &amp;body)</arglist>
     </member>
     <member kind="function">
       <type>const ForceSensor &amp;</type>
-      <name>findBodyForceSensor</name>
+      <name>indirectBodyForceSensor</name>
       <anchorfile>a01635.html</anchorfile>
-      <anchor>a663bbb5cbdd28846262d23e2def39e83</anchor>
+      <anchor>a0c2ceb538921611b7b50a50634859e5f</anchor>
       <arglist>(const std::string &amp;body) const</arglist>
     </member>
     <member kind="function">
       <type>ForceSensor &amp;</type>
-      <name>findSurfaceForceSensor</name>
+      <name>indirectSurfaceForceSensor</name>
       <anchorfile>a01635.html</anchorfile>
-      <anchor>a42d6eaf5f5a8bb51c29a400a29897d1d</anchor>
+      <anchor>a4733eee02a2b700c1e5ab9796f92b26b</anchor>
       <arglist>(const std::string &amp;surface)</arglist>
     </member>
     <member kind="function">
       <type>const ForceSensor &amp;</type>
-      <name>findSurfaceForceSensor</name>
+      <name>indirectSurfaceForceSensor</name>
       <anchorfile>a01635.html</anchorfile>
-      <anchor>a2afa3baa0fc7aab41ca8e1670d4f13d3</anchor>
+      <anchor>a77d7387d7242da1e7c42420583dce311</anchor>
       <arglist>(const std::string &amp;surface) const</arglist>
     </member>
     <member kind="function">
