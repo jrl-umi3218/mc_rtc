@@ -472,7 +472,7 @@ class PlotYAxis(object):
 
   def add_diff_plot(self, x, y, y_label):
     dt = self._data()[x][1] - self._data()[x][0]
-    return self._plot(self._data()[x][1:], np.diff(self._data()[y])//dt, y_label)
+    return self._plot(self._data()[x][1:], np.diff(self._data()[y])/dt, y_label)
 
   def _add_rpy_plot(self, x_label, y, idx):
     assert (idx >= 0 and idx <= 2),"index must be 0, 1 or 2"
