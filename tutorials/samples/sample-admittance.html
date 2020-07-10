@@ -322,7 +322,7 @@
 <p>Then start the simulation by clicking on the green arrow in Choreonoid’s interface. You should see the following output:</p>
 
 <div class="embed-responsive embed-responsive-16by9">
-  <video src="https://seafile.lirmm.fr/seafhttp/files/421a3d60-386d-47cb-87d0-8da2dafe5494/sample-admittance.mp4" controls="" />
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/B_L_xPynhvU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 </div>
 
 <p>The following graph depicts the results of the force tracking along the gripper’s <code class="highlighter-rouge">z</code> axis. Note the spike at <code class="highlighter-rouge">t=6s</code> corresponding to an impact between the gripper and the wall. About <code class="highlighter-rouge">1s</code> later, the force target of <code class="highlighter-rouge">-20N</code> is realized, and tracked for a few seconds. Then the pressure is released.</p>
@@ -369,7 +369,7 @@
 
 <h3 id="righthandtowall-hand-trajectory">RightHandToWall: Hand trajectory</h3>
 
-<p>Next, we want to move the hand to a location in front of the robot near the wall. To do so, we use the <a href="/mc_rtc/doxygen.html#a02255" target="blank_">mc_tasks::BSplineTrajectoryTask</a>, that provides a bspline trajectory paremetrized in terms of waypoints in both position and orientation. The task controls a desired robot surface to follow this trajectory.</p>
+<p>Next, we want to move the hand to a location in front of the robot near the wall. To do so, we use the <a href="/mc_rtc/doxygen.html#a02255" target="blank_">mc_tasks::BSplineTrajectoryTask</a>, that provides a bspline trajectory parametrized in terms of waypoints in both position and orientation. The task controls a desired robot surface to follow this trajectory.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Trajectory to bring hand close to the wall</span>
   <span class="na">RightHandToWall</span><span class="pi">:</span>
