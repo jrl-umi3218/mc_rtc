@@ -1089,6 +1089,31 @@ const sva::MotionVecd & Robot::velW() const
   return bodyVelW().at(0);
 }
 
+void Robot::accW(const sva::MotionVecd & acc)
+{
+  if(mb().joint(0).type() == rbd::Joint::Type::Free)
+  {
+    auto aB = sva::PTransformd(mbc().bodyPosW[0].rotation()) * acc;
+    alphaD()[0][0] = aB.angular().x();
+    alphaD()[0][1] = aB.angular().y();
+    alphaD()[0][2] = aB.angular().z();
+    alphaD()[0][3] = aB.linear().x();
+    alphaD()[0][4] = aB.linear().y();
+    alphaD()[0][5] = aB.linear().z();
+    forwardAcceleration();
+  }
+  else
+  {
+    mc_rtc::log::warning("You cannot set the base acceleration on a fixed-base robot");
+  }
+}
+
+const sva::MotionVecd Robot::accW() const
+{
+  Eigen::Matrix3d rot = posW().rotation().transpose();
+  return sva::PTransformd{rot} * mbc().bodyAccB[0];
+}
+
 void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) const
 {
   robots.robots_.emplace_back(Robot(robots, robots_idx, false, &base.X_0_s, base.baseName));

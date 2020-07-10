@@ -820,6 +820,19 @@ public:
   /** Return the robot's floating base velocity expressed in the inertial frame */
   const sva::MotionVecd & velW() const;
 
+  /** Update the robot's floating base acceleration.
+   *
+   * \param vel New floating base acceleration in the inertial frame.
+   *
+   * @note This function takes care of calling rbd::forwardAcceleration
+   */
+  void accW(const sva::MotionVecd & acc);
+
+  /** Return the robot's floating base acceleration expressed in the inertial
+   * frame
+   */
+  const sva::MotionVecd accW() const;
+
   /** Access a gripper by name
    *
    * \param gripper Gripper name

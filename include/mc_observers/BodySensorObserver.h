@@ -96,6 +96,7 @@ protected:
   std::string fbSensorName_;
   sva::PTransformd posW_;
   sva::MotionVecd velW_;
+  sva::MotionVecd accW_;
 };
 
 } // namespace mc_observers
