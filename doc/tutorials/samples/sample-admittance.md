@@ -42,8 +42,9 @@ $ roslaunch mc_rtc_ticker controler_display.launch
 Then start the simulation by clicking on the green arrow in Choreonoid's interface. You should see the following output:
 
 <div class="embed-responsive embed-responsive-16by9">
-  <video src="https://seafile.lirmm.fr/seafhttp/files/421a3d60-386d-47cb-87d0-8da2dafe5494/sample-admittance.mp4" controls />
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/B_L_xPynhvU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
+
 
 The following graph depicts the results of the force tracking along the gripper's `z` axis. Note the spike at `t=6s` corresponding to an impact between the gripper and the wall. About `1s` later, the force target of `-20N` is realized, and tracked for a few seconds. Then the pressure is released.
 
@@ -91,7 +92,7 @@ During the whole experiment, we want the robot's CoM to remain centered between 
 
 ### RightHandToWall: Hand trajectory 
 
-Next, we want to move the hand to a location in front of the robot near the wall. To do so, we use the {% doxygen mc_tasks::BSplineTrajectoryTask %}, that provides a bspline trajectory paremetrized in terms of waypoints in both position and orientation. The task controls a desired robot surface to follow this trajectory.
+Next, we want to move the hand to a location in front of the robot near the wall. To do so, we use the {% doxygen mc_tasks::BSplineTrajectoryTask %}, that provides a bspline trajectory parametrized in terms of waypoints in both position and orientation. The task controls a desired robot surface to follow this trajectory.
 
 ```yaml
   # Trajectory to bring hand close to the wall

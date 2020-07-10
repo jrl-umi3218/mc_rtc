@@ -34,8 +34,9 @@ Thus in the end the `realRobot()` instance will contain a full estimate of the a
 The end-result for this example pipeline looks like this *(left: choreonoid simulation, right: control state [transparent], observed state [solid])*
 
 <div class="embed-responsive embed-responsive-16by9">
-  <video src="https://gite.lirmm.fr/multi-contact/mc_rtc/uploads/bd05951bc324f2e367e9626f458371cb/screencast_observers.mp4" controls />
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/ssoNkV940yc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
+
 
 # Default observers
 
@@ -129,7 +130,7 @@ Encoder:
 BodySensor:
   # Valid entries are [control, estimator]
   UpdateFrom: estimator
-  FloatingBaseSensor": FloatingBase
+  FloatingBaseSensor: FloatingBase
 {% endhighlight %}
 </p>
       </div>
