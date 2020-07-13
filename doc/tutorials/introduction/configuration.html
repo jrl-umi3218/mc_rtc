@@ -12,7 +12,7 @@ layout: tutorials
 
 <ol class="highlight-inline">
   <li>{% highlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endhighlight %}</li>
-  <li>{% highlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endhighlight %} on Linux/MacOS or {% highlight msshell %}%APPDATA%/mc_rtc/mc_rtc.conf{% endhighlight %} on Windows</li>
+  <li>Linux/MacOS: {% highlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endhighlight %}Windows: {% highlight msshell %}%APPDATA%/mc_rtc/mc_rtc.conf{% endhighlight %}</li>
 </ol>
 
 <p>The interface might load additional configuration file(s). Please refer to the interface documentation to find out about that.</p>
@@ -37,6 +37,8 @@ layout: tutorials
     {% include mc_rtc_configuration_row.html entry="Default" desc="Select which of the enabled controllers will be started first. Note that if the default controller is not enabled or if no default entry is provided then the first enabled controller in the list is chosen as a default controller." example="Default: Posture" %}
     {% include mc_rtc_configuration_row.html entry="Timestep" desc="The controller's timestep." example="Timestep: 0.005" %}
     {% include mc_rtc_configuration_row.html entry="Log" desc="Dictate whether or not controllers will log their output." example="Log: true" %}
+    {% include mc_rtc_configuration_row.html entry="InitAttitudeFromSensor" desc="Intialize the robot's attitude from sensor or the robot module" example="InitAttitudeFromSensor: false" %}
+    {% include mc_rtc_configuration_row.html entry="InitAttitudeSensor" desc="Name of the BodySensor used for initialization of the robot's attitude. An empty name uses the default body sensor. Only used when <pre>InitAttitudeFromSensor=true</pre>" example="InitAttitudeSensor: \"\"" %}
     <tr class="table-active">
       <th scope="row">
         Logging&nbsp;options
