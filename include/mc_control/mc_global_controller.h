@@ -132,7 +132,7 @@ public:
    * @param initq Initial joints configuration
    * @param initAttitude Attitude of the floating base
    */
-  void init(const std::vector<double> & initq, const sva::PTransformd & intitAttitude);
+  void init(const std::vector<double> & initq, const sva::PTransformd & initAttitude);
 
   /** @name Sensing
    *
@@ -267,10 +267,10 @@ public:
   /*! \brief Const access to current controller */
   const MCController & controller() const;
 
-  /*! \brief Access to the real robots instance. */
+  /*! \brief Access to the control robots instance. */
   mc_rbdyn::Robots & robots();
 
-  /*! \brief Const access to the real robots instance. */
+  /*! \brief Const access to the control robots instance. */
   const mc_rbdyn::Robots & robots() const;
 
   /*! \brief Access to the real robots instance. */

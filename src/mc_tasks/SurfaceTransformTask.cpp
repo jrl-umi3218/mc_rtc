@@ -84,7 +84,7 @@ void SurfaceTransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Conf
     if(config.has("targetRotation"))
     {
       // Only modify the specified DoF of the rotation
-      config("targetRotation", X_0_t.rotation());
+      config.partialRotation("targetRotation", X_0_t.rotation());
     }
   }
 

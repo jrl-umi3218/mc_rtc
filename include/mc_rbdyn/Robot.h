@@ -868,8 +868,6 @@ private:
   std::map<std::string, std::vector<double>> stance_;
   /** Reference joint order see mc_rbdyn::RobotModule */
   std::vector<std::string> refJointOrder_;
-  /** Number of actuated degrees of freedom */
-  size_t nrActuatedDof_ = 0;
   /** Correspondance between refJointOrder (actuated joints) index and
    * mbc index. **/
   std::vector<int> refJointIndexToMBCIndex_;
