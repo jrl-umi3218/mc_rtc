@@ -250,7 +250,7 @@ void MCGlobalController::initEncoders(const std::vector<double> & initq)
   {
     mc_rtc::log::error_and_throw<std::domain_error>(
         "Could not initialize the robot state from encoder sensors: got {} encoder values but the robot expects {}",
-        initq.size(), controller_->robot().nrActuatedDof());
+        initq.size(), controller_->robot().refJointOrder().size());
   }
 
   if(config.enable_log)

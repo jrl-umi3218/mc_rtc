@@ -448,9 +448,6 @@ public:
   /** Return the reference joint order for this robot */
   const std::vector<std::string> & refJointOrder() const;
 
-  /** Number of actuated degrees of freedom */
-  size_t nrActuatedDof() const;
-
   /** @} */
   /* End Joints sensors section */
 
