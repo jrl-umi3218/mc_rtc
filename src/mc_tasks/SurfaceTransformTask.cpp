@@ -3,6 +3,7 @@
  */
 
 #include <mc_rbdyn/rpy_utils.h>
+#include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 
@@ -84,7 +85,7 @@ void SurfaceTransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Conf
     if(config.has("targetRotation"))
     {
       // Only modify the specified DoF of the rotation
-      config.partialRotation("targetRotation", X_0_t.rotation());
+      mc_rtc::partialRotation(config, "targetRotation", X_0_t.rotation());
     }
   }
 

@@ -61,6 +61,7 @@ add_custom_command(OUTPUT ${VERSION_HEADER}
 
 set(mc_rtc_utils_SRC
   mc_rtc/Configuration.cpp
+  mc_rtc/ConfigurationHelpers.cpp
   mc_rtc/DataStore.cpp
   mc_rtc/FlatLog.cpp
   mc_rtc/iterate_binary_log.cpp

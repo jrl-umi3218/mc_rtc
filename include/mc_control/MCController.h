@@ -264,25 +264,14 @@ public:
    */
   virtual void supported_robots(std::vector<std::string> & out) const;
 
-  /** Load an additional robot into the controller
+  /** Load an additional robot into the controller (and its corresponding
+   * realRobot instance)
    *
    * \param rm RobotModule used to load the robot
    *
    * \param name Name of the robot
-   *
-   * \returns The loaded robot
    */
-  mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
-
-  /** Load an additional robot into the controller
-   *
-   * \param name Name of the robot
-   * \param rm RobotModule used to load the robot
-   * \param robots Robots in which this robot will be loaded
-   *
-   * \returns The loaded robot
-   */
-  mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name, mc_rbdyn::Robots & robots);
+  void loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
 
   /** Remove a robot from the controller
    *
@@ -336,6 +325,21 @@ protected:
   MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModule>> & robot_modules,
                double dt,
                const mc_rtc::Configuration & config);
+
+  /** Load an additional robot into the controller
+   *
+   * \param name Name of the robot
+   * \param rm RobotModule used to load the robot
+   * \param robots Robots in which this robot will be loaded
+   * \param updateNrVars When true, update the number of variables in the QP
+   * problem.
+   *
+   * \returns The loaded robot
+   */
+  mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm,
+                              const std::string & name,
+                              mc_rbdyn::Robots & robots,
+                              bool updateNrVars = true);
 
 protected:
   /** QP solver */

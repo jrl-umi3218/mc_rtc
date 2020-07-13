@@ -653,52 +653,6 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
   }
 
-  /**
-   * @brief Retrive rotation elements while keeping unspecified DoFs unchanged.
-   *
-   * Attempts to retrived the value stored within the configuration as a
-   * Matrix3d.
-   * - If the element exists and is a valid matrix representation (see \ref
-   *   Matrix3d_operator), the rotation reference will be fully overwitten with the value from the
-   * configuration.
-   * - The configuration element can also contain a partial roll/pitch/yaw representation:
-   *   \code{.yaml}
-   *   roll: 0.5
-   *   pitch: 0.3
-   *   \code{.yaml}
-   *   In this case, only the specified axes will be overwritten from configuration and the other axes will remain
-   * unaffected.
-   *
-   * @param key The key used to store the value
-   * @param rotation The rotation to modify. Only the DoFs specified in the
-   * configuration will be overwritten, other DoFs will remain unchanged.
-   */
-  void partialRotation(const std::string & key, Eigen::Matrix3d & rotation) const
-  {
-    auto c = (*this)(key);
-    if(c.has("roll") || c.has("pitch") || c.has("yaw"))
-    {
-      Eigen::Vector3d rpy = mc_rbdyn::rpyFromMat(rotation);
-      if(has("roll"))
-      {
-        rpy.x() = (*this)("roll");
-      }
-      if(has("pitch"))
-      {
-        rpy.y() = (*this)("pitch");
-      }
-      if(has("yaw"))
-      {
-        rpy.z() = (*this)("yaw");
-      }
-      rotation = mc_rbdyn::rpyToMat(rpy);
-    }
-    else
-    {
-      (*this)(key, rotation);
-    }
-  }
-
   /*! \brief Retrieve a given value stored within the configuration with a
    * default value
    *

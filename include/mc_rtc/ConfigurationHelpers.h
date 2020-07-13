@@ -104,4 +104,28 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config, const s
   return vec;
 }
 
+/**
+ * @brief Retrive rotation elements while keeping unspecified DoFs unchanged.
+ *
+ * Attempts to retrived the value stored within the configuration as a
+ * Matrix3d.
+ * - If the element exists and is a valid matrix representation (see \ref
+ *   Matrix3d_operator), the rotation reference will be fully overwitten with the value from the
+ * configuration.
+ * - The configuration element can also contain a partial roll/pitch/yaw representation:
+ *   \code{.yaml}
+ *   roll: 0.5
+ *   pitch: 0.3
+ *   \code{.yaml}
+ *   In this case, only the specified axes will be overwritten from configuration and the other axes will remain
+ * unaffected.
+ *
+ * @param key The key used to store the value
+ * @param rotation The rotation to modify. Only the DoFs specified in the
+ * configuration will be overwritten, other DoFs will remain unchanged.
+ */
+void MC_RTC_UTILS_DLLAPI partialRotation(const mc_rtc::Configuration & config,
+                                         const std::string & key,
+                                         Eigen::Matrix3d & rotation);
+
 } // namespace mc_rtc
