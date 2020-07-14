@@ -33,10 +33,9 @@ namespace mc_observers
  */
 struct MC_OBSERVERS_DLLAPI Observer
 {
-  Observer(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
+  Observer(const std::string & name, const mc_rtc::Configuration & config = {});
   virtual ~Observer();
   virtual const std::string & name() const;
-  double dt() const;
 
   /*! \brief Reset estimator.
    *
@@ -64,32 +63,32 @@ struct MC_OBSERVERS_DLLAPI Observer
    * the real robot instance with its estimates. The pipeline will only call the
    * updateRobots() function if requested by the user.
    */
-  virtual void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) = 0;
+  virtual void updateRobots(mc_control::MCController & ctl) = 0;
 
   /*! \brief Add observer to the logger.
    *
    * Default implementation does nothing, each observer implementation is
    * responsible for logging its own data by overriding this function
    */
-  virtual void addToLogger(const mc_control::MCController &, mc_rtc::Logger &) {}
+  virtual void addToLogger(mc_rtc::Logger &, const std::string & /* category */ = "") {}
   /*! \brief Remove observer from logger
    *
    * Default implementation does nothing, each observer implementation is
    * responsible for removing all logs entry that it added.
    */
-  virtual void removeFromLogger(mc_rtc::Logger &) {}
+  virtual void removeFromLogger(mc_rtc::Logger &, const std::string & /* category */ = "") {}
   /*! \brief Add observer information the GUI.
    *
    * Default implementation does nothing, each observer implementation is
    * responsible for adding its own elements to the GUI. Default observers will
    * be shown under the tab "Observers->observer name".
    */
-  virtual void addToGUI(const mc_control::MCController &, mc_rtc::gui::StateBuilder &) {}
+  virtual void addToGUI(mc_rtc::gui::StateBuilder &, std::vector<std::string> /* category */ = {}) {}
   /*! \brief Remove observer from gui
    *
-   * Default implementation removes the category Observers->observer name
+   * Default implementation removes the category {category, observer name}
    */
-  virtual void removeFromGUI(mc_rtc::gui::StateBuilder &);
+  virtual void removeFromGUI(mc_rtc::gui::StateBuilder &, std::vector<std::string> /* category */ = {});
 
   /*! \brief Short description of the observer
    *
@@ -106,7 +105,6 @@ struct MC_OBSERVERS_DLLAPI Observer
 
 protected:
   std::string name_;
-  double dt_;
 
   /* Short descriptive description of the observer used for CLI logging */
   std::string desc_;

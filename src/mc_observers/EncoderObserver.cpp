@@ -8,8 +8,8 @@
 
 namespace mc_observers
 {
-EncoderObserver::EncoderObserver(const std::string & name, double dt, const mc_rtc::Configuration & config)
-: Observer(name, dt, config)
+EncoderObserver::EncoderObserver(const std::string & name, const mc_rtc::Configuration & config)
+: Observer(name, config)
 {
   const std::string & position = config("UpdatePosition", std::string("estimator"));
   if(position == "control")
@@ -82,14 +82,15 @@ bool EncoderObserver::run(const mc_control::MCController & ctl)
   const auto & enc = ctl.robot().encoderValues();
   for(unsigned i = 0; i < enc.size(); ++i)
   {
-    encodersVelocity_[i] = (enc[i] - prevEncoders_[i]) / dt();
+    encodersVelocity_[i] = (enc[i] - prevEncoders_[i]) / ctl.timeStep;
     prevEncoders_[i] = enc[i];
   }
   return true;
 }
 
-void EncoderObserver::updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots)
+void EncoderObserver::updateRobots(mc_control::MCController & ctl)
 {
+  auto & realRobots = ctl.realRobots();
   const auto & robot = ctl.robot();
   auto & realRobot = realRobots.robot();
   const auto & q = robot.encoderValues();
@@ -136,18 +137,18 @@ void EncoderObserver::updateRobots(const mc_control::MCController & ctl, mc_rbdy
   }
 }
 
-void EncoderObserver::addToLogger(const mc_control::MCController & /* ctl */, mc_rtc::Logger & logger)
+void EncoderObserver::addToLogger(mc_rtc::Logger & logger, const std::string & category)
 {
   if(logEstimation_)
   {
-    logger.addLogEntry("observer_" + name() + "_alpha", [this]() { return encodersVelocity_; });
+    logger.addLogEntry(category + "_" + name() + "_alpha", [this]() { return encodersVelocity_; });
   }
 }
-void EncoderObserver::removeFromLogger(mc_rtc::Logger & logger)
+void EncoderObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
 {
   if(logEstimation_)
   {
-    logger.removeLogEntry("observer_" + name() + "_alpha");
+    logger.removeLogEntry(category + "_" + name() + "_alpha");
   }
 }
 

@@ -33,7 +33,7 @@ namespace mc_observers
 struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
 {
   /** Initialize observer. */
-  EncoderObserver(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
+  EncoderObserver(const std::string & name, const mc_rtc::Configuration & config);
 
   /** Reset finite differences estimator from current encoder values and sets encoder velocity to zero
    *
@@ -62,10 +62,10 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
    * \param realRobots Real robots state to write to.
    *
    */
-  void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
+  void updateRobots(mc_control::MCController & ctl) override;
 
-  void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &) override;
-  void removeFromLogger(mc_rtc::Logger &) override;
+  void addToLogger(mc_rtc::Logger &, const std::string & /* category */ = "") override;
+  void removeFromLogger(mc_rtc::Logger &, const std::string & /* category */ = "") override;
 
 protected:
   /*! \brief Update source for the update. */

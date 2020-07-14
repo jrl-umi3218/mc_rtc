@@ -139,61 +139,44 @@ void MCController::removeRobot(const std::string & name)
   solver().updateNrVars();
 }
 
+void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
+{
+  for(const auto & pipelineConfig : config("ObserversPipeline", std::vector<mc_rtc::Configuration>{}))
+  {
+    auto name = pipelineConfig("name", std::string{"DefaultPipeline"});
+    observerPipelines_.emplace_back(*this, name);
+    auto & pipeline = observerPipelines_.back();
+    pipeline.create(pipelineConfig);
+    // pipeline.configure(pipelineConfig);
+  }
+}
+
 bool MCController::resetObservers()
 {
-  auto pipelineDesc = std::string{};
-
-  for(size_t i = 0; i < pipelineObservers_.size(); ++i)
+  std::string desc = "";
+  for(auto & pipeline : observerPipelines_)
   {
-    const auto & observerPair = pipelineObservers_[i];
-    auto observer = observerPair.first;
-    bool updateRobots = observerPair.second;
-    observer->reset(*this);
-
-    if(updateRobots)
-    {
-      observer->updateRobots(*this, realRobots());
-      pipelineDesc += observer->desc();
-    }
-    else
-    {
-      pipelineDesc += "[" + observer->desc() + "]";
-    }
-
-    if(i < pipelineObservers_.size() - 1)
-    {
-      pipelineDesc += " -> ";
-    }
-
-    observer->addToLogger(*this, logger());
-    if(gui_)
-    {
-      observer->addToGUI(*this, *gui_);
-    }
+    pipeline.reset();
+    desc += "- " + pipeline.desc() + "\n";
   }
-  if(!pipelineObservers_.empty())
+  if(!desc.empty())
   {
-    mc_rtc::log::success("Observers: {}", pipelineDesc);
+    mc_rtc::log::success("[MCController::{}] State observation pipelines:\n{}", name_, desc);
+  }
+  else
+  {
+    mc_rtc::log::warning("[MCController::{}] No state observation pipeline configured: the state of the real robots "
+                         "will not be estimated",
+                         name_);
   }
   return true;
 }
 
 bool MCController::runObservers()
 {
-  for(const auto & observerPair : pipelineObservers_)
+  for(auto & pipeline : observerPipelines_)
   {
-    auto observer = observerPair.first;
-    bool updateRobots = observerPair.second;
-    bool r = observer->run(*this);
-    if(!r)
-    {
-      mc_rtc::log::error("Observer {} failed to run", observer->name());
-      return false;
-    }
-    if(updateRobots)
-    {
-      observer->updateRobots(*this, realRobots());
-    }
+    pipeline.run();
   }
   return true;
 }
@@ -328,7 +311,17 @@ void MCController::anchorFrameReal(const sva::PTransformd & anchor)
   anchorFrameReal_ = anchor;
 }
 
-void MCController::stop() {}
+void MCController::stop()
+{
+  for(auto & pipeline : observerPipelines_)
+  {
+    if(gui())
+    {
+      pipeline.removeFromGUI(*gui());
+    }
+    pipeline.removeFromLogger(logger());
+  }
+}
 
 Gripper & MCController::gripper(const std::string & robot, const std::string & gripper)
 {

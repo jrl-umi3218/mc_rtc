@@ -40,28 +40,6 @@ MCGlobalController::MCGlobalController(const std::string & conf, std::shared_ptr
 MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
 : config(conf), current_ctrl(""), next_ctrl(""), controller_(nullptr), next_controller_(nullptr)
 {
-  // Loading observer modules
-  for(const auto & observerName : config.enabled_observers)
-  {
-    if(mc_observers::ObserverLoader::has_observer(observerName))
-    {
-      auto observer = mc_observers::ObserverLoader::get_observer(observerName, config.timestep,
-                                                                 config.observer_configs[observerName]);
-
-      observers_.push_back(observer);
-      observersByName_[observerName] = observer;
-    }
-    else
-    {
-      mc_rtc::log::error("Observer {} requested in \"EnabledObservers\" configuration but not available", observerName);
-      mc_rtc::log::info("Note common reasons for this error include:\n"
-                        "\t- The observer name does not match the name exported by EXPORT_OBSERVER_MODULE\n"
-                        "\t- The library is not in a path read by mc_rtc\n"
-                        "\t- The constuctor segfaults\n"
-                        "\t- The library hasn't been properly linked");
-    }
-  }
-
   // Loading plugins
   config.load_plugin_configs();
   try
@@ -474,14 +452,6 @@ bool MCGlobalController::run()
   /* Check if we need to change the controller this time */
   if(next_controller_)
   {
-    for(auto & observer : observers_)
-    {
-      observer->removeFromLogger(controller_->logger());
-      if(controller_->gui())
-      {
-        observer->removeFromGUI(*controller_->gui());
-      }
-    }
     mc_rtc::log::info("Switching controllers");
     if(controller_)
     {
@@ -750,58 +720,12 @@ bool MCGlobalController::AddController(const std::string & name)
       controllers[name] = controller_loader->create_object(name, config.main_robot_module, config.timestep,
                                                            config.controllers_configs[name]);
     }
+    controllers[name]->name_ = name;
     if(config.enable_log)
     {
       controllers[name]->logger().setup(config.log_policy, config.log_directory, config.log_template);
     }
-
-    // Give each controller access to all observers
-    controllers[name]->observers_ = observers_;
-    const auto & cc = config.controllers_configs[name];
-    auto runObservers = cc("RunObservers", std::vector<std::string>{});
-    if(runObservers.empty())
-    {
-      std::string observerName = cc("RunObservers", std::string{""});
-      if(!observerName.empty())
-      {
-        runObservers = {observerName};
-      }
-    }
-
-    auto updateObservers = cc("UpdateObservers", std::vector<std::string>{});
-    if(updateObservers.empty())
-    {
-      std::string observerName = cc("UpdateObservers", std::string{""});
-      if(!observerName.empty())
-      {
-        updateObservers = {observerName};
-      }
-    }
-    // Use controller-specific configuration instead of global configuration
-    for(const auto & observerName : runObservers)
-    {
-      if(observersByName_.count(observerName) > 0)
-      {
-        auto observer = observersByName_[observerName];
-        // If observer is in the "UpdateObserver" configuration, request for
-        // update
-        if(std::find(updateObservers.begin(), updateObservers.end(), observerName) != updateObservers.end())
-        {
-          controllers[name]->pipelineObservers_.push_back(std::make_pair(observer, true));
-        }
-        else
-        {
-          controllers[name]->pipelineObservers_.push_back(std::make_pair(observer, false));
-        }
-      }
-      else
-      {
-        mc_rtc::log::error_and_throw<std::runtime_error>(
-            "Controller {} requested observer {} but this observer is not available. Please make sure that it is in "
-            "your \"EnabledObservers\" configuration, and that is was properly loaded.",
-            controller_name, observerName);
-      }
-    }
+    controllers[name]->createObserverPipelines(config.controllers_configs[name]);
     return true;
   }
   else

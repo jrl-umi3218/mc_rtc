@@ -6,7 +6,7 @@
 
 #include <mc_control/Configuration.h>
 
-#include <mc_observers/ObserverLoader.h>
+#include <mc_observers/ObserverPipeline.h>
 
 #include <mc_rbdyn/Robots.h>
 
@@ -74,6 +74,8 @@ public:
    * It is recommended to use it in your override.
    */
   virtual bool run();
+
+  virtual void createObserverPipelines(const mc_rtc::Configuration & config);
 
   /** This function is called before the run() function at each time step of the process
    * driving the robot (i.e. simulation or robot's controller). The default
@@ -348,18 +350,9 @@ protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
 
-  /** Observers order provided by MCGlobalController
-   * Observers will be run and update real robot in that order
-   **/
-  std::vector<mc_observers::ObserverPtr> observers_;
-  /** Observers that will be run by the pipeline.
-   *
-   * The pair contains:
-   * - The observer to run
-   * - A boolean set to true if the observer updates the real robot instance
-   *
-   * Provided by MCGlobalController */
-  std::vector<std::pair<mc_observers::ObserverPtr, bool>> pipelineObservers_;
+  /** State observation pipelines for this controller */
+  std::vector<mc_observers::ObserverPipeline> observerPipelines_;
+  std::vector<mc_observers::ObserverPtr> observers_; ///< loaded observers
 
   /**
    * Anchor frame used by the kinematic observers
@@ -396,6 +389,8 @@ public:
   std::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<mc_tasks::PostureTask> postureTask;
+  /* Controller's name */
+  std::string name_;
 };
 
 } // namespace mc_control
