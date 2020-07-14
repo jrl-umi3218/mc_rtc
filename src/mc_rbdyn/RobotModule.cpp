@@ -134,6 +134,7 @@ RobotModule::RobotModule(const std::string & name, const mc_rbdyn_urdf::URDFPars
   boundsFromURDF(res.limits);
   _visual = res.visual;
   make_default_ref_joint_order();
+  fillAdditionalBounds();
   expand_stance();
 }
 
@@ -154,6 +155,7 @@ void RobotModule::init(const rbd::parsers::ParserResult & res)
   boundsFromURDF(res.limits);
   _visual = res.visual;
   make_default_ref_joint_order();
+  fillAdditionalBounds();
   expand_stance();
 }
 
@@ -220,6 +222,25 @@ void RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits & limits)
 {
   mc_rtc::log::warning("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf");
   boundsFromURDF(from_mc_rbdyn_urdf(limits));
+}
+
+void RobotModule::fillAdditionalBounds()
+{
+  std::map<std::string, std::vector<double>> torqueDerivativeUpper;
+  std::map<std::string, std::vector<double>> torqueDerivativeLower;
+  for (auto it = _bounds.at(0).begin(); it != _bounds.at(0).end(); it++)
+  {
+    std::vector<double> vecUpper;
+    std::vector<double> vecLower;
+    for(unsigned int i=0; i<it->second.size(); i++)
+    {
+      vecUpper.push_back( +std::numeric_limits<double>::infinity() );
+      vecLower.push_back( -std::numeric_limits<double>::infinity() );
+    }
+    torqueDerivativeUpper.insert( std::make_pair(it->first, vecUpper) );
+    torqueDerivativeLower.insert( std::make_pair(it->first, vecLower) );
+  }
+  _torqueDerivativeBounds = {torqueDerivativeLower, torqueDerivativeUpper};
 }
 
 void RobotModule::expand_stance()

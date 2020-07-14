@@ -71,7 +71,7 @@ struct MC_RBDYN_DLLAPI RobotModule
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  /*! Holds information regarding the bounds
+  /*! Holds information regarding the urdf bounds
    *
    * The vector should have 6 entries:
    * - lower/upper position bounds
@@ -81,6 +81,15 @@ struct MC_RBDYN_DLLAPI RobotModule
    * Each entry is a map joint name <-> bound
    */
   using bounds_t = std::vector<std::map<std::string, std::vector<double>>>;
+
+  /*! Holds information regarding the torque-derivative bounds
+   *
+   * The vector should have 2 entries:
+   * - lower/upper torque-derivative bounds 
+   *
+   * Each entry is a map joint name <-> bound
+   */
+  using additionalbounds_t = std::vector<std::map<std::string, std::vector<double>>>;
 
   /*! Holds necessary information to create a gripper */
   struct MC_RBDYN_DLLAPI Gripper
@@ -226,7 +235,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   void init(const rbd::parsers::ParserResult & res);
 
-  /** Returns the robot's bounds
+  /** Returns the robot's bounds obtained from parsing a urdf
    *
    * The vector should hold 6 string -> vector<double> map
    *
@@ -240,6 +249,20 @@ struct MC_RBDYN_DLLAPI RobotModule
   const std::vector<std::map<std::string, std::vector<double>>> & bounds() const
   {
     return _bounds;
+  }
+
+  /** Returns the robot's torque-derivative bounds
+   *
+   * The vector should hold 2 string -> vector<double> map
+   *
+   * Each map's keys are joint names and values are joint limits.
+   *
+   * They should be provided in the following order:
+   * - torque-derivative limits (lower/upper)
+   */
+  const std::vector<std::map<std::string, std::vector<double>>> & torqueDerivativeBounds() const
+  {
+    return _torqueDerivativeBounds;
   }
 
   /** Returns a default configuration for the robot
@@ -418,6 +441,13 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** \deprecated{Use rbd::parsers version instead} */
   MC_RTC_DEPRECATED void boundsFromURDF(const mc_rbdyn_urdf::Limits & limits);
 
+  /** Generate default torque-derivative bounds
+   *
+   * This function set _torqueDerivativeBounds to:
+   * {-inf, inf}
+   */
+  void fillAdditionalBounds();
+  
   /** Add missing elements to the current module stance
    *
    * If joints are present in the MultiBody but absent from the default stance,
@@ -486,6 +516,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   rbd::MultiBodyGraph mbg;
   /** \see bounds() */
   bounds_t _bounds;
+  /** \see torqueDerivativeBounds() */
+  additionalbounds_t _torqueDerivativeBounds;
   /** \see stance() */
   std::map<std::string, std::vector<double>> _stance;
   /** \see convexHull() */
