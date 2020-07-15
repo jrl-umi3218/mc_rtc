@@ -854,8 +854,7 @@ restore_path()
 
 build_project()
 {
-  exec_log cmake --build . --config ${BUILD_TYPE}
-  exit_if_error "[ERROR] Build failed for $1"
+  # Uninstall previously installed files
   if [ -f install_manifest.txt ]
   then
     exec_log ${SUDO_CMD} cmake --build . --target uninstall --config ${BUILD_TYPE}
@@ -864,6 +863,9 @@ build_project()
       echo_log "-- [WARNING] Uninstallation failed for $1"
     fi
   fi
+  # Build and install new version
+  exec_log cmake --build . --config ${BUILD_TYPE}
+  exit_if_error "[ERROR] Build failed for $1"
   exec_log ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE}
   exit_if_error "-- [ERROR] Installation failed for $1"
 }
