@@ -11,6 +11,12 @@ shopt -s expand_aliases
 #  --  Configuration --  #
 ##########################
 
+readonly this_dir=`cd $(dirname $0); pwd`
+readonly mc_rtc_dir=`cd $this_dir/..; pwd`
+readonly PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
+
+. "$this_dir/build_and_install_default_config.sh"
+
 echo_log()
 {
   echo $1 | $TEE -a $BUILD_LOGFILE
@@ -45,17 +51,22 @@ mc_rtc_extra_steps()
   true
 }
 
-readonly this_dir=`cd $(dirname $0); pwd`
-readonly mc_rtc_dir=`cd $this_dir/..; pwd`
-readonly PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
+echo_log ""
+echo_log "========================================"
+echo_log "== mc_rtc build_and_install.sh script =="
+echo_log "========================================"
+echo_log ""
 
-. "$this_dir/build_and_install_default_config.sh"
+
+echo_log "-- Loaded default configuration from $this_dir/build_and_install_default_config.sh"
 if [ -f "$this_dir/build_and_install_user_config.sh" ]; then
   . "$this_dir/build_and_install_user_config.sh"
-  echo_log "Loaded user configuration from $this_dir/build_and_install_user_config.sh"
+  echo_log "-- Loaded user configuration from $this_dir/build_and_install_user_config.sh"
 else
-  echo_log "No user configuration file $this_dir/build_and_install_user_config.sh provided, using default configuration"
-  echo_log "If you wish to create a custom user configuration, you may overwrite any of the variables defined in $this_dir/build_and_install_default_config.sh with values of your choice"
+  echo_log "-- No user configuration file $this_dir/build_and_install_user_config.sh provided, using default configuration from $this_dir/build_and_install_default_config.sh"
+  echo "   If you wish to create a custom user configuration:"
+  echo "     - Copy the sample configuration: cp $this_dir/build_and_install_user_config.sample.sh $this_dir/build_and_install_user_config.sh"
+  echo "     - Edit the options to your liking"
 fi
 
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
@@ -319,13 +330,8 @@ touch $BUILD_LOGFILE
 exit_if_error "-- [ERROR] Could not create log file $BUILD_LOGFILE"
 ln -sf $BUILD_LOGFILE "$LOG_PATH/build_and_install_warnings-latest.log"
 
+echo_log "-- Log file will be written to $BUILD_LOGFILE "
 echo_log ""
-echo_log "========================================"
-echo_log "== mc_rtc build_and_install.sh script =="
-echo_log "========================================"
-echo_log ""
-echo_log "-- Build and install log for mc_rtc generated on `date +%Y-%m-%d-%H:%M:%S`"
-echo "-- Log file will be written to $BUILD_LOGFILE "
 echo_log "-- Requested installation with the following options:"
 echo_log "   INSTALL_PREFIX=$INSTALL_PREFIX"
 echo_log "   SOURCE_DIR=$SOURCE_DIR"
