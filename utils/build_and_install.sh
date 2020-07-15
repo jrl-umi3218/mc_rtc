@@ -85,6 +85,12 @@ mc_rtc_extra_steps()
   true
 }
 
+if [[ $(id -u) -eq 0 ]]
+then
+  echo_log "Please run this script as a non-root user. sudo permission will be asked where necessary."
+  exit_failure
+fi
+
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --help                     (-h)               : print this help
     --install-prefix           (-i) PATH          : the directory used to install everything           (default $INSTALL_PREFIX)
