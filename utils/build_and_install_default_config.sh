@@ -1,5 +1,5 @@
 #default settings
-export SOURCE_DIR=`cd $(dirname $0)/../; pwd`
+export SOURCE_DIR=`cd $(dirname $0)/../../; pwd`
 export INSTALL_PREFIX="/usr/local"
 export WITH_ROS_SUPPORT="true"
 export WITH_PYTHON_SUPPORT="true"
@@ -10,7 +10,12 @@ export PYTHON_BUILD_PYTHON2_AND_PYTHON3="false"
 export WITH_LSSOL="false"
 export WITH_HRP2="false"
 export WITH_HRP4="false"
+export WITH_HRP4J="false"
 export WITH_HRP5="false"
+export WITH_MC_OPENRTM="false"
+export MC_OPENRTM_INSTALL_PREFIX="$INSTALL_PREFIX"
+export WITH_MC_UDP="false"
+export MC_UDP_INSTALL_PREFIX="$INSTALL_PREFIX"
 export BUILD_TYPE="RelWithDebInfo"
 export BUILD_TESTING="true"
 export BUILD_BENCHMARKS="false"

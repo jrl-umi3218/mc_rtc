@@ -19,7 +19,7 @@ readonly PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version
 
 echo_log()
 {
-  echo $1 | $TEE -a $BUILD_LOGFILE
+  echo "$1" | $TEE -a $BUILD_LOGFILE
 }
 
 exec_log()
@@ -70,17 +70,20 @@ else
 fi
 
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
-    --help                     (-h)               : print this help
-    --install-prefix           (-i) PATH          : the directory used to install everything           (default $INSTALL_PREFIX)
-    --source-dir               (-s) PATH          : the directory used to clone everything             (default $SOURCE_DIR)
-    --build-type                    Type          : the build type to use                              (default $BUILD_TYPE)
-    --build-testing                 {true, false} : whether to build and run unit tests                (default $BUILD_TESTING)
-    --build-benchmarks              {true, false} : whether to build and run benchmarks                (default $BUILD_BENCHMARKS)
-    --build-core               (-j) N             : number of cores used for building                  (default $BUILD_CORE)
-    --with-lssol                                  : enable LSSOL (requires multi-contact group access) (default $WITH_LSSOL)
-    --with-hrp2                                   : enable HRP2 (requires mc-hrp2 group access)        (default $WITH_HRP2)
-    --with-hrp4                                   : enable HRP4 (requires mc-hrp4 group access)        (default $WITH_HRP4)
-    --with-hrp5                                   : enable HRP5 (requires mc-hrp5 group access)        (default $WITH_HRP5)
+    --help                (-h)               : print this help
+    --install-prefix      (-i) PATH          : the directory used to install everything                (default $INSTALL_PREFIX)
+    --source-dir          (-s) PATH          : the directory used to clone everything                  (default $SOURCE_DIR)
+    --build-type               Type          : the build type to use                                   (default $BUILD_TYPE)
+    --build-testing            {true, false} : whether to build and run unit tests                     (default $BUILD_TESTING)
+    --build-benchmarks         {true, false} : whether to build and run benchmarks                     (default $BUILD_BENCHMARKS)
+    --build-core          (-j) N             : number of cores used for building                       (default $BUILD_CORE)
+    --with-lssol                             : enable LSSOL (requires multi-contact group access)      (default $WITH_LSSOL)
+    --with-hrp2                              : enable HRP2 (requires mc-hrp2 group access)             (default $WITH_HRP2)
+    --with-hrp4                              : enable HRP4 (requires mc-hrp4 group access)             (default $WITH_HRP4)
+    --with-hrp4j                             : enable HRP4J (requires mc-hrp4 group access)            (default $WITH_HRP4J)
+    --with-hrp5                              : enable HRP5 (requires mc-hrp5 group access)             (default $WITH_HRP5)
+    --with-mc_openrtm                        : enable the mc_openrtm interface (requires hrpsys-base)  (default $WITH_MC_OPENRTM)
+    --with-mc_udp                            : enable the mc_udp interface (requires hrpsys-base)      (default $WITH_MC_UDP)
     --with-python-support           {true, false} : whether to build with Python support               (default $WITH_PYTHON_SUPPORT)
     --python-user-install           {true, false} : whether to install Python bindings with user       (default $PYTHON_USER_INSTALL)
     --python-force-python2          {true, false} : whether to enforce the use of Python 2             (default $PYTHON_FORCE_PYTHON2)
@@ -178,10 +181,28 @@ do
         check_true_false --with-hrp4 "$WITH_HRP4"
         ;;
 
+        --with-hrp4j)
+        i=$(($i+1))
+        WITH_HRP4J="${!i}"
+        check_true_false --with-hrp4j "$WITH_HRP4J"
+        ;;
+
         --with-hrp5)
         i=$(($i+1))
         WITH_HRP5="${!i}"
         check_true_false --with-hrp5 "$WITH_HRP5"
+        ;;
+
+        --with-mc_udp)
+        i=$(($i+1))
+        WITH_MC_UDP="${!i}"
+        check_true_false --with-mc_udp "$WITH_MC_UDP"
+        ;;
+
+        --with-mc_openrtm)
+        i=$(($i+1))
+        WITH_MC_OPENRTM="${!i}"
+        check_true_false --with-mc_openrtm "$WITH_MC_OPENRTM"
         ;;
 
         --build-type)
@@ -349,7 +370,12 @@ echo_log "   CLONE_ONLY=$CLONE_ONLY"
 echo_log "   WITH_LSSOL=$WITH_LSSOL"
 echo_log "   WITH_HRP2=$WITH_HRP2"
 echo_log "   WITH_HRP4=$WITH_HRP4"
+echo_log "   WITH_HRP4J=$WITH_HRP4J"
 echo_log "   WITH_HRP5=$WITH_HRP5"
+echo_log "   WITH_MC_UDP=$WITH_MC_UDP"
+echo_log "   MC_UDP_INSTALL_PREFIX=$MC_UDP_INSTALL_PREFIX"
+echo_log "   WITH_MC_OPENRTM=$WITH_MC_OPENRTM"
+echo_log "   MC_OPENRTM_INSTALL_PREFIX=$MC_OPENRTM_INSTALL_PREFIX"
 echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
 echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
 echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
@@ -428,7 +454,12 @@ readonly CLONE_ONLY
 readonly WITH_LSSOL
 readonly WITH_HRP2
 readonly WITH_HRP4
+readonly WITH_HRP4J
 readonly WITH_HRP5
+readonly WITH_MC_OPENRTM
+readonly MC_OPENRTM_INSTALL_PREFIX
+readonly WITH_MC_UDP
+readonly MC_UDP_INSTALL_PREFIX
 readonly SKIP_UPDATE
 readonly SKIP_DIRTY_UPDATE
 readonly BUILD_LOGFILE
@@ -451,7 +482,12 @@ echo_log "   CLONE_ONLY=$CLONE_ONLY"
 echo_log "   WITH_LSSOL=$WITH_LSSOL"
 echo_log "   WITH_HRP2=$WITH_HRP2"
 echo_log "   WITH_HRP4=$WITH_HRP4"
+echo_log "   WITH_HRP4J=$WITH_HRP4J"
 echo_log "   WITH_HRP5=$WITH_HRP5"
+echo_log "   WITH_MC_UDP=$WITH_MC_UDP"
+echo_log "   MC_UDP_INSTALL_PREFIX=$MC_UDP_INSTALL_PREFIX"
+echo_log "   WITH_MC_OPENRTM=$WITH_MC_OPENRTM"
+echo_log "   MC_OPENRTM_INSTALL_PREFIX=$MC_OPENRTM_INSTALL_PREFIX"
 echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
 echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
 echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
@@ -721,6 +757,33 @@ check_and_clone_git_dependency()
     echo_log "-- [OK] Found local repository for ${git_dep} in ${repo_dir}"
 
     if check_clean_work_tree; then
+      # Ensure that the remote is correct
+      echo "-- Checking remote URL"
+      remote="`git remote get-url origin`"
+      if [ "$remote" != "$git_dep_uri" ]
+      then
+        echo_log "-- The remote has changed for $repo, previous remote: $remote, desired remote $git_dep_uri."
+
+        if $ASK_USER_INPUT
+        then
+          read -r -p "--> Would you like to update to the new remote (warning this will overwrite the local master branch)? [y/N] " response
+          if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]
+          then
+            echo_log "-- Updating the remote url to $git_dep_uri"
+            git remote set-url origin $git_dep_uri
+            git remote update origin
+            exit_if_error "Failed to update the remote uri to $git_dep_uri"
+            git fetch origin
+            exit_if_error "Failed to fetch the remote uri to $git_dep_uri"
+            git reset --hard origin/master
+            exit_if_error "Failed to update to the the remote's master branch (new remote: $git_dep_uri)"
+          else
+            echo_log "-- Installation stopped because the locate remote $remote does not match the local remote uri ."
+            echo_log "   Please manually update the remote to $git_dep_uri and rerun the script."
+            exit_failure
+          fi
+        fi
+      fi
       prev_commit="`git rev-parse HEAD`"
       echo_log "-- [OK] repository is clean"
       echo_log "-- Attempting to update local repository from remote branch ${git_dep_branch}..."
@@ -808,6 +871,20 @@ then
   echo_log "-- [OK] Successfully cloned and updated the robot module $git_dep to $repo_dir"
 fi
 
+if $WITH_HRP4J
+then
+  if $WITH_ROS_SUPPORT
+  then
+    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4j_description $CATKIN_DATA_WORKSPACE_SRC
+    echo_log "-- [OK] Successfully cloned and updated the robot description to $git_dep to $repo_dir (catkin)"
+  else
+    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4j_description $SOURCE_DIR
+    echo_log "-- [OK] Successfully cloned and updated the robot description $git_dep to $repo_dir (no catkin)"
+  fi
+  check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp4/mc_hrp4j $SOURCE_DIR
+  echo_log "-- [OK] Successfully cloned and updated the robot module $git_dep to $repo_dir"
+fi
+
 if $WITH_HRP5
 then
   if $WITH_ROS_SUPPORT
@@ -820,6 +897,18 @@ then
   fi
   check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp5/mc_hrp5_p $SOURCE_DIR
   echo_log "-- [OK] Successfully cloned and updated the robot module $git_dep to $repo_dir"
+fi
+
+if $WITH_MC_UDP
+then
+  check_and_clone_git_dependency jrl-umi3218/mc_udp $SOURCE_DIR
+  echo_log "-- [OK] Successfully cloned and updated the interface $git_dep to $repo_dir"
+fi
+
+if $WITH_MC_OPENRTM
+then
+  check_and_clone_git_dependency jrl-umi3218/mc_openrtm $SOURCE_DIR
+  echo_log "-- [OK] Successfully cloned and updated the interface $git_dep to $repo_dir"
 fi
 
 echo_log "-- [OK] All extra repositiories have been successfully cloned or updated"
@@ -860,6 +949,9 @@ restore_path()
 
 build_project()
 {
+  # Build and install new version
+  exec_log cmake --build . --config ${BUILD_TYPE}
+  exit_if_error "[ERROR] Build failed for $1"
   # Uninstall previously installed files
   if [ -f install_manifest.txt ]
   then
@@ -869,9 +961,6 @@ build_project()
       echo_log "-- [WARNING] Uninstallation failed for $1"
     fi
   fi
-  # Build and install new version
-  exec_log cmake --build . --config ${BUILD_TYPE}
-  exit_if_error "[ERROR] Build failed for $1"
   exec_log ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE}
   exit_if_error "-- [ERROR] Installation failed for $1"
 }
@@ -920,7 +1009,12 @@ build_git_dependency_configure_and_build()
   then
     hide_sh
   fi
-  exec_log cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
+  custom_install_prefix=$INSTALL_PREFIX
+  if [ ! -z "$2" ]
+  then
+    custom_install_prefix="$2"
+  fi
+  exec_log cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$custom_install_prefix" \
                     -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
                     -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
                     -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
@@ -953,7 +1047,7 @@ build_git_dependency_no_test()
   echo_log "-- Building git dependency $1 (no test)"
   OLD_CMAKE_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS}"
   export CMAKE_ADDITIONAL_OPTIONS="${OLD_CMAKE_OPTIONS} -DBUILD_TESTING:BOOL=OFF"
-  build_git_dependency_configure_and_build $1
+  build_git_dependency_configure_and_build $1 $2
   export CMAKE_ADDITIONAL_OPTIONS="${OLD_CMAKE_OPTIONS}"
 }
 
@@ -1024,7 +1118,7 @@ echo_log "====================="
 echo_log ""
 
 cd $mc_rtc_dir
-git remote update
+git remote update origin
 current_commit=`git rev-parse HEAD`
 current_branch_name="`git rev-parse --abbrev-ref HEAD`"
 remote_commit=`git rev-parse master@{upstream}`
@@ -1129,6 +1223,18 @@ then
   echo_log "-- [OK] Successfully built the robot module $git_dep"
 fi
 
+if $WITH_HRP4J
+then
+  echo_log "-- Installing with HRP4J robot support"
+  if ! $WITH_ROS_SUPPORT
+  then
+    build_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4j
+    echo_log "-- [OK] Successfully built the robot description $git_dep (no catkin)"
+  fi
+  build_git_dependency git@gite.lirmm.fr:mc-hrp4/mc_hrp4j
+  echo_log "-- [OK] Successfully built the robot module $git_dep"
+fi
+
 if $WITH_HRP5
 then
   echo_log "-- Installing with HRP5 robot support"
@@ -1139,6 +1245,20 @@ then
   fi
   build_git_dependency git@gite.lirmm.fr:mc-hrp5/mc_hrp5_p
   echo_log "-- [OK] Successfully built the robot module $git_dep"
+fi
+
+if $WITH_MC_UDP
+then
+  echo_log "-- Installing with mc_udp interface support"
+  build_git_dependency_no_test jrl-umi3218/mc_udp $MC_UDP_INSTALL_PREFIX
+  echo_log "-- [OK] Successfully built the interface $git_dep"
+fi
+
+if $WITH_MC_OPENRTM
+then
+  echo_log "-- Installing with mc_udp interface support"
+  build_git_dependency_no_test jrl-umi3218/mc_openrtm $MC_OPENRTM_INSTALL_PREFIX
+  echo_log "-- [OK] Successfully built the interface $git_dep"
 fi
 
 echo_log "-- [SUCCESS] All extra dedencencies have been installed"

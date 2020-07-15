@@ -57,5 +57,17 @@
 # export WITH_HRP5="false"
 
 ##
+# Interfaces -- allows communication with the choreonoid simulator, and with the HRP robots.
+# Both mc_udp and mc_openrtm require hrpsys-base and its dependencies to be installed. The script does not
+# automatically install these dependencies, please install them manually before running the script.
+# In case choreonoid was installed in a different path than $INSTALL_PREFIX, set
+# MC_UDP_INSTALL_PREFIX and MC_OPENRTM_INSTALL_PREFIX to choreonoid's base installation path
+##
+# export WITH_MC_OPENRTM="false"
+# export MC_OPENRTM_INSTALL_PREFIX="$INSTALL_PREFIX"
+# export WITH_MC_UDP="false"
+# export MC_UDP_INSTALL_PREFIX="$INSTALL_PREFIX"
+
+##
 # For additional options, please refer to build_and_install_default_config.sh
 ##
