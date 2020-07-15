@@ -71,7 +71,7 @@ Note: it should also work and compile with Visual Studio 2017. However, only Vis
 1. Clone the [mc\_rtc](https://github.com/jrl-umi3218/mc_rtc) repository;
 2. Go into the mc\_rtc directory and update submodules `git submodule update --init`;
 3. Go into the `utils` directory and locate the file named `build_and_install.sh`;
-4. Edit some of the options to your liking: `INSTALL_PREFIX`, `WITH_ROS_SUPPORT`, `ROS_DISTRO`. On Ubuntu, ROS will be installed if you enable ROS support and it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc\_rtc with ROS support;
+4. [optional] Create a custom configuration file `build_and_install_user_config.sh` and override some of the default options provided in `build_and_install_default_config.sh`: `INSTALL_PREFIX`, `WITH_ROS_SUPPORT`, `ROS_DISTRO`. On Ubuntu, ROS will be installed if you enable ROS support and it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc\_rtc with ROS support;
 5. Run `./build_and_install.sh`
 
 The script will take care of installing the required dependencies, clone all required source codes, build and install them. This may take a while.

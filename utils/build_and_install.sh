@@ -6,50 +6,10 @@
 
 shopt -s expand_aliases
 
+
 ##########################
 #  --  Configuration --  #
 ##########################
-
-readonly this_dir=`cd $(dirname $0); pwd`
-readonly mc_rtc_dir=`cd $this_dir/..; pwd`
-SOURCE_DIR=`cd $mc_rtc_dir/../; pwd`
-
-readonly PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
-
-#default settings
-export INSTALL_PREFIX="/usr/local"
-export WITH_ROS_SUPPORT="true"
-export WITH_PYTHON_SUPPORT="true"
-export PYTHON_USER_INSTALL="false"
-export PYTHON_FORCE_PYTHON2="false"
-export PYTHON_FORCE_PYTHON3="false"
-export PYTHON_BUILD_PYTHON2_AND_PYTHON3="false"
-export WITH_LSSOL="false"
-export WITH_HRP2="false"
-export WITH_HRP4="false"
-export WITH_HRP5="false"
-export BUILD_TYPE="RelWithDebInfo"
-export BUILD_TESTING="true"
-export BUILD_BENCHMARKS="false"
-export INSTALL_SYSTEM_DEPENDENCIES="true"
-export CLONE_ONLY="false"
-export SKIP_UPDATE="false"
-# This configuration option lets the script choose what to do when local git repositories are in
-# an unclean state (have local changes). The default false will stop the script with an error.
-# If true, the repository will be compiled as-is without trying to fetch the remote changes.
-export SKIP_DIRTY_UPDATE="false"
-if command -v nproc > /dev/null
-then
-   BUILD_CORE=`nproc`
-else
-   BUILD_CORE=`sysctl -n hw.ncpu`
-fi
-export CMAKE_BUILD_PARALLEL_LEVEL=${BUILD_CORE}
-LOG_PATH="/tmp"
-BUILD_LOGFILE="$LOG_PATH/build_and_install_warnings-`date +%Y-%m-%d-%H-%M-%S`.log"
-export ASK_USER_INPUT="true"
-
-readonly TEE=`which tee`
 
 echo_log()
 {
@@ -85,10 +45,17 @@ mc_rtc_extra_steps()
   true
 }
 
-if [[ $(id -u) -eq 0 ]]
-then
-  echo_log "Please run this script as a non-root user. sudo permission will be asked where necessary."
-  exit_failure
+readonly this_dir=`cd $(dirname $0); pwd`
+readonly mc_rtc_dir=`cd $this_dir/..; pwd`
+readonly PYTHON_VERSION=`python -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))'`
+
+. "$this_dir/build_and_install_default_config.sh"
+if [ -f "$this_dir/build_and_install_user_config.sh" ]; then
+  . "$this_dir/build_and_install_user_config.sh"
+  echo_log "Loaded user configuration from $this_dir/build_and_install_user_config.sh"
+else
+  echo_log "No user configuration file $this_dir/build_and_install_user_config.sh provided, using default configuration"
+  echo_log "If you wish to create a custom user configuration, you may overwrite any of the variables defined in $this_dir/build_and_install_default_config.sh with values of your choice"
 fi
 
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
@@ -263,6 +230,12 @@ do
         ROS_DISTRO="${!i}"
         ;;
 
+        --allow-root)
+        i=$(($i+1))
+        ALLOW_ROOT="${!i}"
+        check_true_false --allow-root "$ALLOW_ROOT"
+        ;;
+
         *)
         echo "unknown parameter $i ($key)"
         exit_failure
@@ -271,6 +244,14 @@ do
 
     i=$(($i+1))
 done
+
+if [ "$ALLOW_ROOT" = "false" ] && [ $(id -u) -eq 0 ]
+then
+  echo_log "Please run this script as a non-root user. sudo permission will be asked where necessary."
+  echo_log "You may force installation as root by setting ALLOW_ROOT=true (--allow-root true). Please note that this may have unintended consequences."
+  exit_failure
+fi
+
 if $WITH_PYTHON_SUPPORT
 then
   WITH_PYTHON_SUPPORT=ON
