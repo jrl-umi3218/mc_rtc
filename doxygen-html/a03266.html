@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Contact.h File Reference</title>
+<title>Polygon.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -72,79 +72,47 @@ $(document).ready(function(){initNavTree('a03266.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">mc_tasks/lipm_stabilizer/Contact.h File Reference</div>  </div>
+<div class="title">plot/Polygon.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03272.html">mc_rbdyn/Robot.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03257.html">mc_rtc/Configuration.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00359.html">mc_rtc/logging.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03248.html">mc_tasks/api.h</a>&gt;</code><br />
-<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
-<code>#include &lt;Eigen/StdVector&gt;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00260.html">mc_rtc/gui/details/traits.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03275.html">mc_rtc/gui/plot/types.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02287.html">mc_tasks::lipm_stabilizer::internal::Contact</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class wraps information about contact surfaces used by the stabilizer.  <a href="a02287.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02291.html">mc_tasks::lipm_stabilizer::ContactDescription</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02295.html">mc_rtc::ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01896.html">mc_rtc::gui::plot::impl::Polygon&lt; GetT &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This hold information on (x,y) points in a polygon and how to plot them.  <a href="a01896.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00725"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00725.html">mc_tasks</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00726"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html">mc_tasks::lipm_stabilizer</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00755"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html">mc_tasks::lipm_stabilizer::internal</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00724"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00724.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00724"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01711.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00727.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memdesc:a00724"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01708.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00727.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00743"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html">mc_rtc::gui</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00745"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html">mc_rtc::gui::plot</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00746"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00746.html">mc_rtc::gui::plot::impl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:af644950088ef46324f20a7214021a824"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#af644950088ef46324f20a7214021a824">mc_tasks::lipm_stabilizer::HrepXd</a> = std::pair&lt; Eigen::MatrixXd, Eigen::VectorXd &gt;</td></tr>
-<tr class="separator:af644950088ef46324f20a7214021a824"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ca092c9a2df0b34b399ff21a8bc938f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#a4ca092c9a2df0b34b399ff21a8bc938f">mc_tasks::lipm_stabilizer::ContactDescriptionVector</a> = std::vector&lt; ContactDescription, Eigen::aligned_allocator&lt; ContactDescription &gt; &gt;</td></tr>
-<tr class="separator:a4ca092c9a2df0b34b399ff21a8bc938f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:aa149c1d1da2ae1c94f1ae91f4919625a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03266.html#aa149c1d1da2ae1c94f1ae91f4919625a">Left</a></td></tr>
-<tr class="separator:aa149c1d1da2ae1c94f1ae91f4919625a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a455aeb83363d1c76669333ae6827f638"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
+<tr class="memitem:a455aeb83363d1c76669333ae6827f638"><td class="memTemplItemLeft" align="right" valign="top">impl::Polygon&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00745.html#a455aeb83363d1c76669333ae6827f638">mc_rtc::gui::plot::Polygon</a> (const std::string &amp;name, GetT get_fn, Side side=<a class="el" href="a03263.html#aa149c1d1da2ae1c94f1ae91f4919625a">Side::Left</a>)</td></tr>
+<tr class="memdesc:a455aeb83363d1c76669333ae6827f638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to create an <a class="el" href="a01896.html" title="This hold information on (x,y) points in a polygon and how to plot them. ">impl::Polygon</a>.  <a href="a00745.html#a455aeb83363d1c76669333ae6827f638">More...</a><br /></td></tr>
+<tr class="separator:a455aeb83363d1c76669333ae6827f638"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="aa149c1d1da2ae1c94f1ae91f4919625a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa149c1d1da2ae1c94f1ae91f4919625a">&#9670;&nbsp;</a></span>Left</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Left</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a02295.html#a1528be809a0f45f51c25a46722a101bb">mc_rtc::ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;::load()</a>, and <a class="el" href="a02295.html#a569fbb0c9f4777d08b28cad40479fb7f">mc_rtc::ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;::save()</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_c5d9ba9e59fcda315855869f4a23a264.html">mc_tasks</a></li><li class="navelem"><a class="el" href="dir_18af6c2952718ac3c6e0c979e92f25ef.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a03266.html">Contact.h</a></li>
-    <li class="footer">Generated on Fri Jul 10 2020 07:23:19 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="dir_db09ff38bdf4a48089498df3a23be2f9.html">plot</a></li><li class="navelem"><a class="el" href="a03266.html">Polygon.h</a></li>
+    <li class="footer">Generated on Wed Jul 15 2020 07:06:57 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

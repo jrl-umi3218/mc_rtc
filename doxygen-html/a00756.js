@@ -1,7 +1,7 @@
 var a00756 =
 [
-    [ "BSpline", "a02371.html", "a02371" ],
-    [ "ExactCubic", "a02375.html", "a02375" ],
-    [ "InterpolatedRotation", "a02379.html", "a02379" ],
-    [ "Spline", "a02383.html", "a02383" ]
+    [ "BSpline", "a02368.html", "a02368" ],
+    [ "ExactCubic", "a02372.html", "a02372" ],
+    [ "InterpolatedRotation", "a02376.html", "a02376" ],
+    [ "Spline", "a02380.html", "a02380" ]
 ];

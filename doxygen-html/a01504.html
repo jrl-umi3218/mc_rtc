@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_observers::KinematicInertialPoseObserver Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01507.html','');});
+$(document).ready(function(){initNavTree('a01504.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,40 +69,446 @@ $(document).ready(function(){initNavTree('a01507.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="a01501.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_observers::KinematicInertialPoseObserver Member List</div>  </div>
+<div class="title">mc_observers::KinematicInertialPoseObserver Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01511.html#a0957402752e8564b876c86f305ebbe2f">addToGUI</a>(const mc_control::MCController &amp;, mc_rtc::gui::StateBuilder &amp;)</td><td class="entry"><a class="el" href="a01511.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01507.html#a2ef97a314ad3f21392694e585ff89582">addToLogger</a>(const mc_control::MCController &amp;ctl, mc_rtc::Logger &amp;) override</td><td class="entry"><a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01511.html#ae17bf0ca1911dea768788e63bf0d45b0">desc</a>() const</td><td class="entry"><a class="el" href="a01511.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01511.html#a09b5945fa09bf14489d9796d43df60b9">desc_</a></td><td class="entry"><a class="el" href="a01511.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01511.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>() const</td><td class="entry"><a class="el" href="a01511.html">mc_observers::Observer</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01511.html#adde90bcccecab614f391f6d515d435fa">dt_</a></td><td class="entry"><a class="el" href="a01511.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01507.html#a6b6a2d32b41691feec87fbff77276731">estimateOrientation</a>(const mc_rbdyn::Robot &amp;robot, const mc_rbdyn::Robot &amp;realRobot)</td><td class="entry"><a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01507.html#af4516c687fb2683eea570e5afc926165">estimatePosition</a>(const mc_control::MCController &amp;ctl)</td><td class="entry"><a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01507.html#a0fe74faab4da1913b5e271bbf6a7d1ed">KinematicInertialPoseObserver</a>(const std::string &amp;name, double dt, const mc_rtc::Configuration &amp;config={})</td><td class="entry"><a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01511.html#a5faf70047c2be78645564f90a8053bff">name</a>() const</td><td class="entry"><a class="el" href="a01511.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01511.html#a2e3f65fb8549873b71b1eeda29c1b363">name_</a></td><td class="entry"><a class="el" href="a01511.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01511.html#a0f9f2d8b07a93f2fe3b55e48406835d3">Observer</a>(const std::string &amp;name, double dt, const mc_rtc::Configuration &amp;config={})</td><td class="entry"><a class="el" href="a01511.html">mc_observers::Observer</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01507.html#ae0059d688bf9a9864199b4f8bece7e3e">posW</a>() const</td><td class="entry"><a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01511.html#a261f51b20ca1d1a57500ae40b6e4093b">removeFromGUI</a>(mc_rtc::gui::StateBuilder &amp;)</td><td class="entry"><a class="el" href="a01511.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01507.html#adbd72a6d4f7f24086bb399c556aef15c">removeFromLogger</a>(mc_rtc::Logger &amp;) override</td><td class="entry"><a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01507.html#a5564591fc150e119fbfe35991031c7da">reset</a>(const mc_control::MCController &amp;ctl) override</td><td class="entry"><a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01507.html#a91574e17a50e7d77a05835335accc0ec">run</a>(const mc_control::MCController &amp;ctl) override</td><td class="entry"><a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01507.html#a143ebfe1847c460ee63c5ec2b8ec5047">updateBodySensor</a>(mc_rbdyn::Robots &amp;robots, const std::string &amp;sensorName=&quot;FloatingBase&quot;)</td><td class="entry"><a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01507.html#a4c4e67e7605e46a446caaf2fd6525b7c">updateRobots</a>(const mc_control::MCController &amp;ctl, mc_rbdyn::Robots &amp;realRobots) override</td><td class="entry"><a class="el" href="a01507.html">mc_observers::KinematicInertialPoseObserver</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01511.html#afe80cec7744a72c627f17990a74e890b">~Observer</a>()</td><td class="entry"><a class="el" href="a01511.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-</table></div><!-- contents -->
+<p>Kinematics-inertial observer of the floating base position.  
+ <a href="a01504.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_observers/KinematicInertialPoseObserver.h&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mc_observers::KinematicInertialPoseObserver:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="a01504.png" usemap="#mc_5Fobservers::KinematicInertialPoseObserver_map" alt=""/>
+  <map id="mc_5Fobservers::KinematicInertialPoseObserver_map" name="mc_5Fobservers::KinematicInertialPoseObserver_map">
+<area href="a01508.html" title="State observation API. " alt="mc_observers::Observer" shape="rect" coords="0,0,272,24"/>
+<area href="a01500.html" title="Kinematics-inertial observer of the floating base position with finite differences estimation of the ..." alt="mc_observers::KinematicInertialObserver" shape="rect" coords="0,112,272,136"/>
+</map>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a0fe74faab4da1913b5e271bbf6a7d1ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#a0fe74faab4da1913b5e271bbf6a7d1ed">KinematicInertialPoseObserver</a> (const std::string &amp;<a class="el" href="a01508.html#a5faf70047c2be78645564f90a8053bff">name</a>, double <a class="el" href="a01508.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>, const <a class="el" href="a01708.html">mc_rtc::Configuration</a> &amp;config={})</td></tr>
+<tr class="separator:a0fe74faab4da1913b5e271bbf6a7d1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5564591fc150e119fbfe35991031c7da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#a5564591fc150e119fbfe35991031c7da">reset</a> (const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;ctl) override</td></tr>
+<tr class="memdesc:a5564591fc150e119fbfe35991031c7da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset floating base estimate from the current control robot state and estimates the floating base position by calling <a class="el" href="a01504.html#a91574e17a50e7d77a05835335accc0ec" title="Update floating-base transform of real robot. ">run()</a>  <a href="#a5564591fc150e119fbfe35991031c7da">More...</a><br /></td></tr>
+<tr class="separator:a5564591fc150e119fbfe35991031c7da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91574e17a50e7d77a05835335accc0ec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#a91574e17a50e7d77a05835335accc0ec">run</a> (const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;ctl) override</td></tr>
+<tr class="memdesc:a91574e17a50e7d77a05835335accc0ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update floating-base transform of real robot.  <a href="#a91574e17a50e7d77a05835335accc0ec">More...</a><br /></td></tr>
+<tr class="separator:a91574e17a50e7d77a05835335accc0ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c4e67e7605e46a446caaf2fd6525b7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#a4c4e67e7605e46a446caaf2fd6525b7c">updateRobots</a> (const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;ctl, <a class="el" href="a01672.html">mc_rbdyn::Robots</a> &amp;realRobots) override</td></tr>
+<tr class="memdesc:a4c4e67e7605e46a446caaf2fd6525b7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write observed floating-base transform to the robot's configuration.  <a href="#a4c4e67e7605e46a446caaf2fd6525b7c">More...</a><br /></td></tr>
+<tr class="separator:a4c4e67e7605e46a446caaf2fd6525b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a143ebfe1847c460ee63c5ec2b8ec5047"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#a143ebfe1847c460ee63c5ec2b8ec5047">updateBodySensor</a> (<a class="el" href="a01672.html">mc_rbdyn::Robots</a> &amp;robots, const std::string &amp;sensorName=&quot;FloatingBase&quot;)</td></tr>
+<tr class="separator:a143ebfe1847c460ee63c5ec2b8ec5047"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0059d688bf9a9864199b4f8bece7e3e"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#ae0059d688bf9a9864199b4f8bece7e3e">posW</a> () const</td></tr>
+<tr class="memdesc:ae0059d688bf9a9864199b4f8bece7e3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get floating-base pose in the world frame.  <a href="#ae0059d688bf9a9864199b4f8bece7e3e">More...</a><br /></td></tr>
+<tr class="separator:ae0059d688bf9a9864199b4f8bece7e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ef97a314ad3f21392694e585ff89582"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#a2ef97a314ad3f21392694e585ff89582">addToLogger</a> (const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;ctl, <a class="el" href="a02044.html">mc_rtc::Logger</a> &amp;) override</td></tr>
+<tr class="memdesc:a2ef97a314ad3f21392694e585ff89582"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add observer to the logger.  <a href="#a2ef97a314ad3f21392694e585ff89582">More...</a><br /></td></tr>
+<tr class="separator:a2ef97a314ad3f21392694e585ff89582"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbd72a6d4f7f24086bb399c556aef15c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#adbd72a6d4f7f24086bb399c556aef15c">removeFromLogger</a> (<a class="el" href="a02044.html">mc_rtc::Logger</a> &amp;) override</td></tr>
+<tr class="memdesc:adbd72a6d4f7f24086bb399c556aef15c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove observer from logger.  <a href="#adbd72a6d4f7f24086bb399c556aef15c">More...</a><br /></td></tr>
+<tr class="separator:adbd72a6d4f7f24086bb399c556aef15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a01508"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a01508')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a01508.html">mc_observers::Observer</a></td></tr>
+<tr class="memitem:a0f9f2d8b07a93f2fe3b55e48406835d3 inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a0f9f2d8b07a93f2fe3b55e48406835d3">Observer</a> (const std::string &amp;<a class="el" href="a01508.html#a5faf70047c2be78645564f90a8053bff">name</a>, double <a class="el" href="a01508.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>, const <a class="el" href="a01708.html">mc_rtc::Configuration</a> &amp;config={})</td></tr>
+<tr class="separator:a0f9f2d8b07a93f2fe3b55e48406835d3 inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe80cec7744a72c627f17990a74e890b inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#afe80cec7744a72c627f17990a74e890b">~Observer</a> ()</td></tr>
+<tr class="separator:afe80cec7744a72c627f17990a74e890b inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5faf70047c2be78645564f90a8053bff inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a5faf70047c2be78645564f90a8053bff">name</a> () const</td></tr>
+<tr class="separator:a5faf70047c2be78645564f90a8053bff inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a862e1f350e7b57da34f15824d21d1d37 inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a862e1f350e7b57da34f15824d21d1d37">dt</a> () const</td></tr>
+<tr class="separator:a862e1f350e7b57da34f15824d21d1d37 inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0957402752e8564b876c86f305ebbe2f inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a0957402752e8564b876c86f305ebbe2f">addToGUI</a> (const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;, <a class="el" href="a01940.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
+<tr class="memdesc:a0957402752e8564b876c86f305ebbe2f inherit pub_methods_a01508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add observer information the GUI.  <a href="a01508.html#a0957402752e8564b876c86f305ebbe2f">More...</a><br /></td></tr>
+<tr class="separator:a0957402752e8564b876c86f305ebbe2f inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261f51b20ca1d1a57500ae40b6e4093b inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a261f51b20ca1d1a57500ae40b6e4093b">removeFromGUI</a> (<a class="el" href="a01940.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
+<tr class="memdesc:a261f51b20ca1d1a57500ae40b6e4093b inherit pub_methods_a01508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove observer from gui.  <a href="a01508.html#a261f51b20ca1d1a57500ae40b6e4093b">More...</a><br /></td></tr>
+<tr class="separator:a261f51b20ca1d1a57500ae40b6e4093b inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae17bf0ca1911dea768788e63bf0d45b0 inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">virtual const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#ae17bf0ca1911dea768788e63bf0d45b0">desc</a> () const</td></tr>
+<tr class="memdesc:ae17bf0ca1911dea768788e63bf0d45b0 inherit pub_methods_a01508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Short description of the observer.  <a href="a01508.html#ae17bf0ca1911dea768788e63bf0d45b0">More...</a><br /></td></tr>
+<tr class="separator:ae17bf0ca1911dea768788e63bf0d45b0 inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a6b6a2d32b41691feec87fbff77276731"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#a6b6a2d32b41691feec87fbff77276731">estimateOrientation</a> (const <a class="el" href="a01632.html">mc_rbdyn::Robot</a> &amp;robot, const <a class="el" href="a01632.html">mc_rbdyn::Robot</a> &amp;realRobot)</td></tr>
+<tr class="memdesc:a6b6a2d32b41691feec87fbff77276731"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update floating-base orientation based on new observed gravity vector.  <a href="#a6b6a2d32b41691feec87fbff77276731">More...</a><br /></td></tr>
+<tr class="separator:a6b6a2d32b41691feec87fbff77276731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4516c687fb2683eea570e5afc926165"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#af4516c687fb2683eea570e5afc926165">estimatePosition</a> (const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;ctl)</td></tr>
+<tr class="separator:af4516c687fb2683eea570e5afc926165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_attribs_a01508"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a01508')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a01508.html">mc_observers::Observer</a></td></tr>
+<tr class="memitem:a2e3f65fb8549873b71b1eeda29c1b363 inherit pro_attribs_a01508"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a2e3f65fb8549873b71b1eeda29c1b363">name_</a></td></tr>
+<tr class="separator:a2e3f65fb8549873b71b1eeda29c1b363 inherit pro_attribs_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adde90bcccecab614f391f6d515d435fa inherit pro_attribs_a01508"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#adde90bcccecab614f391f6d515d435fa">dt_</a></td></tr>
+<tr class="separator:adde90bcccecab614f391f6d515d435fa inherit pro_attribs_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09b5945fa09bf14489d9796d43df60b9 inherit pro_attribs_a01508"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a09b5945fa09bf14489d9796d43df60b9">desc_</a></td></tr>
+<tr class="separator:a09b5945fa09bf14489d9796d43df60b9 inherit pro_attribs_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Kinematics-inertial observer of the floating base position. </p>
+<p>This estimator relies on the feet contact location and the IMU orientation to estimate the floating base position and orientation. Note that this is a very simple kinematic inertial estimator that does not take advantage of closed-loop kinematic chains. As a result, the estimate using the left foot contact as an anchor point and the one using the right foot might differ slightly.</p>
+<p>See <a href="https://scaron.info/teaching/floating-base-estimation.html">https://scaron.info/teaching/floating-base-estimation.html</a> for technical details on the derivation of this simple estimator.</p>
+<p>and for comparison between simple kinematic-inertial estimators the paper</p>
+<p>"Experimental Evaluation of Simple Estimators for Humanoid Robots" by Thomas Flayols, Andrea Del Prete, Patrick Wensing, Alexis Mifsud, Mehdi Benallegue, Olivier Stasse <a href="https://hal.archives-ouvertes.fr/hal-01574819/document">https://hal.archives-ouvertes.fr/hal-01574819/document</a> </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0fe74faab4da1913b5e271bbf6a7d1ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fe74faab4da1913b5e271bbf6a7d1ed">&#9670;&nbsp;</a></span>KinematicInertialPoseObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_observers::KinematicInertialPoseObserver::KinematicInertialPoseObserver </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01708.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initialize floating base observer </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2ef97a314ad3f21392694e585ff89582"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ef97a314ad3f21392694e585ff89582">&#9670;&nbsp;</a></span>addToLogger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_observers::KinematicInertialPoseObserver::addToLogger </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a02044.html">mc_rtc::Logger</a> &amp;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add observer to the logger. </p>
+<p>Default implementation does nothing, each observer implementation is responsible for logging its own data by overriding this function </p>
+
+<p>Reimplemented from <a class="el" href="a01508.html#aa1a2253dad0a8adcb7eb376dc0861af0">mc_observers::Observer</a>.</p>
+
+</div>
+</div>
+<a id="a6b6a2d32b41691feec87fbff77276731"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b6a2d32b41691feec87fbff77276731">&#9670;&nbsp;</a></span>estimateOrientation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_observers::KinematicInertialPoseObserver::estimateOrientation </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01632.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>robot</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01632.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>realRobot</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update floating-base orientation based on new observed gravity vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robot</td><td>Control robot model. </td></tr>
+    <tr><td class="paramname">realRobot</td><td>Measured robot state. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af4516c687fb2683eea570e5afc926165"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4516c687fb2683eea570e5afc926165">&#9670;&nbsp;</a></span>estimatePosition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_observers::KinematicInertialPoseObserver::estimatePosition </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;&#160;</td>
+          <td class="paramname"><em>ctl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae0059d688bf9a9864199b4f8bece7e3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0059d688bf9a9864199b4f8bece7e3e">&#9670;&nbsp;</a></span>posW()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">sva::PTransformd mc_observers::KinematicInertialPoseObserver::posW </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get floating-base pose in the world frame. </p>
+
+</div>
+</div>
+<a id="adbd72a6d4f7f24086bb399c556aef15c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbd72a6d4f7f24086bb399c556aef15c">&#9670;&nbsp;</a></span>removeFromLogger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_observers::KinematicInertialPoseObserver::removeFromLogger </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02044.html">mc_rtc::Logger</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove observer from logger. </p>
+<p>Default implementation does nothing, each observer implementation is responsible for removing all logs entry that it added. </p>
+
+<p>Reimplemented from <a class="el" href="a01508.html#ac81467221a6c73328b0ee45fa7327eb3">mc_observers::Observer</a>.</p>
+
+</div>
+</div>
+<a id="a5564591fc150e119fbfe35991031c7da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5564591fc150e119fbfe35991031c7da">&#9670;&nbsp;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_observers::KinematicInertialPoseObserver::reset </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;&#160;</td>
+          <td class="paramname"><em>ctl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reset floating base estimate from the current control robot state and estimates the floating base position by calling <a class="el" href="a01504.html#a91574e17a50e7d77a05835335accc0ec" title="Update floating-base transform of real robot. ">run()</a> </p>
+
+<p>Implements <a class="el" href="a01508.html#aa59bc21df7afff4f66cecc9315898c6b">mc_observers::Observer</a>.</p>
+
+</div>
+</div>
+<a id="a91574e17a50e7d77a05835335accc0ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91574e17a50e7d77a05835335accc0ec">&#9670;&nbsp;</a></span>run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_observers::KinematicInertialPoseObserver::run </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;&#160;</td>
+          <td class="paramname"><em>ctl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update floating-base transform of real robot. </p>
+
+<p>Implements <a class="el" href="a01508.html#a4805153c7a65f4f5ff444fdfd6528d73">mc_observers::Observer</a>.</p>
+
+</div>
+</div>
+<a id="a143ebfe1847c460ee63c5ec2b8ec5047"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a143ebfe1847c460ee63c5ec2b8ec5047">&#9670;&nbsp;</a></span>updateBodySensor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_observers::KinematicInertialPoseObserver::updateBodySensor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01672.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robots</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>sensorName</em> = <code>&quot;FloatingBase&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4c4e67e7605e46a446caaf2fd6525b7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c4e67e7605e46a446caaf2fd6525b7c">&#9670;&nbsp;</a></span>updateRobots()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_observers::KinematicInertialPoseObserver::updateRobots </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;&#160;</td>
+          <td class="paramname"><em>ctl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01672.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>realRobots</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Write observed floating-base transform to the robot's configuration. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robot</td><td>Robot state to write to </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="a01508.html#a7c2325f9b7cc610db1f7f459198217ee">mc_observers::Observer</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Jul 10 2020 07:23:19 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00730.html">mc_observers</a></li><li class="navelem"><a class="el" href="a01504.html">KinematicInertialPoseObserver</a></li>
+    <li class="footer">Generated on Wed Jul 15 2020 07:06:58 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

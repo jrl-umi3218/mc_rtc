@@ -1,9 +1,9 @@
 var a03248 =
 [
-    [ "MC_TASKS_DLLAPI", "a03248.html#a54b6b62a72f51c6877ce5f6855eae009", null ],
-    [ "MC_TASKS_DLLEXPORT", "a03248.html#a6f58d55d50caa4b695e9ae0db68a84e3", null ],
-    [ "MC_TASKS_DLLIMPORT", "a03248.html#a1ca51f7fba6e50050fa71ee00906116e", null ],
-    [ "MC_TASKS_DLLLOCAL", "a03248.html#a88d2b44a0ab87ccac98cac02f5bc0220", null ],
-    [ "MC_TASKS_LOCAL", "a03248.html#a6fad7ce5639c7536227a82e08f06c0e5", null ],
-    [ "MC_TASKS_VERSION", "a03248.html#a47ff1b35f32c422f53ffee9a1a5d2de4", null ]
+    [ "MC_TRAJECTORY_DLLAPI", "a03248.html#adff5a6c1e965ae6fdc756a2c5187f9c9", null ],
+    [ "MC_TRAJECTORY_DLLEXPORT", "a03248.html#a531302b8554807c8aca0fcf931c490f3", null ],
+    [ "MC_TRAJECTORY_DLLIMPORT", "a03248.html#a6dc4322483ff7548be6769a3e2d2ae54", null ],
+    [ "MC_TRAJECTORY_DLLLOCAL", "a03248.html#aa1a1e2ac0d81d28e134d91b52199d1e1", null ],
+    [ "MC_TRAJECTORY_LOCAL", "a03248.html#a4d2a4bf4b090297efb1f6dfa124b52e2", null ],
+    [ "MC_TRAJECTORY_VERSION", "a03248.html#acd63e2a4854ce5d3f1eec2e5f2cf7498", null ]
 ];

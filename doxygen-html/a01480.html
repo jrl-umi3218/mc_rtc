@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_filter::LowPass&lt; T &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01483.html','');});
+$(document).ready(function(){initNavTree('a01480.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,28 +69,349 @@ $(document).ready(function(){initNavTree('a01483.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="a01477.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_filter::LowPass&lt; T &gt; Member List</div>  </div>
+<div class="title">mc_filter::LowPass&lt; T &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01483.html">mc_filter::LowPass&lt; T &gt;</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01483.html#ac48741a383af10509d4678c5a0673f3a">cutoffPeriod</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_filter::LowPass&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01483.html#ac3c92851291e84d2347271125877dc0c">cutoffPeriod</a>(double period)</td><td class="entry"><a class="el" href="a01483.html">mc_filter::LowPass&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a41bcea9e9de194a6816f03cacbd534dd">dt</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_filter::LowPass&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01483.html#a54232494fa4fa74a08d85acf3f95ab7a">dt_</a></td><td class="entry"><a class="el" href="a01483.html">mc_filter::LowPass&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a543781fd1c5ec7b653de6e2189de8fdb">eval</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_filter::LowPass&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01483.html#ae3ddcbbc84aae62aad621a14a91c39bf">LowPass</a>(double dt, double period=0)</td><td class="entry"><a class="el" href="a01483.html">mc_filter::LowPass&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01483.html#af9ccdd55e5d7f3beabcf4c26bcea9620">reset</a>(const T &amp;value)</td><td class="entry"><a class="el" href="a01483.html">mc_filter::LowPass&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01483.html#a03ab891a2b1f5cd2fd2398b7016ba633">update</a>(const T &amp;newValue)</td><td class="entry"><a class="el" href="a01483.html">mc_filter::LowPass&lt; T &gt;</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-</table></div><!-- contents -->
+<p>Low-pass filter from series of velocity measurements.  
+ <a href="a01480.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_filter/LowPass.h&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mc_filter::LowPass&lt; T &gt;:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="a01480.png" usemap="#mc_5Ffilter::LowPass_3C_20T_20_3E_map" alt=""/>
+  <map id="mc_5Ffilter::LowPass_3C_20T_20_3E_map" name="mc_5Ffilter::LowPass_3C_20T_20_3E_map">
+<area href="a01484.html" title="Low-pass velocity filter from series of position measurements. " alt="mc_filter::LowPassFiniteDifferences&lt; T &gt;" shape="rect" coords="0,56,244,80"/>
+</map>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ae3ddcbbc84aae62aad621a14a91c39bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01480.html#ae3ddcbbc84aae62aad621a14a91c39bf">LowPass</a> (double <a class="el" href="a01480.html#a41bcea9e9de194a6816f03cacbd534dd">dt</a>, double period=0)</td></tr>
+<tr class="memdesc:ae3ddcbbc84aae62aad621a14a91c39bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with cutoff period.  <a href="#ae3ddcbbc84aae62aad621a14a91c39bf">More...</a><br /></td></tr>
+<tr class="separator:ae3ddcbbc84aae62aad621a14a91c39bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac48741a383af10509d4678c5a0673f3a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01480.html#ac48741a383af10509d4678c5a0673f3a">cutoffPeriod</a> () const</td></tr>
+<tr class="memdesc:ac48741a383af10509d4678c5a0673f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get cutoff period.  <a href="#ac48741a383af10509d4678c5a0673f3a">More...</a><br /></td></tr>
+<tr class="separator:ac48741a383af10509d4678c5a0673f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3c92851291e84d2347271125877dc0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01480.html#ac3c92851291e84d2347271125877dc0c">cutoffPeriod</a> (double period)</td></tr>
+<tr class="memdesc:ac3c92851291e84d2347271125877dc0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set cutoff period.  <a href="#ac3c92851291e84d2347271125877dc0c">More...</a><br /></td></tr>
+<tr class="separator:ac3c92851291e84d2347271125877dc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9ccdd55e5d7f3beabcf4c26bcea9620"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01480.html#af9ccdd55e5d7f3beabcf4c26bcea9620">reset</a> (const T &amp;value)</td></tr>
+<tr class="memdesc:af9ccdd55e5d7f3beabcf4c26bcea9620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset position to an initial rest value.  <a href="#af9ccdd55e5d7f3beabcf4c26bcea9620">More...</a><br /></td></tr>
+<tr class="separator:af9ccdd55e5d7f3beabcf4c26bcea9620"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03ab891a2b1f5cd2fd2398b7016ba633"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01480.html#a03ab891a2b1f5cd2fd2398b7016ba633">update</a> (const T &amp;newValue)</td></tr>
+<tr class="memdesc:a03ab891a2b1f5cd2fd2398b7016ba633"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update velocity estimate from new position value.  <a href="#a03ab891a2b1f5cd2fd2398b7016ba633">More...</a><br /></td></tr>
+<tr class="separator:a03ab891a2b1f5cd2fd2398b7016ba633"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a543781fd1c5ec7b653de6e2189de8fdb"><td class="memItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01480.html#a543781fd1c5ec7b653de6e2189de8fdb">eval</a> () const</td></tr>
+<tr class="memdesc:a543781fd1c5ec7b653de6e2189de8fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get filtered velocity.  <a href="#a543781fd1c5ec7b653de6e2189de8fdb">More...</a><br /></td></tr>
+<tr class="separator:a543781fd1c5ec7b653de6e2189de8fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41bcea9e9de194a6816f03cacbd534dd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01480.html#a41bcea9e9de194a6816f03cacbd534dd">dt</a> () const</td></tr>
+<tr class="separator:a41bcea9e9de194a6816f03cacbd534dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a54232494fa4fa74a08d85acf3f95ab7a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01480.html#a54232494fa4fa74a08d85acf3f95ab7a">dt_</a> = 0.005</td></tr>
+<tr class="separator:a54232494fa4fa74a08d85acf3f95ab7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename T&gt;<br />
+struct mc_filter::LowPass&lt; T &gt;</h3>
+
+<p>Low-pass filter from series of velocity measurements. </p>
+<p>Expects T to have:</p><ul>
+<li>T::Zero() static method (e.g Eigen::Vector3d, etc) </li>
+</ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ae3ddcbbc84aae62aad621a14a91c39bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3ddcbbc84aae62aad621a14a91c39bf">&#9670;&nbsp;</a></span>LowPass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01480.html">mc_filter::LowPass</a>&lt; T &gt;::<a class="el" href="a01480.html">LowPass</a> </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>period</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor with cutoff period. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt</td><td>Sampling period.</td></tr>
+    <tr><td class="paramname">period</td><td>Cutoff period. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac48741a383af10509d4678c5a0673f3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac48741a383af10509d4678c5a0673f3a">&#9670;&nbsp;</a></span>cutoffPeriod() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="a01480.html">mc_filter::LowPass</a>&lt; T &gt;::cutoffPeriod </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get cutoff period. </p>
+
+</div>
+</div>
+<a id="ac3c92851291e84d2347271125877dc0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3c92851291e84d2347271125877dc0c">&#9670;&nbsp;</a></span>cutoffPeriod() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a01480.html">mc_filter::LowPass</a>&lt; T &gt;::cutoffPeriod </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>period</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set cutoff period. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">period</td><td>New cutoff period.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>period is explicitely enforced to respect the Nyquist–Shannon sampling theorem, that is T is at least 2*timestep. </dd></dl>
+
+</div>
+</div>
+<a id="a41bcea9e9de194a6816f03cacbd534dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41bcea9e9de194a6816f03cacbd534dd">&#9670;&nbsp;</a></span>dt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="a01480.html">mc_filter::LowPass</a>&lt; T &gt;::dt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a01484.html#a48566df5537776a9c6fa06de4181fada">mc_filter::LowPassFiniteDifferences&lt; T &gt;::update()</a>.</p>
+
+</div>
+</div>
+<a id="a543781fd1c5ec7b653de6e2189de8fdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a543781fd1c5ec7b653de6e2189de8fdb">&#9670;&nbsp;</a></span>eval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const T&amp; <a class="el" href="a01480.html">mc_filter::LowPass</a>&lt; T &gt;::eval </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get filtered velocity. </p>
+
+</div>
+</div>
+<a id="af9ccdd55e5d7f3beabcf4c26bcea9620"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9ccdd55e5d7f3beabcf4c26bcea9620">&#9670;&nbsp;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a01480.html">mc_filter::LowPass</a>&lt; T &gt;::reset </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reset position to an initial rest value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>New position. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="reference">Referenced by <a class="el" href="a01480.html#ae3ddcbbc84aae62aad621a14a91c39bf">mc_filter::LowPass&lt; sva::MotionVecd &gt;::LowPass()</a>, <a class="el" href="a01484.html#a6b34f60855856174042323741e8ca777">mc_filter::LowPassFiniteDifferences&lt; T &gt;::LowPassFiniteDifferences()</a>, and <a class="el" href="a01484.html#a2e407b95655d11d8cc0e07b127670771">mc_filter::LowPassFiniteDifferences&lt; T &gt;::reset()</a>.</p>
+
+</div>
+</div>
+<a id="a03ab891a2b1f5cd2fd2398b7016ba633"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03ab891a2b1f5cd2fd2398b7016ba633">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a01480.html">mc_filter::LowPass</a>&lt; T &gt;::update </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>newValue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Update velocity estimate from new position value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">newPos</td><td>New observed position. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="reference">Referenced by <a class="el" href="a01484.html#a48566df5537776a9c6fa06de4181fada">mc_filter::LowPassFiniteDifferences&lt; T &gt;::update()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a54232494fa4fa74a08d85acf3f95ab7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54232494fa4fa74a08d85acf3f95ab7a">&#9670;&nbsp;</a></span>dt_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="a01480.html">mc_filter::LowPass</a>&lt; T &gt;::dt_ = 0.005</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a01480.html#ac3c92851291e84d2347271125877dc0c">mc_filter::LowPass&lt; sva::MotionVecd &gt;::cutoffPeriod()</a>, <a class="el" href="a01480.html#a41bcea9e9de194a6816f03cacbd534dd">mc_filter::LowPass&lt; sva::MotionVecd &gt;::dt()</a>, and <a class="el" href="a01480.html#a03ab891a2b1f5cd2fd2398b7016ba633">mc_filter::LowPass&lt; sva::MotionVecd &gt;::update()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Jul 10 2020 07:23:19 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00728.html">mc_filter</a></li><li class="navelem"><a class="el" href="a01480.html">LowPass</a></li>
+    <li class="footer">Generated on Wed Jul 15 2020 07:06:58 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

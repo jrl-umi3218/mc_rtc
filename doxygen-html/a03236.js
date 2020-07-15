@@ -1,9 +1,9 @@
 var a03236 =
 [
-    [ "MC_RBDYN_DLLAPI", "a03236.html#a5f64edebd03a669545de1ba699d6cb49", null ],
-    [ "MC_RBDYN_DLLEXPORT", "a03236.html#ae269070c4054c9fa40053b5e28ea074f", null ],
-    [ "MC_RBDYN_DLLIMPORT", "a03236.html#a529cb71c3827899033a1e94d10552a38", null ],
-    [ "MC_RBDYN_DLLLOCAL", "a03236.html#a2956eb566ae27b5965f64bc3c422c703", null ],
-    [ "MC_RBDYN_LOCAL", "a03236.html#a830b69e4ab5049ef14b25b9a3dd872cb", null ],
-    [ "MC_RBDYN_VERSION", "a03236.html#a552577349e8efdac2745cbdd3898f85e", null ]
+    [ "MC_ROBOTS_DLLAPI", "a03236.html#aab9f1fcb73f7bb68ce97897257085bc6", null ],
+    [ "MC_ROBOTS_DLLEXPORT", "a03236.html#a551f4997282c602cc3b9699950bff0d9", null ],
+    [ "MC_ROBOTS_DLLIMPORT", "a03236.html#afab08aefa87854e0f4e002300f42f2e0", null ],
+    [ "MC_ROBOTS_DLLLOCAL", "a03236.html#abd12baa7258deaf7a15d3874f1920e57", null ],
+    [ "MC_ROBOTS_LOCAL", "a03236.html#a31fee9d1d5fe536ba8cfac80e376564e", null ],
+    [ "MC_ROBOTS_VERSION", "a03236.html#a12b895bf0b39c259b3eb51ee7782f970", null ]
 ];
