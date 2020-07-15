@@ -320,6 +320,7 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
           PT2TF(surf->X_b_s(), tm, prefix + surf->bodyName(), prefix + "surfaces/" + surf->name(), 0);
       data.surface_tfs[surf_i].header.stamp = data.js.header.stamp;
       data.surface_tfs[surf_i].header.seq = data.js.header.seq;
+      ++surf_i;
     }
   }
 
