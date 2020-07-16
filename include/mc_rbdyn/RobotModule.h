@@ -73,10 +73,11 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /*! Holds information regarding the urdf bounds
    *
-   * The vector should have 6 entries:
+   * The vector should have 8 entries:
    * - lower/upper position bounds
    * - lower/upper velocity bounds
    * - lower/upper torque bounds
+   * - lower/upper torque-derivative bounds
    *
    * Each entry is a map joint name <-> bound
    */
@@ -237,7 +238,7 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /** Returns the robot's bounds obtained from parsing a urdf
    *
-   * The vector should hold 6 string -> vector<double> map
+   * The vector should hold 8 string -> vector<double> map
    *
    * Each map's keys are joint names and values are joint limits.
    *
@@ -245,24 +246,11 @@ struct MC_RBDYN_DLLAPI RobotModule
    * - joint limits (lower/upper)
    * - velocity limits (lower/upper)
    * - torque limits (lower/upper)
+   * - torque-derivative limits (lower/upper)
    */
   const std::vector<std::map<std::string, std::vector<double>>> & bounds() const
   {
     return _bounds;
-  }
-
-  /** Returns the robot's torque-derivative bounds
-   *
-   * The vector should hold 2 string -> vector<double> map
-   *
-   * Each map's keys are joint names and values are joint limits.
-   *
-   * They should be provided in the following order:
-   * - torque-derivative limits (lower/upper)
-   */
-  const std::vector<std::map<std::string, std::vector<double>>> & torqueDerivativeBounds() const
-  {
-    return _torqueDerivativeBounds;
   }
 
   /** Returns a default configuration for the robot
