@@ -3,7 +3,7 @@
 namespace mc_rtc
 {
 
-void partialRotation(const mc_rtc::Configuration & config, const std::string & key, Eigen::Matrix3d & rotation)
+void overwriteRotationRPY(const mc_rtc::Configuration & config, const std::string & key, Eigen::Matrix3d & rotation)
 {
   if(!config.has(key)) return;
   const auto & c = config(key);
@@ -14,10 +14,6 @@ void partialRotation(const mc_rtc::Configuration & config, const std::string & k
     c("pitch", rpy.y());
     c("yaw", rpy.z());
     rotation = mc_rbdyn::rpyToMat(rpy);
-  }
-  else
-  {
-    rotation = c;
   }
 }
 

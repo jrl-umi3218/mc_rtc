@@ -346,10 +346,12 @@ void StabilizerTask::load(mc_solver::QPSolver &, const mc_rtc::Configuration & c
         const auto & c = config(contactName);
         if(c.has("rotation"))
         {
-          auto cRot = c("rotation");
-          Eigen::Matrix3d rotation = contactPose.rotation();
+          contactPose.rotation() = c("rotation");
+        }
+        else if(c.has("overwriteRPY"))
+        {
           // Only modify the specified DoF of the rotation
-          mc_rtc::partialRotation(c, "rotation", rotation);
+          mc_rtc::overwriteRotationRPY(c, "rotation", contactPose.rotation());
         }
         if(c.has("translation"))
         {

@@ -1,0 +1,11 @@
+{
+  "title": "rpy",
+  "type": "object",
+  "description": "Roll, Pitch and Yaw angles",
+  "properties":
+  {
+    "roll": { "type": "number" },
+    "pitch": { "type": "number" },
+    "yaw": { "type": "number" }
+  }
+}

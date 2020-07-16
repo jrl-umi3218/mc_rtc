@@ -6,7 +6,10 @@
       "height": 0
    },
    "Right": {
-      "rotation": [ 0, 0, 0 ],
+      "overwriteRotationRPY": {
+        "roll": 0,
+        "pitch": 0
+      },
       "height": 0
    },
    "jvrc1": {

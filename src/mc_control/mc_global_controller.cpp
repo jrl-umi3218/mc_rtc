@@ -183,7 +183,7 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
 {
   Eigen::Quaterniond q{initAttitude[0], initAttitude[1], initAttitude[2], initAttitude[3]};
   Eigen::Vector3d t{initAttitude[4], initAttitude[5], initAttitude[6]};
-  init(initq, sva::PTransformd(q, t));
+  init(initq, sva::PTransformd(q.inverse(), t));
 }
 
 void MCGlobalController::init(const std::vector<double> & initq, const sva::PTransformd & initAttitude)
@@ -497,6 +497,8 @@ bool MCGlobalController::run()
       next_controller_->anchorFrameReal(controller_->anchorFrameReal());
       next_controller_->robot().encoderValues(controller_->robot().encoderValues());
       next_controller_->realRobot().encoderValues(controller_->robot().encoderValues());
+      next_controller_->robot().encoderVelocities(controller_->robot().encoderVelocities());
+      next_controller_->realRobot().encoderVelocities(controller_->robot().encoderVelocities());
       next_controller_->robot().jointTorques(controller_->robot().jointTorques());
       next_controller_->realRobot().jointTorques(controller_->robot().jointTorques());
       for(auto & fs : next_controller_->robot().forceSensors())

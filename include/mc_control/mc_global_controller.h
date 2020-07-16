@@ -113,7 +113,7 @@ public:
    * calling this method.
    *
    * \throws logical_exception if the bodysensor does not exist or the joint
-   * configuration does not have the same DoFs as the robot
+   * configuration does not have the same size as the reference joint order
    */
   void init(const std::vector<double> & initq);
 
