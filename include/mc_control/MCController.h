@@ -270,8 +270,11 @@ public:
    * \param rm RobotModule used to load the robot
    *
    * \param name Name of the robot
+   *
+   * \return The loaded control robot.
+   * You may access the corresponding real robot through realRobots().robot(name)
    */
-  void loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
+  mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
 
   /** Remove a robot from the controller
    *

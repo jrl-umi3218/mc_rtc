@@ -86,10 +86,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
 
 MCController::~MCController() {}
 
-void MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name)
+mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name)
 {
-  loadRobot(rm, name, robots(), true);
   loadRobot(rm, name, realRobots(), false);
+  return loadRobot(rm, name, robots(), true);
 }
 
 mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
