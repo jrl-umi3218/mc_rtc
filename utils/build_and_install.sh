@@ -760,7 +760,7 @@ check_and_clone_git_dependency()
       # Ensure that the remote is correct
       echo "-- Checking remote URL"
       remote="`git remote get-url origin`"
-      if [ "$remote" != "$git_dep_uri" ]
+      if  [[ "$remote" == *"github"* ]] && [[ $git_dep_uri != *"github"* ]] ||  [[ "$remote" == *"gite"* ]] && [[ $git_dep_uri != *"gite"* ]]
       then
         echo_log "-- The remote has changed for $repo, previous remote: $remote, desired remote $git_dep_uri."
 

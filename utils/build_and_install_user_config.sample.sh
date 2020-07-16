@@ -54,6 +54,7 @@
 # export WITH_LSSOL="false"
 # export WITH_HRP2="false"
 # export WITH_HRP4="false"
+# export WITH_HRP4J="false"
 # export WITH_HRP5="false"
 
 ##
