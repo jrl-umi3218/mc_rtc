@@ -17,6 +17,8 @@ var a01444 =
     [ "gui_server_pub_uris", "a01444.html#a669bd8f5926553a0091c2f2118d5d5cb", null ],
     [ "gui_server_rep_uris", "a01444.html#a86b0d00d5943bf98a345f513b03f5388", null ],
     [ "gui_timestep", "a01444.html#aefc4cb0145c34e7595b346186ed8a2d6", null ],
+    [ "init_attitude_from_sensor", "a01444.html#a4f838a5287a1cbd4156961e77e389165", null ],
+    [ "init_attitude_sensor", "a01444.html#ab6fb51a60d74fbfcfa7f8effe292aeef", null ],
     [ "initial_controller", "a01444.html#a160c16f13781fc249731c80cb25b9dad", null ],
     [ "log_directory", "a01444.html#a8eedde988acfcfba5942a52d69f2b1b8", null ],
     [ "log_policy", "a01444.html#acbde34fb861228455a925e57f38b2e6d", null ],

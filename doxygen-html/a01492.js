@@ -13,6 +13,7 @@ var a01492 =
     [ "run", "a01492.html#a2a497aef03e071004c926032776ac520", null ],
     [ "updateRobots", "a01492.html#aa499d558eec971e714a924f1fb9d0722", null ],
     [ "velW", "a01492.html#a96afc25baaad80aa4c09d6619eb3be56", null ],
+    [ "accW_", "a01492.html#a2ab22db3a902644b453b677193ea982a", null ],
     [ "fbSensorName_", "a01492.html#a66d2fa568fd183d424b8b45488fe5c87", null ],
     [ "posW_", "a01492.html#a7b67ccbf5ae607a9ed7227d64825d4fe", null ],
     [ "updateFrom_", "a01492.html#a41e24212545815c92909fc647cfd4d75", null ],

@@ -16,7 +16,6 @@ var searchData=
   ['r2surface',['r2Surface',['../a01344.html#a19bb1febaf343d980f6de167b004d8bb',1,'mc_control::fsm::Contact']]],
   ['radius',['radius',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00579.html#a6b7fc33cb69b68e07f34abed0134369b',1,'mc_rbdyn_urdf::Geometry::Cylinder::radius()'],['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00583.html#a3e9c79391c4c1efa2461fdc79b53c739',1,'mc_rbdyn_urdf::Geometry::Sphere::radius()']]],
   ['range',['range',['../a01908.html#a1d461d7275261bd5c496e415a523bd89',1,'mc_rtc::gui::plot::AxisConfiguration']]],
-  ['real_5frobots',['real_robots',['../a01464.html#ada71de0674724e0136ec360054d3b702',1,'mc_control::MCController']]],
   ['realrobots_5f',['realRobots_',['../a02296.html#a01584b7cc75fc92846251632bec2e835',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['reconfigure_5f',['reconfigure_',['../a02296.html#a39e9122dda239e200cec4a503d02cb4d',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['records',['records',['../a02040.html#abf3c8af81db34096910a6167aa54266c',1,'mc_rtc::log::FlatLog::entry']]],

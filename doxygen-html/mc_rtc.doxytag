@@ -1092,6 +1092,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
     <filename>a03254</filename>
     <includes id="a00362" name="MessagePackBuilder.h" local="no" imported="no">mc_rtc/MessagePackBuilder.h</includes>
+    <includes id="a00209" name="rpy_utils.h" local="no" imported="no">mc_rbdyn/rpy_utils.h</includes>
     <class kind="struct">mc_rtc::ConfigurationLoader</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; void &gt;</class>
     <class kind="struct">mc_rtc::internal::_has_configuration_load_object</class>
@@ -2919,6 +2920,13 @@
       <name>Joints</name>
       <anchorfile>a00413.html</anchorfile>
       <anchor>afe16a7652eeda60792bb24b8bce8455c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type></type>
+      <name>JointsWVelocity</name>
+      <anchorfile>a00413.html</anchorfile>
+      <anchor>af8afc30b1dee8cadc825a905926db9b1</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -5599,6 +5607,13 @@
       <anchor>a4d5cc646377a58ef243bf1d6b8c10f5e</anchor>
       <arglist></arglist>
     </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>accW_</name>
+      <anchorfile>a01492.html</anchorfile>
+      <anchor>a2ab22db3a902644b453b677193ea982a</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="class">
     <name>mc_solver::BoundedSpeedConstr</name>
@@ -7041,6 +7056,7 @@
       <anchorfile>a01708.html</anchorfile>
       <anchor>a7a2df9dbb9a6139d9ff99c6c60ef61a8</anchor>
       <arglist>() const</arglist>
+      <docanchor file="a01708">Matrix3d_operator</docanchor>
     </member>
     <member kind="function">
       <type></type>
@@ -7244,6 +7260,7 @@
       <anchorfile>a01708.html</anchorfile>
       <anchor>a4bd14911f7201bfc8d7ae644ceed153f</anchor>
       <arglist>(const std::string &amp;key, T &amp;v) const</arglist>
+      <docanchor file="a01708">retrieve_and_store_template</docanchor>
     </member>
     <member kind="function">
       <type>T</type>
@@ -10000,10 +10017,10 @@
     <name>mc_control::ControllerResetData</name>
     <filename>a01460.html</filename>
     <member kind="variable">
-      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt;</type>
       <name>q</name>
       <anchorfile>a01460.html</anchorfile>
-      <anchor>ac3dbbf827ccf63e00f0f7c7be7f32539</anchor>
+      <anchor>a2e6d446ed6dd7f705c238d69b57e9f14</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -13458,6 +13475,20 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
+      <type>bool</type>
+      <name>init_attitude_from_sensor</name>
+      <anchorfile>a01444.html</anchorfile>
+      <anchor>a4f838a5287a1cbd4156961e77e389165</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>init_attitude_sensor</name>
+      <anchorfile>a01444.html</anchorfile>
+      <anchor>ab6fb51a60d74fbfcfa7f8effe292aeef</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
       <type>std::vector&lt; std::string &gt;</type>
       <name>robot_module_paths</name>
       <anchorfile>a01444.html</anchorfile>
@@ -14694,13 +14725,6 @@
       <anchor>a8d79052ede7702b4e1271aa45f8c17e4</anchor>
       <arglist>(const mc_control::MCController &amp;, mc_rtc::gui::StateBuilder &amp;) override</arglist>
     </member>
-    <member kind="function">
-      <type>void</type>
-      <name>removeFromGUI</name>
-      <anchorfile>a01500.html</anchorfile>
-      <anchor>aee19bc2e4f9457e9df7e60fa5f562769</anchor>
-      <arglist>(mc_rtc::gui::StateBuilder &amp;) override</arglist>
-    </member>
   </compound>
   <compound kind="struct">
     <name>mc_observers::KinematicInertialPoseObserver</name>
@@ -14761,6 +14785,13 @@
       <anchorfile>a01504.html</anchorfile>
       <anchor>adbd72a6d4f7f24086bb399c556aef15c</anchor>
       <arglist>(mc_rtc::Logger &amp;) override</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addToGUI</name>
+      <anchorfile>a01504.html</anchorfile>
+      <anchor>a85d378344e8baa707eb294593b1097f7</anchor>
+      <arglist>(const mc_control::MCController &amp;, mc_rtc::gui::StateBuilder &amp;) override</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
@@ -15619,13 +15650,6 @@
       <anchor>a83a923627684cc278f6f9952b285655a</anchor>
       <arglist>(const sva::PTransformd &amp;anchor)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual bool</type>
-      <name>runClosedLoop</name>
-      <anchorfile>a01464.html</anchorfile>
-      <anchor>a2e823bc69796964a6868ee5c30f0e382</anchor>
-      <arglist>()</arglist>
-    </member>
     <member kind="function">
       <type>bool</type>
       <name>run</name>
@@ -15892,24 +15916,17 @@
       <arglist>(const std::vector&lt; std::shared_ptr&lt; mc_rbdyn::RobotModule &gt;&gt; &amp;robot_modules, double dt, const mc_rtc::Configuration &amp;config)</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>realRobots</name>
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>loadRobot</name>
       <anchorfile>a01464.html</anchorfile>
-      <anchor>aee84dbf2540fda3182f7eb8ef31b89fa</anchor>
-      <arglist>(std::shared_ptr&lt; mc_rbdyn::Robots &gt; realRobots)</arglist>
+      <anchor>aefccad1f0ce477f1427b939f5f698d6b</anchor>
+      <arglist>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name, mc_rbdyn::Robots &amp;robots, bool updateNrVars=true)</arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>std::shared_ptr&lt; mc_solver::QPSolver &gt;</type>
       <name>qpsolver</name>
       <anchorfile>a01464.html</anchorfile>
       <anchor>a4523facc71906c6622227d0fa2597963</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>std::shared_ptr&lt; mc_rbdyn::Robots &gt;</type>
-      <name>real_robots</name>
-      <anchorfile>a01464.html</anchorfile>
-      <anchor>ada71de0674724e0136ec360054d3b702</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -16051,6 +16068,13 @@
       <arglist>(const std::vector&lt; double &gt; &amp;initq, const std::array&lt; double, 7 &gt; &amp;initAttitude)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>init</name>
+      <anchorfile>a01440.html</anchorfile>
+      <anchor>afa22752ce1130d6cc4fc7ab4fef53309</anchor>
+      <arglist>(const std::vector&lt; double &gt; &amp;initq, const sva::PTransformd &amp;initAttitude)</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>run</name>
       <anchorfile>a01440.html</anchorfile>
@@ -16079,6 +16103,34 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>mc_rbdyn::Robots &amp;</type>
+      <name>robots</name>
+      <anchorfile>a01440.html</anchorfile>
+      <anchor>a70698192db374ec4f01093192a31b9b8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robots &amp;</type>
+      <name>robots</name>
+      <anchorfile>a01440.html</anchorfile>
+      <anchor>a8082e0a5cb74de8f79b74fa543cf80d9</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robots &amp;</type>
+      <name>realRobots</name>
+      <anchorfile>a01440.html</anchorfile>
+      <anchor>afd88894202e0d03669627e4e049d6927</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robots &amp;</type>
+      <name>realRobots</name>
+      <anchorfile>a01440.html</anchorfile>
+      <anchor>a1bac67547ea86d74b63f234bdcc92626</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
       <type>mc_rbdyn::Robot &amp;</type>
       <name>robot</name>
       <anchorfile>a01440.html</anchorfile>
@@ -16090,6 +16142,20 @@
       <name>robot</name>
       <anchorfile>a01440.html</anchorfile>
       <anchor>afc42120f3cbed546bd2a52b93bf08794</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rbdyn::Robot &amp;</type>
+      <name>realRobot</name>
+      <anchorfile>a01440.html</anchorfile>
+      <anchor>a447bdf10bea46610b6ab74bc669d9c53</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>const mc_rbdyn::Robot &amp;</type>
+      <name>realRobot</name>
+      <anchorfile>a01440.html</anchorfile>
+      <anchor>aa13fb3a34f6c41a207d4fe998cd7ba3d</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -16146,20 +16212,6 @@
       <name>refreshLog</name>
       <anchorfile>a01440.html</anchorfile>
       <anchor>a07310532c70c9cb3087cbbec3a2f14e3</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robots &amp;</type>
-      <name>realRobots</name>
-      <anchorfile>a01440.html</anchorfile>
-      <anchor>afd88894202e0d03669627e4e049d6927</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>mc_rbdyn::Robot &amp;</type>
-      <name>realRobot</name>
-      <anchorfile>a01440.html</anchorfile>
-      <anchor>a447bdf10bea46610b6ab74bc669d9c53</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -20237,13 +20289,6 @@
       <arglist>(FeedbackType fType=FeedbackType::None)</arglist>
     </member>
     <member kind="function">
-      <type>bool</type>
-      <name>runClosedLoop</name>
-      <anchorfile>a02196.html</anchorfile>
-      <anchor>a174d43a36fd4106dd1267564946327a5</anchor>
-      <arglist>(std::shared_ptr&lt; mc_rbdyn::Robots &gt; robot_est)</arglist>
-    </member>
-    <member kind="function">
       <type>const QPResultMsg &amp;</type>
       <name>send</name>
       <anchorfile>a02196.html</anchorfile>
@@ -20312,13 +20357,6 @@
       <anchorfile>a02196.html</anchorfile>
       <anchor>afadc51df1ed896ae8e1546bfb7443ffb</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>realRobots</name>
-      <anchorfile>a02196.html</anchorfile>
-      <anchor>a1d6aeb840e2e8f9abc904c1a19e75408</anchor>
-      <arglist>(std::shared_ptr&lt; mc_rbdyn::Robots &gt; realRobots)</arglist>
     </member>
     <member kind="function">
       <type>const mc_rbdyn::Robots &amp;</type>
@@ -20937,6 +20975,20 @@
       <name>velW</name>
       <anchorfile>a01632.html</anchorfile>
       <anchor>a38618f0ff197fccef53069f51e9fcafc</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>accW</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a8c7a59334340cf8b44a10c6c9cb64d76</anchor>
+      <arglist>(const sva::MotionVecd &amp;acc)</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::MotionVecd</type>
+      <name>accW</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a30b21b6e828397cebd4f015cf9e87f44</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">

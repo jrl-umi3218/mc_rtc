@@ -117,6 +117,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adbd72a6d4f7f24086bb399c556aef15c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#adbd72a6d4f7f24086bb399c556aef15c">removeFromLogger</a> (<a class="el" href="a02044.html">mc_rtc::Logger</a> &amp;) override</td></tr>
 <tr class="memdesc:adbd72a6d4f7f24086bb399c556aef15c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove observer from logger.  <a href="#adbd72a6d4f7f24086bb399c556aef15c">More...</a><br /></td></tr>
 <tr class="separator:adbd72a6d4f7f24086bb399c556aef15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85d378344e8baa707eb294593b1097f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01504.html#a85d378344e8baa707eb294593b1097f7">addToGUI</a> (const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;, <a class="el" href="a01940.html">mc_rtc::gui::StateBuilder</a> &amp;) override</td></tr>
+<tr class="memdesc:a85d378344e8baa707eb294593b1097f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add observer information the GUI.  <a href="#a85d378344e8baa707eb294593b1097f7">More...</a><br /></td></tr>
+<tr class="separator:a85d378344e8baa707eb294593b1097f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_a01508"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a01508')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a01508.html">mc_observers::Observer</a></td></tr>
 <tr class="memitem:a0f9f2d8b07a93f2fe3b55e48406835d3 inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a0f9f2d8b07a93f2fe3b55e48406835d3">Observer</a> (const std::string &amp;<a class="el" href="a01508.html#a5faf70047c2be78645564f90a8053bff">name</a>, double <a class="el" href="a01508.html#a862e1f350e7b57da34f15824d21d1d37">dt</a>, const <a class="el" href="a01708.html">mc_rtc::Configuration</a> &amp;config={})</td></tr>
 <tr class="separator:a0f9f2d8b07a93f2fe3b55e48406835d3 inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,9 +129,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5faf70047c2be78645564f90a8053bff inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a862e1f350e7b57da34f15824d21d1d37 inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a862e1f350e7b57da34f15824d21d1d37">dt</a> () const</td></tr>
 <tr class="separator:a862e1f350e7b57da34f15824d21d1d37 inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0957402752e8564b876c86f305ebbe2f inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a0957402752e8564b876c86f305ebbe2f">addToGUI</a> (const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;, <a class="el" href="a01940.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
-<tr class="memdesc:a0957402752e8564b876c86f305ebbe2f inherit pub_methods_a01508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add observer information the GUI.  <a href="a01508.html#a0957402752e8564b876c86f305ebbe2f">More...</a><br /></td></tr>
-<tr class="separator:a0957402752e8564b876c86f305ebbe2f inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a261f51b20ca1d1a57500ae40b6e4093b inherit pub_methods_a01508"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01508.html#a261f51b20ca1d1a57500ae40b6e4093b">removeFromGUI</a> (<a class="el" href="a01940.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
 <tr class="memdesc:a261f51b20ca1d1a57500ae40b6e4093b inherit pub_methods_a01508"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove observer from gui.  <a href="a01508.html#a261f51b20ca1d1a57500ae40b6e4093b">More...</a><br /></td></tr>
 <tr class="separator:a261f51b20ca1d1a57500ae40b6e4093b inherit pub_methods_a01508"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -197,6 +197,47 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a85d378344e8baa707eb294593b1097f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85d378344e8baa707eb294593b1097f7">&#9670;&nbsp;</a></span>addToGUI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_observers::KinematicInertialPoseObserver::addToGUI </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01464.html">mc_control::MCController</a> &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01940.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add observer information the GUI. </p>
+<p>Default implementation does nothing, each observer implementation is responsible for adding its own elements to the GUI. Default observers will be shown under the tab "Observers-&gt;observer name". </p>
+
+<p>Reimplemented from <a class="el" href="a01508.html#a0957402752e8564b876c86f305ebbe2f">mc_observers::Observer</a>.</p>
+
+</div>
+</div>
 <a id="a2ef97a314ad3f21392694e585ff89582"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2ef97a314ad3f21392694e585ff89582">&#9670;&nbsp;</a></span>addToLogger()</h2>
 
@@ -508,7 +549,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00730.html">mc_observers</a></li><li class="navelem"><a class="el" href="a01504.html">KinematicInertialPoseObserver</a></li>
-    <li class="footer">Generated on Thu Jul 16 2020 08:36:21 for mc_rtc by
+    <li class="footer">Generated on Thu Jul 16 2020 09:12:15 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

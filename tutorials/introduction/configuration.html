@@ -282,7 +282,7 @@
 
 <ol class="highlight-inline">
   <li><figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$INSTALL_PREFIX</span>/etc/mc_rtc.yaml</code></pre></figure></li>
-  <li><figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></pre></figure> on Linux/MacOS or <figure class="highlight"><pre><code class="language-msshell" data-lang="msshell"><span class="o">%</span><span class="nf">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/mc_rtc.conf</span></code></pre></figure> on Windows</li>
+  <li>Linux/MacOS: <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></pre></figure>Windows: <figure class="highlight"><pre><code class="language-msshell" data-lang="msshell"><span class="o">%</span><span class="nf">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/mc_rtc.conf</span></code></pre></figure></li>
 </ol>
 
 <p>The interface might load additional configuration file(s). Please refer to the interface documentation to find out about that.</p>
@@ -330,6 +330,18 @@
   <th scope="row">Log</th>
   <td>Dictate whether or not controllers will log their output.</td>
   <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">Log</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">InitAttitudeFromSensor</th>
+  <td>Intialize the robot's attitude from sensor or the robot module</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeFromSensor</span><span class="pi">:</span> <span class="no">false</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">InitAttitudeSensor</th>
+  <td>Name of the BodySensor used for initialization of the robot's attitude. An empty name uses the default body sensor. Only used when <pre>InitAttitudeFromSensor=true</pre></td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">InitAttitudeSensor</span><span class="pi">:</span> <span class="s2">"</span><span class="s">"</span></code></pre></figure></td>
 </tr>
 
     <tr class="table-active">

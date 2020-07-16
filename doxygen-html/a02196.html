@@ -145,9 +145,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab8f45ed05cf2852c592659d496b2acbb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02196.html#ab8f45ed05cf2852c592659d496b2acbb">run</a> (FeedbackType fType=<a class="el" href="a00413.html#ac7485dcc8d256a6f197ed7802687f252">FeedbackType::None</a>)</td></tr>
 <tr class="memdesc:ab8f45ed05cf2852c592659d496b2acbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run one iteration of the QP.  <a href="#ab8f45ed05cf2852c592659d496b2acbb">More...</a><br /></td></tr>
 <tr class="separator:ab8f45ed05cf2852c592659d496b2acbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a174d43a36fd4106dd1267564946327a5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02196.html#a174d43a36fd4106dd1267564946327a5">runClosedLoop</a> (std::shared_ptr&lt; <a class="el" href="a01672.html">mc_rbdyn::Robots</a> &gt; robot_est)</td></tr>
-<tr class="memdesc:a174d43a36fd4106dd1267564946327a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">WARNING EXPERIMENTAL.  <a href="#a174d43a36fd4106dd1267564946327a5">More...</a><br /></td></tr>
-<tr class="separator:a174d43a36fd4106dd1267564946327a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b4e9a6b5015c188b1c3825f4e266bd0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02184.html">QPResultMsg</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02196.html#a0b4e9a6b5015c188b1c3825f4e266bd0">send</a> (double curTime=0)</td></tr>
 <tr class="memdesc:a0b4e9a6b5015c188b1c3825f4e266bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the result of <a class="el" href="a02196.html#ab8f45ed05cf2852c592659d496b2acbb" title="Run one iteration of the QP. ">run()</a> for robots.robot()  <a href="#a0b4e9a6b5015c188b1c3825f4e266bd0">More...</a><br /></td></tr>
 <tr class="separator:a0b4e9a6b5015c188b1c3825f4e266bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,9 +175,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afadc51df1ed896ae8e1546bfb7443ffb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01672.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02196.html#afadc51df1ed896ae8e1546bfb7443ffb">robots</a> ()</td></tr>
 <tr class="memdesc:afadc51df1ed896ae8e1546bfb7443ffb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the robots controlled by this solver.  <a href="#afadc51df1ed896ae8e1546bfb7443ffb">More...</a><br /></td></tr>
 <tr class="separator:afadc51df1ed896ae8e1546bfb7443ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d6aeb840e2e8f9abc904c1a19e75408"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02196.html#a1d6aeb840e2e8f9abc904c1a19e75408">realRobots</a> (std::shared_ptr&lt; <a class="el" href="a01672.html">mc_rbdyn::Robots</a> &gt; realRobots)</td></tr>
-<tr class="memdesc:a1d6aeb840e2e8f9abc904c1a19e75408"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to set the real robots used by this solver XXX could be dangerous / misleading if users set it but tasks have stored it too.  <a href="#a1d6aeb840e2e8f9abc904c1a19e75408">More...</a><br /></td></tr>
-<tr class="separator:a1d6aeb840e2e8f9abc904c1a19e75408"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c9e02613427dd8ab79f833d4244186d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01672.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02196.html#a6c9e02613427dd8ab79f833d4244186d">realRobots</a> () const</td></tr>
 <tr class="memdesc:a6c9e02613427dd8ab79f833d4244186d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the real robots used by this solver.  <a href="#a6c9e02613427dd8ab79f833d4244186d">More...</a><br /></td></tr>
 <tr class="separator:a6c9e02613427dd8ab79f833d4244186d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -257,11 +251,12 @@ Public Member Functions</h2></td></tr>
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">robot</td><td>Set of robots managed by this solver </td></tr>
-    <tr><td class="paramname">timeStep</td><td>Timestep of the solver </td></tr>
+    <tr><td class="paramname">robots</td><td>Set of robots managed by this solver </td></tr>
+    <tr><td class="paramname">timeStep</td><td>Timestep of the solver</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>The real robots will be created by copying the provided robots </dd></dl>
 
 </div>
 </div>
@@ -746,28 +741,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a1d6aeb840e2e8f9abc904c1a19e75408"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d6aeb840e2e8f9abc904c1a19e75408">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_solver::QPSolver::realRobots </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="a01672.html">mc_rbdyn::Robots</a> &gt;&#160;</td>
-          <td class="paramname"><em>realRobots</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Allows to set the real robots used by this solver XXX could be dangerous / misleading if users set it but tasks have stored it too. </p>
-
-</div>
-</div>
 <a id="a6c9e02613427dd8ab79f833d4244186d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c9e02613427dd8ab79f833d4244186d">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c9e02613427dd8ab79f833d4244186d">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -786,7 +761,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="acac203b080dfbd7dbc680e4d9e8aaa3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acac203b080dfbd7dbc680e4d9e8aaa3c">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acac203b080dfbd7dbc680e4d9e8aaa3c">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1150,34 +1125,6 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a174d43a36fd4106dd1267564946327a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a174d43a36fd4106dd1267564946327a5">&#9670;&nbsp;</a></span>runClosedLoop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_solver::QPSolver::runClosedLoop </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="a01672.html">mc_rbdyn::Robots</a> &gt;&#160;</td>
-          <td class="paramname"><em>robot_est</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>WARNING EXPERIMENTAL. </p>
-<p>Runs the QP on an estimated robot state</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">robot_est</td><td>Estimated robot state. Both mbc().q and mbc().alpha should be defined</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if successful, false otherwise </dd></dl>
-
-</div>
-</div>
 <a id="a0b4e9a6b5015c188b1c3825f4e266bd0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0b4e9a6b5015c188b1c3825f4e266bd0">&#9670;&nbsp;</a></span>send()</h2>
 
@@ -1324,7 +1271,7 @@ template&lt;typename T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02196.html">QPSolver</a></li>
-    <li class="footer">Generated on Thu Jul 16 2020 08:36:22 for mc_rtc by
+    <li class="footer">Generated on Thu Jul 16 2020 09:12:15 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

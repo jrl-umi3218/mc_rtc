@@ -13,6 +13,7 @@ var searchData=
   ['joints',['joints',['../a01664.html#a8ed52bd8f3d7ce552f62843c352b3d9c',1,'mc_rbdyn::RobotModule::Gripper::joints()'],['../a01432.html#aa789942e53cc165d37e40819a233ddbf',1,'mc_control::Gripper::joints()'],['../a00413.html#afe16a7652eeda60792bb24b8bce8455c',1,'Joints():&#160;QPSolver.h']]],
   ['joints_5fmbc_5fidx',['joints_mbc_idx',['../a01432.html#a30fe14a15d20853d1d0ddd2c3cedcb14',1,'mc_control::Gripper']]],
   ['jointstiffness',['jointStiffness',['../a02340.html#a3933b0c231304b52c0c4dc83080143cb',1,'mc_tasks::PostureTask']]],
+  ['jointswvelocity',['JointsWVelocity',['../a00413.html#af8afc30b1dee8cadc825a905926db9b1',1,'QPSolver.h']]],
   ['jointtorque',['jointTorque',['../a01632.html#a95798f9588d0656c61558ab20ad935b4',1,'mc_rbdyn::Robot::jointTorque() const'],['../a01632.html#af946d00c2f9e36ed5c0899f237f35c32',1,'mc_rbdyn::Robot::jointTorque()']]],
   ['jointtorques',['jointTorques',['../a01632.html#a91168b4930361d5a61a60a925ae0cc6d',1,'mc_rbdyn::Robot::jointTorques() const'],['../a01632.html#abc6661a03573ba04f70c8cd14939dd0e',1,'mc_rbdyn::Robot::jointTorques(const std::vector&lt; double &gt; &amp;jointTorques)']]]
 ];

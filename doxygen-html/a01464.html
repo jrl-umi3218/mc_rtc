@@ -121,9 +121,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a83a923627684cc278f6f9952b285655a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#a83a923627684cc278f6f9952b285655a">anchorFrameReal</a> (const sva::PTransformd &amp;anchor)</td></tr>
 <tr class="memdesc:a83a923627684cc278f6f9952b285655a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the real robot's anchor frame.  <a href="#a83a923627684cc278f6f9952b285655a">More...</a><br /></td></tr>
 <tr class="separator:a83a923627684cc278f6f9952b285655a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e823bc69796964a6868ee5c30f0e382"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#a2e823bc69796964a6868ee5c30f0e382">runClosedLoop</a> ()</td></tr>
-<tr class="memdesc:a2e823bc69796964a6868ee5c30f0e382"><td class="mdescLeft">&#160;</td><td class="mdescRight">WARNING EXPERIMENTAL Runs the QP on real_robot state ONLY SUPPORTS ONE ROBOT FOR NOW.  <a href="#a2e823bc69796964a6868ee5c30f0e382">More...</a><br /></td></tr>
-<tr class="separator:a2e823bc69796964a6868ee5c30f0e382"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d9a2ee7d9c553bc3ced736b7ee9a3e7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#a7d9a2ee7d9c553bc3ced736b7ee9a3e7">run</a> (mc_solver::FeedbackType fType)</td></tr>
 <tr class="memdesc:a7d9a2ee7d9c553bc3ced736b7ee9a3e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be called in derived class instead of run to use a feedback strategy different from the default one.  <a href="#a7d9a2ee7d9c553bc3ced736b7ee9a3e7">More...</a><br /></td></tr>
 <tr class="separator:a7d9a2ee7d9c553bc3ced736b7ee9a3e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,7 +185,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ab071255e2e17b62e05aec6f67d88ce44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a list of robots supported by the controller.  <a href="#ab071255e2e17b62e05aec6f67d88ce44">More...</a><br /></td></tr>
 <tr class="separator:ab071255e2e17b62e05aec6f67d88ce44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3110512ea26812d8a58d3945e739c751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01632.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#a3110512ea26812d8a58d3945e739c751">loadRobot</a> (<a class="el" href="a00727.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> rm, const std::string &amp;name)</td></tr>
-<tr class="memdesc:a3110512ea26812d8a58d3945e739c751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an additional robot into the controller.  <a href="#a3110512ea26812d8a58d3945e739c751">More...</a><br /></td></tr>
+<tr class="memdesc:a3110512ea26812d8a58d3945e739c751"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an additional robot into the controller (and its corresponding realRobot instance)  <a href="#a3110512ea26812d8a58d3945e739c751">More...</a><br /></td></tr>
 <tr class="separator:a3110512ea26812d8a58d3945e739c751"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea29ca137334fbf6d9aefdc426ad1184"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#aea29ca137334fbf6d9aefdc426ad1184">removeRobot</a> (const std::string &amp;name)</td></tr>
 <tr class="memdesc:aea29ca137334fbf6d9aefdc426ad1184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a robot from the controller.  <a href="#aea29ca137334fbf6d9aefdc426ad1184">More...</a><br /></td></tr>
@@ -240,17 +237,15 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a0788cb5ea805128e4825e14f52122b5d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#a0788cb5ea805128e4825e14f52122b5d">MCController</a> (const std::vector&lt; std::shared_ptr&lt; <a class="el" href="a01660.html">mc_rbdyn::RobotModule</a> &gt;&gt; &amp;robot_modules, double dt, const <a class="el" href="a01708.html">mc_rtc::Configuration</a> &amp;<a class="el" href="a01464.html#aca6f0bb79c273474a9e6ed524ff4d33c">config</a>)</td></tr>
 <tr class="memdesc:a0788cb5ea805128e4825e14f52122b5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a multi-robot controller base.  <a href="#a0788cb5ea805128e4825e14f52122b5d">More...</a><br /></td></tr>
 <tr class="separator:a0788cb5ea805128e4825e14f52122b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee84dbf2540fda3182f7eb8ef31b89fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#aee84dbf2540fda3182f7eb8ef31b89fa">realRobots</a> (std::shared_ptr&lt; <a class="el" href="a01672.html">mc_rbdyn::Robots</a> &gt; realRobots)</td></tr>
-<tr class="separator:aee84dbf2540fda3182f7eb8ef31b89fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefccad1f0ce477f1427b939f5f698d6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01632.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#aefccad1f0ce477f1427b939f5f698d6b">loadRobot</a> (<a class="el" href="a00727.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a> rm, const std::string &amp;name, <a class="el" href="a01672.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="a01464.html#adc557ecb7d64eb2d8be551f7cf6678cd">robots</a>, bool updateNrVars=true)</td></tr>
+<tr class="memdesc:aefccad1f0ce477f1427b939f5f698d6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an additional robot into the controller.  <a href="#aefccad1f0ce477f1427b939f5f698d6b">More...</a><br /></td></tr>
+<tr class="separator:aefccad1f0ce477f1427b939f5f698d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:a4523facc71906c6622227d0fa2597963"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02196.html">mc_solver::QPSolver</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#a4523facc71906c6622227d0fa2597963">qpsolver</a></td></tr>
 <tr class="memdesc:a4523facc71906c6622227d0fa2597963"><td class="mdescLeft">&#160;</td><td class="mdescRight">QP solver.  <a href="#a4523facc71906c6622227d0fa2597963">More...</a><br /></td></tr>
 <tr class="separator:a4523facc71906c6622227d0fa2597963"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada71de0674724e0136ec360054d3b702"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a01672.html">mc_rbdyn::Robots</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#ada71de0674724e0136ec360054d3b702">real_robots</a></td></tr>
-<tr class="memdesc:ada71de0674724e0136ec360054d3b702"><td class="mdescLeft">&#160;</td><td class="mdescRight">Real robots provided by <a class="el" href="a01440.html">MCGlobalController</a>.  <a href="#ada71de0674724e0136ec360054d3b702">More...</a><br /></td></tr>
-<tr class="separator:ada71de0674724e0136ec360054d3b702"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac131a31714e368146f4d9f1e04d7fdf1"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="a00730.html#a45c5f50ee1e5bcc4959faef24b334643">mc_observers::ObserverPtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01464.html#ac131a31714e368146f4d9f1e04d7fdf1">observers_</a></td></tr>
 <tr class="memdesc:ac131a31714e368146f4d9f1e04d7fdf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Observers order provided by <a class="el" href="a01440.html">MCGlobalController</a> Observers will be run and update real robot in that order.  <a href="#ac131a31714e368146f4d9f1e04d7fdf1">More...</a><br /></td></tr>
 <tr class="separator:ac131a31714e368146f4d9f1e04d7fdf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -640,6 +635,8 @@ Friends</h2></td></tr>
 
 <p>Access controller configuration (const) </p>
 
+<p class="reference">References <a class="el" href="a00727.html#acaac690d2e96da3b8254fecefe1cccf9">mc_rbdyn::loadRobot()</a>.</p>
+
 </div>
 </div>
 <a id="a5d814ae6c6c4d33fd9601c80ef74ccd9"></a>
@@ -812,7 +809,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="a3110512ea26812d8a58d3945e739c751"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3110512ea26812d8a58d3945e739c751">&#9670;&nbsp;</a></span>loadRobot()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3110512ea26812d8a58d3945e739c751">&#9670;&nbsp;</a></span>loadRobot() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -837,11 +834,71 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Load an additional robot into the controller. </p>
+<p>Load an additional robot into the controller (and its corresponding realRobot instance) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rm</td><td>RobotModule used to load the robot</td></tr>
     <tr><td class="paramname">name</td><td>Name of the robot</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The loaded control robot. You may access the corresponding real robot through <a class="el" href="a01464.html#a47636696fa5be9a4e8c0d10d6dae1a20" title="Non-const variant of realRobots(). ">realRobots()</a>.robot(name) </dd></dl>
+
+</div>
+</div>
+<a id="aefccad1f0ce477f1427b939f5f698d6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefccad1f0ce477f1427b939f5f698d6b">&#9670;&nbsp;</a></span>loadRobot() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01632.html">mc_rbdyn::Robot</a>&amp; mc_control::MCController::loadRobot </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00727.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a>&#160;</td>
+          <td class="paramname"><em>rm</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01672.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robots</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>updateNrVars</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Load an additional robot into the controller. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name of the robot </td></tr>
+    <tr><td class="paramname">rm</td><td>RobotModule used to load the robot </td></tr>
+    <tr><td class="paramname">robots</td><td>Robots in which this robot will be loaded </td></tr>
+    <tr><td class="paramname">updateNrVars</td><td>When true, update the number of variables in the QP problem.</td></tr>
   </table>
   </dd>
 </dl>
@@ -908,7 +965,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="a1443aed08b26c319294465b1caa1e221"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1443aed08b26c319294465b1caa1e221">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1443aed08b26c319294465b1caa1e221">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -928,7 +985,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="a47636696fa5be9a4e8c0d10d6dae1a20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47636696fa5be9a4e8c0d10d6dae1a20">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a47636696fa5be9a4e8c0d10d6dae1a20">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -943,32 +1000,6 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Non-const variant of <a class="el" href="a01464.html#mc_controller_real_robots_const_doc">realRobots()</a>. </p>
-
-</div>
-</div>
-<a id="aee84dbf2540fda3182f7eb8ef31b89fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee84dbf2540fda3182f7eb8ef31b89fa">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_control::MCController::realRobots </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="a01672.html">mc_rbdyn::Robots</a> &gt;&#160;</td>
-          <td class="paramname"><em>realRobots</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -1210,33 +1241,6 @@ The default implementation does the bare minimum (i.e. call run on QPSolver) It 
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a2e823bc69796964a6868ee5c30f0e382"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e823bc69796964a6868ee5c30f0e382">&#9670;&nbsp;</a></span>runClosedLoop()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool mc_control::MCController::runClosedLoop </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>WARNING EXPERIMENTAL Runs the QP on real_robot state ONLY SUPPORTS ONE ROBOT FOR NOW. </p>
 
 </div>
 </div>
@@ -1742,30 +1746,6 @@ If the default pipeline behaviour does not suit you, you may override this metho
 
 </div>
 </div>
-<a id="ada71de0674724e0136ec360054d3b702"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada71de0674724e0136ec360054d3b702">&#9670;&nbsp;</a></span>real_robots</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::shared_ptr&lt;<a class="el" href="a01672.html">mc_rbdyn::Robots</a>&gt; mc_control::MCController::real_robots</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Real robots provided by <a class="el" href="a01440.html">MCGlobalController</a>. </p>
-
-</div>
-</div>
 <a id="ad67e0621398628a6b8f4f700a7455b67"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad67e0621398628a6b8f4f700a7455b67">&#9670;&nbsp;</a></span>selfCollisionConstraint</h2>
 
@@ -1805,7 +1785,7 @@ If the default pipeline behaviour does not suit you, you may override this metho
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00722.html">mc_control</a></li><li class="navelem"><a class="el" href="a01464.html">MCController</a></li>
-    <li class="footer">Generated on Thu Jul 16 2020 08:36:21 for mc_rtc by
+    <li class="footer">Generated on Thu Jul 16 2020 09:12:15 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

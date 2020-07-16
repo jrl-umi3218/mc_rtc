@@ -206,6 +206,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a38618f0ff197fccef53069f51e9fcafc"><td class="memItemLeft" align="right" valign="top">const sva::MotionVecd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01632.html#a38618f0ff197fccef53069f51e9fcafc">velW</a> () const</td></tr>
 <tr class="memdesc:a38618f0ff197fccef53069f51e9fcafc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the robot's floating base velocity expressed in the inertial frame.  <a href="#a38618f0ff197fccef53069f51e9fcafc">More...</a><br /></td></tr>
 <tr class="separator:a38618f0ff197fccef53069f51e9fcafc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c7a59334340cf8b44a10c6c9cb64d76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01632.html#a8c7a59334340cf8b44a10c6c9cb64d76">accW</a> (const sva::MotionVecd &amp;acc)</td></tr>
+<tr class="memdesc:a8c7a59334340cf8b44a10c6c9cb64d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the robot's floating base acceleration.  <a href="#a8c7a59334340cf8b44a10c6c9cb64d76">More...</a><br /></td></tr>
+<tr class="separator:a8c7a59334340cf8b44a10c6c9cb64d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30b21b6e828397cebd4f015cf9e87f44"><td class="memItemLeft" align="right" valign="top">const sva::MotionVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01632.html#a30b21b6e828397cebd4f015cf9e87f44">accW</a> () const</td></tr>
+<tr class="memdesc:a30b21b6e828397cebd4f015cf9e87f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the robot's floating base acceleration expressed in the inertial frame.  <a href="#a30b21b6e828397cebd4f015cf9e87f44">More...</a><br /></td></tr>
+<tr class="separator:a30b21b6e828397cebd4f015cf9e87f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b970df4059237f37021b47d5aaf2494"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01432.html">mc_control::Gripper</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01632.html#a8b970df4059237f37021b47d5aaf2494">gripper</a> (const std::string &amp;gripper)</td></tr>
 <tr class="memdesc:a8b970df4059237f37021b47d5aaf2494"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access a gripper by name.  <a href="#a8b970df4059237f37021b47d5aaf2494">More...</a><br /></td></tr>
 <tr class="separator:a8b970df4059237f37021b47d5aaf2494"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -698,6 +704,52 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8c7a59334340cf8b44a10c6c9cb64d76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c7a59334340cf8b44a10c6c9cb64d76">&#9670;&nbsp;</a></span>accW() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::Robot::accW </td>
+          <td>(</td>
+          <td class="paramtype">const sva::MotionVecd &amp;&#160;</td>
+          <td class="paramname"><em>acc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update the robot's floating base acceleration. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vel</td><td>New floating base acceleration in the inertial frame.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This function takes care of calling rbd::forwardAcceleration </dd></dl>
+
+</div>
+</div>
+<a id="a30b21b6e828397cebd4f015cf9e87f44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30b21b6e828397cebd4f015cf9e87f44">&#9670;&nbsp;</a></span>accW() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const sva::MotionVecd mc_rbdyn::Robot::accW </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the robot's floating base acceleration expressed in the inertial frame. </p>
+
+</div>
+</div>
 <a id="ae30c16125ec220e6525f86339d894a3c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae30c16125ec220e6525f86339d894a3c">&#9670;&nbsp;</a></span>addConvex()</h2>
 
@@ -4362,7 +4414,7 @@ template&lt;typename T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00727.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a01632.html">Robot</a></li>
-    <li class="footer">Generated on Thu Jul 16 2020 08:36:21 for mc_rtc by
+    <li class="footer">Generated on Thu Jul 16 2020 09:12:15 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

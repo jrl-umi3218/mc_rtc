@@ -4,6 +4,8 @@ var a01632 =
     [ "S_ObjectPtr", "a01632.html#a28270fdeec598bc23d8761191a6226d4", null ],
     [ "Robot", "a01632.html#a023a2a4a841760ae65a2d868bb6139fa", null ],
     [ "Robot", "a01632.html#a36f2a1e6efba28f038f83f77f85e19d6", null ],
+    [ "accW", "a01632.html#a8c7a59334340cf8b44a10c6c9cb64d76", null ],
+    [ "accW", "a01632.html#a30b21b6e828397cebd4f015cf9e87f44", null ],
     [ "addConvex", "a01632.html#ae30c16125ec220e6525f86339d894a3c", null ],
     [ "addDevice", "a01632.html#a1736b85ddedafef83111d6c67ff6f129", null ],
     [ "addSensor", "a01632.html#abc302e460bc53880eb062681e9e50a54", null ],

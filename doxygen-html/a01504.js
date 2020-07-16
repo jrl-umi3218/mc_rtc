@@ -1,6 +1,7 @@
 var a01504 =
 [
     [ "KinematicInertialPoseObserver", "a01504.html#a0fe74faab4da1913b5e271bbf6a7d1ed", null ],
+    [ "addToGUI", "a01504.html#a85d378344e8baa707eb294593b1097f7", null ],
     [ "addToLogger", "a01504.html#a2ef97a314ad3f21392694e585ff89582", null ],
     [ "estimateOrientation", "a01504.html#a6b6a2d32b41691feec87fbff77276731", null ],
     [ "estimatePosition", "a01504.html#af4516c687fb2683eea570e5afc926165", null ],

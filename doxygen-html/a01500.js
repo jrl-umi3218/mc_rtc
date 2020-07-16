@@ -3,7 +3,6 @@ var a01500 =
     [ "KinematicInertialObserver", "a01500.html#a165a77caf0652ffe0388127ceafe7ba6", null ],
     [ "addToGUI", "a01500.html#a8d79052ede7702b4e1271aa45f8c17e4", null ],
     [ "addToLogger", "a01500.html#a70349dda9da00837225afa919fdc9ce7", null ],
-    [ "removeFromGUI", "a01500.html#aee19bc2e4f9457e9df7e60fa5f562769", null ],
     [ "removeFromLogger", "a01500.html#ab7a34a69d1337573093b19cce5f4442e", null ],
     [ "reset", "a01500.html#ae964341c760e3f942152f39d4d596432", null ],
     [ "reset", "a01500.html#a218d679b8851235ad18b2a49b2c71e01", null ],

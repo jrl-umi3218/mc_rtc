@@ -6,6 +6,8 @@ var searchData=
   ['idx',['idx',['../a01400.html#a15631f7cb4afab3665d62197f9b0aa67',1,'mc_control::fsm::MetaTasksState::TaskCriteria']]],
   ['impl_5f',['impl_',['../a01376.html#a8921148d58f33c039fe655ad12c6fbb2',1,'mc_control::fsm::AddRemoveContactState']]],
   ['inf',['inf',['../a01904.html#ab995e2707a19a7b8beb6b05bbeffa3b9',1,'mc_rtc::gui::plot::Range']]],
+  ['init_5fattitude_5ffrom_5fsensor',['init_attitude_from_sensor',['../a01444.html#a4f838a5287a1cbd4156961e77e389165',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
+  ['init_5fattitude_5fsensor',['init_attitude_sensor',['../a01444.html#ab6fb51a60d74fbfcfa7f8effe292aeef',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['initial_5fcom',['initial_com',['../a01416.html#aca2139273c699c55c684164f558d936e',1,'mc_control::fsm::SlidingFootContactState']]],
   ['initial_5fcontroller',['initial_controller',['../a01444.html#a160c16f13781fc249731c80cb25b9dad',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['initialpose_5f',['initialPose_',['../a02276.html#a7468619f2b047add1ee8a018daafb4f5',1,'mc_tasks::ExactCubicTrajectoryTask']]],
