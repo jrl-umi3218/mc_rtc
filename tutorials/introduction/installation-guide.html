@@ -386,7 +386,11 @@ sudo tee /etc/apt/sources.list.d/multi-contact.list'</span>
   <li>Clone the <a href="https://github.com/jrl-umi3218/mc_rtc">mc_rtc</a> repository;</li>
   <li>Go into the mc_rtc directory and update submodules <code class="highlighter-rouge">git submodule update --init</code>;</li>
   <li>Go into the <code class="highlighter-rouge">utils</code> directory and locate the file named <code class="highlighter-rouge">build_and_install.sh</code>;</li>
-  <li>Edit some of the options to your liking: <code class="highlighter-rouge">INSTALL_PREFIX</code>, <code class="highlighter-rouge">WITH_ROS_SUPPORT</code>, <code class="highlighter-rouge">ROS_DISTRO</code>. On Ubuntu, ROS will be installed if you enable ROS support and it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc_rtc with ROS support;</li>
+  <li>[optional] Create a custom configuration file <code class="highlighter-rouge">build_and_install_user_config.sh</code> (overrides the corresponding variables from the default configuration <code class="highlighter-rouge">build_and_install_default_config.sh</code>)
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>build_and_install_user_config.sample.sh build_and_install_user_config.sh
+</code></pre></div>    </div>
+  </li>
+  <li>[optional] Edit the <code class="highlighter-rouge">build_and_install_user_config.sh</code> and edit the options to your liking: <code class="highlighter-rouge">INSTALL_PREFIX</code>, <code class="highlighter-rouge">WITH_ROS_SUPPORT</code>, <code class="highlighter-rouge">ROS_DISTRO</code>. On Ubuntu, ROS will be installed if you enable ROS support and it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc_rtc with ROS support;</li>
   <li>Run <code class="highlighter-rouge">./build_and_install.sh</code></li>
 </ol>
 
