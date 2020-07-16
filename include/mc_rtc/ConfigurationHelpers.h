@@ -104,4 +104,24 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config, const s
   return vec;
 }
 
+/**
+ * @brief Retrieve rotation elements while keeping unspecified DoFs unchanged.
+ *
+ * Modify the RPY orientation along the provided axes, keep the unspecified axes to their original RPY orientation from
+ * the `rotation` matrix argument.
+ *
+ *   \code{.yaml}
+ *   # Modifies roll=0.5, pitch=0.3, keeps yaw unaffected
+ *   roll: 0.5
+ *   pitch: 0.3
+ *   \code{.yaml}
+ *
+ * @param key The key used to store the value
+ * @param rotation The rotation to modify. Only the DoFs specified in the
+ * configuration will be overwritten, other DoFs will remain unchanged.
+ */
+void MC_RTC_UTILS_DLLAPI overwriteRotationRPY(const mc_rtc::Configuration & config,
+                                              const std::string & key,
+                                              Eigen::Matrix3d & rotation);
+
 } // namespace mc_rtc

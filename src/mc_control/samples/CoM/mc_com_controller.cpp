@@ -4,6 +4,7 @@
 
 #include "mc_com_controller.h"
 
+#include <mc_filter/utils/clamp.h>
 #include <mc_rbdyn/Surface.h>
 #include <mc_rtc/logging.h>
 #include <mc_tasks/SurfaceTransformTask.h>
@@ -27,6 +28,21 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   postureTask->stiffness(1);
   postureTask->weight(1);
   comTask->weight(1000);
+
+  if(robot().hasSurface("LFullSole") && robot().hasSurface("RFullSole"))
+  {
+    leftFootSurface = "LFullSole";
+    rightFootSurface = "RFullSole";
+  }
+  else if(robot().hasSurface("LeftFoot") && robot().hasSurface("RightFoot"))
+  {
+    leftFootSurface = "LeftFoot";
+    rightFootSurface = "RightFoot";
+  }
+  else
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("MCCoMController does not support robot {}", robot().name());
+  }
 }
 
 void MCCoMController::reset(const ControllerResetData & reset_data)
@@ -34,20 +50,30 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
   MCController::reset(reset_data);
   comTask->reset();
   solver().addTask(comTask);
-  if(robot().hasSurface("LFullSole") && robot().hasSurface("RFullSole"))
-  {
-    solver().setContacts(
-        {mc_rbdyn::Contact(robots(), "LFullSole", "AllGround"), mc_rbdyn::Contact(robots(), "RFullSole", "AllGround")});
-  }
-  else if(robot().hasSurface("LeftFoot") && robot().hasSurface("RightFoot"))
-  {
-    solver().setContacts(
-        {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
-  }
-  else
-  {
-    mc_rtc::log::error_and_throw<std::runtime_error>("MCCoMController does not support robot {}", robot().name());
-  }
+  solver().setContacts({mc_rbdyn::Contact(robots(), leftFootSurface, "AllGround"),
+                        mc_rbdyn::Contact(robots(), rightFootSurface, "AllGround")});
+  updateAnchorFrame();
+}
+
+bool MCCoMController::run()
+{
+  updateAnchorFrame();
+  return MCController::run();
+}
+
+void MCCoMController::updateAnchorFrame()
+{
+  // Project desired CoM in-between foot-sole ankle frames and compute ratio along the line in-beween the two surfaces
+  const Eigen::Vector3d & lankle = robot().surfacePose(leftFootSurface).translation();
+  const Eigen::Vector3d & rankle = robot().surfacePose(rightFootSurface).translation();
+  Eigen::Vector3d t_lankle_com = robot().com() - lankle;
+  Eigen::Vector3d t_lankle_rankle = rankle - lankle;
+  double d_proj = t_lankle_com.dot(t_lankle_rankle.normalized());
+  double leftFootRatio = mc_filter::utils::clamp(d_proj / t_lankle_rankle.norm(), 0., 1.);
+  anchorFrame(
+      sva::interpolate(robot().surfacePose(leftFootSurface), robot().surfacePose(rightFootSurface), leftFootRatio));
+  anchorFrameReal(sva::interpolate(realRobot().surfacePose(leftFootSurface), realRobot().surfacePose(rightFootSurface),
+                                   leftFootRatio));
 }
 
 } // namespace mc_control

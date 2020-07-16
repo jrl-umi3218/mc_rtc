@@ -8,6 +8,7 @@
 #include <mc_filter/utils/clamp.h>
 #include <mc_rbdyn/ZMP.h>
 #include <mc_rbdyn/rpy_utils.h>
+#include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/constants.h>
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/lipm_stabilizer/StabilizerTask.h>
@@ -346,6 +347,11 @@ void StabilizerTask::load(mc_solver::QPSolver &, const mc_rtc::Configuration & c
         if(c.has("rotation"))
         {
           contactPose.rotation() = c("rotation");
+        }
+        else if(c.has("overwriteRPY"))
+        {
+          // Only modify the specified DoF of the rotation
+          mc_rtc::overwriteRotationRPY(c, "rotation", contactPose.rotation());
         }
         if(c.has("translation"))
         {

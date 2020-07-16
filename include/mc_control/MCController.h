@@ -43,7 +43,7 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI ControllerResetData
 {
   /** Contains free flyer + joints state information */
-  const std::vector<std::vector<double>> & q;
+  const std::vector<std::vector<double>> q;
 };
 
 struct MCGlobalController;
@@ -140,13 +140,6 @@ public:
    * \see const sva::PTransformd & anchorFrameReal() const;
    */
   void anchorFrameReal(const sva::PTransformd & anchor);
-
-  /**
-   * WARNING EXPERIMENTAL
-   * Runs the QP on real_robot state
-   * ONLY SUPPORTS ONE ROBOT FOR NOW
-   */
-  virtual bool runClosedLoop();
 
   /** Can be called in derived class instead of run to use a feedback strategy
    * different from the default one
@@ -271,13 +264,15 @@ public:
    */
   virtual void supported_robots(std::vector<std::string> & out) const;
 
-  /** Load an additional robot into the controller
+  /** Load an additional robot into the controller (and its corresponding
+   * realRobot instance)
    *
    * \param rm RobotModule used to load the robot
    *
    * \param name Name of the robot
    *
-   * \returns The loaded robot
+   * \return The loaded control robot.
+   * You may access the corresponding real robot through realRobots().robot(name)
    */
   mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name);
 
@@ -334,12 +329,24 @@ protected:
                double dt,
                const mc_rtc::Configuration & config);
 
+  /** Load an additional robot into the controller
+   *
+   * \param name Name of the robot
+   * \param rm RobotModule used to load the robot
+   * \param robots Robots in which this robot will be loaded
+   * \param updateNrVars When true, update the number of variables in the QP
+   * problem.
+   *
+   * \returns The loaded robot
+   */
+  mc_rbdyn::Robot & loadRobot(mc_rbdyn::RobotModulePtr rm,
+                              const std::string & name,
+                              mc_rbdyn::Robots & robots,
+                              bool updateNrVars = true);
+
 protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
-  /** Real robots provided by MCGlobalController **/
-  std::shared_ptr<mc_rbdyn::Robots> real_robots;
-  void realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots);
 
   /** Observers order provided by MCGlobalController
    * Observers will be run and update real robot in that order

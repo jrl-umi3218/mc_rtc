@@ -88,8 +88,17 @@ MCController::~MCController() {}
 
 mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name)
 {
+  loadRobot(rm, name, realRobots(), false);
+  return loadRobot(rm, name, robots(), true);
+}
+
+mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
+                                          const std::string & name,
+                                          mc_rbdyn::Robots & robots,
+                                          bool updateNrVars)
+{
   assert(rm);
-  auto & r = robots().load(*rm);
+  auto & r = robots.load(*rm);
   r.name(name);
   r.mbc().gravity = mc_rtc::constants::gravity;
   r.forwardKinematics();
@@ -117,7 +126,10 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
     }
     data("surfaces").add(r.name(), r.availableSurfaces());
   }
-  solver().updateNrVars();
+  if(updateNrVars)
+  {
+    solver().updateNrVars();
+  }
   return r;
 }
 
@@ -202,17 +214,6 @@ bool MCController::run(mc_solver::FeedbackType fType)
   return true;
 }
 
-bool MCController::runClosedLoop()
-{
-  if(!qpsolver->runClosedLoop(real_robots))
-  {
-    mc_rtc::log::error("QP failed to run()");
-    return false;
-  }
-  qpsolver->fillTorque(dynamicsConstraint);
-  return true;
-}
-
 const mc_solver::QPResultMsg & MCController::send(const double & t)
 {
   return qpsolver->send(t);
@@ -232,8 +233,8 @@ void MCController::reset(const ControllerResetData & reset_data)
   robot().mbc().zero(robot().mb());
   robot().mbc().q = reset_data.q;
   postureTask->posture(reset_data.q);
-  rbd::forwardKinematics(robot().mb(), robot().mbc());
-  rbd::forwardVelocity(robot().mb(), robot().mbc());
+  robot().forwardKinematics();
+  robot().forwardVelocity();
 }
 
 const mc_rbdyn::Robot & MCController::robot() const
@@ -286,12 +287,6 @@ mc_rtc::Logger & MCController::logger()
 void MCController::supported_robots(std::vector<std::string> & out) const
 {
   out = {};
-}
-
-void MCController::realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots)
-{
-  solver().realRobots(realRobots);
-  real_robots = realRobots;
 }
 
 const mc_rbdyn::Robots & MCController::realRobots() const

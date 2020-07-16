@@ -84,12 +84,6 @@ void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl, m
                                                              return end;
                                                            }));
 }
-void KinematicInertialObserver::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
-{
-  KinematicInertialPoseObserver::removeFromGUI(gui);
-  gui.removeCategory({"Observers", name()});
-}
-
 } // namespace mc_observers
 
 EXPORT_OBSERVER_MODULE("KinematicInertial", mc_observers::KinematicInertialObserver)

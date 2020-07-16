@@ -156,7 +156,7 @@ states:
     tasks:
       LiftFootTask:
         surface: "LeftFootCenter"
-  
+
   LIPMStabilizer::PutRightFoot:
     base: MetaTasks
     tasks:
@@ -174,70 +174,72 @@ states:
          couple: [0, 0, 0]
         moveWorld:
           translation: [0, 0, -0.1]
-        targetRotation: [0, 0, 0]
+        targetRotation:
+          roll: 0
+          pitch: 0
         completion:
           wrench:
             force: [.nan, .nan, 20]
             couple: [.nan, .nan, .nan]
-  
+
   LIPMStabilizer::PutLeftFoot:
     base: LIPMStabilizer::PutRightFoot
     tasks:
       PutFootAdmittance:
         surface: "LeftFootCenter"
-  
+
   LIPMStabilizer::Stabilized::LiftRightFoot:
     base: Parallel
     states: [Stabilizer::LeftSupport, LIPMStabilizer::LiftRightFoot]
-  
+
   LIPMStabilizer::Stabilized::LiftLeftFoot:
     base: Parallel
     states: [Stabilizer::RightSupport, LIPMStabilizer::LiftLeftFoot]
-  
+
   LIPMStabilizer::Stabilized::PutRightFoot:
     base: Parallel
     states: [Stabilizer::LeftSupport, LIPMStabilizer::PutRightFoot]
-  
+
   LIPMStabilizer::Stabilized::PutLeftFoot:
     base: Parallel
     states: [Stabilizer::RightSupport, LIPMStabilizer::PutLeftFoot]
-  
+
   LIPMStabilizer::Stabilized::StayLeft:
     base: Stabilizer::GoLeft
     completion: {}
-  
+
   LIPMStabilizer::Stabilized::StayRight:
     base: Stabilizer::GoRight
     completion: {}
-  
+
   LIPMStabilizer::StandingFSM::LiftRightFoot:
     base: Meta
     transitions:
       - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::LiftRightFoot]
       - [LIPMStabilizer::Stabilized::LiftRightFoot, OK, LIPMStabilizer::Stabilized::PutRightFoot]
       - [LIPMStabilizer::Stabilized::PutRightFoot, OK, LIPMStabilizer::Stabilized::StayLeft, Auto]
-  
+
   LIPMStabilizer::StandingFSM::LiftLeftFoot:
     base: Meta
     transitions:
       - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LiftLeftFoot]
       - [LIPMStabilizer::Stabilized::LiftLeftFoot, OK, LIPMStabilizer::Stabilized::PutLeftFoot]
       - [LIPMStabilizer::Stabilized::PutLeftFoot, OK, LIPMStabilizer::Stabilized::StayRight, Auto]
-  
+
   LIPMStabilizer::StandingFSM::LiftRightFootManual:
     base: LIPMStabilizer::StandingFSM::LiftRightFoot
     StepByStep: true
-  
+
   LIPMStabilizer::StandingFSM::LiftLeftFootManual:
     base: LIPMStabilizer::StandingFSM::LiftLeftFoot
     StepByStep: true
-  
+
   LIPMStabilizer::StandingFSM::AlternateFeetLifting:
     base: Meta
     transitions:
       - [LIPMStabilizer::StandingFSM::LiftRightFoot, OK, LIPMStabilizer::StandingFSM::LiftLeftFoot]
       - [LIPMStabilizer::StandingFSM::LiftLeftFoot, OK, Stabilizer::GoCenter]
-  
+
   LIPMStabilizer::StandingFSM::AlternateFeetLiftingManual:
     base: Meta
     StepByStep: true
@@ -245,7 +247,7 @@ states:
       - [Stabilizer::GoCenter, OK, LIPMStabilizer::StandingFSM::LiftRightFootManual]
       - [LIPMStabilizer::StandingFSM::LiftRightFootManual, OK, LIPMStabilizer::StandingFSM::LiftLeftFootManual]
       - [LIPMStabilizer::StandingFSM::LiftLeftFootManual, OK, Stabilizer::GoCenter]
-  
+
   ###
   # Simple forward walking FSM
   ###
@@ -273,7 +275,7 @@ states:
           # control points in target surface frame
           controlPoints:
             - [1, [0.01, 0.0, 0.01]]
-  
+
   LIPMStabilizer::LeftFootTrajectory:
     base: LIPMStabilizer::RightFootTrajectory
     tasks:
@@ -286,34 +288,34 @@ states:
           # control points in target surface frame
           controlPoints:
             - [1., [0.01, 0.0, 0.01]]
-  
-  
+
+
   LIPMStabilizer::Stabilized::LeftFootTrajectory:
     base: Parallel
     states: [Stabilizer::RightSupport, LIPMStabilizer::LeftFootTrajectory]
-  
+
   LIPMStabilizer::Stabilized::RightFootTrajectory:
     base: Parallel
     states: [Stabilizer::LeftSupport, LIPMStabilizer::RightFootTrajectory]
-  
+
   LIPMStabilizer::WalkingFSM::RightStep:
     base: Meta
     transitions:
     - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::RightFootTrajectory, Auto]
-  
+
   LIPMStabilizer::WalkingFSM::LeftStep:
     base: LIPMStabilizer::WalkingFSM::RightStep
     transitions:
     - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LeftFootTrajectory, Auto]
-  
-  
+
+
   LIPMStabilizer::WalkingFSM::StepForward:
     base: Meta
     transitions:
     - [LIPMStabilizer::WalkingFSM::LeftStep, OK, LIPMStabilizer::WalkingFSM::RightStep, Auto]
     - [LIPMStabilizer::WalkingFSM::RightStep, OK, Stabilizer::GoCenter, Auto]
-  
-  
+
+
   ###
   # FSM to walk backwards
   ###
@@ -328,7 +330,7 @@ states:
           # control points in target surface frame
           controlPoints:
             - [1, [-0.01, 0.0, 0.01]]
-  
+
   LIPMStabilizer::LeftFootBackwardTrajectory:
     base: LIPMStabilizer::RightFootBackwardTrajectory
     tasks:
@@ -341,25 +343,25 @@ states:
           # control points in target surface frame
           controlPoints:
             - [1., [-0.01, 0.0, 0.01]]
-  
+
   LIPMStabilizer::Stabilized::LeftFootBackwardTrajectory:
     base: Parallel
     states: [Stabilizer::RightSupport, LIPMStabilizer::LeftFootBackwardTrajectory]
-  
+
   LIPMStabilizer::Stabilized::RightFootBackwardTrajectory:
     base: Parallel
     states: [Stabilizer::LeftSupport, LIPMStabilizer::RightFootBackwardTrajectory]
-  
+
   LIPMStabilizer::WalkingFSM::RightBackwardStep:
     base: Meta
     transitions:
     - [Stabilizer::GoLeft, OK, LIPMStabilizer::Stabilized::RightFootBackwardTrajectory, Auto]
-  
+
   LIPMStabilizer::WalkingFSM::LeftBackwardStep:
     base: LIPMStabilizer::WalkingFSM::RightStep
     transitions:
     - [Stabilizer::GoRight, OK, LIPMStabilizer::Stabilized::LeftFootBackwardTrajectory, Auto]
-  
+
   LIPMStabilizer::WalkingFSM::StepBackward:
     base: Meta
     transitions:

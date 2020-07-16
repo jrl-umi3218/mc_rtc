@@ -15,10 +15,15 @@ Stabilizer::Standing:
         linear: [0.3,0.3,0.3]
         angular: [0.5,0.5,0.5]
     Left:
-      rotation: [0,0,0]
+      # Keep the yaw intact, align roll/pitch with the (flat) ground
+      overwriteRotationRPY:
+        roll: 0
+        pitch: 0
       height: 0
     Right:
-      rotation: [0,0,0]
+      overwriteRotationRPY:
+        roll: 0
+        pitch: 0
       height: 0
 
 ##

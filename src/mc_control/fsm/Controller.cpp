@@ -90,9 +90,12 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
       {
         mc_rtc::log::error_and_throw<std::runtime_error>("Failed to load {} as specified in configuration", name);
       }
-      auto & r = loadRobot(rm, name);
+      loadRobot(rm, name);
+      auto & r = robots().robot(name);
+      auto & realRobot = realRobots().robot(name);
       robots_idx_[name] = r.robotIndex();
       r.posW(cr.second("init_pos", sva::PTransformd::Identity()));
+      realRobot.posW(r.posW());
     }
     mc_rtc::log::info("Robots loaded in FSM controller:");
     for(const auto & r : robots())
@@ -233,6 +236,7 @@ void Controller::reset(const ControllerResetData & data)
   if(config().has("init_pos"))
   {
     robot().posW(config()("init_pos"));
+    realRobot().posW(robot().posW());
   }
   auto startUpdateContacts = clock::now();
   updateContacts();

@@ -66,6 +66,8 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
   void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
 
+  void addToGUI(const mc_control::MCController &, mc_rtc::gui::StateBuilder &) override;
+
 protected:
   /** Update floating-base orientation based on new observed gravity vector.
    *
@@ -89,6 +91,7 @@ protected:
 private:
   Eigen::Matrix3d orientation_; /**< Rotation from world to floating-base frame */
   Eigen::Vector3d position_; /**< Translation of floating-base in world frame */
+  bool showAnchorFrame_ = false; /**< Whether to show the anchor frames in the GUI */
 };
 
 } // namespace mc_observers

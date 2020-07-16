@@ -3,6 +3,7 @@
  */
 
 #include <mc_rbdyn/rpy_utils.h>
+#include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_tasks/MetaTaskLoader.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 

@@ -98,22 +98,41 @@ public:
 
   /*! \brief Initialize the default controller with the given configuration
    *
-   * In this version, the robot's initial attitude is provided by
-   * mc_rbdyn::RobotModule
+   * - The initial joint configuration provided as the initq argument.
+   * - The initial floating base attitude is set from body sensors or the robot module
+   * depending on your controller's configuration (default: robot module)
    *
-   * \param initq Initial joint configuration
+   * \code{.yaml}
+   * InitAttitudeFromSensor: true,
+   * InitAttitudeSensor: FloatingBase
+   * \endcode
    *
+   * \param initq initial joints configuration
+   *
+   * \note When implementing an interface, the sensors must be set prior to
+   * calling this method.
+   *
+   * \throws logical_exception if the bodysensor does not exist or the joint
+   * configuration does not have the same size as the reference joint order
    */
   void init(const std::vector<double> & initq);
 
-  /*! \brief Initialize the default controller with the given configuration and attitude
+  /**
+   * @brief Initialize robot attitude from encoders and the floating base attitude
    *
-   * \param initq Initial joint configuration
-   *
-   * \param initAttitude Initial attitude (qw, qx, qy, qz, tx, ty, tz)
-   *
+   * @param initq Initial joints configuration
+   * @param initAttitude Attitude of the floating base provided as
+   *        a quaternion [qw, qx, qy, qz, tx, ty, tz]
    */
   void init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude);
+
+  /**
+   * @brief Initialize robot attitude from encoders and the floating base attitude
+   *
+   * @param initq Initial joints configuration
+   * @param initAttitude Attitude of the floating base
+   */
+  void init(const std::vector<double> & initq, const sva::PTransformd & initAttitude);
 
   /** @name Sensing
    *
@@ -248,11 +267,29 @@ public:
   /*! \brief Const access to current controller */
   const MCController & controller() const;
 
+  /*! \brief Access to the control robots instance. */
+  mc_rbdyn::Robots & robots();
+
+  /*! \brief Const access to the control robots instance. */
+  const mc_rbdyn::Robots & robots() const;
+
+  /*! \brief Access to the real robots instance. */
+  mc_rbdyn::Robots & realRobots();
+
+  /*! \brief Const access to the real robots instance. */
+  const mc_rbdyn::Robots & realRobots() const;
+
   /*! \brief Access the main robot */
   mc_rbdyn::Robot & robot();
 
   /*! \brief Const access to the main robot */
   const mc_rbdyn::Robot & robot() const;
+
+  /*! \brief Access the main real robot */
+  mc_rbdyn::Robot & realRobot();
+
+  /*! \brief Const access to the main real robot */
+  const mc_rbdyn::Robot & realRobot() const;
 
   /*! \brief Get the controller timestep */
   double timestep() const;
@@ -374,15 +411,19 @@ public:
    */
   void refreshLog();
 
-  /*! \brief Get access to the real robots instance.
-   *
-   * This can be accessed by external tools to provide information about other
-   * robots than the main robot.
+private:
+  /**
+   * @brief Initializes the robot from provided encoder values
+   * @param initq Encoder values for all actuated joints
    */
-  mc_rbdyn::Robots & realRobots();
-
-  /*! \brief Get access to the main real robot instance. */
-  mc_rbdyn::Robot & realRobot();
+  void initEncoders(const std::vector<double> & initq);
+  /**
+   * @brief Initializes controller, observers and plugins
+   *
+   * The robot state must be properly initialized prior to calling this
+   * function.
+   */
+  void initController();
 
 public:
   /*! \brief Returns true if the controller is running
@@ -404,6 +445,9 @@ public:
     bool use_sandbox = false;
 
     bool verbose_loader = true;
+
+    bool init_attitude_from_sensor = false;
+    std::string init_attitude_sensor = "";
 
     std::vector<std::string> robot_module_paths = {};
     std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
@@ -453,7 +497,6 @@ private:
 
   std::vector<mc_observers::ObserverPtr> observers_;
   std::map<std::string, mc_observers::ObserverPtr> observersByName_;
-  std::shared_ptr<mc_rbdyn::Robots> real_robots = nullptr;
 
   std::unique_ptr<mc_control::ControllerServer> server_ = nullptr;
 

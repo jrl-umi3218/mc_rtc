@@ -252,6 +252,12 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   config("Default", initial_controller);
 
+  ////////////////////
+  // Initialization //
+  ////////////////////
+  config("InitAttitudeFromSensor", init_attitude_from_sensor);
+  config("InitAttitudeSensor", init_attitude_sensor);
+
   ///////////////
   //  Logging  //
   ///////////////

@@ -45,7 +45,10 @@ enum class MC_SOLVER_DLLAPI FeedbackType
   /** Use encoder values for actuated joints */
   Joints,
   /** Joints + encoder velocity obtained from numerical differentiation */
-  JointsWVelocity
+  JointsWVelocity,
+  /** Run in closed loop w.r.t realRobots. The user is responsible for ensuring
+   * that the observed state of the real robots is valid */
+  ObservedRobots
 };
 
 #pragma GCC diagnostic pop
@@ -61,8 +64,10 @@ struct MC_SOLVER_DLLAPI QPSolver
 {
 public:
   /** Constructor
-   * \param robot Set of robots managed by this solver
+   * \param robots Set of robots managed by this solver
    * \param timeStep Timestep of the solver
+   *
+   * \note The real robots will be created by copying the provided robots
    */
   QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep);
 
@@ -216,18 +221,6 @@ public:
    */
   bool run(FeedbackType fType = FeedbackType::None);
 
-  /**
-   * WARNING EXPERIMENTAL
-   *
-   * Runs the QP on an estimated robot state
-   *
-   * @param robot_est
-   *  Estimated robot state. Both mbc().q and mbc().alpha should be defined
-   *
-   * @return True if successful, false otherwise
-   */
-  bool runClosedLoop(std::shared_ptr<mc_rbdyn::Robots> robot_est);
-
   /** Provides the result of run() for robots.robot()
    * \param curTime Unused
    */
@@ -264,11 +257,6 @@ public:
   /** Gives access to the robots controlled by this solver */
   mc_rbdyn::Robots & robots();
 
-  /** Allows to set the real robots used by this solver
-   * XXX could be dangerous / misleading if users set it but tasks have stored
-   * it too
-   */
-  void realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots);
   /** Gives access to the real robots used by this solver */
   const mc_rbdyn::Robots & realRobots() const;
   /** Gives access to the real robots used by this solver */
@@ -360,6 +348,25 @@ private:
 
   /** Run with encoders' feedback */
   bool runJointsFeedback(bool wVelocity);
+
+  /**
+   * WARNING EXPERIMENTAL
+   *
+   * Runs the QP on an estimated robot state.
+   *
+   * Uses the real robot state (mbc.q and mbc.alpha) from realRobots() instances.
+   * It is the users responsibility to ensure that the real robot instance is properly estimated
+   * and filled. Typically, this will be done through the Observers pipeline.
+   * For example, the following pipeline provides a suitable state:
+   *
+   * \code{.yaml}
+   * RunObservers: [Encoder, KinematicInertial]
+   * UpdateObservers: [Encoder, KinematicInertial]
+   * \endcode
+   *
+   * @return True if successful, false otherwise
+   */
+  bool runClosedLoop();
 
   /** Feedback data */
   std::vector<std::vector<double>> prev_encoders_{};

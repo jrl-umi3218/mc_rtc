@@ -8,6 +8,7 @@
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
+#include <mc_rbdyn/rpy_utils.h>
 #include <Eigen/Core>
 #include <array>
 #include <exception>
@@ -238,6 +239,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
   operator Eigen::Quaterniond() const;
 
   /*! \brief Retrieve as a Eigen::Matrix3d instance
+   * \anchor Matrix3d_operator
    *
    * \throws If the underlying value does not hold a numeric sequence of size 9
    */
@@ -628,6 +630,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
 
   /*! \brief Retrieve and store a given value stored within the
    * configuration
+   * \anchor retrieve_and_store_template
    *
    * If they key is not stored in the Configuration, the value is
    * unchanged.

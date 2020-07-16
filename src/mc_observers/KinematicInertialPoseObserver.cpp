@@ -15,9 +15,10 @@ namespace mc_observers
 {
 KinematicInertialPoseObserver::KinematicInertialPoseObserver(const std::string & name,
                                                              double dt,
-                                                             const mc_rtc::Configuration & /* config */)
-: Observer(name, dt), orientation_(Eigen::Matrix3d::Identity()), position_(Eigen::Vector3d::Zero())
+                                                             const mc_rtc::Configuration & config)
+: Observer(name, dt, config), orientation_(Eigen::Matrix3d::Identity()), position_(Eigen::Vector3d::Zero())
 {
+  config("showAnchorFrame", showAnchorFrame_);
 }
 
 void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)
@@ -52,8 +53,8 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
 
 void KinematicInertialPoseObserver::estimatePosition(const mc_control::MCController & ctl)
 {
-  const sva::PTransformd X_0_c = ctl.anchorFrame();
-  const sva::PTransformd X_0_s = ctl.anchorFrameReal();
+  const sva::PTransformd & X_0_c = ctl.anchorFrame();
+  const sva::PTransformd & X_0_s = ctl.anchorFrameReal();
   const sva::PTransformd X_real_s = X_0_s * ctl.realRobot().posW().inv();
   const Eigen::Vector3d & r_c_0 = X_0_c.translation();
   const Eigen::Vector3d & r_s_real = X_real_s.translation();
@@ -84,6 +85,16 @@ void KinematicInertialPoseObserver::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry("observer_" + name() + "_posW");
   logger.removeLogEntry("observer_" + name() + "_anchorFrame");
   logger.removeLogEntry("observer_" + name() + "_anchorFrameReal");
+}
+
+void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ctl, mc_rtc::gui::StateBuilder & gui)
+{
+  if(showAnchorFrame_)
+  {
+    gui.addElement({"Observers", name()},
+                   mc_rtc::gui::Transform("anchorFrameControl", [&ctl]() { return ctl.anchorFrame(); }),
+                   mc_rtc::gui::Transform("anchorFrameReal", [&ctl]() { return ctl.anchorFrameReal(); }));
+  }
 }
 
 } // namespace mc_observers

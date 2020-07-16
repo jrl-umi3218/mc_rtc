@@ -60,12 +60,16 @@ std::vector<mc_solver::ContactMsg> contactsMsgFromContacts(const mc_rbdyn::Robot
 
 namespace mc_solver
 {
-QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep)
-: robots_p(robots), timeStep(timeStep), solver()
+QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep) : robots_p(robots), timeStep(timeStep)
 {
   if(timeStep <= 0)
   {
     mc_rtc::log::error_and_throw<std::invalid_argument>("timeStep has to be > 0! timeStep = {}", timeStep);
+  }
+  realRobots_p = std::make_shared<mc_rbdyn::Robots>();
+  for(const auto & robot : robots->robots())
+  {
+    realRobots_p->robotCopy(robot);
   }
 }
 
@@ -284,6 +288,9 @@ bool QPSolver::run(FeedbackType fType)
     case FeedbackType::JointsWVelocity:
       success = runJointsFeedback(true);
       break;
+    case FeedbackType::ObservedRobots:
+      success = runClosedLoop();
+      break;
     default:
       mc_rtc::log::error("FeedbackType set to unknown value");
       break;
@@ -396,37 +403,57 @@ bool QPSolver::runJointsFeedback(bool wVelocity)
   return false;
 }
 
-bool QPSolver::runClosedLoop(std::shared_ptr<mc_rbdyn::Robots> real_robots)
+bool QPSolver::runClosedLoop()
 {
-  // =============================
-  // 1 - Save old integrator state
-  // =============================
-  std::vector<std::vector<double>> oldQ(robot().mbc().q);
-  std::vector<std::vector<double>> oldQd(robot().mbc().alpha);
+  if(control_q_.size() < robots().size())
+  {
+    control_q_.resize(robots().size());
+    control_alpha_.resize(robots().size());
+  }
 
-  // Set robot state to estimator
-  robot().mbc().q = real_robots->robot().mbc().q;
-  robot().mbc().alpha = real_robots->robot().mbc().alpha;
+  for(size_t i = 0; i < robots().size(); ++i)
+  {
+    auto & robot = robots().robot(i);
+    const auto & realRobot = realRobots().robot(i);
 
-  // COMPUTE QP on estimated robot
+    // Save old integrator state
+    control_q_[i] = robot.mbc().q;
+    control_alpha_[i] = robot.mbc().alpha;
+
+    // Set robot state from estimator
+    robot.mbc().q = realRobot.mbc().q;
+    robot.mbc().alpha = realRobot.mbc().alpha;
+    robot.forwardKinematics();
+    robot.forwardVelocity();
+    robot.forwardAcceleration();
+  }
+
+  // Update tasks from estimated robots
   for(auto & t : metaTasks_)
   {
     t->update(*this);
   }
-  bool success = solver.solveNoMbcUpdate(robots().mbs(), robots().mbcs());
-  solver.updateMbc(robot().mbc(), static_cast<int>(robots().robotIndex()));
 
-  // Apply computed acceleration to integrator state
-  robot().mbc().q = oldQ;
-  robot().mbc().alpha = oldQd;
-
-  // Integrate Qdd on top of integrator state q, qd
-  rbd::eulerIntegration(robot().mb(), robot().mbc(), timeStep);
-  rbd::forwardKinematics(robot().mb(), robot().mbc());
-  rbd::forwardVelocity(robot().mb(), robot().mbc());
-
-  __fillResult();
-  return success;
+  // Solve QP and integrate
+  if(solver.solveNoMbcUpdate(robots_p->mbs(), robots_p->mbcs()))
+  {
+    for(size_t i = 0; i < robots_p->mbs().size(); ++i)
+    {
+      auto & robot = robots().robot(i);
+      robot.mbc().q = control_q_[i];
+      robot.mbc().alpha = control_alpha_[i];
+      if(robot.mb().nrDof() > 0)
+      {
+        solver.updateMbc(robot.mbc(), static_cast<int>(i));
+        robot.eulerIntegration(timeStep);
+        robot.forwardKinematics();
+        robot.forwardVelocity();
+        robot.forwardAcceleration();
+      }
+    }
+    return true;
+  }
+  return false;
 }
 
 const QPResultMsg & QPSolver::send(double /*curTime*/)
@@ -496,10 +523,6 @@ mc_rbdyn::Robots & QPSolver::robots()
   return *robots_p;
 }
 
-void QPSolver::realRobots(std::shared_ptr<mc_rbdyn::Robots> realRobots)
-{
-  realRobots_p = realRobots;
-}
 const mc_rbdyn::Robots & QPSolver::realRobots() const
 {
   assert(realRobots_p);

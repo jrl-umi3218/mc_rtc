@@ -14,13 +14,15 @@ namespace mc_control
 
 struct MC_CONTROL_DLLAPI MCCoMController : public MCController
 {
-public:
   MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
+  void reset(const ControllerResetData & reset_data) override;
+  bool run() override;
 
-  virtual void reset(const ControllerResetData & reset_data) override;
+protected:
+  void updateAnchorFrame();
 
-public:
   std::shared_ptr<mc_tasks::CoMTask> comTask;
+  std::string leftFootSurface, rightFootSurface;
 };
 
 } // namespace mc_control

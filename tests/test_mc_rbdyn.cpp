@@ -21,7 +21,7 @@ mc_rbdyn::Robots & get_robots()
   return *robots_ptr;
 }
 
-BOOST_AUTO_TEST_CASE(TestRobotPosWVelW)
+BOOST_AUTO_TEST_CASE(TestRobotPosWVelWAccW)
 {
   auto robots = get_robots();
 
@@ -34,11 +34,7 @@ BOOST_AUTO_TEST_CASE(TestRobotPosWVelW)
     BOOST_CHECK(robots.robot().posW().matrix().isApprox(refPosW.matrix()));
   }
 
-  for(int i = 0; i < 100; ++i)
-  {
-    auto refVal = sva::MotionVecd{Eigen::Vector3d::Random(), Eigen::Vector3d::Random()};
-    robots.robot().velW(refVal);
-    auto actual = robots.robot().velW();
+  auto checkVelocity = [](const sva::MotionVecd & actual, const sva::MotionVecd & refVal) {
     BOOST_CHECK_MESSAGE(actual.vector().isApprox(refVal.vector()), "Error in Robot::velW"
                                                                        << "\nExpected:"
                                                                        << "\nangular:" << refVal.angular().transpose()
@@ -46,6 +42,15 @@ BOOST_AUTO_TEST_CASE(TestRobotPosWVelW)
                                                                        << "\nGot:"
                                                                        << "\nangular:" << actual.angular().transpose()
                                                                        << "\nlinear :" << actual.linear().transpose());
+  };
+
+  for(int i = 0; i < 100; ++i)
+  {
+    auto refVal = sva::MotionVecd{Eigen::Vector3d::Random(), Eigen::Vector3d::Random()};
+    robots.robot().velW(refVal);
+    robots.robot().accW(refVal);
+    checkVelocity(robots.robot().velW(), refVal);
+    checkVelocity(robots.robot().accW(), refVal);
   }
 }
 

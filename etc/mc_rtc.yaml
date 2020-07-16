@@ -1,11 +1,41 @@
 ---
+###################################
+# Default configuration of mc_rtc #
+###################################
+# This file contains the default configuration of mc_rtc
+#
+# You may overwrite any of these settings in
+# - Linux/MacOS: $HOME/.config/mc_rtc/mc_rtc.yaml
+# - Windows:     %APPDATA%/mc_rtc/mc_rtc.conf
+#
+# For further details, refer to https://jrl-umi3218.github.io/mc_rtc/tutorials/introduction/configuration.html
+
 # What robot is being controlled
 MainRobot: JVRC1
 # Enabled controllers
 Enabled: [CoM]
+# Controller timestep
+Timestep: 0.005
 
+#####################################
+# Initialize floating base attitude #
+#####################################
+# - When true, initialize attitude from the bodysensor specified by InitAttitudeSensor
+# - Otherwise use the robot module halfsitting stance
+InitAttitudeFromSensor: false
+# BodySensor to initialize from (default = first body sensor)
+# - Empty string: use the default body sensor
+# - Otherwise use the provided sensor name
+# Note that the robot model and encoder values are used to transform the sensor measurements to the floating base frame
+InitAttitudeSensor: ""
+
+
+##############################
+# State observation pipeline #
+##############################
+# See https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html for details
+#
 # Load and run state observers.
-# Order matters here, estimators will be run after each other.
 
 # Available estimators in mc_rtc are:
 # - Encoder: Estimate encoder position from sensor and velocity by finite differences
@@ -17,8 +47,10 @@ Enabled: [CoM]
 # RunObservers: [Encoder, BodySensor, KinematicInertial]
 # UpdateObservers: [Encoder, KinematicInertial]
 #
-# Only the estimators in the "UpdateObservers" list will affect the state of the real robot. 
-# The other estimators will only be run and logged, such that they may be used for comparison purposes.
+# Note:
+# - Order matters here, estimators will be run after each other.
+# - Only the estimators in the "UpdateObservers" list will affect the state of the real robot.
+#   The other estimators will only be run and logged, such that they may be used for comparison purposes.
 EnabledObservers: [Encoder, BodySensor, KinematicInertial]
 
 # Specific configuration for each observer
@@ -33,8 +65,9 @@ Observers:
     UpdateFrom: estimator
     FloatingBaseSensor: FloatingBase
 
-# Controller timestep
-Timestep: 0.005
+###########
+# Logging #
+###########
 # Set to true or false to enable/disable respectively
 Log: true
 
@@ -51,6 +84,9 @@ Log: true
 # The log file will have the name [LogTemplate]-[ControllerName]-[date].log
 LogTemplate: mc-control
 
+#######
+# GUI #
+#######
 # GUIServer section
 GUIServer:
   # If true, enable the GUI server, otherwise or if absent, disable this
@@ -83,8 +119,14 @@ GUIServer:
   #   # the PULL socket
   #   Ports: [8080, 8081]
 
-# The following option change the verbosity of the controller and robot
-# loader
+############################
+# Loader paths and options #
+############################
+# Many components of the framework are loaded from libraries (Controllers, Plugins, Observers, etc)
+# The default configuration for this section is suitable for loading the components provided and installed along with
+# the framework. You may use the following options to load custom modules specified elsewhere.
+
+# The following option change the verbosity of the controller and robot loader
 VerboseLoader: false
 
 # The following option is used to disable controller/robot creation sandboxing

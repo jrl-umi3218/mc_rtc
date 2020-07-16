@@ -52,7 +52,6 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
   void addToLogger(const mc_control::MCController &, mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
   void addToGUI(const mc_control::MCController &, mc_rtc::gui::StateBuilder &) override;
-  void removeFromGUI(mc_rtc::gui::StateBuilder &) override;
 
 private:
   /** Previous estimated position.
