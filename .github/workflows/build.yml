@@ -87,7 +87,7 @@ jobs:
         then
           ./build_and_install.sh --user-input false --with-python-support false --build-testing false --build-benchmarks true
         else
-          ./build_and_install.sh --user-input false --build-benchmarks true
+          ./build_and_install.sh --user-input false --build-benchmarks true --allow-root true
         fi
     - name: Install dependencies
       uses: jrl-umi3218/github-actions/install-dependencies@master
