@@ -253,11 +253,7 @@ void MCGlobalController::initEncoders(const std::vector<double> & initq)
         initq.size(), controller_->robot().refJointOrder().size());
   }
 
-  if(config.enable_log)
-  {
-    start_log();
-  }
-  std::vector<std::vector<double>> q = robot().mbc().q;
+  auto & q = robot().mbc().q;
   const auto & rjo = ref_joint_order();
   for(size_t i = 0; i < rjo.size(); ++i)
   {
@@ -307,6 +303,10 @@ void MCGlobalController::initEncoders(const std::vector<double> & initq)
 
 void MCGlobalController::initController()
 {
+  if(config.enable_log)
+  {
+    start_log();
+  }
   const auto & q = robot().mbc().q;
   controller_->reset({q});
   controller_->resetObservers();
