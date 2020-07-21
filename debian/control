@@ -66,6 +66,7 @@ Depends: cmake,
          libhpp-spline-dev,
          libyaml-cpp-dev,
          libspdlog-dev,
+         libltdl-dev,
          libmc-rtc1 (= ${binary:Version}),
          ${misc:Depends}
 Suggests: libmc-rtc-doc
