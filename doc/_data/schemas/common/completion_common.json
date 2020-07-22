@@ -1,0 +1,5 @@
+{
+  "timeout": { "type": "number", "minimum": 0, "description": "Time since the task was added to the solver"},
+  "eval": { "type": "number", "minimum": 0,  "description": "Task's error (norm)" },
+  "speed": { "type": "number", "minimum": 0, "description": "Task's velocity (norm)" }
+}

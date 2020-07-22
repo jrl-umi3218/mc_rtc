@@ -20,7 +20,8 @@
         "wrench": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
         "refVelB": { "$ref": "/../../SpaceVecAlg/MotionVecd.json" },
         "maxVel": { "$ref": "/../../SpaceVecAlg/MotionVecd.json" },
-        "admittance": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" }
+        "admittance": { "$ref": "/../../SpaceVecAlg/ForceVecd.json" },
+        "completion": { "$ref": "/../../common/completion_criteria_wrench.json" }
       }
     },
     {

@@ -12,6 +12,7 @@
       "type": "string",
       "default": "MainRobot",
       "description": "Name of the robot to which this task applies"
-    }
+    },
+    "completion": { "$ref": "/../../common/completion_criteria.json" }
   }
 }
