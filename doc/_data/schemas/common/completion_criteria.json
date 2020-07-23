@@ -10,6 +10,8 @@
       { 
         "type": "array",
         "description": "True when criteria1 and criteria2 are both true",
+        "minItems": 2,
+        "maxItems": 2,
         "items": 
         [
           {
@@ -28,6 +30,8 @@
       { 
         "type": "array",
         "description": "True when either criteria1 or criteria2 is true",
+        "minItems": 2,
+        "maxItems": 2,
         "items": 
         [
           {
