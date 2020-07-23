@@ -5,17 +5,13 @@
   "allOf":
   [
     {
-      "$ref": "/../../common/MetaTask_common.json"
-    },
-    {
       "properties":
       {
-        "type": { "enum": ["bspline_trajectory"] },
-        "completion":
-        {
-          "$ref": "/../../common/completion_criteria_spline_trajectory.json"
-        }
+        "type": { "enum": ["bspline_trajectory"] }
       }
+    },
+    {
+      "$ref": "/../../common/MetaTask_common.json"
     },
     {
       "$ref": "/../../common/MetaTask_surface.json"

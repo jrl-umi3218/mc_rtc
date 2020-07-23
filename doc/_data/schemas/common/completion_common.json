@@ -1,5 +1,8 @@
 {
-  "timeout": { "type": "number", "minimum": 0, "description": "Time since the task was added to the solver"},
-  "eval": { "type": "number", "minimum": 0,  "description": "Task's error (norm)" },
-  "speed": { "type": "number", "minimum": 0, "description": "Task's velocity (norm)" }
+  "properties":
+  {
+    "timeout": { "type": "number", "minimum": 0, "description": "True when the task has been added to the solver for longer than this threshold"},
+    "eval": { "type": "number", "minimum": 0,  "description": "True when the task's error (norm) is below this threshold" },
+    "speed": { "type": "number", "minimum": 0, "description": "True when the task's velocity (norm) is below this threshold" }
+  }
 }

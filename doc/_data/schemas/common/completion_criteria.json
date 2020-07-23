@@ -1,7 +1,7 @@
 {
   "title": "Completion Criteria",
   "type": "object",
-  "description": "Builds a conditional function that returns true when all of its conditions are satisfied.<br/>Some states (MetaTasks) may use these criterias to determine when a task execution is finished.",
+  "description": "Builds a conditional function that returns true when all of its conditions are satisfied.<br/>Some states (e.g MetaTasks) may use these criterias to determine when a task is finished.",
   "allOf":
   [
     "properties":
@@ -9,59 +9,40 @@
       "AND": 
       { 
         "type": "array",
-        "description": "criteria1 AND criteria2",
+        "description": "True when criteria1 and criteria2 are both true",
         "items": 
         [
           {
             "type": "object",
-            "title": "Criteria 1",
-            "description": "Completion criteria on the left-hand side of the AND comparison",
-            "properties":
-            {
-              "$ref": "/../../common/completion_common.json"
-            }
+            "title": "Completion Criteria",
+            "description": "Completion criteria on the left-hand side of the AND comparison"
           },
           {
             "type": "object",
-            "title": "Criteria 2",
-            "description": "Completion criteria on the right-hand side of the AND comparison",
-            "properties":
-            {
-              "$ref": "/../../common/completion_common.json"
-            }
+            "title": "Completion Criteria",
+            "description": "Completion criteria on the right-hand side of the AND comparison"
           }
         ]
       },
       "OR": 
       { 
         "type": "array",
-        "description": "criteria1 OR criteria2",
+        "description": "True when either criteria1 or criteria2 is true",
         "items": 
         [
           {
             "type": "object",
-            "title": "Criteria 1",
-            "description": "Completion criteria on the left-hand side of the OR comparison",
-            "properties":
-            {
-              "$ref": "/../../common/completion_common.json"
-            }
+            "title": "Completion Criteria",
+            "description": "Completion criteria on the left-hand side of the OR comparison"
           },
           {
             "type": "object",
-            "title": "Criteria 2",
-            "description": "Completion criteria on the right-hand side of the OR comparison",
-            "properties":
-            {
-              "$ref": "/../../common/completion_common.json"
-            }
+            "title": "Completion Criteria",
+            "description": "Completion criteria on the right-hand side of the OR comparison"
           }
         ]
       }
     },
-    "properties":
-    {
-      "$ref": "/../../common/completion_common.json"
-    }
+    "$ref": "/../../common/completion_common.json"
   ]
 }
