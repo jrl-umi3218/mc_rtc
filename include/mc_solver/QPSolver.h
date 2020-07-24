@@ -324,6 +324,9 @@ private:
   /** Holds MetaTask currently in the solver */
   std::vector<mc_tasks::MetaTask *> metaTasks_;
 
+  /** Holds dynamics constraint currently in the solver */
+  std::vector<mc_solver::DynamicsConstraint *> dynamicsConstraints_;
+
 private:
   /** The actual solver instance */
   tasks::qp::QPSolver solver;

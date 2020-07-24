@@ -210,7 +210,6 @@ bool MCController::run(mc_solver::FeedbackType fType)
     mc_rtc::log::error("QP failed to run()");
     return false;
   }
-  qpsolver->fillTorque(dynamicsConstraint);
   return true;
 }
 
