@@ -56,6 +56,12 @@ struct MC_RBDYN_DLLAPI Device
     return parent_;
   }
 
+  /** Returns the transformation from the parent body to the device */
+  inline const sva::PTransformd & X_p_d() const
+  {
+    return X_p_s_;
+  }
+
   /** Returns the transformation from the parent body to the sensor */
   inline const sva::PTransformd & X_p_s() const
   {
