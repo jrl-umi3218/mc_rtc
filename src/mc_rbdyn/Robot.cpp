@@ -28,7 +28,7 @@ namespace
 {
 
 using bound_t = std::vector<std::vector<double>>;
-using bounds_t = std::tuple<bound_t, bound_t, bound_t, bound_t, bound_t, bound_t>;
+using bounds_t = std::tuple<bound_t, bound_t, bound_t, bound_t, bound_t, bound_t, bound_t, bound_t>;
 using rm_bounds_t = mc_rbdyn::RobotModule::bounds_t;
 using rm_bound_t = rm_bounds_t::value_type;
 
@@ -63,12 +63,22 @@ bounds_t bounds(const rbd::MultiBody & mb, const rm_bounds_t & bounds)
     }
     return res;
   };
+  rm_bound_t default_bound = {};
+  auto safe_bounds = [&bounds, &default_bound](size_t idx) -> const rm_bound_t & {
+    if(idx < bounds.size())
+    {
+      return bounds[idx];
+    }
+    return default_bound;
+  };
   return std::make_tuple(fill_bound("lower position", bounds.at(0), &rbd::Joint::params, -INFINITY, -INFINITY),
                          fill_bound("upper position", bounds.at(1), &rbd::Joint::params, INFINITY, INFINITY),
                          fill_bound("lower velocity", bounds.at(2), &rbd::Joint::dof, -INFINITY, -INFINITY),
                          fill_bound("upper velocity", bounds.at(3), &rbd::Joint::dof, INFINITY, INFINITY),
                          fill_bound("lower torque", bounds.at(4), &rbd::Joint::dof, -INFINITY, 0),
-                         fill_bound("upper torque", bounds.at(5), &rbd::Joint::dof, INFINITY, 0));
+                         fill_bound("upper torque", bounds.at(5), &rbd::Joint::dof, INFINITY, 0),
+                         fill_bound("lower torque-derivative", safe_bounds(6), &rbd::Joint::dof, -INFINITY, 0),
+                         fill_bound("upper torque-derivative", safe_bounds(7), &rbd::Joint::dof, INFINITY, 0));
 }
 
 template<typename schT, typename mapT>
@@ -177,13 +187,13 @@ Robot::Robot(Robots & robots,
     bodyTransforms_[i] = bbts.at(b.name());
   }
 
-  if(module_.bounds().size() != 6)
+  if(module_.bounds().size() != 6 && module_.bounds().size() != 8)
   {
-    mc_rtc::log::error_and_throw<std::invalid_argument>(
-        "The bounds of robotmodule \"{}\" have a size of {} instead of 6 (ql, qu, vl, vu, tl, tu).", module_.name,
-        module_.bounds().size());
+    mc_rtc::log::error_and_throw<std::invalid_argument>("The urdf-bounds of RobotModule \"{}\" have a size of {} "
+                                                        "instead of 6 or 8 (ql, qu, vl, vu, tl, tu, [tdl, tdu]).",
+                                                        module_.name, module_.bounds().size());
   }
-  std::tie(ql_, qu_, vl_, vu_, tl_, tu_) = bounds(mb(), module_.bounds());
+  std::tie(ql_, qu_, vl_, vu_, tl_, tu_, tdl_, tdu_) = bounds(mb(), module_.bounds());
 
   if(loadFiles)
   {
@@ -645,6 +655,14 @@ const std::vector<std::vector<double>> & Robot::tu() const
 {
   return tu_;
 }
+const std::vector<std::vector<double>> & Robot::tdl() const
+{
+  return tdl_;
+}
+const std::vector<std::vector<double>> & Robot::tdu() const
+{
+  return tdu_;
+}
 std::vector<std::vector<double>> & Robot::ql()
 {
   return ql_;
@@ -668,6 +686,14 @@ std::vector<std::vector<double>> & Robot::tl()
 std::vector<std::vector<double>> & Robot::tu()
 {
   return tu_;
+}
+std::vector<std::vector<double>> & Robot::tdl()
+{
+  return tdl_;
+}
+std::vector<std::vector<double>> & Robot::tdu()
+{
+  return tdu_;
 }
 
 const std::vector<Flexibility> & Robot::flexibility() const

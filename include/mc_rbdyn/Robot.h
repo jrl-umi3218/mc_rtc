@@ -378,6 +378,10 @@ public:
   const std::vector<std::vector<double>> & tl() const;
   /** Access the robot's angular upper torque limits (const) */
   const std::vector<std::vector<double>> & tu() const;
+  /** Access the robot's angular lower torque-derivative limits (const) */
+  const std::vector<std::vector<double>> & tdl() const;
+  /** Access the robot's angular upper torque-derivative limits (const) */
+  const std::vector<std::vector<double>> & tdu() const;
   /** Access the robot's angular lower limits */
   std::vector<std::vector<double>> & ql();
   /** Access the robot's angular upper limits */
@@ -390,6 +394,10 @@ public:
   std::vector<std::vector<double>> & tl();
   /** Access the robot's angular upper torque limits */
   std::vector<std::vector<double>> & tu();
+  /** Access the robot's angular lower torque-derivative limits */
+  std::vector<std::vector<double>> & tdl();
+  /** Access the robot's angular upper torque-derivative limits */
+  std::vector<std::vector<double>> & tdu();
 
   /** Return the flexibilities of the robot (const) */
   const std::vector<Flexibility> & flexibility() const;
@@ -861,6 +869,8 @@ private:
   std::vector<std::vector<double>> vu_;
   std::vector<std::vector<double>> tl_;
   std::vector<std::vector<double>> tu_;
+  std::vector<std::vector<double>> tdl_;
+  std::vector<std::vector<double>> tdu_;
   std::map<std::string, convex_pair_t> convexes_;
   std::map<std::string, sva::PTransformd> collisionTransforms_;
   std::map<std::string, mc_rbdyn::SurfacePtr> surfaces_;
