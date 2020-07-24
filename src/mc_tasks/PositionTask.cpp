@@ -78,14 +78,20 @@ void PositionTask::addToLogger(mc_rtc::Logger & logger)
   TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_target", [this]() { return position(); });
   logger.addLogEntry(
-      name_, [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); });
+      name_ + "_curPos", [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); });
+  logger.addLogEntry(
+      name_ + "_curVel", [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyVelW[bIndex].linear(); });
+  // logger.addLogEntry(
+  //     name_ + "_curAccel", [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyAccW[bIndex].linear(); });
 }
 
 void PositionTask::removeFromLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::removeFromLogger(logger);
   logger.removeLogEntry(name_ + "_target");
-  logger.removeLogEntry(name_);
+  logger.removeLogEntry(name_ + "_curPos");
+  logger.removeLogEntry(name_ + "_curVel");
+  // logger.removeLogEntry(name_ + "_curAccel");
 }
 
 void PositionTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
