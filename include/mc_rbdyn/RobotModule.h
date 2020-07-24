@@ -71,11 +71,12 @@ struct MC_RBDYN_DLLAPI RobotModule
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  /*! Holds information regarding the urdf bounds
+  /*! Holds information regarding the bounds (obtained from urdf and additional limits)
    *
-   * The vector should have 8 entries:
+   * The vector should have 10 entries:
    * - lower/upper position bounds
    * - lower/upper velocity bounds
+   * - lower/upper acceleration bounds
    * - lower/upper torque bounds
    * - lower/upper torque-derivative bounds
    *
@@ -236,6 +237,7 @@ struct MC_RBDYN_DLLAPI RobotModule
    * They should be provided in the following order:
    * - joint limits (lower/upper)
    * - velocity limits (lower/upper)
+   * - acceleration limits (lower/upper)
    * - torque limits (lower/upper)
    * - torque-derivative limits (lower/upper)
    */

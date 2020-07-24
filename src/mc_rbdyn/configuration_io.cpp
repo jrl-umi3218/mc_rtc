@@ -781,6 +781,18 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     }
     rm.init(rbd::parsers::from_urdf_file(rm.urdf_path, fixed));
   }
+  if(config.has("accelerationBounds"))
+  {
+    mc_rbdyn::RobotModule::bounds_t aBounds = config("accelerationBounds");
+    if(aBounds.size() != 2)
+    {
+      mc_rtc::log::error_and_throw<std::runtime_error>("accelerationBounds entry should be an array of size 2");
+    }
+    const int cur_size = rm._bounds.size();
+    rm._bounds.resize(cur_size+2);
+    rm._bounds[cur_size] = aBounds[0];
+    rm._bounds[cur_size+1] = aBounds[1];
+  }
   if(config.has("torqueDerivativeBounds"))
   {
     mc_rbdyn::RobotModule::bounds_t tdBounds = config("torqueDerivativeBounds");
@@ -788,9 +800,10 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     {
       mc_rtc::log::error_and_throw<std::runtime_error>("torqueDerivativeBounds entry should be an array of size 2");
     }
-    rm._bounds.resize(8);
-    rm._bounds[6] = tdBounds[0];
-    rm._bounds[7] = tdBounds[1];
+    const int cur_size = rm._bounds.size();
+    rm._bounds.resize(cur_size+2);
+    rm._bounds[cur_size] = tdBounds[0];
+    rm._bounds[cur_size+1] = tdBounds[1];
   }
   /* Default values work fine for those */
   if(config.has("rsdf_dir"))
@@ -881,13 +894,22 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   }
   if(rm._bounds.size() > 6)
   {
-    if(rm._bounds.size() != 8)
+    if(rm._bounds.size() != 8 || rm._bounds.size() != 10)
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("Too many bounds entries in RobotModule");
+      mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number of bounds entries in RobotModule");
     }
-    auto tdBounds = config.array("torqueDerivativeBounds", 2);
-    tdBounds.push(rm._bounds[6]);
-    tdBounds.push(rm._bounds[7]);
+    if(config.has("accelerationBounds"))
+    {
+      auto aBounds = config.array("accelerationBounds", 2);
+      aBounds.push(rm._bounds[6]);
+      aBounds.push(rm._bounds[7]);
+    }
+    if(config.has("torqueDerivativeBounds"))
+    {
+      auto tdBounds = config.array("torqueDerivativeBounds", 2);
+      tdBounds.push(rm._bounds[6]);
+      tdBounds.push(rm._bounds[7]);
+    }
   }
   config.add("stance", rm._stance);
   auto cHs = rm._convexHull;

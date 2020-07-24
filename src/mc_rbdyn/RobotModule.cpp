@@ -234,7 +234,7 @@ void RobotModule::make_default_ref_joint_order()
 RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
 {
   RobotModule::bounds_t ret = {};
-  ret.reserve(8);
+  ret.reserve(10);
   ret.push_back(limits.lower);
   ret.push_back(limits.upper);
   auto convert = [](const std::map<std::string, std::vector<double>> & l) {
@@ -263,6 +263,8 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
   };
   ret.push_back(convert(limits.velocity));
   ret.push_back(limits.velocity);
+  ret.push_back(inf_convert(limits.velocity, true));
+  ret.push_back(inf_convert(limits.velocity, false));
   ret.push_back(convert(limits.torque));
   ret.push_back(limits.torque);
   ret.push_back(inf_convert(limits.torque, true));
