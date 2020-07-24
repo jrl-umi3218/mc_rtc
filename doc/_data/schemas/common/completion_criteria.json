@@ -18,12 +18,14 @@
             {
               "type": "object",
               "title": "Completion Criteria",
-              "description": "Completion criteria on the left-hand side of the AND comparison"
+              "description": "Completion criteria on the left-hand side of the AND comparison",
+              "properties": {}
             },
             {
               "type": "object",
               "title": "Completion Criteria",
-              "description": "Completion criteria on the right-hand side of the AND comparison"
+              "description": "Completion criteria on the right-hand side of the AND comparison",
+              "properties": {}
             }
           ]
         },
@@ -38,12 +40,14 @@
             {
               "type": "object",
               "title": "Completion Criteria",
-              "description": "Completion criteria on the left-hand side of the OR comparison"
+              "description": "Completion criteria on the left-hand side of the OR comparison",
+              "properties": {}
             },
             {
               "type": "object",
               "title": "Completion Criteria",
-              "description": "Completion criteria on the right-hand side of the OR comparison"
+              "description": "Completion criteria on the right-hand side of the OR comparison",
+              "properties": {}
             }
           ]
         }
