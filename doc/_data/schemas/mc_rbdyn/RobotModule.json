@@ -26,14 +26,25 @@
     },
     "bounds":
     {
-      "description": "Position limits (lower/upper), velocity, torque",
+      "description": "Position limits (lower/upper), velocity (lower/upper), torque (lower/upper), torque derivative (lower/upper)",
       "type": "array",
       "items":
       {
         "$ref": "#/definitions/joint_bound_map"
       },
-      "minItems": 4,
-      "maxItems": 4
+      "minItems": 6,
+      "maxItems": 8
+    },
+    "torqueDerivativeBounds":
+    {
+      "description": "Torque derivative bounds (lower/upper). Overwrite those specified in bounds if present",
+      "type": "array",
+      "items":
+      {
+        "$ref": "#/definitions/joint_bound_map"
+      },
+      "minItems": 2,
+      "maxItems": 2
     },
     "visuals":
     {

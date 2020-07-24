@@ -781,6 +781,17 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     }
     rm.init(rbd::parsers::from_urdf_file(rm.urdf_path, fixed));
   }
+  if(config.has("torqueDerivativeBounds"))
+  {
+    mc_rbdyn::RobotModule::bounds_t tdBounds = config("torqueDerivativeBounds");
+    if(tdBounds.size() != 2)
+    {
+      mc_rtc::log::error_and_throw<std::runtime_error>("torqueDerivativeBounds entry should be an array of size 2");
+    }
+    rm._bounds.resize(8);
+    rm._bounds[6] = tdBounds[0];
+    rm._bounds[7] = tdBounds[1];
+  }
   /* Default values work fine for those */
   if(config.has("rsdf_dir"))
   {
@@ -867,6 +878,16 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   {
     config.add("filteredLinks", filteredLinks);
     config.add("fixed", fixed);
+  }
+  if(rm._bounds.size() > 6)
+  {
+    if(rm._bounds.size() != 8)
+    {
+      mc_rtc::log::error_and_throw<std::runtime_error>("Too many bounds entries in RobotModule");
+    }
+    auto tdBounds = config.array("torqueDerivativeBounds", 2);
+    tdBounds.push(rm._bounds[6]);
+    tdBounds.push(rm._bounds[7]);
   }
   config.add("stance", rm._stance);
   auto cHs = rm._convexHull;
