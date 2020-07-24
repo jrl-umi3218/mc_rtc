@@ -200,12 +200,41 @@ RobotModule::Gripper::Gripper(const std::string & name,
 void RobotModule::boundsFromURDF(const rbd::parsers::Limits & limits)
 {
   _bounds = urdf_limits_to_bounds(limits);
+  initAdditionalBounds();
 }
 
 void RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits & limits)
 {
   mc_rtc::log::warning("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf");
   _bounds = urdf_limits_to_bounds(limits);
+  initAdditionalBounds();
+}
+
+void RobotModule::initAdditionalBounds()
+{
+  auto inf_convert = [](const std::map<std::string, std::vector<double>> & l, bool neg) {
+    auto ret = l;
+    auto inf = std::numeric_limits<double>::infinity();
+    auto value = neg ? -inf : inf;
+    for(auto & el : ret)
+    {
+      for(auto & e : el.second)
+      {
+        e = value;
+      }
+    }
+    return ret;
+  };
+  
+  _acceleration_bounds = {};
+  _acceleration_bounds.reserve(2);
+  _acceleration_bounds.push_back(inf_convert(_bounds.at(3), true));
+  _acceleration_bounds.push_back(inf_convert(_bounds.at(3), false));
+
+  _torqueDerivative_bounds = {};
+  _torqueDerivative_bounds.reserve(2);
+  _torqueDerivative_bounds.push_back(inf_convert(_bounds.at(5), true));
+  _torqueDerivative_bounds.push_back(inf_convert(_bounds.at(5), false));
 }
 
 void RobotModule::expand_stance()
@@ -234,7 +263,7 @@ void RobotModule::make_default_ref_joint_order()
 RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
 {
   RobotModule::bounds_t ret = {};
-  ret.reserve(10);
+  ret.reserve(6);
   ret.push_back(limits.lower);
   ret.push_back(limits.upper);
   auto convert = [](const std::map<std::string, std::vector<double>> & l) {
@@ -248,27 +277,10 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
     }
     return ret;
   };
-  auto inf_convert = [](const std::map<std::string, std::vector<double>> & l, bool neg) {
-    auto ret = l;
-    auto inf = std::numeric_limits<double>::infinity();
-    auto value = neg ? -inf : inf;
-    for(auto & el : ret)
-    {
-      for(auto & e : el.second)
-      {
-        e = value;
-      }
-    }
-    return ret;
-  };
   ret.push_back(convert(limits.velocity));
   ret.push_back(limits.velocity);
-  ret.push_back(inf_convert(limits.velocity, true));
-  ret.push_back(inf_convert(limits.velocity, false));
   ret.push_back(convert(limits.torque));
   ret.push_back(limits.torque);
-  ret.push_back(inf_convert(limits.torque, true));
-  ret.push_back(inf_convert(limits.torque, false));
   return ret;
 }
 
