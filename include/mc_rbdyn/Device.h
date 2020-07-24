@@ -30,6 +30,12 @@ struct MC_RBDYN_DLLAPI Device
 {
   Device(const std::string & name, const std::string & parent, const sva::PTransformd & X_p_s);
 
+  Device(const Device &) = delete;
+  Device & operator=(const Device &) = delete;
+
+  Device(Device &&) = default;
+  Device & operator=(Device &&) = default;
+
   virtual ~Device() noexcept = default;
 
   /** Returns the name of the sensor */
