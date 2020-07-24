@@ -53,6 +53,7 @@
     {% endif %}
     <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapse{{include.id}}" aria-expanded="false" aria-controls="collapse{{include.id}}">{{TITLE}}</a>
     {% capture INCLUDE_AFTER %}
+    {{INCLUDE_AFTER}}
     <tr class="collapse" id="collapse{{include.id}}">
       <td colspan="3">
         {% include json_schema.html schema=include.data id=include.id %}

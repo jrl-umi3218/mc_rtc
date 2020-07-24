@@ -37,7 +37,8 @@
         "weight": { "default": 1000 },
         "stiffness": { "default": 5, "description": "Task's stiffness (affects position control)"},
         "damping": { "description": "Task's damping (affects velocity/force control)." },
-        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
+        "completion": { "$ref": "/../../common/completion_cop.json" }
       }
     }
   ],

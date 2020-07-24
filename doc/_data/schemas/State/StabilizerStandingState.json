@@ -19,7 +19,7 @@
           "description": "Completion criteria for the state",
           "properties":
           {
-            "dcmEval": { "$ref": "/../../Eigen/Vector3d.json", "description": "Outputs 'OK' when the dcm error is under this threshold."}
+            "dcmEval": { "$ref": "/../../Eigen/Vector3d.json", "description": "Returns true with output 'OK' when the dcm error is under this threshold."}
           }
         }
       },

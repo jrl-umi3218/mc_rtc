@@ -11,6 +11,7 @@
     "leftFootSurface": { "type": "string" },
     "rightFootSurface": { "type": "string" },
     "torsoBodyName": { "type": "string" },
+    "completion": { "$ref": "/../../common/completion_criteria.json" },
 
     "friction": { "type": "number", "minimum": 0 },
     "tasks":

@@ -1,0 +1,15 @@
+{
+  "allOf":
+  [
+    {
+      "$ref": "/../../common/completion_common.json"
+    },
+    {
+      "properties":
+      {
+        "wrench": {"$ref": "/../../Eigen/Vector6d.json", "description": "True when the measured wrench reaches the given wrench [torque, force] in controlled surface frame.<br/>if some values are NaN, this direction is ignored"},
+        "timeElapsed": {"type": "number", "minimum": 0, "description": "True when the trajectory's \"duration\" is elapsed"}
+      }
+    }
+  ]
+}
