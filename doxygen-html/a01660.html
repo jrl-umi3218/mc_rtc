@@ -109,7 +109,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a33637f65346a81c078c9c04de9e4be0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the module from a parser result.  <a href="#a33637f65346a81c078c9c04de9e4be0e">More...</a><br /></td></tr>
 <tr class="separator:a33637f65346a81c078c9c04de9e4be0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae05a5aab8f1a3edbecad4e4c7b29380d"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#ae05a5aab8f1a3edbecad4e4c7b29380d">bounds</a> () const</td></tr>
-<tr class="memdesc:ae05a5aab8f1a3edbecad4e4c7b29380d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the robot's bounds.  <a href="#ae05a5aab8f1a3edbecad4e4c7b29380d">More...</a><br /></td></tr>
+<tr class="memdesc:ae05a5aab8f1a3edbecad4e4c7b29380d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the robot's bounds obtained from parsing a urdf.  <a href="#ae05a5aab8f1a3edbecad4e4c7b29380d">More...</a><br /></td></tr>
 <tr class="separator:ae05a5aab8f1a3edbecad4e4c7b29380d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae00ee36a0f17eaf23aadcb7643186fa4"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, std::vector&lt; double &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#ae00ee36a0f17eaf23aadcb7643186fa4">stance</a> () const</td></tr>
 <tr class="memdesc:ae00ee36a0f17eaf23aadcb7643186fa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a default configuration for the robot.  <a href="#ae00ee36a0f17eaf23aadcb7643186fa4">More...</a><br /></td></tr>
@@ -262,11 +262,12 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Holds information regarding the bounds</p>
-<p>The vector should have 6 entries:</p><ul>
+<p>Holds information regarding the urdf bounds</p>
+<p>The vector should have 8 entries:</p><ul>
 <li>lower/upper position bounds</li>
 <li>lower/upper velocity bounds</li>
 <li>lower/upper torque bounds</li>
+<li>lower/upper torque-derivative bounds</li>
 </ul>
 <p>Each entry is a map joint name &lt;-&gt; bound </p>
 
@@ -491,13 +492,14 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns the robot's bounds. </p>
-<p>The vector should hold 6 string -&gt; vector&lt;double&gt; map</p>
+<p>Returns the robot's bounds obtained from parsing a urdf. </p>
+<p>The vector should hold 8 string -&gt; vector&lt;double&gt; map</p>
 <p>Each map's keys are joint names and values are joint limits.</p>
 <p>They should be provided in the following order:</p><ul>
 <li>joint limits (lower/upper)</li>
 <li>velocity limits (lower/upper)</li>
-<li>torque limits (lower/upper) </li>
+<li>torque limits (lower/upper)</li>
+<li>torque-derivative limits (lower/upper) </li>
 </ul>
 
 </div>
@@ -1155,7 +1157,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a01660.html#ae05a5aab8f1a3edbecad4e4c7b29380d" title="Returns the robot&#39;s bounds. ">bounds()</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="a01660.html#ae05a5aab8f1a3edbecad4e4c7b29380d" title="Returns the robot&#39;s bounds obtained from parsing a urdf. ">bounds()</a> </dd></dl>
 
 </div>
 </div>
@@ -1580,7 +1582,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00727.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a01660.html">RobotModule</a></li>
-    <li class="footer">Generated on Fri Jul 24 2020 05:25:46 for mc_rtc by
+    <li class="footer">Generated on Fri Jul 24 2020 06:20:12 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -21420,6 +21420,20 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>tdl</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a9fa7e717817cab5e190f17d0397ff934</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>tdu</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a2607ecfbe200094f4bba59ac7c5c390d</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
       <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
       <name>ql</name>
       <anchorfile>a01632.html</anchorfile>
@@ -21459,6 +21473,20 @@
       <name>tu</name>
       <anchorfile>a01632.html</anchorfile>
       <anchor>afe854537bd0f1fb8ab64ce91f5f6105d</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>tdl</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a39a5fe0d5e143aae2d95ba39e56ab0a9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>tdu</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a77a7831e452c28f863abba6992990ac8</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -22191,6 +22219,20 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>tdl</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a9fa7e717817cab5e190f17d0397ff934</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>tdu</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a2607ecfbe200094f4bba59ac7c5c390d</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
       <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
       <name>ql</name>
       <anchorfile>a01632.html</anchorfile>
@@ -22230,6 +22272,20 @@
       <name>tu</name>
       <anchorfile>a01632.html</anchorfile>
       <anchor>afe854537bd0f1fb8ab64ce91f5f6105d</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>tdl</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a39a5fe0d5e143aae2d95ba39e56ab0a9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>tdu</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a77a7831e452c28f863abba6992990ac8</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">

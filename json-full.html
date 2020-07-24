@@ -10362,7 +10362,7 @@ O: 0.0</pre>
   
   
     
-    <span class="text-secondary">array[4]</span>&nbsp;
+    <span class="text-secondary">array</span>&nbsp;
 
   
   
@@ -10380,7 +10380,7 @@ O: 0.0</pre>
 
   </td>
   <td>
-    <span class="text-secondary"><small>Position limits (lower/upper), velocity, torque</small></span>
+    <span class="text-secondary"><small>Position limits (lower/upper), velocity (lower/upper), torque (lower/upper), torque derivative (lower/upper)</small></span>
   </td>
   
 </tr>
@@ -10388,6 +10388,123 @@ O: 0.0</pre>
   
     
     <tr class="collapse" id="collapsemc_rbdyn_RobotModule_PROP_bounds">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">object</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><i>*</i>&nbsp;&nbsp;<small class="text-secondary">(pattern)</small></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>torqueDerivativeBounds</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array[2]</span>&nbsp;
+
+  
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapsemc_rbdyn_RobotModule_PROP_torqueDerivativeBounds" aria-expanded="false" aria-controls="collapsemc_rbdyn_RobotModule_PROP_torqueDerivativeBounds">object</a>
+    
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Torque derivative bounds (lower/upper). Overwrite those specified in bounds if present</small></span>
+  </td>
+  
+</tr>
+
+  
+    
+    <tr class="collapse" id="collapsemc_rbdyn_RobotModule_PROP_torqueDerivativeBounds">
       <td colspan="3">
         
 <div class="card card-schema">
