@@ -1,4 +1,5 @@
 {
+  "type": "object",
   "properties":
   {
     "timeout": { "type": "number", "minimum": 0, "description": "True when the task has been added to the solver for longer than this threshold"},
