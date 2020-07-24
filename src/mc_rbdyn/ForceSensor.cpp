@@ -137,6 +137,26 @@ ForceSensor::ForceSensor(const std::string & name, const std::string & parentBod
   type_ = "ForceSensor";
 }
 
+ForceSensor::ForceSensor(const ForceSensor & fs) : ForceSensor(fs.name_, fs.parentBody(), fs.X_p_f())
+{
+  wrench_ = fs.wrench_;
+  *calibration_ = *fs.calibration_;
+}
+
+ForceSensor & ForceSensor::operator=(const ForceSensor & fs)
+{
+  if(&fs == this)
+  {
+    return *this;
+  }
+  name_ = fs.name_;
+  parent_ = fs.parent_;
+  X_p_s_ = fs.X_p_s_;
+  *calibration_ = *fs.calibration_;
+  wrench_ = fs.wrench_;
+  return *this;
+}
+
 ForceSensor::~ForceSensor() noexcept = default;
 
 void ForceSensor::loadCalibrator(const std::string & calib_file, const Eigen::Vector3d & gravity)

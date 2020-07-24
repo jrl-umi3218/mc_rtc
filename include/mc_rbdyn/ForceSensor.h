@@ -40,6 +40,13 @@ public:
    */
   ForceSensor(const std::string & name, const std::string & parentBodyName, const sva::PTransformd & X_p_f);
 
+  ForceSensor(const ForceSensor & fs);
+
+  ForceSensor & operator=(const ForceSensor & fs);
+
+  ForceSensor(ForceSensor &&) = default;
+  ForceSensor & operator=(ForceSensor &&) = default;
+
   /** Destructor */
   ~ForceSensor() noexcept override;
 
