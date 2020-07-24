@@ -199,45 +199,14 @@ RobotModule::Gripper::Gripper(const std::string & name,
 
 void RobotModule::boundsFromURDF(const rbd::parsers::Limits & limits)
 {
-  auto neg_bound = [](const std::map<std::string, std::vector<double>> & v) {
-    std::map<std::string, std::vector<double>> res;
-    for(const auto & vi : v)
-    {
-      res[vi.first] = vi.second;
-      for(auto & vj : res[vi.first])
-      {
-        vj = -vj;
-      }
-    }
-    return res;
-  };
-
-  std::map<std::string, std::vector<double>> torqueDerivativeUpper;
-  std::map<std::string, std::vector<double>> torqueDerivativeLower;
-  for (auto it = _bounds.at(0).begin(); it != _bounds.at(0).end(); it++)
-  {
-    std::vector<double> vecUpper;
-    std::vector<double> vecLower;
-    for(unsigned int i=0; i<it->second.size(); i++)
-    {
-      vecUpper.push_back( +std::numeric_limits<double>::infinity() );
-      vecLower.push_back( -std::numeric_limits<double>::infinity() );
-    }
-    torqueDerivativeUpper.insert( std::make_pair(it->first, vecUpper) );
-    torqueDerivativeLower.insert( std::make_pair(it->first, vecLower) );
-  }
-
-  _bounds = {
-      limits.lower, limits.upper, neg_bound(limits.velocity), limits.velocity, neg_bound(limits.torque), limits.torque, torqueDerivativeLower, torqueDerivativeUpper,
-  };
+  _bounds = urdf_limits_to_bounds(limits);
 }
 
 void RobotModule::boundsFromURDF(const mc_rbdyn_urdf::Limits & limits)
 {
   mc_rtc::log::warning("This function is deprecated, use rbd::parsers instead of mc_rbdyn_urdf");
-  boundsFromURDF(from_mc_rbdyn_urdf(limits));
+  _bounds = urdf_limits_to_bounds(limits);
 }
-
 
 void RobotModule::expand_stance()
 {
@@ -265,7 +234,7 @@ void RobotModule::make_default_ref_joint_order()
 RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
 {
   RobotModule::bounds_t ret = {};
-  ret.reserve(6); //TODO or 8 ?
+  ret.reserve(8);
   ret.push_back(limits.lower);
   ret.push_back(limits.upper);
   auto convert = [](const std::map<std::string, std::vector<double>> & l) {
@@ -279,10 +248,25 @@ RobotModule::bounds_t urdf_limits_to_bounds(const rbd::parsers::Limits & limits)
     }
     return ret;
   };
+  auto inf_convert = [](const std::map<std::string, std::vector<double>> & l, bool neg) {
+    auto ret = l;
+    auto inf = std::numeric_limits<double>::infinity();
+    auto value = neg ? -inf : inf;
+    for(auto & el : ret)
+    {
+      for(auto & e : el.second)
+      {
+        e = value;
+      }
+    }
+    return ret;
+  };
   ret.push_back(convert(limits.velocity));
   ret.push_back(limits.velocity);
   ret.push_back(convert(limits.torque));
   ret.push_back(limits.torque);
+  ret.push_back(inf_convert(limits.torque, true));
+  ret.push_back(inf_convert(limits.torque, false));
   return ret;
 }
 
