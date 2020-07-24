@@ -254,7 +254,11 @@ Robot::Robot(Robots & robots,
   devices_ = module_.devices();
   for(size_t i = 0; i < devices_.size(); ++i)
   {
-    const auto & d = devices_[i];
+    auto & d = devices_[i];
+    if(d->parent() == "")
+    {
+      d->parent(mb().body(0).name());
+    }
     devicesIndex_[d->name()] = i;
   }
 
@@ -1315,6 +1319,11 @@ void Robot::addDevice(DevicePtr device)
         "You cannot have multiple generic sensor with the same name in a robot");
   }
   devices_.push_back(std::move(device));
+  auto & d = devices_.back();
+  if(d->parent() == "")
+  {
+    d->parent(mb().body(0).name());
+  }
   devicesIndex_[device->name()] = devices_.size() - 1;
 }
 

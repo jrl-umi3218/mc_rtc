@@ -5,6 +5,8 @@
 namespace mc_rbdyn
 {
 
+Device::Device(const std::string & name) : Device(name, "", sva::PTransformd::Identity()) {}
+
 Device::Device(const std::string & name, const std::string & parent, const sva::PTransformd & X_p_s)
 : type_(""), name_(name), parent_(parent), X_p_s_(X_p_s)
 {
