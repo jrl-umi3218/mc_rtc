@@ -5406,6 +5406,34 @@
     </member>
     <member kind="function">
       <type></type>
+      <name>BodySensor</name>
+      <anchorfile>a01524.html</anchorfile>
+      <anchor>a53b8def2da6127d7a84f7e5488d5350e</anchor>
+      <arglist>(const BodySensor &amp;bs)</arglist>
+    </member>
+    <member kind="function">
+      <type>BodySensor &amp;</type>
+      <name>operator=</name>
+      <anchorfile>a01524.html</anchorfile>
+      <anchor>a464df9c5722e155018cebbb60edbbe1a</anchor>
+      <arglist>(const BodySensor &amp;bs)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>BodySensor</name>
+      <anchorfile>a01524.html</anchorfile>
+      <anchor>a481adcb82e3dac378ba4c1bd0fee37d4</anchor>
+      <arglist>(BodySensor &amp;&amp;)=default</arglist>
+    </member>
+    <member kind="function">
+      <type>BodySensor &amp;</type>
+      <name>operator=</name>
+      <anchorfile>a01524.html</anchorfile>
+      <anchor>ac39771d679356af14ab9b5e8a738bfbb</anchor>
+      <arglist>(BodySensor &amp;&amp;)=default</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
       <name>~BodySensor</name>
       <anchorfile>a01524.html</anchorfile>
       <anchor>ab9ffa63a5396c7eb000ea7fbf716d086</anchor>
@@ -10513,8 +10541,43 @@
       <type></type>
       <name>Device</name>
       <anchorfile>a01568.html</anchorfile>
+      <anchor>aac4fc1405587e64b75f2b8b7e81769d5</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Device</name>
+      <anchorfile>a01568.html</anchorfile>
       <anchor>ab03a19828b8a5e670beb832a18e42281</anchor>
       <arglist>(const std::string &amp;name, const std::string &amp;parent, const sva::PTransformd &amp;X_p_s)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Device</name>
+      <anchorfile>a01568.html</anchorfile>
+      <anchor>a10e51518c0cd7afd26b71fa6d39ae80d</anchor>
+      <arglist>(const Device &amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type>Device &amp;</type>
+      <name>operator=</name>
+      <anchorfile>a01568.html</anchorfile>
+      <anchor>acb0d4de20d18c168d3069f170dd568f5</anchor>
+      <arglist>(const Device &amp;)=delete</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Device</name>
+      <anchorfile>a01568.html</anchorfile>
+      <anchor>a5ef29dded30b518781405cde1b243089</anchor>
+      <arglist>(Device &amp;&amp;)=default</arglist>
+    </member>
+    <member kind="function">
+      <type>Device &amp;</type>
+      <name>operator=</name>
+      <anchorfile>a01568.html</anchorfile>
+      <anchor>a6ed916e8d88fd2032b790ab143ac7c13</anchor>
+      <arglist>(Device &amp;&amp;)=default</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual</type>
@@ -10545,11 +10608,46 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>parent</name>
+      <anchorfile>a01568.html</anchorfile>
+      <anchor>aa195d74e93e262d231b44efaf6217758</anchor>
+      <arglist>(const std::string &amp;p)</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::PTransformd &amp;</type>
+      <name>X_p_d</name>
+      <anchorfile>a01568.html</anchorfile>
+      <anchor>af2b47d128a8964d8fe32f6c9279e816f</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
       <type>const sva::PTransformd &amp;</type>
       <name>X_p_s</name>
       <anchorfile>a01568.html</anchorfile>
       <anchor>a018981488a410e62be4605726f953507</anchor>
       <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>X_p_d</name>
+      <anchorfile>a01568.html</anchorfile>
+      <anchor>aa4c6653e8ee6aed277bfbd96e1410b6a</anchor>
+      <arglist>(const sva::PTransformd &amp;pt)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>X_p_s</name>
+      <anchorfile>a01568.html</anchorfile>
+      <anchor>a9c69d16bdaed36b31375b419cdcddc0b</anchor>
+      <arglist>(const sva::PTransformd &amp;pt)</arglist>
+    </member>
+    <member kind="function">
+      <type>sva::PTransformd</type>
+      <name>X_0_d</name>
+      <anchorfile>a01568.html</anchorfile>
+      <anchor>a0f7c7a08133ec941b3cb8d12dacee6b3</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;robot) const</arglist>
     </member>
     <member kind="function">
       <type>sva::PTransformd</type>
@@ -12265,6 +12363,34 @@
       <anchorfile>a01576.html</anchorfile>
       <anchor>aa6327851fadc1e203db65471072aa3a5</anchor>
       <arglist>(const std::string &amp;name, const std::string &amp;parentBodyName, const sva::PTransformd &amp;X_p_f)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ForceSensor</name>
+      <anchorfile>a01576.html</anchorfile>
+      <anchor>a1ddf8c264c9370c5777df87328243f4b</anchor>
+      <arglist>(const ForceSensor &amp;fs)</arglist>
+    </member>
+    <member kind="function">
+      <type>ForceSensor &amp;</type>
+      <name>operator=</name>
+      <anchorfile>a01576.html</anchorfile>
+      <anchor>ab4c7269c90f201bee45fda93ec7d88e3</anchor>
+      <arglist>(const ForceSensor &amp;fs)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ForceSensor</name>
+      <anchorfile>a01576.html</anchorfile>
+      <anchor>a37735354c6d4aaaa666024dd5e86e667</anchor>
+      <arglist>(ForceSensor &amp;&amp;)=default</arglist>
+    </member>
+    <member kind="function">
+      <type>ForceSensor &amp;</type>
+      <name>operator=</name>
+      <anchorfile>a01576.html</anchorfile>
+      <anchor>a349ba9b2264e0fa126265d2eba36fcb7</anchor>
+      <arglist>(ForceSensor &amp;&amp;)=default</arglist>
     </member>
     <member kind="function">
       <type></type>

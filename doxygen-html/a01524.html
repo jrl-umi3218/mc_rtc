@@ -99,6 +99,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a44f050d481291a6015f3a5423e5098fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01524.html#a44f050d481291a6015f3a5423e5098fe">BodySensor</a> (const std::string &amp;<a class="el" href="a01568.html#ac7f03a01fbf81e9e65c595e06c8db3a7">name</a>, const std::string &amp;bodyName, const sva::PTransformd &amp;<a class="el" href="a01524.html#adb95b5d1ba5be5b51912cfc058f2371d">X_b_s</a>)</td></tr>
 <tr class="memdesc:a44f050d481291a6015f3a5423e5098fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a44f050d481291a6015f3a5423e5098fe">More...</a><br /></td></tr>
 <tr class="separator:a44f050d481291a6015f3a5423e5098fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53b8def2da6127d7a84f7e5488d5350e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01524.html#a53b8def2da6127d7a84f7e5488d5350e">BodySensor</a> (const <a class="el" href="a01524.html">BodySensor</a> &amp;bs)</td></tr>
+<tr class="separator:a53b8def2da6127d7a84f7e5488d5350e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a464df9c5722e155018cebbb60edbbe1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01524.html">BodySensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01524.html#a464df9c5722e155018cebbb60edbbe1a">operator=</a> (const <a class="el" href="a01524.html">BodySensor</a> &amp;bs)</td></tr>
+<tr class="separator:a464df9c5722e155018cebbb60edbbe1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a481adcb82e3dac378ba4c1bd0fee37d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01524.html#a481adcb82e3dac378ba4c1bd0fee37d4">BodySensor</a> (<a class="el" href="a01524.html">BodySensor</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a481adcb82e3dac378ba4c1bd0fee37d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac39771d679356af14ab9b5e8a738bfbb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01524.html">BodySensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01524.html#ac39771d679356af14ab9b5e8a738bfbb">operator=</a> (<a class="el" href="a01524.html">BodySensor</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:ac39771d679356af14ab9b5e8a738bfbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab9ffa63a5396c7eb000ea7fbf716d086"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01524.html#ab9ffa63a5396c7eb000ea7fbf716d086">~BodySensor</a> () noexcept override</td></tr>
 <tr class="separator:ab9ffa63a5396c7eb000ea7fbf716d086"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5d6323b65ec6e712804d0c8590c8b55"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01524.html#ab5d6323b65ec6e712804d0c8590c8b55">parentBody</a> () const</td></tr>
@@ -138,10 +146,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a47391dc54a7bfcfc505a52c8352d066c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the sensor's acceleration reading.  <a href="#a47391dc54a7bfcfc505a52c8352d066c">More...</a><br /></td></tr>
 <tr class="separator:a47391dc54a7bfcfc505a52c8352d066c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a636b6a07fb613352e458b6636fcf240f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00727.html#a356f67585abd89ae94368d4644d6e865">DevicePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01524.html#a636b6a07fb613352e458b6636fcf240f">clone</a> () const override</td></tr>
+<tr class="memdesc:a636b6a07fb613352e458b6636fcf240f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a device copy.  <a href="#a636b6a07fb613352e458b6636fcf240f">More...</a><br /></td></tr>
 <tr class="separator:a636b6a07fb613352e458b6636fcf240f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_a01568"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a01568')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a01568.html">mc_rbdyn::Device</a></td></tr>
+<tr class="memitem:aac4fc1405587e64b75f2b8b7e81769d5 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#aac4fc1405587e64b75f2b8b7e81769d5">Device</a> (const std::string &amp;<a class="el" href="a01568.html#ac7f03a01fbf81e9e65c595e06c8db3a7">name</a>)</td></tr>
+<tr class="memdesc:aac4fc1405587e64b75f2b8b7e81769d5 inherit pub_methods_a01568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a device not specifically attached to the robot.  <a href="a01568.html#aac4fc1405587e64b75f2b8b7e81769d5">More...</a><br /></td></tr>
+<tr class="separator:aac4fc1405587e64b75f2b8b7e81769d5 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab03a19828b8a5e670beb832a18e42281 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#ab03a19828b8a5e670beb832a18e42281">Device</a> (const std::string &amp;<a class="el" href="a01568.html#ac7f03a01fbf81e9e65c595e06c8db3a7">name</a>, const std::string &amp;<a class="el" href="a01568.html#aa4fa7c2fd9c533abc6e1bd965f128650">parent</a>, const sva::PTransformd &amp;<a class="el" href="a01568.html#a018981488a410e62be4605726f953507">X_p_s</a>)</td></tr>
+<tr class="memdesc:ab03a19828b8a5e670beb832a18e42281 inherit pub_methods_a01568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a device attached to a specific body of the robot.  <a href="a01568.html#ab03a19828b8a5e670beb832a18e42281">More...</a><br /></td></tr>
 <tr class="separator:ab03a19828b8a5e670beb832a18e42281 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10e51518c0cd7afd26b71fa6d39ae80d inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#a10e51518c0cd7afd26b71fa6d39ae80d">Device</a> (const <a class="el" href="a01568.html">Device</a> &amp;)=delete</td></tr>
+<tr class="separator:a10e51518c0cd7afd26b71fa6d39ae80d inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb0d4de20d18c168d3069f170dd568f5 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01568.html">Device</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#acb0d4de20d18c168d3069f170dd568f5">operator=</a> (const <a class="el" href="a01568.html">Device</a> &amp;)=delete</td></tr>
+<tr class="separator:acb0d4de20d18c168d3069f170dd568f5 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ef29dded30b518781405cde1b243089 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#a5ef29dded30b518781405cde1b243089">Device</a> (<a class="el" href="a01568.html">Device</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a5ef29dded30b518781405cde1b243089 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ed916e8d88fd2032b790ab143ac7c13 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01568.html">Device</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#a6ed916e8d88fd2032b790ab143ac7c13">operator=</a> (<a class="el" href="a01568.html">Device</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a6ed916e8d88fd2032b790ab143ac7c13 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ef17bdaf954ee5a88ea1673ef94a625 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#a9ef17bdaf954ee5a88ea1673ef94a625">~Device</a> () noexcept=default</td></tr>
 <tr class="separator:a9ef17bdaf954ee5a88ea1673ef94a625 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7f03a01fbf81e9e65c595e06c8db3a7 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#ac7f03a01fbf81e9e65c595e06c8db3a7">name</a> () const</td></tr>
@@ -153,9 +174,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4fa7c2fd9c533abc6e1bd965f128650 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#aa4fa7c2fd9c533abc6e1bd965f128650">parent</a> () const</td></tr>
 <tr class="memdesc:aa4fa7c2fd9c533abc6e1bd965f128650 inherit pub_methods_a01568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the parent body of the sensor.  <a href="a01568.html#aa4fa7c2fd9c533abc6e1bd965f128650">More...</a><br /></td></tr>
 <tr class="separator:aa4fa7c2fd9c533abc6e1bd965f128650 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa195d74e93e262d231b44efaf6217758 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#aa195d74e93e262d231b44efaf6217758">parent</a> (const std::string &amp;p)</td></tr>
+<tr class="memdesc:aa195d74e93e262d231b44efaf6217758 inherit pub_methods_a01568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the parent body of the sensor.  <a href="a01568.html#aa195d74e93e262d231b44efaf6217758">More...</a><br /></td></tr>
+<tr class="separator:aa195d74e93e262d231b44efaf6217758 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2b47d128a8964d8fe32f6c9279e816f inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">const sva::PTransformd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#af2b47d128a8964d8fe32f6c9279e816f">X_p_d</a> () const</td></tr>
+<tr class="memdesc:af2b47d128a8964d8fe32f6c9279e816f inherit pub_methods_a01568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the transformation from the parent body to the device.  <a href="a01568.html#af2b47d128a8964d8fe32f6c9279e816f">More...</a><br /></td></tr>
+<tr class="separator:af2b47d128a8964d8fe32f6c9279e816f inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a018981488a410e62be4605726f953507 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">const sva::PTransformd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#a018981488a410e62be4605726f953507">X_p_s</a> () const</td></tr>
 <tr class="memdesc:a018981488a410e62be4605726f953507 inherit pub_methods_a01568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the transformation from the parent body to the sensor.  <a href="a01568.html#a018981488a410e62be4605726f953507">More...</a><br /></td></tr>
 <tr class="separator:a018981488a410e62be4605726f953507 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4c6653e8ee6aed277bfbd96e1410b6a inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#aa4c6653e8ee6aed277bfbd96e1410b6a">X_p_d</a> (const sva::PTransformd &amp;pt)</td></tr>
+<tr class="memdesc:aa4c6653e8ee6aed277bfbd96e1410b6a inherit pub_methods_a01568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the parent to device transformation.  <a href="a01568.html#aa4c6653e8ee6aed277bfbd96e1410b6a">More...</a><br /></td></tr>
+<tr class="separator:aa4c6653e8ee6aed277bfbd96e1410b6a inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c69d16bdaed36b31375b419cdcddc0b inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#a9c69d16bdaed36b31375b419cdcddc0b">X_p_s</a> (const sva::PTransformd &amp;pt)</td></tr>
+<tr class="memdesc:a9c69d16bdaed36b31375b419cdcddc0b inherit pub_methods_a01568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the parent to sensor transformation.  <a href="a01568.html#a9c69d16bdaed36b31375b419cdcddc0b">More...</a><br /></td></tr>
+<tr class="separator:a9c69d16bdaed36b31375b419cdcddc0b inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f7c7a08133ec941b3cb8d12dacee6b3 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#a0f7c7a08133ec941b3cb8d12dacee6b3">X_0_d</a> (const <a class="el" href="a01632.html">mc_rbdyn::Robot</a> &amp;robot) const</td></tr>
+<tr class="memdesc:a0f7c7a08133ec941b3cb8d12dacee6b3 inherit pub_methods_a01568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the deviec position in the inertial frame (convenience function)  <a href="a01568.html#a0f7c7a08133ec941b3cb8d12dacee6b3">More...</a><br /></td></tr>
+<tr class="separator:a0f7c7a08133ec941b3cb8d12dacee6b3 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89cf1a897146d487c4f2c9c915ff3ec5 inherit pub_methods_a01568"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01568.html#a89cf1a897146d487c4f2c9c915ff3ec5">X_0_s</a> (const <a class="el" href="a01632.html">mc_rbdyn::Robot</a> &amp;robot) const</td></tr>
 <tr class="memdesc:a89cf1a897146d487c4f2c9c915ff3ec5 inherit pub_methods_a01568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the sensor position in the inertial frame (convenience function)  <a href="a01568.html#a89cf1a897146d487c4f2c9c915ff3ec5">More...</a><br /></td></tr>
 <tr class="separator:a89cf1a897146d487c4f2c9c915ff3ec5 inherit pub_methods_a01568"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,7 +217,7 @@ Additional Inherited Members</h2></td></tr>
 <p>It would typically be used to represent an IMU reading but in more ideal (simulation, external tracking system...) it can hold more information </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0ccd7feb3cb52abec8d65b3da9df4989"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ccd7feb3cb52abec8d65b3da9df4989">&#9670;&nbsp;</a></span>BodySensor() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ccd7feb3cb52abec8d65b3da9df4989">&#9670;&nbsp;</a></span>BodySensor() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -208,7 +244,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <a id="a44f050d481291a6015f3a5423e5098fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44f050d481291a6015f3a5423e5098fe">&#9670;&nbsp;</a></span>BodySensor() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a44f050d481291a6015f3a5423e5098fe">&#9670;&nbsp;</a></span>BodySensor() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -256,6 +292,58 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a53b8def2da6127d7a84f7e5488d5350e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53b8def2da6127d7a84f7e5488d5350e">&#9670;&nbsp;</a></span>BodySensor() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rbdyn::BodySensor::BodySensor </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01524.html">BodySensor</a> &amp;&#160;</td>
+          <td class="paramname"><em>bs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a481adcb82e3dac378ba4c1bd0fee37d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a481adcb82e3dac378ba4c1bd0fee37d4">&#9670;&nbsp;</a></span>BodySensor() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rbdyn::BodySensor::BodySensor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01524.html">BodySensor</a> &amp;&amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -418,6 +506,8 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Perform a device copy. </p>
+
 <p>Implements <a class="el" href="a01568.html#a836b2415a1379592403363bdc2dda8b0">mc_rbdyn::Device</a>.</p>
 
 </div>
@@ -474,6 +564,60 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the sensor's linear velocity reading. </p>
+
+</div>
+</div>
+<a id="a464df9c5722e155018cebbb60edbbe1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a464df9c5722e155018cebbb60edbbe1a">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01524.html">BodySensor</a>&amp; mc_rbdyn::BodySensor::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01524.html">BodySensor</a> &amp;&#160;</td>
+          <td class="paramname"><em>bs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="reference">References <a class="el" href="a01568.html#abf31b34d57b3746dd96a745d67b5dbde">mc_rbdyn::Device::name_</a>, <a class="el" href="a01568.html#aa24ec57cfee577ff0e85317ff4588c98">mc_rbdyn::Device::parent_</a>, and <a class="el" href="a01568.html#a6a5a93f9a1e463e41da680695aca29c7">mc_rbdyn::Device::X_p_s_</a>.</p>
+
+</div>
+</div>
+<a id="ac39771d679356af14ab9b5e8a738bfbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac39771d679356af14ab9b5e8a738bfbb">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01524.html">BodySensor</a>&amp; mc_rbdyn::BodySensor::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a01524.html">BodySensor</a> &amp;&amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -653,7 +797,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00727.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a01524.html">BodySensor</a></li>
-    <li class="footer">Generated on Fri Jul 24 2020 13:48:38 for mc_rtc by
+    <li class="footer">Generated on Sat Jul 25 2020 03:59:36 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

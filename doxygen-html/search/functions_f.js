@@ -1,7 +1,7 @@
 var searchData=
 [
   ['parameters',['parameters',['../a01660.html#a8361592b3630831c0cb57d8bb86afceb',1,'mc_rbdyn::RobotModule']]],
-  ['parent',['parent',['../a01568.html#aa4fa7c2fd9c533abc6e1bd965f128650',1,'mc_rbdyn::Device']]],
+  ['parent',['parent',['../a01568.html#aa4fa7c2fd9c533abc6e1bd965f128650',1,'mc_rbdyn::Device::parent() const'],['../a01568.html#aa195d74e93e262d231b44efaf6217758',1,'mc_rbdyn::Device::parent(const std::string &amp;p)']]],
   ['parentbody',['parentBody',['../a01524.html#ab5d6323b65ec6e712804d0c8590c8b55',1,'mc_rbdyn::BodySensor::parentBody()'],['../a01576.html#a6629c5e91037493e31492c2ee4c88ffb',1,'mc_rbdyn::ForceSensor::parentBody()']]],
   ['parsemultibodygraphfromurdf',['parseMultiBodyGraphFromURDF',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00015.html#a405459fdf14f8089f31d20102316fa78',1,'mc_rbdyn_urdf']]],
   ['path',['path',['../a02016.html#aab506987ae59f5623e4875126b3ad06b',1,'mc_rtc::LTDLHandle']]],

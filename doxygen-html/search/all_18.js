@@ -1,6 +1,7 @@
 var searchData=
 [
   ['x',['x',['../a02192.html#aa979cfc7765a146ead01123e495c5975',1,'mc_solver::ZMP::x()'],['../a00745.html#a13155e82e2012b946c5c973369b1db56',1,'mc_rtc::gui::plot::X(AxisConfiguration config, GetT get_fn)'],['../a00745.html#ac22eeca55379fb5c66be97b783a8bd32',1,'mc_rtc::gui::plot::X(const std::string &amp;legend, GetT get_fn)'],['../a00745.html#ac2f689ceed9f080a4ccc49a6a70aeb4c',1,'mc_rtc::gui::plot::X(const char *legend, GetT get_fn)']]],
+  ['x_5f0_5fd',['X_0_d',['../a01568.html#a0f7c7a08133ec941b3cb8d12dacee6b3',1,'mc_rbdyn::Device']]],
   ['x_5f0_5ff',['X_0_f',['../a01576.html#aa573d1f10146ae3a17209b404cade3aa',1,'mc_rbdyn::ForceSensor']]],
   ['x_5f0_5fr1s',['X_0_r1s',['../a01560.html#a264707e8a87bb9a265583e14c16dcd28',1,'mc_rbdyn::Contact::X_0_r1s(const mc_rbdyn::Robot &amp;robot) const'],['../a01560.html#afaf2d04a5bc477ee65742160ab6efa6e',1,'mc_rbdyn::Contact::X_0_r1s(const mc_rbdyn::Robots &amp;robots) const']]],
   ['x_5f0_5fr2s',['X_0_r2s',['../a01560.html#a812161a2be97be624b190b4680dc21cb',1,'mc_rbdyn::Contact::X_0_r2s(const mc_rbdyn::Robot &amp;robot) const'],['../a01560.html#a6be23bfafec507c064b00431499030ac',1,'mc_rbdyn::Contact::X_0_r2s(const mc_rbdyn::Robots &amp;robots) const']]],
@@ -11,8 +12,9 @@ var searchData=
   ['x_5fb_5fs',['X_b_s',['../a01524.html#adb95b5d1ba5be5b51912cfc058f2371d',1,'mc_rbdyn::BodySensor::X_b_s()'],['../a01560.html#a840fb862241dd9ea8586c54733f9c2b4',1,'mc_rbdyn::Contact::X_b_s()'],['../a01680.html#a608e48ae09decafa9c66caf47368a800',1,'mc_rbdyn::Surface::X_b_s() const'],['../a01680.html#a2ce6f078f8d8822cc9f5fa230ad4edee',1,'mc_rbdyn::Surface::X_b_s(const sva::PTransformd &amp;X_b_s)']]],
   ['x_5ffsactual_5fparent',['X_fsactual_parent',['../a01576.html#a9c831a9aa004b7f583de71ab26b8e5f3',1,'mc_rbdyn::ForceSensor']]],
   ['x_5ffsmodel_5ffsactual',['X_fsmodel_fsactual',['../a01576.html#a95d5b7f0eb0f2eea86ff77013df65787',1,'mc_rbdyn::ForceSensor']]],
+  ['x_5fp_5fd',['X_p_d',['../a01568.html#af2b47d128a8964d8fe32f6c9279e816f',1,'mc_rbdyn::Device::X_p_d() const'],['../a01568.html#aa4c6653e8ee6aed277bfbd96e1410b6a',1,'mc_rbdyn::Device::X_p_d(const sva::PTransformd &amp;pt)']]],
   ['x_5fp_5ff',['X_p_f',['../a01576.html#a707f4a4c8178f9a626cdf802f744cd5e',1,'mc_rbdyn::ForceSensor']]],
-  ['x_5fp_5fs',['X_p_s',['../a01568.html#a018981488a410e62be4605726f953507',1,'mc_rbdyn::Device']]],
+  ['x_5fp_5fs',['X_p_s',['../a01568.html#a018981488a410e62be4605726f953507',1,'mc_rbdyn::Device::X_p_s() const'],['../a01568.html#a9c69d16bdaed36b31375b419cdcddc0b',1,'mc_rbdyn::Device::X_p_s(const sva::PTransformd &amp;pt)']]],
   ['x_5fp_5fs_5f',['X_p_s_',['../a01568.html#a6a5a93f9a1e463e41da680695aca29c7',1,'mc_rbdyn::Device']]],
   ['x_5fr2s_5fr1s',['X_r2s_r1s',['../a01560.html#a9deb8f52a9ea07b222b22102326589a3',1,'mc_rbdyn::Contact::X_r2s_r1s() const'],['../a01560.html#a24d2d5e3381e4e863bea3c3d5f66b9c5',1,'mc_rbdyn::Contact::X_r2s_r1s(const sva::PTransformd &amp;in)']]],
   ['xmax',['xmax',['../a02284.html#adee46fe7d5c7596d13f2288c92a7a0c8',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],

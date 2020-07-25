@@ -2,6 +2,8 @@ var a01524 =
 [
     [ "BodySensor", "a01524.html#a0ccd7feb3cb52abec8d65b3da9df4989", null ],
     [ "BodySensor", "a01524.html#a44f050d481291a6015f3a5423e5098fe", null ],
+    [ "BodySensor", "a01524.html#a53b8def2da6127d7a84f7e5488d5350e", null ],
+    [ "BodySensor", "a01524.html#a481adcb82e3dac378ba4c1bd0fee37d4", null ],
     [ "~BodySensor", "a01524.html#ab9ffa63a5396c7eb000ea7fbf716d086", null ],
     [ "acceleration", "a01524.html#a9ddd4e669bf23bc6d3ec7428a1f030ea", null ],
     [ "acceleration", "a01524.html#a47391dc54a7bfcfc505a52c8352d066c", null ],
@@ -10,6 +12,8 @@ var a01524 =
     [ "clone", "a01524.html#a636b6a07fb613352e458b6636fcf240f", null ],
     [ "linearVelocity", "a01524.html#ad01dc341ccff4cab51488c3cbffe21ee", null ],
     [ "linearVelocity", "a01524.html#a0df07b5cdfd86d18be2227182bb2aec2", null ],
+    [ "operator=", "a01524.html#a464df9c5722e155018cebbb60edbbe1a", null ],
+    [ "operator=", "a01524.html#ac39771d679356af14ab9b5e8a738bfbb", null ],
     [ "orientation", "a01524.html#abcf42c2151733e3ef80c9594cb37a43a", null ],
     [ "orientation", "a01524.html#a9544ac0b6bb997b65db638bf52b2d5a3", null ],
     [ "parentBody", "a01524.html#ab5d6323b65ec6e712804d0c8590c8b55", null ],
