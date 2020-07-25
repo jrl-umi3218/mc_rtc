@@ -36,6 +36,31 @@ struct MC_RBDYN_DLLAPI BodySensor : public Device
     type_ = "BodySensor";
   }
 
+  BodySensor(const BodySensor & bs) : BodySensor(bs.name(), bs.parent(), bs.X_b_s())
+  {
+    position_ = bs.position_;
+    orientation_ = bs.orientation_;
+    linear_velocity_ = bs.linear_velocity_;
+    angular_velocity_ = bs.angular_velocity_;
+    acceleration_ = bs.acceleration_;
+  }
+
+  BodySensor & operator=(const BodySensor & bs)
+  {
+    name_ = bs.name_;
+    parent_ = bs.parent_;
+    X_p_s_ = bs.X_p_s_;
+    position_ = bs.position_;
+    orientation_ = bs.orientation_;
+    linear_velocity_ = bs.linear_velocity_;
+    angular_velocity_ = bs.angular_velocity_;
+    acceleration_ = bs.acceleration_;
+    return *this;
+  }
+
+  BodySensor(BodySensor &&) = default;
+  BodySensor & operator=(BodySensor &&) = default;
+
   ~BodySensor() noexcept override;
 
   /** Get the sensor's parent body name */
