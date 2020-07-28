@@ -70605,8 +70605,7 @@ other_robot:
   </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
   </span><span class="nl">"dimWeight"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span><span class="w">
   </span><span class="nl">"displaySamples"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"completion"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"OR"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"eval"</span><span class="p">:</span><span class="w"> </span><span class="mi">1e-3</span><span class="w"> </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="nl">"AND"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.0</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mi">1e-2</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"completion"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"timeElapsed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span><span class="w">
   </span><span class="nl">"targetSurface"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ground"</span><span class="p">,</span><span class="w">
@@ -70638,8 +70637,7 @@ other_robot:
   "weight": 100,
   "dimWeight": [0.5, 0.5, 0.5, 1.0, 1.0, 1.0],
   "displaySamples": 100,
-  "completion": { "OR": [ { "eval": 1e-3 },
-  {"AND": [ { "timeout": 3.0 }, { "speed": 1e-2 } ] } ] },
+  "completion": { "timeElapsed": true },
   "targetSurface":
   {
     "robot": "ground",
@@ -70677,12 +70675,13 @@ other_robot:
 <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
 <span class="na">dimWeight</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.5</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">]</span>
 <span class="na">displaySamples</span><span class="pi">:</span> <span class="m">100</span>
+<span class="c1"># Task is complete when it has reached its total duration,</span>
+<span class="c1"># Or if a force greater than 20N has been detected</span>
+<span class="c1"># along the Z axis (early contact)</span>
 <span class="na">completion</span><span class="pi">:</span>
   <span class="na">OR</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">eval</span><span class="pi">:</span> <span class="s">1e-3</span>
-    <span class="pi">-</span> <span class="na">AND</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">timeout</span><span class="pi">:</span> <span class="m">3.0</span>
-      <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="s">1e-2</span>
+    <span class="pi">-</span> <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="pi">-</span> <span class="na">wrench</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">20</span><span class="pi">]</span>
 <span class="na">targetSurface</span><span class="pi">:</span>
   <span class="na">robot</span><span class="pi">:</span> <span class="s">ground</span>
   <span class="na">surface</span><span class="pi">:</span> <span class="s">AllGround</span>
@@ -70710,12 +70709,13 @@ duration: 15.0
 weight: 100
 dimWeight: [0.5, 0.5, 0.5, 1.0, 1.0, 1.0]
 displaySamples: 100
+# Task is complete when it has reached its total duration,
+# Or if a force greater than 20N has been detected
+# along the Z axis (early contact)
 completion:
   OR:
-    - eval: 1e-3
-    - AND:
-      - timeout: 3.0
-      - speed: 1e-2
+    - timeElapsed: true
+    - wrench: [.NaN, .NaN, .NaN, .NaN, .NaN, 20]
 targetSurface:
   robot: ground
   surface: AllGround
@@ -88548,8 +88548,7 @@ admittance:
   </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
   </span><span class="nl">"dimWeight"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">],</span><span class="w">
   </span><span class="nl">"displaySamples"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"completion"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"OR"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"eval"</span><span class="p">:</span><span class="w"> </span><span class="mi">1e-3</span><span class="w"> </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="nl">"AND"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.0</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"speed"</span><span class="p">:</span><span class="w"> </span><span class="mi">1e-2</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"completion"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"timeElapsed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span><span class="w">
   </span><span class="nl">"targetSurface"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ground"</span><span class="p">,</span><span class="w">
@@ -88585,8 +88584,7 @@ admittance:
   "weight": 100,
   "dimWeight": [0.5, 0.5, 0.5, 1.0, 1.0, 1.0],
   "displaySamples": 100,
-  "completion": { "OR": [ { "eval": 1e-3 },
-  {"AND": [ { "timeout": 3.0 }, { "speed": 1e-2 } ] } ] },
+  "completion": { "timeElapsed": true },
   "targetSurface":
   {
     "robot": "ground",
@@ -88628,12 +88626,13 @@ admittance:
 <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
 <span class="na">dimWeight</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.5</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">]</span>
 <span class="na">displaySamples</span><span class="pi">:</span> <span class="m">100</span>
+<span class="c1"># Task is complete when it has reached its total duration,</span>
+<span class="c1"># Or if a force greater than 20N has been detected</span>
+<span class="c1"># along the Z axis (early contact)</span>
 <span class="na">completion</span><span class="pi">:</span>
   <span class="na">OR</span><span class="pi">:</span>
-    <span class="pi">-</span> <span class="na">eval</span><span class="pi">:</span> <span class="s">1e-3</span>
-    <span class="pi">-</span> <span class="na">AND</span><span class="pi">:</span>
-      <span class="pi">-</span> <span class="na">timeout</span><span class="pi">:</span> <span class="m">3.0</span>
-      <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="s">1e-2</span>
+    <span class="pi">-</span> <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
+    <span class="pi">-</span> <span class="na">wrench</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">20</span><span class="pi">]</span>
 <span class="na">targetSurface</span><span class="pi">:</span>
   <span class="na">robot</span><span class="pi">:</span> <span class="s">ground</span>
   <span class="na">surface</span><span class="pi">:</span> <span class="s">AllGround</span>
@@ -88661,12 +88660,13 @@ duration: 15.0
 weight: 100
 dimWeight: [0.5, 0.5, 0.5, 1.0, 1.0, 1.0]
 displaySamples: 100
+# Task is complete when it has reached its total duration,
+# Or if a force greater than 20N has been detected
+# along the Z axis (early contact)
 completion:
   OR:
-    - eval: 1e-3
-    - AND:
-      - timeout: 3.0
-      - speed: 1e-2
+    - timeElapsed: true
+    - wrench: [.NaN, .NaN, .NaN, .NaN, .NaN, 20]
 targetSurface:
   robot: ground
   surface: AllGround

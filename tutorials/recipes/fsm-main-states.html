@@ -303,7 +303,6 @@
       <span class="c1"># create a CoM task</span>
       <span class="na">CoM</span><span class="pi">:</span>
         <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
-        <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
         <span class="na">move_com</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">-0.05</span><span class="pi">]</span>
         <span class="na">completion</span><span class="pi">:</span>
           <span class="na">OR</span><span class="pi">:</span>
@@ -316,12 +315,12 @@
       <span class="na">HandTrajectory</span><span class="pi">:</span>
         <span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
         <span class="na">surface</span><span class="pi">:</span> <span class="s">LeftHand</span>
-        <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
         <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10000.0</span>
         <span class="na">duration</span><span class="pi">:</span> <span class="m">15.0</span>
         <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
         <span class="na">targetSurface</span><span class="pi">:</span>
-          <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">1</span>
+          <span class="c1"># assumes that the additional object/box robot was loaded in the global fsm configuration</span>
+          <span class="na">robot</span><span class="pi">:</span> <span class="s">box</span>
           <span class="na">surface</span><span class="pi">:</span> <span class="s">Left</span>
         <span class="na">completion</span><span class="pi">:</span>
           <span class="pi">-</span> <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
@@ -422,12 +421,11 @@
   <span class="na">HandTrajectory</span><span class="pi">:</span>
     <span class="na">type</span><span class="pi">:</span> <span class="s">bspline_trajectory</span>
     <span class="na">surface</span><span class="pi">:</span> <span class="s">RightHand</span>
-    <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">0</span>
     <span class="na">stiffness</span><span class="pi">:</span> <span class="m">10000.0</span>
     <span class="na">duration</span><span class="pi">:</span> <span class="m">15.0</span>
     <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
     <span class="na">targetSurface</span><span class="pi">:</span>
-      <span class="na">robotIndex</span><span class="pi">:</span> <span class="m">1</span>
+      <span class="na">robot</span><span class="pi">:</span> <span class="s">box</span>
       <span class="na">surface</span><span class="pi">:</span> <span class="s">Left</span>
     <span class="na">completion</span><span class="pi">:</span>
       <span class="pi">-</span> <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
