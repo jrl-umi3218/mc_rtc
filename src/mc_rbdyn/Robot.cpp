@@ -34,6 +34,31 @@ using torqueDerivativeBounds_t = std::tuple<bound_t, bound_t>;
 using rm_bounds_t = mc_rbdyn::RobotModule::bounds_t;
 using rm_bound_t = rm_bounds_t::value_type;
 
+using jt_method = int (rbd::Joint::*)() const;
+
+bound_t fill_bound(const rbd::MultiBody & mb, const std::string & name, const rm_bound_t & bound_in, jt_method def_size, double def_value,
+                        double ff_def_value) {
+  bound_t res;
+  res.reserve(static_cast<size_t>(mb.nrJoints()));
+  for(const auto & j : mb.joints())
+  {
+    res.emplace_back(((j).*(def_size))(), j.type() == rbd::Joint::Free ? ff_def_value : def_value);
+    if(bound_in.count(j.name()))
+    {
+      const auto & b_ref = bound_in.at(j.name());
+      auto & b = res.back();
+      if(b_ref.size() != b.size())
+      {
+        mc_rtc::log::error_and_throw<std::runtime_error>(
+            "{} provided bound size ({}) different from expected size ({}) for joint {}", name, b_ref.size(),
+            b.size(), j.name());
+      }
+      res.back() = bound_in.at(j.name());
+    }
+  }
+  return res;
+};
+
 /** Generate bounds compatible with the given MultiBody
  *
  * If bounds is provided, use the values provided to build the bounds.
@@ -42,35 +67,12 @@ using rm_bound_t = rm_bounds_t::value_type;
  */
 bounds_t bounds(const rbd::MultiBody & mb, const rm_bounds_t & bounds)
 {
-  using jt_method = int (rbd::Joint::*)() const;
-  auto fill_bound = [&mb](const std::string & name, const rm_bound_t & bound_in, jt_method def_size, double def_value,
-                          double ff_def_value) {
-    bound_t res;
-    res.reserve(static_cast<size_t>(mb.nrJoints()));
-    for(const auto & j : mb.joints())
-    {
-      res.emplace_back(((j).*(def_size))(), j.type() == rbd::Joint::Free ? ff_def_value : def_value);
-      if(bound_in.count(j.name()))
-      {
-        const auto & b_ref = bound_in.at(j.name());
-        auto & b = res.back();
-        if(b_ref.size() != b.size())
-        {
-          mc_rtc::log::error_and_throw<std::runtime_error>(
-              "{} provided bound size ({}) different from expected size ({}) for joint {}", name, b_ref.size(),
-              b.size(), j.name());
-        }
-        res.back() = bound_in.at(j.name());
-      }
-    }
-    return res;
-  };
-  return std::make_tuple(fill_bound("lower position", bounds.at(0), &rbd::Joint::params, -INFINITY, -INFINITY),
-                         fill_bound("upper position", bounds.at(1), &rbd::Joint::params, INFINITY, INFINITY),
-                         fill_bound("lower velocity", bounds.at(2), &rbd::Joint::dof, -INFINITY, -INFINITY),
-                         fill_bound("upper velocity", bounds.at(3), &rbd::Joint::dof, INFINITY, INFINITY),
-                         fill_bound("lower torque", bounds.at(4), &rbd::Joint::dof, -INFINITY, 0),
-                         fill_bound("upper torque", bounds.at(5), &rbd::Joint::dof, INFINITY, 0));
+  return std::make_tuple(fill_bound(mb, "lower position", bounds.at(0), &rbd::Joint::params, -INFINITY, -INFINITY),
+                         fill_bound(mb, "upper position", bounds.at(1), &rbd::Joint::params, INFINITY, INFINITY),
+                         fill_bound(mb, "lower velocity", bounds.at(2), &rbd::Joint::dof, -INFINITY, -INFINITY),
+                         fill_bound(mb, "upper velocity", bounds.at(3), &rbd::Joint::dof, INFINITY, INFINITY),
+                         fill_bound(mb, "lower torque", bounds.at(4), &rbd::Joint::dof, -INFINITY, 0),
+                         fill_bound(mb, "upper torque", bounds.at(5), &rbd::Joint::dof, INFINITY, 0));
 }
 
 /** Generate acceleration bounds compatible with the given MultiBody
@@ -81,29 +83,6 @@ bounds_t bounds(const rbd::MultiBody & mb, const rm_bounds_t & bounds)
  */
 accelerationBounds_t acceleration_bounds(const rbd::MultiBody & mb, const rm_bounds_t & bounds)
 {
-  using jt_method = int (rbd::Joint::*)() const;
-  auto fill_bound = [&mb](const std::string & name, const rm_bound_t & bound_in, jt_method def_size, double def_value,
-                          double ff_def_value) {
-    bound_t res;
-    res.reserve(static_cast<size_t>(mb.nrJoints()));
-    for(const auto & j : mb.joints())
-    {
-      res.emplace_back(((j).*(def_size))(), j.type() == rbd::Joint::Free ? ff_def_value : def_value);
-      if(bound_in.count(j.name()))
-      {
-        const auto & b_ref = bound_in.at(j.name());
-        auto & b = res.back();
-        if(b_ref.size() != b.size())
-        {
-          mc_rtc::log::error_and_throw<std::runtime_error>(
-              "{} provided bound size ({}) different from expected size ({}) for joint {}", name, b_ref.size(),
-              b.size(), j.name());
-        }
-        res.back() = bound_in.at(j.name());
-      }
-    }
-    return res;
-  };
   rm_bound_t default_bound = {};
   auto safe_bounds = [&bounds, &default_bound](size_t idx) -> const rm_bound_t & {
     if(idx < bounds.size())
@@ -112,8 +91,8 @@ accelerationBounds_t acceleration_bounds(const rbd::MultiBody & mb, const rm_bou
     }
     return default_bound;
   };
-  return std::make_tuple(fill_bound("lower acceleration", safe_bounds(0), &rbd::Joint::dof, -INFINITY, -INFINITY),
-                         fill_bound("upper acceleration", safe_bounds(1), &rbd::Joint::dof, INFINITY, INFINITY));
+  return std::make_tuple(fill_bound(mb, "lower acceleration", safe_bounds(0), &rbd::Joint::dof, -INFINITY, -INFINITY),
+                         fill_bound(mb, "upper acceleration", safe_bounds(1), &rbd::Joint::dof, INFINITY, INFINITY));
 }
 
 /** Generate torque-derivative bounds compatible with the given MultiBody
@@ -124,29 +103,6 @@ accelerationBounds_t acceleration_bounds(const rbd::MultiBody & mb, const rm_bou
  */
 torqueDerivativeBounds_t torqueDerivative_bounds(const rbd::MultiBody & mb, const rm_bounds_t & bounds)
 {
-  using jt_method = int (rbd::Joint::*)() const;
-  auto fill_bound = [&mb](const std::string & name, const rm_bound_t & bound_in, jt_method def_size, double def_value,
-                          double ff_def_value) {
-    bound_t res;
-    res.reserve(static_cast<size_t>(mb.nrJoints()));
-    for(const auto & j : mb.joints())
-    {
-      res.emplace_back(((j).*(def_size))(), j.type() == rbd::Joint::Free ? ff_def_value : def_value);
-      if(bound_in.count(j.name()))
-      {
-        const auto & b_ref = bound_in.at(j.name());
-        auto & b = res.back();
-        if(b_ref.size() != b.size())
-        {
-          mc_rtc::log::error_and_throw<std::runtime_error>(
-              "{} provided bound size ({}) different from expected size ({}) for joint {}", name, b_ref.size(),
-              b.size(), j.name());
-        }
-        res.back() = bound_in.at(j.name());
-      }
-    }
-    return res;
-  };
   rm_bound_t default_bound = {};
   auto safe_bounds = [&bounds, &default_bound](size_t idx) -> const rm_bound_t & {
     if(idx < bounds.size())
@@ -155,8 +111,8 @@ torqueDerivativeBounds_t torqueDerivative_bounds(const rbd::MultiBody & mb, cons
     }
     return default_bound;
   };
-  return std::make_tuple(fill_bound("lower torque-derivative", safe_bounds(0), &rbd::Joint::dof, -INFINITY, 0),
-                         fill_bound("upper torque-derivative", safe_bounds(1), &rbd::Joint::dof, INFINITY, 0));
+  return std::make_tuple(fill_bound(mb, "lower torque-derivative", safe_bounds(0), &rbd::Joint::dof, -INFINITY, 0),
+                         fill_bound(mb, "upper torque-derivative", safe_bounds(1), &rbd::Joint::dof, INFINITY, 0));
 }
 
 template<typename schT, typename mapT>
@@ -273,7 +229,7 @@ Robot::Robot(Robots & robots,
   }
   std::tie(ql_, qu_, vl_, vu_, tl_, tu_) = bounds(mb(), module_.bounds());
 
-  if(module_.accelerationBounds().size() != 2)
+  if(module_.accelerationBounds().size() != 0 && module_.accelerationBounds().size() != 2)
   {
     mc_rtc::log::error_and_throw<std::invalid_argument>("The additional acceleration bounds of RobotModule \"{}\" have a size of {} "
                                                         "instead of 2 ([al, au]).",
@@ -281,7 +237,7 @@ Robot::Robot(Robots & robots,
   }
   std::tie(al_, au_) = acceleration_bounds(mb(), module_.accelerationBounds());
 
-  if(module_.torqueDerivativeBounds().size() != 2)
+  if(module_.torqueDerivativeBounds().size() != 0 && module_.torqueDerivativeBounds().size() != 2)
   {
     mc_rtc::log::error_and_throw<std::invalid_argument>("The additional acceleration bounds of RobotModule \"{}\" have a size of {} "
                                                         "instead of 2 ([tdl, tdu]).",
