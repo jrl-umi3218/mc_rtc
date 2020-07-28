@@ -26,7 +26,6 @@ states:
       # create a CoM task
       CoM:
         type: com
-        robotIndex: 0
         move_com: [0, 0, -0.05]
         completion:
           OR:
@@ -39,12 +38,12 @@ states:
       HandTrajectory:
         type: bspline_trajectory
         surface: LeftHand
-        robotIndex: 0
         stiffness: 10000.0
         duration: 15.0
         weight: 100
         targetSurface:
-          robotIndex: 1
+          # assumes that the additional object/box robot was loaded in the global fsm configuration
+          robot: box
           surface: Left
         completion:
           - timeElapsed: true
@@ -140,12 +139,11 @@ RightHandState:
   HandTrajectory:
     type: bspline_trajectory
     surface: RightHand
-    robotIndex: 0
     stiffness: 10000.0
     duration: 15.0
     weight: 100
     targetSurface:
-      robotIndex: 1
+      robot: box
       surface: Left
     completion:
       - timeElapsed: true

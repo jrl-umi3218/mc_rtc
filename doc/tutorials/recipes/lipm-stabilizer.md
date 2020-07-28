@@ -237,7 +237,6 @@ Stabilizer::Standing:
   # StabilizerTask configuration (see previous section)
   StabilizerConfig:
     type: lipm_stabilizer
-    robotIndex: 0
     leftFootSurface: LeftFootCenter
     rightFootSurface: RightFootCenter
     enabled: true
