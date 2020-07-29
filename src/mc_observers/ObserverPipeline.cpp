@@ -17,58 +17,46 @@ void ObserverPipeline::reconfigure() {}
 
 void ObserverPipeline::create(const mc_rtc::Configuration & config)
 {
-  const auto & cc = config;
-  auto runObservers = mc_rtc::fromVectorOrElement<std::string>(cc, "RunObservers", {});
-  auto updateObservers = mc_rtc::fromVectorOrElement<std::string>(cc, "UpdateObservers", {});
-  std::vector<ObserverPtr> loadedObservers;
-  loadedObservers.reserve(runObservers.size());
-  // Load observers
-  for(const auto & observerName : runObservers)
+  std::vector<mc_rtc::Configuration> observersConf = config;
+  observers_.reserve(observersConf.size());
+  for(const auto & observerConf : observersConf)
   {
-    if(mc_observers::ObserverLoader::has_observer(observerName))
+    if(!observerConf.has("type"))
     {
-      auto observer = mc_observers::ObserverLoader::get_observer(observerName, config);
-      loadedObservers.push_back(observer);
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "[ObserverPipeline::{}] Observer {} requires a \"type\" configuration entry");
+    }
+    const std::string & observerType = observerConf("type");
+    auto observerName = observerConf("name", observerType);
+    auto update = observerConf("update", false);
+
+    if(mc_observers::ObserverLoader::has_observer(observerType))
+    {
+      if(observersByName_.count(observerName))
+      {
+        mc_rtc::log::error_and_throw<std::runtime_error>(
+            "[ObserverPipeline::{}] An observer named {} already exists (type: {}). Please make sure that observer "
+            "names within a pipeline are unique, use the \"name\" configuration entry.",
+            name_, observerName, observersByName_[observerName]->type());
+      }
+      auto observer = mc_observers::ObserverLoader::get_observer(observerType, observerName,
+                                                                 observerConf("config", mc_rtc::Configuration{}));
+      observer->name(observerName);
+      observers_.push_back(observer);
+      observersByName_[observerName] = observer;
+      pipelineObservers_.push_back(std::make_pair(observer, update));
     }
     else
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
-          "Observer pipeline \"{}\" requires observer \"{}\" but it is not available.\n"
+          "[ObserverPipeline::{}] requires observer \"{}\" but it is not available.\n"
           "- Available observers are: {}\n"
           "- Note common reasons for this error include:\n"
           "\t- The library is not in a path read by mc_rtc\n"
-          "\t- The library hasn't been properly linked",
+          "\t- The library hasn't been properly linked\n",
           "\t- The observer name does not match the name exported by EXPORT_OBSERVER_MODULE\n",
-          "\t- The constuctor segfaults\n", observerName,
+          "\t- The constuctor segfaults\n", name_, observerName,
           mc_rtc::io::to_string(mc_observers::ObserverLoader::available_observers()));
-    }
-  }
-  observers(loadedObservers);
-
-  // Configure the pipeline
-  for(const auto & observerName : runObservers)
-  {
-    if(observersByName_.count(observerName) > 0)
-    {
-      auto observer = observersByName_[observerName];
-      // If observer is in the "UpdateObserver" configuration, request for
-      // update
-      if(std::find(updateObservers.begin(), updateObservers.end(), observerName) != updateObservers.end())
-      {
-        pipelineObservers_.push_back(std::make_pair(observer, true));
-      }
-      else
-      {
-        pipelineObservers_.push_back(std::make_pair(observer, false));
-      }
-    }
-    else
-    {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
-          "[ObserverPipeline::{}] Requested observer {} but this observer is not available. Please make sure that it "
-          "is in "
-          "your \"EnabledObservers\" configuration, and that is was properly loaded.",
-          name_, observerName);
     }
   }
 }
@@ -129,7 +117,7 @@ void ObserverPipeline::addToLogger(mc_rtc::Logger & logger)
 {
   for(auto & observer : observers_)
   {
-    observer->addToLogger(logger, guiCategory_ + "_" + name_);
+    observer->addToLogger(logger, "Observers_" + name_);
   }
 }
 /*! \brief Remove observer from logger. */
@@ -137,7 +125,7 @@ void ObserverPipeline::removeFromLogger(mc_rtc::Logger & logger)
 {
   for(auto & observer : observers_)
   {
-    observer->removeFromLogger(logger, guiCategory_ + "_" + name_);
+    observer->removeFromLogger(logger, "Observers_" + name_);
   }
 }
 

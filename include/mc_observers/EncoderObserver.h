@@ -67,6 +67,11 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
   void addToLogger(mc_rtc::Logger &, const std::string & /* category */ = "") override;
   void removeFromLogger(mc_rtc::Logger &, const std::string & /* category */ = "") override;
 
+  const std::string type() const
+  {
+    return "Encoder";
+  }
+
 protected:
   /*! \brief Update source for the update. */
   enum class Update

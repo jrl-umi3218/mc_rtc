@@ -35,6 +35,10 @@ struct MC_OBSERVERS_DLLAPI Observer
 {
   Observer(const std::string & name, const mc_rtc::Configuration & config = {});
   virtual ~Observer();
+  void name(const std::string & name)
+  {
+    name_ = name;
+  }
   virtual const std::string & name() const;
 
   /*! \brief Reset estimator.
@@ -102,6 +106,8 @@ struct MC_OBSERVERS_DLLAPI Observer
    * its name.
    */
   virtual const std::string & desc() const;
+
+  virtual const std::string type() const = 0;
 
 protected:
   std::string name_;

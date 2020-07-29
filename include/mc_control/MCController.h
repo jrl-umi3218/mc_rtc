@@ -112,6 +112,10 @@ public:
    */
   virtual bool resetObservers();
 
+  bool hasObserverPipeline(const std::string & name) const;
+  mc_observers::ObserverPipeline & observerPipeline(const std::string & name);
+  const mc_observers::ObserverPipeline & observerPipeline(const std::string & name) const;
+
   /*! @brief Returns a kinematic anchor frame.
    *  This is typically used by state observers such as mc_observers::KinematicInertialObserver to obtain a reference
    * frame for the estimation. In the case of a biped robot, this is typically a frame in-between the feet of the robot.
@@ -352,7 +356,6 @@ protected:
 
   /** State observation pipelines for this controller */
   std::vector<mc_observers::ObserverPipeline> observerPipelines_;
-  std::vector<mc_observers::ObserverPtr> observers_; ///< loaded observers
 
   /**
    * Anchor frame used by the kinematic observers

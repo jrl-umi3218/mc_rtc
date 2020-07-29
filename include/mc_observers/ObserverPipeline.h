@@ -120,9 +120,8 @@ protected:
 
 protected:
   mc_control::MCController & ctl_; ///< Controller to which this pipeline is bound
-  std::string name_ = {}; ///< Name of this pipeline
-  std::string desc_ = {};
-  std::string guiCategory_ = "ObserverPipeline";
+  std::string name_ = {"DefaultPipeline"}; ///< Name of this pipeline
+  std::string desc_ = {""};
 
   mc_rtc::Configuration config_; ///< Initial configuration (from configuration files)
 

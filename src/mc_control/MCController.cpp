@@ -141,13 +141,12 @@ void MCController::removeRobot(const std::string & name)
 
 void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
 {
-  for(const auto & pipelineConfig : config("ObserversPipeline", std::vector<mc_rtc::Configuration>{}))
+  for(const auto & pipelineConfig : config("ObserversPipeline", std::map<std::string, mc_rtc::Configuration>{}))
   {
-    auto name = pipelineConfig("name", std::string{"DefaultPipeline"});
+    auto name = pipelineConfig.first;
     observerPipelines_.emplace_back(*this, name);
     auto & pipeline = observerPipelines_.back();
-    pipeline.create(pipelineConfig);
-    // pipeline.configure(pipelineConfig);
+    pipeline.create(pipelineConfig.second);
   }
 }
 
@@ -179,6 +178,33 @@ bool MCController::runObservers()
     pipeline.run();
   }
   return true;
+}
+
+bool MCController::hasObserverPipeline(const std::string & name) const
+{
+  return std::find_if(observerPipelines_.begin(), observerPipelines_.end(),
+                      [&name](const mc_observers::ObserverPipeline & pipeline) { return pipeline.name() == name; })
+         != observerPipelines_.end();
+}
+
+const mc_observers::ObserverPipeline & MCController::observerPipeline(const std::string & name) const
+{
+  auto pipelineIt =
+      std::find_if(observerPipelines_.begin(), observerPipelines_.end(),
+                   [&name](const mc_observers::ObserverPipeline & pipeline) { return pipeline.name() == name; });
+  if(pipelineIt != observerPipelines_.end())
+  {
+    return *pipelineIt;
+  }
+  else
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Observer pipeline {} does not exist", name);
+  }
+}
+
+mc_observers::ObserverPipeline & MCController::observerPipeline(const std::string & name)
+{
+  return const_cast<mc_observers::ObserverPipeline &>(static_cast<const MCController *>(this)->observerPipeline(name));
 }
 
 bool MCController::run()

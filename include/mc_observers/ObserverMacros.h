@@ -39,9 +39,10 @@
     }                                                                                         \
     OBSERVER_MODULE_API unsigned int create_args_required()                                   \
     {                                                                                         \
-      return 2;                                                                               \
+      return 3;                                                                               \
     }                                                                                         \
-    OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & name,             \
+    OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & /*type*/,         \
+                                                        const std::string & name,             \
                                                         const mc_rtc::Configuration & config) \
     {                                                                                         \
       return new TYPE(name, config);                                                          \
