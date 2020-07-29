@@ -11,45 +11,53 @@ namespace mc_observers
 EncoderObserver::EncoderObserver(const std::string & name, const mc_rtc::Configuration & config)
 : Observer(name, config)
 {
-  const std::string & position = config("UpdatePosition", std::string("estimator"));
+  // robot_ = config("robot", ctl.robot().name());
+  const std::string & position = config("position", std::string("encoderValues"));
   if(position == "control")
   {
-    posUpdate_ = Update::Control;
+    posUpdate_ = PosUpdate::Control;
   }
-  else if(position == "estimator")
+  else if(position == "encoderValues")
   {
-    posUpdate_ = Update::Estimator;
+    posUpdate_ = PosUpdate::EncoderValues;
   }
   else if(position == "none")
   {
-    posUpdate_ = Update::None;
+    posUpdate_ = PosUpdate::None;
   }
   else
   {
-    mc_rtc::log::warning("[EncoderObserver] Invalid configuration value for UpdatePosition (valid values are [control, "
-                         "sensor, none]), using default behaviour (updating joint velocity from estimator) ");
-    posUpdate_ = Update::Estimator;
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[EncoderObserver::{}] Invalid configuration value \"{}\" for field \"position\" (valid values are [control, "
+        "encoderValues, none])",
+        name, position);
   }
 
-  const std::string & velocity = config("UpdateVelocity", std::string("estimator"));
+  const std::string & velocity = config("velocity", std::string("encoderFiniteDifferences"));
   if(velocity == "control")
   {
-    velUpdate_ = Update::Control;
+    velUpdate_ = VelUpdate::Control;
   }
-  else if(velocity == "estimator")
+  else if(velocity == "encoderFiniteDifferences")
   {
-    velUpdate_ = Update::Estimator;
+    velUpdate_ = VelUpdate::EncoderFiniteDifferences;
+  }
+  else if(velocity == "encoderVelocities")
+  {
+    velUpdate_ = VelUpdate::EncoderVelocities;
   }
   else if(velocity == "none")
   {
-    velUpdate_ = Update::None;
+    velUpdate_ = VelUpdate::None;
   }
   else
   {
-    mc_rtc::log::warning("[EncoderObserver] Invalid configuration value for UpdateVelocity (valid values are [control, "
-                         "sensor, none]), using default behaviour (updating joint velocity from estimator) ");
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[EncoderObserver::{}] Invalid configuration value \"{}\" for field \"velocity\" (valid values are [control, "
+        "encoderFiniteDifferences, encoderVelocities, none])",
+        name, velocity);
     ;
-    velUpdate_ = Update::Estimator;
+    velUpdate_ = VelUpdate::EncoderFiniteDifferences;
   }
 
   logEstimation_ = config("Log", false);
@@ -60,10 +68,17 @@ EncoderObserver::EncoderObserver(const std::string & name, const mc_rtc::Configu
 void EncoderObserver::reset(const mc_control::MCController & ctl)
 {
   const auto & enc = ctl.robot().encoderValues();
-  if(enc.empty() && (posUpdate_ == Update::Estimator || velUpdate_ == Update::Estimator))
+  if(enc.empty()
+     && (posUpdate_ == PosUpdate::EncoderValues || velUpdate_ == VelUpdate::EncoderFiniteDifferences
+         || velUpdate_ == VelUpdate::EncoderVelocities))
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
         "[EncoderObserver] requires the robot to have encoder measurements");
+  }
+  if(velUpdate_ == VelUpdate::EncoderVelocities && ctl.robot().encoderVelocities().empty())
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[EncoderObserver] requires the robot to have encoder velocity measurements");
   }
 
   if(!enc.empty())
@@ -79,11 +94,14 @@ void EncoderObserver::reset(const mc_control::MCController & ctl)
 
 bool EncoderObserver::run(const mc_control::MCController & ctl)
 {
-  const auto & enc = ctl.robot().encoderValues();
-  for(unsigned i = 0; i < enc.size(); ++i)
+  if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
   {
-    encodersVelocity_[i] = (enc[i] - prevEncoders_[i]) / ctl.timeStep;
-    prevEncoders_[i] = enc[i];
+    const auto & enc = ctl.robot().encoderValues();
+    for(unsigned i = 0; i < enc.size(); ++i)
+    {
+      encodersVelocity_[i] = (enc[i] - prevEncoders_[i]) / ctl.timeStep;
+      prevEncoders_[i] = enc[i];
+    }
   }
   return true;
 }
@@ -106,32 +124,36 @@ void EncoderObserver::updateRobots(mc_control::MCController & ctl)
       {
         size_t jidx = static_cast<size_t>(joint_index);
         // Update position
-        if(posUpdate_ == Update::Control)
+        if(posUpdate_ == PosUpdate::Control)
         {
           realRobot.mbc().q[jidx][0] = robot.mbc().q[jidx][0];
         }
-        else if(posUpdate_ == Update::Estimator)
+        else if(posUpdate_ == PosUpdate::EncoderValues)
         {
           realRobot.mbc().q[jidx][0] = q[i];
         }
 
         // Update velocity
-        if(velUpdate_ == Update::Control)
+        if(velUpdate_ == VelUpdate::Control)
         {
           realRobot.mbc().alpha[jidx][0] = robot.mbc().alpha[jidx][0];
         }
-        else if(velUpdate_ == Update::Estimator)
+        else if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
         {
           realRobot.mbc().alpha[jidx][0] = encodersVelocity_[i];
+        }
+        else if(velUpdate_ == VelUpdate::EncoderVelocities)
+        {
+          realRobot.mbc().alpha[jidx][0] = robot.encoderVelocities()[i];
         }
       }
     }
   }
-  if(posUpdate_ != Update::None)
+  if(posUpdate_ != PosUpdate::None)
   {
     realRobot.forwardKinematics();
   }
-  if(velUpdate_ != Update::None)
+  if(velUpdate_ != VelUpdate::None)
   {
     realRobot.forwardVelocity();
   }

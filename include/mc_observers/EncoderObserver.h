@@ -74,15 +74,22 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
 
 protected:
   /*! \brief Update source for the update. */
-  enum class Update
+  enum class PosUpdate
   {
-    Control, ///< Use encoder value from control robot
-    Estimator, ///< Estimates the encoder value from sensor
+    Control, ///< Use joint value from robot.mbc.alpha (control)
+    EncoderValues, ///< Encoder values from robot.encoderValues (encoder sensor)
+    None ///< Do not compute/update value
+  };
+  enum class VelUpdate
+  {
+    Control, ///< Use joint velocities from robot.mbc.alpha (control)
+    EncoderVelocities, ///< Joint velocity from robot.encoderValues (encoder sensor)
+    EncoderFiniteDifferences, ///< Joint velocity from finite differences of robot.encoderValues (encoder sensor)
     None ///< Do not compute/update value
   };
 
-  Update posUpdate_ = Update::Estimator;
-  Update velUpdate_ = Update::Estimator;
+  PosUpdate posUpdate_ = PosUpdate::EncoderValues;
+  VelUpdate velUpdate_ = VelUpdate::EncoderFiniteDifferences;
 
   bool logEstimation_;
 

@@ -49,14 +49,13 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config)
     else
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
-          "[ObserverPipeline::{}] requires observer \"{}\" but it is not available.\n"
-          "- Available observers are: {}\n"
-          "- Note common reasons for this error include:\n"
-          "\t- The library is not in a path read by mc_rtc\n"
-          "\t- The library hasn't been properly linked\n",
-          "\t- The observer name does not match the name exported by EXPORT_OBSERVER_MODULE\n",
-          "\t- The constuctor segfaults\n", name_, observerName,
-          mc_rtc::io::to_string(mc_observers::ObserverLoader::available_observers()));
+          "[ObserverPipeline::{}] requires observer \"{}\" but it is not available (available: [{}])\n"
+          "Common reasons for this error include:\n"
+          "  - The observer library hasn't been properly linked\n"
+          "  - The observer library is not in a path read by mc_rtc\n"
+          "  - The observer type does not match the one exported by EXPORT_OBSERVER_MODULE\n"
+          "  - The observer constuctor segfaults\n",
+          name_, observerName, mc_rtc::io::to_string(mc_observers::ObserverLoader::available_observers()));
     }
   }
 }
