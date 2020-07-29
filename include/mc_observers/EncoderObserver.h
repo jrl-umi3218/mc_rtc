@@ -32,8 +32,9 @@ namespace mc_observers
  */
 struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
 {
-  /** Initialize observer. */
-  EncoderObserver(const std::string & name, const mc_rtc::Configuration & config);
+
+  /** Configure observer */
+  void configure(const mc_control::MCController & /*ctl*/, const mc_rtc::Configuration & /*config*/) override;
 
   /** Reset finite differences estimator from current encoder values and sets encoder velocity to zero
    *
@@ -64,10 +65,10 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
    */
   void updateRobots(mc_control::MCController & ctl) override;
 
-  void addToLogger(mc_rtc::Logger &, const std::string & /* category */ = "") override;
-  void removeFromLogger(mc_rtc::Logger &, const std::string & /* category */ = "") override;
+  void addToLogger(mc_control::MCController &, const std::string & /* category */ = "") override;
+  void removeFromLogger(mc_control::MCController &, const std::string & /* category */ = "") override;
 
-  const std::string type() const
+  const std::string type() const override
   {
     return "Encoder";
   }
@@ -91,10 +92,11 @@ protected:
   PosUpdate posUpdate_ = PosUpdate::EncoderValues;
   VelUpdate velUpdate_ = VelUpdate::EncoderFiniteDifferences;
 
-  bool logEstimation_;
+  bool logEstimation_ = false;
 
   std::vector<double> prevEncoders_;
   std::vector<double> encodersVelocity_;
+  std::string robot_;
 };
 
 } // namespace mc_observers

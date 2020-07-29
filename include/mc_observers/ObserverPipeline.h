@@ -98,8 +98,8 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
     return name_;
   }
 
-  void addToLogger(mc_rtc::Logger &);
-  void removeFromLogger(mc_rtc::Logger &);
+  void addToLogger();
+  void removeFromLogger();
   void addToGUI(mc_rtc::gui::StateBuilder &);
   void removeFromGUI(mc_rtc::gui::StateBuilder &);
 

@@ -6,10 +6,6 @@
 
 namespace mc_observers
 {
-Observer::Observer(const std::string & name, const mc_rtc::Configuration &) : name_(name), desc_(name) {}
-
-Observer::~Observer() {}
-
 const std::string & Observer::name() const
 {
   return name_;

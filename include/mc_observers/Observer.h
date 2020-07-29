@@ -33,13 +33,15 @@ namespace mc_observers
  */
 struct MC_OBSERVERS_DLLAPI Observer
 {
-  Observer(const std::string & name, const mc_rtc::Configuration & config = {});
-  virtual ~Observer();
-  void name(const std::string & name)
-  {
-    name_ = name;
-  }
-  virtual const std::string & name() const;
+  virtual ~Observer() {}
+
+  /**
+   * @brief Configure observer
+   *
+   * @param ctl Controller running the observer
+   * @param config Configuration for this observer
+   */
+  virtual void configure(const mc_control::MCController & /*ctl*/, const mc_rtc::Configuration & /*config*/) {}
 
   /*! \brief Reset estimator.
    *
@@ -69,18 +71,33 @@ struct MC_OBSERVERS_DLLAPI Observer
    */
   virtual void updateRobots(mc_control::MCController & ctl) = 0;
 
+  /**
+   * @brief Set the observer's name
+   *
+   * @param name Name of the observer
+   */
+  void name(const std::string & name)
+  {
+    name_ = name;
+  }
+
+  /**
+   * @brief Returns the observer's name
+   */
+  const std::string & name() const;
+
   /*! \brief Add observer to the logger.
    *
    * Default implementation does nothing, each observer implementation is
    * responsible for logging its own data by overriding this function
    */
-  virtual void addToLogger(mc_rtc::Logger &, const std::string & /* category */ = "") {}
+  virtual void addToLogger(mc_control::MCController &, const std::string & /* category */ = "") {}
   /*! \brief Remove observer from logger
    *
    * Default implementation does nothing, each observer implementation is
    * responsible for removing all logs entry that it added.
    */
-  virtual void removeFromLogger(mc_rtc::Logger &, const std::string & /* category */ = "") {}
+  virtual void removeFromLogger(mc_control::MCController &, const std::string & /* category */ = "") {}
   /*! \brief Add observer information the GUI.
    *
    * Default implementation does nothing, each observer implementation is

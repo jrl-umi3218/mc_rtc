@@ -39,9 +39,9 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config)
             "names within a pipeline are unique, use the \"name\" configuration entry.",
             name_, observerName, observersByName_[observerName]->type());
       }
-      auto observer = mc_observers::ObserverLoader::get_observer(observerType, observerName,
-                                                                 observerConf("config", mc_rtc::Configuration{}));
+      auto observer = mc_observers::ObserverLoader::get_observer(observerType);
       observer->name(observerName);
+      observer->configure(ctl_, observerConf("config", mc_rtc::Configuration{}));
       observers_.push_back(observer);
       observersByName_[observerName] = observer;
       pipelineObservers_.push_back(std::make_pair(observer, update));
@@ -112,19 +112,19 @@ bool ObserverPipeline::run()
   return true;
 }
 
-void ObserverPipeline::addToLogger(mc_rtc::Logger & logger)
+void ObserverPipeline::addToLogger()
 {
   for(auto & observer : observers_)
   {
-    observer->addToLogger(logger, "Observers_" + name_);
+    observer->addToLogger(ctl_, "Observers_" + name_);
   }
 }
 /*! \brief Remove observer from logger. */
-void ObserverPipeline::removeFromLogger(mc_rtc::Logger & logger)
+void ObserverPipeline::removeFromLogger()
 {
   for(auto & observer : observers_)
   {
-    observer->removeFromLogger(logger, "Observers_" + name_);
+    observer->removeFromLogger(ctl_, "Observers_" + name_);
   }
 }
 

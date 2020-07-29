@@ -8,10 +8,10 @@
 
 namespace mc_observers
 {
-EncoderObserver::EncoderObserver(const std::string & name, const mc_rtc::Configuration & config)
-: Observer(name, config)
+
+void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config)
 {
-  // robot_ = config("robot", ctl.robot().name());
+  robot_ = config("robot", ctl.robot().name());
   const std::string & position = config("position", std::string("encoderValues"));
   if(position == "control")
   {
@@ -30,7 +30,7 @@ EncoderObserver::EncoderObserver(const std::string & name, const mc_rtc::Configu
     mc_rtc::log::error_and_throw<std::runtime_error>(
         "[EncoderObserver::{}] Invalid configuration value \"{}\" for field \"position\" (valid values are [control, "
         "encoderValues, none])",
-        name, position);
+        name_, position);
   }
 
   const std::string & velocity = config("velocity", std::string("encoderFiniteDifferences"));
@@ -55,30 +55,31 @@ EncoderObserver::EncoderObserver(const std::string & name, const mc_rtc::Configu
     mc_rtc::log::error_and_throw<std::runtime_error>(
         "[EncoderObserver::{}] Invalid configuration value \"{}\" for field \"velocity\" (valid values are [control, "
         "encoderFiniteDifferences, encoderVelocities, none])",
-        name, velocity);
+        name_, velocity);
     ;
     velUpdate_ = VelUpdate::EncoderFiniteDifferences;
   }
 
-  logEstimation_ = config("Log", false);
+  logEstimation_ = config("log", false);
 
   desc_ = name_ + " (position=" + position + ",velocity=" + velocity + ")";
 }
 
 void EncoderObserver::reset(const mc_control::MCController & ctl)
 {
-  const auto & enc = ctl.robot().encoderValues();
+  auto & robot = ctl.robots().robot(robot_);
+  const auto & enc = robot.encoderValues();
   if(enc.empty()
      && (posUpdate_ == PosUpdate::EncoderValues || velUpdate_ == VelUpdate::EncoderFiniteDifferences
          || velUpdate_ == VelUpdate::EncoderVelocities))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[EncoderObserver] requires the robot to have encoder measurements");
+    mc_rtc::log::error_and_throw<std::runtime_error>("[EncoderObserver] requires robot {} to have encoder measurements",
+                                                     robot_);
   }
-  if(velUpdate_ == VelUpdate::EncoderVelocities && ctl.robot().encoderVelocities().empty())
+  if(velUpdate_ == VelUpdate::EncoderVelocities && robot.encoderVelocities().empty())
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[EncoderObserver] requires the robot to have encoder velocity measurements");
+        "[EncoderObserver] requires robot {} to have encoder velocity measurements", robot_);
   }
 
   if(!enc.empty())
@@ -94,9 +95,10 @@ void EncoderObserver::reset(const mc_control::MCController & ctl)
 
 bool EncoderObserver::run(const mc_control::MCController & ctl)
 {
+  auto & robot = ctl.robots().robot(robot_);
   if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
   {
-    const auto & enc = ctl.robot().encoderValues();
+    const auto & enc = robot.encoderValues();
     for(unsigned i = 0; i < enc.size(); ++i)
     {
       encodersVelocity_[i] = (enc[i] - prevEncoders_[i]) / ctl.timeStep;
@@ -109,8 +111,8 @@ bool EncoderObserver::run(const mc_control::MCController & ctl)
 void EncoderObserver::updateRobots(mc_control::MCController & ctl)
 {
   auto & realRobots = ctl.realRobots();
-  const auto & robot = ctl.robot();
-  auto & realRobot = realRobots.robot();
+  const auto & robot = ctl.robots().robot(robot_);
+  auto & realRobot = realRobots.robot(robot_);
   const auto & q = robot.encoderValues();
 
   if(q.size() == robot.refJointOrder().size())
@@ -159,18 +161,34 @@ void EncoderObserver::updateRobots(mc_control::MCController & ctl)
   }
 }
 
-void EncoderObserver::addToLogger(mc_rtc::Logger & logger, const std::string & category)
+void EncoderObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
 {
   if(logEstimation_)
   {
-    logger.addLogEntry(category + "_" + name() + "_alpha", [this]() { return encodersVelocity_; });
+    if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
+    {
+      ctl.logger().addLogEntry(category + "_" + name() + "_encoderFiniteDifferences",
+                               [this]() { return encodersVelocity_; });
+    }
+    if(velUpdate_ == VelUpdate::EncoderVelocities)
+    {
+      ctl.logger().addLogEntry(category + "_" + name() + "_encoderVelocities",
+                               [this, &ctl]() { return ctl.robots().robot(robot_).encoderVelocities(); });
+    }
   }
 }
-void EncoderObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
+void EncoderObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
 {
   if(logEstimation_)
   {
-    logger.removeLogEntry(category + "_" + name() + "_alpha");
+    if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
+    {
+      ctl.logger().removeLogEntry(category + "_" + name() + "_encoderFiniteDifferences");
+    }
+    if(velUpdate_ == VelUpdate::EncoderVelocities)
+    {
+      ctl.logger().removeLogEntry(category + "_" + name() + "_encoderVelocities");
+    }
   }
 }
 

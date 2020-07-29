@@ -147,6 +147,7 @@ void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
     observerPipelines_.emplace_back(*this, name);
     auto & pipeline = observerPipelines_.back();
     pipeline.create(pipelineConfig.second);
+    pipeline.addToLogger();
   }
 }
 
@@ -345,7 +346,7 @@ void MCController::stop()
     {
       pipeline.removeFromGUI(*gui());
     }
-    pipeline.removeFromLogger(logger());
+    pipeline.removeFromLogger();
   }
 }
 
