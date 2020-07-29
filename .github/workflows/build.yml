@@ -110,7 +110,7 @@ jobs:
               ref: 7.1.0
             - path: libgeos/geos
               ref: 3.8.1
-              options: -DGEOS_ENABLE_TESTS=False
+              options: -DBUILD_TESTING=True
             - path: nanomsg/nanomsg
               ref: 1.1.5
             - path: jbeder/yaml-cpp
