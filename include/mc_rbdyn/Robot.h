@@ -730,6 +730,12 @@ public:
   /** Access a convex named \p cName (const) */
   const convex_pair_t & convex(const std::string & cName) const;
 
+  /** Access all convexes available in this robot
+   *
+   * \returns a map where keys are the convex name and values are those returned by \ref convex
+   */
+  const std::map<std::string, convex_pair_t> & convexes() const;
+
   /** Add a convex online
    *
    * This has no effect if \p name is already a convex of the robot

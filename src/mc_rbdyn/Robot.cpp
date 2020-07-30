@@ -1073,6 +1073,11 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
   return convexes_.at(cName);
 }
 
+const std::map<std::string, Robot::convex_pair_t> & Robot::convexes() const
+{
+  return convexes_;
+}
+
 void Robot::addConvex(const std::string & cName,
                       const std::string & body,
                       Robot::S_ObjectPtr convex,

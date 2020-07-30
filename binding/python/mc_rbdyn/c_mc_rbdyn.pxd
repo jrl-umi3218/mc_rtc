@@ -210,6 +210,8 @@ cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
 
     const pair[string, shared_ptr[sch.S_Object]]& convex(string)
 
+    const map[string, pair[string, shared_ptr[sch.S_Object]]] & convexes()
+
     const PTransformd& bodyTransform(const string&)
 
     const PTransformd& collisionTransform(const string&)
