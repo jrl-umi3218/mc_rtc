@@ -36,8 +36,13 @@ using rm_bound_t = rm_bounds_t::value_type;
 
 using jt_method = int (rbd::Joint::*)() const;
 
-bound_t fill_bound(const rbd::MultiBody & mb, const std::string & name, const rm_bound_t & bound_in, jt_method def_size, double def_value,
-                        double ff_def_value) {
+bound_t fill_bound(const rbd::MultiBody & mb,
+                   const std::string & name,
+                   const rm_bound_t & bound_in,
+                   jt_method def_size,
+                   double def_value,
+                   double ff_def_value)
+{
   bound_t res;
   res.reserve(static_cast<size_t>(mb.nrJoints()));
   for(const auto & j : mb.joints())
@@ -50,8 +55,8 @@ bound_t fill_bound(const rbd::MultiBody & mb, const std::string & name, const rm
       if(b_ref.size() != b.size())
       {
         mc_rtc::log::error_and_throw<std::runtime_error>(
-            "{} provided bound size ({}) different from expected size ({}) for joint {}", name, b_ref.size(),
-            b.size(), j.name());
+            "{} provided bound size ({}) different from expected size ({}) for joint {}", name, b_ref.size(), b.size(),
+            j.name());
       }
       res.back() = bound_in.at(j.name());
     }
@@ -231,17 +236,19 @@ Robot::Robot(Robots & robots,
 
   if(module_.accelerationBounds().size() != 0 && module_.accelerationBounds().size() != 2)
   {
-    mc_rtc::log::error_and_throw<std::invalid_argument>("The additional acceleration bounds of RobotModule \"{}\" have a size of {} "
-                                                        "instead of 2 ([al, au]).",
-                                                        module_.name, module_.accelerationBounds().size());
+    mc_rtc::log::error_and_throw<std::invalid_argument>(
+        "The additional acceleration bounds of RobotModule \"{}\" have a size of {} "
+        "instead of 2 ([al, au]).",
+        module_.name, module_.accelerationBounds().size());
   }
   std::tie(al_, au_) = acceleration_bounds(mb(), module_.accelerationBounds());
 
   if(module_.torqueDerivativeBounds().size() != 0 && module_.torqueDerivativeBounds().size() != 2)
   {
-    mc_rtc::log::error_and_throw<std::invalid_argument>("The additional acceleration bounds of RobotModule \"{}\" have a size of {} "
-                                                        "instead of 2 ([tdl, tdu]).",
-                                                        module_.name, module_.torqueDerivativeBounds().size());
+    mc_rtc::log::error_and_throw<std::invalid_argument>(
+        "The additional acceleration bounds of RobotModule \"{}\" have a size of {} "
+        "instead of 2 ([tdl, tdu]).",
+        module_.name, module_.torqueDerivativeBounds().size());
   }
   std::tie(tdl_, tdu_) = torqueDerivative_bounds(mb(), module_.torqueDerivativeBounds());
 
