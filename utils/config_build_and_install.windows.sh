@@ -47,6 +47,6 @@ mc_rtc_extra_steps()
   build_system_dependency leethomason/tinyxml2 7.1.0 "$SOURCE_DIR/tinyxml2"
   build_system_dependency libgeos/geos 3.8.1 "$SOURCE_DIR/geos" -DBUILD_TESTING:BOOL=ON
   build_system_dependency nanomsg/nanomsg 1.1.5 "$SOURCE_DIR/nanomsg"
-  build_system_dependency jbeder/yaml-cpp 29dcf92f870ee51cce8d68f8fcfe228942e8dfe1 "$SOURCE_DIR/yaml-cpp" -DBUILD_TESTING:BOOL=OFF
+  build_system_dependency jbeder/yaml-cpp 29dcf92f870ee51cce8d68f8fcfe228942e8dfe1 "$SOURCE_DIR/yaml-cpp" -DYAML_CPP_BUILD_TESTS:BOOL=OFF
   build_system_dependency google/benchmark master "$SOURCE_DIR/benchmark" -DBENCHMARK_ENABLE_GTEST_TESTS:BOOL=OFF
 }

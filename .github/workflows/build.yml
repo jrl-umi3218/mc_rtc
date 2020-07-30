@@ -115,7 +115,7 @@ jobs:
               ref: 1.1.5
             - path: jbeder/yaml-cpp
               ref: 29dcf92f870ee51cce8d68f8fcfe228942e8dfe1
-              options: -DBUILD_TESTING:BOOL=OFF
+              options: -DYAML_CPP_BUILD_TESTS:BOOL=OFF
         github: |
           - path: gabime/spdlog
             ref: v1.6.1
