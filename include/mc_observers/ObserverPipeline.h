@@ -100,7 +100,7 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
 
   void addToLogger();
   void removeFromLogger();
-  void addToGUI(mc_rtc::gui::StateBuilder &);
+  void addToGUI();
   void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
 protected:

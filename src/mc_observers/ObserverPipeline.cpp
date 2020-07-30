@@ -128,11 +128,11 @@ void ObserverPipeline::removeFromLogger()
   }
 }
 
-void ObserverPipeline::addToGUI(mc_rtc::gui::StateBuilder & gui)
+void ObserverPipeline::addToGUI()
 {
   for(auto & observer : observers_)
   {
-    observer->addToGUI(gui, {"ObserverPipeline", name_});
+    observer->addToGUI(ctl_, {"ObserverPipeline", name_});
   }
 }
 void ObserverPipeline::removeFromGUI(mc_rtc::gui::StateBuilder & gui)

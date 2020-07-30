@@ -32,46 +32,33 @@ namespace mc_observers
  */
 struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
 {
+  EncoderObserver(const std::string & type) : Observer(type) {}
 
   /** Configure observer */
-  void configure(const mc_control::MCController & /*ctl*/, const mc_rtc::Configuration & /*config*/) override;
+  void configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & /*config*/) override;
 
   /** Reset finite differences estimator from current encoder values and sets encoder velocity to zero
-   *
-   * \param ctl Controller calling this observer
    *
    * \throw std::runtime_error if the robot does not have encoder values
    */
   void reset(const mc_control::MCController & ctl) override;
 
-  /*! \brief Computes encoder velocity by finite differences of position */
+  /*! \brief Computes encoder velocity by finite differences of position
+   *
+   * \see PosUpdate
+   * \see VelUpdate
+   **/
   bool run(const mc_control::MCController & ctl) override;
 
-  /** Update the real robot from the estimator state, depending on its
-   * configuration:
-   * - UpdatePosition::Control : update joint position from robot().mbc().q
-   * - UpdatePosition::Estimator : update joint position from
-   *   robot().encoderValues()
+  /** Update the real robot from the estimator state according to the observer's
+   * results
    *
-   * - UpdateVelocity::Control : update joint velocity from robot().mbc().alpha
-   * - UpdateVelocity::Estimator : update joint velocity from finite differences
-   *   of robot().encoderValues
-   *
-   * - UpdatePosition::None : joint position is not changed by this estimator
-   * - UpdateVelocity::None : joint velocity is not changed by this estimator
-   *
-   * \param realRobots Real robots state to write to.
-   *
+   * \see PosUpdate, VelUpdate for details on the data used for estimatation
    */
   void updateRobots(mc_control::MCController & ctl) override;
 
-  void addToLogger(mc_control::MCController &, const std::string & /* category */ = "") override;
-  void removeFromLogger(mc_control::MCController &, const std::string & /* category */ = "") override;
-
-  const std::string type() const override
-  {
-    return "Encoder";
-  }
+  void addToLogger(mc_control::MCController & ctl, const std::string & /* category */ = "") override;
+  void removeFromLogger(mc_control::MCController & ctl, const std::string & /* category */ = "") override;
 
 protected:
   /*! \brief Update source for the update. */
@@ -92,11 +79,11 @@ protected:
   PosUpdate posUpdate_ = PosUpdate::EncoderValues;
   VelUpdate velUpdate_ = VelUpdate::EncoderFiniteDifferences;
 
+  std::string robot_;
   bool logEstimation_ = false;
 
   std::vector<double> prevEncoders_;
   std::vector<double> encodersVelocity_;
-  std::string robot_;
 };
 
 } // namespace mc_observers

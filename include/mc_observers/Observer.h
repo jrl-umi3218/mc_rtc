@@ -29,46 +29,59 @@ namespace mc_observers
  * @brief State observation API
  *
  * All new observers must inherit from this Observer class, and implement the
- * required virtual functions (at least reset, run, updateRobots)
+ * required virtual functions (at least reset, run, updateRobots). The framework
+ * provides a mechanism to load state observation pipelines (see ObserverPipeline) consisting
+ * of multiple sequences of observers running sequentially, each estimating part
+ * of the robot state. In that case, observers are loaded by the framework from
+ * libraries, and must be exported using the EXPORT_OBSERVER_MODULE(NAME, TYPE)
+ * function defined in ObserverMacros.h
+ *
+ * Each observer has access to the public members of its parent controller, and thus can
+ * access properties of the robots, sensors, datastore, logger, gui,
+ * and set its estimation results to the controller's realRobots instances.
  */
 struct MC_OBSERVERS_DLLAPI Observer
 {
+  Observer(const std::string & type) : type_(type) {}
   virtual ~Observer() {}
 
   /**
    * @brief Configure observer
    *
-   * @param ctl Controller running the observer
    * @param config Configuration for this observer
    */
   virtual void configure(const mc_control::MCController & /*ctl*/, const mc_rtc::Configuration & /*config*/) {}
 
   /*! \brief Reset estimator.
    *
-   * \param ctl Controller reference (const). Used to access information about
-   * the robot and the controller (anchor frame, contacts, desired contact
-   * force, etc).
-   */
+   * The reset function should make sure that the observer is started in a state
+   * consistent with the current robot state. In most cases, during the first
+   * iteration(s) all measurement information required by the observers may not
+   * yet be available (e.g filters requiring a history of inputs, finite
+   * differences requiring at least two measurements, etc). In addition some
+   * observer may require some additional input information from the controller
+   * (e.g position of an anchor frame for KinematicInertial observers)
+   *
+   * This function is called after MCController::reset()
+   **/
   virtual void reset(const mc_control::MCController & ctl) = 0;
 
   /*! \brief Compute observer state
    *
-   * \param ctl Controller reference (const). Used to access information about
-   * the robot and the controller (anchor frame, contacts, desired contact
-   * force, etc).
-   */
+   * This function is called before MCController::run()
+   **/
   virtual bool run(const mc_control::MCController & ctl) = 0;
 
   /*! \brief Update the real robot state from the observed state
    *
-   * \param ctl Controller reference (const). Used to access information about
-   * the robot and the controller (anchor frame, contacts, desired contact
-   * force, etc).
+   * This function is expected to write the estimated parameters to the
+   * corresponding real robot instances, and compute the necessary information
+   * to ensure a consistent state (e.g calling forward velocity after
+   * updating joint velocities, etc).
    *
-   * \param robot Robot state to write to. Each controller is expected to update
-   * the real robot instance with its estimates. The pipeline will only call the
-   * updateRobots() function if requested by the user.
-   */
+   * This function is called after Observer::run() if the observer is declared
+   * to update the real robot in the pipeline configuration.
+   **/
   virtual void updateRobots(mc_control::MCController & ctl) = 0;
 
   /**
@@ -104,12 +117,13 @@ struct MC_OBSERVERS_DLLAPI Observer
    * responsible for adding its own elements to the GUI. Default observers will
    * be shown under the tab "Observers->observer name".
    */
-  virtual void addToGUI(mc_rtc::gui::StateBuilder &, std::vector<std::string> /* category */ = {}) {}
+  virtual void addToGUI(mc_control::MCController &, std::vector<std::string> /* category */ = {}) {}
   /*! \brief Remove observer from gui
    *
-   * Default implementation removes the category {category, observer name}
+   * Default implementation does nothing. Each observer is responsible from
+   * removing any element it added to the GUI.
    */
-  virtual void removeFromGUI(mc_rtc::gui::StateBuilder &, std::vector<std::string> /* category */ = {});
+  virtual void removeFromGUI(mc_control::MCController &, std::vector<std::string> /* category */ = {}){};
 
   /*! \brief Short description of the observer
    *
@@ -124,10 +138,14 @@ struct MC_OBSERVERS_DLLAPI Observer
    */
   virtual const std::string & desc() const;
 
-  virtual const std::string type() const = 0;
+  const std::string type() const
+  {
+    return type_;
+  }
 
 protected:
   std::string name_;
+  std::string type_;
 
   /* Short descriptive description of the observer used for CLI logging */
   std::string desc_;

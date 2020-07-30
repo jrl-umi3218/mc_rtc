@@ -41,8 +41,8 @@
     {                                                                                 \
       return 1;                                                                       \
     }                                                                                 \
-    OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & /*type*/) \
+    OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & type)     \
     {                                                                                 \
-      return new TYPE{};                                                              \
+      return new TYPE{type};                                                          \
     }                                                                                 \
   }
