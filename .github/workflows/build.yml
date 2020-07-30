@@ -110,11 +110,12 @@ jobs:
               ref: 7.1.0
             - path: libgeos/geos
               ref: 3.8.1
-              options: -DBUILD_TESTING=True
+              options: -DBUILD_TESTING:BOOL=ON
             - path: nanomsg/nanomsg
               ref: 1.1.5
             - path: jbeder/yaml-cpp
               ref: 29dcf92f870ee51cce8d68f8fcfe228942e8dfe1
+              options: -DBUILD_TESTING:BOOL=OFF
         github: |
           - path: gabime/spdlog
             ref: v1.6.1
