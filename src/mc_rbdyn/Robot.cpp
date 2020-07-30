@@ -18,6 +18,9 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
+#include <sch/S_Object/S_Capsule.h>
+#include <sch/S_Object/S_Superellipsoid.h>
+
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
@@ -158,6 +161,65 @@ void fixSCH(const mc_rbdyn::Robot & robot, mapT & data_, const std::map<std::str
   }
 }
 
+bool VisualToConvex(const std::string & robot,
+                    const std::string & cName,
+                    const std::string & bName,
+                    const rbd::parsers::Visual & visual,
+                    std::map<std::string, mc_rbdyn::Robot::convex_pair_t> & convexes,
+                    std::map<std::string, sva::PTransformd> & collisionTransforms)
+{
+  // Ignore visual types that we cannot easily map to SCH
+  if(visual.geometry.type == rbd::parsers::Geometry::Type::UNKNOWN
+     || visual.geometry.type == rbd::parsers::Geometry::Type::MESH)
+  {
+    return false;
+  }
+  // If we already have a convex with the same name, discard loading
+  if(convexes.count(cName) != 0)
+  {
+    mc_rtc::log::warning("While loading {}, a convex was already provided for collision geometry specified in URDF",
+                         robot);
+    return false;
+  }
+  auto fromBox = [&]() {
+    const auto & box = boost::get<rbd::parsers::Geometry::Box>(visual.geometry.data);
+    convexes[cName] = {bName, std::make_shared<sch::S_Box>(box.size.x(), box.size.y(), box.size.z())};
+  };
+  auto fromCylinder = [&]() {
+    const auto & cyl = boost::get<rbd::parsers::Geometry::Cylinder>(visual.geometry.data);
+    convexes[cName] = {
+        bName, std::make_shared<sch::S_Capsule>(sch::Point3(0, 0, 0), sch::Point3(0, 0, cyl.length), cyl.radius)};
+  };
+  auto fromSphere = [&]() {
+    const auto & sph = boost::get<rbd::parsers::Geometry::Sphere>(visual.geometry.data);
+    convexes[cName] = {bName, std::make_shared<sch::S_Sphere>(sph.radius)};
+  };
+  auto fromSuperEllipsoid = [&]() {
+    const auto & sel = boost::get<rbd::parsers::Geometry::Superellipsoid>(visual.geometry.data);
+    convexes[cName] = {bName, std::make_shared<sch::S_Superellipsoid>(sel.size.x(), sel.size.y(), sel.size.z(),
+                                                                      sel.epsilon1, sel.epsilon2)};
+  };
+  switch(visual.geometry.type)
+  {
+    case rbd::parsers::Geometry::Type::BOX:
+      fromBox();
+      break;
+    case rbd::parsers::Geometry::Type::CYLINDER:
+      fromCylinder();
+      break;
+    case rbd::parsers::Geometry::Type::SPHERE:
+      fromSphere();
+      break;
+    case rbd::parsers::Geometry::Type::SUPERELLIPSOID:
+      fromSuperEllipsoid();
+      break;
+    default:
+      return false;
+  }
+  collisionTransforms[cName] = visual.origin;
+  return true;
+}
+
 } // namespace
 
 namespace mc_rbdyn
@@ -256,6 +318,24 @@ Robot::Robot(Robots & robots,
   if(loadFiles)
   {
     loadSCH(*this, module_.convexHull(), &sch::mc_rbdyn::Polyhedron, convexes_);
+  }
+  for(const auto & c : module_._collision)
+  {
+    const auto & body = c.first;
+    const auto & collisions = c.second;
+    if(collisions.size() == 1)
+    {
+      VisualToConvex(name(), body, body, collisions[0], convexes_, collisionTransforms_);
+      continue;
+    }
+    size_t added = 0;
+    for(const auto & col : collisions)
+    {
+      if(VisualToConvex(name(), body + "_" + std::to_string(added), body, col, convexes_, collisionTransforms_))
+      {
+        added++;
+      }
+    }
   }
 
   for(const auto & b : mb().bodies())
@@ -1058,9 +1138,16 @@ void Robot::fixCollisionTransforms()
 {
   for(auto & ct : collisionTransforms_)
   {
-    // assert(bodyTransforms_.size(ct.first));
-    const auto & trans = bodyTransform(ct.first);
-    ct.second = ct.second * trans;
+    if(convexes_.count(ct.first))
+    {
+      const auto & trans = bodyTransform(convexes_.at(ct.first).first);
+      ct.second = ct.second * trans;
+    }
+    else
+    {
+      const auto & trans = bodyTransform(ct.first);
+      ct.second = ct.second * trans;
+    }
   }
 }
 
