@@ -18,7 +18,7 @@
 #include <RBDyn/FK.h>
 #include <RBDyn/FV.h>
 
-#include <sch/S_Object/S_Capsule.h>
+#include <sch/S_Object/S_Cylinder.h>
 #include <sch/S_Object/S_Superellipsoid.h>
 
 #include <boost/filesystem.hpp>
@@ -187,8 +187,8 @@ bool VisualToConvex(const std::string & robot,
   };
   auto fromCylinder = [&]() {
     const auto & cyl = boost::get<rbd::parsers::Geometry::Cylinder>(visual.geometry.data);
-    convexes[cName] = {
-        bName, std::make_shared<sch::S_Capsule>(sch::Point3(0, 0, 0), sch::Point3(0, 0, cyl.length), cyl.radius)};
+    convexes[cName] = {bName, std::make_shared<sch::S_Cylinder>(sch::Point3(0, 0, -cyl.length / 2),
+                                                                sch::Point3(0, 0, cyl.length / 2), cyl.radius)};
   };
   auto fromSphere = [&]() {
     const auto & sph = boost::get<rbd::parsers::Geometry::Sphere>(visual.geometry.data);
