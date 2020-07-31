@@ -53,8 +53,9 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots,
   tasks::AlphaBound alphaBound(vl, vu);
   tasks::AlphaDBound alphaDBound(al, au);
 
-  damperJointLimitsConstr.reset(new tasks::qp::DamperJointLimitsConstr(
-      robots.mbs(), static_cast<int>(robotIndex), qBound, alphaBound, alphaDBound, percentInter, percentSecur, offset, timeStep));
+  damperJointLimitsConstr.reset(new tasks::qp::DamperJointLimitsConstr(robots.mbs(), static_cast<int>(robotIndex),
+                                                                       qBound, alphaBound, alphaDBound, percentInter,
+                                                                       percentSecur, offset, timeStep));
 }
 
 void KinematicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)

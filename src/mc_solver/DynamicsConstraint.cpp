@@ -30,7 +30,10 @@ DynamicsConstraint::DynamicsConstraint(const mc_rbdyn::Robots & robots,
   build_constr(robots, robotIndex, infTorque, timeStep);
 }
 
-void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, bool infTorque, double timeStep)
+void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots,
+                                      unsigned int robotIndex,
+                                      bool infTorque,
+                                      double timeStep)
 {
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   std::vector<std::vector<double>> tl = robot.tl();
@@ -77,7 +80,8 @@ void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots, unsigned 
     {
       sjList.push_back(tasks::qp::SpringJoint(flex.jointName, flex.K, flex.C, flex.O));
     }
-    motionConstr.reset(new tasks::qp::MotionSpringConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, tDBound, timeStep, sjList));
+    motionConstr.reset(new tasks::qp::MotionSpringConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, tDBound,
+                                                         timeStep, sjList));
   }
   /*FIXME Implement?
   else if(robot.tlPoly.size() != 0)
@@ -85,7 +89,8 @@ void DynamicsConstraint::build_constr(const mc_rbdyn::Robots & robots, unsigned 
   } */
   else
   {
-    motionConstr.reset(new tasks::qp::MotionConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, tDBound, timeStep));
+    motionConstr.reset(
+        new tasks::qp::MotionConstr(robots.mbs(), static_cast<int>(robotIndex), tBound, tDBound, timeStep));
   }
 }
 
