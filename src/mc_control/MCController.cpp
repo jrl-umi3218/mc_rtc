@@ -141,7 +141,7 @@ void MCController::removeRobot(const std::string & name)
 
 void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
 {
-  for(const auto & pipelineConfig : config("ObserversPipeline", std::map<std::string, mc_rtc::Configuration>{}))
+  for(const auto & pipelineConfig : config("ObserverPipelines", std::map<std::string, mc_rtc::Configuration>{}))
   {
     auto name = pipelineConfig.first;
     observerPipelines_.emplace_back(*this, name);

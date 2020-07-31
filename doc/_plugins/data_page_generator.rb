@@ -163,7 +163,7 @@ module Jekyll
       # Write generated schemas to a temporary file (for debug purposes)
       # File.open('/tmp/mc-rtc-doc-json-schemas.json', 'w') { |file| file.write(JSON.pretty_generate(site.data["schemas"])) }
       # puts "Generated json schema has been saved to /tmp/mc-rtc-doc-json-schemas.json"
-      default_categories = ["mc_rbdyn", "ConstraintSet", "MetaTask", "State"]
+      default_categories = ["mc_rbdyn", "ConstraintSet", "MetaTask", "State", "Observers"]
       site.pages << AllSchemasPage.new(site, site.source, 'json.html', site.data["schemas"], default_categories, {"All objects" => 'json-full.html'})
       site.pages << AllSchemasPage.new(site, site.source, 'json-full.html', site.data["schemas"], ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks"] + default_categories)
     end
