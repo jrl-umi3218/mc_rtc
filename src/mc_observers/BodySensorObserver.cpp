@@ -89,28 +89,26 @@ void BodySensorObserver::updateRobots(mc_control::MCController & ctl)
   realRobot.velW(velW_);
 }
 
-void BodySensorObserver::addToLogger(mc_control::MCController & ctl, std::string category)
+void BodySensorObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
 {
   auto & logger = ctl.logger();
-  category += "_" + name();
   Observer::addToLogger(ctl, category);
   logger.addLogEntry(category + "_posW", [this]() { return posW_; });
   logger.addLogEntry(category + "_velW", [this]() { return velW_; });
   logger.addLogEntry(category + "_accW", [this]() { return accW_; });
 }
-void BodySensorObserver::removeFromLogger(mc_control::MCController & ctl, std::string category)
+
+void BodySensorObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
 {
   auto & logger = ctl.logger();
-  category += "_" + name();
   Observer::removeFromLogger(ctl, category);
   logger.removeLogEntry("observer_" + name() + "_posW");
   logger.removeLogEntry("observer_" + name() + "_velW");
   logger.removeLogEntry("observer_" + name() + "_accW");
 }
 
-void BodySensorObserver::addToGUI(mc_control::MCController & ctl, std::vector<std::string> category)
+void BodySensorObserver::addToGUI(mc_control::MCController & ctl, const std::vector<std::string> & category)
 {
-  category.push_back(name());
   ctl.gui()->addElement(category,
                         mc_rtc::gui::Arrow("Velocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}),
                                            [this]() -> const Eigen::Vector3d & { return posW_.translation(); },

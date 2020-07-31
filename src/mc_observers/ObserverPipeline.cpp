@@ -122,7 +122,7 @@ void ObserverPipeline::addToLogger()
   {
     if(observer.log)
     {
-      observer.observer->addToLogger(ctl_, "Observers_" + name_);
+      observer.observer->addToLogger_(ctl_, "Observers_" + name_);
     }
   }
 }
@@ -133,7 +133,7 @@ void ObserverPipeline::removeFromLogger()
   {
     if(observer.log)
     {
-      observer.observer->removeFromLogger(ctl_, "Observers_" + name_);
+      observer.observer->removeFromLogger_(ctl_, "Observers_" + name_);
     }
   }
 }
@@ -144,7 +144,7 @@ void ObserverPipeline::addToGUI()
   {
     if(observer.gui)
     {
-      observer.observer->addToGUI(ctl_, {"ObserverPipeline", name_});
+      observer.observer->addToGUI_(ctl_, {"ObserverPipeline", name_});
     }
   }
 }

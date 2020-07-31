@@ -158,7 +158,7 @@ void EncoderObserver::updateRobots(mc_control::MCController & ctl)
   }
 }
 
-void EncoderObserver::addToLogger(mc_control::MCController & ctl, std::string category)
+void EncoderObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
 {
   if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
   {
@@ -171,7 +171,7 @@ void EncoderObserver::addToLogger(mc_control::MCController & ctl, std::string ca
                              [this, &ctl]() { return ctl.robots().robot(robot_).encoderVelocities(); });
   }
 }
-void EncoderObserver::removeFromLogger(mc_control::MCController & ctl, std::string category)
+void EncoderObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
 {
   if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
   {

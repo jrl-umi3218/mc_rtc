@@ -55,28 +55,25 @@ const sva::MotionVecd & KinematicInertialObserver::velW() const
   return velW_;
 }
 
-void KinematicInertialObserver::addToLogger(mc_control::MCController & ctl, std::string category)
+void KinematicInertialObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
 {
   KinematicInertialPoseObserver::addToLogger(ctl, category);
-  category += "_" + name();
   auto & logger = ctl.logger();
   logger.addLogEntry(category + "_velW", [this]() { return velW_; });
   logger.addLogEntry(category + "_filter_cutoffPeriod", [this]() { return velFilter_.cutoffPeriod(); });
 }
 
-void KinematicInertialObserver::removeFromLogger(mc_control::MCController & ctl, std::string category)
+void KinematicInertialObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
 {
   KinematicInertialPoseObserver::removeFromLogger(ctl, category);
   auto & logger = ctl.logger();
-  category += "_" + name();
   logger.removeLogEntry(category + "_velW");
   logger.removeLogEntry(category + "_filter_cutoffPeriod");
 }
 
-void KinematicInertialObserver::addToGUI(mc_control::MCController & ctl, std::vector<std::string> category)
+void KinematicInertialObserver::addToGUI(mc_control::MCController & ctl, const std::vector<std::string> & category)
 {
   KinematicInertialPoseObserver::addToGUI(ctl, category);
-  category.push_back(name());
   ctl.gui()->addElement(category, mc_rtc::gui::Arrow("Velocity", [this]() { return posW().translation(); },
                                                      [this]() -> Eigen::Vector3d {
                                                        const Eigen::Vector3d p = posW().translation();

@@ -101,29 +101,45 @@ struct MC_OBSERVERS_DLLAPI Observer
 
   /*! \brief Add observer to the logger.
    *
-   * Default implementation does nothing, each observer implementation is
-   * responsible for logging its own data by overriding this function
+   * Default implementation calls the observers' addToLogger function with
+   * category
    */
-  virtual void addToLogger(mc_control::MCController &, std::string /* category */ = "") {}
+  void addToLogger_(mc_control::MCController & ctl, const std::string & category = "")
+  {
+    addToLogger(ctl, category + "_" + name_);
+  }
+
   /*! \brief Remove observer from logger
    *
    * Default implementation does nothing, each observer implementation is
    * responsible for removing all logs entry that it added.
    */
-  virtual void removeFromLogger(mc_control::MCController &, std::string /* category */ = "") {}
+  virtual void removeFromLogger_(mc_control::MCController & ctl, std::string category = "")
+  {
+    removeFromLogger(ctl, category + "_" + name_);
+  }
+
   /*! \brief Add observer information the GUI.
    *
    * Default implementation does nothing, each observer implementation is
    * responsible for adding its own elements to the GUI. Default observers will
    * be shown under the tab "Observers->observer name".
    */
-  virtual void addToGUI(mc_control::MCController &, std::vector<std::string> /* category */ = {}) {}
+  virtual void addToGUI_(mc_control::MCController & ctl, std::vector<std::string> category = {})
+  {
+    category.push_back(name_);
+    addToGUI(ctl, category);
+  }
   /*! \brief Remove observer from gui
    *
    * Default implementation does nothing. Each observer is responsible from
    * removing any element it added to the GUI.
    */
-  virtual void removeFromGUI(mc_control::MCController &, std::vector<std::string> /* category */ = {}){};
+  virtual void removeFromGUI_(mc_control::MCController & ctl, std::vector<std::string> category = {})
+  {
+    category.push_back(name_);
+    removeFromGUI(ctl, category);
+  };
 
   /*! \brief Short description of the observer
    *
@@ -147,6 +163,12 @@ struct MC_OBSERVERS_DLLAPI Observer
   {
     return dt_;
   }
+
+protected:
+  virtual void addToLogger(mc_control::MCController &, const std::string &) {}
+  virtual void removeFromLogger(mc_control::MCController &, const std::string &) {}
+  virtual void addToGUI(mc_control::MCController &, const std::vector<std::string> &) {}
+  virtual void removeFromGUI(mc_control::MCController &, const std::vector<std::string> &) {}
 
 protected:
   std::string name_;

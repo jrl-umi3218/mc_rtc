@@ -57,8 +57,9 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
    */
   void updateRobots(mc_control::MCController & ctl) override;
 
-  void addToLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
-  void removeFromLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
+protected:
+  void addToLogger(mc_control::MCController & ctl, const std::string & category) override;
+  void removeFromLogger(mc_control::MCController & ctl, const std::string & category) override;
 
 protected:
   /*! \brief Update source for the update. */

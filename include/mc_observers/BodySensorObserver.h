@@ -85,9 +85,10 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
     return velW_;
   }
 
-  void addToLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
-  void removeFromLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
-  void addToGUI(mc_control::MCController &, std::vector<std::string> /* category */ = {}) override;
+protected:
+  void addToLogger(mc_control::MCController & ctl, const std::string & category) override;
+  void removeFromLogger(mc_control::MCController & ctl, const std::string & category) override;
+  void addToGUI(mc_control::MCController &, const std::vector<std::string> & category) override;
 
 protected:
   enum class Update

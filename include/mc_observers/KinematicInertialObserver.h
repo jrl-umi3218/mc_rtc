@@ -53,9 +53,10 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
    **/
   const sva::MotionVecd & velW() const;
 
-  void addToLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
-  void removeFromLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
-  void addToGUI(mc_control::MCController &, std::vector<std::string> /* category */ = {}) override;
+protected:
+  void addToLogger(mc_control::MCController & ctl, const std::string & category) override;
+  void removeFromLogger(mc_control::MCController & ctl, const std::string & category) override;
+  void addToGUI(mc_control::MCController &, const std::vector<std::string> & category) override;
 
 private:
   /** Previous estimated position.

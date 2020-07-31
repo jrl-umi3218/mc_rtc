@@ -70,29 +70,26 @@ void KinematicInertialPoseObserver::updateRobots(mc_control::MCController & ctl)
   robot.posW(sva::PTransformd{orientation_, position_});
 }
 
-void KinematicInertialPoseObserver::addToLogger(mc_control::MCController & ctl, std::string category)
+void KinematicInertialPoseObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
 {
   auto & logger = ctl.logger();
-  category += "_" + name();
   logger.addLogEntry(category + "_posW", [this]() { return posW(); });
   logger.addLogEntry(category + "_anchorFrame", [&ctl]() { return ctl.anchorFrame(); });
   logger.addLogEntry(category + "_anchorFrameReal", [&ctl]() { return ctl.anchorFrameReal(); });
 }
 
-void KinematicInertialPoseObserver::removeFromLogger(mc_control::MCController & ctl, std::string category)
+void KinematicInertialPoseObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
 {
   auto & logger = ctl.logger();
-  category += "_" + name();
   logger.removeLogEntry(category + "_posW");
   logger.removeLogEntry(category + "_anchorFrame");
   logger.removeLogEntry(category + "_anchorFrameReal");
 }
 
-void KinematicInertialPoseObserver::addToGUI(mc_control::MCController & ctl, std::vector<std::string> category)
+void KinematicInertialPoseObserver::addToGUI(mc_control::MCController & ctl, const std::vector<std::string> & category)
 {
   if(showAnchorFrame_)
   {
-    category.push_back(name());
     ctl.gui()->addElement(category,
                           mc_rtc::gui::Transform("anchorFrameControl", [&ctl]() { return ctl.anchorFrame(); }),
                           mc_rtc::gui::Transform("anchorFrameReal", [&ctl]() { return ctl.anchorFrameReal(); }));
