@@ -37,7 +37,10 @@ Benallegue, Olivier Stasse
 struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
 {
   /*! Initialize floating base observer */
-  KinematicInertialPoseObserver(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
+  KinematicInertialPoseObserver(const std::string & type, double dt) : Observer(type, dt) {}
+
+  /** Configure observer */
+  void configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config) override;
 
   /** Reset floating base estimate from the current control robot state and
    * estimates the floating base position by calling run()
@@ -53,9 +56,7 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
    * \param robot Robot state to write to
    *
    */
-  void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
-
-  void updateBodySensor(mc_rbdyn::Robots & robots, const std::string & sensorName = "FloatingBase");
+  void updateRobots(mc_control::MCController & ctl) override;
 
   /*! \brief Get floating-base pose in the world frame. */
   sva::PTransformd posW() const
@@ -63,10 +64,9 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
     return {orientation_, position_};
   }
 
-  void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &) override;
-  void removeFromLogger(mc_rtc::Logger &) override;
-
-  void addToGUI(const mc_control::MCController &, mc_rtc::gui::StateBuilder &) override;
+  void addToLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
+  void removeFromLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
+  void addToGUI(mc_control::MCController &, std::vector<std::string> /* category */ = {}) override;
 
 protected:
   /** Update floating-base orientation based on new observed gravity vector.
@@ -88,10 +88,15 @@ protected:
    */
   void estimatePosition(const mc_control::MCController & ctl);
 
+protected:
+  std::string robot_; /**< Robot to observe */
+  std::string imuSensor_; /**< BodySensor containting IMU readings */
+
 private:
-  Eigen::Matrix3d orientation_; /**< Rotation from world to floating-base frame */
-  Eigen::Vector3d position_; /**< Translation of floating-base in world frame */
+  Eigen::Matrix3d orientation_ = Eigen::Matrix3d::Identity(); /**< Rotation from world to floating-base frame */
+  Eigen::Vector3d position_ = Eigen::Vector3d::Zero(); /**< Translation of floating-base in world frame */
   bool showAnchorFrame_ = false; /**< Whether to show the anchor frames in the GUI */
+  bool log_ = false; /**< Whether to log the estimation results */
 };
 
 } // namespace mc_observers

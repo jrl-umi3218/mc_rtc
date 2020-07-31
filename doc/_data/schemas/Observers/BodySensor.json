@@ -6,7 +6,6 @@
   {
     "robot": {"type": "string", "default": "MainRobot", "description": "Name of the robot to observe" },
     "method": { "enum": ["sensor", "control"], "description": "Update from sensor or control values" },
-    "bodySensor": { "type": "string", "default": "Main body sensor", "description": "Body sensor used to set the floating base state (only used if method=sensor). When empty, the main body sensor will be used."},
-    "log": { "type": "boolean", "default": true, "description": "When true, log the estimation results" }
+    "bodySensor": { "type": "string", "default": "Main body sensor", "description": "Body sensor used to set the floating base state (only used if method=sensor). When empty, the main body sensor will be used."}
   }
 }

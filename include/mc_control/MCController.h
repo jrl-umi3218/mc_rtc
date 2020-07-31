@@ -209,6 +209,16 @@ public:
   /** Non-const variant of \ref mc_controller_robots_const_doc "robots()" */
   mc_rbdyn::Robots & robots();
 
+  /** Return the mc_rbdyn::Robot controlled by this controller
+   *
+   * @throws std::runtime_error if the robot does not exist
+   * \anchor mc_controller_robot_name_const_doc
+   **/
+  const mc_rbdyn::Robot & robot(const std::string & name) const;
+
+  /** Non-const variant of \ref mc_controller_robot_name_const_doc "robot(name)" */
+  mc_rbdyn::Robot & robot(const std::string & name);
+
   /** Non-const variant of \ref mc_controller_robot_const_doc "robot()" */
   mc_rbdyn::Robot & robot();
 
@@ -257,6 +267,16 @@ public:
   const mc_rbdyn::Robot & realRobot() const;
   /** Non-const variant of \ref mc_controller_real_robot_const_doc "realRobot()" */
   mc_rbdyn::Robot & realRobot();
+
+  /** Return the mc_rbdyn::Robot controlled by this controller
+   *
+   * @throws std::runtime_error if the robot does not exist
+   * \anchor mc_controller_realRobot_name_const_doc
+   **/
+  const mc_rbdyn::Robot & realRobot(const std::string & name) const;
+
+  /** Non-const variant of \ref mc_controller_realRobot_name_const_doc "realRobot(name)" */
+  mc_rbdyn::Robot & realRobot(const std::string & name);
 
   /** Returns a list of robots supported by the controller.
    * \param out Vector of supported robots designed by name (as returned by

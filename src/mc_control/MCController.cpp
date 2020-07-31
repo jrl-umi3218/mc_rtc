@@ -8,6 +8,7 @@
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rtc/constants.h>
 
+#include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/config.h>
 #include <mc_rtc/gui/Schema.h>
 #include <mc_rtc/io_utils.h>
@@ -141,13 +142,28 @@ void MCController::removeRobot(const std::string & name)
 
 void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
 {
-  for(const auto & pipelineConfig : config("ObserverPipelines", std::map<std::string, mc_rtc::Configuration>{}))
+  if(!config.has("ObserverPipelines"))
   {
-    auto name = pipelineConfig.first;
-    observerPipelines_.emplace_back(*this, name);
+    mc_rtc::log::warning("[MCController::{}] No state observation pipeline configured: the state of the real robots "
+                         "will not be estimated",
+                         name_);
+    return;
+  }
+  std::vector<mc_rtc::Configuration> c = config("ObserverPipelines");
+  auto pipelineConfigs = mc_rtc::fromVectorOrElement(config, "ObserverPipelines", std::vector<mc_rtc::Configuration>{});
+  for(const auto & pipelineConfig : pipelineConfigs)
+  {
+    observerPipelines_.emplace_back(*this);
     auto & pipeline = observerPipelines_.back();
-    pipeline.create(pipelineConfig.second);
-    pipeline.addToLogger();
+    pipeline.create(pipelineConfig, timeStep);
+    if(config("log", true))
+    {
+      pipeline.addToLogger();
+    }
+    if(config("gui", true))
+    {
+      pipeline.addToGUI();
+    }
   }
 }
 
@@ -165,9 +181,6 @@ bool MCController::resetObservers()
   }
   else
   {
-    mc_rtc::log::warning("[MCController::{}] No state observation pipeline configured: the state of the real robots "
-                         "will not be estimated",
-                         name_);
   }
   return true;
 }
@@ -246,26 +259,6 @@ void MCController::reset(const ControllerResetData & reset_data)
   robot().forwardVelocity();
 }
 
-const mc_rbdyn::Robot & MCController::robot() const
-{
-  return qpsolver->robot();
-}
-
-const mc_rbdyn::Robot & MCController::env() const
-{
-  return qpsolver->env();
-}
-
-mc_rbdyn::Robot & MCController::robot()
-{
-  return qpsolver->robot();
-}
-
-mc_rbdyn::Robot & MCController::env()
-{
-  return qpsolver->env();
-}
-
 const mc_rbdyn::Robots & MCController::robots() const
 {
   return qpsolver->robots();
@@ -274,6 +267,66 @@ const mc_rbdyn::Robots & MCController::robots() const
 mc_rbdyn::Robots & MCController::robots()
 {
   return qpsolver->robots();
+}
+
+const mc_rbdyn::Robot & MCController::robot() const
+{
+  return qpsolver->robot();
+}
+
+mc_rbdyn::Robot & MCController::robot()
+{
+  return qpsolver->robot();
+}
+
+const mc_rbdyn::Robot & MCController::robot(const std::string & name) const
+{
+  return robots().robot(name);
+}
+
+mc_rbdyn::Robot & MCController::robot(const std::string & name)
+{
+  return robots().robot(name);
+}
+
+const mc_rbdyn::Robots & MCController::realRobots() const
+{
+  return solver().realRobots();
+}
+
+mc_rbdyn::Robots & MCController::realRobots()
+{
+  return solver().realRobots();
+}
+
+const mc_rbdyn::Robot & MCController::realRobot() const
+{
+  return realRobots().robot();
+}
+
+mc_rbdyn::Robot & MCController::realRobot()
+{
+  return realRobots().robot();
+}
+
+const mc_rbdyn::Robot & MCController::realRobot(const std::string & name) const
+{
+  return realRobots().robot(name);
+}
+
+mc_rbdyn::Robot & MCController::realRobot(const std::string & name)
+{
+  return realRobots().robot(name);
+}
+
+const mc_rbdyn::Robot & MCController::env() const
+{
+  return qpsolver->env();
+}
+
+mc_rbdyn::Robot & MCController::env()
+{
+  return qpsolver->env();
 }
 
 const mc_solver::QPSolver & MCController::solver() const
@@ -296,26 +349,6 @@ mc_rtc::Logger & MCController::logger()
 void MCController::supported_robots(std::vector<std::string> & out) const
 {
   out = {};
-}
-
-const mc_rbdyn::Robots & MCController::realRobots() const
-{
-  return solver().realRobots();
-}
-
-mc_rbdyn::Robots & MCController::realRobots()
-{
-  return solver().realRobots();
-}
-
-const mc_rbdyn::Robot & MCController::realRobot() const
-{
-  return realRobots().robot();
-}
-
-mc_rbdyn::Robot & MCController::realRobot()
-{
-  return realRobots().robot();
 }
 
 const sva::PTransformd & MCController::anchorFrame() const

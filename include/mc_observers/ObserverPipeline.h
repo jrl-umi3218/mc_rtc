@@ -28,13 +28,14 @@ namespace mc_observers
 struct MC_OBSERVERS_DLLAPI ObserverPipeline
 {
   ObserverPipeline(mc_control::MCController & ctl, const std::string & name);
+  ObserverPipeline(mc_control::MCController & ctl);
   virtual ~ObserverPipeline() = default;
 
   /* May be called multiple times */
   void configure(const mc_rtc::Configuration & config);
 
   /* Load the observers */
-  void create(const mc_rtc::Configuration & config);
+  void create(const mc_rtc::Configuration & config, double dt);
 
   /* Reinitialize pipeline configuration from loaded configuration
    * by configure()
@@ -66,20 +67,14 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
 
   bool hasPipelineObserver(const std::string & name) const
   {
-    return std::find_if(
-               pipelineObservers_.begin(), pipelineObservers_.end(),
-               [&name](const std::pair<mc_observers::ObserverPtr, bool> & obs) { return obs.first->name() == name; })
+    return std::find_if(pipelineObservers_.begin(), pipelineObservers_.end(),
+                        [&name](const PipelineObserver & obs) { return obs.observer->name() == name; })
            != pipelineObservers_.end();
   }
 
   const std::vector<mc_observers::ObserverPtr> & observers() const
   {
     return observers_;
-  }
-
-  const std::vector<std::pair<mc_observers::ObserverPtr, bool>> & pipelineObservers() const
-  {
-    return pipelineObservers_;
   }
 
   /* Non-const variant */
@@ -131,6 +126,17 @@ protected:
   std::map<std::string, mc_observers::ObserverPtr>
       observersByName_; ///< Mapping between loaded observers and their name
 
+  struct PipelineObserver
+  {
+    PipelineObserver(const mc_observers::ObserverPtr & observer, bool update, bool log, bool gui)
+    : observer(observer), update(update), log(log), gui(gui)
+    {
+    }
+    mc_observers::ObserverPtr observer = nullptr;
+    bool update = true;
+    bool log = true;
+    bool gui = true;
+  };
   /** Observers that will be run by the pipeline.
    *
    * The pair contains:
@@ -138,7 +144,7 @@ protected:
    * - A boolean set to true if the observer updates the real robot instance
    *
    * Provided by MCGlobalController */
-  std::vector<std::pair<mc_observers::ObserverPtr, bool>> pipelineObservers_;
+  std::vector<PipelineObserver> pipelineObservers_;
 };
 
 } // namespace mc_observers

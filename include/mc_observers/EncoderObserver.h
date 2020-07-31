@@ -32,10 +32,10 @@ namespace mc_observers
  */
 struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
 {
-  EncoderObserver(const std::string & type) : Observer(type) {}
+  EncoderObserver(const std::string & type, double dt) : Observer(type, dt) {}
 
   /** Configure observer */
-  void configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & /*config*/) override;
+  void configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config) override;
 
   /** Reset finite differences estimator from current encoder values and sets encoder velocity to zero
    *
@@ -57,8 +57,8 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
    */
   void updateRobots(mc_control::MCController & ctl) override;
 
-  void addToLogger(mc_control::MCController & ctl, const std::string & /* category */ = "") override;
-  void removeFromLogger(mc_control::MCController & ctl, const std::string & /* category */ = "") override;
+  void addToLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
+  void removeFromLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
 
 protected:
   /*! \brief Update source for the update. */
@@ -80,7 +80,6 @@ protected:
   VelUpdate velUpdate_ = VelUpdate::EncoderFiniteDifferences;
 
   std::string robot_;
-  bool logEstimation_ = false;
 
   std::vector<double> prevEncoders_;
   std::vector<double> encodersVelocity_;

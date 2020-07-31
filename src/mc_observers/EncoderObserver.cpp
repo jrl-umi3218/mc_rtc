@@ -57,10 +57,7 @@ void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_r
         "encoderFiniteDifferences, encoderVelocities, none])",
         name_, velocity);
     ;
-    velUpdate_ = VelUpdate::EncoderFiniteDifferences;
   }
-
-  logEstimation_ = config("log", false);
 
   desc_ = name_ + " (position=" + position + ",velocity=" + velocity + ")";
 }
@@ -161,34 +158,28 @@ void EncoderObserver::updateRobots(mc_control::MCController & ctl)
   }
 }
 
-void EncoderObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
+void EncoderObserver::addToLogger(mc_control::MCController & ctl, std::string category)
 {
-  if(logEstimation_)
+  if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
   {
-    if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
-    {
-      ctl.logger().addLogEntry(category + "_" + name() + "_encoderFiniteDifferences",
-                               [this]() { return encodersVelocity_; });
-    }
-    if(velUpdate_ == VelUpdate::EncoderVelocities)
-    {
-      ctl.logger().addLogEntry(category + "_" + name() + "_encoderVelocities",
-                               [this, &ctl]() { return ctl.robots().robot(robot_).encoderVelocities(); });
-    }
+    ctl.logger().addLogEntry(category + "_" + name() + "_encoderFiniteDifferences",
+                             [this]() { return encodersVelocity_; });
+  }
+  if(velUpdate_ == VelUpdate::EncoderVelocities)
+  {
+    ctl.logger().addLogEntry(category + "_" + name() + "_encoderVelocities",
+                             [this, &ctl]() { return ctl.robots().robot(robot_).encoderVelocities(); });
   }
 }
-void EncoderObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
+void EncoderObserver::removeFromLogger(mc_control::MCController & ctl, std::string category)
 {
-  if(logEstimation_)
+  if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
   {
-    if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
-    {
-      ctl.logger().removeLogEntry(category + "_" + name() + "_encoderFiniteDifferences");
-    }
-    if(velUpdate_ == VelUpdate::EncoderVelocities)
-    {
-      ctl.logger().removeLogEntry(category + "_" + name() + "_encoderVelocities");
-    }
+    ctl.logger().removeLogEntry(category + "_" + name() + "_encoderFiniteDifferences");
+  }
+  if(velUpdate_ == VelUpdate::EncoderVelocities)
+  {
+    ctl.logger().removeLogEntry(category + "_" + name() + "_encoderVelocities");
   }
 }
 

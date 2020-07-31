@@ -32,7 +32,10 @@ namespace mc_observers
  */
 struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
 {
-  BodySensorObserver(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
+  BodySensorObserver(const std::string & type, double dt) : Observer(type, dt) {}
+
+  /** Configure observer */
+  void configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & /*config*/) override;
 
   /** \brief Resets the observer.
    *
@@ -49,7 +52,7 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
    * chosen:
    * - Update::Control: copies the floating base position from the control robot
    *   (no estimation)
-   * - Update::Estimator: Computes the position of the floating base from a BodySensor and the kinematic chain
+   * - Update::Sensor: Computes the position of the floating base from a BodySensor and the kinematic chain
    *   between it and the floating base. If the BodySensor is not directly
    *   attached to the floating base link, this estimator requires accurate
    *   estimation of the real robot's forward kinematics. It is assumed here that the floating base sensor and encoders
@@ -68,7 +71,7 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
    *
    * \param realRobots Current implementation updates realRobots.robot()
    */
-  void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
+  void updateRobots(mc_control::MCController & ctl) override;
 
   /*! \brief Get floating-base pose in the world frame. */
   const sva::PTransformd & posW() const
@@ -82,21 +85,22 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
     return velW_;
   }
 
-  void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &) override;
-  void removeFromLogger(mc_rtc::Logger &) override;
-  void addToGUI(const mc_control::MCController & ctl, mc_rtc::gui::StateBuilder &) override;
+  void addToLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
+  void removeFromLogger(mc_control::MCController & ctl, std::string /* category */ = "") override;
+  void addToGUI(mc_control::MCController &, std::vector<std::string> /* category */ = {}) override;
 
 protected:
   enum class Update
   {
     Control, ///< Use the control robot floating base state
-    Estimator ///< Use the body sensor to determine the floating base pose
+    Sensor ///< Use the body sensor to determine the floating base pose
   };
-  Update updateFrom_ = Update::Estimator;
+  Update updateFrom_ = Update::Sensor;
   std::string fbSensorName_;
-  sva::PTransformd posW_;
-  sva::MotionVecd velW_;
-  sva::MotionVecd accW_;
+  sva::PTransformd posW_ = sva::PTransformd::Identity();
+  sva::MotionVecd velW_ = sva::MotionVecd::Zero();
+  sva::MotionVecd accW_ = sva::MotionVecd::Zero();
+  std::string robot_;
 };
 
 } // namespace mc_observers

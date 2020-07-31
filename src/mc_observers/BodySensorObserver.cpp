@@ -12,15 +12,16 @@
 
 namespace mc_observers
 {
-BodySensorObserver::BodySensorObserver(const std::string & name, double dt, const mc_rtc::Configuration & config)
-: Observer(name, dt, config)
+
+void BodySensorObserver::configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config)
 {
-  auto updateConfig = config("UpdateFrom", std::string{});
+  robot_ = config("robot", ctl.robot().name());
+  auto updateConfig = config("method", std::string{});
   if(!updateConfig.empty())
   {
-    if(updateConfig == "estimator")
+    if(updateConfig == "sensor")
     {
-      updateFrom_ = Update::Estimator;
+      updateFrom_ = Update::Sensor;
     }
     else
     {
@@ -28,13 +29,13 @@ BodySensorObserver::BodySensorObserver(const std::string & name, double dt, cons
     }
   }
 
-  fbSensorName_ = config("FloatingBaseSensor", std::string("FloatingBase"));
-  desc_ = name_ + " (sensor=" + fbSensorName_ + ",update=" + updateConfig + ")";
+  fbSensorName_ = config("bodySensor", std::string("FloatingBase"));
+  desc_ = name_ + " (sensor=" + fbSensorName_ + ", update=" + updateConfig + ")";
 }
 
 void BodySensorObserver::reset(const mc_control::MCController & ctl)
 {
-  if(updateFrom_ == Update::Estimator)
+  if(updateFrom_ == Update::Sensor)
   {
     if(!ctl.robot().hasBodySensor(fbSensorName_))
     {
@@ -49,9 +50,9 @@ void BodySensorObserver::reset(const mc_control::MCController & ctl)
 
 bool BodySensorObserver::run(const mc_control::MCController & ctl)
 {
-  const auto & robot = ctl.robot();
-  const auto & realRobot = ctl.realRobot();
-  if(updateFrom_ == Update::Estimator)
+  const auto & robot = ctl.robot(robot_);
+  const auto & realRobot = ctl.realRobot(robot_);
+  if(updateFrom_ == Update::Sensor)
   {
     // Update free flyer from body sensor
     // Note that if the body to which the sensor is attached is not the
@@ -81,36 +82,42 @@ bool BodySensorObserver::run(const mc_control::MCController & ctl)
   return true;
 }
 
-void BodySensorObserver::updateRobots(const mc_control::MCController & /* ctl */, mc_rbdyn::Robots & realRobots)
+void BodySensorObserver::updateRobots(mc_control::MCController & ctl)
 {
-  realRobots.robot().posW(posW_);
-  realRobots.robot().velW(velW_);
+  auto & realRobot = ctl.realRobots().robot(robot_);
+  realRobot.posW(posW_);
+  realRobot.velW(velW_);
 }
 
-void BodySensorObserver::addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger & logger)
+void BodySensorObserver::addToLogger(mc_control::MCController & ctl, std::string category)
 {
-  Observer::addToLogger(ctl, logger);
-  logger.addLogEntry("observer_" + name() + "_posW", [this]() { return posW_; });
-  logger.addLogEntry("observer_" + name() + "_velW", [this]() { return velW_; });
-  logger.addLogEntry("observer_" + name() + "_accW", [this]() { return accW_; });
+  auto & logger = ctl.logger();
+  category += "_" + name();
+  Observer::addToLogger(ctl, category);
+  logger.addLogEntry(category + "_posW", [this]() { return posW_; });
+  logger.addLogEntry(category + "_velW", [this]() { return velW_; });
+  logger.addLogEntry(category + "_accW", [this]() { return accW_; });
 }
-void BodySensorObserver::removeFromLogger(mc_rtc::Logger & logger)
+void BodySensorObserver::removeFromLogger(mc_control::MCController & ctl, std::string category)
 {
-  Observer::removeFromLogger(logger);
+  auto & logger = ctl.logger();
+  category += "_" + name();
+  Observer::removeFromLogger(ctl, category);
   logger.removeLogEntry("observer_" + name() + "_posW");
   logger.removeLogEntry("observer_" + name() + "_velW");
   logger.removeLogEntry("observer_" + name() + "_accW");
 }
 
-void BodySensorObserver::addToGUI(const mc_control::MCController &, mc_rtc::gui::StateBuilder & gui)
+void BodySensorObserver::addToGUI(mc_control::MCController & ctl, std::vector<std::string> category)
 {
-  gui.addElement({"Observers", name()},
-                 mc_rtc::gui::Arrow("Velocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}),
-                                    [this]() -> const Eigen::Vector3d & { return posW_.translation(); },
-                                    [this]() -> Eigen::Vector3d {
-                                      Eigen::Vector3d end = posW_.translation() + velW_.linear();
-                                      return end;
-                                    }));
+  category.push_back(name());
+  ctl.gui()->addElement(category,
+                        mc_rtc::gui::Arrow("Velocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}),
+                                           [this]() -> const Eigen::Vector3d & { return posW_.translation(); },
+                                           [this]() -> Eigen::Vector3d {
+                                             Eigen::Vector3d end = posW_.translation() + velW_.linear();
+                                             return end;
+                                           }));
 }
 
 } // namespace mc_observers

@@ -7,6 +7,7 @@ namespace mc_observers
 {
 
 ObserverPipeline::ObserverPipeline(mc_control::MCController & ctl, const std::string & name) : ctl_(ctl), name_(name) {}
+ObserverPipeline::ObserverPipeline(mc_control::MCController & ctl) : ctl_(ctl) {}
 
 void ObserverPipeline::configure(const mc_rtc::Configuration & config)
 {
@@ -15,11 +16,16 @@ void ObserverPipeline::configure(const mc_rtc::Configuration & config)
 
 void ObserverPipeline::reconfigure() {}
 
-void ObserverPipeline::create(const mc_rtc::Configuration & config)
+void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
 {
-  std::vector<mc_rtc::Configuration> observersConf = config;
-  observers_.reserve(observersConf.size());
-  for(const auto & observerConf : observersConf)
+  if(!config.has("name"))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("[ObserverPipeline] \"name\" entry is required", name_);
+  }
+  name_ = static_cast<std::string>(config("name"));
+  auto observersConfs = mc_rtc::fromVectorOrElement(config, "observers", std::vector<mc_rtc::Configuration>{});
+  observers_.reserve(observersConfs.size());
+  for(const auto & observerConf : observersConfs)
   {
     if(!observerConf.has("type"))
     {
@@ -39,12 +45,12 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config)
             "names within a pipeline are unique, use the \"name\" configuration entry.",
             name_, observerName, observersByName_[observerName]->type());
       }
-      auto observer = mc_observers::ObserverLoader::get_observer(observerType);
+      auto observer = mc_observers::ObserverLoader::get_observer(observerType, dt);
       observer->name(observerName);
       observer->configure(ctl_, observerConf("config", mc_rtc::Configuration{}));
       observers_.push_back(observer);
       observersByName_[observerName] = observer;
-      pipelineObservers_.push_back(std::make_pair(observer, update));
+      pipelineObservers_.emplace_back(observer, update, observerConf("log", true), observerConf("gui", true));
     }
     else
     {
@@ -70,12 +76,11 @@ void ObserverPipeline::reset()
 
   for(size_t i = 0; i < pipelineObservers_.size(); ++i)
   {
-    const auto & observerPair = pipelineObservers_[i];
-    auto observer = observerPair.first;
-    bool updateRobots = observerPair.second;
+    const auto & pipelineObserver = pipelineObservers_[i];
+    auto & observer = pipelineObserver.observer;
     observer->reset(ctl_);
 
-    if(updateRobots)
+    if(pipelineObserver.update)
     {
       observer->updateRobots(ctl_);
       desc_ += observer->desc();
@@ -94,17 +99,16 @@ void ObserverPipeline::reset()
 
 bool ObserverPipeline::run()
 {
-  for(const auto & observerPair : pipelineObservers_)
+  for(const auto & pipelineObserver : pipelineObservers_)
   {
-    auto observer = observerPair.first;
-    bool updateRobots = observerPair.second;
+    auto & observer = pipelineObserver.observer;
     bool r = observer->run(ctl_);
     if(!r)
     {
       mc_rtc::log::error("Observer {} failed to run", observer->name());
       return false;
     }
-    if(updateRobots)
+    if(pipelineObserver.update)
     {
       observer->updateRobots(ctl_);
     }
@@ -114,25 +118,34 @@ bool ObserverPipeline::run()
 
 void ObserverPipeline::addToLogger()
 {
-  for(auto & observer : observers_)
+  for(auto & observer : pipelineObservers_)
   {
-    observer->addToLogger(ctl_, "Observers_" + name_);
+    if(observer.log)
+    {
+      observer.observer->addToLogger(ctl_, "Observers_" + name_);
+    }
   }
 }
 /*! \brief Remove observer from logger. */
 void ObserverPipeline::removeFromLogger()
 {
-  for(auto & observer : observers_)
+  for(auto & observer : pipelineObservers_)
   {
-    observer->removeFromLogger(ctl_, "Observers_" + name_);
+    if(observer.log)
+    {
+      observer.observer->removeFromLogger(ctl_, "Observers_" + name_);
+    }
   }
 }
 
 void ObserverPipeline::addToGUI()
 {
-  for(auto & observer : observers_)
+  for(auto & observer : pipelineObservers_)
   {
-    observer->addToGUI(ctl_, {"ObserverPipeline", name_});
+    if(observer.gui)
+    {
+      observer.observer->addToGUI(ctl_, {"ObserverPipeline", name_});
+    }
   }
 }
 void ObserverPipeline::removeFromGUI(mc_rtc::gui::StateBuilder & gui)

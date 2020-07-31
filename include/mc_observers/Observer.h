@@ -42,7 +42,7 @@ namespace mc_observers
  */
 struct MC_OBSERVERS_DLLAPI Observer
 {
-  Observer(const std::string & type) : type_(type) {}
+  Observer(const std::string & type, double dt) : type_(type), dt_(dt) {}
   virtual ~Observer() {}
 
   /**
@@ -104,13 +104,13 @@ struct MC_OBSERVERS_DLLAPI Observer
    * Default implementation does nothing, each observer implementation is
    * responsible for logging its own data by overriding this function
    */
-  virtual void addToLogger(mc_control::MCController &, const std::string & /* category */ = "") {}
+  virtual void addToLogger(mc_control::MCController &, std::string /* category */ = "") {}
   /*! \brief Remove observer from logger
    *
    * Default implementation does nothing, each observer implementation is
    * responsible for removing all logs entry that it added.
    */
-  virtual void removeFromLogger(mc_control::MCController &, const std::string & /* category */ = "") {}
+  virtual void removeFromLogger(mc_control::MCController &, std::string /* category */ = "") {}
   /*! \brief Add observer information the GUI.
    *
    * Default implementation does nothing, each observer implementation is
@@ -143,12 +143,19 @@ struct MC_OBSERVERS_DLLAPI Observer
     return type_;
   }
 
+  double dt() const
+  {
+    return dt_;
+  }
+
 protected:
   std::string name_;
   std::string type_;
 
   /* Short descriptive description of the observer used for CLI logging */
   std::string desc_;
+
+  double dt_;
 };
 
 using ObserverPtr = std::shared_ptr<mc_observers::Observer>;

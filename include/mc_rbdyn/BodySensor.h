@@ -150,6 +150,7 @@ private:
   Eigen::Vector3d linear_velocity_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d angular_velocity_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d acceleration_ = Eigen::Vector3d::Zero();
+  bool log_ = true;
 };
 
 typedef std::vector<BodySensor, Eigen::aligned_allocator<BodySensor>> BodySensorVector;
