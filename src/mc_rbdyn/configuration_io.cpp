@@ -892,15 +892,18 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   }
   if(rm._bounds.size() != 6)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number of _bounds entries in RobotModule");
+    mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number ({}) of _bounds entries in RobotModule",
+                                                     rm._bounds.size());
   }
   if(rm._accelerationBounds.size() != 0 && rm._accelerationBounds.size() != 2)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number of _accelerationBounds entries in RobotModule");
+    mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number ({}) of _accelerationBounds entries in RobotModule",
+                                                     rm._accelerationBounds.size());
   }
   if(rm._torqueDerivativeBounds.size() != 0 && rm._torqueDerivativeBounds.size() != 2)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number of _torqueDerivativeBounds entries in RobotModule");
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Wrong number ({}) of _torqueDerivativeBounds entries in RobotModule", rm._torqueDerivativeBounds.size());
   }
   config.add("accelerationBounds", rm._accelerationBounds);
   config.add("torqueDerivativeBounds", rm._torqueDerivativeBounds);
