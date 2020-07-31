@@ -894,11 +894,11 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number of _bounds entries in RobotModule");
   }
-  if(rm._accelerationBounds.size() != 2)
+  if(rm._accelerationBounds.size() != 0 && rm._accelerationBounds.size() != 2)
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number of _accelerationBounds entries in RobotModule");
   }
-  if(rm._torqueDerivativeBounds.size() != 2)
+  if(rm._torqueDerivativeBounds.size() != 0 && rm._torqueDerivativeBounds.size() != 2)
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number of _torqueDerivativeBounds entries in RobotModule");
   }
