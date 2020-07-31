@@ -97,6 +97,69 @@ void CollisionsConstraint::__addCollision(const mc_solver::QPSolver & solver, co
   const auto & robots = solver.robots();
   const mc_rbdyn::Robot & r1 = robots.robot(r1Index);
   const mc_rbdyn::Robot & r2 = robots.robot(r2Index);
+  if(col.body1.size() == 0 || col.body2.size() == 0)
+  {
+    mc_rtc::log::error("Attempted to add a collision without a specific body");
+    return;
+  }
+  auto replace_b1 = [](const mc_rbdyn::Collision & col, const std::string & b) {
+    auto out = col;
+    out.body1 = b;
+    return out;
+  };
+  auto replace_b2 = [](const mc_rbdyn::Collision & col, const std::string & b) {
+    auto out = col;
+    out.body2 = b;
+    return out;
+  };
+  auto handle_wildcard = [&, this](const mc_rbdyn::Robot & robot, const std::string & body, bool is_b1) {
+    if(body.back() != '*')
+    {
+      return false;
+    }
+    std::string search = body.substr(0, body.size() - 1);
+    bool match = false;
+    for(const auto & convex : robot.convexes())
+    {
+      const auto & cName = convex.first;
+      if(cName.size() < search.size())
+      {
+        continue;
+      }
+      if(cName.substr(0, search.size()) == search)
+      {
+        match = true;
+        auto nCol = is_b1 ? replace_b1(col, cName) : replace_b2(col, cName);
+        __addCollision(solver, nCol);
+      }
+    }
+    if(!match)
+    {
+      mc_rtc::log::warning("No match found for collision wildcard {} in {}", body, robot.name());
+    }
+    return true;
+  };
+  if(handle_wildcard(r1, col.body1, true) || handle_wildcard(r2, col.body2, false))
+  {
+    return;
+  }
+  if(col.body1.back() == '*')
+  {
+    std::string search = col.body1.substr(0, col.body1.size() - 1);
+    for(const auto & convex : r1.convexes())
+    {
+      const auto & cName = convex.first;
+      if(cName.size() < search.size())
+      {
+        continue;
+      }
+      if(cName.substr(0, search.size()) == search)
+      {
+        __addCollision(solver, {cName, col.body2, col.iDist, col.sDist, col.damping});
+      }
+    }
+    return;
+  }
   const auto & body1 = r1.convex(col.body1);
   const auto & body2 = r2.convex(col.body2);
   const sva::PTransformd & X_b1_c = r1.collisionTransform(col.body1);
