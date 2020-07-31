@@ -905,8 +905,14 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
     mc_rtc::log::error_and_throw<std::runtime_error>(
         "Wrong number ({}) of _torqueDerivativeBounds entries in RobotModule", rm._torqueDerivativeBounds.size());
   }
-  config.add("accelerationBounds", rm._accelerationBounds);
-  config.add("torqueDerivativeBounds", rm._torqueDerivativeBounds);
+  if(rm._accelerationBounds.size() == 2)
+  {
+    config.add("accelerationBounds", rm._accelerationBounds);
+  }
+  if(rm._torqueDerivativeBounds.size() == 2)
+  {
+    config.add("torqueDerivativeBounds", rm._torqueDerivativeBounds);
+  }
   config.add("stance", rm._stance);
   auto cHs = rm._convexHull;
   for(auto & cH : cHs)
