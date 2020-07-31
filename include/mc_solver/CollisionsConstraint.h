@@ -7,6 +7,7 @@
 #include <mc_rbdyn/Collision.h>
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/Robots.h>
+#include <mc_rtc/gui/StateBuilder.h>
 #include <mc_solver/ConstraintSet.h>
 
 #include <Tasks/QPConstr.h>
@@ -97,11 +98,17 @@ public:
 private:
   /* Internal sauce to manage collisions */
   int collId;
-  std::map<std::string, std::pair<unsigned int, mc_rbdyn::Collision>> collIdDict;
+  std::map<std::string, std::pair<int, mc_rbdyn::Collision>> collIdDict;
   std::string __keyByNames(const std::string & name1, const std::string & name2);
   int __createCollId(const mc_rbdyn::Collision & col);
   std::pair<int, mc_rbdyn::Collision> __popCollId(const std::string & name1, const std::string & name2);
-  void __addCollision(const mc_rbdyn::Robots & robots, const mc_rbdyn::Collision & col);
+  void __addCollision(const mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
+
+  /* Internal management for collision display */
+  std::unordered_set<int> monitored_;
+  std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
+  std::vector<std::string> category_;
+  void toggleCollisionMonitor(int collId);
 
 public:
   /** \deprecated{Default constructor, not made for general usage} */
