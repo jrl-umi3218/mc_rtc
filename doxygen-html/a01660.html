@@ -91,6 +91,10 @@ Classes</h2></td></tr>
 Public Types</h2></td></tr>
 <tr class="memitem:a5b8304a1ea905fa0378a31dcf65b1460"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#a5b8304a1ea905fa0378a31dcf65b1460">bounds_t</a> = std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt;&gt;</td></tr>
 <tr class="separator:a5b8304a1ea905fa0378a31dcf65b1460"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10b7fc984b3fa946f5c59a4174a366b8"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#a10b7fc984b3fa946f5c59a4174a366b8">accelerationBounds_t</a> = std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt;&gt;</td></tr>
+<tr class="separator:a10b7fc984b3fa946f5c59a4174a366b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a225813431ae1e40a0e452b103504b636"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#a225813431ae1e40a0e452b103504b636">torqueDerivativeBounds_t</a> = std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt;&gt;</td></tr>
+<tr class="separator:a225813431ae1e40a0e452b103504b636"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -111,6 +115,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae05a5aab8f1a3edbecad4e4c7b29380d"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#ae05a5aab8f1a3edbecad4e4c7b29380d">bounds</a> () const</td></tr>
 <tr class="memdesc:ae05a5aab8f1a3edbecad4e4c7b29380d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the robot's bounds obtained from parsing a urdf.  <a href="#ae05a5aab8f1a3edbecad4e4c7b29380d">More...</a><br /></td></tr>
 <tr class="separator:ae05a5aab8f1a3edbecad4e4c7b29380d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a2fb5d58157ab88f81a263cdd583d90"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#a7a2fb5d58157ab88f81a263cdd583d90">accelerationBounds</a> () const</td></tr>
+<tr class="memdesc:a7a2fb5d58157ab88f81a263cdd583d90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the robot's acceleration bounds.  <a href="#a7a2fb5d58157ab88f81a263cdd583d90">More...</a><br /></td></tr>
+<tr class="separator:a7a2fb5d58157ab88f81a263cdd583d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31833fa22143ca219c84c894bae0b5ae"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#a31833fa22143ca219c84c894bae0b5ae">torqueDerivativeBounds</a> () const</td></tr>
+<tr class="memdesc:a31833fa22143ca219c84c894bae0b5ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the robot's torque-derivative bounds.  <a href="#a31833fa22143ca219c84c894bae0b5ae">More...</a><br /></td></tr>
+<tr class="separator:a31833fa22143ca219c84c894bae0b5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae00ee36a0f17eaf23aadcb7643186fa4"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, std::vector&lt; double &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#ae00ee36a0f17eaf23aadcb7643186fa4">stance</a> () const</td></tr>
 <tr class="memdesc:ae00ee36a0f17eaf23aadcb7643186fa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a default configuration for the robot.  <a href="#ae00ee36a0f17eaf23aadcb7643186fa4">More...</a><br /></td></tr>
 <tr class="separator:ae00ee36a0f17eaf23aadcb7643186fa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -208,6 +218,10 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a6f8d5e7c1d3c2df1113120dd61d6cef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af19dd43ad8642aabc8c406e0972c5d65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01660.html#a5b8304a1ea905fa0378a31dcf65b1460">bounds_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#af19dd43ad8642aabc8c406e0972c5d65">_bounds</a></td></tr>
 <tr class="separator:af19dd43ad8642aabc8c406e0972c5d65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a392097f1562229e352b6079edd9e2941"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01660.html#a10b7fc984b3fa946f5c59a4174a366b8">accelerationBounds_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#a392097f1562229e352b6079edd9e2941">_accelerationBounds</a></td></tr>
+<tr class="separator:a392097f1562229e352b6079edd9e2941"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af57a4434d7756e4d9e4e014fed6f5efe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01660.html#a225813431ae1e40a0e452b103504b636">torqueDerivativeBounds_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#af57a4434d7756e4d9e4e014fed6f5efe">_torqueDerivativeBounds</a></td></tr>
+<tr class="separator:af57a4434d7756e4d9e4e014fed6f5efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82b20e5c4af771dd7778ea81e7fb0dcb"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#a82b20e5c4af771dd7778ea81e7fb0dcb">_stance</a></td></tr>
 <tr class="separator:a82b20e5c4af771dd7778ea81e7fb0dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65db2f156200c10f888f52bf12875e64"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::pair&lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01660.html#a65db2f156200c10f888f52bf12875e64">_convexHull</a></td></tr>
@@ -251,6 +265,25 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ab6b79da885f0935ee568f416025466e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a10b7fc984b3fa946f5c59a4174a366b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10b7fc984b3fa946f5c59a4174a366b8">&#9670;&nbsp;</a></span>accelerationBounds_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a01660.html#a10b7fc984b3fa946f5c59a4174a366b8">mc_rbdyn::RobotModule::accelerationBounds_t</a> =  std::vector&lt;std::map&lt;std::string, std::vector&lt;double&gt; &gt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Holds information regarding the additional acceleration bounds (specified in addition to urdf limits)</p>
+<p>The vector should have 2 entries:</p><ul>
+<li>lower/upper acceleration bounds</li>
+</ul>
+<p>Each entry is a map joint name &lt;-&gt; bound </p>
+
+</div>
+</div>
 <a id="a5b8304a1ea905fa0378a31dcf65b1460"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5b8304a1ea905fa0378a31dcf65b1460">&#9670;&nbsp;</a></span>bounds_t</h2>
 
@@ -262,11 +295,29 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Holds information regarding the urdf bounds</p>
-<p>The vector should have 8 entries:</p><ul>
+<p>Holds information regarding the bounds (specified in the urdf)</p>
+<p>The vector should have 6 entries:</p><ul>
 <li>lower/upper position bounds</li>
 <li>lower/upper velocity bounds</li>
 <li>lower/upper torque bounds</li>
+</ul>
+<p>Each entry is a map joint name &lt;-&gt; bound </p>
+
+</div>
+</div>
+<a id="a225813431ae1e40a0e452b103504b636"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a225813431ae1e40a0e452b103504b636">&#9670;&nbsp;</a></span>torqueDerivativeBounds_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a01660.html#a225813431ae1e40a0e452b103504b636">mc_rbdyn::RobotModule::torqueDerivativeBounds_t</a> =  std::vector&lt;std::map&lt;std::string, std::vector&lt;double&gt; &gt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Holds information regarding the additional torque-derivative bounds (specified in addition to urdf limits)</p>
+<p>The vector should have 2 entries:</p><ul>
 <li>lower/upper torque-derivative bounds</li>
 </ul>
 <p>Each entry is a map joint name &lt;-&gt; bound </p>
@@ -441,6 +492,38 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7a2fb5d58157ab88f81a263cdd583d90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a2fb5d58157ab88f81a263cdd583d90">&#9670;&nbsp;</a></span>accelerationBounds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;std::map&lt;std::string, std::vector&lt;double&gt; &gt; &gt;&amp; mc_rbdyn::RobotModule::accelerationBounds </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the robot's acceleration bounds. </p>
+<p>The vector should hold 2 string -&gt; vector&lt;double&gt; map</p>
+<p>Each map's keys are joint names and values are joint limits.</p>
+<p>They should be provided in the following order:</p><ul>
+<li>acceleration limits (lower/upper) </li>
+</ul>
+
+</div>
+</div>
 <a id="a4edb2a975531bfb2935c0d7b25f8f677"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4edb2a975531bfb2935c0d7b25f8f677">&#9670;&nbsp;</a></span>bodySensors()</h2>
 
@@ -493,13 +576,12 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the robot's bounds obtained from parsing a urdf. </p>
-<p>The vector should hold 8 string -&gt; vector&lt;double&gt; map</p>
+<p>The vector should hold 6 string -&gt; vector&lt;double&gt; map</p>
 <p>Each map's keys are joint names and values are joint limits.</p>
 <p>They should be provided in the following order:</p><ul>
 <li>joint limits (lower/upper)</li>
 <li>velocity limits (lower/upper)</li>
-<li>torque limits (lower/upper)</li>
-<li>torque-derivative limits (lower/upper) </li>
+<li>torque limits (lower/upper) </li>
 </ul>
 
 </div>
@@ -1130,7 +1212,54 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a31833fa22143ca219c84c894bae0b5ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31833fa22143ca219c84c894bae0b5ae">&#9670;&nbsp;</a></span>torqueDerivativeBounds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;std::map&lt;std::string, std::vector&lt;double&gt; &gt; &gt;&amp; mc_rbdyn::RobotModule::torqueDerivativeBounds </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the robot's torque-derivative bounds. </p>
+<p>The vector should hold 2 string -&gt; vector&lt;double&gt; map</p>
+<p>Each map's keys are joint names and values are joint limits.</p>
+<p>They should be provided in the following order:</p><ul>
+<li>torque-derivative limits (lower/upper) </li>
+</ul>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a392097f1562229e352b6079edd9e2941"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a392097f1562229e352b6079edd9e2941">&#9670;&nbsp;</a></span>_accelerationBounds</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01660.html#a10b7fc984b3fa946f5c59a4174a366b8">accelerationBounds_t</a> mc_rbdyn::RobotModule::_accelerationBounds</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="a01660.html#a7a2fb5d58157ab88f81a263cdd583d90" title="Returns the robot&#39;s acceleration bounds. ">accelerationBounds()</a> </dd></dl>
+
+</div>
+</div>
 <a id="a850abf7b9eb7e6ef1f3ca70fc495c6e4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a850abf7b9eb7e6ef1f3ca70fc495c6e4">&#9670;&nbsp;</a></span>_bodySensors</h2>
 
@@ -1431,6 +1560,21 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="af57a4434d7756e4d9e4e014fed6f5efe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af57a4434d7756e4d9e4e014fed6f5efe">&#9670;&nbsp;</a></span>_torqueDerivativeBounds</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01660.html#a225813431ae1e40a0e452b103504b636">torqueDerivativeBounds_t</a> mc_rbdyn::RobotModule::_torqueDerivativeBounds</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="a01660.html#a31833fa22143ca219c84c894bae0b5ae" title="Returns the robot&#39;s torque-derivative bounds. ">torqueDerivativeBounds()</a> </dd></dl>
+
+</div>
+</div>
 <a id="a2cbb7d9c42ddcac022ccb2166381ec12"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2cbb7d9c42ddcac022ccb2166381ec12">&#9670;&nbsp;</a></span>_visual</h2>
 
@@ -1582,7 +1726,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00727.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a01660.html">RobotModule</a></li>
-    <li class="footer">Generated on Fri Jul 31 2020 00:53:55 for mc_rtc by
+    <li class="footer">Generated on Mon Aug 3 2020 04:33:45 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -21533,6 +21533,20 @@
     </member>
     <member kind="function">
       <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>al</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a353666f3eb88becdbde844f6e6915807</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>au</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>ab0b3183f0c2579662c80c1c94aca9410</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
       <name>tl</name>
       <anchorfile>a01632.html</anchorfile>
       <anchor>afd4cbabd88c9ee4565a2555dcc0208ae</anchor>
@@ -21585,6 +21599,20 @@
       <name>vu</name>
       <anchorfile>a01632.html</anchorfile>
       <anchor>ae6c3ad6f7d81353b09689ea6e41eec34</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>al</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>ab64263a01616ad04b3f5212fd5742fd2</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>au</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>ab0b41cfc1ed67b789573ca788b6e79cf</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -22332,6 +22360,20 @@
     </member>
     <member kind="function">
       <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>al</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>a353666f3eb88becdbde844f6e6915807</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>au</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>ab0b3183f0c2579662c80c1c94aca9410</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
       <name>tl</name>
       <anchorfile>a01632.html</anchorfile>
       <anchor>afd4cbabd88c9ee4565a2555dcc0208ae</anchor>
@@ -22384,6 +22426,20 @@
       <name>vu</name>
       <anchorfile>a01632.html</anchorfile>
       <anchor>ae6c3ad6f7d81353b09689ea6e41eec34</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>al</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>ab64263a01616ad04b3f5212fd5742fd2</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>au</name>
+      <anchorfile>a01632.html</anchorfile>
+      <anchor>ab0b41cfc1ed67b789573ca788b6e79cf</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -22848,6 +22904,20 @@
       <anchor>a5b8304a1ea905fa0378a31dcf65b1460</anchor>
       <arglist></arglist>
     </member>
+    <member kind="typedef">
+      <type>std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt;&gt;</type>
+      <name>accelerationBounds_t</name>
+      <anchorfile>a01660.html</anchorfile>
+      <anchor>a10b7fc984b3fa946f5c59a4174a366b8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt;&gt;</type>
+      <name>torqueDerivativeBounds_t</name>
+      <anchorfile>a01660.html</anchorfile>
+      <anchor>a225813431ae1e40a0e452b103504b636</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="function">
       <type></type>
       <name>RobotModule</name>
@@ -22888,6 +22958,20 @@
       <name>bounds</name>
       <anchorfile>a01660.html</anchorfile>
       <anchor>ae05a5aab8f1a3edbecad4e4c7b29380d</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt; &gt; &amp;</type>
+      <name>accelerationBounds</name>
+      <anchorfile>a01660.html</anchorfile>
+      <anchor>a7a2fb5d58157ab88f81a263cdd583d90</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt; &gt; &amp;</type>
+      <name>torqueDerivativeBounds</name>
+      <anchorfile>a01660.html</anchorfile>
+      <anchor>a31833fa22143ca219c84c894bae0b5ae</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -23112,6 +23196,20 @@
       <name>_bounds</name>
       <anchorfile>a01660.html</anchorfile>
       <anchor>af19dd43ad8642aabc8c406e0972c5d65</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>accelerationBounds_t</type>
+      <name>_accelerationBounds</name>
+      <anchorfile>a01660.html</anchorfile>
+      <anchor>a392097f1562229e352b6079edd9e2941</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>torqueDerivativeBounds_t</type>
+      <name>_torqueDerivativeBounds</name>
+      <anchorfile>a01660.html</anchorfile>
+      <anchor>af57a4434d7756e4d9e4e014fed6f5efe</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
