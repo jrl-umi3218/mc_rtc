@@ -116,8 +116,9 @@ torqueDerivativeBounds_t torqueDerivative_bounds(const rbd::MultiBody & mb, cons
     }
     return default_bound;
   };
-  return std::make_tuple(fill_bound(mb, "lower torque-derivative", safe_bounds(0), &rbd::Joint::dof, -INFINITY, 0),
-                         fill_bound(mb, "upper torque-derivative", safe_bounds(1), &rbd::Joint::dof, INFINITY, 0));
+  return std::make_tuple(
+      fill_bound(mb, "lower torque-derivative", safe_bounds(0), &rbd::Joint::dof, -INFINITY, -INFINITY),
+      fill_bound(mb, "upper torque-derivative", safe_bounds(1), &rbd::Joint::dof, INFINITY, INFINITY));
 }
 
 template<typename schT, typename mapT>
