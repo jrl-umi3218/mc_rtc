@@ -71,17 +71,34 @@ struct MC_RBDYN_DLLAPI RobotModule
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-  /*! Holds information regarding the urdf bounds
+  /*! Holds information regarding the bounds (specified in the urdf)
    *
-   * The vector should have 8 entries:
+   * The vector should have 6 entries:
    * - lower/upper position bounds
    * - lower/upper velocity bounds
    * - lower/upper torque bounds
-   * - lower/upper torque-derivative bounds
    *
    * Each entry is a map joint name <-> bound
    */
   using bounds_t = std::vector<std::map<std::string, std::vector<double>>>;
+
+  /*! Holds information regarding the additional acceleration bounds (specified in addition to urdf limits)
+   *
+   * The vector should have 2 entries:
+   * - lower/upper acceleration bounds
+   *
+   * Each entry is a map joint name <-> bound
+   */
+  using accelerationBounds_t = std::vector<std::map<std::string, std::vector<double>>>;
+
+  /*! Holds information regarding the additional torque-derivative bounds (specified in addition to urdf limits)
+   *
+   * The vector should have 2 entries:
+   * - lower/upper torque-derivative bounds
+   *
+   * Each entry is a map joint name <-> bound
+   */
+  using torqueDerivativeBounds_t = std::vector<std::map<std::string, std::vector<double>>>;
 
   /*! Holds necessary information to create a gripper */
   struct MC_RBDYN_DLLAPI Gripper
@@ -229,7 +246,7 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /** Returns the robot's bounds obtained from parsing a urdf
    *
-   * The vector should hold 8 string -> vector<double> map
+   * The vector should hold 6 string -> vector<double> map
    *
    * Each map's keys are joint names and values are joint limits.
    *
@@ -237,11 +254,38 @@ struct MC_RBDYN_DLLAPI RobotModule
    * - joint limits (lower/upper)
    * - velocity limits (lower/upper)
    * - torque limits (lower/upper)
-   * - torque-derivative limits (lower/upper)
    */
   const std::vector<std::map<std::string, std::vector<double>>> & bounds() const
   {
     return _bounds;
+  }
+
+  /** Returns the robot's acceleration bounds
+   *
+   * The vector should hold 2 string -> vector<double> map
+   *
+   * Each map's keys are joint names and values are joint limits.
+   *
+   * They should be provided in the following order:
+   * - acceleration limits (lower/upper)
+   */
+  const std::vector<std::map<std::string, std::vector<double>>> & accelerationBounds() const
+  {
+    return _accelerationBounds;
+  }
+
+  /** Returns the robot's torque-derivative bounds
+   *
+   * The vector should hold 2 string -> vector<double> map
+   *
+   * Each map's keys are joint names and values are joint limits.
+   *
+   * They should be provided in the following order:
+   * - torque-derivative limits (lower/upper)
+   */
+  const std::vector<std::map<std::string, std::vector<double>>> & torqueDerivativeBounds() const
+  {
+    return _torqueDerivativeBounds;
   }
 
   /** Returns a default configuration for the robot
@@ -488,6 +532,10 @@ struct MC_RBDYN_DLLAPI RobotModule
   rbd::MultiBodyGraph mbg;
   /** \see bounds() */
   bounds_t _bounds;
+  /** \see accelerationBounds() */
+  accelerationBounds_t _accelerationBounds;
+  /** \see torqueDerivativeBounds() */
+  torqueDerivativeBounds_t _torqueDerivativeBounds;
   /** \see stance() */
   std::map<std::string, std::vector<double>> _stance;
   /** \see convexHull() */

@@ -76,7 +76,7 @@ public:
 
 private:
   /** Private function to build the proper MotionConstr */
-  void build_constr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, bool infTorque);
+  void build_constr(const mc_rbdyn::Robots & robots, unsigned int robotIndex, bool infTorque, double timeStep);
   /** Boolean: is this constraint inserted in the solver? */
   bool inSolver_;
   /** Robot index for the constraint */
