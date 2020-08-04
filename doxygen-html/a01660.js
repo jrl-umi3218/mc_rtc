@@ -38,6 +38,7 @@ var a01660 =
     [ "_accelerationBounds", "a01660.html#a392097f1562229e352b6079edd9e2941", null ],
     [ "_bodySensors", "a01660.html#a850abf7b9eb7e6ef1f3ca70fc495c6e4", null ],
     [ "_bounds", "a01660.html#af19dd43ad8642aabc8c406e0972c5d65", null ],
+    [ "_collision", "a01660.html#ab30a1f088ce9b008c0b619185554d751", null ],
     [ "_collisionTransforms", "a01660.html#a57b63a2f82b40741398b3a167b43592c", null ],
     [ "_commonSelfCollisions", "a01660.html#a064f95b0a8e134739d1f7ab194afe42f", null ],
     [ "_compoundJoints", "a01660.html#a0b4dd720e3b699b37947c3453a93e126", null ],

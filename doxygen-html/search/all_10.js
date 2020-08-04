@@ -55,7 +55,7 @@ var searchData=
   ['pointsfromorigin',['pointsFromOrigin',['../a01580.html#a027aa5e8df99bc421791c350e2793213',1,'mc_rbdyn::GripperSurface']]],
   ['policy',['Policy',['../a02044.html#a0fefb36635930cf5a9db966442756b9b',1,'mc_rtc::Logger']]],
   ['polygon',['Polygon',['../a01896.html',1,'mc_rtc::gui::plot::impl::Polygon&lt; GetT &gt;'],['../a01896.html#af7e96bad2cd93f2b0eaecbf94e8ce4c2',1,'mc_rtc::gui::plot::impl::Polygon::Polygon()'],['../a01336.html#a9b237bbf2c2441f2d80e9c2b825dcb1b',1,'mc_control::ControllerClient::polygon()'],['../a02284.html#a5b6cfbb78cfb49c05589e1f861355853',1,'mc_tasks::lipm_stabilizer::internal::Contact::polygon()'],['../a00745.html#a455aeb83363d1c76669333ae6827f638',1,'mc_rtc::gui::plot::Polygon()'],['../a00743.html#ac7c7c596bdb09e8c01e26e8fb53ce360',1,'mc_rtc::gui::Polygon(const std::string &amp;name, GetT get_fn)'],['../a00743.html#a2b137bae8372a9a84cdb28508e7de1dd',1,'mc_rtc::gui::Polygon(const std::string &amp;name, const Color &amp;color, GetT get_fn)'],['../a00743.html#a32d283e5c35e7fd7dcddbc0199bfdc06a4c0a11247d92f73fb84baa51e37a3263',1,'mc_rtc::gui::Polygon()'],['../a00745.html#a6e2b70125fa1d433838b9a8f2bf28c4da4c0a11247d92f73fb84baa51e37a3263',1,'mc_rtc::gui::plot::Polygon()']]],
-  ['polygon_2eh',['Polygon.h',['../a03270.html',1,'(Global Namespace)'],['../a00293.html',1,'(Global Namespace)']]],
+  ['polygon_2eh',['Polygon.h',['../a03274.html',1,'(Global Namespace)'],['../a00293.html',1,'(Global Namespace)']]],
   ['polygon_5futils_2eh',['polygon_utils.h',['../a00188.html',1,'']]],
   ['polygondescription',['PolygonDescription',['../a01912.html',1,'mc_rtc::gui::plot::PolygonDescription'],['../a01912.html#a5be9ba163395960fd1d95bc337b64f2b',1,'mc_rtc::gui::plot::PolygonDescription::PolygonDescription()'],['../a01912.html#a45ab1398054c73f857e813161bb32c62',1,'mc_rtc::gui::plot::PolygonDescription::PolygonDescription(const std::vector&lt; std::array&lt; double, 2 &gt;&gt; &amp;points, Color outline)']]],
   ['polygonimpl',['PolygonImpl',['../a01924.html',1,'mc_rtc::gui::PolygonImpl&lt; GetT &gt;'],['../a01924.html#af21492bee86877ea68740b1c555e8d45',1,'mc_rtc::gui::PolygonImpl::PolygonImpl(const std::string &amp;name, const Color &amp;color, GetT get_fn)'],['../a01924.html#a9c908c6704072d862688c0dcd3f1de73',1,'mc_rtc::gui::PolygonImpl::PolygonImpl()']]],
@@ -72,7 +72,7 @@ var searchData=
   ['positiontask_2eh',['PositionTask.h',['../a00485.html',1,'']]],
   ['poslambdaconstr',['posLambdaConstr',['../a02112.html#a4456741f8ae0b07c199415fda9b9aecf',1,'mc_solver::ContactConstraint']]],
   ['posture',['posture',['../a02340.html#a2299c6226e336a265adc283b2a600639',1,'mc_tasks::PostureTask::posture(const std::vector&lt; std::vector&lt; double &gt;&gt; &amp;p)'],['../a02340.html#ad3d36333bd6d95d5bc742ad1de920ab7',1,'mc_tasks::PostureTask::posture() const']]],
-  ['posturetask',['PostureTask',['../a02340.html',1,'mc_tasks::PostureTask'],['../a02340.html#a2236062d8e099d089e8f2c93dc4ba55e',1,'mc_tasks::PostureTask::PostureTask()'],['../a01464.html#a3d17bb7e20af4d312617d7d5f6288889',1,'mc_control::MCController::postureTask()']]],
+  ['posturetask',['PostureTask',['../a02340.html',1,'mc_tasks::PostureTask'],['../a01464.html#a3d17bb7e20af4d312617d7d5f6288889',1,'mc_control::MCController::postureTask()'],['../a02340.html#a2236062d8e099d089e8f2c93dc4ba55e',1,'mc_tasks::PostureTask::PostureTask()']]],
   ['posturetask_2eh',['PostureTask.h',['../a00488.html',1,'']]],
   ['posupdate_5f',['posUpdate_',['../a01496.html#a8b1666591ee20b8a1f45f7766b5ec694',1,'mc_observers::EncoderObserver']]],
   ['posw',['posW',['../a01492.html#a40a80d57f8974b3af7d4f65df95161ab',1,'mc_observers::BodySensorObserver::posW()'],['../a01504.html#ae0059d688bf9a9864199b4f8bece7e3e',1,'mc_observers::KinematicInertialPoseObserver::posW()'],['../a01632.html#a48843047df8893808f80971fa3f9257f',1,'mc_rbdyn::Robot::posW() const'],['../a01632.html#a54fe0da3fe099906b79cb20de8076659',1,'mc_rbdyn::Robot::posW(const sva::PTransformd &amp;pt)']]],
@@ -93,5 +93,5 @@ var searchData=
   ['pythonrwcallback',['PythonRWCallback',['../a01452.html',1,'mc_control']]],
   ['pythonstate',['PythonState',['../a01364.html',1,'mc_control::fsm']]],
   ['pythonstate_2eh',['PythonState.h',['../a00026.html',1,'']]],
-  ['types_2eh',['types.h',['../a03279.html',1,'']]]
+  ['types_2eh',['types.h',['../a03283.html',1,'']]]
 ];

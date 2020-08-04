@@ -143,6 +143,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2b2dc756cfb84c337de115384febab34"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01632.html#aeaf56b7bf79a4e2be37e3c8615d156ad">convex_pair_t</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01632.html#a2b2dc756cfb84c337de115384febab34">convex</a> (const std::string &amp;cName) const</td></tr>
 <tr class="memdesc:a2b2dc756cfb84c337de115384febab34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access a convex named <code>cName</code> (const)  <a href="#a2b2dc756cfb84c337de115384febab34">More...</a><br /></td></tr>
 <tr class="separator:a2b2dc756cfb84c337de115384febab34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa176323f1dd1dc8f29ad40ccd4b23c9d"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="a01632.html#aeaf56b7bf79a4e2be37e3c8615d156ad">convex_pair_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01632.html#aa176323f1dd1dc8f29ad40ccd4b23c9d">convexes</a> () const</td></tr>
+<tr class="memdesc:aa176323f1dd1dc8f29ad40ccd4b23c9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access all convexes available in this robot.  <a href="#aa176323f1dd1dc8f29ad40ccd4b23c9d">More...</a><br /></td></tr>
+<tr class="separator:aa176323f1dd1dc8f29ad40ccd4b23c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae30c16125ec220e6525f86339d894a3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01632.html#ae30c16125ec220e6525f86339d894a3c">addConvex</a> (const std::string &amp;<a class="el" href="a01632.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>, const std::string &amp;body, <a class="el" href="a01632.html#a28270fdeec598bc23d8761191a6226d4">S_ObjectPtr</a> <a class="el" href="a01632.html#a7fa487585e4b6d447c69ba78d9eca203">convex</a>, const sva::PTransformd &amp;X_b_c=sva::PTransformd::Identity())</td></tr>
 <tr class="memdesc:ae30c16125ec220e6525f86339d894a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a convex online.  <a href="#ae30c16125ec220e6525f86339d894a3c">More...</a><br /></td></tr>
 <tr class="separator:ae30c16125ec220e6525f86339d894a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1878,6 +1881,26 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="aa176323f1dd1dc8f29ad40ccd4b23c9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa176323f1dd1dc8f29ad40ccd4b23c9d">&#9670;&nbsp;</a></span>convexes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt;std::string, <a class="el" href="a01632.html#aeaf56b7bf79a4e2be37e3c8615d156ad">convex_pair_t</a>&gt;&amp; mc_rbdyn::Robot::convexes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Access all convexes available in this robot. </p>
+<dl class="section return"><dt>Returns</dt><dd>a map where keys are the convex name and values are those returned by <a class="el" href="a01632.html#a7fa487585e4b6d447c69ba78d9eca203">convex</a> </dd></dl>
+
+</div>
+</div>
 <a id="a411485264496b268c8ace71adcc3e75e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a411485264496b268c8ace71adcc3e75e">&#9670;&nbsp;</a></span>cop()</h2>
 
@@ -2727,7 +2750,7 @@ template&lt;typename T &gt; </div>
 
 <p>Access all grippers. </p>
 
-<p class="reference">References <a class="el" href="a03237.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>, <a class="el" href="a00720.html#ga70b316b2f0c0caf547e160e74c2a029d">mc_rbdyn::robotFromConfig()</a>, <a class="el" href="a00720.html#gaf9b711ec2baa5684b8f422d740464b5f">mc_rbdyn::robotIndexFromConfig()</a>, and <a class="el" href="a00720.html#ga40325ac769295d23f270976eead26245">mc_rbdyn::robotNameFromConfig()</a>.</p>
+<p class="reference">References <a class="el" href="a03241.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>, <a class="el" href="a00720.html#ga70b316b2f0c0caf547e160e74c2a029d">mc_rbdyn::robotFromConfig()</a>, <a class="el" href="a00720.html#gaf9b711ec2baa5684b8f422d740464b5f">mc_rbdyn::robotIndexFromConfig()</a>, and <a class="el" href="a00720.html#ga40325ac769295d23f270976eead26245">mc_rbdyn::robotNameFromConfig()</a>.</p>
 
 </div>
 </div>
@@ -4590,7 +4613,7 @@ template&lt;typename T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00727.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a01632.html">Robot</a></li>
-    <li class="footer">Generated on Mon Aug 3 2020 15:31:39 for mc_rtc by
+    <li class="footer">Generated on Tue Aug 4 2020 05:17:40 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

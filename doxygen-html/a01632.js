@@ -55,6 +55,7 @@ var a01632 =
     [ "comVelocity", "a01632.html#aa17c3d6b4bff8b9bcbedad822a86fdbc", null ],
     [ "convex", "a01632.html#a7fa487585e4b6d447c69ba78d9eca203", null ],
     [ "convex", "a01632.html#a2b2dc756cfb84c337de115384febab34", null ],
+    [ "convexes", "a01632.html#aa176323f1dd1dc8f29ad40ccd4b23c9d", null ],
     [ "cop", "a01632.html#a411485264496b268c8ace71adcc3e75e", null ],
     [ "copW", "a01632.html#a2042bcdb8f612347b16e72c1853d0f1a", null ],
     [ "copy", "a01632.html#a36e2cb8d08978a8d62e117b9b6a7b8ce", null ],

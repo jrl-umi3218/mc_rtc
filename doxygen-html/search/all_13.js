@@ -2,7 +2,7 @@ var searchData=
 [
   ['mc_5frbdyn',['mc_rbdyn',['../a00739.html',1,'sch']]],
   ['s_5fobjectptr',['S_ObjectPtr',['../a01632.html#a28270fdeec598bc23d8761191a6226d4',1,'mc_rbdyn::Robot']]],
-  ['safety',['Safety',['../a01668.html',1,'mc_rbdyn::RobotModule::Gripper::Safety'],['../a01664.html#ae5dccc3ca07db76cec2cd0e70cc0bff5',1,'mc_rbdyn::RobotModule::Gripper::safety() const'],['../a01668.html#a2b38f18523213a233bff74f28f1a40c6',1,'mc_rbdyn::RobotModule::Gripper::Safety::Safety()'],['../a01668.html#a8dd63f7c20eda1e3f4f891a8d4171095',1,'mc_rbdyn::RobotModule::Gripper::Safety::Safety(double percentVMax, double actualCommandDiffTrigger=DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER, double releaseSafetyOffset=DEFAULT_RELEASE_OFFSET, unsigned int overCommandLimitIterN=DEFAULT_OVER_COMMAND_LIMIT_ITER_N)']]],
+  ['safety',['Safety',['../a01668.html',1,'mc_rbdyn::RobotModule::Gripper::Safety'],['../a01668.html#a2b38f18523213a233bff74f28f1a40c6',1,'mc_rbdyn::RobotModule::Gripper::Safety::Safety()'],['../a01668.html#a8dd63f7c20eda1e3f4f891a8d4171095',1,'mc_rbdyn::RobotModule::Gripper::Safety::Safety(double percentVMax, double actualCommandDiffTrigger=DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER, double releaseSafetyOffset=DEFAULT_RELEASE_OFFSET, unsigned int overCommandLimitIterN=DEFAULT_OVER_COMMAND_LIMIT_ITER_N)'],['../a01664.html#ae5dccc3ca07db76cec2cd0e70cc0bff5',1,'mc_rbdyn::RobotModule::Gripper::safety()']]],
   ['sagital',['sagital',['../a02284.html#ac7880a19753e73389edd2b9ed0c120d8',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
   ['sagittal',['sagittal',['../a02284.html#a335b37445d20098b896931675aaedc34',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
   ['samples_5f',['samples_',['../a02352.html#a55ddc08175e2c18024ba3aba28c9caa7',1,'mc_tasks::SplineTrajectoryTask::samples_()'],['../a02380.html#a98f852018150c074fd1f367f8435dcb4',1,'mc_trajectory::Spline::samples_()']]],
@@ -83,7 +83,7 @@ var searchData=
   ['slidingsurface_5f',['slidingSurface_',['../a01416.html#a6b9672879e70a7220fc474ac8aec7d6f',1,'mc_control::fsm::SlidingFootContactState']]],
   ['smoothtask',['SmoothTask',['../a02348.html',1,'mc_tasks::SmoothTask&lt; objT &gt;'],['../a02348.html#a9ceb8c25b164dea48c57db36aae1f788',1,'mc_tasks::SmoothTask::SmoothTask()']]],
   ['smoothtask_2eh',['SmoothTask.h',['../a00494.html',1,'']]],
-  ['solid',['Solid',['../a03279.html#ae070f931bda093c33a301115abc450b1',1,'Solid():&#160;types.h'],['../a00743.html#a23166295a3983f35cb0fa510b4c156c9ae41480b6bbfbf7407974a88d3d34f4fa',1,'mc_rtc::gui::Solid()']]],
+  ['solid',['Solid',['../a03283.html#ae070f931bda093c33a301115abc450b1',1,'Solid():&#160;types.h'],['../a00743.html#a23166295a3983f35cb0fa510b4c156c9ae41480b6bbfbf7407974a88d3d34f4fa',1,'mc_rtc::gui::Solid()']]],
   ['solveandbuildtime',['solveAndBuildTime',['../a02196.html#a53c4d41439ee0e428928a7318fde3f07',1,'mc_solver::QPSolver']]],
   ['solver',['solver',['../a01464.html#aa6a9b2cd350ec94a1f1bda12c3133c28',1,'mc_control::MCController::solver() const'],['../a01464.html#abc7651033ec24b18d662797fc3bb48fa',1,'mc_control::MCController::solver()']]],
   ['solvetime',['solveTime',['../a02196.html#a58d895e4be36ff13a42b481f28576e38',1,'mc_solver::QPSolver']]],

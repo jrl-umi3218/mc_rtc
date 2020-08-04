@@ -391,10 +391,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "a01400.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "a01704.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "a01696.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "a01696.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "a01704.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "a01424.html", null ],
     [ "mc_control::fsm::TransitionMap", "a01428.html", null ],
