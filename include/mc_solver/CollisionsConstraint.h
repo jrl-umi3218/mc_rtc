@@ -65,12 +65,21 @@ public:
   bool removeCollisionByBody(QPSolver & solver, const std::string & byName, const std::string & b2Name);
 
   /** Add a collision represented by mc_rbdyn::Collision
-   * \param solver The solver into which this constraint was added
-   * \param col The collision that should be added
+   *
+   * The collision object is allowed to specify wildcard names to add multiple
+   * collisions at once, if body1 is named bodyA* and body2 is named bodyB*
+   * then collision constraints will be added for all convex objects in robot1
+   * (resp. robot2) that start with bodyA (resp. bodyB)
+   *
+   * \param solver The solver into which this constraint was added \param col
+   * The collision that should be added
    */
   void addCollision(QPSolver & solver, const mc_rbdyn::Collision & col);
 
   /** Add a set of collisions
+   *
+   * \see addCollision for details on wildcard collision specification
+   *
    * \param solver The solver into which this constraint was added
    * \param cols The set of collisions that should be added
    */
@@ -102,6 +111,7 @@ private:
   std::string __keyByNames(const std::string & name1, const std::string & name2);
   int __createCollId(const mc_rbdyn::Collision & col);
   std::pair<int, mc_rbdyn::Collision> __popCollId(const std::string & name1, const std::string & name2);
+  /** Actually adds the collision to the constraint, handles id creation and wildcard support */
   void __addCollision(const mc_solver::QPSolver & solver, const mc_rbdyn::Collision & col);
 
   /* Internal management for collision display */
