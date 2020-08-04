@@ -544,6 +544,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::map<std::string, std::pair<std::string, std::string>> _stpbvHull;
   /** Holds visual representation of bodies in the robot */
   VisualMap _visual;
+  /** Holds collision representation of bodies in the robot */
+  VisualMap _collision;
   /** \see collisionTransforms() */
   std::map<std::string, sva::PTransformd> _collisionTransforms;
   /** \see flexibility() */

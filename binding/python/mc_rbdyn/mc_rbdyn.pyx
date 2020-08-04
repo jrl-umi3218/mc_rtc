@@ -800,6 +800,16 @@ cdef class Robot(object):
       name = name.encode(u'ascii')
     return (self.impl.convex(name).first,sch.S_ObjectFromPtr(self.impl.convex(name).second.get()))
 
+  def convexes(self):
+    self.__is_valid()
+    end = deref(self.impl).convexes().const_end()
+    it = deref(self.impl).convexes().const_begin()
+    ret = {}
+    while it  != end:
+      ret[deref(it).first] = self.convex(deref(it).first)
+      preinc(it)
+    return ret
+
   def bodyTransform(self, bName):
     self.__is_valid()
     if isinstance(bName, unicode):
