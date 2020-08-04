@@ -143,23 +143,6 @@ void CollisionsConstraint::__addCollision(const mc_solver::QPSolver & solver, co
   {
     return;
   }
-  if(col.body1.back() == '*')
-  {
-    std::string search = col.body1.substr(0, col.body1.size() - 1);
-    for(const auto & convex : r1.convexes())
-    {
-      const auto & cName = convex.first;
-      if(cName.size() < search.size())
-      {
-        continue;
-      }
-      if(cName.substr(0, search.size()) == search)
-      {
-        __addCollision(solver, {cName, col.body2, col.iDist, col.sDist, col.damping});
-      }
-    }
-    return;
-  }
   const auto & body1 = r1.convex(col.body1);
   const auto & body2 = r2.convex(col.body2);
   const sva::PTransformd & X_b1_c = r1.collisionTransform(col.body1);
