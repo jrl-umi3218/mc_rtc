@@ -163,12 +163,20 @@ void CollisionsConstraint::__addCollision(const mc_solver::QPSolver & solver, co
       gui_ = solver.gui();
       category_ = {"Collisions", r1.name() + "/" + r2.name()};
     }
+    addMonitorButton(collId, col);
+  }
+}
+
+void CollisionsConstraint::addMonitorButton(int collId, const mc_rbdyn::Collision & col)
+{
+  if(gui_ && inSolver_)
+  {
     auto & gui = *gui_;
-    std::string collisionName = col.body1 + "/" + col.body2;
+    std::string name = col.body1 + "/" + col.body2;
     category_.push_back("Monitors");
-    gui.addElement(category_, mc_rtc::gui::Checkbox("Monitor " + collisionName,
-                                                    [collId, this]() { return monitored_.count(collId) != 0; },
-                                                    [collId, this]() { toggleCollisionMonitor(collId); }));
+    gui.addElement(category_,
+                   mc_rtc::gui::Checkbox("Monitor " + name, [collId, this]() { return monitored_.count(collId) != 0; },
+                                         [collId, this]() { toggleCollisionMonitor(collId); }));
     category_.pop_back();
   }
 }
@@ -232,17 +240,23 @@ void CollisionsConstraint::addCollisions(QPSolver & solver, const std::vector<mc
 
 void CollisionsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)
 {
-  if(collConstr)
+  if(collConstr && !inSolver_)
   {
+    inSolver_ = true;
     collConstr->addToSolver(mbs, solver);
+    for(const auto & cols : collIdDict)
+    {
+      addMonitorButton(cols.second.first, cols.second.second);
+    }
   }
 }
 
 void CollisionsConstraint::removeFromSolver(tasks::qp::QPSolver & solver)
 {
-  if(collConstr)
+  if(collConstr && inSolver_)
   {
     collConstr->removeFromSolver(solver);
+    inSolver_ = false;
     if(gui_)
     {
       gui_->removeCategory(category_);

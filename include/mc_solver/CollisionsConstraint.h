@@ -118,7 +118,10 @@ private:
   std::unordered_set<int> monitored_;
   std::shared_ptr<mc_rtc::gui::StateBuilder> gui_;
   std::vector<std::string> category_;
+  void addMonitorButton(int collId, const mc_rbdyn::Collision & col);
   void toggleCollisionMonitor(int collId);
+
+  bool inSolver_ = false;
 
 public:
   /** \deprecated{Default constructor, not made for general usage} */

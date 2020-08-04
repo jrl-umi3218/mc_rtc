@@ -65,7 +65,7 @@ bound_t fill_bound(const rbd::MultiBody & mb,
     }
   }
   return res;
-};
+}
 
 /** Generate bounds compatible with the given MultiBody
  *
