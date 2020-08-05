@@ -87,6 +87,10 @@ protected:
 
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
 
+  virtual void addToLogger(mc_rtc::Logger & logger) override;
+
+  virtual void removeFromLogger(mc_rtc::Logger & logger) override;
+
 private:
   /** True if added to solver */
   bool inSolver_ = false;
