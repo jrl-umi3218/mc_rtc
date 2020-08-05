@@ -453,8 +453,6 @@ public:
     std::shared_ptr<mc_rbdyn::RobotModule> main_robot_module;
 
     std::vector<std::string> observer_module_paths = {};
-    std::vector<std::string> enabled_observers = {};
-    std::unordered_map<std::string, mc_rtc::Configuration> observer_configs;
 
     std::vector<std::string> global_plugin_paths = {};
     std::vector<std::string> global_plugins = {};

@@ -144,13 +144,13 @@ void ObserverPipeline::addToGUI()
   {
     if(observer.gui)
     {
-      observer.observer->addToGUI_(ctl_, {"ObserverPipeline", name_});
+      observer.observer->addToGUI_(ctl_, {"ObserverPipelines", name_});
     }
   }
 }
 void ObserverPipeline::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  gui.removeCategory({"ObserverPipeline", name_});
+  gui.removeCategory({"ObserverPipelines", name_});
 }
 
 } // namespace mc_observers

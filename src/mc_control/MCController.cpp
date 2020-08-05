@@ -142,6 +142,16 @@ void MCController::removeRobot(const std::string & name)
 
 void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
 {
+  if(config.has("EnabledObservers"), config.has("RunObservers") || config.has("UpdateObservers"))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[{}] The observer pipeline can no longer be configured by \"RunObservers\" and \"UpdateObservers\".\nMultiple "
+        "pipelines are now supported, allowing for estimation of multiple robots and/or multiple observations of the "
+        "same robot.\nFor details on upgrating, please refer to:\n"
+        "- The observer pipelines tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html\n"
+        "- The JSON Schema documentation: https://jrl-umi3218.github.io/mc_rtc/json.html#Observers/ObserverPipelines",
+        name_);
+  }
   if(!config.has("ObserverPipelines"))
   {
     mc_rtc::log::warning("[MCController::{}] No state observation pipeline configured: the state of the real robots "

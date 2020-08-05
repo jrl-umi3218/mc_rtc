@@ -168,24 +168,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
   }
 
-  // Vector of observers module names (or single observer name)
-  enabled_observers = mc_rtc::fromVectorOrElement<std::string>(config, "EnabledObservers", {});
-  if(config.has("Observers"))
-  {
-    const auto & oc = config("Observers");
-    for(const auto & observerName : enabled_observers)
-    {
-      if(oc.has(observerName))
-      {
-        observer_configs[observerName] = oc(observerName);
-      }
-      else
-      {
-        observer_configs[observerName] = {};
-      }
-    }
-  }
-
   ///////////////
   //  Plugins  //
   ///////////////

@@ -82,10 +82,6 @@ public:
    * behaviour is to call the run() function of each loaded observer and update
    * the realRobot instance when desired.
    *
-   * The default behaviour is determined by the following configuration entries:
-   * - "EnabledObservers": ["Encoder", "BodySensor", "KinematicInertial"],
-   * - "UpdateObservers": ["Encoder", "KinematicInertial"],
-   *
    * This is meant to run in real-time hence some precaution should apply (e.g.
    * no i/o blocking calls, no thread instantiation and such)
    *
