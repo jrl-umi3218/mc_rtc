@@ -464,8 +464,6 @@ bool MCGlobalController::run()
         bs.angularVelocity(current.angularVelocity());
         bs.acceleration(current.acceleration());
       }
-      next_controller_->anchorFrame(controller_->anchorFrame());
-      next_controller_->anchorFrameReal(controller_->anchorFrameReal());
       next_controller_->robot().encoderValues(controller_->robot().encoderValues());
       next_controller_->realRobot().encoderValues(controller_->robot().encoderValues());
       next_controller_->robot().encoderVelocities(controller_->robot().encoderVelocities());

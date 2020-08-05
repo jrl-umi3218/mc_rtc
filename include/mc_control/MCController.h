@@ -89,12 +89,12 @@ public:
    * This is meant to run in real-time hence some precaution should apply (e.g.
    * no i/o blocking calls, no thread instantiation and such)
    *
-   * \note Some estimators are likely to require extra information. For this, each observer
-   * has const access to the MCController instance, and can thus access all const information
-   * available from it. The default estimators provided by mc_rtc (currently)
-   * rely on robots() and realRobots() information. Additionally, the
-   * KinematicInertialObserver requires an anchor frame with the environement.
-   * This is to be provided by overriding the anchorFrame() method.
+   * \note Some estimators are likely to require extra information from the control.
+   * Each observer has access to the `MCController` instance, and may access all information
+   * available from it (robots, etc). In addition some observers may require
+   * additional information that is not part of the `MCController` instance. In
+   * that case, it may be provided though the `Datastore` (see each observer's
+   * documentation for specific requirements).
    *
    * \note If the default pipeline behaviour does not suit you, you may override
    * this method.
@@ -115,37 +115,6 @@ public:
   bool hasObserverPipeline(const std::string & name) const;
   mc_observers::ObserverPipeline & observerPipeline(const std::string & name);
   const mc_observers::ObserverPipeline & observerPipeline(const std::string & name) const;
-
-  /*! @brief Returns a kinematic anchor frame.
-   *  This is typically used by state observers such as mc_observers::KinematicInertialObserver to obtain a reference
-   * frame for the estimation. In the case of a biped robot, this is typically a frame in-between the feet of the robot.
-   * See the specific requirements for the active observers in your controller.
-   *
-   * @returns An anchor frame in-between the feet.
-   */
-  const sva::PTransformd & anchorFrame() const;
-
-  /**
-   * @brief Sets the anchor frame
-   * @param anchor Anchor frame
-   *
-   * \see const sva::PTransformd & anchorFrame() const;
-   */
-  void anchorFrame(const sva::PTransformd & anchor);
-
-  /**
-   * @brief Returns the anchor frame computed from the real robot
-   *
-   * \see const sva::PTransformd & anchorFrame() const;
-   */
-  const sva::PTransformd & anchorFrameReal() const;
-  /**
-   * @brief Sets the real robot's anchor frame
-   * @param anchor Anchor frame
-   *
-   * \see const sva::PTransformd & anchorFrameReal() const;
-   */
-  void anchorFrameReal(const sva::PTransformd & anchor);
 
   /** Can be called in derived class instead of run to use a feedback strategy
    * different from the default one
@@ -376,14 +345,6 @@ protected:
 
   /** State observation pipelines for this controller */
   std::vector<mc_observers::ObserverPipeline> observerPipelines_;
-
-  /**
-   * Anchor frame used by the kinematic observers
-   *
-   * \note To be replaced in the future by a more generic message-passing mechanism
-   */
-  sva::PTransformd anchorFrame_ = sva::PTransformd::Identity();
-  sva::PTransformd anchorFrameReal_ = sva::PTransformd::Identity();
 
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;

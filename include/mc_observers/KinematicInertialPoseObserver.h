@@ -59,9 +59,9 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
   void updateRobots(mc_control::MCController & ctl) override;
 
   /*! \brief Get floating-base pose in the world frame. */
-  sva::PTransformd posW() const
+  const sva::PTransformd & posW() const
   {
-    return {orientation_, position_};
+    return pose_;
   }
 
 protected:
@@ -89,14 +89,21 @@ protected:
   void estimatePosition(const mc_control::MCController & ctl);
 
 protected:
-  std::string robot_; /**< Robot to observe */
+  std::string robot_; /**< Robot to observe (default main robot) */
+  std::string realRobot_; /**< Corresponding real robot (default main real robot) */
   std::string imuSensor_; /**< BodySensor containting IMU readings */
 
+  std::string anchorFrameFunction_ = "Observer::anchorFrame"; ///< Name of datastore entry for the anchor frame function
+  sva::PTransformd X_0_anchorFrame_ =
+      sva::PTransformd::Identity(); ///< Control anchor frame (provided through the datastore)
+  sva::PTransformd X_0_anchorFrameReal_ =
+      sva::PTransformd::Identity(); ///< Real anchor frame (provided through the datastore)
+
 private:
-  Eigen::Matrix3d orientation_ = Eigen::Matrix3d::Identity(); /**< Rotation from world to floating-base frame */
-  Eigen::Vector3d position_ = Eigen::Vector3d::Zero(); /**< Translation of floating-base in world frame */
-  bool showAnchorFrame_ = false; /**< Whether to show the anchor frames in the GUI */
-  bool log_ = false; /**< Whether to log the estimation results */
+  sva::PTransformd pose_ = sva::PTransformd::Identity(); ///< Estimated pose of the floating-base in world frame */
+  bool showAnchorFrame_ = false; /**< Whether to show the anchor frame in the GUI */
+  bool showAnchorFrameReal_ = false; /**< Whether to show the anchor frame in the GUI */
+  bool showPose_ = false; /**< Whether to show the anchor frame in the GUI */
 };
 
 } // namespace mc_observers

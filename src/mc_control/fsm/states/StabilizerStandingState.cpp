@@ -98,9 +98,9 @@ void StabilizerStandingState::start(Controller & ctl)
     targetCoM(ctl.robot().com());
   }
 
-  // Update anchor frame for the KinematicInertial observer
-  ctl.anchorFrame(stabilizerTask_->anchorFrame());
-  ctl.anchorFrameReal(stabilizerTask_->anchorFrameReal());
+  // Fixme: the stabilizer needs the observed state immediatly
+  ctl.datastore().make_call("Observer::anchorFrame",
+                            [this](const mc_rbdyn::Robot & robot) { return stabilizerTask_->anchorFrame(robot); });
 
   if(optionalGUI_ && stabilizerTask_->inDoubleSupport())
   {
@@ -211,9 +211,6 @@ bool StabilizerStandingState::run(Controller & ctl)
 
   // Update stabilizer target
   stabilizerTask_->target(pendulum_.com(), pendulum_.comd(), pendulum_.comdd(), pendulum_.zmp());
-  // Update anchor frame for the KinematicInertial observer
-  ctl.anchorFrame(stabilizerTask_->anchorFrame());
-  ctl.anchorFrameReal(stabilizerTask_->anchorFrameReal());
 
   if(!hasCompletion_)
   {

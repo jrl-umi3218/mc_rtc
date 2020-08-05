@@ -351,26 +351,6 @@ void MCController::supported_robots(std::vector<std::string> & out) const
   out = {};
 }
 
-const sva::PTransformd & MCController::anchorFrame() const
-{
-  return anchorFrame_;
-}
-
-void MCController::anchorFrame(const sva::PTransformd & anchor)
-{
-  anchorFrame_ = anchor;
-}
-
-const sva::PTransformd & MCController::anchorFrameReal() const
-{
-  return anchorFrameReal_;
-}
-
-void MCController::anchorFrameReal(const sva::PTransformd & anchor)
-{
-  anchorFrameReal_ = anchor;
-}
-
 void MCController::stop()
 {
   for(auto & pipeline : observerPipelines_)

@@ -224,15 +224,13 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 
   /**
    * @brief computes the anchorFrame compatible with the state observers
-   * (KinematicInertial)
+   * (e.g KinematicInertial)
+   *
+   * @param robot Robot from which the frame will be computed
    *
    * @return Anchor frame in-between the feet according to leftFootRatio()
    */
-  sva::PTransformd anchorFrame() const;
-  /**
-   * @brief Returns the anchor frame computed from real robot
-   */
-  sva::PTransformd anchorFrameReal() const;
+  sva::PTransformd anchorFrame(const mc_rbdyn::Robot & robot) const;
 
   /** Provides a static target to the stabilizer.
    * - CoM target : user-provided

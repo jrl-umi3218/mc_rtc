@@ -17,9 +17,13 @@ namespace mc_observers
 void KinematicInertialPoseObserver::configure(const mc_control::MCController & ctl,
                                               const mc_rtc::Configuration & config)
 {
-  config("showAnchorFrame", showAnchorFrame_);
   robot_ = config("robot", ctl.robot().name());
+  realRobot_ = config("realRobot", ctl.realRobot().name());
   imuSensor_ = config("imuBodySensor", ctl.robot().bodySensor().name());
+  config("anchorFrame", anchorFrameFunction_);
+  config("showAnchorFrame", showAnchorFrame_);
+  config("showAnchorFrameReal", showAnchorFrameReal_);
+  config("showPose", showPose_);
 }
 
 void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)
@@ -29,6 +33,13 @@ void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)
 
 bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
 {
+  if(!ctl.datastore().has("Observer::anchorFrame"))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "{} requires an \"Observer::anchorFrame\" function in the datastore", name());
+  }
+  X_0_anchorFrame_ = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.robot(robot_));
+  X_0_anchorFrameReal_ = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.realRobot(realRobot_));
   estimateOrientation(ctl.robot(robot_), ctl.realRobot(robot_));
   estimatePosition(ctl);
   return true;
@@ -50,32 +61,30 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
   Eigen::Matrix3d E_0_mBase = X_rIMU_rBase.rotation() * E_0_mIMU;
   Eigen::Vector3d cRPY = mc_rbdyn::rpyFromMat(E_0_cBase);
   Eigen::Vector3d mRPY = mc_rbdyn::rpyFromMat(E_0_mBase);
-  orientation_ = mc_rbdyn::rpyToMat(mRPY(0), mRPY(1), cRPY(2));
+  pose_.rotation() = mc_rbdyn::rpyToMat(mRPY(0), mRPY(1), cRPY(2));
 }
 
 void KinematicInertialPoseObserver::estimatePosition(const mc_control::MCController & ctl)
 {
-  // FIXME not multi-robot. Use datastore instead
-  const sva::PTransformd & X_0_c = ctl.anchorFrame();
-  const sva::PTransformd & X_0_s = ctl.anchorFrameReal();
-  const sva::PTransformd X_real_s = X_0_s * ctl.realRobot(robot_).posW().inv();
-  const Eigen::Vector3d & r_c_0 = X_0_c.translation();
+  const sva::PTransformd X_real_s = X_0_anchorFrameReal_ * ctl.realRobot(robot_).posW().inv();
+  const Eigen::Vector3d & r_c_0 = X_0_anchorFrame_.translation();
   const Eigen::Vector3d & r_s_real = X_real_s.translation();
-  position_ = r_c_0 - orientation_.transpose() * r_s_real;
+  pose_.translation() = r_c_0 - pose_.rotation().transpose() * r_s_real;
 }
 
 void KinematicInertialPoseObserver::updateRobots(mc_control::MCController & ctl)
 {
   auto & robot = ctl.realRobot(robot_);
-  robot.posW(sva::PTransformd{orientation_, position_});
+  robot.posW(pose_);
 }
 
 void KinematicInertialPoseObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
 {
   auto & logger = ctl.logger();
-  logger.addLogEntry(category + "_posW", [this]() { return posW(); });
-  logger.addLogEntry(category + "_anchorFrame", [&ctl]() { return ctl.anchorFrame(); });
-  logger.addLogEntry(category + "_anchorFrameReal", [&ctl]() { return ctl.anchorFrameReal(); });
+  logger.addLogEntry(category + "_posW", [this]() -> const sva::PTransformd & { return pose_; });
+  logger.addLogEntry(category + "_anchorFrame", [this]() -> const sva::PTransformd & { return X_0_anchorFrame_; });
+  logger.addLogEntry(category + "_anchorFrameReal",
+                     [this]() -> const sva::PTransformd & { return X_0_anchorFrameReal_; });
 }
 
 void KinematicInertialPoseObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
@@ -88,12 +97,54 @@ void KinematicInertialPoseObserver::removeFromLogger(mc_control::MCController & 
 
 void KinematicInertialPoseObserver::addToGUI(mc_control::MCController & ctl, const std::vector<std::string> & category)
 {
-  if(showAnchorFrame_)
-  {
-    ctl.gui()->addElement(category,
-                          mc_rtc::gui::Transform("anchorFrameControl", [&ctl]() { return ctl.anchorFrame(); }),
-                          mc_rtc::gui::Transform("anchorFrameReal", [&ctl]() { return ctl.anchorFrameReal(); }));
-  }
+  auto showHideAnchorFrame = [&ctl, category](const std::string & name, bool show,
+                                              const sva::PTransformd & anchorFrame) {
+    auto cat = category;
+    cat.push_back("Markers");
+    ctl.gui()->removeElement(cat, name);
+    if(show)
+    {
+      ctl.gui()->addElement(
+          cat, mc_rtc::gui::Transform(name, [&anchorFrame]() -> const sva::PTransformd & { return anchorFrame; }));
+    }
+  };
+  auto showHidePose = [this, category, &ctl]() {
+    std::string name = "Pose";
+    auto cat = category;
+    cat.push_back("Markers");
+    ctl.gui()->removeElement(cat, name);
+    if(showPose_)
+    {
+      ctl.gui()->addElement(cat, mc_rtc::gui::Transform(name, [this]() -> const sva::PTransformd & { return pose_; }));
+    }
+  };
+
+  ctl.gui()->addElement(
+      category,
+      mc_rtc::gui::Checkbox("Show anchor frame (control)", [this]() { return showAnchorFrame_; },
+                            [this, showHideAnchorFrame]() {
+                              showAnchorFrame_ = !showAnchorFrame_;
+                              showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
+                            }),
+      mc_rtc::gui::Checkbox("Show anchor frame (real)", [this]() { return showAnchorFrameReal_; },
+                            [this, showHideAnchorFrame]() {
+                              showAnchorFrameReal_ = !showAnchorFrameReal_;
+                              showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
+                            }),
+      mc_rtc::gui::Checkbox("Show anchor frame (real)", [this]() { return showAnchorFrameReal_; },
+                            [this, showHideAnchorFrame]() {
+                              showAnchorFrameReal_ = !showAnchorFrameReal_;
+                              showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
+                            }),
+      mc_rtc::gui::Checkbox("Show pose", [this]() { return showPose_; },
+                            [this, showHidePose]() {
+                              showPose_ = !showPose_;
+                              showHidePose();
+                            }));
+
+  showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
+  showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
+  showHidePose();
 }
 
 } // namespace mc_observers

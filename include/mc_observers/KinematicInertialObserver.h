@@ -59,6 +59,8 @@ protected:
   void addToGUI(mc_control::MCController &, const std::vector<std::string> & category) override;
 
 private:
+  bool showVelocity_ = true;
+
   /** Previous estimated position.
    * Used to compute finite differences estimation of the velocity */
   sva::PTransformd posWPrev_;

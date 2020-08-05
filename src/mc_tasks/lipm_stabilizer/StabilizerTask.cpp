@@ -520,16 +520,10 @@ void StabilizerTask::computeLeftFootRatio()
   }
 }
 
-sva::PTransformd StabilizerTask::anchorFrame() const
+sva::PTransformd StabilizerTask::anchorFrame(const mc_rbdyn::Robot & robot) const
 {
-  return sva::interpolate(robot().surfacePose(footTasks.at(ContactState::Left)->surface()),
-                          robot().surfacePose(footTasks.at(ContactState::Right)->surface()), leftFootRatio_);
-}
-
-sva::PTransformd StabilizerTask::anchorFrameReal() const
-{
-  return sva::interpolate(realRobot().surfacePose(footTasks.at(ContactState::Left)->surface()),
-                          realRobot().surfacePose(footTasks.at(ContactState::Right)->surface()), leftFootRatio_);
+  return sva::interpolate(robot.surfacePose(footTasks.at(ContactState::Left)->surface()),
+                          robot.surfacePose(footTasks.at(ContactState::Right)->surface()), leftFootRatio_);
 }
 
 void StabilizerTask::updateZMPFrame()
@@ -623,7 +617,7 @@ void StabilizerTask::run()
   comTask->refAccel(comddTarget_);
 
   // Update orientation tasks according to feet orientation
-  sva::PTransformd X_0_a = anchorFrame();
+  sva::PTransformd X_0_a = anchorFrame(robot());
   Eigen::Matrix3d pelvisOrientation = X_0_a.rotation();
   pelvisTask->orientation(pelvisOrientation);
   torsoTask->orientation(mc_rbdyn::rpyToMat({0, c_.torsoPitch, 0}) * pelvisOrientation);
