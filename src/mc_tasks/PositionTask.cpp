@@ -80,7 +80,7 @@ void PositionTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_curPos", [this]() -> const Eigen::Vector3d & {
     return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
   });
-  logger.addLogEntry(name_ + "_curVel", [this]() -> const Eigen::Vector3d & { return this->speed(); });
+  logger.addLogEntry(name_ + "_curVel", [this]() -> const Eigen::VectorXd & { return errorT->speed(); });
   // logger.addLogEntry(
   //     name_ + "_curAccel", [this]() -> const Eigen::Vector3d & { return
   //     robots.robot(rIndex).mbc().bodyAccW[bIndex].linear(); });
