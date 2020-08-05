@@ -77,12 +77,13 @@ void PositionTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_target", [this]() { return position(); });
-  logger.addLogEntry(
-      name_ + "_curPos", [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); });
-  logger.addLogEntry(
-      name_ + "_curVel", [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyVelW[bIndex].linear(); });
+  logger.addLogEntry(name_ + "_curPos", [this]() -> const Eigen::Vector3d & {
+    return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
+  });
+  logger.addLogEntry(name_ + "_curVel", [this]() -> const Eigen::Vector3d & { return this->speed(); });
   // logger.addLogEntry(
-  //     name_ + "_curAccel", [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyAccW[bIndex].linear(); });
+  //     name_ + "_curAccel", [this]() -> const Eigen::Vector3d & { return
+  //     robots.robot(rIndex).mbc().bodyAccW[bIndex].linear(); });
 }
 
 void PositionTask::removeFromLogger(mc_rtc::Logger & logger)
