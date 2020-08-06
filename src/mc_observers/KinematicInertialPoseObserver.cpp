@@ -35,8 +35,11 @@ bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
 {
   if(!ctl.datastore().has("Observer::anchorFrame"))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "{} requires an \"Observer::anchorFrame\" function in the datastore", name());
+    error_ =
+        fmt::format("Observer {} requires an \"Observer::anchorFrame\" function in the datastore.\n\tPlease refer to "
+                    "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html for further details.",
+                    name());
+    return false;
   }
   X_0_anchorFrame_ = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.robot(robot_));
   X_0_anchorFrameReal_ = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.realRobot(realRobot_));
@@ -125,11 +128,6 @@ void KinematicInertialPoseObserver::addToGUI(mc_control::MCController & ctl, con
                             [this, showHideAnchorFrame]() {
                               showAnchorFrame_ = !showAnchorFrame_;
                               showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
-                            }),
-      mc_rtc::gui::Checkbox("Show anchor frame (real)", [this]() { return showAnchorFrameReal_; },
-                            [this, showHideAnchorFrame]() {
-                              showAnchorFrameReal_ = !showAnchorFrameReal_;
-                              showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
                             }),
       mc_rtc::gui::Checkbox("Show anchor frame (real)", [this]() { return showAnchorFrameReal_; },
                             [this, showHideAnchorFrame]() {

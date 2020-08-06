@@ -99,21 +99,38 @@ void ObserverPipeline::reset()
 
 bool ObserverPipeline::run()
 {
-  for(const auto & pipelineObserver : pipelineObservers_)
+  success_ = true;
+  for(auto & pipelineObserver : pipelineObservers_)
   {
     auto & observer = pipelineObserver.observer;
-    bool r = observer->run(ctl_);
-    if(!r)
+    bool res = observer->run(ctl_);
+    success_ = success_ && res;
+    if(!res)
     {
-      mc_rtc::log::error("Observer {} failed to run", observer->name());
-      return false;
+      if(pipelineObserver.previousSuccess)
+      {
+        mc_rtc::log::warning("[ObserverPipeline::{}] Observer {} failed to run", name(), observer->name());
+        if(observer->error().size())
+        {
+          mc_rtc::log::warning("{}", observer->error());
+        }
+        pipelineObserver.previousSuccess = false;
+      }
     }
-    if(pipelineObserver.update)
+    else
     {
-      observer->updateRobots(ctl_);
+      if(!pipelineObserver.previousSuccess)
+      {
+        mc_rtc::log::info("[ObserverPipeline::{}] Observer {} resumed", name(), observer->name());
+        pipelineObserver.previousSuccess = true;
+      }
+      if(pipelineObserver.update)
+      {
+        observer->updateRobots(ctl_);
+      }
     }
   }
-  return true;
+  return success_;
 }
 
 void ObserverPipeline::addToLogger()

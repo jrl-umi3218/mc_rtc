@@ -413,5 +413,13 @@ Observers:
     # Valid entries are [control, estimator, none]
     UpdateFrom: estimator
     FloatingBaseSensor: FloatingBase
-RunObservers: [Encoder, KinematicInertial]
-UpdateObservers: [Encoder, KinematicInertial]
+
+ObserverPipelines:
+- name: "MainPipeline"
+  observers:
+    - type: Encoder
+      # Floating base kinematic-inertial state observation
+    - type: KinematicInertial
+      # Floating base Groundtruth
+    - type: BodySensor
+      bodySensor: FloatingBase

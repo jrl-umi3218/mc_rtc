@@ -142,10 +142,11 @@ void MCController::removeRobot(const std::string & name)
 
 void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
 {
-  if(config.has("EnabledObservers"), config.has("RunObservers") || config.has("UpdateObservers"))
+  if(config.has("EnabledObservers") || config.has("RunObservers") || config.has("UpdateObservers"))
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[{}] The observer pipeline can no longer be configured by \"RunObservers\" and \"UpdateObservers\".\nMultiple "
+        "[{}] The observer pipeline can no longer be configured by \"EnabledObservers\", \"RunObservers\" and "
+        "\"UpdateObservers\".\nMultiple "
         "pipelines are now supported, allowing for estimation of multiple robots and/or multiple observations of the "
         "same robot.\nFor details on upgrating, please refer to:\n"
         "- The observer pipelines tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html\n"
@@ -177,7 +178,7 @@ void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
   }
 }
 
-bool MCController::resetObservers()
+bool MCController::resetObserverPipelines()
 {
   std::string desc = "";
   for(auto & pipeline : observerPipelines_)
@@ -189,19 +190,27 @@ bool MCController::resetObservers()
   {
     mc_rtc::log::success("[MCController::{}] State observation pipelines:\n{}", name_, desc);
   }
-  else
-  {
-  }
   return true;
 }
 
-bool MCController::runObservers()
+bool MCController::runObserverPipelines()
 {
+  bool success = true;
   for(auto & pipeline : observerPipelines_)
   {
-    pipeline.run();
+    success = success && pipeline.run();
   }
-  return true;
+  return success;
+}
+
+bool MCController::validObserverPipelines() const
+{
+  bool valid = true;
+  for(const auto & pipeline : observerPipelines_)
+  {
+    valid = valid && pipeline.success();
+  }
+  return valid;
 }
 
 bool MCController::hasObserverPipeline(const std::string & name) const

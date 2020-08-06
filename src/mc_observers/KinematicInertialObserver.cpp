@@ -36,13 +36,13 @@ void KinematicInertialObserver::reset(const mc_control::MCController & ctl, cons
 
 bool KinematicInertialObserver::run(const mc_control::MCController & ctl)
 {
-  KinematicInertialPoseObserver::run(ctl);
+  bool res = KinematicInertialPoseObserver::run(ctl);
   const sva::PTransformd posW = KinematicInertialPoseObserver::posW();
   sva::MotionVecd errVel = sva::transformError(posWPrev_, posW) / ctl.timeStep;
   velFilter_.update(errVel);
   velW_ = velFilter_.eval();
   posWPrev_ = posW;
-  return true;
+  return res;
 }
 
 void KinematicInertialObserver::updateRobots(mc_control::MCController & ctl)

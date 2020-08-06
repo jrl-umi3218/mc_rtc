@@ -97,7 +97,7 @@ public:
    *
    * @returns true if all observers ran as expected, false otherwise
    */
-  virtual bool runObservers();
+  virtual bool runObserverPipelines();
 
   /*! @brief Reset the observers. This function is called after the reset()
    * function.
@@ -106,11 +106,12 @@ public:
    *
    * @returns True when all observers have been succesfully reset.
    */
-  virtual bool resetObservers();
+  virtual bool resetObserverPipelines();
 
   bool hasObserverPipeline(const std::string & name) const;
   mc_observers::ObserverPipeline & observerPipeline(const std::string & name);
   const mc_observers::ObserverPipeline & observerPipeline(const std::string & name) const;
+  bool validObserverPipelines() const;
 
   /** Can be called in derived class instead of run to use a feedback strategy
    * different from the default one

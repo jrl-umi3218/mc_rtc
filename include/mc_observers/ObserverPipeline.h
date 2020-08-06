@@ -43,8 +43,22 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   void reconfigure();
   /* Initialize based on the current robot state */
   void reset();
-  /* Run this observservation pipeline */
+  /* Run this observservation pipeline
+   *
+   * If an observer is unable to estimate the robot's state, it is expected to
+   * return false. In this case, the pipeline execution is considered invalid,
+   * and this status is reflected by the return value of this function. This
+   * state may later be retrieved by success().
+   *
+   * @return True when the pipeline exectued properly
+   * False otherwise (one or more observers failed to execute)
+   **/
   bool run();
+
+  bool success() const
+  {
+    return success_;
+  }
 
   /* Const accessor to an observer
    *
@@ -116,11 +130,11 @@ protected:
 protected:
   mc_control::MCController & ctl_; ///< Controller to which this pipeline is bound
   std::string name_ = {"DefaultPipeline"}; ///< Name of this pipeline
+  /* Short descriptive description of the observer used for CLI logging */
   std::string desc_ = {""};
+  bool success_ = false; ///< Whether the pipeline successfully executed
 
   mc_rtc::Configuration config_; ///< Initial configuration (from configuration files)
-
-  /* Short descriptive description of the observer used for CLI logging */
 
   std::vector<mc_observers::ObserverPtr> observers_; ///< Loaded observers
   std::map<std::string, mc_observers::ObserverPtr>
@@ -136,7 +150,10 @@ protected:
     bool update = true;
     bool log = true;
     bool gui = true;
+
+    bool previousSuccess = true;
   };
+
   /** Observers that will be run by the pipeline.
    *
    * The pair contains:

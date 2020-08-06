@@ -164,6 +164,11 @@ struct MC_OBSERVERS_DLLAPI Observer
     return dt_;
   }
 
+  const std::string & error() const
+  {
+    return error_;
+  }
+
 protected:
   virtual void addToLogger(mc_control::MCController &, const std::string &) {}
   virtual void removeFromLogger(mc_control::MCController &, const std::string &) {}
@@ -173,6 +178,7 @@ protected:
 protected:
   std::string name_;
   std::string type_;
+  std::string error_;
 
   /* Short descriptive description of the observer used for CLI logging */
   std::string desc_;

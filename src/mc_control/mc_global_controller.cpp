@@ -288,7 +288,7 @@ void MCGlobalController::initController()
   }
   const auto & q = robot().mbc().q;
   controller_->reset({q});
-  controller_->resetObservers();
+  controller_->resetObserverPipelines();
   initGUI();
   for(auto & plugin : plugins_)
   {
@@ -492,7 +492,7 @@ bool MCGlobalController::run()
         next_controller_->robot().gripper(g.first).reset(*g.second);
       }
       next_controller_->reset({controller_->robot().mbc().q});
-      next_controller_->resetObservers();
+      next_controller_->resetObserverPipelines();
       controller_ = next_controller_;
       /** Reset plugins */
       for(auto & plugin : plugins_)
@@ -522,7 +522,8 @@ bool MCGlobalController::run()
       controller_->robots().robot(i).mbc() = pre_gripper_mbcs_[i];
     }
     auto start_controller_run_t = clock::now();
-    bool r = controller_->runObservers() && controller_->run();
+    controller_->runObserverPipelines();
+    bool r = controller_->run();
     auto end_controller_run_t = clock::now();
     if(server_)
     {
