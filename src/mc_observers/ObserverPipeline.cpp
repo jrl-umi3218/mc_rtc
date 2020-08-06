@@ -34,7 +34,6 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
     }
     const std::string & observerType = observerConf("type");
     auto observerName = observerConf("name", observerType);
-    auto update = observerConf("update", false);
 
     if(mc_observers::ObserverLoader::has_observer(observerType))
     {
@@ -50,7 +49,8 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
       observer->configure(ctl_, observerConf("config", mc_rtc::Configuration{}));
       observers_.push_back(observer);
       observersByName_[observerName] = observer;
-      pipelineObservers_.emplace_back(observer, update, observerConf("log", true), observerConf("gui", true));
+      pipelineObservers_.emplace_back(observer, observerConf("update", true), observerConf("log", true),
+                                      observerConf("gui", true));
     }
     else
     {
