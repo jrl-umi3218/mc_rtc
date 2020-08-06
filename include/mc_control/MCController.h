@@ -111,6 +111,11 @@ public:
   bool hasObserverPipeline(const std::string & name) const;
   mc_observers::ObserverPipeline & observerPipeline(const std::string & name);
   const mc_observers::ObserverPipeline & observerPipeline(const std::string & name) const;
+
+  bool hasObserverPipeline() const;
+  mc_observers::ObserverPipeline & observerPipeline();
+  const mc_observers::ObserverPipeline & observerPipeline() const;
+
   bool validObserverPipelines() const;
 
   /** Can be called in derived class instead of run to use a feedback strategy

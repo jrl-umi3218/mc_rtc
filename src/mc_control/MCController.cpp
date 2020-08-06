@@ -240,6 +240,25 @@ mc_observers::ObserverPipeline & MCController::observerPipeline(const std::strin
   return const_cast<mc_observers::ObserverPipeline &>(static_cast<const MCController *>(this)->observerPipeline(name));
 }
 
+bool MCController::hasObserverPipeline() const
+{
+  return !observerPipelines_.empty();
+}
+
+const mc_observers::ObserverPipeline & MCController::observerPipeline() const
+{
+  if(!hasObserverPipeline())
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Controller {} does not have a default observer pipeline", name_);
+  }
+  return observerPipeline(observerPipelines_.front().name());
+}
+
+mc_observers::ObserverPipeline & MCController::observerPipeline()
+{
+  return const_cast<mc_observers::ObserverPipeline &>(static_cast<const MCController *>(this)->observerPipeline());
+}
+
 bool MCController::run()
 {
   return run(mc_solver::FeedbackType::None);
