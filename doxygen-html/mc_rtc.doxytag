@@ -13151,6 +13151,13 @@
       <type>static T_ptr</type>
       <name>load</name>
       <anchorfile>a02136.html</anchorfile>
+      <anchor>adb825defeb480187f9584f84e8441a43</anchor>
+      <arglist>(mc_solver::QPSolver &amp;solver, const char *file)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static T_ptr</type>
+      <name>load</name>
+      <anchorfile>a02136.html</anchorfile>
       <anchor>a13b1f947ca0b22d2985f580ec57caf85</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config)</arglist>
     </member>
@@ -13160,6 +13167,13 @@
       <anchorfile>a02136.html</anchorfile>
       <anchor>a5236104825bda3a24cc3645e0e3bf448</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::string &amp;file)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static std::shared_ptr&lt; U &gt;</type>
+      <name>load</name>
+      <anchorfile>a02136.html</anchorfile>
+      <anchor>aca794f13fede4900b9ee9cf70ee621b2</anchor>
+      <arglist>(mc_solver::QPSolver &amp;solver, const char *file)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static std::shared_ptr&lt; U &gt;</type>
@@ -13218,6 +13232,13 @@
       <type>static T_ptr</type>
       <name>load</name>
       <anchorfile>a02136.html</anchorfile>
+      <anchor>adb825defeb480187f9584f84e8441a43</anchor>
+      <arglist>(mc_solver::QPSolver &amp;solver, const char *file)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static T_ptr</type>
+      <name>load</name>
+      <anchorfile>a02136.html</anchorfile>
       <anchor>a13b1f947ca0b22d2985f580ec57caf85</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config)</arglist>
     </member>
@@ -13227,6 +13248,13 @@
       <anchorfile>a02136.html</anchorfile>
       <anchor>a5236104825bda3a24cc3645e0e3bf448</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::string &amp;file)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static std::shared_ptr&lt; U &gt;</type>
+      <name>load</name>
+      <anchorfile>a02136.html</anchorfile>
+      <anchor>aca794f13fede4900b9ee9cf70ee621b2</anchor>
+      <arglist>(mc_solver::QPSolver &amp;solver, const char *file)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static std::shared_ptr&lt; U &gt;</type>
@@ -13285,6 +13313,13 @@
       <type>static T_ptr</type>
       <name>load</name>
       <anchorfile>a02136.html</anchorfile>
+      <anchor>adb825defeb480187f9584f84e8441a43</anchor>
+      <arglist>(mc_solver::QPSolver &amp;solver, const char *file)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static T_ptr</type>
+      <name>load</name>
+      <anchorfile>a02136.html</anchorfile>
       <anchor>a13b1f947ca0b22d2985f580ec57caf85</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config)</arglist>
     </member>
@@ -13294,6 +13329,13 @@
       <anchorfile>a02136.html</anchorfile>
       <anchor>a5236104825bda3a24cc3645e0e3bf448</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::string &amp;file)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static std::shared_ptr&lt; U &gt;</type>
+      <name>load</name>
+      <anchorfile>a02136.html</anchorfile>
+      <anchor>aca794f13fede4900b9ee9cf70ee621b2</anchor>
+      <arglist>(mc_solver::QPSolver &amp;solver, const char *file)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static std::shared_ptr&lt; U &gt;</type>

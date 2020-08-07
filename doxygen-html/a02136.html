@@ -113,6 +113,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a5da6be5874e61bd328a5452dda08950c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02136.html#adb735279d914086553de0a21285126e4">T_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02136.html#a5da6be5874e61bd328a5452dda08950c">load</a> (<a class="el" href="a02196.html">mc_solver::QPSolver</a> &amp;solver, const std::string &amp;file)</td></tr>
 <tr class="memdesc:a5da6be5874e61bd328a5452dda08950c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from a file.  <a href="#a5da6be5874e61bd328a5452dda08950c">More...</a><br /></td></tr>
 <tr class="separator:a5da6be5874e61bd328a5452dda08950c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb825defeb480187f9584f84e8441a43"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02136.html#adb735279d914086553de0a21285126e4">T_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02136.html#adb825defeb480187f9584f84e8441a43">load</a> (<a class="el" href="a02196.html">mc_solver::QPSolver</a> &amp;solver, const char *file)</td></tr>
+<tr class="memdesc:adb825defeb480187f9584f84e8441a43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from a file (C-style string)  <a href="#adb825defeb480187f9584f84e8441a43">More...</a><br /></td></tr>
+<tr class="separator:adb825defeb480187f9584f84e8441a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13b1f947ca0b22d2985f580ec57caf85"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02136.html#adb735279d914086553de0a21285126e4">T_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02136.html#a13b1f947ca0b22d2985f580ec57caf85">load</a> (<a class="el" href="a02196.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="a01708.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
 <tr class="memdesc:a13b1f947ca0b22d2985f580ec57caf85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from an <a class="el" href="a01708.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> object.  <a href="#a13b1f947ca0b22d2985f580ec57caf85">More...</a><br /></td></tr>
 <tr class="separator:a13b1f947ca0b22d2985f580ec57caf85"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,6 +123,10 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a5236104825bda3a24cc3645e0e3bf448"><td class="memTemplItemLeft" align="right" valign="top">static std::shared_ptr&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02136.html#a5236104825bda3a24cc3645e0e3bf448">load</a> (<a class="el" href="a02196.html">mc_solver::QPSolver</a> &amp;solver, const std::string &amp;file)</td></tr>
 <tr class="memdesc:a5236104825bda3a24cc3645e0e3bf448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a more precise object's type from a file.  <a href="#a5236104825bda3a24cc3645e0e3bf448">More...</a><br /></td></tr>
 <tr class="separator:a5236104825bda3a24cc3645e0e3bf448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca794f13fede4900b9ee9cf70ee621b2"><td class="memTemplParams" colspan="2">template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:aca794f13fede4900b9ee9cf70ee621b2"><td class="memTemplItemLeft" align="right" valign="top">static std::shared_ptr&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02136.html#aca794f13fede4900b9ee9cf70ee621b2">load</a> (<a class="el" href="a02196.html">mc_solver::QPSolver</a> &amp;solver, const char *file)</td></tr>
+<tr class="memdesc:aca794f13fede4900b9ee9cf70ee621b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a more precise object's type from a file (C-style string)  <a href="#aca794f13fede4900b9ee9cf70ee621b2">More...</a><br /></td></tr>
+<tr class="separator:aca794f13fede4900b9ee9cf70ee621b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab10c87faa2a1fb4721163c6a479fdd78"><td class="memTemplParams" colspan="2">template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
 <tr class="memitem:ab10c87faa2a1fb4721163c6a479fdd78"><td class="memTemplItemLeft" align="right" valign="top">static std::shared_ptr&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02136.html#ab10c87faa2a1fb4721163c6a479fdd78">load</a> (<a class="el" href="a02196.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="a01708.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
 <tr class="memdesc:ab10c87faa2a1fb4721163c6a479fdd78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a more precise object's type from a Configuration entry.  <a href="#ab10c87faa2a1fb4721163c6a479fdd78">More...</a><br /></td></tr>
@@ -189,7 +196,7 @@ template&lt;typename Derived, typename T&gt; </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5da6be5874e61bd328a5452dda08950c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5da6be5874e61bd328a5452dda08950c">&#9670;&nbsp;</a></span>load() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5da6be5874e61bd328a5452dda08950c">&#9670;&nbsp;</a></span>load() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -241,8 +248,61 @@ template&lt;typename Derived, typename T&gt; </div>
 
 </div>
 </div>
+<a id="adb825defeb480187f9584f84e8441a43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb825defeb480187f9584f84e8441a43">&#9670;&nbsp;</a></span>load() <span class="overload">[2/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a02136.html#adb735279d914086553de0a21285126e4">T_ptr</a> <a class="el" href="a02136.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02196.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Load an object from a file (C-style string) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver to create the object for</td></tr>
+    <tr><td class="paramname">file</td><td>File to load the object from</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>the file does not exist or the loaded JSON object does not represent a known object </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a13b1f947ca0b22d2985f580ec57caf85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13b1f947ca0b22d2985f580ec57caf85">&#9670;&nbsp;</a></span>load() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a13b1f947ca0b22d2985f580ec57caf85">&#9670;&nbsp;</a></span>load() <span class="overload">[3/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,7 +355,7 @@ template&lt;typename Derived, typename T&gt; </div>
 </div>
 </div>
 <a id="a5236104825bda3a24cc3645e0e3bf448"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5236104825bda3a24cc3645e0e3bf448">&#9670;&nbsp;</a></span>load() <span class="overload">[3/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5236104825bda3a24cc3645e0e3bf448">&#9670;&nbsp;</a></span>load() <span class="overload">[4/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -336,8 +396,50 @@ template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;
 
 </div>
 </div>
+<a id="aca794f13fede4900b9ee9cf70ee621b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca794f13fede4900b9ee9cf70ee621b2">&#9670;&nbsp;</a></span>load() <span class="overload">[5/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Derived, typename T&gt; </div>
+<div class="memtemplate">
+template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::shared_ptr&lt;U&gt; <a class="el" href="a02136.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02196.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>file</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieve a more precise object's type from a file (C-style string) </p>
+
+</div>
+</div>
 <a id="ab10c87faa2a1fb4721163c6a479fdd78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab10c87faa2a1fb4721163c6a479fdd78">&#9670;&nbsp;</a></span>load() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab10c87faa2a1fb4721163c6a479fdd78">&#9670;&nbsp;</a></span>load() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -469,7 +571,7 @@ template&lt;typename Derived, typename T&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02136.html">GenericLoader</a></li>
-    <li class="footer">Generated on Tue Aug 4 2020 08:34:36 for mc_rtc by
+    <li class="footer">Generated on Fri Aug 7 2020 05:20:41 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
