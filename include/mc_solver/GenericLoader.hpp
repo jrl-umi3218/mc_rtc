@@ -48,6 +48,13 @@ typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_sol
 
 template<typename Derived, typename T>
 typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
+                                                                          const char * file)
+{
+  return load(solver, mc_rtc::Configuration(file));
+}
+
+template<typename Derived, typename T>
+typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver,
                                                                           const mc_rtc::Configuration & config)
 {
   static auto & fns = get_fns();
@@ -66,6 +73,13 @@ typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_sol
 template<typename Derived, typename T>
 template<typename U, typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type>
 std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver, const std::string & file)
+{
+  return cast<U>(load(solver, file));
+}
+
+template<typename Derived, typename T>
+template<typename U, typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type>
+std::shared_ptr<U> GenericLoader<Derived, T>::load(mc_solver::QPSolver & solver, const char * file)
 {
   return cast<U>(load(solver, file));
 }

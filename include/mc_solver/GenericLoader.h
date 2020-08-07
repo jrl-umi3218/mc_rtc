@@ -84,6 +84,17 @@ struct GenericLoader
    */
   static T_ptr load(mc_solver::QPSolver & solver, const std::string & file);
 
+  /** Load an object from a file (C-style string)
+   *
+   * \param solver Solver to create the object for
+   *
+   * \param file File to load the object from
+   *
+   * \throws If the file does not exist or the loaded JSON object does not
+   * represent a known object
+   */
+  static T_ptr load(mc_solver::QPSolver & solver, const char * file);
+
   /** Load an object from an mc_rtc::Configuration object
    *
    * \param solver Solver to create the object for
@@ -98,6 +109,11 @@ struct GenericLoader
   template<typename U,
            typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type = 0>
   static std::shared_ptr<U> load(mc_solver::QPSolver & solver, const std::string & file);
+
+  /** Retrieve a more precise object's type from a file (C-style string) */
+  template<typename U,
+           typename std::enable_if<(!std::is_same<U, T>::value) && std::is_base_of<T, U>::value, int>::type = 0>
+  static std::shared_ptr<U> load(mc_solver::QPSolver & solver, const char * file);
 
   /** Retrieve a more precise object's type from a Configuration entry */
   template<typename U,
