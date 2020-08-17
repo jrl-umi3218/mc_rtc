@@ -289,15 +289,15 @@ document assumes the reader has some level of familiarity with ROS principles.</
   <li>the real state of the robot, this is the state provided by the interface, it may be incomplete in some cases.</li>
 </ol>
 
-<p>The first is published in the <code class="highlighter-rouge">control</code> namespace while the second is published in the <code class="highlighter-rouge">real</code> namespace.</p>
+<p>The first is published in the <code class="language-plaintext highlighter-rouge">control</code> namespace while the second is published in the <code class="language-plaintext highlighter-rouge">real</code> namespace.</p>
 
 <p>Everything else is up to the controller code. In particular, <strong>mc_rtc will not take care of spinning.</strong></p>
 
-<p>For external tools, the <code class="highlighter-rouge">mc_rtc::RobotPublisher</code> class is provided to publish a robot’s state to ROS.</p>
+<p>For external tools, the <code class="language-plaintext highlighter-rouge">mc_rtc::RobotPublisher</code> class is provided to publish a robot’s state to ROS.</p>
 
 <h2 id="getting-a-nodehandle">Getting a NodeHandle</h2>
 
-<p>The following code will give you access to the <code class="highlighter-rouge">ros::NodeHandle</code> created by mc_rtc:</p>
+<p>The following code will give you access to the <code class="language-plaintext highlighter-rouge">ros::NodeHandle</code> created by mc_rtc:</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_rtc/ros.h&gt;
 </span>
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ros</span><span class="o">::</span><span class="n">NodeHandle</span><span class="o">&gt;</span> <span class="n">nh</span> <span class="o">=</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">ROSBridge</span><span class="o">::</span><span class="n">get_node_handle</span><span class="p">();</span>
@@ -314,8 +314,8 @@ available).</p>
 <p>The main caveat when working with ROS (in mc_rtc) is the absence of real-time
 support. As such, you are strongly encourage not to use ROS functions within:</p>
 <ol>
-  <li>The <code class="highlighter-rouge">reset()</code> function</li>
-  <li>The <code class="highlighter-rouge">run()</code> function</li>
+  <li>The <code class="language-plaintext highlighter-rouge">reset()</code> function</li>
+  <li>The <code class="language-plaintext highlighter-rouge">run()</code> function</li>
 </ol>
 
 <p>Both these functions will occur in the real-time loop or real-time sensitive

@@ -277,9 +277,9 @@
         <h1>Log plotting</h1>
 
         <p>A simple GUI is provided in mc_rtc to read the logs after an experiment
-has been performed. This tool is installed as <code class="highlighter-rouge">mc_log_ui</code></p>
+has been performed. This tool is installed as <code class="language-plaintext highlighter-rouge">mc_log_ui</code></p>
 
-<p>Provided you have obtained a log (e.g. <code class="highlighter-rouge">~/my_log.bin</code>) then you can open it in the GUI with:</p>
+<p>Provided you have obtained a log (e.g. <code class="language-plaintext highlighter-rouge">~/my_log.bin</code>) then you can open it in the GUI with:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_log_ui ~/my_log.bin
 </code></pre></div></div>
@@ -296,7 +296,7 @@ has been performed. This tool is installed as <code class="highlighter-rouge">mc
 
 <h4 id="time-plot">Time plot</h4>
 
-<p>In this mode you select data that shares the same abscissa (generally time hence the name), the panels on the left and the right of the plot let you select which data to display. You can select a grouped entry (e.g. <code class="highlighter-rouge">LeftFootForceSensor</code>) or a single entry (e.g. <code class="highlighter-rouge">LeftFootForceSensor -&gt; fz</code>).</p>
+<p>In this mode you select data that shares the same abscissa (generally time hence the name), the panels on the left and the right of the plot let you select which data to display. You can select a grouped entry (e.g. <code class="language-plaintext highlighter-rouge">LeftFootForceSensor</code>) or a single entry (e.g. <code class="language-plaintext highlighter-rouge">LeftFootForceSensor -&gt; fz</code>).</p>
 
 <p>Plots can be removed by clicking the same data entry again.</p>
 
@@ -304,15 +304,15 @@ has been performed. This tool is installed as <code class="highlighter-rouge">mc
 
 <h4 id="xy-plot">X/Y plot</h4>
 
-<p>In this mode, <code class="highlighter-rouge">Add XY plots</code> buttons on the left and right of the plot will open a menu to let you select two data entries that will be plotted on the X and Y axis respectively. You can select a grouped entry if it has exactly two entries (i.e. selecting <code class="highlighter-rouge">LeftFoot -&gt; CoP</code> is the same as selecting <code class="highlighter-rouge">LeftFoot -&gt; CoP -&gt; x</code> and <code class="highlighter-rouge">LeftFoot -&gt; CoP -&gt; y</code> individually). A label can be set at this point or later in the sytle menu.</p>
+<p>In this mode, <code class="language-plaintext highlighter-rouge">Add XY plots</code> buttons on the left and right of the plot will open a menu to let you select two data entries that will be plotted on the X and Y axis respectively. You can select a grouped entry if it has exactly two entries (i.e. selecting <code class="language-plaintext highlighter-rouge">LeftFoot -&gt; CoP</code> is the same as selecting <code class="language-plaintext highlighter-rouge">LeftFoot -&gt; CoP -&gt; x</code> and <code class="language-plaintext highlighter-rouge">LeftFoot -&gt; CoP -&gt; y</code> individually). A label can be set at this point or later in the sytle menu.</p>
 
-<p>Plots can be removed by clicking the <code class="highlighter-rouge">Remove XY plot(s)</code> button on the left or right and selecting the plots to remove.</p>
+<p>Plots can be removed by clicking the <code class="language-plaintext highlighter-rouge">Remove XY plot(s)</code> button on the left or right and selecting the plots to remove.</p>
 
 <h4 id="3d-plot">3D plot</h4>
 
-<p>In this mode, an <code class="highlighter-rouge">Add 3D plot</code> button on the left will open a menu to let you select three data entries that will be plotted on the X, Y and Z axis respectively. You can select a grouped entry if it has exactly three entries (i.e. selecting <code class="highlighter-rouge">CoM</code> is the same as selecting <code class="highlighter-rouge">CoM -&gt; x</code>, <code class="highlighter-rouge">CoM -&gt; y</code> and <code class="highlighter-rouge">CoM -&gt; z</code> individually). A label can be set at this point or later in the style menu.</p>
+<p>In this mode, an <code class="language-plaintext highlighter-rouge">Add 3D plot</code> button on the left will open a menu to let you select three data entries that will be plotted on the X, Y and Z axis respectively. You can select a grouped entry if it has exactly three entries (i.e. selecting <code class="language-plaintext highlighter-rouge">CoM</code> is the same as selecting <code class="language-plaintext highlighter-rouge">CoM -&gt; x</code>, <code class="language-plaintext highlighter-rouge">CoM -&gt; y</code> and <code class="language-plaintext highlighter-rouge">CoM -&gt; z</code> individually). A label can be set at this point or later in the style menu.</p>
 
-<p>Plots can be removed by clicking the <code class="highlighter-rouge">Remove 3D plot(s)</code> button and selecting the plots to remove.</p>
+<p>Plots can be removed by clicking the <code class="language-plaintext highlighter-rouge">Remove 3D plot(s)</code> button and selecting the plots to remove.</p>
 
 <p>You can use the mouse to manipulate the view in 3D mode.</p>
 
@@ -320,19 +320,19 @@ has been performed. This tool is installed as <code class="highlighter-rouge">mc
 
 <p>The selector under the plot lets you select the time range under which you wish to examine the log. In time plot mode, it simply selects the abscissa for the graph. In X/Y plot and 3D plot modes it will act as a filter (i.e. display the selected data when the selected range is active).</p>
 
-<p>The <code class="highlighter-rouge">Make range</code> button lets you select arbitrary data to create time ranges when the data is in the log. For example, if <code class="highlighter-rouge">com_x</code> is present if <code class="highlighter-rouge">5 &lt; t &lt; 10</code> and <code class="highlighter-rouge">15 &lt; t &lt; 20</code> then it will generate <code class="highlighter-rouge">t_com_x_1</code> and <code class="highlighter-rouge">t_com_x_2</code> corresponding to these ranges. For strings (typically <code class="highlighter-rouge">Executor_*</code> from the FSM), the selection can be refined for specific values of the string (so you can typically generate ranges for specific states).</p>
+<p>The <code class="language-plaintext highlighter-rouge">Make range</code> button lets you select arbitrary data to create time ranges when the data is in the log. For example, if <code class="language-plaintext highlighter-rouge">com_x</code> is present if <code class="language-plaintext highlighter-rouge">5 &lt; t &lt; 10</code> and <code class="language-plaintext highlighter-rouge">15 &lt; t &lt; 20</code> then it will generate <code class="language-plaintext highlighter-rouge">t_com_x_1</code> and <code class="language-plaintext highlighter-rouge">t_com_x_2</code> corresponding to these ranges. For strings (typically <code class="language-plaintext highlighter-rouge">Executor_*</code> from the FSM), the selection can be refined for specific values of the string (so you can typically generate ranges for specific states).</p>
 
-<p>Finally, three buttons beside the <code class="highlighter-rouge">Make range</code> button let you lock the X axis, the left side Y axis and the right side Y axis (or Z axis in 3D mode) respectively. Otherwise, the limits adapt to the selected data. Note that the GUI will not try to align the left and the right side Y axes even when the ranges are similar.</p>
+<p>Finally, three buttons beside the <code class="language-plaintext highlighter-rouge">Make range</code> button let you lock the X axis, the left side Y axis and the right side Y axis (or Z axis in 3D mode) respectively. Otherwise, the limits adapt to the selected data. Note that the GUI will not try to align the left and the right side Y axes even when the ranges are similar.</p>
 
 <h3 id="animation">Animation</h3>
 
 <p>The three buttons below the range selector relate to the animation:</p>
 
-<p><code class="highlighter-rouge">Start animation</code> will start an animation based on the current time range selected. By default, the axes limits will adapt during the animation.</p>
+<p><code class="language-plaintext highlighter-rouge">Start animation</code> will start an animation based on the current time range selected. By default, the axes limits will adapt during the animation.</p>
 
-<p>If the animation is not running, <code class="highlighter-rouge">Lock axes</code> will lock the axes so that the whole final graph in the animation is visible. Otherwise, it will lock the axes to the current view.</p>
+<p>If the animation is not running, <code class="language-plaintext highlighter-rouge">Lock axes</code> will lock the axes so that the whole final graph in the animation is visible. Otherwise, it will lock the axes to the current view.</p>
 
-<p><code class="highlighter-rouge">Save animation</code> will export the animation to an mp4 file. Note that no progress bar appears and it could take a while to save the animation.</p>
+<p><code class="language-plaintext highlighter-rouge">Save animation</code> will export the animation to an mp4 file. Note that no progress bar appears and it could take a while to save the animation.</p>
 
 <h3 id="common-plots-menu">Common plots menu</h3>
 
@@ -342,15 +342,15 @@ has been performed. This tool is installed as <code class="highlighter-rouge">mc
 
 <p>During the development of a controller you probably plot the same graph for different iterations of your controller. To save time, you can save your data selection. This is called a “User plot”.</p>
 
-<p>To create such a plot, you must setup the plot once manually. Then go the <code class="highlighter-rouge">User plots</code> menu and select <code class="highlighter-rouge">Save current plot</code>. You will be prompted for a name. This will then create a new entry in the <code class="highlighter-rouge">User plots</code> menu with this name.</p>
+<p>To create such a plot, you must setup the plot once manually. Then go the <code class="language-plaintext highlighter-rouge">User plots</code> menu and select <code class="language-plaintext highlighter-rouge">Save current plot</code>. You will be prompted for a name. This will then create a new entry in the <code class="language-plaintext highlighter-rouge">User plots</code> menu with this name.</p>
 
-<p>After loading a new log, select this new entry in the <code class="highlighter-rouge">User plots</code> menu and it will redo the same selection and styling (it doesn’t save axis limits or abscissa selection as they are likely to change).</p>
+<p>After loading a new log, select this new entry in the <code class="language-plaintext highlighter-rouge">User plots</code> menu and it will redo the same selection and styling (it doesn’t save axis limits or abscissa selection as they are likely to change).</p>
 
-<p>Such plots are saved in a JSON format under <code class="highlighter-rouge">$HOME/.config/mc_log_ui/custom_plots.json</code>. This file can be stored in your controller repository to setup the log ui quickly on a new machine. It can also be passed to the <code class="highlighter-rouge">mc_plot_logs</code> tool (see below).</p>
+<p>Such plots are saved in a JSON format under <code class="language-plaintext highlighter-rouge">$HOME/.config/mc_log_ui/custom_plots.json</code>. This file can be stored in your controller repository to setup the log ui quickly on a new machine. It can also be passed to the <code class="language-plaintext highlighter-rouge">mc_plot_logs</code> tool (see below).</p>
 
 <h3 id="robot-menu">Robot menu</h3>
 
-<p>This menu lets you select with which robot the log was generated. The main effect is to display user-friendly names in joint-related entries (e.g. instead of <code class="highlighter-rouge">qIn_0</code> you will get <code class="highlighter-rouge">qIn_R_HIP_P</code> with JVRC1 but <code class="highlighter-rouge">qIn_RLEG_JOINT0</code> with HRP2DRC.</p>
+<p>This menu lets you select with which robot the log was generated. The main effect is to display user-friendly names in joint-related entries (e.g. instead of <code class="language-plaintext highlighter-rouge">qIn_0</code> you will get <code class="language-plaintext highlighter-rouge">qIn_R_HIP_P</code> with JVRC1 but <code class="language-plaintext highlighter-rouge">qIn_RLEG_JOINT0</code> with HRP2DRC.</p>
 
 <p>The robot selection is saved upon change and restored when you open the UI again. Unless you work with a lot of robots it is likely you will change it once.</p>
 
@@ -359,11 +359,11 @@ has been performed. This tool is installed as <code class="highlighter-rouge">mc
 <p>The style menu lets you set many styling options for your graph, it has several entries:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">Graph</code>: lets you choose the line color and line style for each plot;</li>
-  <li><code class="highlighter-rouge">Grid</code>: lets you enable a grid aligned with the left and/or right axis;</li>
-  <li><code class="highlighter-rouge">Labels/Title/Fonts</code>: lets you add labels to the axes, a title to the graph and choose the police size for those;</li>
-  <li><code class="highlighter-rouge">Colors selection</code>: lets you choose which colors are picked to display curves, you can either choose an existing color set (which have a limited number of colors available) or build your own selection;</li>
-  <li><code class="highlighter-rouge">Polygons colors selection</code>: lets you choose the colors that are used when displaying string entries in time-plot mode;</li>
+  <li><code class="language-plaintext highlighter-rouge">Graph</code>: lets you choose the line color and line style for each plot;</li>
+  <li><code class="language-plaintext highlighter-rouge">Grid</code>: lets you enable a grid aligned with the left and/or right axis;</li>
+  <li><code class="language-plaintext highlighter-rouge">Labels/Title/Fonts</code>: lets you add labels to the axes, a title to the graph and choose the police size for those;</li>
+  <li><code class="language-plaintext highlighter-rouge">Colors selection</code>: lets you choose which colors are picked to display curves, you can either choose an existing color set (which have a limited number of colors available) or build your own selection;</li>
+  <li><code class="language-plaintext highlighter-rouge">Polygons colors selection</code>: lets you choose the colors that are used when displaying string entries in time-plot mode;</li>
 </ul>
 
 <p><em>Note: style options are also saved when you save a user plot</em></p>
@@ -373,11 +373,11 @@ has been performed. This tool is installed as <code class="highlighter-rouge">mc
 <p>The following keyboard shortcuts can be used within the interface:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">Ctrl+T</code>: create a new tab</li>
-  <li><code class="highlighter-rouge">Ctrl+W</code>: close the current tab</li>
-  <li><code class="highlighter-rouge">Ctrl+PageDown</code>: next tab</li>
-  <li><code class="highlighter-rouge">Ctrl+PageUp</code>: previous tab</li>
-  <li><code class="highlighter-rouge">Ctrl+A</code>: Axis limits menu</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+T</code>: create a new tab</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+W</code>: close the current tab</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+PageDown</code>: next tab</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+PageUp</code>: previous tab</li>
+  <li><code class="language-plaintext highlighter-rouge">Ctrl+A</code>: Axis limits menu</li>
 </ul>
 
 <h3 id="saving-a-figure">Saving a figure</h3>
@@ -390,7 +390,7 @@ has been performed. This tool is installed as <code class="highlighter-rouge">mc
 
 <h3 id="automated-figure-plotting">Automated figure plotting</h3>
 
-<p>The final tool introduced here is <code class="highlighter-rouge">mc_plot_logs</code>. It expects a binary log and a JSON file describing the logs that you wish to plot (the format is the same as user plots from <code class="highlighter-rouge">mc_log_ui</code>). It will output a figure for each plot in the provided file.</p>
+<p>The final tool introduced here is <code class="language-plaintext highlighter-rouge">mc_plot_logs</code>. It expects a binary log and a JSON file describing the logs that you wish to plot (the format is the same as user plots from <code class="language-plaintext highlighter-rouge">mc_log_ui</code>). It will output a figure for each plot in the provided file.</p>
 
 
         <hr/>

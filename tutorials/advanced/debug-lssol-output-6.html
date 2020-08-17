@@ -285,9 +285,9 @@
       <div class="col-9">
         <h1>Debugging LSSOL output 6</h1>
 
-        <p>This page will help you to debug the issue known as <code class="highlighter-rouge">lssol output (6)</code> that you might typically encounter as the following:</p>
+        <p>This page will help you to debug the issue known as <code class="language-plaintext highlighter-rouge">lssol output (6)</code> that you might typically encounter as the following:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lssol output (6):
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lssol output (6):
 An input parameter is invalid
 
 QP failed to run()
@@ -309,12 +309,12 @@ QP failed to run()
   <li>Not enough workspace memory was allocated</li>
 </ol>
 
-<p>The file <code class="highlighter-rouge">/tmp/fort.9</code> should inform you on the exact nature of the problem. You should have a line ressembling one of these:</p>
+<p>The file <code class="language-plaintext highlighter-rouge">/tmp/fort.9</code> should inform you on the exact nature of the problem. You should have a line ressembling one of these:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">XXX  The bounds on  varbl  3  are inconsistent.   bl =   -1000.000       bu =   -10000.00</code> (inconsistent bounds on a variable)</li>
-  <li><code class="highlighter-rouge">XXX  The bounds on  lncon  4  are inconsistent.   bl =    2       bu =   -1.000000</code> (inconsistent bounds on an inequality constraint)</li>
-  <li><code class="highlighter-rouge">XXX  The equal bounds on  lncon  1  are infinite.   Bounds =   0.1000000+101  bigbnd =   0.9999900E+10</code> (\(b\) too large in an equality constraint \(A_i^T x = b\) - represented internally as \(b \leq A_i^T x \leq b\))</li>
+  <li><code class="language-plaintext highlighter-rouge">XXX  The bounds on  varbl  3  are inconsistent.   bl =   -1000.000       bu =   -10000.00</code> (inconsistent bounds on a variable)</li>
+  <li><code class="language-plaintext highlighter-rouge">XXX  The bounds on  lncon  4  are inconsistent.   bl =    2       bu =   -1.000000</code> (inconsistent bounds on an inequality constraint)</li>
+  <li><code class="language-plaintext highlighter-rouge">XXX  The equal bounds on  lncon  1  are infinite.   Bounds =   0.1000000+101  bigbnd =   0.9999900E+10</code> (\(b\) too large in an equality constraint \(A_i^T x = b\) - represented internally as \(b \leq A_i^T x \leq b\))</li>
 </ul>
 
 <p>Note: on Windows, that file is located in the folder where the application using LSSOL is executed</p>

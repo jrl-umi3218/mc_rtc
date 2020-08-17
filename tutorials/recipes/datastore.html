@@ -278,17 +278,17 @@
       <div class="col-9">
         <h1>DataStore: Sharing Objects</h1>
 
-        <p>The <code class="highlighter-rouge">DataStore</code> is a facility used to efficiently store and retrieve arbitrary C++ objects, and is intended as a way to conveniently and efficiently share arbitrary objects within the framework. It is strongly typed (only objects of the same type as the stored type can be retrieved), and only relies on standard C++ mechanisms.</p>
+        <p>The <code class="language-plaintext highlighter-rouge">DataStore</code> is a facility used to efficiently store and retrieve arbitrary C++ objects, and is intended as a way to conveniently and efficiently share arbitrary objects within the framework. It is strongly typed (only objects of the same type as the stored type can be retrieved), and only relies on standard C++ mechanisms.</p>
 
-<p>The <code class="highlighter-rouge">DataStore</code> may for instance be used to:</p>
+<p>The <code class="language-plaintext highlighter-rouge">DataStore</code> may for instance be used to:</p>
 
 <ul>
-  <li><strong>Share data between <code class="highlighter-rouge">States</code> in the FSM</strong>.
+  <li><strong>Share data between <code class="language-plaintext highlighter-rouge">States</code> in the FSM</strong>.
     <ul>
-      <li>For instance, it makes it easy to achieve a stabilized FSM simply by putting a <code class="highlighter-rouge">StabilizerStandingState</code> (see the <a href="lipm-stabilizer.html">LIPM Stabilizer tutorial</a>) in parallel with an existing FSM. Targets to the <code class="highlighter-rouge">StabilizerStandingState</code> may then be provided through the <code class="highlighter-rouge">DataStore</code>. For instance to change the CoM target, you can simply set the <code class="highlighter-rouge">StabilizerStandingState::com</code> property.</li>
+      <li>For instance, it makes it easy to achieve a stabilized FSM simply by putting a <code class="language-plaintext highlighter-rouge">StabilizerStandingState</code> (see the <a href="lipm-stabilizer.html">LIPM Stabilizer tutorial</a>) in parallel with an existing FSM. Targets to the <code class="language-plaintext highlighter-rouge">StabilizerStandingState</code> may then be provided through the <code class="language-plaintext highlighter-rouge">DataStore</code>. For instance to change the CoM target, you can simply set the <code class="language-plaintext highlighter-rouge">StabilizerStandingState::com</code> property.</li>
     </ul>
   </li>
-  <li><strong>Provide additional information to <a href="observers.html">observers</a></strong> (such as the <code class="highlighter-rouge">anchorFrame</code> required by the <code class="highlighter-rouge">KinematicInertial</code> observer).</li>
+  <li><strong>Provide additional information to <a href="observers.html">observers</a></strong> (such as the <code class="language-plaintext highlighter-rouge">anchorFrame</code> required by the <code class="language-plaintext highlighter-rouge">KinematicInertial</code> observer).</li>
   <li>
     <p><strong>Share data between plugins and the controller</strong>. As an example, consider the interaction between a walking controller and a footstep planner plugin. As an input, the footstep planner requires information about <em>(i) the current feet contacts</em>, <em>(ii) a desired goal</em>, and might also use additional information (such as obstacles, etc.). In return, it should provide the <em>(iii) next footsteps</em> that the walking controller should follow. Additionally in the case of an online footstep planner, it is needed to request updates to the footstep plan (when the goal or robot state changes, new obstacles are detected, etc.)</p>
 
@@ -304,11 +304,11 @@
 
 <h2 id="usage">Usage</h2>
 
-<p>A default <code class="highlighter-rouge">DataStore</code> instance is available in the <code class="highlighter-rouge">mc_control::MCController</code> class, and can be accessed using <code class="highlighter-rouge">mc_control::MCController::datastore()</code>. Any <code class="highlighter-rouge">c++</code> object can be created and retrieved from this <code class="highlighter-rouge">DataStore</code> instance from anywhere with access to the controller’s instance.</p>
+<p>A default <code class="language-plaintext highlighter-rouge">DataStore</code> instance is available in the <code class="language-plaintext highlighter-rouge">mc_control::MCController</code> class, and can be accessed using <code class="language-plaintext highlighter-rouge">mc_control::MCController::datastore()</code>. Any <code class="language-plaintext highlighter-rouge">c++</code> object can be created and retrieved from this <code class="language-plaintext highlighter-rouge">DataStore</code> instance from anywhere with access to the controller’s instance.</p>
 
 <ul>
   <li>
-    <p>Objects can be directly created on the datastore through the use of <code class="highlighter-rouge">make</code> or <code class="highlighter-rouge">make_initializer</code> as follows:</p>
+    <p>Objects can be directly created on the datastore through the use of <code class="language-plaintext highlighter-rouge">make</code> or <code class="language-plaintext highlighter-rouge">make_initializer</code> as follows:</p>
 
     <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a vector of double of size 4 initialized with value 42</span>
 <span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="s">"key"</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">);</span>
@@ -330,13 +330,13 @@
 </code></pre></div>    </div>
   </li>
   <li>
-    <p>A reference to the stored value can be retrieved at any time using <code class="highlighter-rouge">get&lt;Type&gt;</code>:</p>
+    <p>A reference to the stored value can be retrieved at any time using <code class="language-plaintext highlighter-rouge">get&lt;Type&gt;</code>:</p>
 
     <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">auto</span> <span class="o">&amp;</span> <span class="n">vec</span> <span class="o">=</span> <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"EigenVector"</span><span class="p">);</span>
 <span class="c1">// vec: 42, 0, 0</span>
 </code></pre></div>    </div>
 
-    <p>An exception will be thrown if the key is not present in the datastore, or the requested <code class="highlighter-rouge">Type</code> differs from the one used upon creation. Similarly to <code class="highlighter-rouge">mc_rtc::Configuration</code> objects, you may also use one of the convenience overloads of <code class="highlighter-rouge">get</code> to specify a default value to use in case the key does not exist:</p>
+    <p>An exception will be thrown if the key is not present in the datastore, or the requested <code class="language-plaintext highlighter-rouge">Type</code> differs from the one used upon creation. Similarly to <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> objects, you may also use one of the convenience overloads of <code class="language-plaintext highlighter-rouge">get</code> to specify a default value to use in case the key does not exist:</p>
 
     <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">vec</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">};</span>
 <span class="n">datastore</span><span class="p">().</span><span class="n">get</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"NotAKey"</span><span class="p">,</span> <span class="n">vec</span><span class="p">);</span> <span class="c1">// vec remains unchanged: 1, 2, 3</span>
@@ -386,7 +386,7 @@
 </code></pre></div>    </div>
   </li>
   <li>
-    <p><strong>Lambda functions</strong> may also be stored but you must use the special <code class="highlighter-rouge">make_call</code></p>
+    <p><strong>Lambda functions</strong> may also be stored but you must use the special <code class="language-plaintext highlighter-rouge">make_call</code></p>
 
     <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a lambda function and store it as an std::function</span>
 <span class="n">datastore</span><span class="p">().</span><span class="n">make_call</span><span class="p">(</span><span class="s">"lambda"</span><span class="p">,</span> <span class="p">[](</span><span class="kt">double</span> <span class="n">t</span><span class="p">)</span> <span class="p">{});</span>

@@ -281,17 +281,17 @@
         <p>A common recipe to get more out of the FSM is to derive the FSM controller, this allows to:</p>
 <ul>
   <li>share data (tasks, constraints, parameters…) across states easily;</li>
-  <li>easily implement a default behaviour (note that this can be achieved using the <code class="highlighter-rouge">Parallel</code> and <code class="highlighter-rouge">Meta</code> state).</li>
+  <li>easily implement a default behaviour (note that this can be achieved using the <code class="language-plaintext highlighter-rouge">Parallel</code> and <code class="language-plaintext highlighter-rouge">Meta</code> state).</li>
 </ul>
 
 <p>To do so, the following steps are necessary:</p>
 <ul>
-  <li>your controller must derive from <code class="highlighter-rouge">mc_control::fsm::Controller</code> instead of <code class="highlighter-rouge">mc_control::MCController</code>;</li>
-  <li>call <code class="highlighter-rouge">mc_control::fsm::Controller::reset</code> first in your own reset function. Alternatively you can call <code class="highlighter-rouge">mc_control::MCController::reset</code> first, then do your own initialization then call <code class="highlighter-rouge">mc_control::fsm::Controller::reset</code>. The later is required if your first state needs data from your controller instance that will be properly initialized in the reset function;</li>
-  <li>your library should link with <code class="highlighter-rouge">mc_control_fsm</code></li>
+  <li>your controller must derive from <code class="language-plaintext highlighter-rouge">mc_control::fsm::Controller</code> instead of <code class="language-plaintext highlighter-rouge">mc_control::MCController</code>;</li>
+  <li>call <code class="language-plaintext highlighter-rouge">mc_control::fsm::Controller::reset</code> first in your own reset function. Alternatively you can call <code class="language-plaintext highlighter-rouge">mc_control::MCController::reset</code> first, then do your own initialization then call <code class="language-plaintext highlighter-rouge">mc_control::fsm::Controller::reset</code>. The later is required if your first state needs data from your controller instance that will be properly initialized in the reset function;</li>
+  <li>your library should link with <code class="language-plaintext highlighter-rouge">mc_control_fsm</code></li>
 </ul>
 
-<p>The states you implement for your controller must still follow the regular <code class="highlighter-rouge">State</code> interface, if you want to access your controller class, you should cast the <code class="highlighter-rouge">Controller</code> instance that is passed to you.</p>
+<p>The states you implement for your controller must still follow the regular <code class="language-plaintext highlighter-rouge">State</code> interface, if you want to access your controller class, you should cast the <code class="language-plaintext highlighter-rouge">Controller</code> instance that is passed to you.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">MyState</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl_</span><span class="p">)</span>
 <span class="p">{</span>
@@ -300,7 +300,7 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>A way to simplify the controller access above is to derive the <code class="highlighter-rouge">mc_control::fsm::State</code> class so that your state already access your own controller class. See the following snippet below:</p>
+<p>A way to simplify the controller access above is to derive the <code class="language-plaintext highlighter-rouge">mc_control::fsm::State</code> class so that your state already access your own controller class. See the following snippet below:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">State</span> <span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">State</span>
 <span class="p">{</span>
@@ -323,7 +323,7 @@
 <span class="p">};</span>
 </code></pre></div></div>
 
-<p>Then simply, inherit this <code class="highlighter-rouge">State</code> class instead of <code class="highlighter-rouge">mc_control::fsm::State</code>.</p>
+<p>Then simply, inherit this <code class="language-plaintext highlighter-rouge">State</code> class instead of <code class="language-plaintext highlighter-rouge">mc_control::fsm::State</code>.</p>
 
 <p>You can use this technique to implement the FSM behaviour differently, see the following example:</p>
 
@@ -370,7 +370,7 @@
 
 <h2 id="getting-started">Getting started</h2>
 
-<p>The <code class="highlighter-rouge">mc_rtc_new_fsm_controller</code> tool will let you create a new controller deriving from the FSM controller. It works similarly to the <code class="highlighter-rouge">mc_rtc_new_controller</code> tool.</p>
+<p>The <code class="language-plaintext highlighter-rouge">mc_rtc_new_fsm_controller</code> tool will let you create a new controller deriving from the FSM controller. It works similarly to the <code class="language-plaintext highlighter-rouge">mc_rtc_new_controller</code> tool.</p>
 
 
         <hr/>

@@ -285,9 +285,9 @@
 
 <h3 id="access-to-the-gui">Access to the GUI</h3>
 
-<p>The GUI works with a server/client model. The controller being the server and the client being remote interfaces. As such, on the controller side, your code will only provide data that is sent by the GUI server to the clients. This data is added through the <code class="highlighter-rouge">mc_rtc::gui::StateBuilder</code> interface.</p>
+<p>The GUI works with a server/client model. The controller being the server and the client being remote interfaces. As such, on the controller side, your code will only provide data that is sent by the GUI server to the clients. This data is added through the <code class="language-plaintext highlighter-rouge">mc_rtc::gui::StateBuilder</code> interface.</p>
 
-<p>To access the GUI builder, you simply call <code class="highlighter-rouge">gui()</code> from your controller code. Much like the logging interface, the GUI builder interface is always enabled so you don’t have to worry about the state of the feature.</p>
+<p>To access the GUI builder, you simply call <code class="language-plaintext highlighter-rouge">gui()</code> from your controller code. Much like the logging interface, the GUI builder interface is always enabled so you don’t have to worry about the state of the feature.</p>
 
 <h3 id="add-elements-to-the-gui">Add elements to the GUI</h3>
 
@@ -295,7 +295,7 @@
 
 <p>Categories are represented by vector of strings (list of strings in Python) and elements are represented by a simple object that wraps a description of the element’s type and accesors to the data your controller is providing.</p>
 
-<p>To add an element one simply calls <code class="highlighter-rouge">gui()-&gt;addElement(...)</code> with a category an one or more elements, e.g.:</p>
+<p>To add an element one simply calls <code class="language-plaintext highlighter-rouge">gui()-&gt;addElement(...)</code> with a category an one or more elements, e.g.:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Add a single button named "Push" in the a/b category</span>
 <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">({</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">},</span>
@@ -314,18 +314,18 @@
 
 <p>The state builder also holds some “static” data that can be used to reference commonly refered elements. By default, the following entries are already into data:</p>
 <ul>
-  <li><code class="highlighter-rouge">robots</code> is a list of robots’ names in the controller</li>
-  <li><code class="highlighter-rouge">surfaces</code> is a map of robot’s names to robot’s surfaces</li>
-  <li><code class="highlighter-rouge">bodies</code> is a map of robot’s names to robot’s bodies</li>
+  <li><code class="language-plaintext highlighter-rouge">robots</code> is a list of robots’ names in the controller</li>
+  <li><code class="language-plaintext highlighter-rouge">surfaces</code> is a map of robot’s names to robot’s surfaces</li>
+  <li><code class="language-plaintext highlighter-rouge">bodies</code> is a map of robot’s names to robot’s bodies</li>
 </ul>
 
-<p>The data can be accessed by calling <code class="highlighter-rouge">gui()-&gt;data()</code> and modifying it. It is strongly advised not to modify the default data as it is used by the GUI clients to display some elements nicely.</p>
+<p>The data can be accessed by calling <code class="language-plaintext highlighter-rouge">gui()-&gt;data()</code> and modifying it. It is strongly advised not to modify the default data as it is used by the GUI clients to display some elements nicely.</p>
 
 <h4 id="simple-elements">Simple elements</h4>
 
-<p>In this section we present every element that can be added to the GUI, every sample assumes they are included as part of a <code class="highlighter-rouge">gui()-&gt;addElement(...)</code> call. For every functions you provide to the GUI to read data from your controller or pass data back to your controller you don’t need to worry about exporting/importing the data to/from a specific format, this will be handled by the GUI.</p>
+<p>In this section we present every element that can be added to the GUI, every sample assumes they are included as part of a <code class="language-plaintext highlighter-rouge">gui()-&gt;addElement(...)</code> call. For every functions you provide to the GUI to read data from your controller or pass data back to your controller you don’t need to worry about exporting/importing the data to/from a specific format, this will be handled by the GUI.</p>
 
-<h5 id="labelarraylabel"><code class="highlighter-rouge">Label</code>/<code class="highlighter-rouge">ArrayLabel</code></h5>
+<h5 id="labelarraylabel"><code class="language-plaintext highlighter-rouge">Label</code>/<code class="language-plaintext highlighter-rouge">ArrayLabel</code></h5>
 
 <p>These elements can be used to display simple text or numeric data.</p>
 
@@ -354,21 +354,21 @@
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ArrayLabel</span><span class="p">(</span><span class="s">"Vector"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">v3d</span><span class="p">,</span> <span class="p">[</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">])</span>
 </code></pre></div></div>
 
-<h5 id="button"><code class="highlighter-rouge">Button</code></h5>
+<h5 id="button"><code class="language-plaintext highlighter-rouge">Button</code></h5>
 
 <p>This element simply display a button. Clicking the button triggers a call to the callback you provided.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Button</span><span class="p">(</span><span class="s">"Push me"</span><span class="p">,</span> <span class="p">[]()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Hello!"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
-<h5 id="checkbox"><code class="highlighter-rouge">Checkbox</code></h5>
+<h5 id="checkbox"><code class="language-plaintext highlighter-rouge">Checkbox</code></h5>
 
 <p>This element display a checkbox. Its status depends on the value you provide, when you click it that value will be flipped.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Checkbox</span><span class="p">(</span><span class="s">"Check me"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">status_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="kt">bool</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="n">status_</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
-<h5 id="stringinputintegerinputnumberarrayinput"><code class="highlighter-rouge">StringInput</code>/<code class="highlighter-rouge">IntegerInput</code>/<code class="highlighter-rouge">Number</code>/<code class="highlighter-rouge">ArrayInput</code></h5>
+<h5 id="stringinputintegerinputnumberarrayinput"><code class="language-plaintext highlighter-rouge">StringInput</code>/<code class="language-plaintext highlighter-rouge">IntegerInput</code>/<code class="language-plaintext highlighter-rouge">Number</code>/<code class="language-plaintext highlighter-rouge">ArrayInput</code></h5>
 
 <p>These elements provide inputs for the user. You should use the representation that is most relevant to your data.</p>
 
@@ -377,7 +377,7 @@
 <span class="n">NumberInput</span><span class="p">(</span><span class="s">"Weight"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">w_</span><span class="p">;</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="kt">double</span> <span class="n">w</span><span class="p">){</span> <span class="n">w_</span> <span class="o">=</span> <span class="n">w</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">ArrayInput</code> accepts an additional parameter to add labels to the data. It also assumes that the array size is fixed.</p>
+<p><code class="language-plaintext highlighter-rouge">ArrayInput</code> accepts an additional parameter to add labels to the data. It also assumes that the array size is fixed.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ArrayInput</span><span class="p">(</span><span class="s">"Your array"</span><span class="p">,</span> <span class="p">{</span><span class="s">"x"</span><span class="p">,</span> <span class="s">"y"</span><span class="p">,</span> <span class="s">"z"</span><span class="p">},</span>
            <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">v3_</span><span class="p">;</span> <span class="p">},</span>
@@ -386,9 +386,9 @@
 
 <p>In Python, the labels go at the end of the parameter list.</p>
 
-<h5 id="comboinputdatacomboinput"><code class="highlighter-rouge">ComboInput</code>/<code class="highlighter-rouge">DataComboInput</code></h5>
+<h5 id="comboinputdatacomboinput"><code class="language-plaintext highlighter-rouge">ComboInput</code>/<code class="language-plaintext highlighter-rouge">DataComboInput</code></h5>
 
-<p>These elements create a dialog to choose a value from a list of string, in <code class="highlighter-rouge">ComboInput</code> you provide this list of strings, in <code class="highlighter-rouge">DataComboInput</code>, you provide a reference to an entry in the GUI state data map.</p>
+<p>These elements create a dialog to choose a value from a list of string, in <code class="language-plaintext highlighter-rouge">ComboInput</code> you provide this list of strings, in <code class="language-plaintext highlighter-rouge">DataComboInput</code>, you provide a reference to an entry in the GUI state data map.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ComboInput</span><span class="p">(</span><span class="s">"Choose from list"</span><span class="p">,</span> <span class="p">{</span><span class="s">"a"</span><span class="p">,</span> <span class="s">"b"</span><span class="p">,</span> <span class="s">"c"</span><span class="p">},</span>
            <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">choice_</span><span class="p">;</span> <span class="p">},</span>
@@ -403,11 +403,11 @@
                <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span> <span class="n">surface_</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
-<h5 id="point3drotationtransform"><code class="highlighter-rouge">Point3D</code>/<code class="highlighter-rouge">Rotation</code>/<code class="highlighter-rouge">Transform</code></h5>
+<h5 id="point3drotationtransform"><code class="language-plaintext highlighter-rouge">Point3D</code>/<code class="language-plaintext highlighter-rouge">Rotation</code>/<code class="language-plaintext highlighter-rouge">Transform</code></h5>
 
 <p>These elements will display two things:</p>
 <ul>
-  <li>an <code class="highlighter-rouge">ArrayInput</code> suited for the element you are adding</li>
+  <li>an <code class="language-plaintext highlighter-rouge">ArrayInput</code> suited for the element you are adding</li>
   <li>an (optionally) interactive element to display the data in a 3D environment such as RViZ</li>
 </ul>
 
@@ -423,7 +423,7 @@
          <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix3d</span> <span class="o">&amp;</span> <span class="n">rot</span><span class="p">)</span> <span class="p">{</span> <span class="n">rot_</span> <span class="o">=</span> <span class="n">rot</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
-<h5 id="trajectory"><code class="highlighter-rouge">Trajectory</code></h5>
+<h5 id="trajectory"><code class="language-plaintext highlighter-rouge">Trajectory</code></h5>
 
 <p>This element displays a trajectory in the 3D environment: depending on the type of data it returns it can be interpreted as a real-time trajectory display (e.g. to show the path taken by a surface) or a pre-planned trajectory.</p>
 
@@ -436,7 +436,7 @@
            <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">traj_</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
-<h5 id="polygon"><code class="highlighter-rouge">Polygon</code></h5>
+<h5 id="polygon"><code class="language-plaintext highlighter-rouge">Polygon</code></h5>
 
 <p>This element displays a single polygon (e.g. a planar surface) or list of polygon (e.g. a walking steps-plan).</p>
 
@@ -449,14 +449,14 @@
         <span class="p">[</span><span class="k">this</span><span class="p">]]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">step_plan_display_</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
-<h5 id="force"><code class="highlighter-rouge">Force</code></h5>
+<h5 id="force"><code class="language-plaintext highlighter-rouge">Force</code></h5>
 
-<p>This element displays a force vector in the 3D environment. You need to provide the force value as an <code class="highlighter-rouge">sva::ForceVecd</code> as well as the frame where the force is applied as an <code class="highlighter-rouge">sva::PTransformd</code>.</p>
+<p>This element displays a force vector in the 3D environment. You need to provide the force value as an <code class="language-plaintext highlighter-rouge">sva::ForceVecd</code> as well as the frame where the force is applied as an <code class="language-plaintext highlighter-rouge">sva::PTransformd</code>.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Force</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfaceWrench</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">robot</span><span class="p">().</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"LFullSole"</span><span class="p">);</span> <span class="p">}),</span>
 </code></pre></div></div>
 
-<h5 id="arrow"><code class="highlighter-rouge">Arrow</code></h5>
+<h5 id="arrow"><code class="language-plaintext highlighter-rouge">Arrow</code></h5>
 
 <p>This element displays an arrow in the 3D environment. You need to provide the starting point and the end point of the arrow. It is possible to provide an editable arrow.</p>
 
@@ -471,9 +471,9 @@
       <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">&amp;</span> <span class="n">end</span><span class="p">)</span> <span class="p">{</span> <span class="n">end_</span> <span class="o">=</span> <span class="n">end</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
-<h5 id="xytheta"><code class="highlighter-rouge">XYTheta</code></h5>
+<h5 id="xytheta"><code class="language-plaintext highlighter-rouge">XYTheta</code></h5>
 
-<p>This element is a special case of the <code class="highlighter-rouge">Transform</code> element where only X/Y translation and Z rotation are editable.</p>
+<p>This element is a special case of the <code class="language-plaintext highlighter-rouge">Transform</code> element where only X/Y translation and Z rotation are editable.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Returns a vector with 3 elements representing the X/Y position and the theta angle</span>
 <span class="n">XYTheta</span><span class="p">(</span><span class="s">"XYThetaOnGround"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">3</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">};</span> <span class="p">});</span>
@@ -482,9 +482,9 @@
 <span class="n">XYTheta</span><span class="p">(</span><span class="s">"XYTheta"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">array</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="mi">4</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">return</span> <span class="p">{</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">z</span><span class="p">};</span> <span class="p">});</span>
 </code></pre></div></div>
 
-<h5 id="table"><code class="highlighter-rouge">Table</code></h5>
+<h5 id="table"><code class="language-plaintext highlighter-rouge">Table</code></h5>
 
-<p>This element allows to display a table with arbitrary data in it. The data callback must return an object that could be represented as an array of array such as an <code class="highlighter-rouge">std::vector&lt;std::vector&lt;double&gt;&gt;</code> or an <code class="highlighter-rouge">std::vector&lt;std::tuple&lt;X, Y, Z&gt;&gt;</code></p>
+<p>This element allows to display a table with arbitrary data in it. The data callback must return an object that could be represented as an array of array such as an <code class="language-plaintext highlighter-rouge">std::vector&lt;std::vector&lt;double&gt;&gt;</code> or an <code class="language-plaintext highlighter-rouge">std::vector&lt;std::tuple&lt;X, Y, Z&gt;&gt;</code></p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Table with a fixed header</span>
 <span class="n">Table</span><span class="p">(</span><span class="s">"Simple table"</span><span class="p">,</span> <span class="p">{</span><span class="s">"X"</span><span class="p">,</span> <span class="s">"Y"</span><span class="p">,</span> <span class="s">"Z"</span><span class="p">},</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="o">-&gt;</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="k">return</span> <span class="n">points_</span><span class="p">;</span> <span class="p">});</span>
@@ -498,9 +498,9 @@
 
 <p>It is your reponsibility to ensure that the header, format and data sizes are coherent although the client should be relatively resilient when they are not. Format strings must follow the rules of <a href="https://fmt.dev/latest/syntax.html">{fmt}</a>.</p>
 
-<h5 id="form"><code class="highlighter-rouge">Form</code></h5>
+<h5 id="form"><code class="language-plaintext highlighter-rouge">Form</code></h5>
 
-<p>The <code class="highlighter-rouge">Form</code> element allows to build a more complexe dialog for interaction with the user. A form is itself composed of elements, the <code class="highlighter-rouge">Form</code> creation looks like the following:</p>
+<p>The <code class="language-plaintext highlighter-rouge">Form</code> element allows to build a more complexe dialog for interaction with the user. A form is itself composed of elements, the <code class="language-plaintext highlighter-rouge">Form</code> creation looks like the following:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Form</span><span class="p">(</span><span class="s">"Push to send"</span><span class="p">,</span> <span class="c1">// This will be shown on the "send" button for the form</span>
      <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span> <span class="p">{},</span>
@@ -510,22 +510,22 @@
 
 <p>The available elements are:</p>
 <ul>
-  <li><code class="highlighter-rouge">FormCheckbox(name, required, default)</code></li>
-  <li><code class="highlighter-rouge">FormIntegerInput(name, required, default)</code></li>
-  <li><code class="highlighter-rouge">FormNumberInput(name, required, default)</code></li>
-  <li><code class="highlighter-rouge">FormStringInput(name, required, default)</code></li>
-  <li><code class="highlighter-rouge">FormArrayInput(name, required, default, fixed_size (true))</code></li>
-  <li><code class="highlighter-rouge">FormComboInput(name, required, values)</code></li>
-  <li><code class="highlighter-rouge">FormDataComboInput(name, required, reference)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormCheckbox(name, required, default)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormIntegerInput(name, required, default)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormNumberInput(name, required, default)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormStringInput(name, required, default)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormArrayInput(name, required, default, fixed_size (true))</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormComboInput(name, required, values)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FormDataComboInput(name, required, reference)</code></li>
 </ul>
 
-<p>In all those, <code class="highlighter-rouge">name</code> will be used to display the name of the element and to retrieve the data in the callback, <code class="highlighter-rouge">required</code> indicates whether the user must provide a value for this field or not and <code class="highlighter-rouge">default</code> is optional and provides a default value for the field.</p>
+<p>In all those, <code class="language-plaintext highlighter-rouge">name</code> will be used to display the name of the element and to retrieve the data in the callback, <code class="language-plaintext highlighter-rouge">required</code> indicates whether the user must provide a value for this field or not and <code class="language-plaintext highlighter-rouge">default</code> is optional and provides a default value for the field.</p>
 
-<p>In <code class="highlighter-rouge">FormArrayInput</code>, <code class="highlighter-rouge">fixed_size</code> indicates whether the default value you are providing is of a fixed size or can be expanded/shrinked by the user.</p>
+<p>In <code class="language-plaintext highlighter-rouge">FormArrayInput</code>, <code class="language-plaintext highlighter-rouge">fixed_size</code> indicates whether the default value you are providing is of a fixed size or can be expanded/shrinked by the user.</p>
 
-<p>In <code class="highlighter-rouge">FormComboInput</code>, <code class="highlighter-rouge">values</code> is the list of values provided to the user in the combo box.</p>
+<p>In <code class="language-plaintext highlighter-rouge">FormComboInput</code>, <code class="language-plaintext highlighter-rouge">values</code> is the list of values provided to the user in the combo box.</p>
 
-<p>In <code class="highlighter-rouge">FormDataComboInput</code>, <code class="highlighter-rouge">reference</code> is a reference to the data entry. Additionally, it can reference another field of the form by using the <code class="highlighter-rouge">$</code> symbol. For example:</p>
+<p>In <code class="language-plaintext highlighter-rouge">FormDataComboInput</code>, <code class="language-plaintext highlighter-rouge">reference</code> is a reference to the data entry. Additionally, it can reference another field of the form by using the <code class="language-plaintext highlighter-rouge">$</code> symbol. For example:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Form</span><span class="p">(</span><span class="s">"Button name"</span><span class="p">,</span>
      <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span> <span class="p">{},</span>
@@ -534,7 +534,7 @@
 <span class="p">);</span>
 </code></pre></div></div>
 
-<p>In that example, the content of the <code class="highlighter-rouge">Surface</code> combo box will change depending on the selection the user makes in <code class="highlighter-rouge">Robot</code>.</p>
+<p>In that example, the content of the <code class="language-plaintext highlighter-rouge">Surface</code> combo box will change depending on the selection the user makes in <code class="language-plaintext highlighter-rouge">Robot</code>.</p>
 
 <h5 id="a-note-on-callbacks">A note on callbacks</h5>
 

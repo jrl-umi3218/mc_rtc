@@ -280,7 +280,7 @@
 
         <h2 id="a-bit-of-history">A bit of history</h2>
 
-<p>The stabilizer presented in this tutorial was originally implemented as part of Dr. Stéphane Caron’s <a href="https://github.com/stephane-caron/lipm_walking_controller">LIPM Walking Controller</a>. This implementation has been intensively used for walking, including stair climbing and extensive locomotion, notably as part of an Airbus’ manufacturing use-case performed in-situ at their industrial factory. The implementation proposed in <code class="highlighter-rouge">mc_tasks::lipm_stabilizer::StabilizerTask</code> is an integration of the method proposed in Dr. Caron’s original implementation. No significant conceptual alteration to the stabilization algorithm were made. Walking is currently provided in a separate  <a href="https://github.com/jrl-umi3218/lipm_walking_controller">controller</a>.</p>
+<p>The stabilizer presented in this tutorial was originally implemented as part of Dr. Stéphane Caron’s <a href="https://github.com/stephane-caron/lipm_walking_controller">LIPM Walking Controller</a>. This implementation has been intensively used for walking, including stair climbing and extensive locomotion, notably as part of an Airbus’ manufacturing use-case performed in-situ at their industrial factory. The implementation proposed in <code class="language-plaintext highlighter-rouge">mc_tasks::lipm_stabilizer::StabilizerTask</code> is an integration of the method proposed in Dr. Caron’s original implementation. No significant conceptual alteration to the stabilization algorithm were made. Walking is currently provided in a separate  <a href="https://github.com/jrl-umi3218/lipm_walking_controller">controller</a>.</p>
 
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vFCFKAunsYM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
@@ -290,21 +290,21 @@
 
 <p>For details on the stabilization algorithm, please refer to the original publication by Stéphane Caron, Abderrahmane Kheddar and Olivier Tempier: <a href="https://scaron.info/publications/icra-2019.html">Stair Climbing Stabilization of the HRP-4 Humanoid Robot using Whole-body Admittance Control</a> published at <em>ICRA 2019, Montreal, Canada, May 2019.</em></p>
 
-<p>This stabilizer is implemented here in <code class="highlighter-rouge">mc_tasks::lipm_stabilizer::StabilizerTask</code> as a <code class="highlighter-rouge">MetaTask</code>, i.e a task that manages the following additional tasks:</p>
+<p>This stabilizer is implemented here in <code class="language-plaintext highlighter-rouge">mc_tasks::lipm_stabilizer::StabilizerTask</code> as a <code class="language-plaintext highlighter-rouge">MetaTask</code>, i.e a task that manages the following additional tasks:</p>
 
 <ul>
-  <li>A <code class="highlighter-rouge">CoMTask</code> to track the desired CoM position computed by the stabilizer</li>
-  <li>Two <code class="highlighter-rouge">CoPTask</code> to track desired wrench under each of the robot’s feet</li>
-  <li>Two <code class="highlighter-rouge">OrientationTasks</code> on respectively the waist and torso bodies, used for regularization of the upper-body behaviour</li>
+  <li>A <code class="language-plaintext highlighter-rouge">CoMTask</code> to track the desired CoM position computed by the stabilizer</li>
+  <li>Two <code class="language-plaintext highlighter-rouge">CoPTask</code> to track desired wrench under each of the robot’s feet</li>
+  <li>Two <code class="language-plaintext highlighter-rouge">OrientationTasks</code> on respectively the waist and torso bodies, used for regularization of the upper-body behaviour</li>
 </ul>
 
-<p>The <code class="highlighter-rouge">StabilizerTask</code> role is to compute targets to provide to these tasks such that the real robot system tracks as-best-as-possible the behaviour of a reference linear inverted pendulum model. As such, to stabilize dynamic trajectories, the user must provide the following inputs to the stabilizer:</p>
+<p>The <code class="language-plaintext highlighter-rouge">StabilizerTask</code> role is to compute targets to provide to these tasks such that the real robot system tracks as-best-as-possible the behaviour of a reference linear inverted pendulum model. As such, to stabilize dynamic trajectories, the user must provide the following inputs to the stabilizer:</p>
 
 <ul>
-  <li>Position of the desired <code class="highlighter-rouge">CoM</code></li>
-  <li>Velocity of the desired <code class="highlighter-rouge">CoM</code></li>
-  <li>Acceleration of the desired <code class="highlighter-rouge">CoM</code></li>
-  <li>Position of the desired <code class="highlighter-rouge">ZMP</code></li>
+  <li>Position of the desired <code class="language-plaintext highlighter-rouge">CoM</code></li>
+  <li>Velocity of the desired <code class="language-plaintext highlighter-rouge">CoM</code></li>
+  <li>Acceleration of the desired <code class="language-plaintext highlighter-rouge">CoM</code></li>
+  <li>Position of the desired <code class="language-plaintext highlighter-rouge">ZMP</code></li>
 </ul>
 
 <p>This full reference state can be provided by:</p>
@@ -328,8 +328,8 @@
 <p>The aim of the stabilizer is to make the real system track the desired reference pendulum. As such, it requires the observation of the following real robot state:</p>
 
 <ul>
-  <li>Position of the <code class="highlighter-rouge">CoM</code></li>
-  <li>Velocity of the <code class="highlighter-rouge">CoM</code></li>
+  <li>Position of the <code class="language-plaintext highlighter-rouge">CoM</code></li>
+  <li>Velocity of the <code class="language-plaintext highlighter-rouge">CoM</code></li>
   <li>Contact wrenches</li>
 </ul>
 
@@ -342,8 +342,8 @@
 </code></pre></div></div>
 
 <ul>
-  <li>The <code class="highlighter-rouge">Encoder</code> observer computes the body position and velocities based on encoder measurements</li>
-  <li>The <code class="highlighter-rouge">KinematicInertial</code> observer computes the floating base’s pose and its velocity based on IMU measurement and a reference anchor frame provided in-between the robot’s feet.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">Encoder</code> observer computes the body position and velocities based on encoder measurements</li>
+  <li>The <code class="language-plaintext highlighter-rouge">KinematicInertial</code> observer computes the floating base’s pose and its velocity based on IMU measurement and a reference anchor frame provided in-between the robot’s feet.</li>
 </ul>
 
 <p><strong>Important note:</strong> you are expected to provide a valid continuous anchor frame. For simplicity, the stabilizer implementation provides it as</p>
@@ -352,7 +352,7 @@
 <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span> <span class="n">anchorFrameReal</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>For now these values must be manually passed at each iteration to the <code class="highlighter-rouge">KinematicInertial</code> observer by calling:</p>
+<p>For now these values must be manually passed at each iteration to the <code class="language-plaintext highlighter-rouge">KinematicInertial</code> observer by calling:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mc_controller</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// Controller's instance</span>
 <span class="n">mc_tasks</span><span class="o">::</span><span class="n">lipm_stabilizer</span><span class="o">::</span><span class="n">StabilizerTask</span> <span class="o">&amp;</span> <span class="n">stabilizer</span> <span class="o">=</span> <span class="p">...;</span> <span class="c1">// Stabilizer instance</span>
@@ -360,7 +360,7 @@
 <span class="n">ctl</span><span class="p">.</span><span class="n">anchorFrameReal</span><span class="p">(</span><span class="n">stabilizer</span><span class="p">.</span><span class="n">anchorFrameReal</span><span class="p">());</span>
 </code></pre></div></div>
 
-<p>With this, the observer pipeline will automatically update the <code class="highlighter-rouge">realRobot()</code> instance with the estimated state, which the stabilizer task will use to compute the tasks’ targets.</p>
+<p>With this, the observer pipeline will automatically update the <code class="language-plaintext highlighter-rouge">realRobot()</code> instance with the estimated state, which the stabilizer task will use to compute the tasks’ targets.</p>
 
 <h2 id="configuring-the-gains">Configuring the gains</h2>
 
@@ -421,7 +421,7 @@ See <a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/
 
 </code></pre></div></div>
 
-<p>Looks daunting? Don’t worry, you most likely won’t need to provide those gains explicitely, unless you are tuning the stabilizer for a new robot. A default stabilizer configuration must be provided by the <code class="highlighter-rouge">RobotModule</code> and can be accessed within your controller by</p>
+<p>Looks daunting? Don’t worry, you most likely won’t need to provide those gains explicitely, unless you are tuning the stabilizer for a new robot. A default stabilizer configuration must be provided by the <code class="language-plaintext highlighter-rouge">RobotModule</code> and can be accessed within your controller by</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">lipm_stabilizer</span><span class="o">::</span><span class="n">StabilizerConfiguration</span> <span class="n">stabiConf</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">module</span><span class="p">().</span><span class="n">defaultLIPMStabilizerConfiguration</span><span class="p">();</span>
 </code></pre></div></div>
@@ -435,7 +435,7 @@ See <a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/
 <p>When doing so, the stabilizer is configured in the following way:</p>
 
 <ul>
-  <li>Default configuration from the <code class="highlighter-rouge">RobotModule::defaultLIPMStabilizerConfiguration()</code>. A valid configuration is provided for all <a href="/mc_rtc/robots.html">robots</a> supported by <code class="highlighter-rouge">mc_rtc</code>.</li>
+  <li>Default configuration from the <code class="language-plaintext highlighter-rouge">RobotModule::defaultLIPMStabilizerConfiguration()</code>. A valid configuration is provided for all <a href="/mc_rtc/robots.html">robots</a> supported by <code class="language-plaintext highlighter-rouge">mc_rtc</code>.</li>
   <li>YAML configuration for the task</li>
   <li>Per-robot YAML configuration can be used to modify any of these values for a specific robot.</li>
 </ul>
@@ -444,7 +444,7 @@ See <a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/
 
 <h2 id="using-the-stabilizer-manually">Using the Stabilizer (Manually)</h2>
 
-<p>To create a stabilizer task within your own controller, you simply need to instanciate the <code class="highlighter-rouge">mc_tasks::lipm_stabilizer::StabilizerTask</code>, and</p>
+<p>To create a stabilizer task within your own controller, you simply need to instanciate the <code class="language-plaintext highlighter-rouge">mc_tasks::lipm_stabilizer::StabilizerTask</code>, and</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load default configuration from robot module</span>
 <span class="k">auto</span> <span class="n">stabiConf</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">module</span><span class="p">().</span><span class="n">defaultLIPMStabilizerConfiguration</span><span class="p">();</span>
@@ -465,7 +465,7 @@ See <a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/
 <span class="n">t</span><span class="o">-&gt;</span><span class="n">setContacts</span><span class="p">({</span><span class="n">ContactState</span><span class="o">::</span><span class="n">Left</span><span class="p">,</span> <span class="n">ContactState</span><span class="o">::</span><span class="n">Right</span><span class="p">});</span>
 </code></pre></div></div>
 
-<p>Additionally, you may load additional configuration settings and targets from an <code class="highlighter-rouge">mc_rtc::Configuration</code> object:</p>
+<p>Additionally, you may load additional configuration settings and targets from an <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> object:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load default configuration from robot module</span>
 <span class="k">auto</span> <span class="n">stabiConf</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">module</span><span class="p">().</span><span class="n">defaultLIPMStabilizerConfiguration</span><span class="p">();</span>
@@ -490,15 +490,15 @@ See <a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/
 <span class="n">t</span><span class="o">-&gt;</span><span class="n">load</span><span class="p">(</span><span class="n">solver</span><span class="p">,</span> <span class="n">config</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>By default, if no contacts and targets are specified, the task will start in double support and attempt to maintain the current feet pose and CoM position of the control robot. You may give targets to the stabilizer using <code class="highlighter-rouge">StabilizerTask::target(com, comd, comdd, zmp)</code> (see above).</p>
+<p>By default, if no contacts and targets are specified, the task will start in double support and attempt to maintain the current feet pose and CoM position of the control robot. You may give targets to the stabilizer using <code class="language-plaintext highlighter-rouge">StabilizerTask::target(com, comd, comdd, zmp)</code> (see above).</p>
 
 <h2 id="using-the-stabilizer-fsm">Using the Stabilizer (FSM)</h2>
 
-<p>The previous sections have introduced generalities about the stabilizer, how to create it and configure its gains. Using it is now as simple as selecting the appropriate contact mode (left support, right support, double support), and providing a valid reference state. Additionally, for the most common use-cases, <code class="highlighter-rouge">FSM</code> facilities are provided to help with its use.</p>
+<p>The previous sections have introduced generalities about the stabilizer, how to create it and configure its gains. Using it is now as simple as selecting the appropriate contact mode (left support, right support, double support), and providing a valid reference state. Additionally, for the most common use-cases, <code class="language-plaintext highlighter-rouge">FSM</code> facilities are provided to help with its use.</p>
 
-<p>A default FSM state <code class="highlighter-rouge">StabilizerStandingState</code> is provided. This state automatically creates a stabilizer task from configuration, and provides simple targets to the <code class="highlighter-rouge">CoM</code> and <code class="highlighter-rouge">Contacts</code>. The trajectory of the CoM is computed according to a simple spring-damper, and dynamic pendulum references are computed using a LIPM pendulum model. This reference is given to the stabilizer at every timestep.</p>
+<p>A default FSM state <code class="language-plaintext highlighter-rouge">StabilizerStandingState</code> is provided. This state automatically creates a stabilizer task from configuration, and provides simple targets to the <code class="language-plaintext highlighter-rouge">CoM</code> and <code class="language-plaintext highlighter-rouge">Contacts</code>. The trajectory of the CoM is computed according to a simple spring-damper, and dynamic pendulum references are computed using a LIPM pendulum model. This reference is given to the stabilizer at every timestep.</p>
 
-<p>You can configure the state in <code class="highlighter-rouge">YAML</code> as follows</p>
+<p>You can configure the state in <code class="language-plaintext highlighter-rouge">YAML</code> as follows</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">##</span>
 <span class="c1"># This state keeps the robot standing at it's current position in double support</span>
@@ -546,23 +546,23 @@ See <a href="https://jrl-umi3218.github.io/lipm_walking_controller/doxygen/HEAD/
   <span class="s">above</span><span class="pi">:</span> <span class="s">RightAnkle</span>
 </code></pre></div></div>
 
-<p>A simple library of predefined states for the most common actions (including the ones above) is provided in <code class="highlighter-rouge">mc_control/fsm/states/data/StabilizerStanding.yaml</code>. These states are intended to be put in parallel to other states to achieve more complex actions, such as the ones showcased in the next section.</p>
+<p>A simple library of predefined states for the most common actions (including the ones above) is provided in <code class="language-plaintext highlighter-rouge">mc_control/fsm/states/data/StabilizerStanding.yaml</code>. These states are intended to be put in parallel to other states to achieve more complex actions, such as the ones showcased in the next section.</p>
 
 <h2 id="lipmstabilizer-sample-fsm">LIPMStabilizer sample FSM</h2>
 
-<p>To get started with the stabilizer, the user may refer to the provided sample controller <code class="highlighter-rouge">LIPMStabilizer</code>. To test it, simply add the following to your <code class="highlighter-rouge">mc_rtc.yaml</code> configuration file:</p>
+<p>To get started with the stabilizer, the user may refer to the provided sample controller <code class="language-plaintext highlighter-rouge">LIPMStabilizer</code>. To test it, simply add the following to your <code class="language-plaintext highlighter-rouge">mc_rtc.yaml</code> configuration file:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Enabled</span><span class="pi">:</span> <span class="s">LIPMStabilizer</span>
 </code></pre></div></div>
 
-<p>And run an interface supporting dynamic simulation (such as <code class="highlighter-rouge">mc_vrep</code> or <code class="highlighter-rouge">choreonoid</code>). This default FSM lets you move the CoM from left to right foot, and provides the following FSMs:</p>
+<p>And run an interface supporting dynamic simulation (such as <code class="language-plaintext highlighter-rouge">mc_vrep</code> or <code class="language-plaintext highlighter-rouge">choreonoid</code>). This default FSM lets you move the CoM from left to right foot, and provides the following FSMs:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">Stabilizer::Standing</code> : keeps the CoM at its current observed position. While in this state, you can freely move the CoM from <code class="highlighter-rouge">Left</code> to <code class="highlighter-rouge">Right</code> ankle in the GUI, or any other position. You may go to the “Tasks-&gt;Stabilizer” tab to see and modify the stabilizer gains. Additionally the “Debug” tab lets you add live plots visualizing the stabilizer behaviour.</li>
-  <li><code class="highlighter-rouge">AlternateFeetLifting</code> : alternatively lift the left and right foot. This is essentially a quasi-static motion, where the <code class="highlighter-rouge">StabilizerStandingState</code> is used to move the CoM above the left (resp right) ankle, configure the stabilizer in single support, then use it in parallel to tasks on the right (resp. left) swing foot (<code class="highlighter-rouge">SurfaceTransform</code> for the liftoff phase, <code class="highlighter-rouge">AdmittanceTask</code> for putting the foot down).</li>
-  <li><code class="highlighter-rouge">AlternateFeetLiftingManual</code>: same as above, but transitions are triggered by the user. Useful to tune the stabilizer’s behaviour</li>
-  <li><code class="highlighter-rouge">StepForward</code>: performs one <code class="highlighter-rouge">20cm</code> step foward using a quasi-static motion. If using on a real robot, be careful as the swing foot trajectory is merly a spline with no early/late impact handling.</li>
-  <li><code class="highlighter-rouge">StepBackward</code>: performs one <code class="highlighter-rouge">10cm</code> step backward using a quasi-static motion.</li>
+  <li><code class="language-plaintext highlighter-rouge">Stabilizer::Standing</code> : keeps the CoM at its current observed position. While in this state, you can freely move the CoM from <code class="language-plaintext highlighter-rouge">Left</code> to <code class="language-plaintext highlighter-rouge">Right</code> ankle in the GUI, or any other position. You may go to the “Tasks-&gt;Stabilizer” tab to see and modify the stabilizer gains. Additionally the “Debug” tab lets you add live plots visualizing the stabilizer behaviour.</li>
+  <li><code class="language-plaintext highlighter-rouge">AlternateFeetLifting</code> : alternatively lift the left and right foot. This is essentially a quasi-static motion, where the <code class="language-plaintext highlighter-rouge">StabilizerStandingState</code> is used to move the CoM above the left (resp right) ankle, configure the stabilizer in single support, then use it in parallel to tasks on the right (resp. left) swing foot (<code class="language-plaintext highlighter-rouge">SurfaceTransform</code> for the liftoff phase, <code class="language-plaintext highlighter-rouge">AdmittanceTask</code> for putting the foot down).</li>
+  <li><code class="language-plaintext highlighter-rouge">AlternateFeetLiftingManual</code>: same as above, but transitions are triggered by the user. Useful to tune the stabilizer’s behaviour</li>
+  <li><code class="language-plaintext highlighter-rouge">StepForward</code>: performs one <code class="language-plaintext highlighter-rouge">20cm</code> step foward using a quasi-static motion. If using on a real robot, be careful as the swing foot trajectory is merly a spline with no early/late impact handling.</li>
+  <li><code class="language-plaintext highlighter-rouge">StepBackward</code>: performs one <code class="language-plaintext highlighter-rouge">10cm</code> step backward using a quasi-static motion.</li>
 </ul>
 
 <h2 id="interacting-with-the-stabilizer-from-another-fsm-states">Interacting with the stabilizer from another FSM states</h2>

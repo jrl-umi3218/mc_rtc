@@ -278,39 +278,39 @@
       <div class="col-9">
         <h1>Using the observers pipeline</h1>
 
-        <p>When dealing with robotic systems, it is common to need an estimation of the state of the system being controlled. Doing so requires writing some form of state observer, that takes as input sensor measurements (joint encoders, force-torque sensors, IMU, cameras, etc) and additional knowledge about the system (contacts, etc) and infers all or part of the system’s state. To simplify this estimation process, the framework provide a facility refered to as the <code class="highlighter-rouge">Observers pipeline</code>. The main concept is to consider the observation of the full robot state as a sequence of simple estimators that each observe a specific part of the state (floating base position, encoder kinematics, etc) and update the robot state accordingly. The framework makes the distinction between two set of robot instances:</p>
+        <p>When dealing with robotic systems, it is common to need an estimation of the state of the system being controlled. Doing so requires writing some form of state observer, that takes as input sensor measurements (joint encoders, force-torque sensors, IMU, cameras, etc) and additional knowledge about the system (contacts, etc) and infers all or part of the system’s state. To simplify this estimation process, the framework provide a facility refered to as the <code class="language-plaintext highlighter-rouge">Observers pipeline</code>. The main concept is to consider the observation of the full robot state as a sequence of simple estimators that each observe a specific part of the state (floating base position, encoder kinematics, etc) and update the robot state accordingly. The framework makes the distinction between two set of robot instances:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">robots()</code> represents the control state (desired) of the system.</li>
-  <li><code class="highlighter-rouge">realRobots()</code> represents the state of the real system. The point of the <code class="highlighter-rouge">Observers pipeline</code> is to simplify the observation of its state.</li>
+  <li><code class="language-plaintext highlighter-rouge">robots()</code> represents the control state (desired) of the system.</li>
+  <li><code class="language-plaintext highlighter-rouge">realRobots()</code> represents the state of the real system. The point of the <code class="language-plaintext highlighter-rouge">Observers pipeline</code> is to simplify the observation of its state.</li>
 </ul>
 
 <p>For example, in case of a humanoid robot, one needs the full dynamic properties of the robot, that is the position, orientation and velocity of each body, including the floating base. Considering common sensors available on a humanoid robot, these can be estimated from encoder measurements and an IMU using a simple kinematic-inertial estimator. Using the facilities described in this tutorial, such as estimator can be achieved through the following pipeline:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Observers: Encoder (position=estimator,velocity=estimator) -&gt; [BodySensor (sensor=FloatingBase,update=estimator)] -&gt; KinematicInertial (cutoff=0.01)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Observers: Encoder (position=estimator,velocity=estimator) -&gt; [BodySensor (sensor=FloatingBase,update=estimator)] -&gt; KinematicInertial (cutoff=0.01)
 </code></pre></div></div>
 
 <p>Note that the above short description of the pipeline will be displayed when starting your controller. It provides a short description of the pipeline and its options, and reads as follows:</p>
 
 <ul>
-  <li>Observers are executed in sequential order (separated by <code class="highlighter-rouge">-&gt;</code>)</li>
-  <li>Relevant details of each observer configuration are shown between parenthesis <code class="highlighter-rouge">(...)</code></li>
-  <li>Observers shown between brackets (<code class="highlighter-rouge">[...]</code>) are run, but do not affect the state of the <code class="highlighter-rouge">realRobots()</code> instance. This allows to have several observers estimating the same state simultaneously, for comparison purposes. Here both <code class="highlighter-rouge">BodySensor</code> (groundtruth) and <code class="highlighter-rouge">KinematicInertial</code> estimate the state of the floating base, but only <code class="highlighter-rouge">KinematicInertial</code> observer result is used to update the <code class="highlighter-rouge">realRobots()</code> instances.</li>
+  <li>Observers are executed in sequential order (separated by <code class="language-plaintext highlighter-rouge">-&gt;</code>)</li>
+  <li>Relevant details of each observer configuration are shown between parenthesis <code class="language-plaintext highlighter-rouge">(...)</code></li>
+  <li>Observers shown between brackets (<code class="language-plaintext highlighter-rouge">[...]</code>) are run, but do not affect the state of the <code class="language-plaintext highlighter-rouge">realRobots()</code> instance. This allows to have several observers estimating the same state simultaneously, for comparison purposes. Here both <code class="language-plaintext highlighter-rouge">BodySensor</code> (groundtruth) and <code class="language-plaintext highlighter-rouge">KinematicInertial</code> estimate the state of the floating base, but only <code class="language-plaintext highlighter-rouge">KinematicInertial</code> observer result is used to update the <code class="language-plaintext highlighter-rouge">realRobots()</code> instances.</li>
 </ul>
 
-<p>Each observer is allowed to modify properties of the <code class="highlighter-rouge">realRobots()</code> instance. In the above example:</p>
+<p>Each observer is allowed to modify properties of the <code class="language-plaintext highlighter-rouge">realRobots()</code> instance. In the above example:</p>
 <ul>
-  <li>The <code class="highlighter-rouge">Encoder</code> observer will compute the encoder velocity through finite differences of the encoder position sensor, and use this estimate for the kinematic properties of the real robot instance (e.g set <code class="highlighter-rouge">realRobot().mbc().q, realRobot().mbc().alpha</code> and compute forward kinematics and forward velocity to update each body pose and velocity).</li>
-  <li>Then the <code class="highlighter-rouge">BodySensor</code> observer will be run, and only compute the pose of the floating base from <code class="highlighter-rouge">BodySensor</code> information (typically groundtruth from a simulator). It will however not update any properties of the <code class="highlighter-rouge">realRobots()</code> instance.</li>
-  <li>Finally, the <code class="highlighter-rouge">KinematicInertial</code> observer is run, and estimates the floating base pose and velocity (through filtered finite differences) based on IMU measurement. This estimate is in turn used to update the floating base (i.e <code class="highlighter-rouge">realRobot().posW(...)</code> and <code class="highlighter-rouge">realRobot().velW(...)</code>).</li>
+  <li>The <code class="language-plaintext highlighter-rouge">Encoder</code> observer will compute the encoder velocity through finite differences of the encoder position sensor, and use this estimate for the kinematic properties of the real robot instance (e.g set <code class="language-plaintext highlighter-rouge">realRobot().mbc().q, realRobot().mbc().alpha</code> and compute forward kinematics and forward velocity to update each body pose and velocity).</li>
+  <li>Then the <code class="language-plaintext highlighter-rouge">BodySensor</code> observer will be run, and only compute the pose of the floating base from <code class="language-plaintext highlighter-rouge">BodySensor</code> information (typically groundtruth from a simulator). It will however not update any properties of the <code class="language-plaintext highlighter-rouge">realRobots()</code> instance.</li>
+  <li>Finally, the <code class="language-plaintext highlighter-rouge">KinematicInertial</code> observer is run, and estimates the floating base pose and velocity (through filtered finite differences) based on IMU measurement. This estimate is in turn used to update the floating base (i.e <code class="language-plaintext highlighter-rouge">realRobot().posW(...)</code> and <code class="language-plaintext highlighter-rouge">realRobot().velW(...)</code>).</li>
 </ul>
 
-<p>Thus in the end the <code class="highlighter-rouge">realRobot()</code> instance will contain a full estimate of the afformentioned state, that is floating base position and velocity, encoder position and velocity. This estimated robot is widely available throughout your controller, and allows you to access any property of the real system in the same way you would access the control instance. For example, you can access:</p>
+<p>Thus in the end the <code class="language-plaintext highlighter-rouge">realRobot()</code> instance will contain a full estimate of the afformentioned state, that is floating base position and velocity, encoder position and velocity. This estimated robot is widely available throughout your controller, and allows you to access any property of the real system in the same way you would access the control instance. For example, you can access:</p>
 
 <ul>
-  <li>Body pose: <code class="highlighter-rouge">realRobot().bodyPosW("bodyName");</code></li>
-  <li>Body velocity: <code class="highlighter-rouge">realRobot().bodyVelW("bodyName");</code></li>
-  <li>Compute the CoM position and velocity <code class="highlighter-rouge">realRobot().com() / realRobot().comVelocity()</code></li>
+  <li>Body pose: <code class="language-plaintext highlighter-rouge">realRobot().bodyPosW("bodyName");</code></li>
+  <li>Body velocity: <code class="language-plaintext highlighter-rouge">realRobot().bodyVelW("bodyName");</code></li>
+  <li>Compute the CoM position and velocity <code class="language-plaintext highlighter-rouge">realRobot().com() / realRobot().comVelocity()</code></li>
   <li>…</li>
 </ul>
 
@@ -331,23 +331,23 @@
   <li><strong>Run</strong>: keeps the encoder position from sensor unchanged, computes encoder velocity by finite differences of the position sensor</li>
   <li><strong>Update</strong>:
     <ul>
-      <li><code class="highlighter-rouge">UpdatePositionFrom</code>: updates <code class="highlighter-rouge">realRobot().mbc().q</code>
+      <li><code class="language-plaintext highlighter-rouge">UpdatePositionFrom</code>: updates <code class="language-plaintext highlighter-rouge">realRobot().mbc().q</code>
         <ul>
-          <li><code class="highlighter-rouge">"estimator"</code> :  from encoder position.</li>
-          <li><code class="highlighter-rouge">"control"</code> : from <code class="highlighter-rouge">robot().mbc().q</code> values (eg copies the control state instead of using sensors).</li>
-          <li><code class="highlighter-rouge">"none"</code>: does not update the encoder position</li>
+          <li><code class="language-plaintext highlighter-rouge">"estimator"</code> :  from encoder position.</li>
+          <li><code class="language-plaintext highlighter-rouge">"control"</code> : from <code class="language-plaintext highlighter-rouge">robot().mbc().q</code> values (eg copies the control state instead of using sensors).</li>
+          <li><code class="language-plaintext highlighter-rouge">"none"</code>: does not update the encoder position</li>
         </ul>
       </li>
-      <li><code class="highlighter-rouge">"UpdateVelocityFrom":</code> : updates <code class="highlighter-rouge">realRobot().mbc().alpha</code>
+      <li><code class="language-plaintext highlighter-rouge">"UpdateVelocityFrom":</code> : updates <code class="language-plaintext highlighter-rouge">realRobot().mbc().alpha</code>
         <ul>
-          <li><code class="highlighter-rouge">"estimator"</code>: from estimated encoder velocity.</li>
-          <li><code class="highlighter-rouge">"control"</code>: from <code class="highlighter-rouge">robot().mbc().alpha</code> values (eg copies the control state instead of using sensors).</li>
-          <li><code class="highlighter-rouge">"none"</code>: does not update the encoder velocity</li>
+          <li><code class="language-plaintext highlighter-rouge">"estimator"</code>: from estimated encoder velocity.</li>
+          <li><code class="language-plaintext highlighter-rouge">"control"</code>: from <code class="language-plaintext highlighter-rouge">robot().mbc().alpha</code> values (eg copies the control state instead of using sensors).</li>
+          <li><code class="language-plaintext highlighter-rouge">"none"</code>: does not update the encoder velocity</li>
         </ul>
       </li>
     </ul>
   </li>
-  <li><strong>Computes</strong>: forward kinematics, forward velocity for the <code class="highlighter-rouge">estimator|control</code> updates.</li>
+  <li><strong>Computes</strong>: forward kinematics, forward velocity for the <code class="language-plaintext highlighter-rouge">estimator|control</code> updates.</li>
 </ul>
 
 <ul class="nav nav-tabs" id="createTab" role="tablist">
@@ -397,14 +397,14 @@
 <ul>
   <li><strong>Prerequisites</strong>:
     <ul>
-      <li>Up to date kinematic information (typically obtained by the <code class="highlighter-rouge">Encoder</code> observer)</li>
-      <li>The <code class="highlighter-rouge">BodySensor</code> must contain position, orientation, linear and angular velocity</li>
+      <li>Up to date kinematic information (typically obtained by the <code class="language-plaintext highlighter-rouge">Encoder</code> observer)</li>
+      <li>The <code class="language-plaintext highlighter-rouge">BodySensor</code> must contain position, orientation, linear and angular velocity</li>
     </ul>
   </li>
   <li><strong>Run</strong>:
     <ul>
-      <li>If <code class="highlighter-rouge">"UpdateFrom": "estimator"</code>: Computes the floating base pose and velocity from a <code class="highlighter-rouge">BodySensor</code>. If the body sensor is not directly attached to the floating base link, the transformation between the sensor frame and the floating base frame is taken into account using their relative pose obtained by kinematics.</li>
-      <li>If <code class="highlighter-rouge">"UpdateFrom": "control"</code>: Use the control robot floating base (`robot().posW(), robot().velW()) instead</li>
+      <li>If <code class="language-plaintext highlighter-rouge">"UpdateFrom": "estimator"</code>: Computes the floating base pose and velocity from a <code class="language-plaintext highlighter-rouge">BodySensor</code>. If the body sensor is not directly attached to the floating base link, the transformation between the sensor frame and the floating base frame is taken into account using their relative pose obtained by kinematics.</li>
+      <li>If <code class="language-plaintext highlighter-rouge">"UpdateFrom": "control"</code>: Use the control robot floating base (`robot().posW(), robot().velW()) instead</li>
     </ul>
   </li>
   <li><strong>Update</strong>:
@@ -566,9 +566,9 @@
   </div>
 </div>
 
-<p>Note that most of the configuration used in this example is already the default. The only required fields are <code class="highlighter-rouge">EnabledObservers</code>, <code class="highlighter-rouge">RunObservers</code> and <code class="highlighter-rouge">UpdateObservers</code>. Only use observer-specific configuration when needed. The above example will set-up the pipeline described at the begining of this tutorial. When running your controller, you should now see this line in the terminal, and the log file will contain <code class="highlighter-rouge">observers_...</code> entries.</p>
+<p>Note that most of the configuration used in this example is already the default. The only required fields are <code class="language-plaintext highlighter-rouge">EnabledObservers</code>, <code class="language-plaintext highlighter-rouge">RunObservers</code> and <code class="language-plaintext highlighter-rouge">UpdateObservers</code>. Only use observer-specific configuration when needed. The above example will set-up the pipeline described at the begining of this tutorial. When running your controller, you should now see this line in the terminal, and the log file will contain <code class="language-plaintext highlighter-rouge">observers_...</code> entries.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Observers: Encoder (position=estimator,velocity=estimator) -&gt; [BodySensor (sensor=FloatingBase,update=estimator)] -&gt; KinematicInertial (cutoff=0.01)
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Observers: Encoder (position=estimator,velocity=estimator) -&gt; [BodySensor (sensor=FloatingBase,update=estimator)] -&gt; KinematicInertial (cutoff=0.01)
 </code></pre></div></div>
 
 <p>If that’s not the case, there is something wrong with your observers set-up. Please check that your configuration file is correct, and that all observers were successfully loaded.</p>
@@ -578,17 +578,17 @@
 <p>In Rviz, create a new robot with the following parameters:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">Robot Description path: /real/robot_description</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Robot Description path: /real/robot_description</code></li>
 </ul>
 
 <h1 id="creating-your-own-observer">Creating your own Observer</h1>
 
-<p>All observers must inherit from <a href="/mc_rtc/doxygen.html#a01508" target="blank_">mc_observers::Observer</a> and implement the following <code class="highlighter-rouge">virtual</code> functions:</p>
+<p>All observers must inherit from <a href="/mc_rtc/doxygen.html#a01508" target="blank_">mc_observers::Observer</a> and implement the following <code class="language-plaintext highlighter-rouge">virtual</code> functions:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">virtual void reset (const mc_control::MCController &amp;ctl)</code> : reset the observers state</li>
-  <li><code class="highlighter-rouge">virtual bool run (const mc_control::MCController &amp;ctl)</code> : estimate the state, but does not update the real robot instance</li>
-  <li><code class="highlighter-rouge">virtual void	updateRobots (const mc_control::MCController &amp;ctl, mc_rbdyn::Robots &amp;realRobots)</code> : update the robot state from the estimated state</li>
+  <li><code class="language-plaintext highlighter-rouge">virtual void reset (const mc_control::MCController &amp;ctl)</code> : reset the observers state</li>
+  <li><code class="language-plaintext highlighter-rouge">virtual bool run (const mc_control::MCController &amp;ctl)</code> : estimate the state, but does not update the real robot instance</li>
+  <li><code class="language-plaintext highlighter-rouge">virtual void	updateRobots (const mc_control::MCController &amp;ctl, mc_rbdyn::Robots &amp;realRobots)</code> : update the robot state from the estimated state</li>
 </ul>
 
 <p>To compile your own observer, you can use the provided macro</p>

@@ -278,7 +278,7 @@
       <div class="col-9">
         <h1>Constraining the accessible region of the CoM</h1>
 
-        <p>In many cases, one may want to limit the accessible region of the Center of Mass. To do so, we will introduce a new constraint, <code class="highlighter-rouge">CoMIncPlaneConstr</code> that can be used to constrain the CoM to a convex region.</p>
+        <p>In many cases, one may want to limit the accessible region of the Center of Mass. To do so, we will introduce a new constraint, <code class="language-plaintext highlighter-rouge">CoMIncPlaneConstr</code> that can be used to constrain the CoM to a convex region.</p>
 
 <p>Let us present the API of this constraint:</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CoMIncPlaneConstr</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robots</span> <span class="o">&amp;</span> <span class="n">robots</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">robotIndex</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">);</span>
@@ -299,13 +299,13 @@
 
 <h2 id="how-to-set-planes">How to “set planes”</h2>
 <p>First, a quick reminder on convex sets: they can be equivalently described by their vertices or by a set of linear inequalities.
-That is to say, any point p inside a convex set can be expressed as the barycenter of the vertices, i.e. there exists a set of weights <code class="highlighter-rouge">\lambda_i</code>:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>p = \sum_i \lambda_i v_i
+That is to say, any point p inside a convex set can be expressed as the barycenter of the vertices, i.e. there exists a set of weights <code class="language-plaintext highlighter-rouge">\lambda_i</code>:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>p = \sum_i \lambda_i v_i
 \sum_i \lambda_i = 0
 \forall i \lambda_i \geq 0
 </code></pre></div></div>
 <p>However, this is not very efficient for testing if a vertex is inside, as it requires basically solving a linear program. To actually test membership, the hyperplane representation is much better as it allows to test in a single matrix operation:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A p + b \geq 0
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>A p + b \geq 0
 </code></pre></div></div>
 <p>Where A is a matrix of stacked normals to each plane, and b is a vector of offsets.</p>
 
@@ -314,12 +314,12 @@ That is to say, any point p inside a convex set can be expressed as the barycent
 <h2 id="example">Example</h2>
 <p>Let’s go back to the CoM controller we <a href="/mc_rtc/tutorials/introduction/com-controller.html">constructed before</a>: the robot fell in a dynamic simulation because we asked it to go to far to the sides.
 Let us now restrict its motion to a square, of sides 8cm. This can be expressed as:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-0.08 \leq x \leq 0.08
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-0.08 \leq x \leq 0.08
 -0.08 \leq y \leq 0.08
 </code></pre></div></div>
 
 <p>Thus, in matrix form:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>⎡ -1 0 0 ⎤ ⎡ x ⎤   ⎡ 0.08 ⎤
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>⎡ -1 0 0 ⎤ ⎡ x ⎤   ⎡ 0.08 ⎤
 ⎢ 1  0 0 ⎥ ⎢ y ⎥ + ⎢ 0.08 ⎥ \leq 0
 ⎢ 0 -1 0 ⎥ ⎣ z ⎦   ⎢ 0.08 ⎥
 ⎣ 0  1 0 ⎦         ⎣ 0.08 ⎦
@@ -352,7 +352,7 @@ Let us now restrict its motion to a square, of sides 8cm. This can be expressed 
 
 <h2 id="additional-parameters">Additional parameters</h2>
 
-<p>The additional parameters passed to <code class="highlighter-rouge">set_planes</code> fall in two categories:</p>
+<p>The additional parameters passed to <code class="language-plaintext highlighter-rouge">set_planes</code> fall in two categories:</p>
 
 <ul>
   <li>Dealing with moving planes</li>

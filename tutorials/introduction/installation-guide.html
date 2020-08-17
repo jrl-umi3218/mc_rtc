@@ -274,7 +274,7 @@
 
         <h2 id="overview">Overview</h2>
 
-<p>mc_rtc is an interface for simulation and robot control systems. These systems should provide the state of a given robot (joints’ values, sensor readings…) and in return mc_rtc will provide the desired robot’s state (command). This is done through the <code class="highlighter-rouge">mc_control::MCGlobalController</code> class. This class does not perform control by itself but rather delegates this task to the <code class="highlighter-rouge">mc_control::MCController</code> derived objects that it holds. Writing a controller within the mc_rtc framework is done by writing a class that inherits from the <code class="highlighter-rouge">mc_control::MCController</code> base class and implements the required functionnality. We implement such a controller in the following tutorials. The present tutorial simply explains how to build/install the framework on your machine.</p>
+<p>mc_rtc is an interface for simulation and robot control systems. These systems should provide the state of a given robot (joints’ values, sensor readings…) and in return mc_rtc will provide the desired robot’s state (command). This is done through the <code class="language-plaintext highlighter-rouge">mc_control::MCGlobalController</code> class. This class does not perform control by itself but rather delegates this task to the <code class="language-plaintext highlighter-rouge">mc_control::MCController</code> derived objects that it holds. Writing a controller within the mc_rtc framework is done by writing a class that inherits from the <code class="language-plaintext highlighter-rouge">mc_control::MCController</code> base class and implements the required functionnality. We implement such a controller in the following tutorials. The present tutorial simply explains how to build/install the framework on your machine.</p>
 
 <p><img src="img/mc_rtc_architecture.jpg" alt="architecture_overview" class="img-fluid" /></p>
 
@@ -361,7 +361,7 @@ sudo tee /etc/apt/sources.list.d/multi-contact.list'</span>
   
 </div>
 
-<p><em>Note: the distributed version of mc_rtc runs with the QLD QP solver through <a href="https://github.com/jrl-umi3218/eigen-qld">eigen-qld</a>. If you have access to the LSSOL solver and thus can install <a href="https://gite.lirmm.fr/multi-contact/eigen-lssol">eigen-lssol</a> then you can build <a href="https://github.com/jrl-umi3218/Tasks">Tasks</a> with LSSOL support and install it in <code class="highlighter-rouge">/usr</code>. The two versions are binary compatible.</em></p>
+<p><em>Note: the distributed version of mc_rtc runs with the QLD QP solver through <a href="https://github.com/jrl-umi3218/eigen-qld">eigen-qld</a>. If you have access to the LSSOL solver and thus can install <a href="https://gite.lirmm.fr/multi-contact/eigen-lssol">eigen-lssol</a> then you can build <a href="https://github.com/jrl-umi3218/Tasks">Tasks</a> with LSSOL support and install it in <code class="language-plaintext highlighter-rouge">/usr</code>. The two versions are binary compatible.</em></p>
 
 <h3 id="building-from-source-script">Building from source (script)</h3>
 
@@ -371,11 +371,11 @@ sudo tee /etc/apt/sources.list.d/multi-contact.list'</span>
 
 <p>If you are building on Windows, you need to have the following tools installed before starting:</p>
 <ul>
-  <li><a href="https://visualstudio.microsoft.com/vs/">Visual Studio 2019</a> - when installing, ensure that you select the Python extension if you wish to build the Python bindings. Furthermore, you should make sure that Visual Studio’s <code class="highlighter-rouge">python</code> and <code class="highlighter-rouge">pip</code> executables are in your <code class="highlighter-rouge">PATH</code> environment variable;</li>
+  <li><a href="https://visualstudio.microsoft.com/vs/">Visual Studio 2019</a> - when installing, ensure that you select the Python extension if you wish to build the Python bindings. Furthermore, you should make sure that Visual Studio’s <code class="language-plaintext highlighter-rouge">python</code> and <code class="language-plaintext highlighter-rouge">pip</code> executables are in your <code class="language-plaintext highlighter-rouge">PATH</code> environment variable;</li>
   <li><a href="https://git-scm.com/download/win">Git Bash</a> - we will use this tool to clone mc_rtc and start the installation script;</li>
   <li><a href="https://cmake.org/download/">CMake</a> - install the latest version available;</li>
-  <li><a href="https://www.boost.org/">Boost</a> - install the latest binaries avaible from <a href="https://sourceforge.net/projects/boost/files/boost-binaries/">sourceforce</a>. Make sure to select the right version for your computer and Visual Studio version, for example, for Boost 1.72 and Visual Studio 2019 on a 64 bits computer it should be: <a href="https://sourceforge.net/projects/boost/files/boost-binaries/1.72.0/boost_1_72_0-msvc-14.2-64.exe/download">boost_1_72_0-msvc-14.2-64.exe</a>. After installing, make sure to set the environment variable <code class="highlighter-rouge">BOOST_ROOT</code> to the location where you installed Boost and add Boost DLLs path to your <code class="highlighter-rouge">PATH</code> environment. For example, if you installed into <code class="highlighter-rouge">C:\local\boost_1_72_0</code> then <code class="highlighter-rouge">BOOST_ROOT</code> should be <code class="highlighter-rouge">C:\local\boost_1_72_0</code> and <code class="highlighter-rouge">%BOOST_ROOT%\lib64-msvc-14.2</code> should be in your <code class="highlighter-rouge">PATH</code>;</li>
-  <li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download">mingw-w64</a> - this will be used to compile Fortran code on Windows. After downloading, you can run the executable. At one point, it will ask you to select several options: Version, Architecture, Threads, Exception and Build revision. For Version you can choose the most recent one (default), for Architecture you should choose x86_64 if you are building on a 64 bits Windows (likely), for Threads you should choose win32, for Exceptions you should choose seh (default). After installing, you should make sure the <code class="highlighter-rouge">bin</code> folder of the installation is in your <code class="highlighter-rouge">PATH</code> environment, e.g. <code class="highlighter-rouge">C:\mingw-w64\x86_64-8.1.0-release-win32-seh-rt_v6-rev0\mingw64\bin</code></li>
+  <li><a href="https://www.boost.org/">Boost</a> - install the latest binaries avaible from <a href="https://sourceforge.net/projects/boost/files/boost-binaries/">sourceforce</a>. Make sure to select the right version for your computer and Visual Studio version, for example, for Boost 1.72 and Visual Studio 2019 on a 64 bits computer it should be: <a href="https://sourceforge.net/projects/boost/files/boost-binaries/1.72.0/boost_1_72_0-msvc-14.2-64.exe/download">boost_1_72_0-msvc-14.2-64.exe</a>. After installing, make sure to set the environment variable <code class="language-plaintext highlighter-rouge">BOOST_ROOT</code> to the location where you installed Boost and add Boost DLLs path to your <code class="language-plaintext highlighter-rouge">PATH</code> environment. For example, if you installed into <code class="language-plaintext highlighter-rouge">C:\local\boost_1_72_0</code> then <code class="language-plaintext highlighter-rouge">BOOST_ROOT</code> should be <code class="language-plaintext highlighter-rouge">C:\local\boost_1_72_0</code> and <code class="language-plaintext highlighter-rouge">%BOOST_ROOT%\lib64-msvc-14.2</code> should be in your <code class="language-plaintext highlighter-rouge">PATH</code>;</li>
+  <li><a href="https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download">mingw-w64</a> - this will be used to compile Fortran code on Windows. After downloading, you can run the executable. At one point, it will ask you to select several options: Version, Architecture, Threads, Exception and Build revision. For Version you can choose the most recent one (default), for Architecture you should choose x86_64 if you are building on a 64 bits Windows (likely), for Threads you should choose win32, for Exceptions you should choose seh (default). After installing, you should make sure the <code class="language-plaintext highlighter-rouge">bin</code> folder of the installation is in your <code class="language-plaintext highlighter-rouge">PATH</code> environment, e.g. <code class="language-plaintext highlighter-rouge">C:\mingw-w64\x86_64-8.1.0-release-win32-seh-rt_v6-rev0\mingw64\bin</code></li>
 </ul>
 
 <p>Note: it should also work and compile with Visual Studio 2017. However, only Visual Studio 2019 is regularly tested</p>
@@ -384,14 +384,14 @@ sudo tee /etc/apt/sources.list.d/multi-contact.list'</span>
 
 <ol>
   <li>Clone the <a href="https://github.com/jrl-umi3218/mc_rtc">mc_rtc</a> repository;</li>
-  <li>Go into the mc_rtc directory and update submodules <code class="highlighter-rouge">git submodule update --init</code>;</li>
-  <li>Go into the <code class="highlighter-rouge">utils</code> directory and locate the file named <code class="highlighter-rouge">build_and_install.sh</code>;</li>
-  <li>[optional] Create a custom configuration file <code class="highlighter-rouge">build_and_install_user_config.sh</code> (overrides the corresponding variables from the default configuration <code class="highlighter-rouge">build_and_install_default_config.sh</code>)
+  <li>Go into the mc_rtc directory and update submodules <code class="language-plaintext highlighter-rouge">git submodule update --init</code>;</li>
+  <li>Go into the <code class="language-plaintext highlighter-rouge">utils</code> directory and locate the file named <code class="language-plaintext highlighter-rouge">build_and_install.sh</code>;</li>
+  <li>[optional] Create a custom configuration file <code class="language-plaintext highlighter-rouge">build_and_install_user_config.sh</code> (overrides the corresponding variables from the default configuration <code class="language-plaintext highlighter-rouge">build_and_install_default_config.sh</code>)
     <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>build_and_install_user_config.sample.sh build_and_install_user_config.sh
 </code></pre></div>    </div>
   </li>
-  <li>[optional] Edit the <code class="highlighter-rouge">build_and_install_user_config.sh</code> and edit the options to your liking: <code class="highlighter-rouge">INSTALL_PREFIX</code>, <code class="highlighter-rouge">WITH_ROS_SUPPORT</code>, <code class="highlighter-rouge">ROS_DISTRO</code>. On Ubuntu, ROS will be installed if you enable ROS support and it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc_rtc with ROS support;</li>
-  <li>Run <code class="highlighter-rouge">./build_and_install.sh</code></li>
+  <li>[optional] Edit the <code class="language-plaintext highlighter-rouge">build_and_install_user_config.sh</code> and edit the options to your liking: <code class="language-plaintext highlighter-rouge">INSTALL_PREFIX</code>, <code class="language-plaintext highlighter-rouge">WITH_ROS_SUPPORT</code>, <code class="language-plaintext highlighter-rouge">ROS_DISTRO</code>. On Ubuntu, ROS will be installed if you enable ROS support and it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc_rtc with ROS support;</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">./build_and_install.sh</code></li>
 </ol>
 
 <p>The script will take care of installing the required dependencies, clone all required source codes, build and install them. This may take a while.</p>
@@ -448,7 +448,7 @@ sudo tee /etc/apt/sources.list.d/multi-contact.list'</span>
 
 <p>Additional Python libraries are required to run mc_rtc tools:</p>
 <ul>
-  <li><a href="">python-git</a> (pip name: <code class="highlighter-rouge">GitPython</code>)</li>
+  <li><a href="">python-git</a> (pip name: <code class="language-plaintext highlighter-rouge">GitPython</code>)</li>
   <li><a href="">python-pyqt5</a></li>
 </ul>
 
@@ -458,7 +458,7 @@ sudo tee /etc/apt/sources.list.d/multi-contact.list'</span>
   <li><a href="https://github.com/jrl-umi3218/mc_rtc_ros">mc_rtc_ros</a></li>
 </ul>
 
-<p>If <code class="highlighter-rouge">roscpp</code> is available during build then <code class="highlighter-rouge">tf2_ros</code> and <code class="highlighter-rouge">sensor_msgs</code> are also required. This will add some integration between the <code class="highlighter-rouge">ROS</code> framework and <code class="highlighter-rouge">mc_rtc</code> (e.g. robot’s state publication) and allow controllers to use ROS functionnalities (provides a <code class="highlighter-rouge">ros::NodeHandle</code> instance that can be used anywhere in <code class="highlighter-rouge">mc_rtc</code>).</p>
+<p>If <code class="language-plaintext highlighter-rouge">roscpp</code> is available during build then <code class="language-plaintext highlighter-rouge">tf2_ros</code> and <code class="language-plaintext highlighter-rouge">sensor_msgs</code> are also required. This will add some integration between the <code class="language-plaintext highlighter-rouge">ROS</code> framework and <code class="language-plaintext highlighter-rouge">mc_rtc</code> (e.g. robot’s state publication) and allow controllers to use ROS functionnalities (provides a <code class="language-plaintext highlighter-rouge">ros::NodeHandle</code> instance that can be used anywhere in <code class="language-plaintext highlighter-rouge">mc_rtc</code>).</p>
 
 
         <hr/>

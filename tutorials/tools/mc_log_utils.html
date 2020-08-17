@@ -276,11 +276,11 @@
       <div class="col-9">
         <h1>Log manipulation</h1>
 
-        <p>In this document we will assume you have a log at <code class="highlighter-rouge">~/my_log.bin</code>.</p>
+        <p>In this document we will assume you have a log at <code class="language-plaintext highlighter-rouge">~/my_log.bin</code>.</p>
 
-<h3 id="mc_bin_utils-a-general-manipulation-tool"><code class="highlighter-rouge">mc_bin_utils</code>: a general manipulation tool</h3>
+<h3 id="mc_bin_utils-a-general-manipulation-tool"><code class="language-plaintext highlighter-rouge">mc_bin_utils</code>: a general manipulation tool</h3>
 
-<p><code class="highlighter-rouge">mc_bin_utils</code> lets you perform a number of operations on a binary log:</p>
+<p><code class="language-plaintext highlighter-rouge">mc_bin_utils</code> lets you perform a number of operations on a binary log:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils <span class="nt">--help</span>
 mc_bin_utils is a command-line tool to work with mc_rtc bin logs
@@ -294,34 +294,34 @@ Available commands:
 Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> <span class="nt">--help</span> <span class="k">for </span>usage of each <span class="nb">command</span>
 </code></pre></div></div>
 
-<p>We will covert the <code class="highlighter-rouge">extract</code> and <code class="highlighter-rouge">convert</code> commands. <code class="highlighter-rouge">show</code> and <code class="highlighter-rouge">split</code> are self-explanatory.</p>
+<p>We will covert the <code class="language-plaintext highlighter-rouge">extract</code> and <code class="language-plaintext highlighter-rouge">convert</code> commands. <code class="language-plaintext highlighter-rouge">show</code> and <code class="language-plaintext highlighter-rouge">split</code> are self-explanatory.</p>
 
-<h4 id="mc_bin_utils-extract"><code class="highlighter-rouge">mc_bin_utils extract</code></h4>
+<h4 id="mc_bin_utils-extract"><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code></h4>
 
-<p><code class="highlighter-rouge">mc_bin_utils extract</code> has two operation mode.</p>
+<p><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code> has two operation mode.</p>
 
 <p>The first one extract all parts of a log where a given key is present:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--key</span> com_task_target
 </code></pre></div></div>
 
-<p>This will generate one log for each section where the key <code class="highlighter-rouge">com_task_target</code> was present. For example, if the key was present at the 5 seconds mark until the 15 seconds mark and again from the 30 seconds mark to the 60 seconds mark you will get <code class="highlighter-rouge">my_log_out_1.bin</code> and <code class="highlighter-rouge">my_log_out_2.bin</code>.</p>
+<p>This will generate one log for each section where the key <code class="language-plaintext highlighter-rouge">com_task_target</code> was present. For example, if the key was present at the 5 seconds mark until the 15 seconds mark and again from the 30 seconds mark to the 60 seconds mark you will get <code class="language-plaintext highlighter-rouge">my_log_out_1.bin</code> and <code class="language-plaintext highlighter-rouge">my_log_out_2.bin</code>.</p>
 
-<p>The second form lets directly extract a time-range based on the <code class="highlighter-rouge">t</code> entry:</p>
+<p>The second form lets directly extract a time-range based on the <code class="language-plaintext highlighter-rouge">t</code> entry:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--from</span> 50 <span class="nt">--to</span> 100
 </code></pre></div></div>
 
-<p>This example will generate <code class="highlighter-rouge">my_log_out.bin</code> with time <code class="highlighter-rouge">t</code> ranging from 50 seconds to 100 seconds. You can omit either <code class="highlighter-rouge">from</code> or <code class="highlighter-rouge">to</code> in which case the output log will start at 0 second and end at the end of the log respectively.</p>
+<p>This example will generate <code class="language-plaintext highlighter-rouge">my_log_out.bin</code> with time <code class="language-plaintext highlighter-rouge">t</code> ranging from 50 seconds to 100 seconds. You can omit either <code class="language-plaintext highlighter-rouge">from</code> or <code class="language-plaintext highlighter-rouge">to</code> in which case the output log will start at 0 second and end at the end of the log respectively.</p>
 
-<h4 id="mc_bin_utils-convert"><code class="highlighter-rouge">mc_bin_utils convert</code></h4>
+<h4 id="mc_bin_utils-convert"><code class="language-plaintext highlighter-rouge">mc_bin_utils convert</code></h4>
 
-<p>This tool will let you convert a <code class="highlighter-rouge">.bin</code> log to one of three formats (two without ROS support)</p>
+<p>This tool will let you convert a <code class="language-plaintext highlighter-rouge">.bin</code> log to one of three formats (two without ROS support)</p>
 
 <ul>
-  <li><code class="highlighter-rouge">.flat</code> is the actual format expected by <code class="highlighter-rouge">mc_log_ui</code> if you find yourself opening the same log frequently you may convert it once to save time;</li>
-  <li><code class="highlighter-rouge">.csv</code> is a well-known data format that is understood by a lot of tools (notably MATLAB and Excel) and can be convenient to share data with external collaborators;</li>
-  <li><code class="highlighter-rouge">.bag</code> is the format expected by the <code class="highlighter-rouge">rosbag</code> tool;</li>
+  <li><code class="language-plaintext highlighter-rouge">.flat</code> is the actual format expected by <code class="language-plaintext highlighter-rouge">mc_log_ui</code> if you find yourself opening the same log frequently you may convert it once to save time;</li>
+  <li><code class="language-plaintext highlighter-rouge">.csv</code> is a well-known data format that is understood by a lot of tools (notably MATLAB and Excel) and can be convenient to share data with external collaborators;</li>
+  <li><code class="language-plaintext highlighter-rouge">.bag</code> is the format expected by the <code class="language-plaintext highlighter-rouge">rosbag</code> tool;</li>
 </ul>
 
 <h3 id="opening-the-log-in-python">Opening the log in Python</h3>
@@ -332,11 +332,11 @@ Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> 
 <span class="n">log</span> <span class="o">=</span> <span class="n">mc_log_ui</span><span class="p">.</span><span class="n">read_log</span><span class="p">(</span><span class="s">'/tmp/mylog.bin'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Then <code class="highlighter-rouge">log</code> is a Python dictionary where the keys are the entries you see in the tree of mc_log_ui (e.g. if you logged an <code class="highlighter-rouge">Eigen::Vector3d</code> called <code class="highlighter-rouge">v3d</code> then you get <code class="highlighter-rouge">v3d_x</code>, <code class="highlighter-rouge">v3d_y</code> and <code class="highlighter-rouge">v3d_z</code>) and the values are numpy arrays so you can do anything with it.</p>
+<p>Then <code class="language-plaintext highlighter-rouge">log</code> is a Python dictionary where the keys are the entries you see in the tree of mc_log_ui (e.g. if you logged an <code class="language-plaintext highlighter-rouge">Eigen::Vector3d</code> called <code class="language-plaintext highlighter-rouge">v3d</code> then you get <code class="language-plaintext highlighter-rouge">v3d_x</code>, <code class="language-plaintext highlighter-rouge">v3d_y</code> and <code class="language-plaintext highlighter-rouge">v3d_z</code>) and the values are numpy arrays so you can do anything with it.</p>
 
-<h3 id="the-mc_rtcflatlog-class">The <code class="highlighter-rouge">mc_rtc::FlatLog</code> class</h3>
+<h3 id="the-mc_rtcflatlog-class">The <code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code> class</h3>
 
-<p>The <code class="highlighter-rouge">mc_rtc::FlatLog</code> class is part of the <code class="highlighter-rouge">mc_rtc_utils</code> library. It lets you open a log and iterate through the data using their original type. For example, if you have logged a force sensor’s reading as an <code class="highlighter-rouge">sva::ForceVecd</code> object you can retrieve it as-is through the <code class="highlighter-rouge">mc_rtc::FlatLog</code>. See the class documentation for more details on the usage and API. This is only available in C++.</p>
+<p>The <code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code> class is part of the <code class="language-plaintext highlighter-rouge">mc_rtc_utils</code> library. It lets you open a log and iterate through the data using their original type. For example, if you have logged a force sensor’s reading as an <code class="language-plaintext highlighter-rouge">sva::ForceVecd</code> object you can retrieve it as-is through the <code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code>. See the class documentation for more details on the usage and API. This is only available in C++.</p>
 
 
         <hr/>

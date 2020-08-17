@@ -280,15 +280,15 @@
 
         <p>It is possible to affect different weights to different axis in the task-space (e.g. ignore the vertical position of the CoM).</p>
 
-<p>Most tasks can take in an additional parameter <code class="highlighter-rouge">dimWeight</code> of type <code class="highlighter-rouge">Eigen::VectorXd</code> that allows you to weigh differently different directions:</p>
+<p>Most tasks can take in an additional parameter <code class="language-plaintext highlighter-rouge">dimWeight</code> of type <code class="language-plaintext highlighter-rouge">Eigen::VectorXd</code> that allows you to weigh differently different directions:</p>
 <ul>
-  <li>The <code class="highlighter-rouge">dimWeight</code> does not replace the total weight. It is multiplicative with it. For example, a <code class="highlighter-rouge">comTask</code> with weight <code class="highlighter-rouge">1000</code> and a <code class="highlighter-rouge">dimWeight</code> of <code class="highlighter-rouge">[1., 1., 1e-3]</code> will behave like a task of total weight <code class="highlighter-rouge">[1000., 1000., 1.]</code></li>
-  <li>The <code class="highlighter-rouge">dimWeight</code> is a dynamic size vector. It is up to <em>you</em> to make sure it has the right size. Note that you can obtain the (lower-level) task size by calling <code class="highlighter-rouge">dim()</code> on it.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">dimWeight</code> does not replace the total weight. It is multiplicative with it. For example, a <code class="language-plaintext highlighter-rouge">comTask</code> with weight <code class="language-plaintext highlighter-rouge">1000</code> and a <code class="language-plaintext highlighter-rouge">dimWeight</code> of <code class="language-plaintext highlighter-rouge">[1., 1., 1e-3]</code> will behave like a task of total weight <code class="language-plaintext highlighter-rouge">[1000., 1000., 1.]</code></li>
+  <li>The <code class="language-plaintext highlighter-rouge">dimWeight</code> is a dynamic size vector. It is up to <em>you</em> to make sure it has the right size. Note that you can obtain the (lower-level) task size by calling <code class="language-plaintext highlighter-rouge">dim()</code> on it.</li>
   <li>You can pass this parameter at construction and/or change it later.</li>
 </ul>
 
 <h4 id="example">Example</h4>
-<p>To ignore the vertical error on a <code class="highlighter-rouge">comTask</code>:</p>
+<p>To ignore the vertical error on a <code class="language-plaintext highlighter-rouge">comTask</code>:</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="nf">dimWeight</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
 <span class="n">dimWeight</span><span class="p">.</span><span class="n">setOnes</span><span class="p">();</span>
 <span class="n">dimWeight</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">;</span>
@@ -297,7 +297,7 @@
 <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">dimWeight</span><span class="p">(</span><span class="n">dimWeight</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">EndEffectorTask</code> is composed of two tasks in order to control the orientation and the position of the end-effector. As such, its <code class="highlighter-rouge">dimWeight</code> method excepts a 6d vector, the first three dimensions control the orientation dimension weight while the last three control the position dimension weight. To ignore the <code class="highlighter-rouge">x</code> and <code class="highlighter-rouge">y</code> translations on an <code class="highlighter-rouge">EndEffectorTask</code>:</p>
+<p><code class="language-plaintext highlighter-rouge">EndEffectorTask</code> is composed of two tasks in order to control the orientation and the position of the end-effector. As such, its <code class="language-plaintext highlighter-rouge">dimWeight</code> method excepts a 6d vector, the first three dimensions control the orientation dimension weight while the last three control the position dimension weight. To ignore the <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">y</code> translations on an <code class="language-plaintext highlighter-rouge">EndEffectorTask</code>:</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">VectorXd</span> <span class="nf">dimWeight</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
 <span class="n">dimWeight</span> <span class="o">&lt;&lt;</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">;</span>
 

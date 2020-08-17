@@ -363,16 +363,16 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>What you will notice is that the robot “slides” its feet along the floor. That’s because this is the most direct way to go to the desired position. There is many ways this could be solved but we will now cover two useful <code class="highlighter-rouge">MetaTask</code> that take care of such scenarios:</p>
+<p>What you will notice is that the robot “slides” its feet along the floor. That’s because this is the most direct way to go to the desired position. There is many ways this could be solved but we will now cover two useful <code class="language-plaintext highlighter-rouge">MetaTask</code> that take care of such scenarios:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">AddRemoveContactTask</code> which we will use to remove and add the left foot contact</li>
-  <li><code class="highlighter-rouge">MoveContactTask</code> which we will use to move the foot between the two points</li>
+  <li><code class="language-plaintext highlighter-rouge">AddRemoveContactTask</code> which we will use to remove and add the left foot contact</li>
+  <li><code class="language-plaintext highlighter-rouge">MoveContactTask</code> which we will use to move the foot between the two points</li>
 </ul>
 
-<h2 id="using-addremovecontacttask">Using <code class="highlighter-rouge">AddRemoveContactTask</code></h2>
+<h2 id="using-addremovecontacttask">Using <code class="language-plaintext highlighter-rouge">AddRemoveContactTask</code></h2>
 
-<p>To use <code class="highlighter-rouge">AddRemoveContactTask</code> we need a <a href="/mc_rtc/tutorials/recipes/speed-constraint.html">BoundedSpeedConstraint</a> in the solver. We will also need the task itself. Finally, we need two supplementary steps to remove and add back the foot. So, we will modify our controller header and the <code class="highlighter-rouge">reset()</code> function accordingly:</p>
+<p>To use <code class="language-plaintext highlighter-rouge">AddRemoveContactTask</code> we need a <a href="/mc_rtc/tutorials/recipes/speed-constraint.html">BoundedSpeedConstraint</a> in the solver. We will also need the task itself. Finally, we need two supplementary steps to remove and add back the foot. So, we will modify our controller header and the <code class="language-plaintext highlighter-rouge">reset()</code> function accordingly:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In the header</span>
 <span class="cp">#include &lt;mc_solver/BoundedSpeedConstr.h&gt;
@@ -388,7 +388,7 @@
 <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="o">*</span><span class="n">bSpeedConstr</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>For the removal, we will use the <code class="highlighter-rouge">RemoveContactTask</code> specialization of <code class="highlighter-rouge">AddRemoveContactTask</code>, the prototype is:</p>
+<p>For the removal, we will use the <code class="language-plaintext highlighter-rouge">RemoveContactTask</code> specialization of <code class="language-plaintext highlighter-rouge">AddRemoveContactTask</code>, the prototype is:</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">RemoveContactTask</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robots</span> <span class="o">&amp;</span> <span class="n">robots</span><span class="p">,</span>
                  <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">BoundedSpeedConstr</span><span class="o">&gt;</span> <span class="n">constSpeedConstr</span><span class="p">,</span>
                  <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span> <span class="o">&amp;</span> <span class="n">contact</span><span class="p">,</span>
@@ -396,7 +396,7 @@
                  <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="o">*</span> <span class="n">userT_0_s</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>To add the contact, we will use the <code class="highlighter-rouge">AddContactTask</code> specialization, whose prototype is:</p>
+<p>To add the contact, we will use the <code class="language-plaintext highlighter-rouge">AddContactTask</code> specialization, whose prototype is:</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">AddContactTask</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Robots</span> <span class="o">&amp;</span> <span class="n">robots</span><span class="p">,</span>
                  <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">BoundedSpeedConstr</span><span class="o">&gt;</span> <span class="n">constSpeedConstr</span><span class="p">,</span>
                  <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span> <span class="o">&amp;</span> <span class="n">contact</span><span class="p">,</span>
@@ -406,8 +406,8 @@
 
 <p>For both cases, the arguments are pretty similar, the most importants are:</p>
 <ul>
-  <li><code class="highlighter-rouge">mc_rbdyn::Contact &amp; contact</code> which should be the contact we want to add or remove</li>
-  <li><code class="highlighter-rouge">double speed</code> which is the insertion/removal speed</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rbdyn::Contact &amp; contact</code> which should be the contact we want to add or remove</li>
+  <li><code class="language-plaintext highlighter-rouge">double speed</code> which is the insertion/removal speed</li>
 </ul>
 
 <p>Note that, this task does not take care of actually maintaing the contact list in the solver nor does it take care of collision avoidance so we will need to take care of that ourselves.</p>

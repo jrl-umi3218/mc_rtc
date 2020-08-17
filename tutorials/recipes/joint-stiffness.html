@@ -278,9 +278,9 @@
       <div class="col-9">
         <h1>Joints Stiffness</h1>
 
-        <p>This facility only applies to the <code class="highlighter-rouge">PostureTask</code>. It is akin to the <a href="joint-select.html">joint selection</a> and the <a href="dim-weight.html">dimensional weight</a> features of other tasks.</p>
+        <p>This facility only applies to the <code class="language-plaintext highlighter-rouge">PostureTask</code>. It is akin to the <a href="joint-select.html">joint selection</a> and the <a href="dim-weight.html">dimensional weight</a> features of other tasks.</p>
 
-<p>It is implemented by the <code class="highlighter-rouge">JointStiffness</code> specification. Alternatively, one can use <code class="highlighter-rouge">JointGains</code> to specify a damping that is not the critical one.</p>
+<p>It is implemented by the <code class="language-plaintext highlighter-rouge">JointStiffness</code> specification. Alternatively, one can use <code class="language-plaintext highlighter-rouge">JointGains</code> to specify a damping that is not the critical one.</p>
 
 <p>It is interesting when we want some joints to better track the reference angles without disturbing the rest of the tasks:</p>
 
@@ -291,7 +291,7 @@
 
 <h2 id="how-to-use-it">How to use it?</h2>
 
-<p>Let’s first create a <code class="highlighter-rouge">PostureTask</code> with weight 5 and stiffness 1. Then let’s select a few joints of the right arm, and give them a stiffness of 4.</p>
+<p>Let’s first create a <code class="language-plaintext highlighter-rouge">PostureTask</code> with weight 5 and stiffness 1. Then let’s select a few joints of the right arm, and give them a stiffness of 4.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="k">auto</span> <span class="n">postureTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
@@ -306,7 +306,7 @@
 
 <p>In this case, all the regular stiffnesses are set to 2 and all the selected joints’ dampings are set to 4.</p>
 
-<p>If you want to set those dampings to another, user-defined value, you will need to use <code class="highlighter-rouge">JointGains</code>. Note that <code class="highlighter-rouge">JointGains</code> can be constructed with just a stiffness, in which case it will default to critical damping. This time let’s set our stiffness to 4., but our damping to 10.</p>
+<p>If you want to set those dampings to another, user-defined value, you will need to use <code class="language-plaintext highlighter-rouge">JointGains</code>. Note that <code class="language-plaintext highlighter-rouge">JointGains</code> can be constructed with just a stiffness, in which case it will default to critical damping. This time let’s set our stiffness to 4., but our damping to 10.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">tasks</span><span class="o">::</span><span class="n">qp</span><span class="o">::</span><span class="n">JointGains</span><span class="o">&gt;</span> <span class="n">gains</span> <span class="o">=</span> <span class="p">{{</span><span class="s">"RARM_JOINT3"</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">},</span>

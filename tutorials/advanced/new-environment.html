@@ -295,16 +295,16 @@
   <li><a href="https://gite.lirmm.fr/multi-contact/robot_script">robot_script</a></li>
 </ol>
 
-<p>Concerning Blender, on Ubuntu systems, it is advised to use <a href="https://launchpad.net/~thomas-schiex/+archive/ubuntu/blender">Thomas Schiex’s PPA</a> in order to get a fully featured Blender installation. In particular, collada (<code class="highlighter-rouge">.dae</code> files) import is not supported in the repository version of Blender.i</p>
+<p>Concerning Blender, on Ubuntu systems, it is advised to use <a href="https://launchpad.net/~thomas-schiex/+archive/ubuntu/blender">Thomas Schiex’s PPA</a> in order to get a fully featured Blender installation. In particular, collada (<code class="language-plaintext highlighter-rouge">.dae</code> files) import is not supported in the repository version of Blender.i</p>
 
-<p><code class="highlighter-rouge">robot_script</code> is a collection of Blender and shell scripts we will be using to go from a Blender file to a fully functional environment for mc_rtc.</p>
+<p><code class="language-plaintext highlighter-rouge">robot_script</code> is a collection of Blender and shell scripts we will be using to go from a Blender file to a fully functional environment for mc_rtc.</p>
 
 <h2 id="install-our-blender-addon">Install our Blender addon</h2>
 
 <ol>
-  <li><code class="highlighter-rouge">mkdir -p $HOME/.config/blender/$(blender -v|awk '{print $2}')/scripts/addons</code></li>
-  <li>Clone <code class="highlighter-rouge">robot_script</code> and navigate to the <code class="highlighter-rouge">robot_script</code> folder</li>
-  <li><code class="highlighter-rouge">cp -r blender_addons/io_qconvex/ $HOME/.config/blender/$(blender -v|awk '{print $2}')/scripts/addons</code></li>
+  <li><code class="language-plaintext highlighter-rouge">mkdir -p $HOME/.config/blender/$(blender -v|awk '{print $2}')/scripts/addons</code></li>
+  <li>Clone <code class="language-plaintext highlighter-rouge">robot_script</code> and navigate to the <code class="language-plaintext highlighter-rouge">robot_script</code> folder</li>
+  <li><code class="language-plaintext highlighter-rouge">cp -r blender_addons/io_qconvex/ $HOME/.config/blender/$(blender -v|awk '{print $2}')/scripts/addons</code></li>
   <li>Start Blender</li>
   <li>Activate the addon: “Import-Export: qconvex cloud format” as shown in the image below</li>
 </ol>
@@ -426,7 +426,7 @@
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./do_all.sh my_file.blend /path/to/ros/package env_name package_name
 </code></pre></div></div>
 
-<p>The package_name is optional if you are adding the environment to the <code class="highlighter-rouge">mc_env_description</code> package.</p>
+<p>The package_name is optional if you are adding the environment to the <code class="language-plaintext highlighter-rouge">mc_env_description</code> package.</p>
 
 <h1 id="testing-the-environment">Testing the environment</h1>
 

@@ -275,18 +275,18 @@
         <h1>Printing information to the screen</h1>
 
         <p>mc_rtc also provides some console logging utility which are available in
-<code class="highlighter-rouge">&lt;mc_rtc/logging.h&gt;</code>. Those are simple macros that allows to highlight
+<code class="language-plaintext highlighter-rouge">&lt;mc_rtc/logging.h&gt;</code>. Those are simple macros that allows to highlight
 information in the console in a cross-platform way. The following macros are
 available:</p>
 <ul>
-  <li><code class="highlighter-rouge">mc_rtc::log::success(...)</code> displays a message on <code class="highlighter-rouge">std::cout</code> indicating success</li>
-  <li><code class="highlighter-rouge">mc_rtc::log::info(...)</code> display a message on <code class="highlighter-rouge">std::cout</code> to provide information to the user</li>
-  <li><code class="highlighter-rouge">mc_rtc::log::warning(...)</code> display a message on <code class="highlighter-rouge">std::cerr</code> to warn the user of a non-fatal error</li>
-  <li><code class="highlighter-rouge">mc_rtc::log::error(...)</code> display a message on <code class="highlighter-rouge">std::cerr</code> to show an error message</li>
-  <li><code class="highlighter-rouge">mc_rtc::log::error_and_throw&lt;T&gt;(...)</code> display a message on <code class="highlighter-rouge">std::cerr</code> to show a critical error message and throw an exception of type <code class="highlighter-rouge">T</code></li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::success(...)</code> displays a message on <code class="language-plaintext highlighter-rouge">std::cout</code> indicating success</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::info(...)</code> display a message on <code class="language-plaintext highlighter-rouge">std::cout</code> to provide information to the user</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::warning(...)</code> display a message on <code class="language-plaintext highlighter-rouge">std::cerr</code> to warn the user of a non-fatal error</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::error(...)</code> display a message on <code class="language-plaintext highlighter-rouge">std::cerr</code> to show an error message</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_rtc::log::error_and_throw&lt;T&gt;(...)</code> display a message on <code class="language-plaintext highlighter-rouge">std::cerr</code> to show a critical error message and throw an exception of type <code class="language-plaintext highlighter-rouge">T</code></li>
 </ul>
 
-<p>You are not forced to use these functions to use <code class="highlighter-rouge">std::cout</code> and <code class="highlighter-rouge">std::cerr</code>
+<p>You are not forced to use these functions to use <code class="language-plaintext highlighter-rouge">std::cout</code> and <code class="language-plaintext highlighter-rouge">std::cerr</code>
 but this helps to highlight important messages on the console.</p>
 
 <p>Example:</p>

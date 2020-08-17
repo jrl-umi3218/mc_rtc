@@ -295,10 +295,10 @@
 <p>We will discuss the state implementation later. For now we will simply describe the four main methods of a state:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">configure</code> is used to configure the state; one important feature to consider and understand with the FSM implementation is that new states can be created by specifying a different configuration of an existing state. This function will thus be called multiple times;</li>
-  <li><code class="highlighter-rouge">init</code> is used to perform initialization; it is called only once;</li>
-  <li><code class="highlighter-rouge">run</code> is the main function implemented by a state; it is called once per iteration loop until the state is over or until the state changes. When the run is completed, the state will set an output to an arbitrary value that must be documented by the state;</li>
-  <li><code class="highlighter-rouge">teardown</code> is a cleanup function that is called when the state changes.</li>
+  <li><code class="language-plaintext highlighter-rouge">configure</code> is used to configure the state; one important feature to consider and understand with the FSM implementation is that new states can be created by specifying a different configuration of an existing state. This function will thus be called multiple times;</li>
+  <li><code class="language-plaintext highlighter-rouge">init</code> is used to perform initialization; it is called only once;</li>
+  <li><code class="language-plaintext highlighter-rouge">run</code> is the main function implemented by a state; it is called once per iteration loop until the state is over or until the state changes. When the run is completed, the state will set an output to an arbitrary value that must be documented by the state;</li>
+  <li><code class="language-plaintext highlighter-rouge">teardown</code> is a cleanup function that is called when the state changes.</li>
 </ul>
 
 <h3 id="transition">Transition</h3>
@@ -309,7 +309,7 @@
   <li>The transit-from state;</li>
   <li>The output of the state;</li>
   <li>The transit-to state;</li>
-  <li>An optional parameter that influences how the FSM handles the transition. The possible values are: <code class="highlighter-rouge">StepByStep</code> (default), <code class="highlighter-rouge">Auto</code> and <code class="highlighter-rouge">Strict</code>, we will see their respective meaning shortly.</li>
+  <li>An optional parameter that influences how the FSM handles the transition. The possible values are: <code class="language-plaintext highlighter-rouge">StepByStep</code> (default), <code class="language-plaintext highlighter-rouge">Auto</code> and <code class="language-plaintext highlighter-rouge">Strict</code>, we will see their respective meaning shortly.</li>
 </ol>
 
 <h3 id="fsm-run">FSM run</h3>
@@ -329,7 +329,7 @@
       <li>If its returns true, check the state output and find the associated transition
         <ul>
           <li>Teardown the state</li>
-          <li>If the transition type is <code class="highlighter-rouge">Auto</code> or if it is <code class="highlighter-rouge">StepByStep</code> and the <code class="highlighter-rouge">StepByStep</code> setting of the FSM is <code class="highlighter-rouge">false</code>
+          <li>If the transition type is <code class="language-plaintext highlighter-rouge">Auto</code> or if it is <code class="language-plaintext highlighter-rouge">StepByStep</code> and the <code class="language-plaintext highlighter-rouge">StepByStep</code> setting of the FSM is <code class="language-plaintext highlighter-rouge">false</code>
             <ul>
               <li>Configure and initialize the next state</li>
             </ul>
@@ -379,7 +379,7 @@
 
 <p>The states we describe here are C++ objects and they provide many configuration options. However, it would be tedious to repeat the complete set of options when one wants to define two (or more) subtly different states. Therefore, the interface provides a way to inherit configuration set.</p>
 
-<p>Assuming we have a C++ state named <code class="highlighter-rouge">StateBase</code>, we can do the following:</p>
+<p>Assuming we have a C++ state named <code class="language-plaintext highlighter-rouge">StateBase</code>, we can do the following:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MyFirstState</span><span class="pi">:</span> <span class="c1"># &lt;-- Name of the new state</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">StateBase</span> <span class="c1"># &lt;-- Name of the C++ state we are based on</span>
@@ -389,7 +389,7 @@
   <span class="c1"># other options</span>
 </code></pre></div></div>
 
-<p>The way options are combined depends on the C++ state implementation and should be documented by it. However, the general rule applies for mc_rtc provided states and they are based on the defalt loading rule for <code class="highlighter-rouge">mc_rtc::Configuration</code> objects:</p>
+<p>The way options are combined depends on the C++ state implementation and should be documented by it. However, the general rule applies for mc_rtc provided states and they are based on the defalt loading rule for <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> objects:</p>
 <ul>
   <li>“raw” values (boolean, numbers and strings) and vectors are overwritten</li>
   <li>objects are merged following the rule:
@@ -579,9 +579,9 @@
 <p>Some options are common to all states:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">AddContacts</code>/<code class="highlighter-rouge">RemoveContacts</code>: allows to add/remove contacts <strong>before</strong> the state is executed, this should be a vector of <code class="highlighter-rouge">fsm::Contact</code> objects;</li>
-  <li><code class="highlighter-rouge">AddContactsAfter</code>/<code class="highlighter-rouge">RemoveContactsAfter</code>: allows to add/remove contacts <strong>after</strong> the state is executed, this should be a vector of <code class="highlighter-rouge">fsm::Contact</code> objects;</li>
-  <li><code class="highlighter-rouge">RemovePostureTask</code>: if set to true, the default posture tasks will be removed.</li>
+  <li><code class="language-plaintext highlighter-rouge">AddContacts</code>/<code class="language-plaintext highlighter-rouge">RemoveContacts</code>: allows to add/remove contacts <strong>before</strong> the state is executed, this should be a vector of <code class="language-plaintext highlighter-rouge">fsm::Contact</code> objects;</li>
+  <li><code class="language-plaintext highlighter-rouge">AddContactsAfter</code>/<code class="language-plaintext highlighter-rouge">RemoveContactsAfter</code>: allows to add/remove contacts <strong>after</strong> the state is executed, this should be a vector of <code class="language-plaintext highlighter-rouge">fsm::Contact</code> objects;</li>
+  <li><code class="language-plaintext highlighter-rouge">RemovePostureTask</code>: if set to true, the default posture tasks will be removed.</li>
 </ul>
 
 <h2 id="new-state-creation">New state creation</h2>
@@ -605,23 +605,23 @@
 <span class="n">EXPORT_SINGLE_STATE</span><span class="p">(</span><span class="s">"MyState"</span><span class="p">,</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">MyState</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>In all functions where a <code class="highlighter-rouge">Controller</code> instance is passed it is an <code class="highlighter-rouge">mc_control::fsm::Controller</code> instance.</p>
+<p>In all functions where a <code class="language-plaintext highlighter-rouge">Controller</code> instance is passed it is an <code class="language-plaintext highlighter-rouge">mc_control::fsm::Controller</code> instance.</p>
 
-<h3 id="void-configuremc_rtcconfiguration-"><code class="highlighter-rouge">void configure(mc_rtc::Configuration &amp;)</code></h3>
+<h3 id="void-configuremc_rtcconfiguration-"><code class="language-plaintext highlighter-rouge">void configure(mc_rtc::Configuration &amp;)</code></h3>
 
 <p>This function is called <strong>multiple</strong> times. It is very important to remember that as you should only “accumulate” configuration entries in this function and not create any tasks.</p>
 
-<h3 id="void-startcontroller-"><code class="highlighter-rouge">void start(Controller &amp;)</code></h3>
+<h3 id="void-startcontroller-"><code class="language-plaintext highlighter-rouge">void start(Controller &amp;)</code></h3>
 
 <p>This function is called once to initialize the state. This is where you’ll want to transform your accumulated configuration into a runnable state.</p>
 
-<h3 id="bool-runcontroller-"><code class="highlighter-rouge">bool run(Controller &amp;)</code></h3>
+<h3 id="bool-runcontroller-"><code class="language-plaintext highlighter-rouge">bool run(Controller &amp;)</code></h3>
 
-<p>This function will be called on every iteration following the <code class="highlighter-rouge">start</code> iteration, i.e. there will be no call to <code class="highlighter-rouge">run</code> in the same iteration as <code class="highlighter-rouge">start</code> unless you manually call <code class="highlighter-rouge">run</code> from your <code class="highlighter-rouge">start</code> implementation.</p>
+<p>This function will be called on every iteration following the <code class="language-plaintext highlighter-rouge">start</code> iteration, i.e. there will be no call to <code class="language-plaintext highlighter-rouge">run</code> in the same iteration as <code class="language-plaintext highlighter-rouge">start</code> unless you manually call <code class="language-plaintext highlighter-rouge">run</code> from your <code class="language-plaintext highlighter-rouge">start</code> implementation.</p>
 
-<p>This function should return <code class="highlighter-rouge">true</code> when the state is completed. At this point you should also set the state’s output by calling <code class="highlighter-rouge">output(const std::string &amp;)</code>.</p>
+<p>This function should return <code class="language-plaintext highlighter-rouge">true</code> when the state is completed. At this point you should also set the state’s output by calling <code class="language-plaintext highlighter-rouge">output(const std::string &amp;)</code>.</p>
 
-<h3 id="void-teardowncontroller-"><code class="highlighter-rouge">void teardown(Controller &amp;)</code></h3>
+<h3 id="void-teardowncontroller-"><code class="language-plaintext highlighter-rouge">void teardown(Controller &amp;)</code></h3>
 
 <p>This function will be called once before the state is destroyed. This should be used to cleanup the effect of the state on the controller.</p>
 
@@ -643,7 +643,7 @@
 <span class="p">};</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">dof</code> vector will be transformed to a diagonal matrix and added as a <a href="contact-dof.html">dof constraint</a>.</p>
+<p>The <code class="language-plaintext highlighter-rouge">dof</code> vector will be transformed to a diagonal matrix and added as a <a href="contact-dof.html">dof constraint</a>.</p>
 
 <p>To add/remove contacts in the FSM controller, simply call:</p>
 
@@ -675,17 +675,17 @@
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span> <span class="n">getPostureTask</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">robot</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>This task is normally kept in the solver during the state’s lifetime. If this is not desired, you can remove it and put it back in the <code class="highlighter-rouge">teardown</code> call.</p>
+<p>This task is normally kept in the solver during the state’s lifetime. If this is not desired, you can remove it and put it back in the <code class="language-plaintext highlighter-rouge">teardown</code> call.</p>
 
 <h3 id="other-methods">Other methods</h3>
 
-<p>The following methods are virtual in the <code class="highlighter-rouge">State</code> interface and can be optionally overriden.</p>
+<p>The following methods are virtual in the <code class="language-plaintext highlighter-rouge">State</code> interface and can be optionally overriden.</p>
 
-<h4 id="void-stopcontroller-"><code class="highlighter-rouge">void stop(Controller &amp;)</code></h4>
+<h4 id="void-stopcontroller-"><code class="language-plaintext highlighter-rouge">void stop(Controller &amp;)</code></h4>
 
 <p>This is called if the state is interrupted.</p>
 
-<h4 id="bool-read_msgstdstring-bool-read_write_msgstdstring--stdstring-"><code class="highlighter-rouge">bool read_msg(std::string &amp;)</code>/<code class="highlighter-rouge">bool read_write_msg(std::string &amp;, std::string &amp;)</code></h4>
+<h4 id="bool-read_msgstdstring-bool-read_write_msgstdstring--stdstring-"><code class="language-plaintext highlighter-rouge">bool read_msg(std::string &amp;)</code>/<code class="language-plaintext highlighter-rouge">bool read_write_msg(std::string &amp;, std::string &amp;)</code></h4>
 
 <p>Can be used to communicate with the state using the same interface as the controller.</p>
 
@@ -694,13 +694,13 @@
 <p>The following options can be used to configure the FSM:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">Managed</code>: if true, the FSM is managed, otherwise it is not;</li>
-  <li><code class="highlighter-rouge">StepByStep</code>: if true, transitions that are tagged as <code class="highlighter-rouge">StepByStep</code> will behave as <code class="highlighter-rouge">Strict</code> transitions, otherwise they behave as <code class="highlighter-rouge">Auto</code> transitions;</li>
-  <li><code class="highlighter-rouge">IdleKeepState</code>: if true, the state is kept alive until the transition is triggered by the user;</li>
-  <li><code class="highlighter-rouge">StatesLibraries</code>: where to look for states libraries;</li>
-  <li><code class="highlighter-rouge">StatesFiles</code>: where to look for states configuration files;</li>
-  <li><code class="highlighter-rouge">VerboseStateFactory</code>: if true, the state factory will provide more information while loading libraries, this is useful for debugging;</li>
-  <li><code class="highlighter-rouge">robots</code>: JSON object, each key is the name of a robot and the value is an object representing a robot module to load in addition to the main robot module;</li>
+  <li><code class="language-plaintext highlighter-rouge">Managed</code>: if true, the FSM is managed, otherwise it is not;</li>
+  <li><code class="language-plaintext highlighter-rouge">StepByStep</code>: if true, transitions that are tagged as <code class="language-plaintext highlighter-rouge">StepByStep</code> will behave as <code class="language-plaintext highlighter-rouge">Strict</code> transitions, otherwise they behave as <code class="language-plaintext highlighter-rouge">Auto</code> transitions;</li>
+  <li><code class="language-plaintext highlighter-rouge">IdleKeepState</code>: if true, the state is kept alive until the transition is triggered by the user;</li>
+  <li><code class="language-plaintext highlighter-rouge">StatesLibraries</code>: where to look for states libraries;</li>
+  <li><code class="language-plaintext highlighter-rouge">StatesFiles</code>: where to look for states configuration files;</li>
+  <li><code class="language-plaintext highlighter-rouge">VerboseStateFactory</code>: if true, the state factory will provide more information while loading libraries, this is useful for debugging;</li>
+  <li><code class="language-plaintext highlighter-rouge">robots</code>: JSON object, each key is the name of a robot and the value is an object representing a robot module to load in addition to the main robot module;</li>
 </ul>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">robots</span><span class="w"> </span><span class="err">entry</span><span class="w">
@@ -715,9 +715,9 @@
 </span></code></pre></div></div>
 
 <ul>
-  <li><code class="highlighter-rouge">constraints</code>: array of constraints, each object is a JSON representation of a <code class="highlighter-rouge">mc_solver::ConstraintSet</code> object as specified by the JSON schemas;</li>
-  <li><code class="highlighter-rouge">collisions</code>: array of collision constraints following the <code class="highlighter-rouge">mc_solver::CollisionConstraint</code> sJSON schema;</li>
-  <li><code class="highlighter-rouge">contacts</code>: array of initial contacts;</li>
+  <li><code class="language-plaintext highlighter-rouge">constraints</code>: array of constraints, each object is a JSON representation of a <code class="language-plaintext highlighter-rouge">mc_solver::ConstraintSet</code> object as specified by the JSON schemas;</li>
+  <li><code class="language-plaintext highlighter-rouge">collisions</code>: array of collision constraints following the <code class="language-plaintext highlighter-rouge">mc_solver::CollisionConstraint</code> sJSON schema;</li>
+  <li><code class="language-plaintext highlighter-rouge">contacts</code>: array of initial contacts;</li>
 </ul>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">Example</span><span class="w"> </span><span class="err">contacts</span><span class="w"> </span><span class="err">entry</span><span class="w">
@@ -740,11 +740,11 @@
 
 <ul>
   <li>for each robot, named <code>r</code>, an entry <code>r</code> can be used to configure the posture and free-flyer task usd in the idle state;</li>
-  <li><code class="highlighter-rouge">states</code>: object, each key is the name of a state, the value is this state configuration;</li>
-  <li><code class="highlighter-rouge">configs</code>: object, each key is the name of a state, the value is additional configuration to pass to this state when it is played in the main FSM;</li>
-  <li><code class="highlighter-rouge">transitions</code>: an array, each elements of the array is a transition</li>
-  <li><code class="highlighter-rouge">init</code>: the initial state to start the FSM;</li>
-  <li><code class="highlighter-rouge">init_pos</code>: initial position of the main robot (7d array);</li>
+  <li><code class="language-plaintext highlighter-rouge">states</code>: object, each key is the name of a state, the value is this state configuration;</li>
+  <li><code class="language-plaintext highlighter-rouge">configs</code>: object, each key is the name of a state, the value is additional configuration to pass to this state when it is played in the main FSM;</li>
+  <li><code class="language-plaintext highlighter-rouge">transitions</code>: an array, each elements of the array is a transition</li>
+  <li><code class="language-plaintext highlighter-rouge">init</code>: the initial state to start the FSM;</li>
+  <li><code class="language-plaintext highlighter-rouge">init_pos</code>: initial position of the main robot (7d array);</li>
 </ul>
 
 <p>In the next tutorial we will implement a practical example of the FSM controller.</p>

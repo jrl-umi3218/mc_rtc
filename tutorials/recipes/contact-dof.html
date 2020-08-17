@@ -290,7 +290,7 @@
 
 <h2 id="how-to-create-one">How to create one?</h2>
 
-<p>DoF contacts will only modify the ContactConstraint. Let’s see the interesting prototypes in <code class="highlighter-rouge">Tasks::QPContactConstr.h</code>:</p>
+<p>DoF contacts will only modify the ContactConstraint. Let’s see the interesting prototypes in <code class="language-plaintext highlighter-rouge">Tasks::QPContactConstr.h</code>:</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">addDofContact</span><span class="p">(</span><span class="k">const</span> <span class="n">ContactId</span><span class="o">&amp;</span> <span class="n">contactId</span><span class="p">,</span> <span class="k">const</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">MatrixXd</span><span class="o">&amp;</span> <span class="n">dof</span><span class="p">);</span>
 <span class="kt">bool</span> <span class="nf">removeDofContact</span><span class="p">(</span><span class="k">const</span> <span class="n">ContactId</span><span class="o">&amp;</span> <span class="n">contactId</span><span class="p">);</span>
 <span class="kt">void</span> <span class="nf">updateDofContacts</span><span class="p">();</span>
@@ -305,7 +305,7 @@
   <li>When done, remove the DoF and update again</li>
 </ul>
 
-<p>To find a ContactID, the best way is to create an <code class="highlighter-rouge">mc_rbdyn::Contact</code> and then call the <code class="highlighter-rouge">contactId</code> method like so:</p>
+<p>To find a ContactID, the best way is to create an <code class="language-plaintext highlighter-rouge">mc_rbdyn::Contact</code> and then call the <code class="language-plaintext highlighter-rouge">contactId</code> method like so:</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span> <span class="n">contact</span><span class="p">;</span>
 <span class="n">tasks</span><span class="o">::</span><span class="n">qp</span><span class="o">::</span><span class="n">contactId</span> <span class="n">cId</span> <span class="o">=</span> <span class="n">contact</span><span class="p">.</span><span class="n">contactId</span><span class="p">(</span><span class="n">robots</span><span class="p">());</span>
 </code></pre></div></div>
@@ -319,7 +319,7 @@
 </ul>
 
 <p>For example:</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 0 0 0 0 0
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0 0 0 0 0 0
 0 0 0 0 0 0
 0 0 0 0 0 0
 0 0 0 0 0 0
@@ -328,7 +328,7 @@
 </code></pre></div></div>
 <p>Is a “virtual” contact: the motion is not restricted at all.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 0 0 0 0
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 0 0 0 0
 0 1 0 0 0 0
 0 0 1 0 0 0
 0 0 0 1 0 0
@@ -338,7 +338,7 @@
 
 <p>Is entirely blocked (regular contact)</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 0 0 0 0
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 0 0 0 0
 0 1 0 0 0 0
 0 0 1 0 0 0
 0 0 0 1 0 0
@@ -348,7 +348,7 @@
 
 <p>Is blocked in every direction except the normal translation (useful for insertion).</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 0 0 0 0
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 0 0 0 0 0
 0 1 0 0 0 0
 0 0 0 0 0 0
 0 0 0 0 0 0
@@ -401,7 +401,7 @@
   <p>Note: In this setup, you need to be in kinematics mode, else the robot will fall, unless you add a first step where you shift the robot’s weight onto the left foot.</p>
 </blockquote>
 
-<p>Let’s slightly change this to show how this can be used to simulate a sliding planar contact. Let’s just change the <code class="highlighter-rouge">dof</code> matrix, and the target of the <code class="highlighter-rouge">EndEffectorTask</code>.</p>
+<p>Let’s slightly change this to show how this can be used to simulate a sliding planar contact. Let’s just change the <code class="language-plaintext highlighter-rouge">dof</code> matrix, and the target of the <code class="language-plaintext highlighter-rouge">EndEffectorTask</code>.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix6d</span> <span class="n">dof</span> <span class="o">=</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Matrix6d</span><span class="o">::</span><span class="n">Identity</span><span class="p">();</span>
 <span class="n">dof</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>

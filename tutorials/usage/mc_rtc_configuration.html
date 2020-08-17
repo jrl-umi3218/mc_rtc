@@ -277,21 +277,21 @@
         <p>This page provides information about the following topics:</p>
 
 <ol>
-  <li>How to read data from an <code class="highlighter-rouge">mc_rtc::Configuration</code> object</li>
-  <li>How to write data to an <code class="highlighter-rouge">mc_rtc::Configuration</code> object</li>
+  <li>How to read data from an <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> object</li>
+  <li>How to write data to an <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> object</li>
   <li>Which C++/Python types are supported out of the box</li>
   <li>How to write your own function to load/save C++ objects
-from/to an <code class="highlighter-rouge">mc_rtc::Configuration</code> object</li>
+from/to an <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> object</li>
 </ol>
 
-<p>In every example on this page, we assume that <code class="highlighter-rouge">config</code> is a C++
-object of type <code class="highlighter-rouge">mc_rtc::Configuration</code> in C++ examples and a
-Python object of type <code class="highlighter-rouge">mc_rtc.Configuration</code> in Python
+<p>In every example on this page, we assume that <code class="language-plaintext highlighter-rouge">config</code> is a C++
+object of type <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> in C++ examples and a
+Python object of type <code class="language-plaintext highlighter-rouge">mc_rtc.Configuration</code> in Python
 examples.</p>
 
 <h3 id="data-source">Data source</h3>
 
-<p><code class="highlighter-rouge">mc_rtc::Configuration</code> provides an abstraction over a JSONor a YAML object to easily manipulate the object and retrieve C++/Python data from it.</p>
+<p><code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> provides an abstraction over a JSONor a YAML object to easily manipulate the object and retrieve C++/Python data from it.</p>
 
 <p>To load data into the configuration object you can use the following:</p>
 
@@ -348,9 +348,9 @@ value you are trying to retrieve.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The above code only throws if the <code class="highlighter-rouge">MyQuaternion</code> entry is part
+<p>The above code only throws if the <code class="language-plaintext highlighter-rouge">MyQuaternion</code> entry is part
 of the configuration but does not contain the required data to
-obtain an <code class="highlighter-rouge">Eigen::Quaterniond</code> object (see the previous
+obtain an <code class="language-plaintext highlighter-rouge">Eigen::Quaterniond</code> object (see the previous
 section).</p>
 
 <h4 id="default-access-method">Default access method</h4>
@@ -382,7 +382,7 @@ type.</p>
 
 <h4 id="sub-section-access">Sub-section access</h4>
 
-<p>The strict/default access methods presented above can be applied to access a sub-section of an <code class="highlighter-rouge">mc_rtc::Configuration</code> object, e.g.</p>
+<p>The strict/default access methods presented above can be applied to access a sub-section of an <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> object, e.g.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// throws if conf is not an object or section does not exist in conf</span>
 <span class="k">auto</span> <span class="n">sub</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"section"</span><span class="p">);</span>
@@ -412,7 +412,7 @@ sub-section can be seen from the parent.</p>
 </span><span class="n">flist</span> <span class="o">=</span> <span class="n">config</span><span class="p">(</span><span class="s">"flist"</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">])</span>
 </code></pre></div></div>
 
-<h3 id="write-data-to-an-mc_rtcconfiguration-object">Write data to an <code class="highlighter-rouge">mc_rtc::Configuration</code> object</h3>
+<h3 id="write-data-to-an-mc_rtcconfiguration-object">Write data to an <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code> object</h3>
 
 <p>Here are some writing examples that demonstrate the difference in object or array APIs.</p>
 
@@ -444,7 +444,7 @@ sub-section can be seen from the parent.</p>
 
 <h3 id="supported-types">Supported types</h3>
 
-<p>As you saw in the previous examples, the <code class="highlighter-rouge">Configuration</code> object can be used to
+<p>As you saw in the previous examples, the <code class="language-plaintext highlighter-rouge">Configuration</code> object can be used to
 retrieve various types of object. The following table shows the supported types
 and JSON requirements.</p>
 
@@ -526,11 +526,11 @@ and JSON requirements.</p>
 
 <h3 id="support-for-your-own-types">Support for your own types</h3>
 
-<p>This feature allows you to specialize <code class="highlighter-rouge">mc_rtc::Configuration</code>
+<p>This feature allows you to specialize <code class="language-plaintext highlighter-rouge">mc_rtc::Configuration</code>
 to support loading/save to/from your own type. This feature is
 a C++ only feature for now.</p>
 
-<p>It works by adding a specialization template in the <code class="highlighter-rouge">mc_rtc</code>
+<p>It works by adding a specialization template in the <code class="language-plaintext highlighter-rouge">mc_rtc</code>
 namespace of the following form:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">template</span><span class="o">&lt;</span><span class="p">&gt;</span>
@@ -542,10 +542,10 @@ namespace of the following form:</p>
 <span class="p">};</span>
 </code></pre></div></div>
 
-<p>This feature is used extensively in <code class="highlighter-rouge">mc_rtc</code> to provide
-support for many <code class="highlighter-rouge">SpaceVecAlg</code>, <code class="highlighter-rouge">RBDyn</code> and <code class="highlighter-rouge">mc_rbdyn</code> types.
+<p>This feature is used extensively in <code class="language-plaintext highlighter-rouge">mc_rtc</code> to provide
+support for many <code class="language-plaintext highlighter-rouge">SpaceVecAlg</code>, <code class="language-plaintext highlighter-rouge">RBDyn</code> and <code class="language-plaintext highlighter-rouge">mc_rbdyn</code> types.
 All declarations can be found in
-<code class="highlighter-rouge">mc_rbdyn/configuration_io.h</code>.</p>
+<code class="language-plaintext highlighter-rouge">mc_rbdyn/configuration_io.h</code>.</p>
 
 <p>The saving function supports optional arguments so, the
 following is a valid specialization:</p>

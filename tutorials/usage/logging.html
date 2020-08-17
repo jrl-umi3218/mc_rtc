@@ -279,7 +279,7 @@ configuration</a>. However, a controller implementation does
 not need to worry about the logging options and will go through a single
 interface for all file logging operations. Each controller instance uses a
 separate log and each time a controller switch happens, a new log is created.
-For convenience purpose, on platforms that support symbolic links, a <code class="highlighter-rouge">latest</code>
+For convenience purpose, on platforms that support symbolic links, a <code class="language-plaintext highlighter-rouge">latest</code>
 log file is created pointing to the latest created log.</p>
 
 <p>By default, the following information are logged by all controllers:</p>
@@ -304,11 +304,11 @@ log file is created pointing to the latest created log.</p>
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry_name"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="cm">/* compute, say x; */</span> <span class="k">return</span> <span class="n">x</span><span class="p">;</span> <span class="p">});</span>
 </code></pre></div></div>
 
-<p>The provided callback will run after your controller <code class="highlighter-rouge">run()</code> method.</p>
+<p>The provided callback will run after your controller <code class="language-plaintext highlighter-rouge">run()</code> method.</p>
 
-<p>You can log most types that your controller could manipulate as-is (e.g. <code class="highlighter-rouge">sva::PTransformd</code> or <code class="highlighter-rouge">sva::ForceVecd</code>) and strings. You can also logs vectors of these types.</p>
+<p>You can log most types that your controller could manipulate as-is (e.g. <code class="language-plaintext highlighter-rouge">sva::PTransformd</code> or <code class="language-plaintext highlighter-rouge">sva::ForceVecd</code>) and strings. You can also logs vectors of these types.</p>
 
-<p>Normally, an <code class="highlighter-rouge">addLogEntry</code> call should have a corresponding <code class="highlighter-rouge">removeLogEntry</code> call, e.g.:</p>
+<p>Normally, an <code class="language-plaintext highlighter-rouge">addLogEntry</code> call should have a corresponding <code class="language-plaintext highlighter-rouge">removeLogEntry</code> call, e.g.:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"entry_name"</span><span class="p">);</span>
 </code></pre></div></div>
@@ -340,7 +340,7 @@ is, the message should look like the following:</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Will log controller outputs to "/tmp/mc-control-MyControllerName-DATE.bin"
 </span></code></pre></div></div>
 
-<p>On systems that support symbolic links, it will also be available as <code class="highlighter-rouge">/tmp/mc-control-MyControllerName-latest.bin</code></p>
+<p>On systems that support symbolic links, it will also be available as <code class="language-plaintext highlighter-rouge">/tmp/mc-control-MyControllerName-latest.bin</code></p>
 
 <h3 id="working-with-the-log">Working with the log</h3>
 

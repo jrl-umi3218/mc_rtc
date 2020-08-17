@@ -278,21 +278,21 @@
       <div class="col-9">
         <h1>Main FSM states</h1>
 
-        <p>The framework provides by default a few pre-implemented states intended to make it easy to take full advantage of the <code class="highlighter-rouge">JSON/YAML</code> configuration capabilities of the FSM. Using these, writing FSMs for complex robot behaviours becomes easy, and usually involves little to no handwritten <code class="highlighter-rouge">C++/Python</code> states: almost everything can be directly described in the FSM configuration. In this tutorial, we’ll explore use of the three most useful states:</p>
+        <p>The framework provides by default a few pre-implemented states intended to make it easy to take full advantage of the <code class="language-plaintext highlighter-rouge">JSON/YAML</code> configuration capabilities of the FSM. Using these, writing FSMs for complex robot behaviours becomes easy, and usually involves little to no handwritten <code class="language-plaintext highlighter-rouge">C++/Python</code> states: almost everything can be directly described in the FSM configuration. In this tutorial, we’ll explore use of the three most useful states:</p>
 
 <ul>
-  <li><a href="/mc_rtc/json.html#State/MetaTasks">MetaTasks</a>: Loads a set of tasks from their <code class="highlighter-rouge">JSON/YAML</code> configuration</li>
+  <li><a href="/mc_rtc/json.html#State/MetaTasks">MetaTasks</a>: Loads a set of tasks from their <code class="language-plaintext highlighter-rouge">JSON/YAML</code> configuration</li>
   <li><a href="/mc_rtc/json.html#State/Parallel">Parallel</a>: Runs multiple states in “parallel”</li>
   <li><a href="/mc_rtc/json.html#State/Meta">Meta</a>: Nests an FSM within an FSM</li>
 </ul>
 
-<p>In the remainder of this tutorial, we’ll see how these may be used. Only <code class="highlighter-rouge">YAML</code> examples will be shown, <code class="highlighter-rouge">JSON</code> is of course also supported and similar examples may be found in the documentation. A full list of available states can be found in the <a href="/mc_rtc/json.html#State">“State objects”</a> section of the JSON/YAML documentation.</p>
+<p>In the remainder of this tutorial, we’ll see how these may be used. Only <code class="language-plaintext highlighter-rouge">YAML</code> examples will be shown, <code class="language-plaintext highlighter-rouge">JSON</code> is of course also supported and similar examples may be found in the documentation. A full list of available states can be found in the <a href="/mc_rtc/json.html#State">“State objects”</a> section of the JSON/YAML documentation.</p>
 
 <h2 id="metatasks-state">MetaTasks state</h2>
 
-<p>The <code class="highlighter-rouge">MetaTasks</code> state (<a href="json.html#State/MetaTasks">documentation</a>) allows to load a list of tasks from their <code class="highlighter-rouge">JSON/YAML</code> configuration. The full list of available tasks is available <a href="/mc_rtc/json.html#MetaTask">JSON/YAML documentation</a>.</p>
+<p>The <code class="language-plaintext highlighter-rouge">MetaTasks</code> state (<a href="json.html#State/MetaTasks">documentation</a>) allows to load a list of tasks from their <code class="language-plaintext highlighter-rouge">JSON/YAML</code> configuration. The full list of available tasks is available <a href="/mc_rtc/json.html#MetaTask">JSON/YAML documentation</a>.</p>
 
-<p>Let’s start with an example, we will add a new <code class="highlighter-rouge">MetaTasks</code> state in the <code class="highlighter-rouge">states:</code> section of the <code class="highlighter-rouge">FSM</code> configuration.</p>
+<p>Let’s start with an example, we will add a new <code class="language-plaintext highlighter-rouge">MetaTasks</code> state in the <code class="language-plaintext highlighter-rouge">states:</code> section of the <code class="language-plaintext highlighter-rouge">FSM</code> configuration.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">states</span><span class="pi">:</span>
   <span class="na">ExampleState</span><span class="pi">:</span>
@@ -326,35 +326,35 @@
           <span class="pi">-</span> <span class="na">timeElapsed</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre></div></div>
 
-<p>This will create a new state named <code class="highlighter-rouge">ExampleState</code> that will itself loads:</p>
+<p>This will create a new state named <code class="language-plaintext highlighter-rouge">ExampleState</code> that will itself loads:</p>
 <ul>
-  <li>A <code class="highlighter-rouge">CoM</code> task named <code class="highlighter-rouge">CoM</code> that moves the com <code class="highlighter-rouge">5cm</code> down.</li>
-  <li>A <code class="highlighter-rouge">BSplineTrajectory</code> task named <code class="highlighter-rouge">LeftHandTrajectory</code> that moves the left gripper of the robot to a surface <code class="highlighter-rouge">Left</code> defined on another robot.</li>
+  <li>A <code class="language-plaintext highlighter-rouge">CoM</code> task named <code class="language-plaintext highlighter-rouge">CoM</code> that moves the com <code class="language-plaintext highlighter-rouge">5cm</code> down.</li>
+  <li>A <code class="language-plaintext highlighter-rouge">BSplineTrajectory</code> task named <code class="language-plaintext highlighter-rouge">LeftHandTrajectory</code> that moves the left gripper of the robot to a surface <code class="language-plaintext highlighter-rouge">Left</code> defined on another robot.</li>
 </ul>
 
 <h3 id="completion-criterias">Completion criterias</h3>
 
-<p>Notice the <code class="highlighter-rouge">completion</code> elements in the example above. These are what we refer to as “completion criteria”. They are a way to generate conditional statements to determine when a task has been completed. See the API documentation for <a href="/mc_rtc/doxygen.html#a01328" target="blank_">mc_control::CompletionCriteria</a> for details.</p>
+<p>Notice the <code class="language-plaintext highlighter-rouge">completion</code> elements in the example above. These are what we refer to as “completion criteria”. They are a way to generate conditional statements to determine when a task has been completed. See the API documentation for <a href="/mc_rtc/doxygen.html#a01328" target="blank_">mc_control::CompletionCriteria</a> for details.</p>
 
 <p>By default, every task defines the following entries:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">eval</code>: True when the norm of MetaTask::eval() is below the provided value</li>
-  <li><code class="highlighter-rouge">speed</code>: True when the norm of MetaTask::speed() is below the provided value</li>
-  <li><code class="highlighter-rouge">timeout</code>: True when the task has been added to the solver longer than the provided time (in seconds)</li>
+  <li><code class="language-plaintext highlighter-rouge">eval</code>: True when the norm of MetaTask::eval() is below the provided value</li>
+  <li><code class="language-plaintext highlighter-rouge">speed</code>: True when the norm of MetaTask::speed() is below the provided value</li>
+  <li><code class="language-plaintext highlighter-rouge">timeout</code>: True when the task has been added to the solver longer than the provided time (in seconds)</li>
 </ul>
 
 <p>Some tasks define additional completion criterias, such as:</p>
 <ul>
-  <li><code class="highlighter-rouge">SplineTrajectoryTask</code> variants (<code class="highlighter-rouge">bspline_trajectory</code>, <code class="highlighter-rouge">exact_cubic_trajectory</code>) additionally define
+  <li><code class="language-plaintext highlighter-rouge">SplineTrajectoryTask</code> variants (<code class="language-plaintext highlighter-rouge">bspline_trajectory</code>, <code class="language-plaintext highlighter-rouge">exact_cubic_trajectory</code>) additionally define
     <ul>
-      <li><code class="highlighter-rouge">timeElapsed: true</code>: True when the task <code class="highlighter-rouge">duration</code> has elapsed</li>
-      <li><code class="highlighter-rouge">wrench</code>: True when the force applied on the robot surface is higher than the provided threshold (6d vector, NaN value ignores the reading, negative values invert the condition). Ignored if the surface has no force-sensor attached.</li>
+      <li><code class="language-plaintext highlighter-rouge">timeElapsed: true</code>: True when the task <code class="language-plaintext highlighter-rouge">duration</code> has elapsed</li>
+      <li><code class="language-plaintext highlighter-rouge">wrench</code>: True when the force applied on the robot surface is higher than the provided threshold (6d vector, NaN value ignores the reading, negative values invert the condition). Ignored if the surface has no force-sensor attached.</li>
     </ul>
   </li>
 </ul>
 
-<p>You may add your own completion criterias by implementing <code class="highlighter-rouge">mc_task::MetaTask::buildCompletionCriteria</code> for your task. These completion criterias can be combined using the conditional constructs <code class="highlighter-rouge">AND</code> and <code class="highlighter-rouge">OR</code> as follows. The usual rules of lazy evaluation apply. For example, to check whether the hand trajectory tasks has completed if its total duration has been reached or more than 15N apply along the <code class="highlighter-rouge">z</code> direction of the hand’s surface normal after 3 seconds of delay, you could write:</p>
+<p>You may add your own completion criterias by implementing <code class="language-plaintext highlighter-rouge">mc_task::MetaTask::buildCompletionCriteria</code> for your task. These completion criterias can be combined using the conditional constructs <code class="language-plaintext highlighter-rouge">AND</code> and <code class="language-plaintext highlighter-rouge">OR</code> as follows. The usual rules of lazy evaluation apply. For example, to check whether the hand trajectory tasks has completed if its total duration has been reached or more than 15N apply along the <code class="language-plaintext highlighter-rouge">z</code> direction of the hand’s surface normal after 3 seconds of delay, you could write:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># completion criteria that checks whether a trajectory task has been active for at least its specified duration</span>
 <span class="c1"># or whether more than 15N apply along the `z` direction of the hand surface after 3 seconds of delay.</span>
@@ -366,11 +366,11 @@
       <span class="pi">-</span> <span class="na">wrench</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">.NaN</span><span class="pi">,</span> <span class="nv">15</span><span class="pi">]</span>
 </code></pre></div></div>
 
-<p>You may also ommit the <code class="highlighter-rouge">completion</code> criteria for tasks that you want to execute but whose completion does not matter. In that case the FSM will consider the task as always completed.</p>
+<p>You may also ommit the <code class="language-plaintext highlighter-rouge">completion</code> criteria for tasks that you want to execute but whose completion does not matter. In that case the FSM will consider the task as always completed.</p>
 
 <h3 id="state-output">State output</h3>
 
-<p>As mentioned in the previous tutorials, each state returns an output string by calling <code class="highlighter-rouge">State::output("output value")</code>. This output value is used in the transition map to determine which state should be exectuted next. By default, the <code class="highlighter-rouge">MetaTasks</code> state returns <code class="highlighter-rouge">"OK"</code> once all of its tasks have completed. If you don’t need to take branching decisions based on the tasks outputs, then your transition map would look like</p>
+<p>As mentioned in the previous tutorials, each state returns an output string by calling <code class="language-plaintext highlighter-rouge">State::output("output value")</code>. This output value is used in the transition map to determine which state should be exectuted next. By default, the <code class="language-plaintext highlighter-rouge">MetaTasks</code> state returns <code class="language-plaintext highlighter-rouge">"OK"</code> once all of its tasks have completed. If you don’t need to take branching decisions based on the tasks outputs, then your transition map would look like</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">transtions</span><span class="pi">:</span>
 <span class="nn">...</span>
@@ -379,7 +379,7 @@
 <span class="nn">...</span>
 </code></pre></div></div>
 
-<p>You may however want to make more complex branching decisions based on why the tasks have completed. For this, the <code class="highlighter-rouge">MetaTasks</code> state defines an <code class="highlighter-rouge">output</code> configuration which may contain a list of tasks names for which the completion criteria’s string output will be used to generate the state’s output. For example:</p>
+<p>You may however want to make more complex branching decisions based on why the tasks have completed. For this, the <code class="language-plaintext highlighter-rouge">MetaTasks</code> state defines an <code class="language-plaintext highlighter-rouge">output</code> configuration which may contain a list of tasks names for which the completion criteria’s string output will be used to generate the state’s output. For example:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">ExampleState</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
@@ -387,7 +387,7 @@
   <span class="na">outputs</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">CoM</span><span class="pi">]</span>
 </code></pre></div></div>
 
-<p>Your transition map can now branch conditionally based on the <code class="highlighter-rouge">CoM</code> completion criteria:</p>
+<p>Your transition map can now branch conditionally based on the <code class="language-plaintext highlighter-rouge">CoM</code> completion criteria:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Reminder: the CoM completion criteria is defined as:</span>
 <span class="c1"># CoM:</span>
@@ -406,9 +406,9 @@
 
 <p>You may now define three new states:</p>
 <ul>
-  <li><code class="highlighter-rouge">CoMHasNotConvergedState</code> to be executed if the CoM task hasn’t converged in the allowed time</li>
-  <li><code class="highlighter-rouge">NextMotionState</code> to continue moving since the CoM converged</li>
-  <li><code class="highlighter-rouge">DefaultState</code> to be executed in case no transition matches the generated output pattern. In this example the matching is exhaustive, and this state would never be executed.</li>
+  <li><code class="language-plaintext highlighter-rouge">CoMHasNotConvergedState</code> to be executed if the CoM task hasn’t converged in the allowed time</li>
+  <li><code class="language-plaintext highlighter-rouge">NextMotionState</code> to continue moving since the CoM converged</li>
+  <li><code class="language-plaintext highlighter-rouge">DefaultState</code> to be executed in case no transition matches the generated output pattern. In this example the matching is exhaustive, and this state would never be executed.</li>
 </ul>
 
 <h2 id="parallel-state">Parallel state</h2>
@@ -441,10 +441,10 @@
   <span class="na">outputs</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">ExampleState</span><span class="pi">,</span> <span class="nv">RightHandState</span><span class="pi">]</span>
 </code></pre></div></div>
 
-<p>Parallel states are considered completed when all of its states have completed. As for the <code class="highlighter-rouge">MetaTasks</code> state, it is possible to specify how the state output is generated:</p>
+<p>Parallel states are considered completed when all of its states have completed. As for the <code class="language-plaintext highlighter-rouge">MetaTasks</code> state, it is possible to specify how the state output is generated:</p>
 <ul>
-  <li>By default, the output of the last state in <code class="highlighter-rouge">states</code> list will be used.</li>
-  <li>When <code class="highlighter-rouge">outputs</code> is specified, these states’ outputs will be used to generate the <code class="highlighter-rouge">parallel state</code>’s output.</li>
+  <li>By default, the output of the last state in <code class="language-plaintext highlighter-rouge">states</code> list will be used.</li>
+  <li>When <code class="language-plaintext highlighter-rouge">outputs</code> is specified, these states’ outputs will be used to generate the <code class="language-plaintext highlighter-rouge">parallel state</code>’s output.</li>
 </ul>
 
 <p>For example:</p>
@@ -458,11 +458,11 @@
 
 <h3 id="interacting-between-parallel-states">Interacting between parallel states</h3>
 
-<p>Sometimes it is useful to be able to interact between states. For instance consider a <code class="highlighter-rouge">StabilizerStandingState</code> in parallel to a <code class="highlighter-rouge">Pickup</code> state that wants to pick-up an object on the floor. This state needs to move the <code class="highlighter-rouge">CoM</code> lower to enable the robot to reach. This kind of interaction between states can be achieved using the <a href="/mc_rtc/tutorials/recipes/datastore.html">DataStore</a>.</p>
+<p>Sometimes it is useful to be able to interact between states. For instance consider a <code class="language-plaintext highlighter-rouge">StabilizerStandingState</code> in parallel to a <code class="language-plaintext highlighter-rouge">Pickup</code> state that wants to pick-up an object on the floor. This state needs to move the <code class="language-plaintext highlighter-rouge">CoM</code> lower to enable the robot to reach. This kind of interaction between states can be achieved using the <a href="/mc_rtc/tutorials/recipes/datastore.html">DataStore</a>.</p>
 
 <h2 id="meta-fsm-within-an-fsm">Meta: FSM within an FSM</h2>
 
-<p>In complex scenarios, it is often useful to be able to have multiple FSMs in the same controller. That’s what the <code class="highlighter-rouge">Meta</code> state (<a href="json.html#State/Meta">documentation</a>) is for, it embeds an <code class="highlighter-rouge">FSM</code> within an <code class="highlighter-rouge">FSM</code> state.</p>
+<p>In complex scenarios, it is often useful to be able to have multiple FSMs in the same controller. That’s what the <code class="language-plaintext highlighter-rouge">Meta</code> state (<a href="json.html#State/Meta">documentation</a>) is for, it embeds an <code class="language-plaintext highlighter-rouge">FSM</code> within an <code class="language-plaintext highlighter-rouge">FSM</code> state.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">ExampleMetaState</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">Meta</span>
@@ -472,14 +472,14 @@
   <span class="pi">-</span> <span class="s">...</span>
 </code></pre></div></div>
 
-<p>This state can then be exectued as part of another FSM, or even as part of another <code class="highlighter-rouge">Meta</code> state.</p>
+<p>This state can then be exectued as part of another FSM, or even as part of another <code class="language-plaintext highlighter-rouge">Meta</code> state.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">transtions</span><span class="pi">:</span>
 <span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleParallelState</span><span class="pi">,</span> <span class="nv">DEFAULT</span><span class="pi">,</span> <span class="nv">ExampleMetaState</span><span class="pi">]</span>
 <span class="pi">-</span> <span class="pi">[</span><span class="nv">ExampleMetaState</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">LastStateOutput</span><span class="pi">]</span>
 </code></pre></div></div>
 
-<p>Note that the ouput of a Meta FSM is the output of its last state without a transition within the Meta FSM (here <code class="highlighter-rouge">LastStateOutput</code>).</p>
+<p>Note that the ouput of a Meta FSM is the output of its last state without a transition within the Meta FSM (here <code class="language-plaintext highlighter-rouge">LastStateOutput</code>).</p>
 
 
         <hr/>

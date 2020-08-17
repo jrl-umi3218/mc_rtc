@@ -278,7 +278,7 @@
       <div class="col-9">
         <h1>Constraint the speed of a body</h1>
 
-        <p>The constraint presented in this page is <code class="highlighter-rouge">mc_solver::BoundedSpeedConstr</code>. As its name and the page’s title indicates, it can be used in a scenario where a body absolutely needs to move at a given speed in a given direction. For more “relaxed” approach, you can take a look at the following articles:</p>
+        <p>The constraint presented in this page is <code class="language-plaintext highlighter-rouge">mc_solver::BoundedSpeedConstr</code>. As its name and the page’s title indicates, it can be used in a scenario where a body absolutely needs to move at a given speed in a given direction. For more “relaxed” approach, you can take a look at the following articles:</p>
 
 <ul>
   <li><a href="dim-weight.html">Affect different weight to different axis in the task space</a></li>
@@ -296,7 +296,7 @@
                                                              <span class="n">timeStep</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>Out of this parameter, the only one that you might change is <code class="highlighter-rouge">robotIndex</code> that will dictate upon which robot the constraint will act.</p>
+<p>Out of this parameter, the only one that you might change is <code class="language-plaintext highlighter-rouge">robotIndex</code> that will dictate upon which robot the constraint will act.</p>
 
 <p>Then, we add it to the solver:</p>
 
@@ -316,13 +316,13 @@
 
 <p>In the code above:</p>
 <ul>
-  <li><code class="highlighter-rouge">bodyName</code> is the name of the body upon which the constrain will be applied</li>
-  <li><code class="highlighter-rouge">bodyPoint</code> is a point (<code class="highlighter-rouge">Eigen::Vector3d</code>) in the body’s frame that should be used as rotation reference. If <code class="highlighter-rouge">bodyPoint</code> is zero, then the body’s origin is used</li>
-  <li><code class="highlighter-rouge">dof</code> is a DoF selection matrix, more on that below</li>
-  <li><code class="highlighter-rouge">speed</code> is a 6d speed constraint</li>
+  <li><code class="language-plaintext highlighter-rouge">bodyName</code> is the name of the body upon which the constrain will be applied</li>
+  <li><code class="language-plaintext highlighter-rouge">bodyPoint</code> is a point (<code class="language-plaintext highlighter-rouge">Eigen::Vector3d</code>) in the body’s frame that should be used as rotation reference. If <code class="language-plaintext highlighter-rouge">bodyPoint</code> is zero, then the body’s origin is used</li>
+  <li><code class="language-plaintext highlighter-rouge">dof</code> is a DoF selection matrix, more on that below</li>
+  <li><code class="language-plaintext highlighter-rouge">speed</code> is a 6d speed constraint</li>
 </ul>
 
-<p>Note that <code class="highlighter-rouge">speed</code> is expressed in the body’s frame.</p>
+<p>Note that <code class="language-plaintext highlighter-rouge">speed</code> is expressed in the body’s frame.</p>
 
 <h4 id="about-the-dof-matrix">About the DoF matrix</h4>
 
@@ -344,7 +344,7 @@
                             <span class="n">upperSpeed</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>The arguments are the same as above except that the speed is constrained to remain between <code class="highlighter-rouge">lowerSpeed</code> and <code class="highlighter-rouge">upperSpeed</code> instead of being fixed at a given value.</p>
+<p>The arguments are the same as above except that the speed is constrained to remain between <code class="language-plaintext highlighter-rouge">lowerSpeed</code> and <code class="language-plaintext highlighter-rouge">upperSpeed</code> instead of being fixed at a given value.</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -360,7 +360,7 @@
 
 <p>You should observe the robot raising its hand up-to a point where it cannot do so anymore and the solver will then fail. This is partly why this constraint should be used sparsely.</p>
 
-<p>A more sensible example is to use the constraint to limit a body speed. For now, we will remove the constraint add an <code class="highlighter-rouge">mc_tasks::EndEffectorTask</code> named <code class="highlighter-rouge">efTask</code> to the solver and give it a very high stiffness:</p>
+<p>A more sensible example is to use the constraint to limit a body speed. For now, we will remove the constraint add an <code class="language-plaintext highlighter-rouge">mc_tasks::EndEffectorTask</code> named <code class="language-plaintext highlighter-rouge">efTask</code> to the solver and give it a very high stiffness:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">efTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"r_wrist"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
 <span class="n">efTask</span><span class="o">-&gt;</span><span class="n">set_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">RotY</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="o">-</span><span class="n">M_PI</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span>

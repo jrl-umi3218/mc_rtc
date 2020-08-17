@@ -304,7 +304,7 @@
 
 <p>The two examples show how to create a graph with a shared abscissa and a graph without a shared abscissa.</p>
 
-<p>In the first case, we must provide an absicssa constructed by <code class="highlighter-rouge">mc_rtc::gui::plot::X</code> and plot data constructed by <code class="highlighter-rouge">mc_rtc::gui::plot::Y</code>, <code class="highlighter-rouge">mc_rtc::gui::plot::XY</code> or <code class="highlighter-rouge">mc_rtc::gui::plot::Polygon(s)</code>. For the remainder of this document we will call this type of plots “regular plots”.</p>
+<p>In the first case, we must provide an absicssa constructed by <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::X</code> and plot data constructed by <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Y</code>, <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::XY</code> or <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon(s)</code>. For the remainder of this document we will call this type of plots “regular plots”.</p>
 
 <div class="card bg-light card-source">
   <div class="card-body">
@@ -320,7 +320,7 @@
   </div>
 </div>
 
-<p>In the second case, we only need to proivde data constructed by <code class="highlighter-rouge">mc_rtc::gui::plot::XY</code> or <code class="highlighter-rouge">mc_rtc::gui::plot::Polygon(s)</code>. For the remainder of this document we will call this type of pots “XY plots”.</p>
+<p>In the second case, we only need to proivde data constructed by <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::XY</code> or <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon(s)</code>. For the remainder of this document we will call this type of pots “XY plots”.</p>
 
 <div class="card bg-light card-source">
   <div class="card-body">
@@ -354,15 +354,15 @@
 
 <p>That’s the gist of it! In the next sections we will take a closer look at each of the elements introduced in the examples.</p>
 
-<h2 id="mc_rtcguiplotaxisconfiguration"><code class="highlighter-rouge">mc_rtc::gui::plot::AxisConfiguration</code></h2>
+<h2 id="mc_rtcguiplotaxisconfiguration"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::AxisConfiguration</code></h2>
 
-<p>This class lets you manipulate the name and the range of a given axis. By default the range is <code class="highlighter-rouge">[-inf, +inf]</code> which tells the GUI client to automatically guess the limits.</p>
+<p>This class lets you manipulate the name and the range of a given axis. By default the range is <code class="language-plaintext highlighter-rouge">[-inf, +inf]</code> which tells the GUI client to automatically guess the limits.</p>
 
 <h3 id="configuring-the-abscissa-x-axis">Configuring the abscissa (X axis)</h3>
 
 <h4 id="in-a-regular-plot">In a regular plot</h4>
 
-<p>In a regular plot, the abscissa configuration is provided by <code class="highlighter-rouge">mc_rtc::gui::plot::X</code>. In our first example, we only provided the name as the first argument but it can also accept a full configuration. For example:</p>
+<p>In a regular plot, the abscissa configuration is provided by <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::X</code>. In our first example, we only provided the name as the first argument but it can also accept a full configuration. For example:</p>
 
 <div class="card bg-light card-source">
   <div class="card-body">
@@ -383,7 +383,7 @@
 
 <h4 id="in-a-xy-plot">In a XY plot</h4>
 
-<p>In a XY plot, the abscissa configuration is optional, if you wish to provide it then an <code class="highlighter-rouge">mc_rtc::gui::plot::AxisConfiguration</code> must be provided as the first argument of <code class="highlighter-rouge">addXYPlot</code>. For example:</p>
+<p>In a XY plot, the abscissa configuration is optional, if you wish to provide it then an <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::AxisConfiguration</code> must be provided as the first argument of <code class="language-plaintext highlighter-rouge">addXYPlot</code>. For example:</p>
 
 <div class="card bg-light card-source">
   <div class="card-body">
@@ -404,7 +404,7 @@
 
 <h3 id="configuring-the-ordinates-left-y-axis-and-right-y-axis">Configuring the ordinates (Left Y axis and right Y axis)</h3>
 
-<p>The ordinates can be configured by providing an <code class="highlighter-rouge">AxisConfiguration</code> object for the left and right axis:</p>
+<p>The ordinates can be configured by providing an <code class="language-plaintext highlighter-rouge">AxisConfiguration</code> object for the left and right axis:</p>
 
 <h4 id="left-y-axis">Left Y axis</h4>
 
@@ -448,37 +448,37 @@
   </div>
 </div>
 
-<h2 id="mc_rtcguiplotx"><code class="highlighter-rouge">mc_rtc::gui::plot::X</code></h2>
+<h2 id="mc_rtcguiplotx"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::X</code></h2>
 
 <p>There is not much to add at this point, you must provide two elements:</p>
 <ol>
-  <li>the name or the <code class="highlighter-rouge">AxisConfiguration</code> for the abscissa</li>
-  <li>a callback that returns a <code class="highlighter-rouge">double</code></li>
+  <li>the name or the <code class="language-plaintext highlighter-rouge">AxisConfiguration</code> for the abscissa</li>
+  <li>a callback that returns a <code class="language-plaintext highlighter-rouge">double</code></li>
 </ol>
 
-<h2 id="mc_rtcguiploty"><code class="highlighter-rouge">mc_rtc::gui::plot::Y</code></h2>
+<h2 id="mc_rtcguiploty"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Y</code></h2>
 
 <p>This has three required arguments and two optional arguments:</p>
 
 <ol>
   <li>a name that will be used for the plot legend (<strong>required</strong>)</li>
-  <li>a callback that returns a <code class="highlighter-rouge">double</code> (<strong>required</strong>)</li>
-  <li>a <code class="highlighter-rouge">Color</code> or a callback that returns a <code class="highlighter-rouge">Color</code> (<strong>required</strong>)</li>
-  <li>a line <code class="highlighter-rouge">Style</code>, this defaults to <code class="highlighter-rouge">Style::Solid</code></li>
-  <li>a <code class="highlighter-rouge">Side</code> to put the data on left Y axis or right Y axis, this defaults to <code class="highlighter-rouge">Side::Left</code></li>
+  <li>a callback that returns a <code class="language-plaintext highlighter-rouge">double</code> (<strong>required</strong>)</li>
+  <li>a <code class="language-plaintext highlighter-rouge">Color</code> or a callback that returns a <code class="language-plaintext highlighter-rouge">Color</code> (<strong>required</strong>)</li>
+  <li>a line <code class="language-plaintext highlighter-rouge">Style</code>, this defaults to <code class="language-plaintext highlighter-rouge">Style::Solid</code></li>
+  <li>a <code class="language-plaintext highlighter-rouge">Side</code> to put the data on left Y axis or right Y axis, this defaults to <code class="language-plaintext highlighter-rouge">Side::Left</code></li>
 </ol>
 
-<p>Convenience functions are provided to specify the <code class="highlighter-rouge">Style</code> and <code class="highlighter-rouge">Side</code> after constructing the object.</p>
+<p>Convenience functions are provided to specify the <code class="language-plaintext highlighter-rouge">Style</code> and <code class="language-plaintext highlighter-rouge">Side</code> after constructing the object.</p>
 
-<h4 id="about-mc_rtcguiplotstyle">About <code class="highlighter-rouge">mc_rtc::gui::plot::Style</code></h4>
+<h4 id="about-mc_rtcguiplotstyle">About <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Style</code></h4>
 
 <p>Four line styles are available:</p>
 
 <ol>
-  <li><code class="highlighter-rouge">Style::Solid</code> is a solid line;</li>
-  <li><code class="highlighter-rouge">Style::Dashed</code> is a dashed line;</li>
-  <li><code class="highlighter-rouge">Style::Dotted</code> is a dotted line;</li>
-  <li><code class="highlighter-rouge">Style::Point</code> replaces the line with a single point;</li>
+  <li><code class="language-plaintext highlighter-rouge">Style::Solid</code> is a solid line;</li>
+  <li><code class="language-plaintext highlighter-rouge">Style::Dashed</code> is a dashed line;</li>
+  <li><code class="language-plaintext highlighter-rouge">Style::Dotted</code> is a dotted line;</li>
+  <li><code class="language-plaintext highlighter-rouge">Style::Point</code> replaces the line with a single point;</li>
 </ol>
 
 <h4 id="example-1">Example</h4>
@@ -499,45 +499,45 @@
   </div>
 </div>
 
-<h2 id="mc_rtcguiplotxy"><code class="highlighter-rouge">mc_rtc::gui::plot::XY</code></h2>
+<h2 id="mc_rtcguiplotxy"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::XY</code></h2>
 
 <p>This has four required arguments and two optional arguments:</p>
 
 <ol>
   <li>a name that will be used for the plot legend (<strong>required</strong>)</li>
-  <li>a callback that returns a <code class="highlighter-rouge">double</code> for the abscissa value (x) (<strong>required</strong>)</li>
-  <li>a callback that returns a <code class="highlighter-rouge">double</code> for the ordinate value (y) (<strong>required</strong>)</li>
-  <li>a <code class="highlighter-rouge">Color</code> or a callback that returns a <code class="highlighter-rouge">Color</code> (<strong>required</strong>)</li>
-  <li>a line <code class="highlighter-rouge">Style</code>, this defaults to <code class="highlighter-rouge">Style::Solid</code></li>
-  <li>a <code class="highlighter-rouge">Side</code> to put the data on left Y axis or right Y axis, this defaults to <code class="highlighter-rouge">Side::Left</code></li>
+  <li>a callback that returns a <code class="language-plaintext highlighter-rouge">double</code> for the abscissa value (x) (<strong>required</strong>)</li>
+  <li>a callback that returns a <code class="language-plaintext highlighter-rouge">double</code> for the ordinate value (y) (<strong>required</strong>)</li>
+  <li>a <code class="language-plaintext highlighter-rouge">Color</code> or a callback that returns a <code class="language-plaintext highlighter-rouge">Color</code> (<strong>required</strong>)</li>
+  <li>a line <code class="language-plaintext highlighter-rouge">Style</code>, this defaults to <code class="language-plaintext highlighter-rouge">Style::Solid</code></li>
+  <li>a <code class="language-plaintext highlighter-rouge">Side</code> to put the data on left Y axis or right Y axis, this defaults to <code class="language-plaintext highlighter-rouge">Side::Left</code></li>
 </ol>
 
-<p>Convenience functions are provided to specify the <code class="highlighter-rouge">Style</code> and <code class="highlighter-rouge">Side</code> after constructing the object.</p>
+<p>Convenience functions are provided to specify the <code class="language-plaintext highlighter-rouge">Style</code> and <code class="language-plaintext highlighter-rouge">Side</code> after constructing the object.</p>
 
-<h2 id="mc_rtcguiplotpolygon"><code class="highlighter-rouge">mc_rtc::gui::plot::Polygon</code></h2>
+<h2 id="mc_rtcguiplotpolygon"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon</code></h2>
 
 <p>This has two required arguments and one optional argument:</p>
 
 <ol>
   <li>a name that will be used for the plot legend (<strong>required</strong>)</li>
-  <li>a callback that returns a <code class="highlighter-rouge">PolygonDescription</code>, we introduce this next (<strong>required</strong>)</li>
-  <li>a <code class="highlighter-rouge">Side</code> to put the data on left Y axis or right Y axis, this defaults to <code class="highlighter-rouge">Side::Left</code></li>
+  <li>a callback that returns a <code class="language-plaintext highlighter-rouge">PolygonDescription</code>, we introduce this next (<strong>required</strong>)</li>
+  <li>a <code class="language-plaintext highlighter-rouge">Side</code> to put the data on left Y axis or right Y axis, this defaults to <code class="language-plaintext highlighter-rouge">Side::Left</code></li>
 </ol>
 
-<p>A convenience function is provided to specify the <code class="highlighter-rouge">Side</code> after constructing the object.</p>
+<p>A convenience function is provided to specify the <code class="language-plaintext highlighter-rouge">Side</code> after constructing the object.</p>
 
-<h3 id="mc_rtcguiplotpolygondescription"><code class="highlighter-rouge">mc_rtc::gui::plot::PolygonDescription</code></h3>
+<h3 id="mc_rtcguiplotpolygondescription"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::PolygonDescription</code></h3>
 
 <p>This object holds the following information:</p>
 <ul>
-  <li><code class="highlighter-rouge">points()</code> is a list of points (i.e. an <code class="highlighter-rouge">std::vector&lt;std::array&lt;double, 2&gt;&gt;</code>)</li>
-  <li><code class="highlighter-rouge">outline()</code> is the <code class="highlighter-rouge">Color</code> of the polygon outline</li>
-  <li><code class="highlighter-rouge">style()</code> is the line <code class="highlighter-rouge">Style</code> of the polygon outline (defaults to <code class="highlighter-rouge">Style::Solid</code>)</li>
-  <li><code class="highlighter-rouge">fill()</code> is the <code class="highlighter-rouge">Color</code> used to fill the polygon when it is closed (defaults to transparent, i.e. no filling)</li>
-  <li><code class="highlighter-rouge">closed()</code> tells whether the polygon is closed (defaults to true)</li>
+  <li><code class="language-plaintext highlighter-rouge">points()</code> is a list of points (i.e. an <code class="language-plaintext highlighter-rouge">std::vector&lt;std::array&lt;double, 2&gt;&gt;</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">outline()</code> is the <code class="language-plaintext highlighter-rouge">Color</code> of the polygon outline</li>
+  <li><code class="language-plaintext highlighter-rouge">style()</code> is the line <code class="language-plaintext highlighter-rouge">Style</code> of the polygon outline (defaults to <code class="language-plaintext highlighter-rouge">Style::Solid</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">fill()</code> is the <code class="language-plaintext highlighter-rouge">Color</code> used to fill the polygon when it is closed (defaults to transparent, i.e. no filling)</li>
+  <li><code class="language-plaintext highlighter-rouge">closed()</code> tells whether the polygon is closed (defaults to true)</li>
 </ul>
 
-<p><em>Note: if the polygon is closed, you don’t need to repeat the first point at the end of <code class="highlighter-rouge">points()</code>, this will be handled by the client.</em></p>
+<p><em>Note: if the polygon is closed, you don’t need to repeat the first point at the end of <code class="language-plaintext highlighter-rouge">points()</code>, this will be handled by the client.</em></p>
 
 <h4 id="example-2">Example</h4>
 
@@ -556,11 +556,11 @@
   </div>
 </div>
 
-<p><em>Note: since <code class="highlighter-rouge">mc_rtc::gui::plot::Polygon</code> callback returns a <code class="highlighter-rouge">PolygonDescription</code> you are free to change the display style of this polygon anytime while the plot is active.</em></p>
+<p><em>Note: since <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon</code> callback returns a <code class="language-plaintext highlighter-rouge">PolygonDescription</code> you are free to change the display style of this polygon anytime while the plot is active.</em></p>
 
-<h2 id="mc_rtcguiplotpolygons"><code class="highlighter-rouge">mc_rtc::gui::plot::Polygons</code></h2>
+<h2 id="mc_rtcguiplotpolygons"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygons</code></h2>
 
-<p>This is similar to <code class="highlighter-rouge">mc_rtc::gui::plot::Polygon</code> but the callback must return an <code class="highlighter-rouge">std::vector&lt;PolygonDescription&gt;</code>. This allows you to provide a changing set of polygons while the plot is active to create simple animations.</p>
+<p>This is similar to <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon</code> but the callback must return an <code class="language-plaintext highlighter-rouge">std::vector&lt;PolygonDescription&gt;</code>. This allows you to provide a changing set of polygons while the plot is active to create simple animations.</p>
 
 
         <hr/>

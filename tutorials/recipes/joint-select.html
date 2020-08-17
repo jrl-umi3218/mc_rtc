@@ -280,7 +280,7 @@
 
         <p>It is possible to specify a subset of joints to perform a given task (e.g. one might want to perform stabilization using only the lower body).</p>
 
-<p>In the <code class="highlighter-rouge">MetaTask</code> interface, this is implemented using a set of three functions:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">MetaTask</code> interface, this is implemented using a set of three functions:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">selectActiveJoints</span><span class="p">(</span><span class="n">mc_solver</span><span class="o">::</span><span class="n">QPSolver</span> <span class="o">&amp;</span> <span class="n">solver</span><span class="p">,</span>
                         <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">activeJointsName</span><span class="p">);</span>
