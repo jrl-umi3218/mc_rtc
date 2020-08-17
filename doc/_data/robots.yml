@@ -29,19 +29,19 @@
   icon: nao.jpg
   pkg:
     desc:
-      url: https://gite.lirmm.fr/softbankrobotics/nao_description
+      url: https://github.com/jrl-umi3218/nao_description
       name: nao_description
     module:
-      url: https://gite.lirmm.fr/multi-contact/mc_nao
+      url: https://github.com/jrl-umi3218/mc_nao
       name: mc_nao
 - name: Pepper
   icon: pepper.jpg
   pkg:
     desc:
-      url: https://gite.lirmm.fr/softbankrobotics/pepper_description
+      url: https://github.com/jrl-umi3218/pepper_description
       name: pepper_description
     module:
-      url: https://gite.lirmm.fr/multi-contact/mc_pepper
+      url: https://github.com/jrl-umi3218/mc_pepper
       name: mc_pepper
 - name: Sawyer
   icon: sawyer.jpg
