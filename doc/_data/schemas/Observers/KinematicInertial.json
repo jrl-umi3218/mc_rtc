@@ -8,7 +8,7 @@
     "realRobot": {"type": "string", "default": "Main Real Robot", "description": "Name of the robot to observe (real)" },
     "imuBodySensor": { "type": "string", "default": "Main BodySensor", "description": "Name of the body sensor containing IMU measurements (requires orientation)" },
     "cutoff": { "type": "number", "default": "2*dt", "description": "Cutoff period for the low-pass filter on velocity. Must be at least twice the timestep" }, 
-    "anchorFrameFunction": { "type": "string", "default": "Observer::anchorFrame", "description": "Name of the datastore entry for the anchroFrame function. This datastore entry must exist." },
+    "anchorFrameFunction": { "type": "string", "default": "KinematicAnchorFrame::<robot>", "description": "Name of the datastore entry for the anchroFrame function. This datastore entry must exist." },
     "showAnchorFrame": { "type": "boolean", "default": false, "description": "When true, display the anchor frame (control)" },
     "showAnchorFrameReal": { "type": "boolean", "default": false, "description": "When true, display the anchor frame (real)" },
     "showVelocity": { "type": "boolean", "default": true, "description": "When true, display the estimated velocity as an arrow" },

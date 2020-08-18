@@ -38,13 +38,16 @@ void StabilizerStandingState::start(Controller & ctl)
   // create stabilizer task from config
   stabilizerTask_ = mc_tasks::MetaTaskLoader::load<mc_tasks::lipm_stabilizer::StabilizerTask>(
       ctl.solver(), config_("StabilizerConfig"));
+  robot_ = stabilizerTask_->robot().name();
+  auto & robot = ctl.robot(robot_);
+  anchorFrameFunction_ = config_("anchorFrameFunction", "KinematicAnchorFrame::" + robot_);
   ctl.solver().addTask(stabilizerTask_);
 
   // Initialize stabilizer targets. Defaults to current CoM/CoP
   config_("comHeight", stabilizerTask_->config().comHeight);
   // Reset linear inverted pendulum model, used here to compute stabilizer references
   double lambda = constants::GRAVITY / stabilizerTask_->config().comHeight;
-  pendulum_.reset(lambda, ctl.robot().com(), ctl.robot().comVelocity(), ctl.robot().comAcceleration());
+  pendulum_.reset(lambda, robot.com(), robot.comVelocity(), robot.comAcceleration());
   if(config_.has("above"))
   {
     const std::string above = config_("above");
@@ -64,11 +67,11 @@ void StabilizerStandingState::start(Controller & ctl)
     }
     else if(above == "LeftSurface")
     {
-      targetCoP(ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Left)).translation());
+      targetCoP(robot.surfacePose(stabilizerTask_->footSurface(ContactState::Left)).translation());
     }
     else if(above == "RightSurface")
     {
-      targetCoP(ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Right)).translation());
+      targetCoP(robot.surfacePose(stabilizerTask_->footSurface(ContactState::Right)).translation());
     }
     else if(above == "CenterSurfaces")
     {
@@ -76,9 +79,9 @@ void StabilizerStandingState::start(Controller & ctl)
                                  ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Right)), 0.5)
                     .translation());
     }
-    else if(ctl.realRobot().hasSurface(above))
+    else if(robot.hasSurface(above))
     {
-      targetCoP(ctl.realRobot().surfacePose(above).translation());
+      targetCoP(robot.surfacePose(above).translation());
     }
     else
     {
@@ -95,11 +98,11 @@ void StabilizerStandingState::start(Controller & ctl)
   }
   else
   {
-    targetCoM(ctl.robot().com());
+    targetCoM(robot.com());
   }
 
   // Fixme: the stabilizer needs the observed state immediatly
-  ctl.datastore().make_call("Observer::anchorFrame",
+  ctl.datastore().make_call(anchorFrameFunction_,
                             [this](const mc_rbdyn::Robot & robot) { return stabilizerTask_->anchorFrame(robot); });
 
   if(optionalGUI_ && stabilizerTask_->inDoubleSupport())

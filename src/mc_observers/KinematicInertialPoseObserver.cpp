@@ -20,7 +20,7 @@ void KinematicInertialPoseObserver::configure(const mc_control::MCController & c
   robot_ = config("robot", ctl.robot().name());
   realRobot_ = config("realRobot", ctl.realRobot().name());
   imuSensor_ = config("imuBodySensor", ctl.robot().bodySensor().name());
-  config("anchorFrame", anchorFrameFunction_);
+  anchorFrameFunction_ = config("anchorFrame", "KinematicAnchorFrame::" + ctl.robot(robot_).name());
   config("showAnchorFrame", showAnchorFrame_);
   config("showAnchorFrameReal", showAnchorFrameReal_);
   config("showPose", showPose_);
@@ -33,12 +33,12 @@ void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)
 
 bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
 {
-  if(!ctl.datastore().has("Observer::anchorFrame"))
+  if(!ctl.datastore().has(anchorFrameFunction_))
   {
-    error_ =
-        fmt::format("Observer {} requires an \"Observer::anchorFrame\" function in the datastore.\n\tPlease refer to "
-                    "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html for further details.",
-                    name());
+    error_ = fmt::format(
+        "Observer {} requires a \"{}\" function in the datastore to provide the observer's kinematic anchor frame.\n"
+        "Please refer to https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html for further details.",
+        name(), anchorFrameFunction_);
     return false;
   }
   X_0_anchorFrame_ = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.robot(robot_));

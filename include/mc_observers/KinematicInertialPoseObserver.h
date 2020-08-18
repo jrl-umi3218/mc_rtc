@@ -93,7 +93,7 @@ protected:
   std::string realRobot_; /**< Corresponding real robot (default main real robot) */
   std::string imuSensor_; /**< BodySensor containting IMU readings */
 
-  std::string anchorFrameFunction_ = "Observer::anchorFrame"; ///< Name of datastore entry for the anchor frame function
+  std::string anchorFrameFunction_ = ""; ///< Name of datastore entry for the anchor frame function
   sva::PTransformd X_0_anchorFrame_ =
       sva::PTransformd::Identity(); ///< Control anchor frame (provided through the datastore)
   sva::PTransformd X_0_anchorFrameReal_ =
