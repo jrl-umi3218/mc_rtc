@@ -160,7 +160,6 @@ void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
                          name_);
     return;
   }
-  std::vector<mc_rtc::Configuration> c = config("ObserverPipelines");
   auto pipelineConfigs = mc_rtc::fromVectorOrElement(config, "ObserverPipelines", std::vector<mc_rtc::Configuration>{});
   for(const auto & pipelineConfig : pipelineConfigs)
   {

@@ -16,7 +16,7 @@ namespace mc_observers
 void BodySensorObserver::configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config)
 {
   robot_ = config("robot", ctl.robot().name());
-  auto updateConfig = config("method", std::string{});
+  auto updateConfig = config("method", std::string{"sensor"});
   if(!updateConfig.empty())
   {
     if(updateConfig == "sensor")
