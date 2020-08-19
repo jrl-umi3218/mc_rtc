@@ -128,7 +128,8 @@ template<typename schT, typename mapT>
 void loadSCH(const mc_rbdyn::Robot & robot,
              const std::map<std::string, std::pair<std::string, std::string>> & urls,
              schT * (*sch_load_fn)(const std::string &),
-             mapT & data_)
+             mapT & data_,
+             std::map<std::string, sva::PTransformd> & cTfs)
 {
   for(const auto & cH : urls)
   {
@@ -140,6 +141,7 @@ void loadSCH(const mc_rbdyn::Robot & robot,
       auto poly = std::shared_ptr<schT>(sch_load_fn(cHURL));
       sch::mc_rbdyn::transform(*poly, robot.bodyPosW()[robot.bodyIndexByName(parent)]);
       data_[cHName] = {parent, poly};
+      cTfs[cHName] = sva::PTransformd::Identity();
     }
   }
 }
@@ -317,7 +319,7 @@ Robot::Robot(Robots & robots,
 
   if(loadFiles)
   {
-    loadSCH(*this, module_.convexHull(), &sch::mc_rbdyn::Polyhedron, convexes_);
+    loadSCH(*this, module_.convexHull(), &sch::mc_rbdyn::Polyhedron, convexes_, collisionTransforms_);
   }
   for(const auto & c : module_._collision)
   {
