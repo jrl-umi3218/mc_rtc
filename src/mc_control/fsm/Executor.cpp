@@ -171,6 +171,7 @@ void Executor::teardown(Controller & ctl)
     log_entry += "_Main";
   }
   ctl.logger().removeLogEntry(log_entry);
+  ctl.logger().removeLogEntry("perf_" + log_entry);
   ctl.logger().removeLogEntry("perf_" + log_entry + "_create");
   ctl.logger().removeLogEntry("perf_" + log_entry + "_run");
   ctl.logger().removeLogEntry("perf_" + log_entry + "_teardown");
