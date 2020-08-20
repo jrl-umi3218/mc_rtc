@@ -249,8 +249,9 @@ void MCGlobalController::initEncoders(const std::vector<double> & initq)
   if(initq.size() != controller_->robot().refJointOrder().size())
   {
     mc_rtc::log::error_and_throw<std::domain_error>(
-        "Could not initialize the robot state from encoder sensors: got {} encoder values but the robot expects {}",
-        initq.size(), controller_->robot().refJointOrder().size());
+        "Could not initialize the robot state from encoder sensors: got {} encoder values but the robot ({}) expects "
+        "{}.\nMake sure that the MainRobot is compatible with the real/simulated robot used by the interface.",
+        initq.size(), controller_->robot().name(), controller_->robot().refJointOrder().size());
   }
 
   auto & q = robot().mbc().q;
