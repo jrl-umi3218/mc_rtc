@@ -168,11 +168,11 @@ void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
     pipeline.create(pipelineConfig, timeStep);
     if(config("log", true))
     {
-      pipeline.addToLogger();
+      pipeline.addToLogger(logger());
     }
     if(config("gui", true))
     {
-      pipeline.addToGUI();
+      pipeline.addToGUI(*gui());
     }
   }
 }
@@ -396,7 +396,7 @@ void MCController::stop()
     {
       pipeline.removeFromGUI(*gui());
     }
-    pipeline.removeFromLogger();
+    pipeline.removeFromLogger(logger());
   }
 }
 

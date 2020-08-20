@@ -9,6 +9,7 @@
 #include <mc_control/MCController.h>
 
 #include <mc_rtc/gui/Arrow.h>
+#include <mc_rtc/gui/Transform.h>
 
 namespace mc_observers
 {
@@ -28,6 +29,10 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
       updateFrom_ = Update::Control;
     }
   }
+
+  config("logPosition", logPos_);
+  config("logVelocity", logVel_);
+  config("logAcceleration", logAcc_);
 
   fbSensorName_ = config("bodySensor", std::string("FloatingBase"));
   desc_ = name_ + " (sensor=" + fbSensorName_ + ", update=" + updateConfig + ")";
@@ -89,33 +94,49 @@ void BodySensorObserver::updateRobots(mc_control::MCController & ctl)
   realRobot.velW(velW_);
 }
 
-void BodySensorObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
+void BodySensorObserver::addToLogger(const mc_control::MCController &,
+                                     mc_rtc::Logger & logger,
+                                     const std::string & category)
 {
-  auto & logger = ctl.logger();
-  Observer::addToLogger(ctl, category);
-  logger.addLogEntry(category + "_posW", [this]() { return posW_; });
-  logger.addLogEntry(category + "_velW", [this]() { return velW_; });
-  logger.addLogEntry(category + "_accW", [this]() { return accW_; });
+  if(logPos_)
+  {
+    logger.addLogEntry(category + "_posW", [this]() { return posW_; });
+  }
+  if(logVel_)
+  {
+    logger.addLogEntry(category + "_velW", [this]() { return velW_; });
+  }
+  if(logAcc_)
+  {
+    logger.addLogEntry(category + "_accW", [this]() { return accW_; });
+  }
 }
 
-void BodySensorObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
+void BodySensorObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
 {
-  auto & logger = ctl.logger();
-  Observer::removeFromLogger(ctl, category);
-  logger.removeLogEntry("observer_" + name() + "_posW");
-  logger.removeLogEntry("observer_" + name() + "_velW");
-  logger.removeLogEntry("observer_" + name() + "_accW");
+  logger.removeLogEntry(category + "_posW");
+  logger.removeLogEntry(category + "_velW");
+  logger.removeLogEntry(category + "_accW");
 }
 
-void BodySensorObserver::addToGUI(mc_control::MCController & ctl, const std::vector<std::string> & category)
+void BodySensorObserver::addToGUI(const mc_control::MCController &,
+                                  mc_rtc::gui::StateBuilder & gui,
+                                  const std::vector<std::string> & category)
 {
-  ctl.gui()->addElement(category,
-                        mc_rtc::gui::Arrow("Velocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}),
-                                           [this]() -> const Eigen::Vector3d & { return posW_.translation(); },
-                                           [this]() -> Eigen::Vector3d {
-                                             Eigen::Vector3d end = posW_.translation() + velW_.linear();
-                                             return end;
-                                           }));
+  if(guiPos_)
+  {
+    gui.addElement(category, mc_rtc::gui::Transform("Pose", [this]() -> const sva::PTransformd & { return posW_; }));
+  }
+
+  if(guiVel_)
+  {
+    gui.addElement(category, mc_rtc::gui::Arrow("Velocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}),
+                                                [this]() -> const Eigen::Vector3d & { return posW_.translation(); },
+                                                [this]() -> Eigen::Vector3d {
+                                                  Eigen::Vector3d end = posW_.translation() + velW_.linear();
+                                                  return end;
+                                                }));
+  }
 }
 
 } // namespace mc_observers

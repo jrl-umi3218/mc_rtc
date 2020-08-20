@@ -43,32 +43,33 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
    */
   void reset(const mc_control::MCController & ctl) override;
 
-  /*! \brief Computes encoder velocity by finite differences of position
+  /*! \brief Computes encoder velocity if necessary:
    *
-   * \see PosUpdate
-   * \see VelUpdate
+   * - If VelUpdate::EncoderFiniteDifferences, computes velocity from finite
+   *   differences of encoder position
    **/
   bool run(const mc_control::MCController & ctl) override;
 
   /** Update the real robot from the estimator state according to the observer's
    * results
    *
-   * \see PosUpdate, VelUpdate for details on the data used for estimatation
+   * \see PosUpdate, VelUpdate for details on the method used for estimation
    */
   void updateRobots(mc_control::MCController & ctl) override;
 
 protected:
-  void addToLogger(mc_control::MCController & ctl, const std::string & category) override;
-  void removeFromLogger(mc_control::MCController & ctl, const std::string & category) override;
+  void addToLogger(const mc_control::MCController &, mc_rtc::Logger &, const std::string &) override;
+  void removeFromLogger(mc_rtc::Logger &, const std::string &) override;
 
 protected:
-  /*! \brief Update source for the update. */
+  /*! Position update type */
   enum class PosUpdate
   {
     Control, ///< Use joint value from robot.mbc.alpha (control)
     EncoderValues, ///< Encoder values from robot.encoderValues (encoder sensor)
     None ///< Do not compute/update value
   };
+  /*! Velocity update type */
   enum class VelUpdate
   {
     Control, ///< Use joint velocities from robot.mbc.alpha (control)
@@ -80,10 +81,13 @@ protected:
   PosUpdate posUpdate_ = PosUpdate::EncoderValues;
   VelUpdate velUpdate_ = VelUpdate::EncoderFiniteDifferences;
 
-  std::string robot_;
+  std::string robot_; ///< Robot estimated by this observer
 
-  std::vector<double> prevEncoders_;
-  std::vector<double> encodersVelocity_;
+  std::vector<double> prevEncoders_; ///< Previous encoder values (for VelUpdate::EncoderFiniteDifferences)
+  std::vector<double> encodersVelocity_; ///< Estimated encoder velocity
+
+  bool logPosition_ = false;
+  bool logVelocity_ = true;
 };
 
 } // namespace mc_observers

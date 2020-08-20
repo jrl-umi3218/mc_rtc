@@ -56,49 +56,50 @@ const sva::MotionVecd & KinematicInertialObserver::velW() const
   return velW_;
 }
 
-void KinematicInertialObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
+void KinematicInertialObserver::addToLogger(const mc_control::MCController & ctl,
+                                            mc_rtc::Logger & logger,
+                                            const std::string & category)
 {
-  KinematicInertialPoseObserver::addToLogger(ctl, category);
-  auto & logger = ctl.logger();
+  KinematicInertialPoseObserver::addToLogger(ctl, logger, category);
   logger.addLogEntry(category + "_velW", [this]() -> const sva::MotionVecd & { return velW_; });
   logger.addLogEntry(category + "_filter_cutoffPeriod", [this]() { return velFilter_.cutoffPeriod(); });
 }
 
-void KinematicInertialObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
+void KinematicInertialObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
 {
-  KinematicInertialPoseObserver::removeFromLogger(ctl, category);
-  auto & logger = ctl.logger();
+  KinematicInertialPoseObserver::removeFromLogger(logger, category);
   logger.removeLogEntry(category + "_velW");
   logger.removeLogEntry(category + "_filter_cutoffPeriod");
 }
 
-void KinematicInertialObserver::addToGUI(mc_control::MCController & ctl, const std::vector<std::string> & category)
+void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl,
+                                         mc_rtc::gui::StateBuilder & gui,
+                                         const std::vector<std::string> & category)
 {
-  KinematicInertialPoseObserver::addToGUI(ctl, category);
-  auto showHideVel = [this, category, &ctl]() {
+  KinematicInertialPoseObserver::addToGUI(ctl, gui, category);
+  auto showHideVel = [this, category, &gui]() {
     std::string name = "Velocity";
     auto cat = category;
     cat.push_back("Markers");
-    ctl.gui()->removeElement(cat, name);
+    gui.removeElement(cat, name);
     if(showVelocity_)
     {
-      ctl.gui()->addElement(
-          cat, mc_rtc::gui::Arrow(name, [this]() -> const Eigen::Vector3d & { return posW().translation(); },
-                                  [this]() -> Eigen::Vector3d {
-                                    const Eigen::Vector3d p = posW().translation();
-                                    Eigen::Vector3d end = p + velW().linear();
-                                    return end;
-                                  }));
+      gui.addElement(cat, mc_rtc::gui::Arrow(name, [this]() -> const Eigen::Vector3d & { return posW().translation(); },
+                                             [this]() -> Eigen::Vector3d {
+                                               const Eigen::Vector3d p = posW().translation();
+                                               Eigen::Vector3d end = p + velW().linear();
+                                               return end;
+                                             }));
     }
   };
 
-  ctl.gui()->addElement(category, mc_rtc::gui::Checkbox("Show velocity", [this]() { return showVelocity_; },
-                                                        [this, showHideVel]() {
-                                                          showVelocity_ = !showVelocity_;
-                                                          showHideVel();
-                                                        }));
+  gui.addElement(category, mc_rtc::gui::Checkbox("Show velocity", [this]() { return showVelocity_; },
+                                                 [this, showHideVel]() {
+                                                   showVelocity_ = !showVelocity_;
+                                                   showHideVel();
+                                                 }));
 
-  ctl.gui()->addElement(
+  gui.addElement(
       category,
       mc_rtc::gui::NumberInput(
           "Cutoff Period", [this]() -> double { return velFilter_.cutoffPeriod(); },

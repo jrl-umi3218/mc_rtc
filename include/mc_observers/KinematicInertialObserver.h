@@ -54,9 +54,11 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
   const sva::MotionVecd & velW() const;
 
 protected:
-  void addToLogger(mc_control::MCController & ctl, const std::string & category) override;
-  void removeFromLogger(mc_control::MCController & ctl, const std::string & category) override;
-  void addToGUI(mc_control::MCController &, const std::vector<std::string> & category) override;
+  void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &, const std::string & category) override;
+  void removeFromLogger(mc_rtc::Logger &, const std::string & category) override;
+  void addToGUI(const mc_control::MCController &,
+                mc_rtc::gui::StateBuilder &,
+                const std::vector<std::string> & category) override;
 
 private:
   bool showVelocity_ = true;

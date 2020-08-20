@@ -24,6 +24,14 @@ namespace mc_observers
 
 /**
  * @brief State observation pipeline
+ *
+ * Observers are responsible for estimating some of the robot properties from sensor measurements and/or fusing several
+ * source of information (e.g the EncoderObserver estimates the joint position and velocity based on joint sensors, the
+ * KinematicInertialObservers the state of the floating base from kinematics and IMU information, BodySensorObserver
+ * uses BodySensor information to update the floating base, etc). The ObserverPipeline groups them into a \"State
+ * observation pipeline\", that will run each observer sequentially. Some observers may be used to update the state of
+ * the real robots instances used by the controller, while others may only be used for logging estimated values for
+ * comparison purposes.
  */
 struct MC_OBSERVERS_DLLAPI ObserverPipeline
 {
@@ -31,18 +39,12 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   ObserverPipeline(mc_control::MCController & ctl);
   virtual ~ObserverPipeline() = default;
 
-  /* May be called multiple times */
-  void configure(const mc_rtc::Configuration & config);
-
   /* Load the observers */
   void create(const mc_rtc::Configuration & config, double dt);
 
-  /* Reinitialize pipeline configuration from loaded configuration
-   * by configure()
-   */
-  void reconfigure();
   /* Initialize based on the current robot state */
   void reset();
+
   /* Run this observservation pipeline
    *
    * If an observer is unable to estimate the robot's state, it is expected to
@@ -55,6 +57,11 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
    **/
   bool run();
 
+  /**
+   * @brief Checks whether the last run of the pipeline succeeded
+   *
+   * @return True when the last call to run() succeeded
+   */
   bool success() const
   {
     return success_;
@@ -67,28 +74,52 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
    */
   const Observer & observer(const std::string & name) const
   {
-    if(!observersByName_.count(name))
+    auto it = std::find_if(pipelineObservers_.begin(), pipelineObservers_.end(),
+                           [&name](const PipelineObserver & obs) { return obs.observer->name() == name; });
+    if(it == pipelineObservers_.end())
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("[ObserverPipeline::{}] No observer named {}", name_, name);
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "Observer pipeline \"{}\" does not have any observer named \"{}\"", name_, name);
     }
-    return *observersByName_.at(name);
+    return *it->observer;
   }
 
+  /**
+   * @brief Checks whether this pipeline has an observer
+   *
+   * @param name Name of the observer
+   *
+   * @return True if the observer is in the pipeline
+   */
   bool hasObserver(const std::string & name) const
-  {
-    return observersByName_.count(name);
-  }
-
-  bool hasPipelineObserver(const std::string & name) const
   {
     return std::find_if(pipelineObservers_.begin(), pipelineObservers_.end(),
                         [&name](const PipelineObserver & obs) { return obs.observer->name() == name; })
            != pipelineObservers_.end();
   }
 
-  const std::vector<mc_observers::ObserverPtr> & observers() const
+  /**
+   * @brief Checks if there is an observer of a specific type
+   *
+   * There may be more than one
+   *
+   * @param type Type of the observer
+   *
+   * @return True if there is at least one observer of this type in the pipeline
+   */
+  bool hasObserverType(const std::string & type) const
   {
-    return observers_;
+    return std::find_if(pipelineObservers_.begin(), pipelineObservers_.end(),
+                        [&type](const PipelineObserver & obs) { return obs.observer->type() == type; })
+           != pipelineObservers_.end();
+  }
+
+  const std::vector<mc_observers::ObserverPtr> observers() const
+  {
+    std::vector<mc_observers::ObserverPtr> observers;
+    std::transform(pipelineObservers_.begin(), pipelineObservers_.end(), std::back_inserter(observers),
+                   [](const PipelineObserver & pObs) { return pObs.observer; });
+    return observers;
   }
 
   /* Non-const variant */
@@ -102,43 +133,24 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   {
     return desc_;
   }
+
+  /* Name used to identify this pipeline */
   const std::string & name() const
   {
     return name_;
   }
 
-  void addToLogger();
-  void removeFromLogger();
-  void addToGUI();
+  void addToLogger(mc_rtc::Logger &);
+  void removeFromLogger(mc_rtc::Logger &);
+  void addToGUI(mc_rtc::gui::StateBuilder &);
   void removeFromGUI(mc_rtc::gui::StateBuilder &);
 
 protected:
-  void observers(const std::vector<ObserverPtr> & loadedObservers)
-  {
-    observers_ = loadedObservers;
-    for(const auto & observer : observers_)
-    {
-      if(observersByName_.count(observer->name()))
-      {
-        mc_rtc::log::error_and_throw<std::runtime_error>(
-            "[ObserverPipeline::{}] Observer names must be unique: {} created more than once.", observer->name());
-      }
-      observersByName_[observer->name()] = observer;
-    }
-  }
-
-protected:
-  mc_control::MCController & ctl_; ///< Controller to which this pipeline is bound
-  std::string name_ = {"DefaultPipeline"}; ///< Name of this pipeline
+  mc_control::MCController & ctl_;
+  std::string name_ = {"DefaultObserverPipeline"}; ///< Name of this pipeline
   /* Short descriptive description of the observer used for CLI logging */
   std::string desc_ = {""};
   bool success_ = false; ///< Whether the pipeline successfully executed
-
-  mc_rtc::Configuration config_; ///< Initial configuration (from configuration files)
-
-  std::vector<mc_observers::ObserverPtr> observers_; ///< Loaded observers
-  std::map<std::string, mc_observers::ObserverPtr>
-      observersByName_; ///< Mapping between loaded observers and their name
 
   struct PipelineObserver
   {
@@ -146,12 +158,11 @@ protected:
     : observer(observer), update(update), log(log), gui(gui)
     {
     }
-    mc_observers::ObserverPtr observer = nullptr;
-    bool update = true;
-    bool log = true;
-    bool gui = true;
-
-    bool previousSuccess = true;
+    mc_observers::ObserverPtr observer = nullptr; //< Observer
+    bool update = true; //< Whether to update the real robot instance from this observer
+    bool log = true; //< Whether to log this observer
+    bool gui = true; //< Whether to display the gui
+    bool success = true; //< Whether this observer succeeded
   };
 
   /** Observers that will be run by the pipeline.

@@ -9,13 +9,6 @@ namespace mc_observers
 ObserverPipeline::ObserverPipeline(mc_control::MCController & ctl, const std::string & name) : ctl_(ctl), name_(name) {}
 ObserverPipeline::ObserverPipeline(mc_control::MCController & ctl) : ctl_(ctl) {}
 
-void ObserverPipeline::configure(const mc_rtc::Configuration & config)
-{
-  config_.load(config);
-}
-
-void ObserverPipeline::reconfigure() {}
-
 void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
 {
   if(!config.has("name"))
@@ -24,7 +17,6 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
   }
   name_ = static_cast<std::string>(config("name"));
   auto observersConfs = mc_rtc::fromVectorOrElement(config, "observers", std::vector<mc_rtc::Configuration>{});
-  observers_.reserve(observersConfs.size());
   for(const auto & observerConf : observersConfs)
   {
     if(!observerConf.has("type"))
@@ -37,18 +29,16 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
 
     if(mc_observers::ObserverLoader::has_observer(observerType))
     {
-      if(observersByName_.count(observerName))
+      if(hasObserver(observerName))
       {
         mc_rtc::log::error_and_throw<std::runtime_error>(
             "[ObserverPipeline::{}] An observer named {} already exists (type: {}). Please make sure that observer "
             "names within a pipeline are unique, use the \"name\" configuration entry.",
-            name_, observerName, observersByName_[observerName]->type());
+            name_, observerName, observerType);
       }
       auto observer = mc_observers::ObserverLoader::get_observer(observerType, dt);
       observer->name(observerName);
       observer->configure(ctl_, observerConf("config", mc_rtc::Configuration{}));
-      observers_.push_back(observer);
-      observersByName_[observerName] = observer;
       pipelineObservers_.emplace_back(observer, observerConf("update", true), observerConf("log", true),
                                       observerConf("gui", true));
     }
@@ -107,22 +97,22 @@ bool ObserverPipeline::run()
     success_ = success_ && res;
     if(!res)
     {
-      if(pipelineObserver.previousSuccess)
+      if(pipelineObserver.success)
       {
         mc_rtc::log::warning("[ObserverPipeline::{}] Observer {} failed to run", name(), observer->name());
         if(observer->error().size())
         {
           mc_rtc::log::warning("{}", observer->error());
         }
-        pipelineObserver.previousSuccess = false;
+        pipelineObserver.success = false;
       }
     }
     else
     {
-      if(!pipelineObserver.previousSuccess)
+      if(!pipelineObserver.success)
       {
         mc_rtc::log::info("[ObserverPipeline::{}] Observer {} resumed", name(), observer->name());
-        pipelineObserver.previousSuccess = true;
+        pipelineObserver.success = true;
       }
       if(pipelineObserver.update)
       {
@@ -133,35 +123,35 @@ bool ObserverPipeline::run()
   return success_;
 }
 
-void ObserverPipeline::addToLogger()
+void ObserverPipeline::addToLogger(mc_rtc::Logger & logger)
 {
   for(auto & observer : pipelineObservers_)
   {
     if(observer.log)
     {
-      observer.observer->addToLogger_(ctl_, "Observers_" + name_);
+      observer.observer->addToLogger_(ctl_, logger, "Observers_" + name_);
     }
   }
 }
 /*! \brief Remove observer from logger. */
-void ObserverPipeline::removeFromLogger()
+void ObserverPipeline::removeFromLogger(mc_rtc::Logger & logger)
 {
   for(auto & observer : pipelineObservers_)
   {
     if(observer.log)
     {
-      observer.observer->removeFromLogger_(ctl_, "Observers_" + name_);
+      observer.observer->removeFromLogger_(logger, "Observers_" + name_);
     }
   }
 }
 
-void ObserverPipeline::addToGUI()
+void ObserverPipeline::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   for(auto & observer : pipelineObservers_)
   {
     if(observer.gui)
     {
-      observer.observer->addToGUI_(ctl_, {"ObserverPipelines", name_});
+      observer.observer->addToGUI_(ctl_, gui, {"ObserverPipelines", name_});
     }
   }
 }

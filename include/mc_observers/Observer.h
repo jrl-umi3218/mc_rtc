@@ -7,9 +7,16 @@
 /*! Interface used to load observers */
 
 #include <mc_observers/api.h>
-
 #include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/log/Logger.h>
+
+namespace mc_rtc
+{
+namespace gui
+{
+struct StateBuilder;
+} // namespace gui
+} // namespace mc_rtc
 
 namespace mc_control
 {
@@ -99,46 +106,36 @@ struct MC_OBSERVERS_DLLAPI Observer
    */
   const std::string & name() const;
 
-  /*! \brief Add observer to the logger.
-   *
-   * Default implementation calls the observers' addToLogger function with
-   * category
-   */
-  void addToLogger_(mc_control::MCController & ctl, const std::string & category = "")
+  /*! \brief Add observer to the logger. */
+  void addToLogger_(const mc_control::MCController & ctl, mc_rtc::Logger & logger, const std::string & category = "")
   {
-    addToLogger(ctl, category + "_" + name_);
+    addToLogger(ctl, logger, category + "_" + name_);
   }
 
-  /*! \brief Remove observer from logger
-   *
-   * Default implementation does nothing, each observer implementation is
-   * responsible for removing all logs entry that it added.
-   */
-  virtual void removeFromLogger_(mc_control::MCController & ctl, std::string category = "")
+  /*! \brief Remove observer to the logger. */
+  virtual void removeFromLogger_(mc_rtc::Logger & logger, std::string category = "")
   {
-    removeFromLogger(ctl, category + "_" + name_);
+    removeFromLogger(logger, category + "_" + name_);
   }
 
-  /*! \brief Add observer information the GUI.
-   *
-   * Default implementation does nothing, each observer implementation is
-   * responsible for adding its own elements to the GUI. Default observers will
-   * be shown under the tab "Observers->observer name".
-   */
-  virtual void addToGUI_(mc_control::MCController & ctl, std::vector<std::string> category = {})
+  /*! \brief Add observer to the gui */
+  virtual void addToGUI_(const mc_control::MCController & ctl,
+                         mc_rtc::gui::StateBuilder & gui,
+                         std::vector<std::string> category = {})
   {
     category.push_back(name_);
-    addToGUI(ctl, category);
+    addToGUI(ctl, gui, category);
   }
+
   /*! \brief Remove observer from gui
    *
    * Default implementation does nothing. Each observer is responsible from
    * removing any element it added to the GUI.
    */
-  virtual void removeFromGUI_(mc_control::MCController & ctl, std::vector<std::string> category = {})
+  virtual void removeFromGUI_(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category = {})
   {
     category.push_back(name_);
-    removeFromGUI(ctl, category);
+    removeFromGUI(gui, category);
   };
 
   /*! \brief Short description of the observer
@@ -159,31 +156,66 @@ struct MC_OBSERVERS_DLLAPI Observer
     return type_;
   }
 
-  double dt() const
-  {
-    return dt_;
-  }
-
+  /*! Informative message about the last error */
   const std::string & error() const
   {
     return error_;
   }
 
-protected:
-  virtual void addToLogger(mc_control::MCController &, const std::string &) {}
-  virtual void removeFromLogger(mc_control::MCController &, const std::string &) {}
-  virtual void addToGUI(mc_control::MCController &, const std::vector<std::string> &) {}
-  virtual void removeFromGUI(mc_control::MCController &, const std::vector<std::string> &) {}
+  double dt() const
+  {
+    return dt_;
+  }
 
 protected:
-  std::string name_;
-  std::string type_;
-  std::string error_;
+  /*! \brief Add observer from logger
+   *
+   * Default implementation does nothing, each observer implementation is
+   * responsible for adding its own log entries
+   *
+   * @param category Category in which to log this observer
+   */
+  virtual void addToLogger(const mc_control::MCController &, mc_rtc::Logger &, const std::string & /* category */) {}
 
-  /* Short descriptive description of the observer used for CLI logging */
-  std::string desc_;
+  /*! \brief Remove observer from logger
+   *
+   * Default implementation does nothing, each observer implementation is
+   * responsible for removing all logs entry that it added.
+   *
+   * @param category Category in which this observer entries are logged
+   */
+  virtual void removeFromLogger(mc_rtc::Logger &, const std::string & /* category */) {}
 
-  double dt_;
+  /*! \brief Add observer information the GUI.
+   *
+   * Default implementation does nothing, each observer implementation is
+   * responsible for adding its own elements to the GUI.
+   *
+   * @param category Category in which to add this observer
+   */
+  virtual void addToGUI(const mc_control::MCController &,
+                        mc_rtc::gui::StateBuilder &,
+                        const std::vector<std::string> & /* category */)
+  {
+  }
+
+  /**
+   * @brief Remove observer from GUI
+   *
+   * Default implementation removes the category
+   *
+   * @param gui
+   * @param category Categroy in which the observer was added
+   */
+  virtual void removeFromGUI(mc_rtc::gui::StateBuilder &, const std::vector<std::string> & category);
+
+protected:
+  std::string name_; ///< Observer name
+  std::string type_; ///< Observer type
+  std::string desc_; ///< Short description of the observer and its configuration
+  std::string error_; ///< Descriptive error message to show if the observer failed
+
+  double dt_; ///< Timestep
 };
 
 using ObserverPtr = std::shared_ptr<mc_observers::Observer>;

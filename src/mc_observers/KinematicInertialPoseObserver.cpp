@@ -81,48 +81,50 @@ void KinematicInertialPoseObserver::updateRobots(mc_control::MCController & ctl)
   robot.posW(pose_);
 }
 
-void KinematicInertialPoseObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
+void KinematicInertialPoseObserver::addToLogger(const mc_control::MCController &,
+                                                mc_rtc::Logger & logger,
+                                                const std::string & category)
 {
-  auto & logger = ctl.logger();
   logger.addLogEntry(category + "_posW", [this]() -> const sva::PTransformd & { return pose_; });
   logger.addLogEntry(category + "_anchorFrame", [this]() -> const sva::PTransformd & { return X_0_anchorFrame_; });
   logger.addLogEntry(category + "_anchorFrameReal",
                      [this]() -> const sva::PTransformd & { return X_0_anchorFrameReal_; });
 }
 
-void KinematicInertialPoseObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
+void KinematicInertialPoseObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
 {
-  auto & logger = ctl.logger();
   logger.removeLogEntry(category + "_posW");
   logger.removeLogEntry(category + "_anchorFrame");
   logger.removeLogEntry(category + "_anchorFrameReal");
 }
 
-void KinematicInertialPoseObserver::addToGUI(mc_control::MCController & ctl, const std::vector<std::string> & category)
+void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController &,
+                                             mc_rtc::gui::StateBuilder & gui,
+                                             const std::vector<std::string> & category)
 {
-  auto showHideAnchorFrame = [&ctl, category](const std::string & name, bool show,
+  auto showHideAnchorFrame = [&gui, category](const std::string & name, bool show,
                                               const sva::PTransformd & anchorFrame) {
     auto cat = category;
     cat.push_back("Markers");
-    ctl.gui()->removeElement(cat, name);
+    gui.removeElement(cat, name);
     if(show)
     {
-      ctl.gui()->addElement(
+      gui.addElement(
           cat, mc_rtc::gui::Transform(name, [&anchorFrame]() -> const sva::PTransformd & { return anchorFrame; }));
     }
   };
-  auto showHidePose = [this, category, &ctl]() {
+  auto showHidePose = [this, category, &gui]() {
     std::string name = "Pose";
     auto cat = category;
     cat.push_back("Markers");
-    ctl.gui()->removeElement(cat, name);
+    gui.removeElement(cat, name);
     if(showPose_)
     {
-      ctl.gui()->addElement(cat, mc_rtc::gui::Transform(name, [this]() -> const sva::PTransformd & { return pose_; }));
+      gui.addElement(cat, mc_rtc::gui::Transform(name, [this]() -> const sva::PTransformd & { return pose_; }));
     }
   };
 
-  ctl.gui()->addElement(
+  gui.addElement(
       category,
       mc_rtc::gui::Checkbox("Show anchor frame (control)", [this]() { return showAnchorFrame_; },
                             [this, showHideAnchorFrame]() {

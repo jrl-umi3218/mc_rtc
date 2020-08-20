@@ -86,9 +86,11 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
   }
 
 protected:
-  void addToLogger(mc_control::MCController & ctl, const std::string & category) override;
-  void removeFromLogger(mc_control::MCController & ctl, const std::string & category) override;
-  void addToGUI(mc_control::MCController &, const std::vector<std::string> & category) override;
+  void addToLogger(const mc_control::MCController &, mc_rtc::Logger &, const std::string & category) override;
+  void removeFromLogger(mc_rtc::Logger &, const std::string & category) override;
+  void addToGUI(const mc_control::MCController &,
+                mc_rtc::gui::StateBuilder &,
+                const std::vector<std::string> & category) override;
 
 protected:
   enum class Update
@@ -102,6 +104,12 @@ protected:
   sva::MotionVecd velW_ = sva::MotionVecd::Zero();
   sva::MotionVecd accW_ = sva::MotionVecd::Zero();
   std::string robot_;
+
+  bool logPos_ = true;
+  bool logVel_ = true;
+  bool logAcc_ = true;
+  bool guiPos_ = false;
+  bool guiVel_ = true;
 };
 
 } // namespace mc_observers

@@ -59,6 +59,9 @@ void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_r
     ;
   }
 
+  config("logPosition", logPosition_);
+  config("logVelocity", logVelocity_);
+
   desc_ = name_ + " (position=" + position + ",velocity=" + velocity + ")";
 }
 
@@ -158,29 +161,68 @@ void EncoderObserver::updateRobots(mc_control::MCController & ctl)
   }
 }
 
-void EncoderObserver::addToLogger(mc_control::MCController & ctl, const std::string & category)
+void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
+                                  mc_rtc::Logger & logger,
+                                  const std::string & category)
 {
-  if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
+  if(logPosition_)
   {
-    ctl.logger().addLogEntry(category + "_" + name() + "_encoderFiniteDifferences",
-                             [this]() { return encodersVelocity_; });
+    if(posUpdate_ == PosUpdate::EncoderValues)
+    {
+      logger.addLogEntry(category + "_encoderValues", [this, &ctl]() { return ctl.robot(robot_).encoderValues(); });
+    }
+    else if(velUpdate_ == VelUpdate::Control)
+    {
+      std::vector<double> qOut(ctl.robot(robot_).refJointOrder().size(), 0);
+      logger.addLogEntry(category + "_controlValues", [this, &ctl, qOut]() mutable -> const std::vector<double> & {
+        for(size_t i = 0; i < qOut.size(); ++i)
+        {
+          auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
+          if(jIdx != -1)
+          {
+            qOut[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0];
+          }
+        }
+        return qOut;
+      });
+    }
   }
-  if(velUpdate_ == VelUpdate::EncoderVelocities)
+
+  if(logVelocity_)
   {
-    ctl.logger().addLogEntry(category + "_" + name() + "_encoderVelocities",
-                             [this, &ctl]() { return ctl.robots().robot(robot_).encoderVelocities(); });
+    if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
+    {
+      logger.addLogEntry(category + "_encoderFiniteDifferences", [this]() { return encodersVelocity_; });
+    }
+    else if(velUpdate_ == VelUpdate::EncoderVelocities)
+    {
+      logger.addLogEntry(category + "_encoderVelocities",
+                         [this, &ctl]() { return ctl.robot(robot_).encoderVelocities(); });
+    }
+    else if(velUpdate_ == VelUpdate::Control)
+    {
+      std::vector<double> alpha(ctl.robot(robot_).refJointOrder().size(), 0);
+      logger.addLogEntry(category + "_controlVelocities", [this, &ctl, alpha]() mutable -> const std::vector<double> & {
+        for(size_t i = 0; i < alpha.size(); ++i)
+        {
+          auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
+          if(jIdx != -1)
+          {
+            alpha[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0];
+          }
+        }
+        return alpha;
+      });
+    }
   }
 }
-void EncoderObserver::removeFromLogger(mc_control::MCController & ctl, const std::string & category)
+void EncoderObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
 {
-  if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
-  {
-    ctl.logger().removeLogEntry(category + "_" + name() + "_encoderFiniteDifferences");
-  }
-  if(velUpdate_ == VelUpdate::EncoderVelocities)
-  {
-    ctl.logger().removeLogEntry(category + "_" + name() + "_encoderVelocities");
-  }
+  logger.removeLogEntry(category + "_" + name() + "encoderValues");
+  logger.removeLogEntry(category + "_" + name() + "controlValues");
+  logger.removeLogEntry(category + "_" + name() + "encoderFiniteDifferences");
+  logger.removeLogEntry(category + "_" + name() + "encoderVelocities");
+  logger.removeLogEntry(category + "_" + name() + "controlVelocities");
 }
 
 } // namespace mc_observers
