@@ -21,9 +21,13 @@ void KinematicInertialPoseObserver::configure(const mc_control::MCController & c
   realRobot_ = config("realRobot", ctl.realRobot().name());
   imuSensor_ = config("imuBodySensor", ctl.robot().bodySensor().name());
   anchorFrameFunction_ = config("anchorFrame", "KinematicAnchorFrame::" + ctl.robot(robot_).name());
-  config("showAnchorFrame", showAnchorFrame_);
-  config("showAnchorFrameReal", showAnchorFrameReal_);
-  config("showPose", showPose_);
+  if(config.has("gui"))
+  {
+    auto gConfig = config("gui");
+    gConfig("anchorFrame", showAnchorFrame_);
+    gConfig("anchorFrameReal", showAnchorFrameReal_);
+    gConfig("pose", showPose_);
+  }
 }
 
 void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)

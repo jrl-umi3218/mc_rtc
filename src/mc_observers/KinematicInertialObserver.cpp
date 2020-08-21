@@ -15,7 +15,10 @@ namespace mc_observers
 void KinematicInertialObserver::configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config)
 {
   KinematicInertialPoseObserver::configure(ctl, config);
-  config("showVelocity", showVelocity_);
+  if(config.has("gui"))
+  {
+    config("gui")("velocity", showVelocity_);
+  }
   double cutoff = config("cutoff", 2 * ctl.timeStep);
   velFilter_.cutoffPeriod(cutoff);
   desc_ = name_ + " (cutoff=" + std::to_string(velFilter_.cutoffPeriod()) + ")";
