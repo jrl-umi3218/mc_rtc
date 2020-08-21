@@ -110,6 +110,9 @@ protected:
   bool logAcc_ = true;
   bool guiPos_ = false;
   bool guiVel_ = true;
+  mc_rtc::gui::ArrowConfig guiVelConfig_;
+  bool guiAcc_ = false;
+  mc_rtc::gui::ArrowConfig guiAccConfig_;
 };
 
 } // namespace mc_observers

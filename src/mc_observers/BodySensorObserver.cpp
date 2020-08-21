@@ -17,6 +17,7 @@ namespace mc_observers
 void BodySensorObserver::configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config)
 {
   robot_ = config("robot", ctl.robot().name());
+  fbSensorName_ = config("bodySensor", std::string("FloatingBase"));
   auto updateConfig = config("method", std::string{"sensor"});
   if(!updateConfig.empty())
   {
@@ -30,11 +31,24 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
     }
   }
 
-  config("logPosition", logPos_);
-  config("logVelocity", logVel_);
-  config("logAcceleration", logAcc_);
+  if(config.has("log"))
+  {
+    auto lConfig = config("log");
+    lConfig("pose", logPos_);
+    lConfig("velocity", logVel_);
+    lConfig("acceleration", logAcc_);
+  }
 
-  fbSensorName_ = config("bodySensor", std::string("FloatingBase"));
+  if(config.has("gui"))
+  {
+    auto gConfig = config("gui");
+    gConfig("pose", guiPos_);
+    gConfig("velocity", guiVel_);
+    gConfig("acceleration", guiAcc_);
+    guiVelConfig_ = gConfig("velocityConfig", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}));
+    guiAccConfig_ = gConfig("velocityConfig", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 1., 0.}));
+  }
+
   desc_ = name_ + " (sensor=" + fbSensorName_ + ", update=" + updateConfig + ")";
 }
 
@@ -123,20 +137,67 @@ void BodySensorObserver::addToGUI(const mc_control::MCController &,
                                   mc_rtc::gui::StateBuilder & gui,
                                   const std::vector<std::string> & category)
 {
-  if(guiPos_)
-  {
-    gui.addElement(category, mc_rtc::gui::Transform("Pose", [this]() -> const sva::PTransformd & { return posW_; }));
-  }
+  auto showPose = [this, &gui, category]() {
+    if(guiPos_)
+    {
+      gui.addElement(category, mc_rtc::gui::Transform("Pose", [this]() -> const sva::PTransformd & { return posW_; }));
+    }
+    else
+    {
+      gui.removeElement(category, "Pose");
+    }
+  };
+  auto showVel = [this, &gui, category]() {
+    if(guiVel_)
+    {
+      gui.addElement(category, mc_rtc::gui::Arrow("Velocity", guiVelConfig_,
+                                                  [this]() -> const Eigen::Vector3d & { return posW_.translation(); },
+                                                  [this]() -> Eigen::Vector3d {
+                                                    Eigen::Vector3d end = posW_.translation() + velW_.linear();
+                                                    return end;
+                                                  }));
+    }
+    else
+    {
+      gui.removeElement(category, "Velocity");
+    }
+  };
+  auto showAcc = [this, &gui, category]() {
+    if(guiAcc_)
+    {
+      gui.addElement(category, mc_rtc::gui::Arrow("Acceleration", guiAccConfig_,
+                                                  [this]() -> const Eigen::Vector3d & { return posW_.translation(); },
+                                                  [this]() -> Eigen::Vector3d {
+                                                    Eigen::Vector3d end = posW_.translation() + accW_.linear();
+                                                    return end;
+                                                  }));
+    }
+    else
+    {
+      gui.removeElement(category, "Acceleration");
+    }
+  };
 
-  if(guiVel_)
-  {
-    gui.addElement(category, mc_rtc::gui::Arrow("Velocity", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}),
-                                                [this]() -> const Eigen::Vector3d & { return posW_.translation(); },
-                                                [this]() -> Eigen::Vector3d {
-                                                  Eigen::Vector3d end = posW_.translation() + velW_.linear();
-                                                  return end;
-                                                }));
-  }
+  gui.addElement(category,
+                 mc_rtc::gui::Checkbox("Show pose", [this]() { return guiPos_; },
+                                       [this, showPose]() {
+                                         guiPos_ = !guiPos_;
+                                         showPose();
+                                       }),
+                 mc_rtc::gui::Checkbox("Show velocity", [this]() { return guiVel_; },
+                                       [this, showVel]() {
+                                         guiVel_ = !guiVel_;
+                                         showVel();
+                                       }),
+                 mc_rtc::gui::Checkbox("Show acceleration", [this]() { return guiAcc_; },
+                                       [this, showAcc]() {
+                                         guiAcc_ = !guiAcc_;
+                                         showAcc();
+                                       }));
+
+  showPose();
+  showVel();
+  showAcc();
 }
 
 } // namespace mc_observers

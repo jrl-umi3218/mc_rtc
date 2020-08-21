@@ -6,6 +6,28 @@
   {
     "robot": {"type": "string", "default": "MainRobot", "description": "Name of the robot to observe" },
     "method": { "enum": ["sensor", "control"], "description": "Update from sensor or control values" },
-    "bodySensor": { "type": "string", "default": "Main body sensor", "description": "Body sensor used to set the floating base state (only used if method=sensor). When empty, the main body sensor will be used."}
+    "bodySensor": { "type": "string", "default": "Main body sensor", "description": "Body sensor used to set the floating base state (only used if method=sensor). When empty, the main body sensor will be used."},
+    "log":
+    {
+      "type": "object",
+      "description": "Selects which elements to log",
+      "properties":
+      {
+        "pose": {"type": "boolean", "default": true, "description": "When true, log the estimated floating base pose" },
+        "velocity": {"type": "boolean", "default": true, "description": "When true, log the estimated floating base velocity" },
+        "acceleration": {"type": "boolean", "default": true, "description": "When true, log the estimated floating base acceleration" }
+      }
+    },
+    "gui":
+    {
+      "type": "object",
+      "description": "Selects which elements to display in the GUI",
+      "properties":
+      {
+        "pose": {"type": "boolean", "default": false, "description": "When true, diplays the estimated floating base pose (frame)" },
+        "velocity": {"type": "boolean", "default": true, "description": "When true, log the estimated floating base velocity (arrow)" },
+        "acceleration": {"type": "boolean", "default": false, "description": "When true, log the estimated floating base acceleration (arrow)" }
+      }
+    }
   }
 }
