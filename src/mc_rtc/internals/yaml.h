@@ -186,6 +186,10 @@ inline bool YAMLToJSON(const YAML::Node & node, Configuration & out)
   {
     return fromYAMLMap(node, out);
   }
+  else if(node.IsNull())
+  {
+    return true;
+  }
   else
   {
     log::error("Cannot convert from YAML if the root type is not a map or a sequence");
