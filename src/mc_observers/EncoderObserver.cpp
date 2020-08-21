@@ -12,6 +12,17 @@ namespace mc_observers
 void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config)
 {
   robot_ = config("robot", ctl.robot().name());
+  updateRobot_ = config("updateRobot", static_cast<std::string>(robot_));
+  if(!ctl.robots().hasRobot(robot_))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Observer {} requires robot \"{}\" but this robot does not exit",
+                                                     name(), robot_);
+  }
+  if(!ctl.robots().hasRobot(updateRobot_))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Observer {} requires robot \"{}\" (updateRobot) but this robot does not exit", name(), updateRobot_);
+  }
   const std::string & position = config("position", std::string("encoderValues"));
   if(position == "control")
   {
@@ -112,7 +123,7 @@ void EncoderObserver::updateRobots(mc_control::MCController & ctl)
 {
   auto & realRobots = ctl.realRobots();
   const auto & robot = ctl.robots().robot(robot_);
-  auto & realRobot = realRobots.robot(robot_);
+  auto & realRobot = realRobots.robot(updateRobot_);
   const auto & q = robot.encoderValues();
 
   if(q.size() == robot.refJointOrder().size())

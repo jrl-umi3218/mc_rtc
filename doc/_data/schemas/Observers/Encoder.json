@@ -5,6 +5,7 @@
   "properties":
   {
     "robot": {"type": "string", "default": "MainRobot", "description": "Name of the robot to observe" },
+    "updateRobot": { "type": "string", "default": "&lt;robot&gt;", "description": "Name of the robot to update" },
     "position": { "enum": ["encoderValues", "control", "none"], "default": "encoderValues", "description": "Sensor/method used to observe joint position" },
     "velocity": { "enum": ["encoderFiniteDifferences", "encoderVelocities", "control", "none"], "default": "encoderFiniteDifferences", "description": "Sensor/method used to observe joint velocity" },
     "logPosition": { "type": "boolean", "default": false, "description": "When true, logs the estimated position of all actuated joints" },

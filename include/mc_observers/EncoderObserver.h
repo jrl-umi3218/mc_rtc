@@ -81,7 +81,8 @@ protected:
   PosUpdate posUpdate_ = PosUpdate::EncoderValues;
   VelUpdate velUpdate_ = VelUpdate::EncoderFiniteDifferences;
 
-  std::string robot_; ///< Robot estimated by this observer
+  std::string robot_ = ""; ///< Robot estimated by this observer
+  std::string updateRobot_ = ""; ///< Robot to update (defaults to robot_)
 
   std::vector<double> prevEncoders_; ///< Previous encoder values (for VelUpdate::EncoderFiniteDifferences)
   std::vector<double> encodersVelocity_; ///< Estimated encoder velocity
