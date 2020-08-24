@@ -5,6 +5,8 @@
   "properties":
   {
     "name": {"type":"string", "description":"Name of this pipeline"},
+    "run": {"type": "boolean", "default": true, "description": "When true, run each observer in this pipeline"},
+    "update": {"type": "boolean", "default": true, "description": "When true, update the state of real robots instances (depending on each observer's configuration)."},
     "observers":
     {
       "type": "array",

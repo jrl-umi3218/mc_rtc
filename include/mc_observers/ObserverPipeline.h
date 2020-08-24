@@ -57,6 +57,41 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
    **/
   bool run();
 
+  /** @return True if the observers are running */
+  inline bool runObservers() const
+  {
+    return runObservers_;
+  }
+
+  /**
+   * @brief Whether to run the observers in this pipeline
+   *
+   * @param status True if the observers should be run
+   */
+  inline void runObservers(bool status)
+  {
+    runObservers_ = status;
+  }
+
+  /** @return True if the observers are updating the real robots instance. The
+   * update does not occur if runObservers() is false. */
+  inline bool updateObservers() const
+  {
+    return updateObservers_;
+  }
+
+  /**
+   * @brief Whether to update the observers in this pipeline
+   *
+   * @param status True if the real robot instances should be update from the
+   * observers's result. Update occurs only if runObservers() is true, and the
+   * observer succeeded.
+   */
+  inline void updateObservers(bool status)
+  {
+    updateObservers_ = status;
+  }
+
   /**
    * @brief Checks whether the last run of the pipeline succeeded
    *
@@ -99,7 +134,7 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   }
 
   /**
-   * @brief Checks if there is an observer of a specific type
+   * @brief Checks if there is an observer of a specific type in the pipeline
    *
    * There may be more than one
    *
@@ -150,14 +185,20 @@ protected:
   std::string name_ = {"DefaultObserverPipeline"}; ///< Name of this pipeline
   /* Short descriptive description of the observer used for CLI logging */
   std::string desc_ = {""};
+  bool runObservers_ = true; ///< Whether to run this pipeline
+  bool updateObservers_ = true; ///< Whether to update real robots from estimated state.
   bool success_ = false; ///< Whether the pipeline successfully executed
 
   struct PipelineObserver
   {
-    PipelineObserver(const mc_observers::ObserverPtr & observer, bool update, bool log, bool gui)
-    : observer(observer), update(update), log(log), gui(gui)
+    PipelineObserver(const mc_observers::ObserverPtr & observer, const mc_rtc::Configuration & config)
+    : observer(observer)
     {
+      config("update", update);
+      config("log", log);
+      config("gui", gui);
     }
+
     mc_observers::ObserverPtr observer = nullptr; //< Observer
     bool update = true; //< Whether to update the real robot instance from this observer
     bool log = true; //< Whether to log this observer

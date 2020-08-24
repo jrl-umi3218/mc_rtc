@@ -16,6 +16,8 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
     mc_rtc::log::error_and_throw<std::runtime_error>("[ObserverPipeline] \"name\" entry is required", name_);
   }
   name_ = static_cast<std::string>(config("name"));
+  config("run", runObservers_);
+  config("update", updateObservers_);
   auto observersConfs = mc_rtc::fromVectorOrElement(config, "observers", std::vector<mc_rtc::Configuration>{});
   for(const auto & observerConf : observersConfs)
   {
@@ -39,8 +41,7 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
       auto observer = mc_observers::ObserverLoader::get_observer(observerType, dt);
       observer->name(observerName);
       observer->configure(ctl_, observerConf("config", mc_rtc::Configuration{}));
-      pipelineObservers_.emplace_back(observer, observerConf("update", true), observerConf("log", true),
-                                      observerConf("gui", true));
+      pipelineObservers_.emplace_back(observer, observerConf);
     }
     else
     {
@@ -89,6 +90,7 @@ void ObserverPipeline::reset()
 
 bool ObserverPipeline::run()
 {
+  if(!runObservers_) return true;
   success_ = true;
   for(auto & pipelineObserver : pipelineObservers_)
   {
@@ -114,7 +116,7 @@ bool ObserverPipeline::run()
         mc_rtc::log::info("[ObserverPipeline::{}] Observer {} resumed", name(), observer->name());
         pipelineObserver.success = true;
       }
-      if(pipelineObserver.update)
+      if(updateObservers_ && pipelineObserver.update)
       {
         observer->updateRobots(ctl_);
       }
