@@ -231,6 +231,12 @@ void StabilizerStandingState::teardown(Controller & ctl)
   ctl.datastore().remove("StabilizerStandingState::setDamping");
   ctl.datastore().remove("StabilizerStandingState::getConfiguration");
   ctl.datastore().remove("StabilizerStandingState::setConfiguration");
+  ctl.datastore().remove("StabilizerStandingState::setPelvisWeight");
+  ctl.datastore().remove("StabilizerStandingState::setPelvisStiffness");
+  ctl.datastore().remove("StabilizerStandingState::setTorsoWeight");
+  ctl.datastore().remove("StabilizerStandingState::setTorsoStiffness");
+  ctl.datastore().remove("StabilizerStandingState::setCoMWeight");
+  ctl.datastore().remove("StabilizerStandingState::setCoMStiffness");
 }
 
 } // namespace fsm
