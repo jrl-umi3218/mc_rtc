@@ -174,7 +174,7 @@ states:
          couple: [0, 0, 0]
         moveWorld:
           translation: [0, 0, -0.1]
-        targetRotation:
+        overwriteRPY:
           roll: 0
           pitch: 0
         completion:

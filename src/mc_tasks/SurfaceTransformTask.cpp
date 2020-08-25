@@ -86,6 +86,11 @@ void SurfaceTransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Conf
     {
       X_0_t.rotation() = config("targetRotation");
     }
+    if(config.has("overwriteRPY"))
+    {
+      // Only modify the specified DoF of the rotation
+      mc_rtc::overwriteRotationRPY(config("overwriteRPY"), X_0_t.rotation());
+    }
   }
 
   if(config.has("moveWorld"))
