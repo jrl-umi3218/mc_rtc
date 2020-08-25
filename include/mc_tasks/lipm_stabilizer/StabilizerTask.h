@@ -28,6 +28,8 @@ namespace mc_tasks
 namespace lipm_stabilizer
 {
 
+using ::mc_filter::utils::clamp;
+
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
  * Stabilization bridges the gap between the open-loop behavior of the
@@ -44,26 +46,6 @@ namespace lipm_stabilizer
 struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
-  static constexpr double MAX_AVERAGE_DCM_ERROR = 0.05; /**< Maximum average (integral) DCM error in [m] */
-  static constexpr double MAX_COP_ADMITTANCE = 0.1; /**< Maximum CoP admittance for foot damping control */
-  static constexpr double MAX_DCM_D_GAIN = 2.; /**< Maximum DCM derivative gain (no unit) */
-  static constexpr double MAX_DCM_I_GAIN = 100.; /**< Maximum DCM average integral gain in [Hz] */
-  static constexpr double MAX_DCM_P_GAIN = 20.; /**< Maximum DCM proportional gain in [Hz] */
-  static constexpr double MAX_DFZ_ADMITTANCE =
-      5e-4; /**< Maximum admittance in [s] / [kg] for foot force difference control */
-  static constexpr double MAX_DFZ_DAMPING =
-      10.; /**< Maximum normalized damping in [Hz] for foot force difference control */
-  static constexpr double MAX_FDC_RX_VEL =
-      0.2; /**< Maximum x-axis angular velocity in [rad] / [s] for foot damping control. */
-  static constexpr double MAX_FDC_RY_VEL =
-      0.2; /**< Maximum y-axis angular velocity in [rad] / [s] for foot damping control. */
-  static constexpr double MAX_FDC_RZ_VEL =
-      0.2; /**< Maximum z-axis angular velocity in [rad] / [s] for foot damping control. */
-  static constexpr double MIN_DS_PRESSURE = 15.; /**< Minimum normal contact force in DSP, used to avoid low-pressure
-                                                    targets when close to contact switches. */
-  /**< Minimum force for valid ZMP computation (throws otherwise) */
-  static constexpr double MIN_NET_TOTAL_FORCE_ZMP = 1.;
 
   /**
    * @brief Creates a stabilizer meta task
@@ -315,6 +297,167 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return contacts_.size() == 2;
   }
 
+  /**
+   * @name Setters to reconfigure the stabilizer online
+   *
+   * Setters for the main parameters of the stabilizer.
+   * For safety purposes, values are clamped against the maximum values defined
+   * by the stabilizer configuration.
+   *
+   * \see mc_rbdyn::lipm_stabilizer::StabilizerConfiguration for details on each
+   * of these parameters.
+   *
+   * \see config() Access the current stabilizer configuration values
+   * \see commitConfig() Make the current configuration the new default
+   * @{
+   */
+  void torsoPitch(double pitch)
+  {
+    c_.torsoPitch = pitch;
+  }
+
+  void torsoWeight(double weight)
+  {
+    c_.torsoWeight = weight;
+    torsoTask->weight(c_.torsoWeight);
+  }
+
+  void torsoStiffness(double stiffness)
+  {
+    c_.torsoStiffness = stiffness;
+    torsoTask->stiffness(stiffness);
+  }
+
+  void pelvisWeight(double weight)
+  {
+    c_.pelvisWeight = weight;
+    pelvisTask->weight(c_.pelvisWeight);
+  }
+
+  void pelvisStiffness(double stiffness)
+  {
+    c_.pelvisStiffness = stiffness;
+    pelvisTask->stiffness(stiffness);
+  }
+
+  void dcmGains(double p, double i, double d)
+  {
+    c_.dcmPropGain = clamp(p, 0., c_.safetyThresholds.MAX_DCM_P_GAIN);
+    c_.dcmIntegralGain = clamp(i, 0., c_.safetyThresholds.MAX_DCM_I_GAIN);
+    c_.dcmDerivGain = clamp(d, 0., c_.safetyThresholds.MAX_DCM_D_GAIN);
+  }
+
+  void dcmIntegratorTimeConstant(double dcmIntegratorTimeConstant)
+  {
+    c_.dcmIntegratorTimeConstant = dcmIntegratorTimeConstant;
+    dcmIntegrator_.timeConstant(dcmIntegratorTimeConstant);
+  }
+
+  void dcmDerivatorTimeConstant(double dcmDerivatorTimeConstant)
+  {
+    c_.dcmDerivatorTimeConstant = dcmDerivatorTimeConstant;
+    dcmDerivator_.timeConstant(dcmDerivatorTimeConstant);
+  }
+
+  void comWeight(double weight)
+  {
+    c_.comWeight = weight;
+    comTask->weight(weight);
+  }
+
+  void comStiffness(const Eigen::Vector3d & stiffness)
+  {
+    c_.comStiffness = stiffness;
+    comTask->stiffness(stiffness);
+  }
+
+  void contactWeight(double weight)
+  {
+    c_.contactWeight = weight;
+    for(auto footT : contactTasks)
+    {
+      footT->weight(c_.contactWeight);
+    }
+  }
+
+  void contactStiffness(const sva::MotionVecd & stiffness)
+  {
+    c_.contactStiffness = stiffness;
+    for(auto contactT : contactTasks)
+    {
+      contactT->stiffness(stiffness);
+    }
+  }
+
+  void contactDamping(const sva::MotionVecd & damping)
+  {
+    c_.contactDamping = damping;
+    for(auto contactT : contactTasks)
+    {
+      contactT->damping(damping);
+    }
+  }
+
+  void copAdmittance(const Eigen::Vector2d & copAdmittance)
+  {
+    c_.copAdmittance = clamp(copAdmittance, 0., c_.safetyThresholds.MAX_COP_ADMITTANCE);
+    for(auto contactT : contactTasks)
+    {
+      contactT->admittance(contactAdmittance());
+    }
+  }
+
+  void copMaxVel(const sva::MotionVecd & copMaxVel)
+  {
+    c_.copMaxVel = copMaxVel;
+    for(const auto & footTask : footTasks)
+    {
+      footTask.second->maxLinearVel(copMaxVel.linear());
+      footTask.second->maxAngularVel(copMaxVel.angular());
+    }
+  }
+
+  void vdcFrequency(double freq)
+  {
+    c_.vdcFrequency = clamp(freq, 0., 10.);
+  }
+
+  void vdcStiffness(double stiffness)
+  {
+    c_.vdcStiffness = clamp(stiffness, 0., 1e4);
+  }
+
+  void dfzAdmittance(double dfzAdmittance)
+  {
+    c_.dfzAdmittance = clamp(dfzAdmittance, 0., c_.safetyThresholds.MAX_DFZ_ADMITTANCE);
+  }
+
+  void dfzDamping(double dfzDamping)
+  {
+    c_.dfzDamping = clamp(dfzDamping, 0., c_.safetyThresholds.MAX_DFZ_DAMPING);
+  }
+
+  void fdqpWeights(const mc_rbdyn::lipm_stabilizer::FDQPWeights & fdqp)
+  {
+    c_.fdqpWeights = fdqp;
+  }
+
+  /**
+   * @brief Changes the safety thresholds
+   *
+   * This ensures that all the parameters depending on these safety parameters
+   * are withing the new thresholds. If they are out of bounds, they will be
+   * clamped back to the new range, and a warning message will be displayed.
+   *
+   * @param thresholds New safety thresholds
+   */
+  void safetyThresholds(const mc_rbdyn::lipm_stabilizer::SafetyThresholds & thresholds)
+  {
+    c_.safetyThresholds = thresholds;
+    c_.checkGains();
+    copAdmittance(c_.copAdmittance);
+  }
+
 private:
   void dimWeight(const Eigen::VectorXd & dimW) override;
   Eigen::VectorXd dimWeight() const override;
@@ -336,9 +479,6 @@ private:
    * will be done by update() when the task is added to the solver.
    */
   void addContact(ContactState contactState, const internal::Contact & contact);
-
-  /** Check that all gains are within boundaries. */
-  void checkGains();
 
   /** Check whether the robot is in the air. */
   void checkInTheAir();

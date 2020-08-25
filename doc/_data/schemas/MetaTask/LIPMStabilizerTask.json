@@ -27,6 +27,7 @@
         "torso": {"$ref": "/../../common/torso.json"}
       }
     },
+    "safety_thresholds": {"$ref": "/../../common/stabilizer_safety_thresholds.json"},
     "fdqp_weights": {"$ref": "/../../common/fdqp_weights.json"},
     "vdc": {"$ref": "/../../common/vdc.json"},
     "admittance": {"$ref": "/../../common/admittance.json"},

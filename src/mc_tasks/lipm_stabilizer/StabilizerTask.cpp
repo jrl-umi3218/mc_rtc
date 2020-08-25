@@ -25,22 +25,6 @@ using ::mc_filter::utils::clamp;
 using ::mc_filter::utils::clampInPlaceAndWarn;
 namespace constants = ::mc_rtc::constants;
 
-// Repeat static constexpr declarations
-// Fixes https://github.com/stephane-caron/lipm_walking_controller/issues/21
-// See also https://stackoverflow.com/q/8016780
-constexpr double StabilizerTask::MAX_AVERAGE_DCM_ERROR;
-constexpr double StabilizerTask::MAX_COP_ADMITTANCE;
-constexpr double StabilizerTask::MAX_DCM_D_GAIN;
-constexpr double StabilizerTask::MAX_DCM_I_GAIN;
-constexpr double StabilizerTask::MAX_DCM_P_GAIN;
-constexpr double StabilizerTask::MAX_DFZ_ADMITTANCE;
-constexpr double StabilizerTask::MAX_DFZ_DAMPING;
-constexpr double StabilizerTask::MAX_FDC_RX_VEL;
-constexpr double StabilizerTask::MAX_FDC_RY_VEL;
-constexpr double StabilizerTask::MAX_FDC_RZ_VEL;
-constexpr double StabilizerTask::MIN_DS_PRESSURE;
-constexpr double StabilizerTask::MIN_NET_TOTAL_FORCE_ZMP;
-
 StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
                                const mc_rbdyn::Robots & realRobots,
                                unsigned int robotIndex,
@@ -80,37 +64,34 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
 void StabilizerTask::reset()
 {
   t_ = 0;
-  configure(robot().module().defaultLIPMStabilizerConfiguration());
-  commitConfig();
   comTask->reset();
   comTarget_ = comTask->com();
 
   for(auto footTask : footTasks)
   {
     footTask.second->reset();
-    footTask.second->maxAngularVel({MAX_FDC_RX_VEL, MAX_FDC_RY_VEL, MAX_FDC_RZ_VEL});
   }
 
   pelvisTask->reset();
   torsoTask->reset();
-
-  Eigen::Vector3d staticForce = mass_ * constants::gravity;
 
   dcmAverageError_ = Eigen::Vector3d::Zero();
   dcmError_ = Eigen::Vector3d::Zero();
   dcmVelError_ = Eigen::Vector3d::Zero();
   dfzForceError_ = 0.;
   dfzHeightError_ = 0.;
-  distribWrench_ = {comTarget_.cross(staticForce), staticForce};
+  distribWrench_ = sva::ForceVecd::Zero();
   vdcHeightError_ = 0.;
 
   zmpcc_.reset();
 
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
-  dcmIntegrator_.saturation(MAX_AVERAGE_DCM_ERROR);
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
 
   omega_ = std::sqrt(constants::gravity.z() / robot().com().z());
+
+  configure(robot().module().defaultLIPMStabilizerConfiguration());
+  commitConfig();
 }
 
 void StabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
@@ -296,6 +277,7 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
   checkConfiguration(config);
   lastConfig_ = config;
   c_ = config;
+  c_.checkGains();
   reconfigure_ = true;
 }
 
@@ -308,6 +290,7 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
 {
   dcmDerivator_.timeConstant(c_.dcmDerivatorTimeConstant);
   dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
+  dcmIntegrator_.saturation(c_.safetyThresholds.MAX_AVERAGE_DCM_ERROR);
 
   // // Configure upper-body tasks
   pelvisTask->stiffness(c_.pelvisStiffness);
@@ -421,16 +404,6 @@ const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & StabilizerTask::commi
   return defaultConfig_;
 }
 
-void StabilizerTask::checkGains()
-{
-  clampInPlaceAndWarn(c_.copAdmittance.x(), 0., MAX_COP_ADMITTANCE, "CoP x-admittance");
-  clampInPlaceAndWarn(c_.copAdmittance.y(), 0., MAX_COP_ADMITTANCE, "CoP y-admittance");
-  clampInPlaceAndWarn(c_.dcmDerivGain, 0., MAX_DCM_D_GAIN, "DCM deriv x-gain");
-  clampInPlaceAndWarn(c_.dcmIntegralGain, 0., MAX_DCM_I_GAIN, "DCM integral x-gain");
-  clampInPlaceAndWarn(c_.dcmPropGain, 0., MAX_DCM_P_GAIN, "DCM prop x-gain");
-  clampInPlaceAndWarn(c_.dfzAdmittance, 0., MAX_DFZ_ADMITTANCE, "DFz admittance");
-}
-
 void StabilizerTask::setContacts(const std::vector<ContactState> & contacts)
 {
   ContactDescriptionVector addContacts;
@@ -522,7 +495,7 @@ void StabilizerTask::checkInTheAir()
   inTheAir_ = true;
   for(const auto footT : footTasks)
   {
-    inTheAir_ = inTheAir_ && footT.second->measuredWrench().force().z() < MIN_DS_PRESSURE;
+    inTheAir_ = inTheAir_ && footT.second->measuredWrench().force().z() < c_.safetyThresholds.MIN_DS_PRESSURE;
   }
 }
 
@@ -604,7 +577,7 @@ void StabilizerTask::run()
                                           std::chrono::high_resolution_clock, std::chrono::steady_clock>::type;
   auto startTime = clock::now();
 
-  checkGains();
+  c_.checkGains();
   checkInTheAir();
   computeLeftFootRatio();
   setSupportFootGains();
@@ -612,7 +585,15 @@ void StabilizerTask::run()
   if(!inTheAir_)
   {
     measuredNetWrench_ = robots_.robot(robotIndex_).netWrench(contactSensors);
-    measuredZMP_ = robots_.robot(robotIndex_).zmp(measuredNetWrench_, zmpFrame_, MIN_NET_TOTAL_FORCE_ZMP);
+    try
+    {
+      measuredZMP_ =
+          robots_.robot(robotIndex_).zmp(measuredNetWrench_, zmpFrame_, c_.safetyThresholds.MIN_NET_TOTAL_FORCE_ZMP);
+    }
+    catch(std::runtime_error & e)
+    {
+      mc_rtc::log::error("[{}] ZMP computation failed, keeping previous value {}", name(), measuredZMP_.transpose());
+    }
   }
   else
   {
@@ -778,10 +759,10 @@ void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
   // b_ineq.segment<16>(16) is already zero
   // w_l_lc.force().z() >= MIN_DS_PRESSURE
   A_ineq.block<1, 6>(32, 0) = -X_0_lc.dualMatrix().bottomRows<1>();
-  b_ineq(32) = -MIN_DS_PRESSURE;
+  b_ineq(32) = -c_.safetyThresholds.MIN_DS_PRESSURE;
   // w_r_rc.force().z() >= MIN_DS_PRESSURE
   A_ineq.block<1, 6>(33, 6) = -X_0_rc.dualMatrix().bottomRows<1>();
-  b_ineq(33) = -MIN_DS_PRESSURE;
+  b_ineq(33) = -c_.safetyThresholds.MIN_DS_PRESSURE;
 
   qpSolver_.problem(NB_VAR, 0, NB_CONS);
   Eigen::MatrixXd A_eq(0, 0);
