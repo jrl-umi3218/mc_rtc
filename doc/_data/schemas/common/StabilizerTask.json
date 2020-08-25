@@ -4,7 +4,7 @@
     {
       "type": "object",
       "title": "Stabilizer Configuration",
-      "description": "Stabilizer Configuration"
+      "description": "Stabilizer Configuration.<br />Note: the values declared in the robot module take precedence above the default values reported here."
     },
     {
       "$ref": "/../../common/StabilizerTask_common.json"
