@@ -323,13 +323,13 @@ void StabilizerTask::checkConfiguration(const mc_rbdyn::lipm_stabilizer::Stabili
   auto checkSurface = [&](const std::string & surfaceName) {
     if(!robot().hasSurface(surfaceName))
     {
-      LOG_ERROR_AND_THROW(std::runtime_error, "[StabilizerTask] requires a surface named "
-                                                  << surfaceName << " in robot " << robot().name());
+      mc_rtc::log::error_and_throw<std::runtime_error>("[{}] requires a surface named {} in robot {}", surfaceName,
+                                                       robot().name());
     }
     if(!robot().bodyHasForceSensor(robot().surface(surfaceName).bodyName()))
     {
-      LOG_ERROR_AND_THROW(std::runtime_error,
-                          "[StabilizerTask] Surface " << surfaceName << " must have an associated force sensor.");
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "[StabilizerTask] Surface {} must have an associated force sensor.");
     }
   };
   checkSurface(config.rightFootSurface);
