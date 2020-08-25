@@ -458,7 +458,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   void safetyThresholds(const SafetyThresholds & thresholds)
   {
     c_.safetyThresholds = thresholds;
-    c_.checkGains();
+    c_.clampGains();
     copAdmittance(c_.copAdmittance);
   }
 

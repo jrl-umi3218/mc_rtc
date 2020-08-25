@@ -576,7 +576,7 @@ void StabilizerTask::run()
                                           std::chrono::high_resolution_clock, std::chrono::steady_clock>::type;
   auto startTime = clock::now();
 
-  c_.checkGains();
+  c_.clampGains();
   checkInTheAir();
   computeLeftFootRatio();
   setSupportFootGains();

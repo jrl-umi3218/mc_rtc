@@ -140,6 +140,18 @@ void StabilizerStandingState::start(Controller & ctl)
   ctl.datastore().make_call(
       "StabilizerStandingState::setConfiguration",
       [this](const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & conf) { stabilizerTask_->configure(conf); });
+  ctl.datastore().make_call("StabilizerStandingState::setPelvisWeight",
+                            [this](double w) { stabilizerTask_->pelvisWeight(w); });
+  ctl.datastore().make_call("StabilizerStandingState::setPelvisStiffness",
+                            [this](double s) { stabilizerTask_->pelvisStiffness(s); });
+  ctl.datastore().make_call("StabilizerStandingState::setTorsoWeight",
+                            [this](double w) { stabilizerTask_->torsoWeight(w); });
+  ctl.datastore().make_call("StabilizerStandingState::setTorsoStiffness",
+                            [this](double s) { stabilizerTask_->torsoStiffness(s); });
+  ctl.datastore().make_call("StabilizerStandingState::setCoMWeight",
+                            [this](double w) { stabilizerTask_->comWeight(w); });
+  ctl.datastore().make_call("StabilizerStandingState::setCoMStiffness",
+                            [this](const Eigen::Vector3d & s) { stabilizerTask_->comStiffness(s); });
 }
 
 void StabilizerStandingState::targetCoP(const Eigen::Vector3d & cop)
