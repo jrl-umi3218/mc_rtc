@@ -4,8 +4,8 @@
   "description": "Force distribution QP parameters",
   "properties":
   {
-    "net_wrench": { "type": "number", "minimum": 0 },
-    "ankle_torque": { "type": "number", "minimum": 0 },
-    "pressure": { "type": "number", "minimum": 0 }
+    "net_wrench": { "type": "number", "minimum": 0, "default": 10000 },
+    "ankle_torque": { "type": "number", "minimum": 0, "default": 100 },
+    "pressure": { "type": "number", "minimum": 0, "default": 1 }
   }
 }

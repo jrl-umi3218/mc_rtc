@@ -1,11 +1,75 @@
 {
   "type": "object",
   "title": "Contact tasks parameters",
-  "description": "Contact tasks parameters (CoP tasks)",
+  "description": "Contact tasks parameters (CoP tasks). These tasks have very high weight to simulate a contact constraint in task space.",
   "properties":
   {
-    "weight": { "type": "number", "minimum": 0 },
-    "stiffness": { "type": "number", "minimum": 0 },
-    "damping": { "type": "number", "minimum": 0 }
+    "weight": { "type": "number", "minimum": 0, "default": 100000 },
+    "stiffness": 
+    { 
+      "allOf":
+      [
+        {
+          "$ref": "/../../SpaceVecAlg/MotionVecd" 
+        },
+        {
+          "description": "Dimensional stiffness for the CoP tasks",
+          "properties":
+          {
+            "angular":
+            {
+              "items":
+              [
+                { "type": "number", "default": 1 },
+                { "type": "number", "default": 1 },
+                { "type": "number", "default": 1 }
+              ]
+            }, 
+            "linear":
+            {
+              "items":
+              [
+                { "type": "number", "default": 1 },
+                { "type": "number", "default": 1 },
+                { "type": "number", "default": 1 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "damping": 
+    { 
+      "allOf":
+      [
+        {
+          "$ref": "/../../SpaceVecAlg/MotionVecd" 
+        },
+        {
+          "description": "Dimensional damping for the CoP tasks",
+          "properties":
+          {
+            "angular":
+            {
+              "items":
+              [
+                { "type": "number", "default": 300 },
+                { "type": "number", "default": 300 },
+                { "type": "number", "default": 300 }
+              ]
+            }, 
+            "linear":
+            {
+              "items":
+              [
+                { "type": "number", "default": 300 },
+                { "type": "number", "default": 300 },
+                { "type": "number", "default": 300 }
+              ]
+            }
+          }
+        }
+      ]
+    }
   }
 }

@@ -1,11 +1,11 @@
 {
   "type": "object",
   "title": "Torso task parameters",
-  "description": "Toso task parameters (regularization)",
+  "description": "Toso task parameters (regularization).  This task contributes to stabilization by keeping the torso aligned with the contacts orientation. Without it, the robot has been known to vibrate, lower the gains with caution. The pitch value allows to lean the torso forward/backwards while respecting the feet's orientation in the other directions",
   "properties":
   {
-    "weight": { "type": "number", "minimum": 0 },
-    "stiffness": { "type": "number", "minimum": 0 },
+    "weight": { "type": "number", "minimum": 0, "default": 100 },
+    "stiffness": { "type": "number", "minimum": 0, "default": 10 },
     "pitch": { "type": "number", "default": 0 }
   }
 }
