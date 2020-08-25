@@ -60,7 +60,7 @@ struct ZMPCC
    *
    * \note this configuration may be modified interactively by the GUI elements
    */
-  void configure(ZMPCCConfiguration & config)
+  void configure(const ZMPCCConfiguration & config)
   {
     config_ = config;
     integrator_.saturation(config.maxCoMOffset);

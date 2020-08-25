@@ -29,6 +29,10 @@ namespace lipm_stabilizer
 {
 
 using ::mc_filter::utils::clamp;
+using ZMPCCConfiguration = mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration;
+using StabilizerConfiguration = mc_rbdyn::lipm_stabilizer::StabilizerConfiguration;
+using FDQPWeights = mc_rbdyn::lipm_stabilizer::FDQPWeights;
+using SafetyThresholds = mc_rbdyn::lipm_stabilizer::SafetyThresholds;
 
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
@@ -75,12 +79,12 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * module.
    *
    * You can configure the stabilizer parameters (DCM tacking gains, task gains, etc) by calling
-   * configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
+   * configure(const StabilizerConfiguration & config)
    *
    * \note If you wish to reset the stabilizer from it's current configuration,
    * you can do so by storing its current configuration as accessed by config()
    * or commitedConfig() and set it explitely after calling reset by calling
-   * configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &);
+   * configure(const StabilizerConfiguration &);
    */
   void reset() override;
 
@@ -119,7 +123,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * \see load(mc_solver::QPSolver &, const mc_rtc::Configuration &) to set
    * stabilizer targets and contacts from configuration
    */
-  void configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
+  void configure(const StabilizerConfiguration & config);
 
   /**
    * @brief Use the current configuration as the new default
@@ -135,7 +139,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * \see commitedConfig()
    */
-  const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config() const;
+  const StabilizerConfiguration & config() const;
 
   /**
    * @brief Get last commited configuration
@@ -145,7 +149,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * \see config()
    */
-  const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & commitedConfig() const;
+  const StabilizerConfiguration & commitedConfig() const;
 
   /**
    * Reset stabilizer configuration from last configuration set by configure()
@@ -304,7 +308,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * For safety purposes, values are clamped against the maximum values defined
    * by the stabilizer configuration.
    *
-   * \see mc_rbdyn::lipm_stabilizer::StabilizerConfiguration for details on each
+   * \see StabilizerConfiguration for details on each
    * of these parameters.
    *
    * \see config() Access the current stabilizer configuration values
@@ -437,7 +441,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     c_.dfzDamping = clamp(dfzDamping, 0., c_.safetyThresholds.MAX_DFZ_DAMPING);
   }
 
-  void fdqpWeights(const mc_rbdyn::lipm_stabilizer::FDQPWeights & fdqp)
+  void fdqpWeights(const FDQPWeights & fdqp)
   {
     c_.fdqpWeights = fdqp;
   }
@@ -451,7 +455,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * @param thresholds New safety thresholds
    */
-  void safetyThresholds(const mc_rbdyn::lipm_stabilizer::SafetyThresholds & thresholds)
+  void safetyThresholds(const SafetyThresholds & thresholds)
   {
     c_.safetyThresholds = thresholds;
     c_.checkGains();
@@ -556,6 +560,12 @@ private:
     return {{c_.copAdmittance.y(), c_.copAdmittance.x(), 0.}, {0., 0., 0.}};
   }
 
+  void zmpcc(const ZMPCCConfiguration & zmpccConfig)
+  {
+    c_.zmpcc = zmpccConfig;
+    zmpcc_.configure(zmpccConfig);
+  }
+
   /* Task-related properties */
 protected:
   void addToSolver(mc_solver::QPSolver & solver) override;
@@ -590,7 +600,7 @@ protected:
   void configure_(mc_solver::QPSolver & solver);
 
   /** Ensures that the configuration is valid */
-  void checkConfiguration(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config);
+  void checkConfiguration(const StabilizerConfiguration & config);
 
 protected:
   /**
@@ -642,11 +652,11 @@ protected:
 protected:
   /**< Default (user-provided) configuration for the stabilizer. This configuration is superseeded by the parameters set
    * in the GUI */
-  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration defaultConfig_;
+  StabilizerConfiguration defaultConfig_;
   /**< Last valid stabilizer configuration. */
-  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration lastConfig_;
+  StabilizerConfiguration lastConfig_;
   /**< Online stabilizer configuration, can be set from the GUI. Defaults to defaultConfig_ */
-  mc_rbdyn::lipm_stabilizer::StabilizerConfiguration c_;
+  StabilizerConfiguration c_;
   /**< Whether the stabilizer needs to be reconfigured at the next
    * update(solver) call */
   bool reconfigure_ = true;

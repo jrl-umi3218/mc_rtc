@@ -271,7 +271,7 @@ void StabilizerTask::reconfigure()
   enable();
 }
 
-void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
+void StabilizerTask::configure(const StabilizerConfiguration & config)
 {
   checkConfiguration(config);
   lastConfig_ = config;
@@ -316,7 +316,7 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
   reconfigure_ = false;
 }
 
-void StabilizerTask::checkConfiguration(const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & config)
+void StabilizerTask::checkConfiguration(const StabilizerConfiguration & config)
 {
   // Check whether feet have force sensors
   auto checkSurface = [&](const std::string & surfaceName) {
@@ -393,12 +393,12 @@ void StabilizerTask::load(mc_solver::QPSolver &, const mc_rtc::Configuration & c
   }
 }
 
-const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & StabilizerTask::config() const
+const StabilizerConfiguration & StabilizerTask::config() const
 {
   return c_;
 }
 
-const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & StabilizerTask::commitedConfig() const
+const StabilizerConfiguration & StabilizerTask::commitedConfig() const
 {
   return defaultConfig_;
 }
