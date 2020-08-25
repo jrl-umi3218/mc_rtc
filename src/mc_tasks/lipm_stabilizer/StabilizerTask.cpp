@@ -197,8 +197,7 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
       MetaTask::addToSolver(*footTask, solver);
       MetaTask::addToLogger(*footTask, *solver.logger());
       contactTasks.push_back(footTask);
-      const auto & bodyName = robot().surface(footTask->surface()).bodyName();
-      const auto & fs = robot().bodyForceSensor(bodyName);
+      const auto & fs = robot().indirectSurfaceForceSensor(footTask->surface());
       contactSensors.push_back(fs.name());
     }
     addContacts_.clear();
@@ -326,7 +325,7 @@ void StabilizerTask::checkConfiguration(const mc_rbdyn::lipm_stabilizer::Stabili
       mc_rtc::log::error_and_throw<std::runtime_error>("[{}] requires a surface named {} in robot {}", surfaceName,
                                                        robot().name());
     }
-    if(!robot().bodyHasForceSensor(robot().surface(surfaceName).bodyName()))
+    if(!robot().surfaceHasIndirectForceSensor(surfaceName))
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "[StabilizerTask] Surface {} must have an associated force sensor.");
