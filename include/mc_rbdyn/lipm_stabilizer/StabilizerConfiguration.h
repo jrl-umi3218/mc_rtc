@@ -206,7 +206,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
    * @brief Checks that the chosen parameters are within the parameters defined
    * by the SafetyThresholds
    */
-  void checkGains()
+  void clampGains()
   {
     using ::mc_filter::utils::clampInPlaceAndWarn;
     const auto & s = safetyThresholds;

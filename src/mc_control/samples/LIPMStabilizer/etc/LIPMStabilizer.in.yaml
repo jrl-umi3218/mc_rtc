@@ -156,7 +156,7 @@ states:
     tasks:
       LiftFootTask:
         surface: LeftFoot
-  
+
   LIPMStabilizer::PutRightFoot:
     base: MetaTasks
     tasks:
@@ -187,7 +187,7 @@ states:
     tasks:
       PutFootAdmittance:
         surface: LeftFoot
-  
+
   LIPMStabilizer::Stabilized::LiftRightFoot:
     base: Parallel
     states: [Stabilizer::LeftSupport, LIPMStabilizer::LiftRightFoot]
@@ -266,7 +266,7 @@ states:
             - timeElapsed: true
             - AND:
               - timeout: 2.5
-              - wrench: [.nan, .nan, .nan, .nan, .nan, 20] 
+              - wrench: [.nan, .nan, .nan, .nan, .nan, 20]
         targetSurface:
           surface: RightFoot
           # Aim 5mm above ground as the FSM does not have early-impact detection

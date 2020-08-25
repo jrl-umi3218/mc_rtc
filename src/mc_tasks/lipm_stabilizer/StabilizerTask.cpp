@@ -277,7 +277,7 @@ void StabilizerTask::configure(const mc_rbdyn::lipm_stabilizer::StabilizerConfig
   checkConfiguration(config);
   lastConfig_ = config;
   c_ = config;
-  c_.checkGains();
+  c_.clampGains();
   reconfigure_ = true;
 }
 
