@@ -1,11 +1,8 @@
 var a01648 =
 [
-    [ "available_robots", "a01648.html#aae5fb8baa5acee06c3af0dd976808a2f", null ],
-    [ "clear", "a01648.html#a86f7b35ed2a4b3d37508f51aa2b29a38", null ],
-    [ "enable_sandboxing", "a01648.html#a730c3f67a0bc12f73633c42b121b219e", null ],
-    [ "get_robot_module", "a01648.html#ad660aedc7dbf7cd0cd0e60da5fffe4c2", null ],
-    [ "has_robot", "a01648.html#a3edda7983edda591b3664eef5c450144", null ],
-    [ "load_aliases", "a01648.html#a6286734468abc8c146eaad6902dbdd01", null ],
-    [ "set_verbosity", "a01648.html#a6126ced85ec52c8445755948d1060a6f", null ],
-    [ "update_robot_module_path", "a01648.html#a48f1ada05ff7db2152a00da892183c8b", null ]
+    [ "DevicePtrVector", "a01648.html#a39850850b50df785442c15d242d815f3", null ],
+    [ "DevicePtrVector", "a01648.html#a5f5834c7848c1593e4dda8556731c172", null ],
+    [ "DevicePtrVector", "a01648.html#a4190aad2585fa49da5d130316a163741", null ],
+    [ "operator=", "a01648.html#af28db08209588618e620a65c4187f34b", null ],
+    [ "operator=", "a01648.html#a13610008605e9a409dc6b3c7efa4ec66", null ]
 ];

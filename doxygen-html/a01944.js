@@ -1,7 +1,7 @@
 var a01944 =
 [
-    [ "TableImpl", "a01944.html#a89c897966d440e80a2c13884f51fa69d", null ],
-    [ "write", "a01944.html#a8920ca35975825d364222609aadd5019", null ],
-    [ "write_size", "a01944.html#abb8c823897c6460bfa03a98de022c4e7", null ],
-    [ "type", "a01944.html#a1b7522c84b927c1d76878eea1076592f", null ]
+    [ "SchemaImpl", "a01944.html#a3b43196dfda7475d0924cc29e2db22fb", null ],
+    [ "write", "a01944.html#ac2fad63fbecf2126101c4bb4bfca5397", null ],
+    [ "write_size", "a01944.html#ad53e00175461bd0bd4facd164cabf656", null ],
+    [ "type", "a01944.html#a2e77582fcb4cdc8af5919f0d3f8ffa0d", null ]
 ];

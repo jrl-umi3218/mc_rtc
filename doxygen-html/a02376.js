@@ -1,10 +1,10 @@
 var a02376 =
 [
-    [ "waypoint_t", "a02376.html#acbce3f9de05b28314ad0f61bb753d940", null ],
-    [ "InterpolatedRotation", "a02376.html#a35aa6707fcb6b62d7be8daa9df9991eb", null ],
-    [ "eval", "a02376.html#a3848a3c1a1d3796760025d7504c0e7a7", null ],
-    [ "update", "a02376.html#a00b27ba3e5f5c5028a5c3f1b18552617", null ],
-    [ "waypoint", "a02376.html#aa0cdeef0cd6d5a0f7daea52f53bac171", null ],
-    [ "waypoint", "a02376.html#a6188c9c45b2e7b836e82d911131c6f71", null ],
-    [ "all_waypoints_", "a02376.html#a3a83a147d6040fd550d83b1fa2a5e37c", null ]
+    [ "bezier_curve_t", "a02376.html#a58fe236423f0abd51af3cdcb50017a47", null ],
+    [ "waypoints_t", "a02376.html#ada383daeac50ae7ac8b720c6096289f5", null ],
+    [ "BSpline", "a02376.html#a905828c45debcac32ddbd35718a138a1", null ],
+    [ "addToGUI", "a02376.html#a206f674c4f9e666083f9aa96b27b7628", null ],
+    [ "sampleTrajectory", "a02376.html#ac34c7879cd2d0a941a6b303c366d16f4", null ],
+    [ "splev", "a02376.html#ae72e0f0db1744ff5a1e7ea8c8a832d5a", null ],
+    [ "update", "a02376.html#ab70108d4c7af3ce67b487bcbe11cab5d", null ]
 ];

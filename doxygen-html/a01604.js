@@ -1,5 +1,5 @@
 var a01604 =
 [
-    [ "load", "a01604.html#a424041a72a1aab6e27b6b8c9115041bb", null ],
-    [ "save", "a01604.html#a9dc93d8923aa1b6251a7c61acf5332c7", null ]
+    [ "load", "a01604.html#a6f8a65b949b2129b60545644f984db59", null ],
+    [ "save", "a01604.html#a4e91cd76b79b671e4049c8444cf1e3f4", null ]
 ];

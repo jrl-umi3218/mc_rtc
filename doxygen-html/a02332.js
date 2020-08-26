@@ -1,9 +1,12 @@
 var a02332 =
 [
-    [ "PositionBasedVisServoTask", "a02332.html#ae2cab369aedb3678ebd9b4687faa8ba9", null ],
-    [ "PositionBasedVisServoTask", "a02332.html#ab210ce2c552242965b7bd04b02d91517", null ],
-    [ "addToLogger", "a02332.html#a1c5a2a63cff774edab49e058c63344d6", null ],
-    [ "error", "a02332.html#aa2e8c33c6432ee68e91a59ed396fdd2a", null ],
-    [ "removeFromLogger", "a02332.html#adb31cd43854da32f63e4b26fbe11b78b", null ],
-    [ "reset", "a02332.html#a8c041b0993d362a21630ba766aac3218", null ]
+    [ "TrajectoryBase", "a02332.html#ab8b59fbe836201537d6a5d4616a845f2", null ],
+    [ "MomentumTask", "a02332.html#ad208d3c2d0ec9d8a1db4a3b16bb6b0b9", null ],
+    [ "addToGUI", "a02332.html#ac4048a9a19001b1f81ee6a39bf75677d", null ],
+    [ "addToLogger", "a02332.html#ac09760de5c209d12568dac6817e79395", null ],
+    [ "load", "a02332.html#a722bd3ba35066d38f9d301126f46e8fc", null ],
+    [ "momentum", "a02332.html#a6ba0b4c9ecf9da4571b8c052b325c5d3", null ],
+    [ "momentum", "a02332.html#a288104247dc5c93a7915300458da2f06", null ],
+    [ "removeFromLogger", "a02332.html#a4e64f81c801d988a04027e39769daca2", null ],
+    [ "reset", "a02332.html#acafe35db18c7d7d1956aeea5b23927ef", null ]
 ];

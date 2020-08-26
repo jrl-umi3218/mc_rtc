@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::log::is_serializable&lt; T &gt; Struct Template Reference</title>
+<title>mc_rtc::log::GetLogType&lt; T &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -73,28 +73,28 @@ $(document).ready(function(){initNavTree('a02056.html','');});
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="a02053.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::log::is_serializable&lt; T &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_rtc::log::GetLogType&lt; T &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>True if the given type is serializable in the log.  
+<p>Helper to build a correspondance between C++ types and enum values.  
  <a href="a02056.html#details">More...</a></p>
 
 <p><code>#include &lt;mc_rtc/log/utils.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a61a101e0e713dff37bd79ec91d6581de"><td class="memItemLeft" align="right" valign="top">static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02056.html#a61a101e0e713dff37bd79ec91d6581de">value</a> = <a class="el" href="a02048.html">GetLogType</a>&lt;T&gt;::type != <a class="el" href="a00748.html#ae623e7dc6e6722fd48752713664b3549a6adf97f83acf6453d4a6a4b1070f3754">mc_rtc::log::LogType::None</a></td></tr>
-<tr class="separator:a61a101e0e713dff37bd79ec91d6581de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b718d634332b545266bbe2298a624d4"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="a00748.html#ae623e7dc6e6722fd48752713664b3549">mc_rtc::log::LogType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02056.html#a7b718d634332b545266bbe2298a624d4">type</a> = <a class="el" href="a00748.html#ae623e7dc6e6722fd48752713664b3549a6adf97f83acf6453d4a6a4b1070f3754">mc_rtc::log::LogType::None</a></td></tr>
+<tr class="separator:a7b718d634332b545266bbe2298a624d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br />
-struct mc_rtc::log::is_serializable&lt; T &gt;</h3>
+struct mc_rtc::log::GetLogType&lt; T &gt;</h3>
 
-<p>True if the given type is serializable in the log. </p>
+<p>Helper to build a correspondance between C++ types and enum values. </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a61a101e0e713dff37bd79ec91d6581de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61a101e0e713dff37bd79ec91d6581de">&#9670;&nbsp;</a></span>value</h2>
+<a id="a7b718d634332b545266bbe2298a624d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b718d634332b545266bbe2298a624d4">&#9670;&nbsp;</a></span>type</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -105,7 +105,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr bool <a class="el" href="a02056.html">mc_rtc::log::is_serializable</a>&lt; T &gt;::value = <a class="el" href="a02048.html">GetLogType</a>&lt;T&gt;::type != <a class="el" href="a00748.html#ae623e7dc6e6722fd48752713664b3549a6adf97f83acf6453d4a6a4b1070f3754">mc_rtc::log::LogType::None</a></td>
+          <td class="memname">constexpr <a class="el" href="a00748.html#ae623e7dc6e6722fd48752713664b3549">mc_rtc::log::LogType</a> <a class="el" href="a02056.html">mc_rtc::log::GetLogType</a>&lt; T &gt;::type = <a class="el" href="a00748.html#ae623e7dc6e6722fd48752713664b3549a6adf97f83acf6453d4a6a4b1070f3754">mc_rtc::log::LogType::None</a></td>
         </tr>
       </table>
   </td>
@@ -123,8 +123,8 @@ template&lt;typename T &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00724.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00748.html">log</a></li><li class="navelem"><a class="el" href="a02056.html">is_serializable</a></li>
-    <li class="footer">Generated on Fri Aug 21 2020 07:31:17 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00724.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00748.html">log</a></li><li class="navelem"><a class="el" href="a02056.html">GetLogType</a></li>
+    <li class="footer">Generated on Wed Aug 26 2020 09:26:11 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

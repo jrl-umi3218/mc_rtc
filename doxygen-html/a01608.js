@@ -1,7 +1,7 @@
 var a01608 =
 [
-    [ "joint", "a01608.html#a4d23695d0cbacd0471313e1323d9e4b1", null ],
-    [ "multiplier", "a01608.html#acae914e7c2302757339b3f4624394c11", null ],
-    [ "name", "a01608.html#a461c2efe0da4d17cc75ce43837a0503f", null ],
-    [ "offset", "a01608.html#a07938e029fb7d951388c0b1ad64642b5", null ]
+    [ "comAdmittance", "a01608.html#ad6b1427db5969e53c93eda40b82c29c0", null ],
+    [ "integratorLeakRate", "a01608.html#a3c05d238cf8b0b2803e502985898c9ca", null ],
+    [ "maxCoMAdmitance", "a01608.html#ab4355cd8a898d9fb511b6820b4573902", null ],
+    [ "maxCoMOffset", "a01608.html#a1d42904ddf94ae3ac2660f01dd5e8ed9", null ]
 ];

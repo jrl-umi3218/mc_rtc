@@ -1,10 +1,12 @@
 var a01992 =
 [
-    [ "ForceConfig", "a01992.html#aa43d330299a7e98bf4f71bb41203ef82", null ],
-    [ "ForceConfig", "a01992.html#a2d88ac62138a8f3a15a0c48468ec2d51", null ],
-    [ "ForceConfig", "a01992.html#a9a4b2dd24ef25e1505a01f37a899349c", null ],
-    [ "load", "a01992.html#a8fffaa27fe7b876e7dd342dc519b3ebf", null ],
-    [ "write", "a01992.html#a172deb6bbb037afc2955e6ce0495a1cd", null ],
-    [ "write_size", "a01992.html#a3c32ba4f04a0903e09314c4fce866254", null ],
-    [ "force_scale", "a01992.html#a5b196a2d50081a662c2765c283a6d6b8", null ]
+    [ "LineConfig", "a01992.html#a15dd7cd44bf0edc5b475448de6e26451", null ],
+    [ "LineConfig", "a01992.html#a0ba859719a9ff99290fec7b8e8add72b", null ],
+    [ "LineConfig", "a01992.html#a05fe24ecd21753185e6da09151f35ce2", null ],
+    [ "load", "a01992.html#ac77f299a585b18903c8628590b8f6a00", null ],
+    [ "write", "a01992.html#a2845b8dfdbdaeb72cb473086c6bdf8a7", null ],
+    [ "write_size", "a01992.html#a76ab2e9dcb6923c3877c2822dec478dd", null ],
+    [ "color", "a01992.html#a4f88bdc8e23bf720a90553abaca4d6ec", null ],
+    [ "style", "a01992.html#a2678eadbdc5908c80e0dcc9c39941a14", null ],
+    [ "width", "a01992.html#a57cd8fdd493c21993724fe26828cf47c", null ]
 ];

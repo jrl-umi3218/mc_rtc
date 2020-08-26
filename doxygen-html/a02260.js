@@ -1,14 +1,14 @@
 var a02260 =
 [
-    [ "TrajectoryBase", "a02260.html#a51467f7e3f362d7aaa1b6ddb48b5d41a", null ],
-    [ "CoMTask", "a02260.html#a4c8786f3b387a997fb2ae923e2843669", null ],
-    [ "actual", "a02260.html#abc72179651c43a085fe41dd7e420b699", null ],
-    [ "addToGUI", "a02260.html#ad673a413597c928fe6b631c7d778e650", null ],
-    [ "addToLogger", "a02260.html#a67f50fc6a98a4d834ab322931766499d", null ],
-    [ "com", "a02260.html#a9c9d83e308955c7de9205e28bc7c0e9b", null ],
-    [ "com", "a02260.html#afab16ec288652d1509a90a4df324e3ff", null ],
-    [ "load", "a02260.html#a1e128a33ad470c85099edc2f64409a25", null ],
-    [ "move_com", "a02260.html#ad6a83e7e89cbae657665c8815c558f4d", null ],
-    [ "removeFromLogger", "a02260.html#a40670ec23d1459006df4e47398c516ed", null ],
-    [ "reset", "a02260.html#aced244122dda39108ec801512c4ca339", null ]
+    [ "SplineTrajectoryBase", "a02260.html#a81d5a557b19cceddeb5fe7911db9dceb", null ],
+    [ "waypoints_t", "a02260.html#a669d5fdec2578c135db701bba1727403", null ],
+    [ "BSplineTrajectoryTask", "a02260.html#aeb967476c50f3838e13951e0f3d9527c", null ],
+    [ "addToGUI", "a02260.html#a5c4c24081d3cfc9ba7d61097f97c968e", null ],
+    [ "posWaypoints", "a02260.html#a60f2ef40ea951b8d1b9235dbfda346ca", null ],
+    [ "spline", "a02260.html#a81a378c092ca9206ea9fa9e14448e979", null ],
+    [ "spline", "a02260.html#a57429fbfc25ba22a34d9881f54b76121", null ],
+    [ "targetPos", "a02260.html#a559bf605e5d3ee712f3beb4ca867daf0", null ],
+    [ "targetPos", "a02260.html#a9c6b5bc01bbaa882d10178076867265e", null ],
+    [ "SplineTrajectoryTask< BSplineTrajectoryTask >", "a02260.html#ac5eeec3b2af2e5d3a329daf981453a2e", null ],
+    [ "bspline", "a02260.html#ac881b5b505b63c5e89bec2e598c767e0", null ]
 ];

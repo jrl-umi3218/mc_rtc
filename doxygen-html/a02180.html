@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::ContactMsg Struct Reference</title>
+<title>mc_solver::InequalityConstraintForce Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,175 +70,151 @@ $(document).ready(function(){initNavTree('a02180.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a02177.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::ContactMsg Struct Reference</div>  </div>
+<div class="title">mc_solver::InequalityConstraintForce Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;mc_solver/msg/Contact.h&gt;</code></p>
+<p>Helper class to write an inequality constraint for Tasks.  
+ <a href="a02180.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_solver/InequalityConstraint.h&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mc_solver::InequalityConstraintForce:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="a02180.png" usemap="#mc_5Fsolver::InequalityConstraintForce_map" alt=""/>
+  <map id="mc_5Fsolver::InequalityConstraintForce_map" name="mc_5Fsolver::InequalityConstraintForce_map">
+<area href="a02168.html" alt="mc_solver::utils::InequalityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="205,280,606,304"/>
+<area href="a02208.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateForce &gt;" shape="rect" coords="205,224,606,248"/>
+<area href="a02228.html" alt="mc_solver::utils::UpdateForce" shape="rect" coords="411,168,812,192"/>
+<area href="a02220.html" alt="mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;" shape="rect" coords="411,112,812,136"/>
+<area href="a02240.html" title="This struct provides an implement for updateNrVars for a lambda-based constraint. ..." alt="mc_solver::utils::UpdateNrVarsLambda" shape="rect" coords="205,56,606,80"/>
+<area href="a02216.html" alt="mc_solver::utils::UpdateTag" shape="rect" coords="616,56,1017,80"/>
+<area href="a02232.html" title="This struct provides common data for UpdateNrVars* classes. " alt="mc_solver::utils::UpdateNrVarsData" shape="rect" coords="205,0,606,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a91f4355799d2e97441538f28adf25071"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#a91f4355799d2e97441538f28adf25071">r1_index</a></td></tr>
-<tr class="separator:a91f4355799d2e97441538f28adf25071"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaaa28b666db138b8073c87f0367408ea"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#aaaa28b666db138b8073c87f0367408ea">r2_index</a></td></tr>
-<tr class="separator:aaaa28b666db138b8073c87f0367408ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8c4a5aae685b15b8dffeddcb01aa9f7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#ad8c4a5aae685b15b8dffeddcb01aa9f7">r1_body</a></td></tr>
-<tr class="separator:ad8c4a5aae685b15b8dffeddcb01aa9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30084dbbeaca445a811e2b169344919d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#a30084dbbeaca445a811e2b169344919d">r2_body</a></td></tr>
-<tr class="separator:a30084dbbeaca445a811e2b169344919d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7af4dca57bbecf5e3397e7ea4f11a360"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#a7af4dca57bbecf5e3397e7ea4f11a360">r1_surface</a></td></tr>
-<tr class="separator:a7af4dca57bbecf5e3397e7ea4f11a360"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d179ea79ffefc9a499c3300b4fba396"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#a7d179ea79ffefc9a499c3300b4fba396">r2_surface</a></td></tr>
-<tr class="separator:a7d179ea79ffefc9a499c3300b4fba396"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ffb13c3e88fdefbdf8ad51aab184c16"><td class="memItemLeft" align="right" valign="top">std::vector&lt; sva::PTransformd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#a7ffb13c3e88fdefbdf8ad51aab184c16">r1_points</a></td></tr>
-<tr class="separator:a7ffb13c3e88fdefbdf8ad51aab184c16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c97419447f414150d56fb8cc8ea791e"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#a0c97419447f414150d56fb8cc8ea791e">X_b1_b2</a></td></tr>
-<tr class="separator:a0c97419447f414150d56fb8cc8ea791e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c34937b82f901be184a1de7ae8d1dd9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#a5c34937b82f901be184a1de7ae8d1dd9">nr_generators</a></td></tr>
-<tr class="separator:a5c34937b82f901be184a1de7ae8d1dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e1941c9323f825326c7f8d64fac14ac"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#a9e1941c9323f825326c7f8d64fac14ac">mu</a></td></tr>
-<tr class="separator:a9e1941c9323f825326c7f8d64fac14ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aa02dd7575c860883c51f5de6bd94b677"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02180.html#aa02dd7575c860883c51f5de6bd94b677">InequalityConstraintForce</a> (const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:aa02dd7575c860883c51f5de6bd94b677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a02168"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02168')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02168.html">mc_solver::utils::InequalityConstraint&lt; utils::UpdateForce &gt;</a></td></tr>
+<tr class="memitem:a2cc88eb4c1dbe254f3c849c0e76b0e03 inherit pub_methods_a02168"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02168.html#a2cc88eb4c1dbe254f3c849c0e76b0e03">InequalityConstraint</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:a2cc88eb4c1dbe254f3c849c0e76b0e03 inherit pub_methods_a02168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94b71fe257e26cc49bb153daa02b32d1 inherit pub_methods_a02168"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02168.html#a94b71fe257e26cc49bb153daa02b32d1">InequalityConstraint</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:a94b71fe257e26cc49bb153daa02b32d1 inherit pub_methods_a02168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1a4f382d3a67a6c728632e4f3189cb0 inherit pub_methods_a02168"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02168.html#aa1a4f382d3a67a6c728632e4f3189cb0">InequalityConstraint</a> (const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:aa1a4f382d3a67a6c728632e4f3189cb0 inherit pub_methods_a02168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f8d6cb3fdbcb0dbf3a598f5db0db67d inherit pub_methods_a02168"><td class="memItemLeft" align="right" valign="top">const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02168.html#a2f8d6cb3fdbcb0dbf3a598f5db0db67d">AInEq</a> () const override</td></tr>
+<tr class="separator:a2f8d6cb3fdbcb0dbf3a598f5db0db67d inherit pub_methods_a02168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad32d4e6549d14ef03faa5b61294a9161 inherit pub_methods_a02168"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02168.html#ad32d4e6549d14ef03faa5b61294a9161">descInEq</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;, int i) override</td></tr>
+<tr class="separator:ad32d4e6549d14ef03faa5b61294a9161 inherit pub_methods_a02168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_types_a02168"><td colspan="2" onclick="javascript:toggleInherit('pub_types_a02168')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="a02168.html">mc_solver::utils::InequalityConstraint&lt; utils::UpdateForce &gt;</a></td></tr>
+<tr class="memitem:aa303f3fb9dbf88ece28ef6ee013af8a8 inherit pub_types_a02168"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02168.html#aa303f3fb9dbf88ece28ef6ee013af8a8">Base</a> = <a class="el" href="a02208.html">Constraint</a>&lt; tasks::qp::Inequality, <a class="el" href="a02228.html">utils::UpdateForce</a> &gt;</td></tr>
+<tr class="separator:aa303f3fb9dbf88ece28ef6ee013af8a8 inherit pub_types_a02168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02208"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02208')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02208.html">mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateForce &gt;</a></td></tr>
+<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73 inherit pro_methods_a02208"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#adcc2b9ec9fbd3b47e0183ef0ce034c73">Constraint</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:adcc2b9ec9fbd3b47e0183ef0ce034c73 inherit pro_methods_a02208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e inherit pro_methods_a02208"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#ae5a2073ed0b8b0432593221fec955e4e">Constraint</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:ae5a2073ed0b8b0432593221fec955e4e inherit pro_methods_a02208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca inherit pro_methods_a02208"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#aab0cc49bca85557519c9a110b54c65ca">Constraint</a> (const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:aab0cc49bca85557519c9a110b54c65ca inherit pro_methods_a02208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02208"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a819dd76da2909a4c88efcca1cb9aaf69">~Constraint</a> ()</td></tr>
+<tr class="memdesc:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02208"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="a02208.html#a819dd76da2909a4c88efcca1cb9aaf69">More...</a><br /></td></tr>
+<tr class="separator:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab383394a69ab62c4fab23378e64868de inherit pro_methods_a02208"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#ab383394a69ab62c4fab23378e64868de">updateNrVars</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data) override</td></tr>
+<tr class="separator:ab383394a69ab62c4fab23378e64868de inherit pro_methods_a02208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7693804807033e3718c4ba01a58d3a58 inherit pro_methods_a02208"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a7693804807033e3718c4ba01a58d3a58">update</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;mbcs, const tasks::qp::SolverData &amp;data) override</td></tr>
+<tr class="separator:a7693804807033e3718c4ba01a58d3a58 inherit pro_methods_a02208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02228"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02228')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02228.html">mc_solver::utils::UpdateForce</a></td></tr>
+<tr class="memitem:ac7cfe8520ea50dc9cbf285f433769d11 inherit pro_methods_a02228"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02228.html#ac7cfe8520ea50dc9cbf285f433769d11">UpdateForce</a> (const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:ac7cfe8520ea50dc9cbf285f433769d11 inherit pro_methods_a02228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a147dd26742af4a2879ffdead8b3ab93d inherit pro_methods_a02228"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02228.html#a147dd26742af4a2879ffdead8b3ab93d">updateImpl</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;, const tasks::qp::SolverData &amp;)</td></tr>
+<tr class="separator:a147dd26742af4a2879ffdead8b3ab93d inherit pro_methods_a02228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02220"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02220')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02220.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td></tr>
+<tr class="memitem:ad172325243564a16279d9392bd86efa5 inherit pro_methods_a02220"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02220.html#ad172325243564a16279d9392bd86efa5">Update</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:ad172325243564a16279d9392bd86efa5 inherit pro_methods_a02220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a806d3dc017b28e570dfa268a32a55600 inherit pro_methods_a02220"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02220.html#a806d3dc017b28e570dfa268a32a55600">Update</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:a806d3dc017b28e570dfa268a32a55600 inherit pro_methods_a02220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8ad71dd3414ee8bccc766c7bc8b4dc3 inherit pro_methods_a02220"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02220.html#ab8ad71dd3414ee8bccc766c7bc8b4dc3">~Update</a> ()</td></tr>
+<tr class="separator:ab8ad71dd3414ee8bccc766c7bc8b4dc3 inherit pro_methods_a02220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02220"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02220.html#a8f658eb01d91768ab6a4e9b095a894de">compute</a> ()=0</td></tr>
+<tr class="memdesc:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should be overriden to update the constraint matrix and vector(s)  <a href="a02220.html#a8f658eb01d91768ab6a4e9b095a894de">More...</a><br /></td></tr>
+<tr class="separator:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02220"><td class="memItemLeft" align="right" valign="top">virtual const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02220.html#adcc1dc8dc0563b2e14f962f26afbfa5f">A</a> () const=0</td></tr>
+<tr class="memdesc:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should be overriden to provide A in the desired operation space.  <a href="a02220.html#adcc1dc8dc0563b2e14f962f26afbfa5f">More...</a><br /></td></tr>
+<tr class="separator:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab889dcd5361a420fe976146c40f56533 inherit pro_methods_a02220"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02220.html#ab889dcd5361a420fe976146c40f56533">updateImpl</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;, const tasks::qp::SolverData &amp;)</td></tr>
+<tr class="separator:ab889dcd5361a420fe976146c40f56533 inherit pro_methods_a02220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02240"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02240')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02240.html">mc_solver::utils::UpdateNrVarsLambda</a></td></tr>
+<tr class="memitem:a9d6f46e4b6e93b51903495758aecd406 inherit pro_methods_a02240"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02240.html#a9d6f46e4b6e93b51903495758aecd406">UpdateNrVarsLambda</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:a9d6f46e4b6e93b51903495758aecd406 inherit pro_methods_a02240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c7ce960742e1844186550b503af6207 inherit pro_methods_a02240"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02240.html#a3c7ce960742e1844186550b503af6207">updateNrVarsImpl</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data)</td></tr>
+<tr class="separator:a3c7ce960742e1844186550b503af6207 inherit pro_methods_a02240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02220"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02220')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02220.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td></tr>
+<tr class="memitem:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02220"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02220.html#a6ba3138c342b7e4efa2328ac11930706">AFull_</a></td></tr>
+<tr class="memdesc:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the full size matrix.  <a href="a02220.html#a6ba3138c342b7e4efa2328ac11930706">More...</a><br /></td></tr>
+<tr class="separator:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02220"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02240"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02240')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02240.html">mc_solver::utils::UpdateNrVarsLambda</a></td></tr>
+<tr class="memitem:a855dd9e41399b5a6271e9b4e02576b23 inherit pro_attribs_a02240"><td class="memItemLeft" align="right" valign="top">tasks::qp::ContactId&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02240.html#a855dd9e41399b5a6271e9b4e02576b23">cid_</a></td></tr>
+<tr class="separator:a855dd9e41399b5a6271e9b4e02576b23 inherit pro_attribs_a02240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02232"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02232')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02232.html">mc_solver::utils::UpdateNrVarsData</a></td></tr>
+<tr class="memitem:a3c4a15ad329aedecdfd932aaffe4ff76 inherit pro_attribs_a02232"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02232.html#a3c4a15ad329aedecdfd932aaffe4ff76">nrVars_</a></td></tr>
+<tr class="separator:a3c4a15ad329aedecdfd932aaffe4ff76 inherit pro_attribs_a02232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7940f913dbc5037ed042609f685bfaa inherit pro_attribs_a02232"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02232.html#ac7940f913dbc5037ed042609f685bfaa">ABegin_</a></td></tr>
+<tr class="separator:ac7940f913dbc5037ed042609f685bfaa inherit pro_attribs_a02232"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a9e1941c9323f825326c7f8d64fac14ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e1941c9323f825326c7f8d64fac14ac">&#9670;&nbsp;</a></span>mu</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Helper class to write an inequality constraint for Tasks. </p>
+<p>This constraint applies to the wrench associated with a given contact.</p>
+<p>This implements \( A * \mathbf{f}_{cI} \le b \)</p>
+<p>Where \(cI\) is the contact id you provide at construction.</p>
+<p>You must implement the following functions:</p><ul>
+<li><code>const Eigen::MatrixXd &amp; <a class="el" href="a02220.html#adcc1dc8dc0563b2e14f962f26afbfa5f" title="Should be overriden to provide A in the desired operation space. ">A() const </a>override;</code> returns \(A\), must be of size (nrLines, 6)</li>
+<li><code>void <a class="el" href="a02220.html#a8f658eb01d91768ab6a4e9b095a894de" title="Should be overriden to update the constraint matrix and vector(s) ">compute()</a> override;</code> update constraint matrix and bounds</li>
+<li><code>int maxInEq() const override;</code> number of inequality lines</li>
+<li><code>std::string nameInEq() const override;</code> descriptive name of the constraint</li>
+<li><code>const Eigen::VectorXd &amp; bInEq() const override;</code> returns \(b\) </li>
+</ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa02dd7575c860883c51f5de6bd94b677"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa02dd7575c860883c51f5de6bd94b677">&#9670;&nbsp;</a></span>InequalityConstraintForce()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">double mc_solver::ContactMsg::mu</td>
+          <td class="memname">mc_solver::InequalityConstraintForce::InequalityConstraintForce </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5c34937b82f901be184a1de7ae8d1dd9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c34937b82f901be184a1de7ae8d1dd9">&#9670;&nbsp;</a></span>nr_generators</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">uint16_t mc_solver::ContactMsg::nr_generators</td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
+          <td class="paramname"><em>cid</em>&#160;</td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad8c4a5aae685b15b8dffeddcb01aa9f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8c4a5aae685b15b8dffeddcb01aa9f7">&#9670;&nbsp;</a></span>r1_body</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">std::string mc_solver::ContactMsg::r1_body</td>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a91f4355799d2e97441538f28adf25071"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91f4355799d2e97441538f28adf25071">&#9670;&nbsp;</a></span>r1_index</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t mc_solver::ContactMsg::r1_index</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7ffb13c3e88fdefbdf8ad51aab184c16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ffb13c3e88fdefbdf8ad51aab184c16">&#9670;&nbsp;</a></span>r1_points</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;sva::PTransformd&gt; mc_solver::ContactMsg::r1_points</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7af4dca57bbecf5e3397e7ea4f11a360"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7af4dca57bbecf5e3397e7ea4f11a360">&#9670;&nbsp;</a></span>r1_surface</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string mc_solver::ContactMsg::r1_surface</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a30084dbbeaca445a811e2b169344919d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30084dbbeaca445a811e2b169344919d">&#9670;&nbsp;</a></span>r2_body</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string mc_solver::ContactMsg::r2_body</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aaaa28b666db138b8073c87f0367408ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaaa28b666db138b8073c87f0367408ea">&#9670;&nbsp;</a></span>r2_index</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t mc_solver::ContactMsg::r2_index</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7d179ea79ffefc9a499c3300b4fba396"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d179ea79ffefc9a499c3300b4fba396">&#9670;&nbsp;</a></span>r2_surface</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string mc_solver::ContactMsg::r2_surface</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0c97419447f414150d56fb8cc8ea791e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c97419447f414150d56fb8cc8ea791e">&#9670;&nbsp;</a></span>X_b1_b2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">sva::PTransformd mc_solver::ContactMsg::X_b1_b2</td>
-        </tr>
-      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -249,8 +225,8 @@ Public Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02180.html">ContactMsg</a></li>
-    <li class="footer">Generated on Fri Aug 21 2020 07:31:17 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02180.html">InequalityConstraintForce</a></li>
+    <li class="footer">Generated on Wed Aug 26 2020 09:26:11 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

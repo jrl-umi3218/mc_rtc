@@ -1,8 +1,11 @@
 var a02004 =
 [
-    [ "XYThetaImpl", "a02004.html#a6de2e9a332b75b696ddbd1167dc31d1b", null ],
-    [ "XYThetaImpl", "a02004.html#ad69684bdac6275e7cd47e84f786cac2d", null ],
-    [ "write", "a02004.html#a247757b0f4f2f7537cd966304f6395fc", null ],
-    [ "write_size", "a02004.html#ada9a5e8aafdff45f17263ae02a574970", null ],
-    [ "type", "a02004.html#a3db5a65e4c481b435a71e15ac8715c26", null ]
+    [ "PointConfig", "a02004.html#a1561d8ebb70e3cb79de4ccab8c1d9f39", null ],
+    [ "PointConfig", "a02004.html#a292175258d872208e99632ac1552700b", null ],
+    [ "PointConfig", "a02004.html#a8277e9a9b0552925512c2c5bf13e27af", null ],
+    [ "load", "a02004.html#ac42a2a7dbe68b518029a300b5ed6ff2d", null ],
+    [ "write", "a02004.html#a21cfe22ca3c76493be3f27788a18c0bf", null ],
+    [ "write_size", "a02004.html#aceab827e57173288e6abee5abf7cf368", null ],
+    [ "color", "a02004.html#a322a868c95c738f131da19c405ca0fd3", null ],
+    [ "scale", "a02004.html#aec3bebebe03aa2f57a8e9dfab49e55a2", null ]
 ];

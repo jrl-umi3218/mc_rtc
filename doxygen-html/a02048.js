@@ -1,4 +1,5 @@
 var a02048 =
 [
-    [ "type", "a02048.html#a7b718d634332b545266bbe2298a624d4", null ]
+    [ "name", "a02048.html#a67fbc08c9538e65ac214472f795e8dc9", null ],
+    [ "records", "a02048.html#abf3c8af81db34096910a6167aa54266c", null ]
 ];

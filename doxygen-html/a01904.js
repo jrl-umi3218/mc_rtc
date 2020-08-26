@@ -1,10 +1,7 @@
 var a01904 =
 [
-    [ "Range", "a01904.html#aead20688a3c041cd852dd71c98cfc15b", null ],
-    [ "Range", "a01904.html#ae57efd48b0202aac88fd98578af24993", null ],
-    [ "load", "a01904.html#ad303c48ab81bc362a13995c1b2464d0b", null ],
-    [ "write", "a01904.html#aa6b749d005afc464c84b138a2d72ae79", null ],
-    [ "inf", "a01904.html#ab995e2707a19a7b8beb6b05bbeffa3b9", null ],
-    [ "max", "a01904.html#a85f2d2500191f058985f2d32ea40583d", null ],
-    [ "min", "a01904.html#a3626d90084b55cd8a94307e620a09062", null ]
+    [ "Polygon", "a01904.html#af7e96bad2cd93f2b0eaecbf94e8ce4c2", null ],
+    [ "side", "a01904.html#ab7683b7758fdcb4c826c57eb7ef37800", null ],
+    [ "write", "a01904.html#a5cad8ea3b30915d71a70df177591e536", null ],
+    [ "type", "a01904.html#a5c7df3c2bb038af2fd07bc822c1af1bc", null ]
 ];

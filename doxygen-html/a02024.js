@@ -1,6 +1,11 @@
 var a02024 =
 [
-    [ "ObjectDeleter", "a02024.html#ad9d8c7bebf11fd046f3264f25d73f56d", null ],
-    [ "ObjectDeleter", "a02024.html#a3527e6200ab7ef9bf24606c987072039", null ],
-    [ "operator()", "a02024.html#a7cd3bbddec0b057af90444eb5794ad80", null ]
+    [ "LTDLHandle", "a02024.html#a1d2ebbcff7e52decbb18a9dc96b7671b", null ],
+    [ "~LTDLHandle", "a02024.html#ac3f676e1ef23ac13767069ebf1018af7", null ],
+    [ "LTDLHandle", "a02024.html#aeb254d88dad0c357ba003eb2ef458556", null ],
+    [ "classes", "a02024.html#a5027f7059635b26c598d8547787c70da", null ],
+    [ "get_symbol", "a02024.html#ac9e807398c51fe641aa12610ee1d35fc", null ],
+    [ "operator=", "a02024.html#ab5ad49d16629787bd61589dbf4924c4e", null ],
+    [ "path", "a02024.html#aab506987ae59f5623e4875126b3ad06b", null ],
+    [ "valid", "a02024.html#aad84c0ae1a67095338adf0205ee6cbfe", null ]
 ];

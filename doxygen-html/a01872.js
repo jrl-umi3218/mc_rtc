@@ -1,8 +1,6 @@
 var a01872 =
 [
-    [ "NumberSliderImpl", "a01872.html#ad32d76eae5aae6d20a58743e4744947d", null ],
-    [ "NumberSliderImpl", "a01872.html#a63a81dc88237bae8b029eaf615b0acdb", null ],
-    [ "write", "a01872.html#a8e216317bf0a49f9f776b0a81d708c71", null ],
-    [ "write_size", "a01872.html#a3a7ce274a193ddbde40a23f4391e38eb", null ],
-    [ "type", "a01872.html#ad6ef847b456858e8283667379b82dda0", null ]
+    [ "LabelImpl", "a01872.html#a8d875328b3e6dcc3d22287cdc7b65d9f", null ],
+    [ "LabelImpl", "a01872.html#aa27962fafec53add87be74c45388891a", null ],
+    [ "type", "a01872.html#a4701d75e61153ae03eb9137a254e603f", null ]
 ];

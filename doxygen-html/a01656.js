@@ -1,10 +1,11 @@
 var a01656 =
 [
-    [ "VisualMap", "a01656.html#abd6e8a7131d62002125d9cdc291719bf", null ],
-    [ "VisualMap", "a01656.html#ac58a4bfb954bb2596131d9dcf1bd54ec", null ],
-    [ "VisualMap", "a01656.html#a9ce12bfdd7e0edfaa4afbcce9764279a", null ],
-    [ "VisualMap", "a01656.html#a5a7913eda1566657722387ae559127ab", null ],
-    [ "operator=", "a01656.html#a7b4d1a9917b3bc796db270228d699411", null ],
-    [ "operator=", "a01656.html#a12a6994b9750a77e0543846be016a263", null ],
-    [ "operator=", "a01656.html#aace9203b0cf03c1813dbb51060a1681d", null ]
+    [ "available_robots", "a01656.html#aae5fb8baa5acee06c3af0dd976808a2f", null ],
+    [ "clear", "a01656.html#a86f7b35ed2a4b3d37508f51aa2b29a38", null ],
+    [ "enable_sandboxing", "a01656.html#a730c3f67a0bc12f73633c42b121b219e", null ],
+    [ "get_robot_module", "a01656.html#ad660aedc7dbf7cd0cd0e60da5fffe4c2", null ],
+    [ "has_robot", "a01656.html#a3edda7983edda591b3664eef5c450144", null ],
+    [ "load_aliases", "a01656.html#a6286734468abc8c146eaad6902dbdd01", null ],
+    [ "set_verbosity", "a01656.html#a6126ced85ec52c8445755948d1060a6f", null ],
+    [ "update_robot_module_path", "a01656.html#a48f1ada05ff7db2152a00da892183c8b", null ]
 ];

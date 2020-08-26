@@ -1,7 +1,6 @@
 var a01956 =
 [
-    [ "TableImpl", "a01956.html#a89c897966d440e80a2c13884f51fa69d", null ],
-    [ "write", "a01956.html#a8920ca35975825d364222609aadd5019", null ],
-    [ "write_size", "a01956.html#abb8c823897c6460bfa03a98de022c4e7", null ],
-    [ "type", "a01956.html#a1b7522c84b927c1d76878eea1076592f", null ]
+    [ "FormattedTableImpl", "a01956.html#a6f17c4273427021ac165e1bf6b297d61", null ],
+    [ "write", "a01956.html#a1b6fc2b88d050a5f7cb79694d8dd2619", null ],
+    [ "write_size", "a01956.html#a1fa99d9e0b44b82827a7e7a0d94272e1", null ]
 ];

@@ -1,8 +1,8 @@
 var a01928 =
 [
-    [ "RotationROImpl", "a01928.html#a09c1c750a2be23f5554b148d0bdc0355", null ],
-    [ "RotationROImpl", "a01928.html#a4fd7310d27046f65c062596a31abda2b", null ],
-    [ "write", "a01928.html#ac51a9c31ab21b7f4fab3c2888cc728a6", null ],
-    [ "write_size", "a01928.html#afc5b2ee991da77eae0a2ef1623ca19c9", null ],
-    [ "type", "a01928.html#aa295eb5ebba63beadb8f2d9f9348b0fa", null ]
+    [ "Point3DImpl", "a01928.html#aebb2b0f65583cdb425856d7589a325d9", null ],
+    [ "Point3DImpl", "a01928.html#a81ef40f7c6064e0c1888601141f88cfd", null ],
+    [ "write", "a01928.html#a9101fdc36b843f5a6e93eb033095de14", null ],
+    [ "write_size", "a01928.html#a0c1fd00806f16e62c3ee1140799ac02c", null ],
+    [ "type", "a01928.html#a0471c69344137b9065b0c26db9d43639", null ]
 ];

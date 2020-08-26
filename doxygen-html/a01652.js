@@ -1,8 +1,10 @@
 var a01652 =
 [
-    [ "DevicePtrVector", "a01652.html#a39850850b50df785442c15d242d815f3", null ],
-    [ "DevicePtrVector", "a01652.html#a5f5834c7848c1593e4dda8556731c172", null ],
-    [ "DevicePtrVector", "a01652.html#a4190aad2585fa49da5d130316a163741", null ],
-    [ "operator=", "a01652.html#af28db08209588618e620a65c4187f34b", null ],
-    [ "operator=", "a01652.html#a13610008605e9a409dc6b3c7efa4ec66", null ]
+    [ "VisualMap", "a01652.html#abd6e8a7131d62002125d9cdc291719bf", null ],
+    [ "VisualMap", "a01652.html#ac58a4bfb954bb2596131d9dcf1bd54ec", null ],
+    [ "VisualMap", "a01652.html#a9ce12bfdd7e0edfaa4afbcce9764279a", null ],
+    [ "VisualMap", "a01652.html#a5a7913eda1566657722387ae559127ab", null ],
+    [ "operator=", "a01652.html#a7b4d1a9917b3bc796db270228d699411", null ],
+    [ "operator=", "a01652.html#a12a6994b9750a77e0543846be016a263", null ],
+    [ "operator=", "a01652.html#aace9203b0cf03c1813dbb51060a1681d", null ]
 ];

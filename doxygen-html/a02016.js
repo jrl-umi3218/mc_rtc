@@ -1,11 +1,21 @@
 var a02016 =
 [
-    [ "LTDLHandle", "a02016.html#a1d2ebbcff7e52decbb18a9dc96b7671b", null ],
-    [ "~LTDLHandle", "a02016.html#ac3f676e1ef23ac13767069ebf1018af7", null ],
-    [ "LTDLHandle", "a02016.html#aeb254d88dad0c357ba003eb2ef458556", null ],
-    [ "classes", "a02016.html#a5027f7059635b26c598d8547787c70da", null ],
-    [ "get_symbol", "a02016.html#ac9e807398c51fe641aa12610ee1d35fc", null ],
-    [ "operator=", "a02016.html#ab5ad49d16629787bd61589dbf4924c4e", null ],
-    [ "path", "a02016.html#aab506987ae59f5623e4875126b3ad06b", null ],
-    [ "valid", "a02016.html#aad84c0ae1a67095338adf0205ee6cbfe", null ]
+    [ "ObjectDeleter", "a02032.html", "a02032" ],
+    [ "unique_ptr", "a02016.html#a78852c55af0f996b628466db4f6ae828", null ],
+    [ "ObjectLoader", "a02016.html#af60c459a8ffc58fb8329669bd3967bcb", null ],
+    [ "~ObjectLoader", "a02016.html#a8dd305a8add6473f847951f6fcc6bf0c", null ],
+    [ "clear", "a02016.html#a33bbdbec8644e9b0e09077f076c88b0b", null ],
+    [ "create", "a02016.html#a0dce6e455c174537d988c115dc31ce80", null ],
+    [ "create_object", "a02016.html#ab0fb7a187ae96e784f32978127824fd8", null ],
+    [ "create_unique_object", "a02016.html#af0215e4d220b8e17862a1f1e0dcc42ad", null ],
+    [ "enable_sandboxing", "a02016.html#ae6747e5d8a42e424da0e89f2f2ed8363", null ],
+    [ "has_object", "a02016.html#aa0739f917476b8d1af3c3de7b32c1d1b", null ],
+    [ "load_libraries", "a02016.html#a42d500b49baacc44c189bb53264a5185", null ],
+    [ "objects", "a02016.html#acab918dfa002205a257be3c638f94ff2", null ],
+    [ "set_verbosity", "a02016.html#aae9bc7b4461a90a191a7c1bd8f82fc7e", null ],
+    [ "class_name", "a02016.html#aab1c409baa5b97ec1e5b58242c572fbe", null ],
+    [ "deleters_", "a02016.html#a716eefa0204ce8e39886323aaad00a02", null ],
+    [ "enable_sandbox", "a02016.html#a2ed489dea742157c337ac078e99f6dc3", null ],
+    [ "handles_", "a02016.html#a5c219f5a809cfc139409874145d76a20", null ],
+    [ "verbose", "a02016.html#ac2b5e003d3ccd4958a32a83f1981754c", null ]
 ];

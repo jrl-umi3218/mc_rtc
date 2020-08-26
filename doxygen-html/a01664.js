@@ -1,12 +1,10 @@
 var a01664 =
 [
-    [ "Safety", "a01668.html", "a01668" ],
-    [ "Gripper", "a01664.html#a095ecf4ebd9b675117bf1c5b45f093ca", null ],
-    [ "Gripper", "a01664.html#a3fa8ce090be890c8fd518592fe65b25e", null ],
-    [ "Gripper", "a01664.html#acbbf290bba17b0b3becaf8c84da9c066", null ],
-    [ "mimics", "a01664.html#ada9b553ac4484e6920c981bf71a92368", null ],
-    [ "safety", "a01664.html#ae5dccc3ca07db76cec2cd0e70cc0bff5", null ],
-    [ "joints", "a01664.html#a8ed52bd8f3d7ce552f62843c352b3d9c", null ],
-    [ "name", "a01664.html#a4c63d69cf61ff0c5ae634a549eadecd1", null ],
-    [ "reverse_limits", "a01664.html#a61df660109da82ecf0cb5cb476525045", null ]
+    [ "VisualMap", "a01664.html#abd6e8a7131d62002125d9cdc291719bf", null ],
+    [ "VisualMap", "a01664.html#ac58a4bfb954bb2596131d9dcf1bd54ec", null ],
+    [ "VisualMap", "a01664.html#a9ce12bfdd7e0edfaa4afbcce9764279a", null ],
+    [ "VisualMap", "a01664.html#a5a7913eda1566657722387ae559127ab", null ],
+    [ "operator=", "a01664.html#a7b4d1a9917b3bc796db270228d699411", null ],
+    [ "operator=", "a01664.html#a12a6994b9750a77e0543846be016a263", null ],
+    [ "operator=", "a01664.html#aace9203b0cf03c1813dbb51060a1681d", null ]
 ];

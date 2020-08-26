@@ -1,4 +1,6 @@
 var a01736 =
 [
-    [ "fn_t", "a01736.html#a41b09899ae7e27ef7427ce4b6968ea9d", null ]
+    [ "decay_t", "a01736.html#a5b8154625caf14c4dcc919d071c7ba46", null ],
+    [ "type", "a01736.html#a0b4ee875f9490a7d6bef544143160904", null ],
+    [ "is_arithmetic", "a01736.html#a63d9d0405b36451f9c9441f71e3642f6", null ]
 ];

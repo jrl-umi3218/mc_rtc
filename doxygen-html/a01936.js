@@ -1,7 +1,8 @@
 var a01936 =
 [
-    [ "SchemaImpl", "a01936.html#a3b43196dfda7475d0924cc29e2db22fb", null ],
-    [ "write", "a01936.html#ac2fad63fbecf2126101c4bb4bfca5397", null ],
-    [ "write_size", "a01936.html#ad53e00175461bd0bd4facd164cabf656", null ],
-    [ "type", "a01936.html#a2e77582fcb4cdc8af5919f0d3f8ffa0d", null ]
+    [ "RotationROImpl", "a01936.html#a09c1c750a2be23f5554b148d0bdc0355", null ],
+    [ "RotationROImpl", "a01936.html#a4fd7310d27046f65c062596a31abda2b", null ],
+    [ "write", "a01936.html#ac51a9c31ab21b7f4fab3c2888cc728a6", null ],
+    [ "write_size", "a01936.html#afc5b2ee991da77eae0a2ef1623ca19c9", null ],
+    [ "type", "a01936.html#aa295eb5ebba63beadb8f2d9f9348b0fa", null ]
 ];

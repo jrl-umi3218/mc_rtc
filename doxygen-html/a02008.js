@@ -1,21 +1,8 @@
 var a02008 =
 [
-    [ "ObjectDeleter", "a02024.html", "a02024" ],
-    [ "unique_ptr", "a02008.html#a78852c55af0f996b628466db4f6ae828", null ],
-    [ "ObjectLoader", "a02008.html#af60c459a8ffc58fb8329669bd3967bcb", null ],
-    [ "~ObjectLoader", "a02008.html#a8dd305a8add6473f847951f6fcc6bf0c", null ],
-    [ "clear", "a02008.html#a33bbdbec8644e9b0e09077f076c88b0b", null ],
-    [ "create", "a02008.html#a0dce6e455c174537d988c115dc31ce80", null ],
-    [ "create_object", "a02008.html#ab0fb7a187ae96e784f32978127824fd8", null ],
-    [ "create_unique_object", "a02008.html#af0215e4d220b8e17862a1f1e0dcc42ad", null ],
-    [ "enable_sandboxing", "a02008.html#ae6747e5d8a42e424da0e89f2f2ed8363", null ],
-    [ "has_object", "a02008.html#aa0739f917476b8d1af3c3de7b32c1d1b", null ],
-    [ "load_libraries", "a02008.html#a42d500b49baacc44c189bb53264a5185", null ],
-    [ "objects", "a02008.html#acab918dfa002205a257be3c638f94ff2", null ],
-    [ "set_verbosity", "a02008.html#aae9bc7b4461a90a191a7c1bd8f82fc7e", null ],
-    [ "class_name", "a02008.html#aab1c409baa5b97ec1e5b58242c572fbe", null ],
-    [ "deleters_", "a02008.html#a716eefa0204ce8e39886323aaad00a02", null ],
-    [ "enable_sandbox", "a02008.html#a2ed489dea742157c337ac078e99f6dc3", null ],
-    [ "handles_", "a02008.html#a5c219f5a809cfc139409874145d76a20", null ],
-    [ "verbose", "a02008.html#ac2b5e003d3ccd4958a32a83f1981754c", null ]
+    [ "XYThetaROImpl", "a02008.html#ac0153847ff6a36d76c47cae5292be192", null ],
+    [ "XYThetaROImpl", "a02008.html#a17aa4be99cbd7e12a198638912b80726", null ],
+    [ "write", "a02008.html#a2a9635b525b47f997fffcf697ae4b2f5", null ],
+    [ "write_size", "a02008.html#a10d9c0c5738157dac5fdb0e5dec24c21", null ],
+    [ "type", "a02008.html#aff70a2c515c79366813abd70e1d09996", null ]
 ];

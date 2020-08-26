@@ -218,7 +218,7 @@ template&lt;typename Container , typename Callback , typename std::enable_if&lt;
 </div><div class="memdoc">
 
 <p>Converts a container to a string. </p>
-<p>Example: </p><div class="fragment"><div class="line">  <span class="keyword">const</span> <span class="keyword">auto</span> availabeRobots = <a class="code" href="a00747.html#af24adad562092ccd4f760a38c86fcf95">mc_rtc::io::to_string</a>(robots(), [](<span class="keyword">const</span> <a class="code" href="a01632.html">mc_rbdyn::Robot</a> &amp; r) -&gt; <span class="keyword">const</span> std::string &amp; {</div><div class="line">*<span class="keywordflow">return</span> r.<a class="code" href="a01632.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>(); });</div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line">  <span class="keyword">const</span> <span class="keyword">auto</span> availabeRobots = <a class="code" href="a00747.html#af24adad562092ccd4f760a38c86fcf95">mc_rtc::io::to_string</a>(robots(), [](<span class="keyword">const</span> <a class="code" href="a01640.html">mc_rbdyn::Robot</a> &amp; r) -&gt; <span class="keyword">const</span> std::string &amp; {</div><div class="line">*<span class="keywordflow">return</span> r.<a class="code" href="a01640.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>(); });</div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Container</td><td>An iterable container whose unerlying type is convertible to std::string. The container must define Container::value_type.</td></tr>
   </table>
@@ -242,7 +242,7 @@ template&lt;typename Container , typename Callback , typename std::enable_if&lt;
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00724.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00747.html">io</a></li>
-    <li class="footer">Generated on Fri Aug 21 2020 07:31:17 for mc_rtc by
+    <li class="footer">Generated on Wed Aug 26 2020 09:26:11 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

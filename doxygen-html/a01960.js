@@ -1,6 +1,6 @@
 var a01960 =
 [
-    [ "FormattedTableImpl", "a01960.html#a6f17c4273427021ac165e1bf6b297d61", null ],
-    [ "write", "a01960.html#a1b6fc2b88d050a5f7cb79694d8dd2619", null ],
-    [ "write_size", "a01960.html#a1fa99d9e0b44b82827a7e7a0d94272e1", null ]
+    [ "StringInputImpl", "a01960.html#a7bb61ec13b057633c8fde818c5013a52", null ],
+    [ "StringInputImpl", "a01960.html#a350ed0e71968dfab7a2abe8ff9429b68", null ],
+    [ "type", "a01960.html#a252d8382e7f5b9df9d46d805f8265fa1", null ]
 ];

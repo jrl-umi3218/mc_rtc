@@ -1,12 +1,8 @@
 var a01984 =
 [
-    [ "LineConfig", "a01984.html#a15dd7cd44bf0edc5b475448de6e26451", null ],
-    [ "LineConfig", "a01984.html#a0ba859719a9ff99290fec7b8e8add72b", null ],
-    [ "LineConfig", "a01984.html#a05fe24ecd21753185e6da09151f35ce2", null ],
-    [ "load", "a01984.html#ac77f299a585b18903c8628590b8f6a00", null ],
-    [ "write", "a01984.html#a2845b8dfdbdaeb72cb473086c6bdf8a7", null ],
-    [ "write_size", "a01984.html#a76ab2e9dcb6923c3877c2822dec478dd", null ],
-    [ "color", "a01984.html#a4f88bdc8e23bf720a90553abaca4d6ec", null ],
-    [ "style", "a01984.html#a2678eadbdc5908c80e0dcc9c39941a14", null ],
-    [ "width", "a01984.html#a57cd8fdd493c21993724fe26828cf47c", null ]
+    [ "TransformImpl", "a01984.html#a1483ccb550b761697c786f561b11e970", null ],
+    [ "TransformImpl", "a01984.html#acaf2d26843df186ed2ca354b90586163", null ],
+    [ "write", "a01984.html#aec9c9d90b11609bfa840aa7c3fd1a19c", null ],
+    [ "write_size", "a01984.html#a7f8b306036dedba08cb160068ea9b759", null ],
+    [ "type", "a01984.html#aeb03ff7486f988cc5a2f0ef8d96e793b", null ]
 ];

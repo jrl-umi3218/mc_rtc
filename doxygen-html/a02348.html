@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_tasks::SmoothTask&lt; objT &gt; Struct Template Reference</title>
+<title>mc_tasks::PostureTask Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,204 +70,187 @@ $(document).ready(function(){initNavTree('a02348.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="a02345.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_tasks::SmoothTask&lt; objT &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_tasks::PostureTask Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="a02348.html" title="SmoothTask allows to smoothly reach a final weight and objective for a given task. ">SmoothTask</a> allows to smoothly reach a final weight and objective for a given task.  
+<p>A posture task for a given robot.  
  <a href="a02348.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_tasks/SmoothTask.h&gt;</code></p>
+<p><code>#include &lt;mc_tasks/PostureTask.h&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mc_tasks::PostureTask:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="a02348.png" usemap="#mc_5Ftasks::PostureTask_map" alt=""/>
+  <map id="mc_5Ftasks::PostureTask_map" name="mc_5Ftasks::PostureTask_map">
+<area href="a02324.html" title="Represents a generic task. " alt="mc_tasks::MetaTask" shape="rect" coords="0,0,138,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:ad0b3cad2b0a949faddd0259779446d7f"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(double)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#ad0b3cad2b0a949faddd0259779446d7f">w_set_fn</a></td></tr>
-<tr class="memdesc:ad0b3cad2b0a949faddd0259779446d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function to set the weight of the task.  <a href="#ad0b3cad2b0a949faddd0259779446d7f">More...</a><br /></td></tr>
-<tr class="separator:ad0b3cad2b0a949faddd0259779446d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a0447137eacf8f3c534ecc568b5aec1"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; double(void)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a5a0447137eacf8f3c534ecc568b5aec1">w_get_fn</a></td></tr>
-<tr class="memdesc:a5a0447137eacf8f3c534ecc568b5aec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function to get the current weight of the task.  <a href="#a5a0447137eacf8f3c534ecc568b5aec1">More...</a><br /></td></tr>
-<tr class="separator:a5a0447137eacf8f3c534ecc568b5aec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ea4109a61bfbaec12d0b0831c5b01cf"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(const objT &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a5ea4109a61bfbaec12d0b0831c5b01cf">obj_set_fn</a></td></tr>
-<tr class="memdesc:a5ea4109a61bfbaec12d0b0831c5b01cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function to set the objective of a task.  <a href="#a5ea4109a61bfbaec12d0b0831c5b01cf">More...</a><br /></td></tr>
-<tr class="separator:a5ea4109a61bfbaec12d0b0831c5b01cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad253e94eb032bbb85f32e85be175fe81"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; const objT(void)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#ad253e94eb032bbb85f32e85be175fe81">obj_get_fn</a></td></tr>
-<tr class="memdesc:ad253e94eb032bbb85f32e85be175fe81"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function to get the objective of a task.  <a href="#ad253e94eb032bbb85f32e85be175fe81">More...</a><br /></td></tr>
-<tr class="separator:ad253e94eb032bbb85f32e85be175fe81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9ceb8c25b164dea48c57db36aae1f788"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a9ceb8c25b164dea48c57db36aae1f788">SmoothTask</a> (<a class="el" href="a02348.html#ad0b3cad2b0a949faddd0259779446d7f">w_set_fn</a> <a class="el" href="a02348.html#ad8423422fde0f1394bc52751fe14dcfd">w_set</a>, <a class="el" href="a02348.html#a5a0447137eacf8f3c534ecc568b5aec1">w_get_fn</a> <a class="el" href="a02348.html#a0c30bbb84a3b062b0992c022f782ecfe">w_get</a>, <a class="el" href="a02348.html#a5ea4109a61bfbaec12d0b0831c5b01cf">obj_set_fn</a> <a class="el" href="a02348.html#adee8384a9d270de1bc58484c584974d1">obj_set</a>, <a class="el" href="a02348.html#ad253e94eb032bbb85f32e85be175fe81">obj_get_fn</a> <a class="el" href="a02348.html#a1c18f13463da565c13cb7b7f27b6cbfa">obj_get</a>, double <a class="el" href="a02348.html#a5b8834e3bf77ffe9c7f4626dbc6c64c8">weight</a>, const objT &amp;<a class="el" href="a02348.html#a37bce28bfb36f35247f40e400fa1d33e">obj</a>, double percent)</td></tr>
-<tr class="memdesc:a9ceb8c25b164dea48c57db36aae1f788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9ceb8c25b164dea48c57db36aae1f788">More...</a><br /></td></tr>
-<tr class="separator:a9ceb8c25b164dea48c57db36aae1f788"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2615cd1f68019e4b4b8947c9271e2062"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">update</a> ()</td></tr>
-<tr class="memdesc:a2615cd1f68019e4b4b8947c9271e2062"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the task.  <a href="#a2615cd1f68019e4b4b8947c9271e2062">More...</a><br /></td></tr>
-<tr class="separator:a2615cd1f68019e4b4b8947c9271e2062"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a739c37ff2c58b2b906fe1ac7eb08adbe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a739c37ff2c58b2b906fe1ac7eb08adbe">reset</a> (double <a class="el" href="a02348.html#a5b8834e3bf77ffe9c7f4626dbc6c64c8">weight</a>, const objT &amp;<a class="el" href="a02348.html#a37bce28bfb36f35247f40e400fa1d33e">obj</a>, double percent)</td></tr>
-<tr class="memdesc:a739c37ff2c58b2b906fe1ac7eb08adbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the target weight, target objective and interpolation step.  <a href="#a739c37ff2c58b2b906fe1ac7eb08adbe">More...</a><br /></td></tr>
-<tr class="separator:a739c37ff2c58b2b906fe1ac7eb08adbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2236062d8e099d089e8f2c93dc4ba55e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a2236062d8e099d089e8f2c93dc4ba55e">PostureTask</a> (const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, unsigned int rIndex, double <a class="el" href="a02348.html#a15a1e19481a9a67cc4c0a9db183f7463">stiffness</a>=1, double <a class="el" href="a02348.html#aa4725eea7614be3d2bcb54e16aa0f15c">weight</a>=10)</td></tr>
+<tr class="separator:a2236062d8e099d089e8f2c93dc4ba55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac47c167b6a6c59546bbebfcabb5be810"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#ac47c167b6a6c59546bbebfcabb5be810">reset</a> () override</td></tr>
+<tr class="memdesc:ac47c167b6a6c59546bbebfcabb5be810"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the task.  <a href="#ac47c167b6a6c59546bbebfcabb5be810">More...</a><br /></td></tr>
+<tr class="separator:ac47c167b6a6c59546bbebfcabb5be810"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a956fb062557c6d0789eb2424a9a2c06b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a956fb062557c6d0789eb2424a9a2c06b">dimWeight</a> (const Eigen::VectorXd &amp;) override</td></tr>
+<tr class="memdesc:a956fb062557c6d0789eb2424a9a2c06b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does not make much sense for <a class="el" href="a02348.html" title="A posture task for a given robot. ">PostureTask</a>, prefer selectActiveJoints or selectUnactiveJoints.  <a href="#a956fb062557c6d0789eb2424a9a2c06b">More...</a><br /></td></tr>
+<tr class="separator:a956fb062557c6d0789eb2424a9a2c06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add36165bd4f34b697789531972948e22"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#add36165bd4f34b697789531972948e22">dimWeight</a> () const override</td></tr>
+<tr class="memdesc:add36165bd4f34b697789531972948e22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Does not make much sense for <a class="el" href="a02348.html" title="A posture task for a given robot. ">PostureTask</a>, prefer selectActiveJoints or selectUnactiveJoints.  <a href="#add36165bd4f34b697789531972948e22">More...</a><br /></td></tr>
+<tr class="separator:add36165bd4f34b697789531972948e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3d5a7f71a7bfbc3cd92a40a8b5d432b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#af3d5a7f71a7bfbc3cd92a40a8b5d432b">selectActiveJoints</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</td></tr>
+<tr class="memdesc:af3d5a7f71a7bfbc3cd92a40a8b5d432b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup an active joints selector.  <a href="#af3d5a7f71a7bfbc3cd92a40a8b5d432b">More...</a><br /></td></tr>
+<tr class="separator:af3d5a7f71a7bfbc3cd92a40a8b5d432b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afda9cd7d8bab32bc0644da110f06a4e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#afda9cd7d8bab32bc0644da110f06a4e3">selectUnactiveJoints</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</td></tr>
+<tr class="memdesc:afda9cd7d8bab32bc0644da110f06a4e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup an unactive joints selector.  <a href="#afda9cd7d8bab32bc0644da110f06a4e3">More...</a><br /></td></tr>
+<tr class="separator:afda9cd7d8bab32bc0644da110f06a4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53ab7fdbe90e3b309a618bec3bb69859"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a53ab7fdbe90e3b309a618bec3bb69859">resetJointsSelector</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
+<tr class="memdesc:a53ab7fdbe90e3b309a618bec3bb69859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset active joints selection.  <a href="#a53ab7fdbe90e3b309a618bec3bb69859">More...</a><br /></td></tr>
+<tr class="separator:a53ab7fdbe90e3b309a618bec3bb69859"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a529169e0178306b0eec9bf0f428752c7"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a529169e0178306b0eec9bf0f428752c7">eval</a> () const override</td></tr>
+<tr class="memdesc:a529169e0178306b0eec9bf0f428752c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task error.  <a href="#a529169e0178306b0eec9bf0f428752c7">More...</a><br /></td></tr>
+<tr class="separator:a529169e0178306b0eec9bf0f428752c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3327552ee53d6f191b04208baafd9a9"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#ab3327552ee53d6f191b04208baafd9a9">speed</a> () const override</td></tr>
+<tr class="memdesc:ab3327552ee53d6f191b04208baafd9a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task velocity.  <a href="#ab3327552ee53d6f191b04208baafd9a9">More...</a><br /></td></tr>
+<tr class="separator:ab3327552ee53d6f191b04208baafd9a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2299c6226e336a265adc283b2a600639"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a2299c6226e336a265adc283b2a600639">posture</a> (const std::vector&lt; std::vector&lt; double &gt;&gt; &amp;p)</td></tr>
+<tr class="memdesc:a2299c6226e336a265adc283b2a600639"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change posture objective.  <a href="#a2299c6226e336a265adc283b2a600639">More...</a><br /></td></tr>
+<tr class="separator:a2299c6226e336a265adc283b2a600639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3d36333bd6d95d5bc742ad1de920ab7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#ad3d36333bd6d95d5bc742ad1de920ab7">posture</a> () const</td></tr>
+<tr class="memdesc:ad3d36333bd6d95d5bc742ad1de920ab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current posture objective.  <a href="#ad3d36333bd6d95d5bc742ad1de920ab7">More...</a><br /></td></tr>
+<tr class="separator:ad3d36333bd6d95d5bc742ad1de920ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d21d16164f3b18f45923a69a7198423"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a4d21d16164f3b18f45923a69a7198423">jointGains</a> (const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; tasks::qp::JointGains &gt; &amp;jgs)</td></tr>
+<tr class="memdesc:a4d21d16164f3b18f45923a69a7198423"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set joint gains for the posture task.  <a href="#a4d21d16164f3b18f45923a69a7198423">More...</a><br /></td></tr>
+<tr class="separator:a4d21d16164f3b18f45923a69a7198423"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3933b0c231304b52c0c4dc83080143cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a3933b0c231304b52c0c4dc83080143cb">jointStiffness</a> (const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; tasks::qp::JointStiffness &gt; &amp;jss)</td></tr>
+<tr class="memdesc:a3933b0c231304b52c0c4dc83080143cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set joint stiffness for the posture task.  <a href="#a3933b0c231304b52c0c4dc83080143cb">More...</a><br /></td></tr>
+<tr class="separator:a3933b0c231304b52c0c4dc83080143cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb550b5465420b15d564c8df277b849a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#acb550b5465420b15d564c8df277b849a">target</a> (const std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;joints)</td></tr>
+<tr class="memdesc:acb550b5465420b15d564c8df277b849a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set specific joint targets.  <a href="#acb550b5465420b15d564c8df277b849a">More...</a><br /></td></tr>
+<tr class="separator:acb550b5465420b15d564c8df277b849a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15a1e19481a9a67cc4c0a9db183f7463"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a15a1e19481a9a67cc4c0a9db183f7463">stiffness</a> (double s)</td></tr>
+<tr class="memdesc:a15a1e19481a9a67cc4c0a9db183f7463"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set task's stiffness.  <a href="#a15a1e19481a9a67cc4c0a9db183f7463">More...</a><br /></td></tr>
+<tr class="separator:a15a1e19481a9a67cc4c0a9db183f7463"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5110734784d263558b2ae937f2f74705"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a5110734784d263558b2ae937f2f74705">stiffness</a> () const</td></tr>
+<tr class="memdesc:a5110734784d263558b2ae937f2f74705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get task's stiffness.  <a href="#a5110734784d263558b2ae937f2f74705">More...</a><br /></td></tr>
+<tr class="separator:a5110734784d263558b2ae937f2f74705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4725eea7614be3d2bcb54e16aa0f15c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#aa4725eea7614be3d2bcb54e16aa0f15c">weight</a> (double w)</td></tr>
+<tr class="memdesc:aa4725eea7614be3d2bcb54e16aa0f15c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set task's weight.  <a href="#aa4725eea7614be3d2bcb54e16aa0f15c">More...</a><br /></td></tr>
+<tr class="separator:aa4725eea7614be3d2bcb54e16aa0f15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c8b2d553a214e9c07c1f51a4eaa4962"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a0c8b2d553a214e9c07c1f51a4eaa4962">weight</a> () const</td></tr>
+<tr class="memdesc:a0c8b2d553a214e9c07c1f51a4eaa4962"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get task's weight.  <a href="#a0c8b2d553a214e9c07c1f51a4eaa4962">More...</a><br /></td></tr>
+<tr class="separator:a0c8b2d553a214e9c07c1f51a4eaa4962"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab65cad427dd26ba032f9512de7fc374c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#ab65cad427dd26ba032f9512de7fc374c">inSolver</a> () const</td></tr>
+<tr class="memdesc:ab65cad427dd26ba032f9512de7fc374c"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the task is in the solver.  <a href="#ab65cad427dd26ba032f9512de7fc374c">More...</a><br /></td></tr>
+<tr class="separator:ab65cad427dd26ba032f9512de7fc374c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a02324"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02324')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02324.html">mc_tasks::MetaTask</a></td></tr>
+<tr class="memitem:aea3e513dfe137830b38272336451b8cc inherit pub_methods_a02324"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#aea3e513dfe137830b38272336451b8cc">~MetaTask</a> ()</td></tr>
+<tr class="separator:aea3e513dfe137830b38272336451b8cc inherit pub_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_a02324"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#ac090b29eae1954585e32572d40731ca1">type</a> () const</td></tr>
+<tr class="memdesc:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_a02324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the type of the task.  <a href="a02324.html#ac090b29eae1954585e32572d40731ca1">More...</a><br /></td></tr>
+<tr class="separator:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa98468771424ad14d60915a6b52e927b inherit pub_methods_a02324"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#aa98468771424ad14d60915a6b52e927b">name</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:aa98468771424ad14d60915a6b52e927b inherit pub_methods_a02324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a name for the task.  <a href="a02324.html#aa98468771424ad14d60915a6b52e927b">More...</a><br /></td></tr>
+<tr class="separator:aa98468771424ad14d60915a6b52e927b inherit pub_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_a02324"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a94831a7f067fdd5b05e03e83bfc4166b">name</a> () const</td></tr>
+<tr class="memdesc:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_a02324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the task.  <a href="a02324.html#a94831a7f067fdd5b05e03e83bfc4166b">More...</a><br /></td></tr>
+<tr class="separator:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27dbee0df32ae7f803184cb6222fc427 inherit pub_methods_a02324"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a27dbee0df32ae7f803184cb6222fc427">load</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="memdesc:a27dbee0df32ae7f803184cb6222fc427 inherit pub_methods_a02324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load parameters from a Configuration object.  <a href="a02324.html#a27dbee0df32ae7f803184cb6222fc427">More...</a><br /></td></tr>
+<tr class="separator:a27dbee0df32ae7f803184cb6222fc427 inherit pub_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ad8423422fde0f1394bc52751fe14dcfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02348.html#ad0b3cad2b0a949faddd0259779446d7f">w_set_fn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#ad8423422fde0f1394bc52751fe14dcfd">w_set</a></td></tr>
-<tr class="separator:ad8423422fde0f1394bc52751fe14dcfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c30bbb84a3b062b0992c022f782ecfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02348.html#a5a0447137eacf8f3c534ecc568b5aec1">w_get_fn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a0c30bbb84a3b062b0992c022f782ecfe">w_get</a></td></tr>
-<tr class="separator:a0c30bbb84a3b062b0992c022f782ecfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adee8384a9d270de1bc58484c584974d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02348.html#a5ea4109a61bfbaec12d0b0831c5b01cf">obj_set_fn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#adee8384a9d270de1bc58484c584974d1">obj_set</a></td></tr>
-<tr class="separator:adee8384a9d270de1bc58484c584974d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c18f13463da565c13cb7b7f27b6cbfa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02348.html#ad253e94eb032bbb85f32e85be175fe81">obj_get_fn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a1c18f13463da565c13cb7b7f27b6cbfa">obj_get</a></td></tr>
-<tr class="separator:a1c18f13463da565c13cb7b7f27b6cbfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b8834e3bf77ffe9c7f4626dbc6c64c8"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a5b8834e3bf77ffe9c7f4626dbc6c64c8">weight</a></td></tr>
-<tr class="separator:a5b8834e3bf77ffe9c7f4626dbc6c64c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37bce28bfb36f35247f40e400fa1d33e"><td class="memItemLeft" align="right" valign="top">objT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a37bce28bfb36f35247f40e400fa1d33e">obj</a></td></tr>
-<tr class="separator:a37bce28bfb36f35247f40e400fa1d33e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28924d882b21a72fe7998f0ed7ab9d6c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a28924d882b21a72fe7998f0ed7ab9d6c">stepW</a></td></tr>
-<tr class="separator:a28924d882b21a72fe7998f0ed7ab9d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aade06f21c4fbdee53fc75491a02c7db4"><td class="memItemLeft" align="right" valign="top">objT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#aade06f21c4fbdee53fc75491a02c7db4">stepO</a></td></tr>
-<tr class="separator:aade06f21c4fbdee53fc75491a02c7db4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a884b8bb76b6c9a855075927986d4b26f"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a884b8bb76b6c9a855075927986d4b26f">nrIter</a></td></tr>
-<tr class="separator:a884b8bb76b6c9a855075927986d4b26f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5477c67f01c202cf9a659558e71700ce"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a5477c67f01c202cf9a659558e71700ce">iter</a></td></tr>
-<tr class="separator:a5477c67f01c202cf9a659558e71700ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a875f742c1356787157c780f8c82140f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a875f742c1356787157c780f8c82140f1">addToSolver</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
+<tr class="memdesc:a875f742c1356787157c780f8c82140f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the task to a solver.  <a href="#a875f742c1356787157c780f8c82140f1">More...</a><br /></td></tr>
+<tr class="separator:a875f742c1356787157c780f8c82140f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37fc0f741d63ef396c13a2ff3a528772"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a37fc0f741d63ef396c13a2ff3a528772">removeFromSolver</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
+<tr class="memdesc:a37fc0f741d63ef396c13a2ff3a528772"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the task from a solver.  <a href="#a37fc0f741d63ef396c13a2ff3a528772">More...</a><br /></td></tr>
+<tr class="separator:a37fc0f741d63ef396c13a2ff3a528772"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47374edf3d1448c75f6306a0889b22bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#a47374edf3d1448c75f6306a0889b22bf">update</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;) override</td></tr>
+<tr class="memdesc:a47374edf3d1448c75f6306a0889b22bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the task.  <a href="#a47374edf3d1448c75f6306a0889b22bf">More...</a><br /></td></tr>
+<tr class="separator:a47374edf3d1448c75f6306a0889b22bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfb4be7a8cd547a301878ba42ee52fb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02348.html#adfb4be7a8cd547a301878ba42ee52fb3">addToGUI</a> (<a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a> &amp;) override</td></tr>
+<tr class="memdesc:adfb4be7a8cd547a301878ba42ee52fb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add elements to the GUI through the helper.  <a href="#adfb4be7a8cd547a301878ba42ee52fb3">More...</a><br /></td></tr>
+<tr class="separator:adfb4be7a8cd547a301878ba42ee52fb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02324"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02324')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02324.html">mc_tasks::MetaTask</a></td></tr>
+<tr class="memitem:a19bd5d3b7b1b36dae48b516457de16a8 inherit pro_methods_a02324"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a19bd5d3b7b1b36dae48b516457de16a8">addToLogger</a> (<a class="el" href="a02052.html">mc_rtc::Logger</a> &amp;)</td></tr>
+<tr class="memdesc:a19bd5d3b7b1b36dae48b516457de16a8 inherit pro_methods_a02324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add entries to the logger.  <a href="a02324.html#a19bd5d3b7b1b36dae48b516457de16a8">More...</a><br /></td></tr>
+<tr class="separator:a19bd5d3b7b1b36dae48b516457de16a8 inherit pro_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_a02324"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a1db4ea4e03d00823e7ee10b444a697b1">removeFromLogger</a> (<a class="el" href="a02052.html">mc_rtc::Logger</a> &amp;)</td></tr>
+<tr class="memdesc:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_a02324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove entries from the logger.  <a href="a02324.html#a1db4ea4e03d00823e7ee10b444a697b1">More...</a><br /></td></tr>
+<tr class="separator:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_a02324"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a44d85f3f65abc8a5f8965efec40ebe7d">removeFromGUI</a> (<a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
+<tr class="memdesc:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_a02324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove elements from the GUI through the helper.  <a href="a02324.html#a44d85f3f65abc8a5f8965efec40ebe7d">More...</a><br /></td></tr>
+<tr class="separator:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a753237535cc3e200e44ae0fa276f733e inherit pro_methods_a02324"><td class="memItemLeft" align="right" valign="top">virtual std::function&lt; bool(const <a class="el" href="a02324.html">mc_tasks::MetaTask</a> &amp;task, std::string &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a753237535cc3e200e44ae0fa276f733e">buildCompletionCriteria</a> (double dt, const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;config) const</td></tr>
+<tr class="memdesc:a753237535cc3e200e44ae0fa276f733e inherit pro_methods_a02324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add additional completion criterias to <a class="el" href="a01328.html" title="A generic MetaTask completion criteria. ">mc_control::CompletionCriteria</a> object.  <a href="a02324.html#a753237535cc3e200e44ae0fa276f733e">More...</a><br /></td></tr>
+<tr class="separator:a753237535cc3e200e44ae0fa276f733e inherit pro_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_static_methods_a02324"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_a02324')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="a02324.html">mc_tasks::MetaTask</a></td></tr>
+<tr class="memitem:a6f753630a5e0aca76308b4d652e62277 inherit pro_static_methods_a02324"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a6f753630a5e0aca76308b4d652e62277">addToSolver</a> (<a class="el" href="a02324.html">MetaTask</a> &amp;t, <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:a6f753630a5e0aca76308b4d652e62277 inherit pro_static_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af374c0658624a4cb7a6a9f900ab9f69a inherit pro_static_methods_a02324"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#af374c0658624a4cb7a6a9f900ab9f69a">removeFromSolver</a> (<a class="el" href="a02324.html">MetaTask</a> &amp;t, <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:af374c0658624a4cb7a6a9f900ab9f69a inherit pro_static_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a570ef153c01abad5d5642b7a16f44d79 inherit pro_static_methods_a02324"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a570ef153c01abad5d5642b7a16f44d79">update</a> (<a class="el" href="a02324.html">MetaTask</a> &amp;t, <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver)</td></tr>
+<tr class="separator:a570ef153c01abad5d5642b7a16f44d79 inherit pro_static_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac29af31e9eb526d06b6d4ec1d2f3d5bb inherit pro_static_methods_a02324"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#ac29af31e9eb526d06b6d4ec1d2f3d5bb">addToLogger</a> (<a class="el" href="a02324.html">MetaTask</a> &amp;t, <a class="el" href="a02052.html">mc_rtc::Logger</a> &amp;logger)</td></tr>
+<tr class="separator:ac29af31e9eb526d06b6d4ec1d2f3d5bb inherit pro_static_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a256b3b8d5c00bc81ef7726f536f79bfb inherit pro_static_methods_a02324"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a256b3b8d5c00bc81ef7726f536f79bfb">removeFromLogger</a> (<a class="el" href="a02324.html">MetaTask</a> &amp;t, <a class="el" href="a02052.html">mc_rtc::Logger</a> &amp;logger)</td></tr>
+<tr class="separator:a256b3b8d5c00bc81ef7726f536f79bfb inherit pro_static_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73ce0e373c9cf7f5b8db6745c46c3ef4 inherit pro_static_methods_a02324"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a73ce0e373c9cf7f5b8db6745c46c3ef4">addToGUI</a> (<a class="el" href="a02324.html">MetaTask</a> &amp;t, <a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a> &amp;gui)</td></tr>
+<tr class="separator:a73ce0e373c9cf7f5b8db6745c46c3ef4 inherit pro_static_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a780d496b8148d863b2aa0462abcba525 inherit pro_static_methods_a02324"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a780d496b8148d863b2aa0462abcba525">removeFromGUI</a> (<a class="el" href="a02324.html">MetaTask</a> &amp;t, <a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a> &amp;gui)</td></tr>
+<tr class="separator:a780d496b8148d863b2aa0462abcba525 inherit pro_static_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d90bfa419602be569c6098e822cdb0d inherit pro_static_methods_a02324"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a5d90bfa419602be569c6098e822cdb0d">ensureHasJoints</a> (const <a class="el" href="a01640.html">mc_rbdyn::Robot</a> &amp;robot, const std::vector&lt; std::string &gt; &amp;joints, const std::string &amp;prefix)</td></tr>
+<tr class="separator:a5d90bfa419602be569c6098e822cdb0d inherit pro_static_methods_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02324"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02324')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02324.html">mc_tasks::MetaTask</a></td></tr>
+<tr class="memitem:addf8dbe10befa2b37c8e7ea386561775 inherit pro_attribs_a02324"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#addf8dbe10befa2b37c8e7ea386561775">type_</a></td></tr>
+<tr class="separator:addf8dbe10befa2b37c8e7ea386561775 inherit pro_attribs_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e55f0bff9a3d49ba0b92e0a4dff9a6f inherit pro_attribs_a02324"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02324.html#a6e55f0bff9a3d49ba0b92e0a4dff9a6f">name_</a></td></tr>
+<tr class="separator:a6e55f0bff9a3d49ba0b92e0a4dff9a6f inherit pro_attribs_a02324"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename objT&gt;<br />
-struct mc_tasks::SmoothTask&lt; objT &gt;</h3>
-
-<p><a class="el" href="a02348.html" title="SmoothTask allows to smoothly reach a final weight and objective for a given task. ">SmoothTask</a> allows to smoothly reach a final weight and objective for a given task. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">objT</td><td>The type of the objective given to the task </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="ad253e94eb032bbb85f32e85be175fe81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad253e94eb032bbb85f32e85be175fe81">&#9670;&nbsp;</a></span>obj_get_fn</h2>
+<div class="textblock"><p>A posture task for a given robot. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2236062d8e099d089e8f2c93dc4ba55e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2236062d8e099d089e8f2c93dc4ba55e">&#9670;&nbsp;</a></span>PostureTask()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::function&lt;const objT(void)&gt; <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::<a class="el" href="a02348.html#ad253e94eb032bbb85f32e85be175fe81">obj_get_fn</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function to get the objective of a task. </p>
-
-</div>
-</div>
-<a id="a5ea4109a61bfbaec12d0b0831c5b01cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ea4109a61bfbaec12d0b0831c5b01cf">&#9670;&nbsp;</a></span>obj_set_fn</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::function&lt;void(const objT &amp;)&gt; <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::<a class="el" href="a02348.html#a5ea4109a61bfbaec12d0b0831c5b01cf">obj_set_fn</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function to set the objective of a task. </p>
-
-</div>
-</div>
-<a id="a5a0447137eacf8f3c534ecc568b5aec1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a0447137eacf8f3c534ecc568b5aec1">&#9670;&nbsp;</a></span>w_get_fn</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::function&lt;double(void)&gt; <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::<a class="el" href="a02348.html#a5a0447137eacf8f3c534ecc568b5aec1">w_get_fn</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function to get the current weight of the task. </p>
-
-</div>
-</div>
-<a id="ad0b3cad2b0a949faddd0259779446d7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0b3cad2b0a949faddd0259779446d7f">&#9670;&nbsp;</a></span>w_set_fn</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::function&lt;void(double)&gt; <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::<a class="el" href="a02348.html#ad0b3cad2b0a949faddd0259779446d7f">w_set_fn</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function to set the weight of the task. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a9ceb8c25b164dea48c57db36aae1f788"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ceb8c25b164dea48c57db36aae1f788">&#9670;&nbsp;</a></span>SmoothTask()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::<a class="el" href="a02348.html">SmoothTask</a> </td>
+          <td class="memname">mc_tasks::PostureTask::PostureTask </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a02348.html#ad0b3cad2b0a949faddd0259779446d7f">w_set_fn</a>&#160;</td>
-          <td class="paramname"><em>w_set</em>, </td>
+          <td class="paramtype">const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a02348.html#a5a0447137eacf8f3c534ecc568b5aec1">w_get_fn</a>&#160;</td>
-          <td class="paramname"><em>w_get</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a02348.html#a5ea4109a61bfbaec12d0b0831c5b01cf">obj_set_fn</a>&#160;</td>
-          <td class="paramname"><em>obj_set</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a02348.html#ad253e94eb032bbb85f32e85be175fe81">obj_get_fn</a>&#160;</td>
-          <td class="paramname"><em>obj_get</em>, </td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>rIndex</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>weight</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const objT &amp;&#160;</td>
-          <td class="paramname"><em>obj</em>, </td>
+          <td class="paramname"><em>stiffness</em> = <code>1</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>percent</em>&#160;</td>
+          <td class="paramname"><em>weight</em> = <code>10</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -276,51 +259,203 @@ template&lt;typename objT &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">w_set</td><td>Weight setting function</td></tr>
-    <tr><td class="paramname">w_get</td><td>Weight getting function</td></tr>
-    <tr><td class="paramname">obj_set</td><td>Objective setting function</td></tr>
-    <tr><td class="paramname">obj_get</td><td>Objective getting function</td></tr>
-    <tr><td class="paramname">weight</td><td>The target weight</td></tr>
-    <tr><td class="paramname">obj</td><td>The target objective</td></tr>
-    <tr><td class="paramname">percent</td><td>The interpolation speed as a percentage (step-size, 1 is instantaneous, 0 stop the smooth task process) </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="reference">References <a class="el" href="a02348.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask&lt; objT &gt;::reset()</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a739c37ff2c58b2b906fe1ac7eb08adbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a739c37ff2c58b2b906fe1ac7eb08adbe">&#9670;&nbsp;</a></span>reset()</h2>
+<a id="adfb4be7a8cd547a301878ba42ee52fb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfb4be7a8cd547a301878ba42ee52fb3">&#9670;&nbsp;</a></span>addToGUI()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::reset </td>
+          <td class="memname">void mc_tasks::PostureTask::addToGUI </td>
           <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>weight</em>, </td>
+          <td class="paramtype"><a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add elements to the GUI through the helper. </p>
+<p>This will be called by the solver when the task is added.</p>
+<p>The default implementation adds the type of the task under the {"Tasks", name_} category. </p>
+
+<p>Reimplemented from <a class="el" href="a02324.html#a6be5d66b0aba0cac4f65093d5d3b7c7f">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="a875f742c1356787157c780f8c82140f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a875f742c1356787157c780f8c82140f1">&#9670;&nbsp;</a></span>addToSolver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::addToSolver </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add the task to a solver. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver where to add the task </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="a02324.html#a87fbfd10dd81b8ce64a7a9f82d80d078">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="a956fb062557c6d0789eb2424a9a2c06b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a956fb062557c6d0789eb2424a9a2c06b">&#9670;&nbsp;</a></span>dimWeight() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::dimWeight </td>
+          <td>(</td>
+          <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Does not make much sense for <a class="el" href="a02348.html" title="A posture task for a given robot. ">PostureTask</a>, prefer selectActiveJoints or selectUnactiveJoints. </p>
+
+<p>Implements <a class="el" href="a02324.html#a98221b876dab3cc67fbd60036213eb46">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="add36165bd4f34b697789531972948e22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add36165bd4f34b697789531972948e22">&#9670;&nbsp;</a></span>dimWeight() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd mc_tasks::PostureTask::dimWeight </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Does not make much sense for <a class="el" href="a02348.html" title="A posture task for a given robot. ">PostureTask</a>, prefer selectActiveJoints or selectUnactiveJoints. </p>
+
+<p>Implements <a class="el" href="a02324.html#ae6437fb02541a7c63e177ee13170b5a4">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="a529169e0178306b0eec9bf0f428752c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a529169e0178306b0eec9bf0f428752c7">&#9670;&nbsp;</a></span>eval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd mc_tasks::PostureTask::eval </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the task error. </p>
+<p>The vector's dimensions depend on the underlying task </p>
+
+<p>Implements <a class="el" href="a02324.html#ad6451130cee8c71e4045d48f7b8b7a18">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="ab65cad427dd26ba032f9512de7fc374c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab65cad427dd26ba032f9512de7fc374c">&#9670;&nbsp;</a></span>inSolver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_tasks::PostureTask::inSolver </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>True if the task is in the solver. </p>
+
+</div>
+</div>
+<a id="a4d21d16164f3b18f45923a69a7198423"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d21d16164f3b18f45923a69a7198423">&#9670;&nbsp;</a></span>jointGains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::jointGains </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const objT &amp;&#160;</td>
-          <td class="paramname"><em>obj</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>percent</em>&#160;</td>
+          <td class="paramtype">const std::vector&lt; tasks::qp::JointGains &gt; &amp;&#160;</td>
+          <td class="paramname"><em>jgs</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -330,224 +465,460 @@ template&lt;typename objT &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Reset the target weight, target objective and interpolation step. </p>
+<p>Set joint gains for the posture task. </p>
+
+</div>
+</div>
+<a id="a3933b0c231304b52c0c4dc83080143cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3933b0c231304b52c0c4dc83080143cb">&#9670;&nbsp;</a></span>jointStiffness()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::jointStiffness </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; tasks::qp::JointStiffness &gt; &amp;&#160;</td>
+          <td class="paramname"><em>jss</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set joint stiffness for the posture task. </p>
+
+</div>
+</div>
+<a id="a2299c6226e336a265adc283b2a600639"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2299c6226e336a265adc283b2a600639">&#9670;&nbsp;</a></span>posture() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::posture </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::vector&lt; double &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Change posture objective. </p>
+
+</div>
+</div>
+<a id="ad3d36333bd6d95d5bc742ad1de920ab7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3d36333bd6d95d5bc742ad1de920ab7">&#9670;&nbsp;</a></span>posture() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::vector&lt;double&gt; &gt; mc_tasks::PostureTask::posture </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get current posture objective. </p>
+
+</div>
+</div>
+<a id="a37fc0f741d63ef396c13a2ff3a528772"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37fc0f741d63ef396c13a2ff3a528772">&#9670;&nbsp;</a></span>removeFromSolver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::removeFromSolver </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove the task from a solver. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">weight</td><td>New target weight</td></tr>
-    <tr><td class="paramname">obj</td><td>New objective</td></tr>
-    <tr><td class="paramname">percent</td><td>The interpolation speed as a percentage (step-size, 1 is instantaneous, 0 stop the smooth task process) </td></tr>
+    <tr><td class="paramname">solver</td><td>Solver from which to remove the task </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="reference">References <a class="el" href="a02348.html#a5477c67f01c202cf9a659558e71700ce">mc_tasks::SmoothTask&lt; objT &gt;::iter</a>, <a class="el" href="a02348.html#a884b8bb76b6c9a855075927986d4b26f">mc_tasks::SmoothTask&lt; objT &gt;::nrIter</a>, <a class="el" href="a02348.html#a37bce28bfb36f35247f40e400fa1d33e">mc_tasks::SmoothTask&lt; objT &gt;::obj</a>, <a class="el" href="a02348.html#a1c18f13463da565c13cb7b7f27b6cbfa">mc_tasks::SmoothTask&lt; objT &gt;::obj_get</a>, <a class="el" href="a02348.html#aade06f21c4fbdee53fc75491a02c7db4">mc_tasks::SmoothTask&lt; objT &gt;::stepO</a>, <a class="el" href="a02348.html#a28924d882b21a72fe7998f0ed7ab9d6c">mc_tasks::SmoothTask&lt; objT &gt;::stepW</a>, <a class="el" href="a02348.html#a0c30bbb84a3b062b0992c022f782ecfe">mc_tasks::SmoothTask&lt; objT &gt;::w_get</a>, and <a class="el" href="a02348.html#a5b8834e3bf77ffe9c7f4626dbc6c64c8">mc_tasks::SmoothTask&lt; objT &gt;::weight</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a02348.html#a9ceb8c25b164dea48c57db36aae1f788">mc_tasks::SmoothTask&lt; objT &gt;::SmoothTask()</a>.</p>
+<p>Implements <a class="el" href="a02324.html#afa7c055d8cef8f4a8bb1e76689445130">mc_tasks::MetaTask</a>.</p>
 
 </div>
 </div>
-<a id="a2615cd1f68019e4b4b8947c9271e2062"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2615cd1f68019e4b4b8947c9271e2062">&#9670;&nbsp;</a></span>update()</h2>
+<a id="ac47c167b6a6c59546bbebfcabb5be810"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac47c167b6a6c59546bbebfcabb5be810">&#9670;&nbsp;</a></span>reset()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::update </td>
+          <td class="memname">void mc_tasks::PostureTask::reset </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reset the task. </p>
+
+<p>Implements <a class="el" href="a02324.html#a7821083f6def1d54f22ea7c0e223e21a">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="a53ab7fdbe90e3b309a618bec3bb69859"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53ab7fdbe90e3b309a618bec3bb69859">&#9670;&nbsp;</a></span>resetJointsSelector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::resetJointsSelector </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reset active joints selection. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver where the task is involved </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="a02324.html#a745e75d72133feaf9b7aef649485168f">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="af3d5a7f71a7bfbc3cd92a40a8b5d432b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3d5a7f71a7bfbc3cd92a40a8b5d432b">&#9670;&nbsp;</a></span>selectActiveJoints()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::selectActiveJoints </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>activeJointsName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>activeDofs</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Setup an active joints selector. </p>
+<p>This function setups a tasks::qp;:JointsSelector for the task. Only the provided joints will be used to solve the task.</p>
+<dl class="section note"><dt>Note</dt><dd>Calling this method or the related selectUnactiveJoints should reset the current joints' selection</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver where the task is involved</td></tr>
+    <tr><td class="paramname">activeJointsName</td><td>Active joints in the task</td></tr>
+    <tr><td class="paramname">activeDofs</td><td>Allow to select only part of the dofs of a joint </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="a02324.html#a2fd93334634a24c2955f83cbf71926c1">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="afda9cd7d8bab32bc0644da110f06a4e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afda9cd7d8bab32bc0644da110f06a4e3">&#9670;&nbsp;</a></span>selectUnactiveJoints()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::selectUnactiveJoints </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>unactiveJointsName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>unactiveDofs</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Setup an unactive joints selector. </p>
+<p>This function setups a tasks::qp;:JointsSelector for the task. All joints will be used to realize the task except those provided here.</p>
+<dl class="section note"><dt>Note</dt><dd>Calling this method or the related selectActiveJoints should reset the current joints' selection</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver where the task is involved</td></tr>
+    <tr><td class="paramname">unactiveJointsName</td><td>Active joints in the task</td></tr>
+    <tr><td class="paramname">unactiveDofs</td><td>Allow to select only part of the dofs of a joint </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implements <a class="el" href="a02324.html#aa4d582c6cd1934d8a4ac2fed6fb296da">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="ab3327552ee53d6f191b04208baafd9a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3327552ee53d6f191b04208baafd9a9">&#9670;&nbsp;</a></span>speed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd mc_tasks::PostureTask::speed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the task velocity. </p>
+<p>The vector's dimensions depend on the underlying task </p>
+
+<p>Implements <a class="el" href="a02324.html#a2f04c2bc3c4806a13bd383826127f7e1">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="a15a1e19481a9a67cc4c0a9db183f7463"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15a1e19481a9a67cc4c0a9db183f7463">&#9670;&nbsp;</a></span>stiffness() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::stiffness </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set task's stiffness. </p>
+
+</div>
+</div>
+<a id="a5110734784d263558b2ae937f2f74705"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5110734784d263558b2ae937f2f74705">&#9670;&nbsp;</a></span>stiffness() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::PostureTask::stiffness </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get task's stiffness. </p>
+
+</div>
+</div>
+<a id="acb550b5465420b15d564c8df277b849a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb550b5465420b15d564c8df277b849a">&#9670;&nbsp;</a></span>target()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::target </td>
+          <td>(</td>
+          <td class="paramtype">const std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>joints</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set specific joint targets. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">joints</td><td>Map of joint's name to joint's configuration </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a47374edf3d1448c75f6306a0889b22bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47374edf3d1448c75f6306a0889b22bf">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramname"><em>solver</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Update the task. </p>
-<p>This will move the weight to the target weight and the objective to the target objective </p>
+<p>This function (usually) has to be called at every iteration of the solver once it has been added. It should update the state of the task.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">solver</td><td>Solver in which the task is inserted </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="reference">References <a class="el" href="a02348.html#a5477c67f01c202cf9a659558e71700ce">mc_tasks::SmoothTask&lt; objT &gt;::iter</a>, <a class="el" href="a02348.html#a884b8bb76b6c9a855075927986d4b26f">mc_tasks::SmoothTask&lt; objT &gt;::nrIter</a>, <a class="el" href="a02348.html#a37bce28bfb36f35247f40e400fa1d33e">mc_tasks::SmoothTask&lt; objT &gt;::obj</a>, <a class="el" href="a02348.html#a1c18f13463da565c13cb7b7f27b6cbfa">mc_tasks::SmoothTask&lt; objT &gt;::obj_get</a>, <a class="el" href="a02348.html#adee8384a9d270de1bc58484c584974d1">mc_tasks::SmoothTask&lt; objT &gt;::obj_set</a>, <a class="el" href="a02348.html#aade06f21c4fbdee53fc75491a02c7db4">mc_tasks::SmoothTask&lt; objT &gt;::stepO</a>, <a class="el" href="a02348.html#a28924d882b21a72fe7998f0ed7ab9d6c">mc_tasks::SmoothTask&lt; objT &gt;::stepW</a>, <a class="el" href="a02348.html#a0c30bbb84a3b062b0992c022f782ecfe">mc_tasks::SmoothTask&lt; objT &gt;::w_get</a>, <a class="el" href="a02348.html#ad8423422fde0f1394bc52751fe14dcfd">mc_tasks::SmoothTask&lt; objT &gt;::w_set</a>, and <a class="el" href="a02348.html#a5b8834e3bf77ffe9c7f4626dbc6c64c8">mc_tasks::SmoothTask&lt; objT &gt;::weight</a>.</p>
+<p>Implements <a class="el" href="a02324.html#a21e9870f7434084d52299f18f8f86da7">mc_tasks::MetaTask</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a5477c67f01c202cf9a659558e71700ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5477c67f01c202cf9a659558e71700ce">&#9670;&nbsp;</a></span>iter</h2>
+<a id="aa4725eea7614be3d2bcb54e16aa0f15c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4725eea7614be3d2bcb54e16aa0f15c">&#9670;&nbsp;</a></span>weight() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::iter</td>
+          <td class="memname">void mc_tasks::PostureTask::weight </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>w</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a02348.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask&lt; objT &gt;::reset()</a>, and <a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;::update()</a>.</p>
+<p>Set task's weight. </p>
 
 </div>
 </div>
-<a id="a884b8bb76b6c9a855075927986d4b26f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a884b8bb76b6c9a855075927986d4b26f">&#9670;&nbsp;</a></span>nrIter</h2>
+<a id="a0c8b2d553a214e9c07c1f51a4eaa4962"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c8b2d553a214e9c07c1f51a4eaa4962">&#9670;&nbsp;</a></span>weight() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::nrIter</td>
+          <td class="memname">double mc_tasks::PostureTask::weight </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a02348.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask&lt; objT &gt;::reset()</a>, and <a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;::update()</a>.</p>
-
-</div>
-</div>
-<a id="a37bce28bfb36f35247f40e400fa1d33e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37bce28bfb36f35247f40e400fa1d33e">&#9670;&nbsp;</a></span>obj</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">objT <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::obj</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a02348.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask&lt; objT &gt;::reset()</a>, and <a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;::update()</a>.</p>
-
-</div>
-</div>
-<a id="a1c18f13463da565c13cb7b7f27b6cbfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c18f13463da565c13cb7b7f27b6cbfa">&#9670;&nbsp;</a></span>obj_get</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02348.html#ad253e94eb032bbb85f32e85be175fe81">obj_get_fn</a> <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::obj_get</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a02348.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask&lt; objT &gt;::reset()</a>, and <a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;::update()</a>.</p>
-
-</div>
-</div>
-<a id="adee8384a9d270de1bc58484c584974d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adee8384a9d270de1bc58484c584974d1">&#9670;&nbsp;</a></span>obj_set</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02348.html#a5ea4109a61bfbaec12d0b0831c5b01cf">obj_set_fn</a> <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::obj_set</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;::update()</a>.</p>
-
-</div>
-</div>
-<a id="aade06f21c4fbdee53fc75491a02c7db4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aade06f21c4fbdee53fc75491a02c7db4">&#9670;&nbsp;</a></span>stepO</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">objT <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::stepO</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a02348.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask&lt; objT &gt;::reset()</a>, and <a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;::update()</a>.</p>
-
-</div>
-</div>
-<a id="a28924d882b21a72fe7998f0ed7ab9d6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28924d882b21a72fe7998f0ed7ab9d6c">&#9670;&nbsp;</a></span>stepW</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">double <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::stepW</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a02348.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask&lt; objT &gt;::reset()</a>, and <a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;::update()</a>.</p>
-
-</div>
-</div>
-<a id="a0c30bbb84a3b062b0992c022f782ecfe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c30bbb84a3b062b0992c022f782ecfe">&#9670;&nbsp;</a></span>w_get</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02348.html#a5a0447137eacf8f3c534ecc568b5aec1">w_get_fn</a> <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::w_get</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a02348.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask&lt; objT &gt;::reset()</a>, and <a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;::update()</a>.</p>
-
-</div>
-</div>
-<a id="ad8423422fde0f1394bc52751fe14dcfd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8423422fde0f1394bc52751fe14dcfd">&#9670;&nbsp;</a></span>w_set</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02348.html#ad0b3cad2b0a949faddd0259779446d7f">w_set_fn</a> <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::w_set</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;::update()</a>.</p>
-
-</div>
-</div>
-<a id="a5b8834e3bf77ffe9c7f4626dbc6c64c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b8834e3bf77ffe9c7f4626dbc6c64c8">&#9670;&nbsp;</a></span>weight</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename objT &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">double <a class="el" href="a02348.html">mc_tasks::SmoothTask</a>&lt; objT &gt;::weight</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a02348.html#a739c37ff2c58b2b906fe1ac7eb08adbe">mc_tasks::SmoothTask&lt; objT &gt;::reset()</a>, and <a class="el" href="a02348.html#a2615cd1f68019e4b4b8947c9271e2062">mc_tasks::SmoothTask&lt; objT &gt;::update()</a>.</p>
+<p>Get task's weight. </p>
 
 </div>
 </div>
@@ -557,8 +928,8 @@ template&lt;typename objT &gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00725.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a02348.html">SmoothTask</a></li>
-    <li class="footer">Generated on Fri Aug 21 2020 07:31:17 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00725.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a02348.html">PostureTask</a></li>
+    <li class="footer">Generated on Wed Aug 26 2020 09:26:12 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
