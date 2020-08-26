@@ -299,6 +299,16 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return contacts_.size() == 2;
   }
 
+  const mc_rbdyn::Robot & robot() const
+  {
+    return robots_.robot(robotIndex_);
+  }
+
+  const mc_rbdyn::Robot & realRobot() const
+  {
+    return realRobots_.robot(robotIndex_);
+  }
+
   /**
    * @name Setters to reconfigure the stabilizer online
    *
@@ -579,16 +589,6 @@ protected:
   void addToLogger(mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
-
-  const mc_rbdyn::Robot & robot() const
-  {
-    return robots_.robot(robotIndex_);
-  }
-
-  const mc_rbdyn::Robot & realRobot() const
-  {
-    return realRobots_.robot(robotIndex_);
-  }
 
   /**
    * @brief Actual configuration of the stabilizer.

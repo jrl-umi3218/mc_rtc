@@ -252,6 +252,7 @@ void StabilizerStandingState::teardown(Controller & ctl)
   ctl.datastore().remove("StabilizerStandingState::setTorsoStiffness");
   ctl.datastore().remove("StabilizerStandingState::setCoMWeight");
   ctl.datastore().remove("StabilizerStandingState::setCoMStiffness");
+  ctl.datastore().remove(anchorFrameFunction_);
 }
 
 } // namespace fsm
