@@ -97,8 +97,9 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config, const s
     catch(mc_rtc::Configuration::Exception & notAnElem)
     {
       notAnElem.silence();
-      log::error_and_throw<mc_rtc::Configuration::Exception>(
-          "Configuration {} is not valid. It should be a vector or single element.", key);
+      auto msg = fmt::format("Configuration {} is not valid. It should be a vector or single element.", key);
+      log::critical(msg);
+      throw mc_rtc::Configuration::Exception(msg, c);
     }
   }
   return vec;

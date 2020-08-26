@@ -102,16 +102,47 @@ struct has_configuration_save_object : decltype(_has_configuration_save_object::
  */
 struct MC_RTC_UTILS_DLLAPI Configuration
 {
+private:
+  /*! \brief Implementation details
+   *
+   * This structure is meant to hide the JSON library used by mc_rtc
+   * while allowing the template method implementation.
+   */
+  struct MC_RTC_UTILS_DLLAPI Json
+  {
+    bool isArray() const;
+    size_t size() const;
+    Json operator[](size_t idx) const;
+    bool isObject() const;
+    std::vector<std::string> keys() const;
+    Json operator[](const std::string & key) const;
+    bool isNumeric() const;
+    double asDouble() const;
+    void path(std::string & out) const;
+    void * value_;
+    std::shared_ptr<void> doc_;
+  };
 
+public:
   /*! \brief Exception thrown by this class when something bad occurs
    */
   struct MC_RTC_UTILS_DLLAPI Exception : public std::exception
   {
     /*! \brief Constructor
      *
-     * \param msg The message that will be returned by what()
+     * \param msg Exception message
+     *
+     * \param v Json value that was the source of the exception
      */
-    Exception(const std::string & msg);
+    Exception(const std::string & msg, const Json & v);
+
+    /*! \brief Constructor
+     *
+     * \param msg Exception message
+     *
+     * \param c Configuration object that was the source of the exception
+     */
+    Exception(const std::string & msg, const Configuration & c) : Exception(msg, c.v) {}
 
     ~Exception() noexcept;
 
@@ -119,7 +150,11 @@ struct MC_RTC_UTILS_DLLAPI Configuration
 
     void silence() noexcept;
 
-    std::string msg;
+    const std::string & msg() const noexcept;
+
+  private:
+    mutable std::string msg_;
+    mutable Json v_;
   };
 
   /*! \brief Deprecated, see has
@@ -295,7 +330,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not a vector");
+      throw Configuration::Exception("Stored Json value is not a vector", v);
     }
   }
 
@@ -319,7 +354,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not an array or its size is incorrect");
+      throw Configuration::Exception("Stored Json value is not an array or its size is incorrect", v);
     }
   }
 
@@ -337,7 +372,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not an array of size 2");
+      throw Configuration::Exception("Stored Json value is not an array of size 2", v);
     }
   }
 
@@ -363,7 +398,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not an object");
+      throw Configuration::Exception("Stored Json value is not an object", v);
     }
   }
 
@@ -384,14 +419,14 @@ struct MC_RTC_UTILS_DLLAPI Configuration
         auto ins = ret.insert(Configuration(v[i]));
         if(!ins.second)
         {
-          throw Configuration::Exception("Stored Json set does not hold unique values");
+          throw Configuration::Exception("Stored Json set does not hold unique values", v);
         }
       }
       return ret;
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not an array");
+      throw Configuration::Exception("Stored Json value is not an array", v);
     }
   }
 
@@ -412,14 +447,14 @@ struct MC_RTC_UTILS_DLLAPI Configuration
         auto ins = ret.insert(Configuration(v[i]));
         if(!ins.second)
         {
-          throw Configuration::Exception("Stored Json set does not hold unique values");
+          throw Configuration::Exception("Stored Json set does not hold unique values", v);
         }
       }
       return ret;
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not an array");
+      throw Configuration::Exception("Stored Json value is not an array", v);
     }
   }
 
@@ -1252,24 +1287,6 @@ struct MC_RTC_UTILS_DLLAPI Configuration
   ConfigurationArrayIterator end() const;
 
 private:
-  /*! \brief Implementation details
-   *
-   * This structure is meant to hide the JSON library used by mc_rtc
-   * while allowing the template method implementation.
-   */
-  struct MC_RTC_UTILS_DLLAPI Json
-  {
-    bool isArray() const;
-    size_t size() const;
-    Json operator[](size_t idx) const;
-    bool isObject() const;
-    std::vector<std::string> keys() const;
-    Json operator[](const std::string & key) const;
-    bool isNumeric() const;
-    double asDouble() const;
-    void * value_;
-    std::shared_ptr<void> doc_;
-  };
   Json v;
   Configuration(const Json & v);
 };

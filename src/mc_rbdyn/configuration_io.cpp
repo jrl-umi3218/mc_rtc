@@ -435,8 +435,9 @@ Eigen::Matrix<double, 6, Eigen::Dynamic> ConfigurationLoader<Eigen::Matrix<doubl
   auto data = config("data");
   if(static_cast<Eigen::DenseIndex>(data.size()) != 6 * m.cols())
   {
-    mc_rtc::log::error_and_throw<mc_rtc::Configuration::Exception>(
-        "Stored data size ({}) is different from the expected size ({})", data.size(), 6 * m.cols());
+    auto msg = fmt::format("Stored data size ({}) is different from the expected size ({})", data.size(), 6 * m.cols());
+    mc_rtc::log::critical(msg);
+    throw mc_rtc::Configuration::Exception(msg, data);
   }
   for(Eigen::DenseIndex i = 0; i < 6; ++i)
   {
