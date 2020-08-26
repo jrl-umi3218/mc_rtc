@@ -3,7 +3,7 @@
   <div class="card-header">
     <h6 class="text-primary font-weight-bold">{{ include.schema.title | default: "object" }}</h6>
     <div class="float-right">
-      <small class="text-muted text-right">{{ include.schema.description }}</small>
+      <small class="text-muted text-right">{{include.schema.description | liquefy}}</small>
     </div>
   </div>
   <div class="card-body">

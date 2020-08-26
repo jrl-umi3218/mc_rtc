@@ -8,6 +8,7 @@
     { 
       "title": "Eigen::Vector3d",
       "type": "array",
+      "description": "{% doxygen mc_rbyn::lipm_stabilizer::SafetyThresholds %}",
       "items":
       [
         { "type": "number", "default": 1000 },
