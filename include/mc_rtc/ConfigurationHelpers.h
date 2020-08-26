@@ -116,12 +116,9 @@ std::vector<T> fromVectorOrElement(const mc_rtc::Configuration & config, const s
  *   pitch: 0.3
  *   \code{.yaml}
  *
- * @param key The key used to store the value
  * @param rotation The rotation to modify. Only the DoFs specified in the
  * configuration will be overwritten, other DoFs will remain unchanged.
  */
-void MC_RTC_UTILS_DLLAPI overwriteRotationRPY(const mc_rtc::Configuration & config,
-                                              const std::string & key,
-                                              Eigen::Matrix3d & rotation);
+void MC_RTC_UTILS_DLLAPI overwriteRotationRPY(const mc_rtc::Configuration & config, Eigen::Matrix3d & rotation);
 
 } // namespace mc_rtc

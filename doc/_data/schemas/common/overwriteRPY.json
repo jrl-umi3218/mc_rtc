@@ -1,0 +1,11 @@
+{
+  "allOf":
+  [
+    {
+      "$ref": "/../../common/rpy.json"
+    },
+    {
+      "description": "Overwrites the specified roll/pitch/yaw axes with the provided angle (in world frame) while keeping the other axes unchanged (example: keep world yaw rotation intact, but align roll and ptich with the floor plane)"
+    }
+  ]
+}

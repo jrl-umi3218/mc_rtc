@@ -1,10 +1,10 @@
 {
   "type": "object",
   "title": "Pelvis task parameters",
-  "description": "Pelvis task parameters (regularization)",
+  "description": "Pelvis task parameters (regularization). This task contributes to stabilization by keeping the pelvis aligned with the contacts orientation. Without it, the robot has been known to vibrate, lower the gains with caution.",
   "properties":
   {
-    "weight": { "type": "number", "minimum": 0 },
-    "stiffness": { "type": "number", "minimum": 0 }
+    "weight": { "type": "number", "minimum": 0, "default": "100" },
+    "stiffness": { "type": "number", "minimum": 0, "default": "10" }
   }
 }

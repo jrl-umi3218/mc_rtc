@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "title": "Safety thresholds for the stabilizer parameters",
+  "description": "These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See {% doxygen mc_rbdyn::lipm_stabilizer::SafetyThresholds %}",
+  "properties":
+  {
+    "MAX_AVERAGE_DCM_ERROR": { "type": "number", "minimum": 0, "default": 0.05 },
+    "MAX_COP_ADMITTANCE": { "type": "number", "minimum": 0, "default": 0.1 },
+    "MAX_DCM_D_GAIN": { "type": "number", "minimum": 0, "default": 2 },
+    "MAX_DCM_I_GAIN": { "type": "number", "minimum": 0, "default": 100 },
+    "MAX_DCM_P_GAIN": { "type": "number", "minimum": 0, "default": 20 },
+    "MAX_DFZ_ADMITTANCE": { "type": "number", "minimum": 0, "default": 5e-4 },
+    "MAX_DFZ_DAMPING": { "type": "number", "minimum": 0, "default": 10 },
+    "MAX_FDC_RX_VEL": { "type": "number", "minimum": 0, "default": 0.2 },
+    "MAX_FDC_RY_VEL": { "type": "number", "minimum": 0, "default": 0.2 },
+    "MAX_FDC_RZ_VEL": { "type": "number", "minimum": 0, "default": 0.2 },
+    "MIN_DS_PRESSURE": { "type": "number", "minimum": 0, "default": 15 },
+    "MIN_NET_TOTAL_FORCE_ZMP": { "type": "number", "minimum": 0, "default": 1 }
+  }
+}

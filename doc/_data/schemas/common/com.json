@@ -1,12 +1,22 @@
 {
   "type": "object",
   "title": "CoM task parameters",
-  "description": "CoM task parameters",
+  "description": "CoM task parameters. The CoM task should have a higher importance than all other active tasks. Too low gains will degrade the stabilizer's tracking performance",
   "properties":
   {
-    "stiffness":  { "$ref": "/../../Eigen/Vector3d.json" },
-    "weight": { "type": "number", "minimum": 0 },
-    "height": { "type": "number", "minimum": 0 },
+    "stiffness":  
+    { 
+      "title": "Eigen::Vector3d",
+      "type": "array",
+      "items":
+      [
+        { "type": "number", "default": 1000 },
+        { "type": "number", "default": 1000 },
+        { "type": "number", "default": 100 }
+      ]
+    },
+    "weight": { "type": "number", "minimum": 0, "default": 1000, "description": "Task's weight."  },
+    "height": { "type": "number", "minimum": 0, "default": 0.84, "description": "Desired height of the CoM."},
     "activeJoints": { "type": "array", "items": { "type": "string" } }
   }
 }

@@ -6,8 +6,6 @@ Stabilizer::Standing:
   stiffness: 5
   StabilizerConfig:
     type: lipm_stabilizer
-    leftFootSurface: LeftFootCenter
-    rightFootSurface: RightFootCenter
     enabled: true
     contacts: [Left, Right]
     admittance:
@@ -16,12 +14,12 @@ Stabilizer::Standing:
         angular: [0.5,0.5,0.5]
     Left:
       # Keep the yaw intact, align roll/pitch with the (flat) ground
-      overwriteRotationRPY:
+      overwriteRPY:
         roll: 0
         pitch: 0
       height: 0
     Right:
-      overwriteRotationRPY:
+      overwriteRPY:
         roll: 0
         pitch: 0
       height: 0
@@ -34,7 +32,7 @@ Stabilizer::Standing:
 ##
 Stabilizer::GoCenter:
   base: Stabilizer::Standing
-  above: Center
+  above: CenterSurfaces
   completion:
     dcmEval: [0.005, 0.005, 0.05]
 
@@ -43,14 +41,14 @@ Stabilizer::GoCenter:
 ##
 Stabilizer::GoLeft:
   base: Stabilizer::GoCenter
-  above: LeftAnkle
+  above: LeftSurface
 
 ##
 # Make the CoM move to a point above the right foot ankle
 ##
 Stabilizer::GoRight:
   base: Stabilizer::GoLeft
-  above: RightAnkle
+  above: RightSurface
 
 ###
 # Go to half sitting posture in parallel to the stabilizer

@@ -18,7 +18,7 @@
     {% include json_schema_item.html data=include.data id=include.id %}
   </td>
   <td>
-    <span class="text-secondary"><small>{{include.description}}</small></span>
+    <span class="text-secondary"><small>{{include.description | liquefy}}</small></span>
   </td>
   {% else %}
   <td colspan="2">

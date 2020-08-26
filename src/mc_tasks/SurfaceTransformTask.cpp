@@ -100,6 +100,12 @@ void SurfaceTransformTask::load(mc_solver::QPSolver & solver, const mc_rtc::Conf
     X_0_t = move * X_0_t;
   }
 
+  if(config.has("overwriteRPY"))
+  {
+    // Only modify the specified DoF of the rotation
+    mc_rtc::overwriteRotationRPY(config("overwriteRPY"), X_0_t.rotation());
+  }
+
   this->target(X_0_t);
 
   TrajectoryBase::load(solver, config);

@@ -4,7 +4,7 @@
   "description": "Vertical drift compensation parameters",
   "properties":
   {
-    "frequency": { "type": "number", "minimum": 0 },
-    "stiffness": { "type": "number", "minimum": 0 }
+    "frequency": { "type": "number", "minimum": 0, "default": 1, "description": "Frequency used in double-support vertical drift compensation"  },
+    "stiffness": { "type": "number", "minimum": 0, "default": 1000, "description": "Stiffness used in single-support vertical drift compensation" }
   }
 }

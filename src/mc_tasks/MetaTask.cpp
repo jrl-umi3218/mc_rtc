@@ -35,7 +35,7 @@ void MetaTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & 
   {
     selectActiveJoints(solver, config("activeJoints"));
   }
-  if(config.has("unactiveJoints"))
+  else if(config.has("unactiveJoints"))
   {
     selectUnactiveJoints(solver, config("unactiveJoints"));
   }

@@ -1,12 +1,49 @@
 {
   "type": "object",
   "title": "Admittance Parameters",
-  "description": "Admittance parameters",
+  "description": "Admittance parameters for the contact tasks. Contacts are expected to be free to move along the pitch and roll axis.",
   "properties":
   {
-    "cop":  { "$ref": "/../../Eigen/Vector2d.json" },
-    "dfz": { "type": "number", "minimum": 0 },
-    "dfz_damping": { "type": "number", "minimum": 0 },
-    "maxVel": { "$ref": "/../../SpaceVecAlg/MotionVecd.json", "description": "maximum velocity of the cop tasks" }
+    "cop":
+    {
+      "type": "array",
+      "title": "Eigen::Vector2d",
+      "items":
+      [
+        { "type": "number", "default": 0 },
+        { "type": "number", "default": 0 }
+      ]
+    },
+    "dfz": { "type": "number", "minimum": 0, "default": 1e-4 },
+    "dfz_damping": { "type": "number", "minimum": 0, "default": 0 },
+    "maxVel":
+    {
+      "type": "object",
+      "title": "sva::MotionVecd",
+      "description": "maximum velocity of the cop tasks" ,
+      "properties":
+      {
+        "angular":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "minimum": 0, "default": 0.3 },
+            { "type": "number", "minimum": 0, "default": 0.3 },
+            { "type": "number", "minimum": 0, "default": 0.3 }
+          ]
+        },
+        "linear":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "minimum": 0, "default": 0.1 },
+            { "type": "number", "minimum": 0, "default": 0.1 },
+            { "type": "number", "minimum": 0, "default": 0.1 }
+          ]
+        }
+      }
+    }
   }
 }

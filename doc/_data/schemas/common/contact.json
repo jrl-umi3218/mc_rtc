@@ -1,11 +1,67 @@
 {
   "type": "object",
   "title": "Contact tasks parameters",
-  "description": "Contact tasks parameters (CoP tasks)",
+  "description": "Contact tasks parameters (CoP tasks). These tasks have very high weight to simulate a contact constraint in task space.",
   "properties":
   {
-    "weight": { "type": "number", "minimum": 0 },
-    "stiffness": { "type": "number", "minimum": 0 },
-    "damping": { "type": "number", "minimum": 0 }
+    "weight": { "type": "number", "minimum": 0, "default": 100000 },
+    "stiffness":
+    {
+      "type": "object",
+      "title": "sva::MotionVecd",
+      "description": "Dimensional stiffness for the CoP tasks",
+      "properties":
+      {
+        "angular":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 }
+          ]
+        },
+        "linear":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 }
+          ]
+        }
+      }
+    },
+    "damping":
+    {
+      "type": "object",
+      "title": "sva::MotionVecd",
+      "description": "Dimensional damping for the CoP tasks",
+      "properties":
+      {
+        "angular":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 }
+          ]
+        },
+        "linear":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 }
+          ]
+        }
+      }
+    }
   }
 }

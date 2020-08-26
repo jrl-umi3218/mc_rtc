@@ -56,10 +56,24 @@ void StabilizerStandingState::start(Controller & ctl)
     {
       targetCoP(stabilizerTask_->contactAnklePose(ContactState::Right).translation());
     }
-    else if(above == "Center")
+    else if(above == "CenterAnkles")
     {
       targetCoP(sva::interpolate(stabilizerTask_->contactAnklePose(ContactState::Left),
                                  stabilizerTask_->contactAnklePose(ContactState::Right), 0.5)
+                    .translation());
+    }
+    else if(above == "LeftSurface")
+    {
+      targetCoP(ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Left)).translation());
+    }
+    else if(above == "RightSurface")
+    {
+      targetCoP(ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Right)).translation());
+    }
+    else if(above == "CenterSurfaces")
+    {
+      targetCoP(sva::interpolate(ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Left)),
+                                 ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Right)), 0.5)
                     .translation());
     }
     else if(ctl.realRobot().hasSurface(above))
@@ -70,7 +84,8 @@ void StabilizerStandingState::start(Controller & ctl)
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "[StabilizerStandingState] Requested standing above {} but this is neither one of the state target "
-          "(LeftAnkle, RightAnkle, Center), nor a valid robot surface",
+          "(LeftAnkle, RightAnkle, CenterAnkles, LeftSurface, RightSurface, CenterSurfaces), nor a valid robot surface "
+          "name",
           above);
     }
   }
@@ -140,6 +155,18 @@ void StabilizerStandingState::start(Controller & ctl)
   ctl.datastore().make_call(
       "StabilizerStandingState::setConfiguration",
       [this](const mc_rbdyn::lipm_stabilizer::StabilizerConfiguration & conf) { stabilizerTask_->configure(conf); });
+  ctl.datastore().make_call("StabilizerStandingState::setPelvisWeight",
+                            [this](double w) { stabilizerTask_->pelvisWeight(w); });
+  ctl.datastore().make_call("StabilizerStandingState::setPelvisStiffness",
+                            [this](double s) { stabilizerTask_->pelvisStiffness(s); });
+  ctl.datastore().make_call("StabilizerStandingState::setTorsoWeight",
+                            [this](double w) { stabilizerTask_->torsoWeight(w); });
+  ctl.datastore().make_call("StabilizerStandingState::setTorsoStiffness",
+                            [this](double s) { stabilizerTask_->torsoStiffness(s); });
+  ctl.datastore().make_call("StabilizerStandingState::setCoMWeight",
+                            [this](double w) { stabilizerTask_->comWeight(w); });
+  ctl.datastore().make_call("StabilizerStandingState::setCoMStiffness",
+                            [this](const Eigen::Vector3d & s) { stabilizerTask_->comStiffness(s); });
 }
 
 void StabilizerStandingState::targetCoP(const Eigen::Vector3d & cop)
@@ -219,6 +246,12 @@ void StabilizerStandingState::teardown(Controller & ctl)
   ctl.datastore().remove("StabilizerStandingState::setDamping");
   ctl.datastore().remove("StabilizerStandingState::getConfiguration");
   ctl.datastore().remove("StabilizerStandingState::setConfiguration");
+  ctl.datastore().remove("StabilizerStandingState::setPelvisWeight");
+  ctl.datastore().remove("StabilizerStandingState::setPelvisStiffness");
+  ctl.datastore().remove("StabilizerStandingState::setTorsoWeight");
+  ctl.datastore().remove("StabilizerStandingState::setTorsoStiffness");
+  ctl.datastore().remove("StabilizerStandingState::setCoMWeight");
+  ctl.datastore().remove("StabilizerStandingState::setCoMStiffness");
 }
 
 } // namespace fsm

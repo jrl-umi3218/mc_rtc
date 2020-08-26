@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include <mc_filter/utils/clamp.h>
 #include <mc_rbdyn/api.h>
 #include <mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h>
 #include <mc_rtc/Configuration.h>
@@ -68,6 +69,86 @@ namespace lipm_stabilizer
 {
 
 /**
+ * @brief Stabilizer safety thresholds
+ *
+ * The corresponding stabilization entries should be clamped within those limits
+ *
+ * \warning Developper note: Do not change the default thresholds here, it is likely
+ * that robot modules and users do not override every single parameter value,
+ * and modifying their default might have serious consequences.
+ */
+struct SafetyThresholds
+{
+  double MAX_AVERAGE_DCM_ERROR = 0.05; /**< Maximum average (integral) DCM error in [m] */
+  double MAX_COP_ADMITTANCE = 0.1; /**< Maximum CoP admittance for foot damping control */
+  double MAX_DCM_D_GAIN = 2.; /**< Maximum DCM derivative gain (no unit) */
+  double MAX_DCM_I_GAIN = 100.; /**< Maximum DCM average integral gain in [Hz] */
+  double MAX_DCM_P_GAIN = 20.; /**< Maximum DCM proportional gain in [Hz] */
+  double MAX_DFZ_ADMITTANCE = 5e-4; /**< Maximum admittance in [s] / [kg] for foot force difference control */
+  double MAX_DFZ_DAMPING = 10.; /**< Maximum normalized damping in [Hz] for foot force difference control */
+  double MAX_FDC_RX_VEL = 0.2; /**< Maximum x-axis angular velocity in [rad] / [s] for foot damping control. */
+  double MAX_FDC_RY_VEL = 0.2; /**< Maximum y-axis angular velocity in [rad] / [s] for foot damping control. */
+  double MAX_FDC_RZ_VEL = 0.2; /**< Maximum z-axis angular velocity in [rad] / [s] for foot damping control. */
+  double MIN_DS_PRESSURE = 15.; /**< Minimum normal contact force in DSP, used to avoid low-pressure
+                                                    targets when close to contact switches. */
+  /**< Minimum force for valid ZMP computation (throws otherwise) */
+  double MIN_NET_TOTAL_FORCE_ZMP = 1.;
+};
+} // namespace lipm_stabilizer
+} // namespace mc_rbdyn
+
+namespace mc_rtc
+{
+/**
+ * @brief Read-write stabilizer safety thresholds from configuration
+ */
+template<>
+struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::SafetyThresholds>
+{
+  static mc_rbdyn::lipm_stabilizer::SafetyThresholds load(const mc_rtc::Configuration & config)
+  {
+    mc_rbdyn::lipm_stabilizer::SafetyThresholds safety;
+    config("MAX_AVERAGE_DCM_ERROR", safety.MAX_AVERAGE_DCM_ERROR);
+    config("MAX_COP_ADMITTANCE", safety.MAX_COP_ADMITTANCE);
+    config("MAX_DCM_D_GAIN", safety.MAX_DCM_D_GAIN);
+    config("MAX_DCM_I_GAIN", safety.MAX_DCM_I_GAIN);
+    config("MAX_DCM_P_GAIN", safety.MAX_DCM_P_GAIN);
+    config("MAX_DFZ_ADMITTANCE", safety.MAX_DFZ_ADMITTANCE);
+    config("MAX_DFZ_DAMPING", safety.MAX_DFZ_DAMPING);
+    config("MAX_FDC_RX_VEL", safety.MAX_FDC_RX_VEL);
+    config("MAX_FDC_RY_VEL", safety.MAX_FDC_RY_VEL);
+    config("MAX_FDC_RZ_VEL", safety.MAX_FDC_RZ_VEL);
+    config("MIN_DS_PRESSURE", safety.MIN_DS_PRESSURE);
+    config("MIN_NET_TOTAL_FORCE_ZMP", safety.MIN_NET_TOTAL_FORCE_ZMP);
+    return safety;
+  }
+
+  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::SafetyThresholds & safety)
+  {
+    mc_rtc::Configuration config;
+    config.add("MAX_AVERAGE_DCM_ERROR", safety.MAX_AVERAGE_DCM_ERROR);
+    config.add("MAX_COP_ADMITTANCE", safety.MAX_COP_ADMITTANCE);
+    config.add("MAX_DCM_D_GAIN", safety.MAX_DCM_D_GAIN);
+    config.add("MAX_DCM_I_GAIN", safety.MAX_DCM_I_GAIN);
+    config.add("MAX_DCM_P_GAIN", safety.MAX_DCM_P_GAIN);
+    config.add("MAX_DFZ_ADMITTANCE", safety.MAX_DFZ_ADMITTANCE);
+    config.add("MAX_DFZ_DAMPING", safety.MAX_DFZ_DAMPING);
+    config.add("MAX_FDC_RX_VEL", safety.MAX_FDC_RX_VEL);
+    config.add("MAX_FDC_RY_VEL", safety.MAX_FDC_RY_VEL);
+    config.add("MAX_FDC_RZ_VEL", safety.MAX_FDC_RZ_VEL);
+    config.add("MIN_DS_PRESSURE", safety.MIN_DS_PRESSURE);
+    config.add("MIN_NET_TOTAL_FORCE_ZMP", safety.MIN_NET_TOTAL_FORCE_ZMP);
+    return config;
+  }
+};
+} // namespace mc_rtc
+
+namespace mc_rbdyn
+{
+namespace lipm_stabilizer
+{
+
+/**
  * @brief Configuration of the LIPMStabilizer. This configuration is meant to be
  * overriden from the RobotModule, and the user YAML configuration of the
  * stabilizer task.
@@ -80,6 +161,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+  SafetyThresholds safetyThresholds;
   FDQPWeights fdqpWeights;
 
   double friction = 0.7; /**< Friction coefficient. Same for both feet */
@@ -120,14 +202,32 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   double vdcFrequency = 1.; /**< Frequency used in double-support vertical drift compensation */
   double vdcStiffness = 1000.; /**< Stiffness used in single-support vertical drift compensation */
 
+  /**
+   * @brief Checks that the chosen parameters are within the parameters defined
+   * by the SafetyThresholds
+   */
+  void clampGains()
+  {
+    using ::mc_filter::utils::clampInPlaceAndWarn;
+    const auto & s = safetyThresholds;
+    clampInPlaceAndWarn(copAdmittance.x(), 0., s.MAX_COP_ADMITTANCE, "CoP x-admittance");
+    clampInPlaceAndWarn(copAdmittance.y(), 0., s.MAX_COP_ADMITTANCE, "CoP y-admittance");
+    clampInPlaceAndWarn(dcmDerivGain, 0., s.MAX_DCM_D_GAIN, "DCM deriv x-gain");
+    clampInPlaceAndWarn(dcmIntegralGain, 0., s.MAX_DCM_I_GAIN, "DCM integral x-gain");
+    clampInPlaceAndWarn(dcmPropGain, 0., s.MAX_DCM_P_GAIN, "DCM prop x-gain");
+    clampInPlaceAndWarn(dfzAdmittance, 0., s.MAX_DFZ_ADMITTANCE, "DFz admittance");
+    clampInPlaceAndWarn(dfzDamping, 0., s.MAX_DFZ_DAMPING, "DFz admittance");
+  }
+
   void load(const mc_rtc::Configuration & config)
   {
-    config("fdqp_weights", fdqpWeights);
+    config("safety_tresholds", safetyThresholds);
 
+    config("fdqp_weights", fdqpWeights);
     config("leftFootSurface", leftFootSurface);
     config("rightFootSurface", rightFootSurface);
-    config("friction", friction);
     config("torsoBodyName", torsoBodyName);
+    config("friction", friction);
 
     if(config.has("admittance"))
     {
@@ -203,6 +303,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   mc_rtc::Configuration save() const
   {
     mc_rtc::Configuration conf;
+    conf.add("safety_tresholds", safetyThresholds);
     conf.add("fdqp_weights", fdqpWeights);
 
     conf.add("torsoBodyName", torsoBodyName);

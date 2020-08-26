@@ -1,77 +1,52 @@
 {
   "title": "mc_tasks::lipm_stabilizer::StabilizerTask",
-  "description": "The stabilizer task attempts to make the real system track as best as possible the desired state of the CoM (position, velocity, acceleration) and ZMP based on the LIPM model. The reference desired dynamic state must be valid, and continuous (i.e obtained from a walking MPC). A suitable state observation pipeline is required to observe the CoM position and velocity and ZMP of the real system (e.g [Encoder, KinematicInertialObserver]). Default gains are defined in the RobotModule and may be overriden from configuration.<br />See the <a href=\"https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/lipm-stabilizer.html\">LIPM Stabilizer tutorial for further details.</a>",
+  "description": "The stabilizer task attempts to make the real system track as best as possible the desired state of the CoM (position, velocity, acceleration) and ZMP based on the LIPM model. The reference desired dynamic state must be valid, and continuous (i.e obtained from a walking MPC). A suitable state observation pipeline is required to observe the CoM position and velocity and ZMP of the real system (e.g [Encoder, KinematicInertialObserver]). Default gains are defined in the RobotModule and may be overriden from configuration (the default gains reported in this schemas are those of mc_rtc in case none is provided by the RobotModule).<br />See the <a href=\"{{site.baseurl}}/tutorials/recipes/lipm-stabilizer.html\">LIPM Stabilizer tutorial</a> and the API Documentation {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %} for further information.",
   "type": "object",
-  "properties":
-  {
-    "type": { "enum": ["lipm_stabilizer"] },
-    "name": { "type": "string" },
-
-    "robot": { "$ref": "/../../common/MetaTask_robot.json" },
-    "leftFootSurface": { "type": "string" },
-    "rightFootSurface": { "type": "string" },
-    "torsoBodyName": { "type": "string" },
-    "completion": { "$ref": "/../../common/completion_criteria.json" },
-
-    "friction": { "type": "number", "minimum": 0 },
-    "tasks":
+  "allOf":
+  [
     {
-      "type": "object",
-      "title": "Tasks configuration",
-      "description": "Configuration of the tasks managed by the stabilizer: CoM, left and right contact CoP tasks, and torso and pelvis regularization tasks",
       "properties":
       {
-        "com": {"$ref": "/../../common/com.json"},
-        "contact": {"$ref": "/../../common/contact.json"},
-        "pelvis": {"$ref": "/../../common/pelvis.json"},
-        "torso": {"$ref": "/../../common/torso.json"}
-      }
-    },
-    "fdqp_weights": {"$ref": "/../../common/fdqp_weights.json"},
-    "vdc": {"$ref": "/../../common/vdc.json"},
-    "admittance": {"$ref": "/../../common/admittance.json"},
-    "dcm_tracking": {"$ref": "/../../common/dcm_tracking.json"},
-    "contacts":
-    {
-      "type": "array",
-      "items": { "type": "string" },
-      "default": ["Left", "Right"]
-    },
-    "Left": { "$ref": "../../common/contactTarget.json" },
-    "Right": { "$ref": "../../common/contactTarget.json" },
+        "type": { "enum": ["lipm_stabilizer"] },
+        "name": { "type": "string" },
 
-    "robot_name" :
-    {
-      "type": "object",
-      "title": "Robot-specific stabilizer configuration",
-      "description": "Per-robot configuration, entries specidied here will overwite the global stabilizer configuration entries",
-      "properties":
-      {
-        "friction": { "type": "number", "minimum": 0 },
-        "tasks":
+        "robot_name" :
         {
           "type": "object",
-          "title": "Tasks configuration",
-          "description": "Configuration of the tasks managed by the stabilizer: CoM, left and right contact CoP tasks, and torso and pelvis regularization tasks",
+          "title": "Robot-specific stabilizer configuration",
+          "description": "Per-robot configuration, entries specidied here will overwite the global stabilizer configuration entries",
           "properties":
           {
-            "com": {"$ref": "/../../common/com.json"},
-            "contact": {"$ref": "/../../common/contact.json"},
-            "pelvis": {"$ref": "/../../common/pelvis.json"},
-            "torso": {"$ref": "/../../common/torso.json"}
+            "friction": { "type": "number", "minimum": 0 },
+            "tasks":
+            {
+              "type": "object",
+              "title": "Tasks configuration",
+              "description": "Configuration of the tasks managed by the stabilizer: CoM, left and right contact CoP tasks, and torso and pelvis regularization tasks",
+              "properties":
+              {
+                "com": {"$ref": "/../../common/com.json"},
+                "contact": {"$ref": "/../../common/contact.json"},
+                "pelvis": {"$ref": "/../../common/pelvis.json"},
+                "torso": {"$ref": "/../../common/torso.json"}
+              }
+            },
+            "fdqp_weights": {"$ref": "/../../common/fdqp_weights.json"},
+            "vdc": {"$ref": "/../../common/vdc.json"},
+            "admittance": {"$ref": "/../../common/admittance.json"},
+            "dcm_tracking": {"$ref": "/../../common/dcm_tracking.json"},
+            "contacts":
+            {
+              "type": "array",
+              "items": { "type": "string" }
+            }
           }
-        },
-        "fdqp_weights": {"$ref": "/../../common/fdqp_weights.json"},
-        "vdc": {"$ref": "/../../common/vdc.json"},
-        "admittance": {"$ref": "/../../common/admittance.json"},
-        "dcm_tracking": {"$ref": "/../../common/dcm_tracking.json"},
-        "contacts":
-        {
-          "type": "array",
-          "items": { "type": "string" }
         }
       }
+    },
+    {
+      "$ref": "/../../common/StabilizerTask_common.json"
     }
-  },
+  ],
   "required": ["type", "contacts"]
 }
