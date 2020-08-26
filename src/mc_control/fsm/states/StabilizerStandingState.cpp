@@ -56,10 +56,24 @@ void StabilizerStandingState::start(Controller & ctl)
     {
       targetCoP(stabilizerTask_->contactAnklePose(ContactState::Right).translation());
     }
-    else if(above == "Center")
+    else if(above == "CenterAnkles")
     {
       targetCoP(sva::interpolate(stabilizerTask_->contactAnklePose(ContactState::Left),
                                  stabilizerTask_->contactAnklePose(ContactState::Right), 0.5)
+                    .translation());
+    }
+    else if(above == "LeftSurface")
+    {
+      targetCoP(ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Left)).translation());
+    }
+    else if(above == "RightSurface")
+    {
+      targetCoP(ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Right)).translation());
+    }
+    else if(above == "CenterSurfaces")
+    {
+      targetCoP(sva::interpolate(ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Left)),
+                                 ctl.robot().surfacePose(stabilizerTask_->footSurface(ContactState::Right)), 0.5)
                     .translation());
     }
     else if(ctl.realRobot().hasSurface(above))
@@ -70,7 +84,8 @@ void StabilizerStandingState::start(Controller & ctl)
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "[StabilizerStandingState] Requested standing above {} but this is neither one of the state target "
-          "(LeftAnkle, RightAnkle, Center), nor a valid robot surface",
+          "(LeftAnkle, RightAnkle, CenterAnkles, LeftSurface, RightSurface, CenterSurfaces), nor a valid robot surface "
+          "name",
           above);
     }
   }
