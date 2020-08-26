@@ -450,7 +450,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * @brief Changes the safety thresholds
    *
    * This ensures that all the parameters depending on these safety parameters
-   * are withing the new thresholds. If they are out of bounds, they will be
+   * are within the new thresholds. If they are out of bounds, they will be
    * clamped back to the new range, and a warning message will be displayed.
    *
    * @param thresholds New safety thresholds
@@ -459,6 +459,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   {
     c_.safetyThresholds = thresholds;
     c_.clampGains();
+    // only requried because we want to apply the new gains immediately
     copAdmittance(c_.copAdmittance);
   }
 
