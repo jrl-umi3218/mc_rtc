@@ -5,71 +5,63 @@
   "properties":
   {
     "weight": { "type": "number", "minimum": 0, "default": 100000 },
-    "stiffness": 
-    { 
-      "allOf":
-      [
+    "stiffness":
+    {
+      "type": "object",
+      "title": "sva::MotionVecd",
+      "description": "Dimensional stiffness for the CoP tasks",
+      "properties":
+      {
+        "angular":
         {
-          "$ref": "/../../SpaceVecAlg/MotionVecd" 
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 }
+          ]
         },
+        "linear":
         {
-          "description": "Dimensional stiffness for the CoP tasks",
-          "properties":
-          {
-            "angular":
-            {
-              "items":
-              [
-                { "type": "number", "default": 1 },
-                { "type": "number", "default": 1 },
-                { "type": "number", "default": 1 }
-              ]
-            }, 
-            "linear":
-            {
-              "items":
-              [
-                { "type": "number", "default": 1 },
-                { "type": "number", "default": 1 },
-                { "type": "number", "default": 1 }
-              ]
-            }
-          }
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 },
+            { "type": "number", "minimum": 0, "default": 1 }
+          ]
         }
-      ]
+      }
     },
-    "damping": 
-    { 
-      "allOf":
-      [
+    "damping":
+    {
+      "type": "object",
+      "title": "sva::MotionVecd",
+      "description": "Dimensional damping for the CoP tasks",
+      "properties":
+      {
+        "angular":
         {
-          "$ref": "/../../SpaceVecAlg/MotionVecd" 
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 }
+          ]
         },
+        "linear":
         {
-          "description": "Dimensional damping for the CoP tasks",
-          "properties":
-          {
-            "angular":
-            {
-              "items":
-              [
-                { "type": "number", "default": 300 },
-                { "type": "number", "default": 300 },
-                { "type": "number", "default": 300 }
-              ]
-            }, 
-            "linear":
-            {
-              "items":
-              [
-                { "type": "number", "default": 300 },
-                { "type": "number", "default": 300 },
-                { "type": "number", "default": 300 }
-              ]
-            }
-          }
+          "type": "array",
+          "items":
+          [
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 },
+            { "type": "number", "default": 300 }
+          ]
         }
-      ]
+      }
     }
   }
 }

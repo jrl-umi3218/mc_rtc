@@ -2,11 +2,9 @@
   "title": "Eigen::Vector3d",
   "type": "array",
   "items":
-  [
-    { "type": "number" },
-    { "type": "number" },
-    { "type": "number" }
-  ],
+  {
+    "type": "number"
+  },
   "minItems": 3,
   "maxItems": 3
 }
