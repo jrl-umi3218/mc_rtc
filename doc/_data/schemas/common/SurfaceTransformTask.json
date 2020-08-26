@@ -1,0 +1,24 @@
+{
+  "properties":
+  {
+        "move": { "$ref": "/../../SpaceVecAlg/PTransformd.json", "description": "Move relative to the current target frame" },
+        "moveWorld": { "$ref": "/../../SpaceVecAlg/PTransformd.json", "description": "Move relative to world frame" },
+        "target": { "$ref": "/../../SpaceVecAlg/PTransformd.json", "description": "Target a world frame pose (position and orientation)" },
+        "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
+        "relative":
+        {
+          "type": "object",
+          "description": "Relative target specification, the target is specified relatively to the middle point between two surfaces s1 and s2",
+          "properties":
+          {
+            "s1": { "type": "string" },
+            "s2": { "type": "string" },
+            "target": { "$ref": "/../../SpaceVecAlg/PTransformd.json" }
+          },
+          "required": ["s1", "s2", "target"]
+        },
+        "targetPosition": { "$ref": "/../../Eigen/Vector3d.json", "description": "Target a world position" },
+        "targetRotation": { "$ref": "/../../Eigen/Matrix3d.json", "description": "Target a world rotation" },
+        "overwriteRPY": { "$ref": "/../../common/overwriteRPY.json" }
+  }
+}

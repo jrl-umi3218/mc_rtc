@@ -1,8 +1,8 @@
 {
   "properties":
   {
-    "stiffness": { "type": "number", "minimum": 0, "description": "Task's stiffness" },
-    "damping": { "type": "number", "minimum": 0, "default": "\\(2\\sqrt{\\mathit{stiffness}}\\)", "description": "Task's damping" },
+    "stiffness": { "type": "number", "minimum": 0, "description": "Task's stiffness. May also be an array of the task's dimension (dimensional stiffness)." },
+    "damping": { "type": "number", "minimum": 0, "default": "\\(2\\sqrt{\\mathit{stiffness}}\\)", "description": "Task's damping. May also be an array of the task's dimension (dimensional damping)." },
     "weight": { "type": "number", "minimum": 0, "description": "Task's weight" },
     "dimWeight": { "$ref": "/../../Eigen/VectorXd.json", "description": "Apply an anisotropic weight to the task multiplicative of the task's weight" },
     "activeJoints": { "type": "array", "items": { "type": "string" }, "description": "A list of joints used by this task<br>If empty the task uses all available joints" },

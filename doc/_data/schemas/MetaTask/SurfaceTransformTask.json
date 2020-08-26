@@ -12,24 +12,11 @@
     {
       "properties":
       {
-        "type": { "enum": ["surfaceTransform"] },
-        "move": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-        "moveWorld": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-        "target": { "$ref": "/../../SpaceVecAlg/PTransformd.json" },
-        "targetSurface": { "$ref" : "/../../common/targetSurface.json" },
-        "relative":
-        {
-          "type": "object",
-          "description": "Relative target specification, the target is specified relatively to the middle point between two surfaces s1 and s2",
-          "properties":
-          {
-            "s1": { "type": "string" },
-            "s2": { "type": "string" },
-            "target": { "$ref": "/../../SpaceVecAlg/PTransformd.json" }
-          },
-          "required": ["s1", "s2", "target"]
-        }
+        "type": { "enum": ["surfaceTransform"] }
       }
+    },
+    {
+      "$ref": "/../../common/SurfaceTransformTask.json"
     },
     {
       "$ref": "/../../common/TrajectoryTaskGeneric.json"
@@ -39,7 +26,9 @@
       {
         "weight": { "default": 500 },
         "stiffness": { "default": 2 },
-        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
+        "refVel": {"$ref": "/../../Eigen/Vector6d.json", "description": "Trajectory's reference velocity" },
+        "refAccel": {"$ref": "/../../Eigen/Vector6d.json", "description": "Trajectory's reference acceleration" }
       }
     }
   ],

@@ -90,6 +90,7 @@ void AdmittanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
   }
   else if(config.has("targetPose"))
   {
+    mc_rtc::log::warning("[{}] property \"targetPose\" is deprecated, use \"target\" instead", name());
     targetPose(config("targetPose"));
   }
   if(config.has("wrench"))
