@@ -65,13 +65,13 @@ private:
 
   /** Previous estimated position.
    * Used to compute finite differences estimation of the velocity */
-  sva::PTransformd posWPrev_;
+  sva::PTransformd posWPrev_ = sva::PTransformd::Identity();
 
   /**
    * Estimated velocity through finite differences and low-pass filtering
    **/
   mc_filter::LowPass<sva::MotionVecd> velFilter_;
-  sva::MotionVecd velW_;
+  sva::MotionVecd velW_ = sva::MotionVecd::Zero();
 
 private:
   /** Prevent from resetting only the position */

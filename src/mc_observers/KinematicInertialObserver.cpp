@@ -41,9 +41,16 @@ bool KinematicInertialObserver::run(const mc_control::MCController & ctl)
 {
   bool res = KinematicInertialPoseObserver::run(ctl);
   const sva::PTransformd posW = KinematicInertialPoseObserver::posW();
-  sva::MotionVecd errVel = sva::transformError(posWPrev_, posW) / ctl.timeStep;
-  velFilter_.update(errVel);
-  velW_ = velFilter_.eval();
+  if(!anchorFrameJumped_)
+  {
+    sva::MotionVecd errVel = sva::transformError(posWPrev_, posW) / ctl.timeStep;
+    velFilter_.update(errVel);
+    velW_ = velFilter_.eval();
+  }
+  else
+  {
+    mc_rtc::log::warning("[{}] Skipping velocity update (anchor frame jumped)", name());
+  }
   posWPrev_ = posW;
   return res;
 }

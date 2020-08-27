@@ -20,7 +20,12 @@ void KinematicInertialPoseObserver::configure(const mc_control::MCController & c
   robot_ = config("robot", ctl.robot().name());
   realRobot_ = config("realRobot", ctl.realRobot().name());
   imuSensor_ = config("imuBodySensor", ctl.robot().bodySensor().name());
-  anchorFrameFunction_ = config("anchorFrame", "KinematicAnchorFrame::" + ctl.robot(robot_).name());
+  anchorFrameFunction_ = "KinematicAnchorFrame::" + ctl.robot(robot_).name();
+  if(config.has("anchorFrame"))
+  {
+    config("datastoreFunction", anchorFrameFunction_);
+    config("jumpThreshold", anchorFrameJumpThreshold_);
+  }
   if(config.has("gui"))
   {
     auto gConfig = config("gui");
@@ -45,8 +50,26 @@ bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
         name(), anchorFrameFunction_);
     return false;
   }
-  X_0_anchorFrame_ = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.robot(robot_));
-  X_0_anchorFrameReal_ = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.realRobot(realRobot_));
+  anchorFrameJumped_ = false;
+  auto anchorFrame = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.robot(robot_));
+  auto anchorFrameReal = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.realRobot(realRobot_));
+  auto error = (anchorFrame.translation() - X_0_anchorFrame_.translation()).norm();
+  if(error > anchorFrameJumpThreshold_)
+  {
+    mc_rtc::log::warning("[{}] Control anchor frame jumped from [{}] to [{}] (error norm {} > threshold {})", name(),
+                         X_0_anchorFrame_.translation().transpose(), anchorFrame.translation().transpose(), error,
+                         anchorFrameJumpThreshold_);
+    anchorFrameJumped_ = true;
+  }
+  if((anchorFrameReal.translation() - X_0_anchorFrameReal_.translation()).norm() > anchorFrameJumpThreshold_)
+  {
+    mc_rtc::log::warning("[{}] Real anchor frame jumped from [{}] to [{}] (error norm {:.3f} > threshold {:.3f})",
+                         name(), X_0_anchorFrameReal_.translation().transpose(),
+                         anchorFrameReal.translation().transpose(), error, anchorFrameJumpThreshold_);
+    anchorFrameJumped_ = true;
+  }
+  X_0_anchorFrame_ = anchorFrame;
+  X_0_anchorFrameReal_ = anchorFrameReal;
   estimateOrientation(ctl.robot(robot_), ctl.realRobot(robot_));
   estimatePosition(ctl);
   return true;

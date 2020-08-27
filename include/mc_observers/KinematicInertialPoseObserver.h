@@ -101,6 +101,10 @@ protected:
   sva::PTransformd X_0_anchorFrameReal_ =
       sva::PTransformd::Identity(); ///< Real anchor frame (provided through the datastore)
 
+  double anchorFrameJumpThreshold_ =
+      0.01; ///< Threshold (norm) above wich the anchor frame is considered to have had a discontinuity
+  bool anchorFrameJumped_ = false; /** Detects whether the anchor frame had a discontinuity */
+
 private:
   sva::PTransformd pose_ = sva::PTransformd::Identity(); ///< Estimated pose of the floating-base in world frame */
   bool showAnchorFrame_ = false; /**< Whether to show the anchor frame in the GUI */
