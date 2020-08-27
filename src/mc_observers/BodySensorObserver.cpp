@@ -17,7 +17,7 @@ namespace mc_observers
 void BodySensorObserver::configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config)
 {
   robot_ = config("robot", ctl.robot().name());
-  fbSensorName_ = config("bodySensor", std::string("FloatingBase"));
+  fbSensorName_ = config("bodySensor", ctl.robot().bodySensor().name());
   auto updateConfig = config("method", std::string{"sensor"});
   if(!updateConfig.empty())
   {

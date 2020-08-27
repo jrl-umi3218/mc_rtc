@@ -55,7 +55,9 @@ struct MC_OBSERVERS_DLLAPI Observer
   /**
    * @brief Configure observer
    *
-   * @param config Configuration for this observer
+   * @param config Configuration for this observer. Refer to the JSON Schema
+   * documentation fo each observer for details on supported entries:
+   * https://jrl-umi3218.github.io/mc_rtc/json.html#Observers-objects
    */
   virtual void configure(const mc_control::MCController & /*ctl*/, const mc_rtc::Configuration & /*config*/) {}
 
@@ -82,12 +84,14 @@ struct MC_OBSERVERS_DLLAPI Observer
   /*! \brief Update the real robot state from the observed state
    *
    * This function is expected to write the estimated parameters to the
-   * corresponding real robot instances, and compute the necessary information
+   * corresponding real robot instances ctl.realRobots(), and compute the necessary information
    * to ensure a consistent state (e.g calling forward velocity after
    * updating joint velocities, etc).
    *
    * This function is called after Observer::run() if the observer is declared
    * to update the real robot in the pipeline configuration.
+   *
+   * \param ctl Controller running this observer
    **/
   virtual void updateRobots(mc_control::MCController & ctl) = 0;
 
@@ -106,19 +110,19 @@ struct MC_OBSERVERS_DLLAPI Observer
    */
   const std::string & name() const;
 
-  /*! \brief Add observer to the logger. */
+  /*! \brief Add observer entries to the logger under the categrory "category + name()". */
   void addToLogger_(const mc_control::MCController & ctl, mc_rtc::Logger & logger, const std::string & category = "")
   {
     addToLogger(ctl, logger, category + "_" + name_);
   }
 
-  /*! \brief Remove observer to the logger. */
+  /*! \brief Remove observer from logger. */
   virtual void removeFromLogger_(mc_rtc::Logger & logger, std::string category = "")
   {
     removeFromLogger(logger, category + "_" + name_);
   }
 
-  /*! \brief Add observer to the gui */
+  /*! \brief Add observer to the gui under category {category, name()} */
   virtual void addToGUI_(const mc_control::MCController & ctl,
                          mc_rtc::gui::StateBuilder & gui,
                          std::vector<std::string> category = {})
@@ -129,8 +133,7 @@ struct MC_OBSERVERS_DLLAPI Observer
 
   /*! \brief Remove observer from gui
    *
-   * Default implementation does nothing. Each observer is responsible from
-   * removing any element it added to the GUI.
+   * Default implementation removes category {category, name()}
    */
   virtual void removeFromGUI_(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category = {})
   {
@@ -144,10 +147,9 @@ struct MC_OBSERVERS_DLLAPI Observer
    * possible while showing the important information about the observer.
    *
    * The output might end up looking like:
-   * Observers: Encoders (Position+Velocity) -> KinematicInertial (cutoff=0.01) -> BodySensor
+   * Encoders (Position+Velocity) -> KinematicInertial (cutoff=0.01) -> BodySensor
    *
-   * \returns Short description of the observer. Default implementation returns
-   * its name.
+   * \returns Short description of the observer.
    */
   virtual const std::string & desc() const;
 
@@ -162,6 +164,7 @@ struct MC_OBSERVERS_DLLAPI Observer
     return error_;
   }
 
+  /*! Controller timestep */
   double dt() const
   {
     return dt_;

@@ -12,23 +12,14 @@
 
 namespace mc_observers
 {
-/*! BodySensorObserver is responsible for updating the state of the realRobot's
- * floating base from sensor measurements expressed as BodySensors. It
- * essentially replaces the old way of updating the realRobot (using `"UpdateRealFromSensors": true`).
+/*! The BodySensorObserver is responsible for estimating the state of a robot's
+ * floating base from sensor measurements provided by a BodySensor and the
+ * kinematics beween this sensor and the floating base.
+ * It is assumed here that the floating base sensor kinematics estimate are synchronized.
  *
  * \see BodySensorObserver::run() for usage requirements
  *
- * Default configuration estimates the floating base pose from the
- * "FloatingBase" bodysensor.
- *
- * \code{.json}
- * "BodySensor":
- * {
- *   // Valid values are ["control", "estimator"]
- *   "UpdateFrom": "estimator",
- *   "FloatingBaseSensorName": "FloatingBase",
- * }
- * \endcode
+ * The default configuration estimates the floating base pose from the main bodysensor (typically an IMU).
  */
 struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
 {
@@ -53,23 +44,21 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
    * - Update::Control: copies the floating base position from the control robot
    *   (no estimation)
    * - Update::Sensor: Computes the position of the floating base from a BodySensor and the kinematic chain
-   *   between it and the floating base. If the BodySensor is not directly
-   *   attached to the floating base link, this estimator requires accurate
-   *   estimation of the real robot's forward kinematics. It is assumed here that the floating base sensor and encoders
-   * are synchronized. A typical pipeline will achieve this by running the EncoderObserver observer before the
-   * BodySensorObserver
+   *   between it and the floating base. If the BodySensor is not directly attached to the floating base link, this
+   * estimator requires accurate estimation of the robot kinematics. A typical pipeline will achieve this by running the
+   * EncoderObserver observer before the BodySensorObserver.
+   *
+   *   It is assumed here that the floating base sensor and encoders are synchronized.
    *
    * \param ctl The controller instance running this observer
    */
   bool run(const mc_control::MCController & ctl) override;
 
-  /*! \brief Update realRobots floating base from its estimated pose
+  /*! \brief Update the robot's floating base from its estimated pose
    *
    * \see run for usage requirements
    *
    * \note Calls rbd::forwardKinematics and rbd::forwardVelocity
-   *
-   * \param realRobots Current implementation updates realRobots.robot()
    */
   void updateRobots(mc_control::MCController & ctl) override;
 
