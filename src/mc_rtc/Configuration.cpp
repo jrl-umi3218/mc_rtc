@@ -171,7 +171,7 @@ const std::string & Configuration::Exception::msg() const noexcept
   {
     std::string path;
     v_.path(path);
-    msg_ = fmt::format("{} (error path: (){})", msg_, path);
+    msg_ = fmt::format("{} (error path: {})", msg_, path.size() ? path : "()");
     v_.value_ = nullptr;
   }
   return msg_;
