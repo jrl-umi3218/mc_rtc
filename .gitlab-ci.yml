@@ -14,6 +14,20 @@ before_script:
   - add-apt-repository ppa:pierre-gergondet+ppa/multi-contact-unstable && apt-get update && apt-get upgrade cmake libeigen3-dev -qq
   - rm -rf debian
 
+sync-github:
+  only:
+    refs:
+      - master
+  stage: sync-github
+  before_script:
+    - git submodule update --quiet --init --recursive
+  script:
+    - git checkout -b master origin/master
+    - git remote add github https://gergondet:${GITHUB_TOKEN}@github.com/jrl-umi3218/mc_rtc
+    - git push github master:master
+  tags:
+    - pid, x86_64_linux_abi11
+
 clang-format:
   stage: clang-format
   before_script: []
@@ -114,5 +128,6 @@ build_with_script:
   allow_failure: true
 
 stages:
+  - sync-github
   - clang-format
   - build

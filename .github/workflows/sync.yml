@@ -1,0 +1,19 @@
+name: Sync with GitLab
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  sync-with-gitlab:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - name: Sync
+        run: |
+          git remote add gitlab https://oauth2:${{ secrets.GITLAB_TOKEN }}@gite.lirmm.fr/multi-contact/mc_rtc
+          git push gitlab master:master
