@@ -15,7 +15,7 @@ var searchData=
   ['equalityconstraintrobot',['EqualityConstraintRobot',['../a02132.html',1,'mc_solver']]],
   ['exactcubic',['ExactCubic',['../a02380.html',1,'mc_trajectory']]],
   ['exactcubictrajectorytask',['ExactCubicTrajectoryTask',['../a02284.html',1,'mc_tasks']]],
-  ['exception',['Exception',['../a01720.html',1,'mc_rtc::Configuration']]],
+  ['exception',['Exception',['../a01724.html',1,'mc_rtc::Configuration']]],
   ['executor',['Executor',['../a01360.html',1,'mc_control::fsm']]],
   ['exponentialmovingaverage',['ExponentialMovingAverage',['../a01472.html',1,'mc_filter']]],
   ['exponentialmovingaverage_3c_20eigen_3a_3avector3d_20_3e',['ExponentialMovingAverage&lt; Eigen::Vector3d &gt;',['../a01472.html',1,'mc_filter']]]

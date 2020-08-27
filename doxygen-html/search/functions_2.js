@@ -90,6 +90,7 @@ var searchData=
   ['create_5funique_5fobject',['create_unique_object',['../a02016.html#af0215e4d220b8e17862a1f1e0dcc42ad',1,'mc_rtc::ObjectLoader']]],
   ['createrobotwithbase',['createRobotWithBase',['../a01680.html#a3882c33b607d637474ad14d7f6b540b7',1,'mc_rbdyn::Robots::createRobotWithBase(Robots &amp;robots, unsigned int robots_idx, const Base &amp;base, const Eigen::Vector3d &amp;baseAxis=Eigen::Vector3d::UnitZ())'],['../a01680.html#abe0d347ac71a45399ef83b0417cd4204',1,'mc_rbdyn::Robots::createRobotWithBase(Robot &amp;robot, const Base &amp;base, const Eigen::Vector3d &amp;baseAxis=Eigen::Vector3d::UnitZ())']]],
   ['crend',['crend',['../a01680.html#a54a0069d6ac9debe385ba1f1f311ee51',1,'mc_rbdyn::Robots']]],
+  ['critical',['critical',['../a00748.html#a82d6969aa78c74fbe4716532661ea0d8',1,'mc_rtc::log']]],
   ['curposition',['curPosition',['../a01432.html#ad0e50e298dbf9b0a2be480a40a207c83',1,'mc_control::Gripper']]],
   ['current_5fcontroller',['current_controller',['../a01440.html#a5beed5b1e8d4aa37b58c03f510420283',1,'mc_control::MCGlobalController']]],
   ['currenttime',['currentTime',['../a02360.html#a86462d1e1779f47f938fb59feb6ad0e6',1,'mc_tasks::SplineTrajectoryTask']]],

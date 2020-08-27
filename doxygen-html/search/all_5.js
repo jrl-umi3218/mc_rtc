@@ -63,7 +63,7 @@ var searchData=
   ['exactcubic_2eh',['ExactCubic.h',['../a00512.html',1,'']]],
   ['exactcubictrajectorytask',['ExactCubicTrajectoryTask',['../a02284.html',1,'mc_tasks::ExactCubicTrajectoryTask'],['../a02284.html#ad27477a0f30c373765213f5e8288963e',1,'mc_tasks::ExactCubicTrajectoryTask::ExactCubicTrajectoryTask()']]],
   ['exactcubictrajectorytask_2eh',['ExactCubicTrajectoryTask.h',['../a00452.html',1,'']]],
-  ['exception',['Exception',['../a01720.html',1,'mc_rtc::Configuration::Exception'],['../a01720.html#a5fbc7e52e1f5e239e11916b19378c146',1,'mc_rtc::Configuration::Exception::Exception()']]],
+  ['exception',['Exception',['../a01724.html',1,'mc_rtc::Configuration::Exception'],['../a01724.html#ae817c10e94b5dac7d6790f39138db9ff',1,'mc_rtc::Configuration::Exception::Exception(const std::string &amp;msg, const Json &amp;v)'],['../a01724.html#a7fb4c7e9f42ab610bc546f16c23e5bd4',1,'mc_rtc::Configuration::Exception::Exception(const std::string &amp;msg, const Configuration &amp;c)']]],
   ['executor',['Executor',['../a01360.html',1,'mc_control::fsm::Executor'],['../a01352.html#abde1658ded2ac75f5466b223e73135d9',1,'mc_control::fsm::Controller::Executor()']]],
   ['executor_2eh',['Executor.h',['../a00023.html',1,'']]],
   ['executor_5f',['executor_',['../a01392.html#a9666773e74f14ce95d27e0215d1146f8',1,'mc_control::fsm::MetaState']]],

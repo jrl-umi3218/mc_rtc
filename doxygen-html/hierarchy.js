@@ -179,7 +179,7 @@ var hierarchy =
     [ "mc_rtc::log::FlatLog::entry", "a02048.html", null ],
     [ "mc_tasks::lipm_stabilizer::StabilizerTask::EnumClassHash", "a02308.html", null ],
     [ "std::exception", null, [
-      [ "mc_rtc::Configuration::Exception", "a01720.html", null ],
+      [ "mc_rtc::Configuration::Exception", "a01724.html", null ],
       [ "mc_rtc::LoaderException", "a02020.html", null ]
     ] ],
     [ "mc_control::fsm::Executor", "a01360.html", null ],

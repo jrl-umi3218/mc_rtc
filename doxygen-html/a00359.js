@@ -6,6 +6,7 @@ var a00359 =
     [ "LOG_SUCCESS", "a00359.html#ada5a572b2a8b25bcd9f471bc5c3c0787", null ],
     [ "LOG_WARNING", "a00359.html#ad8493c09711c1562481e104d334694db", null ],
     [ "cerr", "a00359.html#aa8cc2cc8dc25d49fa533f32a67f73c33", null ],
+    [ "critical", "a00359.html#a82d6969aa78c74fbe4716532661ea0d8", null ],
     [ "error", "a00359.html#aa189b2ec856ad8f96d632d635efc05ce", null ],
     [ "error_and_throw", "a00359.html#a2bad497e8a4c7a7f29f7ab908c83274e", null ],
     [ "info", "a00359.html#a2e57684e4d69b10eb5c9f41cf59c11ea", null ],

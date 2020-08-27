@@ -118,6 +118,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a2bad497e8a4c7a7f29f7ab908c83274e"><td class="memTemplParams" colspan="2">template&lt;typename ExceptionT , typename... Args&gt; </td></tr>
 <tr class="memitem:a2bad497e8a4c7a7f29f7ab908c83274e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00748.html#a2bad497e8a4c7a7f29f7ab908c83274e">mc_rtc::log::error_and_throw</a> (Args &amp;&amp;... args)</td></tr>
 <tr class="separator:a2bad497e8a4c7a7f29f7ab908c83274e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82d6969aa78c74fbe4716532661ea0d8"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a82d6969aa78c74fbe4716532661ea0d8"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00748.html#a82d6969aa78c74fbe4716532661ea0d8">mc_rtc::log::critical</a> (Args &amp;&amp;... args)</td></tr>
+<tr class="separator:a82d6969aa78c74fbe4716532661ea0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa189b2ec856ad8f96d632d635efc05ce"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:aa189b2ec856ad8f96d632d635efc05ce"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00748.html#aa189b2ec856ad8f96d632d635efc05ce">mc_rtc::log::error</a> (Args &amp;&amp;... args)</td></tr>
 <tr class="separator:aa189b2ec856ad8f96d632d635efc05ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -161,8 +164,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">_Pragma(<span class="stringliteral">&quot;GCC warning \&quot;This macro is deprecated, use mc_rtc::log::error instead\&quot;&quot;</span>); <a class="code" href="a00749.html#aa8cc2cc8dc25d49fa533f32a67f73c33">\</a></div><div class="line"><a class="code" href="a00749.html#aa8cc2cc8dc25d49fa533f32a67f73c33">    std::cerr</a> &lt;&lt; <a class="code" href="a00724.html#a9003469324d75c8934d51654d98ef862">mc_rtc::OUT_RED</a> &lt;&lt; args &lt;&lt; <a class="code" href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="ttc" id="a00749_html_aa8cc2cc8dc25d49fa533f32a67f73c33"><div class="ttname"><a href="a00749.html#aa8cc2cc8dc25d49fa533f32a67f73c33">mc_rtc::log::details::cerr</a></div><div class="ttdeci">MC_RTC_UTILS_DLLAPI spdlog::logger &amp; cerr()</div></div>
-<div class="ttc" id="a00724_html_ab85e3cb123f11bf1f9290abe17a7d49e"><div class="ttname"><a href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a></div><div class="ttdeci">constexpr auto OUT_NONE</div><div class="ttdef"><b>Definition:</b> logging.h:73</div></div>
-<div class="ttc" id="a00724_html_a9003469324d75c8934d51654d98ef862"><div class="ttname"><a href="a00724.html#a9003469324d75c8934d51654d98ef862">mc_rtc::OUT_RED</a></div><div class="ttdeci">constexpr auto OUT_RED</div><div class="ttdef"><b>Definition:</b> logging.h:77</div></div>
+<div class="ttc" id="a00724_html_ab85e3cb123f11bf1f9290abe17a7d49e"><div class="ttname"><a href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a></div><div class="ttdeci">constexpr auto OUT_NONE</div><div class="ttdef"><b>Definition:</b> logging.h:79</div></div>
+<div class="ttc" id="a00724_html_a9003469324d75c8934d51654d98ef862"><div class="ttname"><a href="a00724.html#a9003469324d75c8934d51654d98ef862">mc_rtc::OUT_RED</a></div><div class="ttdeci">constexpr auto OUT_RED</div><div class="ttdef"><b>Definition:</b> logging.h:83</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -209,8 +212,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">_Pragma(<span class="stringliteral">&quot;GCC warning \&quot;This macro is deprecated, use mc_rtc::log::info instead\&quot;&quot;</span>); \</div><div class="line">    std::cout &lt;&lt; <a class="code" href="a00724.html#a15b005678017d9608ff8f599e34e41de">mc_rtc::OUT_BLUE</a> &lt;&lt; args &lt;&lt; <a class="code" href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="ttc" id="a00724_html_a15b005678017d9608ff8f599e34e41de"><div class="ttname"><a href="a00724.html#a15b005678017d9608ff8f599e34e41de">mc_rtc::OUT_BLUE</a></div><div class="ttdeci">constexpr auto OUT_BLUE</div><div class="ttdef"><b>Definition:</b> logging.h:74</div></div>
-<div class="ttc" id="a00724_html_ab85e3cb123f11bf1f9290abe17a7d49e"><div class="ttname"><a href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a></div><div class="ttdeci">constexpr auto OUT_NONE</div><div class="ttdef"><b>Definition:</b> logging.h:73</div></div>
+<b>Value:</b><div class="fragment"><div class="line">_Pragma(<span class="stringliteral">&quot;GCC warning \&quot;This macro is deprecated, use mc_rtc::log::info instead\&quot;&quot;</span>); \</div><div class="line">    std::cout &lt;&lt; <a class="code" href="a00724.html#a15b005678017d9608ff8f599e34e41de">mc_rtc::OUT_BLUE</a> &lt;&lt; args &lt;&lt; <a class="code" href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="ttc" id="a00724_html_a15b005678017d9608ff8f599e34e41de"><div class="ttname"><a href="a00724.html#a15b005678017d9608ff8f599e34e41de">mc_rtc::OUT_BLUE</a></div><div class="ttdeci">constexpr auto OUT_BLUE</div><div class="ttdef"><b>Definition:</b> logging.h:80</div></div>
+<div class="ttc" id="a00724_html_ab85e3cb123f11bf1f9290abe17a7d49e"><div class="ttname"><a href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a></div><div class="ttdeci">constexpr auto OUT_NONE</div><div class="ttdef"><b>Definition:</b> logging.h:79</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -229,8 +232,8 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">_Pragma(<span class="stringliteral">&quot;GCC warning \&quot;This macro is deprecated, use mc_rtc::log::success instead\&quot;&quot;</span>); \</div><div class="line">    std::cout &lt;&lt; <a class="code" href="a00724.html#a7ab584d4904b2b1695ae2cb04ca984ca">mc_rtc::OUT_GREEN</a> &lt;&lt; args &lt;&lt; <a class="code" href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="ttc" id="a00724_html_a7ab584d4904b2b1695ae2cb04ca984ca"><div class="ttname"><a href="a00724.html#a7ab584d4904b2b1695ae2cb04ca984ca">mc_rtc::OUT_GREEN</a></div><div class="ttdeci">constexpr auto OUT_GREEN</div><div class="ttdef"><b>Definition:</b> logging.h:75</div></div>
-<div class="ttc" id="a00724_html_ab85e3cb123f11bf1f9290abe17a7d49e"><div class="ttname"><a href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a></div><div class="ttdeci">constexpr auto OUT_NONE</div><div class="ttdef"><b>Definition:</b> logging.h:73</div></div>
+<b>Value:</b><div class="fragment"><div class="line">_Pragma(<span class="stringliteral">&quot;GCC warning \&quot;This macro is deprecated, use mc_rtc::log::success instead\&quot;&quot;</span>); \</div><div class="line">    std::cout &lt;&lt; <a class="code" href="a00724.html#a7ab584d4904b2b1695ae2cb04ca984ca">mc_rtc::OUT_GREEN</a> &lt;&lt; args &lt;&lt; <a class="code" href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="ttc" id="a00724_html_a7ab584d4904b2b1695ae2cb04ca984ca"><div class="ttname"><a href="a00724.html#a7ab584d4904b2b1695ae2cb04ca984ca">mc_rtc::OUT_GREEN</a></div><div class="ttdeci">constexpr auto OUT_GREEN</div><div class="ttdef"><b>Definition:</b> logging.h:81</div></div>
+<div class="ttc" id="a00724_html_ab85e3cb123f11bf1f9290abe17a7d49e"><div class="ttname"><a href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a></div><div class="ttdeci">constexpr auto OUT_NONE</div><div class="ttdef"><b>Definition:</b> logging.h:79</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -250,8 +253,8 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">_Pragma(<span class="stringliteral">&quot;GCC warning \&quot;This macro is deprecated, use mc_rtc::log::warning instead\&quot;&quot;</span>); <a class="code" href="a00749.html#aa8cc2cc8dc25d49fa533f32a67f73c33">\</a></div><div class="line"><a class="code" href="a00749.html#aa8cc2cc8dc25d49fa533f32a67f73c33">    std::cerr</a> &lt;&lt; <a class="code" href="a00724.html#aeb1d99e566cb5c454074579fcfa712f4">mc_rtc::OUT_PURPLE</a> &lt;&lt; args &lt;&lt; <a class="code" href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div><div class="ttc" id="a00749_html_aa8cc2cc8dc25d49fa533f32a67f73c33"><div class="ttname"><a href="a00749.html#aa8cc2cc8dc25d49fa533f32a67f73c33">mc_rtc::log::details::cerr</a></div><div class="ttdeci">MC_RTC_UTILS_DLLAPI spdlog::logger &amp; cerr()</div></div>
-<div class="ttc" id="a00724_html_aeb1d99e566cb5c454074579fcfa712f4"><div class="ttname"><a href="a00724.html#aeb1d99e566cb5c454074579fcfa712f4">mc_rtc::OUT_PURPLE</a></div><div class="ttdeci">constexpr auto OUT_PURPLE</div><div class="ttdef"><b>Definition:</b> logging.h:76</div></div>
-<div class="ttc" id="a00724_html_ab85e3cb123f11bf1f9290abe17a7d49e"><div class="ttname"><a href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a></div><div class="ttdeci">constexpr auto OUT_NONE</div><div class="ttdef"><b>Definition:</b> logging.h:73</div></div>
+<div class="ttc" id="a00724_html_aeb1d99e566cb5c454074579fcfa712f4"><div class="ttname"><a href="a00724.html#aeb1d99e566cb5c454074579fcfa712f4">mc_rtc::OUT_PURPLE</a></div><div class="ttdeci">constexpr auto OUT_PURPLE</div><div class="ttdef"><b>Definition:</b> logging.h:82</div></div>
+<div class="ttc" id="a00724_html_ab85e3cb123f11bf1f9290abe17a7d49e"><div class="ttname"><a href="a00724.html#ab85e3cb123f11bf1f9290abe17a7d49e">mc_rtc::OUT_NONE</a></div><div class="ttdeci">constexpr auto OUT_NONE</div><div class="ttdef"><b>Definition:</b> logging.h:79</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -262,7 +265,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00359.html">logging.h</a></li>
-    <li class="footer">Generated on Wed Aug 26 2020 09:26:10 for mc_rtc by
+    <li class="footer">Generated on Thu Aug 27 2020 07:55:12 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

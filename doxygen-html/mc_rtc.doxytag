@@ -2277,6 +2277,13 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>critical</name>
+      <anchorfile>a00748.html</anchorfile>
+      <anchor>a82d6969aa78c74fbe4716532661ea0d8</anchor>
+      <arglist>(Args &amp;&amp;... args)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>error</name>
       <anchorfile>a00748.html</anchorfile>
       <anchor>aa189b2ec856ad8f96d632d635efc05ce</anchor>
@@ -11752,41 +11759,48 @@
   </compound>
   <compound kind="struct">
     <name>mc_rtc::Configuration::Exception</name>
-    <filename>a01720.html</filename>
+    <filename>a01724.html</filename>
     <member kind="function">
       <type></type>
       <name>Exception</name>
-      <anchorfile>a01720.html</anchorfile>
-      <anchor>a5fbc7e52e1f5e239e11916b19378c146</anchor>
-      <arglist>(const std::string &amp;msg)</arglist>
+      <anchorfile>a01724.html</anchorfile>
+      <anchor>ae817c10e94b5dac7d6790f39138db9ff</anchor>
+      <arglist>(const std::string &amp;msg, const Json &amp;v)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Exception</name>
+      <anchorfile>a01724.html</anchorfile>
+      <anchor>a7fb4c7e9f42ab610bc546f16c23e5bd4</anchor>
+      <arglist>(const std::string &amp;msg, const Configuration &amp;c)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>~Exception</name>
-      <anchorfile>a01720.html</anchorfile>
+      <anchorfile>a01724.html</anchorfile>
       <anchor>a262aab07d1d6f5b9b121e5af5fddfc11</anchor>
       <arglist>() noexcept</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual const char *</type>
       <name>what</name>
-      <anchorfile>a01720.html</anchorfile>
+      <anchorfile>a01724.html</anchorfile>
       <anchor>a02a511274c6edbdfcf14ecc723a495c5</anchor>
       <arglist>() const noexcept override</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>silence</name>
-      <anchorfile>a01720.html</anchorfile>
-      <anchor>ab026ea13c4e83beee1d4ee93da90eb1c</anchor>
-      <arglist>() noexcept</arglist>
+      <anchorfile>a01724.html</anchorfile>
+      <anchor>a036273616d903f906ac28972cc16d902</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
-    <member kind="variable">
-      <type>std::string</type>
+    <member kind="function">
+      <type>const std::string &amp;</type>
       <name>msg</name>
-      <anchorfile>a01720.html</anchorfile>
-      <anchor>ace2b3bb5680e1528a1ebe8da64a409e0</anchor>
-      <arglist></arglist>
+      <anchorfile>a01724.html</anchorfile>
+      <anchor>a2a9ce02ed46c689d66f0dd5c2ccc7524</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -33936,6 +33950,13 @@
       <name>error_and_throw</name>
       <anchorfile>a00748.html</anchorfile>
       <anchor>a2bad497e8a4c7a7f29f7ab908c83274e</anchor>
+      <arglist>(Args &amp;&amp;... args)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>critical</name>
+      <anchorfile>a00748.html</anchorfile>
+      <anchor>a82d6969aa78c74fbe4716532661ea0d8</anchor>
       <arglist>(Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">

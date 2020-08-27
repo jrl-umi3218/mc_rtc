@@ -1,6 +1,6 @@
 var a01716 =
 [
-    [ "Exception", "a01720.html", "a01720" ],
+    [ "Exception", "a01724.html", "a01724" ],
     [ "Configuration", "a01716.html#a56857d79e0d10c4347e20ee425987970", null ],
     [ "Configuration", "a01716.html#af2bae551aad627ee177f6897c7258eb0", null ],
     [ "Configuration", "a01716.html#a10aac0c05692c6b8ac9667ce9f104395", null ],

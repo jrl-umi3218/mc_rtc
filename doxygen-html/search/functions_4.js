@@ -33,7 +33,7 @@ var searchData=
   ['evaltracking',['evalTracking',['../a02360.html#ae456950d2eafdbc888d0a92b0d87f66a',1,'mc_tasks::SplineTrajectoryTask']]],
   ['exactcubic',['ExactCubic',['../a02380.html#a1c4b7078a6df6537dc27a7b678d254c2',1,'mc_trajectory::ExactCubic']]],
   ['exactcubictrajectorytask',['ExactCubicTrajectoryTask',['../a02284.html#ad27477a0f30c373765213f5e8288963e',1,'mc_tasks::ExactCubicTrajectoryTask']]],
-  ['exception',['Exception',['../a01720.html#a5fbc7e52e1f5e239e11916b19378c146',1,'mc_rtc::Configuration::Exception']]],
+  ['exception',['Exception',['../a01724.html#ae817c10e94b5dac7d6790f39138db9ff',1,'mc_rtc::Configuration::Exception::Exception(const std::string &amp;msg, const Json &amp;v)'],['../a01724.html#a7fb4c7e9f42ab610bc546f16c23e5bd4',1,'mc_rtc::Configuration::Exception::Exception(const std::string &amp;msg, const Configuration &amp;c)']]],
   ['expand_5fstance',['expand_stance',['../a01668.html#aa6f2c53b2567e6fbd62f8694db311a9d',1,'mc_rbdyn::RobotModule']]],
   ['exponentialmovingaverage',['ExponentialMovingAverage',['../a01472.html#a156a26de235d293b4e94cb1f269dd16c',1,'mc_filter::ExponentialMovingAverage']]],
   ['extrastiffness',['extraStiffness',['../a00725.html#aa673a5574c449b983c740d35cddf6669',1,'mc_tasks']]]
