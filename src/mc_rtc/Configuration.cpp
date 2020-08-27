@@ -159,7 +159,7 @@ const char * Configuration::Exception::what() const noexcept
   return msg().c_str();
 }
 
-void Configuration::Exception::silence() noexcept
+void Configuration::Exception::silence() const noexcept
 {
   msg_.resize(0);
   v_.value_ = nullptr;
