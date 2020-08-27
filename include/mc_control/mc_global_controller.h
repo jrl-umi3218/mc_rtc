@@ -195,14 +195,41 @@ public:
 
   /*! \brief Sets the main robot acceleration (control+real)
    *
+   * \deprecated in favor of void setSensorLinearAcceleration(const Eigen::Vector3d & acc);
+   */
+  MC_RTC_DEPRECATED void setSensorAcceleration(const Eigen::Vector3d & acc);
+  /*! \brief Set multiple body sensors' acceleration for a given robot for the main robot (control+real)
+   *
+   * \deprecated in favor of void setSensorLinearAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
+   **/
+  void setSensorAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
+  /*! \brief Set multiple body sensors' acceleration for a given robot
+   *
+   * \deprecated in favor of void setSensorLinearAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string,
+   *Eigen::Vector3d> & accels);
+   **/
+  void setSensorAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
+
+  /*! \brief Sets the main robot linear acceleration (control+real)
+   *
+   * \param acc Linear acceleration given by a sensor
+   */
+  void setSensorLinearAcceleration(const Eigen::Vector3d & acc);
+  /*! \brief Set multiple body sensors' linear acceleration for a given robot for the main robot (control+real) */
+  void setSensorLinearAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
+  /*! \brief Set multiple body sensors' linear acceleration for a given robot */
+  void setSensorLinearAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
+
+  /*! \brief Sets the main robot angular acceleration (control+real)
+   *
    * \param acc Acceleration given by a sensor
    */
-  void setSensorAcceleration(const Eigen::Vector3d & acc);
-  /*! \brief Set multiple body sensors' acceleration for a given robot for the
+  void setSensorAngularAcceleration(const Eigen::Vector3d & acc);
+  /*! \brief Set multiple body sensors' angular acceleration for a given robot for the
    * main robot (control+real) */
-  void setSensorAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
-  /*! \brief Set multiple body sensors' acceleration for a given robot */
-  void setSensorAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
+  void setSensorAngularAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
+  /*! \brief Set multiple body sensors' angular acceleration for a given robot */
+  void setSensorAngularAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
 
   /*! \brief Sets the main robot actual joints' values (control+real)
    *

@@ -381,22 +381,59 @@ void MCGlobalController::setSensorAngularVelocities(mc_rbdyn::Robot & robot,
 
 void MCGlobalController::setSensorAcceleration(const Eigen::Vector3d & acc)
 {
-  robot().bodySensor().acceleration(acc);
-  realRobot().bodySensor().acceleration(acc);
+  setSensorLinearAcceleration(acc);
 }
 
 void MCGlobalController::setSensorAccelerations(const std::map<std::string, Eigen::Vector3d> & accels)
 {
-  setSensorAccelerations(robot(), accels);
-  setSensorAccelerations(realRobot(), accels);
+  setSensorLinearAccelerations(accels);
 }
 
 void MCGlobalController::setSensorAccelerations(mc_rbdyn::Robot & robot,
                                                 const std::map<std::string, Eigen::Vector3d> & accels)
 {
+  setSensorLinearAccelerations(robot, accels);
+}
+
+void MCGlobalController::setSensorLinearAcceleration(const Eigen::Vector3d & acc)
+{
+  robot().bodySensor().linearAcceleration(acc);
+  realRobot().bodySensor().linearAcceleration(acc);
+}
+
+void MCGlobalController::setSensorLinearAccelerations(const std::map<std::string, Eigen::Vector3d> & accels)
+{
+  setSensorAccelerations(robot(), accels);
+  setSensorAccelerations(realRobot(), accels);
+}
+
+void MCGlobalController::setSensorLinearAccelerations(mc_rbdyn::Robot & robot,
+                                                      const std::map<std::string, Eigen::Vector3d> & accels)
+{
   for(const auto & a : accels)
   {
-    robot.bodySensor(a.first).acceleration(a.second);
+    robot.bodySensor(a.first).linearAcceleration(a.second);
+  }
+}
+
+void MCGlobalController::setSensorAngularAcceleration(const Eigen::Vector3d & acc)
+{
+  robot().bodySensor().angularAcceleration(acc);
+  realRobot().bodySensor().angularAcceleration(acc);
+}
+
+void MCGlobalController::setSensorAngularAccelerations(const std::map<std::string, Eigen::Vector3d> & accels)
+{
+  setSensorAccelerations(robot(), accels);
+  setSensorAccelerations(realRobot(), accels);
+}
+
+void MCGlobalController::setSensorAngularAccelerations(mc_rbdyn::Robot & robot,
+                                                       const std::map<std::string, Eigen::Vector3d> & accels)
+{
+  for(const auto & a : accels)
+  {
+    robot.bodySensor(a.first).angularAcceleration(a.second);
   }
 }
 

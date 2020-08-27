@@ -89,7 +89,7 @@ bool BodySensorObserver::run(const mc_control::MCController & ctl)
 
     sva::MotionVecd sensorVel(sensor.angularVelocity(), sensor.linearVelocity());
     velW_ = X_s_fb * sensorVel;
-    sva::MotionVecd sensorAcc(Eigen::Vector3d::Zero(), sensor.acceleration());
+    sva::MotionVecd sensorAcc(sensor.angularAcceleration(), sensor.linearAcceleration());
     accW_ = X_s_fb * sensorAcc;
   }
   else /* if(updateFrom_ == Update::Control) */
@@ -112,25 +112,27 @@ void BodySensorObserver::addToLogger(const mc_control::MCController &,
                                      mc_rtc::Logger & logger,
                                      const std::string & category)
 {
+  auto cat = category + "_" + fbSensorName_;
   if(logPos_)
   {
-    logger.addLogEntry(category + "_posW", [this]() { return posW_; });
+    logger.addLogEntry(cat + "_posW", [this]() { return posW_; });
   }
   if(logVel_)
   {
-    logger.addLogEntry(category + "_velW", [this]() { return velW_; });
+    logger.addLogEntry(cat + "_velW", [this]() { return velW_; });
   }
   if(logAcc_)
   {
-    logger.addLogEntry(category + "_accW", [this]() { return accW_; });
+    logger.addLogEntry(cat + "_accW", [this]() { return accW_; });
   }
 }
 
 void BodySensorObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
 {
-  logger.removeLogEntry(category + "_posW");
-  logger.removeLogEntry(category + "_velW");
-  logger.removeLogEntry(category + "_accW");
+  auto cat = category + "_" + fbSensorName_;
+  logger.removeLogEntry(cat + "_posW");
+  logger.removeLogEntry(cat + "_velW");
+  logger.removeLogEntry(cat + "_accW");
 }
 
 void BodySensorObserver::addToGUI(const mc_control::MCController &,
