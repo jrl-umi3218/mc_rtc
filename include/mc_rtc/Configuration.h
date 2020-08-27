@@ -102,24 +102,90 @@ struct has_configuration_save_object : decltype(_has_configuration_save_object::
  */
 struct MC_RTC_UTILS_DLLAPI Configuration
 {
+private:
+  /*! \brief Implementation details
+   *
+   * This structure is meant to hide the JSON library used by mc_rtc
+   * while allowing the template method implementation.
+   */
+  struct MC_RTC_UTILS_DLLAPI Json
+  {
+    /** True if the underlying value is an array */
+    bool isArray() const;
+    /** Size of the array, 0 if the array is empty or the value is not an array */
+    size_t size() const;
+    /** Access element at the provided index
+     *
+     * \throws If idx >= size()
+     */
+    Json operator[](size_t idx) const;
+    /** True if the underlying value is an object */
+    bool isObject() const;
+    /** Key of the object, empty if the object is or if the value is not an object */
+    std::vector<std::string> keys() const;
+    /** Access element at the provided key
+     *
+     * \throws If key does not belong in keys()
+     */
+    Json operator[](const std::string & key) const;
+    /** True if the value is numeric */
+    bool isNumeric() const;
+    /** Access the value as a double
+     *
+     * \throws If isNumeric() is false
+     */
+    double asDouble() const;
+    /** Output the path from the root of the document to this value
+     *
+     * \note This requires searching through the whole document for this value and is not very efficient
+     */
+    void path(std::string & out) const;
+    /** Actually a RapidJSON value */
+    void * value_;
+    /** Actually a RapidJSON document (root) */
+    std::shared_ptr<void> doc_;
+  };
 
+public:
   /*! \brief Exception thrown by this class when something bad occurs
+   *
+   * The exception message is generated when accessed via what() or msg(). It is printed when the exception is deleted
+   * and builds a path from the root of the document to the source of the error in order to help the user to find the
+   * source of the error. This operation can be expensive. If you do not need the message (e.g. you are attempting
+   * various conversions) then you should call silence() to prevent the generation of the message.
    */
   struct MC_RTC_UTILS_DLLAPI Exception : public std::exception
   {
     /*! \brief Constructor
      *
-     * \param msg The message that will be returned by what()
+     * \param msg Exception message
+     *
+     * \param v Json value that was the source of the exception
      */
-    Exception(const std::string & msg);
+    Exception(const std::string & msg, const Json & v);
+
+    /*! \brief Constructor
+     *
+     * \param msg Exception message
+     *
+     * \param c Configuration object that was the source of the exception
+     */
+    Exception(const std::string & msg, const Configuration & c) : Exception(msg, c.v) {}
 
     ~Exception() noexcept;
 
+    /** Returns the error message */
     virtual const char * what() const noexcept override;
 
-    void silence() noexcept;
+    /** Empty the error message */
+    void silence() const noexcept;
 
-    std::string msg;
+    /** Returns the error message */
+    const std::string & msg() const noexcept;
+
+  private:
+    mutable std::string msg_;
+    mutable Json v_;
   };
 
   /*! \brief Deprecated, see has
@@ -295,7 +361,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not a vector");
+      throw Configuration::Exception("Stored Json value is not a vector", v);
     }
   }
 
@@ -319,7 +385,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not an array or its size is incorrect");
+      throw Configuration::Exception("Stored Json value is not an array or its size is incorrect", v);
     }
   }
 
@@ -337,7 +403,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not an array of size 2");
+      throw Configuration::Exception("Stored Json value is not an array of size 2", v);
     }
   }
 
@@ -363,7 +429,7 @@ struct MC_RTC_UTILS_DLLAPI Configuration
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not an object");
+      throw Configuration::Exception("Stored Json value is not an object", v);
     }
   }
 
@@ -384,14 +450,14 @@ struct MC_RTC_UTILS_DLLAPI Configuration
         auto ins = ret.insert(Configuration(v[i]));
         if(!ins.second)
         {
-          throw Configuration::Exception("Stored Json set does not hold unique values");
+          throw Configuration::Exception("Stored Json set does not hold unique values", v);
         }
       }
       return ret;
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not an array");
+      throw Configuration::Exception("Stored Json value is not an array", v);
     }
   }
 
@@ -412,14 +478,14 @@ struct MC_RTC_UTILS_DLLAPI Configuration
         auto ins = ret.insert(Configuration(v[i]));
         if(!ins.second)
         {
-          throw Configuration::Exception("Stored Json set does not hold unique values");
+          throw Configuration::Exception("Stored Json set does not hold unique values", v);
         }
       }
       return ret;
     }
     else
     {
-      throw Configuration::Exception("Stored Json value is not an array");
+      throw Configuration::Exception("Stored Json value is not an array", v);
     }
   }
 
@@ -1252,24 +1318,6 @@ struct MC_RTC_UTILS_DLLAPI Configuration
   ConfigurationArrayIterator end() const;
 
 private:
-  /*! \brief Implementation details
-   *
-   * This structure is meant to hide the JSON library used by mc_rtc
-   * while allowing the template method implementation.
-   */
-  struct MC_RTC_UTILS_DLLAPI Json
-  {
-    bool isArray() const;
-    size_t size() const;
-    Json operator[](size_t idx) const;
-    bool isObject() const;
-    std::vector<std::string> keys() const;
-    Json operator[](const std::string & key) const;
-    bool isNumeric() const;
-    double asDouble() const;
-    void * value_;
-    std::shared_ptr<void> doc_;
-  };
   Json v;
   Configuration(const Json & v);
 };

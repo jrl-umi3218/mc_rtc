@@ -973,3 +973,74 @@ BOOST_AUTO_TEST_CASE(TestConfigurartionRemove)
   BOOST_CHECK(config.remove("dict"));
   BOOST_CHECK(!config.has("dict"));
 }
+
+static std::string YAML_DATA3 = R"(
+v3d: [1.0, 2.0, 3.0]
+v3dPair:
+  - [1.0, 2.0, 3.0]
+  - [1.0, 2.0, 3.0]
+dict:
+  v3d: [1.0, 2.0, 3.0]
+  v3dPair:
+    - [1.0, 2.0, 3.0]
+    - [1.0, 2.0, 3.0]
+array:
+  - v3d: [1.0, 2.0, 3.0]
+  - v3dPair:
+      - [1.0, 2.0, 3.0]
+      - [1.0, 2.0, 3.0]
+deep:
+  - {}
+  - {}
+  - object1:
+      key1: {}
+      key2:
+        - {}
+        - object2:
+            key1: {}
+            v3d: [1.0, 2.0, 3.0]
+)";
+
+#define CHECK_ERROR_MESSAGE(EXPECTED, ...)      \
+  try                                           \
+  {                                             \
+    __VA_ARGS__;                                \
+  }                                             \
+  catch(mc_rtc::Configuration::Exception & exc) \
+  {                                             \
+    BOOST_REQUIRE(exc.msg() == EXPECTED);       \
+    exc.silence();                              \
+  }
+
+BOOST_AUTO_TEST_CASE(TestConfigurationErrorMessage)
+{
+  auto config = mc_rtc::Configuration::fromYAMLData(YAML_DATA3);
+  CHECK_ERROR_MESSAGE("No entry named NONE in the configuration (error path: ())", config("NONE"));
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused"
+#ifdef __clang__
+#  pragma GCC diagnostic ignored "-Wunknown-warning-option"
+#endif
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+  CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"v3d\"))", Eigen::Vector6d v = config("v3d"));
+  CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"v3dPair\")[0])",
+                      Eigen::Vector6d v = config("v3dPair")[0]);
+  CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"v3dPair\")[1])",
+                      std::pair<Eigen::Vector3d, Eigen::Vector6d> v = config("v3dPair"));
+  CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"dict\")(\"v3d\"))",
+                      Eigen::Vector6d v = config("dict")("v3d"));
+  CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"dict\")(\"v3dPair\")[0])",
+                      Eigen::Vector6d v = config("dict")("v3dPair")[0]);
+  CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"dict\")(\"v3dPair\")[1])",
+                      std::pair<Eigen::Vector3d, Eigen::Vector6d> v = config("dict")("v3dPair"));
+  CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"array\")[0](\"v3d\"))",
+                      Eigen::Vector6d v = config("array")[0]("v3d"));
+  CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"array\")[1](\"v3dPair\")[0])",
+                      Eigen::Vector6d v = config("array")[1]("v3dPair")[0]);
+  CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"array\")[1](\"v3dPair\")[1])",
+                      std::pair<Eigen::Vector3d, Eigen::Vector6d> v = config("array")[1]("v3dPair"));
+  CHECK_ERROR_MESSAGE(
+      "Stored Json value is not a Vector6d (error path: (\"deep\")[2](\"object1\")(\"key2\")[1](\"object2\")(\"v3d\"))",
+      Eigen::Vector6d v = config("deep")[2]("object1")("key2")[1]("object2")("v3d"));
+#pragma GCC diagnostic pop
+}

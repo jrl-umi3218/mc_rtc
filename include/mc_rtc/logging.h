@@ -38,6 +38,12 @@ void error_and_throw[[noreturn]](Args &&... args)
 }
 
 template<typename... Args>
+void critical(Args &&... args)
+{
+  details::cerr().critical(std::forward<Args>(args)...);
+}
+
+template<typename... Args>
 void error(Args &&... args)
 {
   details::cerr().error(std::forward<Args>(args)...);
