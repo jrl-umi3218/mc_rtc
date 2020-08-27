@@ -26,6 +26,11 @@ const Color Color::Magenta = Color(1, 0, 1, 1);
 const Color Color::Yellow = Color(1, 1, 0, 1);
 const Color Color::Gray = Color(0.6, 0.6, 0.6, 1);
 const Color Color::LightGray = Color(0.75, 0.75, 0.75, 1);
+const std::map<std::string, Color> Color::ColorMap{
+    {"white", Color::White}, {"black", Color::Black},         {"red", Color::Red},         {"green", Color::Green},
+    {"blue", Color::Blue},   {"cyan", Color::Cyan},           {"magenta", Color::Magenta}, {"yellow", Color::Yellow},
+    {"gray", Color::Gray},   {"lightgray", Color::LightGray},
+};
 
 namespace plot
 {

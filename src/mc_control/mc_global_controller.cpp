@@ -499,7 +499,8 @@ bool MCGlobalController::run()
         bs.orientation(current.orientation());
         bs.linearVelocity(current.linearVelocity());
         bs.angularVelocity(current.angularVelocity());
-        bs.acceleration(current.acceleration());
+        bs.linearAcceleration(current.linearAcceleration());
+        bs.angularAcceleration(current.angularAcceleration());
       }
       next_controller_->robot().encoderValues(controller_->robot().encoderValues());
       next_controller_->realRobot().encoderValues(controller_->robot().encoderValues());
@@ -895,8 +896,9 @@ void MCGlobalController::setup_log()
   controller->logger().addLogEntry("rateIn", [controller]() -> const Eigen::Vector3d & {
     return controller->robot().bodySensor().angularVelocity();
   });
-  controller->logger().addLogEntry(
-      "accIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().acceleration(); });
+  controller->logger().addLogEntry("accIn", [controller]() -> const Eigen::Vector3d & {
+    return controller->robot().bodySensor().linearAcceleration();
+  });
 
   // Log all other body sensors
   const auto & bodySensors = controller->robot().bodySensors();
@@ -916,7 +918,7 @@ void MCGlobalController::setup_log()
       return controller->robot().bodySensor(name).angularVelocity();
     });
     controller->logger().addLogEntry(name + "_accIn", [controller, name]() -> const Eigen::Vector3d & {
-      return controller->robot().bodySensor(name).acceleration();
+      return controller->robot().bodySensor(name).linearAcceleration();
     });
   }
 
