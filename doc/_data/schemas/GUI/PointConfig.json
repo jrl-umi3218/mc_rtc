@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "title": "mc_rtc::gui::PointConfig",
+  "properties":
+  {
+    "scale": {"type": "number"},
+    "color": { "$ref": "/../../GUI/Color.json" }
+  }
+}

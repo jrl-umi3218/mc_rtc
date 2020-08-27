@@ -26,7 +26,9 @@
       {
         "pose": {"type": "boolean", "default": false, "description": "When true, diplays the estimated floating base pose (frame)" },
         "velocity": {"type": "boolean", "default": true, "description": "When true, log the estimated floating base velocity (arrow)" },
-        "acceleration": {"type": "boolean", "default": false, "description": "When true, log the estimated floating base acceleration (arrow)" }
+        "acceleration": {"type": "boolean", "default": false, "description": "When true, log the estimated floating base acceleration (arrow)" },
+        "velocityArrow": { "$ref": "/../../GUI/ArrowConfig.json" },
+        "accelerationArrow": { "$ref": "/../../GUI/ArrowConfig.json" }
       }
     }
   }

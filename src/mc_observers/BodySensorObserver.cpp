@@ -54,8 +54,8 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
     gConfig("pose", guiPos_);
     gConfig("velocity", guiVel_);
     gConfig("acceleration", guiAcc_);
-    guiVelConfig_ = gConfig("velocityConfig", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}));
-    guiAccConfig_ = gConfig("velocityConfig", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 1., 0.}));
+    guiVelConfig_ = gConfig("velocityArrow", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}));
+    guiAccConfig_ = gConfig("accelerationArrow", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 1., 0.}));
   }
 
   desc_ = name_ + " (sensor=" + fbSensorName_ + ", update=" + updateConfig + ")";
