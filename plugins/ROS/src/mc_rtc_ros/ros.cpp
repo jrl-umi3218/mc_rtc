@@ -247,7 +247,7 @@ void RobotPublisherImpl::update(double, const mc_rbdyn::Robot & robot)
   }
 
   data.imu.header = data.js.header;
-  const auto & imu_linear_acceleration = robot.bodySensor().acceleration();
+  const auto & imu_linear_acceleration = robot.bodySensor().linearAcceleration();
   data.imu.linear_acceleration.x = imu_linear_acceleration.x();
   data.imu.linear_acceleration.y = imu_linear_acceleration.y();
   data.imu.linear_acceleration.z = imu_linear_acceleration.z();

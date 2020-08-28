@@ -70,14 +70,17 @@ struct MC_RTC_GUI_DLLAPI Color
         }
         else
         {
-          mc_rtc::log::error_and_throw<mc_rtc::Configuration::Exception>("No color named {} ", color);
+          auto msg = fmt::format("No color named {} ", color);
+          mc_rtc::log::error(msg);
+          throw mc_rtc::Configuration::Exception(msg, config);
         }
       }
       catch(mc_rtc::Configuration::Exception & e)
       {
         e.silence();
-        mc_rtc::log::error_and_throw<mc_rtc::Configuration::Exception>(
-            "Color is neither an array of size 4, nor a valid color string");
+        auto msg = std::string{"Color is neither an array of size 4, nor a valid color string"};
+        mc_rtc::log::error(msg);
+        throw mc_rtc::Configuration::Exception(msg, config);
       }
     }
   }

@@ -126,39 +126,36 @@ void EncoderObserver::updateRobots(mc_control::MCController & ctl)
   auto & realRobot = realRobots.robot(updateRobot_);
   const auto & q = robot.encoderValues();
 
-  if(q.size() == robot.refJointOrder().size())
+  // Set all joint values and velocities from encoders
+  size_t nJoints = realRobot.refJointOrder().size();
+  for(size_t i = 0; i < nJoints; ++i)
   {
-    // Set all joint values and velocities from encoders
-    size_t nJoints = realRobot.refJointOrder().size();
-    for(size_t i = 0; i < nJoints; ++i)
+    const auto joint_index = robot.jointIndexInMBC(i);
+    if(joint_index != -1 && robot.mb().joint(joint_index).dof() == 1)
     {
-      const auto joint_index = robot.jointIndexInMBC(i);
-      if(joint_index != -1 && robot.mb().joint(joint_index).dof() == 1)
+      size_t jidx = static_cast<size_t>(joint_index);
+      // Update position
+      if(posUpdate_ == PosUpdate::Control)
       {
-        size_t jidx = static_cast<size_t>(joint_index);
-        // Update position
-        if(posUpdate_ == PosUpdate::Control)
-        {
-          realRobot.mbc().q[jidx][0] = robot.mbc().q[jidx][0];
-        }
-        else if(posUpdate_ == PosUpdate::EncoderValues)
-        {
-          realRobot.mbc().q[jidx][0] = q[i];
-        }
+        realRobot.mbc().q[jidx][0] = robot.mbc().q[jidx][0];
+      }
+      else if(posUpdate_ == PosUpdate::EncoderValues)
+      {
+        realRobot.mbc().q[jidx][0] = q[i];
+      }
 
-        // Update velocity
-        if(velUpdate_ == VelUpdate::Control)
-        {
-          realRobot.mbc().alpha[jidx][0] = robot.mbc().alpha[jidx][0];
-        }
-        else if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
-        {
-          realRobot.mbc().alpha[jidx][0] = encodersVelocity_[i];
-        }
-        else if(velUpdate_ == VelUpdate::EncoderVelocities)
-        {
-          realRobot.mbc().alpha[jidx][0] = robot.encoderVelocities()[i];
-        }
+      // Update velocity
+      if(velUpdate_ == VelUpdate::Control)
+      {
+        realRobot.mbc().alpha[jidx][0] = robot.mbc().alpha[jidx][0];
+      }
+      else if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
+      {
+        realRobot.mbc().alpha[jidx][0] = encodersVelocity_[i];
+      }
+      else if(velUpdate_ == VelUpdate::EncoderVelocities)
+      {
+        realRobot.mbc().alpha[jidx][0] = robot.encoderVelocities()[i];
       }
     }
   }

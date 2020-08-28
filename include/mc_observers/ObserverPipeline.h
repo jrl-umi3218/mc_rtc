@@ -22,6 +22,64 @@ struct Robots;
 namespace mc_observers
 {
 
+/** Holds an observer and its configuration within the ObserverPipeline */
+struct PipelineObserver
+{
+  friend struct ObserverPipeline;
+
+  PipelineObserver(const mc_observers::ObserverPtr & observer, const mc_rtc::Configuration & config)
+  : observer_(observer)
+  {
+    config("update", update_);
+    config("log", log_);
+    config("gui", gui_);
+  }
+
+  /* Const accessor to an observer
+   *
+   * @param name Name of the observer
+   * @throws std::runtime_error if the observer is not part of the pipeline
+   */
+  const Observer & observer() const
+  {
+    return *observer_;
+  }
+
+  /* Non-const variant */
+  Observer & observer()
+  {
+    return const_cast<Observer &>(static_cast<const PipelineObserver *>(this)->observer());
+  }
+
+  bool update() const
+  {
+    return update_;
+  }
+
+  bool log() const
+  {
+    return log_;
+  }
+
+  bool gui() const
+  {
+    return gui_;
+  }
+
+  /** Returns whether the last call to this observer succeeded */
+  bool success() const
+  {
+    return success_;
+  }
+
+protected:
+  ObserverPtr observer_ = nullptr; //< Observer
+  bool update_ = true; //< Whether to update the real robot instance from this observer
+  bool log_ = true; //< Whether to log this observer
+  bool gui_ = true; //< Whether to display the gui
+  bool success_ = true; //< Whether this observer succeeded
+};
+
 /**
  * @brief State observation pipeline
  *
@@ -107,16 +165,32 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
    * @param name Name of the observer
    * @throws std::runtime_error if the observer is not part of the pipeline
    */
-  const Observer & observer(const std::string & name) const
+  const PipelineObserver & observer(const std::string & name) const
   {
     auto it = std::find_if(pipelineObservers_.begin(), pipelineObservers_.end(),
-                           [&name](const PipelineObserver & obs) { return obs.observer->name() == name; });
+                           [&name](const PipelineObserver & obs) { return obs.observer().name() == name; });
     if(it == pipelineObservers_.end())
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "Observer pipeline \"{}\" does not have any observer named \"{}\"", name_, name);
     }
-    return *it->observer;
+    return *it;
+  }
+
+  /* Non-const variant */
+  PipelineObserver & observer(const std::string & name)
+  {
+    return const_cast<PipelineObserver &>(static_cast<const ObserverPipeline *>(this)->observer(name));
+  }
+
+  const std::vector<mc_observers::PipelineObserver> & observers() const
+  {
+    return pipelineObservers_;
+  }
+
+  std::vector<mc_observers::PipelineObserver> & observers()
+  {
+    return pipelineObservers_;
   }
 
   /**
@@ -129,7 +203,7 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   bool hasObserver(const std::string & name) const
   {
     return std::find_if(pipelineObservers_.begin(), pipelineObservers_.end(),
-                        [&name](const PipelineObserver & obs) { return obs.observer->name() == name; })
+                        [&name](const PipelineObserver & obs) { return obs.observer().name() == name; })
            != pipelineObservers_.end();
   }
 
@@ -145,22 +219,8 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   bool hasObserverType(const std::string & type) const
   {
     return std::find_if(pipelineObservers_.begin(), pipelineObservers_.end(),
-                        [&type](const PipelineObserver & obs) { return obs.observer->type() == type; })
+                        [&type](const PipelineObserver & obs) { return obs.observer().type() == type; })
            != pipelineObservers_.end();
-  }
-
-  const std::vector<mc_observers::ObserverPtr> observers() const
-  {
-    std::vector<mc_observers::ObserverPtr> observers;
-    std::transform(pipelineObservers_.begin(), pipelineObservers_.end(), std::back_inserter(observers),
-                   [](const PipelineObserver & pObs) { return pObs.observer; });
-    return observers;
-  }
-
-  /* Non-const variant */
-  Observer & observer(const std::string & name)
-  {
-    return const_cast<Observer &>(static_cast<const ObserverPipeline *>(this)->observer(name));
   }
 
   /*! \brief Short description of the pipeline */
@@ -188,23 +248,6 @@ protected:
   bool runObservers_ = true; ///< Whether to run this pipeline
   bool updateObservers_ = true; ///< Whether to update real robots from estimated state.
   bool success_ = false; ///< Whether the pipeline successfully executed
-
-  struct PipelineObserver
-  {
-    PipelineObserver(const mc_observers::ObserverPtr & observer, const mc_rtc::Configuration & config)
-    : observer(observer)
-    {
-      config("update", update);
-      config("log", log);
-      config("gui", gui);
-    }
-
-    mc_observers::ObserverPtr observer = nullptr; //< Observer
-    bool update = true; //< Whether to update the real robot instance from this observer
-    bool log = true; //< Whether to log this observer
-    bool gui = true; //< Whether to display the gui
-    bool success = true; //< Whether this observer succeeded
-  };
 
   /** Observers that will be run by the pipeline.
    *

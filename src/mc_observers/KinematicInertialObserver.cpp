@@ -18,7 +18,7 @@ void KinematicInertialObserver::configure(const mc_control::MCController & ctl, 
   if(config.has("gui"))
   {
     config("gui")("velocity", showVelocity_);
-    config("gui")("velocityArrow" velocityArrowConfig_);
+    config("gui")("velocityArrow", velocityArrowConfig_);
   }
   double cutoff = config("cutoff", 2 * ctl.timeStep);
   velFilter_.cutoffPeriod(cutoff);

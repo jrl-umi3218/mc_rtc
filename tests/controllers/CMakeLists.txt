@@ -24,6 +24,9 @@ macro(controller_test_common NAME)
   endif()
   add_library(${NAME} SHARED ${${NAME}_SRC})
   target_link_libraries(${NAME} PUBLIC mc_control Boost::unit_test_framework)
+  target_include_directories(${NAME} PRIVATE ${CMAKE_SOURCE_DIR}/tests)
+  set(CONFIG_HEADER_INCLUDE_DIR "${CMAKE_BINARY_DIR}/tests/include/$<CONFIGURATION>")
+  target_include_directories(${NAME} PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
   set_target_properties(${NAME} PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
     PREFIX ""
@@ -160,6 +163,8 @@ controller_test_run(TestEndEffectorTaskController 4001)
 set(ENABLED_OBSERVERS "\"Encoder\", \"BodySensor\", \"KinematicInertial\"")
 set(RUN_OBSERVERS "\"Encoder\", \"BodySensor\"")
 set(UPDATE_OBSERVERS "\"Encoder\"")
+
+file(READ "ObserverPipelines.json" OBSERVER_PIPELINES)
 
 # mc_observer test controllers
 controller_test_run(TestObserverController 2001)

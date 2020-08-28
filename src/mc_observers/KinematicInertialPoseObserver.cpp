@@ -37,7 +37,8 @@ void KinematicInertialPoseObserver::configure(const mc_control::MCController & c
 
 void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)
 {
-  run(ctl);
+  pose_ = ctl.realRobot(robot_).posW();
+  firstIter_ = true;
 }
 
 bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
@@ -54,19 +55,26 @@ bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
   auto anchorFrame = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.robot(robot_));
   auto anchorFrameReal = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.realRobot(realRobot_));
   auto error = (anchorFrame.translation() - X_0_anchorFrame_.translation()).norm();
-  if(error > anchorFrameJumpThreshold_)
-  {
-    mc_rtc::log::warning("[{}] Control anchor frame jumped from [{}] to [{}] (error norm {} > threshold {})", name(),
-                         X_0_anchorFrame_.translation().transpose(), anchorFrame.translation().transpose(), error,
-                         anchorFrameJumpThreshold_);
-    anchorFrameJumped_ = true;
+  if(firstIter_)
+  { // Ignore anchor frame check on first iteration
+    firstIter_ = false;
   }
-  if((anchorFrameReal.translation() - X_0_anchorFrameReal_.translation()).norm() > anchorFrameJumpThreshold_)
-  {
-    mc_rtc::log::warning("[{}] Real anchor frame jumped from [{}] to [{}] (error norm {:.3f} > threshold {:.3f})",
-                         name(), X_0_anchorFrameReal_.translation().transpose(),
-                         anchorFrameReal.translation().transpose(), error, anchorFrameJumpThreshold_);
-    anchorFrameJumped_ = true;
+  else
+  { // Check whether anchor frame jumped
+    if(error > anchorFrameJumpThreshold_)
+    {
+      mc_rtc::log::warning("[{}] Control anchor frame jumped from [{}] to [{}] (error norm {} > threshold {})", name(),
+                           X_0_anchorFrame_.translation().transpose(), anchorFrame.translation().transpose(), error,
+                           anchorFrameJumpThreshold_);
+      anchorFrameJumped_ = true;
+    }
+    if((anchorFrameReal.translation() - X_0_anchorFrameReal_.translation()).norm() > anchorFrameJumpThreshold_)
+    {
+      mc_rtc::log::warning("[{}] Real anchor frame jumped from [{}] to [{}] (error norm {:.3f} > threshold {:.3f})",
+                           name(), X_0_anchorFrameReal_.translation().transpose(),
+                           anchorFrameReal.translation().transpose(), error, anchorFrameJumpThreshold_);
+      anchorFrameJumped_ = true;
+    }
   }
   X_0_anchorFrame_ = anchorFrame;
   X_0_anchorFrameReal_ = anchorFrameReal;

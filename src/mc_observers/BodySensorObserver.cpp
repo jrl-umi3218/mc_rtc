@@ -17,7 +17,7 @@ namespace mc_observers
 void BodySensorObserver::configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config)
 {
   robot_ = config("robot", ctl.robot().name());
-  fbSensorName_ = config("bodySensor", std::string{"FloatingBase"});
+  fbSensorName_ = config("bodySensor", ctl.robot(robot_).bodySensor().name());
   if(!ctl.robots().hasRobot(robot_))
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No robot named {}", name(), robot_);

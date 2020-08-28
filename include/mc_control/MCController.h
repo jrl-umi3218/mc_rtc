@@ -109,6 +109,10 @@ public:
   virtual bool resetObserverPipelines();
 
   bool hasObserverPipeline(const std::string & name) const;
+
+  std::vector<mc_observers::ObserverPipeline> & observerPipelines();
+  const std::vector<mc_observers::ObserverPipeline> & observerPipelines() const;
+
   mc_observers::ObserverPipeline & observerPipeline(const std::string & name);
   const mc_observers::ObserverPipeline & observerPipeline(const std::string & name) const;
 

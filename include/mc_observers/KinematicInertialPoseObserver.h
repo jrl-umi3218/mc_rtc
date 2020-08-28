@@ -42,20 +42,13 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
   /** Configure observer */
   void configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config) override;
 
-  /** Reset floating base estimate from the current control robot state and
-   * estimates the floating base position by calling run()
-   */
+  /** Reset floating base estimate from the current real robot state */
   void reset(const mc_control::MCController & ctl) override;
 
-  /** Update floating-base transform of real robot
-   */
+  /** Update floating-base estimation of real robot (IMU + kinematics) */
   bool run(const mc_control::MCController & ctl) override;
 
-  /** Write observed floating-base transform to the robot's configuration
-   *
-   * \param robot Robot state to write to
-   *
-   */
+  /** Write observed floating-base transform to the robot's configuration */
   void updateRobots(mc_control::MCController & ctl) override;
 
   /*! \brief Get floating-base pose in the world frame. */
@@ -104,6 +97,7 @@ protected:
   double anchorFrameJumpThreshold_ =
       0.01; ///< Threshold (norm) above wich the anchor frame is considered to have had a discontinuity
   bool anchorFrameJumped_ = false; /** Detects whether the anchor frame had a discontinuity */
+  bool firstIter_ = true; /** Ignore anchor frame check on first iteration */
 
 private:
   sva::PTransformd pose_ = sva::PTransformd::Identity(); ///< Estimated pose of the floating-base in world frame */

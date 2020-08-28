@@ -219,6 +219,16 @@ bool MCController::hasObserverPipeline(const std::string & name) const
          != observerPipelines_.end();
 }
 
+const std::vector<mc_observers::ObserverPipeline> & MCController::observerPipelines() const
+{
+  return observerPipelines_;
+}
+
+std::vector<mc_observers::ObserverPipeline> & MCController::observerPipelines()
+{
+  return observerPipelines_;
+}
+
 const mc_observers::ObserverPipeline & MCController::observerPipeline(const std::string & name) const
 {
   auto pipelineIt =
