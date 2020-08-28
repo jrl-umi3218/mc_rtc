@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "mc_observers::KinematicInertial",
+  "title": "mc_observers::KinematicInertialObserver",
   "description": "Kinematic Intertial observer: floating base observeration from IMU and kinematics",
   "properties":
   {

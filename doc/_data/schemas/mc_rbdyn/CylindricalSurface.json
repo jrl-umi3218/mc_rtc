@@ -5,7 +5,7 @@
       "$ref": "/../../common/Surface.json"
     },
     {
-      "title": "mc_rbdyn::CylindricalSurfacePtr",
+      "title": "mc_rbdyn::CylindricalSurface",
       "type": "object",
       "properties":
       {

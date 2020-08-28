@@ -62,6 +62,7 @@ protected:
 
 private:
   bool showVelocity_ = true;
+  mc_rtc::gui::ArrowConfig velocityArrowConfig_;
 
   /** Previous estimated position.
    * Used to compute finite differences estimation of the velocity */

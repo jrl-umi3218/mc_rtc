@@ -18,6 +18,7 @@ void KinematicInertialObserver::configure(const mc_control::MCController & ctl, 
   if(config.has("gui"))
   {
     config("gui")("velocity", showVelocity_);
+    config("gui")("velocityArrow" velocityArrowConfig_);
   }
   double cutoff = config("cutoff", 2 * ctl.timeStep);
   velFilter_.cutoffPeriod(cutoff);
@@ -94,7 +95,8 @@ void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl,
     gui.removeElement(cat, name);
     if(showVelocity_)
     {
-      gui.addElement(cat, mc_rtc::gui::Arrow(name, [this]() -> const Eigen::Vector3d & { return posW().translation(); },
+      gui.addElement(cat, mc_rtc::gui::Arrow(name, velocityArrowConfig_,
+                                             [this]() -> const Eigen::Vector3d & { return posW().translation(); },
                                              [this]() -> Eigen::Vector3d {
                                                const Eigen::Vector3d p = posW().translation();
                                                Eigen::Vector3d end = p + velW().linear();

@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "title": "fsm::StabilizerStandingState",
+      "title": "mc_control::fsm::StabilizerStandingState",
       "description": "Simple state managing the LIPM Stabilizer.<br />It provides set-point position target to the CoM, from which a full dynamic trajectory (com, comd, comdd, zmp) is computed and provided as reference to the lipm_stabilizer::StabilizerTask",
       "type": "object",
       "properties":

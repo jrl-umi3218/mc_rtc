@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "title": "fsm::HalfSitting",
+      "title": "mc_control::fsm::HalfSittingState",
       "description": "Brings the robot posture to halfsitting stance",
       "type": "object",
       "properties":

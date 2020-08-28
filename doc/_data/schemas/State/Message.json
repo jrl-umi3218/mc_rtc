@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "title": "fsm::Message",
+      "title": "mc_control::fsm::MessageState",
       "description": "Prints a message to the terminal and/or the GUI",
       "type": "object",
       "properties":

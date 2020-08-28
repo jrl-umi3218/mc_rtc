@@ -5,7 +5,7 @@
       "$ref": "/../../common/Surface.json"
     },
     {
-      "title": "mc_rbdyn::PlanarSurfacePtr",
+      "title": "mc_rbdyn::PlanarSurface",
       "type": "object",
       "properties":
       {

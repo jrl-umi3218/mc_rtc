@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "mc_observers::Encoder",
+  "title": "mc_observers::EncoderObserver",
   "description": "Encoder observer",
   "properties":
   {
