@@ -168,6 +168,7 @@ file(READ "ObserverPipelines.json" OBSERVER_PIPELINES)
 
 # mc_observer test controllers
 controller_test_run(TestObserverController 2001)
+target_link_libraries(TestObserverController PUBLIC BodySensorObserver)
 
 # Test run of sample controllers
 macro(controller_sample_test_run NAME PATH_SUFFIX NRITER)

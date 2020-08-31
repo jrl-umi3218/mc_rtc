@@ -17,12 +17,17 @@ namespace mc_observers
 void BodySensorObserver::configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config)
 {
   robot_ = config("robot", ctl.robot().name());
+  updateRobot_ = config("updateRobot", static_cast<std::string>(robot_));
   fbSensorName_ = config("bodySensor", ctl.robot(robot_).bodySensor().name());
   if(!ctl.robots().hasRobot(robot_))
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No robot named {}", name(), robot_);
   }
-  if(!ctl.robot(robot_).hasBodySensor(fbSensorName_))
+  if(!ctl.robots().hasRobot(updateRobot_))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No robot named {}", name(), updateRobot_);
+  }
+  if(updateFrom_ == Update::Sensor && !ctl.robot(robot_).hasBodySensor(fbSensorName_))
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No sensor named {} in robot {}", name(), fbSensorName_,
                                                      robot_);
@@ -63,16 +68,6 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
 
 void BodySensorObserver::reset(const mc_control::MCController & ctl)
 {
-  if(updateFrom_ == Update::Sensor)
-  {
-    if(!ctl.robot().hasBodySensor(fbSensorName_))
-    {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
-          "[BodySensorObserver] Bodysensor {} is requested but does not exist in robot {}", fbSensorName_,
-          ctl.robot().name());
-    }
-    name_ += "_" + fbSensorName_;
-  }
   run(ctl);
 }
 
@@ -112,7 +107,7 @@ bool BodySensorObserver::run(const mc_control::MCController & ctl)
 
 void BodySensorObserver::updateRobots(mc_control::MCController & ctl)
 {
-  auto & realRobot = ctl.realRobots().robot(robot_);
+  auto & realRobot = ctl.realRobots().robot(updateRobot_);
   realRobot.posW(posW_);
   realRobot.velW(velW_);
 }

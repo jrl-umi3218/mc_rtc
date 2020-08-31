@@ -93,6 +93,7 @@ protected:
   sva::MotionVecd velW_ = sva::MotionVecd::Zero();
   sva::MotionVecd accW_ = sva::MotionVecd::Zero();
   std::string robot_;
+  std::string updateRobot_;
 
   bool logPos_ = true;
   bool logVel_ = true;

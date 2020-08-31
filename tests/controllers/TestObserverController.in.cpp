@@ -7,6 +7,8 @@
 #endif
 #include <mc_control/api.h>
 #include <mc_control/mc_controller.h>
+#include <mc_observers/BodySensorObserver.h>
+#include <mc_rtc/io_utils.h>
 #include <mc_rtc/logging.h>
 #include <mc_tasks/CoMTask.h>
 
@@ -23,6 +25,9 @@ public:
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
+    // Load an additional main robot for the second pipeline
+    loadRobot(rm, "jvrc1_2");
+    BOOST_CHECK_EQUAL(robots().robots().size(), 3);
     // Check that JVRC-1 was loaded
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     solver().addConstraintSet(contactConstraint);
@@ -43,16 +48,37 @@ public:
 
   virtual bool run() override
   {
-    simulateSensors();
     // Check whether all pipelines succeeded
     for(const auto & pipeline : observerPipelines())
     {
       BOOST_REQUIRE_EQUAL(pipeline.success(), true);
     }
 
-    BOOST_CHECK_MESSAGE(allclose(robot().posW().translation(), realRobot().posW().translation(), 1e-6),
-                        fmt::format("Expected position [{}] but got [{}]", robot().posW().translation().transpose(),
-                                    realRobot().posW().translation().transpose()));
+    auto checkPose = [](const std::string & prefix, const sva::PTransformd & expected,
+                        const sva::PTransformd & actual) {
+      BOOST_CHECK_MESSAGE(allclose(expected.rotation(), actual.rotation(), 1e-6),
+                          fmt::format("{} expected orientation [{}] but got [{}]", prefix,
+                                      mc_rbdyn::rpyFromMat(expected.rotation()).transpose().format(Eigen::IOFormat(4)),
+                                      mc_rbdyn::rpyFromMat(actual.rotation()).transpose().format(Eigen::IOFormat(4))));
+      BOOST_CHECK_MESSAGE(allclose(expected.translation(), actual.translation(), 1e-6),
+                          fmt::format("{} expected position [{}] but got [{}]", prefix,
+                                      expected.translation().transpose(), actual.translation().transpose()));
+    };
+
+    // Check that the estimation from the KinematicInertial observers matches the
+    // control robot state
+    checkPose("KinematicInertial", robot().posW(), realRobot().posW());
+
+    // Check that the estimation from the BodySensor observers matches the control robot state
+    // This observer does not update the real robot instance, so to access its
+    // result we need to access the actual BodySensorObserver object. This
+    // implies explicitely linking the controller against it.
+    auto & bodySensorObserver = observerPipeline().observer("BodySensor").observer<mc_observers::BodySensorObserver>();
+    checkPose("BodySensor (no update)", robot().posW(), bodySensorObserver.posW());
+
+    // Check that the second pipeline BodySensor observer works as expected
+    checkPose("Second pipeline", robot().posW(), realRobot("jvrc1_2").posW());
+
     for(const auto joint : robot().refJointOrder())
     {
       auto j = robot().jointIndexByName(joint);
@@ -62,6 +88,7 @@ public:
 
     bool ret = MCController::run();
     BOOST_CHECK(ret);
+    simulateSensors();
 
     nrIter++;
     if(nrIter == 1000)
@@ -138,6 +165,10 @@ public:
 
     const auto & firstPipeline = observerPipeline("FirstPipeline");
     BOOST_REQUIRE_EQUAL(firstPipeline.observers().size(), 4);
+    BOOST_REQUIRE(firstPipeline.hasObserver("Encoder"));
+    BOOST_REQUIRE(firstPipeline.hasObserver("Encoder2"));
+    BOOST_REQUIRE(firstPipeline.hasObserver("BodySensor"));
+    BOOST_REQUIRE(firstPipeline.hasObserver("KinematicInertial"));
     const auto & observers = firstPipeline.observers();
     // Check that order is respected
     BOOST_REQUIRE_EQUAL(observers[0].observer().name(), "Encoder");
@@ -146,9 +177,9 @@ public:
     BOOST_REQUIRE_EQUAL(observers[1].observer().name(), "Encoder2");
     BOOST_REQUIRE_EQUAL(observers[1].update(), false);
     BOOST_REQUIRE_EQUAL(observers[2].observer().name(), "BodySensor");
-    BOOST_REQUIRE_EQUAL(observers[2].update(), true);
+    BOOST_REQUIRE_EQUAL(observers[2].update(), false);
     BOOST_REQUIRE_EQUAL(observers[3].observer().name(), "KinematicInertial");
-    BOOST_REQUIRE_EQUAL(observers[3].update(), false);
+    BOOST_REQUIRE_EQUAL(observers[3].update(), true);
     BOOST_REQUIRE(firstPipeline.hasObserverType("Encoder"));
     BOOST_REQUIRE(firstPipeline.hasObserverType("BodySensor"));
     BOOST_REQUIRE(firstPipeline.hasObserverType("KinematicInertial"));
@@ -157,11 +188,16 @@ public:
     BOOST_REQUIRE_EQUAL(firstPipeline.success(), false);
 
     const auto & secondPipeline = observerPipeline("SecondPipeline");
-    BOOST_REQUIRE_EQUAL(secondPipeline.observers().size(), 1);
-    BOOST_REQUIRE(secondPipeline.hasObserver("EncoderWithName"));
-    BOOST_REQUIRE(secondPipeline.hasObserverType("Encoder"));
-    BOOST_REQUIRE_EQUAL(secondPipeline.observer("EncoderWithName").update(), false);
+    BOOST_REQUIRE_EQUAL(secondPipeline.observers().size(), 3);
     BOOST_REQUIRE_EQUAL(secondPipeline.success(), false);
+    BOOST_REQUIRE(secondPipeline.hasObserver("EncoderWithName"));
+    BOOST_REQUIRE(secondPipeline.hasObserver("SecondRobotEncoder"));
+    BOOST_REQUIRE(secondPipeline.hasObserver("SecondRobotBodySensor"));
+    BOOST_REQUIRE(secondPipeline.hasObserverType("Encoder"));
+    BOOST_REQUIRE(secondPipeline.hasObserverType("BodySensor"));
+    BOOST_REQUIRE_EQUAL(secondPipeline.observer("EncoderWithName").update(), false);
+    BOOST_REQUIRE_EQUAL(secondPipeline.observer("SecondRobotBodySensor").update(), true);
+    BOOST_REQUIRE_EQUAL(secondPipeline.observer("SecondRobotEncoder").update(), true);
 
     // Check that the real robot was properly initialized
     BOOST_REQUIRE(allclose(realRobot().posW().translation(), robot().posW().translation()));
@@ -175,14 +211,21 @@ public:
 
   void simulateSensors()
   {
-    // Set IMU (only rotation used by KinematicInertialPoseObserver
-    robot().bodySensor("FloatingBase").orientation(Eigen::Quaterniond{robot().posW().rotation().inverse()});
+    // Set IMU (only rotation used by KinematicInertialPoseObserver)
+    robot().bodySensor("FloatingBase").orientation(Eigen::Quaterniond{robot().posW().rotation()});
     robot().bodySensor("FloatingBase").position(robot().posW().translation());
+    realRobot().bodySensor("FloatingBase").orientation(Eigen::Quaterniond{robot().posW().rotation()});
+    realRobot().bodySensor("FloatingBase").position(robot().posW().translation());
     for(unsigned i = 0; i < robot().refJointOrder().size(); i++)
     {
-      enc[i] = robot().mbc().q[robot().jointIndexInMBC(i)][0];
+      auto jIdx = robot().jointIndexInMBC(i);
+      if(jIdx != -1)
+      {
+        enc[i] = robot().mbc().q[jIdx][0];
+      }
     }
     robot().encoderValues(enc);
+    realRobot().encoderValues(enc);
   }
 
 private:

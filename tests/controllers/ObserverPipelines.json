@@ -18,7 +18,7 @@
       },
       {
         "type": "BodySensor",
-        "update": true,
+        "update": false,
         "config":
         {
           "bodySensor": "FloatingBase"
@@ -26,7 +26,7 @@
       },
       {
         "type": "KinematicInertial",
-        "update": false,
+        "update": true,
         "config":
         {
           "imuBodySensor": "FloatingBase"
@@ -42,6 +42,25 @@
         "type": "Encoder",
         "name": "EncoderWithName",
         "update": false
+      },
+      {
+        "type": "Encoder",
+        "name": "SecondRobotEncoder",
+        "config":
+        {
+          "robot": "jvrc1",
+          "updateRobot": "jvrc1_2"
+        }
+      },
+      {
+        "type": "BodySensor",
+        "name": "SecondRobotBodySensor",
+        "config":
+        {
+          "robot": "jvrc1",
+          "updateRobot": "jvrc1_2",
+          "bodySensor": "FloatingBase"
+        }
       }
     ]
   }

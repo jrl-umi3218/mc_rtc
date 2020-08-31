@@ -5,6 +5,7 @@
   "properties":
   {
     "robot": {"type": "string", "default": "MainRobot", "description": "Name of the robot to observe" },
+    "updateRobot": { "type": "string", "default": "&lt;robot&gt;", "description": "Name of the robot to update" },
     "method": { "enum": ["sensor", "control"], "description": "Update from sensor or control values" },
     "bodySensor": { "type": "string", "default": "Main body sensor", "description": "Body sensor used to set the floating base state (only used if method=sensor). When empty, the main body sensor will be used."},
     "log":

@@ -91,7 +91,7 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
   // r for real-robot model
   // m for estimated/measured quantities
   sva::PTransformd X_0_rBase = realRobot.posW();
-  const auto & imuSensor = realRobot.bodySensor(imuSensor_);
+  const auto & imuSensor = robot.bodySensor(imuSensor_);
   sva::PTransformd X_0_rIMU = realRobot.bodyPosW(imuSensor.parentBody());
   sva::PTransformd X_rIMU_rBase = X_0_rBase * X_0_rIMU.inv();
   Eigen::Matrix3d E_0_mIMU = imuSensor.orientation().toRotationMatrix();
@@ -104,9 +104,17 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
 
 void KinematicInertialPoseObserver::estimatePosition(const mc_control::MCController & ctl)
 {
+  // Relative transformation between the real anchor frame and the floating base
+  // Uses the FK with the real robot encoder measurements
   const sva::PTransformd X_real_s = X_0_anchorFrameReal_ * ctl.realRobot(robot_).posW().inv();
+  // Position of the control anchor frame (world)
   const Eigen::Vector3d & r_c_0 = X_0_anchorFrame_.translation();
+  // Position of the real anchor frame (world)
   const Eigen::Vector3d & r_s_real = X_real_s.translation();
+  // The floating base position is estimated by applying the kinematics
+  // transformation between the real robot's anchor frame and its floating base
+  // (kinematics only), rotated by the estimated rotation of the real floating
+  // base from the IMU (see estimateOrientation)
   pose_.translation() = r_c_0 - pose_.rotation().transpose() * r_s_real;
 }
 

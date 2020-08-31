@@ -8,6 +8,7 @@
 #include <mc_observers/api.h>
 #include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/log/Logger.h>
+#include <mc_rtc/type_name.h>
 
 namespace mc_control
 {
@@ -35,7 +36,7 @@ struct PipelineObserver
     config("gui", gui_);
   }
 
-  /* Const accessor to an observer
+  /* Const accessor to an observer generic interface
    *
    * @param name Name of the observer
    * @throws std::runtime_error if the observer is not part of the pipeline
@@ -49,6 +50,33 @@ struct PipelineObserver
   Observer & observer()
   {
     return const_cast<Observer &>(static_cast<const PipelineObserver *>(this)->observer());
+  }
+
+  /** Get a an observer of type T
+   *
+   * \note Requires the code from which this is called to link against the
+   * observer's library where type T is declared
+   *
+   * \tparam T type of the observer requested
+   *
+   * \throws If the observer does not exist or does not have the right type
+   */
+  template<typename T>
+  const T & observer() const
+  {
+    auto ptr = dynamic_cast<T *>(observer_.get());
+    if(!ptr)
+    {
+      mc_rtc::log::error_and_throw<std::runtime_error>("{} observer type did not match the requested one: {}",
+                                                       observer_->type(), mc_rtc::type_name<T>());
+    }
+    return *ptr;
+  }
+
+  template<typename T>
+  T & observer()
+  {
+    return const_cast<T &>(static_cast<const PipelineObserver *>(this)->observer<T>());
   }
 
   bool update() const

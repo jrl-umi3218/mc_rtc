@@ -79,7 +79,6 @@ protected:
    *
    * The new position is chosen so that the origin of the real anchor frame
    * coincides with the control anchor frame.
-   *
    */
   void estimatePosition(const mc_control::MCController & ctl);
 
