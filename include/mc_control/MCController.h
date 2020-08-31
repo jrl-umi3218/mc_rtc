@@ -305,6 +305,56 @@ public:
    */
   Gripper & gripper(const std::string & robot, const std::string & gripper);
 
+  /** @deprecated The observer's anchor frame is now provided by a callback on
+   * the datastore. For further information, please refer to the observer's tutorial:
+   * https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   */
+  MC_RTC_DEPRECATED void anchorFrame(const sva::PTransformd &)
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please update your "
+        "code. This information is now expected to be provided as a datastore callback. For further information, "
+        "please refer to the observer's tutorial: "
+        "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+  }
+  /** @deprecated The observer's anchor frame is now provided by a callback on
+   * the datastore. For further information, please refer to the observer's
+   * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   */
+  MC_RTC_DEPRECATED void anchorFrameReal(const sva::PTransformd & anchor)
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please update your "
+        "code. This information is now expected to be provided as a datastore callback. For further information, "
+        "please refer to the observer's tutorial: "
+        "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+  }
+  /** @deprecated The observer's anchor frame is now provided by a callback on
+   * the datastore. For further information, please refer to the observer's
+   * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   */
+  MC_RTC_DEPRECATED const sva::PTransformd & anchorFrame() const
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please update your "
+        "code. This information is now expected to be provided as a datastore callback. For further information, "
+        "please refer to the observer's tutorial: "
+        "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+  }
+
+  /** @deprecated The observer's anchor frame is now provided by a callback on
+   * the datastore. For further information, please refer to the observer's
+   * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   */
+  MC_RTC_DEPRECATED const sva::PTransformd & anchorFrameReal() const
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please update your "
+        "code. This information is now expected to be provided as a datastore callback. For further information, "
+        "please refer to the observer's tutorial: "
+        "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+  }
+
 protected:
   /** Builds a controller base with an empty environment
    * \param robot Pointer to the main RobotModule
