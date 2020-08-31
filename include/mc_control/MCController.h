@@ -321,7 +321,7 @@ public:
    * the datastore. For further information, please refer to the observer's
    * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
    */
-  MC_RTC_DEPRECATED void anchorFrameReal(const sva::PTransformd & anchor)
+  MC_RTC_DEPRECATED void anchorFrameReal(const sva::PTransformd &)
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
         "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please update your "
