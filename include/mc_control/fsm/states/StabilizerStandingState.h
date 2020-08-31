@@ -97,6 +97,8 @@ protected:
 
   std::string robot_ = "";
   std::string anchorFrameFunction_ = "";
+  bool ownsAnchorFrameCallback_ =
+      false; /** Whether the state added its own anchor frame callback or is using a global one */
 };
 
 } // namespace fsm

@@ -102,8 +102,18 @@ void StabilizerStandingState::start(Controller & ctl)
   }
 
   // Fixme: the stabilizer needs the observed state immediatly
-  ctl.datastore().make_call(anchorFrameFunction_,
-                            [this](const mc_rbdyn::Robot & robot) { return stabilizerTask_->anchorFrame(robot); });
+  if(ctl.datastore().has(anchorFrameFunction_))
+  {
+    mc_rtc::log::warning("[{}] a datastore callback for \"{}\" already exist on the datastore, using it instead",
+                         name(), anchorFrameFunction_);
+    ownsAnchorFrameCallback_ = false;
+  }
+  else
+  {
+    ctl.datastore().make_call(anchorFrameFunction_,
+                              [this](const mc_rbdyn::Robot & robot) { return stabilizerTask_->anchorFrame(robot); });
+    ownsAnchorFrameCallback_ = true;
+  }
 
   if(optionalGUI_ && stabilizerTask_->inDoubleSupport())
   {
@@ -252,7 +262,10 @@ void StabilizerStandingState::teardown(Controller & ctl)
   ctl.datastore().remove("StabilizerStandingState::setTorsoStiffness");
   ctl.datastore().remove("StabilizerStandingState::setCoMWeight");
   ctl.datastore().remove("StabilizerStandingState::setCoMStiffness");
-  ctl.datastore().remove(anchorFrameFunction_);
+  if(ownsAnchorFrameCallback_)
+  {
+    ctl.datastore().remove(anchorFrameFunction_);
+  }
 }
 
 } // namespace fsm
