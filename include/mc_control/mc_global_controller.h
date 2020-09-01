@@ -549,6 +549,7 @@ private:
   /** Timers and performance measure */
   duration_ms global_run_dt{0};
   duration_ms controller_run_dt{0};
+  duration_ms observers_run_dt{0};
   duration_ms log_dt{0};
   duration_ms gui_dt{0};
   double solver_build_and_solve_t = 0;

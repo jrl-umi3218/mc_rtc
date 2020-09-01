@@ -559,10 +559,14 @@ bool MCGlobalController::run()
     {
       controller_->robots().robot(i).mbc() = pre_gripper_mbcs_[i];
     }
-    auto start_controller_run_t = clock::now();
+    auto start_observers_run_t = clock::now();
     controller_->runObserverPipelines();
+    observers_run_dt = clock::now() - start_observers_run_t;
+
+    auto start_controller_run_t = clock::now();
     bool r = controller_->run();
     auto end_controller_run_t = clock::now();
+
     if(server_)
     {
       auto start_gui_t = clock::now();
@@ -937,6 +941,7 @@ void MCGlobalController::setup_log()
   // Performance measures
   controller->logger().addLogEntry("perf_GlobalRun", [this]() { return global_run_dt.count(); });
   controller->logger().addLogEntry("perf_ControllerRun", [this]() { return controller_run_dt.count(); });
+  controller->logger().addLogEntry("perf_ObserversRun", [this]() { return observers_run_dt.count(); });
   controller->logger().addLogEntry("perf_SolverBuildAndSolve", [this]() { return solver_build_and_solve_t; });
   controller->logger().addLogEntry("perf_SolverSolve", [this]() { return solver_solve_t; });
   controller->logger().addLogEntry("perf_Log", [this]() { return log_dt.count(); });
