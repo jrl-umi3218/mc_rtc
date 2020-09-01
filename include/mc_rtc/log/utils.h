@@ -93,6 +93,12 @@ struct GetLogType<std::vector<double, A>>
   static constexpr mc_rtc::log::LogType type = mc_rtc::log::LogType::VectorDouble;
 };
 
+template<std::size_t N>
+struct GetLogType<std::array<double, N>>
+{
+  static constexpr mc_rtc::log::LogType type = mc_rtc::log::LogType::VectorDouble;
+};
+
 /** True if the given type is serializable in the log */
 template<typename T>
 struct is_serializable
