@@ -208,12 +208,15 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   for(const auto footTask : footTasks)
   {
     auto footT = footTask.second;
-    gui.addElement({"Tasks", name_, "Markers", "Foot wrenches"},
-                   Point3D("Stabilizer_" + footT->surface() + "CoP", PointConfig(Color::Magenta, 0.01),
-                           [footT]() { return footT->targetCoPW(); }),
-                   Force("Measured_" + footT->surface() + "CoPForce", copForceConfig,
-                         [footT]() { return footT->measuredWrench(); },
-                         [footT]() { return sva::PTransformd(footT->measuredCoPW()); }));
+    gui.addElement(
+        {"Tasks", name_, "Markers", "Foot wrenches"},
+        Point3D("Stabilizer_" + footT->surface() + "CoP", PointConfig(Color::Magenta, 0.01),
+                [footT]() { return footT->targetCoPW(); }),
+        Force("Measured_" + footT->surface() + "CoPForce", copForceConfig,
+              [footT, this]() {
+                return robot().indirectSurfaceForceSensor(footT->surface()).worldWrenchWithoutGravity(robot());
+              },
+              [footT]() { return sva::PTransformd(footT->measuredCoPW()); }));
   }
 
   gui.addElement({"Tasks", name_, "Markers", "Contacts"},
