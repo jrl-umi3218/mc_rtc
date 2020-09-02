@@ -45,7 +45,7 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
    */
   void reset(const mc_control::MCController & ctl, const sva::MotionVecd & velW);
   bool run(const mc_control::MCController & ctl) override;
-  void updateRobots(mc_control::MCController & ctl) override;
+  void update(mc_control::MCController & ctl) override;
 
   /*! \brief Get floating-base velocity in the world frame.
    * The velocity is obtained by finite differences of the estimated position,
@@ -73,6 +73,8 @@ private:
    **/
   mc_filter::LowPass<sva::MotionVecd> velFilter_;
   sva::MotionVecd velW_ = sva::MotionVecd::Zero();
+
+  bool logVelocity_ = true; ///< Whether to log the estimated velocity
 
 private:
   /** Prevent from resetting only the position */

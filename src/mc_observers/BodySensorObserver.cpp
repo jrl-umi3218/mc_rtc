@@ -105,7 +105,7 @@ bool BodySensorObserver::run(const mc_control::MCController & ctl)
   return true;
 }
 
-void BodySensorObserver::updateRobots(mc_control::MCController & ctl)
+void BodySensorObserver::update(mc_control::MCController & ctl)
 {
   auto & realRobot = ctl.realRobots().robot(updateRobot_);
   realRobot.posW(posW_);

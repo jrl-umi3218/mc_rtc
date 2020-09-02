@@ -1,7 +1,7 @@
 {
   "type": "object",
   "title": "mc_observers::BodySensorObserver",
-  "description": "BodySensor: update floating base state from a body sensor. This is typically used to set the floating base state from a simulator groundtruth",
+  "description": "BodySensor: updates floating base state from a body sensor. This is typically used to set the floating base state from a simulator ground truth",
   "properties":
   {
     "robot": {"type": "string", "default": "MainRobot", "description": "Name of the robot to observe" },

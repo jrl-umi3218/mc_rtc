@@ -75,6 +75,14 @@ public:
    */
   virtual bool run();
 
+  /**
+   * Create state observation pipelines from configuration
+   *
+   * Please refer to the ObserverPipelines JSON Schema for supported
+   * configuration options.
+   *
+   * \see mc_observers::ObserverPipeline
+   **/
   virtual void createObserverPipelines(const mc_rtc::Configuration & config);
 
   /** This function is called before the run() function at each time step of the process
@@ -99,28 +107,48 @@ public:
    */
   virtual bool runObserverPipelines();
 
-  /*! @brief Reset the observers. This function is called after the reset()
-   * function.
+  /*! @brief Reset the observers.
    *
-   * \see runObservers()
+   * This function is called after the reset() function.
    *
    * @returns True when all observers have been succesfully reset.
    */
   virtual bool resetObserverPipelines();
 
+  /** Whether this controller contains a pipeline with the provided name
+   *
+   * \param name Name of the pipeline
+   */
   bool hasObserverPipeline(const std::string & name) const;
 
-  std::vector<mc_observers::ObserverPipeline> & observerPipelines();
-  const std::vector<mc_observers::ObserverPipeline> & observerPipelines() const;
-
-  mc_observers::ObserverPipeline & observerPipeline(const std::string & name);
-  const mc_observers::ObserverPipeline & observerPipeline(const std::string & name) const;
-
+  /** True if this controller has at least one state observation pipeline */
   bool hasObserverPipeline() const;
-  mc_observers::ObserverPipeline & observerPipeline();
-  const mc_observers::ObserverPipeline & observerPipeline() const;
 
-  bool validObserverPipelines() const;
+  /**
+   * Provides const access to the state observation pipelines defined in this
+   * controller
+   */
+  const std::vector<mc_observers::ObserverPipeline> & observerPipelines() const;
+  /** Non-const variant */
+  std::vector<mc_observers::ObserverPipeline> & observerPipelines();
+
+  /**
+   * Provides const access to a state-observation pipeline
+   *
+   * @throws if no pipeline with that name exist
+   */
+  const mc_observers::ObserverPipeline & observerPipeline(const std::string & name) const;
+  /** Non-const variant */
+  mc_observers::ObserverPipeline & observerPipeline(const std::string & name);
+
+  /**
+   * Provides const access to the main observer pipeline (first pipeline)
+   *
+   * @throws if this controller does not have any pipeline
+   */
+  const mc_observers::ObserverPipeline & observerPipeline() const;
+  /** Non-const variant */
+  mc_observers::ObserverPipeline & observerPipeline();
 
   /** Can be called in derived class instead of run to use a feedback strategy
    * different from the default one
@@ -136,7 +164,6 @@ public:
    *
    * For example, it can be overriden to signal threads launched by the
    * controller to pause.
-   *
    */
   virtual void stop();
 
@@ -305,54 +332,66 @@ public:
    */
   Gripper & gripper(const std::string & robot, const std::string & gripper);
 
+  /** Helper to make the anchor frame compile-time deprecation warning
+   * clearer
+   */
+  struct DeprecatedAnchorFrame
+  {
+  };
+
   /** @deprecated The observer's anchor frame is now provided by a callback on
    * the datastore. For further information, please refer to the observer's tutorial:
    * https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
    */
-  MC_RTC_DEPRECATED void anchorFrame(const sva::PTransformd &)
+  template<typename T = DeprecatedAnchorFrame>
+  inline void anchorFrame(const sva::PTransformd &)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please update your "
-        "code. This information is now expected to be provided as a datastore callback. For further information, "
-        "please refer to the observer's tutorial: "
-        "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
-  }
-  /** @deprecated The observer's anchor frame is now provided by a callback on
-   * the datastore. For further information, please refer to the observer's
-   * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
-   */
-  MC_RTC_DEPRECATED void anchorFrameReal(const sva::PTransformd &)
-  {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please update your "
-        "code. This information is now expected to be provided as a datastore callback. For further information, "
-        "please refer to the observer's tutorial: "
-        "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
-  }
-  /** @deprecated The observer's anchor frame is now provided by a callback on
-   * the datastore. For further information, please refer to the observer's
-   * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
-   */
-  MC_RTC_DEPRECATED const sva::PTransformd & anchorFrame() const
-  {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please update your "
-        "code. This information is now expected to be provided as a datastore callback. For further information, "
-        "please refer to the observer's tutorial: "
-        "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+    static_assert(!std::is_same<T, T>::value,
+                  "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
+                  "remove calls to these functions from your code and replace it with a datastore callback. For "
+                  "further information please refer to the observer's tutorial: "
+                  "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
   }
 
   /** @deprecated The observer's anchor frame is now provided by a callback on
    * the datastore. For further information, please refer to the observer's
    * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
    */
-  MC_RTC_DEPRECATED const sva::PTransformd & anchorFrameReal() const
+  template<typename T = DeprecatedAnchorFrame>
+  inline void anchorFrameReal(const sva::PTransformd &)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please update your "
-        "code. This information is now expected to be provided as a datastore callback. For further information, "
-        "please refer to the observer's tutorial: "
-        "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+    static_assert(!std::is_same<T, T>::value,
+                  "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
+                  "remove calls to these functions from your code and replace it with a datastore callback. For "
+                  "further information please refer to the observer's tutorial: "
+                  "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+  }
+  /** @deprecated The observer's anchor frame is now provided by a callback on
+   * the datastore. For further information, please refer to the observer's
+   * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   */
+  template<typename T = DeprecatedAnchorFrame>
+  inline const sva::PTransformd & anchorFrame() const
+  {
+    static_assert(!std::is_same<T, T>::value,
+                  "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
+                  "remove calls to these functions from your code and replace it with a datastore callback. For "
+                  "further information please refer to the observer's tutorial: "
+                  "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+  }
+
+  /** @deprecated The observer's anchor frame is now provided by a callback on
+   * the datastore. For further information, please refer to the observer's
+   * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   */
+  template<typename T = DeprecatedAnchorFrame>
+  inline const sva::PTransformd & anchorFrameReal() const
+  {
+    static_assert(!std::is_same<T, T>::value,
+                  "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
+                  "remove calls to these functions from your code and replace it with a datastore callback. For "
+                  "further information please refer to the observer's tutorial: "
+                  "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
   }
 
 protected:

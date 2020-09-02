@@ -73,7 +73,6 @@ void ObserverPipeline::reset()
 
     if(pipelineObserver.update())
     {
-      observer.updateRobots(ctl_);
       desc_ += observer.desc();
     }
     else
@@ -118,7 +117,7 @@ bool ObserverPipeline::run()
       }
       if(updateObservers_ && pipelineObserver.update_)
       {
-        observer.updateRobots(ctl_);
+        observer.update(ctl_);
       }
     }
   }

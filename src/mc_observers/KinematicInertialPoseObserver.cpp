@@ -18,7 +18,7 @@ void KinematicInertialPoseObserver::configure(const mc_control::MCController & c
                                               const mc_rtc::Configuration & config)
 {
   robot_ = config("robot", ctl.robot().name());
-  realRobot_ = config("realRobot", ctl.realRobot().name());
+  realRobot_ = config("updateRobot", ctl.realRobot().name());
   imuSensor_ = config("imuBodySensor", ctl.robot().bodySensor().name());
   anchorFrameFunction_ = "KinematicAnchorFrame::" + ctl.robot(robot_).name();
   if(config.has("anchorFrame"))
@@ -32,6 +32,12 @@ void KinematicInertialPoseObserver::configure(const mc_control::MCController & c
     gConfig("anchorFrame", showAnchorFrame_);
     gConfig("anchorFrameReal", showAnchorFrameReal_);
     gConfig("pose", showPose_);
+  }
+  if(config.has("log"))
+  {
+    auto lConfig = config("log");
+    lConfig("pose", logPose_);
+    lConfig("anchorFrame", logAnchorFrame_);
   }
 }
 
@@ -118,7 +124,7 @@ void KinematicInertialPoseObserver::estimatePosition(const mc_control::MCControl
   pose_.translation() = r_c_0 - pose_.rotation().transpose() * r_s_real;
 }
 
-void KinematicInertialPoseObserver::updateRobots(mc_control::MCController & ctl)
+void KinematicInertialPoseObserver::update(mc_control::MCController & ctl)
 {
   auto & robot = ctl.realRobot(robot_);
   robot.posW(pose_);
@@ -128,10 +134,16 @@ void KinematicInertialPoseObserver::addToLogger(const mc_control::MCController &
                                                 mc_rtc::Logger & logger,
                                                 const std::string & category)
 {
-  logger.addLogEntry(category + "_posW", [this]() -> const sva::PTransformd & { return pose_; });
-  logger.addLogEntry(category + "_anchorFrame", [this]() -> const sva::PTransformd & { return X_0_anchorFrame_; });
-  logger.addLogEntry(category + "_anchorFrameReal",
-                     [this]() -> const sva::PTransformd & { return X_0_anchorFrameReal_; });
+  if(logPose_)
+  {
+    logger.addLogEntry(category + "_posW", [this]() -> const sva::PTransformd & { return pose_; });
+  }
+  if(logAnchorFrame_)
+  {
+    logger.addLogEntry(category + "_anchorFrame", [this]() -> const sva::PTransformd & { return X_0_anchorFrame_; });
+    logger.addLogEntry(category + "_anchorFrameReal",
+                       [this]() -> const sva::PTransformd & { return X_0_anchorFrameReal_; });
+  }
 }
 
 void KinematicInertialPoseObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)

@@ -87,8 +87,11 @@ struct MC_RTC_GUI_DLLAPI Color
 
   mc_rtc::Configuration saveConfig() const
   {
-    mc_rtc::Configuration conf;
-    conf.array().push(std::vector<double>{r, g, b, a});
+    auto conf = mc_rtc::Configuration::rootArray();
+    conf.push(r);
+    conf.push(g);
+    conf.push(b);
+    conf.push(a);
     return conf;
   }
 
@@ -258,7 +261,6 @@ struct MC_RTC_GUI_DLLAPI ArrowConfig
 
   void fromConfig(const mc_rtc::Configuration & config)
   {
-    mc_rtc::log::info("Config for ArrowConfig: {}", config.dump(true));
     config("head_diam", head_diam);
     config("head_len", head_len);
     config("shaft_diam", shaft_diam);

@@ -20,6 +20,11 @@ void KinematicInertialObserver::configure(const mc_control::MCController & ctl, 
     config("gui")("velocity", showVelocity_);
     config("gui")("velocityArrow", velocityArrowConfig_);
   }
+  if(config.has("log"))
+  {
+    auto lConfig = config("log");
+    lConfig("velocity", logVelocity_);
+  }
   double cutoff = config("cutoff", 2 * ctl.timeStep);
   velFilter_.cutoffPeriod(cutoff);
   desc_ = name_ + " (cutoff=" + std::to_string(velFilter_.cutoffPeriod()) + ")";
@@ -56,9 +61,9 @@ bool KinematicInertialObserver::run(const mc_control::MCController & ctl)
   return res;
 }
 
-void KinematicInertialObserver::updateRobots(mc_control::MCController & ctl)
+void KinematicInertialObserver::update(mc_control::MCController & ctl)
 {
-  KinematicInertialPoseObserver::updateRobots(ctl);
+  KinematicInertialPoseObserver::update(ctl);
   ctl.realRobot(robot_).velW(velW_);
 }
 
@@ -72,8 +77,11 @@ void KinematicInertialObserver::addToLogger(const mc_control::MCController & ctl
                                             const std::string & category)
 {
   KinematicInertialPoseObserver::addToLogger(ctl, logger, category);
-  logger.addLogEntry(category + "_velW", [this]() -> const sva::MotionVecd & { return velW_; });
-  logger.addLogEntry(category + "_filter_cutoffPeriod", [this]() { return velFilter_.cutoffPeriod(); });
+  if(logVelocity_)
+  {
+    logger.addLogEntry(category + "_velW", [this]() -> const sva::MotionVecd & { return velW_; });
+    logger.addLogEntry(category + "_filter_cutoffPeriod", [this]() { return velFilter_.cutoffPeriod(); });
+  }
 }
 
 void KinematicInertialObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)

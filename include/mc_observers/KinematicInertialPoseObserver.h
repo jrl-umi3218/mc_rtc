@@ -49,7 +49,7 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
   bool run(const mc_control::MCController & ctl) override;
 
   /** Write observed floating-base transform to the robot's configuration */
-  void updateRobots(mc_control::MCController & ctl) override;
+  void update(mc_control::MCController & ctl) override;
 
   /*! \brief Get floating-base pose in the world frame. */
   const sva::PTransformd & posW() const
@@ -103,6 +103,9 @@ private:
   bool showAnchorFrame_ = false; /**< Whether to show the anchor frame in the GUI */
   bool showAnchorFrameReal_ = false; /**< Whether to show the anchor frame in the GUI */
   bool showPose_ = false; /**< Whether to show the anchor frame in the GUI */
+
+  bool logPose_ = true; ///< Whether to log the estimated pose
+  bool logAnchorFrame_ = true; ///< Whether to log the user-provided anchor frame (control and real)
 };
 
 } // namespace mc_observers

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -23,91 +23,6 @@ struct Robots;
 namespace mc_observers
 {
 
-/** Holds an observer and its configuration within the ObserverPipeline */
-struct PipelineObserver
-{
-  friend struct ObserverPipeline;
-
-  PipelineObserver(const mc_observers::ObserverPtr & observer, const mc_rtc::Configuration & config)
-  : observer_(observer)
-  {
-    config("update", update_);
-    config("log", log_);
-    config("gui", gui_);
-  }
-
-  /* Const accessor to an observer generic interface
-   *
-   * @param name Name of the observer
-   * @throws std::runtime_error if the observer is not part of the pipeline
-   */
-  const Observer & observer() const
-  {
-    return *observer_;
-  }
-
-  /* Non-const variant */
-  Observer & observer()
-  {
-    return const_cast<Observer &>(static_cast<const PipelineObserver *>(this)->observer());
-  }
-
-  /** Get a an observer of type T
-   *
-   * \note Requires the code from which this is called to link against the
-   * observer's library where type T is declared
-   *
-   * \tparam T type of the observer requested
-   *
-   * \throws If the observer does not exist or does not have the right type
-   */
-  template<typename T>
-  const T & observer() const
-  {
-    auto ptr = dynamic_cast<T *>(observer_.get());
-    if(!ptr)
-    {
-      mc_rtc::log::error_and_throw<std::runtime_error>("{} observer type did not match the requested one: {}",
-                                                       observer_->type(), mc_rtc::type_name<T>());
-    }
-    return *ptr;
-  }
-
-  template<typename T>
-  T & observer()
-  {
-    return const_cast<T &>(static_cast<const PipelineObserver *>(this)->observer<T>());
-  }
-
-  bool update() const
-  {
-    return update_;
-  }
-
-  bool log() const
-  {
-    return log_;
-  }
-
-  bool gui() const
-  {
-    return gui_;
-  }
-
-  /** Returns whether the last call to this observer succeeded */
-  bool success() const
-  {
-    return success_;
-  }
-
-protected:
-  ObserverPtr observer_ = nullptr; //< Observer
-  bool update_ = true; //< Whether to update the real robot instance from this observer
-  bool log_ = true; //< Whether to log this observer
-  bool gui_ = true; //< Whether to display the gui
-  bool success_ = true; //< Whether this observer succeeded
-};
-
 /**
  * @brief State observation pipeline
  *
@@ -121,9 +36,94 @@ protected:
  */
 struct MC_OBSERVERS_DLLAPI ObserverPipeline
 {
+  /** Holds an observer and its configuration within the ObserverPipeline */
+  struct PipelineObserver
+  {
+    friend struct ObserverPipeline;
+
+    PipelineObserver(const mc_observers::ObserverPtr & observer, const mc_rtc::Configuration & config)
+    : observer_(observer)
+    {
+      config("update", update_);
+      config("log", log_);
+      config("gui", gui_);
+    }
+
+    /* Const accessor to an observer generic interface
+     *
+     * @param name Name of the observer
+     * @throws std::runtime_error if the observer is not part of the pipeline
+     */
+    const Observer & observer() const
+    {
+      return *observer_;
+    }
+
+    /* Non-const variant */
+    Observer & observer()
+    {
+      return const_cast<Observer &>(static_cast<const PipelineObserver *>(this)->observer());
+    }
+
+    /** Get a an observer of type T
+     *
+     * \note Requires the code from which this is called to link against the
+     * observer's library where type T is declared
+     *
+     * \tparam T type of the observer requested
+     *
+     * \throws If the observer does not exist or does not have the right type
+     */
+    template<typename T>
+    const T & observer() const
+    {
+      auto ptr = dynamic_cast<T *>(observer_.get());
+      if(!ptr)
+      {
+        mc_rtc::log::error_and_throw<std::runtime_error>("{} observer type did not match the requested one: {}",
+                                                         observer_->type(), mc_rtc::type_name<T>());
+      }
+      return *ptr;
+    }
+
+    template<typename T>
+    T & observer()
+    {
+      return const_cast<T &>(static_cast<const PipelineObserver *>(this)->observer<T>());
+    }
+
+    bool update() const
+    {
+      return update_;
+    }
+
+    bool log() const
+    {
+      return log_;
+    }
+
+    bool gui() const
+    {
+      return gui_;
+    }
+
+    /** Returns whether the last call to this observer succeeded */
+    bool success() const
+    {
+      return success_;
+    }
+
+  protected:
+    ObserverPtr observer_ = nullptr; //< Observer
+    bool update_ = true; //< Whether to update the real robot instance from this observer
+    bool log_ = true; //< Whether to log this observer
+    bool gui_ = true; //< Whether to display the gui
+    bool success_ = true; //< Whether this observer succeeded
+  };
+
   ObserverPipeline(mc_control::MCController & ctl, const std::string & name);
   ObserverPipeline(mc_control::MCController & ctl);
-  virtual ~ObserverPipeline() = default;
+  ~ObserverPipeline() = default;
 
   /* Load the observers */
   void create(const mc_rtc::Configuration & config, double dt);
@@ -144,7 +144,7 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   bool run();
 
   /** @return True if the observers are running */
-  inline bool runObservers() const
+  inline bool runObservers() const noexcept
   {
     return runObservers_;
   }
@@ -183,7 +183,7 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
    *
    * @return True when the last call to run() succeeded
    */
-  bool success() const
+  inline bool success() const noexcept
   {
     return success_;
   }
@@ -211,12 +211,12 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
     return const_cast<PipelineObserver &>(static_cast<const ObserverPipeline *>(this)->observer(name));
   }
 
-  const std::vector<mc_observers::PipelineObserver> & observers() const
+  const std::vector<PipelineObserver> & observers() const
   {
     return pipelineObservers_;
   }
 
-  std::vector<mc_observers::PipelineObserver> & observers()
+  std::vector<PipelineObserver> & observers()
   {
     return pipelineObservers_;
   }
@@ -252,13 +252,13 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
   }
 
   /*! \brief Short description of the pipeline */
-  virtual const std::string & desc() const
+  inline const std::string & desc() const noexcept
   {
     return desc_;
   }
 
   /* Name used to identify this pipeline */
-  const std::string & name() const
+  inline const std::string & name() const noexcept
   {
     return name_;
   }

@@ -70,8 +70,12 @@ void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_r
     ;
   }
 
-  config("logPosition", logPosition_);
-  config("logVelocity", logVelocity_);
+  if(config.has("log"))
+  {
+    auto lConfig = config("log");
+    lConfig("position", logPosition_);
+    lConfig("velocity", logVelocity_);
+  }
 
   desc_ = name_ + " (position=" + position + ",velocity=" + velocity + ")";
 }
@@ -119,7 +123,7 @@ bool EncoderObserver::run(const mc_control::MCController & ctl)
   return true;
 }
 
-void EncoderObserver::updateRobots(mc_control::MCController & ctl)
+void EncoderObserver::update(mc_control::MCController & ctl)
 {
   auto & realRobots = ctl.realRobots();
   const auto & robot = ctl.robots().robot(robot_);

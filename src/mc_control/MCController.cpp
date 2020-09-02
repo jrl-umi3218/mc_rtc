@@ -166,11 +166,11 @@ void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
     observerPipelines_.emplace_back(*this);
     auto & pipeline = observerPipelines_.back();
     pipeline.create(pipelineConfig, timeStep);
-    if(config("log", true))
+    if(pipelineConfig("log", true))
     {
       pipeline.addToLogger(logger());
     }
-    if(config("gui", true))
+    if(pipelineConfig("gui", false))
     {
       pipeline.addToGUI(*gui());
     }
@@ -201,19 +201,9 @@ bool MCController::runObserverPipelines()
   bool success = true;
   for(auto & pipeline : observerPipelines_)
   {
-    success = success && pipeline.run();
+    success = pipeline.run() && success;
   }
   return success;
-}
-
-bool MCController::validObserverPipelines() const
-{
-  bool valid = true;
-  for(const auto & pipeline : observerPipelines_)
-  {
-    valid = valid && pipeline.success();
-  }
-  return valid;
 }
 
 bool MCController::hasObserverPipeline(const std::string & name) const
@@ -402,17 +392,7 @@ void MCController::supported_robots(std::vector<std::string> & out) const
   out = {};
 }
 
-void MCController::stop()
-{
-  for(auto & pipeline : observerPipelines_)
-  {
-    if(gui())
-    {
-      pipeline.removeFromGUI(*gui());
-    }
-    pipeline.removeFromLogger(logger());
-  }
-}
+void MCController::stop() {}
 
 Gripper & MCController::gripper(const std::string & robot, const std::string & gripper)
 {

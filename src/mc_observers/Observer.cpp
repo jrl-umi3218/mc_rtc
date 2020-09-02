@@ -6,15 +6,6 @@
 
 namespace mc_observers
 {
-const std::string & Observer::name() const
-{
-  return name_;
-}
-
-const std::string & Observer::desc() const
-{
-  return desc_;
-}
 
 void Observer::removeFromGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {

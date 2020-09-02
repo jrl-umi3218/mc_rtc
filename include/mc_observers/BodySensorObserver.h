@@ -60,7 +60,7 @@ struct MC_OBSERVER_DLLAPI BodySensorObserver : public Observer
    *
    * \note Calls rbd::forwardKinematics and rbd::forwardVelocity
    */
-  void updateRobots(mc_control::MCController & ctl) override;
+  void update(mc_control::MCController & ctl) override;
 
   /*! \brief Get floating-base pose in the world frame. */
   const sva::PTransformd & posW() const

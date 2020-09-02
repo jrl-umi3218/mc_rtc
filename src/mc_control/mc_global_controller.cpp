@@ -523,6 +523,15 @@ bool MCGlobalController::run()
     }
     else
     {
+      // Remove observer pipelines created by MCController::createObserverPipelines
+      for(auto & pipeline : controller_->observerPipelines())
+      {
+        if(controller_->gui_)
+        {
+          pipeline.removeFromGUI(*controller_->gui());
+        }
+        pipeline.removeFromLogger(controller_->logger());
+      }
       controller_->stop();
       mc_rtc::log::info("Reset with q[0] = {}", mc_rtc::io::to_string(controller_->robot().mbc().q[0], ", ", 5));
       for(const auto & g : controller_->robot().grippersByName())

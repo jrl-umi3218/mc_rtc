@@ -55,7 +55,7 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
    *
    * \see PosUpdate, VelUpdate for details on the method used for estimation
    */
-  void updateRobots(mc_control::MCController & ctl) override;
+  void update(mc_control::MCController & ctl) override;
 
 protected:
   void addToLogger(const mc_control::MCController &, mc_rtc::Logger &, const std::string &) override;
@@ -65,7 +65,7 @@ protected:
   /*! Position update type */
   enum class PosUpdate
   {
-    Control, ///< Use joint value from robot.mbc.alpha (control)
+    Control, ///< Use joint value from robot.mbc.q (control)
     EncoderValues, ///< Encoder values from robot.encoderValues (encoder sensor)
     None ///< Do not compute/update value
   };
@@ -73,7 +73,7 @@ protected:
   enum class VelUpdate
   {
     Control, ///< Use joint velocities from robot.mbc.alpha (control)
-    EncoderVelocities, ///< Joint velocity from robot.encoderValues (encoder sensor)
+    EncoderVelocities, ///< Joint velocity from robot.encoderVelocities (encoder velocity sensor)
     EncoderFiniteDifferences, ///< Joint velocity from finite differences of robot.encoderValues (encoder sensor)
     None ///< Do not compute/update value
   };

@@ -50,7 +50,7 @@ namespace mc_observers
 struct MC_OBSERVERS_DLLAPI Observer
 {
   Observer(const std::string & type, double dt) : type_(type), dt_(dt) {}
-  virtual ~Observer() {}
+  virtual ~Observer() = default;
 
   /**
    * @brief Configure observer
@@ -64,12 +64,7 @@ struct MC_OBSERVERS_DLLAPI Observer
   /*! \brief Reset estimator.
    *
    * The reset function should make sure that the observer is started in a state
-   * consistent with the current robot state. In most cases, during the first
-   * iteration(s) all measurement information required by the observers may not
-   * yet be available (e.g filters requiring a history of inputs, finite
-   * differences requiring at least two measurements, etc). In addition some
-   * observer may require some additional input information from the controller
-   * (e.g position of an anchor frame for KinematicInertial observers)
+   * consistent with the current robot state.
    *
    * This function is called after MCController::reset()
    **/
@@ -93,14 +88,14 @@ struct MC_OBSERVERS_DLLAPI Observer
    *
    * \param ctl Controller running this observer
    **/
-  virtual void updateRobots(mc_control::MCController & ctl) = 0;
+  virtual void update(mc_control::MCController & ctl) = 0;
 
   /**
    * @brief Set the observer's name
    *
    * @param name Name of the observer
    */
-  void name(const std::string & name)
+  inline void name(const std::string & name)
   {
     name_ = name;
   }
@@ -108,7 +103,10 @@ struct MC_OBSERVERS_DLLAPI Observer
   /**
    * @brief Returns the observer's name
    */
-  const std::string & name() const;
+  inline const std::string & name() const noexcept
+  {
+    return name_;
+  }
 
   /*! \brief Add observer entries to the logger under the categrory "category + name()". */
   void addToLogger_(const mc_control::MCController & ctl, mc_rtc::Logger & logger, const std::string & category = "")
@@ -117,15 +115,15 @@ struct MC_OBSERVERS_DLLAPI Observer
   }
 
   /*! \brief Remove observer from logger. */
-  virtual void removeFromLogger_(mc_rtc::Logger & logger, std::string category = "")
+  void removeFromLogger_(mc_rtc::Logger & logger, std::string category = "")
   {
     removeFromLogger(logger, category + "_" + name_);
   }
 
   /*! \brief Add observer to the gui under category {category, name()} */
-  virtual void addToGUI_(const mc_control::MCController & ctl,
-                         mc_rtc::gui::StateBuilder & gui,
-                         std::vector<std::string> category = {})
+  void addToGUI_(const mc_control::MCController & ctl,
+                 mc_rtc::gui::StateBuilder & gui,
+                 std::vector<std::string> category = {})
   {
     category.push_back(name_);
     addToGUI(ctl, gui, category);
@@ -135,7 +133,7 @@ struct MC_OBSERVERS_DLLAPI Observer
    *
    * Default implementation removes category {category, name()}
    */
-  virtual void removeFromGUI_(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category = {})
+  void removeFromGUI_(mc_rtc::gui::StateBuilder & gui, std::vector<std::string> category = {})
   {
     category.push_back(name_);
     removeFromGUI(gui, category);
@@ -151,21 +149,24 @@ struct MC_OBSERVERS_DLLAPI Observer
    *
    * \returns Short description of the observer.
    */
-  virtual const std::string & desc() const;
+  inline const std::string & desc() const noexcept
+  {
+    return desc_;
+  }
 
-  const std::string type() const
+  inline const std::string type() const noexcept
   {
     return type_;
   }
 
   /*! Informative message about the last error */
-  const std::string & error() const
+  inline const std::string & error() const noexcept
   {
     return error_;
   }
 
   /*! Controller timestep */
-  double dt() const
+  inline double dt() const noexcept
   {
     return dt_;
   }

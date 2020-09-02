@@ -31,11 +31,11 @@ public:
    * the module
    */
   template<typename... Args>
-  static std::shared_ptr<mc_observers::Observer> get_observer(const std::string & name, Args &&... args)
+  static std::shared_ptr<mc_observers::Observer> get_observer(const std::string & name, const Args &... args)
   {
     std::lock_guard<std::mutex> guard{mtx};
     init();
-    return observer_loader->create_object(name, std::forward<Args>(args)...);
+    return observer_loader->create_object(name, args...);
   }
 
   /** Add additional directories to the robot module path

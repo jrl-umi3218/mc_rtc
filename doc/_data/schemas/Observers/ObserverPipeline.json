@@ -6,7 +6,9 @@
   {
     "name": {"type":"string", "description":"Name of this pipeline"},
     "run": {"type": "boolean", "default": true, "description": "When true, run each observer in this pipeline"},
-    "update": {"type": "boolean", "default": true, "description": "When true, update the state of real robots instances (depending on each observer's configuration)."},
+    "update": {"type": "boolean", "default": true, "description": "When true, update the state of real robots instances (depending on each observer's configuration). Requires \"run\" to be true."},
+    "log": {"type": "boolean", "default": true, "description": "When true, log estimated values"},
+    "gui": {"type": "boolean", "default": false, "description": "When true, show this pipeline and its observers in the gui. All observers will be displayed acording to their configuration in \"observers\" (each observer is visible by default)."},
     "observers":
     {
       "type": "array",
@@ -17,9 +19,9 @@
         "title": "Observer",
         "properties":
         {
-          "type": {"type": "string", "description": "Name of the observer. This is the name exported by each observer library, for default encoders see the entries in \"Observer objects\". The main default observers are:<br /><ul><li><b>Encoder</b>: estimates a robot's joint state (position and velocity)</li><li><b>KinematicInertial</b>: estimates a robot's floating base state based on IMU and a kinematic information</li><li><b>BodySensor</b>: sets the floating base state based on a BodySensor (typically used to obtain groundtruth state from a simulator)</li></ul>"},
+          "type": {"type": "string", "description": "Name of the observer. This is the name exported by each observer library, for default observers see the entries in \"Observer objects\". The main default observers are:<br /><ul><li><b>Encoder</b>: estimates a robot's joint state (position and velocity)</li><li><b>KinematicInertial</b>: estimates a robot's floating base state based on IMU and a kinematic information</li><li><b>BodySensor</b>: sets the floating base state based on a BodySensor (typically used to obtain groundtruth state from a simulator)</li></ul>"},
           "name": { "type": "string", "description": "Name of the observer (optional unless there are multiple observers with the same name type in this pipeline)" },
-          "update": {"type": "boolean", "default": true, "description": "When true, update the state of real robots instances"},
+          "update": {"type": "boolean", "default": true, "description": "When true, update the state of real robots instances (requires the observer's run to have succeeded)"},
           "log": {"type": "boolean", "default": true, "description": "When true, log estimated values"},
           "gui": {"type": "boolean", "default": true, "description": "When true, show observer in the gui"},
           "config":
