@@ -64,6 +64,17 @@ BOOST_AUTO_TEST_CASE(TestRobotZMPSimple)
   const auto sensorNames = std::vector<std::string>{"LeftFootForceSensor", "RightFootForceSensor"};
   auto & lfs = robot.forceSensor("LeftFootForceSensor");
   auto & rfs = robot.forceSensor("RightFootForceSensor");
+  // Prevent using the JVRC1 calibration files (when they exist)
+  // for the ZMP computation to obtain repeatable results here.
+  // Resetting the calibrator makes sure that it has no effect.
+  //
+  // This test assumes that the sensor is at the model position and that there
+  // is no force offset.
+  //
+  // XXX We should investigate the effect of calibrator on ZMP measurement,
+  // and write a test that checks this case as well
+  lfs.resetCalibrator();
+  rfs.resetCalibrator();
 
   {
     // ZMP under left sensor
