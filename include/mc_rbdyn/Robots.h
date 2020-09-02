@@ -71,6 +71,8 @@ public:
 
   /** Load a single robot from a RobotModule with an optional base
    *
+   * \param name Name of the new robot. Must be unique.
+   *
    * \param module The RobotModule to fetch data from for this robot
    *
    * \param base If non-null, used as the initial transformation between the base and the world
@@ -78,6 +80,23 @@ public:
    * \param bName If empty, use the "normal" base, otherwise use body bName as base
    *
    * \returns a reference to the robot that was just loaded
+   *
+   * \throws If a robot named <name> already exists
+   *
+   * \anchor load_robot_with_name
+   */
+  Robot & load(const std::string & name,
+               const RobotModule & module,
+               sva::PTransformd * base = nullptr,
+               const std::string & bName = "");
+
+  /** Load a single robot from a RobotModule with an optional base
+   *
+   * \param module The RobotModule to fetch data from for this robot. The module
+   * name is used as the new robot name
+   *
+   * Calls \ref road_robot_with_name with RobotModule::name as the new robot
+   * name
    */
   Robot & load(const RobotModule & module, sva::PTransformd * base = nullptr, const std::string & bName = "");
 
@@ -90,7 +109,6 @@ public:
    * \param base If non-null, used as the initial transformation between the base and the world
    *
    * \param bName If empty, use the "normal" base, otherwise use body bName as base
-   *
    */
   void load(const RobotModule & module,
             const RobotModule & envModule,
@@ -100,9 +118,11 @@ public:
   /** Load multiple robots from as many RobotModule instances
    *
    * \param modules List of RobotModule to load the robots from
-   *
    */
   void load(const std::vector<std::shared_ptr<RobotModule>> & modules);
+
+  /** Rename an existing robot */
+  void rename(const std::string & oldName, const std::string & newName);
 
   Robot & loadFromUrdf(const std::string & name,
                        const std::string & urdf,
@@ -114,12 +134,14 @@ public:
 
   void robotCopy(const Robot & robot);
 
-  void createRobotWithBase(Robots & robots,
+  void createRobotWithBase(const std::string & name,
+                           Robots & robots,
                            unsigned int robots_idx,
                            const Base & base,
                            const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
 
-  void createRobotWithBase(Robot & robot,
+  void createRobotWithBase(const std::string & name,
+                           Robot & robot,
                            const Base & base,
                            const Eigen::Vector3d & baseAxis = Eigen::Vector3d::UnitZ());
 
@@ -214,7 +236,7 @@ protected:
   unsigned int robotIndex_;
   unsigned int envIndex_;
   void updateIndexes();
-  std::vector<mc_rbdyn::Robot>::const_iterator getRobot(const std::string & name) const;
+  std::map<std::string, unsigned int> robotNameToIndex_; ///< Correspondance between robot name and index
 };
 
 /* Static pendant of the loader functions to create Robots directly */

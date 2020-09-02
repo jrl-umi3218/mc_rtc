@@ -99,8 +99,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
                                           bool updateNrVars)
 {
   assert(rm);
-  auto & r = robots.load(*rm);
-  r.name(name);
+  auto & r = robots.load(name, *rm);
   r.mbc().gravity = mc_rtc::constants::gravity;
   r.forwardKinematics();
   r.forwardVelocity();

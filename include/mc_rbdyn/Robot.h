@@ -37,15 +37,12 @@ public:
   Robot(Robot &&) = default;
   Robot & operator=(Robot &&) = default;
 
-  /** Returns the name of the robot */
-  const std::string & name() const;
-
-  /** Set the name of the robot
+  /** Returns the name of the robot
    *
-   * \note It is not recommended to call this late in the life cycle of the
-   * Robot object as the change is not communicated in any way.
-   */
-  void name(const std::string & n);
+   * \note To rename a robot, use
+   * Robots::rename(const std::string &, const std::string &)
+   **/
+  const std::string & name() const;
 
   /** Retrieve the associated RobotModule */
   const RobotModule & module() const;
@@ -965,6 +962,13 @@ protected:
 private:
   Robot(const Robot &) = delete;
   Robot & operator=(const Robot &) = delete;
+
+  /** Set the name of the robot
+   *
+   * \note It is not recommended to call this late in the life cycle of the
+   * Robot object as the change is not communicated in any way.
+   */
+  void name(const std::string & n);
 };
 
 /** @defgroup robotFromConfig Helpers to obtain robot index/name from configuration
