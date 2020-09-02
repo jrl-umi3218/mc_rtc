@@ -13,9 +13,9 @@ var searchData=
   ['polygonimpl',['PolygonImpl',['../a01932.html',1,'mc_rtc::gui']]],
   ['polygoninterpolator',['PolygonInterpolator',['../a01632.html',1,'mc_rbdyn']]],
   ['polygons',['Polygons',['../a01908.html',1,'mc_rtc::gui::plot::impl']]],
-  ['positionbasedvisservotask',['PositionBasedVisServoTask',['../a02340.html',1,'mc_tasks']]],
-  ['positiontask',['PositionTask',['../a02344.html',1,'mc_tasks']]],
-  ['posturetask',['PostureTask',['../a02348.html',1,'mc_tasks']]],
+  ['positionbasedvisservotask',['PositionBasedVisServoTask',['../a02344.html',1,'mc_tasks']]],
+  ['positiontask',['PositionTask',['../a02348.html',1,'mc_tasks']]],
+  ['posturetask',['PostureTask',['../a02352.html',1,'mc_tasks']]],
   ['pythonrwcallback',['PythonRWCallback',['../a01452.html',1,'mc_control']]],
   ['pythonstate',['PythonState',['../a01364.html',1,'mc_control::fsm']]]
 ];

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils::ContactWrenchMatrixToLambdaMatrix Struct Reference</title>
+<title>mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,65 +70,140 @@ $(document).ready(function(){initNavTree('a02212.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="a02209.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix Struct Reference</div>  </div>
+<div class="title">mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Transform contact wrench matrix to lambda matrix.  
+<p>Generic helper class to write a new constraint for Tasks.  
  <a href="a02212.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_solver/utils/ContactWrenchMatrixToLambdaMatrix.h&gt;</code></p>
+<p><code>#include &lt;mc_solver/utils/Constraint.h&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt;:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="a02212.png" usemap="#mc_5Fsolver::utils::Constraint_3C_20ConstraintT_2C_20UpdateT_20_3E_map" alt=""/>
+  <map id="mc_5Fsolver::utils::Constraint_3C_20ConstraintT_2C_20UpdateT_20_3E_map" name="mc_5Fsolver::utils::Constraint_3C_20ConstraintT_2C_20UpdateT_20_3E_map">
+</map>
+ </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a023d5ba6b69792d96db4ca6e8fd20e2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#a023d5ba6b69792d96db4ca6e8fd20e2c">ContactWrenchMatrixToLambdaMatrix</a> (const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
-<tr class="memdesc:a023d5ba6b69792d96db4ca6e8fd20e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the transformation matrix for a given contact.  <a href="#a023d5ba6b69792d96db4ca6e8fd20e2c">More...</a><br /></td></tr>
-<tr class="separator:a023d5ba6b69792d96db4ca6e8fd20e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3024b20e8f098756d24cd2082469c055"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#a3024b20e8f098756d24cd2082469c055">transform</a> (const Eigen::MatrixXd &amp;A) const</td></tr>
-<tr class="memdesc:a3024b20e8f098756d24cd2082469c055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the \(A&#39;\) matrix given the \(A\) matrix.  <a href="#a3024b20e8f098756d24cd2082469c055">More...</a><br /></td></tr>
-<tr class="separator:a3024b20e8f098756d24cd2082469c055"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae56a8607e4c339c9a345155ec613032d"><td class="memItemLeft" align="right" valign="top">const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#ae56a8607e4c339c9a345155ec613032d">transform</a> () const</td></tr>
-<tr class="separator:ae56a8607e4c339c9a345155ec613032d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateRobot&gt;::value&gt;::type&gt; </td></tr>
+<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02212.html#adcc2b9ec9fbd3b47e0183ef0ce034c73">Constraint</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:adcc2b9ec9fbd3b47e0183ef0ce034c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateLambda&gt;::value&gt;::type&gt; </td></tr>
+<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02212.html#ae5a2073ed0b8b0432593221fec955e4e">Constraint</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:ae5a2073ed0b8b0432593221fec955e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateForce&gt;::value&gt;::type&gt; </td></tr>
+<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02212.html#aab0cc49bca85557519c9a110b54c65ca">Constraint</a> (const <a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:aab0cc49bca85557519c9a110b54c65ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a819dd76da2909a4c88efcca1cb9aaf69"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#a819dd76da2909a4c88efcca1cb9aaf69">~Constraint</a> ()</td></tr>
+<tr class="memdesc:a819dd76da2909a4c88efcca1cb9aaf69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="#a819dd76da2909a4c88efcca1cb9aaf69">More...</a><br /></td></tr>
+<tr class="separator:a819dd76da2909a4c88efcca1cb9aaf69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab383394a69ab62c4fab23378e64868de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#ab383394a69ab62c4fab23378e64868de">updateNrVars</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data) override</td></tr>
+<tr class="separator:ab383394a69ab62c4fab23378e64868de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7693804807033e3718c4ba01a58d3a58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#a7693804807033e3718c4ba01a58d3a58">update</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;mbcs, const tasks::qp::SolverData &amp;data) override</td></tr>
+<tr class="separator:a7693804807033e3718c4ba01a58d3a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Transform contact wrench matrix to lambda matrix. </p>
-<p>This transforms a given matrix A that applies to a wrench (e.g. such as in \(A F &lt;= F_{max}\)) into a matrix that applies to lambdas (i.e. such \(A&#39; \boldsymbol{\lambda} &lt;= F_{max}\))</p>
-<p>For a given force \(f_p\) at point \(p\), the linearized friction cone provides:</p>
-<p class="formulaDsp">
-\[f_p = \sum^{N^{Gen}_{p}}_{i=1} G^{p}_{i} \lambda^{p}_{i}\]
-</p>
-<p>Where \(G^{p}_{i} \in \mathbb{R}^{3,1}\) are the generatrix of the friction cone. In the remainder of these equations we write \(N = N^{Gen}_{p}\) for sparcity</p>
-<p>In matrix form:</p>
-<p class="formulaDsp">
-\[ f_p = \begin{bmatrix} G^p_{1x} &amp; \cdots &amp; G^p_{Nx} \\ G^p_{1y} &amp; \cdots &amp; G^p_{Ny} \\ G^p_{1z} &amp; \cdots &amp; G^p_{Nz} \end{bmatrix} \begin{bmatrix} \lambda^{p}_{i} \\ \vdots \\ \lambda^{p}_{N} \end{bmatrix} \]
-</p>
-<p>For a given wrench \(F\) at frame b, resulting from \(P\) contacts</p>
-<p class="formulaDsp">
-\begin{align} F &amp; = \sum^{P}_{i=1} {}^{p_{i}}X_{b}^{T} f_{p_{i}} \\ &amp; = \begin{bmatrix} \begin{bmatrix} r^{\times}_{1}E^{T}_{1} \\ E^{T}_{1} \end{bmatrix} \begin{bmatrix} G^{1}_{1} &amp; \cdots &amp; G^{1}_{N} \end{bmatrix} &amp; \cdots &amp; \begin{bmatrix} r^{\times}_{P}E^{T}_{P} \\ E^{T}_{P} \end{bmatrix} \begin{bmatrix} G^{P}_{1} &amp; \cdots &amp; G^{P}_{N} \end{bmatrix} \end{bmatrix} \begin{bmatrix} \lambda^{1}_{1} \\ \vdots \\ \lambda^{P}_{N} \end{bmatrix} \end{align}
-</p>
-<p>Where \({}^{p_{i}}X_{b}\) is the Plücker transform from the point \(p\) to the wrench frame \(b\):</p>
-<p class="formulaDsp">
-\begin{align*} {}^{p_{i}}X_{b} = \begin{bmatrix} E_{i} &amp; 0 \\ -E_{i}r_{i}^{\times} &amp; E_{i} \end{bmatrix} &amp; &amp; {}^{p_{i}}X_{b}^{T} = \begin{bmatrix} E^{T}_{i} &amp; r^{\times}_{i}E^{T}_{i} \\ 0 &amp; E^{T}_{i} \end{bmatrix} \end{align*}
-</p>
-<p>Note: we only take the last three columns on \({}^{p_{i}}X_{b}^{T}\) in Equation (2)</p>
-<p>Hence:</p>
-<p class="formulaDsp">
-\begin{align*} A&#39; = A \begin{bmatrix} \begin{bmatrix} r^{\times}_{1}E^{T}_{1} \\ E^{T}_{1} \end{bmatrix} \begin{bmatrix} G^{1}_{1} &amp; \cdots &amp; G^{1}_{N} \end{bmatrix} &amp; \cdots &amp; \begin{bmatrix} r^{\times}_{P}E^{T}_{P} \\ E^{T}_{P} \end{bmatrix} \begin{bmatrix} G^{P}_{1} &amp; \cdots &amp; G^{P}_{N} \end{bmatrix} \end{bmatrix} \end{align*}
-</p>
- </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a023d5ba6b69792d96db4ca6e8fd20e2c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a023d5ba6b69792d96db4ca6e8fd20e2c">&#9670;&nbsp;</a></span>ContactWrenchMatrixToLambdaMatrix()</h2>
+<div class="textblock"><h3>template&lt;typename ConstraintT, typename UpdateT&gt;<br />
+class mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt;</h3>
+
+<p>Generic helper class to write a new constraint for Tasks. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02132.html" title="Helper class to write an equality constraint for Tasks. ">EqualityConstraint</a>, </dd>
+<dd>
+<a class="el" href="a02172.html" title="Helper class to write an inequality constraint for Tasks. ">InequalityConstraint</a> and </dd>
+<dd>
+<a class="el" href="a02156.html" title="Helper class to write a general inequality constraint for Tasks. ">GenInequalityConstraint</a> for <a class="el" href="a00751.html">details</a> on specific constraints you can implement based on this helper</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ConstraintT</td><td>Type of tasks::qp constraint</td></tr>
+    <tr><td class="paramname">UpdateT</td><td>Type of <a class="el" href="a02224.html">utils::Update</a> we will use </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="adcc2b9ec9fbd3b47e0183ef0ce034c73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcc2b9ec9fbd3b47e0183ef0ce034c73">&#9670;&nbsp;</a></span>Constraint() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConstraintT, typename UpdateT&gt; </div>
+<div class="memtemplate">
+template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateRobot&gt;::value&gt;::type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix::ContactWrenchMatrixToLambdaMatrix </td>
+          <td class="memname"><a class="el" href="a02212.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::<a class="el" href="a02212.html">Constraint</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>rIndex</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae5a2073ed0b8b0432593221fec955e4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5a2073ed0b8b0432593221fec955e4e">&#9670;&nbsp;</a></span>Constraint() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConstraintT, typename UpdateT&gt; </div>
+<div class="memtemplate">
+template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateLambda&gt;::value&gt;::type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02212.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::<a class="el" href="a02212.html">Constraint</a> </td>
+          <td>(</td>
+          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
+          <td class="paramname"><em>cid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aab0cc49bca85557519c9a110b54c65ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab0cc49bca85557519c9a110b54c65ca">&#9670;&nbsp;</a></span>Constraint() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConstraintT, typename UpdateT&gt; </div>
+<div class="memtemplate">
+template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateForce&gt;::value&gt;::type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02212.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::<a class="el" href="a02212.html">Constraint</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em>, </td>
         </tr>
         <tr>
@@ -143,66 +218,121 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-</div><div class="memdoc">
-
-<p>Creates the transformation matrix for a given contact. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">If</td><td>the contact has not been added to the solver </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3024b20e8f098756d24cd2082469c055"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3024b20e8f098756d24cd2082469c055">&#9670;&nbsp;</a></span>transform() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::MatrixXd mc_solver::utils::ContactWrenchMatrixToLambdaMatrix::transform </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::MatrixXd &amp;&#160;</td>
-          <td class="paramname"><em>A</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Compute the \(A&#39;\) matrix given the \(A\) matrix. </p>
-
 </div>
 </div>
-<a id="ae56a8607e4c339c9a345155ec613032d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae56a8607e4c339c9a345155ec613032d">&#9670;&nbsp;</a></span>transform() <span class="overload">[2/2]</span></h2>
+<a id="a819dd76da2909a4c88efcca1cb9aaf69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a819dd76da2909a4c88efcca1cb9aaf69">&#9670;&nbsp;</a></span>~Constraint()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConstraintT, typename UpdateT&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const Eigen::MatrixXd&amp; mc_solver::utils::ContactWrenchMatrixToLambdaMatrix::transform </td>
+          <td class="memname">virtual <a class="el" href="a02212.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::~<a class="el" href="a02212.html">Constraint</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Virtual destructor. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7693804807033e3718c4ba01a58d3a58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7693804807033e3718c4ba01a58d3a58">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConstraintT, typename UpdateT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a02212.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::update </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
+          <td class="paramname"><em>mbs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;&#160;</td>
+          <td class="paramname"><em>mbcs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const tasks::qp::SolverData &amp;&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab383394a69ab62c4fab23378e64868de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab383394a69ab62c4fab23378e64868de">&#9670;&nbsp;</a></span>updateNrVars()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConstraintT, typename UpdateT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="a02212.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::updateNrVars </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
+          <td class="paramname"><em>mbs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const tasks::qp::SolverData &amp;&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -215,8 +345,8 @@ Public Member Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00752.html">utils</a></li><li class="navelem"><a class="el" href="a02212.html">ContactWrenchMatrixToLambdaMatrix</a></li>
-    <li class="footer">Generated on Tue Sep 1 2020 04:59:49 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00752.html">utils</a></li><li class="navelem"><a class="el" href="a02212.html">Constraint</a></li>
+    <li class="footer">Generated on Wed Sep 2 2020 05:50:26 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

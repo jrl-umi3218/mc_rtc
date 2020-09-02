@@ -1,8 +1,7 @@
 var a02320 =
 [
-    [ "LookAtTask", "a02320.html#aa8ac514e5194309507f7032f47c0cbd4", null ],
-    [ "LookAtTask", "a02320.html#a6ab5055c130fd2813d825c7bcd508fb9", null ],
-    [ "reset", "a02320.html#abe25dfb65d85b23932ca41150a9f97a6", null ],
-    [ "target", "a02320.html#a99e4cc8d6d381936d58bc7675dea901a", null ],
-    [ "target", "a02320.html#acdb7b5c10685b0a725af082547b473c9", null ]
+    [ "LookAtSurfaceTask", "a02320.html#af114f86e50d42bb8f1cdae2e5dd8a593", null ],
+    [ "offset", "a02320.html#a7210671b2e64840382d3ed5116b41481", null ],
+    [ "offset", "a02320.html#a37c95499a045a9425193a72aa57ddba4", null ],
+    [ "update", "a02320.html#a324669541d4f3abee475ec9a6a04ec0e", null ]
 ];

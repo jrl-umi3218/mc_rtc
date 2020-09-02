@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::GenericLoader&lt; Derived, T &gt; Struct Template Reference</title>
+<title>mc_solver::EqualityConstraintForce Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,153 +70,139 @@ $(document).ready(function(){initNavTree('a02144.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a02141.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::GenericLoader&lt; Derived, T &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_solver::EqualityConstraintForce Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Retrieve an object using a JSON configuration object and a solver instance.  
+<p>Helper class to write an equality constraint for Tasks.  
  <a href="a02144.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_solver/GenericLoader.h&gt;</code></p>
+<p><code>#include &lt;mc_solver/EqualityConstraint.h&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for mc_solver::EqualityConstraintForce:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="a02144.png" usemap="#mc_5Fsolver::EqualityConstraintForce_map" alt=""/>
+  <map id="mc_5Fsolver::EqualityConstraintForce_map" name="mc_5Fsolver::EqualityConstraintForce_map">
+<area href="a02132.html" alt="mc_solver::utils::EqualityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="201,280,593,304"/>
+<area href="a02212.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Equality, utils::UpdateForce &gt;" shape="rect" coords="201,224,593,248"/>
+<area href="a02232.html" alt="mc_solver::utils::UpdateForce" shape="rect" coords="402,168,794,192"/>
+<area href="a02224.html" alt="mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;" shape="rect" coords="402,112,794,136"/>
+<area href="a02244.html" title="This struct provides an implement for updateNrVars for a lambda-based constraint. ..." alt="mc_solver::utils::UpdateNrVarsLambda" shape="rect" coords="201,56,593,80"/>
+<area href="a02220.html" alt="mc_solver::utils::UpdateTag" shape="rect" coords="603,56,995,80"/>
+<area href="a02236.html" title="This struct provides common data for UpdateNrVars* classes. " alt="mc_solver::utils::UpdateNrVarsData" shape="rect" coords="201,0,593,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02148.html">Handle</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a02148.html" title="Handle returned by register_laod_function. ">Handle</a> returned by register_laod_function.  <a href="a02148.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a252d0cb3773296939c4fabf8802ee6ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02144.html#a252d0cb3773296939c4fabf8802ee6ee">EqualityConstraintForce</a> (const <a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:a252d0cb3773296939c4fabf8802ee6ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_a02132"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a02132')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a02132.html">mc_solver::utils::EqualityConstraint&lt; utils::UpdateForce &gt;</a></td></tr>
+<tr class="memitem:afac8d98cb261408cd57f582fe581d425 inherit pub_methods_a02132"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02132.html#afac8d98cb261408cd57f582fe581d425">EqualityConstraint</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:afac8d98cb261408cd57f582fe581d425 inherit pub_methods_a02132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9c31eab66ce20859ff84a59e1689f67 inherit pub_methods_a02132"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02132.html#ac9c31eab66ce20859ff84a59e1689f67">EqualityConstraint</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:ac9c31eab66ce20859ff84a59e1689f67 inherit pub_methods_a02132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cac80832dee69a3d8449bdcf37c8b19 inherit pub_methods_a02132"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02132.html#a3cac80832dee69a3d8449bdcf37c8b19">EqualityConstraint</a> (const <a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:a3cac80832dee69a3d8449bdcf37c8b19 inherit pub_methods_a02132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae98f12b4064111652efd273fe72e4352 inherit pub_methods_a02132"><td class="memItemLeft" align="right" valign="top">const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02132.html#ae98f12b4064111652efd273fe72e4352">AEq</a> () const override</td></tr>
+<tr class="separator:ae98f12b4064111652efd273fe72e4352 inherit pub_methods_a02132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48e36fd2b8881ffa1e7ba7a5b885f51d inherit pub_methods_a02132"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02132.html#a48e36fd2b8881ffa1e7ba7a5b885f51d">descEq</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;, int i) override</td></tr>
+<tr class="separator:a48e36fd2b8881ffa1e7ba7a5b885f51d inherit pub_methods_a02132"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:adb735279d914086553de0a21285126e4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02144.html#adb735279d914086553de0a21285126e4">T_ptr</a> = std::shared_ptr&lt; T &gt;</td></tr>
-<tr class="memdesc:adb735279d914086553de0a21285126e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">shared_ptr to T  <a href="#adb735279d914086553de0a21285126e4">More...</a><br /></td></tr>
-<tr class="separator:adb735279d914086553de0a21285126e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02dbea2e4a083ed146cea53d7b648483"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02144.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a> = std::function&lt; <a class="el" href="a02144.html#adb735279d914086553de0a21285126e4">T_ptr</a>(<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;, const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;)&gt;</td></tr>
-<tr class="memdesc:a02dbea2e4a083ed146cea53d7b648483"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function that is able to load a T object through a solver instance and JSON configuration.  <a href="#a02dbea2e4a083ed146cea53d7b648483">More...</a><br /></td></tr>
-<tr class="separator:a02dbea2e4a083ed146cea53d7b648483"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc58a28dae04a63aa3ed180a654ec223"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02144.html#afc58a28dae04a63aa3ed180a654ec223">storage_t</a> = std::map&lt; std::string, <a class="el" href="a02144.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a> &gt;</td></tr>
-<tr class="memdesc:afc58a28dae04a63aa3ed180a654ec223"><td class="mdescLeft">&#160;</td><td class="mdescRight">Storage type, actual storage location is returned by Derived::storage()  <a href="#afc58a28dae04a63aa3ed180a654ec223">More...</a><br /></td></tr>
-<tr class="separator:afc58a28dae04a63aa3ed180a654ec223"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac24012d951d6a04490b05a64f5ccf620"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02148.html">Handle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02144.html#ac24012d951d6a04490b05a64f5ccf620">register_load_function</a> (const std::string &amp;type, <a class="el" href="a02144.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a> fn)</td></tr>
-<tr class="memdesc:ac24012d951d6a04490b05a64f5ccf620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a new loading function.  <a href="#ac24012d951d6a04490b05a64f5ccf620">More...</a><br /></td></tr>
-<tr class="separator:ac24012d951d6a04490b05a64f5ccf620"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35fcd3b9f4280a31049089aa57b54330"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02144.html#a35fcd3b9f4280a31049089aa57b54330">unregister_load_function</a> (const std::string &amp;type)</td></tr>
-<tr class="memdesc:a35fcd3b9f4280a31049089aa57b54330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a registered loading function.  <a href="#a35fcd3b9f4280a31049089aa57b54330">More...</a><br /></td></tr>
-<tr class="separator:a35fcd3b9f4280a31049089aa57b54330"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5da6be5874e61bd328a5452dda08950c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02144.html#adb735279d914086553de0a21285126e4">T_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02144.html#a5da6be5874e61bd328a5452dda08950c">load</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const std::string &amp;file)</td></tr>
-<tr class="memdesc:a5da6be5874e61bd328a5452dda08950c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from a file.  <a href="#a5da6be5874e61bd328a5452dda08950c">More...</a><br /></td></tr>
-<tr class="separator:a5da6be5874e61bd328a5452dda08950c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb825defeb480187f9584f84e8441a43"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02144.html#adb735279d914086553de0a21285126e4">T_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02144.html#adb825defeb480187f9584f84e8441a43">load</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const char *file)</td></tr>
-<tr class="memdesc:adb825defeb480187f9584f84e8441a43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from a file (C-style string)  <a href="#adb825defeb480187f9584f84e8441a43">More...</a><br /></td></tr>
-<tr class="separator:adb825defeb480187f9584f84e8441a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13b1f947ca0b22d2985f580ec57caf85"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a02144.html#adb735279d914086553de0a21285126e4">T_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02144.html#a13b1f947ca0b22d2985f580ec57caf85">load</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
-<tr class="memdesc:a13b1f947ca0b22d2985f580ec57caf85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from an <a class="el" href="a01716.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> object.  <a href="#a13b1f947ca0b22d2985f580ec57caf85">More...</a><br /></td></tr>
-<tr class="separator:a13b1f947ca0b22d2985f580ec57caf85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5236104825bda3a24cc3645e0e3bf448"><td class="memTemplParams" colspan="2">template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
-<tr class="memitem:a5236104825bda3a24cc3645e0e3bf448"><td class="memTemplItemLeft" align="right" valign="top">static std::shared_ptr&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02144.html#a5236104825bda3a24cc3645e0e3bf448">load</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const std::string &amp;file)</td></tr>
-<tr class="memdesc:a5236104825bda3a24cc3645e0e3bf448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a more precise object's type from a file.  <a href="#a5236104825bda3a24cc3645e0e3bf448">More...</a><br /></td></tr>
-<tr class="separator:a5236104825bda3a24cc3645e0e3bf448"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca794f13fede4900b9ee9cf70ee621b2"><td class="memTemplParams" colspan="2">template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
-<tr class="memitem:aca794f13fede4900b9ee9cf70ee621b2"><td class="memTemplItemLeft" align="right" valign="top">static std::shared_ptr&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02144.html#aca794f13fede4900b9ee9cf70ee621b2">load</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const char *file)</td></tr>
-<tr class="memdesc:aca794f13fede4900b9ee9cf70ee621b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a more precise object's type from a file (C-style string)  <a href="#aca794f13fede4900b9ee9cf70ee621b2">More...</a><br /></td></tr>
-<tr class="separator:aca794f13fede4900b9ee9cf70ee621b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab10c87faa2a1fb4721163c6a479fdd78"><td class="memTemplParams" colspan="2">template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
-<tr class="memitem:ab10c87faa2a1fb4721163c6a479fdd78"><td class="memTemplItemLeft" align="right" valign="top">static std::shared_ptr&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02144.html#ab10c87faa2a1fb4721163c6a479fdd78">load</a> (<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
-<tr class="memdesc:ab10c87faa2a1fb4721163c6a479fdd78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a more precise object's type from a Configuration entry.  <a href="#ab10c87faa2a1fb4721163c6a479fdd78">More...</a><br /></td></tr>
-<tr class="separator:ab10c87faa2a1fb4721163c6a479fdd78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_types_a02132"><td colspan="2" onclick="javascript:toggleInherit('pub_types_a02132')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="a02132.html">mc_solver::utils::EqualityConstraint&lt; utils::UpdateForce &gt;</a></td></tr>
+<tr class="memitem:a30e140ba79389f855367792961934326 inherit pub_types_a02132"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02132.html#a30e140ba79389f855367792961934326">Base</a> = <a class="el" href="a02212.html">Constraint</a>&lt; tasks::qp::Equality, <a class="el" href="a02232.html">utils::UpdateForce</a> &gt;</td></tr>
+<tr class="separator:a30e140ba79389f855367792961934326 inherit pub_types_a02132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02212"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02212')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02212.html">mc_solver::utils::Constraint&lt; tasks::qp::Equality, utils::UpdateForce &gt;</a></td></tr>
+<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73 inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#adcc2b9ec9fbd3b47e0183ef0ce034c73">Constraint</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:adcc2b9ec9fbd3b47e0183ef0ce034c73 inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#ae5a2073ed0b8b0432593221fec955e4e">Constraint</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:ae5a2073ed0b8b0432593221fec955e4e inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#aab0cc49bca85557519c9a110b54c65ca">Constraint</a> (const <a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:aab0cc49bca85557519c9a110b54c65ca inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#a819dd76da2909a4c88efcca1cb9aaf69">~Constraint</a> ()</td></tr>
+<tr class="memdesc:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="a02212.html#a819dd76da2909a4c88efcca1cb9aaf69">More...</a><br /></td></tr>
+<tr class="separator:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab383394a69ab62c4fab23378e64868de inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#ab383394a69ab62c4fab23378e64868de">updateNrVars</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data) override</td></tr>
+<tr class="separator:ab383394a69ab62c4fab23378e64868de inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7693804807033e3718c4ba01a58d3a58 inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#a7693804807033e3718c4ba01a58d3a58">update</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;mbcs, const tasks::qp::SolverData &amp;data) override</td></tr>
+<tr class="separator:a7693804807033e3718c4ba01a58d3a58 inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02232"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02232')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02232.html">mc_solver::utils::UpdateForce</a></td></tr>
+<tr class="memitem:ac7cfe8520ea50dc9cbf285f433769d11 inherit pro_methods_a02232"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02232.html#ac7cfe8520ea50dc9cbf285f433769d11">UpdateForce</a> (const <a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:ac7cfe8520ea50dc9cbf285f433769d11 inherit pro_methods_a02232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a147dd26742af4a2879ffdead8b3ab93d inherit pro_methods_a02232"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02232.html#a147dd26742af4a2879ffdead8b3ab93d">updateImpl</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;, const tasks::qp::SolverData &amp;)</td></tr>
+<tr class="separator:a147dd26742af4a2879ffdead8b3ab93d inherit pro_methods_a02232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02224"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02224')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02224.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td></tr>
+<tr class="memitem:ad172325243564a16279d9392bd86efa5 inherit pro_methods_a02224"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02224.html#ad172325243564a16279d9392bd86efa5">Update</a> (unsigned int rIndex)</td></tr>
+<tr class="separator:ad172325243564a16279d9392bd86efa5 inherit pro_methods_a02224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a806d3dc017b28e570dfa268a32a55600 inherit pro_methods_a02224"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02224.html#a806d3dc017b28e570dfa268a32a55600">Update</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:a806d3dc017b28e570dfa268a32a55600 inherit pro_methods_a02224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8ad71dd3414ee8bccc766c7bc8b4dc3 inherit pro_methods_a02224"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02224.html#ab8ad71dd3414ee8bccc766c7bc8b4dc3">~Update</a> ()</td></tr>
+<tr class="separator:ab8ad71dd3414ee8bccc766c7bc8b4dc3 inherit pro_methods_a02224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02224"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02224.html#a8f658eb01d91768ab6a4e9b095a894de">compute</a> ()=0</td></tr>
+<tr class="memdesc:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02224"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should be overriden to update the constraint matrix and vector(s)  <a href="a02224.html#a8f658eb01d91768ab6a4e9b095a894de">More...</a><br /></td></tr>
+<tr class="separator:a8f658eb01d91768ab6a4e9b095a894de inherit pro_methods_a02224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02224"><td class="memItemLeft" align="right" valign="top">virtual const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02224.html#adcc1dc8dc0563b2e14f962f26afbfa5f">A</a> () const=0</td></tr>
+<tr class="memdesc:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02224"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should be overriden to provide A in the desired operation space.  <a href="a02224.html#adcc1dc8dc0563b2e14f962f26afbfa5f">More...</a><br /></td></tr>
+<tr class="separator:adcc1dc8dc0563b2e14f962f26afbfa5f inherit pro_methods_a02224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab889dcd5361a420fe976146c40f56533 inherit pro_methods_a02224"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02224.html#ab889dcd5361a420fe976146c40f56533">updateImpl</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;, const tasks::qp::SolverData &amp;)</td></tr>
+<tr class="separator:ab889dcd5361a420fe976146c40f56533 inherit pro_methods_a02224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_a02244"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02244')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02244.html">mc_solver::utils::UpdateNrVarsLambda</a></td></tr>
+<tr class="memitem:a9d6f46e4b6e93b51903495758aecd406 inherit pro_methods_a02244"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02244.html#a9d6f46e4b6e93b51903495758aecd406">UpdateNrVarsLambda</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
+<tr class="separator:a9d6f46e4b6e93b51903495758aecd406 inherit pro_methods_a02244"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c7ce960742e1844186550b503af6207 inherit pro_methods_a02244"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02244.html#a3c7ce960742e1844186550b503af6207">updateNrVarsImpl</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data)</td></tr>
+<tr class="separator:a3c7ce960742e1844186550b503af6207 inherit pro_methods_a02244"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02224"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02224')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02224.html">mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;</a></td></tr>
+<tr class="memitem:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02224"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02224.html#a6ba3138c342b7e4efa2328ac11930706">AFull_</a></td></tr>
+<tr class="memdesc:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02224"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the full size matrix.  <a href="a02224.html#a6ba3138c342b7e4efa2328ac11930706">More...</a><br /></td></tr>
+<tr class="separator:a6ba3138c342b7e4efa2328ac11930706 inherit pro_attribs_a02224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02244"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02244')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02244.html">mc_solver::utils::UpdateNrVarsLambda</a></td></tr>
+<tr class="memitem:a855dd9e41399b5a6271e9b4e02576b23 inherit pro_attribs_a02244"><td class="memItemLeft" align="right" valign="top">tasks::qp::ContactId&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02244.html#a855dd9e41399b5a6271e9b4e02576b23">cid_</a></td></tr>
+<tr class="separator:a855dd9e41399b5a6271e9b4e02576b23 inherit pro_attribs_a02244"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_a02236"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02236')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02236.html">mc_solver::utils::UpdateNrVarsData</a></td></tr>
+<tr class="memitem:a3c4a15ad329aedecdfd932aaffe4ff76 inherit pro_attribs_a02236"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02236.html#a3c4a15ad329aedecdfd932aaffe4ff76">nrVars_</a></td></tr>
+<tr class="separator:a3c4a15ad329aedecdfd932aaffe4ff76 inherit pro_attribs_a02236"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7940f913dbc5037ed042609f685bfaa inherit pro_attribs_a02236"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02236.html#ac7940f913dbc5037ed042609f685bfaa">ABegin_</a></td></tr>
+<tr class="separator:ac7940f913dbc5037ed042609f685bfaa inherit pro_attribs_a02236"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename Derived, typename T&gt;<br />
-struct mc_solver::GenericLoader&lt; Derived, T &gt;</h3>
-
-<p>Retrieve an object using a JSON configuration object and a solver instance. </p>
-<p>Other objects can register new types that can be loaded through such an interface. If you are writing a new <a class="el" href="a02324.html" title="Represents a generic task. ">mc_tasks::MetaTask</a> or <a class="el" href="a02112.html" title="This class is a basis to wrap Constraint functions from Tasks. ">mc_solver::ConstraintSet</a> you will probably register through <a class="el" href="a02328.html">mc_tasks::MetaTaskLoader</a> and <a class="el" href="a02116.html">mc_solver::ConstraintSetLoader</a> respectively.</p>
-<p>The CRTP is used to provide an ODR-resilient storage here. </p>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a02dbea2e4a083ed146cea53d7b648483"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02dbea2e4a083ed146cea53d7b648483">&#9670;&nbsp;</a></span>load_fun</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::<a class="el" href="a02144.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a> =  std::function&lt;<a class="el" href="a02144.html#adb735279d914086553de0a21285126e4">T_ptr</a>(<a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;, const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;)&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function that is able to load a T object through a solver instance and JSON configuration. </p>
-
-</div>
-</div>
-<a id="afc58a28dae04a63aa3ed180a654ec223"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc58a28dae04a63aa3ed180a654ec223">&#9670;&nbsp;</a></span>storage_t</h2>
+<div class="textblock"><p>Helper class to write an equality constraint for Tasks. </p>
+<p>This constraint applies to the wrench associated with a given contact.</p>
+<p>This implements \( A * \mathbf{f}_{cI} = b \)</p>
+<p>Where \(cI\) is the contact id you provide at construction.</p>
+<p>You must implement the following functions:</p><ul>
+<li><code>const Eigen::MatrixXd &amp; <a class="el" href="a02224.html#adcc1dc8dc0563b2e14f962f26afbfa5f" title="Should be overriden to provide A in the desired operation space. ">A() const </a>override;</code> returns \(A\), must be of size (nrLines, 6)</li>
+<li><code>void <a class="el" href="a02224.html#a8f658eb01d91768ab6a4e9b095a894de" title="Should be overriden to update the constraint matrix and vector(s) ">compute()</a> override;</code> update constraint matrix and bounds</li>
+<li><code>int maxEq() const override;</code> number of equality lines</li>
+<li><code>std::string nameEq() const override;</code> descriptive name of the constraint</li>
+<li><code>const Eigen::VectorXd &amp; bEq() const override;</code> returns \(b\) </li>
+</ul>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a252d0cb3773296939c4fabf8802ee6ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a252d0cb3773296939c4fabf8802ee6ee">&#9670;&nbsp;</a></span>EqualityConstraintForce()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::<a class="el" href="a02144.html#afc58a28dae04a63aa3ed180a654ec223">storage_t</a> =  std::map&lt;std::string, <a class="el" href="a02144.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Storage type, actual storage location is returned by Derived::storage() </p>
-
-</div>
-</div>
-<a id="adb735279d914086553de0a21285126e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb735279d914086553de0a21285126e4">&#9670;&nbsp;</a></span>T_ptr</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::<a class="el" href="a02144.html#adb735279d914086553de0a21285126e4">T_ptr</a> =  std::shared_ptr&lt;T&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>shared_ptr to T </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5da6be5874e61bd328a5452dda08950c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5da6be5874e61bd328a5452dda08950c">&#9670;&nbsp;</a></span>load() <span class="overload">[1/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a02144.html#adb735279d914086553de0a21285126e4">T_ptr</a> <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
+          <td class="memname">mc_solver::EqualityConstraintForce::EqualityConstraintForce </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>file</em>&#160;</td>
+          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
+          <td class="paramname"><em>cid</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -226,341 +212,10 @@ template&lt;typename Derived, typename T&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Load an object from a file. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver to create the object for</td></tr>
-    <tr><td class="paramname">file</td><td>File to load the object from</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">If</td><td>the file does not exist or the loaded JSON object does not represent a known object </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="adb825defeb480187f9584f84e8441a43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb825defeb480187f9584f84e8441a43">&#9670;&nbsp;</a></span>load() <span class="overload">[2/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a02144.html#adb735279d914086553de0a21285126e4">T_ptr</a> <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>file</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Load an object from a file (C-style string) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver to create the object for</td></tr>
-    <tr><td class="paramname">file</td><td>File to load the object from</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">If</td><td>the file does not exist or the loaded JSON object does not represent a known object </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a13b1f947ca0b22d2985f580ec57caf85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13b1f947ca0b22d2985f580ec57caf85">&#9670;&nbsp;</a></span>load() <span class="overload">[3/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a02144.html#adb735279d914086553de0a21285126e4">T_ptr</a> <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Load an object from an <a class="el" href="a01716.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver to create the object for</td></tr>
-    <tr><td class="paramname">config</td><td>Configuration to load the object from</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">If</td><td>the loaded JSON object does not represent a known object </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a5236104825bda3a24cc3645e0e3bf448"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5236104825bda3a24cc3645e0e3bf448">&#9670;&nbsp;</a></span>load() <span class="overload">[4/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
-<div class="memtemplate">
-template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::shared_ptr&lt;U&gt; <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>file</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Retrieve a more precise object's type from a file. </p>
-
-</div>
-</div>
-<a id="aca794f13fede4900b9ee9cf70ee621b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca794f13fede4900b9ee9cf70ee621b2">&#9670;&nbsp;</a></span>load() <span class="overload">[5/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
-<div class="memtemplate">
-template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::shared_ptr&lt;U&gt; <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>file</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Retrieve a more precise object's type from a file (C-style string) </p>
-
-</div>
-</div>
-<a id="ab10c87faa2a1fb4721163c6a479fdd78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab10c87faa2a1fb4721163c6a479fdd78">&#9670;&nbsp;</a></span>load() <span class="overload">[6/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
-<div class="memtemplate">
-template&lt;typename U , typename std::enable_if&lt;(!std::is_same&lt; U, T &gt;::value) &amp;&amp;std::is_base_of&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::shared_ptr&lt;U&gt; <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::load </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Retrieve a more precise object's type from a Configuration entry. </p>
-
-</div>
-</div>
-<a id="ac24012d951d6a04490b05a64f5ccf620"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac24012d951d6a04490b05a64f5ccf620">&#9670;&nbsp;</a></span>register_load_function()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="a02148.html">Handle</a> <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::register_load_function </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a02144.html#a02dbea2e4a083ed146cea53d7b648483">load_fun</a>&#160;</td>
-          <td class="paramname"><em>fn</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Register a new loading function. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">type</td><td>Type of the object this function handles. It should match the "type" entry of the expected JSON objects</td></tr>
-    <tr><td class="paramname">fn</td><td>Function that will be registered </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a35fcd3b9f4280a31049089aa57b54330"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35fcd3b9f4280a31049089aa57b54330">&#9670;&nbsp;</a></span>unregister_load_function()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Derived, typename T&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void <a class="el" href="a02144.html">mc_solver::GenericLoader</a>&lt; Derived, T &gt;::unregister_load_function </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>type</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Remove a registered loading function. </p>
-<p>This is mostly called automatically by the handle returned by <a class="el" href="a02144.html#ac24012d951d6a04490b05a64f5ccf620">register_load_function</a></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">type</td><td>Type of the object to un-register </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -570,8 +225,8 @@ template&lt;typename Derived, typename T&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02144.html">GenericLoader</a></li>
-    <li class="footer">Generated on Tue Sep 1 2020 04:59:49 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02144.html">EqualityConstraintForce</a></li>
+    <li class="footer">Generated on Wed Sep 2 2020 05:50:26 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

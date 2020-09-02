@@ -210,8 +210,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac40b549f94ac55bb5f99b2b8a5343709"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01716.html#ac40b549f94ac55bb5f99b2b8a5343709">toMessagePack</a> (std::vector&lt; char &gt; &amp;data) const</td></tr>
 <tr class="memdesc:ac40b549f94ac55bb5f99b2b8a5343709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert to MessagePack.  <a href="#ac40b549f94ac55bb5f99b2b8a5343709">More...</a><br /></td></tr>
 <tr class="separator:ac40b549f94ac55bb5f99b2b8a5343709"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f5e10d984befe08c3a5b23ce0cd25cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01716.html#a0f5e10d984befe08c3a5b23ce0cd25cf">toMessagePack</a> (<a class="el" href="a02076.html">MessagePackBuilder</a> &amp;builder) const</td></tr>
-<tr class="memdesc:a0f5e10d984befe08c3a5b23ce0cd25cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append to an existing <a class="el" href="a02076.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a>.  <a href="#a0f5e10d984befe08c3a5b23ce0cd25cf">More...</a><br /></td></tr>
+<tr class="memitem:a0f5e10d984befe08c3a5b23ce0cd25cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01716.html#a0f5e10d984befe08c3a5b23ce0cd25cf">toMessagePack</a> (<a class="el" href="a02080.html">MessagePackBuilder</a> &amp;builder) const</td></tr>
+<tr class="memdesc:a0f5e10d984befe08c3a5b23ce0cd25cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append to an existing <a class="el" href="a02080.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a>.  <a href="#a0f5e10d984befe08c3a5b23ce0cd25cf">More...</a><br /></td></tr>
 <tr class="separator:a0f5e10d984befe08c3a5b23ce0cd25cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8bc98b0203b31bd14f80fb84de0d9df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01716.html">Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01716.html#ad8bc98b0203b31bd14f80fb84de0d9df">operator()</a> (const std::string &amp;key) const</td></tr>
 <tr class="memdesc:ad8bc98b0203b31bd14f80fb84de0d9df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a Entry value stored within the configuration.  <a href="#ad8bc98b0203b31bd14f80fb84de0d9df">More...</a><br /></td></tr>
@@ -4127,18 +4127,18 @@ template&lt;typename T , typename H  = std::hash&lt;T&gt;, typename E  = std::eq
         <tr>
           <td class="memname">void mc_rtc::Configuration::toMessagePack </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a02076.html">MessagePackBuilder</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02080.html">MessagePackBuilder</a> &amp;&#160;</td>
           <td class="paramname"><em>builder</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Append to an existing <a class="el" href="a02076.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a>. </p>
+<p>Append to an existing <a class="el" href="a02080.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a>. </p>
 <p>The whole configuration will be stored in the MessagePack being built</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">builder</td><td><a class="el" href="a02076.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a> instance </td></tr>
+    <tr><td class="paramname">builder</td><td><a class="el" href="a02080.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a> instance </td></tr>
   </table>
   </dd>
 </dl>
@@ -4152,7 +4152,7 @@ template&lt;typename T , typename H  = std::hash&lt;T&gt;, typename E  = std::eq
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00724.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a01716.html">Configuration</a></li>
-    <li class="footer">Generated on Tue Sep 1 2020 04:59:49 for mc_rtc by
+    <li class="footer">Generated on Wed Sep 2 2020 05:50:25 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

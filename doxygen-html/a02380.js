@@ -1,22 +1,10 @@
 var a02380 =
 [
-    [ "exact_cubic_t", "a02380.html#aa722aab6305bf5e4f1ae6f0007202f48", null ],
-    [ "point_t", "a02380.html#a696e4cd6c5ac9fda37888ac9b2c7a955", null ],
-    [ "spline_constraints_t", "a02380.html#af3fc53f8154ef0226149e69b9bfd8485", null ],
-    [ "spline_deriv_constraint_t", "a02380.html#a1fffcee3002474517dd513904de9ea77", null ],
-    [ "waypoint_t", "a02380.html#a5e665c15b2b296658f1ec80caf0499e0", null ],
-    [ "ExactCubic", "a02380.html#a1c4b7078a6df6537dc27a7b678d254c2", null ],
-    [ "addToGUI", "a02380.html#ae734960f82442e523fe5fa1077588e75", null ],
-    [ "constraints", "a02380.html#af0dd28bb9136823399f3d85d5512bc33", null ],
-    [ "end_acc", "a02380.html#a36540b993aa3ca5af2f656335726b454", null ],
-    [ "end_vel", "a02380.html#a39c91f03c69b47e26871602fecb5dc09", null ],
-    [ "init_acc", "a02380.html#af47e1c92e5824f345b1616aacbd1891c", null ],
-    [ "init_vel", "a02380.html#a342e98f2928656490fbcb12bf7d8bee3", null ],
-    [ "sampleTrajectory", "a02380.html#ab73c2c2f06d04ee301e8ec0d1a15b831", null ],
-    [ "splev", "a02380.html#a3df92dec43977efee8f5f4a8cc83ae87", null ],
-    [ "update", "a02380.html#a22a9af98b0a796589d8c25037b7cdb60", null ],
-    [ "waypoint", "a02380.html#aec46e0e93dfe6c8483cd4ab96ec133ae", null ],
-    [ "waypoint", "a02380.html#a012346ad965151024073f23d6261d977", null ],
-    [ "waypoint", "a02380.html#a83a0733b114960743205b1b3a390ca6e", null ],
-    [ "waypointTime", "a02380.html#a48ee7c7819f41e00f485f3565d990106", null ]
+    [ "bezier_curve_t", "a02380.html#a58fe236423f0abd51af3cdcb50017a47", null ],
+    [ "waypoints_t", "a02380.html#ada383daeac50ae7ac8b720c6096289f5", null ],
+    [ "BSpline", "a02380.html#a905828c45debcac32ddbd35718a138a1", null ],
+    [ "addToGUI", "a02380.html#a206f674c4f9e666083f9aa96b27b7628", null ],
+    [ "sampleTrajectory", "a02380.html#ac34c7879cd2d0a941a6b303c366d16f4", null ],
+    [ "splev", "a02380.html#ae72e0f0db1744ff5a1e7ea8c8a832d5a", null ],
+    [ "update", "a02380.html#ab70108d4c7af3ce67b487bcbe11cab5d", null ]
 ];

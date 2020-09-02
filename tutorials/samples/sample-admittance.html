@@ -280,7 +280,7 @@
       <div class="col-9">
         <h1>Admittance sample controller</h1>
 
-        <p>This tutorial explains usage and concepts of the <code class="language-plaintext highlighter-rouge">AdmittanceSample</code> sample controller provided with the framework. This sample demonstrates the use of the <a href="/mc_rtc/doxygen.html#a02256" target="blank_">mc_tasks::force::AdmittanceTask</a> to regulate forces on <code class="language-plaintext highlighter-rouge">JVRC1</code> hand while pushing against a wall.</p>
+        <p>This tutorial explains usage and concepts of the <code class="language-plaintext highlighter-rouge">AdmittanceSample</code> sample controller provided with the framework. This sample demonstrates the use of the <a href="/mc_rtc/doxygen.html#a02260" target="blank_">mc_tasks::force::AdmittanceTask</a> to regulate forces on <code class="language-plaintext highlighter-rouge">JVRC1</code> hand while pushing against a wall.</p>
 
 <p>This controller follows the following steps:</p>
 
@@ -349,7 +349,7 @@
 
 <h3 id="standingbase-managing-the-com-and-chest">StandingBase: Managing the CoM and Chest</h3>
 
-<p>During the whole experiment, we want the robot’s CoM to remain centered between the feet. This is achieved by using a <a href="/mc_rtc/doxygen.html#a02268" target="blank_">mc_tasks::CoMTask</a>. Additionally, we add an <a href="/mc_rtc/doxygen.html#a02336" target="blank_">mc_tasks::OrientationTask</a> on the robot’s chest to prevent it from moving too much and provide a more human-like motion. This state is used as the base state for all other states in the FSM, thus every state will inherit this behaviour.</p>
+<p>During the whole experiment, we want the robot’s CoM to remain centered between the feet. This is achieved by using a <a href="/mc_rtc/doxygen.html#a02272" target="blank_">mc_tasks::CoMTask</a>. Additionally, we add an <a href="/mc_rtc/doxygen.html#a02340" target="blank_">mc_tasks::OrientationTask</a> on the robot’s chest to prevent it from moving too much and provide a more human-like motion. This state is used as the base state for all other states in the FSM, thus every state will inherit this behaviour.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Keep the CoM centered between the feet, and the chest upright</span>
   <span class="na">StandingBase</span><span class="pi">:</span>
@@ -369,7 +369,7 @@
 
 <h3 id="righthandtowall-hand-trajectory">RightHandToWall: Hand trajectory</h3>
 
-<p>Next, we want to move the hand to a location in front of the robot near the wall. To do so, we use the <a href="/mc_rtc/doxygen.html#a02260" target="blank_">mc_tasks::BSplineTrajectoryTask</a>, that provides a bspline trajectory parametrized in terms of waypoints in both position and orientation. The task controls a desired robot surface to follow this trajectory.</p>
+<p>Next, we want to move the hand to a location in front of the robot near the wall. To do so, we use the <a href="/mc_rtc/doxygen.html#a02264" target="blank_">mc_tasks::BSplineTrajectoryTask</a>, that provides a bspline trajectory parametrized in terms of waypoints in both position and orientation. The task controls a desired robot surface to follow this trajectory.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># Trajectory to bring hand close to the wall</span>
   <span class="na">RightHandToWall</span><span class="pi">:</span>

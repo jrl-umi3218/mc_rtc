@@ -15,6 +15,6 @@ var annotated_dup =
     [ "std", null, [
       [ "hash< mc_control::fsm::Contact >", "a01348.html", "a01348" ]
     ] ],
-    [ "Collision", "a02396.html", null ],
-    [ "Global", "a02392.html", null ]
+    [ "Collision", "a02400.html", null ],
+    [ "Global", "a02396.html", null ]
 ];

@@ -1,10 +1,15 @@
 var a02148 =
 [
-    [ "Handle", "a02148.html#a38ff1a03e3d23844851fbb6945052b6e", null ],
-    [ "Handle", "a02148.html#a3abf3568270608f66c2f3d8f42b158c5", null ],
-    [ "~Handle", "a02148.html#acb9b93dfdd948310129a694363b1d018", null ],
-    [ "Handle", "a02148.html#ad1354d6ec1298c55743594d5f7e959d7", null ],
-    [ "Handle", "a02148.html#a8d34eedd99c2441236c01717b2ec7291", null ],
-    [ "operator=", "a02148.html#a7bcd67bfff206e0063212e99dca891bc", null ],
-    [ "operator=", "a02148.html#a1002f0272ae3957fe636d3b06dc34148", null ]
+    [ "Handle", "a02152.html", "a02152" ],
+    [ "load_fun", "a02148.html#a02dbea2e4a083ed146cea53d7b648483", null ],
+    [ "storage_t", "a02148.html#afc58a28dae04a63aa3ed180a654ec223", null ],
+    [ "T_ptr", "a02148.html#adb735279d914086553de0a21285126e4", null ],
+    [ "load", "a02148.html#a5da6be5874e61bd328a5452dda08950c", null ],
+    [ "load", "a02148.html#adb825defeb480187f9584f84e8441a43", null ],
+    [ "load", "a02148.html#a13b1f947ca0b22d2985f580ec57caf85", null ],
+    [ "load", "a02148.html#a5236104825bda3a24cc3645e0e3bf448", null ],
+    [ "load", "a02148.html#aca794f13fede4900b9ee9cf70ee621b2", null ],
+    [ "load", "a02148.html#ab10c87faa2a1fb4721163c6a479fdd78", null ],
+    [ "register_load_function", "a02148.html#ac24012d951d6a04490b05a64f5ccf620", null ],
+    [ "unregister_load_function", "a02148.html#a35fcd3b9f4280a31049089aa57b54330", null ]
 ];

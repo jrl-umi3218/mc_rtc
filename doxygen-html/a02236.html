@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils::UpdateNrVarsRobot Struct Reference</title>
+<title>mc_solver::utils::UpdateNrVarsData Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,50 +70,60 @@ $(document).ready(function(){initNavTree('a02236.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="a02233.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils::UpdateNrVarsRobot Struct Reference</div>  </div>
+<div class="title">mc_solver::utils::UpdateNrVarsData Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This struct provides an implementation for updateNrVars for a robot-based constraint.  
+<p>This struct provides common data for UpdateNrVars* classes.  
  <a href="a02236.html#details">More...</a></p>
 
 <p><code>#include &lt;mc_solver/utils/UpdateNrVars.h&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for mc_solver::utils::UpdateNrVarsRobot:</div>
+Inheritance diagram for mc_solver::utils::UpdateNrVarsData:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="a02236.png" usemap="#mc_5Fsolver::utils::UpdateNrVarsRobot_map" alt=""/>
-  <map id="mc_5Fsolver::utils::UpdateNrVarsRobot_map" name="mc_5Fsolver::utils::UpdateNrVarsRobot_map">
-<area href="a02232.html" title="This struct provides common data for UpdateNrVars* classes. " alt="mc_solver::utils::UpdateNrVarsData" shape="rect" coords="0,0,216,24"/>
+  <img src="a02236.png" usemap="#mc_5Fsolver::utils::UpdateNrVarsData_map" alt=""/>
+  <map id="mc_5Fsolver::utils::UpdateNrVarsData_map" name="mc_5Fsolver::utils::UpdateNrVarsData_map">
+<area href="a02244.html" title="This struct provides an implement for updateNrVars for a lambda-based constraint. ..." alt="mc_solver::utils::UpdateNrVarsLambda" shape="rect" coords="666,56,1100,80"/>
+<area href="a02240.html" title="This struct provides an implementation for updateNrVars for a robot-based constraint. " alt="mc_solver::utils::UpdateNrVarsRobot" shape="rect" coords="1110,56,1544,80"/>
+<area href="a02224.html" alt="mc_solver::utils::Update&lt; UpdateNrVarsLambda &gt;" shape="rect" coords="666,112,1100,136"/>
+<area href="a02212.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Equality, utils::UpdateLambda &gt;" shape="rect" coords="0,168,434,192"/>
+<area href="a02212.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::GenInequality, utils::UpdateLambda &gt;" shape="rect" coords="444,168,878,192"/>
+<area href="a02212.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateLambda &gt;" shape="rect" coords="888,168,1322,192"/>
+<area href="a02232.html" alt="mc_solver::utils::UpdateForce" shape="rect" coords="1776,168,2210,192"/>
+<area href="a02132.html" alt="mc_solver::utils::EqualityConstraint&lt; utils::UpdateLambda &gt;" shape="rect" coords="0,224,434,248"/>
+<area href="a02156.html" alt="mc_solver::utils::GenInequalityConstraint&lt; utils::UpdateLambda &gt;" shape="rect" coords="444,224,878,248"/>
+<area href="a02172.html" alt="mc_solver::utils::InequalityConstraint&lt; utils::UpdateLambda &gt;" shape="rect" coords="888,224,1322,248"/>
+<area href="a02212.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Equality, utils::UpdateForce &gt;" shape="rect" coords="1332,224,1766,248"/>
+<area href="a02212.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::GenInequality, utils::UpdateForce &gt;" shape="rect" coords="1776,224,2210,248"/>
+<area href="a02212.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Inequality, utils::UpdateForce &gt;" shape="rect" coords="2220,224,2654,248"/>
+<area href="a02140.html" title="Helper class to write an equality constraint for Tasks. " alt="mc_solver::EqualityConstraintLambda" shape="rect" coords="0,280,434,304"/>
+<area href="a02164.html" title="Helper class to write a general inequality constraint for Tasks. " alt="mc_solver::GenInequalityConstraintLambda" shape="rect" coords="444,280,878,304"/>
+<area href="a02180.html" title="Helper class to write an inequality constraint for Tasks. " alt="mc_solver::InequalityConstraintLambda" shape="rect" coords="888,280,1322,304"/>
+<area href="a02132.html" alt="mc_solver::utils::EqualityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="1332,280,1766,304"/>
+<area href="a02156.html" alt="mc_solver::utils::GenInequalityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="1776,280,2210,304"/>
+<area href="a02172.html" alt="mc_solver::utils::InequalityConstraint&lt; utils::UpdateForce &gt;" shape="rect" coords="2220,280,2654,304"/>
+<area href="a02144.html" title="Helper class to write an equality constraint for Tasks. " alt="mc_solver::EqualityConstraintForce" shape="rect" coords="1332,336,1766,360"/>
+<area href="a02168.html" title="Helper class to write a general inequality constraint for Tasks. " alt="mc_solver::GenInequalityConstraintForce" shape="rect" coords="1776,336,2210,360"/>
+<area href="a02184.html" title="Helper class to write an inequality constraint for Tasks. " alt="mc_solver::InequalityConstraintForce" shape="rect" coords="2220,336,2654,360"/>
 </map>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:a31e4270c070674e663da7513abcec55d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02236.html#a31e4270c070674e663da7513abcec55d">UpdateNrVarsRobot</a> (unsigned int rIndex)</td></tr>
-<tr class="separator:a31e4270c070674e663da7513abcec55d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7039825cc623155d75ab86f48a33e48e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02236.html#a7039825cc623155d75ab86f48a33e48e">updateNrVarsImpl</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data)</td></tr>
-<tr class="separator:a7039825cc623155d75ab86f48a33e48e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a55f510b20375d30a9f432a1d4f5a773d"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02236.html#a55f510b20375d30a9f432a1d4f5a773d">rIndex_</a></td></tr>
-<tr class="separator:a55f510b20375d30a9f432a1d4f5a773d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_a02232"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_a02232')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="a02232.html">mc_solver::utils::UpdateNrVarsData</a></td></tr>
-<tr class="memitem:a3c4a15ad329aedecdfd932aaffe4ff76 inherit pro_attribs_a02232"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02232.html#a3c4a15ad329aedecdfd932aaffe4ff76">nrVars_</a></td></tr>
-<tr class="separator:a3c4a15ad329aedecdfd932aaffe4ff76 inherit pro_attribs_a02232"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7940f913dbc5037ed042609f685bfaa inherit pro_attribs_a02232"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02232.html#ac7940f913dbc5037ed042609f685bfaa">ABegin_</a></td></tr>
-<tr class="separator:ac7940f913dbc5037ed042609f685bfaa inherit pro_attribs_a02232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c4a15ad329aedecdfd932aaffe4ff76"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02236.html#a3c4a15ad329aedecdfd932aaffe4ff76">nrVars_</a></td></tr>
+<tr class="separator:a3c4a15ad329aedecdfd932aaffe4ff76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7940f913dbc5037ed042609f685bfaa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02236.html#ac7940f913dbc5037ed042609f685bfaa">ABegin_</a></td></tr>
+<tr class="separator:ac7940f913dbc5037ed042609f685bfaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This struct provides an implementation for updateNrVars for a robot-based constraint. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a31e4270c070674e663da7513abcec55d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31e4270c070674e663da7513abcec55d">&#9670;&nbsp;</a></span>UpdateNrVarsRobot()</h2>
+<div class="textblock"><p>This struct provides common data for UpdateNrVars* classes. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="ac7940f913dbc5037ed042609f685bfaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7940f913dbc5037ed042609f685bfaa">&#9670;&nbsp;</a></span>ABegin_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -122,48 +132,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">mc_solver::utils::UpdateNrVarsRobot::UpdateNrVarsRobot </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>rIndex</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">explicit</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7039825cc623155d75ab86f48a33e48e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7039825cc623155d75ab86f48a33e48e">&#9670;&nbsp;</a></span>updateNrVarsImpl()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_solver::utils::UpdateNrVarsRobot::updateNrVarsImpl </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const tasks::qp::SolverData &amp;&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">int mc_solver::utils::UpdateNrVarsData::ABegin_</td>
         </tr>
       </table>
   </td>
@@ -175,9 +144,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a55f510b20375d30a9f432a1d4f5a773d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55f510b20375d30a9f432a1d4f5a773d">&#9670;&nbsp;</a></span>rIndex_</h2>
+<a id="a3c4a15ad329aedecdfd932aaffe4ff76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c4a15ad329aedecdfd932aaffe4ff76">&#9670;&nbsp;</a></span>nrVars_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,7 +154,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int mc_solver::utils::UpdateNrVarsRobot::rIndex_</td>
+          <td class="memname">int mc_solver::utils::UpdateNrVarsData::nrVars_</td>
         </tr>
       </table>
   </td>
@@ -204,8 +172,8 @@ Protected Attributes</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00752.html">utils</a></li><li class="navelem"><a class="el" href="a02236.html">UpdateNrVarsRobot</a></li>
-    <li class="footer">Generated on Tue Sep 1 2020 04:59:50 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00752.html">utils</a></li><li class="navelem"><a class="el" href="a02236.html">UpdateNrVarsData</a></li>
+    <li class="footer">Generated on Wed Sep 2 2020 05:50:26 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

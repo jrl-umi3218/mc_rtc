@@ -94,7 +94,7 @@ Public Types</h2></td></tr>
  }<tr class="memdesc:a0fefb36635930cf5a9db966442756b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines available policies for the logger.  <a href="a02052.html#a0fefb36635930cf5a9db966442756b9b">More...</a><br /></td></tr>
 </td></tr>
 <tr class="separator:a0fefb36635930cf5a9db966442756b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fd0d1237a81647e462f7af2b4225d5e"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(<a class="el" href="a02076.html">mc_rtc::MessagePackBuilder</a> &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02052.html#a6fd0d1237a81647e462f7af2b4225d5e">serialize_fn</a></td></tr>
+<tr class="memitem:a6fd0d1237a81647e462f7af2b4225d5e"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(<a class="el" href="a02080.html">mc_rtc::MessagePackBuilder</a> &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02052.html#a6fd0d1237a81647e462f7af2b4225d5e">serialize_fn</a></td></tr>
 <tr class="memdesc:a6fd0d1237a81647e462f7af2b4225d5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function that fills LogData vectors.  <a href="#a6fd0d1237a81647e462f7af2b4225d5e">More...</a><br /></td></tr>
 <tr class="separator:a6fd0d1237a81647e462f7af2b4225d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -116,7 +116,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aec88caf27ebb9c9615ed4fd51d9ccd98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log controller's data.  <a href="#aec88caf27ebb9c9615ed4fd51d9ccd98">More...</a><br /></td></tr>
 <tr class="separator:aec88caf27ebb9c9615ed4fd51d9ccd98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fe9ebf879c471ae7741170c9e0d6933"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a1fe9ebf879c471ae7741170c9e0d6933"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02052.html#a1fe9ebf879c471ae7741170c9e0d6933">addLogEntry</a> (const std::string &amp;name, T get_fn, typename std::enable_if&lt; <a class="el" href="a02068.html">mc_rtc::log::callback_is_serializable</a>&lt; T &gt;::value &gt;::type *=0)</td></tr>
+<tr class="memitem:a1fe9ebf879c471ae7741170c9e0d6933"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02052.html#a1fe9ebf879c471ae7741170c9e0d6933">addLogEntry</a> (const std::string &amp;name, T get_fn, typename std::enable_if&lt; <a class="el" href="a02072.html">mc_rtc::log::callback_is_serializable</a>&lt; T &gt;::value &gt;::type *=0)</td></tr>
 <tr class="memdesc:a1fe9ebf879c471ae7741170c9e0d6933"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a log entry into the log.  <a href="#a1fe9ebf879c471ae7741170c9e0d6933">More...</a><br /></td></tr>
 <tr class="separator:a1fe9ebf879c471ae7741170c9e0d6933"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b1427e1251ebbd90947468fc4bdf964"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02052.html#a2b1427e1251ebbd90947468fc4bdf964">removeLogEntry</a> (const std::string &amp;name)</td></tr>
@@ -144,7 +144,7 @@ Static Public Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::function&lt;void(<a class="el" href="a02076.html">mc_rtc::MessagePackBuilder</a> &amp;)&gt; <a class="el" href="a02052.html#a6fd0d1237a81647e462f7af2b4225d5e">mc_rtc::Logger::serialize_fn</a></td>
+          <td class="memname">typedef std::function&lt;void(<a class="el" href="a02080.html">mc_rtc::MessagePackBuilder</a> &amp;)&gt; <a class="el" href="a02052.html#a6fd0d1237a81647e462f7af2b4225d5e">mc_rtc::Logger::serialize_fn</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -277,7 +277,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">typename std::enable_if&lt; <a class="el" href="a02068.html">mc_rtc::log::callback_is_serializable</a>&lt; T &gt;::value &gt;::type *&#160;</td>
+          <td class="paramtype">typename std::enable_if&lt; <a class="el" href="a02072.html">mc_rtc::log::callback_is_serializable</a>&lt; T &gt;::value &gt;::type *&#160;</td>
           <td class="paramname"> = <code>0</code>&#160;</td>
         </tr>
         <tr>
@@ -303,7 +303,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="reference">References <a class="el" href="a00748.html#aa189b2ec856ad8f96d632d635efc05ce">mc_rtc::log::error()</a>, and <a class="el" href="a02072.html#ac76dfb54b68fb04d65d6fcb1cb6e061d">mc_rtc::log::LogWriter&lt; T &gt;::write()</a>.</p>
+<p class="reference">References <a class="el" href="a00748.html#aa189b2ec856ad8f96d632d635efc05ce">mc_rtc::log::error()</a>, and <a class="el" href="a02076.html#ac76dfb54b68fb04d65d6fcb1cb6e061d">mc_rtc::log::LogWriter&lt; T &gt;::write()</a>.</p>
 
 </div>
 </div>
@@ -494,7 +494,7 @@ template&lt;typename T &gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00724.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02052.html">Logger</a></li>
-    <li class="footer">Generated on Tue Sep 1 2020 04:59:49 for mc_rtc by
+    <li class="footer">Generated on Wed Sep 2 2020 05:50:25 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -97,7 +97,7 @@ Inheritance diagram for mc_rtc::gui::details::StaticTableImpl&lt; GetData &gt;:<
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a53e7fd555139aa959ce1b1888cdea868"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01972.html#a53e7fd555139aa959ce1b1888cdea868">StaticTableImpl</a> (const std::string &amp;<a class="el" href="a01816.html#a4f1f84cbf9bafb94cd41824712565f5a">name</a>, std::vector&lt; std::string &gt; header, std::vector&lt; std::string &gt; format, GetData get_data_fn)</td></tr>
 <tr class="separator:a53e7fd555139aa959ce1b1888cdea868"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1637233b6dfef48f4df4d34280865f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01972.html#aa1637233b6dfef48f4df4d34280865f8">write</a> (<a class="el" href="a02076.html">mc_rtc::MessagePackBuilder</a> &amp;builder)</td></tr>
+<tr class="memitem:aa1637233b6dfef48f4df4d34280865f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01972.html#aa1637233b6dfef48f4df4d34280865f8">write</a> (<a class="el" href="a02080.html">mc_rtc::MessagePackBuilder</a> &amp;builder)</td></tr>
 <tr class="separator:aa1637233b6dfef48f4df4d34280865f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_a01816"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_a01816')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="a01816.html">mc_rtc::gui::Element</a></td></tr>
 <tr class="memitem:a4f1f84cbf9bafb94cd41824712565f5a inherit pub_methods_a01816"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01816.html#a4f1f84cbf9bafb94cd41824712565f5a">name</a> () const</td></tr>
@@ -109,8 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a000ffd25b2fe0b3b36ad02b44cd190c3 inherit pub_methods_a01816"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01816.html#a000ffd25b2fe0b3b36ad02b44cd190c3">id</a> (int idIn)</td></tr>
 <tr class="memdesc:a000ffd25b2fe0b3b36ad02b44cd190c3 inherit pub_methods_a01816"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the stack id of an element.  <a href="a01816.html#a000ffd25b2fe0b3b36ad02b44cd190c3">More...</a><br /></td></tr>
 <tr class="separator:a000ffd25b2fe0b3b36ad02b44cd190c3 inherit pub_methods_a01816"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8e71ecce7dab695777a1a11faf119f7 inherit pub_methods_a01816"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01816.html#ab8e71ecce7dab695777a1a11faf119f7">write</a> (<a class="el" href="a02076.html">mc_rtc::MessagePackBuilder</a> &amp;)</td></tr>
-<tr class="memdesc:ab8e71ecce7dab695777a1a11faf119f7 inherit pub_methods_a01816"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the widget to a <a class="el" href="a02076.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a>.  <a href="a01816.html#ab8e71ecce7dab695777a1a11faf119f7">More...</a><br /></td></tr>
+<tr class="memitem:ab8e71ecce7dab695777a1a11faf119f7 inherit pub_methods_a01816"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01816.html#ab8e71ecce7dab695777a1a11faf119f7">write</a> (<a class="el" href="a02080.html">mc_rtc::MessagePackBuilder</a> &amp;)</td></tr>
+<tr class="memdesc:ab8e71ecce7dab695777a1a11faf119f7 inherit pub_methods_a01816"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the widget to a <a class="el" href="a02080.html" title="Helper class to build a MessagePack message. ">MessagePackBuilder</a>.  <a href="a01816.html#ab8e71ecce7dab695777a1a11faf119f7">More...</a><br /></td></tr>
 <tr class="separator:ab8e71ecce7dab695777a1a11faf119f7 inherit pub_methods_a01816"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00f7fa6be59c8cc61304d35e7dd2a914 inherit pub_methods_a01816"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01816.html#a00f7fa6be59c8cc61304d35e7dd2a914">handleRequest</a> (const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;)</td></tr>
 <tr class="memdesc:a00f7fa6be59c8cc61304d35e7dd2a914 inherit pub_methods_a01816"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take care of answering request from the client.  <a href="a01816.html#a00f7fa6be59c8cc61304d35e7dd2a914">More...</a><br /></td></tr>
@@ -223,7 +223,7 @@ template&lt;typename GetData&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="a01972.html">mc_rtc::gui::details::StaticTableImpl</a>&lt; GetData &gt;::write </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a02076.html">mc_rtc::MessagePackBuilder</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="a02080.html">mc_rtc::MessagePackBuilder</a> &amp;&#160;</td>
           <td class="paramname"><em>builder</em></td><td>)</td>
           <td></td>
         </tr>
@@ -235,7 +235,7 @@ template&lt;typename GetData&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="reference">References <a class="el" href="a02076.html#ab7c6cb64330027b2fec8e69d218a866d">mc_rtc::MessagePackBuilder::write()</a>, and <a class="el" href="a01816.html#ab8e71ecce7dab695777a1a11faf119f7">mc_rtc::gui::Element::write()</a>.</p>
+<p class="reference">References <a class="el" href="a02080.html#ab7c6cb64330027b2fec8e69d218a866d">mc_rtc::MessagePackBuilder::write()</a>, and <a class="el" href="a01816.html#ab8e71ecce7dab695777a1a11faf119f7">mc_rtc::gui::Element::write()</a>.</p>
 
 </div>
 </div>
@@ -300,7 +300,7 @@ template&lt;typename GetData&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00724.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00743.html">gui</a></li><li class="navelem"><a class="el" href="a00744.html">details</a></li><li class="navelem"><a class="el" href="a01972.html">StaticTableImpl</a></li>
-    <li class="footer">Generated on Tue Sep 1 2020 04:59:49 for mc_rtc by
+    <li class="footer">Generated on Wed Sep 2 2020 05:50:25 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

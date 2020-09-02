@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt; Class Template Reference</title>
+<title>mc_solver::QPSolver Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,147 +70,175 @@ $(document).ready(function(){initNavTree('a02208.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="a02205.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt; Class Template Reference</div>  </div>
+<div class="title">mc_solver::QPSolver Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Generic helper class to write a new constraint for Tasks.  
+<p>Wraps a tasks::qp::QPSolver instance.  
  <a href="a02208.html#details">More...</a></p>
 
-<p><code>#include &lt;mc_solver/utils/Constraint.h&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt;:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a02208.png" usemap="#mc_5Fsolver::utils::Constraint_3C_20ConstraintT_2C_20UpdateT_20_3E_map" alt=""/>
-  <map id="mc_5Fsolver::utils::Constraint_3C_20ConstraintT_2C_20UpdateT_20_3E_map" name="mc_5Fsolver::utils::Constraint_3C_20ConstraintT_2C_20UpdateT_20_3E_map">
-</map>
- </div></div>
+<p><code>#include &lt;mc_solver/QPSolver.h&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateRobot&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02208.html#adcc2b9ec9fbd3b47e0183ef0ce034c73">Constraint</a> (unsigned int rIndex)</td></tr>
-<tr class="separator:adcc2b9ec9fbd3b47e0183ef0ce034c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateLambda&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02208.html#ae5a2073ed0b8b0432593221fec955e4e">Constraint</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
-<tr class="separator:ae5a2073ed0b8b0432593221fec955e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateForce&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02208.html#aab0cc49bca85557519c9a110b54c65ca">Constraint</a> (const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
-<tr class="separator:aab0cc49bca85557519c9a110b54c65ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a819dd76da2909a4c88efcca1cb9aaf69"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a819dd76da2909a4c88efcca1cb9aaf69">~Constraint</a> ()</td></tr>
-<tr class="memdesc:a819dd76da2909a4c88efcca1cb9aaf69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="#a819dd76da2909a4c88efcca1cb9aaf69">More...</a><br /></td></tr>
-<tr class="separator:a819dd76da2909a4c88efcca1cb9aaf69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab383394a69ab62c4fab23378e64868de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#ab383394a69ab62c4fab23378e64868de">updateNrVars</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data) override</td></tr>
-<tr class="separator:ab383394a69ab62c4fab23378e64868de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7693804807033e3718c4ba01a58d3a58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a7693804807033e3718c4ba01a58d3a58">update</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;mbcs, const tasks::qp::SolverData &amp;data) override</td></tr>
-<tr class="separator:a7693804807033e3718c4ba01a58d3a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a6f0c3211feb7722f0316b8808b61f6d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a6f0c3211feb7722f0316b8808b61f6d1">QPSolver</a> (std::shared_ptr&lt; <a class="el" href="a01680.html">mc_rbdyn::Robots</a> &gt; <a class="el" href="a02208.html#aad5585a2e93a0dcac5f96b1ecf8cddf0">robots</a>, double timeStep)</td></tr>
+<tr class="memdesc:a6f0c3211feb7722f0316b8808b61f6d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6f0c3211feb7722f0316b8808b61f6d1">More...</a><br /></td></tr>
+<tr class="separator:a6f0c3211feb7722f0316b8808b61f6d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb5af970ec8d5b46ddcf8af19bd205be"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#adb5af970ec8d5b46ddcf8af19bd205be">QPSolver</a> (double timeStep)</td></tr>
+<tr class="memdesc:adb5af970ec8d5b46ddcf8af19bd205be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor (the solver creates its own Robots instance)  <a href="#adb5af970ec8d5b46ddcf8af19bd205be">More...</a><br /></td></tr>
+<tr class="separator:adb5af970ec8d5b46ddcf8af19bd205be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37580a89d1a0d1a862dfb6b7240e6dd0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a37580a89d1a0d1a862dfb6b7240e6dd0">addConstraintSet</a> (<a class="el" href="a02116.html">ConstraintSet</a> &amp;cs)</td></tr>
+<tr class="memdesc:a37580a89d1a0d1a862dfb6b7240e6dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a constraint set.  <a href="#a37580a89d1a0d1a862dfb6b7240e6dd0">More...</a><br /></td></tr>
+<tr class="separator:a37580a89d1a0d1a862dfb6b7240e6dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d48a1aa9f88ea1c6873000df4299a1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a2d48a1aa9f88ea1c6873000df4299a1d">removeConstraintSet</a> (<a class="el" href="a02116.html">ConstraintSet</a> &amp;cs)</td></tr>
+<tr class="memdesc:a2d48a1aa9f88ea1c6873000df4299a1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a constraint set.  <a href="#a2d48a1aa9f88ea1c6873000df4299a1d">More...</a><br /></td></tr>
+<tr class="separator:a2d48a1aa9f88ea1c6873000df4299a1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b2f689232445049015987d2ff4d78ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a8b2f689232445049015987d2ff4d78ce">addTask</a> (tasks::qp::Task *task)</td></tr>
+<tr class="memdesc:a8b2f689232445049015987d2ff4d78ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a task to the solver.  <a href="#a8b2f689232445049015987d2ff4d78ce">More...</a><br /></td></tr>
+<tr class="separator:a8b2f689232445049015987d2ff4d78ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68cf69e4985228c83affeb35320c4c25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a68cf69e4985228c83affeb35320c4c25">addTask</a> (<a class="el" href="a02328.html">mc_tasks::MetaTask</a> *task)</td></tr>
+<tr class="memdesc:a68cf69e4985228c83affeb35320c4c25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a task to the solver.  <a href="#a68cf69e4985228c83affeb35320c4c25">More...</a><br /></td></tr>
+<tr class="separator:a68cf69e4985228c83affeb35320c4c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8526c038006669a9f433c94445c69338"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a8526c038006669a9f433c94445c69338"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02208.html#a8526c038006669a9f433c94445c69338">addTask</a> (std::shared_ptr&lt; T &gt; task)</td></tr>
+<tr class="memdesc:a8526c038006669a9f433c94445c69338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a task to the solver.  <a href="#a8526c038006669a9f433c94445c69338">More...</a><br /></td></tr>
+<tr class="separator:a8526c038006669a9f433c94445c69338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59755b6d2a453830d66a662767ff3923"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a59755b6d2a453830d66a662767ff3923">removeTask</a> (tasks::qp::Task *task)</td></tr>
+<tr class="memdesc:a59755b6d2a453830d66a662767ff3923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a task from the solver.  <a href="#a59755b6d2a453830d66a662767ff3923">More...</a><br /></td></tr>
+<tr class="separator:a59755b6d2a453830d66a662767ff3923"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28e05133ff619c24f30a376e951fde51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a28e05133ff619c24f30a376e951fde51">removeTask</a> (<a class="el" href="a02328.html">mc_tasks::MetaTask</a> *task)</td></tr>
+<tr class="memdesc:a28e05133ff619c24f30a376e951fde51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a task from the solver.  <a href="#a28e05133ff619c24f30a376e951fde51">More...</a><br /></td></tr>
+<tr class="separator:a28e05133ff619c24f30a376e951fde51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9c66bd9fbc6687dccd60727db474c53"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ab9c66bd9fbc6687dccd60727db474c53"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02208.html#ab9c66bd9fbc6687dccd60727db474c53">removeTask</a> (std::shared_ptr&lt; T &gt; task)</td></tr>
+<tr class="memdesc:ab9c66bd9fbc6687dccd60727db474c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a task from the solver.  <a href="#ab9c66bd9fbc6687dccd60727db474c53">More...</a><br /></td></tr>
+<tr class="separator:ab9c66bd9fbc6687dccd60727db474c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8508225c35f55cef193bf45adb17ebce"><td class="memTemplParams" colspan="2">template&lt;typename... Fun&gt; </td></tr>
+<tr class="memitem:a8508225c35f55cef193bf45adb17ebce"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02208.html#a8508225c35f55cef193bf45adb17ebce">addConstraint</a> (tasks::qp::ConstraintFunction&lt; Fun... &gt; *constraint)</td></tr>
+<tr class="memdesc:a8508225c35f55cef193bf45adb17ebce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a constraint function from the solver.  <a href="#a8508225c35f55cef193bf45adb17ebce">More...</a><br /></td></tr>
+<tr class="separator:a8508225c35f55cef193bf45adb17ebce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91e043a96e0de999c337b15ea8f8a62f"><td class="memTemplParams" colspan="2">template&lt;typename... Fun&gt; </td></tr>
+<tr class="memitem:a91e043a96e0de999c337b15ea8f8a62f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02208.html#a91e043a96e0de999c337b15ea8f8a62f">removeConstraint</a> (tasks::qp::ConstraintFunction&lt; Fun... &gt; *constraint)</td></tr>
+<tr class="memdesc:a91e043a96e0de999c337b15ea8f8a62f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a constraint function from the solver.  <a href="#a91e043a96e0de999c337b15ea8f8a62f">More...</a><br /></td></tr>
+<tr class="separator:a91e043a96e0de999c337b15ea8f8a62f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3c5b0a375a038d88ebc4c0acb35afc"><td class="memItemLeft" align="right" valign="top">std::pair&lt; int, const tasks::qp::BilateralContact &amp; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a9d3c5b0a375a038d88ebc4c0acb35afc">contactById</a> (const tasks::qp::ContactId &amp;id) const</td></tr>
+<tr class="memdesc:a9d3c5b0a375a038d88ebc4c0acb35afc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the tasks::qp::BilateralContact entity in the solver from a contact id.  <a href="#a9d3c5b0a375a038d88ebc4c0acb35afc">More...</a><br /></td></tr>
+<tr class="separator:a9d3c5b0a375a038d88ebc4c0acb35afc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba37f50ba476a2701c05b8aa737d9362"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#aba37f50ba476a2701c05b8aa737d9362">lambdaVec</a> (int cIndex) const</td></tr>
+<tr class="memdesc:aba37f50ba476a2701c05b8aa737d9362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to a part to lambdaVec given a contact index.  <a href="#aba37f50ba476a2701c05b8aa737d9362">More...</a><br /></td></tr>
+<tr class="separator:aba37f50ba476a2701c05b8aa737d9362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae628e7f079f7ec8dd5ba2818ffe27adc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#ae628e7f079f7ec8dd5ba2818ffe27adc">setContacts</a> (const std::vector&lt; <a class="el" href="a01560.html">mc_rbdyn::Contact</a> &gt; &amp;<a class="el" href="a02208.html#a14141ec983c638fb3400c1ea23c19aed">contacts</a>={})</td></tr>
+<tr class="memdesc:ae628e7f079f7ec8dd5ba2818ffe27adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset all contacts in the solver and use the new set of contacts provided  contact Set of <a class="el" href="a01560.html">mc_rbdyn::Contact</a>.  <a href="#ae628e7f079f7ec8dd5ba2818ffe27adc">More...</a><br /></td></tr>
+<tr class="separator:ae628e7f079f7ec8dd5ba2818ffe27adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14141ec983c638fb3400c1ea23c19aed"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="a01560.html">mc_rbdyn::Contact</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a14141ec983c638fb3400c1ea23c19aed">contacts</a> () const</td></tr>
+<tr class="memdesc:a14141ec983c638fb3400c1ea23c19aed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current set of contacts.  <a href="#a14141ec983c638fb3400c1ea23c19aed">More...</a><br /></td></tr>
+<tr class="separator:a14141ec983c638fb3400c1ea23c19aed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae04be5acbc6d5470efc60889e4024290"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="a02328.html">mc_tasks::MetaTask</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#ae04be5acbc6d5470efc60889e4024290">tasks</a> () const</td></tr>
+<tr class="memdesc:ae04be5acbc6d5470efc60889e4024290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the MetaTasks currently in the solver.  <a href="#ae04be5acbc6d5470efc60889e4024290">More...</a><br /></td></tr>
+<tr class="separator:ae04be5acbc6d5470efc60889e4024290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12c9bbc1231db2f16cfeced583d1c213"><td class="memItemLeft" align="right" valign="top">const sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a12c9bbc1231db2f16cfeced583d1c213">desiredContactForce</a> (const <a class="el" href="a01560.html">mc_rbdyn::Contact</a> &amp;id) const</td></tr>
+<tr class="memdesc:a12c9bbc1231db2f16cfeced583d1c213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Desired resultant of contact force in robot surface frame.  <a href="#a12c9bbc1231db2f16cfeced583d1c213">More...</a><br /></td></tr>
+<tr class="separator:a12c9bbc1231db2f16cfeced583d1c213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8f45ed05cf2852c592659d496b2acbb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#ab8f45ed05cf2852c592659d496b2acbb">run</a> (FeedbackType fType=<a class="el" href="a00413.html#ac7485dcc8d256a6f197ed7802687f252">FeedbackType::None</a>)</td></tr>
+<tr class="memdesc:ab8f45ed05cf2852c592659d496b2acbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run one iteration of the QP.  <a href="#ab8f45ed05cf2852c592659d496b2acbb">More...</a><br /></td></tr>
+<tr class="separator:ab8f45ed05cf2852c592659d496b2acbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b4e9a6b5015c188b1c3825f4e266bd0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a02196.html">QPResultMsg</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a0b4e9a6b5015c188b1c3825f4e266bd0">send</a> (double curTime=0)</td></tr>
+<tr class="memdesc:a0b4e9a6b5015c188b1c3825f4e266bd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the result of <a class="el" href="a02208.html#ab8f45ed05cf2852c592659d496b2acbb" title="Run one iteration of the QP. ">run()</a> for robots.robot()  <a href="#a0b4e9a6b5015c188b1c3825f4e266bd0">More...</a><br /></td></tr>
+<tr class="separator:a0b4e9a6b5015c188b1c3825f4e266bd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ac47f4b98ba6a10a14e6f229b677a0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a02196.html">QPResultMsg</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a6ac47f4b98ba6a10a14e6f229b677a0a">result</a> ()</td></tr>
+<tr class="memdesc:a6ac47f4b98ba6a10a14e6f229b677a0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-const access to <a class="el" href="a02196.html">QPResultMsg</a>.  <a href="#a6ac47f4b98ba6a10a14e6f229b677a0a">More...</a><br /></td></tr>
+<tr class="separator:a6ac47f4b98ba6a10a14e6f229b677a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07536ec6c134bd3f335a382a0a87d55e"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01640.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a07536ec6c134bd3f335a382a0a87d55e">robot</a> () const</td></tr>
+<tr class="memdesc:a07536ec6c134bd3f335a382a0a87d55e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the main robot in the solver.  <a href="#a07536ec6c134bd3f335a382a0a87d55e">More...</a><br /></td></tr>
+<tr class="separator:a07536ec6c134bd3f335a382a0a87d55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9de399f8ca81b31588579ac59deb8d44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01640.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a9de399f8ca81b31588579ac59deb8d44">robot</a> ()</td></tr>
+<tr class="memdesc:a9de399f8ca81b31588579ac59deb8d44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the main robot in the solver.  <a href="#a9de399f8ca81b31588579ac59deb8d44">More...</a><br /></td></tr>
+<tr class="separator:a9de399f8ca81b31588579ac59deb8d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50b2ba3514b0bd8fa4e4775f6a74fc73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01640.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a50b2ba3514b0bd8fa4e4775f6a74fc73">robot</a> (unsigned int idx)</td></tr>
+<tr class="memdesc:a50b2ba3514b0bd8fa4e4775f6a74fc73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the robot with the given index in the solver.  <a href="#a50b2ba3514b0bd8fa4e4775f6a74fc73">More...</a><br /></td></tr>
+<tr class="separator:a50b2ba3514b0bd8fa4e4775f6a74fc73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71a644e823553814792909b06f00f6c6"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01640.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a71a644e823553814792909b06f00f6c6">robot</a> (unsigned int idx) const</td></tr>
+<tr class="memdesc:a71a644e823553814792909b06f00f6c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the robot with the given index in the solver.  <a href="#a71a644e823553814792909b06f00f6c6">More...</a><br /></td></tr>
+<tr class="separator:a71a644e823553814792909b06f00f6c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af48a56a36d044fa4077f1c9e0ad69936"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01640.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#af48a56a36d044fa4077f1c9e0ad69936">env</a> () const</td></tr>
+<tr class="memdesc:af48a56a36d044fa4077f1c9e0ad69936"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the environment robot in the solver (see <a class="el" href="a01680.html">mc_rbdyn::Robots</a>)  <a href="#af48a56a36d044fa4077f1c9e0ad69936">More...</a><br /></td></tr>
+<tr class="separator:af48a56a36d044fa4077f1c9e0ad69936"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae35ec2765a45413bcfebae5e57bcea5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01640.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#ae35ec2765a45413bcfebae5e57bcea5f">env</a> ()</td></tr>
+<tr class="memdesc:ae35ec2765a45413bcfebae5e57bcea5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the environment robot in the solver (see <a class="el" href="a01680.html">mc_rbdyn::Robots</a>)  <a href="#ae35ec2765a45413bcfebae5e57bcea5f">More...</a><br /></td></tr>
+<tr class="separator:ae35ec2765a45413bcfebae5e57bcea5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad5585a2e93a0dcac5f96b1ecf8cddf0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01680.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#aad5585a2e93a0dcac5f96b1ecf8cddf0">robots</a> () const</td></tr>
+<tr class="memdesc:aad5585a2e93a0dcac5f96b1ecf8cddf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the robots controlled by this solver.  <a href="#aad5585a2e93a0dcac5f96b1ecf8cddf0">More...</a><br /></td></tr>
+<tr class="separator:aad5585a2e93a0dcac5f96b1ecf8cddf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afadc51df1ed896ae8e1546bfb7443ffb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01680.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#afadc51df1ed896ae8e1546bfb7443ffb">robots</a> ()</td></tr>
+<tr class="memdesc:afadc51df1ed896ae8e1546bfb7443ffb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the robots controlled by this solver.  <a href="#afadc51df1ed896ae8e1546bfb7443ffb">More...</a><br /></td></tr>
+<tr class="separator:afadc51df1ed896ae8e1546bfb7443ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c9e02613427dd8ab79f833d4244186d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01680.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a6c9e02613427dd8ab79f833d4244186d">realRobots</a> () const</td></tr>
+<tr class="memdesc:a6c9e02613427dd8ab79f833d4244186d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the real robots used by this solver.  <a href="#a6c9e02613427dd8ab79f833d4244186d">More...</a><br /></td></tr>
+<tr class="separator:a6c9e02613427dd8ab79f833d4244186d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acac203b080dfbd7dbc680e4d9e8aaa3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01680.html">mc_rbdyn::Robots</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#acac203b080dfbd7dbc680e4d9e8aaa3c">realRobots</a> ()</td></tr>
+<tr class="memdesc:acac203b080dfbd7dbc680e4d9e8aaa3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to the real robots used by this solver.  <a href="#acac203b080dfbd7dbc680e4d9e8aaa3c">More...</a><br /></td></tr>
+<tr class="separator:acac203b080dfbd7dbc680e4d9e8aaa3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd57fb80048c2f364bc216334ed148a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#acd57fb80048c2f364bc216334ed148a8">updateNrVars</a> ()</td></tr>
+<tr class="memdesc:acd57fb80048c2f364bc216334ed148a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update number of variables.  <a href="#acd57fb80048c2f364bc216334ed148a8">More...</a><br /></td></tr>
+<tr class="separator:acd57fb80048c2f364bc216334ed148a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff107d95b504492274cf0499aa4ddfa0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#aff107d95b504492274cf0499aa4ddfa0">updateConstrSize</a> ()</td></tr>
+<tr class="memdesc:aff107d95b504492274cf0499aa4ddfa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update constraints matrix sizes.  <a href="#aff107d95b504492274cf0499aa4ddfa0">More...</a><br /></td></tr>
+<tr class="separator:aff107d95b504492274cf0499aa4ddfa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf2cd366ed6fa6e21e9cc6833e94cd70"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#aaf2cd366ed6fa6e21e9cc6833e94cd70">dt</a> () const</td></tr>
+<tr class="memdesc:aaf2cd366ed6fa6e21e9cc6833e94cd70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the timestep of the solver.  <a href="#aaf2cd366ed6fa6e21e9cc6833e94cd70">More...</a><br /></td></tr>
+<tr class="separator:aaf2cd366ed6fa6e21e9cc6833e94cd70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74f4a76c8edd444c9c903392c196be8a"><td class="memItemLeft" align="right" valign="top">tasks::qp::SolverData &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a74f4a76c8edd444c9c903392c196be8a">data</a> ()</td></tr>
+<tr class="memdesc:a74f4a76c8edd444c9c903392c196be8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the internal QP solver data.  <a href="#a74f4a76c8edd444c9c903392c196be8a">More...</a><br /></td></tr>
+<tr class="separator:a74f4a76c8edd444c9c903392c196be8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26f03d18cabc6bc384e4ca7a8e172637"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a26f03d18cabc6bc384e4ca7a8e172637">fillTorque</a> (const <a class="el" href="a02128.html">mc_solver::DynamicsConstraint</a> &amp;dynamicsConstraint)</td></tr>
+<tr class="memdesc:a26f03d18cabc6bc384e4ca7a8e172637"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use the dynamics constraint to fill torque in the main robot.  <a href="#a26f03d18cabc6bc384e4ca7a8e172637">More...</a><br /></td></tr>
+<tr class="separator:a26f03d18cabc6bc384e4ca7a8e172637"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58d895e4be36ff13a42b481f28576e38"><td class="memItemLeft" align="right" valign="top">boost::timer::cpu_times&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a58d895e4be36ff13a42b481f28576e38">solveTime</a> ()</td></tr>
+<tr class="separator:a58d895e4be36ff13a42b481f28576e38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53c4d41439ee0e428928a7318fde3f07"><td class="memItemLeft" align="right" valign="top">boost::timer::cpu_times&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a53c4d41439ee0e428928a7318fde3f07">solveAndBuildTime</a> ()</td></tr>
+<tr class="separator:a53c4d41439ee0e428928a7318fde3f07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14b25f17d47d3f23079d557fd8d2fc6a"><td class="memItemLeft" align="right" valign="top">const Eigen::VectorXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a14b25f17d47d3f23079d557fd8d2fc6a">result</a> () const</td></tr>
+<tr class="memdesc:a14b25f17d47d3f23079d557fd8d2fc6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the solvers result vector.  <a href="#a14b25f17d47d3f23079d557fd8d2fc6a">More...</a><br /></td></tr>
+<tr class="separator:a14b25f17d47d3f23079d557fd8d2fc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d2e5c1529e97fa15bff07a9092b1339"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a6d2e5c1529e97fa15bff07a9092b1339">logger</a> (std::shared_ptr&lt; <a class="el" href="a02052.html">mc_rtc::Logger</a> &gt; logger)</td></tr>
+<tr class="memdesc:a6d2e5c1529e97fa15bff07a9092b1339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the logger for this solver instance.  <a href="#a6d2e5c1529e97fa15bff07a9092b1339">More...</a><br /></td></tr>
+<tr class="separator:a6d2e5c1529e97fa15bff07a9092b1339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae805619eed38900664c15a1f3be7921f"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a02052.html">mc_rtc::Logger</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#ae805619eed38900664c15a1f3be7921f">logger</a> () const</td></tr>
+<tr class="memdesc:ae805619eed38900664c15a1f3be7921f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access to the logger instance.  <a href="#ae805619eed38900664c15a1f3be7921f">More...</a><br /></td></tr>
+<tr class="separator:ae805619eed38900664c15a1f3be7921f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac015f44b8b157dafe8303dd295e10e8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#ac015f44b8b157dafe8303dd295e10e8d">gui</a> (std::shared_ptr&lt; <a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a> &gt; gui)</td></tr>
+<tr class="memdesc:ac015f44b8b157dafe8303dd295e10e8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the GUI helper for this solver instance.  <a href="#ac015f44b8b157dafe8303dd295e10e8d">More...</a><br /></td></tr>
+<tr class="separator:ac015f44b8b157dafe8303dd295e10e8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaff0d1437fd451774eb7a306b2c5d464"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#aaff0d1437fd451774eb7a306b2c5d464">gui</a> () const</td></tr>
+<tr class="memdesc:aaff0d1437fd451774eb7a306b2c5d464"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access to the gui instance.  <a href="#aaff0d1437fd451774eb7a306b2c5d464">More...</a><br /></td></tr>
+<tr class="separator:aaff0d1437fd451774eb7a306b2c5d464"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f91d1d6ce556366149d3d947182e5f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02208.html#a4f91d1d6ce556366149d3d947182e5f3">QPSolver</a> ()</td></tr>
+<tr class="separator:a4f91d1d6ce556366149d3d947182e5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename ConstraintT, typename UpdateT&gt;<br />
-class mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt;</h3>
-
-<p>Generic helper class to write a new constraint for Tasks. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02128.html" title="Helper class to write an equality constraint for Tasks. ">EqualityConstraint</a>, </dd>
-<dd>
-<a class="el" href="a02168.html" title="Helper class to write an inequality constraint for Tasks. ">InequalityConstraint</a> and </dd>
-<dd>
-<a class="el" href="a02152.html" title="Helper class to write a general inequality constraint for Tasks. ">GenInequalityConstraint</a> for <a class="el" href="a00751.html">details</a> on specific constraints you can implement based on this helper</dd></dl>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">ConstraintT</td><td>Type of tasks::qp constraint</td></tr>
-    <tr><td class="paramname">UpdateT</td><td>Type of <a class="el" href="a02220.html">utils::Update</a> we will use </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>Wraps a tasks::qp::QPSolver instance. </p>
+<p>Always ensure that the solver is up-to-date </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="adcc2b9ec9fbd3b47e0183ef0ce034c73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcc2b9ec9fbd3b47e0183ef0ce034c73">&#9670;&nbsp;</a></span>Constraint() <span class="overload">[1/3]</span></h2>
+<a id="a6f0c3211feb7722f0316b8808b61f6d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f0c3211feb7722f0316b8808b61f6d1">&#9670;&nbsp;</a></span>QPSolver() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateRobot&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a02208.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::<a class="el" href="a02208.html">Constraint</a> </td>
+          <td class="memname">mc_solver::QPSolver::QPSolver </td>
           <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>rIndex</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae5a2073ed0b8b0432593221fec955e4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5a2073ed0b8b0432593221fec955e4e">&#9670;&nbsp;</a></span>Constraint() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateLambda&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02208.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::<a class="el" href="a02208.html">Constraint</a> </td>
-          <td>(</td>
-          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
-          <td class="paramname"><em>cid</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aab0cc49bca85557519c9a110b54c65ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab0cc49bca85557519c9a110b54c65ca">&#9670;&nbsp;</a></span>Constraint() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateForce&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02208.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::<a class="el" href="a02208.html">Constraint</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02204.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="a01680.html">mc_rbdyn::Robots</a> &gt;&#160;</td>
+          <td class="paramname"><em>robots</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
-          <td class="paramname"><em>cid</em>&#160;</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>timeStep</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -218,28 +246,57 @@ template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::i
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robots</td><td>Set of robots managed by this solver </td></tr>
+    <tr><td class="paramname">timeStep</td><td>Timestep of the solver</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The real robots will be created by copying the provided robots </dd></dl>
 
 </div>
 </div>
-<a id="a819dd76da2909a4c88efcca1cb9aaf69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a819dd76da2909a4c88efcca1cb9aaf69">&#9670;&nbsp;</a></span>~Constraint()</h2>
+<a id="adb5af970ec8d5b46ddcf8af19bd205be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb5af970ec8d5b46ddcf8af19bd205be">&#9670;&nbsp;</a></span>QPSolver() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_solver::QPSolver::QPSolver </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>timeStep</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor (the solver creates its own Robots instance) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">timeStep</td><td>Timestep of the solver </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4f91d1d6ce556366149d3d947182e5f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f91d1d6ce556366149d3d947182e5f3">&#9670;&nbsp;</a></span>QPSolver() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="a02208.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::~<a class="el" href="a02208.html">Constraint</a> </td>
+          <td class="memname">mc_solver::QPSolver::QPSolver </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -247,95 +304,963 @@ template&lt;typename ConstraintT, typename UpdateT&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Virtual destructor. </p>
+<dl class="deprecated"><dt><b><a class="el" href="a00719.html#_deprecated000008">Deprecated:</a></b></dt><dd>{Default constructor, not made for general usage} </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7693804807033e3718c4ba01a58d3a58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7693804807033e3718c4ba01a58d3a58">&#9670;&nbsp;</a></span>update()</h2>
+<a id="a8508225c35f55cef193bf45adb17ebce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8508225c35f55cef193bf45adb17ebce">&#9670;&nbsp;</a></span>addConstraint()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
+template&lt;typename... Fun&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="a02208.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::update </td>
+          <td class="memname">void mc_solver::QPSolver::addConstraint </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">tasks::qp::ConstraintFunction&lt; Fun... &gt; *&#160;</td>
+          <td class="paramname"><em>constraint</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbcs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const tasks::qp::SolverData &amp;&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
+<p>Add a constraint function from the solver. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">constraint</td><td>Pointer to the ConstraintFunction. <a class="el" href="a02208.html" title="Wraps a tasks::qp::QPSolver instance. ">QPSolver</a> does not take ownserhip of this pointer and the caller should make sure the object remains valid until it is removed from the solver </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
-<a id="ab383394a69ab62c4fab23378e64868de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab383394a69ab62c4fab23378e64868de">&#9670;&nbsp;</a></span>updateNrVars()</h2>
+<a id="a37580a89d1a0d1a862dfb6b7240e6dd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37580a89d1a0d1a862dfb6b7240e6dd0">&#9670;&nbsp;</a></span>addConstraintSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::addConstraintSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02116.html">ConstraintSet</a> &amp;&#160;</td>
+          <td class="paramname"><em>cs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a constraint set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cs</td><td>Constraint set added to the solver </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8b2f689232445049015987d2ff4d78ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b2f689232445049015987d2ff4d78ce">&#9670;&nbsp;</a></span>addTask() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::addTask </td>
+          <td>(</td>
+          <td class="paramtype">tasks::qp::Task *&#160;</td>
+          <td class="paramname"><em>task</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a task to the solver. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">task</td><td>Pointer to the added task, <a class="el" href="a02208.html" title="Wraps a tasks::qp::QPSolver instance. ">QPSolver</a> does not take ownership of this pointer and the caller should make sure the object remains valid until it is removed from the solver </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a68cf69e4985228c83affeb35320c4c25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68cf69e4985228c83affeb35320c4c25">&#9670;&nbsp;</a></span>addTask() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::addTask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02328.html">mc_tasks::MetaTask</a> *&#160;</td>
+          <td class="paramname"><em>task</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a task to the solver. </p>
+<p>Adding the same task multiple times has no effect.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">task</td><td>Pointer to an <a class="el" href="a02328.html" title="Represents a generic task. ">mc_tasks::MetaTask</a>, <a class="el" href="a02208.html" title="Wraps a tasks::qp::QPSolver instance. ">QPSolver</a> does not take ownership of this pointer. The MetaTask update function will be automatically called before the optimization is solved. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8526c038006669a9f433c94445c69338"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8526c038006669a9f433c94445c69338">&#9670;&nbsp;</a></span>addTask() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
+template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="a02208.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::updateNrVars </td>
+          <td class="memname">void mc_solver::QPSolver::addTask </td>
           <td>(</td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">std::shared_ptr&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>task</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const tasks::qp::SolverData &amp;&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Add a task to the solver. </p>
+<p>Simple wrapper to add a shared_ptr</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">task</td><td>Shared-pointer to a task T that is derived from <a class="el" href="a02328.html" title="Represents a generic task. ">mc_tasks::MetaTask</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9d3c5b0a375a038d88ebc4c0acb35afc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d3c5b0a375a038d88ebc4c0acb35afc">&#9670;&nbsp;</a></span>contactById()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt;int, const tasks::qp::BilateralContact &amp;&gt; mc_solver::QPSolver::contactById </td>
+          <td>(</td>
+          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the tasks::qp::BilateralContact entity in the solver from a contact id. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The contact id of the contact </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The tasks:qp::BilateralContact entity from the solver if id is valid, otherwise, the first element of the pair is -1 and the reference is invalid </dd></dl>
+
+</div>
+</div>
+<a id="a14141ec983c638fb3400c1ea23c19aed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14141ec983c638fb3400c1ea23c19aed">&#9670;&nbsp;</a></span>contacts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="el" href="a01560.html">mc_rbdyn::Contact</a>&gt;&amp; mc_solver::QPSolver::contacts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the current set of contacts. </p>
+
+</div>
+</div>
+<a id="a74f4a76c8edd444c9c903392c196be8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74f4a76c8edd444c9c903392c196be8a">&#9670;&nbsp;</a></span>data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tasks::qp::SolverData&amp; mc_solver::QPSolver::data </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the internal QP solver data. </p>
+<dl class="section return"><dt>Returns</dt><dd>The data of the solver </dd></dl>
+
+</div>
+</div>
+<a id="a12c9bbc1231db2f16cfeced583d1c213"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12c9bbc1231db2f16cfeced583d1c213">&#9670;&nbsp;</a></span>desiredContactForce()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const sva::ForceVecd mc_solver::QPSolver::desiredContactForce </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01560.html">mc_rbdyn::Contact</a> &amp;&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Desired resultant of contact force in robot surface frame. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">contact</td><td>Contact for which the force is desired. This contact must be one of the active contacts in the solver. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Contact force in robot surface frame </dd></dl>
+
+</div>
+</div>
+<a id="aaf2cd366ed6fa6e21e9cc6833e94cd70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf2cd366ed6fa6e21e9cc6833e94cd70">&#9670;&nbsp;</a></span>dt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_solver::QPSolver::dt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the timestep of the solver. </p>
+<dl class="section return"><dt>Returns</dt><dd>The timestep of the solver </dd></dl>
+
+</div>
+</div>
+<a id="af48a56a36d044fa4077f1c9e0ad69936"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af48a56a36d044fa4077f1c9e0ad69936">&#9670;&nbsp;</a></span>env() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a01640.html">mc_rbdyn::Robot</a>&amp; mc_solver::QPSolver::env </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the environment robot in the solver (see <a class="el" href="a01680.html">mc_rbdyn::Robots</a>) </p>
+
+</div>
+</div>
+<a id="ae35ec2765a45413bcfebae5e57bcea5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae35ec2765a45413bcfebae5e57bcea5f">&#9670;&nbsp;</a></span>env() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01640.html">mc_rbdyn::Robot</a>&amp; mc_solver::QPSolver::env </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the environment robot in the solver (see <a class="el" href="a01680.html">mc_rbdyn::Robots</a>) </p>
+
+</div>
+</div>
+<a id="a26f03d18cabc6bc384e4ca7a8e172637"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26f03d18cabc6bc384e4ca7a8e172637">&#9670;&nbsp;</a></span>fillTorque()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::fillTorque </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a02128.html">mc_solver::DynamicsConstraint</a> &amp;&#160;</td>
+          <td class="paramname"><em>dynamicsConstraint</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use the dynamics constraint to fill torque in the main robot. </p>
+
+</div>
+</div>
+<a id="ac015f44b8b157dafe8303dd295e10e8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac015f44b8b157dafe8303dd295e10e8d">&#9670;&nbsp;</a></span>gui() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::gui </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a> &gt;&#160;</td>
+          <td class="paramname"><em>gui</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the GUI helper for this solver instance. </p>
+
+</div>
+</div>
+<a id="aaff0d1437fd451774eb7a306b2c5d464"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaff0d1437fd451774eb7a306b2c5d464">&#9670;&nbsp;</a></span>gui() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a>&gt; mc_solver::QPSolver::gui </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Access to the gui instance. </p>
+
+</div>
+</div>
+<a id="aba37f50ba476a2701c05b8aa737d9362"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba37f50ba476a2701c05b8aa737d9362">&#9670;&nbsp;</a></span>lambdaVec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::VectorXd mc_solver::QPSolver::lambdaVec </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cIndex</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to a part to lambdaVec given a contact index. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cIndex</td><td>The index of the contact </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The lambdaVec associated </dd></dl>
+
+</div>
+</div>
+<a id="a6d2e5c1529e97fa15bff07a9092b1339"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d2e5c1529e97fa15bff07a9092b1339">&#9670;&nbsp;</a></span>logger() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::logger </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="a02052.html">mc_rtc::Logger</a> &gt;&#160;</td>
+          <td class="paramname"><em>logger</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the logger for this solver instance. </p>
+
+</div>
+</div>
+<a id="ae805619eed38900664c15a1f3be7921f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae805619eed38900664c15a1f3be7921f">&#9670;&nbsp;</a></span>logger() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="a02052.html">mc_rtc::Logger</a>&gt; mc_solver::QPSolver::logger </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Access to the logger instance. </p>
+
+</div>
+</div>
+<a id="a6c9e02613427dd8ab79f833d4244186d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c9e02613427dd8ab79f833d4244186d">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a01680.html">mc_rbdyn::Robots</a>&amp; mc_solver::QPSolver::realRobots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the real robots used by this solver. </p>
+
+</div>
+</div>
+<a id="acac203b080dfbd7dbc680e4d9e8aaa3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acac203b080dfbd7dbc680e4d9e8aaa3c">&#9670;&nbsp;</a></span>realRobots() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01680.html">mc_rbdyn::Robots</a>&amp; mc_solver::QPSolver::realRobots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the real robots used by this solver. </p>
+
+</div>
+</div>
+<a id="a91e043a96e0de999c337b15ea8f8a62f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91e043a96e0de999c337b15ea8f8a62f">&#9670;&nbsp;</a></span>removeConstraint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Fun&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::removeConstraint </td>
+          <td>(</td>
+          <td class="paramtype">tasks::qp::ConstraintFunction&lt; Fun... &gt; *&#160;</td>
+          <td class="paramname"><em>constraint</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove a constraint function from the solver. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">constraint</td><td>Pointer to the constraint that will be removed. It is not destroyed afterwards </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="reference">References <a class="el" href="a00413.html#ac7485dcc8d256a6f197ed7802687f252">None</a>.</p>
+
+</div>
+</div>
+<a id="a2d48a1aa9f88ea1c6873000df4299a1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d48a1aa9f88ea1c6873000df4299a1d">&#9670;&nbsp;</a></span>removeConstraintSet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::removeConstraintSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02116.html">ConstraintSet</a> &amp;&#160;</td>
+          <td class="paramname"><em>cs</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove a constraint set. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cs</td><td>Constrain set removed from the solver </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a59755b6d2a453830d66a662767ff3923"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59755b6d2a453830d66a662767ff3923">&#9670;&nbsp;</a></span>removeTask() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::removeTask </td>
+          <td>(</td>
+          <td class="paramtype">tasks::qp::Task *&#160;</td>
+          <td class="paramname"><em>task</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove a task from the solver. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">task</td><td>Pointer to the removed task. The task is not deleted after being removed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a28e05133ff619c24f30a376e951fde51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28e05133ff619c24f30a376e951fde51">&#9670;&nbsp;</a></span>removeTask() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::removeTask </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02328.html">mc_tasks::MetaTask</a> *&#160;</td>
+          <td class="paramname"><em>task</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove a task from the solver. </p>
+<p>Removing a task that is not in the solver has no effect.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">task</td><td>Pointer to an <a class="el" href="a02328.html" title="Represents a generic task. ">mc_tasks::MetaTask</a>. The task will not be updated anymore and memory should be released by the task's owner. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab9c66bd9fbc6687dccd60727db474c53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9c66bd9fbc6687dccd60727db474c53">&#9670;&nbsp;</a></span>removeTask() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::removeTask </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>task</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove a task from the solver. </p>
+<p>Simple wrapper to remove a shared_ptr</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">task</td><td>Shared-pointer to a task T that is derived from <a class="el" href="a02328.html" title="Represents a generic task. ">mc_tasks::MetaTask</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6ac47f4b98ba6a10a14e6f229b677a0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ac47f4b98ba6a10a14e6f229b677a0a">&#9670;&nbsp;</a></span>result() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a02196.html">QPResultMsg</a>&amp; mc_solver::QPSolver::result </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Non-const access to <a class="el" href="a02196.html">QPResultMsg</a>. </p>
+<p>You are unlikely to need this function, it is used by the framework to change the gripper's states </p>
+
+</div>
+</div>
+<a id="a14b25f17d47d3f23079d557fd8d2fc6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14b25f17d47d3f23079d557fd8d2fc6a">&#9670;&nbsp;</a></span>result() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const Eigen::VectorXd&amp; mc_solver::QPSolver::result </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the solvers result vector. </p>
+<dl class="section return"><dt>Returns</dt><dd>The solvers result vector. </dd></dl>
+
+</div>
+</div>
+<a id="a07536ec6c134bd3f335a382a0a87d55e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07536ec6c134bd3f335a382a0a87d55e">&#9670;&nbsp;</a></span>robot() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a01640.html">mc_rbdyn::Robot</a>&amp; mc_solver::QPSolver::robot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the main robot in the solver. </p>
+
+</div>
+</div>
+<a id="a9de399f8ca81b31588579ac59deb8d44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9de399f8ca81b31588579ac59deb8d44">&#9670;&nbsp;</a></span>robot() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01640.html">mc_rbdyn::Robot</a>&amp; mc_solver::QPSolver::robot </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the main robot in the solver. </p>
+
+</div>
+</div>
+<a id="a50b2ba3514b0bd8fa4e4775f6a74fc73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50b2ba3514b0bd8fa4e4775f6a74fc73">&#9670;&nbsp;</a></span>robot() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01640.html">mc_rbdyn::Robot</a>&amp; mc_solver::QPSolver::robot </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the robot with the given index in the solver. </p>
+
+</div>
+</div>
+<a id="a71a644e823553814792909b06f00f6c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71a644e823553814792909b06f00f6c6">&#9670;&nbsp;</a></span>robot() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a01640.html">mc_rbdyn::Robot</a>&amp; mc_solver::QPSolver::robot </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the robot with the given index in the solver. </p>
+
+</div>
+</div>
+<a id="aad5585a2e93a0dcac5f96b1ecf8cddf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad5585a2e93a0dcac5f96b1ecf8cddf0">&#9670;&nbsp;</a></span>robots() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a01680.html">mc_rbdyn::Robots</a>&amp; mc_solver::QPSolver::robots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the robots controlled by this solver. </p>
+
+</div>
+</div>
+<a id="afadc51df1ed896ae8e1546bfb7443ffb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afadc51df1ed896ae8e1546bfb7443ffb">&#9670;&nbsp;</a></span>robots() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01680.html">mc_rbdyn::Robots</a>&amp; mc_solver::QPSolver::robots </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gives access to the robots controlled by this solver. </p>
+
+</div>
+</div>
+<a id="ab8f45ed05cf2852c592659d496b2acbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8f45ed05cf2852c592659d496b2acbb">&#9670;&nbsp;</a></span>run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_solver::QPSolver::run </td>
+          <td>(</td>
+          <td class="paramtype">FeedbackType&#160;</td>
+          <td class="paramname"><em>fType</em> = <code><a class="el" href="a00413.html#ac7485dcc8d256a6f197ed7802687f252">FeedbackType::None</a></code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run one iteration of the QP. </p>
+<p>If succesful, will update the robots' configurations</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fType</td><td>Type of feedback used to close the loop on sensory information</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if successful, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a0b4e9a6b5015c188b1c3825f4e266bd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b4e9a6b5015c188b1c3825f4e266bd0">&#9670;&nbsp;</a></span>send()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a02196.html">QPResultMsg</a>&amp; mc_solver::QPSolver::send </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>curTime</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provides the result of <a class="el" href="a02208.html#ab8f45ed05cf2852c592659d496b2acbb" title="Run one iteration of the QP. ">run()</a> for robots.robot() </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curTime</td><td>Unused </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae628e7f079f7ec8dd5ba2818ffe27adc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae628e7f079f7ec8dd5ba2818ffe27adc">&#9670;&nbsp;</a></span>setContacts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::setContacts </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="a01560.html">mc_rbdyn::Contact</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>contacts</em> = <code>{}</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset all contacts in the solver and use the new set of contacts provided  contact Set of <a class="el" href="a01560.html">mc_rbdyn::Contact</a>. </p>
+
+</div>
+</div>
+<a id="a53c4d41439ee0e428928a7318fde3f07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53c4d41439ee0e428928a7318fde3f07">&#9670;&nbsp;</a></span>solveAndBuildTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boost::timer::cpu_times mc_solver::QPSolver::solveAndBuildTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a58d895e4be36ff13a42b481f28576e38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58d895e4be36ff13a42b481f28576e38">&#9670;&nbsp;</a></span>solveTime()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boost::timer::cpu_times mc_solver::QPSolver::solveTime </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae04be5acbc6d5470efc60889e4024290"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae04be5acbc6d5470efc60889e4024290">&#9670;&nbsp;</a></span>tasks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="el" href="a02328.html">mc_tasks::MetaTask</a> *&gt;&amp; mc_solver::QPSolver::tasks </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the MetaTasks currently in the solver. </p>
+
+</div>
+</div>
+<a id="aff107d95b504492274cf0499aa4ddfa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff107d95b504492274cf0499aa4ddfa0">&#9670;&nbsp;</a></span>updateConstrSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::updateConstrSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update constraints matrix sizes. </p>
+<dl class="section note"><dt>Note</dt><dd>This is mainly provided to allow safe usage of raw constraint from Tasks rather than those wrapped in this library, you probably do not need to call this </dd></dl>
+
+</div>
+</div>
+<a id="acd57fb80048c2f364bc216334ed148a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd57fb80048c2f364bc216334ed148a8">&#9670;&nbsp;</a></span>updateNrVars()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_solver::QPSolver::updateNrVars </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update number of variables. </p>
+<p>This should be called when/if you add new robots into the scene after the solver initialization, this is a costly operation. </p>
 
 </div>
 </div>
@@ -345,8 +1270,8 @@ template&lt;typename ConstraintT, typename UpdateT&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00752.html">utils</a></li><li class="navelem"><a class="el" href="a02208.html">Constraint</a></li>
-    <li class="footer">Generated on Tue Sep 1 2020 04:59:49 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a02208.html">QPSolver</a></li>
+    <li class="footer">Generated on Wed Sep 2 2020 05:50:26 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

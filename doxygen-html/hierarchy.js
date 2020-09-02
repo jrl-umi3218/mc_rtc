@@ -18,12 +18,12 @@ var hierarchy =
     ] ],
     [ "mc_rtc::gui::plot::AxisConfiguration", "a01916.html", null ],
     [ "mc_rbdyn::Base", "a01520.html", null ],
-    [ "mc_rtc::log::callback_is_serializable< T >", "a02068.html", null ],
+    [ "mc_rtc::log::callback_is_serializable< T >", "a02072.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, Args >", "a01804.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T >", "a01808.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T, Args... >", "a01812.html", null ],
     [ "mc_rbdyn::Collision", "a01528.html", null ],
-    [ "Collision", "a02396.html", null ],
+    [ "Collision", "a02400.html", null ],
     [ "mc_rtc::gui::Color", "a01988.html", null ],
     [ "mc_control::CompletionCriteria", "a01328.html", null ],
     [ "mc_rbdyn::CompoundJointConstraintDescription", "a01532.html", null ],
@@ -39,83 +39,83 @@ var hierarchy =
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration >", "a01612.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::RobotModule >", "a01540.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::RobotModulePtr >", "a01544.html", null ],
-    [ "mc_rtc::ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "a02300.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "a02304.html", null ],
     [ "mc_rtc::ConfigurationLoader< void >", "a01696.html", null ],
     [ "ConstraintFunction", null, [
-      [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "a02208.html", [
-        [ "mc_solver::utils::EqualityConstraint< UpdateT >", "a02128.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "a02212.html", [
+        [ "mc_solver::utils::EqualityConstraint< UpdateT >", "a02132.html", null ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateForce >", "a02208.html", [
-        [ "mc_solver::utils::EqualityConstraint< utils::UpdateForce >", "a02128.html", [
-          [ "mc_solver::EqualityConstraintForce", "a02140.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateForce >", "a02212.html", [
+        [ "mc_solver::utils::EqualityConstraint< utils::UpdateForce >", "a02132.html", [
+          [ "mc_solver::EqualityConstraintForce", "a02144.html", null ]
         ] ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateLambda >", "a02208.html", [
-        [ "mc_solver::utils::EqualityConstraint< utils::UpdateLambda >", "a02128.html", [
-          [ "mc_solver::EqualityConstraintLambda", "a02136.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateLambda >", "a02212.html", [
+        [ "mc_solver::utils::EqualityConstraint< utils::UpdateLambda >", "a02132.html", [
+          [ "mc_solver::EqualityConstraintLambda", "a02140.html", null ]
         ] ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateRobot >", "a02208.html", [
-        [ "mc_solver::utils::EqualityConstraint< utils::UpdateRobot >", "a02128.html", [
-          [ "mc_solver::EqualityConstraintRobot", "a02132.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateRobot >", "a02212.html", [
+        [ "mc_solver::utils::EqualityConstraint< utils::UpdateRobot >", "a02132.html", [
+          [ "mc_solver::EqualityConstraintRobot", "a02136.html", null ]
         ] ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "a02208.html", [
-        [ "mc_solver::utils::GenInequalityConstraint< UpdateT >", "a02152.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "a02212.html", [
+        [ "mc_solver::utils::GenInequalityConstraint< UpdateT >", "a02156.html", null ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateForce >", "a02208.html", [
-        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateForce >", "a02152.html", [
-          [ "mc_solver::GenInequalityConstraintForce", "a02164.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateForce >", "a02212.html", [
+        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateForce >", "a02156.html", [
+          [ "mc_solver::GenInequalityConstraintForce", "a02168.html", null ]
         ] ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateLambda >", "a02208.html", [
-        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateLambda >", "a02152.html", [
-          [ "mc_solver::GenInequalityConstraintLambda", "a02160.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateLambda >", "a02212.html", [
+        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateLambda >", "a02156.html", [
+          [ "mc_solver::GenInequalityConstraintLambda", "a02164.html", null ]
         ] ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateRobot >", "a02208.html", [
-        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateRobot >", "a02152.html", [
-          [ "mc_solver::GenInequalityConstraintRobot", "a02156.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateRobot >", "a02212.html", [
+        [ "mc_solver::utils::GenInequalityConstraint< utils::UpdateRobot >", "a02156.html", [
+          [ "mc_solver::GenInequalityConstraintRobot", "a02160.html", null ]
         ] ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, UpdateT >", "a02208.html", [
-        [ "mc_solver::utils::InequalityConstraint< UpdateT >", "a02168.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, UpdateT >", "a02212.html", [
+        [ "mc_solver::utils::InequalityConstraint< UpdateT >", "a02172.html", null ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateForce >", "a02208.html", [
-        [ "mc_solver::utils::InequalityConstraint< utils::UpdateForce >", "a02168.html", [
-          [ "mc_solver::InequalityConstraintForce", "a02180.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateForce >", "a02212.html", [
+        [ "mc_solver::utils::InequalityConstraint< utils::UpdateForce >", "a02172.html", [
+          [ "mc_solver::InequalityConstraintForce", "a02184.html", null ]
         ] ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateLambda >", "a02208.html", [
-        [ "mc_solver::utils::InequalityConstraint< utils::UpdateLambda >", "a02168.html", [
-          [ "mc_solver::InequalityConstraintLambda", "a02176.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateLambda >", "a02212.html", [
+        [ "mc_solver::utils::InequalityConstraint< utils::UpdateLambda >", "a02172.html", [
+          [ "mc_solver::InequalityConstraintLambda", "a02180.html", null ]
         ] ]
       ] ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateRobot >", "a02208.html", [
-        [ "mc_solver::utils::InequalityConstraint< utils::UpdateRobot >", "a02168.html", [
-          [ "mc_solver::InequalityConstraintRobot", "a02172.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateRobot >", "a02212.html", [
+        [ "mc_solver::utils::InequalityConstraint< utils::UpdateRobot >", "a02172.html", [
+          [ "mc_solver::InequalityConstraintRobot", "a02176.html", null ]
         ] ]
       ] ],
-      [ "mc_solver::details::CompoundJointConstraint", "a02100.html", null ],
-      [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "a02208.html", null ]
+      [ "mc_solver::details::CompoundJointConstraint", "a02104.html", null ],
+      [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "a02212.html", null ]
     ] ],
-    [ "mc_solver::ConstraintSet", "a02112.html", [
-      [ "mc_solver::BoundedSpeedConstr", "a02084.html", null ],
-      [ "mc_solver::CollisionsConstraint", "a02088.html", null ],
-      [ "mc_solver::CoMIncPlaneConstr", "a02096.html", null ],
-      [ "mc_solver::CompoundJointConstraint", "a02108.html", null ],
-      [ "mc_solver::ContactConstraint", "a02120.html", null ],
-      [ "mc_solver::KinematicsConstraint", "a02184.html", [
-        [ "mc_solver::DynamicsConstraint", "a02124.html", null ]
+    [ "mc_solver::ConstraintSet", "a02116.html", [
+      [ "mc_solver::BoundedSpeedConstr", "a02088.html", null ],
+      [ "mc_solver::CollisionsConstraint", "a02092.html", null ],
+      [ "mc_solver::CoMIncPlaneConstr", "a02100.html", null ],
+      [ "mc_solver::CompoundJointConstraint", "a02112.html", null ],
+      [ "mc_solver::ContactConstraint", "a02124.html", null ],
+      [ "mc_solver::KinematicsConstraint", "a02188.html", [
+        [ "mc_solver::DynamicsConstraint", "a02128.html", null ]
       ] ],
-      [ "mc_solver::RobotEnvCollisionsConstraint", "a02092.html", null ]
+      [ "mc_solver::RobotEnvCollisionsConstraint", "a02096.html", null ]
     ] ],
     [ "mc_control::fsm::Contact", "a01344.html", null ],
-    [ "mc_tasks::lipm_stabilizer::internal::Contact", "a02292.html", null ],
+    [ "mc_tasks::lipm_stabilizer::internal::Contact", "a02296.html", null ],
     [ "mc_rbdyn::Contact", "a01560.html", null ],
-    [ "mc_tasks::lipm_stabilizer::ContactDescription", "a02296.html", null ],
-    [ "mc_solver::ContactMsg", "a02188.html", null ],
-    [ "mc_solver::utils::ContactWrenchMatrixToLambdaMatrix", "a02212.html", null ],
+    [ "mc_tasks::lipm_stabilizer::ContactDescription", "a02300.html", null ],
+    [ "mc_solver::ContactMsg", "a02192.html", null ],
+    [ "mc_solver::utils::ContactWrenchMatrixToLambdaMatrix", "a02216.html", null ],
     [ "mc_control::ControllerClient", "a01336.html", null ],
     [ "mc_control::ControllerResetData", "a01460.html", null ],
     [ "mc_control::ControllerServer", "a01340.html", null ],
@@ -177,7 +177,7 @@ var hierarchy =
     ] ],
     [ "mc_control::ElementId", "a01332.html", null ],
     [ "mc_rtc::log::FlatLog::entry", "a02048.html", null ],
-    [ "mc_tasks::lipm_stabilizer::StabilizerTask::EnumClassHash", "a02308.html", null ],
+    [ "mc_tasks::lipm_stabilizer::StabilizerTask::EnumClassHash", "a02312.html", null ],
     [ "std::exception", null, [
       [ "mc_rtc::Configuration::Exception", "a01724.html", null ],
       [ "mc_rtc::LoaderException", "a02020.html", null ]
@@ -204,32 +204,33 @@ var hierarchy =
     [ "mc_rtc::gui::FormElement< FormDataInput< T, element >, element >", "a01848.html", [
       [ "mc_rtc::gui::FormDataInput< T, element >", "a01852.html", null ]
     ] ],
-    [ "mc_solver::GenericLoader< Derived, T >", "a02144.html", null ],
-    [ "mc_solver::GenericLoader< ConstraintSetLoader, ConstraintSet >", "a02144.html", [
-      [ "mc_solver::ConstraintSetLoader", "a02116.html", null ]
+    [ "mc_solver::GenericLoader< Derived, T >", "a02148.html", null ],
+    [ "mc_solver::GenericLoader< ConstraintSetLoader, ConstraintSet >", "a02148.html", [
+      [ "mc_solver::ConstraintSetLoader", "a02120.html", null ]
     ] ],
-    [ "mc_solver::GenericLoader< MetaTaskLoader, MetaTask >", "a02144.html", [
-      [ "mc_tasks::MetaTaskLoader", "a02328.html", null ]
+    [ "mc_solver::GenericLoader< MetaTaskLoader, MetaTask >", "a02148.html", [
+      [ "mc_tasks::MetaTaskLoader", "a02332.html", null ]
     ] ],
     [ "mc_rtc::log::GetLogType< T >", "a02056.html", null ],
+    [ "mc_rtc::log::GetLogType< std::array< double, N > >", "a02064.html", null ],
     [ "mc_rtc::log::GetLogType< std::vector< double, A > >", "a02060.html", null ],
-    [ "Global", "a02392.html", null ],
+    [ "Global", "a02396.html", null ],
     [ "mc_control::MCGlobalController::GlobalConfiguration", "a01444.html", null ],
     [ "mc_control::GlobalPlugin", "a01436.html", null ],
     [ "mc_control::Gripper", "a01432.html", null ],
     [ "mc_rbdyn::RobotModule::Gripper", "a01672.html", null ],
-    [ "mc_solver::GenericLoader< Derived, T >::Handle", "a02148.html", null ],
+    [ "mc_solver::GenericLoader< Derived, T >::Handle", "a02152.html", null ],
     [ "std::hash< mc_control::fsm::Contact >", "a01348.html", null ],
     [ "integral_constant", null, [
       [ "mc_rbdyn::details::are_strings< T, Args... >", "a01652.html", null ]
     ] ],
     [ "is_base_of", null, [
-      [ "mc_solver::utils::IsUpdate< T >", "a02224.html", null ]
+      [ "mc_solver::utils::IsUpdate< T >", "a02228.html", null ]
     ] ],
     [ "is_same", null, [
       [ "mc_rbdyn::details::are_strings< T >", "a01648.html", null ]
     ] ],
-    [ "mc_rtc::log::is_serializable< T >", "a02064.html", null ],
+    [ "mc_rtc::log::is_serializable< T >", "a02068.html", null ],
     [ "mc_rtc::internal::lambda_traits< T >", "a01736.html", null ],
     [ "mc_rtc::internal::lambda_traits< RetT(C::*)(Args...) const >", "a01740.html", null ],
     [ "mc_rtc::internal::lambda_traits< RetT(C::*)(Args...)>", "a01744.html", null ],
@@ -239,7 +240,7 @@ var hierarchy =
     [ "mc_rtc::Loader", "a02028.html", null ],
     [ "mc_rtc::LoaderSandboxData< T >", "a02036.html", null ],
     [ "mc_rtc::Logger", "a02052.html", null ],
-    [ "mc_rtc::log::LogWriter< T >", "a02072.html", null ],
+    [ "mc_rtc::log::LogWriter< T >", "a02076.html", null ],
     [ "mc_filter::LowPass< T >", "a01480.html", [
       [ "mc_filter::LowPassFiniteDifferences< T >", "a01484.html", null ]
     ] ],
@@ -253,59 +254,59 @@ var hierarchy =
       [ "mc_control::MCPythonController", "a01456.html", null ]
     ] ],
     [ "mc_control::MCGlobalController", "a01440.html", null ],
-    [ "mc_rtc::MessagePackBuilder", "a02076.html", null ],
-    [ "mc_tasks::MetaTask", "a02324.html", [
-      [ "mc_tasks::AddRemoveContactTask", "a02244.html", [
-        [ "mc_tasks::AddContactTask", "a02248.html", null ],
-        [ "mc_tasks::RemoveContactTask", "a02252.html", null ]
+    [ "mc_rtc::MessagePackBuilder", "a02080.html", null ],
+    [ "mc_tasks::MetaTask", "a02328.html", [
+      [ "mc_tasks::AddRemoveContactTask", "a02248.html", [
+        [ "mc_tasks::AddContactTask", "a02252.html", null ],
+        [ "mc_tasks::RemoveContactTask", "a02256.html", null ]
       ] ],
-      [ "mc_tasks::EndEffectorTask", "a02280.html", [
-        [ "mc_tasks::RelativeEndEffectorTask", "a02352.html", null ]
+      [ "mc_tasks::EndEffectorTask", "a02284.html", [
+        [ "mc_tasks::RelativeEndEffectorTask", "a02356.html", null ]
       ] ],
-      [ "mc_tasks::force::ComplianceTask", "a02264.html", null ],
-      [ "mc_tasks::lipm_stabilizer::StabilizerTask", "a02304.html", null ],
-      [ "mc_tasks::PostureTask", "a02348.html", null ],
-      [ "mc_tasks::TrajectoryTaskGeneric< T >", "a02368.html", null ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::CoMTask >", "a02368.html", [
-        [ "mc_tasks::CoMTask", "a02268.html", null ]
+      [ "mc_tasks::force::ComplianceTask", "a02268.html", null ],
+      [ "mc_tasks::lipm_stabilizer::StabilizerTask", "a02308.html", null ],
+      [ "mc_tasks::PostureTask", "a02352.html", null ],
+      [ "mc_tasks::TrajectoryTaskGeneric< T >", "a02372.html", null ],
+      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::CoMTask >", "a02372.html", [
+        [ "mc_tasks::CoMTask", "a02272.html", null ]
       ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::GazeTask >", "a02368.html", [
-        [ "mc_tasks::GazeTask", "a02288.html", null ]
+      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::GazeTask >", "a02372.html", [
+        [ "mc_tasks::GazeTask", "a02292.html", null ]
       ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::MomentumTask >", "a02368.html", [
-        [ "mc_tasks::MomentumTask", "a02332.html", null ]
+      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::MomentumTask >", "a02372.html", [
+        [ "mc_tasks::MomentumTask", "a02336.html", null ]
       ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::OrientationTask >", "a02368.html", [
-        [ "mc_tasks::OrientationTask", "a02336.html", null ]
+      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::OrientationTask >", "a02372.html", [
+        [ "mc_tasks::OrientationTask", "a02340.html", null ]
       ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::PositionBasedVisServoTask >", "a02368.html", [
-        [ "mc_tasks::PositionBasedVisServoTask", "a02340.html", null ]
+      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::PositionBasedVisServoTask >", "a02372.html", [
+        [ "mc_tasks::PositionBasedVisServoTask", "a02344.html", null ]
       ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::PositionTask >", "a02368.html", [
-        [ "mc_tasks::PositionTask", "a02344.html", null ]
+      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::PositionTask >", "a02372.html", [
+        [ "mc_tasks::PositionTask", "a02348.html", null ]
       ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::SurfaceTransformTask >", "a02368.html", [
-        [ "mc_tasks::SurfaceTransformTask", "a02364.html", [
-          [ "mc_tasks::force::AdmittanceTask", "a02256.html", [
-            [ "mc_tasks::force::DampingTask", "a02276.html", [
-              [ "mc_tasks::force::CoPTask", "a02272.html", null ]
+      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::SurfaceTransformTask >", "a02372.html", [
+        [ "mc_tasks::SurfaceTransformTask", "a02368.html", [
+          [ "mc_tasks::force::AdmittanceTask", "a02260.html", [
+            [ "mc_tasks::force::DampingTask", "a02280.html", [
+              [ "mc_tasks::force::CoPTask", "a02276.html", null ]
             ] ]
           ] ]
         ] ]
       ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::TransformTask >", "a02368.html", [
-        [ "mc_tasks::SplineTrajectoryTask< Derived >", "a02360.html", null ],
-        [ "mc_tasks::SplineTrajectoryTask< BSplineTrajectoryTask >", "a02360.html", [
-          [ "mc_tasks::BSplineTrajectoryTask", "a02260.html", null ]
+      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::TransformTask >", "a02372.html", [
+        [ "mc_tasks::SplineTrajectoryTask< Derived >", "a02364.html", null ],
+        [ "mc_tasks::SplineTrajectoryTask< BSplineTrajectoryTask >", "a02364.html", [
+          [ "mc_tasks::BSplineTrajectoryTask", "a02264.html", null ]
         ] ],
-        [ "mc_tasks::SplineTrajectoryTask< ExactCubicTrajectoryTask >", "a02360.html", [
-          [ "mc_tasks::ExactCubicTrajectoryTask", "a02284.html", null ]
+        [ "mc_tasks::SplineTrajectoryTask< ExactCubicTrajectoryTask >", "a02364.html", [
+          [ "mc_tasks::ExactCubicTrajectoryTask", "a02288.html", null ]
         ] ]
       ] ],
-      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::VectorOrientationTask >", "a02368.html", [
-        [ "mc_tasks::VectorOrientationTask", "a02372.html", [
-          [ "mc_tasks::LookAtTask", "a02320.html", [
-            [ "mc_tasks::LookAtSurfaceTask", "a02316.html", null ]
+      [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::VectorOrientationTask >", "a02372.html", [
+        [ "mc_tasks::VectorOrientationTask", "a02376.html", [
+          [ "mc_tasks::LookAtTask", "a02324.html", [
+            [ "mc_tasks::LookAtSurfaceTask", "a02320.html", null ]
           ] ]
         ] ]
       ] ]
@@ -343,8 +344,8 @@ var hierarchy =
     [ "mc_control::PythonRWCallback", "a01452.html", null ],
     [ "mc_solver::QPContactPtr", "a01552.html", null ],
     [ "mc_solver::QPContactPtrWPoints", "a01556.html", null ],
-    [ "mc_solver::QPResultMsg", "a02192.html", null ],
-    [ "mc_solver::QPSolver", "a02204.html", null ],
+    [ "mc_solver::QPResultMsg", "a02196.html", null ],
+    [ "mc_solver::QPSolver", "a02208.html", null ],
     [ "mc_rbdyn::QuadraticGenerator", "a01624.html", null ],
     [ "mc_rtc::gui::plot::Range", "a01912.html", null ],
     [ "mc_rtc::log::FlatLog::record", "a02044.html", null ],
@@ -352,21 +353,21 @@ var hierarchy =
     [ "mc_rbdyn::Robot", "a01640.html", null ],
     [ "mc_rbdyn::RobotLoader", "a01656.html", null ],
     [ "mc_rbdyn::RobotModule", "a01668.html", null ],
-    [ "mc_solver::RobotMsg", "a02196.html", null ],
+    [ "mc_solver::RobotMsg", "a02200.html", null ],
     [ "mc_rbdyn::Robots", "a01680.html", null ],
     [ "mc_rbdyn::RobotModule::Gripper::Safety", "a01676.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::SafetyThresholds", "a01592.html", null ],
     [ "mc_control::SimulationContactPair", "a01468.html", null ],
-    [ "mc_tasks::SmoothTask< objT >", "a02356.html", null ],
-    [ "mc_trajectory::Spline< T, WaypointsT >", "a02388.html", null ],
-    [ "mc_trajectory::Spline< Eigen::Matrix3d, std::vector< std::pair< double, Eigen::Matrix3d > > >", "a02388.html", [
-      [ "mc_trajectory::InterpolatedRotation", "a02384.html", null ]
+    [ "mc_tasks::SmoothTask< objT >", "a02360.html", null ],
+    [ "mc_trajectory::Spline< T, WaypointsT >", "a02392.html", null ],
+    [ "mc_trajectory::Spline< Eigen::Matrix3d, std::vector< std::pair< double, Eigen::Matrix3d > > >", "a02392.html", [
+      [ "mc_trajectory::InterpolatedRotation", "a02388.html", null ]
     ] ],
-    [ "mc_trajectory::Spline< Eigen::Vector3d, std::vector< Eigen::Vector3d > >", "a02388.html", [
-      [ "mc_trajectory::BSpline", "a02376.html", null ]
+    [ "mc_trajectory::Spline< Eigen::Vector3d, std::vector< Eigen::Vector3d > >", "a02392.html", [
+      [ "mc_trajectory::BSpline", "a02380.html", null ]
     ] ],
-    [ "mc_trajectory::Spline< Eigen::Vector3d, std::vector< std::pair< double, Eigen::Vector3d > > >", "a02388.html", [
-      [ "mc_trajectory::ExactCubic", "a02380.html", null ]
+    [ "mc_trajectory::Spline< Eigen::Vector3d, std::vector< std::pair< double, Eigen::Vector3d > > >", "a02392.html", [
+      [ "mc_trajectory::ExactCubic", "a02384.html", null ]
     ] ],
     [ "mc_rbdyn::Springs", "a01684.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::StabilizerConfiguration", "a01600.html", null ],
@@ -403,34 +404,34 @@ var hierarchy =
     [ "true_type", null, [
       [ "mc_rbdyn::details::are_strings< Args >", "a01644.html", null ]
     ] ],
-    [ "mc_solver::utils::UpdateNrVarsData", "a02232.html", [
-      [ "mc_solver::utils::UpdateNrVarsLambda", "a02240.html", [
-        [ "mc_solver::utils::Update< UpdateNrVarsLambda >", "a02220.html", [
-          [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateLambda >", "a02208.html", null ],
-          [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateLambda >", "a02208.html", null ],
-          [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateLambda >", "a02208.html", null ],
-          [ "mc_solver::utils::UpdateForce", "a02228.html", [
-            [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateForce >", "a02208.html", null ],
-            [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateForce >", "a02208.html", null ],
-            [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateForce >", "a02208.html", null ]
+    [ "mc_solver::utils::UpdateNrVarsData", "a02236.html", [
+      [ "mc_solver::utils::UpdateNrVarsLambda", "a02244.html", [
+        [ "mc_solver::utils::Update< UpdateNrVarsLambda >", "a02224.html", [
+          [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateLambda >", "a02212.html", null ],
+          [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateLambda >", "a02212.html", null ],
+          [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateLambda >", "a02212.html", null ],
+          [ "mc_solver::utils::UpdateForce", "a02232.html", [
+            [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateForce >", "a02212.html", null ],
+            [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateForce >", "a02212.html", null ],
+            [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateForce >", "a02212.html", null ]
           ] ]
         ] ]
       ] ],
-      [ "mc_solver::utils::UpdateNrVarsRobot", "a02236.html", null ]
+      [ "mc_solver::utils::UpdateNrVarsRobot", "a02240.html", null ]
     ] ],
-    [ "mc_solver::utils::UpdateTag", "a02216.html", [
-      [ "mc_solver::utils::Update< UpdateNrVars >", "a02220.html", [
-        [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateRobot >", "a02208.html", null ],
-        [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateRobot >", "a02208.html", null ],
-        [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateRobot >", "a02208.html", null ]
+    [ "mc_solver::utils::UpdateTag", "a02220.html", [
+      [ "mc_solver::utils::Update< UpdateNrVars >", "a02224.html", [
+        [ "mc_solver::utils::Constraint< tasks::qp::Equality, utils::UpdateRobot >", "a02212.html", null ],
+        [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, utils::UpdateRobot >", "a02212.html", null ],
+        [ "mc_solver::utils::Constraint< tasks::qp::Inequality, utils::UpdateRobot >", "a02212.html", null ]
       ] ],
-      [ "mc_solver::utils::Update< UpdateNrVarsLambda >", "a02220.html", null ]
+      [ "mc_solver::utils::Update< UpdateNrVarsLambda >", "a02224.html", null ]
     ] ],
     [ "std::vector< T >", null, [
       [ "mc_rbdyn::DevicePtrVector", "a01660.html", null ]
     ] ],
-    [ "mc_solver::ZMP", "a02200.html", null ],
-    [ "mc_tasks::lipm_stabilizer::ZMPCC", "a02312.html", null ],
+    [ "mc_solver::ZMP", "a02204.html", null ],
+    [ "mc_tasks::lipm_stabilizer::ZMPCC", "a02316.html", null ],
     [ "mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration", "a01608.html", null ],
     [ "ElementT", null, [
       [ "mc_rtc::gui::CallbackElement< ElementT, Callback >", "a01824.html", [
@@ -438,12 +439,12 @@ var hierarchy =
       ] ]
     ] ],
     [ "UpdateNrVars", null, [
-      [ "mc_solver::utils::Update< UpdateNrVars >", "a02220.html", null ]
+      [ "mc_solver::utils::Update< UpdateNrVars >", "a02224.html", null ]
     ] ],
     [ "UpdateT", null, [
-      [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "a02208.html", null ],
-      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "a02208.html", null ],
-      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, UpdateT >", "a02208.html", null ],
-      [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "a02208.html", null ]
+      [ "mc_solver::utils::Constraint< tasks::qp::Equality, UpdateT >", "a02212.html", null ],
+      [ "mc_solver::utils::Constraint< tasks::qp::GenInequality, UpdateT >", "a02212.html", null ],
+      [ "mc_solver::utils::Constraint< tasks::qp::Inequality, UpdateT >", "a02212.html", null ],
+      [ "mc_solver::utils::Constraint< ConstraintT, UpdateT >", "a02212.html", null ]
     ] ]
 ];
