@@ -164,11 +164,11 @@ set(ENABLED_OBSERVERS "\"Encoder\", \"BodySensor\", \"KinematicInertial\"")
 set(RUN_OBSERVERS "\"Encoder\", \"BodySensor\"")
 set(UPDATE_OBSERVERS "\"Encoder\"")
 
-file(READ "ObserverPipelines.json" OBSERVER_PIPELINES)
-
 # mc_observer test controllers
+file(READ "ObserverPipelines.json" OBSERVER_PIPELINES)
 controller_test_run(TestObserverController 2001)
 target_link_libraries(TestObserverController PUBLIC BodySensorObserver)
+unset(OBSERVER_PIPELINES)
 
 # Test run of sample controllers
 macro(controller_sample_test_run NAME PATH_SUFFIX NRITER)

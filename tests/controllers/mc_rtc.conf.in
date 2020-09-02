@@ -4,7 +4,7 @@
 
   "Enabled"   : ["@TEST_CONTROLLER_NAME@"],
 
-  "ObserverPipelines": @OBSERVER_PIPELINES@,
+  "ObserverPipelines": [@OBSERVER_PIPELINES@],
 
   "PublishControlState" : false,
   "PublishRealState" : false,
