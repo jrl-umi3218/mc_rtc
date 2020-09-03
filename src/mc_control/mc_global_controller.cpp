@@ -302,10 +302,23 @@ void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
   realRobot().bodySensor().position(pos);
 }
 
+void MCGlobalController::setSensorPosition(const std::string & robotName, const Eigen::Vector3d & pos)
+{
+  robot(robotName).bodySensor().position(pos);
+  realRobot(robotName).bodySensor().position(pos);
+}
+
 void MCGlobalController::setSensorPositions(const std::map<std::string, Eigen::Vector3d> & poses)
 {
   setSensorPositions(robot(), poses);
   setSensorPositions(realRobot(), poses);
+}
+
+void MCGlobalController::setSensorPositions(const std::string & robotName,
+                                            const std::map<std::string, Eigen::Vector3d> & poses)
+{
+  setSensorPositions(robot(robotName), poses);
+  setSensorPositions(realRobot(robotName), poses);
 }
 
 void MCGlobalController::setSensorPositions(mc_rbdyn::Robot & robot,
@@ -323,10 +336,23 @@ void MCGlobalController::setSensorOrientation(const Eigen::Quaterniond & ori)
   realRobot().bodySensor().orientation(ori);
 }
 
+void MCGlobalController::setSensorOrientation(const std::string & robotName, const Eigen::Quaterniond & ori)
+{
+  robot(robotName).bodySensor().orientation(ori);
+  realRobot(robotName).bodySensor().orientation(ori);
+}
+
 void MCGlobalController::setSensorOrientations(const std::map<std::string, Eigen::Quaterniond> & oris)
 {
   setSensorOrientations(robot(), oris);
   setSensorOrientations(realRobot(), oris);
+}
+
+void MCGlobalController::setSensorOrientations(const std::string & robotName,
+                                               const std::map<std::string, Eigen::Quaterniond> & oris)
+{
+  setSensorOrientations(robot(robotName), oris);
+  setSensorOrientations(realRobot(robotName), oris);
 }
 
 void MCGlobalController::setSensorOrientations(mc_rbdyn::Robot & robot,
@@ -344,10 +370,23 @@ void MCGlobalController::setSensorLinearVelocity(const Eigen::Vector3d & vel)
   realRobot().bodySensor().linearVelocity(vel);
 }
 
+void MCGlobalController::setSensorLinearVelocity(const std::string & robotName, const Eigen::Vector3d & vel)
+{
+  robot(robotName).bodySensor().linearVelocity(vel);
+  realRobot(robotName).bodySensor().linearVelocity(vel);
+}
+
 void MCGlobalController::setSensorLinearVelocities(const std::map<std::string, Eigen::Vector3d> & linearVels)
 {
   setSensorLinearVelocities(robot(), linearVels);
   setSensorLinearVelocities(realRobot(), linearVels);
+}
+
+void MCGlobalController::setSensorLinearVelocities(const std::string & robotName,
+                                                   const std::map<std::string, Eigen::Vector3d> & linearVels)
+{
+  setSensorLinearVelocities(robot(robotName), linearVels);
+  setSensorLinearVelocities(realRobot(robotName), linearVels);
 }
 
 void MCGlobalController::setSensorLinearVelocities(mc_rbdyn::Robot & robot,
@@ -403,8 +442,8 @@ void MCGlobalController::setSensorLinearAcceleration(const Eigen::Vector3d & acc
 
 void MCGlobalController::setSensorLinearAccelerations(const std::map<std::string, Eigen::Vector3d> & accels)
 {
-  setSensorAccelerations(robot(), accels);
-  setSensorAccelerations(realRobot(), accels);
+  setSensorLinearAccelerations(robot(), accels);
+  setSensorLinearAccelerations(realRobot(), accels);
 }
 
 void MCGlobalController::setSensorLinearAccelerations(mc_rbdyn::Robot & robot,
@@ -424,8 +463,8 @@ void MCGlobalController::setSensorAngularAcceleration(const Eigen::Vector3d & ac
 
 void MCGlobalController::setSensorAngularAccelerations(const std::map<std::string, Eigen::Vector3d> & accels)
 {
-  setSensorAccelerations(robot(), accels);
-  setSensorAccelerations(realRobot(), accels);
+  setSensorAngularAccelerations(robot(), accels);
+  setSensorAngularAccelerations(realRobot(), accels);
 }
 
 void MCGlobalController::setSensorAngularAccelerations(mc_rbdyn::Robot & robot,
@@ -443,10 +482,22 @@ void MCGlobalController::setEncoderValues(const std::vector<double> & eValues)
   realRobot().encoderValues(eValues);
 }
 
+void MCGlobalController::setEncoderValues(const std::string & robotName, const std::vector<double> & eValues)
+{
+  robot(robotName).encoderValues(eValues);
+  realRobot(robotName).encoderValues(eValues);
+}
+
 void MCGlobalController::setEncoderVelocities(const std::vector<double> & eVelocities)
 {
   robot().encoderVelocities(eVelocities);
   realRobot().encoderVelocities(eVelocities);
+}
+
+void MCGlobalController::setEncoderVelocities(const std::string & robotName, const std::vector<double> & eVelocities)
+{
+  robot(robotName).encoderVelocities(eVelocities);
+  realRobot(robotName).encoderVelocities(eVelocities);
 }
 
 void MCGlobalController::setFlexibilityValues(const std::vector<double> & fValues)
@@ -455,17 +506,42 @@ void MCGlobalController::setFlexibilityValues(const std::vector<double> & fValue
   realRobot().flexibilityValues(fValues);
 }
 
+void MCGlobalController::setFlexibilityValues(const std::string & robotName, const std::vector<double> & fValues)
+{
+  robot(robotName).flexibilityValues(fValues);
+  realRobot(robotName).flexibilityValues(fValues);
+}
+
 void MCGlobalController::setJointTorques(const std::vector<double> & tValues)
 {
   robot().jointTorques(tValues);
   realRobot().jointTorques(tValues);
 }
 
-void MCGlobalController::setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches)
+void MCGlobalController::setJointTorques(const std::string & robotName, const std::vector<double> & tValues)
 {
-  setWrenches(controller_->robots().robotIndex(), wrenches);
+  robot(robotName).jointTorques(tValues);
+  realRobot(robotName).jointTorques(tValues);
 }
 
+void MCGlobalController::setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches)
+{
+  setWrenches(controller_->robot().name(), wrenches);
+}
+
+void MCGlobalController::setWrenches(const std::string & robotName,
+                                     const std::map<std::string, sva::ForceVecd> & wrenches)
+{
+  auto & robot = this->robot(robotName);
+  auto & realRobot = this->realRobot(robotName);
+  for(const auto & w : wrenches)
+  {
+    robot.forceSensor(w.first).wrench(w.second);
+    realRobot.forceSensor(w.first).wrench(w.second);
+  }
+}
+
+// deprecated
 void MCGlobalController::setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches)
 {
   auto & robot = controller_->robots().robot(robotIndex);
@@ -684,6 +760,16 @@ const mc_rbdyn::Robot & MCGlobalController::robot() const
   return controller_->robot();
 }
 
+mc_rbdyn::Robot & MCGlobalController::robot(const std::string & name)
+{
+  return robots().robot(name);
+}
+
+const mc_rbdyn::Robot & MCGlobalController::robot(const std::string & name) const
+{
+  return robots().robot(name);
+}
+
 mc_rbdyn::Robot & MCGlobalController::realRobot()
 {
   return controller_->realRobot();
@@ -692,6 +778,16 @@ mc_rbdyn::Robot & MCGlobalController::realRobot()
 const mc_rbdyn::Robot & MCGlobalController::realRobot() const
 {
   return controller_->realRobot();
+}
+
+mc_rbdyn::Robot & MCGlobalController::realRobot(const std::string & name)
+{
+  return realRobots().robot(name);
+}
+
+const mc_rbdyn::Robot & MCGlobalController::realRobot(const std::string & name) const
+{
+  return realRobots().robot(name);
 }
 
 void MCGlobalController::setGripperTargetQ(const std::string & robot,
@@ -900,38 +996,29 @@ void MCGlobalController::setup_log()
       return controller->robot().forceSensor(fs_name).wrench();
     });
   }
-  controller->logger().addLogEntry(
-      "pIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().position(); });
-  controller->logger().addLogEntry(
-      "rpyIn", [controller]() -> const Eigen::Quaterniond & { return controller->robot().bodySensor().orientation(); });
-  controller->logger().addLogEntry(
-      "velIn", [controller]() -> const Eigen::Vector3d & { return controller->robot().bodySensor().linearVelocity(); });
-  controller->logger().addLogEntry("rateIn", [controller]() -> const Eigen::Vector3d & {
-    return controller->robot().bodySensor().angularVelocity();
-  });
-  controller->logger().addLogEntry("accIn", [controller]() -> const Eigen::Vector3d & {
-    return controller->robot().bodySensor().linearAcceleration();
-  });
 
-  // Log all other body sensors
+  // Log all body sensors
   const auto & bodySensors = controller->robot().bodySensors();
-  for(size_t i = 1; i < bodySensors.size(); ++i)
+  for(size_t i = 0; i < bodySensors.size(); ++i)
   {
     const auto & name = bodySensors[i].name();
-    controller->logger().addLogEntry(name + "_pIn", [controller, name]() -> const Eigen::Vector3d & {
+    controller->logger().addLogEntry(name + "_position", [controller, name]() -> const Eigen::Vector3d & {
       return controller->robot().bodySensor(name).position();
     });
-    controller->logger().addLogEntry(name + "_rpyIn", [controller, name]() -> const Eigen::Quaterniond & {
+    controller->logger().addLogEntry(name + "_orientation", [controller, name]() -> const Eigen::Quaterniond & {
       return controller->robot().bodySensor(name).orientation();
     });
-    controller->logger().addLogEntry(name + "_velIn", [controller, name]() -> const Eigen::Vector3d & {
+    controller->logger().addLogEntry(name + "_linearVelocity", [controller, name]() -> const Eigen::Vector3d & {
       return controller->robot().bodySensor(name).linearVelocity();
     });
-    controller->logger().addLogEntry(name + "_rateIn", [controller, name]() -> const Eigen::Vector3d & {
+    controller->logger().addLogEntry(name + "_angularVelocity", [controller, name]() -> const Eigen::Vector3d & {
       return controller->robot().bodySensor(name).angularVelocity();
     });
-    controller->logger().addLogEntry(name + "_accIn", [controller, name]() -> const Eigen::Vector3d & {
+    controller->logger().addLogEntry(name + "_linearAcceleration", [controller, name]() -> const Eigen::Vector3d & {
       return controller->robot().bodySensor(name).linearAcceleration();
+    });
+    controller->logger().addLogEntry(name + "_angularAcc", [controller, name]() -> const Eigen::Vector3d & {
+      return controller->robot().bodySensor(name).angularAcceleration();
     });
   }
 

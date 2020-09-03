@@ -136,8 +136,8 @@ public:
 
   /** @name Sensing
    *
-   * These functions are used to communicate sensors' information to the
-   * controller
+   * These functions are used to communicate sensors' information to the controller. Each function sets the requested
+   * sensor to both the control robots() instance and the real realRobots() instance.
    *
    * @{
    */
@@ -145,14 +145,38 @@ public:
   /*! \brief Sets the main robot position sensor (control+real)
    *
    * \param pos Position given by a sensor
+   * \throws If the robot does not have any body sensor
    */
   void setSensorPosition(const Eigen::Vector3d & pos);
-  /*! \brief Set multiple body sensors' position for the main robot
-   * (control+real)
+
+  /*! \brief Sets a robot's position sensor (control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   *
+   * \param pos Position given by a sensor
+   *
+   * \throws If the robot does not have any body sensor
+   * \throws If the specified robot does not exist
    */
+  void setSensorPosition(const std::string & robotName, const Eigen::Vector3d & pos);
+
+  /*! \brief Set multiple body sensors' position for the main robot (control+real)
+   *
+   * \param poses Map of sensor name -> position
+   * \throws If one of the sensors does not exist in the robot
+   **/
   void setSensorPositions(const std::map<std::string, Eigen::Vector3d> & poses);
-  /*! \brief Set multiple body sensors' position for a given robot */
-  void setSensorPositions(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & poses);
+
+  /*! \brief Set multiple body sensors' position for the specified robot (control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param poses Map of sensor name -> position
+   * \throws If any of the sensors does not exist in the robot
+   * \throws If the specified robot does not exist
+   */
+  void setSensorPositions(const std::string & robotName, const std::map<std::string, Eigen::Vector3d> & poses);
 
   /*! \brief Sets the main robot orientation sensor (control + real)
    *
@@ -163,73 +187,198 @@ public:
    * instance, on HRP-4 the body sensor orientation goes from the inertial
    * frame to the "base_link" frame.
    *
+   * \throws If the robot does not have any body sensor
    */
   void setSensorOrientation(const Eigen::Quaterniond & ori);
-  /*! \brief Set multiple body sensors' orientation for the main robot
-   * (control+real) */
+
+  /*! \brief Sets the main robot orientation sensor (control + real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   *
+   * \throws If the specified robot does not exist
+   * \throws If the robot does not have any body sensor
+   * \see setSensorOrientation(const Eigen::Quaterniond & ori)
+   */
+  void setSensorOrientation(const std::string & robotName, const Eigen::Quaterniond & ori);
+
+  /*! \brief Set multiple body sensors' orientation for the main robot (control+real)
+   *
+   * \param oris Map of sensor name -> orientation
+   * \throws If any of the sensors does not exist in the robot
+   *
+   * \see setSensorOrientation(const Eigen::Quaterniond & ori)
+   */
   void setSensorOrientations(const std::map<std::string, Eigen::Quaterniond> & oris);
-  /*! \brief Set multiple body sensors' orientation for a given robot */
-  void setSensorOrientations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Quaterniond> & oris);
+
+  /*! \brief Set multiple body sensors' orientation for the specified robot (control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   *
+   * \throws If the specified robot does not exist
+   * \throws If any of the sensors does not exist in the robot
+   * \see setSensorOrientation(const Eigen::Quaterniond & ori)
+   */
+  void setSensorOrientations(const std::string & robotName, const std::map<std::string, Eigen::Quaterniond> & oris);
 
   /*! \brief Sets the main robot linear velocity sensor (control+real)
    *
    * \param vel Linear velocity given by a sensor
+   * \throws If the robot does not have any body sensor
    */
   void setSensorLinearVelocity(const Eigen::Vector3d & vel);
-  /*! \brief Set multiple body sensor's linear velocities for the main robot
-   * (control+real) */
+  /*! \brief Sets the specified robot linear velocity sensor (control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param vel Linear velocity given by a sensor
+   *
+   * \throws If the specified robot does not exist
+   * \throws If the robot does not have any body sensor
+   */
+  void setSensorLinearVelocity(const std::string & robotName, const Eigen::Vector3d & vel);
+
+  /*! \brief Set multiple body sensor's linear velocities for the main robot (control+real)
+   *
+   * \param linearVels map of BodySensor name to the corresponding velocity
+   * \throws If any of the body sensors do not exist in the robot
+   */
   void setSensorLinearVelocities(const std::map<std::string, Eigen::Vector3d> & linearVels);
-  /*! \brief Set multiple body sensor's linear velocities for a given robot */
-  void setSensorLinearVelocities(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & linearVels);
+
+  /*! \brief Set multiple body sensor's linear velocities for the specified robot
+   * (control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param linearVels map of BodySensor name to the corresponding velocity
+   *
+   * \throws If the specified robot does not exist
+   * \throws If any of the body sensors do not exist in the robot
+   */
+  void setSensorLinearVelocities(const std::string & robotName,
+                                 const std::map<std::string, Eigen::Vector3d> & linearVels);
 
   /*! \brief Sets the main robot angular velocity sensor (control+real)
    *
    * \param vel Angular velocity given by a sensor
+   *
+   * \throws If the robot does not have any body sensor
    */
   void setSensorAngularVelocity(const Eigen::Vector3d & vel);
-  /*! \brief Set multiple body sensor's angular velocities for the main robot
-   * (control + real)*/
+
+  /*! \brief Sets the specified robot angular velocity sensor (control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param vel Angular velocity given by a sensor
+   *
+   * \throws If the specified robot does not exist
+   * \throws If the robot does not have any body sensor
+   */
+  void setSensorAngularVelocity(const std::string & robotName, const Eigen::Vector3d & vel);
+
+  /*! \brief Set multiple body sensor's angular velocities for the main robot (control + real)
+   *
+   * \param angularVels map of body sensor name to angular velocity
+   * \throws If any of the body sensors do not exist in the robot
+   */
   void setSensorAngularVelocities(const std::map<std::string, Eigen::Vector3d> & angularVels);
-  /*! \brief Set multiple body sensor's angular velocities for a given robot */
-  void setSensorAngularVelocities(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & angularVels);
+
+  /*! \brief Set multiple body sensor's angular velocities for the specified robot (control + real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param angularVels map of body sensor name to angular velocity
+   *
+   * \throws If the specified robot does not exist
+   * \throws If any of the body sensors do not exist in the robot
+   */
+  void setSensorAngularVelocities(const std::string & robotName,
+                                  const std::map<std::string, Eigen::Vector3d> & angularVels);
 
   /*! \brief Sets the main robot acceleration (control+real)
    *
-   * \deprecated in favor of void setSensorLinearAcceleration(const Eigen::Vector3d & acc);
+   * \deprecated in favor of setSensorLinearAcceleration(const Eigen::Vector3d &);
    */
   MC_RTC_DEPRECATED void setSensorAcceleration(const Eigen::Vector3d & acc);
-  /*! \brief Set multiple body sensors' acceleration for a given robot for the main robot (control+real)
-   *
-   * \deprecated in favor of void setSensorLinearAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
+  /*!
+   * \deprecated in favor of setSensorLinearAccelerations(const std::map<std::string, Eigen::Vector3d> &);
    **/
-  void setSensorAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
-  /*! \brief Set multiple body sensors' acceleration for a given robot
-   *
-   * \deprecated in favor of void setSensorLinearAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string,
-   *Eigen::Vector3d> & accels);
-   **/
-  void setSensorAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
+  MC_RTC_DEPRECATED void setSensorAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
 
   /*! \brief Sets the main robot linear acceleration (control+real)
    *
    * \param acc Linear acceleration given by a sensor
    */
   void setSensorLinearAcceleration(const Eigen::Vector3d & acc);
-  /*! \brief Set multiple body sensors' linear acceleration for a given robot for the main robot (control+real) */
+  /*! \brief Sets the specified robot linear acceleration (control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param acc Linear acceleration
+   *
+   * \throws If the specified robot does not exist
+   * \throws If the robot does not have any body sensor
+   */
+  void setSensorLinearAcceleration(const std::string & robotName, const Eigen::Vector3d & acc);
+
+  /*! \brief Set multiple body sensors' linear acceleration for a given robot for the main robot (control+real)
+   *
+   * \param accels Map of body sensor names to linear accelerations
+   * \throws If any of the body sensors do not exist in the robot
+   **/
   void setSensorLinearAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
-  /*! \brief Set multiple body sensors' linear acceleration for a given robot */
-  void setSensorLinearAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
+
+  /*! \brief Set multiple body sensors' linear acceleration for a given robot for the specified robot (control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param accels Map of body sensor names to linear accelerations
+   *
+   * \throws If the specified robot does not exist
+   * \throws If any of the body sensors do not exist in the robot
+   */
+  void setSensorLinearAccelerations(const std::string & robotName,
+                                    const std::map<std::string, Eigen::Vector3d> & accels);
 
   /*! \brief Sets the main robot angular acceleration (control+real)
    *
-   * \param acc Acceleration given by a sensor
+   * \param acc Angular acceleration given by a sensor
+   *
+   * \throws If the robot does not have any body sensor
    */
   void setSensorAngularAcceleration(const Eigen::Vector3d & acc);
-  /*! \brief Set multiple body sensors' angular acceleration for a given robot for the
-   * main robot (control+real) */
+
+  /*! \brief Sets the specified robot angular acceleration (control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param acc Angular acceleration
+   *
+   * \throws If the specified robot does not exist
+   * \throws If the robot does not have any body sensor
+   */
+  void setSensorAngularAcceleration(const std::string & robotName, const Eigen::Vector3d & acc);
+
+  /*! \brief Set multiple body sensors' angular acceleration for a given robot for the main robot (control+real)
+   *
+   * \param accels Map of body sensor names to linear accelerations
+   * \throws If any of the body sensors do not exist in the robot
+   */
   void setSensorAngularAccelerations(const std::map<std::string, Eigen::Vector3d> & accels);
-  /*! \brief Set multiple body sensors' angular acceleration for a given robot */
-  void setSensorAngularAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
+
+  /*! \brief Set multiple body sensors' angular acceleration for the specifiedrobot (control+real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param accels Map of body sensor names to linear accelerations
+   *
+   * \throws If the specified robot does not exist
+   * \throws If any of the body sensors do not exist in the robot
+   */
+  void setSensorAngularAccelerations(const std::string & robotName,
+                                     const std::map<std::string, Eigen::Vector3d> & accels);
 
   /*! \brief Sets the main robot actual joints' values (control+real)
    *
@@ -240,14 +389,36 @@ public:
    */
   void setEncoderValues(const std::vector<double> & eValues);
 
+  /** Set actual joint values for the specified robot (control + real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param eValues Actual joint values provided by encoders
+   *
+   * \throws If the specified robot does not exist
+   */
+  void setEncoderValues(const std::string & robotName, const std::vector<double> & eValues);
+
   /*! \brief Sets the main robot's actual joint velocities (control+real)
    *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
    * \param eVelocities Actual joint velocities
    *
    * \note It is expected that these values follow the order given by
    * ref_joint_order
    */
   void setEncoderVelocities(const std::vector<double> & eVelocities);
+
+  /* Set the actual joint velocities for the specified robot (control + real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param eVelocities Actual joint velocities
+   *
+   * \throws If the specified robot does not exist
+   */
+  void setEncoderVelocities(const std::string & robotName, const std::vector<double> & eVelocities);
 
   /*! \brief Sets the main robot's flexible joint values (control+real)
    *
@@ -258,6 +429,16 @@ public:
    */
   void setFlexibilityValues(const std::vector<double> & fValues);
 
+  /** Set the actual flexibility values for the specified robot (control + real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param eValues Flexible joint values (provided by an estimator)
+   *
+   * \throws If the specified robot does not exist
+   **/
+  void setFlexibilityValues(const std::string & robotName, const std::vector<double> & fValues);
+
   /*! \brief Sets the main robot's actual joint torques (control+real)
    *
    * \param tValues  Actual joint torques (provided by sensors)
@@ -266,14 +447,71 @@ public:
    * ref_joint_order
    */
   void setJointTorques(const std::vector<double> & tValues);
+  /** Set the acutal joint torques for the specified robot (control + real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param tValues  Actual joint torques (provided by sensors)
+   *
+   * \throws If the specified robot does not exist
+   */
+  void setJointTorques(const std::string & robotName, const std::vector<double> & tValues);
 
-  /*! \brief Force sensors' readings provided by the sensors (sets control+real)*/
+  /*! \brief Force sensors' readings provided by the sensors (sets control+real)
+   *
+   * \param wrenches map of force sensor name to wrenches
+   * \throws if any of the force sensors do not exist
+   */
   void setWrenches(const std::map<std::string, sva::ForceVecd> & wrenches);
-  /*! \brief Force sensors' readings for another robot than the main robot */
-  void setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches);
 
+  /*! \brief Force sensors' readings for the specified robot (control + real)
+   *
+   * \param robotName Name of the robot to which the sensor values will be assigned.
+   * A robot with that name must exist in both robots() and realRobots() instances.
+   * \param wrenches map of force sensor name to wrenches
+   *
+   * \throws If the specified robot does not exist
+   * \throws if any of the force sensors do not exist
+   */
+  void setWrenches(const std::string & robotName, const std::map<std::string, sva::ForceVecd> & wrenches);
+  /*!
+   * \deprecated in favor of setWrenches(const std::string &, const std::map<std::string, sva::ForceVecd> &)
+   **/
+  MC_RTC_DEPRECATED void setWrenches(unsigned int robotIndex, const std::map<std::string, sva::ForceVecd> & wrenches);
   /** @} */
 
+protected:
+  /** @name Internal sensing helpers
+   *
+   * These functions only set the sensor(s) for the provided robot reference.
+   * They are expected to be called twice: once for both the robot()
+   * and once for the corresponding realRobot() instances.
+   *
+   * @{
+   */
+
+  /*! \brief Set multiple body sensors' position for a given robot */
+  void setSensorPositions(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & poses);
+  /*! \brief Set multiple body sensors' angular acceleration for a given robot */
+  void setSensorAngularAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
+  /*! \brief Set multiple body sensors' linear acceleration for a given robot */
+  void setSensorLinearAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & accels);
+
+  /*!
+   * \deprecated in favor of void setSensorLinearAccelerations(mc_rbdyn::Robot & robot, const std::map<std::string,
+   *Eigen::Vector3d> &);
+   **/
+  MC_RTC_DEPRECATED void setSensorAccelerations(mc_rbdyn::Robot & robot,
+                                                const std::map<std::string, Eigen::Vector3d> & accels);
+  /*! \brief Set multiple body sensors' orientation for a given robot */
+  void setSensorOrientations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Quaterniond> & oris);
+  /*! \brief Set multiple body sensor's linear velocities for a given robot */
+  void setSensorLinearVelocities(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & linearVels);
+  /*! \brief Set multiple body sensor's angular velocities for a given robot */
+  void setSensorAngularVelocities(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & angularVels);
+  /** @} */
+
+public:
   /*! \brief Runs one step of the controller
    *
    * \returns True if the current controller succeeded, false otherwise
@@ -312,11 +550,35 @@ public:
   /*! \brief Const access to the main robot */
   const mc_rbdyn::Robot & robot() const;
 
+  /*! \brief Access to a robot instance.
+   *
+   * @throws if no robot with that name exist
+   */
+  mc_rbdyn::Robot & robot(const std::string & name);
+
+  /*! \brief Const access to a  robot instance.
+   *
+   * @throws if no robot named with that name exist
+   **/
+  const mc_rbdyn::Robot & robot(const std::string & name) const;
+
   /*! \brief Access the main real robot */
   mc_rbdyn::Robot & realRobot();
 
   /*! \brief Const access to the main real robot */
   const mc_rbdyn::Robot & realRobot() const;
+
+  /*! \brief Access to a real robot instance.
+   *
+   * @throws if no real robot with that name exist
+   */
+  mc_rbdyn::Robot & realRobot(const std::string & name);
+
+  /*! \brief Const access to a real robot instance.
+   *
+   * @throws if no real robot named with that name exist
+   **/
+  const mc_rbdyn::Robot & realRobot(const std::string & name) const;
 
   /*! \brief Get the controller timestep */
   double timestep() const;
