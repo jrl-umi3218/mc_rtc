@@ -88,7 +88,6 @@ public:
 
     bool ret = MCController::run();
     BOOST_CHECK(ret);
-    simulateSensors();
 
     nrIter++;
     if(nrIter == 1000)
@@ -139,15 +138,11 @@ public:
       double current_rkj = robot().mbc().q[robot().jointIndexByName("R_KNEE")][0];
       BOOST_CHECK_SMALL(fabs(orig_rkj - current_rkj), 1e-2);
     }
-    simulateSensors();
     return ret;
   }
 
   virtual void reset(const ControllerResetData & reset_data) override
   {
-    enc.resize(robot().refJointOrder().size());
-    simulateSensors();
-
     MCController::reset(reset_data);
     comTask->reset();
     /* Lower the CoM */
@@ -209,32 +204,12 @@ public:
     });
   }
 
-  void simulateSensors()
-  {
-    // Set IMU (only rotation used by KinematicInertialPoseObserver)
-    robot().bodySensor("FloatingBase").orientation(Eigen::Quaterniond{robot().posW().rotation()});
-    robot().bodySensor("FloatingBase").position(robot().posW().translation());
-    realRobot().bodySensor("FloatingBase").orientation(Eigen::Quaterniond{robot().posW().rotation()});
-    realRobot().bodySensor("FloatingBase").position(robot().posW().translation());
-    for(unsigned i = 0; i < robot().refJointOrder().size(); i++)
-    {
-      auto jIdx = robot().jointIndexInMBC(i);
-      if(jIdx != -1)
-      {
-        enc[i] = robot().mbc().q[jIdx][0];
-      }
-    }
-    robot().encoderValues(enc);
-    realRobot().encoderValues(enc);
-  }
-
 private:
   unsigned int nrIter = 0;
   std::shared_ptr<mc_tasks::CoMTask> comTask = nullptr;
   std::vector<std::string> active_joints = {"Root",      "R_HIP_P",   "R_HIP_R",  "R_HIP_Y", "R_KNEE",
                                             "R_ANKLE_R", "R_ANKLE_P", "L_HIP_P",  "L_HIP_R", "L_HIP_Y",
                                             "L_KNEE",    "L_ANKLE_R", "L_ANKLE_P"};
-  std::vector<double> enc;
   double orig_rkj = 0;
 };
 

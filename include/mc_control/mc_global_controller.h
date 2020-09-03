@@ -108,6 +108,8 @@ public:
    * \endcode
    *
    * \param initq initial joints configuration
+   * \param initController Should be left to true. When false, this function will only initialize the
+   * robot state, and you are expected to call initController() manually.
    *
    * \note When implementing an interface, the sensors must be set prior to
    * calling this method.
@@ -115,7 +117,7 @@ public:
    * \throws logical_exception if the bodysensor does not exist or the joint
    * configuration does not have the same size as the reference joint order
    */
-  void init(const std::vector<double> & initq);
+  void init(const std::vector<double> & initq, bool initController = true);
 
   /**
    * @brief Initialize robot attitude from encoders and the floating base attitude
@@ -123,16 +125,29 @@ public:
    * @param initq Initial joints configuration
    * @param initAttitude Attitude of the floating base provided as
    *        a quaternion [qw, qx, qy, qz, tx, ty, tz]
+   * @param initController Should be left to true. When false, this function will only initialize the
+   * robot state, and you are expected to call initController() manually.
    */
-  void init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude);
+  void init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude, bool initController = true);
 
   /**
    * @brief Initialize robot attitude from encoders and the floating base attitude
    *
    * @param initq Initial joints configuration
    * @param initAttitude Attitude of the floating base
+   * @param initController Should be left to true. When false, this function will only initialize the
+   * robot state, and you are expected to call initController() manually.
    */
-  void init(const std::vector<double> & initq, const sva::PTransformd & initAttitude);
+  void init(const std::vector<double> & initq, const sva::PTransformd & initAttitude, bool initController = true);
+
+  /**
+   * @brief Initializes controller, observers and plugins
+   *
+   * Should only be called if init() has been called with initController=false.
+   *
+   * The robot state must be properly initialized prior to calling this function.
+   */
+  void initController();
 
   /** @name Sensing
    *
@@ -706,13 +721,6 @@ private:
    * @param initq Encoder values for all actuated joints
    */
   void initEncoders(const std::vector<double> & initq);
-  /**
-   * @brief Initializes controller, observers and plugins
-   *
-   * The robot state must be properly initialized prior to calling this
-   * function.
-   */
-  void initController();
 
 public:
   /*! \brief Returns true if the controller is running

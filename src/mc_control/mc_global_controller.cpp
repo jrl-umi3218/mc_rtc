@@ -157,21 +157,28 @@ std::string MCGlobalController::current_controller() const
   return current_ctrl;
 }
 
-void MCGlobalController::init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude)
+void MCGlobalController::init(const std::vector<double> & initq,
+                              const std::array<double, 7> & initAttitude,
+                              bool initController)
 {
   Eigen::Quaterniond q{initAttitude[0], initAttitude[1], initAttitude[2], initAttitude[3]};
   Eigen::Vector3d t{initAttitude[4], initAttitude[5], initAttitude[6]};
-  init(initq, sva::PTransformd(q.inverse(), t));
+  init(initq, sva::PTransformd(q.inverse(), t), initController);
 }
 
-void MCGlobalController::init(const std::vector<double> & initq, const sva::PTransformd & initAttitude)
+void MCGlobalController::init(const std::vector<double> & initq,
+                              const sva::PTransformd & initAttitude,
+                              bool initController)
 {
   initEncoders(initq);
   robot().posW(initAttitude);
-  initController();
+  if(initController)
+  {
+    this->initController();
+  }
 }
 
-void MCGlobalController::init(const std::vector<double> & initq)
+void MCGlobalController::init(const std::vector<double> & initq, bool initController)
 {
   initEncoders(initq);
 
@@ -219,7 +226,10 @@ void MCGlobalController::init(const std::vector<double> & initq)
       robot().forwardKinematics();
     }
   }
-  initController();
+  if(initController)
+  {
+    this->initController();
+  }
 }
 
 void MCGlobalController::initEncoders(const std::vector<double> & initq)
