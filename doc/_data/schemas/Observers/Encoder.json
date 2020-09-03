@@ -8,6 +8,8 @@
     "updateRobot": { "type": "string", "default": "&lt;robot&gt;", "description": "Name of the robot to update" },
     "position": { "enum": ["encoderValues", "control", "none"], "default": "encoderValues", "description": "Sensor/method used to observe joint position" },
     "velocity": { "enum": ["encoderFiniteDifferences", "encoderVelocities", "control", "none"], "default": "encoderFiniteDifferences", "description": "Sensor/method used to observe joint velocity" },
+    "computeFK": { "type": "boolean", "default": true, "description": "When true, the update computes forward kinematics" },
+    "computeFV": { "type": "boolean", "default": true, "description": "When true, the update computes forward velocity" },
     "log":
     {
       "type": "object",

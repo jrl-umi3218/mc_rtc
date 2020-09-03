@@ -80,6 +80,8 @@ protected:
 
   PosUpdate posUpdate_ = PosUpdate::EncoderValues;
   VelUpdate velUpdate_ = VelUpdate::EncoderFiniteDifferences;
+  bool computeFK_ = true; ///< Whether to compute forward kinematics
+  bool computeFV_ = true; ///< Whether to compute forward velocity
 
   std::string robot_ = ""; ///< Robot estimated by this observer
   std::string updateRobot_ = ""; ///< Robot to update (defaults to robot_)

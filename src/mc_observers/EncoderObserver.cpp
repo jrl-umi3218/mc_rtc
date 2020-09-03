@@ -70,6 +70,9 @@ void EncoderObserver::configure(const mc_control::MCController & ctl, const mc_r
     ;
   }
 
+  config("computeFK", computeFK_);
+  config("computeFV", computeFV_);
+
   if(config.has("log"))
   {
     auto lConfig = config("log");
@@ -163,11 +166,11 @@ void EncoderObserver::update(mc_control::MCController & ctl)
       }
     }
   }
-  if(posUpdate_ != PosUpdate::None)
+  if(computeFK_ && posUpdate_ != PosUpdate::None)
   {
     realRobot.forwardKinematics();
   }
-  if(velUpdate_ != VelUpdate::None)
+  if(computeFV_ && velUpdate_ != VelUpdate::None)
   {
     realRobot.forwardVelocity();
   }
