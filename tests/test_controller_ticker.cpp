@@ -72,13 +72,8 @@ BOOST_AUTO_TEST_CASE(RUN)
     controller.setSensorOrientations({{"FloatingBase", Eigen::Quaterniond{robot.posW().rotation()}}});
   };
 
-  // Initialize state of robot, but not the controller as the observer will need
-  // the simulated sensors
-  controller.init(initq, false);
-  // Simulate sensors from control robot values
-  simulateSensors();
-  // Initialize controller (calls reset of controller, observers and plugins)
-  controller.initController();
+  controller.setEncoderValues(qEnc);
+  controller.init(initq, controller.robot().module().default_attitude());
   controller.running = true;
   for(size_t i = 0; i < nrIter; ++i)
   {

@@ -157,28 +157,21 @@ std::string MCGlobalController::current_controller() const
   return current_ctrl;
 }
 
-void MCGlobalController::init(const std::vector<double> & initq,
-                              const std::array<double, 7> & initAttitude,
-                              bool initController)
+void MCGlobalController::init(const std::vector<double> & initq, const std::array<double, 7> & initAttitude)
 {
   Eigen::Quaterniond q{initAttitude[0], initAttitude[1], initAttitude[2], initAttitude[3]};
   Eigen::Vector3d t{initAttitude[4], initAttitude[5], initAttitude[6]};
-  init(initq, sva::PTransformd(q.inverse(), t), initController);
+  init(initq, sva::PTransformd(q.inverse(), t));
 }
 
-void MCGlobalController::init(const std::vector<double> & initq,
-                              const sva::PTransformd & initAttitude,
-                              bool initController)
+void MCGlobalController::init(const std::vector<double> & initq, const sva::PTransformd & initAttitude)
 {
   initEncoders(initq);
   robot().posW(initAttitude);
-  if(initController)
-  {
-    this->initController();
-  }
+  this->initController();
 }
 
-void MCGlobalController::init(const std::vector<double> & initq, bool initController)
+void MCGlobalController::init(const std::vector<double> & initq)
 {
   initEncoders(initq);
 
@@ -226,10 +219,7 @@ void MCGlobalController::init(const std::vector<double> & initq, bool initContro
       robot().forwardKinematics();
     }
   }
-  if(initController)
-  {
-    this->initController();
-  }
+  this->initController();
 }
 
 void MCGlobalController::initEncoders(const std::vector<double> & initq)
@@ -1027,7 +1017,7 @@ void MCGlobalController::setup_log()
     controller->logger().addLogEntry(name + "_linearAcceleration", [controller, name]() -> const Eigen::Vector3d & {
       return controller->robot().bodySensor(name).linearAcceleration();
     });
-    controller->logger().addLogEntry(name + "_angularAcc", [controller, name]() -> const Eigen::Vector3d & {
+    controller->logger().addLogEntry(name + "_angularAcceleration", [controller, name]() -> const Eigen::Vector3d & {
       return controller->robot().bodySensor(name).angularAcceleration();
     });
   }

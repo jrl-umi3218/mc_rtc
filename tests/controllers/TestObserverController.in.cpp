@@ -51,7 +51,7 @@ public:
     // Check whether all pipelines succeeded
     for(const auto & pipeline : observerPipelines())
     {
-      BOOST_REQUIRE_EQUAL(pipeline.success(), true);
+      BOOST_REQUIRE(pipeline.success());
     }
 
     auto checkPose = [](const std::string & prefix, const sva::PTransformd & expected,

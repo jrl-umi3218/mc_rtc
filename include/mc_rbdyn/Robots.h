@@ -121,7 +121,10 @@ public:
    */
   void load(const std::vector<std::shared_ptr<RobotModule>> & modules);
 
-  /** Rename an existing robot */
+  /** Rename an existing robot
+   *
+   * \note This is generally unsafe to do late into the controller's life
+   */
   void rename(const std::string & oldName, const std::string & newName);
 
   Robot & loadFromUrdf(const std::string & name,
