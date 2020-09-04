@@ -7,14 +7,54 @@ else
   $doc = Nokogiri::XML("");
 end
 
-def get_page(struct)
-  $doc.xpath("/tagfile/compound[@kind='struct']").each do |e|
+def get_struct(structName)
+  $doc.xpath("/tagfile/compound[@kind='struct' or @kind='class']").each do |e|
     name = e.at_xpath('name').content;
-    if name == struct then
+    if name == structName then
       return e.at_xpath('filename').content.sub('.html', '');
     end
   end
   return "";
+end
+
+def get_function(structName, functionName)
+  $doc.xpath("/tagfile/compound[@kind='struct' or @kind='class']").each do |e|
+    name = e.at_xpath('name').content;
+    if name == structName then
+      e.xpath(".//member[@kind='function']").each do |f|
+        fname = f.at_xpath('name').content
+        if fname == functionName then
+            anchorFile = f.at_xpath('anchorfile').content.sub('.html', '');
+            anchor = f.at_xpath('anchor').content;
+            return anchorFile + '#' + anchor
+        end
+      end
+    end
+  end
+  return "";
+end
+
+# Try to look for the element in the doxytag file
+# Looks for struct/class and functions. Note that function
+# arguments are ignored
+#
+# Expect text as
+# namespace::ClassName
+# namespace::ClassName::function(args)
+#
+def get_page(text)
+  path = get_struct(text)
+  if path != "" then
+    # Try to find as a class/struct
+    return path
+  else
+    # Try to find as function
+    name = text[/[\w:]+/] # strip parameters
+    sName = name.split("::")[0...-1].join("::") # class name
+    fName = name.split("::").last[/\w+/] # function name
+    path = get_function(sName, fName)
+  end
+  return path
 end
 
 module Jekyll
@@ -26,7 +66,7 @@ module Jekyll
     end
 
     def render(context)
-      path = get_page(@text);
+      path = get_page(@text)
       if(path != "") then
         "<a href=\"#{context.registers[:site].config['baseurl']}/doxygen.html##{path}\" target=\"blank_\">#{@text}</a>"
       else
