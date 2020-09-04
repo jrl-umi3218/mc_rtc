@@ -239,7 +239,7 @@ protected:
   unsigned int robotIndex_;
   unsigned int envIndex_;
   void updateIndexes();
-  std::map<std::string, unsigned int> robotNameToIndex_; ///< Correspondance between robot name and index
+  std::unordered_map<std::string, unsigned int> robotNameToIndex_; ///< Correspondance between robot name and index
 };
 
 /* Static pendant of the loader functions to create Robots directly */

@@ -119,11 +119,12 @@ unsigned int Robots::envIndex() const
 
 unsigned int Robots::robotIndex(const std::string & name) const
 {
-  if(!hasRobot(name))
+  auto key = robotNameToIndex_.find(name);
+  if(key == robotNameToIndex_.end())
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("No robot named {}", name);
   }
-  return robotNameToIndex_.at(name);
+  return key->second;
 }
 
 Robot & Robots::robot()
@@ -169,11 +170,12 @@ Robot & Robots::robot(const std::string & name)
 
 const Robot & Robots::robot(const std::string & name) const
 {
-  if(!hasRobot(name))
+  auto key = robotNameToIndex_.find(name);
+  if(key == robotNameToIndex_.end())
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("No robot named {}", name);
   }
-  return robots_[robotNameToIndex_.at(name)];
+  return robots_[key->second];
 }
 
 void Robots::createRobotWithBase(const std::string & name,
