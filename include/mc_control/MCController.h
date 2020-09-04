@@ -335,7 +335,8 @@ public:
   /** Helper to make the anchor frame compile-time deprecation warning
    * clearer
    */
-  struct DeprecatedAnchorFrame
+  template<typename T>
+  struct DeprecatedAnchorFrame : public std::false_type
   {
   };
 
@@ -343,10 +344,10 @@ public:
    * the datastore. For further information, please refer to the observer's tutorial:
    * https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
    */
-  template<typename T = DeprecatedAnchorFrame>
+  template<typename T = void> // void for shorter error message
   inline void anchorFrame(const sva::PTransformd &)
   {
-    static_assert(!std::is_same<T, T>::value,
+    static_assert(DeprecatedAnchorFrame<T>::value,
                   "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
                   "remove calls to these functions from your code and replace it with a datastore callback. For "
                   "further information please refer to the observer's tutorial: "
@@ -357,10 +358,10 @@ public:
    * the datastore. For further information, please refer to the observer's
    * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
    */
-  template<typename T = DeprecatedAnchorFrame>
+  template<typename T = void> // void for shorter error message
   inline void anchorFrameReal(const sva::PTransformd &)
   {
-    static_assert(!std::is_same<T, T>::value,
+    static_assert(DeprecatedAnchorFrame<T>::value,
                   "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
                   "remove calls to these functions from your code and replace it with a datastore callback. For "
                   "further information please refer to the observer's tutorial: "
@@ -370,10 +371,10 @@ public:
    * the datastore. For further information, please refer to the observer's
    * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
    */
-  template<typename T = DeprecatedAnchorFrame>
+  template<typename T = void> // void for shorter error message
   inline const sva::PTransformd & anchorFrame() const
   {
-    static_assert(!std::is_same<T, T>::value,
+    static_assert(DeprecatedAnchorFrame<T>::value,
                   "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
                   "remove calls to these functions from your code and replace it with a datastore callback. For "
                   "further information please refer to the observer's tutorial: "
@@ -384,10 +385,10 @@ public:
    * the datastore. For further information, please refer to the observer's
    * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
    */
-  template<typename T = DeprecatedAnchorFrame>
+  template<typename T = void> // void for shorter error message
   inline const sva::PTransformd & anchorFrameReal() const
   {
-    static_assert(!std::is_same<T, T>::value,
+    static_assert(DeprecatedAnchorFrame<T>::value,
                   "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
                   "remove calls to these functions from your code and replace it with a datastore callback. For "
                   "further information please refer to the observer's tutorial: "
