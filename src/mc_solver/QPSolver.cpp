@@ -69,7 +69,7 @@ QPSolver::QPSolver(std::shared_ptr<mc_rbdyn::Robots> robots, double timeStep) : 
   realRobots_p = std::make_shared<mc_rbdyn::Robots>();
   for(const auto & robot : robots->robots())
   {
-    realRobots_p->robotCopy(robot);
+    realRobots_p->robotCopy(robot, robot.name());
   }
 }
 

@@ -56,7 +56,7 @@ Robots::Robots(const Robots & rhs)
   for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
   {
     const Robot & robot = rhs.robots_[i];
-    robot.copy(*this, i);
+    robot.copy(*this, robot.name(), i);
   }
 }
 
@@ -76,7 +76,7 @@ Robots & Robots::operator=(const Robots & rhs)
   for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
   {
     const Robot & robot = rhs.robots_[i];
-    robot.copy(*this, i);
+    robot.copy(*this, robot.name(), i);
   }
   return *this;
 }
@@ -200,8 +200,7 @@ void Robots::createRobotWithBase(const std::string & name,
   this->mbcs_.emplace_back(this->mbs_.back());
   this->mbgs_.push_back(robot.mbg());
   auto robotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
-  robot.copy(*this, robotIndex, base);
-  robots_.back().name(name);
+  robot.copy(*this, name, robotIndex, base);
   robotNameToIndex_[name] = robotIndex;
 }
 
@@ -232,16 +231,24 @@ void Robots::removeRobot(unsigned int idx)
   {
     auto & r = robots_[i];
     r.robots_idx_--;
+    robotNameToIndex_[r.name()] = r.robots_idx_;
   }
 }
 
-void Robots::robotCopy(const Robot & robot)
+void Robots::robotCopy(const Robot & robot, const std::string & copyName)
 {
+  if(hasRobot(copyName))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot copy robot {} to {}: a robot named {} already exists",
+                                                     robot.name(), copyName, copyName);
+  }
   this->robot_modules_.push_back(robot.module());
   this->mbs_.push_back(robot.mb());
   this->mbcs_.push_back(robot.mbc());
   this->mbgs_.push_back(robot.mbg());
-  robot.copy(*this, static_cast<unsigned int>(this->mbs_.size()) - 1);
+  auto copyRobotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
+  robot.copy(*this, copyName, copyRobotIndex);
+  robotNameToIndex_[copyName] = copyRobotIndex;
 }
 
 // deprecated
@@ -272,8 +279,7 @@ Robot & Robots::load(const std::string & name,
   mbs_.emplace_back(module.mb);
   mbcs_.emplace_back(module.mbc);
   mbgs_.emplace_back(module.mbg);
-  mc_rbdyn::Robot robot{*this, static_cast<unsigned int>(mbs_.size() - 1), true, base, bName};
-  robot.name(name);
+  mc_rbdyn::Robot robot{name, *this, static_cast<unsigned int>(mbs_.size() - 1), true, base, bName};
   robots_.emplace_back(std::move(robot));
   robotNameToIndex_[name] = robot.robotIndex();
   updateIndexes();

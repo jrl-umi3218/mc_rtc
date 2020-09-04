@@ -132,7 +132,7 @@ public:
                        sva::PTransformd * base = nullptr,
                        const std::string & baseName = "");
 
-  void robotCopy(const Robot & robot);
+  void robotCopy(const Robot & robot, const std::string & newName);
 
   void createRobotWithBase(const std::string & name,
                            Robots & robots,
