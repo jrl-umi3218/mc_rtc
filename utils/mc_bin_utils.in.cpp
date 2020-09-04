@@ -411,6 +411,7 @@ int convert(int argc, char * argv[])
     ("in", po::value<std::string>(), "Input file")
     ("out", po::value<std::string>(), "Output file or template")
     ("format", po::value<std::string>(), "Log format (csv|flat|bag), can be deduced from [out]")
+    ("entries", po::value<std::vector<std::string>>()->multitoken(), "Name of entries to log (all if ommitted)");
     ("dt", po::value<double>(&dt), "Log timestep (only for bag conversion)");
   // clang-format on
   po::positional_options_description pos;
@@ -494,13 +495,19 @@ int convert(int argc, char * argv[])
     mc_rtc::log::error("Could not deduce the desired output format");
     return 1;
   }
+  std::vector<std::string> entries;
+  if(vm.count("entries"))
+  {
+    entries = vm["entries"].as<std::vector<std::string>>();
+  }
+
   if(format == ".flat")
   {
-    mc_bin_to_flat(in, out_p.string());
+    mc_bin_to_flat(in, out_p.string(), entries);
   }
   else if(format == ".csv" || format == ".log")
   {
-    mc_bin_to_log(in, out_p.string());
+    mc_bin_to_log(in, out_p.string(), entries);
   }
   else if(format == ".bag")
   {
@@ -509,6 +516,12 @@ int convert(int argc, char * argv[])
       if(vm.count("dt"))
       {
         dt = vm["dt"].as<double>();
+      }
+      if(vm.count("entries"))
+      {
+        mc_rtc::log::critical(
+            "--entries option is not supported for ROSBAG format, please enquire with mc_rtc maintainers ;)");
+        exit(1);
       }
       std::string cmd = MC_BIN_TO_ROSBAG.string() + " " + in + " " + out_p.string() + " " + std::to_string(dt);
       system(cmd.c_str());

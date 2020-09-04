@@ -7,11 +7,23 @@
 namespace utils
 {
 
-inline std::map<std::string, mc_rtc::log::LogType> entries(const mc_rtc::log::FlatLog & log)
+inline std::map<std::string, mc_rtc::log::LogType> entries(const mc_rtc::log::FlatLog & log,
+                                                           const std::vector<std::string> & entriesFilter)
 {
   std::map<std::string, mc_rtc::log::LogType> ret;
+  for(const auto & e : entriesFilter)
+  {
+    if(!log.has(e))
+    {
+      mc_rtc::log::warning("Requested log entry named {} but this entry is not part of the log, ignoring", e);
+    }
+  }
   for(const auto & e : log.entries())
   {
+    if(entriesFilter.size() && std::find(entriesFilter.begin(), entriesFilter.end(), e) == entriesFilter.end())
+    {
+      continue;
+    }
     auto t = log.type(e);
     if(t != mc_rtc::log::LogType::None)
     {

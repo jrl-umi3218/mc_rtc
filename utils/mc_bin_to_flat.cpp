@@ -357,10 +357,12 @@ void write<Eigen::VectorXd>(const mc_rtc::log::FlatLog & log, const std::string 
 
 } // namespace utils
 
-void mc_bin_to_flat(const std::string & in, const std::string & out)
+void mc_bin_to_flat(const std::string & in,
+                    const std::string & out,
+                    const std::vector<std::string> & entriesFilter = {})
 {
   mc_rtc::log::FlatLog log(in);
-  auto entries = utils::entries(log);
+  auto entries = utils::entries(log, entriesFilter);
   std::ofstream ofs(out, std::ofstream::binary);
   utils::write(utils::nEntries(log, entries), ofs);
   for(const auto & e : entries)

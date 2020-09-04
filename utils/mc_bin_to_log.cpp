@@ -13,10 +13,12 @@ struct SizedType
 
 using SizedEntries = std::map<std::string, SizedType>;
 
-SizedEntries write_header(std::ofstream & ofs, const mc_rtc::log::FlatLog & log)
+SizedEntries write_header(std::ofstream & ofs,
+                          const mc_rtc::log::FlatLog & log,
+                          const std::vector<std::string> & entriesFilter = {})
 {
   SizedEntries out;
-  auto entries = utils::entries(log);
+  auto entries = utils::entries(log, entriesFilter);
   size_t i = 0;
   for(const auto & e : entries)
   {
@@ -323,7 +325,7 @@ void write_data(std::ofstream & ofs, const mc_rtc::log::FlatLog & log, const Siz
   }
 }
 
-void mc_bin_to_log(const std::string & in, const std::string & out)
+void mc_bin_to_log(const std::string & in, const std::string & out, const std::vector<std::string> & entriesFilter)
 {
   mc_rtc::log::FlatLog log(in);
   std::ofstream ofs(out);
@@ -331,7 +333,7 @@ void mc_bin_to_log(const std::string & in, const std::string & out)
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("Failed to open {} for conversion from bin to log", out);
   }
-  auto entries = write_header(ofs, log);
+  auto entries = write_header(ofs, log, entriesFilter);
   for(size_t i = 0; i < log.size(); ++i)
   {
     write_data(ofs, log, entries, i);
