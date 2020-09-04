@@ -27,7 +27,7 @@ void KinematicInertialObserver::configure(const mc_control::MCController & ctl, 
   }
   double cutoff = config("cutoff", 2 * ctl.timeStep);
   velFilter_.cutoffPeriod(cutoff);
-  desc_ = name_ + " (cutoff=" + std::to_string(velFilter_.cutoffPeriod()) + ")";
+  desc_ = fmt::format("{} (sensor={}, cutoff={:.3f})", name_, imuSensor_, velFilter_.cutoffPeriod());
 }
 
 void KinematicInertialObserver::reset(const mc_control::MCController & ctl)

@@ -2,32 +2,90 @@
 layout: tutorials
 ---
 
-When dealing with robotic systems, it is common to need an estimation of the state of the system being controlled. Doing so requires writing some form of state observer, that takes as input sensor measurements (joint encoders, force-torque sensors, IMU, cameras, etc) and additional knowledge about the system (contacts, etc) and infers all or part of the system's state. To simplify this estimation process, the framework provide a facility refered to as the `Observers pipeline`. The main concept is to consider the observation of the full robot state as a sequence of simple estimators that each observe a specific part of the state (floating base position, encoder kinematics, etc) and update the robot state accordingly. The framework makes the distinction between two set of robot instances:
+One commonly needs to know the real state of the robots being controlled. Unfortunately, their state can rarely be fully known, as the robots' embedded sensors rarely provide sufficient information. Instead, the systems' state relevant to the controller need to be inferred from various sensor measurements (joint encoders, force-torque sensors, IMU, cameras, etc), along with additional knowledge about the controller's intent (contacts, etc). For instance, a floating-base robot typically doesn't have any sensor capable of providing the full state of its floating base (position, orientation, velocity, etc), and one must make use of the available information to estimate it. This may for instance a combination of IMU, kalman filters and known information about the robot kinematics. Or one might choose to use visual odometry instead, obtain ground truth measurements from a motion capture system, or any combination of those. This process is refered to as state observation.
 
-- `robots()` represents the control state (desired) of the system.
-- `realRobots()` represents the state of the real system. The point of the `Observers pipeline` is to simplify the observation of its state.
+Each controller has its own requirements on what the state of the observed robots should be. A humanoid robot's walking controller will be particularly interesting in robustly estimating the state of the robot's center of mass, and thus needs to know the full kinematic state of the robot (position and velocity of each of its bodies, including the floating base), but a manipulator arm might only care about joint position and velocity. One may also be interested in comparing various methods to obtain that state (ground truth information vs estimated, different sensors or algorithms, etc).
 
-For example, in case of a humanoid robot, one needs the full dynamic properties of the robot, that is the position, orientation and velocity of each body, including the floating base. Considering common sensors available on a humanoid robot, these can be estimated from encoder measurements and an IMU using a simple kinematic-inertial estimator. Using the facilities described in this tutorial, such as estimator can be achieved through the following pipeline:
+The framework provides a mechanism, refered to as **State Observation Pipelines**, to simplify and generalize the observation of a robot, or multiple robots states. The concept is to view state observation as a pipelines, where each pipeline is composed of multiple observers executed sequentially. Each observer is a component responsible for estimating part of the robot state. When combined together, all observers in a pipeline contribute to provide a full estimation of the desired robot state. Multiple pipelines can be defined and executed allowing to estimate the state of multiple robots, or to perform comparisons between multiple estimation methods. The observers themselves are, as is the case for controller, tasks, plugins, loaded from libraries with a simple interface, allowing to conveniently define your own. The framework currently provides the following observers by default:
+
+- **Encoder Observer**: estimates a robot's joint state (position and velocity) and computes forward kinematics and velocities to obtain body positions and velocities. Various inputs may be used: encoder position, encoder velocity (obtained from a velocity sensor or by finite differences of position), another robot's joint values, etc.
+- **BodySensor Observer**: sets a robot's floating base state from measurements provided by a sensor attached to a robot body and the kinematics between the sensor and the floating base. This is typically be used to exploit ground truth measurement from a simulator, or exploit the results of an external component providing information about the floating base (MOCAP, embedded estimator on the robot plateform, etc).
+- **KinematicInertial Observer**: estimates a robot's floating base pose (position + orientation) and velocity (low-pass filtered finite differences of position) from a {% doxygen mc_rbdyn::BodySensor %} (IMU orientation) and a kinematic anchor frame.
+
+To represent the robots, the framework provides two sets of robot instances ({% doxygen mc_rbdyn::Robots %}):
+- {% doxygen mc_control::MCController::robots() %} represents the control state (desired) of the robots.
+- {% doxygen mc_control::MCController::realRobots() %} represents the state of the real robots. It's the role of the observer pipeline to define how these robot states are estimated.
+
+
+
+# Configuring the observer pipelines
+
+State observation pipelines can be configured in your controller configuration (each pipeline configuration superseeds the previous one):
+
+- Global configuration: {% ihighlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endihighlight %}
+- User configuration: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}
+- Controller-specific configuration: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_controllers/YourController.yaml{% endihighlight %}
+- The FSM configuration of your controller: {% ihighlight bash %} YouController.yaml{% endihighlight %} (recommended)
+
+The configuration format is fully documented in the [Observers JSON schema](../../json.html#Observers/ObserverPipelines).
+
+Let's look first at a simple representative example to estimate the state of a floating-base robot from encoder position measurements and a sensor providing roll and pitch orientation of the floating base.
+
+```yaml
+---
+ObserverPipelines:
+- name: MainPipeline                     # - Create a new pipeline
+  gui: true                              #   diplay the pipeline in the GUI (default = false)
+  log: true                              #   log observers (default)
+
+  observers:                             #   declare which observers to use
+  - type: Encoder                        # - Use an EncoderObserver
+    config:                              #
+      position: encoderValues            #    - Sets joint position from encoder sensor values (default)
+      velocity: encoderFiniteDifferences #    - Computes joint velocities by finite differences  (default)
+                                         # We now have the estimation of each joint position and velocity and the corresponding
+                                         # body positions and velocities, but we are still missing the floating base
+
+  - type: BodySensor                     # - Use a BodySensor observer
+    update: false                        #   Do not update the real robot state
+    gui: false                           #   Do not display in the gui
+    config:                              #
+      bodySensor: FloatingBase           #   In simulation, the interface will fill this sensor with ground truth values
+                                         #   The observer computes the position and velocity of the floating base
+                                         #   by transforming the sensor measurements to the floating base frame
+
+  - type: KinematicInertial              # - Estimates the floating base state using the KinematicInertial observer
+    update: true                         #   update the real robot instance from its results
+    gui: true                            #   Displays the estimated velocity as an arrow (default)
+    config:
+      bodySensor: Accelerometer          # This observer only uses roll and pitch rotation information from this sensor
+                                         # along with a kinematic anchor point and the robot kinematics between the anchor
+                                         # frame and the floating base frame. The anchor frame is expected to be provided
+                                         # through a datastore callback (see below for details)
+```
+
+Please refer to the corresponding JSON schemas for a full list of available options:
+- [ObserverPipelines](../../json.html#Observers/ObserverPipelines): array of multiple state observation pipelines
+- [ObserverPipeline](../../json.html#Observers/ObserverPipeline): definition of an observer pipeline, containing observers
+- [EncoderObserver](../../json.html#Observers/Encoder): options for the encoder observer
+- [BodySensorObserver](../../json.html#Observers/BodySensor): options for the BodySensor observer
+- [KinematicInertial](../../json.html#Observers/KinematicInertial): options for the KinematicInertial observer
+
+When creating a controller with the above pipeline, the framework will display a short summary as
 
 ```
-Observers: Encoder (position=estimator,velocity=estimator) -> [BodySensor (sensor=FloatingBase,update=estimator)] -> KinematicInertial (cutoff=0.01)
+ObserverPipelines:
+- ExamplePipeline: Encoder (position=encoderValues,velocity=encoderFiniteDifferences) -> [BodySensor (sensor=FloatingBase,update=sensor)] ->  KinematicInertial (sensor=Accelerometer,cutoff=0.010000)
 ```
 
-Note that the above short description of the pipeline will be displayed when starting your controller. It provides a short description of the pipeline and its options, and reads as follows:
+This displays information about the running pipelines, and their sequence of observers. Observers displayed between `[..]` brackets are run but do not affect the state of the `realRobots` instance. After running the pipelines, the `realRobots` instances now contain the estimated robot states, and can be used in the controller.
 
-- Observers are executed in sequential order (separated by `->`)
-- Relevant details of each observer configuration are shown between parenthesis `(...)`
-- Observers shown between brackets (`[...]`) are run, but do not affect the state of the `realRobots()` instance. This allows to have several observers estimating the same state simultaneously, for comparison purposes. Here both `BodySensor` (groundtruth) and `KinematicInertial` estimate the state of the floating base, but only `KinematicInertial` observer result is used to update the `realRobots()` instances.
-
-Each observer is allowed to modify properties of the `realRobots()` instance. In the above example:
-- The `Encoder` observer will compute the encoder velocity through finite differences of the encoder position sensor, and use this estimate for the kinematic properties of the real robot instance (e.g set `realRobot().mbc().q, realRobot().mbc().alpha` and compute forward kinematics and forward velocity to update each body pose and velocity).
-- Then the `BodySensor` observer will be run, and only compute the pose of the floating base from `BodySensor` information (typically groundtruth from a simulator). It will however not update any properties of the `realRobots()` instance.
-- Finally, the `KinematicInertial` observer is run, and estimates the floating base pose and velocity (through filtered finite differences) based on IMU measurement. This estimate is in turn used to update the floating base (i.e `realRobot().posW(...)` and `realRobot().velW(...)`).
-
-Thus in the end the `realRobot()` instance will contain a full estimate of the afformentioned state, that is floating base position and velocity, encoder position and velocity. This estimated robot is widely available throughout your controller, and allows you to access any property of the real system in the same way you would access the control instance. For example, you can access:
-
-- Body pose: `realRobot().bodyPosW("bodyName");`
-- Body velocity: `realRobot().bodyVelW("bodyName");`
+For instance, with the above pipeline you can:
+- Get joint position `readRobot().mbc().q()` and velocity `realRobot().mbc().alpha()`
+- Get the floating base pose `realRobot().posW()`
+- Get the floating base velocity `realRobot().velW()`
+- Get the pose of a body: `realRobot().bodyPosW("bodyName");`
+- Get the velocity of a body: `realRobot().bodyVelW("bodyName");`
 - Compute the CoM position and velocity `realRobot().com() / realRobot().comVelocity()`
 - ...
 
@@ -37,250 +95,109 @@ The end-result for this example pipeline looks like this *(left: choreonoid simu
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/ssoNkV940yc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-
 # Default observers
 
-Several common observers are provided with the framework. Their role and requirements will be described in this section, along with a sample JSON/YAML configuration.
+This section provides a brief description of the default observers provided with the framework. Please refer to each observer's API documentation and JSON Schema for further details.
 
-## Encoder
+## Encoder observer
 
-- **Prerequisites**: encoder position sensor
-- **Run**: keeps the encoder position from sensor unchanged, computes encoder velocity by finite differences of the position sensor
-- **Update**:
-   - `UpdatePositionFrom`: updates `realRobot().mbc().q`
-      - `"estimator"` :  from encoder position.
-      - `"control"` : from `robot().mbc().q` values (eg copies the control state instead of using sensors).
-      - `"none"`: does not update the encoder position
-   - `"UpdateVelocityFrom":` : updates `realRobot().mbc().alpha`
-      - `"estimator"`: from estimated encoder velocity.
-      - `"control"`: from `robot().mbc().alpha` values (eg copies the control state instead of using sensors).
-      - `"none"`: does not update the encoder velocity
-- **Computes**: forward kinematics, forward velocity for the `estimator|control` updates.
+- API: {% doxygen mc_observers::EncoderObserver %}
+- [JSON Schema](../../json.html#Observers/Encoder)
 
+The encoder observer may be used to obtain the position and velocity of all actuated joints.
 
-<ul class="nav nav-tabs" id="createTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="yamlCreateTab" data-toggle="tab" href="#yamlCreateTabContent" role="tab" aria-controls="yamlCreateTabContent" aria-selected="true">YAML</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="jsonCreateTab" data-toggle="tab" href="#jsonCreateTabContent" role="tab" aria-controls="jsonCreateTabContent" aria-selected="false">JSON</a>
-  </li>
-</ul>
-<div class="tab-content" id="interfaceTabContent">
-  <div class="tab-pane show active" id="yamlCreateTabContent" role="tabpanel" arial-labelledby="yamlCreateTab">
-    <div class="card bg-light">
-      <div class="card-body">
-<p>
-{% highlight yaml %}
-Encoder:
-  # Valid values are [estimator, control, none]
-  UpdatePositionFrom: estimator
-  UpdateVelocityFrom: estimator
-  Log : true
-{% endhighlight %}
-</p>
-      </div>
-    </div>
-  </div>
-  <div class="tab-pane" id="jsonCreateTabContent" role="tabpanel" arial-labelledby="jsonCreateTab">
-    <div class="card bg-light">
-      <div class="card-body">
-<p>
-{% highlight json %}
-"Encoder":
-{
-  "UpdatePositionFrom": "estimator",
-  "UpdateVelocityFrom": "estimator",
-  "Log" : true
-}
-{% endhighlight %}
-</p>
-      </div>
-    </div>
-  </div>
-</div>
+- Joint values can be obtained from sensor as provided by {% doxygen mc_rbdyn::Robot::encoderValues() %} or using the joint state of another robot {% doxygen mc_rbdyn::Robot::q() %}.
+- Joint velocities can be obtained from a joint velocity sensor {% doxygen mc_rbdyn::Robot::encoderVelocities() %}, estimated by finite differences of the (estimated) position, or using the joint velocities of another robot {% doxygen mc_rbdyn::Robot::alpha() %}
+- The observer will compute forward kinematics {% doxygen mc_rbdyn::Robot::forwardKinematics() %} and forward velocity {% doxygen mc_rbdyn::Robot::forwardVelocity() %} to update the corresponding body positions and velocities (which may be required by subsequent observers).
 
+## BodySensor observer
 
-## BodySensor
+- API: {% doxygen mc_observers::BodySensorObserver %}
+- [JSON Schema](../../json.html#Observers/BodySensor)
 
-- **Prerequisites**:
-  - Up to date kinematic information (typically obtained by the `Encoder` observer)
-  - The `BodySensor` must contain position, orientation, linear and angular velocity
-- **Run**:
-  - If `"UpdateFrom": "estimator"`: Computes the floating base pose and velocity from a `BodySensor`. If the body sensor is not directly attached to the floating base link, the transformation between the sensor frame and the floating base frame is taken into account using their relative pose obtained by kinematics.
-  - If `"UpdateFrom": "control"`: Use the control robot floating base (`robot().posW(), robot().velW()) instead
-- **Update**:
-  - sets the real robot floating base state
-  - computes forward kinematics/velocity when necessary
+The BodySensor observer allows to estimate the state of the floating base from information provided by a {% doxygen mc_rbdyn::BodySensor %}. BodySensors are sensors attached to a robot body representing measurements of its state. A `BodySensor` may contain:
 
-<ul class="nav nav-tabs" id="createTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="bodySensorYAMLCreateTab" data-toggle="tab" href="#bodySensorYAMLCreateTabContent" role="tab" aria-controls="bodySensorYAMLCreateTabContent" aria-selected="true">YAML</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="bodySensorJSONCreateTab" data-toggle="tab" href="#bodySensorJSONCreateTabContent" role="tab" aria-controls="bodySensorJSONCreateTabContent" aria-selected="false">JSON</a>
-  </li>
-</ul>
-<div class="tab-content" id="interfaceTabContent">
-  <div class="tab-pane show active" id="bodySensorYAMLCreateTabContent" role="tabpanel" arial-labelledby="bodySensorYAMLCreateTab">
-    <div class="card bg-light">
-      <div class="card-body">
-<p>
-{% highlight yaml %}
-BodySensor:
-  # Valid entries are [control, estimator]
-  UpdateFrom: estimator
-  FloatingBaseSensor: FloatingBase
-{% endhighlight %}
-</p>
-      </div>
-    </div>
-  </div>
-  <div class="tab-pane" id="bodySensorJSONCreateTabContent" role="tabpanel" arial-labelledby="bodySensorJSONCreateTab">
-    <div class="card bg-light">
-      <div class="card-body">
-<p>
-{% highlight json %}
-"BodySensor":
-{
-  "UpdateFrom": "estimator",
-  "FloatingBaseSensor": "FloatingBase"
-}
-{% endhighlight %}
-</p>
-      </div>
-    </div>
-  </div>
-</div>
+- Transformation between the sensor and the body to which it is attached [required]
+- Position and orientation of the body
+- Linear and angular velocity
+- Linear and angular acceleration
 
-## KinematicInertial
+Depending on the available sensors on the robot, only some of these measurements may be available while others will default to zero. The BodySensor observer requires at least the position, orientation, linear and angular velocity measurements. Futhermore, if the sensor is not directly attached to the floating base, it requires the kinematic transformation between the sensor and the floating-base to be up-to-date (you may for instance use the `EncoderObserver`).
 
-Observes the state of the robot's floating base (pose and velocity) based on IMU measurements, kinematics information, and a reference anchor point. A full explanation of the method implemented here can be found on [Stéphane Caron's website](https://scaron.info/teaching/floating-base-estimation.html). Note that this observer has been extensively used in practice in the [LIPM Walking Controller](https://github.com/jrl-umi3218/lipm_walking_controller).
+This observer is commonly used to let simulation interfaces provide ground truth measurements of the floating base state through a `FloatingBase` body sensor.
 
-- **Prerequisites**:
-  - IMU sensor
-  - Accurate kinematics (body position)
-  - A known anchor frame, to be provided by calling
+## KinematicInertial observer
 
-  ```cpp
-  void mc_control::anchorFrame(const sva::PTransformd & );
-  void mc_control::anchorFrameReal(const sva::PTransformd & );
-  ```
- The anchor frame is a point in-between the robot feet used to estimate the position of the floating base from its orientation and the robot kinematics between the anchor sole and the floating base frame.
+- API: {% doxygen mc_observers::KinematicInertialObserver %}
+- [JSON Schema](../../json.html#Observers/KinematicInertial)
+- [Detailed explanation of the method by Stéphane Caron](https://scaron.info/teaching/floating-base-estimation.html)
 
-- **Run**
-  - Computes the floating base pose from IMU, kinematics and the anchor frame
-  - Computes the floating base velocity by finite differences of the estimated pose, filtered with a low-pass filter.
+Floating base robots rarely have sensors capable of providing the full state of the floating base. The KinematicInertial observer provides a simple method to estimate the floating base position, orientation, linear and angular velocity based on measurement based on orientation estimation obtained from an IMU sensor. Please refer to [Stéphane Caron's website](https://scaron.info/teaching/floating-base-estimation.html) for a full explanation of the method implemented here. Note that this observer has been extensively used in practice in the [LIPM Walking Controller](https://github.com/jrl-umi3218/lipm_walking_controller) for walking, including stair climbing ([video](https://www.youtube.com/embed/vFCFKAunsYM)).
 
-- **Update**
-  - The floating base pose and velocity
-  - Computes forward kinematics/veloctiy
+The method expects the roll and pitch rotation angle w.r.t gravity to be provided by a sensor. The rotation along the gravity vector (yaw) is assumed to be unobservable by sensor (as is the case for IMU), and is instead replaced by the desired rotation of the control robot to provide a complete estimation of the sensor's frame.
 
-**Default configuration**: no configuration options implemented
+The estimation of position relies on the assumption that the contact position is known and only concerns itself with estimating the position that best matches the observed orientation. This is achieved by providing a anchor point in-between the assumed contact positions. When static a suitable choice of anchor frame is a point center in-between all contacts. When performing motions such as walking, the anchor frame is expected to be smoothly interpolated in-between the contacts such that there is no discontinuity when contact transition occurs. This frame is expected to be provided through a datastore callback [datastore]({{site.baseurl}}/tutorial/recipes/datastore.html).
 
+For example, in the pipeline described in the previous section, the anchor frame is provided as a frame center between the two expected feet contact.
 
-## Setting-up the observers pipeline
-
-The observer pipeline can be configured directly from your controller's configuration file as follows.
-
-<ul class="nav nav-tabs" id="createTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="confYAMLCreateTab" data-toggle="tab" href="#confYAMLCreateTabContent" role="tab" aria-controls="confYAMLCreateTabContent" aria-selected="true">YAML</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="confJSONCreateTab" data-toggle="tab" href="#confJSONCreateTabContent" role="tab" aria-controls="confJSONCreateTabContent" aria-selected="false">JSON</a>
-  </li>
-</ul>
-<div class="tab-content" id="interfaceTabContent">
-  <div class="tab-pane show active" id="confYAMLCreateTabContent" role="tabpanel" arial-labelledby="confYAMLCreateTab">
-    <div class="card bg-light">
-      <div class="card-body">
-<p>
-{% highlight yaml %}
-# Defines which observer libraries will be loaded by the framework
-EnabledObservers: [Encoder, BodySensor, KinematicInertial]
-# List of observers to run
-RunObservers: [Encoder, BodySensor, KinematicInertial]
-# List of observers used to update realRobots() from
-UpdateObservers: [Encoder, KinematicInertial]
-
-# Specific configuration for each observer (optional)
-Observers:
-  Encoder:
-    UpdatePositionFrom: estimator
-    UpdateVelocityFrom: estimator
-    Log : true
-
-  BodySensor:
-    UpdateFrom: estimator
-    FloatingBaseSensor: FloatingBase
-
-# These observers are loaded from libraries (similarely to the controllers and metatasks).
-# The default path is `<INSTALL_PREFIX>/lib/mc_observers/ObserverName.so`.
-# Optionally, you can specify additional paths for your observer libraries as
-# ObserverModulePaths: ["/one/path/to/observer/", "/another/path/"]
-{% endhighlight %}
-</p>
-      </div>
-    </div>
-  </div>
-  <div class="tab-pane" id="confJSONCreateTabContent" role="tabpanel" arial-labelledby="confJSONCreateTab">
-    <div class="card bg-light">
-      <div class="card-body">
-<p>
-{% highlight json %}
-{
-"EnabledObservers": ["Encoder", "BodySensor", "KinematicInertial"],
-"RunObservers": ["Encoder", "BodySensor", "KinematicInertial"],
-"UpdateObservers": ["Encoder", "KinematicInertial"],
-
-"Observers":
-{
-  "Encoder":
-  {
-    "UpdatePositionFrom": "estimator",
-    "UpdateVelocityFrom": "estimator",
-    "Log" : true
-  },
-
-  "BodySensor":
-  {
-    "UpdateFrom": "estimator",
-    "FloatingBaseSensor": "FloatingBase"
-  }
-}
-}
-{% endhighlight %}
-</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-Note that most of the configuration used in this example is already the default. The only required fields are `EnabledObservers`, `RunObservers` and `UpdateObservers`. Only use observer-specific configuration when needed. The above example will set-up the pipeline described at the begining of this tutorial. When running your controller, you should now see this line in the terminal, and the log file will contain `observers_...` entries.
-
-```
-Observers: Encoder (position=estimator,velocity=estimator) -> [BodySensor (sensor=FloatingBase,update=estimator)] -> KinematicInertial (cutoff=0.01)
+```cpp
+double leftFootRatio = 0.5
+ctl.datastore().make_call("KinematicAnchorFrame::" + robot().name(),
+                          [this, &leftFootRatio](const mc_rbdyn::Robot & robot)
+                          {
+                            return sva::interpolate(robot().surfacePose("LeftFoot"),
+                                                    robot().surfacePose("RightFoot"),
+                                                    leftFootRatio)
+                          });
 ```
 
-If that's not the case, there is something wrong with your observers set-up. Please check that your configuration file is correct, and that all observers were successfully loaded.
+Note that this function will be called twice: once for the control robot instance, once for the real robot instance (only the relative pose between the anchor frame and the sensor frame is used by the observer).
+
+If one wanted to walk, starting with a right contact and left swing foot motion, the anchor frame would need to be moved smoothly towards the right contact first until contact transition occurs, then be moved smoothly between the two planned contacts such that it ends up at the newly established left foot contact once the step is completed. Discontinuities in the anchor frame may result in jumps of the estimated floating base position (orientation is not affected).
+
+This observer then computes the floating base linear and angular velocity by finite differences of the estimated position and orientation. This velocity is low-pass filtered.
+
+You can find examples of this observer in use in the [Admittance sample controller tutorial]({{site.baseurl}}/tutorials/samples/sample-admittance.html), the {% doxygen mc_control::fsm::StabilizerStandingState %}, and a more complex use in the [LIPMWalking controller](
+https://github.com/jrl-umi3218/lipm_walking_controller).
 
 ## Visualizing the estimated robot
 
-In Rviz, create a new robot with the following parameters:
+You may visualize the estimated robots in rviz. By default the main robot instance is shown as the `RealRobot` element with the following properties.
 
-- `Robot Description path: /real/robot_description`
+```yaml
+Robot Description path: /real/robot_description
+TF Prefix: /real
+```
+
+Additional robots are published as:
+
+```yaml
+# robots published as env_1, env_2, etc
+Robot Description path: /real/env_*/robot_description
+TF Prefix: /real/env_*
+```
 
 # Creating your own Observer
 
-All observers must inherit from {% doxygen mc_observers::Observer %} and implement the following `virtual` functions:
+The framework loads observers from libraries. For this to work, your observer must inherit from {% doxygen mc_observers::Observer %} and implement the following `virtual` functions:
 
-- `virtual void reset (const mc_control::MCController &ctl)` : reset the observers state
-- `virtual bool run (const mc_control::MCController &ctl)` : estimate the state, but does not update the real robot instance
-- `virtual void	updateRobots (const mc_control::MCController &ctl, mc_rbdyn::Robots &realRobots)` : update the robot state from the estimated state
+```cpp
+virtual void configure(const mc_control::MCController & /*ctl*/, const mc_rtc::Configuration & /*config*/)
+virtual void reset (const mc_control::MCController &ctl)
+virtual bool run (const mc_control::MCController &ctl)
+virtual void update(mc_control::MCController &ctl)
+```
 
-To compile your own observer, you can use the provided macro
+Furthermore, in order for `mc_rtc` to find your observer, you must define the loading symbols that `mc_rtc`'s observer loader will look for in your library. This can be done through the following macro defined in `mc_observers/ObserverMacros.h`
+
+```cpp
+# YourObserver.cpp
+
+#include <mc_observers/ObserverMacros.h>
+EXPORT_OBSERVER_MODULE("YourObserver", your_namespace::YourObserverClassName)
+```
+
+To compile your own observer, you can use the provided macro, which takes care of linking your observer with `mc_observers`, and installing it in the default observers path.
 
 ```cmake
 add_observer(YourObserverName YourObserver.cpp YourObserver.h)

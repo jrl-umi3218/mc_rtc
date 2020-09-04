@@ -89,7 +89,7 @@
       title: "DataStore: Sharing Objects"
     -
       id: observers
-      title: Using the observers pipeline
+      title: State Observation Pipelines
     -
       id: lipm-stabilizer
       title: Using the LIPM Stabilizer
