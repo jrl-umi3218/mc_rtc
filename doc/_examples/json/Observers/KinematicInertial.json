@@ -4,7 +4,7 @@
   "imuBodySensor": "Accelerometer",
   "anchorFrame":
   {
-    "jumpThreshold": 0.01
+    "maxAnchorFrameDiscontinuity": 0.01
   },
   "log":
   {

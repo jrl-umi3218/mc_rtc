@@ -16,7 +16,7 @@
       "properties":
       {
         "datastoreFunction": { "type": "string", "default": "KinematicAnchorFrame::&lt;robot&gt;", "description": "Name of the datastore entry for the anchorFrame function. This datastore entry must exist, and it must return a continuous kinematic anchor frame (typically a point in-between the contacts). Please refer to the <a href=\"{{site.baseurl}}/tutorials/recipes/observers.html\">observers tutorial</a> for more information." },
-        "jumpThreshold": { "type": "number", "default": 0.01, "description": "Norm of translation error between the current and new anchor frame computed by \"datastoreFunction\". This is used to detect discontinuities, and prevent discontinuity in velocity estimation." }
+        "maxAnchorFrameDiscontinuity": { "type": "number", "default": 0.01, "description": "Norm of translation error between the current and new anchor frame computed by \"datastoreFunction\". This is used to detect anchor frame discontinuities, and consequently prevent discontinuities in velocity estimation." }
       }
     },
     "gui":

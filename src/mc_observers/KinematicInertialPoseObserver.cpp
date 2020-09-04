@@ -24,7 +24,7 @@ void KinematicInertialPoseObserver::configure(const mc_control::MCController & c
   if(config.has("anchorFrame"))
   {
     config("datastoreFunction", anchorFrameFunction_);
-    config("jumpThreshold", anchorFrameJumpThreshold_);
+    config("maxAnchorFrameDiscontinuity", maxAnchorFrameDiscontinuity_);
   }
   if(config.has("gui"))
   {
@@ -67,18 +67,18 @@ bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
   }
   else
   { // Check whether anchor frame jumped
-    if(error > anchorFrameJumpThreshold_)
+    if(error > maxAnchorFrameDiscontinuity_)
     {
       mc_rtc::log::warning("[{}] Control anchor frame jumped from [{}] to [{}] (error norm {} > threshold {})", name(),
                            X_0_anchorFrame_.translation().transpose(), anchorFrame.translation().transpose(), error,
-                           anchorFrameJumpThreshold_);
+                           maxAnchorFrameDiscontinuity_);
       anchorFrameJumped_ = true;
     }
-    if((anchorFrameReal.translation() - X_0_anchorFrameReal_.translation()).norm() > anchorFrameJumpThreshold_)
+    if((anchorFrameReal.translation() - X_0_anchorFrameReal_.translation()).norm() > maxAnchorFrameDiscontinuity_)
     {
       mc_rtc::log::warning("[{}] Real anchor frame jumped from [{}] to [{}] (error norm {:.3f} > threshold {:.3f})",
                            name(), X_0_anchorFrameReal_.translation().transpose(),
-                           anchorFrameReal.translation().transpose(), error, anchorFrameJumpThreshold_);
+                           anchorFrameReal.translation().transpose(), error, maxAnchorFrameDiscontinuity_);
       anchorFrameJumped_ = true;
     }
   }

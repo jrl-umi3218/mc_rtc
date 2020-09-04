@@ -3,7 +3,7 @@ robot: jvrc1
 updateRobot: jvrc1
 imuBodySensor: Accelerometer
 anchorFrame:
-  jumpThreshold: 0.01
+  maxAnchorFrameDiscontinuity: 0.01
 log:
   pose: true
   velocity: true
