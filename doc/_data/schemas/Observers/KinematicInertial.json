@@ -29,7 +29,8 @@
         "velocity": { "type": "boolean", "default": true, "description": "When true, display the estimated velocity as an arrow" },
         "velocityArrow": { "$ref": "/../../GUI/ArrowConfig.json" },
         "anchorFrame": { "type": "boolean", "default": false, "description": "When true, display the anchor frame (control)" },
-        "anchorFrameReal": { "type": "boolean", "default": false, "description": "When true, display the anchor frame (real)" }
+        "anchorFrameReal": { "type": "boolean", "default": false, "description": "When true, display the anchor frame (real)" },
+        "advanced": { "type": "boolean", "default": false, "description": "Displays an additional GUI tab containing advanced controls. These are NOT intended to be used outside of a debugging context, use with caution." }
       }
     },
     "log":

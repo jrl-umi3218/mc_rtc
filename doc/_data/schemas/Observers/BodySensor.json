@@ -29,7 +29,8 @@
         "velocity": {"type": "boolean", "default": true, "description": "When true, log the estimated floating base velocity (arrow)" },
         "acceleration": {"type": "boolean", "default": false, "description": "When true, log the estimated floating base acceleration (arrow)" },
         "velocityArrow": { "$ref": "/../../GUI/ArrowConfig.json" },
-        "accelerationArrow": { "$ref": "/../../GUI/ArrowConfig.json" }
+        "accelerationArrow": { "$ref": "/../../GUI/ArrowConfig.json" },
+        "advanced": { "type": "boolean", "default": false, "description": "Displays an additional GUI tab containing advanced controls. These are NOT intended to be used outside of a debugging context, use with caution." }
       }
     }
   }

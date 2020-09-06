@@ -61,6 +61,7 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
     gConfig("acceleration", guiAcc_);
     guiVelConfig_ = gConfig("velocityArrow", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 0., 0.}));
     guiAccConfig_ = gConfig("accelerationArrow", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color{1., 1., 0.}));
+    gConfig("advanced", advancedGUI_);
   }
 
   desc_ = name_ + " (sensor=" + fbSensorName_ + ", update=" + updateConfig + ")";
@@ -139,7 +140,7 @@ void BodySensorObserver::removeFromLogger(mc_rtc::Logger & logger, const std::st
   logger.removeLogEntry(cat + "_accW");
 }
 
-void BodySensorObserver::addToGUI(const mc_control::MCController &,
+void BodySensorObserver::addToGUI(const mc_control::MCController & ctl,
                                   mc_rtc::gui::StateBuilder & gui,
                                   const std::vector<std::string> & category)
 {
@@ -204,6 +205,21 @@ void BodySensorObserver::addToGUI(const mc_control::MCController &,
   showPose();
   showVel();
   showAcc();
+
+  if(advancedGUI_)
+  {
+    auto sensorNames = std::vector<std::string>{};
+    auto & bodySensors = ctl.robot(robot_).bodySensors();
+    sensorNames.resize(bodySensors.size());
+    std::transform(bodySensors.begin(), bodySensors.end(), sensorNames.begin(),
+                   [](const mc_rbdyn::BodySensor & bs) { return bs.name(); });
+
+    auto advancedCat = category;
+    advancedCat.push_back("Advanced");
+    gui.addElement(advancedCat,
+                   mc_rtc::gui::ComboInput("BodySensor", sensorNames, [this]() { return fbSensorName_; },
+                                           [this](const std::string & sensor) { fbSensorName_ = sensor; }));
+  }
 }
 
 } // namespace mc_observers

@@ -32,6 +32,7 @@ void KinematicInertialPoseObserver::configure(const mc_control::MCController & c
     gConfig("anchorFrame", showAnchorFrame_);
     gConfig("anchorFrameReal", showAnchorFrameReal_);
     gConfig("pose", showPose_);
+    gConfig("advanced", advancedGUI_);
   }
   if(config.has("log"))
   {
@@ -153,7 +154,7 @@ void KinematicInertialPoseObserver::removeFromLogger(mc_rtc::Logger & logger, co
   logger.removeLogEntry(category + "_anchorFrameReal");
 }
 
-void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController &,
+void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ctl,
                                              mc_rtc::gui::StateBuilder & gui,
                                              const std::vector<std::string> & category)
 {
@@ -196,6 +197,20 @@ void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController &,
                               showPose_ = !showPose_;
                               showHidePose();
                             }));
+
+  if(advancedGUI_)
+  {
+    auto sensorNames = std::vector<std::string>{};
+    auto & bodySensors = ctl.robot(robot_).bodySensors();
+    sensorNames.resize(bodySensors.size());
+    std::transform(bodySensors.begin(), bodySensors.end(), sensorNames.begin(),
+                   [](const mc_rbdyn::BodySensor & bs) { return bs.name(); });
+
+    auto advancedCat = category;
+    advancedCat.push_back("Advanced");
+    gui.addElement(advancedCat, mc_rtc::gui::ComboInput("BodySensor", sensorNames, [this]() { return imuSensor_; },
+                                                        [this](const std::string & sensor) { imuSensor_ = sensor; }));
+  }
 
   showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
   showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);

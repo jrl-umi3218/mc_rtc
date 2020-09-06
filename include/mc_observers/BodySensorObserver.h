@@ -103,6 +103,7 @@ protected:
   mc_rtc::gui::ArrowConfig guiVelConfig_;
   bool guiAcc_ = false;
   mc_rtc::gui::ArrowConfig guiAccConfig_;
+  bool advancedGUI_ = false; ///< When true, displays an Advanced tab in the GUI
 };
 
 } // namespace mc_observers

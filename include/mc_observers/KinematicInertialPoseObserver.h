@@ -103,6 +103,7 @@ private:
   bool showAnchorFrame_ = false; /**< Whether to show the anchor frame in the GUI */
   bool showAnchorFrameReal_ = false; /**< Whether to show the anchor frame in the GUI */
   bool showPose_ = false; /**< Whether to show the anchor frame in the GUI */
+  bool advancedGUI_ = false; ///< When true, displays an Advanced tab in the GUI
 
   bool logPose_ = true; ///< Whether to log the estimated pose
   bool logAnchorFrame_ = true; ///< Whether to log the user-provided anchor frame (control and real)
