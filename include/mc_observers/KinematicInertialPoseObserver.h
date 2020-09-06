@@ -15,6 +15,7 @@
 
 namespace mc_observers
 {
+
 /** Kinematics-inertial observer of the floating base position.
  *
  * This estimator relies on the feet contact location and the IMU orientation to
@@ -45,7 +46,24 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
   /** Reset floating base estimate from the current real robot state */
   void reset(const mc_control::MCController & ctl) override;
 
-  /** Update floating-base estimation of real robot (IMU + kinematics) */
+  /** Update floating-base estimation of real robot (IMU + kinematics)
+   *
+   * Requires an anchor frame to be provided as a datastore callback. This
+   * should be a frame in-between the robot contacts, and its trajectory should
+   * be continuous. See https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   * for futher information.
+   *
+   * Example:
+   *
+   * \code{cpp}
+   * datastore().make_call("KinematicAnchorFrame::" + robot().name(), [this](const mc_rbdyn::Robot & robot) {
+   *   return sva::interpolate(robot.surfacePose(leftFootSurface_), robot.surfacePose(rightFootSurface_), 0.5);
+   * });
+   * \endcode
+   *
+   * \see estimateOrientation(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & realRobot);
+   * \see estimatePosition(const mc_control::MCController & ctl);
+   **/
   bool run(const mc_control::MCController & ctl) override;
 
   /** Write observed floating-base transform to the robot's configuration */
@@ -64,15 +82,20 @@ protected:
                 mc_rtc::gui::StateBuilder &,
                 const std::vector<std::string> & category) override;
 
-  /** Update floating-base orientation based on new observed gravity vector.
+  /** Compute floating-base orientation based on new observed gravity vector.
    *
    * \param robot Control robot model.
    * \param realRobot Measured robot state.
    *
+   * \note Prior to mc_rtc 1.5, there was an important bug in the implementation
+   * concerning how roll and pitch from sensor measurement was merged with the
+   * yaw from control. This bug was fixed in mc_rtc 1.5, you might experience
+   * behaviour changes if you were using the old implementation.
    */
   void estimateOrientation(const mc_rbdyn::Robot & robot, const mc_rbdyn::Robot & realRobot);
 
-  /* Update floating-base position.
+  /** Compute floating-base position from the estimated orientation and a
+   * kinematic anchor frame
    *
    * \param robot Control robot model.
    * \param realRobot Measurements robot model.
@@ -81,6 +104,41 @@ protected:
    * coincides with the control anchor frame.
    */
   void estimatePosition(const mc_control::MCController & ctl);
+
+protected:
+  /**
+   * @brief Merge roll and pitch orientation from a rotation matrix R1 with yaw (rotation around gravity) from another
+   * rotation matrix R2
+   *
+   * This function was adpated from https://github.com/mehdi-benallegue/state-observation and modified to follow
+   * SpaceVecAlg conventions for rotation. It computes:
+   *
+   *
+   * \f[
+   *  R=\left(
+   *  \begin{array}{ccc}
+   *   \frac{m\times e_{z}}{\left\Vert m\times e_{z}\right\Vert } & \frac{e_{z}\times m\times e_{z}}{\left\Vert m\times
+   * e_{z}\right\Vert } & e_{z}\end{array}\right)\left(\begin{array}{ccc} \frac{m_{l}\times v_{1}}{\left\Vert
+   * m_{l}\times v_{1}\right\Vert } & \frac{v_{1}\times m_{l}\times v_{1}}{\left\Vert m_{l}\times v_{1}\right\Vert } &
+   * v_{1}\end{array}
+   *   \right)^{T}\\
+   *   v_{1}=R_{1}e_{z}\qquad m_{l}=R_{2}m\\
+   *   m = \left\{
+   *   \begin{array}{c}
+   *   e_x \mbox{ if } ||R_2e_x \times v_1||^2\\
+   *   e_y \mbox{ otherwise }
+   *   \end{array}
+   *   \right.
+   *  \f]
+   *
+   * @param R1 First rotation matrix (for roll and pitch)
+   * @param R2 Second rotation matrix (for yaw)
+   *
+   * @return a rotation matrix composed of roll and pitch from R1, yaw from R2
+   */
+  inline Eigen::Matrix3d mergeRoll1Pitch1WithYaw2(const Eigen::Matrix3d & R1,
+                                                  const Eigen::Matrix3d & R2,
+                                                  double epsilonAngle = 1e-16);
 
 protected:
   std::string robot_; /**< Robot to observe (default main robot) */

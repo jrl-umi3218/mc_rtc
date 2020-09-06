@@ -97,16 +97,18 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
   // c for control-robot model
   // r for real-robot model
   // m for estimated/measured quantities
-  sva::PTransformd X_0_rBase = realRobot.posW();
-  const auto & imuSensor = robot.bodySensor(imuSensor_);
-  sva::PTransformd X_0_rIMU = realRobot.bodyPosW(imuSensor.parentBody());
+  const sva::PTransformd & X_0_rBase = realRobot.posW();
+  const auto & imuSensor = realRobot.bodySensor(imuSensor_);
+  const auto & imuParent = imuSensor.parentBody();
+  const sva::PTransformd & X_0_rIMU = realRobot.bodyPosW(imuParent);
+  const sva::PTransformd & X_0_cIMU = robot.bodyPosW(imuParent);
   sva::PTransformd X_rIMU_rBase = X_0_rBase * X_0_rIMU.inv();
+
   Eigen::Matrix3d E_0_mIMU = imuSensor.orientation().toRotationMatrix();
-  Eigen::Matrix3d E_0_cBase = robot.posW().rotation();
-  Eigen::Matrix3d E_0_mBase = X_rIMU_rBase.rotation() * E_0_mIMU;
-  Eigen::Vector3d cRPY = mc_rbdyn::rpyFromMat(E_0_cBase);
-  Eigen::Vector3d mRPY = mc_rbdyn::rpyFromMat(E_0_mBase);
-  pose_.rotation() = mc_rbdyn::rpyToMat(mRPY(0), mRPY(1), cRPY(2));
+  const Eigen::Matrix3d & E_0_cIMU = X_0_cIMU.rotation();
+  // Estimate IMU orientation: merges roll+pitch from measurement with yaw from control
+  Eigen::Matrix3d E_0_eIMU = mergeRoll1Pitch1WithYaw2(E_0_mIMU, E_0_cIMU);
+  pose_.rotation() = E_0_eIMU.transpose() * X_rIMU_rBase.rotation();
 }
 
 void KinematicInertialPoseObserver::estimatePosition(const mc_control::MCController & ctl)
@@ -215,6 +217,36 @@ void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ct
   showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
   showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
   showHidePose();
+}
+
+inline Eigen::Matrix3d KinematicInertialPoseObserver::mergeRoll1Pitch1WithYaw2(const Eigen::Matrix3d & R1,
+                                                                               const Eigen::Matrix3d & R2,
+                                                                               double epsilonAngle)
+{
+  using Matrix3 = Eigen::Matrix3d;
+  using Vector3 = Eigen::Vector3d;
+
+  const Vector3 & ez = Vector3::UnitZ();
+  Matrix3 R_temp1, R_temp2;
+  Vector3 v1 = R1 * ez;
+  Vector3 mlxv1 = (R2 * Vector3::UnitX()).cross(v1);
+  double n2 = mlxv1.squaredNorm();
+
+  if(n2 > epsilonAngle * epsilonAngle)
+  {
+    // we take m=ex
+    R_temp1 << -Vector3::UnitY(), Vector3::UnitX(), ez;
+    mlxv1 /= sqrt(n2);
+    R_temp2 << mlxv1.transpose(), v1.cross(mlxv1).transpose(), v1.transpose();
+    return R_temp1 * R_temp2;
+  }
+  else
+  {
+    // we take m=ey
+    mlxv1 = (R2 * Vector3::UnitY()).cross(v1).normalized();
+    R_temp2 << mlxv1.transpose(), v1.cross(mlxv1).transpose(), v1.transpose();
+    return R_temp2.transpose();
+  }
 }
 
 } // namespace mc_observers
