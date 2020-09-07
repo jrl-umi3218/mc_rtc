@@ -1,0 +1,30 @@
+{
+  "name": "FirstPipeline",
+  "observers":
+  [
+    {
+      "type": "Encoder",
+      "config":
+      {
+        "position": "control",
+        "velocity": "control"
+      }
+    },
+    {
+      "type": "BodySensor",
+      "update": false,
+      "config":
+      {
+        "bodySensor": "FloatingBase"
+      }
+    },
+    {
+      "type": "KinematicInertial",
+      "update": true,
+      "config":
+      {
+        "imuBodySensor": "FloatingBase"
+      }
+    }
+  ]
+}

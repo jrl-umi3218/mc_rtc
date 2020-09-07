@@ -45,6 +45,9 @@ class TestPythonController(mc_control.MCPythonController):
   def get_pt(self):
     return self.robot().mbc.bodyPosW[0]
   def reset_callback(self, reset_data):
+    assert(len(self.observerPipelines()) == 1)
+    assert(self.hasObserverPipeline("FirstPipeline"))
+    assert(not self.hasObserverPipeline("NotAPipeline"))
     self.positionTask.reset()
     self.positionTask.position(self.positionTask.position() + eigen.Vector3d(0.1, 0, 0))
     self.logger().addLogEntry("PYTHONDOUBLE", lambda: self.d_data)
