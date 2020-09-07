@@ -134,10 +134,10 @@ cdef class PythonRWCallback(object):
     def __set__(self, value):
       self.impl.out = value
 
-cdef cppbool python_to_run_callback(void * f) with gil:
+cdef cppbool python_to_run_callback(void * f) except+ with gil:
   return (<object>f).run_callback()
 
-cdef void python_to_reset_callback(const c_mc_control.ControllerResetData & crd, void * f) with gil:
+cdef void python_to_reset_callback(const c_mc_control.ControllerResetData & crd, void * f) except+ with gil:
   (<object>f).reset_callback(ControllerResetDataFromPtr(&(c_mc_control.const_cast_crd(crd))))
 
 cdef class MCPythonController(MCController):

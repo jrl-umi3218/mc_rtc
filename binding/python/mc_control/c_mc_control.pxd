@@ -104,8 +104,8 @@ cdef extern from "<mc_control/mc_global_controller.h>" namespace "mc_control":
 cdef extern from "mc_control_wrapper.hpp" namespace "mc_control":
   ControllerResetData & const_cast_crd(const ControllerResetData&)
 
-  ctypedef cppbool (*run_callback_t)(void*)
-  ctypedef void (*reset_callback_t)(const ControllerResetData&, void*)
+  ctypedef cppbool (*run_callback_t)(void*) except+
+  ctypedef void (*reset_callback_t)(const ControllerResetData&, void*) except+
 
   void set_run_callback(MCPythonController&, run_callback_t fn, void*)
   void set_reset_callback(MCPythonController&, reset_callback_t fn, void *)
