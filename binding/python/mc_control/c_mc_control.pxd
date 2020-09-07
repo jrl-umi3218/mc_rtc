@@ -1,5 +1,5 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 from eigen.c_eigen cimport *
@@ -9,6 +9,7 @@ cimport sch.c_sch as sch
 cimport tasks.qp.c_qp as c_qp
 from mc_rbdyn.c_mc_rbdyn cimport *
 from mc_solver.c_mc_solver cimport *
+cimport mc_observers.c_mc_observers as c_mc_observers
 cimport mc_rtc.c_mc_rtc as c_mc_rtc
 cimport mc_rtc.gui.c_gui as c_mc_rtc_gui
 cimport mc_tasks.c_mc_tasks as c_mc_tasks
@@ -48,6 +49,11 @@ cdef extern from "<mc_control/mc_controller.h>" namespace "mc_control":
     shared_ptr[c_mc_tasks.PostureTask] postureTask
     QPSolver & solver()
 
+    cppbool hasObserverPipeline(const string &)
+    c_mc_observers.ObserverPipeline & observerPipeline()
+    c_mc_observers.ObserverPipeline & observerPipeline(const string&)
+    vector[c_mc_observers.ObserverPipeline] & observerPipelines()
+
 cdef extern from "<mc_control/mc_python_controller.h>" namespace "mc_control":
   cdef cppclass PythonRWCallback:
     cppbool success
@@ -79,7 +85,7 @@ cdef extern from "<mc_control/mc_global_controller.h>" namespace "mc_control":
     void setSensorOrientation(Quaterniond)
     void setSensorLinearVelocity(Vector3d)
     void setSensorAngularVelocity(Vector3d)
-    void setSensorAcceleration(Vector3d)
+    void setSensorLinearAcceleration(Vector3d)
     void setEncoderValues(vector[double])
     void setEncoderVelocities(vector[double])
     void setFlexibilityValues(vector[double])

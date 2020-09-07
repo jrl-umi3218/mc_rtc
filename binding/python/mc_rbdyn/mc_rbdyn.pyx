@@ -1,7 +1,7 @@
 # distutils: language = c++
 
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
