@@ -54,7 +54,7 @@ class TestPythonController(mc_control.MCPythonController):
     assert(len(self.observerPipelines()) == 1)
     assert(self.hasObserverPipeline("FirstPipeline"))
     assert(not self.hasObserverPipeline("NotAPipeline"))
-    self.addAnchorFrameCallback("KinematicAnchorFrame::{}".format(self.robot().name()), lambda r: sva.interpolate(r.surfacePose("LeftFoot"), r.surfacePose("RightFoot"), 0.5))
+    self.addAnchorFrameCallback("KinematicAnchorFrame::{}".format(self.robot().name().decode()), lambda r: sva.interpolate(r.surfacePose("LeftFoot"), r.surfacePose("RightFoot"), 0.5))
     self.positionTask.reset()
     self.positionTask.position(self.positionTask.position() + eigen.Vector3d(0.1, 0, 0))
     self.logger().addLogEntry("PYTHONDOUBLE", lambda: self.d_data)
