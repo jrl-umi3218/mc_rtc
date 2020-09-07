@@ -379,6 +379,7 @@ public:
                   "remove calls to these functions from your code and replace it with a datastore callback. For "
                   "further information please refer to the observer's tutorial: "
                   "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+    return robot().posW();
   }
 
   /** @deprecated The observer's anchor frame is now provided by a callback on
@@ -393,6 +394,7 @@ public:
                   "remove calls to these functions from your code and replace it with a datastore callback. For "
                   "further information please refer to the observer's tutorial: "
                   "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+    return robot().posW();
   }
 
 protected:
