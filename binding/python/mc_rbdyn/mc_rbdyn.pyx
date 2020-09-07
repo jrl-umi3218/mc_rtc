@@ -170,7 +170,10 @@ cdef class BodySensor(object):
   def angularVelocity(self):
     return eigen.Vector3dFromC(self.impl.angularVelocity())
   def acceleration(self):
-    return eigen.Vector3dFromC(self.impl.acceleration())
+    deprecated()
+    return eigen.Vector3dFromC(self.impl.linearAcceleration())
+  def linearAcceleration(self):
+    return eigen.Vector3dFromC(self.impl.linearAcceleration())
 
 cdef BodySensor BodySensorFromRef(c_mc_rbdyn.BodySensor & bs):
     cdef BodySensor ret = BodySensor(skip_alloc = True)
@@ -1351,9 +1354,9 @@ def loadRobotFromUrdf(name, urdf, withVirtualLinks = True, filteredLinks = [],
     filteredLinks, fixed, base.impl, bName))
   return robots
 
-def createRobotWithBase(Robot robot, Base base, eigen.Vector3d baseAxis = eigen.Vector3d.UnitZ()):
+def createRobotWithBase(name, Robot robot, Base base, eigen.Vector3d baseAxis = eigen.Vector3d.UnitZ()):
   cdef Robots ret = Robots()
-  ret.impl.get().createRobotWithBase(deref(robot.impl), base.impl, baseAxis.impl)
+  ret.impl.get().createRobotWithBase(name, deref(robot.impl), base.impl, baseAxis.impl)
   return ret
 
 def planar(T, B, N):
@@ -1379,10 +1382,11 @@ def robotCopy(robots, robot_idx = None):
   cdef Robots ret = Robots()
   if isinstance(robots, Robots):
     assert(robot_idx is not None)
-    ret.impl.get().robotCopy(deref((<Robots>robots).impl).robot(robot_idx))
+    robot = robots.robot(robot_idx)
+    ret.impl.get().robotCopy(deref((<Robot>robot).impl), robot.name())
   elif isinstance(robots, Robot):
     assert(robot_idx is None)
-    ret.impl.get().robotCopy(deref((<Robot>robots).impl))
+    ret.impl.get().robotCopy(deref((<Robot>robots).impl), robots.name())
   else:
     raise TypeError("Wrong arguments passed to robotCopy")
   return ret
