@@ -140,7 +140,13 @@ cdef cppbool python_to_run_callback(void * f) except+ with gil:
 cdef void python_to_reset_callback(const c_mc_control.ControllerResetData & crd, void * f) except+ with gil:
   (<object>f).reset_callback(ControllerResetDataFromPtr(&(c_mc_control.const_cast_crd(crd))))
 
+cdef c_sva.PTransformd python_af_callback(callback, const c_mc_rbdyn.Robot & robot) except+ with gil:
+    cdef mc_rbdyn.Robot r = mc_rbdyn.RobotFromC(robot)
+    cdef sva.PTransformd af = callback(r)
+    return deref(af.impl)
+
 cdef class MCPythonController(MCController):
+  AF_CALLBACKS = []
   def __dealloc__(self):
     del self.impl
     self.impl = self.base = NULL
@@ -157,6 +163,15 @@ cdef class MCPythonController(MCController):
       c_mc_control.set_reset_callback(deref(self.impl), &python_to_reset_callback, <void*>(self))
     except AttributeError:
       pass
+  def addAnchorFrameCallback(self, name, callback):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
+    MCPythonController.AF_CALLBACKS.append(callback)
+    c_mc_control.add_anchor_frame_callback(deref(self.impl), name, &python_af_callback, callback)
+  def removeAnchorFrameCallback(self, name):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
+    c_mc_control.remove_anchor_frame_callback(deref(self.impl), name)
 
 cdef class MCGlobalController(object):
   def __dealloc__(self):

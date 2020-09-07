@@ -34,4 +34,15 @@ void set_reset_callback(MCPythonController & ctl, reset_callback_t fn, void * da
   ctl.reset_callback = std::bind(fn, std::placeholders::_1, data);
 }
 
+template<typename Helper, typename Callback>
+void add_anchor_frame_callback(MCPythonController & ctl, const std::string & name, Helper help, Callback cb)
+{
+  ctl.datastore().make_call(name, [help, cb](const mc_rbdyn::Robot & r) { return help(cb, r); });
+}
+
+void remove_anchor_frame_callback(MCPythonController & ctl, const std::string & name)
+{
+  ctl.datastore().remove(name);
+}
+
 } // namespace mc_control

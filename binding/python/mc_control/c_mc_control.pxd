@@ -109,3 +109,6 @@ cdef extern from "mc_control_wrapper.hpp" namespace "mc_control":
 
   void set_run_callback(MCPythonController&, run_callback_t fn, void*)
   void set_reset_callback(MCPythonController&, reset_callback_t fn, void *)
+
+  void add_anchor_frame_callback[T, U](MCPythonController &, const string &, T, U)
+  void remove_anchor_frame_callback(MCPythonController &, const string &)
