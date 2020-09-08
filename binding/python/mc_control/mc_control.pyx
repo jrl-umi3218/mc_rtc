@@ -167,7 +167,7 @@ cdef class MCPythonController(MCController):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
     MCPythonController.AF_CALLBACKS.append(callback)
-    c_mc_control.add_anchor_frame_callback(deref(self.impl), name, &python_af_callback, callback)
+    c_mc_control.add_anchor_frame_callback(deref(self.impl), <string>(name), &python_af_callback, callback)
   def removeAnchorFrameCallback(self, name):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
