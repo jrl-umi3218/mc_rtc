@@ -27,6 +27,9 @@ struct MC_CONTROL_DLLAPI MCGlobalController
 public:
   struct GlobalConfiguration;
 
+  using QuaternionMapAllocator = Eigen::aligned_allocator<std::pair<const std::string, Eigen::Quaterniond>>;
+  using QuaternionMap = std::map<std::string, Eigen::Quaterniond, std::less<std::string>, QuaternionMapAllocator>;
+
 private:
   /* MCGlobalController is non-copyable */
   MCGlobalController(const MCGlobalController &) = delete;
@@ -218,7 +221,7 @@ public:
    *
    * \see setSensorOrientation(const Eigen::Quaterniond & ori)
    */
-  void setSensorOrientations(const std::map<std::string, Eigen::Quaterniond> & oris);
+  void setSensorOrientations(const QuaternionMap & oris);
 
   /*! \brief Set multiple body sensors' orientation for the specified robot (control+real)
    *
@@ -229,7 +232,7 @@ public:
    * \throws If any of the sensors does not exist in the robot
    * \see setSensorOrientation(const Eigen::Quaterniond & ori)
    */
-  void setSensorOrientations(const std::string & robotName, const std::map<std::string, Eigen::Quaterniond> & oris);
+  void setSensorOrientations(const std::string & robotName, const QuaternionMap & oris);
 
   /*! \brief Sets the main robot linear velocity sensor (control+real)
    *
@@ -513,7 +516,7 @@ protected:
   MC_RTC_DEPRECATED void setSensorAccelerations(mc_rbdyn::Robot & robot,
                                                 const std::map<std::string, Eigen::Vector3d> & accels);
   /*! \brief Set multiple body sensors' orientation for a given robot */
-  void setSensorOrientations(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Quaterniond> & oris);
+  void setSensorOrientations(mc_rbdyn::Robot & robot, const QuaternionMap & oris);
   /*! \brief Set multiple body sensor's linear velocities for a given robot */
   void setSensorLinearVelocities(mc_rbdyn::Robot & robot, const std::map<std::string, Eigen::Vector3d> & linearVels);
   /*! \brief Set multiple body sensor's angular velocities for a given robot */

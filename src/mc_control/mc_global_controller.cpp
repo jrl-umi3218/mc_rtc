@@ -342,21 +342,19 @@ void MCGlobalController::setSensorOrientation(const std::string & robotName, con
   realRobot(robotName).bodySensor().orientation(ori);
 }
 
-void MCGlobalController::setSensorOrientations(const std::map<std::string, Eigen::Quaterniond> & oris)
+void MCGlobalController::setSensorOrientations(const QuaternionMap & oris)
 {
   setSensorOrientations(robot(), oris);
   setSensorOrientations(realRobot(), oris);
 }
 
-void MCGlobalController::setSensorOrientations(const std::string & robotName,
-                                               const std::map<std::string, Eigen::Quaterniond> & oris)
+void MCGlobalController::setSensorOrientations(const std::string & robotName, const QuaternionMap & oris)
 {
   setSensorOrientations(robot(robotName), oris);
   setSensorOrientations(realRobot(robotName), oris);
 }
 
-void MCGlobalController::setSensorOrientations(mc_rbdyn::Robot & robot,
-                                               const std::map<std::string, Eigen::Quaterniond> & oris)
+void MCGlobalController::setSensorOrientations(mc_rbdyn::Robot & robot, const QuaternionMap & oris)
 {
   for(const auto & o : oris)
   {
