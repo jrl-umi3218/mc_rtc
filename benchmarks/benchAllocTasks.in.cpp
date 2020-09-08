@@ -12,12 +12,14 @@
 class AllocTaskFixture : public benchmark::Fixture
 {
 public:
-  void SetUp(const ::benchmark::State &)
+  AllocTaskFixture()
   {
     spdlog::set_level(spdlog::level::err);
     auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
     solver.robots().load(*rm);
   }
+
+  void SetUp(const ::benchmark::State &) {}
 
   void TearDown(const ::benchmark::State &) {}
 

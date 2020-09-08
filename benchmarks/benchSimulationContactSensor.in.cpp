@@ -24,7 +24,11 @@ public:
     robots_ = mc_rbdyn::loadRobots({rm, env});
   }
 
-  void TearDown(const ::benchmark::State &) {}
+  void TearDown(const ::benchmark::State &)
+  {
+    robots_->removeRobot("jvrc1");
+    robots_->removeRobot("ground");
+  }
 
   mc_rbdyn::Robots & get_robots()
   {
