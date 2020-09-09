@@ -69,6 +69,12 @@ public:
   /** Get task's stiffness */
   double stiffness() const;
 
+  /** Set task's damping */
+  void damping(double d);
+
+  /** Get task's stiffness */
+  double damping() const;
+
   /** Set task's weight */
   void weight(double w);
 

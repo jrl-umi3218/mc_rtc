@@ -128,6 +128,16 @@ double PostureTask::stiffness() const
   return pt_.stiffness();
 }
 
+void PostureTask::damping(double d)
+{
+  pt_.stiffness(d);
+}
+
+double PostureTask::damping() const
+{
+  return pt_.damping();
+}
+
 void PostureTask::weight(double w)
 {
   pt_.weight(w);
