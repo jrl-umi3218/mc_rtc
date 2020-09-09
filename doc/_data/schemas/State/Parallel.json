@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "title": "fsm::Parallel",
+      "title": "mc_control::fsm::ParallelState",
       "description": "Play multiple states in parallel<br/>The state is completed when all the states it's running are completed<br/>The default state's output is the output of the last state it's running (see \"outputs\" for other behaviours)",
       "type": "object",
       "properties":

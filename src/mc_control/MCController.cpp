@@ -8,6 +8,7 @@
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rtc/constants.h>
 
+#include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/config.h>
 #include <mc_rtc/gui/Schema.h>
 #include <mc_rtc/io_utils.h>
@@ -98,8 +99,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
                                           bool updateNrVars)
 {
   assert(rm);
-  auto & r = robots.load(*rm);
-  r.name(name);
+  auto & r = robots.load(name, *rm);
   r.mbc().gravity = mc_rtc::constants::gravity;
   r.forwardKinematics();
   r.forwardVelocity();
@@ -139,63 +139,126 @@ void MCController::removeRobot(const std::string & name)
   solver().updateNrVars();
 }
 
-bool MCController::resetObservers()
+void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
 {
-  auto pipelineDesc = std::string{};
-
-  for(size_t i = 0; i < pipelineObservers_.size(); ++i)
+  if(config.has("EnabledObservers") || config.has("RunObservers") || config.has("UpdateObservers"))
   {
-    const auto & observerPair = pipelineObservers_[i];
-    auto observer = observerPair.first;
-    bool updateRobots = observerPair.second;
-    observer->reset(*this);
-
-    if(updateRobots)
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "[{}] The observer pipeline can no longer be configured by \"EnabledObservers\", \"RunObservers\" and "
+        "\"UpdateObservers\".\nMultiple "
+        "pipelines are now supported, allowing for estimation of multiple robots and/or multiple observations of the "
+        "same robot.\nFor details on upgrading, please refer to:\n"
+        "- The observer pipelines tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html\n"
+        "- The JSON Schema documentation: https://jrl-umi3218.github.io/mc_rtc/json.html#Observers/ObserverPipelines",
+        name_);
+  }
+  if(!config.has("ObserverPipelines"))
+  {
+    mc_rtc::log::warning("[MCController::{}] No state observation pipeline configured: the state of the real robots "
+                         "will not be estimated",
+                         name_);
+    return;
+  }
+  auto pipelineConfigs = mc_rtc::fromVectorOrElement(config, "ObserverPipelines", std::vector<mc_rtc::Configuration>{});
+  for(const auto & pipelineConfig : pipelineConfigs)
+  {
+    observerPipelines_.emplace_back(*this);
+    auto & pipeline = observerPipelines_.back();
+    pipeline.create(pipelineConfig, timeStep);
+    if(pipelineConfig("log", true))
     {
-      observer->updateRobots(*this, realRobots());
-      pipelineDesc += observer->desc();
+      pipeline.addToLogger(logger());
     }
-    else
+    if(pipelineConfig("gui", false))
     {
-      pipelineDesc += "[" + observer->desc() + "]";
-    }
-
-    if(i < pipelineObservers_.size() - 1)
-    {
-      pipelineDesc += " -> ";
-    }
-
-    observer->addToLogger(*this, logger());
-    if(gui_)
-    {
-      observer->addToGUI(*this, *gui_);
+      pipeline.addToGUI(*gui());
     }
   }
-  if(!pipelineObservers_.empty())
+}
+
+bool MCController::resetObserverPipelines()
+{
+  std::string desc;
+  for(auto & pipeline : observerPipelines_)
   {
-    mc_rtc::log::success("Observers: {}", pipelineDesc);
+    pipeline.reset();
+    if(desc.size())
+    {
+      desc += "\n";
+    }
+    desc += "- " + pipeline.desc();
+  }
+  if(desc.size())
+  {
+    mc_rtc::log::success("[MCController::{}] State observation pipelines:\n{}", name_, desc);
   }
   return true;
 }
 
-bool MCController::runObservers()
+bool MCController::runObserverPipelines()
 {
-  for(const auto & observerPair : pipelineObservers_)
+  bool success = true;
+  for(auto & pipeline : observerPipelines_)
   {
-    auto observer = observerPair.first;
-    bool updateRobots = observerPair.second;
-    bool r = observer->run(*this);
-    if(!r)
-    {
-      mc_rtc::log::error("Observer {} failed to run", observer->name());
-      return false;
-    }
-    if(updateRobots)
-    {
-      observer->updateRobots(*this, realRobots());
-    }
+    success = pipeline.run() && success;
   }
-  return true;
+  return success;
+}
+
+bool MCController::hasObserverPipeline(const std::string & name) const
+{
+  return std::find_if(observerPipelines_.begin(), observerPipelines_.end(),
+                      [&name](const mc_observers::ObserverPipeline & pipeline) { return pipeline.name() == name; })
+         != observerPipelines_.end();
+}
+
+const std::vector<mc_observers::ObserverPipeline> & MCController::observerPipelines() const
+{
+  return observerPipelines_;
+}
+
+std::vector<mc_observers::ObserverPipeline> & MCController::observerPipelines()
+{
+  return observerPipelines_;
+}
+
+const mc_observers::ObserverPipeline & MCController::observerPipeline(const std::string & name) const
+{
+  auto pipelineIt =
+      std::find_if(observerPipelines_.begin(), observerPipelines_.end(),
+                   [&name](const mc_observers::ObserverPipeline & pipeline) { return pipeline.name() == name; });
+  if(pipelineIt != observerPipelines_.end())
+  {
+    return *pipelineIt;
+  }
+  else
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Observer pipeline {} does not exist", name);
+  }
+}
+
+mc_observers::ObserverPipeline & MCController::observerPipeline(const std::string & name)
+{
+  return const_cast<mc_observers::ObserverPipeline &>(static_cast<const MCController *>(this)->observerPipeline(name));
+}
+
+bool MCController::hasObserverPipeline() const
+{
+  return !observerPipelines_.empty();
+}
+
+const mc_observers::ObserverPipeline & MCController::observerPipeline() const
+{
+  if(!hasObserverPipeline())
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Controller {} does not have a default observer pipeline", name_);
+  }
+  return observerPipeline(observerPipelines_.front().name());
+}
+
+mc_observers::ObserverPipeline & MCController::observerPipeline()
+{
+  return const_cast<mc_observers::ObserverPipeline &>(static_cast<const MCController *>(this)->observerPipeline());
 }
 
 bool MCController::run()
@@ -236,26 +299,6 @@ void MCController::reset(const ControllerResetData & reset_data)
   robot().forwardVelocity();
 }
 
-const mc_rbdyn::Robot & MCController::robot() const
-{
-  return qpsolver->robot();
-}
-
-const mc_rbdyn::Robot & MCController::env() const
-{
-  return qpsolver->env();
-}
-
-mc_rbdyn::Robot & MCController::robot()
-{
-  return qpsolver->robot();
-}
-
-mc_rbdyn::Robot & MCController::env()
-{
-  return qpsolver->env();
-}
-
 const mc_rbdyn::Robots & MCController::robots() const
 {
   return qpsolver->robots();
@@ -266,26 +309,24 @@ mc_rbdyn::Robots & MCController::robots()
   return qpsolver->robots();
 }
 
-const mc_solver::QPSolver & MCController::solver() const
+const mc_rbdyn::Robot & MCController::robot() const
 {
-  assert(qpsolver);
-  return *qpsolver;
+  return qpsolver->robot();
 }
 
-mc_solver::QPSolver & MCController::solver()
+mc_rbdyn::Robot & MCController::robot()
 {
-  assert(qpsolver);
-  return *qpsolver;
+  return qpsolver->robot();
 }
 
-mc_rtc::Logger & MCController::logger()
+const mc_rbdyn::Robot & MCController::robot(const std::string & name) const
 {
-  return *logger_;
+  return robots().robot(name);
 }
 
-void MCController::supported_robots(std::vector<std::string> & out) const
+mc_rbdyn::Robot & MCController::robot(const std::string & name)
 {
-  out = {};
+  return robots().robot(name);
 }
 
 const mc_rbdyn::Robots & MCController::realRobots() const
@@ -308,24 +349,46 @@ mc_rbdyn::Robot & MCController::realRobot()
   return realRobots().robot();
 }
 
-const sva::PTransformd & MCController::anchorFrame() const
+const mc_rbdyn::Robot & MCController::realRobot(const std::string & name) const
 {
-  return anchorFrame_;
+  return realRobots().robot(name);
 }
 
-void MCController::anchorFrame(const sva::PTransformd & anchor)
+mc_rbdyn::Robot & MCController::realRobot(const std::string & name)
 {
-  anchorFrame_ = anchor;
+  return realRobots().robot(name);
 }
 
-const sva::PTransformd & MCController::anchorFrameReal() const
+const mc_rbdyn::Robot & MCController::env() const
 {
-  return anchorFrameReal_;
+  return qpsolver->env();
 }
 
-void MCController::anchorFrameReal(const sva::PTransformd & anchor)
+mc_rbdyn::Robot & MCController::env()
 {
-  anchorFrameReal_ = anchor;
+  return qpsolver->env();
+}
+
+const mc_solver::QPSolver & MCController::solver() const
+{
+  assert(qpsolver);
+  return *qpsolver;
+}
+
+mc_solver::QPSolver & MCController::solver()
+{
+  assert(qpsolver);
+  return *qpsolver;
+}
+
+mc_rtc::Logger & MCController::logger()
+{
+  return *logger_;
+}
+
+void MCController::supported_robots(std::vector<std::string> & out) const
+{
+  out = {};
 }
 
 void MCController::stop() {}

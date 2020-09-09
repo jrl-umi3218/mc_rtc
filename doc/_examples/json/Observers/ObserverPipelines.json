@@ -1,0 +1,32 @@
+[
+  {
+    "name": "MainRobotGroundTruth",
+    "gui": true,
+    "observers": [
+      {
+        "type": "Encoder"
+      },
+      {
+        "type": "BodySensor",
+        "config": {
+          "bodySensor": "FloatingBase"
+        }
+      }
+    ]
+  },
+  {
+    "name": "MainRobotKinematicInertial",
+    "observers": [
+      {
+        "type": "Encoder",
+        "robot": "jvrc1",
+        "updateRobot": "jvrc1_2"
+      },
+      {
+        "type": "KinematicInertial",
+        "robot": "jvrc1",
+        "updateRobot": "jvrc1_2"
+      }
+    ]
+  }
+]

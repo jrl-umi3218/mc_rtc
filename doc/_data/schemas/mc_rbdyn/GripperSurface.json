@@ -5,7 +5,7 @@
       "$ref": "/../../common/Surface.json"
     },
     {
-      "title": "mc_rbdyn::GripperSurfacePtr",
+      "title": "mc_rbdyn::GripperSurface",
       "type": "object",
       "properties":
       {

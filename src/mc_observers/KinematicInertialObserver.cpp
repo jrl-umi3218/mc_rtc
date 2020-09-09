@@ -11,17 +11,28 @@
 
 namespace mc_observers
 {
-KinematicInertialObserver::KinematicInertialObserver(const std::string & name,
-                                                     double dt,
-                                                     const mc_rtc::Configuration & config)
-: KinematicInertialPoseObserver(name, dt, config), velFilter_(dt, /* cutoff period = */ 0.01)
+
+void KinematicInertialObserver::configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config)
 {
-  desc_ = name_ + " (cutoff=" + std::to_string(velFilter_.cutoffPeriod()) + ")";
+  KinematicInertialPoseObserver::configure(ctl, config);
+  if(config.has("gui"))
+  {
+    config("gui")("velocity", showVelocity_);
+    config("gui")("velocityArrow", velocityArrowConfig_);
+  }
+  if(config.has("log"))
+  {
+    auto lConfig = config("log");
+    lConfig("velocity", logVelocity_);
+  }
+  double cutoff = config("cutoff", 2 * ctl.timeStep);
+  velFilter_.cutoffPeriod(cutoff);
+  desc_ = fmt::format("{} (sensor={}, cutoff={:.3f})", name_, imuSensor_, velFilter_.cutoffPeriod());
 }
 
 void KinematicInertialObserver::reset(const mc_control::MCController & ctl)
 {
-  reset(ctl, ctl.realRobot().velW());
+  reset(ctl, ctl.realRobot(robot_).velW());
 }
 
 void KinematicInertialObserver::reset(const mc_control::MCController & ctl, const sva::MotionVecd & velW)
@@ -34,27 +45,26 @@ void KinematicInertialObserver::reset(const mc_control::MCController & ctl, cons
 
 bool KinematicInertialObserver::run(const mc_control::MCController & ctl)
 {
-  KinematicInertialPoseObserver::run(ctl);
+  bool res = KinematicInertialPoseObserver::run(ctl);
   const sva::PTransformd posW = KinematicInertialPoseObserver::posW();
-  sva::MotionVecd errVel = sva::transformError(posWPrev_, posW) / dt();
-  velFilter_.update(errVel);
-  velW_ = velFilter_.eval();
+  if(!anchorFrameJumped_)
+  {
+    sva::MotionVecd errVel = sva::transformError(posWPrev_, posW) / ctl.timeStep;
+    velFilter_.update(errVel);
+    velW_ = velFilter_.eval();
+  }
+  else
+  {
+    mc_rtc::log::warning("[{}] Skipping velocity update (anchor frame jumped)", name());
+  }
   posWPrev_ = posW;
-  return true;
+  return res;
 }
 
-void KinematicInertialObserver::updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots)
+void KinematicInertialObserver::update(mc_control::MCController & ctl)
 {
-  KinematicInertialPoseObserver::updateRobots(ctl, realRobots);
-  realRobots.robot().velW(velW_);
-}
-
-void KinematicInertialObserver::updateBodySensor(mc_rbdyn::Robots & realRobots, const std::string & sensorName)
-{
-  KinematicInertialPoseObserver::updateBodySensor(realRobots, sensorName);
-  auto & sensor = realRobots.robot().bodySensor(sensorName);
-  sensor.linearVelocity(velW_.linear());
-  sensor.angularVelocity(velW_.angular());
+  KinematicInertialPoseObserver::update(ctl);
+  ctl.realRobot(robot_).velW(velW_);
 }
 
 const sva::MotionVecd & KinematicInertialObserver::velW() const
@@ -62,28 +72,71 @@ const sva::MotionVecd & KinematicInertialObserver::velW() const
   return velW_;
 }
 
-void KinematicInertialObserver::addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger & logger)
+void KinematicInertialObserver::addToLogger(const mc_control::MCController & ctl,
+                                            mc_rtc::Logger & logger,
+                                            const std::string & category)
 {
-  KinematicInertialPoseObserver::addToLogger(ctl, logger);
-  logger.addLogEntry("observer_" + name() + "_velW", [this]() { return velW_; });
-  logger.addLogEntry("observer_" + name() + "_filter_cutoffPeriod", [this]() { return velFilter_.cutoffPeriod(); });
+  KinematicInertialPoseObserver::addToLogger(ctl, logger, category);
+  if(logVelocity_)
+  {
+    logger.addLogEntry(category + "_velW", [this]() -> const sva::MotionVecd & { return velW_; });
+    logger.addLogEntry(category + "_filter_cutoffPeriod", [this]() { return velFilter_.cutoffPeriod(); });
+  }
 }
-void KinematicInertialObserver::removeFromLogger(mc_rtc::Logger & logger)
+
+void KinematicInertialObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
 {
-  KinematicInertialPoseObserver::removeFromLogger(logger);
-  logger.removeLogEntry("observer_" + name() + "_velW");
-  logger.removeLogEntry("observer_" + name() + "_filter_cutoffPeriod");
+  KinematicInertialPoseObserver::removeFromLogger(logger, category);
+  logger.removeLogEntry(category + "_velW");
+  logger.removeLogEntry(category + "_filter_cutoffPeriod");
 }
-void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl, mc_rtc::gui::StateBuilder & gui)
+
+void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl,
+                                         mc_rtc::gui::StateBuilder & gui,
+                                         const std::vector<std::string> & category)
 {
-  KinematicInertialPoseObserver::addToGUI(ctl, gui);
-  gui.addElement({"Observers", name()}, mc_rtc::gui::Arrow("Velocity", [this]() { return posW().translation(); },
-                                                           [this]() -> Eigen::Vector3d {
-                                                             const Eigen::Vector3d p = posW().translation();
-                                                             Eigen::Vector3d end = p + velW().linear();
-                                                             return end;
-                                                           }));
+  KinematicInertialPoseObserver::addToGUI(ctl, gui, category);
+  auto showHideVel = [this, category, &gui]() {
+    std::string name = "Velocity";
+    auto cat = category;
+    cat.push_back("Markers");
+    gui.removeElement(cat, name);
+    if(showVelocity_)
+    {
+      gui.addElement(cat, mc_rtc::gui::Arrow(name, velocityArrowConfig_,
+                                             [this]() -> const Eigen::Vector3d & { return posW().translation(); },
+                                             [this]() -> Eigen::Vector3d {
+                                               const Eigen::Vector3d p = posW().translation();
+                                               Eigen::Vector3d end = p + velW().linear();
+                                               return end;
+                                             }));
+    }
+  };
+
+  gui.addElement(category, mc_rtc::gui::Checkbox("Show velocity", [this]() { return showVelocity_; },
+                                                 [this, showHideVel]() {
+                                                   showVelocity_ = !showVelocity_;
+                                                   showHideVel();
+                                                 }));
+
+  gui.addElement(
+      category,
+      mc_rtc::gui::NumberInput(
+          "Cutoff Period", [this]() -> double { return velFilter_.cutoffPeriod(); },
+          [this, &ctl](double cutoff) {
+            if(cutoff < 2 * ctl.timeStep)
+            {
+              mc_rtc::log::warning(
+                  "[{}] cutoff period must be at least twice the timestep (>={}), keeping the current value ({})",
+                  name(), 2 * ctl.timeStep, velFilter_.cutoffPeriod());
+              return;
+            }
+            velFilter_.cutoffPeriod(cutoff);
+          }));
+
+  showHideVel();
 }
+
 } // namespace mc_observers
 
 EXPORT_OBSERVER_MODULE("KinematicInertial", mc_observers::KinematicInertialObserver)

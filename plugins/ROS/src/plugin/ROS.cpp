@@ -22,7 +22,7 @@ void ROSPlugin::init(mc_control::MCGlobalController & controller, const mc_rtc::
   {
     auto conf = config("publish");
     conf("control", publish_control);
-    conf("env", publish_control);
+    conf("env", publish_env);
     conf("real", publish_real);
     conf("timestep", publish_timestep);
   }
@@ -39,11 +39,17 @@ void ROSPlugin::reset(mc_control::MCGlobalController & controller)
   }
   if(publish_env)
   {
-    const auto & robots = controller.controller().robots();
-    for(size_t i = 1; i < robots.robots().size(); ++i)
+    auto publish_env = [&controller](const std::string & prefix, mc_rbdyn::Robots & robots, bool use_real) {
+      for(size_t i = 1; i < robots.robots().size(); ++i)
+      {
+        mc_rtc::ROSBridge::init_robot_publisher(prefix + "_" + std::to_string(i), controller.timestep(),
+                                                robots.robot(i), use_real);
+      }
+    };
+    publish_env("control/env", controller.controller().robots(), false);
+    if(publish_real)
     {
-      mc_rtc::ROSBridge::init_robot_publisher("control/env_" + std::to_string(i), controller.timestep(),
-                                              robots.robot(i));
+      publish_env("real/env", controller.controller().realRobots(), true);
     }
   }
   if(publish_real)
@@ -62,11 +68,17 @@ void ROSPlugin::after(mc_control::MCGlobalController & controller)
   // Publish environment state
   if(publish_env)
   {
-    const auto & robots = controller.controller().robots();
-    for(size_t i = 1; i < robots.robots().size(); ++i)
+    auto update_env = [&controller](const std::string & prefix, mc_rbdyn::Robots & robots) {
+      for(size_t i = 1; i < robots.robots().size(); ++i)
+      {
+        mc_rtc::ROSBridge::update_robot_publisher(prefix + "_" + std::to_string(i), controller.timestep(),
+                                                  robots.robot(i));
+      }
+    };
+    update_env("control/env", controller.controller().robots());
+    if(publish_real)
     {
-      mc_rtc::ROSBridge::update_robot_publisher("control/env_" + std::to_string(i), controller.timestep(),
-                                                robots.robot(i));
+      update_env("real/env", controller.controller().realRobots());
     }
   }
   // Publish real robot

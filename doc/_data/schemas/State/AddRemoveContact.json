@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "title": "fsm::AddRemoveContact",
+      "title": "mc_control::fsm::AddRemoveContactState",
       "description": "Add or remove a contact",
       "type": "object",
       "properties":

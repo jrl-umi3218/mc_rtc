@@ -235,12 +235,13 @@ namespace mc_rbdyn
 #  pragma clang diagnostic ignored "-Wshorten-64-to-32"
 #endif
 
-Robot::Robot(Robots & robots,
+Robot::Robot(const std::string & name,
+             Robots & robots,
              unsigned int robots_idx,
              bool loadFiles,
              const sva::PTransformd * base,
              const std::string & bName)
-: robots_(&robots), robots_idx_(robots_idx)
+: robots_(&robots), robots_idx_(robots_idx), name_(name)
 {
   const auto & module_ = module();
 
@@ -279,8 +280,6 @@ Robot::Robot(Robots & robots,
     mbc().q = initQ;
     forwardKinematics();
   }
-
-  name_ = module_.name;
 
   bodyTransforms_.resize(mb().bodies().size());
   const auto & bbts =
@@ -327,13 +326,13 @@ Robot::Robot(Robots & robots,
     const auto & collisions = c.second;
     if(collisions.size() == 1)
     {
-      VisualToConvex(name(), body, body, collisions[0], convexes_, collisionTransforms_);
+      VisualToConvex(name_, body, body, collisions[0], convexes_, collisionTransforms_);
       continue;
     }
     size_t added = 0;
     for(const auto & col : collisions)
     {
-      if(VisualToConvex(name(), body + "_" + std::to_string(added), body, col, convexes_, collisionTransforms_))
+      if(VisualToConvex(name_, body + "_" + std::to_string(added), body, col, convexes_, collisionTransforms_))
       {
         added++;
       }
@@ -1302,11 +1301,10 @@ const sva::MotionVecd Robot::accW() const
   return sva::PTransformd{rot} * mbc().bodyAccB[0];
 }
 
-void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) const
+void Robot::copy(Robots & robots, const std::string & copyName, unsigned int robots_idx, const Base & base) const
 {
-  robots.robots_.emplace_back(Robot(robots, robots_idx, false, &base.X_0_s, base.baseName));
+  robots.robots_.emplace_back(Robot(copyName, robots, robots_idx, false, &base.X_0_s, base.baseName));
   auto & robot = robots.robots_.back();
-  robot.name_ = name_;
   for(const auto & s : surfaces_)
   {
     robot.surfaces_[s.first] = s.second->copy();
@@ -1330,9 +1328,9 @@ void Robot::copy(Robots & robots, unsigned int robots_idx, const Base & base) co
   fixSCH(robot, robot.convexes_, robot.collisionTransforms_);
 }
 
-void Robot::copy(Robots & robots, unsigned int robots_idx) const
+void Robot::copy(Robots & robots, const std::string & copyName, unsigned int robots_idx) const
 {
-  robots.robots_.emplace_back(Robot(robots, robots_idx, false));
+  robots.robots_.emplace_back(Robot(copyName, robots, robots_idx, false));
   auto & robot = robots.robots_.back();
   for(const auto & s : surfaces_)
   {

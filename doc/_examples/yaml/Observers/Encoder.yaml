@@ -1,0 +1,8 @@
+---
+robot: jvrc1
+updateRobot: jvrc1
+position: encoderValues
+velocity: encoderFiniteDifferences
+log:
+  position: false
+  velocity: true

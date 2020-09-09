@@ -1,5 +1,5 @@
 {
-  "title": "mc_tasks::ComplianceTask",
+  "title": "mc_tasks::force::ComplianceTask",
   "type": "object",
   "allOf":
   [

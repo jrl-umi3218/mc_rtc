@@ -9,15 +9,14 @@ AdmittanceSampleController::AdmittanceSampleController(mc_rbdyn::RobotModulePtr 
                                                        const mc_rtc::Configuration & config)
 : mc_control::fsm::Controller(rm, dt, config)
 {
+  datastore().make_call("KinematicAnchorFrame::" + robot().name(), [](const mc_rbdyn::Robot & robot) {
+    return sva::interpolate(robot.surfacePose("LeftFoot"), robot.surfacePose("RightFoot"), 0.5);
+  });
 }
 
 void AdmittanceSampleController::reset(const mc_control::ControllerResetData & reset_data)
 {
   Controller::reset(reset_data);
-  // Update anchor frame for the KinematicInertial observer
-  anchorFrame(sva::interpolate(robot().surfacePose("RightFoot"), robot().surfacePose("LeftFoot"), 0.5));
-  anchorFrameReal(sva::interpolate(realRobot().surfacePose("RightFoot"), realRobot().surfacePose("LeftFoot"), 0.5));
-
   auto handForceConfig = mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(0., 1., 0.));
   handForceConfig.force_scale *= 10;
   gui()->addElement(
@@ -36,8 +35,5 @@ void AdmittanceSampleController::reset(const mc_control::ControllerResetData & r
 bool AdmittanceSampleController::run()
 {
   t_ += timeStep;
-  // Update anchor frame for the KinematicInertial observer
-  anchorFrame(sva::interpolate(robot().surfacePose("RightFoot"), robot().surfacePose("LeftFoot"), 0.5));
-  anchorFrameReal(sva::interpolate(realRobot().surfacePose("RightFoot"), realRobot().surfacePose("LeftFoot"), 0.5));
   return Controller::run();
 }

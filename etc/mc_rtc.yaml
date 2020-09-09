@@ -29,41 +29,39 @@ InitAttitudeFromSensor: false
 # Note that the robot model and encoder values are used to transform the sensor measurements to the floating base frame
 InitAttitudeSensor: ""
 
-
 ##############################
 # State observation pipeline #
 ##############################
-# See https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html for details
+# For details, please refer to:
+# - The tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html for details
+# - The JSON Schemas: https://jrl-umi3218.github.io/mc_rtc/json.html#Observers/ObserverPipelines
 #
-# Load and run state observers.
-
+# Loads and run state observers organized in one or multiple pipelines. Observers within each pipeline are run sequentially
+# and each estimate some properties of the robots, and optionally update the real robots instance from it.
+#
 # Available estimators in mc_rtc are:
 # - Encoder: Estimate encoder position from sensor and velocity by finite differences
 # - BodySensor: Uses a BodySensor to compute the state of the floating base. This estimator will
 # typically be used to obtained groundtruth information (e.g the FloatingBase body sensor contains the groundtruth floating base state when running in choreonoid)
-# - KinematicInertial: Estimates the position and orientation of the floating base from the IMU orientation and assumed contacts. Note that this estimator requires to manually set the leftFootRatio  parameter to specify its anchor point, the default value is configured in-between the feet and is suitable for double-support only.
+# - KinematicInertial: Estimates the position and orientation of the floating base from the IMU orientation and assumed contacts. Note that this estimator requires to provide a kinematic anchor point through the datastore.
 #
-# To run the observers, please add in your controller-specific configuration file. For example
-# RunObservers: [Encoder, BodySensor, KinematicInertial]
-# UpdateObservers: [Encoder, KinematicInertial]
+# To run the observers, please add an "ObserverPipelines" configuration section in your controller-specific configuration file or in you FSM configuration.
 #
-# Note:
-# - Order matters here, estimators will be run after each other.
-# - Only the estimators in the "UpdateObservers" list will affect the state of the real robot.
-#   The other estimators will only be run and logged, such that they may be used for comparison purposes.
-EnabledObservers: [Encoder, BodySensor, KinematicInertial]
-
-# Specific configuration for each observer
-Observers:
-  Encoder:
-    # Valid values are [estimator, control, none]
-    UpdatePositionFrom: estimator
-    UpdateVelocityFrom: estimator
-    Log: true
-  BodySensor:
-    # Valid entries are [control, estimator, none]
-    UpdateFrom: estimator
-    FloatingBaseSensor: FloatingBase
+# Example:
+# ObserverPipelines:
+# - name: "MainPipeline"
+#   observers:
+#     - type: Encoder
+#       update: true
+#       log: true
+#       config:
+#         position: encoderValues
+#         velocity: encoderFiniteDifferences
+#     - type: KinematicInertial
+#       update: true
+#       gui: true
+#       config:
+#         anchorFrameFunction: "Observer::anchorFrame"
 
 ###########
 # Logging #

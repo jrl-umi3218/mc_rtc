@@ -41,10 +41,20 @@ class TestPythonController(mc_control.MCPythonController):
     self.dv_data = [self.d_data]*3
     self.theta += 0.005
     self.quat_data = eigen.Quaterniond(sva.RotZ(self.theta))
+    assert(self.observerPipeline("FirstPipeline").success())
+    if abs(self.d_data - 2.0) < 1e-6:
+      self.removeAnchorFrameCallback("KinematicAnchorFrame::{}".format(self.robot().name()))
+      self.addAnchorFrameCallback("KinematicAnchorFrame::{}".format(self.robot().name()), self.anchorFrameCallback)
     return True
   def get_pt(self):
     return self.robot().mbc.bodyPosW[0]
+  def anchorFrameCallback(self, r):
+    return sva.interpolate(r.surfacePose("LeftFoot"), r.surfacePose("RightFoot"), 0.5)
   def reset_callback(self, reset_data):
+    assert(len(self.observerPipelines()) == 1)
+    assert(self.hasObserverPipeline("FirstPipeline"))
+    assert(not self.hasObserverPipeline("NotAPipeline"))
+    self.addAnchorFrameCallback("KinematicAnchorFrame::{}".format(self.robot().name().decode()), lambda r: sva.interpolate(r.surfacePose("LeftFoot"), r.surfacePose("RightFoot"), 0.5))
     self.positionTask.reset()
     self.positionTask.position(self.positionTask.position() + eigen.Vector3d(0.1, 0, 0))
     self.logger().addLogEntry("PYTHONDOUBLE", lambda: self.d_data)

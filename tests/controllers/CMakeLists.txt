@@ -24,6 +24,9 @@ macro(controller_test_common NAME)
   endif()
   add_library(${NAME} SHARED ${${NAME}_SRC})
   target_link_libraries(${NAME} PUBLIC mc_control Boost::unit_test_framework)
+  target_include_directories(${NAME} PRIVATE ${CMAKE_SOURCE_DIR}/tests)
+  set(CONFIG_HEADER_INCLUDE_DIR "${CMAKE_BINARY_DIR}/tests/include/$<CONFIGURATION>")
+  target_include_directories(${NAME} PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
   set_target_properties(${NAME} PROPERTIES
     COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
     PREFIX ""
@@ -162,7 +165,10 @@ set(RUN_OBSERVERS "\"Encoder\", \"BodySensor\"")
 set(UPDATE_OBSERVERS "\"Encoder\"")
 
 # mc_observer test controllers
+file(READ "ObserverPipelines.json" OBSERVER_PIPELINES)
 controller_test_run(TestObserverController 2001)
+target_link_libraries(TestObserverController PUBLIC BodySensorObserver)
+unset(OBSERVER_PIPELINES)
 
 # Test run of sample controllers
 macro(controller_sample_test_run NAME PATH_SUFFIX NRITER)
@@ -234,7 +240,8 @@ set(RUN_OBSERVERS "")
 set(UPDATE_OBSERVERS "")
 
 # Test Python bindings
-if(${PYTHON_BINDING})
+if(PYTHON_BINDING)
+  file(READ "ObserverPipelinesPython.json" OBSERVER_PIPELINES)
   set(USE_SANDBOX "false")
   get_python_names(python_names)
   foreach(PYTHON ${python_names})
@@ -278,4 +285,5 @@ if(${PYTHON_BINDING})
       add_test(NAME Test${PYTHON}Log COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/check_log.py" "${TEST_CONTROLLER_NAME}" ${NRITER} "${UTILS_BIN_DIR}")
     endif()
   endforeach()
+  unset(OBSERVER_PIPELINES)
 endif()

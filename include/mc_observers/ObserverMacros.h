@@ -25,26 +25,24 @@
         NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version());                                                        \
   }
 
-#define EXPORT_OBSERVER_MODULE(NAME, TYPE)                                                    \
-  extern "C"                                                                                  \
-  {                                                                                           \
-    OBSERVER_MODULE_API void MC_RTC_OBSERVER_MODULE(std::vector<std::string> & names)         \
-    {                                                                                         \
-      OBSERVER_MODULE_CHECK_VERSION(NAME)                                                     \
-      names = {NAME};                                                                         \
-    }                                                                                         \
-    OBSERVER_MODULE_API void destroy(mc_observers::Observer * ptr)                            \
-    {                                                                                         \
-      delete ptr;                                                                             \
-    }                                                                                         \
-    OBSERVER_MODULE_API unsigned int create_args_required()                                   \
-    {                                                                                         \
-      return 3;                                                                               \
-    }                                                                                         \
-    OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & name,             \
-                                                        const double & dt,                    \
-                                                        const mc_rtc::Configuration & config) \
-    {                                                                                         \
-      return new TYPE(name, dt, config);                                                      \
-    }                                                                                         \
+#define EXPORT_OBSERVER_MODULE(NAME, TYPE)                                                           \
+  extern "C"                                                                                         \
+  {                                                                                                  \
+    OBSERVER_MODULE_API void MC_RTC_OBSERVER_MODULE(std::vector<std::string> & names)                \
+    {                                                                                                \
+      OBSERVER_MODULE_CHECK_VERSION(NAME)                                                            \
+      names = {NAME};                                                                                \
+    }                                                                                                \
+    OBSERVER_MODULE_API void destroy(mc_observers::Observer * ptr)                                   \
+    {                                                                                                \
+      delete ptr;                                                                                    \
+    }                                                                                                \
+    OBSERVER_MODULE_API unsigned int create_args_required()                                          \
+    {                                                                                                \
+      return 2;                                                                                      \
+    }                                                                                                \
+    OBSERVER_MODULE_API mc_observers::Observer * create(const std::string & type, const double & dt) \
+    {                                                                                                \
+      return new TYPE{type, dt};                                                                     \
+    }                                                                                                \
   }

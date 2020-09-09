@@ -19,7 +19,12 @@ namespace mc_observers
  */
 struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPoseObserver
 {
-  KinematicInertialObserver(const std::string & name, double dt, const mc_rtc::Configuration & config = {});
+  KinematicInertialObserver(const std::string & type, double dt)
+  : KinematicInertialPoseObserver(type, dt), velFilter_(dt, 2 * dt)
+  {
+  }
+
+  void configure(const mc_control::MCController & ctl, const mc_rtc::Configuration & config) override;
 
   /*! \brief  Resets the estimator from given robot state
    * Calls FLoatingBasePosObserver::reset(realRobot) to estimate the
@@ -28,7 +33,7 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
    *
    * \param ctl Controller access
    */
-  void reset(const mc_control::MCController & ct) override;
+  void reset(const mc_control::MCController & ctl) override;
 
   /*! \brief  Resets the estimator from given robot state
    * First calls FLoatingBasePosObserver::reset(realRobot) to estimate the
@@ -40,8 +45,7 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
    */
   void reset(const mc_control::MCController & ctl, const sva::MotionVecd & velW);
   bool run(const mc_control::MCController & ctl) override;
-  void updateRobots(const mc_control::MCController & ctl, mc_rbdyn::Robots & realRobots) override;
-  void updateBodySensor(mc_rbdyn::Robots & realRobot, const std::string & sensorName = "FloatingBase");
+  void update(mc_control::MCController & ctl) override;
 
   /*! \brief Get floating-base velocity in the world frame.
    * The velocity is obtained by finite differences of the estimated position,
@@ -49,20 +53,28 @@ struct MC_OBSERVER_DLLAPI KinematicInertialObserver : public KinematicInertialPo
    **/
   const sva::MotionVecd & velW() const;
 
-  void addToLogger(const mc_control::MCController &, mc_rtc::Logger &) override;
-  void removeFromLogger(mc_rtc::Logger &) override;
-  void addToGUI(const mc_control::MCController &, mc_rtc::gui::StateBuilder &) override;
+protected:
+  void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &, const std::string & category) override;
+  void removeFromLogger(mc_rtc::Logger &, const std::string & category) override;
+  void addToGUI(const mc_control::MCController &,
+                mc_rtc::gui::StateBuilder &,
+                const std::vector<std::string> & category) override;
 
 private:
+  bool showVelocity_ = true;
+  mc_rtc::gui::ArrowConfig velocityArrowConfig_;
+
   /** Previous estimated position.
    * Used to compute finite differences estimation of the velocity */
-  sva::PTransformd posWPrev_;
+  sva::PTransformd posWPrev_ = sva::PTransformd::Identity();
 
   /**
    * Estimated velocity through finite differences and low-pass filtering
    **/
   mc_filter::LowPass<sva::MotionVecd> velFilter_;
-  sva::MotionVecd velW_;
+  sva::MotionVecd velW_ = sva::MotionVecd::Zero();
+
+  bool logVelocity_ = true; ///< Whether to log the estimated velocity
 
 private:
   /** Prevent from resetting only the position */

@@ -7,10 +7,13 @@
 #endif
 #include <mc_control/api.h>
 #include <mc_control/mc_controller.h>
+#include <mc_observers/BodySensorObserver.h>
+#include <mc_rtc/io_utils.h>
 #include <mc_rtc/logging.h>
 #include <mc_tasks/CoMTask.h>
 
 #include <boost/test/unit_test.hpp>
+#include <utils.h>
 
 namespace mc_control
 {
@@ -22,6 +25,9 @@ public:
   {
     // Check that the default constructor loads the robot + ground environment
     BOOST_CHECK_EQUAL(robots().robots().size(), 2);
+    // Load an additional main robot for the second pipeline
+    loadRobot(rm, "jvrc1_2");
+    BOOST_CHECK_EQUAL(robots().robots().size(), 3);
     // Check that JVRC-1 was loaded
     BOOST_CHECK_EQUAL(robot().name(), "jvrc1");
     solver().addConstraintSet(contactConstraint);
@@ -42,8 +48,47 @@ public:
 
   virtual bool run() override
   {
+    // Check whether all pipelines succeeded
+    for(const auto & pipeline : observerPipelines())
+    {
+      BOOST_REQUIRE(pipeline.success());
+    }
+
+    auto checkPose = [](const std::string & prefix, const sva::PTransformd & expected,
+                        const sva::PTransformd & actual) {
+      BOOST_CHECK_MESSAGE(allclose(expected.rotation(), actual.rotation(), 1e-6),
+                          fmt::format("{} expected orientation [{}] but got [{}]", prefix,
+                                      mc_rbdyn::rpyFromMat(expected.rotation()).transpose().format(Eigen::IOFormat(4)),
+                                      mc_rbdyn::rpyFromMat(actual.rotation()).transpose().format(Eigen::IOFormat(4))));
+      BOOST_CHECK_MESSAGE(allclose(expected.translation(), actual.translation(), 1e-6),
+                          fmt::format("{} expected position [{}] but got [{}]", prefix,
+                                      expected.translation().transpose(), actual.translation().transpose()));
+    };
+
+    // Check that the estimation from the KinematicInertial observers matches the
+    // control robot state
+    checkPose("KinematicInertial", robot().posW(), realRobot().posW());
+
+    // Check that the estimation from the BodySensor observers matches the control robot state
+    // This observer does not update the real robot instance, so to access its
+    // result we need to access the actual BodySensorObserver object. This
+    // implies explicitely linking the controller against it.
+    auto & bodySensorObserver = observerPipeline().observer("BodySensor").observer<mc_observers::BodySensorObserver>();
+    checkPose("BodySensor (no update)", robot().posW(), bodySensorObserver.posW());
+
+    // Check that the second pipeline BodySensor observer works as expected
+    checkPose("Second pipeline", robot().posW(), realRobot("jvrc1_2").posW());
+
+    for(const auto joint : robot().refJointOrder())
+    {
+      auto j = robot().jointIndexByName(joint);
+      BOOST_CHECK_CLOSE(robot().mbc().q[j][0], realRobot().mbc().q[j][0], 1e-6);
+      BOOST_CHECK_CLOSE(robot().mbc().alpha[j][0], realRobot().mbc().alpha[j][0], 1e-6);
+    }
+
     bool ret = MCController::run();
     BOOST_CHECK(ret);
+
     nrIter++;
     if(nrIter == 1000)
     {
@@ -103,44 +148,60 @@ public:
     /* Lower the CoM */
     comTask->com(comTask->com() + Eigen::Vector3d(0., 0., -0.05));
 
-    // clang-format off
-    std::vector<std::string> enabledObservers = { @ENABLED_OBSERVERS@ };
-    std::vector<std::string> runObservers = { @RUN_OBSERVERS@ };
-    std::vector<std::string> updateObservers = { @UPDATE_OBSERVERS@ };
-    // clang-format on
+    BOOST_REQUIRE_EQUAL(observerPipelines().size(), 2);
+    BOOST_REQUIRE(hasObserverPipeline("FirstPipeline"));
+    BOOST_REQUIRE(hasObserverPipeline("SecondPipeline"));
+    // Check that the default pipeline is indeed the first one
+    BOOST_REQUIRE_EQUAL(observerPipeline().name(), "FirstPipeline");
 
-    auto hasObserver = [this](const std::string & name) {
-      for(const auto & obs : observers_)
-      {
-        if(obs->name() == name)
-        {
-          return true;
-        }
-      }
-      return false;
-    };
-    auto hasPipelineObserver = [this](const std::string & name, bool update) {
-      for(const auto & obs : pipelineObservers_)
-      {
-        if(obs.first->name() == name)
-        {
-          return update ? obs.second : true;
-        }
-      }
-      return false;
-    };
-    for(const auto & enabled : enabledObservers)
-    {
-      BOOST_REQUIRE(hasObserver(enabled));
-    }
-    for(const auto & run : runObservers)
-    {
-      BOOST_REQUIRE(hasPipelineObserver(run, false));
-    }
-    for(const auto & update : updateObservers)
-    {
-      BOOST_REQUIRE(hasPipelineObserver(update, false));
-    }
+    const auto & pipelines = observerPipelines();
+    BOOST_REQUIRE_EQUAL(pipelines[0].name(), "FirstPipeline");
+    BOOST_REQUIRE_EQUAL(pipelines[1].name(), "SecondPipeline");
+
+    const auto & firstPipeline = observerPipeline("FirstPipeline");
+    BOOST_REQUIRE_EQUAL(firstPipeline.observers().size(), 4);
+    BOOST_REQUIRE(firstPipeline.hasObserver("Encoder"));
+    BOOST_REQUIRE(firstPipeline.hasObserver("Encoder2"));
+    BOOST_REQUIRE(firstPipeline.hasObserver("BodySensor"));
+    BOOST_REQUIRE(firstPipeline.hasObserver("KinematicInertial"));
+    const auto & observers = firstPipeline.observers();
+    // Check that order is respected
+    BOOST_REQUIRE_EQUAL(observers[0].observer().name(), "Encoder");
+    BOOST_REQUIRE_EQUAL(observers[0].update(), true);
+    // Check that multiple observers of same type can be loaded
+    BOOST_REQUIRE_EQUAL(observers[1].observer().name(), "Encoder2");
+    BOOST_REQUIRE_EQUAL(observers[1].update(), false);
+    BOOST_REQUIRE_EQUAL(observers[2].observer().name(), "BodySensor");
+    BOOST_REQUIRE_EQUAL(observers[2].update(), false);
+    BOOST_REQUIRE_EQUAL(observers[3].observer().name(), "KinematicInertial");
+    BOOST_REQUIRE_EQUAL(observers[3].update(), true);
+    BOOST_REQUIRE(firstPipeline.hasObserverType("Encoder"));
+    BOOST_REQUIRE(firstPipeline.hasObserverType("BodySensor"));
+    BOOST_REQUIRE(firstPipeline.hasObserverType("KinematicInertial"));
+
+    // The pipelines haven't yet been exectued in the reset function
+    BOOST_REQUIRE_EQUAL(firstPipeline.success(), false);
+
+    const auto & secondPipeline = observerPipeline("SecondPipeline");
+    BOOST_REQUIRE_EQUAL(secondPipeline.observers().size(), 3);
+    BOOST_REQUIRE_EQUAL(secondPipeline.success(), false);
+    BOOST_REQUIRE(secondPipeline.hasObserver("EncoderWithName"));
+    BOOST_REQUIRE(secondPipeline.hasObserver("SecondRobotEncoder"));
+    BOOST_REQUIRE(secondPipeline.hasObserver("SecondRobotBodySensor"));
+    BOOST_REQUIRE(secondPipeline.hasObserverType("Encoder"));
+    BOOST_REQUIRE(secondPipeline.hasObserverType("BodySensor"));
+    BOOST_REQUIRE_EQUAL(secondPipeline.observer("EncoderWithName").update(), false);
+    BOOST_REQUIRE_EQUAL(secondPipeline.observer("SecondRobotBodySensor").update(), true);
+    BOOST_REQUIRE_EQUAL(secondPipeline.observer("SecondRobotEncoder").update(), true);
+
+    // Check that the real robot was properly initialized
+    BOOST_REQUIRE(allclose(realRobot().posW().translation(), robot().posW().translation()));
+    BOOST_REQUIRE(allclose(realRobot().posW().rotation(), robot().posW().rotation()));
+
+    // Add anchor frame
+    datastore().make_call("KinematicAnchorFrame::" + robot().name(), [](const mc_rbdyn::Robot & robot) {
+      return sva::interpolate(robot.surfacePose("LeftFoot"), robot.surfacePose("RightFoot"), 0.5);
+    });
   }
 
 private:

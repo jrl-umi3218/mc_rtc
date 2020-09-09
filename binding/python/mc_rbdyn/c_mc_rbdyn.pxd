@@ -1,5 +1,5 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 from eigen.c_eigen cimport *
@@ -45,11 +45,11 @@ cdef extern from "<mc_rbdyn/BodySensor.h>" namespace "mc_rbdyn":
     string name()
     string parentBody()
     const PTransformd & X_b_s()
-    const Vector3d position()
-    const Quaterniond orientation()
-    const Vector3d linearVelocity()
-    const Vector3d angularVelocity()
-    const Vector3d acceleration()
+    const Vector3d & position()
+    const Quaterniond & orientation()
+    const Vector3d & linearVelocity()
+    const Vector3d & angularVelocity()
+    const Vector3d & linearAcceleration()
 
 cdef extern from "<mc_rbdyn/Flexibility.h>" namespace "mc_rbdyn":
   cdef cppclass Flexibility:
@@ -142,13 +142,11 @@ cdef extern from "<mc_rbdyn/Robots.h>" namespace "mc_rbdyn":
 
     const Robot & robot(unsigned int)
 
-    void createRobotWithBase(Robots&, unsigned int, const Base&, const Vector3d&)
+    void createRobotWithBase(const string&, Robots&, unsigned int, const Base&, const Vector3d&)
 
-    void createRobotWithBase(Robot&, const Base&, const Vector3d&)
+    void createRobotWithBase(const string&, Robot&, const Base&, const Vector3d&)
 
-    void robotCopy(const Robots&, unsigned int)
-
-    void robotCopy(const Robot&)
+    void robotCopy(const Robot&, const string&)
 
 cdef extern from "<mc_rbdyn/Robot.h>" namespace "mc_rbdyn":
   cdef cppclass Robot:

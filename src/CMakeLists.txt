@@ -406,16 +406,19 @@ install_mc_rtc_header_lib(mc_filter)
 set(mc_observers_SRC
 mc_observers/ObserverLoader.cpp
 mc_observers/Observer.cpp
+mc_observers/ObserverPipeline.cpp
 )
 
 set(mc_observers_HDR
 ../include/mc_observers/api.h
 ../include/mc_observers/ObserverLoader.h
 ../include/mc_observers/Observer.h
+../include/mc_observers/ObserverPipeline.h
 ../include/mc_observers/ObserverMacros.h
 )
 
 add_library(mc_observers SHARED ${mc_observers_SRC} ${mc_observers_HDR})
+target_include_directories(mc_observers PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 set_target_properties(mc_observers PROPERTIES COMPILE_FLAGS "-DMC_OBSERVERS_EXPORTS")
 target_link_libraries(mc_observers PUBLIC mc_filter mc_rbdyn mc_rtc_gui)
 install_mc_rtc_lib(mc_observers)

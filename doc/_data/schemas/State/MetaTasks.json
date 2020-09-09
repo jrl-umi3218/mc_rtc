@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "title": "fsm::MetaTasks",
+      "title": "mc_control::fsm::MetaTasksState",
       "description": "Create and run multiple tasks until their completion criteria is reached",
       "type": "object",
       "properties":

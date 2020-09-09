@@ -56,7 +56,7 @@ Robots::Robots(const Robots & rhs)
   for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
   {
     const Robot & robot = rhs.robots_[i];
-    robot.copy(*this, i);
+    robot.copy(*this, robot.name(), i);
   }
 }
 
@@ -76,7 +76,7 @@ Robots & Robots::operator=(const Robots & rhs)
   for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
   {
     const Robot & robot = rhs.robots_[i];
-    robot.copy(*this, i);
+    robot.copy(*this, robot.name(), i);
   }
   return *this;
 }
@@ -119,15 +119,12 @@ unsigned int Robots::envIndex() const
 
 unsigned int Robots::robotIndex(const std::string & name) const
 {
-  auto it = getRobot(name);
-  if(it != robots_.end())
-  {
-    return it->robots_idx_;
-  }
-  else
+  auto key = robotNameToIndex_.find(name);
+  if(key == robotNameToIndex_.end())
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("No robot named {}", name);
   }
+  return key->second;
 }
 
 Robot & Robots::robot()
@@ -148,15 +145,9 @@ const Robot & Robots::env() const
   return robots_[envIndex_];
 }
 
-std::vector<mc_rbdyn::Robot>::const_iterator Robots::getRobot(const std::string & name) const
-{
-  return std::find_if(robots_.begin(), robots_.end(), [&name](const Robot & r) { return r.name() == name; });
-}
-
 bool Robots::hasRobot(const std::string & name) const
 {
-  auto it = getRobot(name);
-  return it != robots_.end();
+  return robotNameToIndex_.count(name);
 }
 
 Robot & Robots::robot(size_t idx)
@@ -179,45 +170,49 @@ Robot & Robots::robot(const std::string & name)
 
 const Robot & Robots::robot(const std::string & name) const
 {
-  auto it = getRobot(name);
-  if(it != robots_.end())
-  {
-    return *it;
-  }
-  else
+  auto key = robotNameToIndex_.find(name);
+  if(key == robotNameToIndex_.end())
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("No robot named {}", name);
   }
+  return robots_[key->second];
 }
 
-void Robots::createRobotWithBase(Robots & robots,
+void Robots::createRobotWithBase(const std::string & name,
+                                 Robots & robots,
                                  unsigned int robots_idx,
                                  const Base & base,
                                  const Eigen::Vector3d & baseAxis)
 {
-  createRobotWithBase(robots.robot(robots_idx), base, baseAxis);
+  createRobotWithBase(name, robots.robot(robots_idx), base, baseAxis);
 }
 
-void Robots::createRobotWithBase(Robot & robot, const Base & base, const Eigen::Vector3d & baseAxis)
+void Robots::createRobotWithBase(const std::string & name,
+                                 Robot & robot,
+                                 const Base & base,
+                                 const Eigen::Vector3d & baseAxis)
 {
+  if(hasRobot(name))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Cannot copy robot {} with a new base as a robot named {} already exists", robot.name(), name);
+  }
   this->robot_modules_.push_back(robot.module());
   this->mbs_.push_back(robot.mbg().makeMultiBody(base.baseName, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
   this->mbcs_.emplace_back(this->mbs_.back());
   this->mbgs_.push_back(robot.mbg());
-  robot.copy(*this, static_cast<unsigned int>(this->mbs_.size()) - 1, base);
+  auto robotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
+  robot.copy(*this, name, robotIndex, base);
+  robotNameToIndex_[name] = robotIndex;
 }
 
 void Robots::removeRobot(const std::string & name)
 {
-  auto it = getRobot(name);
-  if(it != robots_.end())
-  {
-    removeRobot(it->robots_idx_);
-  }
-  else
+  if(!hasRobot(name))
   {
     mc_rtc::log::error("Did not find a robot named {} to remove", name);
   }
+  removeRobot(robotNameToIndex_.at(name));
 }
 
 void Robots::removeRobot(unsigned int idx)
@@ -227,6 +222,8 @@ void Robots::removeRobot(unsigned int idx)
     mc_rtc::log::error("Cannot remove a robot at index {} because there is {} robots loaded", idx, robots_.size());
     return;
   }
+  const auto & robotName = robots_[idx].name();
+  robotNameToIndex_.erase(robotName);
   robot_modules_.erase(robot_modules_.begin() + idx);
   robots_.erase(robots_.begin() + idx);
   mbs_.erase(mbs_.begin() + idx);
@@ -236,34 +233,57 @@ void Robots::removeRobot(unsigned int idx)
   {
     auto & r = robots_[i];
     r.robots_idx_--;
+    robotNameToIndex_[r.name()] = r.robots_idx_;
   }
 }
 
-void Robots::robotCopy(const Robot & robot)
+void Robots::robotCopy(const Robot & robot, const std::string & copyName)
 {
+  if(hasRobot(copyName))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot copy robot {} to {}: a robot named {} already exists",
+                                                     robot.name(), copyName, copyName);
+  }
   this->robot_modules_.push_back(robot.module());
   this->mbs_.push_back(robot.mb());
   this->mbcs_.push_back(robot.mbc());
   this->mbgs_.push_back(robot.mbg());
-  robot.copy(*this, static_cast<unsigned int>(this->mbs_.size()) - 1);
+  auto copyRobotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
+  robot.copy(*this, copyName, copyRobotIndex);
+  robotNameToIndex_[copyName] = copyRobotIndex;
 }
 
+// deprecated
 Robot & Robots::load(const RobotModule & module,
                      const std::string &,
                      sva::PTransformd * base,
                      const std::string & bName)
 {
-  return load(module, base, bName);
+  return load(module.name, module, base, bName);
 }
 
 Robot & Robots::load(const RobotModule & module, sva::PTransformd * base, const std::string & bName)
 {
+  return load(module.name, module, base, bName);
+}
+
+Robot & Robots::load(const std::string & name,
+                     const RobotModule & module,
+                     sva::PTransformd * base,
+                     const std::string & bName)
+{
+  if(hasRobot(name))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Robot names are required to be unique but a robot named {} already exists.", name);
+  }
   robot_modules_.emplace_back(module);
   mbs_.emplace_back(module.mb);
   mbcs_.emplace_back(module.mbc);
   mbgs_.emplace_back(module.mbg);
-  mc_rbdyn::Robot robot{*this, static_cast<unsigned int>(mbs_.size() - 1), true, base, bName};
+  mc_rbdyn::Robot robot{name, *this, static_cast<unsigned int>(mbs_.size() - 1), true, base, bName};
   robots_.emplace_back(std::move(robot));
+  robotNameToIndex_[name] = robot.robotIndex();
   updateIndexes();
   return robots_.back();
 }
@@ -283,10 +303,11 @@ std::shared_ptr<Robots> loadRobot(const RobotModule & module,
 std::shared_ptr<Robots> loadRobot(const RobotModule & module, sva::PTransformd * base, const std::string & baseName)
 {
   auto robots = std::make_shared<Robots>();
-  robots->load(module, base, baseName);
+  robots->load(module.name, module, base, baseName);
   return robots;
 }
 
+// deprecated
 void Robots::load(const RobotModule & module,
                   const std::string &,
                   const RobotModule & envModule,
@@ -302,10 +323,11 @@ void Robots::load(const RobotModule & module,
                   sva::PTransformd * base,
                   const std::string & baseName)
 {
-  load(module, base, baseName);
-  load(envModule);
+  load(module.name, module, base, baseName);
+  load(envModule.name, envModule);
 }
 
+// deprecated
 std::shared_ptr<Robots> loadRobotAndEnv(const RobotModule & module,
                                         const std::string &,
                                         const RobotModule & envModule,
@@ -378,6 +400,22 @@ std::shared_ptr<Robots> loadRobotFromUrdf(const std::string & name,
   auto robots = std::make_shared<Robots>();
   robots->loadFromUrdf(name, urdf, withVirtualLinks, filteredLinks, fixed, base, baseName);
   return robots;
+}
+
+void Robots::rename(const std::string & oldName, const std::string & newName)
+{
+  if(!hasRobot(oldName))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot rename robot: no robot named {}", oldName);
+  }
+  if(robotNameToIndex_.count(newName))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot rename robot: a robot named {} already exist", newName);
+  }
+  auto index = robotNameToIndex_[oldName];
+  robotNameToIndex_.erase(oldName);
+  robotNameToIndex_[newName] = index;
+  robots_[index].name(newName);
 }
 
 void Robots::updateIndexes()

@@ -31,18 +31,22 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
 
   if(robot().hasSurface("LFullSole") && robot().hasSurface("RFullSole"))
   {
-    leftFootSurface = "LFullSole";
-    rightFootSurface = "RFullSole";
+    leftFootSurface_ = "LFullSole";
+    rightFootSurface_ = "RFullSole";
   }
   else if(robot().hasSurface("LeftFoot") && robot().hasSurface("RightFoot"))
   {
-    leftFootSurface = "LeftFoot";
-    rightFootSurface = "RightFoot";
+    leftFootSurface_ = "LeftFoot";
+    rightFootSurface_ = "RightFoot";
   }
   else
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("MCCoMController does not support robot {}", robot().name());
   }
+
+  datastore().make_call("KinematicAnchorFrame::" + robot().name(), [this](const mc_rbdyn::Robot & robot) {
+    return sva::interpolate(robot.surfacePose(leftFootSurface_), robot.surfacePose(rightFootSurface_), 0.5);
+  });
 }
 
 void MCCoMController::reset(const ControllerResetData & reset_data)
@@ -50,30 +54,8 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
   MCController::reset(reset_data);
   comTask->reset();
   solver().addTask(comTask);
-  solver().setContacts({mc_rbdyn::Contact(robots(), leftFootSurface, "AllGround"),
-                        mc_rbdyn::Contact(robots(), rightFootSurface, "AllGround")});
-  updateAnchorFrame();
-}
-
-bool MCCoMController::run()
-{
-  updateAnchorFrame();
-  return MCController::run();
-}
-
-void MCCoMController::updateAnchorFrame()
-{
-  // Project desired CoM in-between foot-sole ankle frames and compute ratio along the line in-beween the two surfaces
-  const Eigen::Vector3d & lankle = robot().surfacePose(leftFootSurface).translation();
-  const Eigen::Vector3d & rankle = robot().surfacePose(rightFootSurface).translation();
-  Eigen::Vector3d t_lankle_com = robot().com() - lankle;
-  Eigen::Vector3d t_lankle_rankle = rankle - lankle;
-  double d_proj = t_lankle_com.dot(t_lankle_rankle.normalized());
-  double leftFootRatio = mc_filter::utils::clamp(d_proj / t_lankle_rankle.norm(), 0., 1.);
-  anchorFrame(
-      sva::interpolate(robot().surfacePose(leftFootSurface), robot().surfacePose(rightFootSurface), leftFootRatio));
-  anchorFrameReal(sva::interpolate(realRobot().surfacePose(leftFootSurface), realRobot().surfacePose(rightFootSurface),
-                                   leftFootRatio));
+  solver().setContacts({mc_rbdyn::Contact(robots(), leftFootSurface_, "AllGround"),
+                        mc_rbdyn::Contact(robots(), rightFootSurface_, "AllGround")});
 }
 
 } // namespace mc_control

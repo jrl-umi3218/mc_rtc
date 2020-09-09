@@ -7,14 +7,25 @@
 #include <mc_rbdyn/RobotLoader.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
+#include <Eigen/Core>
 
-#include "tests_config.h"
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <random>
 #include <stdexcept>
 #include <string>
+#include <tests_config.h>
+
+template<typename DerivedA, typename DerivedB>
+bool allclose(
+    const Eigen::DenseBase<DerivedA> & a,
+    const Eigen::DenseBase<DerivedB> & b,
+    const typename DerivedA::RealScalar & rtol = Eigen::NumTraits<typename DerivedA::RealScalar>::dummy_precision(),
+    const typename DerivedA::RealScalar & atol = Eigen::NumTraits<typename DerivedA::RealScalar>::epsilon())
+{
+  return ((a.derived() - b.derived()).array().abs() <= (atol + rtol * b.derived().array().abs())).all();
+}
 
 bool configureRobotLoader()
 {

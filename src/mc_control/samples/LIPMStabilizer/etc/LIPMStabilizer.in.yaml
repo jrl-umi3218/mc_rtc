@@ -399,19 +399,17 @@ transitions:
 #   # Go back to list of choices
 - [Stabilizer::GoCenter, OK, Stabilizer::Standing]
 
-# # Initial state
+# Initial state
 init: @LIPMStabilizer_INIT_STATE@
 
-
-# Specific configuration for each observer
-Observers:
-  Encoder:
-    # Valid values are [estimator, control, none]
-    UpdatePositionFrom: estimator
-    UpdateVelocityFrom: estimator
-  BodySensor:
-    # Valid entries are [control, estimator, none]
-    UpdateFrom: estimator
-    FloatingBaseSensor: FloatingBase
-RunObservers: [Encoder, KinematicInertial]
-UpdateObservers: [Encoder, KinematicInertial]
+ObserverPipelines:
+- name: "MainPipeline"
+  observers:
+    - type: Encoder
+      # Floating base kinematic-inertial state observation
+    - type: KinematicInertial
+      # Floating base Groundtruth
+    - type: BodySensor
+      update: false
+      config:
+        bodySensor: FloatingBase

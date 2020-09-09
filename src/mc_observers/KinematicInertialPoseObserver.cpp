@@ -13,22 +13,79 @@
 
 namespace mc_observers
 {
-KinematicInertialPoseObserver::KinematicInertialPoseObserver(const std::string & name,
-                                                             double dt,
-                                                             const mc_rtc::Configuration & config)
-: Observer(name, dt, config), orientation_(Eigen::Matrix3d::Identity()), position_(Eigen::Vector3d::Zero())
+
+void KinematicInertialPoseObserver::configure(const mc_control::MCController & ctl,
+                                              const mc_rtc::Configuration & config)
 {
-  config("showAnchorFrame", showAnchorFrame_);
+  robot_ = config("robot", ctl.robot().name());
+  realRobot_ = config("updateRobot", ctl.realRobot().name());
+  imuSensor_ = config("imuBodySensor", ctl.robot().bodySensor().name());
+  anchorFrameFunction_ = "KinematicAnchorFrame::" + ctl.robot(robot_).name();
+  if(config.has("anchorFrame"))
+  {
+    config("datastoreFunction", anchorFrameFunction_);
+    config("maxAnchorFrameDiscontinuity", maxAnchorFrameDiscontinuity_);
+  }
+  if(config.has("gui"))
+  {
+    auto gConfig = config("gui");
+    gConfig("anchorFrame", showAnchorFrame_);
+    gConfig("anchorFrameReal", showAnchorFrameReal_);
+    gConfig("pose", showPose_);
+    gConfig("advanced", advancedGUI_);
+  }
+  if(config.has("log"))
+  {
+    auto lConfig = config("log");
+    lConfig("pose", logPose_);
+    lConfig("anchorFrame", logAnchorFrame_);
+  }
 }
 
 void KinematicInertialPoseObserver::reset(const mc_control::MCController & ctl)
 {
-  run(ctl);
+  pose_ = ctl.realRobot(robot_).posW();
+  firstIter_ = true;
 }
 
 bool KinematicInertialPoseObserver::run(const mc_control::MCController & ctl)
 {
-  estimateOrientation(ctl.robot(), ctl.realRobot());
+  if(!ctl.datastore().has(anchorFrameFunction_))
+  {
+    error_ = fmt::format(
+        "Observer {} requires a \"{}\" function in the datastore to provide the observer's kinematic anchor frame.\n"
+        "Please refer to https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html for further details.",
+        name(), anchorFrameFunction_);
+    return false;
+  }
+  anchorFrameJumped_ = false;
+  auto anchorFrame = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.robot(robot_));
+  auto anchorFrameReal = ctl.datastore().call<sva::PTransformd>(anchorFrameFunction_, ctl.realRobot(realRobot_));
+  auto error = (anchorFrame.translation() - X_0_anchorFrame_.translation()).norm();
+  if(firstIter_)
+  { // Ignore anchor frame check on first iteration
+    firstIter_ = false;
+  }
+  else
+  { // Check whether anchor frame jumped
+    if(error > maxAnchorFrameDiscontinuity_)
+    {
+      mc_rtc::log::warning("[{}] Control anchor frame jumped from [{}] to [{}] (error norm {} > threshold {})", name(),
+                           X_0_anchorFrame_.translation().transpose(), anchorFrame.translation().transpose(), error,
+                           maxAnchorFrameDiscontinuity_);
+      anchorFrameJumped_ = true;
+    }
+    if((anchorFrameReal.translation() - X_0_anchorFrameReal_.translation()).norm() > maxAnchorFrameDiscontinuity_)
+    {
+      mc_rtc::log::warning("[{}] Real anchor frame jumped from [{}] to [{}] (error norm {:.3f} > threshold {:.3f})",
+                           name(), X_0_anchorFrameReal_.translation().transpose(),
+                           anchorFrameReal.translation().transpose(), error, maxAnchorFrameDiscontinuity_);
+      anchorFrameJumped_ = true;
+    }
+  }
+  X_0_anchorFrame_ = anchorFrame;
+  X_0_anchorFrameReal_ = anchorFrameReal;
+  estimateOrientation(ctl.robot(robot_), ctl.realRobot(robot_));
   estimatePosition(ctl);
   return true;
 }
@@ -40,60 +97,155 @@ void KinematicInertialPoseObserver::estimateOrientation(const mc_rbdyn::Robot & 
   // c for control-robot model
   // r for real-robot model
   // m for estimated/measured quantities
-  sva::PTransformd X_0_rBase = realRobot.posW();
-  sva::PTransformd X_0_rIMU = realRobot.bodyPosW(realRobot.bodySensor().parentBody());
+  const sva::PTransformd & X_0_rBase = realRobot.posW();
+  const auto & imuSensor = realRobot.bodySensor(imuSensor_);
+  const auto & imuParent = imuSensor.parentBody();
+  const sva::PTransformd & X_0_rIMU = realRobot.bodyPosW(imuParent);
+  const sva::PTransformd & X_0_cIMU = robot.bodyPosW(imuParent);
   sva::PTransformd X_rIMU_rBase = X_0_rBase * X_0_rIMU.inv();
-  Eigen::Matrix3d E_0_mIMU = robot.bodySensor().orientation().toRotationMatrix();
-  Eigen::Matrix3d E_0_cBase = robot.posW().rotation();
-  Eigen::Matrix3d E_0_mBase = X_rIMU_rBase.rotation() * E_0_mIMU;
-  Eigen::Vector3d cRPY = mc_rbdyn::rpyFromMat(E_0_cBase);
-  Eigen::Vector3d mRPY = mc_rbdyn::rpyFromMat(E_0_mBase);
-  orientation_ = mc_rbdyn::rpyToMat(mRPY(0), mRPY(1), cRPY(2));
+
+  Eigen::Matrix3d E_0_mIMU = imuSensor.orientation().toRotationMatrix();
+  const Eigen::Matrix3d & E_0_cIMU = X_0_cIMU.rotation();
+  // Estimate IMU orientation: merges roll+pitch from measurement with yaw from control
+  Eigen::Matrix3d E_0_eIMU = mergeRoll1Pitch1WithYaw2(E_0_mIMU, E_0_cIMU);
+  pose_.rotation() = E_0_eIMU.transpose() * X_rIMU_rBase.rotation();
 }
 
 void KinematicInertialPoseObserver::estimatePosition(const mc_control::MCController & ctl)
 {
-  const sva::PTransformd & X_0_c = ctl.anchorFrame();
-  const sva::PTransformd & X_0_s = ctl.anchorFrameReal();
-  const sva::PTransformd X_real_s = X_0_s * ctl.realRobot().posW().inv();
-  const Eigen::Vector3d & r_c_0 = X_0_c.translation();
+  // Relative transformation between the real anchor frame and the floating base
+  // Uses the FK with the real robot encoder measurements
+  const sva::PTransformd X_real_s = X_0_anchorFrameReal_ * ctl.realRobot(robot_).posW().inv();
+  // Position of the control anchor frame (world)
+  const Eigen::Vector3d & r_c_0 = X_0_anchorFrame_.translation();
+  // Position of the real anchor frame (world)
   const Eigen::Vector3d & r_s_real = X_real_s.translation();
-  position_ = r_c_0 - orientation_.transpose() * r_s_real;
+  // The floating base position is estimated by applying the kinematics
+  // transformation between the real robot's anchor frame and its floating base
+  // (kinematics only), rotated by the estimated rotation of the real floating
+  // base from the IMU (see estimateOrientation)
+  pose_.translation() = r_c_0 - pose_.rotation().transpose() * r_s_real;
 }
 
-void KinematicInertialPoseObserver::updateRobots(const mc_control::MCController & /* ctl */,
-                                                 mc_rbdyn::Robots & realRobots)
+void KinematicInertialPoseObserver::update(mc_control::MCController & ctl)
 {
-  realRobots.robot().posW(sva::PTransformd{orientation_, position_});
+  auto & robot = ctl.realRobot(robot_);
+  robot.posW(pose_);
 }
 
-void KinematicInertialPoseObserver::updateBodySensor(mc_rbdyn::Robots & robots, const std::string & sensorName)
+void KinematicInertialPoseObserver::addToLogger(const mc_control::MCController &,
+                                                mc_rtc::Logger & logger,
+                                                const std::string & category)
 {
-  auto & sensor = robots.robot().bodySensor(sensorName);
-  sensor.orientation(Eigen::Quaterniond(orientation_));
-  sensor.position(position_);
-}
-
-void KinematicInertialPoseObserver::addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger & logger)
-{
-  logger.addLogEntry("observer_" + name() + "_posW", [this]() { return posW(); });
-  logger.addLogEntry("observer_" + name() + "_anchorFrame", [&ctl]() { return ctl.anchorFrame(); });
-  logger.addLogEntry("observer_" + name() + "_anchorFrameReal", [&ctl]() { return ctl.anchorFrameReal(); });
-}
-void KinematicInertialPoseObserver::removeFromLogger(mc_rtc::Logger & logger)
-{
-  logger.removeLogEntry("observer_" + name() + "_posW");
-  logger.removeLogEntry("observer_" + name() + "_anchorFrame");
-  logger.removeLogEntry("observer_" + name() + "_anchorFrameReal");
-}
-
-void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ctl, mc_rtc::gui::StateBuilder & gui)
-{
-  if(showAnchorFrame_)
+  if(logPose_)
   {
-    gui.addElement({"Observers", name()},
-                   mc_rtc::gui::Transform("anchorFrameControl", [&ctl]() { return ctl.anchorFrame(); }),
-                   mc_rtc::gui::Transform("anchorFrameReal", [&ctl]() { return ctl.anchorFrameReal(); }));
+    logger.addLogEntry(category + "_posW", [this]() -> const sva::PTransformd & { return pose_; });
+  }
+  if(logAnchorFrame_)
+  {
+    logger.addLogEntry(category + "_anchorFrame", [this]() -> const sva::PTransformd & { return X_0_anchorFrame_; });
+    logger.addLogEntry(category + "_anchorFrameReal",
+                       [this]() -> const sva::PTransformd & { return X_0_anchorFrameReal_; });
+  }
+}
+
+void KinematicInertialPoseObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
+{
+  logger.removeLogEntry(category + "_posW");
+  logger.removeLogEntry(category + "_anchorFrame");
+  logger.removeLogEntry(category + "_anchorFrameReal");
+}
+
+void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ctl,
+                                             mc_rtc::gui::StateBuilder & gui,
+                                             const std::vector<std::string> & category)
+{
+  auto showHideAnchorFrame = [&gui, category](const std::string & name, bool show,
+                                              const sva::PTransformd & anchorFrame) {
+    auto cat = category;
+    cat.push_back("Markers");
+    gui.removeElement(cat, name);
+    if(show)
+    {
+      gui.addElement(
+          cat, mc_rtc::gui::Transform(name, [&anchorFrame]() -> const sva::PTransformd & { return anchorFrame; }));
+    }
+  };
+  auto showHidePose = [this, category, &gui]() {
+    std::string name = "Pose";
+    auto cat = category;
+    cat.push_back("Markers");
+    gui.removeElement(cat, name);
+    if(showPose_)
+    {
+      gui.addElement(cat, mc_rtc::gui::Transform(name, [this]() -> const sva::PTransformd & { return pose_; }));
+    }
+  };
+
+  gui.addElement(
+      category,
+      mc_rtc::gui::Checkbox("Show anchor frame (control)", [this]() { return showAnchorFrame_; },
+                            [this, showHideAnchorFrame]() {
+                              showAnchorFrame_ = !showAnchorFrame_;
+                              showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
+                            }),
+      mc_rtc::gui::Checkbox("Show anchor frame (real)", [this]() { return showAnchorFrameReal_; },
+                            [this, showHideAnchorFrame]() {
+                              showAnchorFrameReal_ = !showAnchorFrameReal_;
+                              showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
+                            }),
+      mc_rtc::gui::Checkbox("Show pose", [this]() { return showPose_; },
+                            [this, showHidePose]() {
+                              showPose_ = !showPose_;
+                              showHidePose();
+                            }));
+
+  if(advancedGUI_)
+  {
+    auto sensorNames = std::vector<std::string>{};
+    auto & bodySensors = ctl.robot(robot_).bodySensors();
+    sensorNames.resize(bodySensors.size());
+    std::transform(bodySensors.begin(), bodySensors.end(), sensorNames.begin(),
+                   [](const mc_rbdyn::BodySensor & bs) { return bs.name(); });
+
+    auto advancedCat = category;
+    advancedCat.push_back("Advanced");
+    gui.addElement(advancedCat, mc_rtc::gui::ComboInput("BodySensor", sensorNames, [this]() { return imuSensor_; },
+                                                        [this](const std::string & sensor) { imuSensor_ = sensor; }));
+  }
+
+  showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
+  showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
+  showHidePose();
+}
+
+inline Eigen::Matrix3d KinematicInertialPoseObserver::mergeRoll1Pitch1WithYaw2(const Eigen::Matrix3d & R1,
+                                                                               const Eigen::Matrix3d & R2,
+                                                                               double epsilonAngle)
+{
+  using Matrix3 = Eigen::Matrix3d;
+  using Vector3 = Eigen::Vector3d;
+
+  const Vector3 & ez = Vector3::UnitZ();
+  Matrix3 R_temp1, R_temp2;
+  Vector3 v1 = R1 * ez;
+  Vector3 mlxv1 = (R2 * Vector3::UnitX()).cross(v1);
+  double n2 = mlxv1.squaredNorm();
+
+  if(n2 > epsilonAngle * epsilonAngle)
+  {
+    // we take m=ex
+    R_temp1 << -Vector3::UnitY(), Vector3::UnitX(), ez;
+    mlxv1 /= sqrt(n2);
+    R_temp2 << mlxv1.transpose(), v1.cross(mlxv1).transpose(), v1.transpose();
+    return R_temp1 * R_temp2;
+  }
+  else
+  {
+    // we take m=ey
+    mlxv1 = (R2 * Vector3::UnitY()).cross(v1).normalized();
+    R_temp2 << mlxv1.transpose(), v1.cross(mlxv1).transpose(), v1.transpose();
+    return R_temp2.transpose();
   }
 }
 

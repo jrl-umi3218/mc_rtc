@@ -94,6 +94,11 @@ protected:
   Eigen::Vector3d copTarget_ = Eigen::Vector3d::Zero(); /**< World target for the CoP */
 
   bool optionalGUI_ = true; /**< Controls whether optional GUI elements are displayed */
+
+  std::string robot_ = "";
+  std::string anchorFrameFunction_ = "";
+  bool ownsAnchorFrameCallback_ =
+      false; /** Whether the state added its own anchor frame callback or is using a global one */
 };
 
 } // namespace fsm

@@ -224,15 +224,13 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
 
   /**
    * @brief computes the anchorFrame compatible with the state observers
-   * (KinematicInertial)
+   * (e.g KinematicInertial)
+   *
+   * @param robot Robot from which the frame will be computed
    *
    * @return Anchor frame in-between the feet according to leftFootRatio()
    */
-  sva::PTransformd anchorFrame() const;
-  /**
-   * @brief Returns the anchor frame computed from real robot
-   */
-  sva::PTransformd anchorFrameReal() const;
+  sva::PTransformd anchorFrame(const mc_rbdyn::Robot & robot) const;
 
   /** Provides a static target to the stabilizer.
    * - CoM target : user-provided
@@ -299,6 +297,16 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   bool inDoubleSupport() const
   {
     return contacts_.size() == 2;
+  }
+
+  const mc_rbdyn::Robot & robot() const
+  {
+    return robots_.robot(robotIndex_);
+  }
+
+  const mc_rbdyn::Robot & realRobot() const
+  {
+    return realRobots_.robot(robotIndex_);
   }
 
   /**
@@ -581,16 +589,6 @@ protected:
   void addToLogger(mc_rtc::Logger &) override;
   void removeFromLogger(mc_rtc::Logger &) override;
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
-
-  const mc_rbdyn::Robot & robot() const
-  {
-    return robots_.robot(robotIndex_);
-  }
-
-  const mc_rbdyn::Robot & realRobot() const
-  {
-    return realRobots_.robot(robotIndex_);
-  }
 
   /**
    * @brief Actual configuration of the stabilizer.

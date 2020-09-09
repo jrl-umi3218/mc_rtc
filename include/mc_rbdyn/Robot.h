@@ -37,15 +37,12 @@ public:
   Robot(Robot &&) = default;
   Robot & operator=(Robot &&) = default;
 
-  /** Returns the name of the robot */
-  const std::string & name() const;
-
-  /** Set the name of the robot
+  /** Returns the name of the robot
    *
-   * \note It is not recommended to call this late in the life cycle of the
-   * Robot object as the change is not communicated in any way.
-   */
-  void name(const std::string & n);
+   * \note To rename a robot, use
+   * Robots::rename(const std::string &, const std::string &)
+   **/
+  const std::string & name() const;
 
   /** Retrieve the associated RobotModule */
   const RobotModule & module() const;
@@ -935,16 +932,23 @@ protected:
    * loaded. This is used when copying one robot into another.
    *
    */
-  Robot(Robots & robots,
+  Robot(const std::string & name,
+        Robots & robots,
         unsigned int robots_idx,
         bool loadFiles,
         const sva::PTransformd * base = nullptr,
         const std::string & baseName = "");
 
-  /** Copy existing Robot with a new base */
-  void copy(Robots & robots, unsigned int robots_idx, const Base & base) const;
-  /** Copy existing Robot */
-  void copy(Robots & robots, unsigned int robots_idx) const;
+  /** Copy existing Robot with a new base
+   *
+   * \throws std::runtime_error if a robot named <copyName> already exists
+   **/
+  void copy(Robots & robots, const std::string & copyName, unsigned int robots_idx, const Base & base) const;
+  /** Copy existing Robot
+   *
+   * \throws std::runtime_error if a robot named <copyName> already exists
+   **/
+  void copy(Robots & robots, const std::string & copyName, unsigned int robots_idx) const;
 
   /** Used to set the surfaces' X_b_s correctly */
   void fixSurfaces();
@@ -965,6 +969,13 @@ protected:
 private:
   Robot(const Robot &) = delete;
   Robot & operator=(const Robot &) = delete;
+
+  /** Set the name of the robot
+   *
+   * \note It is not recommended to call this late in the life cycle of the
+   * Robot object as the change is not communicated in any way.
+   */
+  void name(const std::string & n);
 };
 
 /** @defgroup robotFromConfig Helpers to obtain robot index/name from configuration

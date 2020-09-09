@@ -85,7 +85,7 @@ struct MC_RTC_GUI_DLLAPI Range
   Range() = default;
   Range(double min, double max) : min(min), max(max) {}
 
-  void load(const mc_rtc::Configuration & config)
+  void fromMessagePack(const mc_rtc::Configuration & config)
   {
     std::array<double, 2> data = config;
     min = data[0];
@@ -124,10 +124,10 @@ struct MC_RTC_GUI_DLLAPI AxisConfiguration
     return *this;
   }
 
-  void load(const mc_rtc::Configuration & config)
+  void fromMessagePack(const mc_rtc::Configuration & config)
   {
     name = static_cast<std::string>(config[0]);
-    range.load(config[1]);
+    range.fromMessagePack(config[1]);
   }
 
   void write(mc_rtc::MessagePackBuilder & builder) const
@@ -199,12 +199,12 @@ struct MC_RTC_GUI_DLLAPI PolygonDescription
   PolygonDescription & closed(bool closed) { closed_ = closed; return *this; };
   // clang-format on
 
-  void load(const mc_rtc::Configuration & data)
+  void fromMessagePack(const mc_rtc::Configuration & data)
   {
     points_ = data[0];
-    outline_.load(data[1]);
+    outline_.fromMessagePack(data[1]);
     style_ = static_cast<Style>(static_cast<uint64_t>(data[2]));
-    fill_.load(data[3]);
+    fill_.fromMessagePack(data[3]);
     closed_ = data[4];
   }
 

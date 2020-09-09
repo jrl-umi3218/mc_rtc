@@ -21,6 +21,49 @@ mc_rbdyn::Robots & get_robots()
   return *robots_ptr;
 }
 
+BOOST_AUTO_TEST_CASE(TestRobotLoading)
+{
+  configureRobotLoader();
+  auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
+  auto envrm = mc_rbdyn::RobotLoader::get_robot_module("env", std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH),
+                                                       std::string("ground"));
+  // Non-unique names
+  BOOST_REQUIRE_THROW(mc_rbdyn::loadRobots({rm, rm}), std::runtime_error);
+  std::shared_ptr<mc_rbdyn::Robots> robots_ptr = nullptr;
+  BOOST_REQUIRE_NO_THROW(robots_ptr = mc_rbdyn::loadRobots({rm, envrm}));
+  BOOST_REQUIRE(robots_ptr->hasRobot(rm->name));
+  BOOST_REQUIRE(robots_ptr->hasRobot(envrm->name));
+  auto & robot = robots_ptr->robot(rm->name);
+  auto & env = robots_ptr->robot(envrm->name);
+  BOOST_REQUIRE_EQUAL(robot.name(), rm->name);
+  BOOST_REQUIRE_EQUAL(robot.robotIndex(), 0);
+  BOOST_REQUIRE_EQUAL(env.name(), envrm->name);
+  BOOST_REQUIRE_EQUAL(env.robotIndex(), 1);
+  robots_ptr->rename(robot.name(), "renamed");
+  BOOST_REQUIRE(robots_ptr->hasRobot("renamed"));
+  auto & renamed = robots_ptr->robot("renamed");
+  BOOST_REQUIRE_EQUAL(renamed.name(), "renamed");
+  BOOST_REQUIRE_EQUAL(robot.name(), "renamed");
+  BOOST_REQUIRE_EQUAL(renamed.robotIndex(), 0);
+  BOOST_REQUIRE_EQUAL(robot.robotIndex(), 0);
+  BOOST_REQUIRE(robots_ptr->hasRobot(envrm->name));
+  BOOST_REQUIRE_EQUAL(robots_ptr->robot(envrm->name).name(), envrm->name);
+  BOOST_REQUIRE_EQUAL(robots_ptr->robot(envrm->name).robotIndex(), 1);
+
+  BOOST_REQUIRE_NO_THROW(robots_ptr->robotCopy(robot, "robotCopy"));
+  BOOST_REQUIRE(robots_ptr->hasRobot("robotCopy"));
+  auto & robotCopy = robots_ptr->robots().back();
+  BOOST_REQUIRE(robotCopy.name() != rm->name);
+  BOOST_REQUIRE_EQUAL(robots_ptr->robot("robotCopy").name(), "robotCopy");
+  BOOST_REQUIRE_EQUAL(robotCopy.robotIndex(), 2);
+  BOOST_REQUIRE_EQUAL(robots_ptr->robots().back().name(), "robotCopy");
+
+  robots_ptr->removeRobot("robotCopy");
+  BOOST_REQUIRE(!robots_ptr->hasRobot("robotCopy"));
+  BOOST_REQUIRE(robots_ptr->hasRobot("renamed"));
+  BOOST_REQUIRE(robots_ptr->hasRobot(envrm->name));
+}
+
 BOOST_AUTO_TEST_CASE(TestRobotPosWVelWAccW)
 {
   auto robots = get_robots();
@@ -64,6 +107,17 @@ BOOST_AUTO_TEST_CASE(TestRobotZMPSimple)
   const auto sensorNames = std::vector<std::string>{"LeftFootForceSensor", "RightFootForceSensor"};
   auto & lfs = robot.forceSensor("LeftFootForceSensor");
   auto & rfs = robot.forceSensor("RightFootForceSensor");
+  // Prevent using the JVRC1 calibration files (when they exist)
+  // for the ZMP computation to obtain repeatable results here.
+  // Resetting the calibrator makes sure that it has no effect.
+  //
+  // This test assumes that the sensor is at the model position and that there
+  // is no force offset.
+  //
+  // XXX We should investigate the effect of calibrator on ZMP measurement,
+  // and write a test that checks this case as well
+  lfs.resetCalibrator();
+  rfs.resetCalibrator();
 
   {
     // ZMP under left sensor

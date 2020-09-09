@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "title": "mc_rtc::gui::ArrowConfig",
+  "properties":
+  {
+    "head_diam": {"type": "number"},
+    "head_len": {"type": "number"},
+    "shaft_diam": {"type": "number"},
+    "scale": {"type": "number"},
+    "start_point_scale": {"type": "number"},
+    "end_point_scale": {"type": "number"},
+    "color": { "$ref": "/../../GUI/Color.json" }
+  }
+}

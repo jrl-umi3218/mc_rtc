@@ -32,7 +32,7 @@ Stabilizer::Standing:
 
 Stabilizer::GoCenter:
   base: Stabilizer::Standing
-  above: Center
+  above: CenterSurfaces
   completion:
     dcmEval: [0.005, 0.005, 0.05]
 
@@ -41,14 +41,14 @@ Stabilizer::GoCenter:
 ##
 Stabilizer::GoLeft:
   base: Stabilizer::GoCenter
-  above: LeftAnkle
+  above: LeftSurface
 
 ##
 # Make the CoM move to a point above the right foot ankle
 ##
 Stabilizer::GoRight:
   base: Stabilizer::GoLeft
-  above: RightAnkle
+  above: RightSurface
 
 ##
 # Single support state that keeps the CoM above the left foot contact

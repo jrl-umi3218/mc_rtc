@@ -1,7 +1,7 @@
 {% if include.schema %}
 <div class="card card-schema">
   <div class="card-header">
-    <h6 class="text-primary font-weight-bold">{{ include.schema.title | default: "object" }}</h6>
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">{{ include.schema.title | default: "object" }}</h6></span><span style="float:right;">{% if include.schema.api %}<a href="{{site.baseurl}}/doxygen.html#{{include.schema.api}}">[API]</a>{% endif %}</span><br />
     <div class="float-right">
       <small class="text-muted text-right">{{include.schema.description | liquefy}}</small>
     </div>

@@ -146,6 +146,12 @@ public:
    */
   void loadCalibrator(const std::string & calib_file, const Eigen::Vector3d & gravity = {0., 0., 9.81});
 
+  /**
+   * Reset the force calibration to its default values such that the calibrator
+   * has no effect on the sensor wrench
+   **/
+  void resetCalibrator();
+
   /** Return the local rotation associated to the sensor, i.e. the error
    * between the model forceSensor and real one
    */

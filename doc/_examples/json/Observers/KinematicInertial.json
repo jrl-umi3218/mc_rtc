@@ -1,0 +1,26 @@
+{
+  "robot": "jvrc1",
+  "updateRobot": "jvrc1",
+  "imuBodySensor": "Accelerometer",
+  "anchorFrame":
+  {
+    "maxAnchorFrameDiscontinuity": 0.01
+  },
+  "log":
+  {
+    "pose": true,
+    "velocity": true,
+    "anchorFrame": true
+  },
+  "gui":
+  {
+    "pose": false,
+    "velocity": true,
+    "anchorFrame": false,
+    "anchorFrameReal": false,
+    "velocityArrow":
+    {
+      "color": "green"
+    }
+  }
+}

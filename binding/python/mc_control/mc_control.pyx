@@ -1,7 +1,7 @@
 # distutils: language = c++
 
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 cimport mc_control.c_mc_control as c_mc_control
@@ -10,6 +10,9 @@ cimport eigen.eigen as eigen
 
 cimport sva.c_sva as c_sva
 cimport sva.sva as sva
+
+cimport mc_observers.c_mc_observers as c_mc_observers
+cimport mc_observers.mc_observers as mc_observers
 
 cimport mc_rbdyn.c_mc_rbdyn as c_mc_rbdyn
 cimport mc_rbdyn.mc_rbdyn as mc_rbdyn
@@ -27,6 +30,13 @@ from libcpp.map cimport map as cppmap
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool as cppbool
+
+import warnings
+
+def deprecated():
+  warnings.simplefilter('always', category=DeprecationWarning)
+  warnings.warn("This call is deprecated", DeprecationWarning)
+  warnings.simplefilter('ignore', category=DeprecationWarning)
 
 cdef class ControllerResetData(object):
   def __cinit__(self):
@@ -84,6 +94,25 @@ cdef class MCController(object):
   property qpsolver:
     def __get__(self):
       return mc_solver.QPSolverFromRef(self.base.solver())
+  def hasObserverPipeline(self, name):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
+    return self.base.hasObserverPipeline(name)
+  def observerPipeline(self, name = None):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
+    if name is None:
+      return mc_observers.ObserverPipelineFromRef(self.base.observerPipeline())
+    else:
+      return mc_observers.ObserverPipelineFromRef(self.base.observerPipeline(name))
+  def observerPipelines(self):
+    it = self.base.observerPipelines().begin()
+    end = self.base.observerPipelines().end()
+    ret = []
+    while it != end:
+      ret.append(mc_observers.ObserverPipelineFromRef(deref(it)))
+      preinc(it)
+    return ret
 
 cdef MCController MCControllerFromPtr(c_mc_control.MCController * p):
     cdef MCController ret = MCController()
@@ -105,13 +134,19 @@ cdef class PythonRWCallback(object):
     def __set__(self, value):
       self.impl.out = value
 
-cdef cppbool python_to_run_callback(void * f) with gil:
+cdef cppbool python_to_run_callback(void * f) except+ with gil:
   return (<object>f).run_callback()
 
-cdef void python_to_reset_callback(const c_mc_control.ControllerResetData & crd, void * f) with gil:
+cdef void python_to_reset_callback(const c_mc_control.ControllerResetData & crd, void * f) except+ with gil:
   (<object>f).reset_callback(ControllerResetDataFromPtr(&(c_mc_control.const_cast_crd(crd))))
 
+cdef c_sva.PTransformd python_af_callback(callback, const c_mc_rbdyn.Robot & robot) except+ with gil:
+    cdef mc_rbdyn.Robot r = mc_rbdyn.RobotFromC(robot)
+    cdef sva.PTransformd af = callback(r)
+    return deref(af.impl)
+
 cdef class MCPythonController(MCController):
+  AF_CALLBACKS = []
   def __dealloc__(self):
     del self.impl
     self.impl = self.base = NULL
@@ -128,6 +163,15 @@ cdef class MCPythonController(MCController):
       c_mc_control.set_reset_callback(deref(self.impl), &python_to_reset_callback, <void*>(self))
     except AttributeError:
       pass
+  def addAnchorFrameCallback(self, name, callback):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
+    MCPythonController.AF_CALLBACKS.append(callback)
+    c_mc_control.add_anchor_frame_callback(deref(self.impl), <string>(name), &python_af_callback, callback)
+  def removeAnchorFrameCallback(self, name):
+    if isinstance(name, unicode):
+      name = name.encode(u'ascii')
+    c_mc_control.remove_anchor_frame_callback(deref(self.impl), name)
 
 cdef class MCGlobalController(object):
   def __dealloc__(self):
@@ -170,7 +214,10 @@ cdef class MCGlobalController(object):
   def setSensorAngularVelocity(self, eigen.Vector3d av):
     self.impl.setSensorAngularVelocity(av.impl)
   def setSensorAcceleration(self, eigen.Vector3d a):
-    self.impl.setSensorAcceleration(a.impl)
+    deprecated()
+    self.impl.setSensorLinearAcceleration(a.impl)
+  def setSensorLinearAcceleration(self, eigen.Vector3d a):
+    self.impl.setSensorLinearAcceleration(a.impl)
   def setEncoderValues(self, q):
     self.impl.setEncoderValues(q)
   def setEncoderVelocities(self, alpha):

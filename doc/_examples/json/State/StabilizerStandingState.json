@@ -26,18 +26,18 @@
   },
   "Stabilizer::GoCenter": {
     "base": "Stabilizer::Standing",
-    "above": "Center",
+    "above": "CenterSurfaces",
     "completion": {
       "dcmEval": [ 0.005, 0.005, 0.05 ]
     }
   },
   "Stabilizer::GoLeft": {
     "base": "Stabilizer::GoCenter",
-    "above": "LeftAnkle"
+    "above": "LeftSurface"
   },
   "Stabilizer::GoRight": {
     "base": "Stabilizer::GoLeft",
-    "above": "RightAnkle"
+    "above": "RightSurface"
   },
   "Stabilizer::LeftSupport": {
     "base": "Stabilizer::GoLeft",

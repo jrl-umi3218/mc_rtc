@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "title": "mc_observers::ObserverPipeline",
+  "description": "State observation pipeline.<br/>Observers are responsible for estimating some of the robot properties from sensor measurements and/or fusing several source of information (e.g the Encoder observer estimates the joint position and velocity based on joint sensors, the KinematicInertial observers the state of the floating base from kinematics and IMU information, etc).<br/>These observers may be grouped into a \"State observation pipeline\", that will run each observer sequentially. Some observers may be used to update the state of the real robots instances used by the controller, while others may only be used for logging estimated values for comparison purposes.",
+  "properties":
+  {
+    "name": {"type":"string", "description":"Name of this pipeline"},
+    "run": {"type": "boolean", "default": true, "description": "When true, run each observer in this pipeline"},
+    "update": {"type": "boolean", "default": true, "description": "When true, update the state of real robots instances (depending on each observer's configuration). Requires \"run\" to be true."},
+    "log": {"type": "boolean", "default": true, "description": "When true, log estimated values"},
+    "gui": {"type": "boolean", "default": false, "description": "When true, show this pipeline and its observers in the gui. All observers will be displayed acording to their configuration in \"observers\" (each observer is visible by default)."},
+    "observers":
+    {
+      "type": "array",
+      "description": "Sequence of observers",
+      "items":
+      {
+        "type": "object",
+        "title": "Observer",
+        "properties":
+        {
+          "type": {"type": "string", "description": "Name of the observer. This is the name exported by each observer library, for default observers see the entries in \"Observer objects\". The main default observers are:<br /><ul><li><b>Encoder</b>: estimates a robot's joint state (position and velocity)</li><li><b>KinematicInertial</b>: estimates a robot's floating base state based on IMU and a kinematic information</li><li><b>BodySensor</b>: sets the floating base state based on a BodySensor (typically used to obtain groundtruth state from a simulator)</li></ul>"},
+          "name": { "type": "string", "description": "Name of the observer (optional unless there are multiple observers with the same name type in this pipeline)" },
+          "update": {"type": "boolean", "default": true, "description": "When true, update the state of real robots instances (requires the observer's run to have succeeded)"},
+          "log": {"type": "boolean", "default": true, "description": "When true, log estimated values"},
+          "gui": {"type": "boolean", "default": true, "description": "When true, show observer in the gui"},
+          "config":
+          {
+            "type": "object",
+            "title": "Observer Configuration",
+            "description": "Configuration options for the observer \"type\" (<a href=\"http://jrl-umi3218.github.io/mc_rtc/json.html#Observers/Encoder\">Encoder</a>, <a href=\"http://jrl-umi3218.github.io/mc_rtc/json.html#Observers/KinematicInertial\">KinematicInertial</a>, <a href=\"http://jrl-umi3218.github.io/mc_rtc/json.html#Observers/BodySensor\">BodySensor</a>, etc)"
+          }
+        },
+        "required": ["type"]
+      }
+    }
+  },
+  "required": ["name"]
+}

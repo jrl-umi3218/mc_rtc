@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "title": "fsm::Meta",
+      "title": "mc_control::fsm::MetaState",
       "description": "Plays its own FSM",
       "type": "object",
       "properties":

@@ -5,6 +5,7 @@
 
 require 'active_support/core_ext/hash/deep_merge'
 require 'json'
+require_relative 'doxygen'
 
 module Jekyll
 
@@ -150,12 +151,24 @@ module Jekyll
       }
     end
 
+    # Try to resolve Doxygen link based on the schema's title and the doxytag file
+    # Fills schema.api:
+    # - doxygen id if there a doxygen entry was found in the doxytag file
+    # - empty otherwise
+    def resolveDoxygen(schema, name)
+      doxygenId = get_page(name)
+      unless doxygenId.empty?
+        schema["api"] = doxygenId
+      end
+    end
+
     def generate(site)
       site.data["schemas"].each { |category, schemas|
         if category != "common"
           schemas.each { |name, schema|
             resolveRef(site, schema)
             schema = resolveAllOf(schema)
+            resolveDoxygen(schema, schema['title'])
             site.data["schemas"][category][name] = schema
           }
         end
@@ -163,9 +176,9 @@ module Jekyll
       # Write generated schemas to a temporary file (for debug purposes)
       # File.open('/tmp/mc-rtc-doc-json-schemas.json', 'w') { |file| file.write(JSON.pretty_generate(site.data["schemas"])) }
       # puts "Generated json schema has been saved to /tmp/mc-rtc-doc-json-schemas.json"
-      default_categories = ["mc_rbdyn", "ConstraintSet", "MetaTask", "State"]
+      default_categories = ["mc_rbdyn", "ConstraintSet", "MetaTask", "State", "Observers"]
       site.pages << AllSchemasPage.new(site, site.source, 'json.html', site.data["schemas"], default_categories, {"All objects" => 'json-full.html'})
-      site.pages << AllSchemasPage.new(site, site.source, 'json-full.html', site.data["schemas"], ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks"] + default_categories)
+      site.pages << AllSchemasPage.new(site, site.source, 'json-full.html', site.data["schemas"], ["Eigen", "SpaceVecAlg", "RBDyn", "Tasks", "GUI"] + default_categories)
     end
   end
 

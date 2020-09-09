@@ -6,7 +6,7 @@
 
 #include <mc_control/Configuration.h>
 
-#include <mc_observers/ObserverLoader.h>
+#include <mc_observers/ObserverPipeline.h>
 
 #include <mc_rbdyn/Robots.h>
 
@@ -75,71 +75,80 @@ public:
    */
   virtual bool run();
 
+  /**
+   * Create state observation pipelines from configuration
+   *
+   * Please refer to the ObserverPipelines JSON Schema for supported
+   * configuration options.
+   *
+   * \see mc_observers::ObserverPipeline
+   **/
+  virtual void createObserverPipelines(const mc_rtc::Configuration & config);
+
   /** This function is called before the run() function at each time step of the process
    * driving the robot (i.e. simulation or robot's controller). The default
    * behaviour is to call the run() function of each loaded observer and update
    * the realRobot instance when desired.
    *
-   * The default behaviour is determined by the following configuration entries:
-   * - "EnabledObservers": ["Encoder", "BodySensor", "KinematicInertial"],
-   * - "UpdateObservers": ["Encoder", "KinematicInertial"],
-   *
    * This is meant to run in real-time hence some precaution should apply (e.g.
    * no i/o blocking calls, no thread instantiation and such)
    *
-   * \note Some estimators are likely to require extra information. For this, each observer
-   * has const access to the MCController instance, and can thus access all const information
-   * available from it. The default estimators provided by mc_rtc (currently)
-   * rely on robots() and realRobots() information. Additionally, the
-   * KinematicInertialObserver requires an anchor frame with the environement.
-   * This is to be provided by overriding the anchorFrame() method.
+   * \note Some estimators are likely to require extra information from the control.
+   * Each observer has access to the `MCController` instance, and may access all information
+   * available from it (robots, etc). In addition some observers may require
+   * additional information that is not part of the `MCController` instance. In
+   * that case, it may be provided though the `Datastore` (see each observer's
+   * documentation for specific requirements).
    *
    * \note If the default pipeline behaviour does not suit you, you may override
    * this method.
    *
    * @returns true if all observers ran as expected, false otherwise
    */
-  virtual bool runObservers();
+  virtual bool runObserverPipelines();
 
-  /*! @brief Reset the observers. This function is called after the reset()
-   * function.
+  /*! @brief Reset the observers.
    *
-   * \see runObservers()
+   * This function is called after the reset() function.
    *
    * @returns True when all observers have been succesfully reset.
    */
-  virtual bool resetObservers();
+  virtual bool resetObserverPipelines();
 
-  /*! @brief Returns a kinematic anchor frame.
-   *  This is typically used by state observers such as mc_observers::KinematicInertialObserver to obtain a reference
-   * frame for the estimation. In the case of a biped robot, this is typically a frame in-between the feet of the robot.
-   * See the specific requirements for the active observers in your controller.
+  /** Whether this controller contains a pipeline with the provided name
    *
-   * @returns An anchor frame in-between the feet.
+   * \param name Name of the pipeline
    */
-  const sva::PTransformd & anchorFrame() const;
+  bool hasObserverPipeline(const std::string & name) const;
 
-  /**
-   * @brief Sets the anchor frame
-   * @param anchor Anchor frame
-   *
-   * \see const sva::PTransformd & anchorFrame() const;
-   */
-  void anchorFrame(const sva::PTransformd & anchor);
+  /** True if this controller has at least one state observation pipeline */
+  bool hasObserverPipeline() const;
 
   /**
-   * @brief Returns the anchor frame computed from the real robot
-   *
-   * \see const sva::PTransformd & anchorFrame() const;
+   * Provides const access to the state observation pipelines defined in this
+   * controller
    */
-  const sva::PTransformd & anchorFrameReal() const;
+  const std::vector<mc_observers::ObserverPipeline> & observerPipelines() const;
+  /** Non-const variant */
+  std::vector<mc_observers::ObserverPipeline> & observerPipelines();
+
   /**
-   * @brief Sets the real robot's anchor frame
-   * @param anchor Anchor frame
+   * Provides const access to a state-observation pipeline
    *
-   * \see const sva::PTransformd & anchorFrameReal() const;
+   * @throws if no pipeline with that name exist
    */
-  void anchorFrameReal(const sva::PTransformd & anchor);
+  const mc_observers::ObserverPipeline & observerPipeline(const std::string & name) const;
+  /** Non-const variant */
+  mc_observers::ObserverPipeline & observerPipeline(const std::string & name);
+
+  /**
+   * Provides const access to the main observer pipeline (first pipeline)
+   *
+   * @throws if this controller does not have any pipeline
+   */
+  const mc_observers::ObserverPipeline & observerPipeline() const;
+  /** Non-const variant */
+  mc_observers::ObserverPipeline & observerPipeline();
 
   /** Can be called in derived class instead of run to use a feedback strategy
    * different from the default one
@@ -155,7 +164,6 @@ public:
    *
    * For example, it can be overriden to signal threads launched by the
    * controller to pause.
-   *
    */
   virtual void stop();
 
@@ -202,6 +210,16 @@ public:
 
   /** Non-const variant of \ref mc_controller_robots_const_doc "robots()" */
   mc_rbdyn::Robots & robots();
+
+  /** Return the mc_rbdyn::Robot controlled by this controller
+   *
+   * @throws std::runtime_error if the robot does not exist
+   * \anchor mc_controller_robot_name_const_doc
+   **/
+  const mc_rbdyn::Robot & robot(const std::string & name) const;
+
+  /** Non-const variant of \ref mc_controller_robot_name_const_doc "robot(name)" */
+  mc_rbdyn::Robot & robot(const std::string & name);
 
   /** Non-const variant of \ref mc_controller_robot_const_doc "robot()" */
   mc_rbdyn::Robot & robot();
@@ -251,6 +269,16 @@ public:
   const mc_rbdyn::Robot & realRobot() const;
   /** Non-const variant of \ref mc_controller_real_robot_const_doc "realRobot()" */
   mc_rbdyn::Robot & realRobot();
+
+  /** Return the mc_rbdyn::Robot controlled by this controller
+   *
+   * @throws std::runtime_error if the robot does not exist
+   * \anchor mc_controller_realRobot_name_const_doc
+   **/
+  const mc_rbdyn::Robot & realRobot(const std::string & name) const;
+
+  /** Non-const variant of \ref mc_controller_realRobot_name_const_doc "realRobot(name)" */
+  mc_rbdyn::Robot & realRobot(const std::string & name);
 
   /** Returns a list of robots supported by the controller.
    * \param out Vector of supported robots designed by name (as returned by
@@ -304,6 +332,71 @@ public:
    */
   Gripper & gripper(const std::string & robot, const std::string & gripper);
 
+  /** Helper to make the anchor frame compile-time deprecation warning
+   * clearer
+   */
+  template<typename T>
+  struct DeprecatedAnchorFrame : public std::false_type
+  {
+  };
+
+  /** @deprecated The observer's anchor frame is now provided by a callback on
+   * the datastore. For further information, please refer to the observer's tutorial:
+   * https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   */
+  template<typename T = void> // void for shorter error message
+  inline void anchorFrame(const sva::PTransformd &)
+  {
+    static_assert(DeprecatedAnchorFrame<T>::value,
+                  "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
+                  "remove calls to these functions from your code and replace it with a datastore callback. For "
+                  "further information please refer to the observer's tutorial: "
+                  "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+  }
+
+  /** @deprecated The observer's anchor frame is now provided by a callback on
+   * the datastore. For further information, please refer to the observer's
+   * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   */
+  template<typename T = void> // void for shorter error message
+  inline void anchorFrameReal(const sva::PTransformd &)
+  {
+    static_assert(DeprecatedAnchorFrame<T>::value,
+                  "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
+                  "remove calls to these functions from your code and replace it with a datastore callback. For "
+                  "further information please refer to the observer's tutorial: "
+                  "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+  }
+  /** @deprecated The observer's anchor frame is now provided by a callback on
+   * the datastore. For further information, please refer to the observer's
+   * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   */
+  template<typename T = void> // void for shorter error message
+  inline const sva::PTransformd & anchorFrame() const
+  {
+    static_assert(DeprecatedAnchorFrame<T>::value,
+                  "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
+                  "remove calls to these functions from your code and replace it with a datastore callback. For "
+                  "further information please refer to the observer's tutorial: "
+                  "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+    return robot().posW();
+  }
+
+  /** @deprecated The observer's anchor frame is now provided by a callback on
+   * the datastore. For further information, please refer to the observer's
+   * tutorial: https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html
+   */
+  template<typename T = void> // void for shorter error message
+  inline const sva::PTransformd & anchorFrameReal() const
+  {
+    static_assert(DeprecatedAnchorFrame<T>::value,
+                  "[MC_RTC_DEPRECATED] The anchorFrame and anchorFrameReal accessors are no longer supported, please "
+                  "remove calls to these functions from your code and replace it with a datastore callback. For "
+                  "further information please refer to the observer's tutorial: "
+                  "https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html");
+    return robot().posW();
+  }
+
 protected:
   /** Builds a controller base with an empty environment
    * \param robot Pointer to the main RobotModule
@@ -348,26 +441,8 @@ protected:
   /** QP solver */
   std::shared_ptr<mc_solver::QPSolver> qpsolver;
 
-  /** Observers order provided by MCGlobalController
-   * Observers will be run and update real robot in that order
-   **/
-  std::vector<mc_observers::ObserverPtr> observers_;
-  /** Observers that will be run by the pipeline.
-   *
-   * The pair contains:
-   * - The observer to run
-   * - A boolean set to true if the observer updates the real robot instance
-   *
-   * Provided by MCGlobalController */
-  std::vector<std::pair<mc_observers::ObserverPtr, bool>> pipelineObservers_;
-
-  /**
-   * Anchor frame used by the kinematic observers
-   *
-   * \note To be replaced in the future by a more generic message-passing mechanism
-   */
-  sva::PTransformd anchorFrame_ = sva::PTransformd::Identity();
-  sva::PTransformd anchorFrameReal_ = sva::PTransformd::Identity();
+  /** State observation pipelines for this controller */
+  std::vector<mc_observers::ObserverPipeline> observerPipelines_;
 
   /** Logger provided by MCGlobalController */
   std::shared_ptr<mc_rtc::Logger> logger_;
@@ -396,6 +471,8 @@ public:
   std::unique_ptr<mc_solver::CompoundJointConstraint> compoundJointConstraint;
   /** Posture task for the main robot */
   std::shared_ptr<mc_tasks::PostureTask> postureTask;
+  /* Controller's name */
+  std::string name_;
 };
 
 } // namespace mc_control

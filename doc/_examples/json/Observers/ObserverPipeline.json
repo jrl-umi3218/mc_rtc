@@ -1,0 +1,25 @@
+{
+  "name": "MainPipeline",
+  "gui": true,
+  "observers":
+  [
+    {
+      "type": "Encoder"
+    },
+    {
+      "type": "BodySensor",
+      "update": false,
+      "config":
+      {
+        "bodySensor": "FloatingBase"
+      }
+    },
+    {
+      "type": "KinematicInertial",
+      "config":
+      {
+        "imuBodySensor": "Accelerometer"
+      }
+    }
+  ]
+}

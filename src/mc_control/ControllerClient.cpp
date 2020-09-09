@@ -336,7 +336,7 @@ void ControllerClient::handle_point3d(const ElementId & id, const mc_rtc::Config
   mc_rtc::gui::PointConfig config;
   if(data.size() > 5)
   {
-    config.load(data[5]);
+    config.fromMessagePack(data[5]);
   }
   if(ro)
   {
@@ -355,7 +355,7 @@ void ControllerClient::handle_trajectory(const ElementId & id, const mc_rtc::Con
   mc_rtc::gui::LineConfig config;
   if(data_.size() > 4)
   {
-    config.load(data_[4]);
+    config.fromMessagePack(data_[4]);
   }
   if(data.size())
   {
@@ -394,7 +394,7 @@ void ControllerClient::handle_polygon(const ElementId & id, const mc_rtc::Config
   mc_rtc::gui::Color color;
   if(data_.size() > 4)
   {
-    color.load(data_[4]);
+    color.fromMessagePack(data_[4]);
   }
   try
   {
@@ -427,7 +427,7 @@ void ControllerClient::handle_force(const ElementId & id, const mc_rtc::Configur
   mc_rtc::gui::ForceConfig forceConfig;
   if(data.size() > 6)
   {
-    forceConfig.load(data[6]);
+    forceConfig.fromMessagePack(data[6]);
   }
   if(ro)
   {
@@ -448,7 +448,7 @@ void ControllerClient::handle_arrow(const ElementId & id, const mc_rtc::Configur
   mc_rtc::gui::ArrowConfig arrow_config;
   if(data.size() > 6)
   {
-    arrow_config.load(data[6]);
+    arrow_config.fromMessagePack(data[6]);
   }
   Eigen::Vector6d arrow_data;
   arrow_data.head<3>() = arrow_start;
@@ -598,7 +598,7 @@ struct X
 
   X(const mc_rtc::Configuration & data)
   {
-    config.load(data[0]);
+    config.fromMessagePack(data[0]);
     value = data[1];
   }
 };
@@ -615,7 +615,7 @@ struct Y
   {
     legend = static_cast<std::string>(data[1]);
     value = data[2];
-    color.load(data[3]);
+    color.fromMessagePack(data[3]);
     style = static_cast<mc_rtc::gui::plot::Style>(static_cast<uint64_t>(data[4]));
     side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[5]));
   }
@@ -635,7 +635,7 @@ struct XY
     legend = static_cast<std::string>(data[1]);
     x = data[2];
     y = data[3];
-    color.load(data[4]);
+    color.fromMessagePack(data[4]);
     style = static_cast<mc_rtc::gui::plot::Style>(static_cast<uint64_t>(data[5]));
     side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[6]));
   }
@@ -650,7 +650,7 @@ struct Polygon
   Polygon(const mc_rtc::Configuration & data)
   {
     legend = static_cast<std::string>(data[1]);
-    polygon.load(data[2]);
+    polygon.fromMessagePack(data[2]);
     side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[3]));
   }
 };
@@ -667,7 +667,7 @@ struct Polygons
     for(size_t i = 0; i < data[2].size(); ++i)
     {
       polygons.emplace_back();
-      polygons.back().load(data[2][i]);
+      polygons.back().fromMessagePack(data[2][i]);
     }
     side = static_cast<mc_rtc::gui::plot::Side>(static_cast<uint64_t>(data[3]));
   }
@@ -683,10 +683,10 @@ void ControllerClient::handle_standard_plot(const mc_rtc::Configuration & plot)
   X x(plot[3]);
   plot_setup_xaxis(id, x.config.name, x.config.range);
   mc_rtc::gui::plot::AxisConfiguration y1Config;
-  y1Config.load(plot[4]);
+  y1Config.fromMessagePack(plot[4]);
   plot_setup_yaxis_left(id, y1Config.name, y1Config.range);
   mc_rtc::gui::plot::AxisConfiguration y2Config;
-  y2Config.load(plot[5]);
+  y2Config.fromMessagePack(plot[5]);
   plot_setup_yaxis_right(id, y2Config.name, y2Config.range);
   for(size_t i = 6; i < plot.size(); ++i)
   {
@@ -728,13 +728,13 @@ void ControllerClient::handle_xy_plot(const mc_rtc::Configuration & plot)
   std::string title = plot[2];
   start_plot(id, title);
   mc_rtc::gui::plot::AxisConfiguration xConfig;
-  xConfig.load(plot[3]);
+  xConfig.fromMessagePack(plot[3]);
   plot_setup_xaxis(id, xConfig.name, xConfig.range);
   mc_rtc::gui::plot::AxisConfiguration y1Config;
-  y1Config.load(plot[4]);
+  y1Config.fromMessagePack(plot[4]);
   plot_setup_yaxis_left(id, y1Config.name, y1Config.range);
   mc_rtc::gui::plot::AxisConfiguration y2Config;
-  y2Config.load(plot[5]);
+  y2Config.fromMessagePack(plot[5]);
   plot_setup_yaxis_right(id, y2Config.name, y2Config.range);
   for(size_t i = 6; i < plot.size(); ++i)
   {

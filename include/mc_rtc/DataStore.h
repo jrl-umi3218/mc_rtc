@@ -431,7 +431,7 @@ private:
     if(!data.same(typeid(fn_t).hash_code()))
     {
       log::error_and_throw<std::runtime_error>("[{}] Function for key \"{}\" does not have the same signature as the "
-                                               "requested one. Stored {} but requested ",
+                                               "requested one. Stored {} but requested {}",
                                                name_, name, data.type(), type_name<fn_t>());
     }
     auto & fn = *(reinterpret_cast<fn_t *>(data.buffer.get()));

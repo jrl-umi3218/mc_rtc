@@ -1,0 +1,22 @@
+---
+# Declare a first pipeline that estimates the main real robot state
+# from encoder values and a ground truth floating base sensor
+- name: MainRobotGroundTruth
+  gui: true
+  observers:
+  - type: Encoder
+  - type: BodySensor
+    update: false
+    config:
+      bodySensor: FloatingBase
+# Declare second pipeline that estimates another instance of the main robot "jvrc1_2"
+# using the sensors of "jvrc1" main robot. Here the floating base position and velocity is
+# estimated by a KinematicInertial observer
+- name: MainRobotKinematicInertial
+  observers:
+    - type: Encoder
+      robot: jvrc1
+      updateRobot: jvrc1_2
+    - type: KinematicInertial
+      robot: jvrc1
+      updateRobot: jvrc1_2

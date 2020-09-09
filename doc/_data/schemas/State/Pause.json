@@ -2,7 +2,7 @@
   "allOf":
   [
     {
-      "title": "fsm::Pause",
+      "title": "mc_control::fsm::PauseState",
       "description": "Pause for a given duration",
       "type": "object",
       "properties":

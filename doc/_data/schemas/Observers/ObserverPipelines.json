@@ -1,0 +1,9 @@
+{
+  "title": "mc_observers::ObserverPipelines",
+  "description": "Configures a sequence of state observation piplines (mc_observers::ObserverPipeline) that will be run sequentially. This may be used to estimate the state of one or multiple robots using a suitable sequence of observers. Observer pipelines may be defined in your mc_rtc.conf, controller-specific configuration, or FSM configuration (each configuration superseeds the previous one). If only one observer pipline is present, the array may be ommitted.",
+  "type": "array",
+  "items":
+  {
+    "$ref": "/../../Observers/ObserverPipeline.json"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "allOf":
+  [
+    {
+      "$ref": "/../../GUI/ArrowConfig.json"
+    },
+    {
+      "title": "mc_rtc::gui::ForceConfig",
+      "description": "Arrow representing a force",
+      "properties":
+      {
+        "force_scale": {"type": "number"}
+      }
+    }
+  ]
+}

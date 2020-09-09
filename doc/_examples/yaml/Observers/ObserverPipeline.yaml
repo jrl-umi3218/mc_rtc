@@ -1,0 +1,41 @@
+---
+##
+# This sample provides a reasonable default pipeline for observing the state (position and velocity) of a floating-base robot.
+# This pipeline does the following:
+# Encoder:
+#   - Joint position is obtained from encoder sensors, joint velocity is estimated by finite differences of position.
+#   - Forward kinematics and velocity is computed (required by the BodySensor and KinematicInertial observers to 
+#     obtain the transformation from sensor to the floating base)
+# BodySensor:
+#   - Only logs the values provided by the \"FloatingBase\" body sensor.
+#     This assumes that the interface supports such ground truth measurement (e.g simulation, MOCAP)
+# KinematicInertial:
+#   - Estimates the floating base position using the orientation of an IMU sensor (rigidly connected to the floating base)
+#     and a kinematic anchor frame provided by the controller through a datastore function. This frame should represent
+#     the same point on both the control robot and real robot, and is used as the reference to compute the floating base
+#     position. In the case of a humanoid robot walking, this would be a frame moving continously between the robot feet
+#     For example
+#
+#     datastore().make_call("KinematicAnchorFrame::" + robot().name(), [this](const mc_rbdyn::Robot & robot) {
+#       // leftFootRatio is a value between 0 and 1 that continuously moves between each feet as the robot is walking
+#       return sva::interpolate(robot.surfacePose("LeftFoot"), robot.surfacePose("RightFoot"), this->leftFootRatio);
+#     });
+#
+  #  See https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html for futher details.
+###
+name: MainPipeline
+gui: true
+observers:
+# Updates the main real robot joint values and velocity based on encoder measurements
+# Velocity is obtained by finite differences of encoder position
+- type: Encoder
+# Logs the \"FloatingBase\" sensor ground truth
+# Does not update the robot instance from it
+- type: BodySensor
+  update: false
+  config:
+    bodySensor: FloatingBase
+# Estimates the floating base position and velocity from IMU (orientation) measurements and a controller-proviced anchor frame
+- type: KinematicInertial
+  config:
+    imuBodySensor: Accelerometer

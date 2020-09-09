@@ -1,0 +1,17 @@
+---
+robot: jvrc1
+updateRobot: jvrc1
+method: sensor
+bodySensor: FloatingBase
+log:
+  pose: true
+  velocity: true
+  acceleration: true
+gui:
+  pose: false
+  velocity: true
+  acceleration: false
+  velocityArrow:
+    color: green
+  accelerationArrow:
+    color: blue

@@ -2,8 +2,8 @@
   "allOf":
   [
     {
-      "title": "fsm::StabilizerStandingState",
-      "description": "Simple state managing the LIPM Stabilizer",
+      "title": "mc_control::fsm::StabilizerStandingState",
+      "description": "Simple state managing the LIPM Stabilizer.<br />It provides set-point position target to the CoM, from which a full dynamic trajectory (com, comd, comdd, zmp) is computed and provided as reference to the lipm_stabilizer::StabilizerTask",
       "type": "object",
       "properties":
       {
@@ -21,7 +21,8 @@
           {
             "dcmEval": { "$ref": "/../../Eigen/Vector3d.json", "description": "Returns true with output 'OK' when the dcm error is under this threshold."}
           }
-        }
+        },
+        "anchorFrameFunction": { "type": "string", "default": "KinematicAnchorFrame::&lt;robot&gt;", "description": "Name of the datastore entry providing a kinematic anchor frame for both the control/real robots. This anchor frame may be used by observers to compute the state of the real robot instance." }
       },
       "required": []
     },

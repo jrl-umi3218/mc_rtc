@@ -5,6 +5,7 @@
 set(BINDINGS_LIBRARIES
   mc_control_fsm
   mc_control
+  mc_observers
   mc_rbdyn
   mc_rtc_loader
   mc_rtc_utils
@@ -23,6 +24,7 @@ add_cython_bindings(mc_rtc
   VERSION ${PROJECT_VERSION}
   MODULES mc_control.mc_control
           mc_control.fsm.fsm
+          mc_observers.mc_observers
           mc_rbdyn.mc_rbdyn
           mc_rtc.mc_rtc
           mc_rtc.gui.gui
@@ -36,6 +38,9 @@ add_cython_bindings(mc_rtc
     mc_control/__init__.py
     mc_control/c_mc_control.pxd
     mc_control/mc_control.pxd
+    mc_observers/__init__.py
+    mc_observers/c_mc_observers.pxd
+    mc_observers/mc_observers.pxd
     mc_rbdyn/__init__.py
     mc_rbdyn/c_mc_rbdyn.pxd
     mc_rbdyn/mc_rbdyn.pxd
@@ -63,6 +68,7 @@ add_cython_bindings(mc_rtc
     include/mc_rbdyn_wrapper.hpp
     mc_control/fsm/fsm.pyx
     mc_control/mc_control.pyx
+    mc_observers/mc_observers.pyx
     mc_rbdyn/mc_rbdyn.pyx
     mc_rtc/gui/gui.pyx
     mc_rtc/mc_rtc.pyx

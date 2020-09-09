@@ -1,4 +1,4 @@
-INPUT                  = @PROJECT_SOURCE_DIR@/include @PROJECT_SOURCE_DIR@/README.md
+INPUT                  = @PROJECT_SOURCE_DIR@/include @PROJECT_SOURCE_DIR@/plugins/ROS/include @PROJECT_SOURCE_DIR@/README.md
 USE_MDFILE_AS_MAINPAGE = @PROJECT_SOURCE_DIR@/README.md
 IMAGE_PATH             = @PROJECT_SOURCE_DIR@/doc/pictures
 FILE_PATTERNS          = *.h *.idl

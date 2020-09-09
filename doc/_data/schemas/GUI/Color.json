@@ -1,0 +1,11 @@
+{
+  "type": "array",
+  "title": "mc_rtc::gui::Color",
+  "description": "Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See {% doxygen mc_rtc::gui::Color %}.",
+  "minItems": 4,
+  "maxItems": 4,
+  "items":
+  {
+    "type": "number"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "name": "FirstPipeline",
+  "observers":
+  [
+    {
+      "type": "Encoder",
+      "config":
+      {
+        "position": "control",
+        "velocity": "control"
+      }
+    },
+    {
+      "type": "Encoder",
+      "name": "Encoder2",
+      "update": false
+    },
+    {
+      "type": "BodySensor",
+      "update": false,
+      "config":
+      {
+        "bodySensor": "FloatingBase"
+      }
+    },
+    {
+      "type": "KinematicInertial",
+      "update": true,
+      "config":
+      {
+        "imuBodySensor": "FloatingBase"
+      }
+    }
+  ]
+},
+{
+  "name": "SecondPipeline",
+  "observers":
+  [
+    {
+      "type": "Encoder",
+      "name": "EncoderWithName",
+      "update": false
+    },
+    {
+      "type": "Encoder",
+      "name": "SecondRobotEncoder",
+      "config":
+      {
+        "robot": "jvrc1",
+        "updateRobot": "jvrc1_2"
+      }
+    },
+    {
+      "type": "BodySensor",
+      "name": "SecondRobotBodySensor",
+      "config":
+      {
+        "robot": "jvrc1",
+        "updateRobot": "jvrc1_2",
+        "bodySensor": "FloatingBase"
+      }
+    }
+  ]
+}

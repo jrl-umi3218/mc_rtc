@@ -8,6 +8,7 @@ plugins:
     - jekyll-octicons
     - jekyll-sitemap
     - liquefy
+    - jekyll_inline_highlight
 exclude:
     - Gemfile
     - Gemfile.lock

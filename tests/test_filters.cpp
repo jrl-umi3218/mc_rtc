@@ -7,8 +7,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <Eigen/Core>
-
 template<typename DerivedA, typename DerivedB>
 bool allclose(
     const Eigen::DenseBase<DerivedA> & a,
