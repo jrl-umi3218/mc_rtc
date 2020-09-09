@@ -2,6 +2,44 @@
 
 ## [Unreleased]
 
+## [1.5.0] - 2020-09-09
+
+### Changes
+
+- Output torques are automatically computed when a dynamics constraint is added to the solver (#52)
+- mc\_rtc::Configuration error reporting now reports the source of error (#60)
+- Real robots instance are now created for all robots loaded by a controller
+- Observer pipelines have been overhauled (#61); see the [refreshed tutorial](https://jrl-umi3218.github.io/mc_rtc/tutorials/recipes/observers.html) for details
+- If a RobotModule provides torque derivative or joint acceleration bounds those will be enforced by (resp.) DynamicsConstraint and KinematicsConstraint
+
+### Added
+
+- [GUI] Added Table element with formatting support (#45/#47)
+- [mc\_rbdyn] Add an API to find force sensors indirectly attached to a surface
+- Support for simple collision shapes described in URDF (#53)
+- Suppport for wildcard collision specifications (#53)
+- GUI monitoring for collisions (#53)
+- User configuration for the build and install script (#48)
+- Support for specifying torque derivative and joint acceleration bounds in RobotModule
+- [mc\_naoqi](https://github.com/jrl-umi3218/mc_naoqi) public release, an interface for SoftBank Robotics robots
+- Support for logging `std::array<double, N>` (#62)
+- Wrench completion criteria for SurfaceTransformTask (#63)
+- Admittance sample controller (!215)
+
+### Fixes
+
+- Support for Ubuntu Focal/ROS noetic in utils script/CI
+- Support for Debian Buster/ROS noetic in utils script/CI
+- Fix several issues with special plots in mc\_log\_ui
+- Publish up-to-date surfaces in ROS TF (#44)
+- Improve documentation for completion criteria (#50)
+- C-string overload for GenericLoader (fixes possibly ambiguous calls)
+- Fix initialization issues
+- Simplified device interface (#51)
+- Fix an issue with collision transforms initialization
+- Fix an issue with FSM executor perf entry logging
+- Improved StabilizerTask/StabilizerState configurability (#23)
+
 ## [1.4.0] - 2020-06-11
 
 ### Changes
@@ -140,7 +178,8 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.0
 [1.4.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.4.0
 [1.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.3.0
 [1.2.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.2.1
