@@ -125,7 +125,7 @@ protected:
    *   v_{1}=R_{1}e_{z}\qquad m_{l}=R_{2}m\\
    *   m = \left\{
    *   \begin{array}{c}
-   *   e_x \mbox{ if } ||R_2e_x \times v_1||^2\\
+   *   e_x \mbox{ if } ||R_2e_x \times v_1||^2 < \epsilon^2\\
    *   e_y \mbox{ otherwise }
    *   \end{array}
    *   \right.
