@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::internal::_has_configuration_load_object Struct Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01700.html','');});
+$(document).ready(function(){initNavTree('a01703.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,95 +69,28 @@ $(document).ready(function(){initNavTree('a01700.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="a01697.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::internal::_has_configuration_load_object Struct Reference</div>  </div>
+<div class="title">mc_rbdyn::RobotModule::Gripper Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Helper trait to determine whether: T <a class="el" href="a01692.html#a3e8685e2cdb83f2ec06ab4e231a653ae">ConfigurationLoader&lt;T&gt;::load(const mc_rtc::Configuration &amp;)</a>; is a valid function or not.  
- <a href="a01700.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_rtc/Configuration.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a7df8b2b030c0677a4cea0ea0a86c3e22"><td class="memTemplParams" colspan="2">template&lt;typename T , typename std::enable_if&lt; std::is_same&lt; decltype(ConfigurationLoader&lt; T &gt;::load(std::declval&lt; const Configuration &amp;&gt;())), T &gt;::value, int &gt;::type  = 0&gt; </td></tr>
-<tr class="memitem:a7df8b2b030c0677a4cea0ea0a86c3e22"><td class="memTemplItemLeft" align="right" valign="top">static std::true_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a01700.html#a7df8b2b030c0677a4cea0ea0a86c3e22">test</a> (T *p)</td></tr>
-<tr class="separator:a7df8b2b030c0677a4cea0ea0a86c3e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf07ac07f94d666ac90926acc0816ee5"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aaf07ac07f94d666ac90926acc0816ee5"><td class="memTemplItemLeft" align="right" valign="top">static std::false_type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a01700.html#aaf07ac07f94d666ac90926acc0816ee5">test</a> (...)</td></tr>
-<tr class="separator:aaf07ac07f94d666ac90926acc0816ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Helper trait to determine whether: T <a class="el" href="a01692.html#a3e8685e2cdb83f2ec06ab4e231a653ae">ConfigurationLoader&lt;T&gt;::load(const mc_rtc::Configuration &amp;)</a>; is a valid function or not. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7df8b2b030c0677a4cea0ea0a86c3e22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7df8b2b030c0677a4cea0ea0a86c3e22">&#9670;&nbsp;</a></span>test() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename std::enable_if&lt; std::is_same&lt; decltype(ConfigurationLoader&lt; T &gt;::load(std::declval&lt; const Configuration &amp;&gt;())), T &gt;::value, int &gt;::type  = 0&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::true_type mc_rtc::internal::_has_configuration_load_object::test </td>
-          <td>(</td>
-          <td class="paramtype">T *&#160;</td>
-          <td class="paramname"><em>p</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aaf07ac07f94d666ac90926acc0816ee5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf07ac07f94d666ac90926acc0816ee5">&#9670;&nbsp;</a></span>test() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::false_type mc_rtc::internal::_has_configuration_load_object::test </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a01703.html">mc_rbdyn::RobotModule::Gripper</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a01703.html#a095ecf4ebd9b675117bf1c5b45f093ca">Gripper</a>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits)</td><td class="entry"><a class="el" href="a01703.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01703.html#a3fa8ce090be890c8fd518592fe65b25e">Gripper</a>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits, const Safety &amp;safety)</td><td class="entry"><a class="el" href="a01703.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01703.html#acbbf290bba17b0b3becaf8c84da9c066">Gripper</a>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits, const Safety &amp;safety, const std::vector&lt; Mimic &gt; &amp;mimics)</td><td class="entry"><a class="el" href="a01703.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01703.html#a8ed52bd8f3d7ce552f62843c352b3d9c">joints</a></td><td class="entry"><a class="el" href="a01703.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01703.html#ada9b553ac4484e6920c981bf71a92368">mimics</a>() const</td><td class="entry"><a class="el" href="a01703.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01703.html#a4c63d69cf61ff0c5ae634a549eadecd1">name</a></td><td class="entry"><a class="el" href="a01703.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01703.html#a61df660109da82ecf0cb5cb476525045">reverse_limits</a></td><td class="entry"><a class="el" href="a01703.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01703.html#ae5dccc3ca07db76cec2cd0e70cc0bff5">safety</a>() const</td><td class="entry"><a class="el" href="a01703.html">mc_rbdyn::RobotModule::Gripper</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00724.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00740.html">internal</a></li><li class="navelem"><a class="el" href="a01700.html">_has_configuration_load_object</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 03:45:49 for mc_rtc by
+    <li class="footer">Generated on Wed Sep 9 2020 03:48:17 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

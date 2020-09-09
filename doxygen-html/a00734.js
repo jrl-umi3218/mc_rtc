@@ -1,7 +1,8 @@
 var a00734 =
 [
-    [ "FDQPWeights", "a01584.html", "a01584" ],
-    [ "SafetyThresholds", "a01592.html", "a01592" ],
-    [ "StabilizerConfiguration", "a01600.html", "a01600" ],
-    [ "ZMPCCConfiguration", "a01608.html", "a01608" ]
+    [ "ExponentialMovingAverage", "a01483.html", "a01483" ],
+    [ "LeakyIntegrator", "a01487.html", "a01487" ],
+    [ "LowPass", "a01491.html", "a01491" ],
+    [ "LowPassFiniteDifferences", "a01495.html", "a01495" ],
+    [ "StationaryOffset", "a01499.html", "a01499" ]
 ];

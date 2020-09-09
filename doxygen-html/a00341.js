@@ -1,9 +1,10 @@
 var a00341 =
 [
-    [ "MC_RTC_LOADER_DLLAPI", "a00341.html#a4b7b7ab74d91ada84566764639f2f8c5", null ],
-    [ "MC_RTC_LOADER_DLLEXPORT", "a00341.html#a6d2514a2d7cbf1461637d19c84d4e190", null ],
-    [ "MC_RTC_LOADER_DLLIMPORT", "a00341.html#ab10c7ea7ab2d8c66f1766d42f4271e07", null ],
-    [ "MC_RTC_LOADER_DLLLOCAL", "a00341.html#a124acbd88de464891bac5a0d4753f3b1", null ],
-    [ "MC_RTC_LOADER_LOCAL", "a00341.html#acf2b4c50e45b046a77958363021c3f17", null ],
-    [ "MC_RTC_LOADER_VERSION", "a00341.html#a20b4289ae8266a5d45b7799ebc1c2cb9", null ]
+    [ "ObjectLoader", "a02067.html", "a02067" ],
+    [ "LoaderException", "a02071.html", "a02071" ],
+    [ "LTDLHandle", "a02075.html", "a02075" ],
+    [ "Loader", "a02079.html", "a02079" ],
+    [ "ObjectLoader", "a02067.html", "a02067" ],
+    [ "ObjectDeleter", "a02083.html", "a02083" ],
+    [ "LTDLHandlePtr", "a00341.html#a04f4430d990b320f494b3a21112c7e3a", null ]
 ];

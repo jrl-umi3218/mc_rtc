@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>surface_hull.h File Reference</title>
+<title>Surface.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,36 +70,34 @@ $(document).ready(function(){initNavTree('a00221.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">surface_hull.h File Reference</div>  </div>
+<div class="title">Surface.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;Eigen/Core&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03253.html">mc_rbdyn/api.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a03336.html">mc_rbdyn/api.h</a>&gt;</code><br />
+<code>#include &lt;RBDyn/MultiBodyConfig.h&gt;</code><br />
 <code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00738"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00738.html">sch</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00727"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html">mc_rbdyn</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01719.html">mc_rbdyn::Surface</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:adf1399b68c68126e373f564e95bc7531"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03253.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sch::S_Object *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html#adf1399b68c68126e373f564e95bc7531">mc_rbdyn::surface_to_sch</a> (const <a class="el" href="a01688.html">mc_rbdyn::Surface</a> &amp;surface, const double &amp;depth=0.01, const unsigned int &amp;slice=8)</td></tr>
-<tr class="separator:adf1399b68c68126e373f564e95bc7531"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3db1776d4f8f36e1eb2a8c51bc157867"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03253.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sch::S_Object *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html#a3db1776d4f8f36e1eb2a8c51bc157867">mc_rbdyn::sch_polyhedron</a> (const std::vector&lt; sva::PTransformd &gt; &amp;points)</td></tr>
-<tr class="separator:a3db1776d4f8f36e1eb2a8c51bc157867"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96cab2abc78656a41b2b56987c5fbbfa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03253.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sch::S_Object *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html#a96cab2abc78656a41b2b56987c5fbbfa">mc_rbdyn::planar_hull</a> (const <a class="el" href="a01620.html">mc_rbdyn::PlanarSurface</a> &amp;surface, const double &amp;depth)</td></tr>
-<tr class="separator:a96cab2abc78656a41b2b56987c5fbbfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcd59f0c2e8c9cd94a6f9800c164e723"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03253.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sch::S_Object *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html#adcd59f0c2e8c9cd94a6f9800c164e723">mc_rbdyn::cylindrical_hull</a> (const <a class="el" href="a01564.html">mc_rbdyn::CylindricalSurface</a> &amp;surface, const unsigned int &amp;slice)</td></tr>
-<tr class="separator:adcd59f0c2e8c9cd94a6f9800c164e723"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70b7277a0499a32774e608f8def99043"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03253.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> sch::S_Object *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00727.html#a70b7277a0499a32774e608f8def99043">mc_rbdyn::gripper_hull</a> (const <a class="el" href="a01580.html">mc_rbdyn::GripperSurface</a> &amp;surface, const double &amp;depth)</td></tr>
-<tr class="separator:a70b7277a0499a32774e608f8def99043"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:a00745"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html">mc_rbdyn</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a848cf0b2e8f6ca6f18ceba1769d9a426"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; Surface &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html#a848cf0b2e8f6ca6f18ceba1769d9a426">mc_rbdyn::SurfacePtr</a></td></tr>
+<tr class="separator:a848cf0b2e8f6ca6f18ceba1769d9a426"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -107,8 +105,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00221.html">surface_hull.h</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 03:45:49 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00221.html">Surface.h</a></li>
+    <li class="footer">Generated on Wed Sep 9 2020 03:48:17 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

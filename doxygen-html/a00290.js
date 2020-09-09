@@ -1,7 +1,7 @@
 var a00290 =
 [
-    [ "Ordinate", "a01896.html", "a01896" ],
-    [ "OrdinateWithColor", "a01900.html", "a01900" ],
-    [ "Y", "a00290.html#aa288bbda415eb4c0d8c5d6fd8fd00f12", null ],
-    [ "Y", "a00290.html#a5957f379abaa61742baef9909ae18990", null ]
+    [ "AbscissaOrdinate", "a01919.html", "a01919" ],
+    [ "AbscissaOrdinateWithColor", "a01923.html", "a01923" ],
+    [ "XY", "a00290.html#aff7557ff1a45292b67d02328c81bdde6", null ],
+    [ "XY", "a00290.html#a93ee6aaded7dfd640df87a78e649062d", null ]
 ];

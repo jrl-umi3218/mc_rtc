@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>constants.h File Reference</title>
+<title>ConfigurationHelpers.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -71,72 +71,39 @@ $(document).ready(function(){initNavTree('a00233.html','');});
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">constants.h File Reference</div>  </div>
+<div class="title">ConfigurationHelpers.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;Eigen/Core&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a03357.html">mc_rtc/Configuration.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00362.html">mc_rtc/logging.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00724"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00724.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00724"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01716.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00727.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memitem:a00742"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00742"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01747.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00745.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00742"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html">mc_rtc::constants</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aebdd4427aa2148313c07b0eedad449ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#aebdd4427aa2148313c07b0eedad449ad">EIGEN_PI</a>&#160;&#160;&#160;3.141592653589793238462643383279502884197169399375105820974944592307816406L</td></tr>
-<tr class="separator:aebdd4427aa2148313c07b0eedad449ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a357fd1ef503f568cf436fbda923472cf"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html#a357fd1ef503f568cf436fbda923472cf">mc_rtc::constants::toDeg</a> (const double degrees)</td></tr>
-<tr class="memdesc:a357fd1ef503f568cf436fbda923472cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts degrees to radians.  <a href="a00742.html#a357fd1ef503f568cf436fbda923472cf">More...</a><br /></td></tr>
-<tr class="separator:a357fd1ef503f568cf436fbda923472cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ca6e1fbd563bfd79d6484a3295d08bd"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html#a2ca6e1fbd563bfd79d6484a3295d08bd">mc_rtc::constants::toRad</a> (const double rad)</td></tr>
-<tr class="memdesc:a2ca6e1fbd563bfd79d6484a3295d08bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts radians to degrees.  <a href="a00742.html#a2ca6e1fbd563bfd79d6484a3295d08bd">More...</a><br /></td></tr>
-<tr class="separator:a2ca6e1fbd563bfd79d6484a3295d08bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a04b344c34834432afcfcc1ac86bff22c"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html#a04b344c34834432afcfcc1ac86bff22c">mc_rtc::constants::GRAVITY</a> = 9.80665</td></tr>
-<tr class="separator:a04b344c34834432afcfcc1ac86bff22c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf271123cee2ac958b9ae0f9220ea422"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html#acf271123cee2ac958b9ae0f9220ea422">mc_rtc::constants::gravity</a> = Eigen::Vector3d{0., 0., GRAVITY}</td></tr>
-<tr class="memdesc:acf271123cee2ac958b9ae0f9220ea422"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt; Gravity positive along the vertical axis  <a href="a00742.html#acf271123cee2ac958b9ae0f9220ea422">More...</a><br /></td></tr>
-<tr class="separator:acf271123cee2ac958b9ae0f9220ea422"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaaeaab7136aa7d17fa172fde905c2cc7"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html#aaaeaab7136aa7d17fa172fde905c2cc7">mc_rtc::constants::vertical</a> = Eigen::Vector3d{0., 0., 1.}</td></tr>
-<tr class="separator:aaaeaab7136aa7d17fa172fde905c2cc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cb2b2837ea283890b185cfef0631602"><td class="memItemLeft" align="right" valign="top">constexpr double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html#a8cb2b2837ea283890b185cfef0631602">mc_rtc::constants::PI</a> = static_cast&lt;double&gt;(<a class="el" href="a00233.html#aebdd4427aa2148313c07b0eedad449ad">EIGEN_PI</a>)</td></tr>
-<tr class="separator:a8cb2b2837ea283890b185cfef0631602"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1107b5d5bcf197a41add86ce445c866"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ac1107b5d5bcf197a41add86ce445c866"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00742.html#ac1107b5d5bcf197a41add86ce445c866">mc_rtc::fromVectorOrElement</a> (const <a class="el" href="a01747.html">mc_rtc::Configuration</a> &amp;config, const std::string &amp;key, const std::vector&lt; T &gt; &amp;defaultVec)</td></tr>
+<tr class="memdesc:ac1107b5d5bcf197a41add86ce445c866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to convert a read a vector or single element as a vector, use default value if it fails.  <a href="a00742.html#ac1107b5d5bcf197a41add86ce445c866">More...</a><br /></td></tr>
+<tr class="separator:ac1107b5d5bcf197a41add86ce445c866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c308b4400fb83031251be1f6ab0adb2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9c308b4400fb83031251be1f6ab0adb2"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00742.html#a9c308b4400fb83031251be1f6ab0adb2">mc_rtc::fromVectorOrElement</a> (const <a class="el" href="a01747.html">mc_rtc::Configuration</a> &amp;config, const std::string &amp;key)</td></tr>
+<tr class="memdesc:a9c308b4400fb83031251be1f6ab0adb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to convert a read a vector or single element as a vector.  <a href="a00742.html#a9c308b4400fb83031251be1f6ab0adb2">More...</a><br /></td></tr>
+<tr class="separator:a9c308b4400fb83031251be1f6ab0adb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="aebdd4427aa2148313c07b0eedad449ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aebdd4427aa2148313c07b0eedad449ad">&#9670;&nbsp;</a></span>EIGEN_PI</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define EIGEN_PI&#160;&#160;&#160;3.141592653589793238462643383279502884197169399375105820974944592307816406L</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00233.html">constants.h</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 03:45:49 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00233.html">ConfigurationHelpers.h</a></li>
+    <li class="footer">Generated on Wed Sep 9 2020 03:48:17 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

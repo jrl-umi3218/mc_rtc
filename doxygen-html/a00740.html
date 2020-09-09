@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::internal Namespace Reference</title>
+<title>mc_control Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,112 +70,115 @@ $(document).ready(function(){initNavTree('a00740.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::internal Namespace Reference</div>  </div>
+<div class="title">mc_control Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01700.html">_has_configuration_load_object</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: T <a class="el" href="a01692.html#a3e8685e2cdb83f2ec06ab4e231a653ae">ConfigurationLoader&lt;T&gt;::load(const mc_rtc::Configuration &amp;)</a>; is a valid function or not.  <a href="a01700.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01708.html">_has_configuration_save_object</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: <a class="el" href="a01716.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> <a class="el" href="a01692.html#ac516ceb726f94bd4e5a32ad25f1178c2">mc_rtc::ConfigurationLoader&lt;T&gt;::save</a>(const T&amp;, Args ...); is a valid construct or not.  <a href="a01708.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01752.html">Allocator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocator&lt;T&gt; is std::allocator&lt;T&gt; for usual types.  <a href="a01752.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01756.html">Allocator&lt; T, typename T::eigen_aligned_operator_new_marker_type &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocator&lt;T&gt; is Eigen::aligned_allocator for EIGEN_MAKE_ALIGNED_OPERATOR_NEW types.  <a href="a01756.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01748.html">args_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bend usual C++ rules to deduct the argument types in call.  <a href="a01748.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01704.html">has_configuration_load_object</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01712.html">has_configuration_save_object</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01736.html">lambda_traits</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract return type and argument types from a lambda by accessing ::operator()  <a href="a01736.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01740.html">lambda_traits&lt; RetT(C::*)(Args...) const &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization that matches non-mutable lambda.  <a href="a01740.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01744.html">lambda_traits&lt; RetT(C::*)(Args...)&gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization that matches mutable lambda.  <a href="a01744.html#details">More...</a><br /></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:a00741"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00741.html">fsm</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a759676405e1815363e6d9094dd1919b1"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a759676405e1815363e6d9094dd1919b1"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00740.html#a759676405e1815363e6d9094dd1919b1">is_valid_hash</a> (std::size_t h)</td></tr>
-<tr class="separator:a759676405e1815363e6d9094dd1919b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memTemplParams" colspan="2">template&lt;typename T , typename U , typename... Args&gt; </td></tr>
-<tr class="memitem:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00740.html#a0f0cc0f5914bc62d93b19fda0ed53e75">is_valid_hash</a> (std::size_t h)</td></tr>
-<tr class="separator:a0f0cc0f5914bc62d93b19fda0ed53e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af017e274f3cf4699850fdbf753d07fa2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00368.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00740.html#af017e274f3cf4699850fdbf753d07fa2">demangle</a> (const char *name)</td></tr>
-<tr class="separator:af017e274f3cf4699850fdbf753d07fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01347.html">CompletionCriteria</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A generic MetaTask completion criteria.  <a href="a01347.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01355.html">ControllerClient</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data and interact with a <a class="el" href="a01359.html" title="Serves data and allow interaction with the controllers. ">ControllerServer</a>.  <a href="a01355.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01479.html">ControllerResetData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains information allowing the controller to start smoothly from the current state of the robot.  <a href="a01479.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01359.html">ControllerServer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serves data and allow interaction with the controllers.  <a href="a01359.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01351.html">ElementId</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to uniquely identify an element.  <a href="a01351.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01455.html">GlobalPlugin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01451.html">Gripper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A robot's gripper reprensentation.  <a href="a01451.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01483.html">MCController</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a01483.html" title="MCController is the base class to implement all controllers. ">MCController</a> is the base class to implement all controllers.  <a href="a01483.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01459.html">MCGlobalController</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01475.html">MCPythonController</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01471.html">PythonRWCallback</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01491.html">SimulationContactPair</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a6e724381ca619d4c38da5fd7cdbfe9c0"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00740.html#a6e724381ca619d4c38da5fd7cdbfe9c0">Configuration</a> = <a class="el" href="a01747.html">mc_rtc::Configuration</a></td></tr>
+<tr class="separator:a6e724381ca619d4c38da5fd7cdbfe9c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67d3b51822d3e7d0c56d9af675f9eaa1"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00740.html#a67d3b51822d3e7d0c56d9af675f9eaa1">GripperPtr</a> = std::unique_ptr&lt; <a class="el" href="a01451.html">Gripper</a> &gt;</td></tr>
+<tr class="separator:a67d3b51822d3e7d0c56d9af675f9eaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39b3dee4f4017bab0f389d9bfd7877dc"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00740.html#a39b3dee4f4017bab0f389d9bfd7877dc">GripperRef</a> = std::reference_wrapper&lt; <a class="el" href="a01451.html">Gripper</a> &gt;</td></tr>
+<tr class="separator:a39b3dee4f4017bab0f389d9bfd7877dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a077624dc5665df1a3e145d0283e10c78"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00740.html#a077624dc5665df1a3e145d0283e10c78">GlobalPluginPtr</a> = std::unique_ptr&lt; <a class="el" href="a01455.html">GlobalPlugin</a>, <a class="el" href="a02067.html">mc_rtc::ObjectLoader</a>&lt; <a class="el" href="a01455.html">GlobalPlugin</a> &gt;::ObjectDeleter &gt;</td></tr>
+<tr class="separator:a077624dc5665df1a3e145d0283e10c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="af017e274f3cf4699850fdbf753d07fa2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af017e274f3cf4699850fdbf753d07fa2">&#9670;&nbsp;</a></span>demangle()</h2>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a6e724381ca619d4c38da5fd7cdbfe9c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e724381ca619d4c38da5fd7cdbfe9c0">&#9670;&nbsp;</a></span>Configuration</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00368.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::string mc_rtc::internal::demangle </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
+          <td class="memname">using <a class="el" href="a00740.html#a6e724381ca619d4c38da5fd7cdbfe9c0">mc_control::Configuration</a> = typedef <a class="el" href="a01747.html">mc_rtc::Configuration</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a00724.html#a8fb61bc6391bc9cd0ef2aa0efff2d641">mc_rtc::type_name()</a>.</p>
-
 </div>
 </div>
-<a id="a759676405e1815363e6d9094dd1919b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a759676405e1815363e6d9094dd1919b1">&#9670;&nbsp;</a></span>is_valid_hash() <span class="overload">[1/2]</span></h2>
+<a id="a077624dc5665df1a3e145d0283e10c78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a077624dc5665df1a3e145d0283e10c78">&#9670;&nbsp;</a></span>GlobalPluginPtr</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_rtc::internal::is_valid_hash </td>
-          <td>(</td>
-          <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>h</em></td><td>)</td>
-          <td></td>
+          <td class="memname">using <a class="el" href="a00740.html#a077624dc5665df1a3e145d0283e10c78">mc_control::GlobalPluginPtr</a> = typedef std::unique_ptr&lt;<a class="el" href="a01455.html">GlobalPlugin</a>, <a class="el" href="a02067.html">mc_rtc::ObjectLoader</a>&lt;<a class="el" href="a01455.html">GlobalPlugin</a>&gt;::ObjectDeleter&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="a01760.html#ad1fe100eb7cb874c226ff76ed64f3cfe">mc_rtc::DataStore::name()</a>.</p>
-
 </div>
 </div>
-<a id="a0f0cc0f5914bc62d93b19fda0ed53e75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f0cc0f5914bc62d93b19fda0ed53e75">&#9670;&nbsp;</a></span>is_valid_hash() <span class="overload">[2/2]</span></h2>
+<a id="a67d3b51822d3e7d0c56d9af675f9eaa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67d3b51822d3e7d0c56d9af675f9eaa1">&#9670;&nbsp;</a></span>GripperPtr</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename U , typename... Args&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool mc_rtc::internal::is_valid_hash </td>
-          <td>(</td>
-          <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>h</em></td><td>)</td>
-          <td></td>
+          <td class="memname">using <a class="el" href="a00740.html#a67d3b51822d3e7d0c56d9af675f9eaa1">mc_control::GripperPtr</a> = typedef std::unique_ptr&lt;<a class="el" href="a01451.html">Gripper</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a39b3dee4f4017bab0f389d9bfd7877dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39b3dee4f4017bab0f389d9bfd7877dc">&#9670;&nbsp;</a></span>GripperRef</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a00740.html#a39b3dee4f4017bab0f389d9bfd7877dc">mc_control::GripperRef</a> = typedef std::reference_wrapper&lt;<a class="el" href="a01451.html">Gripper</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -188,8 +191,8 @@ template&lt;typename T , typename U , typename... Args&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00724.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00740.html">internal</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 03:45:49 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00740.html">mc_control</a></li>
+    <li class="footer">Generated on Wed Sep 9 2020 03:48:17 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

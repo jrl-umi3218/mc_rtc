@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>StateBuilder.h File Reference</title>
+<title>Schema.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -72,41 +72,33 @@ $(document).ready(function(){initNavTree('a00314.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">StateBuilder.h File Reference</div>  </div>
+<div class="title">Schema.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03274.html">mc_rtc/Configuration.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00263.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00302.html">mc_rtc/gui/plot.h</a>&gt;</code><br />
-<code>#include &lt;unordered_map&gt;</code><br />
-<code>#include &quot;StateBuilder.hpp&quot;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00266.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to build a GUI state from multiple objects.  <a href="a01948.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01975.html">mc_rtc::gui::SchemaImpl&lt; Callback &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Should display a form using the data provided in the configured schema folder.  <a href="a01975.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00724"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00724.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00724"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01716.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00727.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memitem:a00742"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00742.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00742"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01747.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00745.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00743"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html">mc_rtc::gui</a></td></tr>
+<tr class="memitem:a00749"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00749.html">mc_rtc::gui</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a649ddcaedb769dede3922fa845e71ca4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html#a649ddcaedb769dede3922fa845e71ca4">mc_rtc::gui::ElementsStacking</a> { <br />
-&#160;&#160;<a class="el" href="a00743.html#a649ddcaedb769dede3922fa845e71ca4a06ce2a25e5d12c166a36f654dbea6012">mc_rtc::gui::ElementsStacking::Vertical</a> = 0, 
-<br />
-&#160;&#160;<a class="el" href="a00743.html#a649ddcaedb769dede3922fa845e71ca4ac1b5fa03ecdb95d4a45dd1c40b02527f">mc_rtc::gui::ElementsStacking::Horizontal</a>
-<br />
- }<tr class="memdesc:a649ddcaedb769dede3922fa845e71ca4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describe elements stacking policy for the client.  <a href="a00743.html#a649ddcaedb769dede3922fa845e71ca4">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:a649ddcaedb769dede3922fa845e71ca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a0c892f6b2ba9e06d4bda32a16b76b75b"><td class="memTemplParams" colspan="2">template&lt;typename Callback &gt; </td></tr>
+<tr class="memitem:a0c892f6b2ba9e06d4bda32a16b76b75b"><td class="memTemplItemLeft" align="right" valign="top">SchemaImpl&lt; Callback &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00749.html#a0c892f6b2ba9e06d4bda32a16b76b75b">mc_rtc::gui::Schema</a> (const std::string &amp;name, const std::string &amp;schema, Callback cb)</td></tr>
+<tr class="memdesc:a0c892f6b2ba9e06d4bda32a16b76b75b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to create a Schema element.  <a href="a00749.html#a0c892f6b2ba9e06d4bda32a16b76b75b">More...</a><br /></td></tr>
+<tr class="separator:a0c892f6b2ba9e06d4bda32a16b76b75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -114,8 +106,8 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00314.html">StateBuilder.h</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 03:45:49 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00314.html">Schema.h</a></li>
+    <li class="footer">Generated on Wed Sep 9 2020 03:48:17 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

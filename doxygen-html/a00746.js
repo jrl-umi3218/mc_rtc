@@ -1,10 +1,8 @@
 var a00746 =
 [
-    [ "Abscissa", "a01884.html", "a01884" ],
-    [ "AbscissaOrdinate", "a01888.html", "a01888" ],
-    [ "AbscissaOrdinateWithColor", "a01892.html", "a01892" ],
-    [ "Ordinate", "a01896.html", "a01896" ],
-    [ "OrdinateWithColor", "a01900.html", "a01900" ],
-    [ "Polygon", "a01904.html", "a01904" ],
-    [ "Polygons", "a01908.html", "a01908" ]
+    [ "ExponentialMovingAverage", "a01495.html", "a01495" ],
+    [ "LeakyIntegrator", "a01499.html", "a01499" ],
+    [ "LowPass", "a01503.html", "a01503" ],
+    [ "LowPassFiniteDifferences", "a01507.html", "a01507" ],
+    [ "StationaryOffset", "a01511.html", "a01511" ]
 ];

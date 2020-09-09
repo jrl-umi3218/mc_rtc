@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Deprecated List</title>
+<title>LookAtTFTask.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -69,35 +69,37 @@ $(document).ready(function(){initNavTree('a00719.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">Deprecated List </div>  </div>
+<div class="title">LookAtTFTask.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_deprecated000003"></a>Member <a class="el" href="a01668.html#a53377fc73020723d47b5af09b942cf0c">mc_rbdyn::RobotModule::boundsFromURDF</a>  (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag:https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/" href="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00563.html">mc_rbdyn_urdf::Limits</a> &amp;limits)</dt>
-<dd>{Use rbd::parsers version instead}  </dd>
-<dt><a class="anchor" id="_deprecated000002"></a>Member <a class="el" href="a01668.html#a0077211acf3f9d4c52aa43a23eb01943">mc_rbdyn::RobotModule::RobotModule</a>  (const std::string &amp;name, const <a class="elRef" doxygen="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag:https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/" href="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00591.html">mc_rbdyn_urdf::URDFParserResult</a> &amp;res)</dt>
-<dd>{Use rbd::parsers version instead }  </dd>
-<dt><a class="anchor" id="_deprecated000001"></a>Member <a class="el" href="a00727.html#a44d55a51f42d585c340944099985fa8e">mc_rbdyn::urdf_limits_to_bounds</a>  (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag:https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/" href="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00563.html">mc_rbdyn_urdf::Limits</a> &amp;limits)</dt>
-<dd>{Use rbd::parsers version instead}  </dd>
-<dt><a class="anchor" id="_deprecated000004"></a>Member <a class="el" href="a02092.html#a65a16e95f788ae679f6aa0bf67d0ec10">mc_solver::CollisionsConstraint::CollisionsConstraint</a>  ()</dt>
-<dd>{Default constructor, not made for general usage}  </dd>
-<dt><a class="anchor" id="_deprecated000005"></a>Member <a class="el" href="a02124.html#ad4a4d2baaacb8b1d914d66a0110c99ab">mc_solver::ContactConstraint::ContactConstraint</a>  ()</dt>
-<dd>{Default constructor, not made for general usage}  </dd>
-<dt><a class="anchor" id="_deprecated000006"></a>Member <a class="el" href="a02128.html#a2adb5f59889ad682361cbdd940e7d527">mc_solver::DynamicsConstraint::DynamicsConstraint</a>  ()</dt>
-<dd>{Default constructor, not made for general usage}  </dd>
-<dt><a class="anchor" id="_deprecated000007"></a>Member <a class="el" href="a02188.html#a9772713ef63997c2ff16a754cdf34401">mc_solver::KinematicsConstraint::KinematicsConstraint</a>  ()</dt>
-<dd>{Default constructor, not made for general usage}  </dd>
-<dt><a class="anchor" id="_deprecated000008"></a>Member <a class="el" href="a02208.html#a4f91d1d6ce556366149d3d947182e5f3">mc_solver::QPSolver::QPSolver</a>  ()</dt>
-<dd>{Default constructor, not made for general usage} </dd>
-</dl>
-</div></div><!-- contents -->
+<div class="textblock"><code>#include &lt;<a class="el" href="a00470.html">mc_tasks/LookAtTask.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03369.html">mc_tasks/ros_api.h</a>&gt;</code><br />
+<code>#include &lt;tf2_ros/buffer.h&gt;</code><br />
+<code>#include &lt;tf2_ros/transform_listener.h&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02443.html">mc_tasks::LookAtTFTask</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the gaze vector of a body to look towards a world position updated at each iteration from a ROS TF Frame.  <a href="a02443.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:a00731"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00731.html">mc_tasks</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Sep 9 2020 03:45:49 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_38c8d24aef3972a7f87b834274e76e31.html">plugins</a></li><li class="navelem"><a class="el" href="dir_34d8e42b5ac6f6cb6d4e988599be737f.html">ROS</a></li><li class="navelem"><a class="el" href="dir_0884a74720358c6ca75630db8a4fc3d2.html">include</a></li><li class="navelem"><a class="el" href="dir_f5863744202c98ee1f457dd1ad29e0a5.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00719.html">LookAtTFTask.h</a></li>
+    <li class="footer">Generated on Wed Sep 9 2020 03:45:16 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -1,0 +1,28 @@
+var a01531 =
+[
+    [ "Observer", "a01531.html#a0f31c5d70d08486d118c3ac97bde377e", null ],
+    [ "~Observer", "a01531.html#a7884d771baae4ffcef532ba6a248be69", null ],
+    [ "addToGUI", "a01531.html#a858ec3fb7857eb010332d689b982f5bf", null ],
+    [ "addToGUI_", "a01531.html#a33f44f594be3c724f57552389924ea72", null ],
+    [ "addToLogger", "a01531.html#ac13bd0e46fd4434ae835e17c2a028f1b", null ],
+    [ "addToLogger_", "a01531.html#afaf68e30ac5a8d4fdb65a781b124f0cb", null ],
+    [ "configure", "a01531.html#aac7a0d76689c884cbec886fb15d208c5", null ],
+    [ "desc", "a01531.html#a000cb5b45f3ae16d5deec144fbfd0d96", null ],
+    [ "dt", "a01531.html#ad50a096eb3ea0ba9a09f3a9b286a73a9", null ],
+    [ "error", "a01531.html#abe5c434f1d731d97473991d6d3ac82d6", null ],
+    [ "name", "a01531.html#a9266bf0e19a321fd933a1fd29cc6a7e7", null ],
+    [ "name", "a01531.html#afb00b8e7fde2d086d3e8674bf70f1c9f", null ],
+    [ "removeFromGUI", "a01531.html#a3deb1aa8ae052466d654f6385ada884a", null ],
+    [ "removeFromGUI_", "a01531.html#ac170276078f1d4b1a018b48be0e7bbb1", null ],
+    [ "removeFromLogger", "a01531.html#abecec13c3a2143c51329b142b31b2543", null ],
+    [ "removeFromLogger_", "a01531.html#a5311631364d1ba27a432481b926c186c", null ],
+    [ "reset", "a01531.html#aa59bc21df7afff4f66cecc9315898c6b", null ],
+    [ "run", "a01531.html#a4805153c7a65f4f5ff444fdfd6528d73", null ],
+    [ "type", "a01531.html#a221d24df2ef49cb0f3439a4a99a59cfb", null ],
+    [ "update", "a01531.html#abb5cf4fc58a1178120bc2bea858518f7", null ],
+    [ "desc_", "a01531.html#a09b5945fa09bf14489d9796d43df60b9", null ],
+    [ "dt_", "a01531.html#adde90bcccecab614f391f6d515d435fa", null ],
+    [ "error_", "a01531.html#a89c80c9c3139aa8025315bb4337618a8", null ],
+    [ "name_", "a01531.html#a2e3f65fb8549873b71b1eeda29c1b363", null ],
+    [ "type_", "a01531.html#af9063e58cac679404843fb7104c60835", null ]
+];

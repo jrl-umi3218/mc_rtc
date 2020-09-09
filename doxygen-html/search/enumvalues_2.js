@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['checkbox',['Checkbox',['../a00743.html#a32d283e5c35e7fd7dcddbc0199bfdc06a4f8222964f9a317cef99dddc23a121bd',1,'mc_rtc::gui']]],
-  ['comboinput',['ComboInput',['../a00743.html#a32d283e5c35e7fd7dcddbc0199bfdc06ad7e38bc04789bd7093fa285ba7a91f4d',1,'mc_rtc::gui']]],
-  ['control',['Control',['../a01492.html#ace7a5ef240bc42d89053419e8718eba3aa1595abbb4c3a326636dd178757cd6c1',1,'mc_observers::BodySensorObserver::Control()'],['../a01496.html#ab23dff7bf325e5a4a3fcf84d13fa62b2aa1595abbb4c3a326636dd178757cd6c1',1,'mc_observers::EncoderObserver::Control()']]]
+  ['checkbox',['Checkbox',['../a00749.html#a32d283e5c35e7fd7dcddbc0199bfdc06a4f8222964f9a317cef99dddc23a121bd',1,'mc_rtc::gui']]],
+  ['comboinput',['ComboInput',['../a00749.html#a32d283e5c35e7fd7dcddbc0199bfdc06ad7e38bc04789bd7093fa285ba7a91f4d',1,'mc_rtc::gui']]],
+  ['control',['Control',['../a01515.html#ace7a5ef240bc42d89053419e8718eba3aa1595abbb4c3a326636dd178757cd6c1',1,'mc_observers::BodySensorObserver::Control()'],['../a01519.html#a2477d2b4531716700f65cea898a74274aa1595abbb4c3a326636dd178757cd6c1',1,'mc_observers::EncoderObserver::Control()'],['../a01519.html#aac0902eb5fa7af1436db7cc9ff06dff9aa1595abbb4c3a326636dd178757cd6c1',1,'mc_observers::EncoderObserver::Control()']]]
 ];

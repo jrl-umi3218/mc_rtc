@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['estimator',['Estimator',['../a01492.html#ace7a5ef240bc42d89053419e8718eba3ada2a1b654dd8965375b17b81a0874e1d',1,'mc_observers::BodySensorObserver::Estimator()'],['../a01496.html#ab23dff7bf325e5a4a3fcf84d13fa62b2ada2a1b654dd8965375b17b81a0874e1d',1,'mc_observers::EncoderObserver::Estimator()']]]
+  ['encoderfinitedifferences',['EncoderFiniteDifferences',['../a01519.html#aac0902eb5fa7af1436db7cc9ff06dff9af36b285527c0884c23e8dd6da1ec899f',1,'mc_observers::EncoderObserver']]],
+  ['encodervalues',['EncoderValues',['../a01519.html#a2477d2b4531716700f65cea898a74274a5d2acfcccfdd535f49b67144392ae508',1,'mc_observers::EncoderObserver']]],
+  ['encodervelocities',['EncoderVelocities',['../a01519.html#aac0902eb5fa7af1436db7cc9ff06dff9af71c32125ed00f5671b8f9f8757c8580',1,'mc_observers::EncoderObserver']]]
 ];

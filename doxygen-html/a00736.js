@@ -1,10 +1,10 @@
 var a00736 =
 [
-    [ "callback_is_serializable", "a02060.html", "a02060" ],
-    [ "FlatLog", "a02028.html", "a02028" ],
-    [ "GetLogType", "a02044.html", "a02044" ],
-    [ "GetLogType< std::array< double, N > >", "a02052.html", "a02052" ],
-    [ "GetLogType< std::vector< double, A > >", "a02048.html", "a02048" ],
-    [ "is_serializable", "a02056.html", "a02056" ],
-    [ "LogWriter", "a02064.html", "a02064" ]
+    [ "BodySensorObserver", "a01503.html", "a01503" ],
+    [ "EncoderObserver", "a01507.html", "a01507" ],
+    [ "KinematicInertialObserver", "a01511.html", "a01511" ],
+    [ "KinematicInertialPoseObserver", "a01515.html", "a01515" ],
+    [ "Observer", "a01519.html", "a01519" ],
+    [ "ObserverLoader", "a01523.html", "a01523" ],
+    [ "ObserverPipeline", "a01527.html", "a01527" ]
 ];

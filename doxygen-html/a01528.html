@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rbdyn::Collision Struct Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01528.html','');});
+$(document).ready(function(){initNavTree('a01531.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,281 +69,45 @@ $(document).ready(function(){initNavTree('a01528.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="a01525.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::Collision Struct Reference</div>  </div>
+<div class="title">mc_observers::Observer Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;mc_rbdyn/Collision.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:afaef9be2f1209c8cc63876f13b8da184"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01528.html#afaef9be2f1209c8cc63876f13b8da184">Collision</a> ()</td></tr>
-<tr class="separator:afaef9be2f1209c8cc63876f13b8da184"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a212f22fc390d0f873dc67244cdbdbce7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01528.html#a212f22fc390d0f873dc67244cdbdbce7">Collision</a> (const std::string &amp;b1, const std::string &amp;b2, double i, double s, double d)</td></tr>
-<tr class="separator:a212f22fc390d0f873dc67244cdbdbce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a664a8719f81b8fee2d2b26cd3cf645ab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01528.html#a664a8719f81b8fee2d2b26cd3cf645ab">isNone</a> ()</td></tr>
-<tr class="memdesc:a664a8719f81b8fee2d2b26cd3cf645ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Damping (0 is automatic.  <a href="#a664a8719f81b8fee2d2b26cd3cf645ab">More...</a><br /></td></tr>
-<tr class="separator:a664a8719f81b8fee2d2b26cd3cf645ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab32d2891597a9ec0d7f76e3dd0723a9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01528.html#aab32d2891597a9ec0d7f76e3dd0723a9">operator==</a> (const <a class="el" href="a01528.html">Collision</a> &amp;rhs) const</td></tr>
-<tr class="separator:aab32d2891597a9ec0d7f76e3dd0723a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f990041663f252046812111a6791048"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01528.html#a4f990041663f252046812111a6791048">operator!=</a> (const <a class="el" href="a01528.html">Collision</a> &amp;rhs) const</td></tr>
-<tr class="separator:a4f990041663f252046812111a6791048"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a169addbd06a09743b06287121884f027"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01528.html#a169addbd06a09743b06287121884f027">body1</a></td></tr>
-<tr class="separator:a169addbd06a09743b06287121884f027"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afde353de6419a4e248eec0851f664968"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01528.html#afde353de6419a4e248eec0851f664968">body2</a></td></tr>
-<tr class="memdesc:afde353de6419a4e248eec0851f664968"><td class="mdescLeft">&#160;</td><td class="mdescRight">First body in the constraint.  <a href="#afde353de6419a4e248eec0851f664968">More...</a><br /></td></tr>
-<tr class="separator:afde353de6419a4e248eec0851f664968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e96ac27cda155ffddb1222ff08f012c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01528.html#a4e96ac27cda155ffddb1222ff08f012c">iDist</a></td></tr>
-<tr class="memdesc:a4e96ac27cda155ffddb1222ff08f012c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second body in the constraint.  <a href="#a4e96ac27cda155ffddb1222ff08f012c">More...</a><br /></td></tr>
-<tr class="separator:a4e96ac27cda155ffddb1222ff08f012c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2853ab9ab669747303ccda6b22bb7d77"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01528.html#a2853ab9ab669747303ccda6b22bb7d77">sDist</a></td></tr>
-<tr class="memdesc:a2853ab9ab669747303ccda6b22bb7d77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interaction distance.  <a href="#a2853ab9ab669747303ccda6b22bb7d77">More...</a><br /></td></tr>
-<tr class="separator:a2853ab9ab669747303ccda6b22bb7d77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affd388406c44197c32f6685e64d7bdb9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01528.html#affd388406c44197c32f6685e64d7bdb9">damping</a></td></tr>
-<tr class="memdesc:affd388406c44197c32f6685e64d7bdb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security distance.  <a href="#affd388406c44197c32f6685e64d7bdb9">More...</a><br /></td></tr>
-<tr class="separator:affd388406c44197c32f6685e64d7bdb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="afaef9be2f1209c8cc63876f13b8da184"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afaef9be2f1209c8cc63876f13b8da184">&#9670;&nbsp;</a></span>Collision() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_rbdyn::Collision::Collision </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a212f22fc390d0f873dc67244cdbdbce7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a212f22fc390d0f873dc67244cdbdbce7">&#9670;&nbsp;</a></span>Collision() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_rbdyn::Collision::Collision </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>b1</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>b2</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>i</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>s</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>d</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a664a8719f81b8fee2d2b26cd3cf645ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a664a8719f81b8fee2d2b26cd3cf645ab">&#9670;&nbsp;</a></span>isNone()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_rbdyn::Collision::isNone </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Damping (0 is automatic. </p>
-
-<p class="reference">References <a class="el" href="a03253.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>, and <a class="el" href="a00727.html#aca0a2bc620d221c02c834716d875c1e0">mc_rbdyn::operator&lt;&lt;()</a>.</p>
-
-</div>
-</div>
-<a id="a4f990041663f252046812111a6791048"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f990041663f252046812111a6791048">&#9670;&nbsp;</a></span>operator!=()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_rbdyn::Collision::operator!= </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01528.html">Collision</a> &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aab32d2891597a9ec0d7f76e3dd0723a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab32d2891597a9ec0d7f76e3dd0723a9">&#9670;&nbsp;</a></span>operator==()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool mc_rbdyn::Collision::operator== </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01528.html">Collision</a> &amp;&#160;</td>
-          <td class="paramname"><em>rhs</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a169addbd06a09743b06287121884f027"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a169addbd06a09743b06287121884f027">&#9670;&nbsp;</a></span>body1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string mc_rbdyn::Collision::body1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afde353de6419a4e248eec0851f664968"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afde353de6419a4e248eec0851f664968">&#9670;&nbsp;</a></span>body2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string mc_rbdyn::Collision::body2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>First body in the constraint. </p>
-
-</div>
-</div>
-<a id="affd388406c44197c32f6685e64d7bdb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affd388406c44197c32f6685e64d7bdb9">&#9670;&nbsp;</a></span>damping</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rbdyn::Collision::damping</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Security distance. </p>
-
-</div>
-</div>
-<a id="a4e96ac27cda155ffddb1222ff08f012c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e96ac27cda155ffddb1222ff08f012c">&#9670;&nbsp;</a></span>iDist</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rbdyn::Collision::iDist</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Second body in the constraint. </p>
-
-</div>
-</div>
-<a id="a2853ab9ab669747303ccda6b22bb7d77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2853ab9ab669747303ccda6b22bb7d77">&#9670;&nbsp;</a></span>sDist</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double mc_rbdyn::Collision::sDist</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Interaction distance. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a01531.html">mc_observers::Observer</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#a858ec3fb7857eb010332d689b982f5bf">addToGUI</a>(const mc_control::MCController &amp;, mc_rtc::gui::StateBuilder &amp;, const std::vector&lt; std::string &gt; &amp;)</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#a33f44f594be3c724f57552389924ea72">addToGUI_</a>(const mc_control::MCController &amp;ctl, mc_rtc::gui::StateBuilder &amp;gui, std::vector&lt; std::string &gt; category={})</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#ac13bd0e46fd4434ae835e17c2a028f1b">addToLogger</a>(const mc_control::MCController &amp;, mc_rtc::Logger &amp;, const std::string &amp;)</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#afaf68e30ac5a8d4fdb65a781b124f0cb">addToLogger_</a>(const mc_control::MCController &amp;ctl, mc_rtc::Logger &amp;logger, const std::string &amp;category=&quot;&quot;)</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#aac7a0d76689c884cbec886fb15d208c5">configure</a>(const mc_control::MCController &amp;, const mc_rtc::Configuration &amp;)</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#a000cb5b45f3ae16d5deec144fbfd0d96">desc</a>() const noexcept</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#a09b5945fa09bf14489d9796d43df60b9">desc_</a></td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#ad50a096eb3ea0ba9a09f3a9b286a73a9">dt</a>() const noexcept</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#adde90bcccecab614f391f6d515d435fa">dt_</a></td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#abe5c434f1d731d97473991d6d3ac82d6">error</a>() const noexcept</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#a89c80c9c3139aa8025315bb4337618a8">error_</a></td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#a9266bf0e19a321fd933a1fd29cc6a7e7">name</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#afb00b8e7fde2d086d3e8674bf70f1c9f">name</a>() const noexcept</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#a2e3f65fb8549873b71b1eeda29c1b363">name_</a></td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#a0f31c5d70d08486d118c3ac97bde377e">Observer</a>(const std::string &amp;type, double dt)</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#a3deb1aa8ae052466d654f6385ada884a">removeFromGUI</a>(mc_rtc::gui::StateBuilder &amp;, const std::vector&lt; std::string &gt; &amp;category)</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#ac170276078f1d4b1a018b48be0e7bbb1">removeFromGUI_</a>(mc_rtc::gui::StateBuilder &amp;gui, std::vector&lt; std::string &gt; category={})</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#abecec13c3a2143c51329b142b31b2543">removeFromLogger</a>(mc_rtc::Logger &amp;, const std::string &amp;)</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#a5311631364d1ba27a432481b926c186c">removeFromLogger_</a>(mc_rtc::Logger &amp;logger, std::string category=&quot;&quot;)</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#aa59bc21df7afff4f66cecc9315898c6b">reset</a>(const mc_control::MCController &amp;ctl)=0</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#a4805153c7a65f4f5ff444fdfd6528d73">run</a>(const mc_control::MCController &amp;ctl)=0</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#a221d24df2ef49cb0f3439a4a99a59cfb">type</a>() const noexcept</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#af9063e58cac679404843fb7104c60835">type_</a></td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01531.html#abb5cf4fc58a1178120bc2bea858518f7">update</a>(mc_control::MCController &amp;ctl)=0</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">pure virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01531.html#a7884d771baae4ffcef532ba6a248be69">~Observer</a>()=default</td><td class="entry"><a class="el" href="a01531.html">mc_observers::Observer</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00727.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a01528.html">Collision</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 03:45:49 for mc_rtc by
+    <li class="footer">Generated on Wed Sep 9 2020 03:48:17 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

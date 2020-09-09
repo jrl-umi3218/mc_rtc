@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils::InequalityConstraint&lt; UpdateT &gt; Class Template Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02172.html','');});
+$(document).ready(function(){initNavTree('a02175.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,277 +69,31 @@ $(document).ready(function(){initNavTree('a02172.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a02169.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils::InequalityConstraint&lt; UpdateT &gt; Class Template Reference</div>  </div>
+<div class="title">mc_solver::ContactConstraint Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Helper class to write an inequality constraint for Tasks.  
- <a href="a02172.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_solver/InequalityConstraint.h&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mc_solver::utils::InequalityConstraint&lt; UpdateT &gt;:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a02172.png" usemap="#mc_5Fsolver::utils::InequalityConstraint_3C_20UpdateT_20_3E_map" alt=""/>
-  <map id="mc_5Fsolver::utils::InequalityConstraint_3C_20UpdateT_20_3E_map" name="mc_5Fsolver::utils::InequalityConstraint_3C_20UpdateT_20_3E_map">
-<area href="a02212.html" alt="mc_solver::utils::Constraint&lt; tasks::qp::Inequality, UpdateT &gt;" shape="rect" coords="178,56,524,80"/>
-</map>
- </div></div>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:aa303f3fb9dbf88ece28ef6ee013af8a8"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02172.html#aa303f3fb9dbf88ece28ef6ee013af8a8">Base</a> = <a class="el" href="a02212.html">Constraint</a>&lt; tasks::qp::Inequality, UpdateT &gt;</td></tr>
-<tr class="separator:aa303f3fb9dbf88ece28ef6ee013af8a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a2cc88eb4c1dbe254f3c849c0e76b0e03"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateRobot&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:a2cc88eb4c1dbe254f3c849c0e76b0e03"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02172.html#a2cc88eb4c1dbe254f3c849c0e76b0e03">InequalityConstraint</a> (unsigned int rIndex)</td></tr>
-<tr class="separator:a2cc88eb4c1dbe254f3c849c0e76b0e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94b71fe257e26cc49bb153daa02b32d1"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateLambda&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:a94b71fe257e26cc49bb153daa02b32d1"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02172.html#a94b71fe257e26cc49bb153daa02b32d1">InequalityConstraint</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
-<tr class="separator:a94b71fe257e26cc49bb153daa02b32d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1a4f382d3a67a6c728632e4f3189cb0"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateForce&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:aa1a4f382d3a67a6c728632e4f3189cb0"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02172.html#aa1a4f382d3a67a6c728632e4f3189cb0">InequalityConstraint</a> (const <a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
-<tr class="separator:aa1a4f382d3a67a6c728632e4f3189cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f8d6cb3fdbcb0dbf3a598f5db0db67d"><td class="memItemLeft" align="right" valign="top">const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02172.html#a2f8d6cb3fdbcb0dbf3a598f5db0db67d">AInEq</a> () const override</td></tr>
-<tr class="separator:a2f8d6cb3fdbcb0dbf3a598f5db0db67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad32d4e6549d14ef03faa5b61294a9161"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02172.html#ad32d4e6549d14ef03faa5b61294a9161">descInEq</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;, int i) override</td></tr>
-<tr class="separator:ad32d4e6549d14ef03faa5b61294a9161"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pro_methods_a02212"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02212')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02212.html">mc_solver::utils::Constraint&lt; tasks::qp::Inequality, UpdateT &gt;</a></td></tr>
-<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73 inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#adcc2b9ec9fbd3b47e0183ef0ce034c73">Constraint</a> (unsigned int rIndex)</td></tr>
-<tr class="separator:adcc2b9ec9fbd3b47e0183ef0ce034c73 inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#ae5a2073ed0b8b0432593221fec955e4e">Constraint</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
-<tr class="separator:ae5a2073ed0b8b0432593221fec955e4e inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#aab0cc49bca85557519c9a110b54c65ca">Constraint</a> (const <a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
-<tr class="separator:aab0cc49bca85557519c9a110b54c65ca inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#a819dd76da2909a4c88efcca1cb9aaf69">~Constraint</a> ()</td></tr>
-<tr class="memdesc:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="a02212.html#a819dd76da2909a4c88efcca1cb9aaf69">More...</a><br /></td></tr>
-<tr class="separator:a819dd76da2909a4c88efcca1cb9aaf69 inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab383394a69ab62c4fab23378e64868de inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#ab383394a69ab62c4fab23378e64868de">updateNrVars</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data) override</td></tr>
-<tr class="separator:ab383394a69ab62c4fab23378e64868de inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7693804807033e3718c4ba01a58d3a58 inherit pro_methods_a02212"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02212.html#a7693804807033e3718c4ba01a58d3a58">update</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;mbcs, const tasks::qp::SolverData &amp;data) override</td></tr>
-<tr class="separator:a7693804807033e3718c4ba01a58d3a58 inherit pro_methods_a02212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename UpdateT&gt;<br />
-class mc_solver::utils::InequalityConstraint&lt; UpdateT &gt;</h3>
-
-<p>Helper class to write an inequality constraint for Tasks. </p>
-<p>This implements \( A * x \le b \)</p>
-<p>You must implement the following functions:</p><ul>
-<li>const Eigen::MatrixXd &amp; A() const override; // Return A</li>
-<li>void compute() override; // <a class="el" href="a02224.html">Update</a> constraint matrix and bounds</li>
-<li>int maxInEq() const override; // Number of equality lines</li>
-<li>std::string nameInEq() const override; // Desriptive name of the constraint</li>
-<li>const Eigen::VectorXd &amp; bInEq() const override; // Return the bound b</li>
-</ul>
-<p>Depending on what the constraint apply to you have to make sure A has the following size:</p><ul>
-<li>(nrLines, alphaD.size()) for a constraint on a robot's state</li>
-<li>(nrLines, nrLambda) for a constraint on the lambdas of a contact</li>
-<li>(nrLines, 6) for a constraint on a wrench </li>
-</ul>
-</div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="aa303f3fb9dbf88ece28ef6ee013af8a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa303f3fb9dbf88ece28ef6ee013af8a8">&#9670;&nbsp;</a></span>Base</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="a02172.html">mc_solver::utils::InequalityConstraint</a>&lt; UpdateT &gt;::<a class="el" href="a02172.html#aa303f3fb9dbf88ece28ef6ee013af8a8">Base</a> =  <a class="el" href="a02212.html">Constraint</a>&lt;tasks::qp::Inequality, UpdateT&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a2cc88eb4c1dbe254f3c849c0e76b0e03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cc88eb4c1dbe254f3c849c0e76b0e03">&#9670;&nbsp;</a></span>InequalityConstraint() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateRobot&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02172.html">mc_solver::utils::InequalityConstraint</a>&lt; UpdateT &gt;::<a class="el" href="a02172.html">InequalityConstraint</a> </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>rIndex</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a94b71fe257e26cc49bb153daa02b32d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94b71fe257e26cc49bb153daa02b32d1">&#9670;&nbsp;</a></span>InequalityConstraint() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateLambda&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02172.html">mc_solver::utils::InequalityConstraint</a>&lt; UpdateT &gt;::<a class="el" href="a02172.html">InequalityConstraint</a> </td>
-          <td>(</td>
-          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
-          <td class="paramname"><em>cid</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa1a4f382d3a67a6c728632e4f3189cb0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1a4f382d3a67a6c728632e4f3189cb0">&#9670;&nbsp;</a></span>InequalityConstraint() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateForce&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02172.html">mc_solver::utils::InequalityConstraint</a>&lt; UpdateT &gt;::<a class="el" href="a02172.html">InequalityConstraint</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
-          <td class="paramname"><em>cid</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2f8d6cb3fdbcb0dbf3a598f5db0db67d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f8d6cb3fdbcb0dbf3a598f5db0db67d">&#9670;&nbsp;</a></span>AInEq()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::MatrixXd&amp; <a class="el" href="a02172.html">mc_solver::utils::InequalityConstraint</a>&lt; UpdateT &gt;::AInEq </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad32d4e6549d14ef03faa5b61294a9161"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad32d4e6549d14ef03faa5b61294a9161">&#9670;&nbsp;</a></span>descInEq()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename UpdateT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="a02172.html">mc_solver::utils::InequalityConstraint</a>&lt; UpdateT &gt;::descInEq </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>i</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a02175.html">mc_solver::ContactConstraint</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a02175.html#aa1038fc325c517503d2f68a3feec1c30acbc392a30777e1fa953eea2c011ea2c3">Acceleration</a> enum value</td><td class="entry"><a class="el" href="a02175.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02175.html#a3e94d3c790da36671345692cbf14e81d">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02175.html">mc_solver::ContactConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02175.html#ad8b6359d4d1a771db2fd8bad433acf1f">contactConstr</a></td><td class="entry"><a class="el" href="a02175.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02175.html#a2226b4449ee6faeb3f6d70cfdfb13b4f">ContactConstraint</a>(double timeStep, ContactType contactType=Velocity, bool dynamics=true)</td><td class="entry"><a class="el" href="a02175.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02175.html#ad4a4d2baaacb8b1d914d66a0110c99ab">ContactConstraint</a>()</td><td class="entry"><a class="el" href="a02175.html">mc_solver::ContactConstraint</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02175.html#aa1038fc325c517503d2f68a3feec1c30">ContactType</a> enum name</td><td class="entry"><a class="el" href="a02175.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02175.html#aa1038fc325c517503d2f68a3feec1c30a75ced229938828d7cf205928657fd137">Position</a> enum value</td><td class="entry"><a class="el" href="a02175.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02175.html#a4456741f8ae0b07c199415fda9b9aecf">posLambdaConstr</a></td><td class="entry"><a class="el" href="a02175.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02175.html#af72efeda2c9cd6af2e4626f32ab7583d">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02175.html">mc_solver::ContactConstraint</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02175.html#aa1038fc325c517503d2f68a3feec1c30a15d06b5b0997a0a5e17eccd053c7c652">Velocity</a> enum value</td><td class="entry"><a class="el" href="a02175.html">mc_solver::ContactConstraint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02167.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02167.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00732.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00752.html">utils</a></li><li class="navelem"><a class="el" href="a02172.html">InequalityConstraint</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 03:45:50 for mc_rtc by
+    <li class="footer">Generated on Wed Sep 9 2020 03:48:18 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

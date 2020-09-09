@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['zmpccconfiguration',['ZMPCCConfiguration',['../a02316.html#a1949eb437a14ae9ceb04a1ed238fa998',1,'mc_tasks::lipm_stabilizer::ZMPCC::ZMPCCConfiguration()'],['../a00726.html#a61ba26bc4aeec5031be001df091b4b1a',1,'mc_tasks::lipm_stabilizer::ZMPCCConfiguration()']]]
+  ['w_5fget_5ffn',['w_get_fn',['../a02411.html#a5a0447137eacf8f3c534ecc568b5aec1',1,'mc_tasks::SmoothTask']]],
+  ['w_5fset_5ffn',['w_set_fn',['../a02411.html#ad0b3cad2b0a949faddd0259779446d7f',1,'mc_tasks::SmoothTask']]],
+  ['waypoint_5ft',['waypoint_t',['../a02435.html#a5e665c15b2b296658f1ec80caf0499e0',1,'mc_trajectory::ExactCubic::waypoint_t()'],['../a02439.html#acbce3f9de05b28314ad0f61bb753d940',1,'mc_trajectory::InterpolatedRotation::waypoint_t()']]],
+  ['waypoints_5ft',['waypoints_t',['../a02315.html#a669d5fdec2578c135db701bba1727403',1,'mc_tasks::BSplineTrajectoryTask::waypoints_t()'],['../a02431.html#ada383daeac50ae7ac8b720c6096289f5',1,'mc_trajectory::BSpline::waypoints_t()']]]
 ];

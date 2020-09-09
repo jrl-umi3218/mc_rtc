@@ -1,7 +1,9 @@
 var a00308 =
 [
-    [ "RotationROImpl", "a01936.html", "a01936" ],
-    [ "RotationImpl", "a01940.html", "a01940" ],
-    [ "Rotation", "a00308.html#a9dc809d7e99978fe3f5e2439d1a20771", null ],
-    [ "Rotation", "a00308.html#a6440392ea4b48778f6d4012e0400ee5b", null ]
+    [ "Point3DROImpl", "a01955.html", "a01955" ],
+    [ "Point3DImpl", "a01959.html", "a01959" ],
+    [ "Point3D", "a00308.html#ac40c7c59cc19e0fe7be9d8a5a8564f74", null ],
+    [ "Point3D", "a00308.html#a0c1802e2d8623ee22fffc408e69eaf56", null ],
+    [ "Point3D", "a00308.html#ad2db10f53541f7b6a925d724023de7ee", null ],
+    [ "Point3D", "a00308.html#a6a9e684830b60a463c848a290d2b910b", null ]
 ];

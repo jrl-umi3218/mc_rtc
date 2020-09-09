@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_filter::ExponentialMovingAverage&lt; VectorT &gt; Struct Template Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01472.html','');});
+$(document).ready(function(){initNavTree('a01475.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,474 +69,89 @@ $(document).ready(function(){initNavTree('a01472.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="a01469.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_filter::ExponentialMovingAverage&lt; VectorT &gt; Struct Template Reference</div>  </div>
+<div class="title">mc_control::MCPythonController Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Exponential Moving Average.  
- <a href="a01472.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_filter/ExponentialMovingAverage.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a156a26de235d293b4e94cb1f269dd16c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#a156a26de235d293b4e94cb1f269dd16c">ExponentialMovingAverage</a> (double dt, double <a class="el" href="a01472.html#a25e06aceff6cb86deaba24edc060ef8f">timeConstant</a>, const VectorT &amp;initValue=VectorT::Zero())</td></tr>
-<tr class="memdesc:a156a26de235d293b4e94cb1f269dd16c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a156a26de235d293b4e94cb1f269dd16c">More...</a><br /></td></tr>
-<tr class="separator:a156a26de235d293b4e94cb1f269dd16c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc5e32731c162cecc484c71b1cd6680f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#afc5e32731c162cecc484c71b1cd6680f">append</a> (const VectorT &amp;value)</td></tr>
-<tr class="memdesc:afc5e32731c162cecc484c71b1cd6680f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append a new reading to the series.  <a href="#afc5e32731c162cecc484c71b1cd6680f">More...</a><br /></td></tr>
-<tr class="separator:afc5e32731c162cecc484c71b1cd6680f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59a37436a454f4caa5d9ba49ab85b2e8"><td class="memItemLeft" align="right" valign="top">const VectorT &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#a59a37436a454f4caa5d9ba49ab85b2e8">eval</a> () const</td></tr>
-<tr class="memdesc:a59a37436a454f4caa5d9ba49ab85b2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the smoothed statistic.  <a href="#a59a37436a454f4caa5d9ba49ab85b2e8">More...</a><br /></td></tr>
-<tr class="separator:a59a37436a454f4caa5d9ba49ab85b2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc199c7a1935a35f01882c9ce6f355e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#abc199c7a1935a35f01882c9ce6f355e4">saturation</a> (double limit)</td></tr>
-<tr class="memdesc:abc199c7a1935a35f01882c9ce6f355e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set output saturation; disable by providing a negative value.  <a href="#abc199c7a1935a35f01882c9ce6f355e4">More...</a><br /></td></tr>
-<tr class="separator:abc199c7a1935a35f01882c9ce6f355e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fe8efb515654281aa77b87296449f89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#a4fe8efb515654281aa77b87296449f89">reset</a> (const VectorT &amp;initVal)</td></tr>
-<tr class="memdesc:a4fe8efb515654281aa77b87296449f89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset average to provided value.  <a href="#a4fe8efb515654281aa77b87296449f89">More...</a><br /></td></tr>
-<tr class="separator:a4fe8efb515654281aa77b87296449f89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25e06aceff6cb86deaba24edc060ef8f"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#a25e06aceff6cb86deaba24edc060ef8f">timeConstant</a> () const</td></tr>
-<tr class="memdesc:a25e06aceff6cb86deaba24edc060ef8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get time constant of the filter.  <a href="#a25e06aceff6cb86deaba24edc060ef8f">More...</a><br /></td></tr>
-<tr class="separator:a25e06aceff6cb86deaba24edc060ef8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e116fb401af8c027896173066d8b8ed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#a5e116fb401af8c027896173066d8b8ed">timeConstant</a> (double T)</td></tr>
-<tr class="memdesc:a5e116fb401af8c027896173066d8b8ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update time constant.  <a href="#a5e116fb401af8c027896173066d8b8ed">More...</a><br /></td></tr>
-<tr class="separator:a5e116fb401af8c027896173066d8b8ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:adaad48a146f8e945da36b18c0e9c4f8a"><td class="memItemLeft" align="right" valign="top">VectorT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#adaad48a146f8e945da36b18c0e9c4f8a">average_</a> = VectorT::Zero()</td></tr>
-<tr class="separator:adaad48a146f8e945da36b18c0e9c4f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accd3db44b24084922b2d1915e378b2fb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#accd3db44b24084922b2d1915e378b2fb">alpha_</a></td></tr>
-<tr class="separator:accd3db44b24084922b2d1915e378b2fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a235570200c501307ebc666fcd81e20"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#a6a235570200c501307ebc666fcd81e20">dt_</a></td></tr>
-<tr class="separator:a6a235570200c501307ebc666fcd81e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08b8eaf1a64cf2abc37a27311db4923e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#a08b8eaf1a64cf2abc37a27311db4923e">timeConstant_</a></td></tr>
-<tr class="separator:a08b8eaf1a64cf2abc37a27311db4923e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa39c03dbafb64fa46f4be54499b3ed48"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01472.html#aa39c03dbafb64fa46f4be54499b3ed48">saturation_</a> = -1.</td></tr>
-<tr class="separator:aa39c03dbafb64fa46f4be54499b3ed48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename VectorT&gt;<br />
-struct mc_filter::ExponentialMovingAverage&lt; VectorT &gt;</h3>
-
-<p>Exponential Moving Average. </p>
-<p>This filter can be seen as an integrator:</p>
-<p class="formulaDsp">
-\[ y(t) = \frac{1}{T} \int_{u=0}^t x(u) e^{(u - t) / T} {\rm d}{\tau} \]
-</p>
-<p>with T &gt; 0 a reset period acting as anti-windup. It can also (informally) be interpreted as the average value of the input signal x(t) over the last T seconds. Formally, it represents the amount of time for the smoothed response of a unit input to reach 1-1/e (~63%) of the original signal.</p>
-<p>See <a href="https://en.wikipedia.org/wiki/Exponential_smoothing">https://en.wikipedia.org/wiki/Exponential_smoothing</a>. It is equivalent to a low-pass filter <a href="https://en.wikipedia.org/wiki/Low-pass_filter">https://en.wikipedia.org/wiki/Low-pass_filter</a> applied to the integral of the input signal.</p>
-<p>Expects type VectorT to have:</p><ul>
-<li>VectorT::Zero() static function</li>
-<li>VectorT::setZero() Common types: Eigen::Vector3d, Eigen::Vector6d, etc. </li>
-</ul>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a156a26de235d293b4e94cb1f269dd16c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a156a26de235d293b4e94cb1f269dd16c">&#9670;&nbsp;</a></span>ExponentialMovingAverage()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::<a class="el" href="a01472.html">ExponentialMovingAverage</a> </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>timeConstant</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>initValue</em> = <code>VectorT::Zero()</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dt</td><td>Time in [s] between two readings.</td></tr>
-    <tr><td class="paramname">timeConstant</td><td>Informally, length of the recent-past window, in [s].</td></tr>
-    <tr><td class="paramname">initValue</td><td>Initial value of the output average. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="afc5e32731c162cecc484c71b1cd6680f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc5e32731c162cecc484c71b1cd6680f">&#9670;&nbsp;</a></span>append()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::append </td>
-          <td>(</td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Append a new reading to the series. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">value</td><td>New value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a59a37436a454f4caa5d9ba49ab85b2e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59a37436a454f4caa5d9ba49ab85b2e8">&#9670;&nbsp;</a></span>eval()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const VectorT&amp; <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::eval </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Evaluate the smoothed statistic. </p>
-
-</div>
-</div>
-<a id="a4fe8efb515654281aa77b87296449f89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fe8efb515654281aa77b87296449f89">&#9670;&nbsp;</a></span>reset()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::reset </td>
-          <td>(</td>
-          <td class="paramtype">const VectorT &amp;&#160;</td>
-          <td class="paramname"><em>initVal</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Reset average to provided value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">initVal</td><td>initial value of the average </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="reference">Referenced by <a class="el" href="a01472.html#a156a26de235d293b4e94cb1f269dd16c">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::ExponentialMovingAverage()</a>.</p>
-
-</div>
-</div>
-<a id="abc199c7a1935a35f01882c9ce6f355e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc199c7a1935a35f01882c9ce6f355e4">&#9670;&nbsp;</a></span>saturation()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::saturation </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>limit</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Set output saturation; disable by providing a negative value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">limit</td><td>Output will saturate between -limit and +limit. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a25e06aceff6cb86deaba24edc060ef8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25e06aceff6cb86deaba24edc060ef8f">&#9670;&nbsp;</a></span>timeConstant() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::timeConstant </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get time constant of the filter. </p>
-
-<p class="reference">Referenced by <a class="el" href="a01472.html#a156a26de235d293b4e94cb1f269dd16c">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::ExponentialMovingAverage()</a>.</p>
-
-</div>
-</div>
-<a id="a5e116fb401af8c027896173066d8b8ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e116fb401af8c027896173066d8b8ed">&#9670;&nbsp;</a></span>timeConstant() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::timeConstant </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>T</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Update time constant. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">T</td><td>New time constant of the filter.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>T is explicitely enforced to respect the Nyquist–Shannon sampling theorem, that is T is at least 2*timestep. </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="accd3db44b24084922b2d1915e378b2fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#accd3db44b24084922b2d1915e378b2fb">&#9670;&nbsp;</a></span>alpha_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::alpha_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a01472.html#afc5e32731c162cecc484c71b1cd6680f">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::append()</a>, and <a class="el" href="a01472.html#a5e116fb401af8c027896173066d8b8ed">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::timeConstant()</a>.</p>
-
-</div>
-</div>
-<a id="adaad48a146f8e945da36b18c0e9c4f8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adaad48a146f8e945da36b18c0e9c4f8a">&#9670;&nbsp;</a></span>average_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">VectorT <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::average_ = VectorT::Zero()</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a01472.html#afc5e32731c162cecc484c71b1cd6680f">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::append()</a>, <a class="el" href="a01472.html#a59a37436a454f4caa5d9ba49ab85b2e8">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::eval()</a>, and <a class="el" href="a01472.html#a4fe8efb515654281aa77b87296449f89">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::reset()</a>.</p>
-
-</div>
-</div>
-<a id="a6a235570200c501307ebc666fcd81e20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a235570200c501307ebc666fcd81e20">&#9670;&nbsp;</a></span>dt_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::dt_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a01472.html#a5e116fb401af8c027896173066d8b8ed">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::timeConstant()</a>.</p>
-
-</div>
-</div>
-<a id="aa39c03dbafb64fa46f4be54499b3ed48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa39c03dbafb64fa46f4be54499b3ed48">&#9670;&nbsp;</a></span>saturation_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::saturation_ = -1.</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a01472.html#afc5e32731c162cecc484c71b1cd6680f">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::append()</a>, and <a class="el" href="a01472.html#abc199c7a1935a35f01882c9ce6f355e4">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::saturation()</a>.</p>
-
-</div>
-</div>
-<a id="a08b8eaf1a64cf2abc37a27311db4923e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08b8eaf1a64cf2abc37a27311db4923e">&#9670;&nbsp;</a></span>timeConstant_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename VectorT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">double <a class="el" href="a01472.html">mc_filter::ExponentialMovingAverage</a>&lt; VectorT &gt;::timeConstant_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="a01472.html#a25e06aceff6cb86deaba24edc060ef8f">mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;::timeConstant()</a>.</p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a01475.html">mc_control::MCPythonController</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a30b4488e0cfd3fdbba775ba38766703b">anchorFrame</a>(const sva::PTransformd &amp;)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a33b108398428ad6ad8619ca25d8e3029">anchorFrame</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#abac248c9494ff8e4e5cc7bc2816fbad0">anchorFrameReal</a>(const sva::PTransformd &amp;)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#ae736f4f84fcbea832107c350efece532">anchorFrameReal</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#af4240035b16cca7624e712eb86795951">compoundJointConstraint</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#aca6f0bb79c273474a9e6ed524ff4d33c">config</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a7d12aa9497219df451e115d53e62bcd8">config</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#adbb3001e8874fedbdc2b71a0db93965c">config_</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a765929daba315c7ec7d455486f2817b3">contactConstraint</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a023985cee8da531d5426a65fa6c613e6">createObserverPipelines</a>(const mc_rtc::Configuration &amp;config)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a5d814ae6c6c4d33fd9601c80ef74ccd9">datastore</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a03fa7c2dd20fecd96b0b92f1ea2977d3">datastore</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a40233bd6dab6721085d266e1dc306de2">datastore_</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a828b8724c182053e6d0aed8a28f368bf">dynamicsConstraint</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a94eed9012e3dab581b9ad63a4e525343">env</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a589dbcbbd52d3218012802800834926d">env</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a64c51eba81ba10f77a9281041b706fac">gripper</a>(const std::string &amp;robot, const std::string &amp;gripper)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#abb942edc92a7d47993ea5d1ad78e58e9">gui</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a5761e783caf225454e03628b2533fc13">gui_</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#af3caf78b3601e0806d9ebf6cfe9b5e5e">hasObserverPipeline</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#ac6529a8c099a0c775a7c99514086544b">hasObserverPipeline</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#af77baae76ef5af0d4ca6bec07172a3a4">kinematicsConstraint</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a3110512ea26812d8a58d3945e739c751">loadRobot</a>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#aefccad1f0ce477f1427b939f5f698d6b">loadRobot</a>(mc_rbdyn::RobotModulePtr rm, const std::string &amp;name, mc_rbdyn::Robots &amp;robots, bool updateNrVars=true)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#ac9542a86bbb7baaf4d40c879b01a4073">logger</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a5de6a08cbbe04ccc032bc4ebbd2773dc">logger_</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a0a5a9b4670e467fa2eabd8f2342e0846">MCController</a>(std::shared_ptr&lt; mc_rbdyn::RobotModule &gt; robot, double dt)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a5908d94ed55dc5a858e156d63e8513e7">MCController</a>(std::shared_ptr&lt; mc_rbdyn::RobotModule &gt; robot, double dt, const mc_rtc::Configuration &amp;config)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a1ac3cbc244e98473e90b06e4c187aec0">MCController</a>(const std::vector&lt; std::shared_ptr&lt; mc_rbdyn::RobotModule &gt;&gt; &amp;robot_modules, double dt)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a0788cb5ea805128e4825e14f52122b5d">MCController</a>(const std::vector&lt; std::shared_ptr&lt; mc_rbdyn::RobotModule &gt;&gt; &amp;robot_modules, double dt, const mc_rtc::Configuration &amp;config)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01475.html#a032e887f83331f4138a8b4125010930a">MCPythonController</a>(const std::vector&lt; std::shared_ptr&lt; mc_rbdyn::RobotModule &gt;&gt; &amp;robots, double dt)</td><td class="entry"><a class="el" href="a01475.html">mc_control::MCPythonController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a8689fff25a5d462a080ff47e03886dfa">name_</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a8d899edca3c7090efa847f9975f4b1bc">observerPipeline</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a4bf14f9d37dd91c6d2fc35e9e312cfc8">observerPipeline</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a0abd8eaa6dac11ce547701c6998f9a9b">observerPipeline</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#add87a6181792e773d082954a5a533b16">observerPipeline</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a3a382908f04c5b6a741b51ccfeb8b2bd">observerPipelines</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#adc6ace5546e8de7efae897965ac0c133">observerPipelines</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#ab3eedc56410fb67db9057a766686243a">observerPipelines_</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a3d17bb7e20af4d312617d7d5f6288889">postureTask</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a4523facc71906c6622227d0fa2597963">qpsolver</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#ab491ba1a03ccfd4b3fe37079ed4f03b1">realRobot</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a545cbd53e4486c535a4e4ffcd2ad0d6e">realRobot</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a0a3a3bbc225e57c006dc2caaad5b9973">realRobot</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#aeccb28ff63147f9cf19a67eb73546a27">realRobot</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a1443aed08b26c319294465b1caa1e221">realRobots</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a47636696fa5be9a4e8c0d10d6dae1a20">realRobots</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#aea29ca137334fbf6d9aefdc426ad1184">removeRobot</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01475.html#a9f6c69c9b96a4fadd5f94d7500d633d7">reset</a>(const ControllerResetData &amp;reset_data) override</td><td class="entry"><a class="el" href="a01475.html">mc_control::MCPythonController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01475.html#a912a0dc9659948113b9eca0605c2cd12">reset_callback</a></td><td class="entry"><a class="el" href="a01475.html">mc_control::MCPythonController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#ae47b233aee0c9428445ead4f9e57eb4f">resetObserverPipelines</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a3d0a5351228f1b62ad1268339020d230">robot</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a6784579e052281787348a47eb3113943">robot</a>(const std::string &amp;name) const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#ae49802b3de0837b6c43b8fac4174480e">robot</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a01afa1d8da9cc41b34f8119023102f65">robot</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#adc557ecb7d64eb2d8be551f7cf6678cd">robots</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#aef59bf32cd83b177201962e7a7325928">robots</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01475.html#a3700ef59c7492c0be19158e991ccf6e6">run</a>() override</td><td class="entry"><a class="el" href="a01475.html">mc_control::MCPythonController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a7d9a2ee7d9c553bc3ced736b7ee9a3e7">mc_control::MCController::run</a>(mc_solver::FeedbackType fType)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01475.html#ac76e53f48809f9cede138425a0b7aac9">run_callback</a></td><td class="entry"><a class="el" href="a01475.html">mc_control::MCPythonController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a49fc72e5be121546b68cd1d8b4edccc8">runObserverPipelines</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#ad67e0621398628a6b8f4f700a7455b67">selfCollisionConstraint</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#a18dee7f61bad6646fe684c0e4ae424cb">send</a>(const double &amp;t)</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#aa6a9b2cd350ec94a1f1bda12c3133c28">solver</a>() const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#abc7651033ec24b18d662797fc3bb48fa">solver</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#a94ad5bc971729e691d57c711f6fac88f">stop</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#ab071255e2e17b62e05aec6f67d88ce44">supported_robots</a>(std::vector&lt; std::string &gt; &amp;out) const</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a01483.html#ae5f48849d9e4d7ed3a1f02a1380a7fee">timeStep</a></td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a01483.html#adbb448aeae9565e56d32cf50067dc9ee">~MCController</a>()</td><td class="entry"><a class="el" href="a01483.html">mc_control::MCController</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00728.html">mc_filter</a></li><li class="navelem"><a class="el" href="a01472.html">ExponentialMovingAverage</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 03:45:49 for mc_rtc by
+    <li class="footer">Generated on Wed Sep 9 2020 03:48:17 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
