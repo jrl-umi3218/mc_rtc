@@ -129,6 +129,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3f8efaafe91d5f6504a8b2e6c7b2dda1"><td class="memItemLeft" align="right" valign="top">const sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02368.html#a3f8efaafe91d5f6504a8b2e6c7b2dda1">surfacePose</a> () const</td></tr>
 <tr class="memdesc:a3f8efaafe91d5f6504a8b2e6c7b2dda1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pose of the surface in the inertial frame.  <a href="#a3f8efaafe91d5f6504a8b2e6c7b2dda1">More...</a><br /></td></tr>
 <tr class="separator:a3f8efaafe91d5f6504a8b2e6c7b2dda1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb9c86d5f18e39374a8b501187f5d449"><td class="memItemLeft" align="right" valign="top">std::function&lt; bool(const <a class="el" href="a02328.html">mc_tasks::MetaTask</a> &amp;task, std::string &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02368.html#aeb9c86d5f18e39374a8b501187f5d449">buildCompletionCriteria</a> (double dt, const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;config) const override</td></tr>
+<tr class="memdesc:aeb9c86d5f18e39374a8b501187f5d449"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add support for the following criterias:  <a href="#aeb9c86d5f18e39374a8b501187f5d449">More...</a><br /></td></tr>
+<tr class="separator:aeb9c86d5f18e39374a8b501187f5d449"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71392150c13f91caba0fcc4e6ecdacdf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02368.html#a71392150c13f91caba0fcc4e6ecdacdf">addToLogger</a> (<a class="el" href="a02052.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
 <tr class="memdesc:a71392150c13f91caba0fcc4e6ecdacdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add entries to the logger.  <a href="#a71392150c13f91caba0fcc4e6ecdacdf">More...</a><br /></td></tr>
 <tr class="separator:a71392150c13f91caba0fcc4e6ecdacdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -477,6 +480,55 @@ Additional Inherited Members</h2></td></tr>
 <p>The default implementation adds nothing to the log. </p>
 
 <p>Reimplemented from <a class="el" href="a02328.html#a19bd5d3b7b1b36dae48b516457de16a8">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="aeb9c86d5f18e39374a8b501187f5d449"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb9c86d5f18e39374a8b501187f5d449">&#9670;&nbsp;</a></span>buildCompletionCriteria()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::function&lt;bool(const <a class="el" href="a02328.html">mc_tasks::MetaTask</a> &amp; task, std::string &amp;)&gt; mc_tasks::SurfaceTransformTask::buildCompletionCriteria </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add support for the following criterias: </p>
+<ul>
+<li>wrench: completed when the surface wrench reaches the given wrench, if some values are NaN, this direction is ignored. Only valid if the surface controlled by this task is attached to a force sensor, throws otherwise</li>
+</ul>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>wrench is used but the surface is not attached to a force sensor </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="a02328.html#a753237535cc3e200e44ae0fa276f733e">mc_tasks::MetaTask</a>.</p>
 
 </div>
 </div>
@@ -1023,7 +1075,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00725.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a02368.html">SurfaceTransformTask</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 01:15:23 for mc_rtc by
+    <li class="footer">Generated on Wed Sep 9 2020 03:45:50 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

@@ -166,6 +166,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3f8efaafe91d5f6504a8b2e6c7b2dda1 inherit pub_methods_a02368"><td class="memItemLeft" align="right" valign="top">const sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02368.html#a3f8efaafe91d5f6504a8b2e6c7b2dda1">surfacePose</a> () const</td></tr>
 <tr class="memdesc:a3f8efaafe91d5f6504a8b2e6c7b2dda1 inherit pub_methods_a02368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pose of the surface in the inertial frame.  <a href="a02368.html#a3f8efaafe91d5f6504a8b2e6c7b2dda1">More...</a><br /></td></tr>
 <tr class="separator:a3f8efaafe91d5f6504a8b2e6c7b2dda1 inherit pub_methods_a02368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb9c86d5f18e39374a8b501187f5d449 inherit pub_methods_a02368"><td class="memItemLeft" align="right" valign="top">std::function&lt; bool(const <a class="el" href="a02328.html">mc_tasks::MetaTask</a> &amp;task, std::string &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02368.html#aeb9c86d5f18e39374a8b501187f5d449">buildCompletionCriteria</a> (double dt, const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;config) const override</td></tr>
+<tr class="memdesc:aeb9c86d5f18e39374a8b501187f5d449 inherit pub_methods_a02368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add support for the following criterias:  <a href="a02368.html#aeb9c86d5f18e39374a8b501187f5d449">More...</a><br /></td></tr>
+<tr class="separator:aeb9c86d5f18e39374a8b501187f5d449 inherit pub_methods_a02368"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71392150c13f91caba0fcc4e6ecdacdf inherit pub_methods_a02368"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02368.html#a71392150c13f91caba0fcc4e6ecdacdf">addToLogger</a> (<a class="el" href="a02052.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
 <tr class="memdesc:a71392150c13f91caba0fcc4e6ecdacdf inherit pub_methods_a02368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add entries to the logger.  <a href="a02368.html#a71392150c13f91caba0fcc4e6ecdacdf">More...</a><br /></td></tr>
 <tr class="separator:a71392150c13f91caba0fcc4e6ecdacdf inherit pub_methods_a02368"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -307,9 +310,6 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:aebc49ae7f9bf32ddfc48b8c64b238ff2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02260.html#aebc49ae7f9bf32ddfc48b8c64b238ff2">update</a> (<a class="el" href="a02208.html">mc_solver::QPSolver</a> &amp;) override</td></tr>
 <tr class="memdesc:aebc49ae7f9bf32ddfc48b8c64b238ff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the task.  <a href="#aebc49ae7f9bf32ddfc48b8c64b238ff2">More...</a><br /></td></tr>
 <tr class="separator:aebc49ae7f9bf32ddfc48b8c64b238ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a341dbedb9368d583f45b7e3ca8bda8cd"><td class="memItemLeft" align="right" valign="top">std::function&lt; bool(const <a class="el" href="a02328.html">mc_tasks::MetaTask</a> &amp;task, std::string &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02260.html#a341dbedb9368d583f45b7e3ca8bda8cd">buildCompletionCriteria</a> (double dt, const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;config) const override</td></tr>
-<tr class="memdesc:a341dbedb9368d583f45b7e3ca8bda8cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add support for the following criterias:  <a href="#a341dbedb9368d583f45b7e3ca8bda8cd">More...</a><br /></td></tr>
-<tr class="separator:a341dbedb9368d583f45b7e3ca8bda8cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7340c5f14c1ba117ec60046742b3e9ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02260.html#a7340c5f14c1ba117ec60046742b3e9ad">addToGUI</a> (<a class="el" href="a01948.html">mc_rtc::gui::StateBuilder</a> &amp;gui) override</td></tr>
 <tr class="memdesc:a7340c5f14c1ba117ec60046742b3e9ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add elements to the GUI through the helper.  <a href="#a7340c5f14c1ba117ec60046742b3e9ad">More...</a><br /></td></tr>
 <tr class="separator:a7340c5f14c1ba117ec60046742b3e9ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -648,51 +648,6 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a341dbedb9368d583f45b7e3ca8bda8cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a341dbedb9368d583f45b7e3ca8bda8cd">&#9670;&nbsp;</a></span>buildCompletionCriteria()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::function&lt;bool(const <a class="el" href="a02328.html">mc_tasks::MetaTask</a> &amp; task, std::string &amp;)&gt; mc_tasks::force::AdmittanceTask::buildCompletionCriteria </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01716.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add support for the following criterias: </p>
-<ul>
-<li>wrench: completed when the measuredWrench reaches the given wrench, if some values are NaN, this direction is ignored </li>
-</ul>
-
-<p>Reimplemented from <a class="el" href="a02328.html#a753237535cc3e200e44ae0fa276f733e">mc_tasks::MetaTask</a>.</p>
-
-<p>Reimplemented in <a class="el" href="a02276.html#a7467766fa42546e99c0d253aac7af98d">mc_tasks::force::CoPTask</a>.</p>
 
 </div>
 </div>
@@ -1428,7 +1383,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00725.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00753.html">force</a></li><li class="navelem"><a class="el" href="a02260.html">AdmittanceTask</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 01:15:23 for mc_rtc by
+    <li class="footer">Generated on Wed Sep 9 2020 03:45:50 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

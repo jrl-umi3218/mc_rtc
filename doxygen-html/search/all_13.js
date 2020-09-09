@@ -168,7 +168,7 @@ var searchData=
   ['supportmin_5f',['supportMin_',['../a02308.html#a37b5b7e6f2acd693711f6b1e8c7310db',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['supportpolygons_5f',['supportPolygons_',['../a02308.html#ad55b59e574799dcf11bc7598b8a6cea9',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['supportsurface_5f',['supportSurface_',['../a01416.html#a6b5b93da636466144e8c964dee5400f4',1,'mc_control::fsm::SlidingFootContactState']]],
-  ['surface',['Surface',['../a01688.html',1,'mc_rbdyn::Surface'],['../a01640.html#aa4b724e51881215dd4293f9578656755',1,'mc_rbdyn::Robot::surface(const std::string &amp;sName)'],['../a01640.html#a032e4252cb8c2c1d2ab82bd353b1cfb2',1,'mc_rbdyn::Robot::surface(const std::string &amp;sName) const'],['../a02368.html#a564f6ac88615f5bf2abcd1defc0c6d57',1,'mc_tasks::SurfaceTransformTask::surface()'],['../a01688.html#a8c4fe07a3ad4392974c63722916b28db',1,'mc_rbdyn::Surface::Surface()']]],
+  ['surface',['Surface',['../a01688.html',1,'mc_rbdyn::Surface'],['../a01688.html#a8c4fe07a3ad4392974c63722916b28db',1,'mc_rbdyn::Surface::Surface()'],['../a01640.html#aa4b724e51881215dd4293f9578656755',1,'mc_rbdyn::Robot::surface(const std::string &amp;sName)'],['../a01640.html#a032e4252cb8c2c1d2ab82bd353b1cfb2',1,'mc_rbdyn::Robot::surface(const std::string &amp;sName) const'],['../a02368.html#a564f6ac88615f5bf2abcd1defc0c6d57',1,'mc_tasks::SurfaceTransformTask::surface()']]],
   ['surface_2eh',['Surface.h',['../a00218.html',1,'']]],
   ['surface_5f',['surface_',['../a02260.html#ac854c2ff4e850e265a8b18d2e92df0ab',1,'mc_tasks::force::AdmittanceTask']]],
   ['surface_5fhull_2eh',['surface_hull.h',['../a00221.html',1,'']]],

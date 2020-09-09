@@ -4884,13 +4884,6 @@
       <arglist>(mc_solver::QPSolver &amp;) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
-      <name>buildCompletionCriteria</name>
-      <anchorfile>a02260.html</anchorfile>
-      <anchor>a341dbedb9368d583f45b7e3ca8bda8cd</anchor>
-      <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>void</type>
       <name>addToGUI</name>
       <anchorfile>a02260.html</anchorfile>
@@ -28024,6 +28017,13 @@
       <anchorfile>a02368.html</anchorfile>
       <anchor>a3f8efaafe91d5f6504a8b2e6c7b2dda1</anchor>
       <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
+      <name>buildCompletionCriteria</name>
+      <anchorfile>a02368.html</anchorfile>
+      <anchor>aeb9c86d5f18e39374a8b501187f5d449</anchor>
+      <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
     <member kind="function">
       <type>void</type>

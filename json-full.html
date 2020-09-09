@@ -34110,7 +34110,7 @@ orientation: [0.0, 0.0, 0.0]</pre>
 
   </td>
   <td>
-    <span class="text-secondary"><small>True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored</small></span>
+    <span class="text-secondary"><small>True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored. Only valid if the controlled surface is attached to a force sensor (throws otherwise).</small></span>
   </td>
   
 </tr>
@@ -48110,6 +48110,73 @@ admittance:
   </td>
   
 </tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>wrench</td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_SurfaceTransformTask_PROP_completion_PROP_wrench" aria-expanded="false" aria-controls="collapseMetaTask_SurfaceTransformTask_PROP_completion_PROP_wrench">Eigen::Vector6d</a>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored. Only valid if the controlled surface is attached to a force sensor (throws otherwise).</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_SurfaceTransformTask_PROP_completion_PROP_wrench">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6>
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
 
 
 

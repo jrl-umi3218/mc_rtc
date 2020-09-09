@@ -6,7 +6,6 @@ var a02260 =
     [ "addToSolver", "a02260.html#a9e4af3978acf95b18cb58842898ff266", null ],
     [ "admittance", "a02260.html#abaa1066a123da76ad55c064c860b96d3", null ],
     [ "admittance", "a02260.html#a856da07a6437955a17e20b42ef8de0d0", null ],
-    [ "buildCompletionCriteria", "a02260.html#a341dbedb9368d583f45b7e3ca8bda8cd", null ],
     [ "load", "a02260.html#a11f68c4af2082ba57141752b3036e0f1", null ],
     [ "maxAngularVel", "a02260.html#a1a82a23ac354e6e380ecd7803e790d27", null ],
     [ "maxLinearVel", "a02260.html#a99d636ebeb1f79aa4cc09409cb1456a1", null ],

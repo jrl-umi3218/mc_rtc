@@ -4,6 +4,7 @@ var a02368 =
     [ "SurfaceTransformTask", "a02368.html#a11dcb669bfded6027ba8d80f9a79a58c", null ],
     [ "addToGUI", "a02368.html#a1dcacdc717af669648c0d06ff0b29e11", null ],
     [ "addToLogger", "a02368.html#a71392150c13f91caba0fcc4e6ecdacdf", null ],
+    [ "buildCompletionCriteria", "a02368.html#aeb9c86d5f18e39374a8b501187f5d449", null ],
     [ "damping", "a02368.html#abeea24142cd101aeb8308950b145e875", null ],
     [ "load", "a02368.html#a9ff367856026ec4e3adf4db88aab281b", null ],
     [ "mvDamping", "a02368.html#a93f19fb156ea70632d753c7a461b98b5", null ],
