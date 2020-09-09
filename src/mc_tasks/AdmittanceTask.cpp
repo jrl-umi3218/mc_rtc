@@ -128,44 +128,6 @@ void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_target_wrench");
 }
 
-std::function<bool(const mc_tasks::MetaTask &, std::string &)> AdmittanceTask::buildCompletionCriteria(
-    double dt,
-    const mc_rtc::Configuration & config) const
-{
-  if(config.has("wrench"))
-  {
-    sva::ForceVecd target_w = config("wrench");
-    Eigen::Vector6d target = target_w.vector();
-    Eigen::Vector6d dof = Eigen::Vector6d::Ones();
-    for(int i = 0; i < 6; ++i)
-    {
-      if(std::isnan(target(i)))
-      {
-        dof(i) = 0.;
-        target(i) = 0.;
-      }
-      else if(target(i) < 0)
-      {
-        dof(i) = -1.;
-      }
-    }
-    return [dof, target](const mc_tasks::MetaTask & t, std::string & out) {
-      const auto & self = static_cast<const mc_tasks::force::AdmittanceTask &>(t);
-      Eigen::Vector6d w = self.measuredWrench().vector();
-      for(int i = 0; i < 6; ++i)
-      {
-        if(dof(i) * fabs(w(i)) < target(i))
-        {
-          return false;
-        }
-      }
-      out += "wrench";
-      return true;
-    };
-  }
-  return MetaTask::buildCompletionCriteria(dt, config);
-}
-
 void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   gui.addElement({"Tasks", name_},

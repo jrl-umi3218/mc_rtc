@@ -221,16 +221,6 @@ protected:
 
   void update(mc_solver::QPSolver &) override;
 
-  /** Add support for the following criterias:
-   *
-   * - wrench: completed when the measuredWrench reaches the given wrench, if
-   *   some values are NaN, this direction is ignored
-   *
-   */
-  std::function<bool(const mc_tasks::MetaTask & task, std::string &)> buildCompletionCriteria(
-      double dt,
-      const mc_rtc::Configuration & config) const override;
-
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;

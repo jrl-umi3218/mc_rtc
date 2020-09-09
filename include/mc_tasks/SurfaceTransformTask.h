@@ -78,6 +78,18 @@ public:
   /** Returns the pose of the surface in the inertial frame */
   const sva::PTransformd surfacePose() const;
 
+  /** Add support for the following criterias:
+   *
+   * - wrench: completed when the surface wrench reaches the given wrench, if
+   *   some values are NaN, this direction is ignored. Only valid if the surface
+   *   controlled by this task is attached to a force sensor, throws otherwise
+   *
+   * @throws If wrench is used but the surface is not attached to a force sensor
+   */
+  std::function<bool(const mc_tasks::MetaTask & task, std::string &)> buildCompletionCriteria(
+      double dt,
+      const mc_rtc::Configuration & config) const override;
+
   void addToLogger(mc_rtc::Logger & logger) override;
 
   void removeFromLogger(mc_rtc::Logger & logger) override;

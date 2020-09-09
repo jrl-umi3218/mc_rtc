@@ -28,7 +28,8 @@
         "stiffness": { "default": 2 },
         "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" },
         "refVel": {"$ref": "/../../Eigen/Vector6d.json", "description": "Trajectory's reference velocity" },
-        "refAccel": {"$ref": "/../../Eigen/Vector6d.json", "description": "Trajectory's reference acceleration" }
+        "refAccel": {"$ref": "/../../Eigen/Vector6d.json", "description": "Trajectory's reference acceleration" },
+        "completion": { "$ref": "/../../common/completion_wrench.json" }
       }
     }
   ],
