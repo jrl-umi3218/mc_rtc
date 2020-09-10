@@ -84,6 +84,8 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
   /*! \brief Sets the dimensional weights (controls the importance of
    * orientation/translation).
    *
+   * \note Removes the dimWeightInterpolator_ if it exists
+   *
    * \throw if dimW is not a Vector6d
    *
    * \param dimW Weights expressed as a Vector6d [wx, wy, wz, tx, ty, tz]
@@ -95,6 +97,101 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    * \returns Dimensional weights expressed as a Vector6d [wx, wy, wz, tx, ty, tz]
    */
   Eigen::VectorXd dimWeight() const override;
+
+  // Import accessors from base class
+  using TrajectoryBase::damping;
+  using TrajectoryBase::dimWeight;
+  using TrajectoryBase::stiffness;
+
+  /*! \brief Set the task stiffness/damping
+   *
+   * Damping is automatically set to 2*sqrt(stiffness)
+   *
+   * \note Removes the stiffnessInterpolator_ if it exists
+   *
+   * \param stiffness Task stiffness
+   */
+  void stiffness(double stiffness);
+
+  /*! \brief Set dimensional stiffness
+   *
+   * The caller should be sure that the dimension of the vector fits the task dimension.
+   *
+   * Damping is automatically set to 2*sqrt(stiffness)
+   *
+   * \note Removes the stiffnessInterpolator_ if it exists
+   *
+   * \param stiffness Dimensional stiffness
+   */
+  void stiffness(const Eigen::VectorXd & stiffness);
+
+  /*! \brief Set the task damping, leaving its stiffness unchanged
+   *
+   * \note Removes the dampingInterpolator_ if it exists
+   *
+   * \param damping Task stiffness
+   */
+  void damping(double damping);
+
+  /*! \brief Set dimensional damping
+   *
+   * The caller should be sure that the dimension of the vector fits the task dimension.
+   *
+   * \note Removes the dampingInterpolator_ if it exists
+   *
+   * \param damping Dimensional damping
+   *
+   */
+  void damping(const Eigen::VectorXd & damping);
+
+  /*! \brief Set both stiffness and damping
+   *
+   * \param stiffness Task stiffness
+   *
+   * \note Removes the stiffnessInterpolator_ and dampingInterpolator_ if they exist
+   *
+   * \param damping Task damping
+   */
+  void setGains(double stiffness, double damping);
+
+  /*! \brief Set dimensional stiffness and damping
+   *
+   * The caller should be sure that the dimensions of the vectors fit the task dimension.
+   *
+   * \note Removes the stiffnessInterpolator_ and dampingInterpolator_ if they exist
+   *
+   * \param stiffness Dimensional stiffness
+   *
+   * \param damping Dimensional damping
+   */
+  void setGains(const Eigen::VectorXd & stiffness, const Eigen::VectorXd & damping);
+
+  /*
+   * Interpolate the dimensional weight between the specified values
+   *
+   * \note The current task's weight will be inserted in front of the provided
+   * values
+   * \note To remove interpolation, call dimWeight(const Eigen::VectorXd & dimW)
+   */
+  void dimWeightInterpolation(Vector6dSequentialInterpolator::TimedValueVector dimWeight);
+
+  /**
+   * Interpolate the stiffness between the provided values
+   *
+   * \note The current task's stiffness will be inserted in front of the provided values
+   * \note This does not set damping interpolation. Please call
+   * dampingInterpolation(Vector6dSequentialInterpolator::TimedValueVector) if this is your intent \note To remove
+   * interpolation, call one of the stiffness setters
+   */
+  void stiffnessInterpolation(Vector6dSequentialInterpolator::TimedValueVector stiffnesses);
+
+  /**
+   * Interpolate the dimensional damping between the provided values
+   *
+   * \note The current task damping will be inserted in front of the provided values
+   * \note To remove interpolation, call one of the damping setters
+   */
+  void dampingInterpolation(Vector6dSequentialInterpolator::TimedValueVector damping);
 
   /*! \brief Whether the trajectory has finished
    *
@@ -225,7 +322,7 @@ protected:
   void update(mc_solver::QPSolver &) override;
 
   /** Interpolate dimWeight, stiffness, damping */
-  void interpolateGains();
+  void interpolateGains(double dt);
 
 protected:
   unsigned int rIndex_;
@@ -239,9 +336,6 @@ protected:
   std::unique_ptr<Vector6dSequentialInterpolator> stiffnessInterpolator_ = nullptr;
   std::unique_ptr<Vector6dSequentialInterpolator> dampingInterpolator_ = nullptr;
 
-  Eigen::Vector6d dimWeightPrev_ = Eigen::Vector6d::Zero();
-  Eigen::Vector6d stiffnessPrev_ = Eigen::Vector6d::Zero();
-  Eigen::Vector6d dampingPrev_ = Eigen::Vector6d::Zero();
   bool paused_ = false;
 
   double currTime_ = 0.;
