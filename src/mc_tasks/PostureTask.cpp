@@ -128,6 +128,16 @@ double PostureTask::stiffness() const
   return pt_.stiffness();
 }
 
+void PostureTask::damping(double d)
+{
+  pt_.gains(stiffness(), d);
+}
+
+double PostureTask::damping() const
+{
+  return pt_.damping();
+}
+
 void PostureTask::weight(double w)
 {
   pt_.weight(w);
@@ -173,6 +183,18 @@ void PostureTask::target(const std::map<std::string, std::vector<double>> & join
     }
   }
   posture(q);
+}
+
+void PostureTask::addToLogger(mc_rtc::Logger & logger)
+{
+  logger.addLogEntry(name_ + "_eval", [this]() -> const Eigen::VectorXd & { return pt_.eval(); });
+  logger.addLogEntry(name_ + "_speed", [this]() -> const Eigen::VectorXd & { return speed_; });
+}
+
+void PostureTask::removeFromLogger(mc_rtc::Logger & logger)
+{
+  logger.removeLogEntry(name_ + "_eval");
+  logger.removeLogEntry(name_ + "_speed");
 }
 
 void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

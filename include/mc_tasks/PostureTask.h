@@ -69,6 +69,12 @@ public:
   /** Get task's stiffness */
   double stiffness() const;
 
+  /** Set task's damping */
+  void damping(double d);
+
+  /** Get task's damping */
+  double damping() const;
+
   /** Set task's weight */
   void weight(double w);
 
@@ -86,6 +92,10 @@ protected:
   void update(mc_solver::QPSolver &) override;
 
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
+
+  void addToLogger(mc_rtc::Logger & logger) override;
+
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 
 private:
   /** True if added to solver */
