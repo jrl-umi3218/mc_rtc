@@ -141,6 +141,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5110734784d263558b2ae937f2f74705"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#a5110734784d263558b2ae937f2f74705">stiffness</a> () const</td></tr>
 <tr class="memdesc:a5110734784d263558b2ae937f2f74705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get task's stiffness.  <a href="#a5110734784d263558b2ae937f2f74705">More...</a><br /></td></tr>
 <tr class="separator:a5110734784d263558b2ae937f2f74705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46a7f613e697f5f5f1ad7db24d108649"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#a46a7f613e697f5f5f1ad7db24d108649">damping</a> (double d)</td></tr>
+<tr class="memdesc:a46a7f613e697f5f5f1ad7db24d108649"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set task's damping.  <a href="#a46a7f613e697f5f5f1ad7db24d108649">More...</a><br /></td></tr>
+<tr class="separator:a46a7f613e697f5f5f1ad7db24d108649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d4d5b303516826dac52c0177ac8f505"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#a0d4d5b303516826dac52c0177ac8f505">damping</a> () const</td></tr>
+<tr class="memdesc:a0d4d5b303516826dac52c0177ac8f505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get task's damping.  <a href="#a0d4d5b303516826dac52c0177ac8f505">More...</a><br /></td></tr>
+<tr class="separator:a0d4d5b303516826dac52c0177ac8f505"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4725eea7614be3d2bcb54e16aa0f15c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#aa4725eea7614be3d2bcb54e16aa0f15c">weight</a> (double w)</td></tr>
 <tr class="memdesc:aa4725eea7614be3d2bcb54e16aa0f15c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set task's weight.  <a href="#aa4725eea7614be3d2bcb54e16aa0f15c">More...</a><br /></td></tr>
 <tr class="separator:aa4725eea7614be3d2bcb54e16aa0f15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -180,13 +186,13 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:adfb4be7a8cd547a301878ba42ee52fb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#adfb4be7a8cd547a301878ba42ee52fb3">addToGUI</a> (<a class="el" href="a01979.html">mc_rtc::gui::StateBuilder</a> &amp;) override</td></tr>
 <tr class="memdesc:adfb4be7a8cd547a301878ba42ee52fb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add elements to the GUI through the helper.  <a href="#adfb4be7a8cd547a301878ba42ee52fb3">More...</a><br /></td></tr>
 <tr class="separator:adfb4be7a8cd547a301878ba42ee52fb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade3d279eeb005e261c75370747f86b19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#ade3d279eeb005e261c75370747f86b19">addToLogger</a> (<a class="el" href="a02103.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
+<tr class="memdesc:ade3d279eeb005e261c75370747f86b19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add entries to the logger.  <a href="#ade3d279eeb005e261c75370747f86b19">More...</a><br /></td></tr>
+<tr class="separator:ade3d279eeb005e261c75370747f86b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46d9f395dba3772018af68c623a42ae7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html#a46d9f395dba3772018af68c623a42ae7">removeFromLogger</a> (<a class="el" href="a02103.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
+<tr class="memdesc:a46d9f395dba3772018af68c623a42ae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove entries from the logger.  <a href="#a46d9f395dba3772018af68c623a42ae7">More...</a><br /></td></tr>
+<tr class="separator:a46d9f395dba3772018af68c623a42ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_a02379"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_a02379')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="a02379.html">mc_tasks::MetaTask</a></td></tr>
-<tr class="memitem:a19bd5d3b7b1b36dae48b516457de16a8 inherit pro_methods_a02379"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02379.html#a19bd5d3b7b1b36dae48b516457de16a8">addToLogger</a> (<a class="el" href="a02103.html">mc_rtc::Logger</a> &amp;)</td></tr>
-<tr class="memdesc:a19bd5d3b7b1b36dae48b516457de16a8 inherit pro_methods_a02379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add entries to the logger.  <a href="a02379.html#a19bd5d3b7b1b36dae48b516457de16a8">More...</a><br /></td></tr>
-<tr class="separator:a19bd5d3b7b1b36dae48b516457de16a8 inherit pro_methods_a02379"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_a02379"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02379.html#a1db4ea4e03d00823e7ee10b444a697b1">removeFromLogger</a> (<a class="el" href="a02103.html">mc_rtc::Logger</a> &amp;)</td></tr>
-<tr class="memdesc:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_a02379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove entries from the logger.  <a href="a02379.html#a1db4ea4e03d00823e7ee10b444a697b1">More...</a><br /></td></tr>
-<tr class="separator:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_a02379"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_a02379"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02379.html#a44d85f3f65abc8a5f8965efec40ebe7d">removeFromGUI</a> (<a class="el" href="a01979.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
 <tr class="memdesc:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_a02379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove elements from the GUI through the helper.  <a href="a02379.html#a44d85f3f65abc8a5f8965efec40ebe7d">More...</a><br /></td></tr>
 <tr class="separator:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_a02379"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -295,6 +301,38 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="ade3d279eeb005e261c75370747f86b19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade3d279eeb005e261c75370747f86b19">&#9670;&nbsp;</a></span>addToLogger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::addToLogger </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02103.html">mc_rtc::Logger</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add entries to the logger. </p>
+<p>This will be called by the solver if it holds a valid logger instance when the task is added.</p>
+<p>The default implementation adds nothing to the log. </p>
+
+<p>Reimplemented from <a class="el" href="a02379.html#a19bd5d3b7b1b36dae48b516457de16a8">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
 <a id="a875f742c1356787157c780f8c82140f1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a875f742c1356787157c780f8c82140f1">&#9670;&nbsp;</a></span>addToSolver()</h2>
 
@@ -328,6 +366,45 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 
 <p>Implements <a class="el" href="a02379.html#a87fbfd10dd81b8ce64a7a9f82d80d078">mc_tasks::MetaTask</a>.</p>
+
+</div>
+</div>
+<a id="a46a7f613e697f5f5f1ad7db24d108649"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46a7f613e697f5f5f1ad7db24d108649">&#9670;&nbsp;</a></span>damping() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::damping </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set task's damping. </p>
+
+</div>
+</div>
+<a id="a0d4d5b303516826dac52c0177ac8f505"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d4d5b303516826dac52c0177ac8f505">&#9670;&nbsp;</a></span>damping() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::PostureTask::damping </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get task's damping. </p>
 
 </div>
 </div>
@@ -535,6 +612,38 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get current posture objective. </p>
+
+</div>
+</div>
+<a id="a46d9f395dba3772018af68c623a42ae7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46d9f395dba3772018af68c623a42ae7">&#9670;&nbsp;</a></span>removeFromLogger()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::PostureTask::removeFromLogger </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a02103.html">mc_rtc::Logger</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Remove entries from the logger. </p>
+<p>This will be called by the solver when the task is removed.</p>
+<p>The default implementation removes nothing from the log. </p>
+
+<p>Reimplemented from <a class="el" href="a02379.html#a1db4ea4e03d00823e7ee10b444a697b1">mc_tasks::MetaTask</a>.</p>
 
 </div>
 </div>
@@ -929,7 +1038,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00743.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a02403.html">PostureTask</a></li>
-    <li class="footer">Generated on Wed Sep 9 2020 05:52:42 for mc_rtc by
+    <li class="footer">Generated on Thu Sep 10 2020 11:24:22 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

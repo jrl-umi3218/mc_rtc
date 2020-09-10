@@ -2,7 +2,10 @@ var a02403 =
 [
     [ "PostureTask", "a02403.html#a2236062d8e099d089e8f2c93dc4ba55e", null ],
     [ "addToGUI", "a02403.html#adfb4be7a8cd547a301878ba42ee52fb3", null ],
+    [ "addToLogger", "a02403.html#ade3d279eeb005e261c75370747f86b19", null ],
     [ "addToSolver", "a02403.html#a875f742c1356787157c780f8c82140f1", null ],
+    [ "damping", "a02403.html#a46a7f613e697f5f5f1ad7db24d108649", null ],
+    [ "damping", "a02403.html#a0d4d5b303516826dac52c0177ac8f505", null ],
     [ "dimWeight", "a02403.html#a956fb062557c6d0789eb2424a9a2c06b", null ],
     [ "dimWeight", "a02403.html#add36165bd4f34b697789531972948e22", null ],
     [ "eval", "a02403.html#a529169e0178306b0eec9bf0f428752c7", null ],
@@ -11,6 +14,7 @@ var a02403 =
     [ "jointStiffness", "a02403.html#a3933b0c231304b52c0c4dc83080143cb", null ],
     [ "posture", "a02403.html#a2299c6226e336a265adc283b2a600639", null ],
     [ "posture", "a02403.html#ad3d36333bd6d95d5bc742ad1de920ab7", null ],
+    [ "removeFromLogger", "a02403.html#a46d9f395dba3772018af68c623a42ae7", null ],
     [ "removeFromSolver", "a02403.html#a37fc0f741d63ef396c13a2ff3a528772", null ],
     [ "reset", "a02403.html#ac47c167b6a6c59546bbebfcabb5be810", null ],
     [ "resetJointsSelector", "a02403.html#a53ab7fdbe90e3b309a618bec3bb69859", null ],

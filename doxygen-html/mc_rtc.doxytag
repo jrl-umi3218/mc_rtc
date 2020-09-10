@@ -20314,18 +20314,18 @@
       <anchor>ada80fbd5aaf53369618630495e92a175</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>addToLogger</name>
       <anchorfile>a02391.html</anchorfile>
-      <anchor>ae0f93ea2baa6813562b79f74658bf561</anchor>
+      <anchor>a40b1231973621ed5718acb5451c81462</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>removeFromLogger</name>
       <anchorfile>a02391.html</anchorfile>
-      <anchor>a05e73e60e317fb0d0e0fa7a9149b5be1</anchor>
+      <anchor>a7cc1cfb9ad9fac5d998d025a212e78c9</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="variable">
@@ -21415,18 +21415,18 @@
       <anchor>a4424ab1a1faf897723d2f3bdbacc3f97</anchor>
       <arglist>(mc_rtc::gui::StateBuilder &amp;gui) override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToLogger</name>
       <anchorfile>a02399.html</anchorfile>
-      <anchor>a14d145d4f022d810aadcc42f18083c6b</anchor>
+      <anchor>a1ace65857e5ada474531dcffc700924f</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>removeFromLogger</name>
       <anchorfile>a02399.html</anchorfile>
-      <anchor>a135de9a59363e65792510f7606db5132</anchor>
+      <anchor>a433188fa6771ae5eb60d49be25a04a22</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -21569,6 +21569,20 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>damping</name>
+      <anchorfile>a02403.html</anchorfile>
+      <anchor>a46a7f613e697f5f5f1ad7db24d108649</anchor>
+      <arglist>(double d)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>damping</name>
+      <anchorfile>a02403.html</anchorfile>
+      <anchor>a0d4d5b303516826dac52c0177ac8f505</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>weight</name>
       <anchorfile>a02403.html</anchorfile>
       <anchor>aa4725eea7614be3d2bcb54e16aa0f15c</anchor>
@@ -21615,6 +21629,20 @@
       <anchorfile>a02403.html</anchorfile>
       <anchor>adfb4be7a8cd547a301878ba42ee52fb3</anchor>
       <arglist>(mc_rtc::gui::StateBuilder &amp;) override</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>addToLogger</name>
+      <anchorfile>a02403.html</anchorfile>
+      <anchor>ade3d279eeb005e261c75370747f86b19</anchor>
+      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>removeFromLogger</name>
+      <anchorfile>a02403.html</anchorfile>
+      <anchor>a46d9f395dba3772018af68c623a42ae7</anchor>
+      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
   </compound>
   <compound kind="struct">
