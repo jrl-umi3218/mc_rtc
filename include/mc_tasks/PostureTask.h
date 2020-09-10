@@ -72,7 +72,7 @@ public:
   /** Set task's damping */
   void damping(double d);
 
-  /** Get task's stiffness */
+  /** Get task's damping */
   double damping() const;
 
   /** Set task's weight */
@@ -93,9 +93,9 @@ protected:
 
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
 
-  virtual void addToLogger(mc_rtc::Logger & logger) override;
+  void addToLogger(mc_rtc::Logger & logger) override;
 
-  virtual void removeFromLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 
 private:
   /** True if added to solver */

@@ -130,7 +130,7 @@ double PostureTask::stiffness() const
 
 void PostureTask::damping(double d)
 {
-  pt_.stiffness(d);
+  pt_.gains(stiffness(), d);
 }
 
 double PostureTask::damping() const

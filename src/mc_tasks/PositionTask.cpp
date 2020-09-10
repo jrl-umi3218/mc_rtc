@@ -81,9 +81,6 @@ void PositionTask::addToLogger(mc_rtc::Logger & logger)
     return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
   });
   logger.addLogEntry(name_ + "_curVel", [this]() -> const Eigen::VectorXd & { return errorT->speed(); });
-  // logger.addLogEntry(
-  //     name_ + "_curAccel", [this]() -> const Eigen::Vector3d & { return
-  //     robots.robot(rIndex).mbc().bodyAccW[bIndex].linear(); });
 }
 
 void PositionTask::removeFromLogger(mc_rtc::Logger & logger)
@@ -92,7 +89,6 @@ void PositionTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_target");
   logger.removeLogEntry(name_ + "_curPos");
   logger.removeLogEntry(name_ + "_curVel");
-  // logger.removeLogEntry(name_ + "_curAccel");
 }
 
 void PositionTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

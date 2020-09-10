@@ -86,8 +86,8 @@ public:
 protected:
   std::string bodyName;
   unsigned int bIndex;
-  virtual void addToLogger(mc_rtc::Logger & logger) override;
-  virtual void removeFromLogger(mc_rtc::Logger & logger) override;
+  void addToLogger(mc_rtc::Logger & logger) override;
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
 } // namespace mc_tasks
