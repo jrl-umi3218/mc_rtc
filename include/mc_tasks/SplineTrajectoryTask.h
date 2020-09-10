@@ -6,6 +6,7 @@
 
 #include <mc_tasks/TrajectoryTaskGeneric.h>
 #include <mc_trajectory/InterpolatedRotation.h>
+#include <mc_trajectory/SequentialInterpolator.h>
 
 namespace mc_tasks
 {
@@ -36,6 +37,8 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
 {
   using SplineTrajectoryBase = SplineTrajectoryTask<Derived>;
   using TrajectoryTask = TrajectoryTaskGeneric<tasks::qp::TransformTask>;
+  using Vector6dSequentialInterpolator =
+      mc_trajectory::SequentialInterpolator<Eigen::Vector6d, mc_trajectory::LinearInterpolation<Eigen::Vector6d>>;
 
   /*! \brief Constructor
    *
@@ -56,6 +59,9 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
                        double weight,
                        const Eigen::Matrix3d & target,
                        const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp = {});
+
+  /*! \brief Load parameters from a Configuration object */
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
   /** Add support for the following entries
    *
@@ -215,9 +221,11 @@ protected:
 
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
-  /*! \brief Update trajectory target
-   */
+  /*! \brief Update trajectory target */
   void update(mc_solver::QPSolver &) override;
+
+  /** Interpolate dimWeight, stiffness, damping */
+  void interpolateGains();
 
 protected:
   unsigned int rIndex_;
@@ -225,6 +233,15 @@ protected:
   double duration_;
   mc_trajectory::InterpolatedRotation oriSpline_;
   std::vector<std::pair<double, Eigen::Matrix3d>> oriWp_;
+
+  // Waypoints for gains, interpolated in-between
+  std::unique_ptr<Vector6dSequentialInterpolator> dimWeightInterpolator_ = nullptr;
+  std::unique_ptr<Vector6dSequentialInterpolator> stiffnessInterpolator_ = nullptr;
+  std::unique_ptr<Vector6dSequentialInterpolator> dampingInterpolator_ = nullptr;
+
+  Eigen::Vector6d dimWeightPrev_ = Eigen::Vector6d::Zero();
+  Eigen::Vector6d stiffnessPrev_ = Eigen::Vector6d::Zero();
+  Eigen::Vector6d dampingPrev_ = Eigen::Vector6d::Zero();
   bool paused_ = false;
 
   double currTime_ = 0.;

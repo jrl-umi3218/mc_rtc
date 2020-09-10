@@ -1,0 +1,14 @@
+{
+  "type": "array",
+  "description": "Gains can be either represented as Vector6d (dimensional gains) or double",
+  "items":
+  [
+    {
+      "type": "number", "description": "time"
+    },
+    {
+      "$ref": "/../../Eigen/Vector6d.json"
+    }
+  ],
+  "minItems": 1
+}
