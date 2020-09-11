@@ -580,7 +580,8 @@ struct TaskTester<mc_tasks::BSplineTrajectoryTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto ret = std::make_shared<mc_tasks::BSplineTrajectoryTask>(*robots, 0, "LeftFoot", d, stiffness, weight, target);
+    auto ret =
+        std::make_shared<mc_tasks::BSplineTrajectoryTask>(*robots, 0, "LeftFoot", d, 0.005, stiffness, weight, target);
     return ret;
   }
 
@@ -623,8 +624,8 @@ struct TaskTester<mc_tasks::ExactCubicTrajectoryTask>
 {
   mc_tasks::MetaTaskPtr make_ref()
   {
-    auto ret =
-        std::make_shared<mc_tasks::ExactCubicTrajectoryTask>(*robots, 0, "LeftFoot", d, stiffness, weight, target);
+    auto ret = std::make_shared<mc_tasks::ExactCubicTrajectoryTask>(*robots, 0, "LeftFoot", d, 0.005, stiffness, weight,
+                                                                    target);
     return ret;
   }
 

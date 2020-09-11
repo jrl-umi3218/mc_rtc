@@ -30,23 +30,18 @@ public:
    *
    * \param robots Robots controlled by the task
    * \param robotIndex Which robot is controlled
-   * \param surfaceName Surface controlled by the task, should belong to the
-   * \ontrolled robot
-   * \param duration Duration of motion (eg time it takes to go from the current
-   * \urface position to the curve's final point)
-   * \param stiffness Stiffness of the underlying TrajectoryTask (position and
-   * \rientation)
-   * \param weight Task weight
-   * \param target Final world pose to reach
-   * \param posWp Waypoints in position
-   * \param oriWp Waypoints in orientation specified as pairs of (time,
-   * orientation). The surface orientation will be interpolated in-between
-   * waypoints.
+   * \param surfaceName Surface controlled by the task, should belong to the controlled robot
+   * \param duration Duration of motion (eg time it takes to go from the current surface position to the curve's final
+   * point) \param timeStep Controller's timestep \param stiffness Stiffness of the underlying TrajectoryTask (position
+   * and orientation) \param weight Task weight \param target Final world pose to reach \param posWp Waypoints in
+   * position \param oriWp Waypoints in orientation specified as pairs of (time, orientation). The surface orientation
+   * will be interpolated in-between waypoints.
    */
   BSplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                         unsigned int robotIndex,
                         const std::string & surfaceName,
                         double duration,
+                        double timeStep,
                         double stiffness,
                         double weight,
                         const sva::PTransformd & target,
