@@ -239,11 +239,11 @@ cdef class BSplineTrajectoryTask(_SplineTrajectoryTask):
     if self.__own_impl:
       del self.impl
   def __ctor__(self, mc_rbdyn.Robots robots, robotIndex,
-          surfaceName, duration, stiffness, weight, sva.PTransformd target, posWp, oriWp):
+          surfaceName, duration, timeStep, stiffness, weight, sva.PTransformd target, posWp, oriWp):
     if isinstance(surfaceName, unicode):
       surfaceName = surfaceName.encode(u'ascii')
     self.__own_impl = True
-    self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.BSplineTrajectoryTask(deref(robots.impl), robotIndex, surfaceName, duration, stiffness, weight, deref(target.impl))
+    self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.BSplineTrajectoryTask(deref(robots.impl), robotIndex, surfaceName, duration, timeStep, stiffness, weight, deref(target.impl))
     self.posWaypoints(posWp)
     self.oriWaypoints(oriWp)
   def __cinit__(self, *args, **kwargs):
@@ -277,11 +277,11 @@ cdef class ExactCubicTrajectoryTask(_SplineTrajectoryTask):
     if self.__own_impl:
       del self.impl
   def __ctor__(self, mc_rbdyn.Robots robots, robotIndex,
-          surfaceName, duration, stiffness, weight, sva.PTransformd target):
+          surfaceName, duration, timeStep, stiffness, weight, sva.PTransformd target):
     if isinstance(surfaceName, unicode):
       surfaceName = surfaceName.encode(u'ascii')
     self.__own_impl = True
-    self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.ExactCubicTrajectoryTask(deref(robots.impl), robotIndex, surfaceName, duration, stiffness, weight, deref(target.impl))
+    self.impl = self.ttg_base = self.mt_base = new c_mc_tasks.ExactCubicTrajectoryTask(deref(robots.impl), robotIndex, surfaceName, duration, timeStep, stiffness, weight, deref(target.impl))
   def __cinit__(self, *args, **kwargs):
     genericInit[ExactCubicTrajectoryTask](self, 7, 'ExactCubicTrajectoryTask', *args, **kwargs)
   def posWaypoints(self, posWp):
