@@ -198,26 +198,26 @@ void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver & /* solver */)
 template<typename Derived>
 void SplineTrajectoryTask<Derived>::interpolateGains()
 {
-  // Interpolate gains
   if(dimWeightInterpolator_.hasValues())
   {
     TrajectoryBase::dimWeight(dimWeightInterpolator_.compute());
   }
 
-  if(stiffnessInterpolator_.hasValues() && dampingInterpolator_.hasValues())
+  if(stiffnessInterpolator_.hasValues())
   { // Interpolate gains
-    TrajectoryBase::setGains(stiffnessInterpolator_.compute(), dampingInterpolator_.compute());
+    auto stiffness = stiffnessInterpolator_.compute();
+    if(dampingInterpolator_.hasValues())
+    {
+      TrajectoryBase::setGains(stiffness, dampingInterpolator_.compute());
+    }
+    else
+    { // damping is 2*sqrt(stiffness)
+      TrajectoryBase::stiffness(stiffness);
+    }
   }
-  else
-  { // Interpolate only stiffness or damping
-    if(stiffnessInterpolator_.hasValues())
-    {
-      TrajectoryBase::stiffness(stiffnessInterpolator_.compute());
-    }
-    else if(dampingInterpolator_.hasValues())
-    {
-      TrajectoryBase::damping(dampingInterpolator_.compute());
-    }
+  else if(dampingInterpolator_.hasValues())
+  { // Interpolate only damping
+    TrajectoryBase::damping(dampingInterpolator_.compute());
   }
 }
 

@@ -208,10 +208,11 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
 
   /**
    * \anchor stiffnessInterpolation
+   *
    * Interpolate the stiffness between the provided values
    *
    * \note The current task's stiffness will be inserted in front of the provided values
-   * \note This does not set damping interpolation. Please call \ref dampingInterpolation if this is your intent
+   * \note If there is no \ref dampingInterpolation, damping will be set to 2*sqrt(stiffness)
    * \note To remove interpolation, call one of the stiffness setters (see \ref stiffness)
    *
    * \param stiffnessGains Pairs of [time, dimensional gain]. Must be strictly
