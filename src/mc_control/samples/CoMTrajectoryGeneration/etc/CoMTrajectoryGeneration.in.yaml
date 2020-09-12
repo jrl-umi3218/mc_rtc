@@ -68,5 +68,8 @@ transitions:
 init: Pause_2s
 
 # State observation
-RunObservers: [Encoder, KinematicInertial]
-UpdateObservers: [Encoder, KinematicInertial]
+ObserverPipelines:
+- name: MainPipeline
+  observers:
+    - type: Encoder
+    - type: KinematicInertial
