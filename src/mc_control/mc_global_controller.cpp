@@ -402,11 +402,25 @@ void MCGlobalController::setSensorAngularVelocity(const Eigen::Vector3d & vel)
   realRobot().bodySensor().angularVelocity(vel);
 }
 
+void MCGlobalController::setSensorAngularVelocity(const std::string & name, const Eigen::Vector3d & vel)
+{
+  robot(name).bodySensor().angularVelocity(vel);
+  realRobot(name).bodySensor().angularVelocity(vel);
+}
+
 void MCGlobalController::setSensorAngularVelocities(const std::map<std::string, Eigen::Vector3d> & angularVels)
 {
   setSensorAngularVelocities(robot(), angularVels);
   setSensorAngularVelocities(realRobot(), angularVels);
 }
+
+void MCGlobalController::setSensorAngularVelocities(const std::string & name,
+                                                    const std::map<std::string, Eigen::Vector3d> & angularVels)
+{
+  setSensorAngularVelocities(robot(name), angularVels);
+  setSensorAngularVelocities(realRobot(name), angularVels);
+}
+
 void MCGlobalController::setSensorAngularVelocities(mc_rbdyn::Robot & robot,
                                                     const std::map<std::string, Eigen::Vector3d> & angularVels)
 {
@@ -438,10 +452,23 @@ void MCGlobalController::setSensorLinearAcceleration(const Eigen::Vector3d & acc
   realRobot().bodySensor().linearAcceleration(acc);
 }
 
+void MCGlobalController::setSensorLinearAcceleration(const std::string & name, const Eigen::Vector3d & acc)
+{
+  robot(name).bodySensor().linearAcceleration(acc);
+  realRobot(name).bodySensor().linearAcceleration(acc);
+}
+
 void MCGlobalController::setSensorLinearAccelerations(const std::map<std::string, Eigen::Vector3d> & accels)
 {
   setSensorLinearAccelerations(robot(), accels);
   setSensorLinearAccelerations(realRobot(), accels);
+}
+
+void MCGlobalController::setSensorLinearAccelerations(const std::string & name,
+                                                      const std::map<std::string, Eigen::Vector3d> & accels)
+{
+  setSensorLinearAccelerations(robot(name), accels);
+  setSensorLinearAccelerations(realRobot(name), accels);
 }
 
 void MCGlobalController::setSensorLinearAccelerations(mc_rbdyn::Robot & robot,
