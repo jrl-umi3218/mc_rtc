@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [1.5.1] - 2020-09-14
+
+### Added
+
+- [mc_tasks] Allow to set the damping on PostureTask
+- [mc_tasks] Log eval and speed in most tasks
+
+### Fixes
+
+- [mc_control] Add missing implementation for some (multi-robot) MCGlobalController functions
+
 ## [1.5.0] - 2020-09-09
 
 ### Changes
@@ -178,7 +189,8 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.5.1...HEAD
+[1.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.1
 [1.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.0
 [1.4.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.4.0
 [1.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.3.0
