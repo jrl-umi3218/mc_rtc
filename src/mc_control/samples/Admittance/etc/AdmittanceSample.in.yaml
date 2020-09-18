@@ -207,5 +207,9 @@ transitions:
 init: RightHandToWall
 
 # Observers pipeline
-RunObservers: [Encoder, KinematicInertial]
-UpdateObservers: [Encoder, KinematicInertial]
+ObserverPipelines:
+  name: MainRobotObservation
+  gui: true
+  observers:
+    - type: Encoder
+    - type: KinematicInertial
