@@ -26,12 +26,11 @@ struct MC_CONTROL_FSM_STATE_DLLAPI PostureState : State
   void teardown(Controller &) override;
 
 protected:
-  std::shared_ptr<mc_tasks::PostureTask> postureTask_;
-  mc_rtc::Configuration postureTaskConfig_;
-  bool has_postureTask_ = false;
-  bool has_robot_ = false;
+  mc_rtc::Configuration config_;
   std::string robot_ = "";
   mc_control::CompletionCriteria crit_;
+  bool hasCompletion_ = false;
+  mc_rtc::Configuration completion_;
 };
 
 } // namespace fsm

@@ -1,0 +1,165 @@
+###
+# Sample usage of the DoorTask
+###
+---
+## If true, the FSM transitions are managed by an external tool
+Managed: false
+# If true and the FSM is self-managed, transitions should be triggered
+StepByStep: false
+# Change idle behaviour, if true the state is kept until transition,
+# otherwise the FSM holds the last state until transition
+IdleKeepState: false
+# Where to look for state libraries
+StatesLibraries:
+- "@MC_STATES_INSTALL_PREFIX@"
+- "@Door_STATES_INSTALL_PREFIX@"
+# Where to look for state files
+StatesFiles:
+- "@MC_STATES_INSTALL_PREFIX@/data"
+- "@Door_STATES_INSTALL_PREFIX@/data"
+
+# Additional robots to load
+robots:
+  ground:
+    module: env/ground
+  door:
+    module: env/door
+    init_pos:
+      translation: [0.70, 0.5, 0.0]
+      rotation: [0.0, 0.0, 3.14]
+# General constraints, always on
+constraints:
+- type: contact
+- type: dynamics
+  damper: [0.1, 0.01, 0.5]
+- type: compoundJoint
+# Collision constraint
+collisions:
+- type: collision
+  useMinimal: true
+- type: collision
+  r1: jvrc1
+  r2: door
+  collisions:
+    - body1: L_WRIST_Y_S
+      body2: door
+      iDist: 0.5
+      sDist: 0.02
+      damping: 0.0
+# Initial set of contacts
+contacts:
+- r1: jvrc1
+  r1Surface: LeftFoot
+  r2: ground
+  r2Surface: AllGround
+- r1: jvrc1
+  r1Surface: RightFoot
+  r2: ground
+  r2Surface: AllGround
+jvrc1:
+  posture:
+    stiffness: 1.0
+    weight: 10.0
+
+# Implement some additional text states
+states:
+  # Keep the CoM centered between the feet, and the chest upright
+  Door::Standing:
+    base: MetaTasks
+    tasks:
+      CoM:
+        type: com
+        above: [LeftFoot, RightFoot]
+        weight: 2000
+        stiffness: 5
+      KeepChest:
+        type: orientation
+        body: WAIST_R_S
+        weight: 100
+        stiffness: 1
+
+  # Trajectory to bring hand close to the door
+  Door::ReachHandle:
+    base: MetaTasks
+    tasks:
+      RightHandTrajectory:
+        type: surfaceTransform
+        surface: RightGripper
+        weight: 1000
+        stiffness: 5
+        # Target relative to the door's handle surface
+        targetSurface:
+          robot: door
+          surface: Handle
+          offset_translation: [0, 0, -0.025]
+          offset_rotation: [0, 0, 0]
+          controlPoints: [[0.17, -0.5, 0.85]]
+        completion:
+          AND:
+            - eval: 0.05
+            - speed: 1e-4 
+
+  Door::MoveHandle:
+    base: Posture 
+    robot: door
+    completion:
+      eval: 0.01
+    postureTask:
+      weight: 100
+      jointGains:
+        - jointName: handle
+          stiffness: 50
+      target:
+        handle: [-1.0]
+    AddContacts:
+    - r1: jvrc1
+      r1Surface: RightGripper
+      r2: door
+      r2Surface: Handle
+
+  Door::OpenDoor:
+    base: Door::MoveHandle
+    postureTask:
+      jointGains:
+        - jointName: handle
+          stiffness: 50
+        - jointName: door
+          stiffness: 50
+      target:
+        handle: [-1.0]
+        door: [-0.3]
+
+  Door::OpenDoorFSM:
+    base: Meta
+    transitions:
+      - [Door_Initial, OpenDoor, Door::ReachHandle, Auto]
+      - [Door::ReachHandle, OK, Door::MoveHandle, Auto]
+      - [Door::MoveHandle, OK, Door::OpenDoor, Auto]
+
+  Door::OpenDoorDemo:
+    base: Parallel
+    states: [Door::Standing, Door::OpenDoorFSM]
+
+transitions:
+- [Door::OpenDoorDemo, OK, Door::OpenDoorDemo, Strict]
+
+# Initial state
+init: Door::OpenDoorDemo
+
+# Observers pipeline
+# In this demo, the state of the real robot is not used.
+# Thus we could completely ignore state observation and not declare any state observation pipelines.
+# For the sake of demonstration, this shows how to set up a virtual state observation pipeline
+# that simply copies the state of the control robot.
+# You may refer to the LIPMStabilizer and AdmittanceSample controllers for more meaningful uses of this feature.
+ObserverPipelines:
+  name: MainRobotObservation
+  observers:
+    - type: Encoder
+      config:
+        position: control
+        velocity: control
+    - type: BodySensor
+      config:
+        method: control
+

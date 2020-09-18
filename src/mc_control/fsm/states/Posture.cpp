@@ -17,42 +17,40 @@ void PostureState::configure(const mc_rtc::Configuration & config)
 {
   if(config.has("postureTask"))
   {
-    has_postureTask_ = true;
-    postureTaskConfig_.load(config("postureTask"));
+    config_.load(config("postureTask"));
   }
   if(config.has("robot"))
   {
-    has_robot_ = true;
     robot_ = static_cast<std::string>(config("robot"));
+  }
+  if(config.has("completion"))
+  {
+    hasCompletion_ = true;
+    completion_ = config("completion");
   }
 }
 
 void PostureState::start(Controller & ctl)
 {
-  if(!has_postureTask_)
-  {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] requires a \"postureTask\" element", name());
-  }
-  if(!has_robot_)
+  if(robot_.empty())
   {
     robot_ = ctl.robot().name();
-    if(!ctl.robots().hasRobot(robot_))
-    {
-      mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No robot named \"{}\"", name(), robot_);
-    }
   }
-  postureTaskConfig_.add("robot", robot_);
-  postureTaskConfig_.add("type", "posture");
-  postureTask_ = mc_tasks::MetaTaskLoader::load<mc_tasks::PostureTask>(ctl.solver(), postureTaskConfig_);
-  ctl.solver().removeTask(ctl.getPostureTask(robot_));
-  ctl.solver().addTask(postureTask_);
+  else if(!ctl.hasRobot(robot_))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] Requested robot {} but this robot is not available", name(),
+                                                     robot_);
+  }
 
-  crit_.configure(*postureTask_, ctl.solver().dt(), postureTaskConfig_("completion"));
+  auto postureTask = ctl.getPostureTask(robot_);
+  postureTask->load(ctl.solver(), config_);
+  crit_.configure(*postureTask, ctl.solver().dt(), completion_);
 }
 
-bool PostureState::run(Controller &)
+bool PostureState::run(Controller & ctl)
 {
-  if(crit_.completed(*postureTask_))
+  auto postureTask = ctl.getPostureTask(robot_);
+  if(crit_.completed(*postureTask))
   {
     output("OK");
     return true;
@@ -60,11 +58,7 @@ bool PostureState::run(Controller &)
   return false;
 }
 
-void PostureState::teardown(Controller & ctl)
-{
-  ctl.solver().addTask(ctl.getPostureTask(robot_));
-  ctl.solver().removeTask(postureTask_);
-}
+void PostureState::teardown(Controller &) {}
 
 } // namespace fsm
 
