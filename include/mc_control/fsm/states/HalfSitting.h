@@ -33,6 +33,8 @@ struct MC_CONTROL_FSM_STATE_DLLAPI HalfSittingState : State
   void teardown(Controller &) override {}
 
 protected:
+  bool has_robot_ = false;
+  std::string robot_ = "";
   bool has_stiffness_ = false;
   double stiffness_ = 1;
   double eval_threshold_ = 0.01;
