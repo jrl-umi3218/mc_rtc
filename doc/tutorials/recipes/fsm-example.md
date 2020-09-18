@@ -75,7 +75,7 @@ constraints:
 Here we declare three constraints:
 - `contact`: Adds an {% doxygen mc_solver::ContactConstraint %}, responsible for keeping the contact position fixed, and ensures that the generated forces are within friction cone constraints (in dynamics only).
 - `dynamics`: Adds a {% doxygen mc_solver::DynamicsConstraint %}: ensures kinematic constraints, joint limit constraints, and computes the joint torques.
-- `compoundJoint`: Adds a {% doxygen mc_solver::CompoundJointConstraint %}: handle joint limits for joint that depend on each other (e.g the ankle joint limits in the roll direction depend on the current yaw angle) 
+- `compoundJoint`: Adds a {% doxygen mc_solver::CompoundJointConstraint %}: handle joint limits for joint that depend on each other (e.g the ankle joint limits in the roll direction depend on the current yaw angle)
 
 
 Contacts
@@ -122,25 +122,25 @@ collisions:
 Creating the FSM states
 ===
 
-In this section, we will see how to define the states required to open the door. Here we will take full advantage of the default `C++` states provided with the framework, and show how using those, one may achieve rather complex behaviours without ever writing a single line of code! This controller uses the following (very common) states: 
+In this section, we will see how to define the states required to open the door. Here we will take full advantage of the default `C++` states provided with the framework, and show how using those, one may achieve rather complex behaviours without ever writing a single line of code! This controller uses the following (very common) states:
 
 - `MetaTasks`: Loads tasks from configuration, add them to the solver, and check for tasks completion
   - API: {% doxygen mc_control::fsm::MetaTasksState %}
   - YAML: [JSON Schema Documentation]({{site.baseurl}}/json.html#State/MetaTasks)
-- `Parallel`: Run multiple states 
+- `Parallel`: Run multiple states
   - API: {% doxygen mc_control::fsm::ParallelState %}
   - YAML: [JSON Schema Documentation]({{site.baseurl}}/json.html#State/Parallel)
-- `Meta`: Creates an FSM within a state 
+- `Meta`: Creates an FSM within a state
   - API: {% doxygen mc_control::fsm::MetaState %}
   - YAML: [JSON Schema Documentation]({{site.baseurl}}/json.html#State/Meta)
-- `Posture`: Handles the global posture tasks' gains and targets 
+- `Posture`: Handles the global posture tasks' gains and targets
   - API: {% doxygen mc_control::fsm::PostureState %}
   - YAML: [JSON Schema Documentation]({{site.baseurl}}/json.html#State/Posture)
 
 The states are declared within the `states` section of the configuration. Alternatively, one may also create a `.yaml` file in `src/states/data` containing the states declaration, which is particularly useful for larger FSMs.
 
 We will create an FSM organized as follow:
-1. `Door_Initial`: A simple C++ state that adds a button to trigger the "Open Door" motion 
+1. `Door_Initial`: A simple C++ state that adds a button to trigger the "Open Door" motion
 2. `Door::OpenDoorFSM`: A sub-fsm containing only the logic for moving the hand, opening the handle, and moving the door
 3. `Door::Standing`: A state responsible for adding a `CoM` task, and a regularisation task on the chest to keep it upright
 4. `Door::OpenDoorDemo`: States `2` and `3` are put in parallel such that the CoM/Chest target is handled simultaneously to the door opening motion.
@@ -197,36 +197,36 @@ Opening the door is achieved by a state executing its own sub-fsm, responsible f
 First, let's see what the transition map for this state looks like:
 
 ```yaml
-  Door::OpenDoorFSM:
-    base: Meta
-    transitions:
-      - [Door_Initial, OpenDoor, Door::ReachHandle, Auto]
-      - [Door::ReachHandle, OK, Door::MoveHandle, Auto]
-      - [Door::MoveHandle, OK, Door::OpenDoor, Auto]
+Door::OpenDoorFSM:
+  base: Meta
+  transitions:
+    - [Door_Initial, OpenDoor, Door::ReachHandle, Auto]
+    - [Door::ReachHandle, OK, Door::MoveHandle, Auto]
+    - [Door::MoveHandle, OK, Door::OpenDoor, Auto]
 ```
 
 The `Door_Initial` C++ state described above will trigger the `OpenDoor` transition when the user clicks on the GUI button. The FSM will then move to the next state `Door::ReachHandle`:
 
 ```yaml
-  Door::ReachHandle:
-    base: MetaTasks
-    tasks:
-      RightHandTrajectory:
-        type: surfaceTransform
-        surface: RightGripper
-        weight: 1000
-        stiffness: 5
-        # Target relative to the door's handle surface
-        targetSurface:
-          robot: door
-          surface: Handle
-          offset_translation: [0, 0, -0.025]
-          offset_rotation: [0, 0, 0]
-          controlPoints: [[0.17, -0.5, 0.85]]
-        completion:
-          AND:
-            - eval: 0.05
-            - speed: 1e-4 
+Door::ReachHandle:
+  base: MetaTasks
+  tasks:
+    RightHandTrajectory:
+      type: surfaceTransform
+      surface: RightGripper
+      weight: 1000
+      stiffness: 5
+      # Target relative to the door's handle surface
+      targetSurface:
+        robot: door
+        surface: Handle
+        offset_translation: [0, 0, -0.025]
+        offset_rotation: [0, 0, 0]
+        controlPoints: [[0.17, -0.5, 0.85]]
+      completion:
+        AND:
+          - eval: 0.05
+          - speed: 1e-4
 ```
 
 This state uses the {% doxygen mc_control::fsm::MetaTasksState %} C++ state provided with the framework to load a set of tasks from their YAML description. Here, we load a task of type `surfaceTransform` ([YAML Documentation]({{site.baseurl}}/json.html#MetaTask/SurfaceTransformTask)) that we name `RightHandTrajectory`. This creates an {% doxygen mc_tasks::SurfaceTransformTask %} and configures it with a target defined w.r.t the door's handle surface. The `completion` element creates a {% doxygen mc_control::CompletionCriteria %}, which builds a function that checks whether the task's execution is considered completed. The `MetaTasks` state will output `"OK"` when the task's completion criteria is fulfilled.
@@ -235,7 +235,7 @@ The `OpenDoorFSM` can thus move to its next transition: `[Door::ReachHandle, OK,
 
 ```yaml
 Door::MoveHandle:
-  base: Posture 
+  base: Posture
   robot: door
   completion:
     eval: 0.01
@@ -251,7 +251,7 @@ Door::MoveHandle:
     r1Surface: RightGripper
     r2: door
     r2Surface: Handle
-  - r1: door 
+  - r1: door
     r1Surface: Door
     r2: ground
     r2Surface: AllGround
@@ -310,5 +310,5 @@ Conclusion
 
 In this tutorial, we have seen how to create an FSM from scratch, and achieve a rather complex multi-robot motion by relying on the main FSM states provided by the framework, along with the multi-robot aspect of task-space control. It is important to note that one is not restricted to the YAML features implemented here, and that you can easily write your own states to define and abstract more complex behaviours.
 
-See also: 
+See also:
 - The [Admittance sample tutorial]({{site.baseurl}}tutorials/samples/sample-admittance.html) for a similar FSM with the addition of force control.
