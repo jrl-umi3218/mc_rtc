@@ -1,0 +1,14 @@
+{
+  "title": "mc_control::fsm::Posture",
+  "description": "Handle the global posture task",
+  "type": "object",
+  "properties":
+  {
+    "robot": { "type": "string", "default": "MainRobot", "Robot to which the posture task applies" },
+    "postureTask":
+    {
+      "$ref": "/../../MetaTask/PostureTask.json",
+      "description": "Configuration for the posture task (robot property is set to the same robot)"
+    }
+  }
+}
