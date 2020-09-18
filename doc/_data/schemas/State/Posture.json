@@ -2,22 +2,16 @@
   "title": "mc_control::fsm::PostureState",
   "description": "Change configuration of the global posture task of a robot.",
   "type": "object",
-  "allOf":
-  [
-    "properties":
+  "properties":
+  {
+    "robot": { "type": "string", "default": "MainRobot", "description": "Name of the robot whose posture task is modified" },
+    "postureTask":
     {
-      "robot": { "type": "string", "default": "MainRobot", "description": "Name of the robot whose posture task is modified" },
-      "postureTask":
-      {
-        "type": "object",
-        "title": "PostureTaskConfig",
-        "description": "Configuration for the gains and targets of the posture task",
-        "properties":
-        {
-          "$ref": "/../../common/PostureTask_targets.json"
-        }
-      },
-      "completion": { "$ref": "/../../common/completion_criteria.json" }
-    }
-  ]
+      "type": "object",
+      "title": "PostureTaskConfig",
+      "description": "Configuration for the gains and targets of the posture task",
+      "allOf":[ "$ref": "/../../common/PostureTask_targets_properties.json" ]
+    },
+    "completion": { "$ref": "/../../common/completion_criteria.json" }
+  }
 }

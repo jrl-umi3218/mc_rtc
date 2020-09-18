@@ -17,10 +17,7 @@
       "$ref": "/../../common/TrajectoryTaskGeneric.json"
     },
     {
-      "properties":
-      {
-        "$ref": "/../../common/PostureTask_targets.json"
-      }
+      "$ref": "/../../common/PostureTask_targets_properties.json"
     }
   ],
   "required": ["type"]
