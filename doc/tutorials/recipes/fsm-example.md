@@ -41,14 +41,14 @@ You should now see the JVRC1 robot standing in RVIZ. Let's now see how to re-imp
 Loading the additional robots
 ==
 
-First we need to declare which robots will be used in this controller in addition to the main robot. By default the framework provides many robots and environments, which can be conveniently loaded with robot aliases. These provide a short name for each robot, and provides mc_rtc with the necessary information for loading then (path to the robot description package, etc). Start the controller to see a full list of available robot aliases. Alternatively, you can look into <code>/usr/local/lib/mc_robots/aliases/</code>. For the purposes of this controller, we need a fixed planar surface to represent the ground provided as `env/ground`, and an articulated robot to represent the door with its handle provided as `object/door`. Refer to the [environment creation tutorial]({{site.baseurl}}/tutorials/advanced/new-environment.html) for details on how to create your own environment.
+First we need to declare which robots will be used in this controller in addition to the main robot. By default the framework provides many robots and environments, which can be conveniently loaded with robot aliases. These provide a short name for each robot, and provides mc_rtc with the necessary information for loading then (path to the robot description package, etc). Start the controller to see a full list of available robot aliases. Alternatively, you can look into <code>/usr/local/lib/mc_robots/aliases/</code>. For the purposes of this controller, we need a fixed planar surface to represent the ground provided as `env/ground`, and an articulated robot to represent the door with its handle provided as `env/door`. Refer to the [environment creation tutorial]({{site.baseurl}}/tutorials/advanced/new-environment.html) for details on how to create your own environment.
 
 ```yaml
 robots:
   ground:
     module: env/ground
   door:
-    module: object/door
+    module: env/door
     init_pos:
       translation: [0.70, 0.5, 0.0]
       rotation: [0.0, 0.0, 1.57]
@@ -56,8 +56,6 @@ robots:
 
 Adding global contacts and constraints
 ==
-
-Constraints and contacts can be added globally to the FSM
 
 Constraints
 ===
@@ -156,7 +154,7 @@ This state aims at demonstrating a simple example of:
 2. How to add a GUI element within a state
 3. How to control the flow of transitions from within a state
 
-This state is defined in `src/states/Door_Initial.cpp` and implements the three required functions `configure`, `start` and `run` and `teardown` function. Here, we add a button to the GUI when the state starts. When clicked, this button is used to change the state of a boolean `openDoor_`, which is used by the `run` function to determine whether the state has finished, and should trigger a transition. When `true`, the state outputs the `OpenDoor` transition, and returns `true` which signifies that it is considered finished and the transition may occur.
+This state is defined in `src/states/Door_Initial.cpp` and overrides the required virtual functions `configure`, `start` and `run` and `teardown` function (see the API documentation of {% doxygen mc_control::fsm::State %}). Here, we add a button to the GUI when the state starts. When clicked, this button is used to change the state of a boolean `openDoor_`, which is later used to trigger an "OpenDoor" transition. This is achieved by calling `output("OpenDoor")` and returning `true` in the `bool Door_Initial::run` function, which signifies that we consider the state to be completed and that the next transition can occur. Note that the the configuration of the transition map determines how this transition occurs (see {% doxygen mc_control::fsm::TransitionMap %}).
 
 ```cpp
 #include <mc_control/fsm/Controller.h>
@@ -222,14 +220,13 @@ Door::ReachHandle:
         surface: Handle
         offset_translation: [0, 0, -0.025]
         offset_rotation: [0, 0, 0]
-        controlPoints: [[0.17, -0.5, 0.85]]
       completion:
         AND:
           - eval: 0.05
           - speed: 1e-4
 ```
 
-This state uses the {% doxygen mc_control::fsm::MetaTasksState %} C++ state provided with the framework to load a set of tasks from their YAML description. Here, we load a task of type `surfaceTransform` ([YAML Documentation]({{site.baseurl}}/json.html#MetaTask/SurfaceTransformTask)) that we name `RightHandTrajectory`. This creates an {% doxygen mc_tasks::SurfaceTransformTask %} and configures it with a target defined w.r.t the door's handle surface. The `completion` element creates a {% doxygen mc_control::CompletionCriteria %}, which builds a function that checks whether the task's execution is considered completed. The `MetaTasks` state will output `"OK"` when the task's completion criteria is fulfilled.
+This state uses the {% doxygen mc_control::fsm::MetaTasksState %} C++ state provided with the framework to load a set of tasks from their YAML description. Here, we load a task of type `surfaceTransform` ([YAML Documentation]({{site.baseurl}}/json.html#MetaTask/SurfaceTransformTask)) that we name `RightHandTrajectory`. This creates and adds an {% doxygen mc_tasks::SurfaceTransformTask %} to the solver, and configures it with a target defined w.r.t the door's handle surface. The `completion` element creates a {% doxygen mc_control::CompletionCriteria %}, which builds a logic function that checks whether the task's execution is considered completed. The `MetaTasks` state will output `"OK"` (by default) when the task's completion criteria is fulfilled.
 
 The `OpenDoorFSM` can thus move to its next transition: `[Door::ReachHandle, OK, Door::MoveHandle, Auto]`
 
@@ -251,15 +248,11 @@ Door::MoveHandle:
     r1Surface: RightGripper
     r2: door
     r2Surface: Handle
-  - r1: door
-    r1Surface: Door
-    r2: ground
-    r2Surface: AllGround
 ```
 
-This state is based on the {% doxygen mc_control::fsm::PostureState %} [JSON documentation]({{site.baseurl}}/json.html#States/Posture) whose role is to change gains and targets of the global posture task, automatically added to each robot by the framework. First, a contact between the robot's RightGripper and the door's Handle surfaces is established which prevents the QP from moving these surfaces relative to each other, and adds friction cone constraints to compute the dynamical forces involved in the robot-door interaction. Thus, when the handle joint rotates so does the JVRC1 robot.
+This state is based on the {% doxygen mc_control::fsm::PostureState %} ([JSON documentation]({{site.baseurl}}/json.html#States/Posture)) whose role is to change gains and targets of the global posture task, automatically added to each robot by the framework. First, a contact between the robot's `RightGripper` and the door's `Handle` surfaces is established which prevents the QP from moving these surfaces relative to each other, and adds friction cone constraints to compute the dynamical forces involved in the robot-door interaction. Thus, when the handle joint rotates so does the JVRC1 robot.
 
-Once this state completes, we can move to the next transition: `[Door::MoveHandle, OK, Door::OpenDoor, Auto]`. This next state is very similar to the previous one: it changes the target joint angle of the door's hinges to make the robot open it.
+Once this state completes, we can move to the next transition: `[Door::MoveHandle, OK, Door::OpenDoor, Auto]`. This next state is very similar to the previous one: it changes the target joint angle of the door's hinges to make the robot open it. Note how this state inherits from the previous one (`base: Door::MoveHandle`), and only redefines the new targets.
 
 ```yaml
 Door::OpenDoor:
@@ -275,9 +268,8 @@ Door::OpenDoor:
       door: [-0.3]
 ```
 
-The one thing to note here is that this state inherits from the previous one (`base: Door::MoveHandle`), and only redefines the new targets.
 
-As-is, this FSM only concerns itself with the door opening motion. However, it does not handle the robot's balance. Here, we will just ask to keep the CoM at its initial position during the whole door opening motion. This is achieved by putting the `Door::Standing` state in parallel with the `Door::OpenDoorFSM` described above. Strictly speaking these states are executed one after the other at every timestep.
+As-is, this FSM only concerns itself with the door opening motion. However, it does not handle the robot's balance. Here, we will simply center the CoM above the left and right foot. This is achieved by putting the `Door::Standing` state in parallel with the `Door::OpenDoorFSM` described above. Strictly speaking these states are executed one after the other at every timestep.
 
 ```yaml
 Door::OpenDoorDemo:
@@ -308,7 +300,7 @@ The full sources for this tutorial are available [here](https://github.com/jrl-u
 Conclusion
 ===
 
-In this tutorial, we have seen how to create an FSM from scratch, and achieve a rather complex multi-robot motion by relying on the main FSM states provided by the framework, along with the multi-robot aspect of task-space control. It is important to note that one is not restricted to the YAML features implemented here, and that you can easily write your own states to define and abstract more complex behaviours.
+In this tutorial, we have seen how to create an FSM from scratch, and achieve a rather complex multi-robot motion by relying on the main FSM states provided by the framework, along with the multi-robot aspect of task-space control. It is important to note that one is not restricted to the YAML features used here, and that you can easily write your own states to define and abstract more complex behaviours.
 
 See also:
 - The [Admittance sample tutorial]({{site.baseurl}}tutorials/samples/sample-admittance.html) for a similar FSM with the addition of force control.

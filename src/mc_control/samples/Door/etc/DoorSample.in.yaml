@@ -93,7 +93,6 @@ states:
           surface: Handle
           offset_translation: [0, 0, -0.025]
           offset_rotation: [0, 0, 0]
-          controlPoints: [[0.17, -0.5, 0.85]]
         completion:
           AND:
             - eval: 0.05

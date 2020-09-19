@@ -27,7 +27,7 @@ optional arguments:
 $ mc_rtc_new_fsm_controller my_first_fsm_controller MyFirstFSMController
 {% endhighlight %}
 
-<p>Going into the newly create my_first_fsm_controller folder we can see some files have been created:</p>
+<p>Going into the newly created <code>my_first_fsm_controller</code> folder we can see some files have been automatically generated:</p>
 
 <dl class="row">
   <dt class="col-3">CMakeLists.txt</dt>
@@ -49,10 +49,16 @@ $ mc_rtc_new_fsm_controller my_first_fsm_controller MyFirstFSMController
   <dd class="col-9">Implement your controller. We will go over this in more details in the next sections</dd>
 
   <dt class="col-3">src/states/</dt>
-  <dd class="col-9">Add your own C++ states here</dd>
+  <dd class="col-9">Defines the controller's states (C++ or YAML)</dd>
+
+  <dt class="col-3">src/states/CMakeLists.txt</dt>
+  <dd class="col-9">Builds and exports the controller's states</dd>
+
+  <dt class="col-3">src/states/Door_Initial.h</dt>
+  <dd class="col-9">Declaration of a new C++ state</dd>
 
   <dt class="col-3">src/states/Door_Initial.cpp</dt>
-  <dd class="col-9">Simple C++ state that adds a button to trigger the "Open Door" transition</dd>
+  <dd class="col-9">Implementation for the state. In this tutorial, it'll consist of a simple state that adds a button to trigger the "Open Door" transition</dd>
 
   <dt class="col-3">src/states/data</dt>
   <dd class="col-9">Additional YAML configuration for the FSM states. You may declare states by adding them to YAML/JSON files in this folder.</dd>
