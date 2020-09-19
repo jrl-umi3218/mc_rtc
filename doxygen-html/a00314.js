@@ -1,5 +1,7 @@
 var a00314 =
 [
-    [ "SchemaImpl", "a01975.html", "a01975" ],
-    [ "Schema", "a00314.html#a0c892f6b2ba9e06d4bda32a16b76b75b", null ]
+    [ "RotationROImpl", "a01974.html", "a01974" ],
+    [ "RotationImpl", "a01978.html", "a01978" ],
+    [ "Rotation", "a00314.html#a9dc809d7e99978fe3f5e2439d1a20771", null ],
+    [ "Rotation", "a00314.html#a6440392ea4b48778f6d4012e0400ee5b", null ]
 ];

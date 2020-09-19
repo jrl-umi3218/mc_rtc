@@ -1,6 +1,7 @@
 var a00296 =
 [
-    [ "PolygonImpl", "a01963.html", "a01963" ],
-    [ "Polygon", "a00296.html#ac7c7c596bdb09e8c01e26e8fb53ce360", null ],
-    [ "Polygon", "a00296.html#a2b137bae8372a9a84cdb28508e7de1dd", null ]
+    [ "Ordinate", "a01934.html", "a01934" ],
+    [ "OrdinateWithColor", "a01938.html", "a01938" ],
+    [ "Y", "a00296.html#aa288bbda415eb4c0d8c5d6fd8fd00f12", null ],
+    [ "Y", "a00296.html#a5957f379abaa61742baef9909ae18990", null ]
 ];

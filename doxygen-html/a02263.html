@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt; Class Template Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02263.html','');});
+$(document).ready(function(){initNavTree('a02266.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,284 +69,64 @@ $(document).ready(function(){initNavTree('a02263.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pro-methods">Protected Member Functions</a> &#124;
-<a href="a02260.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt; Class Template Reference</div>  </div>
+<div class="title">mc_solver::QPSolver Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Generic helper class to write a new constraint for Tasks.  
- <a href="a02263.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_solver/utils/Constraint.h&gt;</code></p>
-<div class="dynheader">
-Inheritance diagram for mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt;:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="a02263.png" usemap="#mc_5Fsolver::utils::Constraint_3C_20ConstraintT_2C_20UpdateT_20_3E_map" alt=""/>
-  <map id="mc_5Fsolver::utils::Constraint_3C_20ConstraintT_2C_20UpdateT_20_3E_map" name="mc_5Fsolver::utils::Constraint_3C_20ConstraintT_2C_20UpdateT_20_3E_map">
-</map>
- </div></div>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateRobot&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:adcc2b9ec9fbd3b47e0183ef0ce034c73"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02263.html#adcc2b9ec9fbd3b47e0183ef0ce034c73">Constraint</a> (unsigned int rIndex)</td></tr>
-<tr class="separator:adcc2b9ec9fbd3b47e0183ef0ce034c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateLambda&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:ae5a2073ed0b8b0432593221fec955e4e"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02263.html#ae5a2073ed0b8b0432593221fec955e4e">Constraint</a> (const tasks::qp::ContactId &amp;cid)</td></tr>
-<tr class="separator:ae5a2073ed0b8b0432593221fec955e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca"><td class="memTemplParams" colspan="2">template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateForce&gt;::value&gt;::type&gt; </td></tr>
-<tr class="memitem:aab0cc49bca85557519c9a110b54c65ca"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a02263.html#aab0cc49bca85557519c9a110b54c65ca">Constraint</a> (const <a class="el" href="a02259.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
-<tr class="separator:aab0cc49bca85557519c9a110b54c65ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a819dd76da2909a4c88efcca1cb9aaf69"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02263.html#a819dd76da2909a4c88efcca1cb9aaf69">~Constraint</a> ()</td></tr>
-<tr class="memdesc:a819dd76da2909a4c88efcca1cb9aaf69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual destructor.  <a href="#a819dd76da2909a4c88efcca1cb9aaf69">More...</a><br /></td></tr>
-<tr class="separator:a819dd76da2909a4c88efcca1cb9aaf69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab383394a69ab62c4fab23378e64868de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02263.html#ab383394a69ab62c4fab23378e64868de">updateNrVars</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const tasks::qp::SolverData &amp;data) override</td></tr>
-<tr class="separator:ab383394a69ab62c4fab23378e64868de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7693804807033e3718c4ba01a58d3a58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02263.html#a7693804807033e3718c4ba01a58d3a58">update</a> (const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;mbcs, const tasks::qp::SolverData &amp;data) override</td></tr>
-<tr class="separator:a7693804807033e3718c4ba01a58d3a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename ConstraintT, typename UpdateT&gt;<br />
-class mc_solver::utils::Constraint&lt; ConstraintT, UpdateT &gt;</h3>
-
-<p>Generic helper class to write a new constraint for Tasks. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="a02183.html" title="Helper class to write an equality constraint for Tasks. ">EqualityConstraint</a>, </dd>
-<dd>
-<a class="el" href="a02223.html" title="Helper class to write an inequality constraint for Tasks. ">InequalityConstraint</a> and </dd>
-<dd>
-<a class="el" href="a02207.html" title="Helper class to write a general inequality constraint for Tasks. ">GenInequalityConstraint</a> for <a class="el" href="a00769.html">details</a> on specific constraints you can implement based on this helper</dd></dl>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">ConstraintT</td><td>Type of tasks::qp constraint</td></tr>
-    <tr><td class="paramname">UpdateT</td><td>Type of <a class="el" href="a02275.html">utils::Update</a> we will use </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="adcc2b9ec9fbd3b47e0183ef0ce034c73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adcc2b9ec9fbd3b47e0183ef0ce034c73">&#9670;&nbsp;</a></span>Constraint() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateRobot&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02263.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::<a class="el" href="a02263.html">Constraint</a> </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>rIndex</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae5a2073ed0b8b0432593221fec955e4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5a2073ed0b8b0432593221fec955e4e">&#9670;&nbsp;</a></span>Constraint() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateLambda&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02263.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::<a class="el" href="a02263.html">Constraint</a> </td>
-          <td>(</td>
-          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
-          <td class="paramname"><em>cid</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aab0cc49bca85557519c9a110b54c65ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab0cc49bca85557519c9a110b54c65ca">&#9670;&nbsp;</a></span>Constraint() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
-<div class="memtemplate">
-template&lt;typename U  = UpdateT, typename  = typename std::enable_if&lt;std::is_same&lt;U, utils::UpdateForce&gt;::value&gt;::type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a02263.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::<a class="el" href="a02263.html">Constraint</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02259.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
-          <td class="paramname"><em>cid</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a819dd76da2909a4c88efcca1cb9aaf69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a819dd76da2909a4c88efcca1cb9aaf69">&#9670;&nbsp;</a></span>~Constraint()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="a02263.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::~<a class="el" href="a02263.html">Constraint</a> </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Virtual destructor. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7693804807033e3718c4ba01a58d3a58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7693804807033e3718c4ba01a58d3a58">&#9670;&nbsp;</a></span>update()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a02263.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::update </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBodyConfig &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbcs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const tasks::qp::SolverData &amp;&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab383394a69ab62c4fab23378e64868de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab383394a69ab62c4fab23378e64868de">&#9670;&nbsp;</a></span>updateNrVars()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename ConstraintT, typename UpdateT&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="a02263.html">mc_solver::utils::Constraint</a>&lt; ConstraintT, UpdateT &gt;::updateNrVars </td>
-          <td>(</td>
-          <td class="paramtype">const std::vector&lt; rbd::MultiBody &gt; &amp;&#160;</td>
-          <td class="paramname"><em>mbs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const tasks::qp::SolverData &amp;&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a02266.html">mc_solver::QPSolver</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a8508225c35f55cef193bf45adb17ebce">addConstraint</a>(tasks::qp::ConstraintFunction&lt; Fun... &gt; *constraint)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a37580a89d1a0d1a862dfb6b7240e6dd0">addConstraintSet</a>(ConstraintSet &amp;cs)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a8b2f689232445049015987d2ff4d78ce">addTask</a>(tasks::qp::Task *task)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a68cf69e4985228c83affeb35320c4c25">addTask</a>(mc_tasks::MetaTask *task)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a8526c038006669a9f433c94445c69338">addTask</a>(std::shared_ptr&lt; T &gt; task)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a9d3c5b0a375a038d88ebc4c0acb35afc">contactById</a>(const tasks::qp::ContactId &amp;id) const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a14141ec983c638fb3400c1ea23c19aed">contacts</a>() const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a74f4a76c8edd444c9c903392c196be8a">data</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a12c9bbc1231db2f16cfeced583d1c213">desiredContactForce</a>(const mc_rbdyn::Contact &amp;id) const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#aaf2cd366ed6fa6e21e9cc6833e94cd70">dt</a>() const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#af48a56a36d044fa4077f1c9e0ad69936">env</a>() const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#ae35ec2765a45413bcfebae5e57bcea5f">env</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a26f03d18cabc6bc384e4ca7a8e172637">fillTorque</a>(const mc_solver::DynamicsConstraint &amp;dynamicsConstraint)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#ac015f44b8b157dafe8303dd295e10e8d">gui</a>(std::shared_ptr&lt; mc_rtc::gui::StateBuilder &gt; gui)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#aaff0d1437fd451774eb7a306b2c5d464">gui</a>() const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#aba37f50ba476a2701c05b8aa737d9362">lambdaVec</a>(int cIndex) const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a6d2e5c1529e97fa15bff07a9092b1339">logger</a>(std::shared_ptr&lt; mc_rtc::Logger &gt; logger)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#ae805619eed38900664c15a1f3be7921f">logger</a>() const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a6f0c3211feb7722f0316b8808b61f6d1">QPSolver</a>(std::shared_ptr&lt; mc_rbdyn::Robots &gt; robots, double timeStep)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#adb5af970ec8d5b46ddcf8af19bd205be">QPSolver</a>(double timeStep)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a4f91d1d6ce556366149d3d947182e5f3">QPSolver</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a6c9e02613427dd8ab79f833d4244186d">realRobots</a>() const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#acac203b080dfbd7dbc680e4d9e8aaa3c">realRobots</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a91e043a96e0de999c337b15ea8f8a62f">removeConstraint</a>(tasks::qp::ConstraintFunction&lt; Fun... &gt; *constraint)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a2d48a1aa9f88ea1c6873000df4299a1d">removeConstraintSet</a>(ConstraintSet &amp;cs)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a59755b6d2a453830d66a662767ff3923">removeTask</a>(tasks::qp::Task *task)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a28e05133ff619c24f30a376e951fde51">removeTask</a>(mc_tasks::MetaTask *task)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#ab9c66bd9fbc6687dccd60727db474c53">removeTask</a>(std::shared_ptr&lt; T &gt; task)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a6ac47f4b98ba6a10a14e6f229b677a0a">result</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a14b25f17d47d3f23079d557fd8d2fc6a">result</a>() const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a07536ec6c134bd3f335a382a0a87d55e">robot</a>() const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a9de399f8ca81b31588579ac59deb8d44">robot</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a50b2ba3514b0bd8fa4e4775f6a74fc73">robot</a>(unsigned int idx)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a71a644e823553814792909b06f00f6c6">robot</a>(unsigned int idx) const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#aad5585a2e93a0dcac5f96b1ecf8cddf0">robots</a>() const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#afadc51df1ed896ae8e1546bfb7443ffb">robots</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#ab8f45ed05cf2852c592659d496b2acbb">run</a>(FeedbackType fType=FeedbackType::None)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a0b4e9a6b5015c188b1c3825f4e266bd0">send</a>(double curTime=0)</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#ae628e7f079f7ec8dd5ba2818ffe27adc">setContacts</a>(const std::vector&lt; mc_rbdyn::Contact &gt; &amp;contacts={})</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#a53c4d41439ee0e428928a7318fde3f07">solveAndBuildTime</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#a58d895e4be36ff13a42b481f28576e38">solveTime</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#ae04be5acbc6d5470efc60889e4024290">tasks</a>() const</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02266.html#aff107d95b504492274cf0499aa4ddfa0">updateConstrSize</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02266.html#acd57fb80048c2f364bc216334ed148a8">updateNrVars</a>()</td><td class="entry"><a class="el" href="a02266.html">mc_solver::QPSolver</a></td><td class="entry"></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00751.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00770.html">utils</a></li><li class="navelem"><a class="el" href="a02263.html">Constraint</a></li>
-    <li class="footer">Generated on Mon Sep 14 2020 07:42:08 for mc_rtc by
+    <li class="footer">Generated on Sat Sep 19 2020 16:26:09 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

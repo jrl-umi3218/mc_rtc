@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>SCHAddon.h File Reference</title>
+<title>rpy_utils.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -73,34 +73,36 @@ $(document).ready(function(){initNavTree('a00215.html','');});
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SCHAddon.h File Reference</div>  </div>
+<div class="title">rpy_utils.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
-<code>#include &lt;sch/CD/CD_Pair.h&gt;</code><br />
-<code>#include &lt;sch/STP-BV/STP_BV.h&gt;</code><br />
-<code>#include &lt;sch/S_Object/S_Box.h&gt;</code><br />
-<code>#include &lt;sch/S_Object/S_Sphere.h&gt;</code><br />
-<code>#include &lt;sch/S_Polyhedron/S_Polyhedron.h&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03336.html">mc_rbdyn/api.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00757"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html">sch</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00758"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html">sch::mc_rbdyn</a></td></tr>
+<tr class="memitem:a00748"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html">mc_rbdyn</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3c0ffcdf6b05980ab8ca56474c431bc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03336.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html#a3c0ffcdf6b05980ab8ca56474c431bc7">sch::mc_rbdyn::transform</a> (S_Object &amp;obj, const sva::PTransformd &amp;t)</td></tr>
-<tr class="separator:a3c0ffcdf6b05980ab8ca56474c431bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30354c6b845b9f2c2bf59342c84f9e0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03336.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> STP_BV *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html#a30354c6b845b9f2c2bf59342c84f9e0d">sch::mc_rbdyn::STPBV</a> (const std::string &amp;filename)</td></tr>
-<tr class="separator:a30354c6b845b9f2c2bf59342c84f9e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d8bc5539da072c12d1f76bc317f8af3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03336.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> S_Polyhedron *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html#a1d8bc5539da072c12d1f76bc317f8af3">sch::mc_rbdyn::Polyhedron</a> (const std::string &amp;filename)</td></tr>
-<tr class="separator:a1d8bc5539da072c12d1f76bc317f8af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e193a456c2d3dab3ad5f12ed049e3b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03336.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html#a8e193a456c2d3dab3ad5f12ed049e3b1">sch::mc_rbdyn::distance</a> (CD_Pair &amp;pair, Eigen::Vector3d &amp;p1, Eigen::Vector3d &amp;p2)</td></tr>
-<tr class="separator:a8e193a456c2d3dab3ad5f12ed049e3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f178afee4c03533ae15c4dc04c143e2"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html#a5f178afee4c03533ae15c4dc04c143e2">mc_rbdyn::rpyToMat</a> (const double &amp;r, const double &amp;p, const double &amp;y)</td></tr>
+<tr class="memdesc:a5f178afee4c03533ae15c4dc04c143e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotation matrix from roll-pitch-yaw angles.  <a href="a00748.html#a5f178afee4c03533ae15c4dc04c143e2">More...</a><br /></td></tr>
+<tr class="separator:a5f178afee4c03533ae15c4dc04c143e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04f15be86a9827b0d076764f344406ab"><td class="memItemLeft" align="right" valign="top">Eigen::Matrix3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html#a04f15be86a9827b0d076764f344406ab">mc_rbdyn::rpyToMat</a> (const Eigen::Vector3d &amp;rpy)</td></tr>
+<tr class="memdesc:a04f15be86a9827b0d076764f344406ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rotation matrix from roll-pitch-yaw angles.  <a href="a00748.html#a04f15be86a9827b0d076764f344406ab">More...</a><br /></td></tr>
+<tr class="separator:a04f15be86a9827b0d076764f344406ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa2b9eed96e67a1bdb6abf90bb597063"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html#afa2b9eed96e67a1bdb6abf90bb597063">mc_rbdyn::rpyToPT</a> (const Eigen::Vector3d &amp;rpy)</td></tr>
+<tr class="memdesc:afa2b9eed96e67a1bdb6abf90bb597063"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plucker transfrom from roll-pitch-yaw angles.  <a href="a00748.html#afa2b9eed96e67a1bdb6abf90bb597063">More...</a><br /></td></tr>
+<tr class="separator:afa2b9eed96e67a1bdb6abf90bb597063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4626f965b6c407b0bd14e10f98ec42b9"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html#a4626f965b6c407b0bd14e10f98ec42b9">mc_rbdyn::rpyToPT</a> (const double &amp;r, const double &amp;p, const double &amp;y)</td></tr>
+<tr class="memdesc:a4626f965b6c407b0bd14e10f98ec42b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plucker transfrom from roll-pitch-yaw angles.  <a href="a00748.html#a4626f965b6c407b0bd14e10f98ec42b9">More...</a><br /></td></tr>
+<tr class="separator:a4626f965b6c407b0bd14e10f98ec42b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0948fb6dc9382e116f65c76261d26ea0"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html#a0948fb6dc9382e116f65c76261d26ea0">mc_rbdyn::rpyFromMat</a> (const Eigen::Matrix3d &amp;E)</td></tr>
+<tr class="memdesc:a0948fb6dc9382e116f65c76261d26ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Roll-pitch-yaw from rotation matrix.  <a href="a00748.html#a0948fb6dc9382e116f65c76261d26ea0">More...</a><br /></td></tr>
+<tr class="separator:a0948fb6dc9382e116f65c76261d26ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a058cd1f189f02e2c4986b6aacffa8195"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html#a058cd1f189f02e2c4986b6aacffa8195">mc_rbdyn::rpyFromQuat</a> (const Eigen::Quaterniond &amp;quat)</td></tr>
+<tr class="memdesc:a058cd1f189f02e2c4986b6aacffa8195"><td class="mdescLeft">&#160;</td><td class="mdescRight">Roll-pitch-yaw from unit quaternion.  <a href="a00748.html#a058cd1f189f02e2c4986b6aacffa8195">More...</a><br /></td></tr>
+<tr class="separator:a058cd1f189f02e2c4986b6aacffa8195"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -108,8 +110,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00215.html">SCHAddon.h</a></li>
-    <li class="footer">Generated on Mon Sep 14 2020 07:42:07 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00215.html">rpy_utils.h</a></li>
+    <li class="footer">Generated on Sat Sep 19 2020 16:26:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

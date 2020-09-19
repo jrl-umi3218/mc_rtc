@@ -276,7 +276,7 @@
 
 <h3>Creating and running the controller skeleton</h3>
 
-<p><em>Note:</em> in mc_rtc, every controller derives from the <code>MCController</code> class. To write a simple controller you can also derive from it and write the required functionnality. This is what we will do in these tutorials. However, for more complex controllers we advise you to use the <a href="/mc_rtc/tutorials/recipes/fsm.html">FSM facilties</a></p>
+<p><em>Note:</em> in mc_rtc, every controller derives from the <code>MCController</code> class. To write a simple controller you can also derive from it and write the required functionnality. This is what we will do in these tutorials. However, for more complex controllers we advise you to use the <a href="/mc_rtc/tutorials/recipes/fsm.html">FSM facilities</a></p>
 
 <ul class="nav nav-tabs" id="createTab" role="tablist">
   <li class="nav-item">
@@ -315,14 +315,14 @@ optional arguments:
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_new_controller my_first_controller MyFirstController</code></pre></figure>
 
-<p>Going into the newly create my_first_controller folder we can see some files have been created:</p>
+<p>Going into the newly created <code>my_first_controller</code> folder we can see some files have been automatically generated:</p>
 
 <dl class="row">
   <dt class="col-3">CMakeLists.txt</dt>
   <dd class="col-9">A minimal CMake file to build your controller</dd>
 
   <dt class="col-3">etc/MyFirstController.yaml</dt>
-  <dd class="col-9">Your contorller configuration file see this <a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html">tutorial</a> for more details</dd>
+  <dd class="col-9">Your controller configuration file see this <a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html">tutorial</a> for more details</dd>
 
   <dt class="col-3">src/CMakeLists.txt</dt>
   <dd class="col-9">Describe the source files required to build your controller</dd>
@@ -331,7 +331,7 @@ optional arguments:
   <dd class="col-9">Declaration to make sure your controller will be loadable on all platforms</dd>
 
   <dt class="col-3">src/MyFirstController.h</dt>
-  <dd class="col-9">Declare your controller class. It must inherits from <code>mc_control::Controller</code> and override at least the run function and the reset function</dd>
+  <dd class="col-9">Declare your controller class. It must inherits from mc_control::Controller and override at least the run function and the reset function</dd>
 
   <dt class="col-3">src/MyFirstController.cpp</dt>
   <dd class="col-9">Implement your controller. We will go over this in more details in the next sections</dd>

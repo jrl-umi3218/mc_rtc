@@ -1,7 +1,7 @@
 var a00774 =
 [
-    [ "BSpline", "a02431.html", "a02431" ],
-    [ "ExactCubic", "a02435.html", "a02435" ],
-    [ "InterpolatedRotation", "a02439.html", "a02439" ],
-    [ "Spline", "a02443.html", "a02443" ]
+    [ "AdmittanceTask", "a02318.html", "a02318" ],
+    [ "ComplianceTask", "a02326.html", "a02326" ],
+    [ "CoPTask", "a02334.html", "a02334" ],
+    [ "DampingTask", "a02338.html", "a02338" ]
 ];

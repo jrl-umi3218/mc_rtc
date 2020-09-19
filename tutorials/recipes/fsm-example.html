@@ -278,7 +278,405 @@
       <div class="col-9">
         <h1>FSM controller in practice</h1>
 
-        <p>In this tutorial,  we will re-implement the controller we implemented in the <a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">multi-robot controller</a> tutorial using only the FSM configuration.</p>
+        <p>In this tutorial,  we will re-implement the controller we implemented in the <a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">multi-robot controller</a> tutorial using only the FSM configuration. In this tutorial, we will walk you through every step needed to reproduce the <code class="language-plaintext highlighter-rouge">DoorSample</code> controller provided along with the framework from scratch.</p>
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/GAtDC79G1zA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+
+<h1 id="setting-up-the-fsm">Setting up the FSM</h1>
+
+<ul class="nav nav-tabs" id="createTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="cppCreateTab" data-toggle="tab" href="#cppCreateTabContent" role="tab" aria-controls="cppCreateTabContent" aria-selected="true">C++</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pythonCreateTab" data-toggle="tab" href="#pythonCreateTabContent" role="tab" aria-controls="pythonCreateTabContent" aria-selected="false">Python</a>
+  </li>
+</ul>
+<div class="tab-content" id="interfaceTabContent">
+  <div class="tab-pane show active" id="cppCreateTabContent" role="tabpanel" arial-labelledby="cppCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>We will use <code>mc_rtc_new_fsm_controller</code> provided by mc_rtc to setup a new FSM controller project:</p>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_new_fsm_controller <span class="nt">--help</span>
+usage: mc_rtc_new_fsm_controller <span class="o">[</span><span class="nt">-h</span><span class="o">]</span>
+                             <span class="o">[</span>project directory] <span class="o">[</span>controller class name]
+                             <span class="o">[[</span>controller name]]
+
+Create a new mc_rtc Controller project
+
+positional arguments:
+  <span class="o">[</span>project directory]   Path of the project
+  <span class="o">[</span>controller class name]
+                        Name of the controller class
+  <span class="o">[</span>controller name]     Name of the controller, defaults to controller class
+                        name
+
+optional arguments:
+  <span class="nt">-h</span>, <span class="nt">--help</span>            show this <span class="nb">help </span>message and <span class="nb">exit</span></code></pre></figure>
+
+
+<p><em>Note: this tool requires Git for Python which is available as python-git in Debian-like systems and GitPython in pip</em></p>
+
+<p>In this tutorial we will create a tutorial controller named <code>MyFirstFSMController</code>, so we can use the following command:</p>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mc_rtc_new_fsm_controller my_first_fsm_controller MyFirstFSMController</code></pre></figure>
+
+
+<p>Going into the newly created <code>my_first_fsm_controller</code> folder we can see some files have been automatically generated:</p>
+
+<dl class="row">
+  <dt class="col-3">CMakeLists.txt</dt>
+  <dd class="col-9">A minimal CMake file to build your controller</dd>
+
+  <dt class="col-3">etc/MyFirstFSMController.in.yaml</dt>
+  <dd class="col-9">Your controller's FSM configuration file.</dd>
+
+  <dt class="col-3">src/CMakeLists.txt</dt>
+  <dd class="col-9">Describe the source files required to build your controller</dd>
+
+  <dt class="col-3">src/api.h</dt>
+  <dd class="col-9">Declaration to make sure your controller will be loadable on all platforms</dd>
+
+  <dt class="col-3">src/MyFirstFSMController.h</dt>
+  <dd class="col-9">Declare your controller class. It must inherits from <a href="/mc_rtc/doxygen.html#a01374" target="blank_">mc_control::fsm::Controller</a> and override at least the run function and the reset function</dd>
+
+  <dt class="col-3">src/MyFirstFSMController.cpp</dt>
+  <dd class="col-9">Implement your controller. We will go over this in more details in the next sections</dd>
+
+  <dt class="col-3">src/states/</dt>
+  <dd class="col-9">Defines the controller's states (C++ or YAML)</dd>
+
+  <dt class="col-3">src/states/CMakeLists.txt</dt>
+  <dd class="col-9">Builds and exports the controller's states</dd>
+
+  <dt class="col-3">src/states/Door_Initial.h</dt>
+  <dd class="col-9">Declaration of a new C++ state</dd>
+
+  <dt class="col-3">src/states/Door_Initial.cpp</dt>
+  <dd class="col-9">Implementation for the state. In this tutorial, it'll consist of a simple state that adds a button to trigger the "Open Door" transition</dd>
+
+  <dt class="col-3">src/states/data</dt>
+  <dd class="col-9">Additional YAML configuration for the FSM states. You may declare states by adding them to YAML/JSON files in this folder.</dd>
+</dl>
+
+<h4>Building the controller</h4>
+
+<p>This is done using CMake and your usual tool to run CMake, build the code and install it. Typically, on Linux/MacOS:</p>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir</span> <span class="nt">-p</span> build
+<span class="nv">$ </span><span class="nb">cd </span>build
+<span class="c"># This build type provides good performance with debuggable code</span>
+<span class="nv">$ </span>cmake ../ <span class="nt">-DCMAKE_BUILD_TYPE</span><span class="o">=</span>RelWithDebInfo
+<span class="nv">$ </span>make
+<span class="nv">$ </span><span class="nb">sudo </span>make <span class="nb">install</span></code></pre></figure>
+
+
+<p><em>Note: <code>sudo</code> is only required if mc_rtc is installed in a privileged directory</em></p>
+
+<h4>Running the controller</h4>
+
+<p>Modify your mc_rtc configuration file so that we use the JVRC1 robot and our newly installed controller:</p>
+
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">MyFirstFSMController</span></code></pre></figure>
+
+
+<p>Then run your controller as explained in <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a> section. Congratulations, you just built and and ran your first FSM controller!</p>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>roslaunch mc_rtc_ticker display.launch
+<span class="nv">$ </span>rosrun mc_rtc_ticker mc_rtc_ticker</code></pre></figure>
+
+
+
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="pythonCreateTabContent" role="tabpanel" arial-labelledby="pythonCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>Upcoming description...</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>You should now see the JVRC1 robot standing in RVIZ. Let’s now see how to re-implement the <a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">multi-robot controller</a> tutorial using the FSM features. For this, you will need to edit your FSM configuration <code class="language-plaintext highlighter-rouge">etc/MyFirstFSMController.yaml</code>.</p>
+
+<h1 id="loading-the-additional-robots">Loading the additional robots</h1>
+
+<p>First we need to declare which robots will be used in this controller in addition to the main robot. By default the framework provides many robots and environments, which can be conveniently loaded with robot aliases. These provide a short name for each robot, and provides mc_rtc with the necessary information for loading then (path to the robot description package, etc). Start the controller to see a full list of available robot aliases. Alternatively, you can look into <code>/usr/local/lib/mc_robots/aliases/</code>. For the purposes of this controller, we need a fixed planar surface to represent the ground provided as <code class="language-plaintext highlighter-rouge">env/ground</code>, and an articulated robot to represent the door with its handle provided as <code class="language-plaintext highlighter-rouge">env/door</code>. Refer to the <a href="/mc_rtc/tutorials/advanced/new-environment.html">environment creation tutorial</a> for details on how to create your own environment.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">robots</span><span class="pi">:</span>
+  <span class="na">ground</span><span class="pi">:</span>
+    <span class="na">module</span><span class="pi">:</span> <span class="s">env/ground</span>
+  <span class="na">door</span><span class="pi">:</span>
+    <span class="na">module</span><span class="pi">:</span> <span class="s">env/door</span>
+    <span class="na">init_pos</span><span class="pi">:</span>
+      <span class="na">translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.70</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
+      <span class="na">rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">1.57</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<h1 id="adding-global-contacts-and-constraints">Adding global contacts and constraints</h1>
+
+<h1 id="constraints">Constraints</h1>
+
+<p>Constraints can be added globally to the FSM. Please refer to the <a href="/mc_rtc/json-full.html#ConstraintSet/ContactConstraint">ConstraintSet JSON Schema</a> documentation for a full list of available constraints provided with the framework. Note that you can also declare your own constraints and load them here.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">constraints</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">contact</span>
+<span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">dynamics</span>
+  <span class="na">damper</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.1</span><span class="pi">,</span> <span class="nv">0.01</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">compoundJoint</span>
+</code></pre></div></div>
+
+<p>Here we declare three constraints:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">contact</code>: Adds an <a href="/mc_rtc/doxygen.html#a02182" target="blank_">mc_solver::ContactConstraint</a>, responsible for keeping the contact position fixed, and ensures that the generated forces are within friction cone constraints (in dynamics only).</li>
+  <li><code class="language-plaintext highlighter-rouge">dynamics</code>: Adds a <a href="/mc_rtc/doxygen.html#a02186" target="blank_">mc_solver::DynamicsConstraint</a>: ensures kinematic constraints, joint limit constraints, and computes the joint torques.</li>
+  <li><code class="language-plaintext highlighter-rouge">compoundJoint</code>: Adds a <a href="/mc_rtc/doxygen.html#a02170" target="blank_">mc_solver::CompoundJointConstraint</a>: handle joint limits for joint that depend on each other (e.g the ankle joint limits in the roll direction depend on the current yaw angle)</li>
+</ul>
+
+<h1 id="contacts">Contacts</h1>
+
+<p>Now let’s see how to add an initial set of contacts to the controller. Note that contacts can later be added/removed by the states. The <code class="language-plaintext highlighter-rouge">contacts</code> element contains an array of <a href="/mc_rtc/json-full.html#mc_rbdyn/Contact">Contact</a> which describe the contact properties to add to the <code class="language-plaintext highlighter-rouge">contact</code> constraint defined above.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Initial set of contacts</span>
+<span class="na">contacts</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
+  <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
+  <span class="na">r2</span><span class="pi">:</span> <span class="s">ground</span>
+  <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">AllGround</span>
+<span class="pi">-</span> <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
+  <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">RightFoot</span>
+  <span class="na">r2</span><span class="pi">:</span> <span class="s">ground</span>
+  <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">AllGround</span>
+</code></pre></div></div>
+
+<p>With this, the left and right foot surfaces are now considered in contact with the ground plane. The feet surfaces are constrained not to move, and the forces generated by the QP must remain within the linearized friction cone constraints.</p>
+
+<h1 id="collisions">Collisions</h1>
+
+<p>Let’s now see how to add an initial set of collisions. As is the case for the contacts, those may later be added/removed by the states. The <code class="language-plaintext highlighter-rouge">collisions</code> element contains an array of <a href="/mc_rtc/json-full.html#ConstraintSet/CollisionsConstraint">CollisionConstraint</a> objects. For the <code class="language-plaintext highlighter-rouge">MainRobot</code>, a default list of self-collisions is defined in the <a href="/mc_rtc/doxygen.html#a01706" target="blank_">mc_rbdyn::RobotModule</a> and may be used here.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Collision constraint</span>
+<span class="na">collisions</span><span class="pi">:</span>
+<span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">collision</span>
+  <span class="na">useMinimal</span><span class="pi">:</span> <span class="no">true</span>  <span class="c1"># The set of minimal self-collisions is defined in the robot module</span>
+<span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">collision</span>
+  <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
+  <span class="na">r2</span><span class="pi">:</span> <span class="s">door</span>
+  <span class="na">collisions</span><span class="pi">:</span> <span class="c1"># array of collisions to add for this pair of robots</span>
+    <span class="pi">-</span> <span class="na">body1</span><span class="pi">:</span> <span class="s">L_WRIST_Y_S</span>
+      <span class="na">body2</span><span class="pi">:</span> <span class="s">door</span>
+      <span class="na">iDist</span><span class="pi">:</span> <span class="m">0.5</span>  <span class="c1"># interaction distance: minimal distance below which the constraint becomes active</span>
+      <span class="na">sDist</span><span class="pi">:</span> <span class="m">0.02</span> <span class="c1"># safety distance: minimal allowed distance</span>
+      <span class="na">damping</span><span class="pi">:</span> <span class="m">0.0</span>
+</code></pre></div></div>
+
+<h1 id="creating-the-fsm-states">Creating the FSM states</h1>
+
+<p>In this section, we will see how to define the states required to open the door. Here we will take full advantage of the default <code class="language-plaintext highlighter-rouge">C++</code> states provided with the framework, and show how using those, one may achieve rather complex behaviours without ever writing a single line of code! This controller uses the following (very common) states:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">MetaTasks</code>: Loads tasks from configuration, add them to the solver, and check for tasks completion
+    <ul>
+      <li>API: <a href="/mc_rtc/doxygen.html#a01418" target="blank_">mc_control::fsm::MetaTasksState</a></li>
+      <li>YAML: <a href="/mc_rtc/json.html#State/MetaTasks">JSON Schema Documentation</a></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Parallel</code>: Run multiple states
+    <ul>
+      <li>API: <a href="/mc_rtc/doxygen.html#a01426" target="blank_">mc_control::fsm::ParallelState</a></li>
+      <li>YAML: <a href="/mc_rtc/json.html#State/Parallel">JSON Schema Documentation</a></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Meta</code>: Creates an FSM within a state
+    <ul>
+      <li>API: <a href="/mc_rtc/doxygen.html#a01414" target="blank_">mc_control::fsm::MetaState</a></li>
+      <li>YAML: <a href="/mc_rtc/json.html#State/Meta">JSON Schema Documentation</a></li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Posture</code>: Handles the global posture tasks’ gains and targets
+    <ul>
+      <li>API: <a href="/mc_rtc/doxygen.html#a01438" target="blank_">mc_control::fsm::PostureState</a></li>
+      <li>YAML: <a href="/mc_rtc/json.html#State/Posture">JSON Schema Documentation</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>The states are declared within the <code class="language-plaintext highlighter-rouge">states</code> section of the configuration. Alternatively, one may also create a <code class="language-plaintext highlighter-rouge">.yaml</code> file in <code class="language-plaintext highlighter-rouge">src/states/data</code> containing the states declaration, which is particularly useful for larger FSMs.</p>
+
+<p>We will create an FSM organized as follow:</p>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">Door_Initial</code>: A simple C++ state that adds a button to trigger the “Open Door” motion</li>
+  <li><code class="language-plaintext highlighter-rouge">Door::OpenDoorFSM</code>: A sub-fsm containing only the logic for moving the hand, opening the handle, and moving the door</li>
+  <li><code class="language-plaintext highlighter-rouge">Door::Standing</code>: A state responsible for adding a <code class="language-plaintext highlighter-rouge">CoM</code> task, and a regularisation task on the chest to keep it upright</li>
+  <li><code class="language-plaintext highlighter-rouge">Door::OpenDoorDemo</code>: States <code class="language-plaintext highlighter-rouge">2</code> and <code class="language-plaintext highlighter-rouge">3</code> are put in parallel such that the CoM/Chest target is handled simultaneously to the door opening motion.</li>
+</ol>
+
+<p>We fully exploit the multi-robot aspect, and the door will be moved by establishing a contact between the hand and the handle, and controlling the joint-angle of the handle and door hinge. Due to the contact constraint, the QP will automatically generate the necessary motion required to achieve this motion.</p>
+
+<h1 id="initial-state-adding-a-button-to-trigger-a-transition">Initial State: Adding a button to trigger a transition</h1>
+
+<p>This state aims at demonstrating a simple example of:</p>
+
+<ol>
+  <li>How to create a C++ state</li>
+  <li>How to add a GUI element within a state</li>
+  <li>How to control the flow of transitions from within a state</li>
+</ol>
+
+<p>This state is defined in <code class="language-plaintext highlighter-rouge">src/states/Door_Initial.cpp</code> and overrides the required virtual functions <code class="language-plaintext highlighter-rouge">configure</code>, <code class="language-plaintext highlighter-rouge">start</code> and <code class="language-plaintext highlighter-rouge">run</code> and <code class="language-plaintext highlighter-rouge">teardown</code> function (see the API documentation of <a href="/mc_rtc/doxygen.html#a01390" target="blank_">mc_control::fsm::State</a>). Here, we add a button to the GUI when the state starts. When clicked, this button is used to change the state of a boolean <code class="language-plaintext highlighter-rouge">openDoor_</code>, which is later used to trigger an “OpenDoor” transition. This is achieved by calling <code class="language-plaintext highlighter-rouge">output("OpenDoor")</code> and returning <code class="language-plaintext highlighter-rouge">true</code> in the <code class="language-plaintext highlighter-rouge">bool Door_Initial::run</code> function, which signifies that we consider the state to be completed and that the next transition can occur. Note that the the configuration of the transition map determines how this transition occurs (see <a href="/mc_rtc/doxygen.html#a01454" target="blank_">mc_control::fsm::TransitionMap</a>).</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_control/fsm/Controller.h&gt;
+</span>
+<span class="cp">#include "Door_Initial.h"
+</span>
+<span class="kt">void</span> <span class="n">Door_Initial</span><span class="o">::</span><span class="n">configure</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="kt">void</span> <span class="n">Door_Initial</span><span class="o">::</span><span class="n">start</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span> <span class="n">ctl</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">ctl</span><span class="p">.</span><span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addElement</span><span class="p">({},</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">Button</span><span class="p">(</span><span class="s">"Open door"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="n">openDoor_</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}));</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">Door_Initial</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">openDoor_</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">output</span><span class="p">(</span><span class="s">"OpenDoor"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">Door_Initial</span><span class="o">::</span><span class="n">teardown</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">fsm</span><span class="o">::</span><span class="n">Controller</span> <span class="o">&amp;</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="n">EXPORT_SINGLE_STATE</span><span class="p">(</span><span class="s">"Door_Initial"</span><span class="p">,</span> <span class="n">Door_Initial</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">EXPORT_SINGLE_STATE</code> macro is used to declare the loading symbols used by mc_rtc to load the state from library. The name <code class="language-plaintext highlighter-rouge">"Door_Initial"</code> provided here is used to identify this state within the FSM.</p>
+
+<p>Note that here this state is very simplistic on purpose. In practice, states typically perform more complex actions, such as adding tasks and handling their targets, reading data from planners, monitoring the state of the robot and triggering transitions, etc. Examples of such states are the <code class="language-plaintext highlighter-rouge">MetaTasks</code>, <code class="language-plaintext highlighter-rouge">Parallel</code>, <code class="language-plaintext highlighter-rouge">Meta</code> and <code class="language-plaintext highlighter-rouge">Posture</code> tasks used within this example.</p>
+
+<h1 id="fsm-for-opening-the-door">FSM for opening the door</h1>
+
+<p>Opening the door is achieved by a state executing its own sub-fsm, responsible for handling the hand’s motion towards the door handle, establishing contact with it, and then turning the handle and door hinge to open it.</p>
+
+<p>First, let’s see what the transition map for this state looks like:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoorFSM:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Meta</span>
+  <span class="s">transitions</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door_Initial</span><span class="pi">,</span> <span class="nv">OpenDoor</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">ReachHandle</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+    <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">ReachHandle</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">MoveHandle</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+    <span class="pi">-</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">MoveHandle</span><span class="pi">,</span> <span class="nv">OK</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">OpenDoor</span><span class="pi">,</span> <span class="nv">Auto</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">Door_Initial</code> C++ state described above will trigger the <code class="language-plaintext highlighter-rouge">OpenDoor</code> transition when the user clicks on the GUI button. The FSM will then move to the next state <code class="language-plaintext highlighter-rouge">Door::ReachHandle</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::ReachHandle:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
+  <span class="s">tasks</span><span class="pi">:</span>
+    <span class="na">RightHandTrajectory</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">surfaceTransform</span>
+      <span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
+      <span class="na">weight</span><span class="pi">:</span> <span class="m">1000</span>
+      <span class="na">stiffness</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="c1"># Target relative to the door's handle surface</span>
+      <span class="na">targetSurface</span><span class="pi">:</span>
+        <span class="na">robot</span><span class="pi">:</span> <span class="s">door</span>
+        <span class="na">surface</span><span class="pi">:</span> <span class="s">Handle</span>
+        <span class="na">offset_translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">-0.025</span><span class="pi">]</span>
+        <span class="na">offset_rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">]</span>
+      <span class="na">completion</span><span class="pi">:</span>
+        <span class="na">AND</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">eval</span><span class="pi">:</span> <span class="m">0.05</span>
+          <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="s">1e-4</span>
+</code></pre></div></div>
+
+<p>This state uses the <a href="/mc_rtc/doxygen.html#a01418" target="blank_">mc_control::fsm::MetaTasksState</a> C++ state provided with the framework to load a set of tasks from their YAML description. Here, we load a task of type <code class="language-plaintext highlighter-rouge">surfaceTransform</code> (<a href="/mc_rtc/json.html#MetaTask/SurfaceTransformTask">YAML Documentation</a>) that we name <code class="language-plaintext highlighter-rouge">RightHandTrajectory</code>. This creates and adds an <a href="/mc_rtc/doxygen.html#a02426" target="blank_">mc_tasks::SurfaceTransformTask</a> to the solver, and configures it with a target defined w.r.t the door’s handle surface. The <code class="language-plaintext highlighter-rouge">completion</code> element creates a <a href="/mc_rtc/doxygen.html#a01350" target="blank_">mc_control::CompletionCriteria</a>, which builds a logic function that checks whether the task’s execution is considered completed. The <code class="language-plaintext highlighter-rouge">MetaTasks</code> state will output <code class="language-plaintext highlighter-rouge">"OK"</code> (by default) when the task’s completion criteria is fulfilled.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">OpenDoorFSM</code> can thus move to its next transition: <code class="language-plaintext highlighter-rouge">[Door::ReachHandle, OK, Door::MoveHandle, Auto]</code></p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::MoveHandle:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Posture</span>
+  <span class="s">robot</span><span class="pi">:</span> <span class="s">door</span>
+  <span class="s">completion</span><span class="pi">:</span>
+    <span class="na">eval</span><span class="pi">:</span> <span class="m">0.01</span>
+<span class="err">  </span><span class="na">postureTask</span><span class="pi">:</span>
+    <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+    <span class="na">jointGains</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">jointName</span><span class="pi">:</span> <span class="s">handle</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">handle</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">-1.0</span><span class="pi">]</span>
+  <span class="na">AddContacts</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">r1</span><span class="pi">:</span> <span class="s">jvrc1</span>
+    <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
+    <span class="na">r2</span><span class="pi">:</span> <span class="s">door</span>
+    <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">Handle</span>
+</code></pre></div></div>
+
+<p>This state is based on the <a href="/mc_rtc/doxygen.html#a01438" target="blank_">mc_control::fsm::PostureState</a> (<a href="/mc_rtc/json.html#States/Posture">JSON documentation</a>) whose role is to change gains and targets of the global posture task, automatically added to each robot by the framework. First, a contact between the robot’s <code class="language-plaintext highlighter-rouge">RightGripper</code> and the door’s <code class="language-plaintext highlighter-rouge">Handle</code> surfaces is established which prevents the QP from moving these surfaces relative to each other, and adds friction cone constraints to compute the dynamical forces involved in the robot-door interaction. Thus, when the handle joint rotates so does the JVRC1 robot.</p>
+
+<p>Once this state completes, we can move to the next transition: <code class="language-plaintext highlighter-rouge">[Door::MoveHandle, OK, Door::OpenDoor, Auto]</code>. This next state is very similar to the previous one: it changes the target joint angle of the door’s hinges to make the robot open it. Note how this state inherits from the previous one (<code class="language-plaintext highlighter-rouge">base: Door::MoveHandle</code>), and only redefines the new targets.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoor:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Door::MoveHandle</span>
+  <span class="s">postureTask</span><span class="pi">:</span>
+    <span class="na">jointGains</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">jointName</span><span class="pi">:</span> <span class="s">handle</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
+      <span class="pi">-</span> <span class="na">jointName</span><span class="pi">:</span> <span class="s">door</span>
+        <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">handle</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">-1.0</span><span class="pi">]</span>
+      <span class="na">door</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">-0.3</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>As-is, this FSM only concerns itself with the door opening motion. However, it does not handle the robot’s balance. Here, we will simply center the CoM above the left and right foot. This is achieved by putting the <code class="language-plaintext highlighter-rouge">Door::Standing</code> state in parallel with the <code class="language-plaintext highlighter-rouge">Door::OpenDoorFSM</code> described above. Strictly speaking these states are executed one after the other at every timestep.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::OpenDoorDemo:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">Parallel</span>
+  <span class="s">states</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">Door</span><span class="pi">::</span><span class="nv">Standing</span><span class="pi">,</span> <span class="nv">Door</span><span class="pi">::</span><span class="nv">OpenDoorFSM</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>with the standing state defined as:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">Door::Standing:</span>
+  <span class="s">base</span><span class="pi">:</span> <span class="s">MetaTasks</span>
+  <span class="s">tasks</span><span class="pi">:</span>
+    <span class="na">CoM</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
+      <span class="na">above</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">LeftFoot</span><span class="pi">,</span> <span class="nv">RightFoot</span><span class="pi">]</span>
+      <span class="na">weight</span><span class="pi">:</span> <span class="m">2000</span>
+      <span class="na">stiffness</span><span class="pi">:</span> <span class="m">5</span>
+    <span class="na">KeepChest</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">orientation</span>
+      <span class="na">body</span><span class="pi">:</span> <span class="s">WAIST_R_S</span>
+      <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+      <span class="na">stiffness</span><span class="pi">:</span> <span class="m">1</span>
+</code></pre></div></div>
+
+<p>The full sources for this tutorial are available <a href="https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Door">here</a>.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>In this tutorial, we have seen how to create an FSM from scratch, and achieve a rather complex multi-robot motion by relying on the main FSM states provided by the framework, along with the multi-robot aspect of task-space control. It is important to note that one is not restricted to the YAML features used here, and that you can easily write your own states to define and abstract more complex behaviours.</p>
+
+<p>See also:</p>
+<ul>
+  <li>The <a href="/mc_rtctutorials/samples/sample-admittance.html">Admittance sample tutorial</a> for a similar FSM with the addition of force control.</li>
+</ul>
 
 
         <hr/>

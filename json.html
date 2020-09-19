@@ -340,6 +340,10 @@
           
             
             
+            <a id="State_Posture_link" href="#collapse_State_Posture" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/Posture" aria-controls="collapse_State_Posture">fsm::PostureState</a>
+          
+            
+            
             <a id="State_StabilizerStandingState_link" href="#collapse_State_StabilizerStandingState" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="State/StabilizerStandingState" aria-controls="collapse_State_StabilizerStandingState">fsm::StabilizerStandingState</a>
           
         </div>
@@ -399,7 +403,7 @@
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::PauseState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01431">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::PauseState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01434">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Pause for a given duration</small>
     </div>
@@ -3402,11 +3406,1075 @@ Pause_5s:
   
   
   
+  <div id="collapse_State_Posture" class="collapse collapseSchema" style="position:sticky; top: 65px;">
+    
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::PostureState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01438">[API]</a></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Change configuration of the global posture task of a robot.</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>robot</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the robot whose posture task is modified</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>postureTask</td>
+  
+  <td>
+    
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Posture_PROP_postureTask" aria-expanded="false" aria-controls="collapseState_Posture_PROP_postureTask">PostureTaskConfig</a>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Configuration for the gains and targets of the posture task</small></span>
+  </td>
+  
+</tr>
+
+  
+    
+    <tr class="collapse" id="collapseState_Posture_PROP_postureTask">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">PostureTaskConfig</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Configuration for the gains and targets of the posture task</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>posture</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Posture target</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>jointGains</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Posture_PROP_postureTask_PROP_jointGains" aria-expanded="false" aria-controls="collapseState_Posture_PROP_postureTask_PROP_jointGains">tasks::qp::JointGains</a>
+  
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Gains for specific joints</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Posture_PROP_postureTask_PROP_jointGains">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">tasks::qp::JointGains</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>jointName</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>stiffness</strong></td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>damping</td>
+  
+  <td colspan="2">
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>target</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  [
+  
+    
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+,
+  
+    
+    
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  [
+  
+    
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+  
+  ]
+
+
+  
+
+
+  
+  ]
+
+
+  
+
+
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Map of joint names -> vector of joint values</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>weight</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">10</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Task's weight</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>stiffness</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">1</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Tasks's stiffness</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>completion</td>
+  
+  <td>
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Posture_PROP_completion" aria-expanded="false" aria-controls="collapseState_Posture_PROP_completion">Completion Criteria</a>
+  
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Builds a conditional function that returns true when all of its conditions are satisfied.<br/>Some states (e.g MetaTasks) may use these criterias to determine when a task is finished.</small></span>
+  </td>
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_Posture_PROP_completion">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Completion Criteria</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Builds a conditional function that returns true when all of its conditions are satisfied.<br/>Some states (e.g MetaTasks) may use these criterias to determine when a task is finished.</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>AND</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array[2]</span>&nbsp;
+
+  [
+  
+    
+    
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Posture_PROP_completion_PROP_AND0" aria-expanded="false" aria-controls="collapseState_Posture_PROP_completion_PROP_AND0">Completion Criteria</a>
+    
+  
+
+,
+  
+    
+    
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Posture_PROP_completion_PROP_AND1" aria-expanded="false" aria-controls="collapseState_Posture_PROP_completion_PROP_AND1">Completion Criteria</a>
+    
+  
+
+
+  
+  ]
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>True when criteria1 and criteria2 are both true</small></span>
+  </td>
+  
+</tr>
+
+  
+    
+    
+    <tr class="collapse" id="collapseState_Posture_PROP_completion_PROP_AND0">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Completion Criteria</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Completion criteria on the left-hand side of the AND comparison</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+    <tr class="collapse" id="collapseState_Posture_PROP_completion_PROP_AND1">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Completion Criteria</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Completion criteria on the right-hand side of the AND comparison</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>OR</td>
+  
+  <td>
+    
+  
+  
+    
+    <span class="text-secondary">array[2]</span>&nbsp;
+
+  [
+  
+    
+    
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Posture_PROP_completion_PROP_OR0" aria-expanded="false" aria-controls="collapseState_Posture_PROP_completion_PROP_OR0">Completion Criteria</a>
+    
+  
+
+,
+  
+    
+    
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_Posture_PROP_completion_PROP_OR1" aria-expanded="false" aria-controls="collapseState_Posture_PROP_completion_PROP_OR1">Completion Criteria</a>
+    
+  
+
+
+  
+  ]
+
+
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>True when either criteria1 or criteria2 is true</small></span>
+  </td>
+  
+</tr>
+
+  
+    
+    
+    <tr class="collapse" id="collapseState_Posture_PROP_completion_PROP_OR0">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Completion Criteria</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Completion criteria on the left-hand side of the OR comparison</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+    <tr class="collapse" id="collapseState_Posture_PROP_completion_PROP_OR1">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Completion Criteria</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Completion criteria on the right-hand side of the OR comparison</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>timeout</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>True when the task has been added to the solver for longer than this threshold</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>eval</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>True when the task's error (norm) is below this threshold</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>speed</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>True when the task's velocity (norm) is below this threshold</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_State_Posture_example" aria-expanded="false" aria-controls="collapse_State_Posture_example">Example</button>
+      </div>
+      <div id="collapse_State_Posture_example" class="collapse">
+        <div class="card-body">
+          <ul class="nav nav-tabs" id="State_Posture_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="state-posture-examplejsonjsonTab" data-toggle="tab" href="#state-posture-examplejsonjsonTabContent" role="tab" aria-controls="state-posture-examplejsonjsonTabContent" aria-selected="true">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="state-posture-exampleyamlyamlTab" data-toggle="tab" href="#state-posture-exampleyamlyamlTabContent" role="tab" aria-controls="state-posture-exampleyamlyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="State_Posture_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="state-posture-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="state-posture-examplejsonjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"door"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"completion"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"eval"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"postureTask"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"weight"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"jointGains"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"jointName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"handle"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"jointName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"door"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"stiffness"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"target"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"handle"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mf">-1.0</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"door"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mf">-0.3</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="State_Posture_examplejsonCopySource" class="offscreen" aria-hidden=true>{
+  "robot": "door",
+  "completion": {
+    "eval": 0.01
+  },
+  "postureTask": {
+    "weight": 100,
+    "jointGains": [
+      {
+        "jointName": "handle",
+        "stiffness": 50
+      },
+      {
+        "jointName": "door",
+        "stiffness": 50
+      }
+    ],
+    "target": {
+      "handle": [
+        -1.0
+      ],
+      "door": [
+        -0.3
+      ]
+    }
+  }
+}</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#State_Posture_examplejsonCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="state-posture-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="state-posture-exampleyamlyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+<span class="na">robot</span><span class="pi">:</span> <span class="s">door</span>
+<span class="na">completion</span><span class="pi">:</span>
+  <span class="na">eval</span><span class="pi">:</span> <span class="m">0.01</span>
+<span class="na">postureTask</span><span class="pi">:</span>
+  <span class="na">weight</span><span class="pi">:</span> <span class="m">100</span>
+  <span class="na">jointGains</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">jointName</span><span class="pi">:</span> <span class="s">handle</span>
+      <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
+    <span class="pi">-</span> <span class="na">jointName</span><span class="pi">:</span> <span class="s">door</span>
+      <span class="na">stiffness</span><span class="pi">:</span> <span class="m">50</span>
+  <span class="na">target</span><span class="pi">:</span>
+    <span class="na">handle</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">-1.0</span><span class="pi">]</span>
+    <span class="na">door</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">-0.3</span><span class="pi">]</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="State_Posture_exampleyamlCopySource" class="offscreen" aria-hidden=true>---
+robot: door
+completion:
+  eval: 0.01
+postureTask:
+  weight: 100
+  jointGains:
+    - jointName: handle
+      stiffness: 50
+    - jointName: door
+      stiffness: 50
+  target:
+    handle: [-1.0]
+    door: [-0.3]</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#State_Posture_exampleyamlCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      
+        
+        
+        
+        
+        
+        
+  
+  
+  
   <div id="collapse_State_AddRemoveContact" class="collapse collapseSchema" style="position:sticky; top: 65px;">
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::AddRemoveContactState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01395">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::AddRemoveContactState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01398">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Add or remove a contact</small>
     </div>
@@ -7589,7 +8657,7 @@ AddContactCompliant:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::MetaTasksState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01415">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::MetaTasksState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01418">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Create and run multiple tasks until their completion criteria is reached</small>
     </div>
@@ -10915,7 +11983,7 @@ Example4:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::MetaState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01411">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::MetaState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01414">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Plays its own FSM</small>
     </div>
@@ -14115,7 +15183,7 @@ configs:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::ParallelState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01423">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::ParallelState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01426">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Play multiple states in parallel<br/>The state is completed when all the states it's running are completed<br/>The default state's output is the output of the last state it's running (see "outputs" for other behaviours)</small>
     </div>
@@ -17300,7 +18368,7 @@ configs:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::StabilizerStandingState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01439">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::StabilizerStandingState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01446">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Simple state managing the LIPM Stabilizer.<br />It provides set-point position target to the CoM, from which a full dynamic trajectory (com, comd, comdd, zmp) is computed and provided as reference to the lipm_stabilizer::StabilizerTask</small>
     </div>
@@ -18672,7 +19740,7 @@ configs:
 
   </td>
   <td>
-    <span class="text-secondary"><small>These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See <a href="/mc_rtc/doxygen.html#a01623" target="blank_">mc_rbdyn::lipm_stabilizer::SafetyThresholds</a></small></span>
+    <span class="text-secondary"><small>These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See <a href="/mc_rtc/doxygen.html#a01630" target="blank_">mc_rbdyn::lipm_stabilizer::SafetyThresholds</a></small></span>
   </td>
   
 </tr>
@@ -18685,7 +19753,7 @@ configs:
   <div class="card-header">
     <span style="float:left;"><h6 class="text-primary font-weight-bold">Safety thresholds for the stabilizer parameters</h6></span><span style="float:right;"></span><br />
     <div class="float-right">
-      <small class="text-muted text-right">These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See <a href="/mc_rtc/doxygen.html#a01623" target="blank_">mc_rbdyn::lipm_stabilizer::SafetyThresholds</a></small>
+      <small class="text-muted text-right">These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See <a href="/mc_rtc/doxygen.html#a01630" target="blank_">mc_rbdyn::lipm_stabilizer::SafetyThresholds</a></small>
     </div>
   </div>
   <div class="card-body">
@@ -24412,7 +25480,7 @@ Stabilizer::GoHalfSitting:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::HalfSittingState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01403">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::HalfSittingState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01406">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Brings the robot posture to halfsitting stance</small>
     </div>
@@ -24422,6 +25490,42 @@ Stabilizer::GoHalfSitting:
       
 <table class="table table-borderless table-hover object-property">
 <tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>robot</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Name of the robot to put to halfsitting</small></span>
+  </td>
+  
+</tr>
+
+
+
 
   
   
@@ -27409,7 +28513,7 @@ eval: 0.001</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::MessageState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01407">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::MessageState</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01410">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Prints a message to the terminal and/or the GUI</small>
     </div>
@@ -30536,7 +31640,7 @@ GUIMessage:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::Grippers</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01399">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_control::fsm::Grippers</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01402">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Controllers the gripper of a robot</small>
     </div>
@@ -33922,7 +35026,7 @@ grippers:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::LookAtTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02375">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::LookAtTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02382">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -35103,7 +36207,7 @@ targetPos: [0.0, 0.0, 0.0]</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::LookAtSurfaceTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02371">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::LookAtSurfaceTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02378">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Aligns a unit vector expressed in body coordinates with a target unit vector from the body to a surface.<br/>Example: Align a camera's viewing direction with a surface on a desired object to look at it.</small>
     </div>
@@ -36357,7 +37461,7 @@ surface: AllGround</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::AddContactTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02303">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::AddContactTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02310">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -37820,7 +38924,7 @@ weight: 100.0</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::PositionTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02399">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::PositionTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02406">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -39056,7 +40160,7 @@ position: [0.0, 0.0, 0.0]</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::RelativeEndEffectorTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02407">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::RelativeEndEffectorTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02414">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -40600,7 +41704,7 @@ position: [0.0, 0.0, 0.0]</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::GazeTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02343">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::GazeTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02350">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -41731,7 +42835,7 @@ X_b_gaze:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::PositionBasedVisServoTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02395">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::PositionBasedVisServoTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02402">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -42874,7 +43978,7 @@ surface: LeftFoot</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::RemoveContactTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02307">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::RemoveContactTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02314">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -44337,9 +45441,9 @@ weight: 100.0</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::lipm_stabilizer::StabilizerTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02359">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::lipm_stabilizer::StabilizerTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02366">[API]</a></span><br />
     <div class="float-right">
-      <small class="text-muted text-right">The stabilizer task attempts to make the real system track as best as possible the desired state of the CoM (position, velocity, acceleration) and ZMP based on the LIPM model. The reference desired dynamic state must be valid, and continuous (i.e obtained from a walking MPC). A suitable state observation pipeline is required to observe the CoM position and velocity and ZMP of the real system (e.g [Encoder, KinematicInertialObserver]). Default gains are defined in the RobotModule and may be overriden from configuration (the default gains reported in this schemas are those of mc_rtc in case none is provided by the RobotModule).<br />See the <a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">LIPM Stabilizer tutorial</a> and the API Documentation <a href="/mc_rtc/doxygen.html#a02359" target="blank_">mc_tasks::lipm_stabilizer::StabilizerTask</a> for further information.</small>
+      <small class="text-muted text-right">The stabilizer task attempts to make the real system track as best as possible the desired state of the CoM (position, velocity, acceleration) and ZMP based on the LIPM model. The reference desired dynamic state must be valid, and continuous (i.e obtained from a walking MPC). A suitable state observation pipeline is required to observe the CoM position and velocity and ZMP of the real system (e.g [Encoder, KinematicInertialObserver]). Default gains are defined in the RobotModule and may be overriden from configuration (the default gains reported in this schemas are those of mc_rtc in case none is provided by the RobotModule).<br />See the <a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">LIPM Stabilizer tutorial</a> and the API Documentation <a href="/mc_rtc/doxygen.html#a02366" target="blank_">mc_tasks::lipm_stabilizer::StabilizerTask</a> for further information.</small>
     </div>
   </div>
   <div class="card-body">
@@ -47974,7 +49078,7 @@ weight: 100.0</pre>
 
   </td>
   <td>
-    <span class="text-secondary"><small>These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See <a href="/mc_rtc/doxygen.html#a01623" target="blank_">mc_rbdyn::lipm_stabilizer::SafetyThresholds</a></small></span>
+    <span class="text-secondary"><small>These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See <a href="/mc_rtc/doxygen.html#a01630" target="blank_">mc_rbdyn::lipm_stabilizer::SafetyThresholds</a></small></span>
   </td>
   
 </tr>
@@ -47987,7 +49091,7 @@ weight: 100.0</pre>
   <div class="card-header">
     <span style="float:left;"><h6 class="text-primary font-weight-bold">Safety thresholds for the stabilizer parameters</h6></span><span style="float:right;"></span><br />
     <div class="float-right">
-      <small class="text-muted text-right">These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See <a href="/mc_rtc/doxygen.html#a01623" target="blank_">mc_rbdyn::lipm_stabilizer::SafetyThresholds</a></small>
+      <small class="text-muted text-right">These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See <a href="/mc_rtc/doxygen.html#a01630" target="blank_">mc_rbdyn::lipm_stabilizer::SafetyThresholds</a></small>
     </div>
   </div>
   <div class="card-body">
@@ -50522,9 +51626,9 @@ other_robot:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::force::AdmittanceTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02311">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::force::AdmittanceTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02318">[API]</a></span><br />
     <div class="float-right">
-      <small class="text-muted text-right">This task tracks a desired wrench with an admittance control law (converts wrench-error to a desired surface velocity).<br/>- Force measurements are used in an admittance control law to compute the velocity of the surface to bring the measured wrench towards its desired target.<br/>- Only axes where the admittance gains are non null will be affected by force control. Along all other axes, the reference position and velocity will be tracked.<br/>- High stiffness/Low damping will favor position control (targetPose/targetSurface)<br/>- Low stiffness/High damping will favour velocity control.<br />- Use [low-stiffness/high-damping/non-zero admittance gains] to achieve force control along the desired surface axes.<br />See the API documentation <a href="/mc_rtc/doxygen.html#a02311" target="blank_">mc_tasks::force::AdmittanceTask</a>, and the <a href="/mc_rtc/tutorials/samples/sample-admittance.html">admittance sample</a> tutorial for futher information.</small>
+      <small class="text-muted text-right">This task tracks a desired wrench with an admittance control law (converts wrench-error to a desired surface velocity).<br/>- Force measurements are used in an admittance control law to compute the velocity of the surface to bring the measured wrench towards its desired target.<br/>- Only axes where the admittance gains are non null will be affected by force control. Along all other axes, the reference position and velocity will be tracked.<br/>- High stiffness/Low damping will favor position control (targetPose/targetSurface)<br/>- Low stiffness/High damping will favour velocity control.<br />- Use [low-stiffness/high-damping/non-zero admittance gains] to achieve force control along the desired surface axes.<br />See the API documentation <a href="/mc_rtc/doxygen.html#a02318" target="blank_">mc_tasks::force::AdmittanceTask</a>, and the <a href="/mc_rtc/tutorials/samples/sample-admittance.html">admittance sample</a> tutorial for futher information.</small>
     </div>
   </div>
   <div class="card-body">
@@ -53937,7 +55041,7 @@ admittance:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::CoMTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02323">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::CoMTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02330">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Task that manages the robot's center of mass (CoM).<br />Targets are loaded in the following order: current com position -> com -> above -> move_com. For example if you wish to move the CoM 2cm left of the right foot, you can combine "above: RightFoot" and "move_com: [0,0.02,0]". When no target is provided, the current CoM position is targeted.</small>
     </div>
@@ -54951,7 +56055,7 @@ com: [0.0, 0.0, 0.71]</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::force::ComplianceTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02319">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::force::ComplianceTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02326">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -56279,7 +57383,7 @@ wrench:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::OrientationTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02391">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::OrientationTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02398">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -57465,7 +58569,7 @@ orientation: [0.0, 0.0, 0.0]</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::PostureTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02403">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::PostureTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02410">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -58002,7 +59106,7 @@ orientation: [0.0, 0.0, 0.0]</pre>
 
   </td>
   <td>
-    <span class="text-secondary"><small>Ignored by PostureTask</small></span>
+    <span class="text-secondary"><small>Apply an anisotropic weight to the task multiplicative of the task's weight</small></span>
   </td>
   
 </tr>
@@ -58148,9 +59252,117 @@ orientation: [0.0, 0.0, 0.0]</pre>
   
   
   
+  <td>stiffness</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">1</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Tasks's stiffness</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>damping</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">\(2\sqrt{\mathit{stiffness}}\)</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Task's damping. May also be an array of the task's dimension (dimensional damping).</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>weight</td>
+  
+  <td>
+    
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">10</span>
+    
+  
+
+
+  </td>
+  <td>
+    <span class="text-secondary"><small>Task's weight</small></span>
+  </td>
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
   <td>posture</td>
   
-  <td colspan="2">
+  <td>
     
   
   
@@ -58184,6 +59396,9 @@ orientation: [0.0, 0.0, 0.0]</pre>
 
 
   </td>
+  <td>
+    <span class="text-secondary"><small>Posture target</small></span>
+  </td>
   
 </tr>
 
@@ -58203,7 +59418,7 @@ orientation: [0.0, 0.0, 0.0]</pre>
   
   <td>jointGains</td>
   
-  <td colspan="2">
+  <td>
     
   
   
@@ -58221,6 +59436,9 @@ orientation: [0.0, 0.0, 0.0]</pre>
   
 
 
+  </td>
+  <td>
+    <span class="text-secondary"><small>Gains for specific joints</small></span>
   </td>
   
 </tr>
@@ -58440,114 +59658,6 @@ orientation: [0.0, 0.0, 0.0]</pre>
 
 
 
-  
-  
-  
-  
-  
-  <tr>
-  
-  
-  
-  
-  
-  <td>stiffness</td>
-  
-  <td>
-    
-  
-  
-    
-      <span class="text-number">number &ge; 0</span>
-    
-    
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">1</span>
-    
-  
-
-
-  </td>
-  <td>
-    <span class="text-secondary"><small>Task's stiffness. May also be an array of the task's dimension (dimensional stiffness).</small></span>
-  </td>
-  
-</tr>
-
-
-
-
-  
-  
-  
-  
-  
-  <tr>
-  
-  
-  
-  
-  
-  <td>damping</td>
-  
-  <td>
-    
-  
-  
-    
-      <span class="text-number">number &ge; 0</span>
-    
-    
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">\(2\sqrt{\mathit{stiffness}}\)</span>
-    
-  
-
-
-  </td>
-  <td>
-    <span class="text-secondary"><small>Task's damping. May also be an array of the task's dimension (dimensional damping).</small></span>
-  </td>
-  
-</tr>
-
-
-
-
-  
-  
-  
-  
-  
-  <tr>
-  
-  
-  
-  
-  
-  <td>weight</td>
-  
-  <td>
-    
-  
-  
-    
-      <span class="text-number">number &ge; 0</span>
-    
-    
-      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">10</span>
-    
-  
-
-
-  </td>
-  <td>
-    <span class="text-secondary"><small>Task's weight</small></span>
-  </td>
-  
-</tr>
-
-
-
-
 
 </tbody>
 </table>
@@ -58674,7 +59784,7 @@ posture:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::VectorOrientationTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02427">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::VectorOrientationTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02434">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -59724,7 +60834,7 @@ targetVector: [0.0, 0.0, 0.0]</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::force::CoPTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02327">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::force::CoPTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02334">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">This task control the center of pressure (CoP) of a robot surface attached to a force sensor.<br/>- Force measurements are used in an admittance control law to compute the velocity of the surface motion to bring the measured CoP to its desired target position.<br/>- Only axes where the admittance gains are non null will be affected by force control. Along all other axes, the reference position and velocity will be tracked.<br/>- High stiffness/Low damping will favor position control (targetPose/targetSurface)<br/>- Low stiffness/High damping will favour velocity control.<br />- Use [low-stiffness/high-damping/non-zero admittance gains] to achieve force control along one of the controlled surface axis.</small>
     </div>
@@ -61658,7 +62768,7 @@ admittance:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::BSplineTrajectoryTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02315">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::BSplineTrajectoryTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02322">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Follow a bezier curve</small>
     </div>
@@ -63686,7 +64796,7 @@ targetSurface:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::SurfaceTransformTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02419">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::SurfaceTransformTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02426">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -66260,7 +67370,7 @@ targetSurface:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::LookAtTFTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02455">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::LookAtTFTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02462">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -67312,7 +68422,7 @@ targetFrame: target_name</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::EndEffectorTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02335">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::EndEffectorTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02342">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -68818,7 +69928,7 @@ position: [0.0, 0.0, 0.0]</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::ExactCubicTrajectoryTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02339">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::ExactCubicTrajectoryTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02346">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Follow an exact cubic curve (passing exactly through waypoints with initial/final velocity and acceleration constraints)<br/>All targets and waypoints are defined in world frame, except when using "targetSurface". In that case they are defined in target surface frame.</small>
     </div>
@@ -72235,7 +73345,7 @@ momentum: [0, 0, 0, 0, 0, 10]</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Flexibility</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01603">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Flexibility</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01610">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -72478,7 +73588,7 @@ O: 0.0</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Plane</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01659">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Plane</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01666">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -72684,7 +73794,7 @@ offset: 0.0</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::ForceSensor</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01607">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::ForceSensor</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01614">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -73072,7 +74182,7 @@ X_p_f:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Contact</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01591">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Contact</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01598">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Requires an mc_rbdyn::Robots instance to be loaded</small>
     </div>
@@ -73812,7 +74922,7 @@ isFixed: false</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01559">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01566">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -74105,7 +75215,7 @@ damping: 0</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule::Gripper</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01703">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule::Gripper</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01710">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -74709,7 +75819,7 @@ reverse_limits: false</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Springs</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01715">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Springs</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01722">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -74950,7 +76060,7 @@ springsJoints: [j0, j1]</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::PlanarSurface</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01651">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::PlanarSurface</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01658">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -75487,7 +76597,7 @@ planarPoints:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::GripperSurface</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01611">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::GripperSurface</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01618">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -76481,7 +77591,7 @@ motorMaxTorque: 5.0</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::BodySensor</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01555">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::BodySensor</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01562">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -76869,7 +77979,7 @@ X_b_s:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::CylindricalSurface</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01595">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::CylindricalSurface</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01602">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -77398,7 +78508,7 @@ width: 1.0</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Base</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01551">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Base</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01558">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -78075,7 +79185,7 @@ type:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Mimic</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01647">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Mimic</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01654">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -78322,7 +79432,7 @@ offset: 0</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::PolygonInterpolator</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01663">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::PolygonInterpolator</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01670">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -78511,7 +79621,7 @@ offset: 0</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01699">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01706">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -83651,7 +84761,7 @@ offset: 0</pre>
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Flexibility</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01603">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Flexibility</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01610">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -83843,7 +84953,7 @@ offset: 0</pre>
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::ForceSensor</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01607">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::ForceSensor</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01614">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -84164,7 +85274,7 @@ offset: 0</pre>
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::BodySensor</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01555">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::BodySensor</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01562">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -84474,7 +85584,7 @@ offset: 0</pre>
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Springs</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01715">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Springs</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01722">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -84668,7 +85778,7 @@ offset: 0</pre>
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01559">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01566">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -84906,7 +86016,7 @@ offset: 0</pre>
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01559">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01566">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -85144,7 +86254,7 @@ offset: 0</pre>
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule::Gripper</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01703">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule::Gripper</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01710">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -86140,7 +87250,7 @@ urdf_path: urdf/robot.urdf</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule::Gripper::Safety</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01707">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::RobotModule::Gripper::Safety</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01714">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -86393,7 +87503,7 @@ overCommandLimitIterN: 5</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::CollisionsConstraint</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02143">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::CollisionsConstraint</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02150">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -86624,7 +87734,7 @@ overCommandLimitIterN: 5</pre>
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01559">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::Collision</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01566">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -86979,7 +88089,7 @@ collisions:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::DynamicsConstraint</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02179">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::DynamicsConstraint</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02186">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -87279,7 +88389,7 @@ infTorque: false</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::KinematicsConstraint</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02239">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::KinematicsConstraint</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02246">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -87542,7 +88652,7 @@ velocityPercent: 0.5</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::ContactConstraint</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02175">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::ContactConstraint</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02182">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -87764,7 +88874,7 @@ dynamics: true</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::CoMIncPlaneConstr</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02151">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::CoMIncPlaneConstr</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02158">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -87941,7 +89051,7 @@ robotIndex: 0</pre>
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::BoundedSpeedConstr</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02139">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::BoundedSpeedConstr</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02146">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -88592,7 +89702,7 @@ constraints:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_observers::ObserverPipeline</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01539">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_observers::ObserverPipeline</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01546">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">State observation pipeline.<br/>Observers are responsible for estimating some of the robot properties from sensor measurements and/or fusing several source of information (e.g the Encoder observer estimates the joint position and velocity based on joint sensors, the KinematicInertial observers the state of the floating base from kinematics and IMU information, etc).<br/>These observers may be grouped into a "State observation pipeline", that will run each observer sequentially. Some observers may be used to update the state of the real robots instances used by the controller, while others may only be used for logging estimated values for comparison purposes.</small>
     </div>
@@ -89316,7 +90426,7 @@ observers:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_observers::KinematicInertialObserver</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01523">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_observers::KinematicInertialObserver</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01530">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">Kinematic Intertial observer: floating base observation from IMU and kinematics</small>
     </div>
@@ -89757,7 +90867,7 @@ observers:
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::ArrowConfig</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02035">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::ArrowConfig</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02042">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -89976,7 +91086,7 @@ observers:
 
   </td>
   <td>
-    <span class="text-secondary"><small>Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02019" target="blank_">mc_rtc::gui::Color</a>.</small></span>
+    <span class="text-secondary"><small>Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02026" target="blank_">mc_rtc::gui::Color</a>.</small></span>
   </td>
   
 </tr>
@@ -89987,9 +91097,9 @@ observers:
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::Color</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02019">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::Color</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02026">[API]</a></span><br />
     <div class="float-right">
-      <small class="text-muted text-right">Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02019" target="blank_">mc_rtc::gui::Color</a>.</small>
+      <small class="text-muted text-right">Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02026" target="blank_">mc_rtc::gui::Color</a>.</small>
     </div>
   </div>
   <div class="card-body">
@@ -90507,7 +91617,7 @@ gui:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_observers::EncoderObserver</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01519">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_observers::EncoderObserver</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01526">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">The Encoder Observer updates the state of a robot kinematic properties (body positions and velocities) using joint sensor values. It can use various sources as sensor input: encoder position, encoder velocity, values from another robot, and can also estimate joint velocities from encoder position by finite differences.</small>
     </div>
@@ -91004,7 +92114,7 @@ log:
     
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_observers::BodySensorObserver</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01515">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_observers::BodySensorObserver</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a01522">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right">BodySensor: updates floating base state from a body sensor. This is typically used to set the floating base state from a simulator ground truth</small>
     </div>
@@ -91518,7 +92628,7 @@ log:
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::ArrowConfig</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02035">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::ArrowConfig</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02042">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -91737,7 +92847,7 @@ log:
 
   </td>
   <td>
-    <span class="text-secondary"><small>Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02019" target="blank_">mc_rtc::gui::Color</a>.</small></span>
+    <span class="text-secondary"><small>Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02026" target="blank_">mc_rtc::gui::Color</a>.</small></span>
   </td>
   
 </tr>
@@ -91748,9 +92858,9 @@ log:
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::Color</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02019">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::Color</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02026">[API]</a></span><br />
     <div class="float-right">
-      <small class="text-muted text-right">Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02019" target="blank_">mc_rtc::gui::Color</a>.</small>
+      <small class="text-muted text-right">Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02026" target="blank_">mc_rtc::gui::Color</a>.</small>
     </div>
   </div>
   <div class="card-body">
@@ -91828,7 +92938,7 @@ log:
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::ArrowConfig</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02035">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::ArrowConfig</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02042">[API]</a></span><br />
     <div class="float-right">
       <small class="text-muted text-right"></small>
     </div>
@@ -92047,7 +93157,7 @@ log:
 
   </td>
   <td>
-    <span class="text-secondary"><small>Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02019" target="blank_">mc_rtc::gui::Color</a>.</small></span>
+    <span class="text-secondary"><small>Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02026" target="blank_">mc_rtc::gui::Color</a>.</small></span>
   </td>
   
 </tr>
@@ -92058,9 +93168,9 @@ log:
       
 <div class="card card-schema">
   <div class="card-header">
-    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::Color</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02019">[API]</a></span><br />
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rtc::gui::Color</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#a02026">[API]</a></span><br />
     <div class="float-right">
-      <small class="text-muted text-right">Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02019" target="blank_">mc_rtc::gui::Color</a>.</small>
+      <small class="text-muted text-right">Color expressed as (r,g,b,a) array with values between 0 and 1. May also be a string with a color name [white, black, red, green, blue, cyan, magenta, yellow, gray, lightgray]. See <a href="/mc_rtc/doxygen.html#a02026" target="blank_">mc_rtc::gui::Color</a>.</small>
     </div>
   </div>
   <div class="card-body">

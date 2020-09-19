@@ -1,7 +1,6 @@
 var a00155 =
 [
-    [ "ConfigurationLoader< mc_rbdyn::RobotModule >", "a01571.html", "a01571" ],
-    [ "ConfigurationLoader< mc_rbdyn::RobotModulePtr >", "a01575.html", "a01575" ],
-    [ "ConfigurationLoader< mc_rbdyn::Contact >", "a01579.html", "a01579" ],
-    [ "DECLARE_IO", "a00155.html#a839325e1d657147f6c746b3043b0b1b0", null ]
+    [ "CompoundJointConstraintDescription", "a01570.html", "a01570" ],
+    [ "ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "a01574.html", "a01574" ],
+    [ "CompoundJointConstraintDescriptionVector", "a00155.html#a96a35f8f44c0b0eb301fabc4af2bd978", null ]
 ];

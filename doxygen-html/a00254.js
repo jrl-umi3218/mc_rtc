@@ -1,5 +1,5 @@
 var a00254 =
 [
-    [ "CheckboxImpl", "a01819.html", "a01819" ],
-    [ "Checkbox", "a00254.html#afc7e12ae3accc04250d14da90634986b", null ]
+    [ "ButtonImpl", "a01822.html", "a01822" ],
+    [ "Button", "a00254.html#a7d2e7edd5eaf913a973c519cdd6affa2", null ]
 ];

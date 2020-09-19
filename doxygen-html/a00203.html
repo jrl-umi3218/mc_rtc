@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>RobotModule.h File Reference</title>
+<title>RobotLoader.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -72,93 +72,52 @@ $(document).ready(function(){initNavTree('a00203.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">RobotModule.h File Reference</div>  </div>
+<div class="title">RobotLoader.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00146.html">mc_rbdyn/BodySensor.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00149.html">mc_rbdyn/Collision.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00152.html">mc_rbdyn/CompoundJointConstraintDescription.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00170.html">mc_rbdyn/Flexibility.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00173.html">mc_rbdyn/ForceSensor.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00185.html">mc_rbdyn/Mimic.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00218.html">mc_rbdyn/Springs.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03336.html">mc_rbdyn/api.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00179.html">mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h</a>&gt;</code><br />
-<code>#include &lt;mc/rtc/deprecated.hh&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00236.html">mc_rtc/constants.h</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" doxygen="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag:https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/" href="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00005.html">mc_rbdyn_urdf/urdf.h</a>&gt;</code><br />
-<code>#include &lt;RBDyn/parsers/common.h&gt;</code><br />
-<code>#include &lt;array&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00206.html">mc_rbdyn/RobotModule.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03343.html">mc_rbdyn/api.h</a>&gt;</code><br />
+<code>#include &lt;mc_rtc/config.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00344.html">mc_rtc/loader.h</a>&gt;</code><br />
 <code>#include &lt;map&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01691.html">mc_rbdyn::DevicePtrVector</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a vector of unique pointers.  <a href="a01691.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01682.html">mc_rbdyn::details::are_strings&lt; Args &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01695.html">mc_rbdyn::VisualMap</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a map from body's names to visual representations.  <a href="a01695.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01686.html">mc_rbdyn::details::are_strings&lt; T &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01699.html">mc_rbdyn::RobotModule</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01690.html">mc_rbdyn::details::are_strings&lt; T, Args... &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01703.html">mc_rbdyn::RobotModule::Gripper</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01707.html">mc_rbdyn::RobotModule::Gripper::Safety</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01694.html">mc_rbdyn::RobotLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load <a class="el" href="a01706.html">RobotModule</a> instances from shared libraries.  <a href="a01694.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00745"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html">mc_rbdyn</a></td></tr>
+<tr class="memitem:a00748"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html">mc_rbdyn</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a983157fccbdda235351228ec75cbd167"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00203.html#a983157fccbdda235351228ec75cbd167">ROBOT_MODULE_API</a></td></tr>
-<tr class="separator:a983157fccbdda235351228ec75cbd167"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:af67e459a90b9a864418fca7d55d959a3"><td class="memItemLeft" align="right" valign="top">typedef std::shared_ptr&lt; RobotModule &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a></td></tr>
-<tr class="separator:af67e459a90b9a864418fca7d55d959a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95605f5cb57b7c5b39027072bedbbc04"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html#a95605f5cb57b7c5b39027072bedbbc04">mc_rbdyn::RobotModuleVector</a> = std::vector&lt; RobotModule, Eigen::aligned_allocator&lt; RobotModule &gt; &gt;</td></tr>
-<tr class="separator:a95605f5cb57b7c5b39027072bedbbc04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00759"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00759.html">mc_rbdyn::details</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa4f40fc0642de7f1debd053f9c5d393f"><td class="memItemLeft" align="right" valign="top">RobotModule::bounds_t <a class="el" href="a03336.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html#aa4f40fc0642de7f1debd053f9c5d393f">mc_rbdyn::urdf_limits_to_bounds</a> (const rbd::parsers::Limits &amp;limits)</td></tr>
-<tr class="memdesc:aa4f40fc0642de7f1debd053f9c5d393f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts limits provided by RBDyn parsers to bounds.  <a href="a00745.html#aa4f40fc0642de7f1debd053f9c5d393f">More...</a><br /></td></tr>
-<tr class="separator:aa4f40fc0642de7f1debd053f9c5d393f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44d55a51f42d585c340944099985fa8e"><td class="memItemLeft" align="right" valign="top">RobotModule::bounds_t MC_RTC_DEPRECATED <a class="el" href="a03336.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html#a44d55a51f42d585c340944099985fa8e">mc_rbdyn::urdf_limits_to_bounds</a> (const <a class="elRef" doxygen="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag:https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/" href="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00563.html">mc_rbdyn_urdf::Limits</a> &amp;limits)</td></tr>
-<tr class="separator:a44d55a51f42d585c340944099985fa8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71fcd7fe46e75452f9c6302bb1c40412"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a71fcd7fe46e75452f9c6302bb1c40412"><td class="memTemplItemLeft" align="right" valign="top">std::conditional&lt; std::is_same&lt; std::string, T &gt;::value, const std::string &amp;, std::string &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00759.html#a71fcd7fe46e75452f9c6302bb1c40412">mc_rbdyn::details::to_string</a> (const T &amp;value)</td></tr>
+<tr class="separator:a71fcd7fe46e75452f9c6302bb1c40412"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a983157fccbdda235351228ec75cbd167"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a983157fccbdda235351228ec75cbd167">&#9670;&nbsp;</a></span>ROBOT_MODULE_API</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ROBOT_MODULE_API</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00203.html">RobotModule.h</a></li>
-    <li class="footer">Generated on Mon Sep 14 2020 07:42:07 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a00203.html">RobotLoader.h</a></li>
+    <li class="footer">Generated on Sat Sep 19 2020 16:26:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

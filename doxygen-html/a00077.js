@@ -1,4 +1,5 @@
 var a00077 =
 [
-    [ "GlobalPluginPtr", "a00077.html#a077624dc5665df1a3e145d0283e10c78", null ]
+    [ "GlobalPlugin", "a01462.html", "a01462" ],
+    [ "GLOBAL_PLUGIN_API", "a00077.html#adda9065a64d1bb53f70cc10616e220fe", null ]
 ];

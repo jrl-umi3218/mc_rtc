@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_tasks Namespace Reference</title>
+<title>mc_control Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -72,142 +72,113 @@ $(document).ready(function(){initNavTree('a00743.html','');});
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">mc_tasks Namespace Reference</div>  </div>
+<div class="title">mc_control Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00771"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00771.html">force</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00744"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html">lipm_stabilizer</a></td></tr>
+<tr class="memitem:a00744"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html">fsm</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02303.html">AddContactTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a contact.  <a href="a02303.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01350.html">CompletionCriteria</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A generic MetaTask completion criteria.  <a href="a01350.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02299.html">AddRemoveContactTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add or remove a contact.  <a href="a02299.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01358.html">ControllerClient</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data and interact with a <a class="el" href="a01362.html" title="Serves data and allow interaction with the controllers. ">ControllerServer</a>.  <a href="a01358.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02315.html">BSplineTrajectoryTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Track a bezier curve with a robot surface.  <a href="a02315.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01486.html">ControllerResetData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains information allowing the controller to start smoothly from the current state of the robot.  <a href="a01486.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02323.html">CoMTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control a robot's CoM.  <a href="a02323.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01362.html">ControllerServer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serves data and allow interaction with the controllers.  <a href="a01362.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02335.html">EndEffectorTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls an end-effector.  <a href="a02335.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01354.html">ElementId</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to uniquely identify an element.  <a href="a01354.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02339.html">ExactCubicTrajectoryTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Track an exact cubic spline, that is a curve passing exactly through waypoints in position, with optional initial and final velocity and acceleration.  <a href="a02339.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01462.html">GlobalPlugin</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02343.html">GazeTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the Gaze of a body.  <a href="a02343.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01458.html">Gripper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A robot's gripper reprensentation.  <a href="a01458.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02371.html">LookAtSurfaceTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Track a surface position with a "gaze" vector. This task is a convenience wrapper for <a class="el" href="a02375.html" title="Orient a &quot;gaze&quot; vector defined on a body to look towards a world position. This task is a convenience...">LookAtTask</a> that takes care of automatically updating the gaze target.  <a href="a02371.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01490.html">MCController</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a01490.html" title="MCController is the base class to implement all controllers. ">MCController</a> is the base class to implement all controllers.  <a href="a01490.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02375.html">LookAtTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Orient a "gaze" vector defined on a body to look towards a world position. This task is a convenience wrapper around <a class="el" href="a02427.html" title="Control the orientation of a body. ">VectorOrientationTask</a>.  <a href="a02375.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html">MCGlobalController</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02455.html">LookAtTFTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the gaze vector of a body to look towards a world position updated at each iteration from a ROS TF Frame.  <a href="a02455.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01482.html">MCPythonController</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02379.html">MetaTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a generic task.  <a href="a02379.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01478.html">PythonRWCallback</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02383.html">MetaTaskLoader</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02387.html">MomentumTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the momentum of a robot.  <a href="a02387.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02391.html">OrientationTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the orientation of a body.  <a href="a02391.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02395.html">PositionBasedVisServoTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Servo an end-effector depending on position error.  <a href="a02395.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02399.html">PositionTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the position of a body.  <a href="a02399.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02403.html">PostureTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A posture task for a given robot.  <a href="a02403.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02407.html">RelativeEndEffectorTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls an end-effector relatively to another body.  <a href="a02407.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02307.html">RemoveContactTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a contact.  <a href="a02307.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02411.html">SmoothTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a02411.html" title="SmoothTask allows to smoothly reach a final weight and objective for a given task. ">SmoothTask</a> allows to smoothly reach a final weight and objective for a given task.  <a href="a02411.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02415.html">SplineTrajectoryTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic CRTP implementation for a task tracking a curve in both position and orientation. This class takes care of much of the logic behind tracking a curve:  <a href="a02415.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02419.html">SurfaceTransformTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the Surface of a body.  <a href="a02419.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02423.html">TrajectoryTaskGeneric</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic wrapper for a tasks::qp::TrajectoryTask.  <a href="a02423.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02427.html">VectorOrientationTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control the orientation of a body.  <a href="a02427.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01498.html">SimulationContactPair</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a3ce36af538f25151dc006eb3d50e8b3d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html#a3ce36af538f25151dc006eb3d50e8b3d">MetaTaskPtr</a> = std::shared_ptr&lt; <a class="el" href="a02379.html">MetaTask</a> &gt;</td></tr>
-<tr class="separator:a3ce36af538f25151dc006eb3d50e8b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:aa673a5574c449b983c740d35cddf6669"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03345.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a> double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html#aa673a5574c449b983c740d35cddf6669">extraStiffness</a> (double error, double extraStiffness)</td></tr>
-<tr class="separator:aa673a5574c449b983c740d35cddf6669"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e724381ca619d4c38da5fd7cdbfe9c0"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html#a6e724381ca619d4c38da5fd7cdbfe9c0">Configuration</a> = <a class="el" href="a01754.html">mc_rtc::Configuration</a></td></tr>
+<tr class="separator:a6e724381ca619d4c38da5fd7cdbfe9c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67d3b51822d3e7d0c56d9af675f9eaa1"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html#a67d3b51822d3e7d0c56d9af675f9eaa1">GripperPtr</a> = std::unique_ptr&lt; <a class="el" href="a01458.html">Gripper</a> &gt;</td></tr>
+<tr class="separator:a67d3b51822d3e7d0c56d9af675f9eaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39b3dee4f4017bab0f389d9bfd7877dc"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html#a39b3dee4f4017bab0f389d9bfd7877dc">GripperRef</a> = std::reference_wrapper&lt; <a class="el" href="a01458.html">Gripper</a> &gt;</td></tr>
+<tr class="separator:a39b3dee4f4017bab0f389d9bfd7877dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a077624dc5665df1a3e145d0283e10c78"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html#a077624dc5665df1a3e145d0283e10c78">GlobalPluginPtr</a> = std::unique_ptr&lt; <a class="el" href="a01462.html">GlobalPlugin</a>, <a class="el" href="a02074.html">mc_rtc::ObjectLoader</a>&lt; <a class="el" href="a01462.html">GlobalPlugin</a> &gt;::ObjectDeleter &gt;</td></tr>
+<tr class="separator:a077624dc5665df1a3e145d0283e10c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="a3ce36af538f25151dc006eb3d50e8b3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ce36af538f25151dc006eb3d50e8b3d">&#9670;&nbsp;</a></span>MetaTaskPtr</h2>
+<a id="a6e724381ca619d4c38da5fd7cdbfe9c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e724381ca619d4c38da5fd7cdbfe9c0">&#9670;&nbsp;</a></span>Configuration</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00743.html#a3ce36af538f25151dc006eb3d50e8b3d">mc_tasks::MetaTaskPtr</a> = typedef std::shared_ptr&lt;<a class="el" href="a02379.html">MetaTask</a>&gt;</td>
+          <td class="memname">using <a class="el" href="a00743.html#a6e724381ca619d4c38da5fd7cdbfe9c0">mc_control::Configuration</a> = typedef <a class="el" href="a01754.html">mc_rtc::Configuration</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="aa673a5574c449b983c740d35cddf6669"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa673a5574c449b983c740d35cddf6669">&#9670;&nbsp;</a></span>extraStiffness()</h2>
+<a id="a077624dc5665df1a3e145d0283e10c78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a077624dc5665df1a3e145d0283e10c78">&#9670;&nbsp;</a></span>GlobalPluginPtr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a03345.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a> double mc_tasks::extraStiffness </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>error</em>, </td>
+          <td class="memname">using <a class="el" href="a00743.html#a077624dc5665df1a3e145d0283e10c78">mc_control::GlobalPluginPtr</a> = typedef std::unique_ptr&lt;<a class="el" href="a01462.html">GlobalPlugin</a>, <a class="el" href="a02074.html">mc_rtc::ObjectLoader</a>&lt;<a class="el" href="a01462.html">GlobalPlugin</a>&gt;::ObjectDeleter&gt;</td>
         </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a67d3b51822d3e7d0c56d9af675f9eaa1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67d3b51822d3e7d0c56d9af675f9eaa1">&#9670;&nbsp;</a></span>GripperPtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>extraStiffness</em>&#160;</td>
+          <td class="memname">using <a class="el" href="a00743.html#a67d3b51822d3e7d0c56d9af675f9eaa1">mc_control::GripperPtr</a> = typedef std::unique_ptr&lt;<a class="el" href="a01458.html">Gripper</a>&gt;</td>
         </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a39b3dee4f4017bab0f389d9bfd7877dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39b3dee4f4017bab0f389d9bfd7877dc">&#9670;&nbsp;</a></span>GripperRef</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
         <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">using <a class="el" href="a00743.html#a39b3dee4f4017bab0f389d9bfd7877dc">mc_control::GripperRef</a> = typedef std::reference_wrapper&lt;<a class="el" href="a01458.html">Gripper</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -220,8 +191,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00743.html">mc_tasks</a></li>
-    <li class="footer">Generated on Mon Sep 14 2020 07:42:08 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00743.html">mc_control</a></li>
+    <li class="footer">Generated on Sat Sep 19 2020 16:26:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

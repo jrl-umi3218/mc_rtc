@@ -1,10 +1,7 @@
 var a00766 =
 [
-    [ "callback_is_serializable", "a02123.html", "a02123" ],
-    [ "FlatLog", "a02091.html", "a02091" ],
-    [ "GetLogType", "a02107.html", "a02107" ],
-    [ "GetLogType< std::array< double, N > >", "a02115.html", "a02115" ],
-    [ "GetLogType< std::vector< double, A > >", "a02111.html", "a02111" ],
-    [ "is_serializable", "a02119.html", "a02119" ],
-    [ "LogWriter", "a02127.html", "a02127" ]
+    [ "impl", "a00767.html", "a00767" ],
+    [ "AxisConfiguration", "a01954.html", "a01954" ],
+    [ "PolygonDescription", "a01958.html", "a01958" ],
+    [ "Range", "a01950.html", "a01950" ]
 ];

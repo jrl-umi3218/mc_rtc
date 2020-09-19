@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>ObserverMacros.h File Reference</title>
+<title>ObserverLoader.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,82 +70,38 @@ $(document).ready(function(){initNavTree('a00134.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
-<div class="title">ObserverMacros.h File Reference</div>  </div>
+<div class="title">ObserverLoader.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00128.html">mc_observers/Observer.h</a>&gt;</code><br />
-<code>#include &lt;mc_rtc/version.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00131.html">mc_observers/Observer.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a03337.html">mc_observers/api.h</a>&gt;</code><br />
+<code>#include &lt;mc_rtc/config.h&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00344.html">mc_rtc/loader.h</a>&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:aee019e14ca218a864623e4ecbf736679"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#aee019e14ca218a864623e4ecbf736679">OBSERVER_MODULE_CHECK_VERSION</a>(NAME)</td></tr>
-<tr class="memdesc:aee019e14ca218a864623e4ecbf736679"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple compile-time versus run-time version checking macro.  <a href="#aee019e14ca218a864623e4ecbf736679">More...</a><br /></td></tr>
-<tr class="separator:aee019e14ca218a864623e4ecbf736679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6dc028023a125205a51522a9667d755"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#af6dc028023a125205a51522a9667d755">EXPORT_OBSERVER_MODULE</a>(NAME,  TYPE)</td></tr>
-<tr class="separator:af6dc028023a125205a51522a9667d755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01542.html">mc_observers::ObserverLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load <a class="el" href="a01538.html" title="State observation API. ">Observer</a> instances from shared libraries.  <a href="a01542.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:a00751"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html">mc_observers</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="af6dc028023a125205a51522a9667d755"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6dc028023a125205a51522a9667d755">&#9670;&nbsp;</a></span>EXPORT_OBSERVER_MODULE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define EXPORT_OBSERVER_MODULE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">NAME, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">TYPE&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span>                                                                                         \</div><div class="line">  {                                                                                                  \</div><div class="line">    OBSERVER_MODULE_API <span class="keywordtype">void</span> MC_RTC_OBSERVER_MODULE(std::vector&lt;std::string&gt; &amp; names)                \</div><div class="line">    {                                                                                                \</div><div class="line">      OBSERVER_MODULE_CHECK_VERSION(NAME)                                                            \</div><div class="line">      names = {NAME};                                                                                \</div><div class="line">    }                                                                                                \</div><div class="line">    OBSERVER_MODULE_API <span class="keywordtype">void</span> destroy(<a class="code" href="a01531.html">mc_observers::Observer</a> * ptr)                                   \</div><div class="line">    {                                                                                                \</div><div class="line">      delete ptr;                                                                                    \</div><div class="line">    }                                                                                                \</div><div class="line">    OBSERVER_MODULE_API <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> create_args_required()                                          \</div><div class="line">    {                                                                                                \</div><div class="line">      return 2;                                                                                      \</div><div class="line">    }                                                                                                \</div><div class="line">    OBSERVER_MODULE_API <a class="code" href="a01531.html">mc_observers::Observer</a> * create(<span class="keyword">const</span> std::string &amp; type, <span class="keyword">const</span> <span class="keywordtype">double</span> &amp; dt) \</div><div class="line">    {                                                                                                \</div><div class="line">      return <span class="keyword">new</span> TYPE{type, dt};                                                                     \</div><div class="line">    }                                                                                                \</div><div class="line">  }</div><div class="ttc" id="a01531_html"><div class="ttname"><a href="a01531.html">mc_observers::Observer</a></div><div class="ttdoc">State observation API. </div><div class="ttdef"><b>Definition:</b> Observer.h:50</div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="aee019e14ca218a864623e4ecbf736679"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee019e14ca218a864623e4ecbf736679">&#9670;&nbsp;</a></span>OBSERVER_MODULE_CHECK_VERSION</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define OBSERVER_MODULE_CHECK_VERSION</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">NAME</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span>(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                \</div><div class="line">  {                                                                                                              <a class="code" href="a00766.html#aa189b2ec856ad8f96d632d635efc05ce">\</a></div><div class="line"><a class="code" href="a00766.html#aa189b2ec856ad8f96d632d635efc05ce">    mc_rtc::log::error</a>(                                                                                          \</div><div class="line">        <span class="stringliteral">&quot;{} was compiled with {} but mc_rtc is currently at version {}, you might experience subtle issues and &quot;</span> \</div><div class="line">        <span class="stringliteral">&quot;should recompile your code&quot;</span>,                                                                            \</div><div class="line">        NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version());                                                        \</div><div class="line">  }</div><div class="ttc" id="a00766_html_aa189b2ec856ad8f96d632d635efc05ce"><div class="ttname"><a href="a00766.html#aa189b2ec856ad8f96d632d635efc05ce">mc_rtc::log::error</a></div><div class="ttdeci">void error(Args &amp;&amp;... args)</div><div class="ttdef"><b>Definition:</b> logging.h:47</div></div>
-</div><!-- fragment -->
-<p>A simple compile-time versus run-time version checking macro. </p>
-<p>If you are not relying on EXPORT_OBSERVER_MODULE you should use this in your MC_RTC_OBSERVER_MODULE implementation </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_dd557f61e1b89092937f946325ef4783.html">mc_observers</a></li><li class="navelem"><a class="el" href="a00134.html">ObserverMacros.h</a></li>
-    <li class="footer">Generated on Mon Sep 14 2020 07:42:07 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_dd557f61e1b89092937f946325ef4783.html">mc_observers</a></li><li class="navelem"><a class="el" href="a00134.html">ObserverLoader.h</a></li>
+    <li class="footer">Generated on Sat Sep 19 2020 16:26:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
