@@ -10,7 +10,7 @@
       "type": "object",
       "title": "PostureTaskConfig",
       "description": "Configuration for the gains and targets of the posture task",
-      "allOf":[ "$ref": "/../../common/PostureTask_targets_properties.json" ]
+      "allOf":[ { "$ref": "/../../common/PostureTask_targets_properties.json" } ]
     },
     "completion": { "$ref": "/../../common/completion_criteria.json" }
   }
