@@ -12,14 +12,8 @@ struct MC_CONTROL_DLLAPI DoorSampleController : public mc_control::fsm::Controll
 {
   DoorSampleController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config);
 
-  void reset(const mc_control::ControllerResetData & reset_data) override;
-  bool run() override;
-
   void supported_robots(std::vector<std::string> & out) const override
   {
     out = {"jvrc1"};
   }
-
-protected:
-  double t_ = 0; ///< Elapsed time since the controller started
 };
