@@ -93,7 +93,8 @@ The way options are combined depends on the C++ state implementation and should 
 
 ## States already implemented in mc_rtc
 
-This section covers states that are provided as part of mc_rtc.
+
+This section covers the main states that are provided as part of mc_rtc. A complete description of all available states and their configuration can be found in the [States JSON Schema]({{site.baseurl}}/json.html#State-objects).
 
 <ul class="nav nav-tabs" id="statesTab" role="tablist">
   <li class="nav-item">

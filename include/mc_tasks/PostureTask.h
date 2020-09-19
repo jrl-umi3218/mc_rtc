@@ -19,6 +19,9 @@ public:
 
   void reset() override;
 
+  /*! \brief Load parameters from a Configuration object */
+  void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
+
   /** Does not make much sense for PostureTask, prefer selectActiveJoints
    * or selectUnactiveJoints */
   void dimWeight(const Eigen::VectorXd &) override {}

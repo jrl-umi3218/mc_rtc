@@ -39,6 +39,31 @@ void PostureTask::reset()
   posture_ = pt_.posture();
 }
 
+void PostureTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+{
+  MetaTask::load(solver, config);
+  if(config.has("posture"))
+  {
+    this->posture(config("posture"));
+  }
+  if(config.has("jointGains"))
+  {
+    this->jointGains(solver, config("jointGains"));
+  }
+  if(config.has("target"))
+  {
+    this->target(config("target"));
+  }
+  if(config.has("stiffness"))
+  {
+    this->stiffness(config("stiffness"));
+  }
+  if(config.has("weight"))
+  {
+    this->weight(config("weight"));
+  }
+}
+
 void PostureTask::selectActiveJoints(mc_solver::QPSolver & solver,
                                      const std::vector<std::string> & activeJointsName,
                                      const std::map<std::string, std::vector<std::array<int, 2>>> &)
@@ -266,18 +291,6 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       auto t =
           std::make_shared<mc_tasks::PostureTask>(solver, robotIndex, config("stiffness", 1.), config("weight", 10.));
       t->load(solver, config);
-      if(config.has("posture"))
-      {
-        t->posture(config("posture"));
-      }
-      if(config.has("jointGains"))
-      {
-        t->jointGains(solver, config("jointGains"));
-      }
-      if(config.has("target"))
-      {
-        t->target(config("target"));
-      }
       return t;
     });
 }

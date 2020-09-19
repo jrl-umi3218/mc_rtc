@@ -1,0 +1,46 @@
+{
+  "properties":
+  {
+    "posture": 
+    { 
+      "type": "array", 
+      "description": "Posture target",
+      "items": 
+      { 
+        "type": "array", 
+        "items": { "type": "number" } 
+      } 
+    },
+    "jointGains": 
+    { 
+      "type": "array", 
+      "description": "Gains for specific joints",
+      "items": 
+      { 
+        "$ref": "/../../Tasks/JointGains.json" 
+      } 
+    },
+    "target":
+    {
+      "type": "array",
+      "description": "Map of joint names -> vector of joint values",
+      "items":
+      {
+        "type": "array",
+        "items":
+        [
+          { "type": "string" },
+          {
+            "type": "array",
+            "items": [
+              {"type": "number"}
+            ]
+          }
+        ]
+      }
+    },
+    "weight": { "type": "number", "default": 10, "description": "Task's weight" },
+    "stiffness": { "type": "number", "default": 1, "description": "Tasks's stiffness" }
+  
+  }
+}

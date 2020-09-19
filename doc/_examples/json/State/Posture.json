@@ -1,0 +1,27 @@
+{
+  "robot": "door",
+  "completion": {
+    "eval": 0.01
+  },
+  "postureTask": {
+    "weight": 100,
+    "jointGains": [
+      {
+        "jointName": "handle",
+        "stiffness": 50
+      },
+      {
+        "jointName": "door",
+        "stiffness": 50
+      }
+    ],
+    "target": {
+      "handle": [
+        -1.0
+      ],
+      "door": [
+        -0.3
+      ]
+    }
+  }
+}

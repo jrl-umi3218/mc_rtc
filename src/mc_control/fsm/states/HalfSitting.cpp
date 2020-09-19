@@ -13,6 +13,11 @@ namespace fsm
 
 void HalfSittingState::configure(const mc_rtc::Configuration & config)
 {
+  if(config.has("robot"))
+  {
+    has_robot_ = true;
+    robot_ = static_cast<std::string>(config("robot"));
+  }
   if(config.has("stiffness"))
   {
     has_stiffness_ = true;
@@ -27,7 +32,11 @@ void HalfSittingState::configure(const mc_rtc::Configuration & config)
 
 void HalfSittingState::start(Controller & ctl)
 {
-  auto postureTask = ctl.getPostureTask(ctl.robot().name());
+  if(!has_robot_)
+  {
+    robot_ = ctl.robot().name();
+  }
+  auto postureTask = ctl.getPostureTask(robot_);
   default_stiffness_ = postureTask->stiffness();
   if(has_stiffness_)
   {
@@ -49,7 +58,7 @@ void HalfSittingState::start(Controller & ctl)
 
 bool HalfSittingState::run(Controller & ctl)
 {
-  auto postureTask = ctl.getPostureTask(ctl.robot().name());
+  auto postureTask = ctl.getPostureTask(robot_);
   if(!has_eval_ || postureTask->eval().norm() < eval_threshold_)
   {
     postureTask->stiffness(default_stiffness_);

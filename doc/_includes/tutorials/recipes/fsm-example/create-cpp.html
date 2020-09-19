@@ -1,0 +1,97 @@
+<p>We will use <code>mc_rtc_new_fsm_controller</code> provided by mc_rtc to setup a new FSM controller project:</p>
+
+{% highlight bash %}
+$ mc_rtc_new_fsm_controller --help
+usage: mc_rtc_new_fsm_controller [-h]
+                             [project directory] [controller class name]
+                             [[controller name]]
+
+Create a new mc_rtc Controller project
+
+positional arguments:
+  [project directory]   Path of the project
+  [controller class name]
+                        Name of the controller class
+  [controller name]     Name of the controller, defaults to controller class
+                        name
+
+optional arguments:
+  -h, --help            show this help message and exit
+{% endhighlight %}
+
+<p><em>Note: this tool requires Git for Python which is available as python-git in Debian-like systems and GitPython in pip</em></p>
+
+<p>In this tutorial we will create a tutorial controller named <code>MyFirstFSMController</code>, so we can use the following command:</p>
+
+{% highlight bash %}
+$ mc_rtc_new_fsm_controller my_first_fsm_controller MyFirstFSMController
+{% endhighlight %}
+
+<p>Going into the newly created <code>my_first_fsm_controller</code> folder we can see some files have been automatically generated:</p>
+
+<dl class="row">
+  <dt class="col-3">CMakeLists.txt</dt>
+  <dd class="col-9">A minimal CMake file to build your controller</dd>
+
+  <dt class="col-3">etc/MyFirstFSMController.in.yaml</dt>
+  <dd class="col-9">Your controller's FSM configuration file.</dd>
+
+  <dt class="col-3">src/CMakeLists.txt</dt>
+  <dd class="col-9">Describe the source files required to build your controller</dd>
+
+  <dt class="col-3">src/api.h</dt>
+  <dd class="col-9">Declaration to make sure your controller will be loadable on all platforms</dd>
+
+  <dt class="col-3">src/MyFirstFSMController.h</dt>
+  <dd class="col-9">Declare your controller class. It must inherits from {% doxygen mc_control::fsm::Controller %} and override at least the run function and the reset function</dd>
+
+  <dt class="col-3">src/MyFirstFSMController.cpp</dt>
+  <dd class="col-9">Implement your controller. We will go over this in more details in the next sections</dd>
+
+  <dt class="col-3">src/states/</dt>
+  <dd class="col-9">Defines the controller's states (C++ or YAML)</dd>
+
+  <dt class="col-3">src/states/CMakeLists.txt</dt>
+  <dd class="col-9">Builds and exports the controller's states</dd>
+
+  <dt class="col-3">src/states/Door_Initial.h</dt>
+  <dd class="col-9">Declaration of a new C++ state</dd>
+
+  <dt class="col-3">src/states/Door_Initial.cpp</dt>
+  <dd class="col-9">Implementation for the state. In this tutorial, it'll consist of a simple state that adds a button to trigger the "Open Door" transition</dd>
+
+  <dt class="col-3">src/states/data</dt>
+  <dd class="col-9">Additional YAML configuration for the FSM states. You may declare states by adding them to YAML/JSON files in this folder.</dd>
+</dl>
+
+<h4>Building the controller</h4>
+
+<p>This is done using CMake and your usual tool to run CMake, build the code and install it. Typically, on Linux/MacOS:</p>
+
+{% highlight bash %}
+$ mkdir -p build
+$ cd build
+# This build type provides good performance with debuggable code
+$ cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo
+$ make
+$ sudo make install
+{% endhighlight %}
+
+<p><em>Note: <code>sudo</code> is only required if mc_rtc is installed in a privileged directory</em></p>
+
+<h4>Running the controller</h4>
+
+<p>Modify your mc_rtc configuration file so that we use the JVRC1 robot and our newly installed controller:</p>
+
+{% highlight yaml %}
+MainRobot: JVRC1
+Enabled: MyFirstFSMController
+{% endhighlight %}
+
+<p>Then run your controller as explained in <a href="{{site.baseurl}}/tutorials/introduction/running-a-controller.html">Running a controller</a> section. Congratulations, you just built and and ran your first FSM controller!</p>
+
+{% highlight bash %}
+$ roslaunch mc_rtc_ticker display.launch
+$ rosrun mc_rtc_ticker mc_rtc_ticker
+{% endhighlight %}
+

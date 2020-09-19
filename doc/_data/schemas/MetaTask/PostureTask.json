@@ -10,39 +10,14 @@
       "properties":
       {
         "type": { "enum": ["posture"] },
-        "posture": { "type": "array", "items": { "type": "array", "items": { "type": "number" } } },
-        "jointGains": { "type": "array", "items": { "$ref": "/../../Tasks/JointGains.json" } },
-        "target":
-        {
-          "type": "array",
-          "description": "Map of joint names -> vector of joint values",
-          "items":
-          {
-            "type": "array",
-            "items":
-            [
-              { "type": "string" },
-              {
-                "type": "array",
-                "items": [
-                  {"type": "number"}
-                ]
-              }
-            ]
-          }
-        }
+        "dimWeight": { "$ref": "/../../Eigen/VectorXd.json", "description": "Ignored by PostureTask" }
       }
     },
     {
       "$ref": "/../../common/TrajectoryTaskGeneric.json"
     },
     {
-      "properties":
-      {
-        "weight": { "default": 10 },
-        "stiffness": { "default": 1 },
-        "dimWeight": { "$ref": "/../../Eigen/VectorXd.json", "description": "Ignored by PostureTask" }
-      }
+      "$ref": "/../../common/PostureTask_targets_properties.json"
     }
   ],
   "required": ["type"]
