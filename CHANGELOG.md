@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixes
+
+- [mc_observers] Fix configuration reading for anchor frame configuration
+
 ## [1.5.1] - 2020-09-14
 
 ### Added
