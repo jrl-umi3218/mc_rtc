@@ -61,6 +61,23 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   torsoTask->name(n + "_torso");
 }
 
+StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
+                               const mc_rbdyn::Robots & realRobots,
+                               unsigned int robotIndex,
+                               double dt)
+: StabilizerTask(robots,
+                 realRobots,
+                 robotIndex,
+                 robots.robot(robotIndex).module().defaultLIPMStabilizerConfiguration().leftFootSurface,
+                 robots.robot(robotIndex).module().defaultLIPMStabilizerConfiguration().rightFootSurface,
+                 robots.robot(robotIndex).module().defaultLIPMStabilizerConfiguration().torsoBodyName,
+                 dt)
+{
+  reset();
+  configure(robots.robot(robotIndex).module().defaultLIPMStabilizerConfiguration());
+  setContacts({ContactState::Left, ContactState::Right});
+}
+
 void StabilizerTask::reset()
 {
   t_ = 0;

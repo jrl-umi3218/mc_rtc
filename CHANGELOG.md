@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- [mc_tasks] Add a simple constructor for StabilizerTask
+
 ### Fixes
 
 - [mc_observers] Fix configuration reading for anchor frame configuration

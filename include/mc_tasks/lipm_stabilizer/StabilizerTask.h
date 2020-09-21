@@ -72,6 +72,25 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
                  double dt);
 
   /**
+   * @brief Creates a stabilizer meta task
+   *
+   * This constructor uses the stabilizer configuration in the robot module associated to the controlled robot. The
+   * stabilizer is started with two feet contacts.
+   *
+   * @param robots Robots on which the task acts
+   *
+   * @param realRobots Corresponding real robots instance
+   *
+   * @param robotIndex Index of the robot
+   *
+   * @param dt Controller's timestep
+   */
+  StabilizerTask(const mc_rbdyn::Robots & robots,
+                 const mc_rbdyn::Robots & realRobots,
+                 unsigned int robotIndex,
+                 double dt);
+
+  /**
    * @brief Resets the stabilizer tasks and parameters to their default configuration.
    *
    * Resets all tasks and errors/integrator/derivators to their initial
