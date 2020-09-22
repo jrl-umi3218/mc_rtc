@@ -119,7 +119,7 @@ var searchData=
   ['stabilizerconfiguration_2eh',['StabilizerConfiguration.h',['../a00182.html',1,'']]],
   ['stabilizerstandingstate',['StabilizerStandingState',['../a01446.html',1,'mc_control::fsm']]],
   ['stabilizerstandingstate_2eh',['StabilizerStandingState.h',['../a00065.html',1,'']]],
-  ['stabilizertask',['StabilizerTask',['../a02366.html',1,'mc_tasks::lipm_stabilizer::StabilizerTask'],['../a02366.html#aa1d5ba976db61be09781ea564a2a7bb5',1,'mc_tasks::lipm_stabilizer::StabilizerTask::StabilizerTask()']]],
+  ['stabilizertask',['StabilizerTask',['../a02366.html',1,'mc_tasks::lipm_stabilizer::StabilizerTask'],['../a02366.html#aa1d5ba976db61be09781ea564a2a7bb5',1,'mc_tasks::lipm_stabilizer::StabilizerTask::StabilizerTask(const mc_rbdyn::Robots &amp;robots, const mc_rbdyn::Robots &amp;realRobots, unsigned int robotIndex, const std::string &amp;leftSurface, const std::string &amp;rightSurface, const std::string &amp;torsoBodyName, double dt)'],['../a02366.html#acbc98793917ce33829d717f289906192',1,'mc_tasks::lipm_stabilizer::StabilizerTask::StabilizerTask(const mc_rbdyn::Robots &amp;robots, const mc_rbdyn::Robots &amp;realRobots, unsigned int robotIndex, double dt)']]],
   ['stabilizertask_2eh',['StabilizerTask.h',['../a00464.html',1,'']]],
   ['stabilizertask_5f',['stabilizerTask_',['../a01446.html#ac1b5a6462db239740800b703e5ef6d38',1,'mc_control::fsm::StabilizerStandingState']]],
   ['stance',['stance',['../a01678.html#ac4b932fc4c4956b16490006dd8591d0e',1,'mc_rbdyn::Robot::stance()'],['../a01706.html#ae00ee36a0f17eaf23aadcb7643186fa4',1,'mc_rbdyn::RobotModule::stance()']]],

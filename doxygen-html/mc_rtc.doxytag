@@ -28136,6 +28136,13 @@
       <arglist>(const mc_rbdyn::Robots &amp;robots, const mc_rbdyn::Robots &amp;realRobots, unsigned int robotIndex, const std::string &amp;leftSurface, const std::string &amp;rightSurface, const std::string &amp;torsoBodyName, double dt)</arglist>
     </member>
     <member kind="function">
+      <type></type>
+      <name>StabilizerTask</name>
+      <anchorfile>a02366.html</anchorfile>
+      <anchor>acbc98793917ce33829d717f289906192</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robots, const mc_rbdyn::Robots &amp;realRobots, unsigned int robotIndex, double dt)</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>reset</name>
       <anchorfile>a02366.html</anchorfile>

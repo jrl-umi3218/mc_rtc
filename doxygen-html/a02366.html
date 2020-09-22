@@ -103,6 +103,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa1d5ba976db61be09781ea564a2a7bb5"><td class="memItemLeft" align="right" valign="top">EIGEN_MAKE_ALIGNED_OPERATOR_NEW&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02366.html#aa1d5ba976db61be09781ea564a2a7bb5">StabilizerTask</a> (const <a class="el" href="a01718.html">mc_rbdyn::Robots</a> &amp;robots, const <a class="el" href="a01718.html">mc_rbdyn::Robots</a> &amp;realRobots, unsigned int robotIndex, const std::string &amp;leftSurface, const std::string &amp;rightSurface, const std::string &amp;torsoBodyName, double dt)</td></tr>
 <tr class="memdesc:aa1d5ba976db61be09781ea564a2a7bb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a stabilizer meta task.  <a href="#aa1d5ba976db61be09781ea564a2a7bb5">More...</a><br /></td></tr>
 <tr class="separator:aa1d5ba976db61be09781ea564a2a7bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbc98793917ce33829d717f289906192"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02366.html#acbc98793917ce33829d717f289906192">StabilizerTask</a> (const <a class="el" href="a01718.html">mc_rbdyn::Robots</a> &amp;robots, const <a class="el" href="a01718.html">mc_rbdyn::Robots</a> &amp;realRobots, unsigned int robotIndex, double dt)</td></tr>
+<tr class="memdesc:acbc98793917ce33829d717f289906192"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a stabilizer meta task.  <a href="#acbc98793917ce33829d717f289906192">More...</a><br /></td></tr>
+<tr class="separator:acbc98793917ce33829d717f289906192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65b51a83fbd47db891199fdafdc50220"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02366.html#a65b51a83fbd47db891199fdafdc50220">reset</a> () override</td></tr>
 <tr class="memdesc:a65b51a83fbd47db891199fdafdc50220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the stabilizer tasks and parameters to their default configuration.  <a href="#a65b51a83fbd47db891199fdafdc50220">More...</a><br /></td></tr>
 <tr class="separator:a65b51a83fbd47db891199fdafdc50220"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -433,7 +436,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Which boils down into corresponding formulas for the CoP and CoM acceleration targets. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa1d5ba976db61be09781ea564a2a7bb5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1d5ba976db61be09781ea564a2a7bb5">&#9670;&nbsp;</a></span>StabilizerTask()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1d5ba976db61be09781ea564a2a7bb5">&#9670;&nbsp;</a></span>StabilizerTask() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -497,6 +500,58 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramname">leftSurface</td><td>Left foot surface name. Its origin should be the center of the foot sole </td></tr>
     <tr><td class="paramname">rightSurface</td><td>Left foot surface name. Its origin should be the center of the foot sole </td></tr>
     <tr><td class="paramname">torsoBodyName</td><td>Body name of the robot's torso (i.e a link above the floating base) </td></tr>
+    <tr><td class="paramname">dt</td><td>Controller's timestep </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acbc98793917ce33829d717f289906192"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbc98793917ce33829d717f289906192">&#9670;&nbsp;</a></span>StabilizerTask() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_tasks::lipm_stabilizer::StabilizerTask::StabilizerTask </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01718.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robots</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01718.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>realRobots</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>robotIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a stabilizer meta task. </p>
+<p>This constructor uses the stabilizer configuration in the robot module associated to the controlled robot. The stabilizer is started with two feet contacts.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">robots</td><td>Robots on which the task acts</td></tr>
+    <tr><td class="paramname">realRobots</td><td>Corresponding real robots instance</td></tr>
+    <tr><td class="paramname">robotIndex</td><td>Index of the robot</td></tr>
     <tr><td class="paramname">dt</td><td>Controller's timestep </td></tr>
   </table>
   </dd>
@@ -3321,7 +3376,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00746.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00747.html">lipm_stabilizer</a></li><li class="navelem"><a class="el" href="a02366.html">StabilizerTask</a></li>
-    <li class="footer">Generated on Sun Sep 20 2020 00:09:51 for mc_rtc by
+    <li class="footer">Generated on Tue Sep 22 2020 04:22:56 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

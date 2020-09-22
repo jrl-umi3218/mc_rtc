@@ -2,6 +2,7 @@ var a02366 =
 [
     [ "EnumClassHash", "a02370.html", "a02370" ],
     [ "StabilizerTask", "a02366.html#aa1d5ba976db61be09781ea564a2a7bb5", null ],
+    [ "StabilizerTask", "a02366.html#acbc98793917ce33829d717f289906192", null ],
     [ "addToGUI", "a02366.html#a50bd7771e0e45cd45b507af97b285544", null ],
     [ "addToLogger", "a02366.html#a0806e753efb5d4a75ea474d775ccadf4", null ],
     [ "addToSolver", "a02366.html#ac7709c43f16a9b418ecf2619d69821a6", null ],
