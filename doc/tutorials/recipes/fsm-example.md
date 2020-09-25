@@ -303,4 +303,4 @@ Conclusion
 In this tutorial, we have seen how to create an FSM from scratch, and achieve a rather complex multi-robot motion by relying on the main FSM states provided by the framework, along with the multi-robot aspect of task-space control. It is important to note that one is not restricted to the YAML features used here, and that you can easily write your own states to define and abstract more complex behaviours.
 
 See also:
-- The [Admittance sample tutorial]({{site.baseurl}}tutorials/samples/sample-admittance.html) for a similar FSM with the addition of force control.
+- The [Admittance sample tutorial]({{site.baseurl}}/tutorials/samples/sample-admittance.html) for a similar FSM with the addition of force control.
