@@ -290,7 +290,7 @@
 
 <h2 id="metatasks-state">MetaTasks state</h2>
 
-<p>The <code class="language-plaintext highlighter-rouge">MetaTasks</code> state (<a href="json.html#State/MetaTasks">documentation</a>) allows to load a list of tasks from their <code class="language-plaintext highlighter-rouge">JSON/YAML</code> configuration. The full list of available tasks is available <a href="/mc_rtc/json.html#MetaTask">JSON/YAML documentation</a>.</p>
+<p>The <code class="language-plaintext highlighter-rouge">MetaTasks</code> state (<a href="/mc_rtc/json.html#State/MetaTasks">documentation</a>) allows to load a list of tasks from their <code class="language-plaintext highlighter-rouge">JSON/YAML</code> configuration. The full list of available tasks is available <a href="/mc_rtc/json.html#MetaTask">JSON/YAML documentation</a>.</p>
 
 <p>Let’s start with an example, we will add a new <code class="language-plaintext highlighter-rouge">MetaTasks</code> state in the <code class="language-plaintext highlighter-rouge">states:</code> section of the <code class="language-plaintext highlighter-rouge">FSM</code> configuration.</p>
 
@@ -413,7 +413,7 @@
 
 <h2 id="parallel-state">Parallel state</h2>
 
-<p>The parallel state (<a href="json.html#State/Parallel">documentation</a>) allows to execute multiple states in parallel. Since the FSM execution is actually single-threaded, the states are actually executed sequentially in a single controller iteration.</p>
+<p>The parallel state (<a href="/mc_rtc/json.html#State/Parallel">documentation</a>) allows to execute multiple states in parallel. Since the FSM execution is actually single-threaded, the states are actually executed sequentially in a single controller iteration.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define an additional MetaTasks state that moves the right hand</span>
 <span class="na">RightHandState</span><span class="pi">:</span>
@@ -462,7 +462,7 @@
 
 <h2 id="meta-fsm-within-an-fsm">Meta: FSM within an FSM</h2>
 
-<p>In complex scenarios, it is often useful to be able to have multiple FSMs in the same controller. That’s what the <code class="language-plaintext highlighter-rouge">Meta</code> state (<a href="json.html#State/Meta">documentation</a>) is for, it embeds an <code class="language-plaintext highlighter-rouge">FSM</code> within an <code class="language-plaintext highlighter-rouge">FSM</code> state.</p>
+<p>In complex scenarios, it is often useful to be able to have multiple FSMs in the same controller. That’s what the <code class="language-plaintext highlighter-rouge">Meta</code> state (<a href="/mc_rtc/json.html#State/Meta">documentation</a>) is for, it embeds an <code class="language-plaintext highlighter-rouge">FSM</code> within an <code class="language-plaintext highlighter-rouge">FSM</code> state.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">ExampleMetaState</span><span class="pi">:</span>
   <span class="na">base</span><span class="pi">:</span> <span class="s">Meta</span>
