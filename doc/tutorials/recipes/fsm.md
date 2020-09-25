@@ -17,7 +17,7 @@ mc\_rtc provides a controller implementation to implement the state chart formal
 We will discuss the state implementation later. For now we will simply describe the four main methods of a state:
 
 - `configure` is used to configure the state; one important feature to consider and understand with the FSM implementation is that new states can be created by specifying a different configuration of an existing state. This function will thus be called multiple times;
-- `init` is used to perform initialization; it is called only once;
+- `start` is used to perform initialization; it is called only once;
 - `run` is the main function implemented by a state; it is called once per iteration loop until the state is over or until the state changes. When the run is completed, the state will set an output to an arbitrary value that must be documented by the state;
 - `teardown` is a cleanup function that is called when the state changes.
 
@@ -275,7 +275,7 @@ Some options are common to all states:
 
 ## New state creation
 
-The minimal interface for a State is the following:
+A state is created by inheriting from {% doxygen mc_control::fsm::State %}. Its minimal interface is the following:
 
 ```cpp
 namespace mc_control::fsm
@@ -295,7 +295,7 @@ namespace mc_control::fsm
 EXPORT_SINGLE_STATE("MyState", mc_control::fsm::MyState);
 ```
 
-In all functions where a `Controller` instance is passed it is an `mc_control::fsm::Controller` instance.
+In all functions where a `Controller` instance is passed it is an {% doxygen mc_control::fsm::Controller %} instance.
 
 ### `void configure(mc_rtc::Configuration &)`
 
@@ -330,7 +330,7 @@ struct Contact
   std::string r2;
   std::string r1Surface;
   std::string r2Surface;
-  Eigen::Vector6d dof; // defauls to Eigen::Vector6d::Ones()
+  Eigen::Vector6d dof; // defaults to Eigen::Vector6d::Ones()
 };
 ```
 
