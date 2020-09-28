@@ -15,6 +15,7 @@ struct MyFirstController_DLLAPI MyFirstController : public mc_control::MCControl
     void switch_target();
 private:
     mc_rtc::Configuration config_;
+    std::string jointName = "NECK_Y";
     int jointIndex = 0;
     bool goingLeft = true;
 };
