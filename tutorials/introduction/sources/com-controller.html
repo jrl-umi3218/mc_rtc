@@ -457,11 +457,11 @@
 <span class="p">{</span>
   <span class="k">if</span><span class="p">(</span><span class="n">goingLeft</span><span class="p">)</span>
   <span class="p">{</span>
-    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">NECK_Y</span><span class="p">);</span>
+    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"NECK_Y"</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">qu</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">]}});</span>
   <span class="p">}</span>
   <span class="k">else</span>
   <span class="p">{</span>
-    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">NECK_Y</span><span class="p">);</span>
+    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"NECK_Y"</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">ql</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">]}});</span>
   <span class="p">}</span>
   <span class="n">goingLeft</span> <span class="o">=</span> <span class="o">!</span><span class="n">goingLeft</span><span class="p">;</span>
 <span class="p">}</span>

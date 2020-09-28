@@ -488,18 +488,18 @@
     <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
     <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span>
     <span class="c1">// Target new handle position</span>
-    <span class="n">doorPosture</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">handle</span><span class="p">});</span>
+    <span class="n">doorPosture</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"handle"</span><span class="p">,</span> <span class="p">{</span><span class="o">-</span><span class="mf">1.0</span><span class="p">}}});</span>
     <span class="c1">// Switch phase</span>
     <span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span><span class="p">;</span>
   <span class="p">}</span>
-  <span class="k">else</span> <span class="nf">if</span><span class="p">(</span><span class="n">phase</span> <span class="o">==</span> <span class="n">HANDLE</span> <span class="o">&amp;&amp;</span> <span class="n">doorPosture</span><span class="o">-&gt;</span><span class="n">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)</span>
+  <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">phase</span> <span class="o">==</span> <span class="n">HANDLE</span> <span class="o">&amp;&amp;</span> <span class="n">doorPosture</span><span class="o">-&gt;</span><span class="n">eval</span><span class="p">().</span><span class="n">norm</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)</span>
   <span class="p">{</span>
     <span class="c1">// Update door opening target</span>
-    <span class="n">doorPosture</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">door</span><span class="p">});</span>
+    <span class="n">doorPosture</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="s">"door"</span><span class="p">,</span> <span class="p">{</span><span class="mf">0.5</span><span class="p">}}});</span>
     <span class="c1">// Switch phase</span>
     <span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span><span class="p">;</span>
-  <span class="err">}</span>
-<span class="err">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
 <span class="n">CONTROLLER_CONSTRUCTOR</span><span class="p">(</span><span class="s">"MyFirstController"</span><span class="p">,</span> <span class="n">MyFirstController</span><span class="p">)</span>
 </pre></td></tr></tbody></table></code></pre></figure>

@@ -309,6 +309,7 @@
 18
 19
 20
+21
 </pre></td><td class="code"><pre><span class="cp">#pragma once
 </span>
 <span class="cp">#include &lt;mc_control/mc_controller.h&gt;
@@ -326,6 +327,7 @@
     <span class="kt">void</span> <span class="n">switch_target</span><span class="p">();</span>
 <span class="nl">private:</span>
     <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="n">config_</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">jointName</span> <span class="o">=</span> <span class="s">"NECK_Y"</span><span class="p">;</span>
     <span class="kt">int</span> <span class="n">jointIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="n">goingLeft</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 <span class="p">};</span>
@@ -373,16 +375,20 @@
 40
 41
 42
+43
+44
 </pre></td><td class="code"><pre><span class="cp">#include "MyFirstController.h"
 </span>
 <span class="n">MyFirstController</span><span class="o">::</span><span class="n">MyFirstController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">)</span>
 <span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">(</span><span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
 <span class="p">{</span>
+  <span class="n">jointIndex</span> <span class="o">=</span> <span class="n">robot</span><span class="p">().</span><span class="n">jointIndexByName</span><span class="p">(</span><span class="n">jointName</span><span class="p">);</span>
+
   <span class="n">config_</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">contactConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">kinematicsConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">postureTask</span><span class="p">);</span>
-  <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">();</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({{}});</span>
 
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">success</span><span class="p">(</span><span class="s">"MyFirstController init done"</span><span class="p">);</span>
 <span class="p">}</span>
@@ -405,11 +411,11 @@
 <span class="p">{</span>
   <span class="k">if</span><span class="p">(</span><span class="n">goingLeft</span><span class="p">)</span>
   <span class="p">{</span>
-    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">NECK_Y</span><span class="p">);</span>
+    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="n">jointName</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">qu</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">]}});</span>
   <span class="p">}</span>
   <span class="k">else</span>
   <span class="p">{</span>
-    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">NECK_Y</span><span class="p">);</span>
+    <span class="n">postureTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">({{</span><span class="n">jointName</span><span class="p">,</span> <span class="n">robot</span><span class="p">().</span><span class="n">ql</span><span class="p">()[</span><span class="n">jointIndex</span><span class="p">]}});</span>
   <span class="p">}</span>
   <span class="n">goingLeft</span> <span class="o">=</span> <span class="o">!</span><span class="n">goingLeft</span><span class="p">;</span>
 <span class="p">}</span>
@@ -579,6 +585,7 @@
 26
 27
 28
+29
 </pre></td><td class="code"><pre><span class="kn">import</span> <span class="nn">mc_control</span>
 <span class="kn">import</span> <span class="nn">mc_rbdyn</span>
 <span class="kn">import</span> <span class="nn">mc_rtc</span>
@@ -589,7 +596,8 @@
         <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">contactConstraint</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">setContacts</span><span class="p">([])</span>
-        <span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">jointIndexByName</span><span class="p">(</span><span class="s">"NECK_Y"</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">jointName</span> <span class="o">=</span> <span class="s">"NECK_Y"</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">jointIndexByName</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">jointName</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">goingLeft</span> <span class="o">=</span> <span class="bp">True</span>
     <span class="k">def</span> <span class="nf">run_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">posture</span><span class="p">()[</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">mbc</span><span class="p">.</span><span class="n">q</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
@@ -599,9 +607,9 @@
         <span class="k">pass</span>
     <span class="k">def</span> <span class="nf">switch_target</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">goingLeft</span><span class="p">:</span>
-            <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="s">"NECK_Y"</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">qu</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span><span class="p">]})</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="bp">self</span><span class="p">.</span><span class="n">jointName</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">qu</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span><span class="p">]})</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="s">"NECK_Y"</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">ql</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span><span class="p">]})</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">postureTask</span><span class="p">.</span><span class="n">target</span><span class="p">({</span><span class="bp">self</span><span class="p">.</span><span class="n">jointName</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">robot</span><span class="p">().</span><span class="n">ql</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">jointIndex</span><span class="p">]})</span>
         <span class="bp">self</span><span class="p">.</span><span class="n">goingLeft</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">.</span><span class="n">goingLeft</span>
     <span class="o">@</span><span class="nb">staticmethod</span>
     <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">robot</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
