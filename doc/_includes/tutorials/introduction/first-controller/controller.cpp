@@ -3,6 +3,8 @@
 MyFirstController::MyFirstController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config)
 : mc_control::MCController(rm, dt)
 {
+  jointIndex = robot().jointIndexByName(jointName);
+
   config_.load(config);
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
@@ -30,11 +32,11 @@ void MyFirstController::switch_target()
 {
   if(goingLeft)
   {
-    postureTask->target({{"NECK_Y", robot().qu()[jointIndex]}});
+    postureTask->target({{jointName, robot().qu()[jointIndex]}});
   }
   else
   {
-    postureTask->target({{"NECK_Y", robot().ql()[jointIndex]}});
+    postureTask->target({{jointName, robot().ql()[jointIndex]}});
   }
   goingLeft = !goingLeft;
 }

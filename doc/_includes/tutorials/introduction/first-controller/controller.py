@@ -8,7 +8,8 @@ class MyFirstController(mc_control.MCPythonController):
         self.qpsolver.addConstraintSet(self.contactConstraint)
         self.qpsolver.addTask(self.postureTask)
         self.qpsolver.setContacts([])
-        self.jointIndex = self.robot().jointIndexByName("NECK_Y")
+        self.jointName = "NECK_Y"
+        self.jointIndex = self.robot().jointIndexByName(self.jointName)
         self.goingLeft = True
     def run_callback(self):
         if abs(self.postureTask.posture()[self.jointIndex][0] - self.robot().mbc.q[self.jointIndex][0]) < 0.05:
@@ -18,9 +19,9 @@ class MyFirstController(mc_control.MCPythonController):
         pass
     def switch_target(self):
         if self.goingLeft:
-            self.postureTask.target({"NECK_Y": self.robot().qu[self.jointIndex]})
+            self.postureTask.target({self.jointName: self.robot().qu[self.jointIndex]})
         else:
-            self.postureTask.target({"NECK_Y": self.robot().ql[self.jointIndex]})
+            self.postureTask.target({self.jointName: self.robot().ql[self.jointIndex]})
         self.goingLeft = not self.goingLeft
     @staticmethod
     def create(robot, dt):
