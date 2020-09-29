@@ -137,6 +137,7 @@ VerboseLoader: false
 # ControllerModulePaths: [/one/path/to/controller/, /another/path/]
 # RobotModulePaths: [/one/path/to/robot/, /another/path/]
 # ObserverModulePaths: [/one/path/to/observer/, /another/path/]
+# GlobalPluginPaths: [/one/path/to/global/plugin, /another/path/]
 
 # The following options are used to clear the default loading path
 # for controllers, robots and observers respectively
@@ -145,3 +146,4 @@ VerboseLoader: false
 # ClearControllerModulePath: false
 # ClearRobotModulePath: false
 # ClearObserverModulePath: false
+# ClearGlobalPluginPath: false

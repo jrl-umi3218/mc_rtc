@@ -64,10 +64,12 @@ The following options only affect the publication of the robot's state in ROS. I
         Module loading options
       </th>
       <td colspan="2">
-The following options control the way mc_rtc loads additional controller and robot modules.
+The following options control the way mc_rtc loads additional modules from libraries (controllers, robot modules, observers, plugins).
       </td>
     </tr>
-    {% include mc_rtc_configuration_row.html entry="ControllerModulePaths" desc="This option allow you to specify <strong>additional</strong> directory where mc_rtc will look for controller modules." example="ControllerModulePaths: [\"/one/path/to/controller/\", \"/another/path/\"]" %}
-    {% include mc_rtc_configuration_row.html entry="RobotModulePaths" desc="This option allow you to specify <strong>additional</strong> directory where mc_rtc will look for robot modules." example="RobotModulePaths: [\"/one/path/to/robot/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="ControllerModulePaths" desc="This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for controller modules." example="ControllerModulePaths: [\"/one/path/to/controller/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="RobotModulePaths" desc="This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for robot modules." example="RobotModulePaths: [\"/one/path/to/robot/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="ObserverModulePaths" desc="This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for state observation modules." example="ObserverModulePaths: [\"/one/path/to/observer/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="GlobalPluginPaths" desc="This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for global plugins." example="GlobalPluginPaths: [\"/one/path/to/global/plugin/\", \"/another/path/\"]" %}
   </tbody>
 </table>
