@@ -2,7 +2,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-set(FSM_STATES_INSTALL_DIR "${MC_CONTROLLER_INSTALL_PREFIX}/fsm/states")
+set(FSM_STATES_INSTALL_DIR "${MC_CONTROLLER_INSTALL_PREFIX}/fsm/states$<$<CONFIG:debug>:/debug>")
 set(FSM_HDR_DIR "${PROJECT_SOURCE_DIR}/include/mc_control/fsm/states")
 set(FSM_HDR_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include/mc_control/fsm/states")
 
