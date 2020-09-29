@@ -399,19 +399,31 @@ The following options only affect the publication of the robot's state in ROS. I
         Module loading options
       </th>
       <td colspan="2">
-The following options control the way mc_rtc loads additional controller and robot modules.
+The following options control the way mc_rtc loads additional modules from libraries (controllers, robot modules, observers, plugins).
       </td>
     </tr>
     <tr>
   <th scope="row">ControllerModulePaths</th>
-  <td>This option allow you to specify <strong>additional</strong> directory where mc_rtc will look for controller modules.</td>
+  <td>This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for controller modules.</td>
   <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ControllerModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/controller/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
 </tr>
 
     <tr>
   <th scope="row">RobotModulePaths</th>
-  <td>This option allow you to specify <strong>additional</strong> directory where mc_rtc will look for robot modules.</td>
+  <td>This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for robot modules.</td>
   <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">RobotModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/robot/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">ObserverModulePaths</th>
+  <td>This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for state observation modules.</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">ObserverModulePaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/observer/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">GlobalPluginPaths</th>
+  <td>This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for global plugins.</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">GlobalPluginPaths</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">/one/path/to/global/plugin/"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">/another/path/"</span><span class="pi">]</span></code></pre></figure></td>
 </tr>
 
   </tbody>
