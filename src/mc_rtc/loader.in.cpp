@@ -201,7 +201,7 @@ void Loader::load_libraries(const std::string & class_name,
     for(const auto & p : drange)
     {
       /* Attempt to load all dynamics libraries in the directory */
-      if((!bfs::is_directory(p)) && (!bfs::is_symlink(p)) && bfs::extension(p) == "@CMAKE_SHARED_LIBRARY_SUFFIX@")
+      if((!bfs::is_directory(p)) && bfs::extension(p) == "@CMAKE_SHARED_LIBRARY_SUFFIX@")
       {
         auto handle = std::make_shared<LTDLHandle>(class_name, p.string(), rpath, verbose);
         for(const auto & cn : handle->classes())
