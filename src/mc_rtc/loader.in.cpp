@@ -10,6 +10,8 @@
 
 #include <mc_rtc/loader.h>
 
+#include <mc_rtc/debug.h>
+
 #include <boost/filesystem.hpp>
 #include <boost/range/adaptors.hpp>
 namespace bfs = boost::filesystem;

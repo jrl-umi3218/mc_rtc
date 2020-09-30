@@ -55,9 +55,14 @@ add_custom_command(OUTPUT ${VERSION_HEADER}
   COMMAND ${CMAKE_COMMAND} -DPROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
                            -DPROJECT_BINARY_DIR="${PROJECT_BINARY_DIR}"
                            -DPROJECT_VERSION="${PROJECT_VERSION}"
-                           -P "${PROJECT_SOURCE_DIR}/CMakeModules/MakeVersionHeader.cmake"
+                            -P "${PROJECT_SOURCE_DIR}/CMakeModules/MakeVersionHeader.cmake"
   DEPENDS ${MC_RTC_ALL_FILES}
 )
+
+set(DEBUG_SOURCE "${PROJECT_BINARY_DIR}/src/mc_rtc/$<CONFIG>/debug.cpp")
+file(GENERATE OUTPUT ${DEBUG_SOURCE} INPUT "${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc/debug.in.cpp")
+# This is not necessary but a work-around for https://gitlab.kitware.com/cmake/cmake/-/issues/21203
+file(GENERATE OUTPUT "${PROJECT_BINARY_DIR}/src/mc_rtc/debug.cpp" INPUT "${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc/debug.in.cpp")
 
 set(mc_rtc_utils_SRC
   mc_rtc/Configuration.cpp
@@ -69,6 +74,7 @@ set(mc_rtc_utils_SRC
   mc_rtc/MessagePackBuilder.cpp
   mc_rtc/logging.cpp
   mc_rtc/version.cpp
+  ${DEBUG_SOURCE}
 )
 
 set(mc_rtc_utils_HDR
@@ -89,6 +95,7 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/constants.h
   ../include/mc_rtc/DataStore.h
   ../include/mc_rtc/type_name.h
+  ../include/mc_rtc/debug.h
 )
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
