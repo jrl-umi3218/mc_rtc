@@ -8,7 +8,7 @@ macro(add_controller controller_name controller_SRC controller_HDR)
   set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS
     "-DMC_CONTROL_EXPORTS" PREFIX "")
   target_link_libraries(${controller_name} PUBLIC mc_control)
-  install(TARGETS ${controller_name} DESTINATION ${MC_CONTROLLER_INSTALL_PREFIX})
+  install(TARGETS ${controller_name} DESTINATION ${MC_CONTROLLER_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>)
 endmacro()
 
 if(${BUILD_CONTROLLER_SAMPLES})

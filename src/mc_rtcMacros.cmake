@@ -17,7 +17,7 @@ macro(add_controller controller_name controller_SRC controller_HDR)
 
   target_link_libraries(${controller_name} PUBLIC mc_rtc::mc_control)
 
-  install(TARGETS ${controller_name} DESTINATION "${MC_CONTROLLER_INSTALL_PREFIX}")
+  install(TARGETS ${controller_name} DESTINATION "${MC_CONTROLLER_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>")
 endmacro()
 
 # -- Robots --
@@ -31,7 +31,7 @@ macro(add_robot robot_name robot_SRC robot_HDR)
 
   target_link_libraries(${robot_name} PUBLIC mc_rtc::mc_rbdyn)
 
-  install(TARGETS ${robot_name} DESTINATION "${MC_ROBOTS_INSTALL_PREFIX}")
+  install(TARGETS ${robot_name} DESTINATION "${MC_ROBOTS_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>")
 endmacro()
 
 macro(add_robot_simple robot_name)
@@ -52,8 +52,8 @@ macro(add_observer observer_name observer_SRC observer_HDR)
   add_library(${observer_name} SHARED ${observer_SRC} ${observer_HDR})
   set_target_properties(${observer_name} PROPERTIES COMPILE_FLAGS "-DMC_OBSERVER_EXPORTS" PREFIX "")
   set_target_properties(${observer_name} PROPERTIES INSTALL_RPATH ${MC_OBSERVERS_INSTALL_PREFIX})
-  target_link_libraries(${observer_name} PUBLIC mc_rbdyn mc_rtc_gui)
-  install(TARGETS ${observer_name} DESTINATION "${MC_OBSERVERS_INSTALL_PREFIX}")
+  target_link_libraries(${observer_name} PUBLIC mc_observers)
+  install(TARGETS ${observer_name} DESTINATION "${MC_OBSERVERS_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>")
 endmacro()
 
 macro(add_observer_simple observer_base)
@@ -81,7 +81,7 @@ macro(add_fsm_state state_name state_SRC state_HDR)
     target_link_libraries(${state_name} PUBLIC ${PROJECT_NAME})
   endif()
 
-  install(TARGETS ${state_name} DESTINATION "${MC_STATES_INSTALL_PREFIX}")
+  install(TARGETS ${state_name} DESTINATION "${MC_STATES_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>")
 endmacro()
 
 macro(add_fsm_state_simple state_name)
@@ -121,7 +121,7 @@ macro(add_plugin plugin plugin_SRC plugin_HDR)
   add_library(${plugin} SHARED ${plugin_SRC} ${plugin_HDR})
   set_target_properties(${plugin} PROPERTIES PREFIX "")
   target_link_libraries(${plugin} PUBLIC mc_rtc::mc_control)
-  install(TARGETS ${plugin} DESTINATION ${MC_PLUGINS_INSTALL_PREFIX})
+  install(TARGETS ${plugin} DESTINATION "${MC_PLUGINS_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>")
   set(plugin_CFG "${CMAKE_CURRENT_SOURCE_DIR}/etc/${plugin}.yaml")
   file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/autoload/${plugin}.yaml" "${plugin}")
   if(AUTOLOAD_${plugin}_PLUGIN)

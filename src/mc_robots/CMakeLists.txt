@@ -10,7 +10,7 @@ macro(add_robot robot_base)
   set_target_properties(${robot_base} PROPERTIES FOLDER robots)
   target_link_libraries(${robot_base} PUBLIC mc_rbdyn)
   target_include_directories(${robot_base} PRIVATE "../../include/mc_robots")
-  install(TARGETS ${robot_base} DESTINATION ${MC_ROBOTS_INSTALL_PREFIX})
+  install(TARGETS ${robot_base} DESTINATION ${MC_ROBOTS_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>)
 endmacro()
 
 add_robot(env)

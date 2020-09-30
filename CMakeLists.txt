@@ -116,10 +116,10 @@ endmacro()
 find_description_package(mc_env_description)
 find_description_package(mc_int_obj_description)
 
-set(MC_PLUGINS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_plugins$<$<CONFIG:debug>:/debug>)
-set(MC_ROBOTS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_robots$<$<CONFIG:debug>:/debug>)
-set(MC_OBSERVERS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_observers$<$<CONFIG:debug>:/debug>)
-set(MC_CONTROLLER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_controller$<$<CONFIG:debug>:/debug>)
+set(MC_PLUGINS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_plugins)
+set(MC_ROBOTS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_robots)
+set(MC_OBSERVERS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_observers)
+set(MC_CONTROLLER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_controller)
 
 configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
 
