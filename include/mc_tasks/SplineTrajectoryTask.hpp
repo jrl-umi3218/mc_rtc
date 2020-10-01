@@ -29,7 +29,7 @@ SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::Robots & rob
              robots.robot(robotIndex).surface(surfaceName).X_0_s(robots.robot(robotIndex)).rotation(),
              target,
              oriWp),
-  dimWeightInterpolator_(timeStep), stiffnessInterpolator_(timeStep), dampingInterpolator_(timeStep)
+  dimWeightInterpolator_(), stiffnessInterpolator_(), dampingInterpolator_()
 {
   const auto & robot = robots.robot(robotIndex);
   const auto & surface = robot.surface(surfaceName);
@@ -198,15 +198,15 @@ void SplineTrajectoryTask<Derived>::interpolateGains()
 {
   if(dimWeightInterpolator_.hasValues())
   {
-    TrajectoryBase::dimWeight(dimWeightInterpolator_.compute());
+    TrajectoryBase::dimWeight(dimWeightInterpolator_.compute(currTime_));
   }
 
   if(stiffnessInterpolator_.hasValues())
   { // Interpolate gains
-    auto stiffness = stiffnessInterpolator_.compute();
+    auto stiffness = stiffnessInterpolator_.compute(currTime_);
     if(dampingInterpolator_.hasValues())
     {
-      TrajectoryBase::setGains(stiffness, dampingInterpolator_.compute());
+      TrajectoryBase::setGains(stiffness, dampingInterpolator_.compute(currTime_));
     }
     else
     { // damping is 2*sqrt(stiffness)
@@ -215,7 +215,7 @@ void SplineTrajectoryTask<Derived>::interpolateGains()
   }
   else if(dampingInterpolator_.hasValues())
   { // Interpolate only damping
-    TrajectoryBase::damping(dampingInterpolator_.compute());
+    TrajectoryBase::damping(dampingInterpolator_.compute(currTime_));
   }
 }
 

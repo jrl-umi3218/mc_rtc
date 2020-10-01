@@ -48,20 +48,17 @@ struct SequentialInterpolator
    * @brief Creates an empty interpolator
    *
    * You must call the \ref setValues "values" setter before calling compute()
-   *
-   * @param dt Controller's timestep
    */
-  SequentialInterpolator(double dt) noexcept : dt_(dt) {}
+  SequentialInterpolator() noexcept {}
 
   /**
    * @brief Creates an interpolator with values
    *
-   * @param dt Controller's timestep
    * @param values Values must respect the conditions describes in \ref setValues "values"
    *
    * @throws std::runtime_error If values are invalid
    */
-  SequentialInterpolator(double dt, const TimedValueVector & values) : dt_(dt)
+  SequentialInterpolator(const TimedValueVector & values)
   {
     this->values(values);
   }
@@ -80,7 +77,6 @@ struct SequentialInterpolator
     if(values.empty()) return;
     checkValues(values);
     values_ = values;
-    currTime_ = values.front().first;
     prevIndex_ = 0;
     if(values.size() == 1)
     {
@@ -90,7 +86,7 @@ struct SequentialInterpolator
     {
       nextIndex_ = 1;
     }
-    intervalDuration_ = values_[nextIndex_].first - values_[prevIndex_].first;
+    intervalDuration_ = values_[nextIndex_].first - values_.front().first;
   }
 
   /** Interpolation values */
@@ -117,86 +113,63 @@ struct SequentialInterpolator
   }
 
   /**
-   * Compute interpolated value and move to the next element (increment time)
+   * Compute interpolated value at the provided time
    *
    * Calls InterpolationFunction::operator(const Value &, const Value &, double ratio) where ratio is the time in the
    * current interval normalized between 0 and 1
    *
-   * If time is greater than the last element, return it
+   * Out-of-bound access return the first or last value
    *
    * @throws std::runtime_error If there are no values
    */
-  Value compute()
+  Value compute(double currTime)
   {
     if(values_.empty())
     {
       mc_rtc::log::error_and_throw<std::runtime_error>("SequentialInterpolator requires at least one value");
     }
 
-    if(prevIndex_ == nextIndex_)
-    { // past last element
-      currTime_ += dt_;
+    // Check for out-of-bound access
+    if(currTime >= values_.back().first)
+    {
       return values_.back().second;
     }
-    const auto & prevValue = values_[prevIndex_].second;
-    const auto & nextValue = values_[nextIndex_].second;
-    const auto & prevTime = values_[prevIndex_].first;
-    Value result = interpolator_(prevValue, nextValue, (currTime_ - prevTime) / intervalDuration_);
-    next();
-    return result;
-  }
+    else if(currTime < values_.front().first)
+    {
+      return values_.front().second;
+    }
 
-  inline double time() const noexcept
-  {
-    return currTime_;
+    // find the current interval
+    nextIndex_ = 0;
+    while(++nextIndex_ < values_.size() && values_[nextIndex_].first < currTime)
+    {
+    }
+    prevIndex_ = nextIndex_ - 1;
+    intervalDuration_ = values_[nextIndex_].first - values_[prevIndex_].first;
+
+    const auto & prevTime = values_[prevIndex_].first;
+    return interpolator_(values_[prevIndex_].second, values_[nextIndex_].second,
+                         (currTime - prevTime) / intervalDuration_);
   }
 
 protected:
-  /** Increment time and update indices */
-  void next()
-  {
-    currTime_ += dt_;
-    const auto & nextTime = values_[nextIndex_].first;
-    if(currTime_ > nextTime)
-    {
-      if(nextIndex_ == values_.size() - 1)
-      {
-        prevIndex_ = nextIndex_;
-      }
-      else
-      {
-        prevIndex_++;
-        nextIndex_++;
-        intervalDuration_ = values_[nextIndex_].first - values_[prevIndex_].first;
-      }
-    }
-  }
-
-  /** Checks that values are strictly ordered by ascending time and spread by
-   * more than dt_ apart.
-   **/
+  /** Checks that values are strictly ordered by ascending time **/
   void checkValues(const TimedValueVector & values)
   {
-    double prevTime = values.front().first;
-    for(unsigned i = 1; i < values.size(); ++i)
+    if(!std::is_sorted(values.begin(), values.end(),
+                       [](const TimedValue & a, const TimedValue & b) { return a.first < b.first; }))
     {
-      auto nextTime = values[i].first;
-      if(nextTime <= prevTime || nextTime - prevTime < dt_)
-      {
-        mc_rtc::log::error_and_throw<std::runtime_error>("SequentialInterpolator values must be ordered by strictly "
-                                                         "ascending time and spread by more than dt apart");
-      }
-      prevTime = nextTime;
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "SequentialInterpolator values must be ordered by strictly ascending time");
     }
   }
 
 protected:
   double dt_ = 0.005; ///< Timestep
   InterpolationFunction interpolator_; ///< Functor for computing the interpolated values
-  std::vector<TimedValue> values_; ///< Interpolation values
+  TimedValueVector values_; ///< Interpolation values
 
-  double currTime_ = 0; ///< Current time (starts at the first value)
-  size_t prevIndex_ = 0; ///< Index of the previous element (first element before currTime_)
+  size_t prevIndex_ = 0; ///< Index of the next element  (first element after currTime_)
   size_t nextIndex_ = 1; ///< Index of the next element  (first element after currTime_)
   double intervalDuration_ = 0; ///< Duration of the current interval in the sequence
 };
