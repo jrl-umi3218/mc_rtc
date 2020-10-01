@@ -182,18 +182,19 @@ TF Prefix: /real/env_*
 The framework loads observers from libraries. For this to work, your observer must inherit from {% doxygen mc_observers::Observer %} and implement the following `virtual` functions:
 
 ```cpp
-virtual void configure(const mc_control::MCController & /*ctl*/, const mc_rtc::Configuration & /*config*/)
-virtual void reset (const mc_control::MCController &ctl)
-virtual bool run (const mc_control::MCController &ctl)
-virtual void update(mc_control::MCController &ctl)
+// YourObserver.h
+void configure(const mc_control::MCController & /*ctl*/, const mc_rtc::Configuration & /*config*/) override
+void reset (const mc_control::MCController &ctl) override
+bool run (const mc_control::MCController &ctl) override
+void update(mc_control::MCController &ctl) override
 ```
 
 Furthermore, in order for `mc_rtc` to find your observer, you must define the loading symbols that `mc_rtc`'s observer loader will look for in your library. This can be done through the following macro defined in `mc_observers/ObserverMacros.h`
 
 ```cpp
-# YourObserver.cpp
-
+// YourObserver.cpp
 #include <mc_observers/ObserverMacros.h>
+// Observer implementation (configure, reset, run and update functions)
 EXPORT_OBSERVER_MODULE("YourObserver", your_namespace::YourObserverClassName)
 ```
 
@@ -202,3 +203,11 @@ To compile your own observer, you can use the provided macro, which takes care o
 ```cmake
 add_observer(YourObserverName YourObserver.cpp YourObserver.h)
 ```
+
+Note: If you wish to inherit from one of the default observers provided along with the framework, you will need to link against it. For example, if you inherit from {% doxygen mc_observers::BodySensorObserver %} you need to link against the corresponding `mc_observers::BodySensorObserver %} target:
+
+```cmake
+target_link_libraries(YourObserverName PUBLIC mc_observers::BodySensorObserver)
+```
+
+For a practical example, please refer to this [sample project](https://github.com/arntanguy/mc_observer_example).
