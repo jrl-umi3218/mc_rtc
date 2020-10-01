@@ -168,4 +168,5 @@ install(FILES "src/mc_rtcMacros.cmake"
         DESTINATION "${CONFIG_INSTALL_DIR}")
 set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
 include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")
-include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_fsm_states.cmake\")")
+include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_fsm_states.cmake\")
+include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtc_observers.cmake\")")
