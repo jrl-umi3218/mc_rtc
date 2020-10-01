@@ -469,24 +469,32 @@
 
 <p>The framework loads observers from libraries. For this to work, your observer must inherit from <a href="/mc_rtc/doxygen.html#a01538" target="blank_">mc_observers::Observer</a> and implement the following <code class="language-plaintext highlighter-rouge">virtual</code> functions:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">virtual</span> <span class="kt">void</span> <span class="n">configure</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span> <span class="o">&amp;</span> <span class="cm">/*ctl*/</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="cm">/*config*/</span><span class="p">)</span>
-<span class="k">virtual</span> <span class="kt">void</span> <span class="n">reset</span> <span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span> <span class="o">&amp;</span><span class="n">ctl</span><span class="p">)</span>
-<span class="k">virtual</span> <span class="kt">bool</span> <span class="n">run</span> <span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span> <span class="o">&amp;</span><span class="n">ctl</span><span class="p">)</span>
-<span class="k">virtual</span> <span class="kt">void</span> <span class="n">update</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span> <span class="o">&amp;</span><span class="n">ctl</span><span class="p">)</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// YourObserver.h</span>
+<span class="kt">void</span> <span class="n">configure</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span> <span class="o">&amp;</span> <span class="cm">/*ctl*/</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="cm">/*config*/</span><span class="p">)</span> <span class="k">override</span>
+<span class="kt">void</span> <span class="n">reset</span> <span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span> <span class="o">&amp;</span><span class="n">ctl</span><span class="p">)</span> <span class="k">override</span>
+<span class="kt">bool</span> <span class="n">run</span> <span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span> <span class="o">&amp;</span><span class="n">ctl</span><span class="p">)</span> <span class="k">override</span>
+<span class="kt">void</span> <span class="n">update</span><span class="p">(</span><span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span> <span class="o">&amp;</span><span class="n">ctl</span><span class="p">)</span> <span class="k">override</span>
 </code></pre></div></div>
 
 <p>Furthermore, in order for <code class="language-plaintext highlighter-rouge">mc_rtc</code> to find your observer, you must define the loading symbols that <code class="language-plaintext highlighter-rouge">mc_rtc</code>’s observer loader will look for in your library. This can be done through the following macro defined in <code class="language-plaintext highlighter-rouge">mc_observers/ObserverMacros.h</code></p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp"># YourObserver.cpp
-</span>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// YourObserver.cpp</span>
 <span class="cp">#include &lt;mc_observers/ObserverMacros.h&gt;
-</span><span class="n">EXPORT_OBSERVER_MODULE</span><span class="p">(</span><span class="s">"YourObserver"</span><span class="p">,</span> <span class="n">your_namespace</span><span class="o">::</span><span class="n">YourObserverClassName</span><span class="p">)</span>
+</span><span class="c1">// Observer implementation (configure, reset, run and update functions)</span>
+<span class="n">EXPORT_OBSERVER_MODULE</span><span class="p">(</span><span class="s">"YourObserver"</span><span class="p">,</span> <span class="n">your_namespace</span><span class="o">::</span><span class="n">YourObserverClassName</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>To compile your own observer, you can use the provided macro, which takes care of linking your observer with <code class="language-plaintext highlighter-rouge">mc_observers</code>, and installing it in the default observers path.</p>
 
 <div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">add_observer</span><span class="p">(</span>YourObserverName YourObserver.cpp YourObserver.h<span class="p">)</span>
 </code></pre></div></div>
+
+<p>Note: If you wish to inherit from one of the default observers provided along with the framework, you will need to link against it. For example, if you inherit from <a href="/mc_rtc/doxygen.html#a01522" target="blank_">mc_observers::BodySensorObserver</a> you need to link against the corresponding `mc_observers::BodySensorObserver %} target:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">target_link_libraries</span><span class="p">(</span>YourObserverName PUBLIC mc_observers::BodySensorObserver<span class="p">)</span>
+</code></pre></div></div>
+
+<p>For a practical example, please refer to this <a href="https://github.com/arntanguy/mc_observer_example">sample project</a>.</p>
 
 
         <hr/>
