@@ -12,7 +12,7 @@
      {
        "type": "object",
        "title": "GainsInterpolation",
-       "description": "Linear interpolation parameters for the tasks's gains expressed as pairs of (time, gain). If present the gains at t=0 will be initialized from the global dimWeight/stiffness/damping parameters, and linearly interpolated between the provided values according to the time along the trajectory",
+       "description": "Linear interpolation parameters for the tasks's gains expressed as pairs of (time, gain). The initial gains are those specified by dimWeight, stiffness and damping unless otherwise specified.",
        "properties":
        {
         "stiffness": { "$ref": "/../../common/gains_spline_trajectory.json" },

@@ -105,35 +105,33 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
      * Load gains from config as vector<pair<double,Vector6d>> or vector<pair<double, double>>
      **/
     auto genValues = [this](const mc_rtc::Configuration & c, const std::string & key) {
-      auto config = c(key);
-      auto values = SequentialInterpolator6d::TimedValueVector{};
-      try
+      const auto & conf = c(key);
+      std::vector<std::pair<double, mc_rtc::Configuration>> values = conf;
+      std::vector<std::pair<double, Eigen::Vector6d>> out;
+      out.reserve(values.size());
+      for(const auto & v : values)
       {
-        values = config;
-      }
-      catch(mc_rtc::Configuration::Exception & e)
-      {
-        e.silence();
         try
         {
-          std::vector<std::pair<double, double>> val = config;
-          values.reserve(val.size());
-          for(const auto & v : val)
+          if(v.second.size())
           {
-            values.push_back({v.first, v.second * Eigen::Vector6d::Ones()});
+            Eigen::Vector6d vec = v.second;
+            out.push_back(std::make_pair(v.first, vec));
+          }
+          else
+          {
+            out.push_back({v.first, Eigen::Vector6d::Constant(static_cast<double>(v.second))});
           }
         }
         catch(mc_rtc::Configuration::Exception & e)
         {
-          e.silence();
-          auto msg = fmt::format("[{}] {} interpolation values are expected to be either vector<pair<double, "
-                                 "Vector6d>> or vector<pair<double, double>>",
-                                 name(), key);
-          mc_rtc::log::critical(msg);
-          throw mc_rtc::Configuration::Exception(msg, config);
+          mc_rtc::log::critical("[{}] {} interpolation values are expected to be either vector<pair<double, "
+                                "Vector6d>> or vector<pair<double, double>>",
+                                name(), key);
+          throw e;
         }
       }
-      return values;
+      return out;
     };
 
     auto gconfig = config("gainsInterpolation");

@@ -34,9 +34,9 @@ namespace mc_trajectory
  * \endcode
  *
  * \tparam Value Type of values to interpolate. Must support multiplication by scalar and addition with another Value
- * (arithmetic types, Eigen::Vector, etc) \tparam InterpolationFunction should be a functor taking two values, and a
- * ratio between 0 and 1. This class will call it with the current interval values and the normalized time within this
- * interval.
+ * (arithmetic types, Eigen::Vector, etc)
+ * \tparam InterpolationFunction should be a functor taking two values, and a ratio between 0 and 1. This class will
+ * call it with the current interval values and the normalized time within this interval.
  */
 template<typename Value, typename InterpolationFunction = LinearInterpolation<Value>>
 struct SequentialInterpolator

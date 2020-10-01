@@ -44,7 +44,6 @@ struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<Ex
    * \param end_vel Final velocity of the curve (default: Zero)
    * \param enc_acc Final acceleration of the curve (default: Zero)
    * \param oriWp Waypoints in orientation, specified as pairs of [time, orientation].
-   * Orientation is interpolated in between waypoints. (default : none)
    */
   ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robots,
                            unsigned int robotIndex,
