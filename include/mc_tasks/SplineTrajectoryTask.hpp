@@ -18,13 +18,12 @@ SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::Robots & rob
                                                     unsigned int robotIndex,
                                                     const std::string & surfaceName,
                                                     double duration,
-                                                    double timeStep,
                                                     double stiffness,
                                                     double weight,
                                                     const Eigen::Matrix3d & target,
                                                     const std::vector<std::pair<double, Eigen::Matrix3d>> & oriWp)
 : TrajectoryTaskGeneric<tasks::qp::TransformTask>(robots, robotIndex, stiffness, weight), rIndex_(robotIndex),
-  surfaceName_(surfaceName), duration_(duration), timeStep_(timeStep),
+  surfaceName_(surfaceName), duration_(duration),
   oriSpline_(duration,
              robots.robot(robotIndex).surface(surfaceName).X_0_s(robots.robot(robotIndex)).rotation(),
              target,
@@ -163,7 +162,7 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
 }
 
 template<typename Derived>
-void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver & /* solver */)
+void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver & solver)
 {
   auto & spline = static_cast<Derived &>(*this).spline();
   spline.samplingPoints(samples_);
@@ -194,7 +193,7 @@ void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver & /* solver */)
     this->refVel(refVel);
     this->refAccel(refAcc);
     this->refPose(target);
-    currTime_ = std::min(currTime_ + timeStep_, duration_);
+    currTime_ = std::min(currTime_ + solver.dt(), duration_);
   }
   else
   {

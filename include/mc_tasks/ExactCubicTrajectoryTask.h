@@ -34,7 +34,6 @@ struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<Ex
    * \param robotIndex  Which robot is controlled
    * \param surfaceName Surface controlled by the task, should belong to the controlled robot
    * \param duration Duration of motion (eg time it takes to go from the current
-   * \param timeStep Controller's time step surface position to the curve's final point)
    * \param stiffness Task stiffness
    * \param weight Task weight
    * \param target Final world pose to reach
@@ -49,7 +48,6 @@ struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<Ex
                            unsigned int robotIndex,
                            const std::string & surfaceName,
                            double duration,
-                           double timeStep,
                            double stiffness,
                            double weight,
                            const sva::PTransformd & target,

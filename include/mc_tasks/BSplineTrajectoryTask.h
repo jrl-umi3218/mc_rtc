@@ -33,7 +33,6 @@ public:
    * \param surfaceName Surface controlled by the task, should belong to the controlled robot
    * \param duration Duration of motion (eg time it takes to go from the current surface position to the curve's final
    * point)
-   * \param timeStep Controller's timestep
    * \param stiffness Stiffness of the underlying TrajectoryTask (position
    * and orientation)
    * \param weight Task weight
@@ -45,7 +44,6 @@ public:
                         unsigned int robotIndex,
                         const std::string & surfaceName,
                         double duration,
-                        double timeStep,
                         double stiffness,
                         double weight,
                         const sva::PTransformd & target,

@@ -46,7 +46,6 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    * \param robotIndex Which robot is controlled
    * \param surfaceName Surface controlled by the task (should belong to the controlled robot)
    * \param duration Length of the movement
-   * \param timeStep Controller's timestep
    * \param stiffness Task stiffness (position and orientation)
    * \param posW Task weight (position)
    * \param oriW Task weight (orientation)
@@ -56,7 +55,6 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
                        unsigned int robotIndex,
                        const std::string & surfaceName,
                        double duration,
-                       double timeStep,
                        double stiffness,
                        double weight,
                        const Eigen::Matrix3d & target,
@@ -379,7 +377,6 @@ protected:
   unsigned int rIndex_ = 0;
   std::string surfaceName_;
   double duration_ = 0;
-  double timeStep_ = 0;
   mc_trajectory::InterpolatedRotation oriSpline_;
   // Linear interpolation for gains
   SequenceInterpolator6d dimWeightInterpolator_;
