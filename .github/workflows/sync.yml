@@ -13,7 +13,9 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
+        if: github.repository == 'jrl-umi3218/mc_rtc'
       - name: Sync
         run: |
           git remote add gitlab https://oauth2:${{ secrets.GITLAB_TOKEN }}@gite.lirmm.fr/multi-contact/mc_rtc
           git push gitlab master:master
+        if: github.repository == 'jrl-umi3218/mc_rtc'
