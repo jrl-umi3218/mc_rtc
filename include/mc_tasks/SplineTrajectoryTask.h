@@ -6,7 +6,7 @@
 
 #include <mc_tasks/TrajectoryTaskGeneric.h>
 #include <mc_trajectory/InterpolatedRotation.h>
-#include <mc_trajectory/SequentialInterpolator.h>
+#include <mc_trajectory/SequenceInterpolator.h>
 
 namespace mc_tasks
 {
@@ -37,8 +37,8 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
 {
   using SplineTrajectoryBase = SplineTrajectoryTask<Derived>;
   using TrajectoryTask = TrajectoryTaskGeneric<tasks::qp::TransformTask>;
-  using SequentialInterpolator6d =
-      mc_trajectory::SequentialInterpolator<Eigen::Vector6d, mc_trajectory::LinearInterpolation<Eigen::Vector6d>>;
+  using SequenceInterpolator6d =
+      mc_trajectory::SequenceInterpolator<Eigen::Vector6d, mc_trajectory::LinearInterpolation<Eigen::Vector6d>>;
 
   /*! \brief Constructor
    *
@@ -175,6 +175,7 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
 
   /*!
    * \anchor setGains
+   *
    * \brief Set dimensional stiffness and damping
    *
    * The caller should be sure that the dimensions of the vectors fit the task dimension.
@@ -187,20 +188,20 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    */
   void setGains(const Eigen::VectorXd & stiffness, const Eigen::VectorXd & damping);
 
-  /*
+  /**
    * \anchor dimWeightInterpolation
+   *
    * Interpolate the dimensional weight between the specified values
    *
-   * \note The current task's weight will be inserted in front of the provided
-   * values
-   * \note To remove interpolation, call \ref dimWeight
+   * \param dimWeights Pairs of [time, dimensional gain], strictly ordered by ascending time.
    *
-   * \param dimWeights Pairs of [time, dimensional gain]. Must be strictly
-   * ordered by ascending time, and time > currTime()
+   * \note To remove interpolation, call \ref dimWeight
+   * \note If you call this function after the task is started, and wish to keep the gains continuous, you should insert
+   * the [currentTime(), dimWeight()] pair in the dimWeights argument.
    *
    * \throws std::runtime_error If dimWeights is not meeting the requirements
    */
-  void dimWeightInterpolation(std::vector<std::pair<double, Eigen::Vector6d>> dimWeights);
+  void dimWeightInterpolation(const std::vector<std::pair<double, Eigen::Vector6d>> & dimWeights);
   inline const std::vector<std::pair<double, Eigen::Vector6d>> & dimWeightInterpolation() const noexcept
   {
     return dimWeightInterpolator_.values();
@@ -211,16 +212,16 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    *
    * Interpolate the stiffness between the provided values
    *
-   * \note The current task's stiffness will be inserted in front of the provided values
+   * \param stiffnessGains Pairs of [time, dimensional gain], strictly ordered by ascending time.
+   *
    * \note If there is no \ref dampingInterpolation, damping will be set to 2*sqrt(stiffness)
    * \note To remove interpolation, call one of the stiffness setters (see \ref stiffness)
-   *
-   * \param stiffnessGains Pairs of [time, dimensional gain]. Must be strictly
-   * ordered by ascending time, and time > currTime()
+   * \note If you call this function after the task is started, and wish to keep the gains continuous, you should insert
+   * the [currentTime(), dimWeight()] pair in the stiffnessGains argument.
    *
    * \throws std::runtime_error If stiffnessGains is not meeting the requirements
    */
-  void stiffnessInterpolation(std::vector<std::pair<double, Eigen::Vector6d>> stiffnessGains);
+  void stiffnessInterpolation(const std::vector<std::pair<double, Eigen::Vector6d>> & stiffnessGains);
   inline const std::vector<std::pair<double, Eigen::Vector6d>> & stiffnessInterpolation() const noexcept
   {
     return stiffnessInterpolator_.values();
@@ -230,15 +231,16 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
    * \anchor dampingInterpolation
    * Interpolate the dimensional damping between the provided values
    *
-   * \note The current task damping will be inserted in front of the provided values
-   * \note To remove interpolation, call one of the damping setters (see \ref damping)
-   *
    * \param dampingGains Pairs of [time, dimensional gain]. Must be strictly
-   * ordered by ascending time, and time > currTime()
+   * ordered by ascending time, and time > currentTime()
+   *
+   * \note To remove interpolation, call one of the damping setters (see \ref damping)
+   * \note If you call this function after the task is started, and wish to keep the gains continuous, you should insert
+   * the [currentTime(), dimWeight()] pair in the dampingGains argument.
    *
    * \throws std::runtime_error If dampingGains is not meeting the requirements
    */
-  void dampingInterpolation(std::vector<std::pair<double, Eigen::Vector6d>> dampingGains);
+  void dampingInterpolation(const std::vector<std::pair<double, Eigen::Vector6d>> & dampingGains);
   inline const std::vector<std::pair<double, Eigen::Vector6d>> & dampingInterpolation() const noexcept
   {
     return dampingInterpolator_.values();
@@ -316,12 +318,13 @@ struct SplineTrajectoryTask : public TrajectoryTaskGeneric<tasks::qp::TransformT
     paused_ = paused;
   }
 
+  /** True when the task is paused */
   inline bool pause() const noexcept
   {
     return paused_;
   }
 
-  /* @brief Returns the current time along the trajectory */
+  /** Returns the current time along the trajectory */
   inline double currentTime() const noexcept
   {
     return currTime_;
@@ -379,9 +382,9 @@ protected:
   double timeStep_ = 0;
   mc_trajectory::InterpolatedRotation oriSpline_;
   // Linear interpolation for gains
-  SequentialInterpolator6d dimWeightInterpolator_;
-  SequentialInterpolator6d stiffnessInterpolator_;
-  SequentialInterpolator6d dampingInterpolator_;
+  SequenceInterpolator6d dimWeightInterpolator_;
+  SequenceInterpolator6d stiffnessInterpolator_;
+  SequenceInterpolator6d dampingInterpolator_;
 
   bool paused_ = false;
 

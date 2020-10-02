@@ -104,7 +104,8 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
     /**
      * Load gains from config as vector<pair<double,Vector6d>> or vector<pair<double, double>>
      **/
-    auto genValues = [this](const mc_rtc::Configuration & c, const std::string & key) {
+    auto genValues = [this](const mc_rtc::Configuration & c, const std::string & key,
+                            const Eigen::Vector6d & startGains) {
       const auto & conf = c(key);
       std::vector<std::pair<double, mc_rtc::Configuration>> values = conf;
       std::vector<std::pair<double, Eigen::Vector6d>> out;
@@ -131,23 +132,32 @@ void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_
           throw e;
         }
       }
+      // Add initial gain if missing from configuration
+      if(out.empty())
+      {
+        out.push_back({0., startGains});
+      }
+      else if(!out.empty() && out.front().first > 0.)
+      {
+        out.insert(out.begin(), {0, startGains});
+      }
       return out;
     };
 
     auto gconfig = config("gainsInterpolation");
     if(gconfig.has("stiffness"))
     {
-      stiffnessInterpolation(genValues(gconfig, "stiffness"));
+      stiffnessInterpolation(genValues(gconfig, "stiffness", this->dimStiffness()));
     }
 
     if(gconfig.has("damping"))
     {
-      dampingInterpolation(genValues(gconfig, "damping"));
+      dampingInterpolation(genValues(gconfig, "damping", this->dimDamping()));
     }
 
     if(gconfig.has("dimWeight"))
     {
-      dimWeightInterpolation(genValues(gconfig, "dimWeight"));
+      dimWeightInterpolation(genValues(gconfig, "dimWeight", this->dimWeight()));
     }
   }
 }
@@ -238,23 +248,22 @@ void SplineTrajectoryTask<Derived>::dimWeight(const Eigen::VectorXd & dimW)
 }
 
 template<typename Derived>
-void SplineTrajectoryTask<Derived>::stiffnessInterpolation(std::vector<std::pair<double, Eigen::Vector6d>> stiffnesses)
+void SplineTrajectoryTask<Derived>::stiffnessInterpolation(
+    const std::vector<std::pair<double, Eigen::Vector6d>> & stiffnesses)
 {
-  stiffnesses.insert(stiffnesses.begin(), {currTime_, dimStiffness()});
-  stiffnessInterpolator_.values({stiffnesses});
+  stiffnessInterpolator_.values(stiffnesses);
 }
 
 template<typename Derived>
-void SplineTrajectoryTask<Derived>::dampingInterpolation(std::vector<std::pair<double, Eigen::Vector6d>> damping)
+void SplineTrajectoryTask<Derived>::dampingInterpolation(const std::vector<std::pair<double, Eigen::Vector6d>> & damping)
 {
-  damping.insert(damping.begin(), {currTime_, dimDamping()});
   dampingInterpolator_.values(damping);
 }
 
 template<typename Derived>
-void SplineTrajectoryTask<Derived>::dimWeightInterpolation(std::vector<std::pair<double, Eigen::Vector6d>> dimWeight)
+void SplineTrajectoryTask<Derived>::dimWeightInterpolation(
+    const std::vector<std::pair<double, Eigen::Vector6d>> & dimWeight)
 {
-  dimWeight.insert(dimWeight.begin(), {currTime_, this->dimWeight()});
   dimWeightInterpolator_.values(dimWeight);
 }
 

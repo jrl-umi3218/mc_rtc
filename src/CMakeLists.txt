@@ -296,7 +296,7 @@ set(mc_trajectory_HDR
 ../include/mc_trajectory/InterpolatedRotation.h
 ../include/mc_trajectory/spline_utils.h
 ../include/mc_trajectory/ExactCubic.h
-../include/mc_trajectory/SequentialInterpolator.h
+../include/mc_trajectory/SequenceInterpolator.h
 ../include/mc_trajectory/LinearInterpolation.h
 )
 

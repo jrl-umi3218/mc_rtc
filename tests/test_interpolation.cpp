@@ -4,26 +4,26 @@
  */
 
 #include <mc_rtc/logging.h>
-#include <mc_trajectory/SequentialInterpolator.h>
+#include <mc_trajectory/SequenceInterpolator.h>
 #include <boost/test/unit_test.hpp>
 #include <Eigen/Core>
 
-BOOST_AUTO_TEST_CASE(TestSequentialInterpolator)
+BOOST_AUTO_TEST_CASE(TestSequenceInterpolator)
 {
   constexpr double epsilon = 1e-10;
   using namespace mc_trajectory;
   LinearInterpolation<double> interpolator;
-  using SequentialInterpolator = SequentialInterpolator<double, LinearInterpolation<double>>;
+  using SequenceInterpolator = SequenceInterpolator<double, LinearInterpolation<double>>;
 
   using values_t = std::vector<std::pair<double, double>>;
   auto values = values_t{{0., 0.}, {1., 1.}, {2., 2.}};
   constexpr double dt = 0.005;
 
-  BOOST_REQUIRE_THROW(SequentialInterpolator{}.compute(0), std::runtime_error);
-  BOOST_REQUIRE_THROW(SequentialInterpolator{{}}.compute(0), std::runtime_error);
-  BOOST_REQUIRE(!SequentialInterpolator{}.hasValues());
-  BOOST_REQUIRE_NO_THROW(SequentialInterpolator{values});
-  SequentialInterpolator interpolation{values};
+  BOOST_REQUIRE_THROW(SequenceInterpolator{}.compute(0), std::runtime_error);
+  BOOST_REQUIRE_THROW(SequenceInterpolator{{}}.compute(0), std::runtime_error);
+  BOOST_REQUIRE(!SequenceInterpolator{}.hasValues());
+  BOOST_REQUIRE_NO_THROW(SequenceInterpolator{values});
+  SequenceInterpolator interpolation{values};
   // Check interpolation in first interval
   int i = 0;
   double time = 0;
@@ -74,4 +74,18 @@ BOOST_AUTO_TEST_CASE(TestSequentialInterpolator)
   BOOST_REQUIRE_CLOSE(interpolation.compute(0.5), interpolator(0, 1, 0.5), epsilon);
   BOOST_REQUIRE_CLOSE(interpolation.compute(2.00001), 2.0, epsilon);
   BOOST_REQUIRE_CLOSE(interpolation.compute(-2.00001), 0.0, epsilon);
+
+  // single value
+  interpolation.values({{1., 1.}});
+  BOOST_REQUIRE_CLOSE(interpolation.compute(0), 1., epsilon);
+  BOOST_REQUIRE_CLOSE(interpolation.compute(1), 1., epsilon);
+  BOOST_REQUIRE_CLOSE(interpolation.compute(2), 1., epsilon);
+
+  // negative value
+  BOOST_REQUIRE_NO_THROW(interpolation.values({{-1., -1.}, {0., 0.}, {1., 1.}}));
+  BOOST_REQUIRE_CLOSE(interpolation.compute(-0.2), -0.2, epsilon);
+
+  // Realistic case: trajectory gains
+  interpolation.values({{0, 20}, {3., 20}, {3.8, 50}, {4., 200}});
+  BOOST_REQUIRE_CLOSE(interpolation.compute(0.), 20, epsilon);
 }

@@ -13,6 +13,10 @@ struct LinearInterpolation
   /**
    * @brief Linear interpolation between two values
    *
+   * \f[
+   *  f(t) = (1 - t) * v_1 + t * v_2;
+   * \f]
+   *
    * @tparam T value type, must support multiplication with scalar and addition with T
    * @param v1 First value
    * @param v2 Second value
