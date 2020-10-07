@@ -1,9 +1,9 @@
 var a03349 =
 [
-    [ "MC_RTC_GUI_DLLAPI", "a03349.html#a0154310cb006fb3f499c367ca3e861a8", null ],
-    [ "MC_RTC_GUI_DLLEXPORT", "a03349.html#a14ad7305617c58803f8ce0c7541bb508", null ],
-    [ "MC_RTC_GUI_DLLIMPORT", "a03349.html#a9365441c6f8e61e9f8c39bb75c617b43", null ],
-    [ "MC_RTC_GUI_DLLLOCAL", "a03349.html#a0480d192b9c9ae9d9d88bf17771118b2", null ],
-    [ "MC_RTC_GUI_LOCAL", "a03349.html#aa7fe5afca945e356848d1a6b156528fa", null ],
-    [ "MC_RTC_GUI_VERSION", "a03349.html#a3c227096c22154059e88b20b7cd202bc", null ]
+    [ "MC_ROBOTS_DLLAPI", "a03349.html#aab9f1fcb73f7bb68ce97897257085bc6", null ],
+    [ "MC_ROBOTS_DLLEXPORT", "a03349.html#a551f4997282c602cc3b9699950bff0d9", null ],
+    [ "MC_ROBOTS_DLLIMPORT", "a03349.html#afab08aefa87854e0f4e002300f42f2e0", null ],
+    [ "MC_ROBOTS_DLLLOCAL", "a03349.html#abd12baa7258deaf7a15d3874f1920e57", null ],
+    [ "MC_ROBOTS_LOCAL", "a03349.html#a31fee9d1d5fe536ba8cfac80e376564e", null ],
+    [ "MC_ROBOTS_VERSION", "a03349.html#a12b895bf0b39c259b3eb51ee7782f970", null ]
 ];

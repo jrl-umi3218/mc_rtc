@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::RobotPublisher Struct Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02458.html','');});
+$(document).ready(function(){initNavTree('a02461.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,171 +69,24 @@ $(document).ready(function(){initNavTree('a02458.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a02455.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::RobotPublisher Struct Reference</div>  </div>
+<div class="title">mc_rtc::RobotPublisher Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This structure is able to publish a Robot's state to ROS.  
- <a href="a02458.html#details">More...</a></p>
-
-<p><code>#include &lt;/home/runner/work/mc_rtc/mc_rtc/plugins/ROS/include/mc_rtc/ros.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a848a9be5477c8e775ec83f546aab552d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02458.html#a848a9be5477c8e775ec83f546aab552d">RobotPublisher</a> (const std::string &amp;prefix, double rate, double dt)</td></tr>
-<tr class="memdesc:a848a9be5477c8e775ec83f546aab552d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a848a9be5477c8e775ec83f546aab552d">More...</a><br /></td></tr>
-<tr class="separator:a848a9be5477c8e775ec83f546aab552d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c712f7481ae4d07e59f11bd4df8c2d7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02458.html#a4c712f7481ae4d07e59f11bd4df8c2d7">~RobotPublisher</a> ()</td></tr>
-<tr class="memdesc:a4c712f7481ae4d07e59f11bd4df8c2d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a4c712f7481ae4d07e59f11bd4df8c2d7">More...</a><br /></td></tr>
-<tr class="separator:a4c712f7481ae4d07e59f11bd4df8c2d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1928a3476891ae7d2c5dd0506f8935f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02458.html#a1928a3476891ae7d2c5dd0506f8935f8">init</a> (const <a class="el" href="a01678.html">mc_rbdyn::Robot</a> &amp;robot, bool use_real=false)</td></tr>
-<tr class="memdesc:a1928a3476891ae7d2c5dd0506f8935f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the publisher.  <a href="#a1928a3476891ae7d2c5dd0506f8935f8">More...</a><br /></td></tr>
-<tr class="separator:a1928a3476891ae7d2c5dd0506f8935f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addd581f3eed02925519d0b823b8eb99c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02458.html#addd581f3eed02925519d0b823b8eb99c">update</a> (double dt, const <a class="el" href="a01678.html">mc_rbdyn::Robot</a> &amp;robot)</td></tr>
-<tr class="memdesc:addd581f3eed02925519d0b823b8eb99c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the publisher.  <a href="#addd581f3eed02925519d0b823b8eb99c">More...</a><br /></td></tr>
-<tr class="separator:addd581f3eed02925519d0b823b8eb99c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This structure is able to publish a Robot's state to ROS. </p>
-<p>When writing a controller inside <a class="el" href="a00745.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a> controller framework, one is not expect to use this class. However, this is useful to have when building tools around the framework. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a848a9be5477c8e775ec83f546aab552d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a848a9be5477c8e775ec83f546aab552d">&#9670;&nbsp;</a></span>RobotPublisher()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_rtc::RobotPublisher::RobotPublisher </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>prefix</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>rate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor. </p>
-<p>If <a class="el" href="a02454.html#ac94779319310005ba44605c567c1c547" title="Get a ros::NodeHandle. ">ROSBridge::get_node_handle</a> returns a nullptr then this object does nothing.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">prefix</td><td>TF prefix</td></tr>
-    <tr><td class="paramname">rate</td><td>Publishing rate</td></tr>
-    <tr><td class="paramname">dt</td><td>Control rate </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a4c712f7481ae4d07e59f11bd4df8c2d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c712f7481ae4d07e59f11bd4df8c2d7">&#9670;&nbsp;</a></span>~RobotPublisher()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_rtc::RobotPublisher::~RobotPublisher </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Destructor. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1928a3476891ae7d2c5dd0506f8935f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1928a3476891ae7d2c5dd0506f8935f8">&#9670;&nbsp;</a></span>init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_rtc::RobotPublisher::init </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01678.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
-          <td class="paramname"><em>robot</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>use_real</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initialize the publisher. </p>
-
-</div>
-</div>
-<a id="addd581f3eed02925519d0b823b8eb99c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#addd581f3eed02925519d0b823b8eb99c">&#9670;&nbsp;</a></span>update()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_rtc::RobotPublisher::update </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01678.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
-          <td class="paramname"><em>robot</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Update the publisher. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a02461.html">mc_rtc::RobotPublisher</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a02461.html#a1928a3476891ae7d2c5dd0506f8935f8">init</a>(const mc_rbdyn::Robot &amp;robot, bool use_real=false)</td><td class="entry"><a class="el" href="a02461.html">mc_rtc::RobotPublisher</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02461.html#a848a9be5477c8e775ec83f546aab552d">RobotPublisher</a>(const std::string &amp;prefix, double rate, double dt)</td><td class="entry"><a class="el" href="a02461.html">mc_rtc::RobotPublisher</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02461.html#addd581f3eed02925519d0b823b8eb99c">update</a>(double dt, const mc_rbdyn::Robot &amp;robot)</td><td class="entry"><a class="el" href="a02461.html">mc_rtc::RobotPublisher</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02461.html#a4c712f7481ae4d07e59f11bd4df8c2d7">~RobotPublisher</a>()</td><td class="entry"><a class="el" href="a02461.html">mc_rtc::RobotPublisher</a></td><td class="entry"></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00745.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02458.html">RobotPublisher</a></li>
-    <li class="footer">Generated on Fri Oct 2 2020 09:02:00 for mc_rtc by
+    <li class="footer">Generated on Wed Oct 7 2020 13:09:11 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

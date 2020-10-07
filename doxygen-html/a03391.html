@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>types.h File Reference</title>
+<title>ros_api.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,157 +70,93 @@ $(document).ready(function(){initNavTree('a03391.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">plot/types.h File Reference</div>  </div>
+<div class="title">mc_tasks/ros_api.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00305.html">mc_rtc/gui/types.h</a>&gt;</code><br />
-<code>#include &lt;limits&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01950.html">mc_rtc::gui::plot::Range</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a01950.html" title="Range for abscissa or ordinate display. ">Range</a> for abscissa or ordinate display.  <a href="a01950.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01954.html">mc_rtc::gui::plot::AxisConfiguration</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describe the configuration of an axis.  <a href="a01954.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01958.html">mc_rtc::gui::plot::PolygonDescription</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describe a polygon to be plotted.  <a href="a01958.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00745"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00745"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01754.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00748.html">mc_rbdyn</a> objects. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00752"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html">mc_rtc::gui</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00766"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00766.html">mc_rtc::gui::plot</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ae8d436e1212bee55dfdb14d50b0d6be9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00766.html#ae8d436e1212bee55dfdb14d50b0d6be9">mc_rtc::gui::plot::Plot</a> { <br />
-&#160;&#160;<a class="el" href="a00766.html#ae8d436e1212bee55dfdb14d50b0d6be9aeb6d8ae6f20283755b339c0dc273988b">mc_rtc::gui::plot::Plot::Standard</a> = 0, 
-<br />
-&#160;&#160;<a class="el" href="a00766.html#ae8d436e1212bee55dfdb14d50b0d6be9a74c53bcd3dcb2bb79993b2fec37d362a">mc_rtc::gui::plot::Plot::XY</a>
-<br />
- }<tr class="memdesc:ae8d436e1212bee55dfdb14d50b0d6be9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describe plot types for the client.  <a href="a00766.html#ae8d436e1212bee55dfdb14d50b0d6be9">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:ae8d436e1212bee55dfdb14d50b0d6be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e2b70125fa1d433838b9a8f2bf28c4d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00766.html#a6e2b70125fa1d433838b9a8f2bf28c4d">mc_rtc::gui::plot::Type</a> { <br />
-&#160;&#160;<a class="el" href="a00766.html#a6e2b70125fa1d433838b9a8f2bf28c4dac9812e629ac3822b86f7c19704983d0e">mc_rtc::gui::plot::Type::Abscissa</a>, 
-<br />
-&#160;&#160;<a class="el" href="a00766.html#a6e2b70125fa1d433838b9a8f2bf28c4da5d32a72e2819aaf62362fcc862b37c5e">mc_rtc::gui::plot::Type::Ordinate</a>, 
-<br />
-&#160;&#160;<a class="el" href="a00766.html#a6e2b70125fa1d433838b9a8f2bf28c4da4c0a11247d92f73fb84baa51e37a3263">mc_rtc::gui::plot::Type::Polygon</a>, 
-<br />
-&#160;&#160;<a class="el" href="a00766.html#a6e2b70125fa1d433838b9a8f2bf28c4daa7a7e14b2a005870ba134e6c92bb7b51">mc_rtc::gui::plot::Type::Polygons</a>, 
-<br />
-&#160;&#160;<a class="el" href="a00766.html#a6e2b70125fa1d433838b9a8f2bf28c4dab83f39f54c4bd7f3a02f9a45fd996031">mc_rtc::gui::plot::Type::AbscissaOrdinate</a>
-<br />
- }<tr class="memdesc:a6e2b70125fa1d433838b9a8f2bf28c4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Distinguish plot types.  <a href="a00766.html#a6e2b70125fa1d433838b9a8f2bf28c4d">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:a6e2b70125fa1d433838b9a8f2bf28c4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a73e5c8e2228efe9d85770fa3233df148"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a73e5c8e2228efe9d85770fa3233df148"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00766.html#a73e5c8e2228efe9d85770fa3233df148">mc_rtc::gui::plot::is_Abscissa</a> ()</td></tr>
-<tr class="separator:a73e5c8e2228efe9d85770fa3233df148"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9dd006fddf621ad45bc2ed39819cb7b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ad9dd006fddf621ad45bc2ed39819cb7b"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00766.html#ad9dd006fddf621ad45bc2ed39819cb7b">mc_rtc::gui::plot::is_not_Abscissa</a> ()</td></tr>
-<tr class="separator:ad9dd006fddf621ad45bc2ed39819cb7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b35e42f9bdc831051bad630befc19d0"><td class="memTemplParams" colspan="2">template&lt;typename T , typename T2 , typename... Args&gt; </td></tr>
-<tr class="memitem:a4b35e42f9bdc831051bad630befc19d0"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00766.html#a4b35e42f9bdc831051bad630befc19d0">mc_rtc::gui::plot::is_not_Abscissa</a> ()</td></tr>
-<tr class="separator:a4b35e42f9bdc831051bad630befc19d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4670673e25f4957cc8b1d6933601fbb8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a4670673e25f4957cc8b1d6933601fbb8"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00766.html#a4670673e25f4957cc8b1d6933601fbb8">mc_rtc::gui::plot::is_2d</a> ()</td></tr>
-<tr class="separator:a4670673e25f4957cc8b1d6933601fbb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37afa0ee1be4dc35f8b370b58cd05c8d"><td class="memTemplParams" colspan="2">template&lt;typename T , typename T2 , typename... Args&gt; </td></tr>
-<tr class="memitem:a37afa0ee1be4dc35f8b370b58cd05c8d"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00766.html#a37afa0ee1be4dc35f8b370b58cd05c8d">mc_rtc::gui::plot::is_2d</a> ()</td></tr>
-<tr class="separator:a37afa0ee1be4dc35f8b370b58cd05c8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:ae070f931bda093c33a301115abc450b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03391.html#ae070f931bda093c33a301115abc450b1">Solid</a></td></tr>
-<tr class="memdesc:ae070f931bda093c33a301115abc450b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solid lines.  <a href="#ae070f931bda093c33a301115abc450b1">More...</a><br /></td></tr>
-<tr class="separator:ae070f931bda093c33a301115abc450b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af050e39a625ecaa0d27537968bbeeaff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03391.html#af050e39a625ecaa0d27537968bbeeaff">Dotted</a></td></tr>
-<tr class="memdesc:af050e39a625ecaa0d27537968bbeeaff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dotted lines.  <a href="#af050e39a625ecaa0d27537968bbeeaff">More...</a><br /></td></tr>
-<tr class="separator:af050e39a625ecaa0d27537968bbeeaff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3aa6973802ff89463140e58e4978b222"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03391.html#a3aa6973802ff89463140e58e4978b222">Dashed</a></td></tr>
-<tr class="memdesc:a3aa6973802ff89463140e58e4978b222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dashed lines.  <a href="#a3aa6973802ff89463140e58e4978b222">More...</a><br /></td></tr>
-<tr class="separator:a3aa6973802ff89463140e58e4978b222"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa149c1d1da2ae1c94f1ae91f4919625a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03391.html#aa149c1d1da2ae1c94f1ae91f4919625a">Left</a></td></tr>
-<tr class="separator:aa149c1d1da2ae1c94f1ae91f4919625a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ad9cb61445fafdd004c409dbab29c15ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03391.html#ad9cb61445fafdd004c409dbab29c15ce">MC_TASKS_ROS_DLLIMPORT</a></td></tr>
+<tr class="separator:ad9cb61445fafdd004c409dbab29c15ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e3780f3cce3c679104c80e08d8e2694"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03391.html#a7e3780f3cce3c679104c80e08d8e2694">MC_TASKS_ROS_DLLEXPORT</a></td></tr>
+<tr class="separator:a7e3780f3cce3c679104c80e08d8e2694"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af79974efde92fc0dac6467d3c01568ed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03391.html#af79974efde92fc0dac6467d3c01568ed">MC_TASKS_ROS_DLLLOCAL</a></td></tr>
+<tr class="separator:af79974efde92fc0dac6467d3c01568ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9127fc040ab12d0ad1fd62b9f562ace"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03391.html#aa9127fc040ab12d0ad1fd62b9f562ace">MC_TASKS_ROS_DLLAPI</a>&#160;&#160;&#160;<a class="el" href="a03391.html#ad9cb61445fafdd004c409dbab29c15ce">MC_TASKS_ROS_DLLIMPORT</a></td></tr>
+<tr class="separator:aa9127fc040ab12d0ad1fd62b9f562ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29794f98df087d4fed1ddd7f873a2488"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03391.html#a29794f98df087d4fed1ddd7f873a2488">MC_TASKS_ROS_LOCAL</a>&#160;&#160;&#160;<a class="el" href="a03391.html#af79974efde92fc0dac6467d3c01568ed">MC_TASKS_ROS_DLLLOCAL</a></td></tr>
+<tr class="separator:a29794f98df087d4fed1ddd7f873a2488"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a3aa6973802ff89463140e58e4978b222"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3aa6973802ff89463140e58e4978b222">&#9670;&nbsp;</a></span>Dashed</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aa9127fc040ab12d0ad1fd62b9f562ace"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9127fc040ab12d0ad1fd62b9f562ace">&#9670;&nbsp;</a></span>MC_TASKS_ROS_DLLAPI</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Dashed</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Dashed lines. </p>
-
-</div>
-</div>
-<a id="af050e39a625ecaa0d27537968bbeeaff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af050e39a625ecaa0d27537968bbeeaff">&#9670;&nbsp;</a></span>Dotted</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Dotted</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Dotted lines. </p>
-
-</div>
-</div>
-<a id="aa149c1d1da2ae1c94f1ae91f4919625a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa149c1d1da2ae1c94f1ae91f4919625a">&#9670;&nbsp;</a></span>Left</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Left</td>
+          <td class="memname">#define MC_TASKS_ROS_DLLAPI&#160;&#160;&#160;<a class="el" href="a03391.html#ad9cb61445fafdd004c409dbab29c15ce">MC_TASKS_ROS_DLLIMPORT</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ae070f931bda093c33a301115abc450b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae070f931bda093c33a301115abc450b1">&#9670;&nbsp;</a></span>Solid</h2>
+<a id="a7e3780f3cce3c679104c80e08d8e2694"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e3780f3cce3c679104c80e08d8e2694">&#9670;&nbsp;</a></span>MC_TASKS_ROS_DLLEXPORT</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Solid</td>
+          <td class="memname">#define MC_TASKS_ROS_DLLEXPORT</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Solid lines. </p>
+</div>
+</div>
+<a id="ad9cb61445fafdd004c409dbab29c15ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9cb61445fafdd004c409dbab29c15ce">&#9670;&nbsp;</a></span>MC_TASKS_ROS_DLLIMPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_TASKS_ROS_DLLIMPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af79974efde92fc0dac6467d3c01568ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af79974efde92fc0dac6467d3c01568ed">&#9670;&nbsp;</a></span>MC_TASKS_ROS_DLLLOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_TASKS_ROS_DLLLOCAL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a29794f98df087d4fed1ddd7f873a2488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29794f98df087d4fed1ddd7f873a2488">&#9670;&nbsp;</a></span>MC_TASKS_ROS_LOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_TASKS_ROS_LOCAL&#160;&#160;&#160;<a class="el" href="a03391.html#af79974efde92fc0dac6467d3c01568ed">MC_TASKS_ROS_DLLLOCAL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -230,8 +166,8 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="dir_db09ff38bdf4a48089498df3a23be2f9.html">plot</a></li><li class="navelem"><a class="el" href="a03391.html">types.h</a></li>
-    <li class="footer">Generated on Fri Oct 2 2020 09:02:00 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_38c8d24aef3972a7f87b834274e76e31.html">plugins</a></li><li class="navelem"><a class="el" href="dir_34d8e42b5ac6f6cb6d4e988599be737f.html">ROS</a></li><li class="navelem"><a class="el" href="dir_0884a74720358c6ca75630db8a4fc3d2.html">include</a></li><li class="navelem"><a class="el" href="dir_f5863744202c98ee1f457dd1ad29e0a5.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a03391.html">ros_api.h</a></li>
+    <li class="footer">Generated on Wed Oct 7 2020 13:09:10 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

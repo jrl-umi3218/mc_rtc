@@ -1,9 +1,13 @@
 var a03340 =
 [
-    [ "MC_PLANNING_DLLAPI", "a03340.html#a3adede9987330f98fe6a52abdfb955f5", null ],
-    [ "MC_PLANNING_DLLEXPORT", "a03340.html#a6a868413b6c5bddd02aeef2f6a0ef5c8", null ],
-    [ "MC_PLANNING_DLLIMPORT", "a03340.html#a7ef3aedb0867986ac977b43fdd7cf21f", null ],
-    [ "MC_PLANNING_DLLLOCAL", "a03340.html#aff1ad001b6bf5fdb9fb19cd51c97a75e", null ],
-    [ "MC_PLANNING_LOCAL", "a03340.html#a73898c9a3a9215937de16e50d4e504a3", null ],
-    [ "MC_PLANNING_VERSION", "a03340.html#aca946837554c98dec168efee18c95e5c", null ]
+    [ "MC_OBSERVER_DLLAPI", "a03340.html#a5f92e3e5bb50345181ceaa0fdc4ed310", null ],
+    [ "MC_OBSERVER_DLLEXPORT", "a03340.html#a71f5d19aecb89bc7ff66ea90cbec91d3", null ],
+    [ "MC_OBSERVER_DLLIMPORT", "a03340.html#a5ec028a59707a198d06a6b92110d7ee1", null ],
+    [ "MC_OBSERVER_DLLLOCAL", "a03340.html#a933db9b3406c8c221ba3ee7f689e7511", null ],
+    [ "MC_OBSERVER_LOCAL", "a03340.html#ad87f4c4e93529fdbfdd4a95ef34bbd7a", null ],
+    [ "MC_OBSERVERS_DLLAPI", "a03340.html#adde8be25d8f40acd541ed21395a5c73a", null ],
+    [ "MC_OBSERVERS_DLLEXPORT", "a03340.html#a584f0147ac169a854c258384854bd841", null ],
+    [ "MC_OBSERVERS_DLLIMPORT", "a03340.html#a0193ed43a7a8a2bca1082d339d28651e", null ],
+    [ "MC_OBSERVERS_DLLLOCAL", "a03340.html#a55268a03db41d5270bf2614681e1eb51", null ],
+    [ "MC_OBSERVERS_LOCAL", "a03340.html#a094cf177ee9875b67aca0d123880fe86", null ]
 ];

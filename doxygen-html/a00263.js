@@ -1,5 +1,5 @@
 var a00263 =
 [
-    [ "DataComboInputImpl", "a01834.html", "a01834" ],
-    [ "DataComboInput", "a00263.html#a5baa34dd8ac370b60f3ffbf0b2fd9dda", null ]
+    [ "ComboInputImpl", "a01833.html", "a01833" ],
+    [ "ComboInput", "a00263.html#aea7948a0427bfd1acd2a28803e5559e1", null ]
 ];

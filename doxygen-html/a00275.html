@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Form.h File Reference</title>
+<title>Force.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -72,55 +72,49 @@ $(document).ready(function(){initNavTree('a00275.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Form.h File Reference</div>  </div>
+<div class="title">Force.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00269.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00269.html">mc_rtc/gui/details/traits.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00272.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00308.html">mc_rtc/gui/types.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01882.html">mc_rtc::gui::FormImpl&lt; Callback &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a user-defined form.  <a href="a01882.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01877.html">mc_rtc::gui::ForceROImpl&lt; GetForce, GetSurface &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force should display a force vector in 3D environment.  <a href="a01877.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01886.html">mc_rtc::gui::FormElement&lt; Derived, element &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01890.html">mc_rtc::gui::FormDataInput&lt; T, element &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01894.html">mc_rtc::gui::FormArrayInput&lt; T &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01898.html">mc_rtc::gui::FormComboInput</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01902.html">mc_rtc::gui::FormDataComboInput</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01881.html">mc_rtc::gui::ForceImpl&lt; GetForce, GetSurface, SetForce &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00745"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00745"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01754.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00748.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memitem:a00748"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00748"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01757.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00751.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00752"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html">mc_rtc::gui</a></td></tr>
+<tr class="memitem:a00755"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html">mc_rtc::gui</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a2683c87b0180a62bc5231a60c18aca7a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#a2683c87b0180a62bc5231a60c18aca7a">mc_rtc::gui::FormCheckbox</a> = FormDataInput&lt; bool, Elements::Checkbox &gt;</td></tr>
-<tr class="separator:a2683c87b0180a62bc5231a60c18aca7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae145da8274a4c06981900ea890979eb9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#ae145da8274a4c06981900ea890979eb9">mc_rtc::gui::FormIntegerInput</a> = FormDataInput&lt; int, Elements::IntegerInput &gt;</td></tr>
-<tr class="separator:ae145da8274a4c06981900ea890979eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc4205d5b7c28257703d3c3c515c9741"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#afc4205d5b7c28257703d3c3c515c9741">mc_rtc::gui::FormNumberInput</a> = FormDataInput&lt; double, Elements::NumberInput &gt;</td></tr>
-<tr class="separator:afc4205d5b7c28257703d3c3c515c9741"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9c26bdeef8d098c11f4edb0f105fef9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html#ad9c26bdeef8d098c11f4edb0f105fef9">mc_rtc::gui::FormStringInput</a> = FormDataInput&lt; std::string, Elements::StringInput &gt;</td></tr>
-<tr class="separator:ad9c26bdeef8d098c11f4edb0f105fef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a94d2215e324dad2adb958327c16bf167"><td class="memTemplParams" colspan="2">template&lt;typename Callback , typename... Args&gt; </td></tr>
-<tr class="memitem:a94d2215e324dad2adb958327c16bf167"><td class="memTemplItemLeft" align="right" valign="top">FormImpl&lt; Callback &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00752.html#a94d2215e324dad2adb958327c16bf167">mc_rtc::gui::Form</a> (const std::string &amp;name, Callback cb, Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:a94d2215e324dad2adb958327c16bf167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to create a Form element.  <a href="a00752.html#a94d2215e324dad2adb958327c16bf167">More...</a><br /></td></tr>
-<tr class="separator:a94d2215e324dad2adb958327c16bf167"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dfaa55db99fac62693744326d7f1cb9"><td class="memTemplParams" colspan="2">template&lt;typename GetForce , typename GetSurface &gt; </td></tr>
+<tr class="memitem:a1dfaa55db99fac62693744326d7f1cb9"><td class="memTemplItemLeft" align="right" valign="top">ForceROImpl&lt; GetForce, GetSurface &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00755.html#a1dfaa55db99fac62693744326d7f1cb9">mc_rtc::gui::Force</a> (const std::string &amp;name, GetForce get_force_fn, GetSurface get_surface_fn)</td></tr>
+<tr class="memdesc:a1dfaa55db99fac62693744326d7f1cb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to get a <a class="el" href="a01881.html">ForceImpl</a>.  <a href="a00755.html#a1dfaa55db99fac62693744326d7f1cb9">More...</a><br /></td></tr>
+<tr class="separator:a1dfaa55db99fac62693744326d7f1cb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5e645b29b00acb907a3080e35a66697"><td class="memTemplParams" colspan="2">template&lt;typename GetForce , typename GetSurface &gt; </td></tr>
+<tr class="memitem:ae5e645b29b00acb907a3080e35a66697"><td class="memTemplItemLeft" align="right" valign="top">ForceROImpl&lt; GetForce, GetSurface &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00755.html#ae5e645b29b00acb907a3080e35a66697">mc_rtc::gui::Force</a> (const std::string &amp;name, const ForceConfig &amp;config, GetForce get_force_fn, GetSurface get_surface_fn)</td></tr>
+<tr class="memdesc:ae5e645b29b00acb907a3080e35a66697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to get a <a class="el" href="a01881.html">ForceImpl</a>.  <a href="a00755.html#ae5e645b29b00acb907a3080e35a66697">More...</a><br /></td></tr>
+<tr class="separator:ae5e645b29b00acb907a3080e35a66697"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed7593a02cc0bcc3b045e2c85a3a2284"><td class="memTemplParams" colspan="2">template&lt;typename GetForce , typename GetSurface , typename SetForce &gt; </td></tr>
+<tr class="memitem:aed7593a02cc0bcc3b045e2c85a3a2284"><td class="memTemplItemLeft" align="right" valign="top">ForceImpl&lt; GetForce, GetSurface, SetForce &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00755.html#aed7593a02cc0bcc3b045e2c85a3a2284">mc_rtc::gui::Force</a> (const std::string &amp;name, GetForce get_force_fn, SetForce set_force_fn, GetSurface get_surface_fn)</td></tr>
+<tr class="memdesc:aed7593a02cc0bcc3b045e2c85a3a2284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to get a <a class="el" href="a01881.html">ForceImpl</a>.  <a href="a00755.html#aed7593a02cc0bcc3b045e2c85a3a2284">More...</a><br /></td></tr>
+<tr class="separator:aed7593a02cc0bcc3b045e2c85a3a2284"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af532dce0703aff08a435a2c53182de1b"><td class="memTemplParams" colspan="2">template&lt;typename GetForce , typename GetSurface , typename SetForce &gt; </td></tr>
+<tr class="memitem:af532dce0703aff08a435a2c53182de1b"><td class="memTemplItemLeft" align="right" valign="top">ForceImpl&lt; GetForce, GetSurface, SetForce &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00755.html#af532dce0703aff08a435a2c53182de1b">mc_rtc::gui::Force</a> (const std::string &amp;name, const ForceConfig &amp;config, GetForce get_force_fn, SetForce set_force_fn, GetSurface get_surface_fn)</td></tr>
+<tr class="memdesc:af532dce0703aff08a435a2c53182de1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to get a <a class="el" href="a01881.html">ForceImpl</a>.  <a href="a00755.html#af532dce0703aff08a435a2c53182de1b">More...</a><br /></td></tr>
+<tr class="separator:af532dce0703aff08a435a2c53182de1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -128,8 +122,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00275.html">Form.h</a></li>
-    <li class="footer">Generated on Fri Oct 2 2020 09:02:00 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00275.html">Force.h</a></li>
+    <li class="footer">Generated on Wed Oct 7 2020 13:09:10 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

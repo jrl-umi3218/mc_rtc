@@ -1,5 +1,6 @@
 var a00302 =
 [
-    [ "Polygons", "a01946.html", "a01946" ],
-    [ "Polygons", "a00302.html#a2bfb0562e6093e2274530cb22f523030", null ]
+    [ "PolygonImpl", "a01973.html", "a01973" ],
+    [ "Polygon", "a00302.html#ac7c7c596bdb09e8c01e26e8fb53ce360", null ],
+    [ "Polygon", "a00302.html#a2b137bae8372a9a84cdb28508e7de1dd", null ]
 ];

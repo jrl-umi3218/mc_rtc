@@ -343,7 +343,7 @@ optional arguments:
   <dd class="col-9">Declaration to make sure your controller will be loadable on all platforms</dd>
 
   <dt class="col-3">src/MyFirstFSMController.h</dt>
-  <dd class="col-9">Declare your controller class. It must inherits from <a href="/mc_rtc/doxygen.html#a01374" target="blank_">mc_control::fsm::Controller</a> and override at least the run function and the reset function</dd>
+  <dd class="col-9">Declare your controller class. It must inherits from <a href="/mc_rtc/doxygen.html#a01377" target="blank_">mc_control::fsm::Controller</a> and override at least the run function and the reset function</dd>
 
   <dt class="col-3">src/MyFirstFSMController.cpp</dt>
   <dd class="col-9">Implement your controller. We will go over this in more details in the next sections</dd>
@@ -440,9 +440,9 @@ optional arguments:
 
 <p>Here we declare three constraints:</p>
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">contact</code>: Adds an <a href="/mc_rtc/doxygen.html#a02182" target="blank_">mc_solver::ContactConstraint</a>, responsible for keeping the contact position fixed, and ensures that the generated forces are within friction cone constraints (in dynamics only).</li>
-  <li><code class="language-plaintext highlighter-rouge">dynamics</code>: Adds a <a href="/mc_rtc/doxygen.html#a02186" target="blank_">mc_solver::DynamicsConstraint</a>: ensures kinematic constraints, joint limit constraints, and computes the joint torques.</li>
-  <li><code class="language-plaintext highlighter-rouge">compoundJoint</code>: Adds a <a href="/mc_rtc/doxygen.html#a02170" target="blank_">mc_solver::CompoundJointConstraint</a>: handle joint limits for joint that depend on each other (e.g the ankle joint limits in the roll direction depend on the current yaw angle)</li>
+  <li><code class="language-plaintext highlighter-rouge">contact</code>: Adds an <a href="/mc_rtc/doxygen.html#a02185" target="blank_">mc_solver::ContactConstraint</a>, responsible for keeping the contact position fixed, and ensures that the generated forces are within friction cone constraints (in dynamics only).</li>
+  <li><code class="language-plaintext highlighter-rouge">dynamics</code>: Adds a <a href="/mc_rtc/doxygen.html#a02189" target="blank_">mc_solver::DynamicsConstraint</a>: ensures kinematic constraints, joint limit constraints, and computes the joint torques.</li>
+  <li><code class="language-plaintext highlighter-rouge">compoundJoint</code>: Adds a <a href="/mc_rtc/doxygen.html#a02173" target="blank_">mc_solver::CompoundJointConstraint</a>: handle joint limits for joint that depend on each other (e.g the ankle joint limits in the roll direction depend on the current yaw angle)</li>
 </ul>
 
 <h1 id="contacts">Contacts</h1>
@@ -465,7 +465,7 @@ optional arguments:
 
 <h1 id="collisions">Collisions</h1>
 
-<p>Let’s now see how to add an initial set of collisions. As is the case for the contacts, those may later be added/removed by the states. The <code class="language-plaintext highlighter-rouge">collisions</code> element contains an array of <a href="/mc_rtc/json-full.html#ConstraintSet/CollisionsConstraint">CollisionConstraint</a> objects. For the <code class="language-plaintext highlighter-rouge">MainRobot</code>, a default list of self-collisions is defined in the <a href="/mc_rtc/doxygen.html#a01706" target="blank_">mc_rbdyn::RobotModule</a> and may be used here.</p>
+<p>Let’s now see how to add an initial set of collisions. As is the case for the contacts, those may later be added/removed by the states. The <code class="language-plaintext highlighter-rouge">collisions</code> element contains an array of <a href="/mc_rtc/json-full.html#ConstraintSet/CollisionsConstraint">CollisionConstraint</a> objects. For the <code class="language-plaintext highlighter-rouge">MainRobot</code>, a default list of self-collisions is defined in the <a href="/mc_rtc/doxygen.html#a01709" target="blank_">mc_rbdyn::RobotModule</a> and may be used here.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Collision constraint</span>
 <span class="na">collisions</span><span class="pi">:</span>
@@ -489,25 +489,25 @@ optional arguments:
 <ul>
   <li><code class="language-plaintext highlighter-rouge">MetaTasks</code>: Loads tasks from configuration, add them to the solver, and check for tasks completion
     <ul>
-      <li>API: <a href="/mc_rtc/doxygen.html#a01418" target="blank_">mc_control::fsm::MetaTasksState</a></li>
+      <li>API: <a href="/mc_rtc/doxygen.html#a01421" target="blank_">mc_control::fsm::MetaTasksState</a></li>
       <li>YAML: <a href="/mc_rtc/json.html#State/MetaTasks">JSON Schema Documentation</a></li>
     </ul>
   </li>
   <li><code class="language-plaintext highlighter-rouge">Parallel</code>: Run multiple states
     <ul>
-      <li>API: <a href="/mc_rtc/doxygen.html#a01426" target="blank_">mc_control::fsm::ParallelState</a></li>
+      <li>API: <a href="/mc_rtc/doxygen.html#a01429" target="blank_">mc_control::fsm::ParallelState</a></li>
       <li>YAML: <a href="/mc_rtc/json.html#State/Parallel">JSON Schema Documentation</a></li>
     </ul>
   </li>
   <li><code class="language-plaintext highlighter-rouge">Meta</code>: Creates an FSM within a state
     <ul>
-      <li>API: <a href="/mc_rtc/doxygen.html#a01414" target="blank_">mc_control::fsm::MetaState</a></li>
+      <li>API: <a href="/mc_rtc/doxygen.html#a01417" target="blank_">mc_control::fsm::MetaState</a></li>
       <li>YAML: <a href="/mc_rtc/json.html#State/Meta">JSON Schema Documentation</a></li>
     </ul>
   </li>
   <li><code class="language-plaintext highlighter-rouge">Posture</code>: Handles the global posture tasks’ gains and targets
     <ul>
-      <li>API: <a href="/mc_rtc/doxygen.html#a01438" target="blank_">mc_control::fsm::PostureState</a></li>
+      <li>API: <a href="/mc_rtc/doxygen.html#a01441" target="blank_">mc_control::fsm::PostureState</a></li>
       <li>YAML: <a href="/mc_rtc/json.html#State/Posture">JSON Schema Documentation</a></li>
     </ul>
   </li>
@@ -535,7 +535,7 @@ optional arguments:
   <li>How to control the flow of transitions from within a state</li>
 </ol>
 
-<p>This state is defined in <code class="language-plaintext highlighter-rouge">src/states/Door_Initial.cpp</code> and overrides the required virtual functions <code class="language-plaintext highlighter-rouge">configure</code>, <code class="language-plaintext highlighter-rouge">start</code> and <code class="language-plaintext highlighter-rouge">run</code> and <code class="language-plaintext highlighter-rouge">teardown</code> function (see the API documentation of <a href="/mc_rtc/doxygen.html#a01390" target="blank_">mc_control::fsm::State</a>). Here, we add a button to the GUI when the state starts. When clicked, this button is used to change the state of a boolean <code class="language-plaintext highlighter-rouge">openDoor_</code>, which is later used to trigger an “OpenDoor” transition. This is achieved by calling <code class="language-plaintext highlighter-rouge">output("OpenDoor")</code> and returning <code class="language-plaintext highlighter-rouge">true</code> in the <code class="language-plaintext highlighter-rouge">bool Door_Initial::run</code> function, which signifies that we consider the state to be completed and that the next transition can occur. Note that the the configuration of the transition map determines how this transition occurs (see <a href="/mc_rtc/doxygen.html#a01454" target="blank_">mc_control::fsm::TransitionMap</a>).</p>
+<p>This state is defined in <code class="language-plaintext highlighter-rouge">src/states/Door_Initial.cpp</code> and overrides the required virtual functions <code class="language-plaintext highlighter-rouge">configure</code>, <code class="language-plaintext highlighter-rouge">start</code> and <code class="language-plaintext highlighter-rouge">run</code> and <code class="language-plaintext highlighter-rouge">teardown</code> function (see the API documentation of <a href="/mc_rtc/doxygen.html#a01393" target="blank_">mc_control::fsm::State</a>). Here, we add a button to the GUI when the state starts. When clicked, this button is used to change the state of a boolean <code class="language-plaintext highlighter-rouge">openDoor_</code>, which is later used to trigger an “OpenDoor” transition. This is achieved by calling <code class="language-plaintext highlighter-rouge">output("OpenDoor")</code> and returning <code class="language-plaintext highlighter-rouge">true</code> in the <code class="language-plaintext highlighter-rouge">bool Door_Initial::run</code> function, which signifies that we consider the state to be completed and that the next transition can occur. Note that the the configuration of the transition map determines how this transition occurs (see <a href="/mc_rtc/doxygen.html#a01457" target="blank_">mc_control::fsm::TransitionMap</a>).</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;mc_control/fsm/Controller.h&gt;
 </span>
@@ -603,7 +603,7 @@ optional arguments:
           <span class="pi">-</span> <span class="na">speed</span><span class="pi">:</span> <span class="s">1e-4</span>
 </code></pre></div></div>
 
-<p>This state uses the <a href="/mc_rtc/doxygen.html#a01418" target="blank_">mc_control::fsm::MetaTasksState</a> C++ state provided with the framework to load a set of tasks from their YAML description. Here, we load a task of type <code class="language-plaintext highlighter-rouge">surfaceTransform</code> (<a href="/mc_rtc/json.html#MetaTask/SurfaceTransformTask">YAML Documentation</a>) that we name <code class="language-plaintext highlighter-rouge">RightHandTrajectory</code>. This creates and adds an <a href="/mc_rtc/doxygen.html#a02426" target="blank_">mc_tasks::SurfaceTransformTask</a> to the solver, and configures it with a target defined w.r.t the door’s handle surface. The <code class="language-plaintext highlighter-rouge">completion</code> element creates a <a href="/mc_rtc/doxygen.html#a01350" target="blank_">mc_control::CompletionCriteria</a>, which builds a logic function that checks whether the task’s execution is considered completed. The <code class="language-plaintext highlighter-rouge">MetaTasks</code> state will output <code class="language-plaintext highlighter-rouge">"OK"</code> (by default) when the task’s completion criteria is fulfilled.</p>
+<p>This state uses the <a href="/mc_rtc/doxygen.html#a01421" target="blank_">mc_control::fsm::MetaTasksState</a> C++ state provided with the framework to load a set of tasks from their YAML description. Here, we load a task of type <code class="language-plaintext highlighter-rouge">surfaceTransform</code> (<a href="/mc_rtc/json.html#MetaTask/SurfaceTransformTask">YAML Documentation</a>) that we name <code class="language-plaintext highlighter-rouge">RightHandTrajectory</code>. This creates and adds an <a href="/mc_rtc/doxygen.html#a02429" target="blank_">mc_tasks::SurfaceTransformTask</a> to the solver, and configures it with a target defined w.r.t the door’s handle surface. The <code class="language-plaintext highlighter-rouge">completion</code> element creates a <a href="/mc_rtc/doxygen.html#a01353" target="blank_">mc_control::CompletionCriteria</a>, which builds a logic function that checks whether the task’s execution is considered completed. The <code class="language-plaintext highlighter-rouge">MetaTasks</code> state will output <code class="language-plaintext highlighter-rouge">"OK"</code> (by default) when the task’s completion criteria is fulfilled.</p>
 
 <p>The <code class="language-plaintext highlighter-rouge">OpenDoorFSM</code> can thus move to its next transition: <code class="language-plaintext highlighter-rouge">[Door::ReachHandle, OK, Door::MoveHandle, Auto]</code></p>
 
@@ -626,7 +626,7 @@ optional arguments:
     <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">Handle</span>
 </code></pre></div></div>
 
-<p>This state is based on the <a href="/mc_rtc/doxygen.html#a01438" target="blank_">mc_control::fsm::PostureState</a> (<a href="/mc_rtc/json.html#States/Posture">JSON documentation</a>) whose role is to change gains and targets of the global posture task, automatically added to each robot by the framework. First, a contact between the robot’s <code class="language-plaintext highlighter-rouge">RightGripper</code> and the door’s <code class="language-plaintext highlighter-rouge">Handle</code> surfaces is established which prevents the QP from moving these surfaces relative to each other, and adds friction cone constraints to compute the dynamical forces involved in the robot-door interaction. Thus, when the handle joint rotates so does the JVRC1 robot.</p>
+<p>This state is based on the <a href="/mc_rtc/doxygen.html#a01441" target="blank_">mc_control::fsm::PostureState</a> (<a href="/mc_rtc/json.html#States/Posture">JSON documentation</a>) whose role is to change gains and targets of the global posture task, automatically added to each robot by the framework. First, a contact between the robot’s <code class="language-plaintext highlighter-rouge">RightGripper</code> and the door’s <code class="language-plaintext highlighter-rouge">Handle</code> surfaces is established which prevents the QP from moving these surfaces relative to each other, and adds friction cone constraints to compute the dynamical forces involved in the robot-door interaction. Thus, when the handle joint rotates so does the JVRC1 robot.</p>
 
 <p>Once this state completes, we can move to the next transition: <code class="language-plaintext highlighter-rouge">[Door::MoveHandle, OK, Door::OpenDoor, Auto]</code>. This next state is very similar to the previous one: it changes the target joint angle of the door’s hinges to make the robot open it. Note how this state inherits from the previous one (<code class="language-plaintext highlighter-rouge">base: Door::MoveHandle</code>), and only redefines the new targets.</p>
 

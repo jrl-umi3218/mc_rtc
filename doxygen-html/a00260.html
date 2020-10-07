@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>ComboInput.h File Reference</title>
+<title>Checkbox.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -74,32 +74,32 @@ $(document).ready(function(){initNavTree('a00260.html','');});
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">ComboInput.h File Reference</div>  </div>
+<div class="title">Checkbox.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00266.html">mc_rtc/gui/details/traits.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00269.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="a00269.html">mc_rtc/gui/details/traits.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00272.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01830.html">mc_rtc::gui::ComboInputImpl&lt; GetT, SetT &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ComboInput should display a combo box with the set of choices provided by values.  <a href="a01830.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01829.html">mc_rtc::gui::CheckboxImpl&lt; GetT, Callback &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checkbox display a toggable checkbox.  <a href="a01829.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
-<tr class="memitem:a00745"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00745"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01754.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00748.html">mc_rbdyn</a> objects. <br /></td></tr>
+<tr class="memitem:a00748"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html">mc_rtc</a></td></tr>
+<tr class="memdesc:a00748"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01757.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00751.html">mc_rbdyn</a> objects. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00752"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html">mc_rtc::gui</a></td></tr>
+<tr class="memitem:a00755"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00755.html">mc_rtc::gui</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aea7948a0427bfd1acd2a28803e5559e1"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
-<tr class="memitem:aea7948a0427bfd1acd2a28803e5559e1"><td class="memTemplItemLeft" align="right" valign="top">ComboInputImpl&lt; GetT, SetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00752.html#aea7948a0427bfd1acd2a28803e5559e1">mc_rtc::gui::ComboInput</a> (const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;values, GetT get_fn, SetT set_fn)</td></tr>
-<tr class="memdesc:aea7948a0427bfd1acd2a28803e5559e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to create a <a class="el" href="a01830.html" title="ComboInput should display a combo box with the set of choices provided by values. ...">ComboInputImpl</a>.  <a href="a00752.html#aea7948a0427bfd1acd2a28803e5559e1">More...</a><br /></td></tr>
-<tr class="separator:aea7948a0427bfd1acd2a28803e5559e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc7e12ae3accc04250d14da90634986b"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename Callback &gt; </td></tr>
+<tr class="memitem:afc7e12ae3accc04250d14da90634986b"><td class="memTemplItemLeft" align="right" valign="top">CheckboxImpl&lt; GetT, Callback &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00755.html#afc7e12ae3accc04250d14da90634986b">mc_rtc::gui::Checkbox</a> (const std::string &amp;name, GetT get_fn, Callback cb)</td></tr>
+<tr class="memdesc:afc7e12ae3accc04250d14da90634986b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function to create a Checkbox.  <a href="a00755.html#afc7e12ae3accc04250d14da90634986b">More...</a><br /></td></tr>
+<tr class="separator:afc7e12ae3accc04250d14da90634986b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -107,8 +107,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00260.html">ComboInput.h</a></li>
-    <li class="footer">Generated on Fri Oct 2 2020 09:02:00 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="dir_dda95c61bc807ada3674ae2fc67687f0.html">gui</a></li><li class="navelem"><a class="el" href="a00260.html">Checkbox.h</a></li>
+    <li class="footer">Generated on Wed Oct 7 2020 13:09:10 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

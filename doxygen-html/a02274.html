@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_solver::utils::ContactWrenchMatrixToLambdaMatrix Struct Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02274.html','');});
+$(document).ready(function(){initNavTree('a02277.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,154 +69,23 @@ $(document).ready(function(){initNavTree('a02274.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="a02271.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix Struct Reference</div>  </div>
+<div class="title">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Transform contact wrench matrix to lambda matrix.  
- <a href="a02274.html#details">More...</a></p>
-
-<p><code>#include &lt;mc_solver/utils/ContactWrenchMatrixToLambdaMatrix.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a023d5ba6b69792d96db4ca6e8fd20e2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02274.html#a023d5ba6b69792d96db4ca6e8fd20e2c">ContactWrenchMatrixToLambdaMatrix</a> (const <a class="el" href="a02266.html">mc_solver::QPSolver</a> &amp;solver, const tasks::qp::ContactId &amp;cid)</td></tr>
-<tr class="memdesc:a023d5ba6b69792d96db4ca6e8fd20e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the transformation matrix for a given contact.  <a href="#a023d5ba6b69792d96db4ca6e8fd20e2c">More...</a><br /></td></tr>
-<tr class="separator:a023d5ba6b69792d96db4ca6e8fd20e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3024b20e8f098756d24cd2082469c055"><td class="memItemLeft" align="right" valign="top">Eigen::MatrixXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02274.html#a3024b20e8f098756d24cd2082469c055">transform</a> (const Eigen::MatrixXd &amp;A) const</td></tr>
-<tr class="memdesc:a3024b20e8f098756d24cd2082469c055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the \(A&#39;\) matrix given the \(A\) matrix.  <a href="#a3024b20e8f098756d24cd2082469c055">More...</a><br /></td></tr>
-<tr class="separator:a3024b20e8f098756d24cd2082469c055"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae56a8607e4c339c9a345155ec613032d"><td class="memItemLeft" align="right" valign="top">const Eigen::MatrixXd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02274.html#ae56a8607e4c339c9a345155ec613032d">transform</a> () const</td></tr>
-<tr class="separator:ae56a8607e4c339c9a345155ec613032d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Transform contact wrench matrix to lambda matrix. </p>
-<p>This transforms a given matrix A that applies to a wrench (e.g. such as in \(A F &lt;= F_{max}\)) into a matrix that applies to lambdas (i.e. such \(A&#39; \boldsymbol{\lambda} &lt;= F_{max}\))</p>
-<p>For a given force \(f_p\) at point \(p\), the linearized friction cone provides:</p>
-<p class="formulaDsp">
-\[f_p = \sum^{N^{Gen}_{p}}_{i=1} G^{p}_{i} \lambda^{p}_{i}\]
-</p>
-<p>Where \(G^{p}_{i} \in \mathbb{R}^{3,1}\) are the generatrix of the friction cone. In the remainder of these equations we write \(N = N^{Gen}_{p}\) for sparcity</p>
-<p>In matrix form:</p>
-<p class="formulaDsp">
-\[ f_p = \begin{bmatrix} G^p_{1x} &amp; \cdots &amp; G^p_{Nx} \\ G^p_{1y} &amp; \cdots &amp; G^p_{Ny} \\ G^p_{1z} &amp; \cdots &amp; G^p_{Nz} \end{bmatrix} \begin{bmatrix} \lambda^{p}_{i} \\ \vdots \\ \lambda^{p}_{N} \end{bmatrix} \]
-</p>
-<p>For a given wrench \(F\) at frame b, resulting from \(P\) contacts</p>
-<p class="formulaDsp">
-\begin{align} F &amp; = \sum^{P}_{i=1} {}^{p_{i}}X_{b}^{T} f_{p_{i}} \\ &amp; = \begin{bmatrix} \begin{bmatrix} r^{\times}_{1}E^{T}_{1} \\ E^{T}_{1} \end{bmatrix} \begin{bmatrix} G^{1}_{1} &amp; \cdots &amp; G^{1}_{N} \end{bmatrix} &amp; \cdots &amp; \begin{bmatrix} r^{\times}_{P}E^{T}_{P} \\ E^{T}_{P} \end{bmatrix} \begin{bmatrix} G^{P}_{1} &amp; \cdots &amp; G^{P}_{N} \end{bmatrix} \end{bmatrix} \begin{bmatrix} \lambda^{1}_{1} \\ \vdots \\ \lambda^{P}_{N} \end{bmatrix} \end{align}
-</p>
-<p>Where \({}^{p_{i}}X_{b}\) is the Plücker transform from the point \(p\) to the wrench frame \(b\):</p>
-<p class="formulaDsp">
-\begin{align*} {}^{p_{i}}X_{b} = \begin{bmatrix} E_{i} &amp; 0 \\ -E_{i}r_{i}^{\times} &amp; E_{i} \end{bmatrix} &amp; &amp; {}^{p_{i}}X_{b}^{T} = \begin{bmatrix} E^{T}_{i} &amp; r^{\times}_{i}E^{T}_{i} \\ 0 &amp; E^{T}_{i} \end{bmatrix} \end{align*}
-</p>
-<p>Note: we only take the last three columns on \({}^{p_{i}}X_{b}^{T}\) in Equation (2)</p>
-<p>Hence:</p>
-<p class="formulaDsp">
-\begin{align*} A&#39; = A \begin{bmatrix} \begin{bmatrix} r^{\times}_{1}E^{T}_{1} \\ E^{T}_{1} \end{bmatrix} \begin{bmatrix} G^{1}_{1} &amp; \cdots &amp; G^{1}_{N} \end{bmatrix} &amp; \cdots &amp; \begin{bmatrix} r^{\times}_{P}E^{T}_{P} \\ E^{T}_{P} \end{bmatrix} \begin{bmatrix} G^{P}_{1} &amp; \cdots &amp; G^{P}_{N} \end{bmatrix} \end{bmatrix} \end{align*}
-</p>
- </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a023d5ba6b69792d96db4ca6e8fd20e2c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a023d5ba6b69792d96db4ca6e8fd20e2c">&#9670;&nbsp;</a></span>ContactWrenchMatrixToLambdaMatrix()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix::ContactWrenchMatrixToLambdaMatrix </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a02266.html">mc_solver::QPSolver</a> &amp;&#160;</td>
-          <td class="paramname"><em>solver</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const tasks::qp::ContactId &amp;&#160;</td>
-          <td class="paramname"><em>cid</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Creates the transformation matrix for a given contact. </p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">If</td><td>the contact has not been added to the solver </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3024b20e8f098756d24cd2082469c055"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3024b20e8f098756d24cd2082469c055">&#9670;&nbsp;</a></span>transform() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Eigen::MatrixXd mc_solver::utils::ContactWrenchMatrixToLambdaMatrix::transform </td>
-          <td>(</td>
-          <td class="paramtype">const Eigen::MatrixXd &amp;&#160;</td>
-          <td class="paramname"><em>A</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Compute the \(A&#39;\) matrix given the \(A\) matrix. </p>
-
-</div>
-</div>
-<a id="ae56a8607e4c339c9a345155ec613032d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae56a8607e4c339c9a345155ec613032d">&#9670;&nbsp;</a></span>transform() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const Eigen::MatrixXd&amp; mc_solver::utils::ContactWrenchMatrixToLambdaMatrix::transform </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a02277.html">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a02277.html#a023d5ba6b69792d96db4ca6e8fd20e2c">ContactWrenchMatrixToLambdaMatrix</a>(const mc_solver::QPSolver &amp;solver, const tasks::qp::ContactId &amp;cid)</td><td class="entry"><a class="el" href="a02277.html">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="a02277.html#a3024b20e8f098756d24cd2082469c055">transform</a>(const Eigen::MatrixXd &amp;A) const</td><td class="entry"><a class="el" href="a02277.html">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02277.html#ae56a8607e4c339c9a345155ec613032d">transform</a>() const</td><td class="entry"><a class="el" href="a02277.html">mc_solver::utils::ContactWrenchMatrixToLambdaMatrix</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00754.html">mc_solver</a></li><li class="navelem"><a class="el" href="a00773.html">utils</a></li><li class="navelem"><a class="el" href="a02274.html">ContactWrenchMatrixToLambdaMatrix</a></li>
-    <li class="footer">Generated on Fri Oct 2 2020 09:02:01 for mc_rtc by
+    <li class="footer">Generated on Wed Oct 7 2020 13:09:11 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

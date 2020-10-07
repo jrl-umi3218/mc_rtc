@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_rtc::ROSBridge Struct Reference</title>
+<title>Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02454.html','');});
+$(document).ready(function(){initNavTree('a02457.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,249 +69,25 @@ $(document).ready(function(){initNavTree('a02454.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="a02451.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc::ROSBridge Struct Reference</div>  </div>
+<div class="title">mc_rtc::ROSBridge Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Allows to access ROS functionalities within <a class="el" href="a00745.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a> without explicit ROS dependencies.  
- <a href="a02454.html#details">More...</a></p>
-
-<p><code>#include &lt;/home/runner/work/mc_rtc/mc_rtc/plugins/ROS/include/mc_rtc/ros.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac94779319310005ba44605c567c1c547"><td class="memItemLeft" align="right" valign="top">static std::shared_ptr&lt; ros::NodeHandle &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02454.html#ac94779319310005ba44605c567c1c547">get_node_handle</a> ()</td></tr>
-<tr class="memdesc:ac94779319310005ba44605c567c1c547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a ros::NodeHandle.  <a href="#ac94779319310005ba44605c567c1c547">More...</a><br /></td></tr>
-<tr class="separator:ac94779319310005ba44605c567c1c547"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab852d1ed6a6154d0b6978bb55ca4d9f0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02454.html#ab852d1ed6a6154d0b6978bb55ca4d9f0">set_publisher_timestep</a> (double timestep)</td></tr>
-<tr class="memdesc:ab852d1ed6a6154d0b6978bb55ca4d9f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set publisher timestep.  <a href="#ab852d1ed6a6154d0b6978bb55ca4d9f0">More...</a><br /></td></tr>
-<tr class="separator:ab852d1ed6a6154d0b6978bb55ca4d9f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6642d73c7c180d1a93f1eff5111b50b2"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02454.html#a6642d73c7c180d1a93f1eff5111b50b2">init_robot_publisher</a> (const std::string &amp;publisher, double dt, const <a class="el" href="a01678.html">mc_rbdyn::Robot</a> &amp;robot, bool use_real=false)</td></tr>
-<tr class="memdesc:a6642d73c7c180d1a93f1eff5111b50b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the robot publisher state.  <a href="#a6642d73c7c180d1a93f1eff5111b50b2">More...</a><br /></td></tr>
-<tr class="separator:a6642d73c7c180d1a93f1eff5111b50b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4972e3f6b94d800663017ba05364f172"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02454.html#a4972e3f6b94d800663017ba05364f172">update_robot_publisher</a> (const std::string &amp;publisher, double dt, const <a class="el" href="a01678.html">mc_rbdyn::Robot</a> &amp;robot)</td></tr>
-<tr class="memdesc:a4972e3f6b94d800663017ba05364f172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the robot publisher state.  <a href="#a4972e3f6b94d800663017ba05364f172">More...</a><br /></td></tr>
-<tr class="separator:a4972e3f6b94d800663017ba05364f172"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ad7c399069ed81e3fb57a415babe0e8"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02454.html#a9ad7c399069ed81e3fb57a415babe0e8">shutdown</a> ()</td></tr>
-<tr class="memdesc:a9ad7c399069ed81e3fb57a415babe0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop ROS.  <a href="#a9ad7c399069ed81e3fb57a415babe0e8">More...</a><br /></td></tr>
-<tr class="separator:a9ad7c399069ed81e3fb57a415babe0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Allows to access ROS functionalities within <a class="el" href="a00745.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a> without explicit ROS dependencies. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac94779319310005ba44605c567c1c547"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac94779319310005ba44605c567c1c547">&#9670;&nbsp;</a></span>get_node_handle()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::shared_ptr&lt;ros::NodeHandle&gt; mc_rtc::ROSBridge::get_node_handle </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Get a ros::NodeHandle. </p>
-<p>This function will return a nullptr if ROS is not available</p>
-<dl class="section return"><dt>Returns</dt><dd>A shared_ptr to a ros::NodeHandle </dd></dl>
-
-</div>
-</div>
-<a id="a6642d73c7c180d1a93f1eff5111b50b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6642d73c7c180d1a93f1eff5111b50b2">&#9670;&nbsp;</a></span>init_robot_publisher()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void mc_rtc::ROSBridge::init_robot_publisher </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>publisher</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01678.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
-          <td class="paramname"><em>robot</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>use_real</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Update the robot publisher state. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">publisher</td><td>Name of the publisher</td></tr>
-    <tr><td class="paramname">dt</td><td>Controller timestep</td></tr>
-    <tr><td class="paramname">robot</td><td>Which robot to publish</td></tr>
-    <tr><td class="paramname">use_real</td><td>Use the real URDF rather than the default one </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ab852d1ed6a6154d0b6978bb55ca4d9f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab852d1ed6a6154d0b6978bb55ca4d9f0">&#9670;&nbsp;</a></span>set_publisher_timestep()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void mc_rtc::ROSBridge::set_publisher_timestep </td>
-          <td>(</td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>timestep</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Set publisher timestep. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">timestep</td><td>Update timestep in ms </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a9ad7c399069ed81e3fb57a415babe0e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ad7c399069ed81e3fb57a415babe0e8">&#9670;&nbsp;</a></span>shutdown()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void mc_rtc::ROSBridge::shutdown </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Stop ROS. </p>
-
-</div>
-</div>
-<a id="a4972e3f6b94d800663017ba05364f172"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4972e3f6b94d800663017ba05364f172">&#9670;&nbsp;</a></span>update_robot_publisher()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void mc_rtc::ROSBridge::update_robot_publisher </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>publisher</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>dt</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01678.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
-          <td class="paramname"><em>robot</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Update the robot publisher state. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">publisher</td><td>Name of the publisher</td></tr>
-    <tr><td class="paramname">dt</td><td>Controller timestep</td></tr>
-    <tr><td class="paramname">robot</td><td>Which robot to publish </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>This is the complete list of members for <a class="el" href="a02457.html">mc_rtc::ROSBridge</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="a02457.html#ac94779319310005ba44605c567c1c547">get_node_handle</a>()</td><td class="entry"><a class="el" href="a02457.html">mc_rtc::ROSBridge</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02457.html#a6642d73c7c180d1a93f1eff5111b50b2">init_robot_publisher</a>(const std::string &amp;publisher, double dt, const mc_rbdyn::Robot &amp;robot, bool use_real=false)</td><td class="entry"><a class="el" href="a02457.html">mc_rtc::ROSBridge</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02457.html#ab852d1ed6a6154d0b6978bb55ca4d9f0">set_publisher_timestep</a>(double timestep)</td><td class="entry"><a class="el" href="a02457.html">mc_rtc::ROSBridge</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="a02457.html#a9ad7c399069ed81e3fb57a415babe0e8">shutdown</a>()</td><td class="entry"><a class="el" href="a02457.html">mc_rtc::ROSBridge</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="a02457.html#a4972e3f6b94d800663017ba05364f172">update_robot_publisher</a>(const std::string &amp;publisher, double dt, const mc_rbdyn::Robot &amp;robot)</td><td class="entry"><a class="el" href="a02457.html">mc_rtc::ROSBridge</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+</table></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00745.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a02454.html">ROSBridge</a></li>
-    <li class="footer">Generated on Fri Oct 2 2020 09:02:00 for mc_rtc by
+    <li class="footer">Generated on Wed Oct 7 2020 13:09:11 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

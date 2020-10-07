@@ -1,5 +1,5 @@
 var a00281 =
 [
-    [ "LabelImpl", "a01910.html", "a01910" ],
-    [ "Label", "a00281.html#a4b4617f09036971e7ccbf6917ee37c19", null ]
+    [ "IntegerInputImpl", "a01909.html", "a01909" ],
+    [ "IntegerInput", "a00281.html#ac4f13804b0853d4e3ee9d53afed5b06c", null ]
 ];
