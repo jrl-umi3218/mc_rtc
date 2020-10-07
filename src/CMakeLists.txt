@@ -60,9 +60,9 @@ add_custom_command(OUTPUT ${VERSION_HEADER}
 )
 
 set(DEBUG_SOURCE "${PROJECT_BINARY_DIR}/src/mc_rtc/$<LOWER_CASE:$<CONFIG>>/debug.cpp")
-file(GENERATE OUTPUT ${DEBUG_SOURCE} INPUT "${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc/debug.in.cpp")
 # This is not necessary but a work-around for https://gitlab.kitware.com/cmake/cmake/-/issues/21203
-file(GENERATE OUTPUT "${PROJECT_BINARY_DIR}/src/mc_rtc/debug.cpp" INPUT "${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc/debug.in.cpp")
+configure_file(mc_rtc/debug.in.cpp "${PROJECT_BINARY_DIR}/src/mc_rtc/debug.cpp")
+file(GENERATE OUTPUT ${DEBUG_SOURCE} INPUT "${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc/debug.in.cpp")
 
 set(mc_rtc_utils_SRC
   mc_rtc/Configuration.cpp
