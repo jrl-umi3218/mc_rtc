@@ -13,31 +13,42 @@ title: Robots
 
 </div>
 
-<div class="offset-1 col-10 offset-lg-3 col-lg-6">
+</div>
+
 
 {% for bot in site.data.robots %}
-  <div class="media features">
-    <img class="mr-3 img-fluid rounded-circle" src="{{site.baseurl}}/assets/robots/{{bot.icon}}" alt="{{bot.name}}" width="75" height="75"/>
-    <div class="media-body">
-      <h5 class="mt-0">{{bot.name}}</h5>
+  {% cycle '<div class="row justify-content-center">', "" %}
+  <div class="col-12 col-lg-4">
+    <div class="media features">
       {% if bot.desc != nil %}
-      <dl class="row">
-        <dd class="col-9" rowspan=2>{{ bot.desc }}<dd>
-      </dl>
+        {% capture tooltip %}data-toggle="tooltip" title="{{bot.desc}}"{% endcapture %}
+      {% else %}
+        {% capture tooltip %}{% endcapture %}
       {% endif %}
-      <dl class="row">
-        <dt class="col">Description</dt>
-        <dd class="col-9"><a href="{{bot.pkg.desc.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.desc.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
-      </dl>
-      <dl class="row">
-        <dt class="col">Module</dt>
-        <dd class="col-9"><a href="{{bot.pkg.module.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.module.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
-      </dl>
+      <img class="mr-3 img-fluid rounded-circle" src="{{site.baseurl}}/assets/robots/{{bot.icon}}" alt="{{bot.name}}" width="75" height="75" {{tooltip}}/>
+      <div class="media-body">
+        <h5 class="mt-0">{{bot.name}}</h5>
+        <dl class="row">
+          <dt class="col-12">Description</dt>
+          <dd class="col-12"><a href="{{bot.pkg.desc.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.desc.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
+          <dt class="col-12">Module</dt>
+          <dd class="col-12"><a href="{{bot.pkg.module.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.module.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
+        </dl>
+      </div>
     </div>
   </div>
+  {% if forloop.last == true %}
+    {% assign parity = forloop.index0 | modulo: 2 %}
+    {% if parity == 0 %}
+      <div class="col-lg-4"></div>
+    {% endif %}
+    </div>
+  {% else %}
+  {% cycle "", "</div>" %}
+  {% endif %}
 {% endfor %}
 
-</div>
+<div class="row">
 
 <div class="col-12 offset-lg-2 col-lg-8">
 
