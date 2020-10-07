@@ -9,7 +9,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "tests_config.h"
+#include "utils.h"
 
 /** This test verifies that task's life is properly extended by the solver */
 
@@ -28,8 +28,7 @@ bool CheckCoMTask::deleted = false;
 
 BOOST_AUTO_TEST_CASE(TestSolverTaskStorage)
 {
-  mc_rbdyn::RobotLoader::clear();
-  mc_rbdyn::RobotLoader::update_robot_module_path({ROBOTS_BUILD_DIR});
+  configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   auto robots = mc_rbdyn::loadRobot(*rm);
   mc_solver::QPSolver solver(robots, 0.005);

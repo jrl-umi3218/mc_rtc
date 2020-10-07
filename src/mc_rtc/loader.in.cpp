@@ -10,6 +10,8 @@
 
 #include <mc_rtc/loader.h>
 
+#include <mc_rtc/debug.h>
+
 #include <boost/filesystem.hpp>
 #include <boost/range/adaptors.hpp>
 namespace bfs = boost::filesystem;
@@ -132,6 +134,8 @@ void LTDLHandle::close()
 
 Loader::callback_t Loader::default_cb = [](const std::string &, LTDLHandle &) {};
 
+std::string Loader::debug_suffix = "/debug";
+
 unsigned int Loader::init_count_ = 0;
 
 bool Loader::init()
@@ -165,11 +169,23 @@ bool Loader::close()
 }
 
 void Loader::load_libraries(const std::string & class_name,
-                            const std::vector<std::string> & paths,
+                            const std::vector<std::string> & pathsIn,
                             Loader::handle_map_t & out,
                             bool verbose,
                             Loader::callback_t cb)
 {
+  std::vector<std::string> debug_paths;
+  auto pathsRef = std::cref(pathsIn);
+  if(mc_rtc::debug())
+  {
+    debug_paths = pathsIn;
+    for(auto & p : debug_paths)
+    {
+      p += debug_suffix;
+    }
+    pathsRef = debug_paths;
+  }
+  const auto & paths = pathsRef.get();
 #ifdef WIN32
   std::stringstream ss;
   for(const auto & path : paths)

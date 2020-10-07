@@ -13,7 +13,7 @@ macro(add_fsm_state state_name state_SRC state_HDR)
   set_target_properties(${state_name} PROPERTIES PREFIX "")
   set_target_properties(${state_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS")
   target_link_libraries(${state_name} PUBLIC mc_control_fsm)
-  install(TARGETS ${state_name} EXPORT mc_rtc_fsm_states DESTINATION ${FSM_STATES_INSTALL_DIR})
+  install(TARGETS ${state_name} EXPORT mc_rtc_fsm_states DESTINATION ${FSM_STATES_INSTALL_DIR}$<$<CONFIG:debug>:/debug>)
   install(FILES ${state_HDR} DESTINATION ${FSM_HDR_INSTALL_DIR})
 endmacro()
 

@@ -15,9 +15,6 @@ on:
     - doc/**
     - README.md
     - ".github/workflows/build.yml"
-    - ".github/workflows/sources/*"
-    - ".github/workflows/build-others.yml"
-    - ".github/workflows/docker/*"
     branches:
     - "**"
     tags:
@@ -34,13 +31,13 @@ jobs:
       run: |
         set -x
         export VERSION=`echo ${{ github.ref }} | sed -e 's@refs/tags/v@@'`
-        echo "::set-env name=REJECTION::PROJECT_VERSION in CMakeLists.txt does not match tag"
+        echo "REJECTION=PROJECT_VERSION in CMakeLists.txt does not match tag" >> $GITHUB_ENV
         grep -q "set(PROJECT_VERSION ${VERSION})" CMakeLists.txt
-        echo "::set-env name=REJECTION::Upstream version in debian/changelog does not match tag"
+        echo "REJECTION=Upstream version in debian/changelog does not match tag" >> $GITHUB_ENV
         head -n 1 debian/changelog | grep -q "mc-rtc (${VERSION}"
-        echo "::set-env name=REJECTION::"
+        echo "REJECTION=" >> $GITHUB_ENV
         export TAG=`echo ${{ github.ref }} | sed -e 's@refs/tags/@@'`
-        echo "::set-env name=RELEASE_TAG::${TAG}"
+        echo "RELEASE_TAG=${TAG}" >> $GITHUB_ENV
       if: startsWith(github.ref, 'refs/tags/')
     - name: Delete tag
       run: |
@@ -108,17 +105,17 @@ jobs:
         fi
         if $USE_HEAD
         then
-          echo "::set-env name=BINTRAY_REPO::multi-contact-head"
-          echo "::set-env name=BINTRAY_VERSION::HEAD"
-          echo "::set-env name=EXTRA_MIRROR::https://dl.bintray.com/gergondet/multi-contact-head"
-          echo "::set-env name=PACKAGE_JOB::package-master"
+          echo "BINTRAY_REPO=multi-contact-head" >> $GITHUB_ENV
+          echo "BINTRAY_VERSION=HEAD" >> $GITHUB_ENV
+          echo "EXTRA_MIRROR=https://dl.bintray.com/gergondet/multi-contact-head" >> $GITHUB_ENV
+          echo "PACKAGE_JOB=package-master" >> $GITHUB_ENV
         else
-          echo "::set-env name=BINTRAY_REPO::multi-contact-release"
-          echo "::set-env name=BINTRAY_VERSION::${REF}"
-          echo "::set-env name=EXTRA_MIRROR::https://dl.bintray.com/gergondet/multi-contact-release"
-          echo "::set-env name=PACKAGE_JOB::package-release"
+          echo "BINTRAY_REPO=multi-contact-release" >> $GITHUB_ENV
+          echo "BINTRAY_VERSION=${REF}" >> $GITHUB_ENV
+          echo "EXTRA_MIRROR=https://dl.bintray.com/gergondet/multi-contact-release" >> $GITHUB_ENV
+          echo "PACKAGE_JOB=package-release" >> $GITHUB_ENV
         fi
-        echo "::set-env name=PACKAGE_UPLOAD::${PACKAGE_UPLOAD}"
+        echo "PACKAGE_UPLOAD=${PACKAGE_UPLOAD}" >> $GITHUB_ENV
     - name: Setup ROS packages
       run: |
         set -x
@@ -138,10 +135,9 @@ jobs:
         then
           export ROS_DISTRO="noetic"
           export PACKAGES_OUT=${PACKAGES_OUT}-${ROS_DISTRO}
-          sed -i -e"s/python2.7/python3/" debian/rules
         fi
-        echo "::set-env name=ROS_DISTRO::${ROS_DISTRO}"
-        echo "::set-env name=PACKAGES_OUT::${PACKAGES_OUT}"
+        echo "ROS_DISTRO=${ROS_DISTRO}" >> $GITHUB_ENV
+        echo "PACKAGES_OUT=${PACKAGES_OUT}" >> $GITHUB_ENV
         if [ "${ROS_DISTRO}" != "" ]
         then
           sed -e"s/@ROS_DISTRO@/${ROS_DISTRO}/" debian/control.ros | tee -a debian/control
@@ -212,17 +208,17 @@ jobs:
         fi
         if $USE_HEAD
         then
-          echo "::set-env name=BINTRAY_REPO::multi-contact-head"
-          echo "::set-env name=BINTRAY_VERSION::HEAD"
-          echo "::set-env name=EXTRA_MIRROR::https://dl.bintray.com/gergondet/multi-contact-head"
-          echo "::set-env name=PACKAGE_JOB::package-master"
+          echo "BINTRAY_REPO=multi-contact-head" >> $GITHUB_ENV
+          echo "BINTRAY_VERSION=HEAD" >> $GITHUB_ENV
+          echo "EXTRA_MIRROR=https://dl.bintray.com/gergondet/multi-contact-head" >> $GITHUB_ENV
+          echo "PACKAGE_JOB=package-master" >> $GITHUB_ENV
         else
-          echo "::set-env name=BINTRAY_REPO::multi-contact-release"
-          echo "::set-env name=BINTRAY_VERSION::${REF}"
-          echo "::set-env name=EXTRA_MIRROR::https://dl.bintray.com/gergondet/multi-contact-release"
-          echo "::set-env name=PACKAGE_JOB::package-release"
+          echo "BINTRAY_REPO=multi-contact-release" >> $GITHUB_ENV
+          echo "BINTRAY_VERSION=${REF}" >> $GITHUB_ENV
+          echo "EXTRA_MIRROR=https://dl.bintray.com/gergondet/multi-contact-release" >> $GITHUB_ENV
+          echo "PACKAGE_JOB=package-release" >> $GITHUB_ENV
         fi
-        echo "::set-env name=PACKAGE_UPLOAD::${PACKAGE_UPLOAD}"
+        echo "PACKAGE_UPLOAD=${PACKAGE_UPLOAD}" >> $GITHUB_ENV
     - name: Download packages
       uses: actions/download-artifact@v1
       with:
@@ -278,17 +274,17 @@ jobs:
         fi
         if $USE_HEAD
         then
-          echo "::set-env name=BINTRAY_REPO::multi-contact-head"
-          echo "::set-env name=BINTRAY_VERSION::HEAD"
-          echo "::set-env name=EXTRA_MIRROR::https://dl.bintray.com/gergondet/multi-contact-head"
-          echo "::set-env name=PACKAGE_JOB::package-master"
+          echo "BINTRAY_REPO=multi-contact-head" >> $GITHUB_ENV
+          echo "BINTRAY_VERSION=HEAD" >> $GITHUB_ENV
+          echo "EXTRA_MIRROR=https://dl.bintray.com/gergondet/multi-contact-head" >> $GITHUB_ENV
+          echo "PACKAGE_JOB=package-master" >> $GITHUB_ENV
         else
-          echo "::set-env name=BINTRAY_REPO::multi-contact-release"
-          echo "::set-env name=BINTRAY_VERSION::${REF}"
-          echo "::set-env name=EXTRA_MIRROR::https://dl.bintray.com/gergondet/multi-contact-release"
-          echo "::set-env name=PACKAGE_JOB::package-release"
+          echo "BINTRAY_REPO=multi-contact-release" >> $GITHUB_ENV
+          echo "BINTRAY_VERSION=${REF}" >> $GITHUB_ENV
+          echo "EXTRA_MIRROR=https://dl.bintray.com/gergondet/multi-contact-release" >> $GITHUB_ENV
+          echo "PACKAGE_JOB=package-release" >> $GITHUB_ENV
         fi
-        echo "::set-env name=PACKAGE_UPLOAD::${PACKAGE_UPLOAD}"
+        echo "PACKAGE_UPLOAD=${PACKAGE_UPLOAD}" >> $GITHUB_ENV
     - name: Request mirror sync
       run: 'curl -ugergondet:${{ secrets.BINTRAY_API_KEY }} --header "X-GPG-PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}" -X POST https://api.bintray.com/calc_metadata/gergondet/${{ env.BINTRAY_REPO }}
 

@@ -8,6 +8,7 @@ usr/include/mc_rtc/log/*
 usr/include/mc_rtc/DataStore.h
 usr/include/mc_rtc/config.h
 usr/include/mc_rtc/constants.h
+usr/include/mc_rtc/debug.h
 usr/include/mc_rtc/loader_api.h
 usr/include/mc_rtc/loader.h
 usr/include/mc_rtc/MessagePackBuilder.h

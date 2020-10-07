@@ -100,6 +100,7 @@ add_executable(test_controller_ticker test_controller_ticker.cpp)
 set_target_properties(test_controller_ticker PROPERTIES FOLDER tests/ticker)
 target_link_libraries(test_controller_ticker PUBLIC mc_control Boost::unit_test_framework Boost::disable_autolinking)
 target_compile_definitions(test_controller_ticker PRIVATE -DBOOST_TEST_DYN_LINK -DBOOST_TEST_MAIN)
+target_include_directories(test_controller_ticker PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
 # Adding a project configuration file (for MSVC only)
 generate_msvc_dot_user_file(test_controller_ticker)
 

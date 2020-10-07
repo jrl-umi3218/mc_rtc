@@ -7,7 +7,7 @@ macro(add_plugin plugin plugin_SRC plugin_HDR)
   add_library(${plugin} SHARED ${plugin_SRC} ${plugin_HDR})
   set_target_properties(${plugin} PROPERTIES PREFIX "")
   target_link_libraries(${plugin} PUBLIC mc_rtc::mc_control)
-  install(TARGETS ${plugin} DESTINATION ${MC_PLUGINS_INSTALL_PREFIX})
+  install(TARGETS ${plugin} DESTINATION ${MC_PLUGINS_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>)
   file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/autoload/${plugin}.yaml" "${plugin}")
   if(AUTOLOAD_${plugin}_PLUGIN)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/autoload/${plugin}.yaml"

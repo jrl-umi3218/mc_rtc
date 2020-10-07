@@ -33,6 +33,7 @@ bool configureRobotLoader()
   if(!done)
   {
     done = true;
+    mc_rtc::Loader::debug_suffix = "";
     mc_rbdyn::RobotLoader::clear();
     mc_rbdyn::RobotLoader::update_robot_module_path({std::string(ROBOTS_BUILD_DIR)});
   }

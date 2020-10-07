@@ -1,7 +1,7 @@
 # distutils: language = c++
 
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 from cython.operator cimport dereference as deref
@@ -311,3 +311,10 @@ cdef Configuration ConfigurationFromRef(c_mc_rtc.Configuration & conf):
   cdef Configuration ret = Configuration(skip_alloc = True)
   ret.impl = &conf
   return ret
+
+class Loader(object):
+  @staticmethod
+  def debug_suffix(suffix):
+    if isinstance(suffix, unicode):
+      suffix = suffix.encode(u'ascii')
+    c_mc_rtc.set_loader_debug_suffix(suffix)
