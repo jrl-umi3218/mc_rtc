@@ -12,7 +12,7 @@ namespace mc_rtc
 bool debug() noexcept
 {
   // clang-format off
-  return $<IF:$<CONFIG:debug>,true,false>;
+  return $<CONFIG:debug> == 1;
   // clang-format on
 }
 
