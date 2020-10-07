@@ -1,13 +1,15 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 import mc_tasks
 import mc_rbdyn
+import mc_rtc
 import eigen as e
 
 from nose import with_setup
 
+mc_rtc.Loader.debug_suffix("")
 
 class TestMCTasks():
 

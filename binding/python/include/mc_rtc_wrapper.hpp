@@ -1,11 +1,12 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rtc/Configuration.h>
+#include <mc_rtc/loader.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>
 
@@ -66,4 +67,9 @@ mc_rtc::Configuration get_as_config(const T & v)
 mc_rtc::Configuration ConfigurationFromData(const std::string & data)
 {
   return mc_rtc::Configuration::fromData(data);
+}
+
+void set_loader_debug_suffix(const std::string & suffix)
+{
+  mc_rtc::Loader::debug_suffix = suffix;
 }

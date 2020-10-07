@@ -1,5 +1,5 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 from libcpp.string cimport string
@@ -77,3 +77,5 @@ cdef extern from "mc_rtc_wrapper.hpp":
   T get_config_as[T](Configuration&, const T&) except +
   Configuration get_as_config[T](const T&) except +
   Configuration ConfigurationFromData(const string&)
+
+  void set_loader_debug_suffix(const string&)
