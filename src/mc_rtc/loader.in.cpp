@@ -134,6 +134,8 @@ void LTDLHandle::close()
 
 Loader::callback_t Loader::default_cb = [](const std::string &, LTDLHandle &) {};
 
+std::string Loader::debug_suffix = "/debug";
+
 unsigned int Loader::init_count_ = 0;
 
 bool Loader::init()
@@ -179,7 +181,7 @@ void Loader::load_libraries(const std::string & class_name,
     debug_paths = pathsIn;
     for(auto & p : debug_paths)
     {
-      p += "/debug";
+      p += debug_suffix;
     }
     pathsRef = debug_paths;
   }

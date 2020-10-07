@@ -132,6 +132,9 @@ struct MC_RTC_LOADER_DLLAPI Loader
 public:
   static callback_t default_cb;
 
+  /** Suffix appended to libraries paths when running in debug mode */
+  static std::string debug_suffix;
+
 protected:
   /*! \brief Initialize ltdl
    * \throws LoaderException if ltdl fails to init

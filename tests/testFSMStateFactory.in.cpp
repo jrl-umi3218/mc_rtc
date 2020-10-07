@@ -10,6 +10,8 @@
 
 #include "testFSMStateFactoryConfig.h"
 
+static bool initialized = configureRobotLoader();
+
 mc_control::fsm::Controller & get_default_controller()
 {
   static std::shared_ptr<mc_control::fsm::Controller> ctl_ptr = nullptr;
@@ -17,7 +19,6 @@ mc_control::fsm::Controller & get_default_controller()
   {
     return *ctl_ptr;
   }
-  configureRobotLoader();
   auto rm = mc_rbdyn::RobotLoader::get_robot_module("JVRC1");
   mc_rtc::Configuration config;
   config.add("Managed", true);
