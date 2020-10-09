@@ -25,6 +25,15 @@
     module:
       url: https://gite.lirmm.fr/mc-hrp4/mc_hrp4j
       name: mc_hrp4j
+- name: HRP-5P
+  icon: hrp5p.jpg
+  pkg:
+    desc:
+      url: https://gite.lirmm.fr/mc-hrp5/hrp5_p_description
+      name: hrp5_p_description
+    module:
+      url: https://gite.lirmm.fr/mc-hrp5/mc_hrp5_p
+      name: mc_hrp5_p
 - name: Nao
   icon: nao.jpg
   pkg:
@@ -43,6 +52,12 @@
     module:
       url: https://github.com/jrl-umi3218/mc_pepper
       name: mc_pepper
+- name: Panda
+  icon: panda.png
+  pkg:
+    module:
+      url: https://github.com/jrl-umi3218/mc_panda
+      name: mc_panda
 - name: Sawyer
   icon: sawyer.jpg
   pkg:

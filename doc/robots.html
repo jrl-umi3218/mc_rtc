@@ -29,10 +29,14 @@ title: Robots
       <div class="media-body">
         <h5 class="mt-0">{{bot.name}}</h5>
         <dl class="row">
+          {% if bot.pkg.desc %}
           <dt class="col-12">Description</dt>
           <dd class="col-12"><a href="{{bot.pkg.desc.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.desc.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
+          {% endif %}
+          {% if bot.pkg.module %}
           <dt class="col-12">Module</dt>
           <dd class="col-12"><a href="{{bot.pkg.module.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.module.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
+          {% endif %}
         </dl>
       </div>
     </div>
