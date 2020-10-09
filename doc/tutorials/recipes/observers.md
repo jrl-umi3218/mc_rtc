@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 One commonly needs to know the real state of the robots being controlled. Unfortunately, their state can rarely be fully known, as the robots' embedded sensors rarely provide sufficient information. Instead, the systems' state relevant to the controller need to be inferred from various sensor measurements (joint encoders, force-torque sensors, IMU, cameras, etc), along with additional knowledge about the controller's intent (contacts, etc). For instance, a floating-base robot typically doesn't have any sensor capable of providing the full state of its floating base (position, orientation, velocity, etc), and one must make use of the available information to estimate it. This may for instance a combination of IMU, kalman filters and known information about the robot kinematics. Or one might choose to use visual odometry instead, obtain ground truth measurements from a motion capture system, or any combination of those. This process is refered to as state observation.

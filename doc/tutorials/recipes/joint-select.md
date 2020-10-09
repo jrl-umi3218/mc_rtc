@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 It is possible to specify a subset of joints to perform a given task (e.g. one might want to perform stabilization using only the lower body).

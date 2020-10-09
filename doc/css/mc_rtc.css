@@ -212,3 +212,39 @@ body
 {
   margin-bottom: 0;
 }
+
+.sticky-toc
+{
+  top: 58px;
+}
+
+#tutorial-content h1
+{
+  padding-top: 58px;
+  margin-top: -58px;
+}
+#tutorial-content h2
+{
+  padding-top: 58px;
+  margin-top: -58px;
+}
+#tutorial-content h3
+{
+  padding-top: 58px;
+  margin-top: -58px;
+}
+#tutorial-content h4
+{
+  padding-top: 58px;
+  margin-top: -58px;
+}
+#tutorial-content h5
+{
+  padding-top: 58px;
+  margin-top: -58px;
+}
+#tutorial-content h6
+{
+  padding-top: 58px;
+  margin-top: -58px;
+}

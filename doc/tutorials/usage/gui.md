@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 The GUI feature allows to build a dynamic graphical interface to interact with your controller remotely. In some regards, the feature implementation and the way you will use it in your controller is close to the approach to [logging]({{site.baseurl}}/tutorials/usage/logging.html).

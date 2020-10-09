@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 This tutorial explains usage and concepts of the `AdmittanceSample` sample controller provided with the framework. This sample demonstrates the use of the {% doxygen mc_tasks::force::AdmittanceTask %} to regulate forces on `JVRC1` hand while pushing against a wall.

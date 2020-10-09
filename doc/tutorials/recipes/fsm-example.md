@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 In this tutorial,  we will re-implement the controller we implemented in the [multi-robot controller]({{site.baseurl}}/tutorials/introduction/multi-robot-controller.html) tutorial using only the FSM configuration. In this tutorial, we will walk you through every step needed to reproduce the `DoorSample` controller provided along with the framework from scratch.
@@ -10,6 +11,8 @@ In this tutorial,  we will re-implement the controller we implemented in the [mu
 
 Setting up the FSM
 ==
+
+<div class="no_toc_section">
 
 <ul class="nav nav-tabs" id="createTab" role="tablist">
   <li class="nav-item">
@@ -34,6 +37,8 @@ Setting up the FSM
       </div>
     </div>
   </div>
+</div>
+
 </div>
 
 You should now see the JVRC1 robot standing in RVIZ. Let's now see how to re-implement the [multi-robot controller]({{site.baseurl}}/tutorials/introduction/multi-robot-controller.html) tutorial using the FSM features. For this, you will need to edit your FSM configuration `etc/MyFirstFSMController.yaml`.

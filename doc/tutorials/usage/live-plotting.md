@@ -1,12 +1,13 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 In some instances, you may want to display graphs while a controller is running (for example, when tuning the gains of a stabilizer). One option to do this is to open the on-going log and plot the data you're interested in. With long running experiments this can become cumbersome as the log size grows as does the time needed to open the log and process it.
 
 The better option, presented in this tutorial, is to let your controller display an on-going log.
 
-##### Note
+<h5 class="no_toc">Note</h5>
 
 For the sake of clarity, in the examples, we will assume the following code snippet is present:
 

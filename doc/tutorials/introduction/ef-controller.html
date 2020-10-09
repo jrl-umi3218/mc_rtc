@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 create_ef_task_sources:
   - name: C++
     lang: cpp
@@ -78,7 +79,7 @@ get_task_sources:
       auto task = mc_tasks::MetaTaskLoader::load<mc_tasks::EndEffectorTask>(solver(), config("task"));
 ---
 
-<h3>The short story</h3>
+{% include h3.html title="The short story" %}
 
 <p>You can create an end-effector task and manipulate its objective:</p>
 
@@ -90,7 +91,7 @@ get_task_sources:
 
 <p>Instead of repeating a similar experience as in the previous tutorials, this tutorial will show how we can load the task from a configuration file written in JSON or YAML. In fact, this will be applicable to any task in the framework.</p>
 
-<h3>Loading the task from disk</h3>
+{% include h3.html title="Loading the task from disk" %}
 
 <p><em>Note: for now, this is only available on the C++ side.</em></p>
 
@@ -106,6 +107,6 @@ get_task_sources:
 
 <p>You can use this task as if you had created it manually, this is a great way to experiment with task settings.</p>
 
-<h3>Give me more tasks</h3>
+{% include h3.html title="Give me more tasks" %}
 
 <p>The <a href="{{site.baseurl}}/json.html">JSON/YAML documentation</a> on this website shows all the tasks that can be loaded by the framework and what is expected in their JSON/YAML representation to be loaded correctly.</p>

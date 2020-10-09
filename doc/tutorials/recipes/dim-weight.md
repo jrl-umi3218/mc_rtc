@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 It is possible to affect different weights to different axis in the task-space (e.g. ignore the vertical position of the CoM).

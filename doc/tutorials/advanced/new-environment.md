@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 This guide will help you to create environment that are compatible with mc_rtc and other JRL/LIRMM softwares.

@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 In many cases, one may want to limit the accessible region of the Center of Mass. To do so, we will introduce a new constraint, `CoMIncPlaneConstr` that can be used to constrain the CoM to a convex region.

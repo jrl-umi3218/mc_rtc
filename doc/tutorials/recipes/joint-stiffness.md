@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 This facility only applies to the `PostureTask`. It is akin to the [joint selection](joint-select.html) and the [dimensional weight](dim-weight.html) features of other tasks.

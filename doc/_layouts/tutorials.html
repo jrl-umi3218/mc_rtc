@@ -108,28 +108,44 @@
 
     <div class="container-fluid">
       <div class="row">
-      <div class="col">
-        <ul>
-          {% for cat in site.data.tutorials %}
-          <li>{{cat.title}}</li>
-          <ul>
-            {% for tuto in cat.tutorials %}
-              {% if category.id == cat.id and tuto.id == tutorial.id %}
-              <li><strong>{{tuto.title}}</strong></li>
-                {% if is_sources %}
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
                   <ul>
-                    <li><a href="{{site.baseurl}}/tutorials/{{cat.id}}/{{tuto.id}}.html">Back to tutorial</a></li>
+                    {% for cat in site.data.tutorials %}
+                    <li>{{cat.title}}</li>
+                    <ul>
+                      {% for tuto in cat.tutorials %}
+                        {% if category.id == cat.id and tuto.id == tutorial.id %}
+                        <li><strong>{{tuto.title}}</strong></li>
+                          {% if is_sources %}
+                            <ul>
+                              <li><a href="{{site.baseurl}}/tutorials/{{cat.id}}/{{tuto.id}}.html">Back to tutorial</a></li>
+                            </ul>
+                          {% endif %}
+                        {% else %}
+                        <li><a href="{{site.baseurl}}/tutorials/{{cat.id}}/{{tuto.id}}.html">{{tuto.title}}</a></li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                    {% endfor %}
                   </ul>
-                {% endif %}
-              {% else %}
-              <li><a href="{{site.baseurl}}/tutorials/{{cat.id}}/{{tuto.id}}.html">{{tuto.title}}</a></li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-          {% endfor %}
-        </ul>
+                </div>
+              </div>
+              {{ content | toc_only }}
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-9">
+      <div class="col-9" id="tutorial-content">
         <h1>{{tutorial.title}}{% if is_sources %} (sources){% endif %}</h1>
 
         {{content}}

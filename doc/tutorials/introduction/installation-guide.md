@@ -33,6 +33,7 @@ install_apt:
       sudo apt install libmc-rtc-dev mc-rtc-utils python3-mc-rtc
       # Assuming you have a ROS distribution mirror setup
       sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin
+toc: true
 ---
 
 ## Overview

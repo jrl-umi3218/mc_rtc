@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 Through the various tutorials, you should have an idea of what contacts are, how they are handled in the controller and how you could move a contact. Let's say that you want to move the left foot from its starting position to another a bit farther away.

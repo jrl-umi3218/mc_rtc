@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 File logging is enabled/disable through the [global

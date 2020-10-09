@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 The framework provides by default a few pre-implemented states intended to make it easy to take full advantage of the `JSON/YAML` configuration capabilities of the FSM. Using these, writing FSMs for complex robot behaviours becomes easy, and usually involves little to no handwritten `C++/Python` states: almost everything can be directly described in the FSM configuration. In this tutorial, we'll explore use of the three most useful states:

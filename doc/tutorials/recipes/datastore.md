@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 The `DataStore` is a facility used to efficiently store and retrieve arbitrary C++ objects, and is intended as a way to conveniently and efficiently share arbitrary objects within the framework. It is strongly typed (only objects of the same type as the stored type can be retrieved), and only relies on standard C++ mechanisms.

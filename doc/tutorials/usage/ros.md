@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 [ROS](https://en.wikipedia.org/wiki/Robot_Operating_System), the Robot

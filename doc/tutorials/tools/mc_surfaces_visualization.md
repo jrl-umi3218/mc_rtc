@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 `mc_surfaces_visualization` is a tool that allows you to visualize the surfaces of a robot in the RViZ application. It is part of the {% link mc_rtc_ros %} package.

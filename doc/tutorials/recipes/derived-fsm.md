@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 A common recipe to get more out of the FSM is to derive the FSM controller, this allows to:

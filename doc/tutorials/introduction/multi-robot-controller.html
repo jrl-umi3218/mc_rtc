@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 constructor_sources:
   - name: C++
     lang: cpp
@@ -202,7 +203,7 @@ p3_sources:
         self.phase = OPEN
 ---
 
-<h3>Why should we use multiple robots?</h3>
+{% include h3.html title="Why should we use multiple robots?" %}
 
 <p>The objective in this section is to control not only one robot, but multiple at the same time. This technique, although computationally expensive when controlling many DoFs, allows us to:</p>
 
@@ -221,7 +222,7 @@ p3_sources:
 <p><em>Note: this article assumes you are able to run and visualize the controller using ROS.</em></p>
 
 
-<h3>Example</h3>
+{% include h3.html title="Example" %}
 
 <p>We will build a simple controller that will load JVRC1 and a door. This door is part of the {% link mc_rtc_data %} package that you should already have.</p>
 
@@ -237,19 +238,19 @@ p3_sources:
 
 {% include show_sources.html sources=page.constructor_sources copy=false id="constructor" %}
 
-<h4>Robot index</h4>
+{% include h4.html title="Robot index" %}
 
 <p>In this new example, we have loaded an extra robot: the door. We have done so by proviing a list of robot modules to load. The loaded robots are then indexed according to the order in which the modules were provided. It means that our main robot still has the index 0, however we now have the door at index 1 and the ground at index 2. It means that the contacts setting must be updated as follows:</p>
 
 {% include show_sources.html sources=page.set_contact_sources copy=false id="set_contact" %}
 
-<h4>Initial position of the door</h4>
+{% include h4.html title="Initial position of the door" %}
 
 <p>If you start the controller now, you will notice that the door and the robot are in the same location, for the purpose of this tutorial, we will manually reposition the door:</p>
 
 {% include show_sources.html sources=page.reposition_door_sources copy=false id="reposition_door" %}
 
-<h4>Tasks and constraints on the door</h4>
+{% include h4.html title="Tasks and constraints on the door" %}
 
 <p>Since we have added a new articulated robot, we should add some constraints on it. We will only add a kinematics constraint and a posture task:</p>
 
@@ -257,7 +258,7 @@ p3_sources:
 
 <p><em>Note: we don't add contact for the door yet as it has a fixed base. However, note that the contact constraint is directly available for every robots in the controller.</em>
 
-<h4>Setting up the controller logic</h4>
+{% include h4.html title="Setting up the controller logic" %}
 
 <p>In that part of the tutorial we will setup the logic of our controller. We want to:</p>
 
@@ -271,13 +272,13 @@ p3_sources:
 
 {% include show_sources.html sources=page.logic_setup_sources copy=false id="logic_setup" %}
 
-<h4>Phase 1: reach the handle</h4>
+{% include h4.html title="Phase 1: reach the handle" %}
 
 <p>For this phase, we will introduce the <code>SurfaceTransformTask</code>. It is very similar to the <code>EndEffectorTask</code> we used except that the task is controlling a surface of the robot instead of an end-effector. This usually makes it easier to express the objective. Furthermore, we will define the target using the position of the door's handle so that we don't have to adapt our code if we decide to move the door or change the hand.</p>
 
 {% include show_sources.html sources=page.p1_sources copy=false id="p1" %}
 
-<h4>Phase 2: moving the handle</h4>
+{% include h4.html title="Phase 2: moving the handle" %}
 
 <p>We need to settle two things for phase 2:</p>
 
@@ -290,13 +291,13 @@ p3_sources:
 
 {% include show_sources.html sources=page.p2_sources copy=false id="p2" %}
 
-<h4>Phase 3: open the door</h4>
+{% include h4.html title="Phase 3: open the door" %}
 
 <p>This phase is very similar to the previous one. We will check the handle position that has been reached to trigger the transition and then set an objective for the door opening.</p>
 
 {% include show_sources.html sources=page.p3_sources copy=false id="p3" %}
 
-<h3>Play time</h3>
+{% include h3.html title="Play time" %}
 
 <p>At this point you can play around with some of the parameters and see the benefits of the multi-robot approach as you can change the following without changing anything else:</p>
 
@@ -309,7 +310,7 @@ p3_sources:
 
 <p><em>Note: of course, you may end up with an unfeasible setup. For example, if you put the door 10 meters away from the robot it won't be able to reach the handle.</em></p>
 
-<h3>Introducing the FSM facilities</h3>
+{% include h3.html title="Introducing the FSM facilities" %}
 
 <p>This tutorial concludes the introduction of mc_rtc controllers. The next tutorials are focused on the advanced tools available in the framework to help you program and debug complex controllers. However, you might have noticed we have used a very crude approach to program the logic of our controller. The framework provides a much more powerful way to deal with such scenarios as introduced in the <a href="{{site.baseurl}}/tutorials/recipes/fsm.html">tutorial introducing the FSM facilties</a> and the <a href="{{site.baseurl}}/tutorials/recipes/fsm-example.html">FSM in practice tutorial</a>. The latter will re-program this tutorial using the FSM facilities.</p>
 

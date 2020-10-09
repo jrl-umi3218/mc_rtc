@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 env_object_example:
   - name: C++
     lang: cpp
@@ -172,13 +173,13 @@ robot_module_example:
 
 <p>The last option has the most flexibility. The main benefits are that your robot will be extremely easy to load and you can easily provide several variants of your robot with minimal efforts.</p>
 
-<h2>Using the <code>env</code>/<code>object</code> loader</h2>
+{% include h2.html title="Using the <code>env</code>/<code>object</code> loader" %}
 
 <p>When loading the robot, use the following invokation:</p>
 
 {% include show_sources.html sources=page.env_object_example copy=false id="env_object_example" %}
 
-<h3>Organization of your robot description package</h3>
+{% include h3.html title="Organization of your robot description package" %}
 
 <p>Given a robot's description folder located at <code>LOCATION</code> and a robot named <code>NAME</code>, mc_rtc expects your data to be organized as follows:</p>
 
@@ -196,19 +197,19 @@ robot_module_example:
   <li>convex files that cannot be associated to a body automatically will be ignored</li>
 </ul>
 
-<h2>Using the <code>json</code> loader</h2>
+{% include h2.html title="Using the <code>json</code> loader" %}
 
 <p>When loading the robot, use the following invokation:</p>
 
 {% include show_sources.html sources=page.json_example copy=false id="json_example" %}
 
-<h3>Data expected in the JSON/YAML file</h3>
+{% include h3.html title="Data expected in the JSON/YAML file" %}
 
 <p>The <code>json</code> module expects your data to be organized as the <code>env</code> module. However, you can override some expectations by providing the data yourself. Furthermore, you can provide data for force sensors, body sensors, minimal self-collisions set and so-on.</p>
 
 <p>See the <a href="{{site.baseurl}}/json.html#mc_rbdyn/RobotModule" target="blank_">JSON/YAML documentation</a> for details on the data expected by the <code>json</code> loader.</p>
 
-<h2>Implementing your own <code>RobotModule</code></h2>
+{% include h2.html title="Implementing your own <code>RobotModule</code>" %}
 
 <p>In this approach, we will write a C++ class to provide a <code>RobotModule</code> for our robot and overwrite the data members that we wish to provide. As in the minimal example below:</p>
 

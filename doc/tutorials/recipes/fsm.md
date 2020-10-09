@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 A finite-state machine (FSM) is an abstract machine that can be in one of a finite set of states. Based on conditions internal or external to the current state, the machine's state can change. Such a state is known as a transition. Such machines are ubiquitous in programming and are particularly well-suited to implement robotic scenarios due to the simplicity and the composability it offers.
@@ -95,6 +96,8 @@ The way options are combined depends on the C++ state implementation and should 
 
 
 This section covers the main states that are provided as part of mc_rtc. A complete description of all available states and their configuration can be found in the [States JSON Schema]({{site.baseurl}}/json.html#State-objects).
+
+<div class="no_toc_section">
 
 <ul class="nav nav-tabs" id="statesTab" role="tablist">
   <li class="nav-item">
@@ -264,6 +267,8 @@ This section covers the main states that are provided as part of mc_rtc. A compl
   </div>
 </div>
 
+</div>
+
 ### Common options
 
 Some options are common to all states:
@@ -361,7 +366,7 @@ void removeCollisions(const std::string & r1, const std::string & r2);
 
 The FSM will create and add the necessary collision constraints if necessary.
 
-##### Posture tasks
+#### Posture tasks
 
 The FSM controller creates a posture task for every actuated robot. You can access this task by calling:
 
@@ -378,10 +383,6 @@ The following methods are virtual in the `State` interface and can be optionally
 #### `void stop(Controller &)`
 
 This is called if the state is interrupted.
-
-#### `bool read_msg(std::string &)`/`bool read_write_msg(std::string &, std::string &)`
-
-Can be used to communicate with the state using the same interface as the controller.
 
 ## FSM configuration
 

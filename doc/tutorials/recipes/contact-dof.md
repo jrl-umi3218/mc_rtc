@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 ## What is a DoF contact?

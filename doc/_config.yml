@@ -9,6 +9,7 @@ plugins:
     - jekyll-sitemap
     - liquefy
     - jekyll_inline_highlight
+    - jekyll-toc
 exclude:
     - Gemfile
     - Gemfile.lock

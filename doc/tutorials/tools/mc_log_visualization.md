@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 `mc_log_visualization` is a tool that allows you to visualize a log in 3D in the RViZ application. It is part of the {% link mc_rtc_ros %} package.

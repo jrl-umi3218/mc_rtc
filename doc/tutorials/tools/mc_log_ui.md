@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 A simple GUI is provided in mc\_rtc to read the logs after an experiment

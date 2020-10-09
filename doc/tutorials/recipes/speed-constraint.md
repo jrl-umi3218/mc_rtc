@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 The constraint presented in this page is `mc_solver::BoundedSpeedConstr`. As its name and the page's title indicates, it can be used in a scenario where a body absolutely needs to move at a given speed in a given direction. For more "relaxed" approach, you can take a look at the following articles:

@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 This page provides information about the following topics:

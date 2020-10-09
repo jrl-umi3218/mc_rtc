@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 ## A bit of history

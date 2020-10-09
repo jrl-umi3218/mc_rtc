@@ -1,5 +1,6 @@
 ---
 layout: tutorials
+toc: true
 ---
 
 In this document we will assume you have a log at `~/my_log.bin`.
