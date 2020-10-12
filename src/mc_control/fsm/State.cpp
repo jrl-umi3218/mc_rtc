@@ -1,10 +1,12 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_control/fsm/State.h>
 
 #include <mc_control/fsm/Controller.h>
+
+#include <mc_solver/ConstraintSetLoader.h>
 
 #include <mc_rbdyn/configuration_io.h>
 
@@ -47,6 +49,10 @@ void State::configure_(const mc_rtc::Configuration & config)
   if(config.has("AddCollisionsAfter"))
   {
     add_collisions_after_config_.load(config("AddCollisionsAfter"));
+  }
+  if(config.has("constraints"))
+  {
+    constraints_config_.load(config("constraints"));
   }
   config("RemovePostureTask", remove_posture_task_);
   configure(config);
@@ -109,6 +115,14 @@ void State::start_(Controller & ctl)
   {
     ctl.solver().removeTask(ctl.getPostureTask(ctl.robot().name()));
   }
+  if(constraints_config_.size())
+  {
+    for(const auto & c : constraints_config_)
+    {
+      constraints_.push_back(mc_solver::ConstraintSetLoader::load(ctl.solver(), c));
+      ctl.solver().addConstraintSet(*constraints_.back());
+    }
+  }
   start(ctl);
 }
 
@@ -168,6 +182,10 @@ void State::teardown_(Controller & ctl)
       std::vector<mc_rbdyn::Collision> collisions = c("collisions");
       ctl.addCollisions(r1, r2, collisions);
     }
+  }
+  for(const auto & c : constraints_)
+  {
+    ctl.solver().removeConstraintSet(*c);
   }
   teardown(ctl);
 }

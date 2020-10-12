@@ -1,11 +1,14 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_control/fsm/api.h>
 #include <mc_control/fsm/states/api.h>
+
+#include <mc_solver/ConstraintSet.h>
+
 #include <mc_rtc/Configuration.h>
 
 namespace mc_control
@@ -143,11 +146,13 @@ protected:
   mc_rtc::Configuration remove_collisions_config_;
   mc_rtc::Configuration add_collisions_after_config_;
   mc_rtc::Configuration remove_collisions_after_config_;
+  mc_rtc::Configuration constraints_config_;
   bool remove_posture_task_ = false;
 
 private:
   std::string name_ = "";
   std::string output_ = "";
+  std::vector<mc_solver::ConstraintSetPtr> constraints_;
 };
 
 using StatePtr = std::shared_ptr<State>;
