@@ -12,10 +12,12 @@ namespace mc_trajectory
 /**
  * @brief Interpolate values in a timed sequence
  *
- * This class provides the logic to perform interpolation for a sequence of
- * values expressed as pairs of (time, Value):
+ * This class provides an efficient and generic way to perform interpolation within a sequence of (sorted) intervals
+ * expressed as pairs of (time, Value):
  * - ensures that values are sorted by strictly ascending time
- * - selects the appropriate interval corresponding to the desired computation time (O(N))
+ * - selects the appropriate interval corresponding to the desired computation time
+ *   - O(log n) when interpolating at an arbitrary time (binary search)
+ *   - O(1) in most cases when used sequentially (the current interval is cached)
  * - perform interpolation by calling the InterpolationFunction functor on this
  *   interval (default: linear interpolation). The time ratio within the current
  *   interval is computed as a normalized value between 0 and 1. See
@@ -113,10 +115,11 @@ struct SequenceInterpolator
   /**
    * Compute interpolated value at the provided time
    *
-   * This function first finds the current interval corresponding to the
-   * provided time (complexity O(N) at worst), then calls
+   * Calls the interpolation functor with time normalized between 0 and 1
+   *
+   * \code{.cpp}
    * InterpolationFunction::operator(const Value &, const Value &, double ratio)
-   * where ratio is the time in the current interval normalized between 0 and 1
+   * \endcode{.cpp}
    *
    * @param currTime Time at which to compute the interpolation. Out-of-bound access return the first or last value.
    *
@@ -134,28 +137,50 @@ struct SequenceInterpolator
     {
       return values_.back().second;
     }
-    else if(currTime < values_.front().first)
+    else if(currTime <= values_.front().first)
     {
       return values_.front().second;
     }
 
-    // find the current interval
-    nextIndex_ = 0;
-    while(++nextIndex_ < values_.size() && values_[nextIndex_].first < currTime)
-    {
-    }
-    auto prevIndex = static_cast<size_t>(nextIndex_ - 1);
-    double intervalDuration = values_[nextIndex_].first - values_[prevIndex].first;
+    /*
+     * Efficiently update interval index in three steps:
+     * 1/ Check whether currTime is in the current interval
+     * 2/ Check whether currTime is in the next interval
+     * 3/ Perform a binary search
+     * Note that we don't need to check indices bounds here as they are valid by
+     * construction.
+     */
+    auto updateIndex = [this, currTime]() {
+      if(values_[prevIndex_].first < currTime && values_[prevIndex_ + 1].first >= currTime)
+      {
+        return;
+      }
+      else if(values_[prevIndex_ + 1].first < currTime && values_[prevIndex_ + 2].first >= currTime)
+      {
+        ++prevIndex_;
+      }
+      else
+      {
+        // first element in values_ not less than currTime (greaor equal to currTime
+        auto it = std::lower_bound(std::begin(values_), std::end(values_), currTime,
+                                   [](const TimedValue & lhs, const double & rhs) { return lhs.first < rhs; });
+        prevIndex_ = static_cast<size_t>(it - values_.begin() - 1);
+      }
+    };
 
-    const auto & prevTime = values_[prevIndex].first;
-    return interpolator_(values_[prevIndex].second, values_[nextIndex_].second,
+    updateIndex();
+    auto nextIndex = prevIndex_ + 1;
+    double intervalDuration = values_[nextIndex].first - values_[prevIndex_].first;
+
+    const auto & prevTime = values_[prevIndex_].first;
+    return interpolator_(values_[prevIndex_].second, values_[nextIndex].second,
                          (currTime - prevTime) / intervalDuration);
   }
 
 protected:
   InterpolationFunction interpolator_; ///< Functor for computing the interpolated values
   TimedValueVector values_; ///< Interpolation values
-  size_t nextIndex_ = 1; ///< Index of the next element  (first element after current time)
+  size_t prevIndex_ = 0; ///< Cache the previous index to optimize lookup when used sequentially
 };
 
 } // namespace mc_trajectory

@@ -88,4 +88,14 @@ BOOST_AUTO_TEST_CASE(TestSequenceInterpolator)
   // Realistic case: trajectory gains
   interpolation.values({{0, 20}, {3., 20}, {3.8, 50}, {4., 200}});
   BOOST_REQUIRE_CLOSE(interpolation.compute(0.), 20, epsilon);
+
+  // Random access
+  values = {{0, 0}, {3., 20}, {3.8, 50}, {4., 200}};
+  interpolation.values(values);
+  BOOST_REQUIRE_CLOSE(interpolation.compute(6), 200, epsilon);
+  BOOST_REQUIRE_CLOSE(interpolation.compute(-1), 0, epsilon);
+  BOOST_REQUIRE_CLOSE(interpolation.compute(3), 20, epsilon);
+  BOOST_REQUIRE_CLOSE(interpolation.compute(3.8), 50, epsilon);
+  BOOST_REQUIRE_CLOSE(interpolation.compute(2), 20 / 3. * 2, epsilon);
+  BOOST_REQUIRE_CLOSE(interpolation.compute(3.9), interpolator(50, 200, 0.5), epsilon);
 }
