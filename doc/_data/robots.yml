@@ -8,7 +8,7 @@
       url: https://gite.lirmm.fr/mc-hrp2/mc-hrp2
       name: mc-hrp2
 - name: HRP-4-LIRMM
-  icon: hrp4.png
+  icon: hrp4.jpg
   pkg:
     desc:
       url: https://gite.lirmm.fr/mc-hrp4/hrp4
@@ -17,7 +17,7 @@
       url: https://gite.lirmm.fr/mc-hrp4/mc-hrp4
       name: mc-hrp4
 - name: HRP-4J
-  icon: hrp4.png
+  icon: hrp4.jpg
   pkg:
     desc:
       url: https://gite.lirmm.fr/mc-hrp4/hrp4j_description
