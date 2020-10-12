@@ -1,0 +1,80 @@
+StatesLibraries: ["@FSM_STATES_INSTALL_PREFIX@"]
+StepByStep: false
+Managed: false
+IdleKeepState: true
+robots:
+  ground:
+    module: env/ground
+constraints:
+  - type: dynamics
+    damper: [0.1, 0.01, 0.5]
+  - type: contact
+contacts:
+  - r1: jvrc1
+    r2: ground
+    r1Surface: LeftFoot
+    r2Surface: AllGround
+  - r1: jvrc1
+    r2: ground
+    r1Surface: RightFoot
+    r2Surface: AllGround
+states:
+  TestContactsManipulation:
+    base: HalfSitting
+    RemoveContacts:
+      - r1: jvrc1
+        r2: ground
+        r1Surface: LeftFoot
+        r2Surface: AllGround
+      - r1: jvrc1
+        r2: ground
+        r1Surface: RightFoot
+        r2Surface: AllGround
+    AddContacts:
+      - r1: jvrc1
+        r2: ground
+        r1Surface: LeftFootCenter
+        r2Surface: AllGround
+        friction: 0.8
+      - r1: jvrc1
+        r2: ground
+        r1Surface: RightFootCenter
+        r2Surface: AllGround
+        friction: 0.8
+        dof: [1, 1, 0, 1, 1, 1]
+    AddContactsAfter:
+      - r1: jvrc1
+        r2: ground
+        r1Surface: LeftFoot
+        r2Surface: AllGround
+      - r1: jvrc1
+        r2: ground
+        r1Surface: RightFoot
+        r2Surface: AllGround
+    RemoveContactsAfter:
+      - r1: jvrc1
+        r2: ground
+        r1Surface: LeftFootCenter
+        r2Surface: AllGround
+        friction: 0.8
+      - r1: jvrc1
+        r2: ground
+        r1Surface: RightFootCenter
+        r2Surface: AllGround
+        friction: 0.8
+        dof: [1, 1, 0, 1, 1, 1]
+  TestRemovePostureTask:
+    base: HalfSitting
+    RemovePostureTask: true
+  TestConstraints:
+    base: HalfSitting
+    constraints:
+      - type: boundedSpeed
+        robot: jvrc1
+        constraints:
+          - body: l_wrist
+            dof: [1, 1, 1, 1, 1, 1]
+            speed: [0, 0, 0, 0, 0, 0.001]
+transitions:
+  - [TestContactsManipulation, OK, TestRemovePostureTask, Auto]
+  - [TestRemovePostureTask, OK, TestConstraints, Auto]
