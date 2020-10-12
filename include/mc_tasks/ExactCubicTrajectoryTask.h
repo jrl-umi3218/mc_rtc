@@ -32,10 +32,8 @@ struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<Ex
    *
    * \param robots Robots controlled by the task
    * \param robotIndex  Which robot is controlled
-   * \param surfaceName Surface controlled by the task, should belong to the
-   * \ontrolled robot
+   * \param surfaceName Surface controlled by the task, should belong to the controlled robot
    * \param duration Duration of motion (eg time it takes to go from the current
-   * \urface position to the curve's final point)
    * \param stiffness Task stiffness
    * \param weight Task weight
    * \param target Final world pose to reach
@@ -44,9 +42,7 @@ struct MC_TASKS_DLLAPI ExactCubicTrajectoryTask : public SplineTrajectoryTask<Ex
    * \param init_acc Initial acceleration of the curve (default: Zero)
    * \param end_vel Final velocity of the curve (default: Zero)
    * \param enc_acc Final acceleration of the curve (default: Zero)
-   * \param oriWp Waypoints in orientation, specified as pairs of [time,
-   * orientation]. Orientation is interpolated in between waypoints. (default :
-   * none)
+   * \param oriWp Waypoints in orientation, specified as pairs of [time, orientation].
    */
   ExactCubicTrajectoryTask(const mc_rbdyn::Robots & robots,
                            unsigned int robotIndex,

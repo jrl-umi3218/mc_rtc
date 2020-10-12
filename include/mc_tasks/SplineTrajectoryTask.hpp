@@ -12,6 +12,7 @@
 
 namespace mc_tasks
 {
+
 template<typename Derived>
 SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::Robots & robots,
                                                     unsigned int robotIndex,
@@ -26,7 +27,8 @@ SplineTrajectoryTask<Derived>::SplineTrajectoryTask(const mc_rbdyn::Robots & rob
   oriSpline_(duration,
              robots.robot(robotIndex).surface(surfaceName).X_0_s(robots.robot(robotIndex)).rotation(),
              target,
-             oriWp)
+             oriWp),
+  dimWeightInterpolator_(), stiffnessInterpolator_(), dampingInterpolator_()
 {
   const auto & robot = robots.robot(robotIndex);
   const auto & surface = robot.surface(surfaceName);
@@ -93,7 +95,74 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> SplineTrajectoryT
 }
 
 template<typename Derived>
-void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver &)
+void SplineTrajectoryTask<Derived>::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
+{
+  TrajectoryBase::load(solver, config);
+  if(config.has("gainsInterpolation"))
+  {
+    /**
+     * Load gains from config as vector<pair<double,Vector6d>> or vector<pair<double, double>>
+     **/
+    auto genValues = [this](const mc_rtc::Configuration & c, const std::string & key,
+                            const Eigen::Vector6d & startGains) {
+      const auto & conf = c(key);
+      std::vector<std::pair<double, mc_rtc::Configuration>> values = conf;
+      std::vector<std::pair<double, Eigen::Vector6d>> out;
+      out.reserve(values.size());
+      for(const auto & v : values)
+      {
+        try
+        {
+          if(v.second.size())
+          {
+            Eigen::Vector6d vec = v.second;
+            out.push_back(std::make_pair(v.first, vec));
+          }
+          else
+          {
+            out.push_back({v.first, Eigen::Vector6d::Constant(static_cast<double>(v.second))});
+          }
+        }
+        catch(mc_rtc::Configuration::Exception & e)
+        {
+          mc_rtc::log::critical("[{}] {} interpolation values are expected to be either vector<pair<double, "
+                                "Vector6d>> or vector<pair<double, double>>",
+                                name(), key);
+          throw e;
+        }
+      }
+      // Add initial gain if missing from configuration
+      if(out.empty())
+      {
+        out.push_back({0., startGains});
+      }
+      else if(!out.empty() && out.front().first > 0.)
+      {
+        out.insert(out.begin(), {0, startGains});
+      }
+      return out;
+    };
+
+    auto gconfig = config("gainsInterpolation");
+    if(gconfig.has("stiffness"))
+    {
+      stiffnessInterpolation(genValues(gconfig, "stiffness", this->dimStiffness()));
+    }
+
+    if(gconfig.has("damping"))
+    {
+      dampingInterpolation(genValues(gconfig, "damping", this->dimDamping()));
+    }
+
+    if(gconfig.has("dimWeight"))
+    {
+      dimWeightInterpolation(genValues(gconfig, "dimWeight", this->dimWeight()));
+    }
+  }
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver & solver)
 {
   auto & spline = static_cast<Derived &>(*this).spline();
   spline.samplingPoints(samples_);
@@ -101,6 +170,9 @@ void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver &)
 
   if(!paused_)
   {
+    // Interpolate dimWeight/stiffness/damping
+    interpolateGains();
+
     // Interpolate position
     auto res = spline.splev(currTime_, 2);
     Eigen::Vector3d & pos = res[0];
@@ -121,12 +193,38 @@ void SplineTrajectoryTask<Derived>::update(mc_solver::QPSolver &)
     this->refVel(refVel);
     this->refAccel(refAcc);
     this->refPose(target);
-    currTime_ = std::min(currTime_ + timeStep_, duration_);
+    currTime_ = std::min(currTime_ + solver.dt(), duration_);
   }
   else
   {
     this->refVel(Eigen::Vector6d::Zero());
     this->refAccel(Eigen::Vector6d::Zero());
+  }
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::interpolateGains()
+{
+  if(dimWeightInterpolator_.hasValues())
+  {
+    TrajectoryBase::dimWeight(dimWeightInterpolator_.compute(currTime_));
+  }
+
+  if(stiffnessInterpolator_.hasValues())
+  { // Interpolate gains
+    auto stiffness = stiffnessInterpolator_.compute(currTime_);
+    if(dampingInterpolator_.hasValues())
+    {
+      TrajectoryBase::setGains(stiffness, dampingInterpolator_.compute(currTime_));
+    }
+    else
+    { // damping is 2*sqrt(stiffness)
+      TrajectoryBase::stiffness(stiffness);
+    }
+  }
+  else if(dampingInterpolator_.hasValues())
+  { // Interpolate only damping
+    TrajectoryBase::damping(dampingInterpolator_.compute(currTime_));
   }
 }
 
@@ -141,15 +239,89 @@ void SplineTrajectoryTask<Derived>::dimWeight(const Eigen::VectorXd & dimW)
 {
   if(dimW.size() != 6)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("SplineTrajectoryTask dimWeight should be a Vector6d!");
+    mc_rtc::log::error_and_throw<std::runtime_error>("SplineTrajectoryTask dimWeight must be a Vector6d!");
   }
+
+  dimWeightInterpolator_.clear();
   TrajectoryBase::dimWeight(dimW);
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::stiffnessInterpolation(
+    const std::vector<std::pair<double, Eigen::Vector6d>> & stiffnesses)
+{
+  stiffnessInterpolator_.values(stiffnesses);
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::dampingInterpolation(const std::vector<std::pair<double, Eigen::Vector6d>> & damping)
+{
+  dampingInterpolator_.values(damping);
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::dimWeightInterpolation(
+    const std::vector<std::pair<double, Eigen::Vector6d>> & dimWeight)
+{
+  dimWeightInterpolator_.values(dimWeight);
 }
 
 template<typename Derived>
 Eigen::VectorXd SplineTrajectoryTask<Derived>::dimWeight() const
 {
   return TrajectoryBase::dimWeight();
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::stiffness(double stiffness)
+{
+  this->stiffness(stiffness * Eigen::Vector6d::Ones());
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::stiffness(const Eigen::VectorXd & stiffness)
+{
+  setGains(stiffness, stiffness.cwiseSqrt());
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::damping(double damping)
+{
+  this->damping(damping * Eigen::Vector6d::Ones());
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::damping(const Eigen::VectorXd & damping)
+{
+  if(damping.size() != 6)
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] dimensional damping must be a Vector6d!", name());
+  }
+
+  dampingInterpolator_.clear();
+  TrajectoryBase::damping(damping);
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::setGains(double stiffness, double damping)
+{
+  setGains(stiffness * Eigen::Vector6d::Ones(), damping * Eigen::Vector6d::Ones());
+}
+
+template<typename Derived>
+void SplineTrajectoryTask<Derived>::setGains(const Eigen::VectorXd & stiffness, const Eigen::VectorXd & damping)
+{
+  if(stiffness.size() != 6)
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] dimensional stiffness must be a Vector6d!", name());
+  }
+  else if(damping.size() != 6)
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] dimensional damping must be a Vector6d!", name());
+  }
+  stiffnessInterpolator_.clear();
+  dampingInterpolator_.clear();
+  TrajectoryBase::setGains(stiffness, damping);
 }
 
 template<typename Derived>
@@ -209,16 +381,6 @@ template<typename Derived>
 const sva::PTransformd & SplineTrajectoryTask<Derived>::refPose() const
 {
   return errorT->target();
-}
-
-template<typename Derived>
-void SplineTrajectoryTask<Derived>::addToSolver(mc_solver::QPSolver & solver)
-{
-  if(!inSolver_)
-  {
-    timeStep_ = solver.dt();
-  }
-  TrajectoryBase::addToSolver(solver);
 }
 
 template<typename Derived>

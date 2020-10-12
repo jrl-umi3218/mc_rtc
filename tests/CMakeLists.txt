@@ -133,3 +133,5 @@ target_link_libraries(dummyServer PUBLIC mc_control)
 # -- Filters test -- #
 ######################
 mc_rtc_test(test_filters mc_filter SpaceVecAlg::SpaceVecAlg)
+
+mc_rtc_test(test_interpolation mc_control)
