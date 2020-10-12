@@ -1,9 +1,9 @@
 var a03352 =
 [
-    [ "MC_RTC_GUI_DLLAPI", "a03352.html#a0154310cb006fb3f499c367ca3e861a8", null ],
-    [ "MC_RTC_GUI_DLLEXPORT", "a03352.html#a14ad7305617c58803f8ce0c7541bb508", null ],
-    [ "MC_RTC_GUI_DLLIMPORT", "a03352.html#a9365441c6f8e61e9f8c39bb75c617b43", null ],
-    [ "MC_RTC_GUI_DLLLOCAL", "a03352.html#a0480d192b9c9ae9d9d88bf17771118b2", null ],
-    [ "MC_RTC_GUI_LOCAL", "a03352.html#aa7fe5afca945e356848d1a6b156528fa", null ],
-    [ "MC_RTC_GUI_VERSION", "a03352.html#a3c227096c22154059e88b20b7cd202bc", null ]
+    [ "MC_CONTROL_DLLAPI", "a03352.html#a167861c5d95139886801b242d6d0115f", null ],
+    [ "MC_CONTROL_DLLEXPORT", "a03352.html#a3ab2eb8965ce5e6d787aecf3e46d3be0", null ],
+    [ "MC_CONTROL_DLLIMPORT", "a03352.html#a93d9bb1f3f36bbffb00cf015b0bb0e37", null ],
+    [ "MC_CONTROL_DLLLOCAL", "a03352.html#a5fd14ed2320e3cbe50d19d4ada5b64a7", null ],
+    [ "MC_CONTROL_LOCAL", "a03352.html#aaef3a5c95b86a2ae0592bfafaec89185", null ],
+    [ "MC_CONTROL_VERSION", "a03352.html#a22df2857d14ed04f3b639527d08f7740", null ]
 ];

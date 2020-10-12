@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_rbdyn::RobotModule::Gripper Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01725.html','');});
+$(document).ready(function(){initNavTree('a01722.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,23 +69,284 @@ $(document).ready(function(){initNavTree('a01725.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="a01719.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::Springs Member List</div>  </div>
+<div class="title">mc_rbdyn::RobotModule::Gripper Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01725.html">mc_rbdyn::Springs</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01725.html#abe9081480e52ed8822a43e5807407324">afterSpringsBodies</a></td><td class="entry"><a class="el" href="a01725.html">mc_rbdyn::Springs</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01725.html#a6c66bef3fc4e0dc969d0924fc01e028b">springsBodies</a></td><td class="entry"><a class="el" href="a01725.html">mc_rbdyn::Springs</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01725.html#acb0fbbe6da7929023e50ef5f4a3471d4">springsJoints</a></td><td class="entry"><a class="el" href="a01725.html">mc_rbdyn::Springs</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p><code>#include &lt;mc_rbdyn/RobotModule.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01726.html">Safety</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a095ecf4ebd9b675117bf1c5b45f093ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01722.html#a095ecf4ebd9b675117bf1c5b45f093ca">Gripper</a> (const std::string &amp;<a class="el" href="a01722.html#a4c63d69cf61ff0c5ae634a549eadecd1">name</a>, const std::vector&lt; std::string &gt; &amp;<a class="el" href="a01722.html#a8ed52bd8f3d7ce552f62843c352b3d9c">joints</a>, bool <a class="el" href="a01722.html#a61df660109da82ecf0cb5cb476525045">reverse_limits</a>)</td></tr>
+<tr class="memdesc:a095ecf4ebd9b675117bf1c5b45f093ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with no mimics and no safety information.  <a href="#a095ecf4ebd9b675117bf1c5b45f093ca">More...</a><br /></td></tr>
+<tr class="separator:a095ecf4ebd9b675117bf1c5b45f093ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fa8ce090be890c8fd518592fe65b25e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01722.html#a3fa8ce090be890c8fd518592fe65b25e">Gripper</a> (const std::string &amp;<a class="el" href="a01722.html#a4c63d69cf61ff0c5ae634a549eadecd1">name</a>, const std::vector&lt; std::string &gt; &amp;<a class="el" href="a01722.html#a8ed52bd8f3d7ce552f62843c352b3d9c">joints</a>, bool <a class="el" href="a01722.html#a61df660109da82ecf0cb5cb476525045">reverse_limits</a>, const <a class="el" href="a01726.html">Safety</a> &amp;<a class="el" href="a01722.html#ae5dccc3ca07db76cec2cd0e70cc0bff5">safety</a>)</td></tr>
+<tr class="memdesc:a3fa8ce090be890c8fd518592fe65b25e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with safety parameters but no mimics information.  <a href="#a3fa8ce090be890c8fd518592fe65b25e">More...</a><br /></td></tr>
+<tr class="separator:a3fa8ce090be890c8fd518592fe65b25e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbbf290bba17b0b3becaf8c84da9c066"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01722.html#acbbf290bba17b0b3becaf8c84da9c066">Gripper</a> (const std::string &amp;<a class="el" href="a01722.html#a4c63d69cf61ff0c5ae634a549eadecd1">name</a>, const std::vector&lt; std::string &gt; &amp;<a class="el" href="a01722.html#a8ed52bd8f3d7ce552f62843c352b3d9c">joints</a>, bool <a class="el" href="a01722.html#a61df660109da82ecf0cb5cb476525045">reverse_limits</a>, const <a class="el" href="a01726.html">Safety</a> &amp;<a class="el" href="a01722.html#ae5dccc3ca07db76cec2cd0e70cc0bff5">safety</a>, const std::vector&lt; <a class="el" href="a01666.html">Mimic</a> &gt; &amp;<a class="el" href="a01722.html#ada9b553ac4484e6920c981bf71a92368">mimics</a>)</td></tr>
+<tr class="memdesc:acbbf290bba17b0b3becaf8c84da9c066"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with mimics and safety information.  <a href="#acbbf290bba17b0b3becaf8c84da9c066">More...</a><br /></td></tr>
+<tr class="separator:acbbf290bba17b0b3becaf8c84da9c066"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5dccc3ca07db76cec2cd0e70cc0bff5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01726.html">Safety</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01722.html#ae5dccc3ca07db76cec2cd0e70cc0bff5">safety</a> () const</td></tr>
+<tr class="separator:ae5dccc3ca07db76cec2cd0e70cc0bff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada9b553ac4484e6920c981bf71a92368"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="a01666.html">Mimic</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01722.html#ada9b553ac4484e6920c981bf71a92368">mimics</a> () const</td></tr>
+<tr class="separator:ada9b553ac4484e6920c981bf71a92368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a4c63d69cf61ff0c5ae634a549eadecd1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01722.html#a4c63d69cf61ff0c5ae634a549eadecd1">name</a></td></tr>
+<tr class="separator:a4c63d69cf61ff0c5ae634a549eadecd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ed52bd8f3d7ce552f62843c352b3d9c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01722.html#a8ed52bd8f3d7ce552f62843c352b3d9c">joints</a></td></tr>
+<tr class="separator:a8ed52bd8f3d7ce552f62843c352b3d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61df660109da82ecf0cb5cb476525045"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01722.html#a61df660109da82ecf0cb5cb476525045">reverse_limits</a></td></tr>
+<tr class="separator:a61df660109da82ecf0cb5cb476525045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Holds necessary information to create a gripper </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a095ecf4ebd9b675117bf1c5b45f093ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a095ecf4ebd9b675117bf1c5b45f093ca">&#9670;&nbsp;</a></span>Gripper() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rbdyn::RobotModule::Gripper::Gripper </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>joints</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reverse_limits</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor with no mimics and no safety information. </p>
+
+</div>
+</div>
+<a id="a3fa8ce090be890c8fd518592fe65b25e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fa8ce090be890c8fd518592fe65b25e">&#9670;&nbsp;</a></span>Gripper() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rbdyn::RobotModule::Gripper::Gripper </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>joints</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reverse_limits</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01726.html">Safety</a> &amp;&#160;</td>
+          <td class="paramname"><em>safety</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor with safety parameters but no mimics information. </p>
+
+</div>
+</div>
+<a id="acbbf290bba17b0b3becaf8c84da9c066"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbbf290bba17b0b3becaf8c84da9c066">&#9670;&nbsp;</a></span>Gripper() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rbdyn::RobotModule::Gripper::Gripper </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>joints</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reverse_limits</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01726.html">Safety</a> &amp;&#160;</td>
+          <td class="paramname"><em>safety</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="a01666.html">Mimic</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>mimics</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor with mimics and safety information. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ada9b553ac4484e6920c981bf71a92368"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada9b553ac4484e6920c981bf71a92368">&#9670;&nbsp;</a></span>mimics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;<a class="el" href="a01666.html">Mimic</a>&gt;* mc_rbdyn::RobotModule::Gripper::mimics </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the mimics parameters if provided, otherwise a nullptr </p>
+
+</div>
+</div>
+<a id="ae5dccc3ca07db76cec2cd0e70cc0bff5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5dccc3ca07db76cec2cd0e70cc0bff5">&#9670;&nbsp;</a></span>safety()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a01726.html">Safety</a>* mc_rbdyn::RobotModule::Gripper::safety </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the safety parameters if provided, otherwise a nullptr </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8ed52bd8f3d7ce552f62843c352b3d9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ed52bd8f3d7ce552f62843c352b3d9c">&#9670;&nbsp;</a></span>joints</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::string&gt; mc_rbdyn::RobotModule::Gripper::joints</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Active joints in the gripper </p>
+
+</div>
+</div>
+<a id="a4c63d69cf61ff0c5ae634a549eadecd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c63d69cf61ff0c5ae634a549eadecd1">&#9670;&nbsp;</a></span>name</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_rbdyn::RobotModule::Gripper::name</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="a01722.html">Gripper</a>'s name </p>
+
+</div>
+</div>
+<a id="a61df660109da82ecf0cb5cb476525045"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61df660109da82ecf0cb5cb476525045">&#9670;&nbsp;</a></span>reverse_limits</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rbdyn::RobotModule::Gripper::reverse_limits</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Whether the limits should be reversed, see <a class="el" href="a01470.html" title="A robot&#39;s gripper reprensentation. ">mc_control::Gripper</a> </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Oct 10 2020 04:20:34 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00760.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a01718.html">RobotModule</a></li><li class="navelem"><a class="el" href="a01722.html">Gripper</a></li>
+    <li class="footer">Generated on Mon Oct 12 2020 05:06:28 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

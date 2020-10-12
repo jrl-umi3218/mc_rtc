@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_planning Namespace Reference</title>
+<title>mc_control::fsm Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,26 +70,154 @@ $(document).ready(function(){initNavTree('a00756.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">mc_planning Namespace Reference</div>  </div>
+<div class="title">mc_control::fsm Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01557.html">Pendulum</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">State of the inverted pendulum model.  <a href="a01557.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html">AddRemoveContactState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a state that is able to remove or add a contact.  <a href="a01410.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01378.html">Contact</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A lightweight variant of <a class="el" href="a01610.html">mc_rbdyn::Contact</a> meant to simplify contact manipulation in the FSM.  <a href="a01378.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01386.html">Controller</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This controller implements a finite-state machine to handle complex scenarios in a generic fashion.  <a href="a01386.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01394.html">Executor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">of executing an FSM  <a href="a01394.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01414.html">Grippers</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls the gripper of a robot.  <a href="a01414.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01418.html">HalfSittingState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a state that brings the robot posture to halfsitting stance.  <a href="a01418.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01422.html">MessageState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a simple Message state to display debug information in the FSM.  <a href="a01422.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01426.html">MetaState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a "meta" state.  <a href="a01426.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01430.html">MetaTasksState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a generic tasks state.  <a href="a01430.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01438.html">ParallelState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements parallel states.  <a href="a01438.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html">PauseState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a pause state.  <a href="a01446.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html">PostureState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the global posture.  <a href="a01450.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01398.html">PythonState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides an interface for the Python bindings to fill-out.  <a href="a01398.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01454.html">SlidingFootContactState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a state that is able to slide a foot contact.  <a href="a01454.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01458.html">StabilizerStandingState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple state to control and stabilize the CoM of a biped-like robot using the LIPMStabilizer.  <a href="a01458.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01402.html">State</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A state of an FSM.  <a href="a01402.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01406.html">StateFactory</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates <a class="el" href="a01402.html" title="A state of an FSM. ">State</a> objects based on name and configuration entries.  <a href="a01406.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01462.html">Transition</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transition is given by the destination state and a type of transition.  <a href="a01462.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01466.html">TransitionMap</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class takes care of reading a transition map from a configuration entry and makes sure it's coherent with the states provided by the <a class="el" href="a01406.html" title="Creates State objects based on name and configuration entries. ">StateFactory</a>.  <a href="a01466.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ad410c6443a64d561960fe4bd490154d9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ad410c6443a64d561960fe4bd490154d9">ContactSet</a> = std::unordered_set&lt; <a class="el" href="a01378.html">Contact</a>, std::hash&lt; <a class="el" href="a01378.html">Contact</a> &gt;, std::equal_to&lt; <a class="el" href="a01378.html">Contact</a> &gt;, Eigen::aligned_allocator&lt; <a class="el" href="a01378.html">Contact</a> &gt; &gt;</td></tr>
+<tr class="separator:ad410c6443a64d561960fe4bd490154d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c42d903de4c4a1e5ad50c37bc2d547a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#a4c42d903de4c4a1e5ad50c37bc2d547a">StatePtr</a> = std::shared_ptr&lt; <a class="el" href="a01402.html">State</a> &gt;</td></tr>
+<tr class="separator:a4c42d903de4c4a1e5ad50c37bc2d547a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a3d06e24faff23eaa588f3820e74042b7"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a03367.html#abb5c53c99c37c6ca870d1838f76228ef">MC_CONTROL_FSM_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#a3d06e24faff23eaa588f3820e74042b7">Controller</a></td></tr>
+<tr class="separator:a3d06e24faff23eaa588f3820e74042b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2deb94750a61f8f86801bd02f4149d5e"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a03370.html#a4cfcac728c1786a9888c977f8b656ba2">MC_CONTROL_FSM_STATE_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#a2deb94750a61f8f86801bd02f4149d5e">AddRemoveContactStateImpl</a></td></tr>
+<tr class="separator:a2deb94750a61f8f86801bd02f4149d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ad410c6443a64d561960fe4bd490154d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad410c6443a64d561960fe4bd490154d9">&#9670;&nbsp;</a></span>ContactSet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a00756.html#ad410c6443a64d561960fe4bd490154d9">mc_control::fsm::ContactSet</a> = typedef std::unordered_set&lt;<a class="el" href="a01378.html">Contact</a>, std::hash&lt;<a class="el" href="a01378.html">Contact</a>&gt;, std::equal_to&lt;<a class="el" href="a01378.html">Contact</a>&gt;, Eigen::aligned_allocator&lt;<a class="el" href="a01378.html">Contact</a>&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4c42d903de4c4a1e5ad50c37bc2d547a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c42d903de4c4a1e5ad50c37bc2d547a">&#9670;&nbsp;</a></span>StatePtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="a00756.html#a4c42d903de4c4a1e5ad50c37bc2d547a">mc_control::fsm::StatePtr</a> = typedef std::shared_ptr&lt;<a class="el" href="a01402.html">State</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a2deb94750a61f8f86801bd02f4149d5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2deb94750a61f8f86801bd02f4149d5e">&#9670;&nbsp;</a></span>AddRemoveContactStateImpl</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="a03370.html#a4cfcac728c1786a9888c977f8b656ba2">MC_CONTROL_FSM_STATE_DLLAPI</a> mc_control::fsm::AddRemoveContactStateImpl</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3d06e24faff23eaa588f3820e74042b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d06e24faff23eaa588f3820e74042b7">&#9670;&nbsp;</a></span>Controller</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="a03367.html#abb5c53c99c37c6ca870d1838f76228ef">MC_CONTROL_FSM_DLLAPI</a> <a class="el" href="a01386.html">mc_control::fsm::Controller</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00756.html">mc_planning</a></li>
-    <li class="footer">Generated on Sat Oct 10 2020 04:20:34 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00755.html">mc_control</a></li><li class="navelem"><a class="el" href="a00756.html">fsm</a></li>
+    <li class="footer">Generated on Mon Oct 12 2020 05:06:28 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

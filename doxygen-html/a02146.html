@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_rtc::log::LogWriter&lt; T &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a02149.html','');});
+$(document).ready(function(){initNavTree('a02146.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,29 +69,80 @@ $(document).ready(function(){initNavTree('a02149.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="a02143.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_solver::BoundedSpeedConstr Member List</div>  </div>
+<div class="title">mc_rtc::log::LogWriter&lt; T &gt; Struct Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a02149.html">mc_solver::BoundedSpeedConstr</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a02149.html#abcd47fff771a0c7357bd5b682398b3df">addBoundedSpeed</a>(QPSolver &amp;solver, const std::string &amp;bodyName, const Eigen::Vector3d &amp;bodyPoint, const Eigen::MatrixXd &amp;dof, const Eigen::VectorXd &amp;speed)</td><td class="entry"><a class="el" href="a02149.html">mc_solver::BoundedSpeedConstr</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02149.html#aff11f05b8b3f2139db8ae2d95ce4afee">addBoundedSpeed</a>(QPSolver &amp;solver, const std::string &amp;bodyName, const Eigen::Vector3d &amp;bodyPoint, const Eigen::MatrixXd &amp;dof, const Eigen::VectorXd &amp;lowerSpeed, const Eigen::VectorXd &amp;upperSpeed)</td><td class="entry"><a class="el" href="a02149.html">mc_solver::BoundedSpeedConstr</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02149.html#a54adcdc90cc41a64a9723b693f8beb1b">addToSolver</a>(const std::vector&lt; rbd::MultiBody &gt; &amp;mbs, tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02149.html">mc_solver::BoundedSpeedConstr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02149.html#a43af0872dd664d13d864053d3ecfda18">BoundedSpeedConstr</a>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double dt)</td><td class="entry"><a class="el" href="a02149.html">mc_solver::BoundedSpeedConstr</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02149.html#a70c84d6defba583690d9175ca4cf192d">nrBoundedSpeeds</a>() const</td><td class="entry"><a class="el" href="a02149.html">mc_solver::BoundedSpeedConstr</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a02149.html#a5b85799a5bb8df9c5344cd9d3f630708">removeBoundedSpeed</a>(QPSolver &amp;solver, const std::string &amp;bodyName)</td><td class="entry"><a class="el" href="a02149.html">mc_solver::BoundedSpeedConstr</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02149.html#a0214a46d2452e2dcf610bbf44f863019">removeFromSolver</a>(tasks::qp::QPSolver &amp;solver) override</td><td class="entry"><a class="el" href="a02149.html">mc_solver::BoundedSpeedConstr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a02149.html#ab0fffcd8e01c61ced64cf5371999acb7">reset</a>(QPSolver &amp;solver)</td><td class="entry"><a class="el" href="a02149.html">mc_solver::BoundedSpeedConstr</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a02177.html#ad979bb11e0faeba2c10d36d5a4c46e00">~ConstraintSet</a>()</td><td class="entry"><a class="el" href="a02177.html">mc_solver::ConstraintSet</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-</table></div><!-- contents -->
+<p>For a given type, writes to the log.  
+ <a href="a02146.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_rtc/log/utils.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ac76dfb54b68fb04d65d6fcb1cb6e061d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02146.html#ac76dfb54b68fb04d65d6fcb1cb6e061d">write</a> (const T &amp;data, <a class="el" href="a02150.html">mc_rtc::MessagePackBuilder</a> &amp;builder)</td></tr>
+<tr class="separator:ac76dfb54b68fb04d65d6fcb1cb6e061d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename T&gt;<br />
+struct mc_rtc::log::LogWriter&lt; T &gt;</h3>
+
+<p>For a given type, writes to the log. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac76dfb54b68fb04d65d6fcb1cb6e061d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac76dfb54b68fb04d65d6fcb1cb6e061d">&#9670;&nbsp;</a></span>write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void <a class="el" href="a02146.html">mc_rtc::log::LogWriter</a>&lt; T &gt;::write </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a02150.html">mc_rtc::MessagePackBuilder</a> &amp;&#160;</td>
+          <td class="paramname"><em>builder</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="reference">References <a class="el" href="a02150.html#ab7c6cb64330027b2fec8e69d218a866d">mc_rtc::MessagePackBuilder::write()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a02122.html#a1fe9ebf879c471ae7741170c9e0d6933">mc_rtc::Logger::addLogEntry()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Oct 10 2020 04:20:35 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00757.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a00781.html">log</a></li><li class="navelem"><a class="el" href="a02146.html">LogWriter</a></li>
+    <li class="footer">Generated on Mon Oct 12 2020 05:06:29 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

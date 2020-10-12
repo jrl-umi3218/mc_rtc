@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Configuration.h File Reference</title>
+<title>api.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,108 +70,109 @@ $(document).ready(function(){initNavTree('a03367.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc/Configuration.h File Reference</div>  </div>
+<div class="title">mc_control/fsm/api.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a00371.html">mc_rtc/MessagePackBuilder.h</a>&gt;</code><br />
-<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
-<code>#include &lt;<a class="el" href="a00215.html">mc_rbdyn/rpy_utils.h</a>&gt;</code><br />
-<code>#include &lt;Eigen/Core&gt;</code><br />
-<code>#include &lt;array&gt;</code><br />
-<code>#include &lt;exception&gt;</code><br />
-<code>#include &lt;map&gt;</code><br />
-<code>#include &lt;mc/rtc/deprecated.hh&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
-<code>#include &lt;set&gt;</code><br />
-<code>#include &lt;spdlog/fmt/fmt.h&gt;</code><br />
-<code>#include &lt;string&gt;</code><br />
-<code>#include &lt;unordered_set&gt;</code><br />
-<code>#include &lt;vector&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01733.html">mc_rtc::ConfigurationLoader&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure should be specialized to implement serialization for a new type.  <a href="a01733.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01737.html">mc_rtc::ConfigurationLoader&lt; void &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01741.html">mc_rtc::internal::_has_configuration_load_object</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: T <a class="el" href="a01733.html#a3e8685e2cdb83f2ec06ab4e231a653ae">ConfigurationLoader&lt;T&gt;::load(const mc_rtc::Configuration &amp;)</a>; is a valid function or not.  <a href="a01741.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01745.html">mc_rtc::internal::has_configuration_load_object&lt; T &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01749.html">mc_rtc::internal::_has_configuration_save_object</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper trait to determine whether: <a class="el" href="a01757.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> <a class="el" href="a01733.html#ac516ceb726f94bd4e5a32ad25f1178c2">mc_rtc::ConfigurationLoader&lt;T&gt;::save</a>(const T&amp;, Args ...); is a valid construct or not.  <a href="a01749.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01753.html">mc_rtc::internal::has_configuration_save_object&lt; T, Args &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01757.html">mc_rtc::Configuration</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simplify access to values hold within a JSON file.  <a href="a01757.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01765.html">mc_rtc::Configuration::Exception</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="a01765.html" title="Exception thrown by this class when something bad occurs. ">Exception</a> thrown by this class when something bad occurs.  <a href="a01765.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01769.html">mc_rtc::ConfigurationArrayIterator</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01773.html">fmt::formatter&lt; mc_rtc::Configuration &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00748"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html">mc_rtc</a></td></tr>
-<tr class="memdesc:a00748"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file holds all <a class="el" href="a01757.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00751.html">mc_rbdyn</a> objects. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00765"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00765.html">mc_rtc::internal</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00766"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00766.html">fmt</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a24679a5c44564f7b7426cca4533300bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03367.html#a24679a5c44564f7b7426cca4533300bf">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="a01757.html">mc_rtc::Configuration</a> &amp;c)</td></tr>
-<tr class="memdesc:a24679a5c44564f7b7426cca4533300bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ostream operator.  <a href="#a24679a5c44564f7b7426cca4533300bf">More...</a><br /></td></tr>
-<tr class="separator:a24679a5c44564f7b7426cca4533300bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a781ea11d3b3f97742187d5910b74edfd"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html#a781ea11d3b3f97742187d5910b74edfd">mc_rtc::ConfigurationArrayIterator</a></td></tr>
-<tr class="separator:a781ea11d3b3f97742187d5910b74edfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b620c9005d103e65363b518ba6dca23"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00748.html#a9b620c9005d103e65363b518ba6dca23">mc_rtc::Configuration</a></td></tr>
-<tr class="separator:a9b620c9005d103e65363b518ba6dca23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a6a20ff82176ab6a5233f93165acadfd9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03367.html#a6a20ff82176ab6a5233f93165acadfd9">MC_CONTROL_FSM_VERSION</a>&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td></tr>
+<tr class="separator:a6a20ff82176ab6a5233f93165acadfd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0dcbeac9312e33f462e6484a868a52b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03367.html#ab0dcbeac9312e33f462e6484a868a52b">MC_CONTROL_FSM_DLLIMPORT</a></td></tr>
+<tr class="separator:ab0dcbeac9312e33f462e6484a868a52b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4907a97f0041ceb9c310d2b8cd0c027d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03367.html#a4907a97f0041ceb9c310d2b8cd0c027d">MC_CONTROL_FSM_DLLEXPORT</a></td></tr>
+<tr class="separator:a4907a97f0041ceb9c310d2b8cd0c027d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ce3297615a42b33da114e62f6176f2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03367.html#a1ce3297615a42b33da114e62f6176f2f">MC_CONTROL_FSM_DLLLOCAL</a></td></tr>
+<tr class="separator:a1ce3297615a42b33da114e62f6176f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb5c53c99c37c6ca870d1838f76228ef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03367.html#abb5c53c99c37c6ca870d1838f76228ef">MC_CONTROL_FSM_DLLAPI</a>&#160;&#160;&#160;<a class="el" href="a03367.html#ab0dcbeac9312e33f462e6484a868a52b">MC_CONTROL_FSM_DLLIMPORT</a></td></tr>
+<tr class="separator:abb5c53c99c37c6ca870d1838f76228ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44f5f50f69e648fb0b8d592720aeaf50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03367.html#a44f5f50f69e648fb0b8d592720aeaf50">MC_CONTROL_FSM_LOCAL</a>&#160;&#160;&#160;<a class="el" href="a03367.html#a1ce3297615a42b33da114e62f6176f2f">MC_CONTROL_FSM_DLLLOCAL</a></td></tr>
+<tr class="separator:a44f5f50f69e648fb0b8d592720aeaf50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a24679a5c44564f7b7426cca4533300bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24679a5c44564f7b7426cca4533300bf">&#9670;&nbsp;</a></span>operator<<()</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="abb5c53c99c37c6ca870d1838f76228ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb5c53c99c37c6ca870d1838f76228ef">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_DLLAPI</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> std::ostream&amp; operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01757.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>c</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define MC_CONTROL_FSM_DLLAPI&#160;&#160;&#160;<a class="el" href="a03367.html#ab0dcbeac9312e33f462e6484a868a52b">MC_CONTROL_FSM_DLLIMPORT</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Ostream operator. </p>
+</div>
+</div>
+<a id="a4907a97f0041ceb9c310d2b8cd0c027d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4907a97f0041ceb9c310d2b8cd0c027d">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_DLLEXPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_DLLEXPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab0dcbeac9312e33f462e6484a868a52b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0dcbeac9312e33f462e6484a868a52b">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_DLLIMPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_DLLIMPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1ce3297615a42b33da114e62f6176f2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ce3297615a42b33da114e62f6176f2f">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_DLLLOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_DLLLOCAL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a44f5f50f69e648fb0b8d592720aeaf50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44f5f50f69e648fb0b8d592720aeaf50">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_LOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_LOCAL&#160;&#160;&#160;<a class="el" href="a03367.html#a1ce3297615a42b33da114e62f6176f2f">MC_CONTROL_FSM_DLLLOCAL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6a20ff82176ab6a5233f93165acadfd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a20ff82176ab6a5233f93165acadfd9">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_VERSION&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -181,8 +182,8 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_379a22462e4fb075f5428ea3ff528930.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a03367.html">Configuration.h</a></li>
-    <li class="footer">Generated on Sat Oct 10 2020 04:20:34 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8a948ff1aa35df8f7730fc54bf71041a.html">mc_control</a></li><li class="navelem"><a class="el" href="dir_5eca7bb21ab95c8ba50a69c382d19321.html">fsm</a></li><li class="navelem"><a class="el" href="a03367.html">api.h</a></li>
+    <li class="footer">Generated on Mon Oct 12 2020 05:06:28 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

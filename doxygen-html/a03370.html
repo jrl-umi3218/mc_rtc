@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Contact.h File Reference</title>
+<title>api.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,48 +70,120 @@ $(document).ready(function(){initNavTree('a03370.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn/Contact.h File Reference</div>  </div>
+<div class="title">mc_control/fsm/states/api.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="a03346.html">mc_rbdyn/api.h</a>&gt;</code><br />
-<code>#include &lt;<a class="el" href="a03367.html">mc_rtc/Configuration.h</a>&gt;</code><br />
-<code>#include &lt;Tasks/QPContacts.h&gt;</code><br />
-<code>#include &lt;SpaceVecAlg/SpaceVecAlg&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01593.html">mc_solver::QPContactPtr</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01597.html">mc_solver::QPContactPtrWPoints</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01601.html">mc_rbdyn::Contact</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00757"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00757.html">mc_solver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00751"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html">mc_rbdyn</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a736c36f68b3eff9f08124c8b1a58cba3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03346.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> std::vector&lt; sva::PTransformd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#a736c36f68b3eff9f08124c8b1a58cba3">mc_rbdyn::computePoints</a> (const <a class="el" href="a01729.html">mc_rbdyn::Surface</a> &amp;robotSurface, const <a class="el" href="a01729.html">mc_rbdyn::Surface</a> &amp;envSurface, const sva::PTransformd &amp;X_es_rs)</td></tr>
-<tr class="separator:a736c36f68b3eff9f08124c8b1a58cba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a2fe6be3f7fd6b98de2dbdcb335b157b0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03370.html#a2fe6be3f7fd6b98de2dbdcb335b157b0">MC_CONTROL_FSM_STATE_VERSION</a>&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td></tr>
+<tr class="separator:a2fe6be3f7fd6b98de2dbdcb335b157b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb918e5798089061b14f124312865580"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03370.html#adb918e5798089061b14f124312865580">MC_CONTROL_FSM_STATE_DLLIMPORT</a></td></tr>
+<tr class="separator:adb918e5798089061b14f124312865580"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16bceb2813abeb80aa1e49f1109e6c88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03370.html#a16bceb2813abeb80aa1e49f1109e6c88">MC_CONTROL_FSM_STATE_DLLEXPORT</a></td></tr>
+<tr class="separator:a16bceb2813abeb80aa1e49f1109e6c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a113188e6b7bc199d59abd8a7f463d9f9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03370.html#a113188e6b7bc199d59abd8a7f463d9f9">MC_CONTROL_FSM_STATE_DLLLOCAL</a></td></tr>
+<tr class="separator:a113188e6b7bc199d59abd8a7f463d9f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cfcac728c1786a9888c977f8b656ba2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03370.html#a4cfcac728c1786a9888c977f8b656ba2">MC_CONTROL_FSM_STATE_DLLAPI</a>&#160;&#160;&#160;<a class="el" href="a03370.html#adb918e5798089061b14f124312865580">MC_CONTROL_FSM_STATE_DLLIMPORT</a></td></tr>
+<tr class="separator:a4cfcac728c1786a9888c977f8b656ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f940b92f5b7fef9b7af442273630546"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03370.html#a9f940b92f5b7fef9b7af442273630546">MC_CONTROL_FSM_STATE_LOCAL</a>&#160;&#160;&#160;<a class="el" href="a03370.html#a113188e6b7bc199d59abd8a7f463d9f9">MC_CONTROL_FSM_STATE_DLLLOCAL</a></td></tr>
+<tr class="separator:a9f940b92f5b7fef9b7af442273630546"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a4cfcac728c1786a9888c977f8b656ba2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cfcac728c1786a9888c977f8b656ba2">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_STATE_DLLAPI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_STATE_DLLAPI&#160;&#160;&#160;<a class="el" href="a03370.html#adb918e5798089061b14f124312865580">MC_CONTROL_FSM_STATE_DLLIMPORT</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a16bceb2813abeb80aa1e49f1109e6c88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16bceb2813abeb80aa1e49f1109e6c88">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_STATE_DLLEXPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_STATE_DLLEXPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adb918e5798089061b14f124312865580"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb918e5798089061b14f124312865580">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_STATE_DLLIMPORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_STATE_DLLIMPORT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a113188e6b7bc199d59abd8a7f463d9f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a113188e6b7bc199d59abd8a7f463d9f9">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_STATE_DLLLOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_STATE_DLLLOCAL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9f940b92f5b7fef9b7af442273630546"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f940b92f5b7fef9b7af442273630546">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_STATE_LOCAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_STATE_LOCAL&#160;&#160;&#160;<a class="el" href="a03370.html#a113188e6b7bc199d59abd8a7f463d9f9">MC_CONTROL_FSM_STATE_DLLLOCAL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2fe6be3f7fd6b98de2dbdcb335b157b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fe6be3f7fd6b98de2dbdcb335b157b0">&#9670;&nbsp;</a></span>MC_CONTROL_FSM_STATE_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_CONTROL_FSM_STATE_VERSION&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a03370.html">Contact.h</a></li>
-    <li class="footer">Generated on Sat Oct 10 2020 04:20:34 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8a948ff1aa35df8f7730fc54bf71041a.html">mc_control</a></li><li class="navelem"><a class="el" href="dir_5eca7bb21ab95c8ba50a69c382d19321.html">fsm</a></li><li class="navelem"><a class="el" href="dir_e6b7f2c290ec347c099e5f45d81956a4.html">states</a></li><li class="navelem"><a class="el" href="a03370.html">api.h</a></li>
+    <li class="footer">Generated on Mon Oct 12 2020 05:06:28 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

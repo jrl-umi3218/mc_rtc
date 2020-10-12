@@ -1,4 +1,4 @@
 var a00775 =
 [
-    [ "CompoundJointConstraint", "a02165.html", "a02165" ]
+    [ "formatter< mc_rtc::Configuration >", "a01782.html", "a01782" ]
 ];

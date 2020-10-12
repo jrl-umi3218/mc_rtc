@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Helpers to obtain robot index/name from configuration</title>
+<title>mc_control::fsm Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,241 +70,143 @@ $(document).ready(function(){initNavTree('a00744.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">Helpers to obtain robot index/name from configuration</div>  </div>
+<div class="title">mc_control::fsm Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>The intent of these functions is:  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga70b316b2f0c0caf547e160e74c2a029d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03346.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> const <a class="el" href="a01681.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html#ga70b316b2f0c0caf547e160e74c2a029d">mc_rbdyn::robotFromConfig</a> (const <a class="el" href="a01757.html">mc_rtc::Configuration</a> &amp;config, const <a class="el" href="a01721.html">mc_rbdyn::Robots</a> &amp;robots, const std::string &amp;prefix, bool required=false, const std::string &amp;robotIndexKey=&quot;robotIndex&quot;, const std::string &amp;robotNameKey=&quot;robot&quot;, const std::string &amp;defaultRobotName=&quot;&quot;)</td></tr>
-<tr class="memdesc:ga70b316b2f0c0caf547e160e74c2a029d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains a reference to a loaded robot from configuration (using robotName or robotIndex)  <a href="a00744.html#ga70b316b2f0c0caf547e160e74c2a029d">More...</a><br /></td></tr>
-<tr class="separator:ga70b316b2f0c0caf547e160e74c2a029d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga40325ac769295d23f270976eead26245"><td class="memItemLeft" align="right" valign="top">std::string <a class="el" href="a03346.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html#ga40325ac769295d23f270976eead26245">mc_rbdyn::robotNameFromConfig</a> (const <a class="el" href="a01757.html">mc_rtc::Configuration</a> &amp;config, const <a class="el" href="a01721.html">mc_rbdyn::Robots</a> &amp;robots, const std::string &amp;prefix=&quot;&quot;, bool required=false, const std::string &amp;robotIndexKey=&quot;robotIndex&quot;, const std::string &amp;robotNameKey=&quot;robot&quot;, const std::string &amp;defaultRobotName=&quot;&quot;)</td></tr>
-<tr class="memdesc:ga40325ac769295d23f270976eead26245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to obtain the robot name from configuration.  <a href="a00744.html#ga40325ac769295d23f270976eead26245">More...</a><br /></td></tr>
-<tr class="separator:ga40325ac769295d23f270976eead26245"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf9b711ec2baa5684b8f422d740464b5f"><td class="memItemLeft" align="right" valign="top">unsigned int <a class="el" href="a03346.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html#gaf9b711ec2baa5684b8f422d740464b5f">mc_rbdyn::robotIndexFromConfig</a> (const <a class="el" href="a01757.html">mc_rtc::Configuration</a> &amp;config, const <a class="el" href="a01721.html">mc_rbdyn::Robots</a> &amp;robots, const std::string &amp;prefix=&quot;&quot;, bool required=false, const std::string &amp;robotIndexKey=&quot;robotIndex&quot;, const std::string &amp;robotNameKey=&quot;robot&quot;, const std::string &amp;defaultRobotName=&quot;&quot;)</td></tr>
-<tr class="memdesc:gaf9b711ec2baa5684b8f422d740464b5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to obtain the robot index from configuration.  <a href="a00744.html#gaf9b711ec2baa5684b8f422d740464b5f">More...</a><br /></td></tr>
-<tr class="separator:gaf9b711ec2baa5684b8f422d740464b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01398.html">AddRemoveContactState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a state that is able to remove or add a contact.  <a href="a01398.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01366.html">Contact</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A lightweight variant of <a class="el" href="a01598.html">mc_rbdyn::Contact</a> meant to simplify contact manipulation in the FSM.  <a href="a01366.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01374.html">Controller</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This controller implements a finite-state machine to handle complex scenarios in a generic fashion.  <a href="a01374.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01382.html">Executor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">of executing an FSM  <a href="a01382.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01402.html">Grippers</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls the gripper of a robot.  <a href="a01402.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01406.html">HalfSittingState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a state that brings the robot posture to halfsitting stance.  <a href="a01406.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01410.html">MessageState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a simple Message state to display debug information in the FSM.  <a href="a01410.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01414.html">MetaState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a "meta" state.  <a href="a01414.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01418.html">MetaTasksState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a generic tasks state.  <a href="a01418.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01426.html">ParallelState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements parallel states.  <a href="a01426.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01434.html">PauseState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a pause state.  <a href="a01434.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01438.html">PostureState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the global posture.  <a href="a01438.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01386.html">PythonState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides an interface for the Python bindings to fill-out.  <a href="a01386.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01442.html">SlidingFootContactState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a state that is able to slide a foot contact.  <a href="a01442.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01446.html">StabilizerStandingState</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple state to control and stabilize the CoM of a biped-like robot using the LIPMStabilizer.  <a href="a01446.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01390.html">State</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A state of an FSM.  <a href="a01390.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01394.html">StateFactory</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates <a class="el" href="a01390.html" title="A state of an FSM. ">State</a> objects based on name and configuration entries.  <a href="a01394.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01450.html">Transition</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A transition is given by the destination state and a type of transition.  <a href="a01450.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01454.html">TransitionMap</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This class takes care of reading a transition map from a configuration entry and makes sure it's coherent with the states provided by the <a class="el" href="a01394.html" title="Creates State objects based on name and configuration entries. ">StateFactory</a>.  <a href="a01454.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ad410c6443a64d561960fe4bd490154d9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html#ad410c6443a64d561960fe4bd490154d9">ContactSet</a> = std::unordered_set&lt; <a class="el" href="a01366.html">Contact</a>, std::hash&lt; <a class="el" href="a01366.html">Contact</a> &gt;, std::equal_to&lt; <a class="el" href="a01366.html">Contact</a> &gt;, Eigen::aligned_allocator&lt; <a class="el" href="a01366.html">Contact</a> &gt; &gt;</td></tr>
+<tr class="separator:ad410c6443a64d561960fe4bd490154d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c42d903de4c4a1e5ad50c37bc2d547a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html#a4c42d903de4c4a1e5ad50c37bc2d547a">StatePtr</a> = std::shared_ptr&lt; <a class="el" href="a01390.html">State</a> &gt;</td></tr>
+<tr class="separator:a4c42d903de4c4a1e5ad50c37bc2d547a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a3d06e24faff23eaa588f3820e74042b7"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a03355.html#abb5c53c99c37c6ca870d1838f76228ef">MC_CONTROL_FSM_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html#a3d06e24faff23eaa588f3820e74042b7">Controller</a></td></tr>
+<tr class="separator:a3d06e24faff23eaa588f3820e74042b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2deb94750a61f8f86801bd02f4149d5e"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a03358.html#a4cfcac728c1786a9888c977f8b656ba2">MC_CONTROL_FSM_STATE_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html#a2deb94750a61f8f86801bd02f4149d5e">AddRemoveContactStateImpl</a></td></tr>
+<tr class="separator:a2deb94750a61f8f86801bd02f4149d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>The intent of these functions is: </p>
-<ul>
-<li>to facilitate supporting managing robots by name in the FSM, while maintaining compatibility with the existing FSMs using robotIndex.</li>
-<li>to facilitate the upcoming transition from Tasks (requires robotIndex) to TVM (using only robotName). When the transition occurs, robotIndexFromConfig can be deprecated, and its uses be replaced with robotNameFromConfig instead. </li>
-</ul>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="ga70b316b2f0c0caf547e160e74c2a029d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga70b316b2f0c0caf547e160e74c2a029d">&#9670;&nbsp;</a></span>robotFromConfig()</h2>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ad410c6443a64d561960fe4bd490154d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad410c6443a64d561960fe4bd490154d9">&#9670;&nbsp;</a></span>ContactSet</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a03346.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> const <a class="el" href="a01681.html">mc_rbdyn::Robot</a>&amp; mc_rbdyn::robotFromConfig </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01757.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01721.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
-          <td class="paramname"><em>robots</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>prefix</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>required</em> = <code>false</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>robotIndexKey</em> = <code>&quot;robotIndex&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>robotNameKey</em> = <code>&quot;robot&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>defaultRobotName</em> = <code>&quot;&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">using <a class="el" href="a00744.html#ad410c6443a64d561960fe4bd490154d9">mc_control::fsm::ContactSet</a> = typedef std::unordered_set&lt;<a class="el" href="a01366.html">Contact</a>, std::hash&lt;<a class="el" href="a01366.html">Contact</a>&gt;, std::equal_to&lt;<a class="el" href="a01366.html">Contact</a>&gt;, Eigen::aligned_allocator&lt;<a class="el" href="a01366.html">Contact</a>&gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Obtains a reference to a loaded robot from configuration (using robotName or robotIndex) </p>
-<ul>
-<li>If robotName is present, it is used to find the robot</li>
-<li>Otherwise, it'll attempt to use robotIndex and inform the user that its use is deprecated in favor of robotName</li>
-</ul>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Configuration from which to look for robotName/robotIndex </td></tr>
-    <tr><td class="paramname">robots</td><td>Loaded robots </td></tr>
-    <tr><td class="paramname">prefix</td><td>Prefix used for printint outputs to the user (deprecation warning, non-existing robot, etc). </td></tr>
-    <tr><td class="paramname">required</td><td><ul>
-<li>When true, throws if the robotName/robotIndex is invalid or missing.</li>
-<li>When false, returns the main robot if the robotName/robotIndex is invalid or missing.</li>
-</ul>
-</td></tr>
-    <tr><td class="paramname">robotIndexKey</td><td>Configuration key for robotIndex </td></tr>
-    <tr><td class="paramname">robotNameKey</td><td>Configuration key for robotName </td></tr>
-    <tr><td class="paramname">defaultRobotName</td><td>When empty, return the main robot name, otherwise use the specified name</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a01681.html">Robot</a> as configured by the robotName or robotIndex configuration entry. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="a01681.html#afa96f71ad7e9c085d622c4885c15f1bb">mc_rbdyn::Robot::grippers()</a>.</p>
-
 </div>
 </div>
-<a id="gaf9b711ec2baa5684b8f422d740464b5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf9b711ec2baa5684b8f422d740464b5f">&#9670;&nbsp;</a></span>robotIndexFromConfig()</h2>
+<a id="a4c42d903de4c4a1e5ad50c37bc2d547a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c42d903de4c4a1e5ad50c37bc2d547a">&#9670;&nbsp;</a></span>StatePtr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int <a class="el" href="a03346.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> mc_rbdyn::robotIndexFromConfig </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01757.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01721.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
-          <td class="paramname"><em>robots</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>prefix</em> = <code>&quot;&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>required</em> = <code>false</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>robotIndexKey</em> = <code>&quot;robotIndex&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>robotNameKey</em> = <code>&quot;robot&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>defaultRobotName</em> = <code>&quot;&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">using <a class="el" href="a00744.html#a4c42d903de4c4a1e5ad50c37bc2d547a">mc_control::fsm::StatePtr</a> = typedef std::shared_ptr&lt;<a class="el" href="a01390.html">State</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Helper to obtain the robot index from configuration. </p>
-<dl class="section note"><dt>Note</dt><dd>This function will be removed when transitioning to TVM. To facilitate the transition from index-based to named-based robots, this function can be deprecated to help with the transition.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd>const <a class="el" href="a01681.html">mc_rbdyn::Robot</a> &amp; <a class="el" href="a00744.html#ga70b316b2f0c0caf547e160e74c2a029d" title="Obtains a reference to a loaded robot from configuration (using robotName or robotIndex) ...">robotFromConfig</a>(const <a class="el" href="a01757.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> &amp; config, const <a class="el" href="a01721.html">mc_rbdyn::Robots</a> &amp; robots, const std::string &amp; prefix, bool required); </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="a01681.html#afa96f71ad7e9c085d622c4885c15f1bb">mc_rbdyn::Robot::grippers()</a>.</p>
-
 </div>
 </div>
-<a id="ga40325ac769295d23f270976eead26245"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga40325ac769295d23f270976eead26245">&#9670;&nbsp;</a></span>robotNameFromConfig()</h2>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a2deb94750a61f8f86801bd02f4149d5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2deb94750a61f8f86801bd02f4149d5e">&#9670;&nbsp;</a></span>AddRemoveContactStateImpl</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string <a class="el" href="a03346.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> mc_rbdyn::robotNameFromConfig </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a01757.html">mc_rtc::Configuration</a> &amp;&#160;</td>
-          <td class="paramname"><em>config</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a01721.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
-          <td class="paramname"><em>robots</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>prefix</em> = <code>&quot;&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>required</em> = <code>false</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>robotIndexKey</em> = <code>&quot;robotIndex&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>robotNameKey</em> = <code>&quot;robot&quot;</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>defaultRobotName</em> = <code>&quot;&quot;</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">struct <a class="el" href="a03358.html#a4cfcac728c1786a9888c977f8b656ba2">MC_CONTROL_FSM_STATE_DLLAPI</a> mc_control::fsm::AddRemoveContactStateImpl</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Helper to obtain the robot name from configuration. </p>
-<dl class="section see"><dt>See also</dt><dd>const <a class="el" href="a01681.html">mc_rbdyn::Robot</a> &amp; <a class="el" href="a00744.html#ga70b316b2f0c0caf547e160e74c2a029d" title="Obtains a reference to a loaded robot from configuration (using robotName or robotIndex) ...">robotFromConfig</a>(const <a class="el" href="a01757.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> &amp; config, const <a class="el" href="a01721.html">mc_rbdyn::Robots</a> &amp; robots, const std::string &amp; prefix, bool required); </dd></dl>
+</div>
+</div>
+<a id="a3d06e24faff23eaa588f3820e74042b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d06e24faff23eaa588f3820e74042b7">&#9670;&nbsp;</a></span>Controller</h2>
 
-<p class="reference">Referenced by <a class="el" href="a01681.html#afa96f71ad7e9c085d622c4885c15f1bb">mc_rbdyn::Robot::grippers()</a>.</p>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="a03355.html#abb5c53c99c37c6ca870d1838f76228ef">MC_CONTROL_FSM_DLLAPI</a> <a class="el" href="a01374.html">mc_control::fsm::Controller</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -314,7 +216,8 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Oct 10 2020 04:20:34 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00743.html">mc_control</a></li><li class="navelem"><a class="el" href="a00744.html">fsm</a></li>
+    <li class="footer">Generated on Mon Oct 12 2020 05:03:50 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

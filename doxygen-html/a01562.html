@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>Member List</title>
+<title>mc_observers::ObserverPipeline::PipelineObserver Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -51,7 +51,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('a01565.html','');});
+$(document).ready(function(){initNavTree('a01562.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -69,65 +69,467 @@ $(document).ready(function(){initNavTree('a01565.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
+<a href="a01559.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rbdyn::BodySensor Member List</div>  </div>
+<div class="title">mc_observers::ObserverPipeline::PipelineObserver Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="a01565.html">mc_rbdyn::BodySensor</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#a3fd7e69c281f765b383df5c8adfcc69e">acceleration</a>() const</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#a1632edbff87a11e1210cf34cfbf6b884">acceleration</a>(const Eigen::Vector3d &amp;acceleration)</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#a57035ac9c86e2d085cce10e3013b2a5d">angularAcceleration</a>() const</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#aabbebc2c66352f66de68032c25bdaa1a">angularAcceleration</a>(const Eigen::Vector3d &amp;angular_acceleration)</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#a0a4ae01169db62588ed207fa0b60b117">angularVelocity</a>() const</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#aaf978a01b2013293156e3a825b58f868">angularVelocity</a>(const Eigen::Vector3d &amp;angular_velocity)</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#a0ccd7feb3cb52abec8d65b3da9df4989">BodySensor</a>()</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#a44f050d481291a6015f3a5423e5098fe">BodySensor</a>(const std::string &amp;name, const std::string &amp;bodyName, const sva::PTransformd &amp;X_b_s)</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#a53b8def2da6127d7a84f7e5488d5350e">BodySensor</a>(const BodySensor &amp;bs)</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#a481adcb82e3dac378ba4c1bd0fee37d4">BodySensor</a>(BodySensor &amp;&amp;)=default</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#a636b6a07fb613352e458b6636fcf240f">clone</a>() const override</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01609.html#aac4fc1405587e64b75f2b8b7e81769d5">Device</a>(const std::string &amp;name)</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#ab03a19828b8a5e670beb832a18e42281">Device</a>(const std::string &amp;name, const std::string &amp;parent, const sva::PTransformd &amp;X_p_s)</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01609.html#a10e51518c0cd7afd26b71fa6d39ae80d">Device</a>(const Device &amp;)=delete</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#a5ef29dded30b518781405cde1b243089">Device</a>(Device &amp;&amp;)=default</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#a61147130274da6eda00b8d5a1ec0e5e7">linearAcceleration</a>() const</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#af860930bcdb938be5d229fa702b4bf0b">linearAcceleration</a>(const Eigen::Vector3d &amp;linear_acceleration)</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#ad01dc341ccff4cab51488c3cbffe21ee">linearVelocity</a>() const</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#a0df07b5cdfd86d18be2227182bb2aec2">linearVelocity</a>(const Eigen::Vector3d &amp;linear_velocity)</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01609.html#ac7f03a01fbf81e9e65c595e06c8db3a7">name</a>() const</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#abf31b34d57b3746dd96a745d67b5dbde">name_</a></td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#a464df9c5722e155018cebbb60edbbe1a">operator=</a>(const BodySensor &amp;bs)</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#ac39771d679356af14ab9b5e8a738bfbb">operator=</a>(BodySensor &amp;&amp;)=default</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01609.html#acb0d4de20d18c168d3069f170dd568f5">mc_rbdyn::Device::operator=</a>(const Device &amp;)=delete</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#a6ed916e8d88fd2032b790ab143ac7c13">mc_rbdyn::Device::operator=</a>(Device &amp;&amp;)=default</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#abcf42c2151733e3ef80c9594cb37a43a">orientation</a>() const</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#a9544ac0b6bb997b65db638bf52b2d5a3">orientation</a>(const Eigen::Quaterniond &amp;orientation)</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01609.html#aa4fa7c2fd9c533abc6e1bd965f128650">parent</a>() const</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#aa195d74e93e262d231b44efaf6217758">parent</a>(const std::string &amp;p)</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01609.html#aa24ec57cfee577ff0e85317ff4588c98">parent_</a></td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#ab5d6323b65ec6e712804d0c8590c8b55">parentBody</a>() const</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#a2be6a3b9c958d75d4c4310418356e014">position</a>() const</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01565.html#a644c0b250aaa8890d6b8f9ea26f2afb6">position</a>(const Eigen::Vector3d &amp;position)</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01609.html#a5f2b9cec0aafca49e350696f9fcc2cf5">type</a>() const</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#a3b2069f13010466c01739606cd39d1a6">type_</a></td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01609.html#a0f7c7a08133ec941b3cb8d12dacee6b3">X_0_d</a>(const mc_rbdyn::Robot &amp;robot) const</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#a89cf1a897146d487c4f2c9c915ff3ec5">X_0_s</a>(const mc_rbdyn::Robot &amp;robot) const</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#adb95b5d1ba5be5b51912cfc058f2371d">X_b_s</a>() const</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#af2b47d128a8964d8fe32f6c9279e816f">X_p_d</a>() const</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01609.html#aa4c6653e8ee6aed277bfbd96e1410b6a">X_p_d</a>(const sva::PTransformd &amp;pt)</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#a018981488a410e62be4605726f953507">X_p_s</a>() const</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01609.html#a9c69d16bdaed36b31375b419cdcddc0b">X_p_s</a>(const sva::PTransformd &amp;pt)</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#a6a5a93f9a1e463e41da680695aca29c7">X_p_s_</a></td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="a01565.html#ab9ffa63a5396c7eb000ea7fbf716d086">~BodySensor</a>() noexcept override</td><td class="entry"><a class="el" href="a01565.html">mc_rbdyn::BodySensor</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="a01609.html#a9ef17bdaf954ee5a88ea1673ef94a625">~Device</a>() noexcept=default</td><td class="entry"><a class="el" href="a01609.html">mc_rbdyn::Device</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-</table></div><!-- contents -->
+<p>Holds an observer and its configuration within the <a class="el" href="a01558.html" title="State observation pipeline. ">ObserverPipeline</a>.  
+ <a href="a01562.html#details">More...</a></p>
+
+<p><code>#include &lt;mc_observers/ObserverPipeline.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a218308b169684bc796e4f5d79a71ca2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#a218308b169684bc796e4f5d79a71ca2c">PipelineObserver</a> (const <a class="el" href="a00763.html#a45c5f50ee1e5bcc4959faef24b334643">mc_observers::ObserverPtr</a> &amp;<a class="el" href="a01562.html#a8b5116125ebbfdd3c6bed1158847b056">observer</a>, const <a class="el" href="a01766.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="separator:a218308b169684bc796e4f5d79a71ca2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b5116125ebbfdd3c6bed1158847b056"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a01550.html">Observer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#a8b5116125ebbfdd3c6bed1158847b056">observer</a> () const</td></tr>
+<tr class="separator:a8b5116125ebbfdd3c6bed1158847b056"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9b4cb7eccc20c8924dfaec86798850c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01550.html">Observer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#ae9b4cb7eccc20c8924dfaec86798850c">observer</a> ()</td></tr>
+<tr class="separator:ae9b4cb7eccc20c8924dfaec86798850c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbbfb1e055606ef060c54b30f9f9b79f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:afbbfb1e055606ef060c54b30f9f9b79f"><td class="memTemplItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a01562.html#afbbfb1e055606ef060c54b30f9f9b79f">observer</a> () const</td></tr>
+<tr class="memdesc:afbbfb1e055606ef060c54b30f9f9b79f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a an observer of type T.  <a href="#afbbfb1e055606ef060c54b30f9f9b79f">More...</a><br /></td></tr>
+<tr class="separator:afbbfb1e055606ef060c54b30f9f9b79f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75b504dd824f30da82b9fb8f1fcb4e8a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a75b504dd824f30da82b9fb8f1fcb4e8a"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a01562.html#a75b504dd824f30da82b9fb8f1fcb4e8a">observer</a> ()</td></tr>
+<tr class="separator:a75b504dd824f30da82b9fb8f1fcb4e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c119c96b39dee2e85bf5b0291c6193e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#a2c119c96b39dee2e85bf5b0291c6193e">update</a> () const</td></tr>
+<tr class="separator:a2c119c96b39dee2e85bf5b0291c6193e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a442ac1cccd63740eb0e976812a6cdfbe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#a442ac1cccd63740eb0e976812a6cdfbe">log</a> () const</td></tr>
+<tr class="separator:a442ac1cccd63740eb0e976812a6cdfbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf6f7a7b32f8bc480a5e11e72d0b11cd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#adf6f7a7b32f8bc480a5e11e72d0b11cd">gui</a> () const</td></tr>
+<tr class="separator:adf6f7a7b32f8bc480a5e11e72d0b11cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29f551d713f3917d48fb0da35b6eddd4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#a29f551d713f3917d48fb0da35b6eddd4">success</a> () const</td></tr>
+<tr class="memdesc:a29f551d713f3917d48fb0da35b6eddd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the last call to this observer succeeded.  <a href="#a29f551d713f3917d48fb0da35b6eddd4">More...</a><br /></td></tr>
+<tr class="separator:a29f551d713f3917d48fb0da35b6eddd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ab5b904d544fd762a5f4dd842af686423"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00763.html#a45c5f50ee1e5bcc4959faef24b334643">ObserverPtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#ab5b904d544fd762a5f4dd842af686423">observer_</a> = nullptr</td></tr>
+<tr class="separator:ab5b904d544fd762a5f4dd842af686423"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3d9811b5cc8fe04066e150cbd6a4386"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#ab3d9811b5cc8fe04066e150cbd6a4386">update_</a> = true</td></tr>
+<tr class="separator:ab3d9811b5cc8fe04066e150cbd6a4386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba73be3150abc3f17e20c9f6d638ae19"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#aba73be3150abc3f17e20c9f6d638ae19">log_</a> = true</td></tr>
+<tr class="separator:aba73be3150abc3f17e20c9f6d638ae19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a048f4bde5058022caab03485c8047db8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#a048f4bde5058022caab03485c8047db8">gui_</a> = true</td></tr>
+<tr class="separator:a048f4bde5058022caab03485c8047db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1fa721bb4f40943cd1f0d798674f9fb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#ab1fa721bb4f40943cd1f0d798674f9fb">success_</a> = true</td></tr>
+<tr class="separator:ab1fa721bb4f40943cd1f0d798674f9fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a1bf2b5490fc8313b8f9e50a52fbc6b73"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01562.html#a1bf2b5490fc8313b8f9e50a52fbc6b73">ObserverPipeline</a></td></tr>
+<tr class="separator:a1bf2b5490fc8313b8f9e50a52fbc6b73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Holds an observer and its configuration within the <a class="el" href="a01558.html" title="State observation pipeline. ">ObserverPipeline</a>. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a218308b169684bc796e4f5d79a71ca2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a218308b169684bc796e4f5d79a71ca2c">&#9670;&nbsp;</a></span>PipelineObserver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_observers::ObserverPipeline::PipelineObserver::PipelineObserver </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00763.html#a45c5f50ee1e5bcc4959faef24b334643">mc_observers::ObserverPtr</a> &amp;&#160;</td>
+          <td class="paramname"><em>observer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01766.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="adf6f7a7b32f8bc480a5e11e72d0b11cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf6f7a7b32f8bc480a5e11e72d0b11cd">&#9670;&nbsp;</a></span>gui()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_observers::ObserverPipeline::PipelineObserver::gui </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a442ac1cccd63740eb0e976812a6cdfbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a442ac1cccd63740eb0e976812a6cdfbe">&#9670;&nbsp;</a></span>log()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_observers::ObserverPipeline::PipelineObserver::log </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8b5116125ebbfdd3c6bed1158847b056"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b5116125ebbfdd3c6bed1158847b056">&#9670;&nbsp;</a></span>observer() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a01550.html">Observer</a>&amp; mc_observers::ObserverPipeline::PipelineObserver::observer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae9b4cb7eccc20c8924dfaec86798850c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9b4cb7eccc20c8924dfaec86798850c">&#9670;&nbsp;</a></span>observer() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01550.html">Observer</a>&amp; mc_observers::ObserverPipeline::PipelineObserver::observer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afbbfb1e055606ef060c54b30f9f9b79f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbbfb1e055606ef060c54b30f9f9b79f">&#9670;&nbsp;</a></span>observer() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const T&amp; mc_observers::ObserverPipeline::PipelineObserver::observer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get a an observer of type T. </p>
+<dl class="section note"><dt>Note</dt><dd>Requires the code from which this is called to link against the observer's library where type T is declared</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>type of the observer requested</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">If</td><td>the observer does not exist or does not have the right type </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a75b504dd824f30da82b9fb8f1fcb4e8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75b504dd824f30da82b9fb8f1fcb4e8a">&#9670;&nbsp;</a></span>observer() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T&amp; mc_observers::ObserverPipeline::PipelineObserver::observer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a29f551d713f3917d48fb0da35b6eddd4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29f551d713f3917d48fb0da35b6eddd4">&#9670;&nbsp;</a></span>success()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_observers::ObserverPipeline::PipelineObserver::success </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns whether the last call to this observer succeeded. </p>
+
+</div>
+</div>
+<a id="a2c119c96b39dee2e85bf5b0291c6193e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c119c96b39dee2e85bf5b0291c6193e">&#9670;&nbsp;</a></span>update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_observers::ObserverPipeline::PipelineObserver::update </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="a1bf2b5490fc8313b8f9e50a52fbc6b73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bf2b5490fc8313b8f9e50a52fbc6b73">&#9670;&nbsp;</a></span>ObserverPipeline</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend struct <a class="el" href="a01558.html">ObserverPipeline</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a048f4bde5058022caab03485c8047db8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a048f4bde5058022caab03485c8047db8">&#9670;&nbsp;</a></span>gui_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_observers::ObserverPipeline::PipelineObserver::gui_ = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aba73be3150abc3f17e20c9f6d638ae19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba73be3150abc3f17e20c9f6d638ae19">&#9670;&nbsp;</a></span>log_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_observers::ObserverPipeline::PipelineObserver::log_ = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab5b904d544fd762a5f4dd842af686423"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5b904d544fd762a5f4dd842af686423">&#9670;&nbsp;</a></span>observer_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00763.html#a45c5f50ee1e5bcc4959faef24b334643">ObserverPtr</a> mc_observers::ObserverPipeline::PipelineObserver::observer_ = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab1fa721bb4f40943cd1f0d798674f9fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1fa721bb4f40943cd1f0d798674f9fb">&#9670;&nbsp;</a></span>success_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_observers::ObserverPipeline::PipelineObserver::success_ = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab3d9811b5cc8fe04066e150cbd6a4386"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3d9811b5cc8fe04066e150cbd6a4386">&#9670;&nbsp;</a></span>update_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_observers::ObserverPipeline::PipelineObserver::update_ = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Oct 10 2020 04:20:34 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00763.html">mc_observers</a></li><li class="navelem"><a class="el" href="a01558.html">ObserverPipeline</a></li><li class="navelem"><a class="el" href="a01562.html">PipelineObserver</a></li>
+    <li class="footer">Generated on Mon Oct 12 2020 05:06:28 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>
