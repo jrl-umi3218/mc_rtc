@@ -89,6 +89,12 @@ struct SequenceInterpolator
           "SequenceInterpolator values must be ordered by strictly ascending time");
     }
     values_ = values;
+    prevIndex_ = 0;
+    if(values_.size() > 1)
+    {
+      nextIndex_ = 1;
+      intervalDuration_ = values_[nextIndex_].first - values_[prevIndex_].first;
+    }
   }
 
   /** Interpolation values */
@@ -143,7 +149,7 @@ struct SequenceInterpolator
     }
 
     /*
-     * Efficiently update interval index in three steps:
+     * Efficiently update interval index and associated cached values:
      * 1/ Check whether currTime is in the current interval
      * 2/ Check whether currTime is in the next interval
      * 3/ Perform a binary search
@@ -151,36 +157,39 @@ struct SequenceInterpolator
      * construction.
      */
     auto updateIndex = [this, currTime]() {
-      if(values_[prevIndex_].first < currTime && values_[prevIndex_ + 1].first >= currTime)
+      if(values_[prevIndex_].first < currTime && values_[nextIndex_].first >= currTime)
       {
         return;
       }
-      else if(values_[prevIndex_ + 1].first < currTime && values_[prevIndex_ + 2].first >= currTime)
+      else if(values_[nextIndex_].first < currTime && values_[nextIndex_ + 1].first >= currTime)
       {
         ++prevIndex_;
+        ++nextIndex_;
+        intervalDuration_ = values_[nextIndex_].first - values_[prevIndex_].first;
       }
       else
       {
-        // first element in values_ not less than currTime (greaor equal to currTime
-        auto it = std::lower_bound(std::begin(values_), std::end(values_), currTime,
-                                   [](const TimedValue & lhs, const double & rhs) { return lhs.first < rhs; });
-        prevIndex_ = static_cast<size_t>(it - values_.begin() - 1);
+        // first element in values_ with time greater or equal to currTime
+        auto nextIt = std::lower_bound(std::begin(values_), std::end(values_), currTime,
+                                       [](const TimedValue & lhs, const double & rhs) { return lhs.first < rhs; });
+        nextIndex_ = static_cast<size_t>(nextIt - values_.begin());
+        prevIndex_ = nextIndex_ - 1;
+        intervalDuration_ = values_[nextIndex_].first - values_[prevIndex_].first;
       }
     };
 
     updateIndex();
-    auto nextIndex = prevIndex_ + 1;
-    double intervalDuration = values_[nextIndex].first - values_[prevIndex_].first;
-
     const auto & prevTime = values_[prevIndex_].first;
-    return interpolator_(values_[prevIndex_].second, values_[nextIndex].second,
-                         (currTime - prevTime) / intervalDuration);
+    return interpolator_(values_[prevIndex_].second, values_[nextIndex_].second,
+                         (currTime - prevTime) / intervalDuration_);
   }
 
 protected:
   InterpolationFunction interpolator_; ///< Functor for computing the interpolated values
   TimedValueVector values_; ///< Interpolation values
   size_t prevIndex_ = 0; ///< Cache the previous index to optimize lookup when used sequentially
+  size_t nextIndex_ = 0; ///< Cache the next index
+  double intervalDuration_ = 0; ///< Cache the duration of the current interval
 };
 
 } // namespace mc_trajectory
