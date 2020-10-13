@@ -19,8 +19,7 @@ contacts:
     r1Surface: RightFoot
     r2Surface: AllGround
 collisions:
-  - type: collision
-    useMinimal: true
+  - useMinimal: true
 states:
   TestContactsManipulation:
     base: HalfSitting
