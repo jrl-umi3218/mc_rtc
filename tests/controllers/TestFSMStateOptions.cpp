@@ -37,6 +37,7 @@ public:
     BOOST_REQUIRE(ret);
     if(iter_ == 0) // TestContactsManipulation
     {
+      BOOST_REQUIRE(executor_.state() == "TestContactsManipulation");
       // The AddContacts/RemoveContacts actions should have swapped the contacts
       BOOST_REQUIRE(!hasContact("LeftFoot"));
       BOOST_REQUIRE(!hasContact("RightFoot"));
@@ -45,8 +46,20 @@ public:
       dof(2) = 0.0;
       BOOST_REQUIRE(hasContact("RightFootCenter", 0.8, dof));
     }
-    if(iter_ == 1) // TestRemovePostureTask
+    if(iter_ == 1) // TestCollisionsManipulation
     {
+      BOOST_REQUIRE(executor_.state() == "TestCollisionsManipulation");
+      BOOST_REQUIRE(hasCollision("jvrc1", "ground", {"L_WRIST_Y_S", "ground", 0.05, 0.01, 0}));
+      BOOST_REQUIRE(!hasCollision("jvrc1", "jvrc1", {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0}));
+    }
+    else
+    {
+      BOOST_REQUIRE(!hasCollision("jvrc1", "ground", {"L_WRIST_Y_S", "ground", 0.05, 0.01, 0}));
+      BOOST_REQUIRE(hasCollision("jvrc1", "jvrc1", {"R_WRIST_Y_S", "R_HIP_Y_S", 0.05, 0.025, 0}));
+    }
+    if(iter_ == 2) // TestRemovePostureTask
+    {
+      BOOST_REQUIRE(executor_.state() == "TestRemovePostureTask");
       // AddContactsAfter/RemoveContactsAfter should have put the contacts back
       BOOST_REQUIRE(hasContact("LeftFoot"));
       BOOST_REQUIRE(hasContact("RightFoot"));
@@ -59,8 +72,9 @@ public:
     {
       BOOST_REQUIRE(getPostureTask("jvrc1")->inSolver());
     }
-    if(iter_ > 1) // TestConstraints
+    if(iter_ > 2) // TestConstraints
     {
+      BOOST_REQUIRE(executor_.state() == "TestConstraints");
       // There is now a constraint to set l_wrist speed to a constant
       auto bIndex = robot().bodyIndexByName("l_wrist");
       auto speed = robot().bodyVelW()[bIndex].vector();
@@ -98,6 +112,16 @@ public:
     }
     const auto & ref = contact(c);
     return ref.friction == c.friction && ref.dof == c.dof;
+  }
+
+  bool hasCollision(const std::string & r1, const std::string & r2, const mc_rbdyn::Collision & col)
+  {
+    if(!collision_constraints_.count({r1, r2}))
+    {
+      return false;
+    }
+    const auto & cols = collision_constraints_.at({r1, r2})->cols;
+    return std::find(cols.begin(), cols.end(), col) != cols.end();
   }
 
 private:
