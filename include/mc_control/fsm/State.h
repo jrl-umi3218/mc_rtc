@@ -9,6 +9,8 @@
 
 #include <mc_solver/ConstraintSet.h>
 
+#include <mc_tasks/MetaTask.h>
+
 #include <mc_rtc/Configuration.h>
 
 namespace mc_control
@@ -138,21 +140,37 @@ protected:
   virtual void teardown(Controller & ctl) = 0;
 
 protected:
+  /** AddContacts in the configuration */
   mc_rtc::Configuration add_contacts_config_;
+  /** RemoveContacts in the configuration */
   mc_rtc::Configuration remove_contacts_config_;
+  /** AddContactsAfter in the configuration */
   mc_rtc::Configuration add_contacts_after_config_;
+  /** RemoveContactsAfter in the configuration */
   mc_rtc::Configuration remove_contacts_after_config_;
+  /** AddCollisions in the configuration */
   mc_rtc::Configuration add_collisions_config_;
+  /** RemoveCollisions in the configuration */
   mc_rtc::Configuration remove_collisions_config_;
+  /** AddCollisionsAfter in the configuration */
   mc_rtc::Configuration add_collisions_after_config_;
+  /** RemoveCollisionsAfter in the configuration */
   mc_rtc::Configuration remove_collisions_after_config_;
+  /** constraints in the configuration */
   mc_rtc::Configuration constraints_config_;
+  /** tasks in the configuration */
+  mc_rtc::Configuration tasks_config_;
+  /** RemovePostureTask in the configuration */
   bool remove_posture_task_ = false;
+
+  /** Constraints managed by the state if any */
+  std::vector<mc_solver::ConstraintSetPtr> constraints_;
+  /** Tasks managed by the state if any */
+  std::vector<mc_tasks::MetaTaskPtr> tasks_;
 
 private:
   std::string name_ = "";
   std::string output_ = "";
-  std::vector<mc_solver::ConstraintSetPtr> constraints_;
 };
 
 using StatePtr = std::shared_ptr<State>;

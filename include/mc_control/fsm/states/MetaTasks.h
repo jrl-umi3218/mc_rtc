@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -107,12 +107,8 @@ struct MC_CONTROL_FSM_STATE_DLLAPI MetaTasksState : State
   void teardown(Controller &) override;
 
 protected:
-  /** Configuration for each of the state's tasks */
-  std::map<std::string, mc_rtc::Configuration> tasks_configs_;
   /** Completion criterias used to generate the state's output */
   std::vector<std::string> outputCrit_;
-  /** Tasks managed by the state */
-  std::vector<mc_tasks::MetaTaskPtr> tasks_;
   /** Completion criteria and related infomation */
   struct TaskCriteria
   {

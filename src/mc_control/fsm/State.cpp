@@ -8,6 +8,8 @@
 
 #include <mc_solver/ConstraintSetLoader.h>
 
+#include <mc_tasks/MetaTaskLoader.h>
+
 #include <mc_rbdyn/configuration_io.h>
 
 namespace mc_control
@@ -53,6 +55,10 @@ void State::configure_(const mc_rtc::Configuration & config)
   if(config.has("constraints"))
   {
     constraints_config_.load(config("constraints"));
+  }
+  if(config.has("tasks"))
+  {
+    tasks_config_.load(config("tasks"));
   }
   config("RemovePostureTask", remove_posture_task_);
   configure(config);
@@ -124,6 +130,21 @@ void State::start_(Controller & ctl)
       ctl.solver().addConstraintSet(*constraints_.back());
     }
   }
+  if(!tasks_config_.empty())
+  {
+    std::map<std::string, mc_rtc::Configuration> tasks = tasks_config_;
+    for(auto & t : tasks)
+    {
+      const auto & tName = t.first;
+      auto & tConfig = t.second;
+      if(!tConfig.has("name"))
+      {
+        tConfig.add("name", tName);
+      }
+      tasks_.push_back(mc_tasks::MetaTaskLoader::load(ctl.solver(), tConfig));
+      ctl.solver().addTask(tasks_.back());
+    }
+  }
   start(ctl);
 }
 
@@ -187,6 +208,10 @@ void State::teardown_(Controller & ctl)
   for(const auto & c : constraints_)
   {
     ctl.solver().removeConstraintSet(*c);
+  }
+  for(const auto & t : tasks_)
+  {
+    ctl.solver().removeTask(t);
   }
   teardown(ctl);
 }
