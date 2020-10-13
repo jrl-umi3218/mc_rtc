@@ -74,7 +74,8 @@ states:
   TestConstraints:
     base: HalfSitting
     constraints:
-      - type: boundedSpeed
+      boundedSpeed:
+        type: boundedSpeed
         robot: jvrc1
         constraints:
           - body: l_wrist

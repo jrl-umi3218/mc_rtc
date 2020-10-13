@@ -115,11 +115,12 @@ void State::start_(Controller & ctl)
   {
     ctl.solver().removeTask(ctl.getPostureTask(ctl.robot().name()));
   }
-  if(constraints_config_.size())
+  if(!constraints_config_.empty())
   {
-    for(const auto & c : constraints_config_)
+    std::map<std::string, mc_rtc::Configuration> constraints = constraints_config_;
+    for(const auto & c : constraints)
     {
-      constraints_.push_back(mc_solver::ConstraintSetLoader::load(ctl.solver(), c));
+      constraints_.push_back(mc_solver::ConstraintSetLoader::load(ctl.solver(), c.second));
       ctl.solver().addConstraintSet(*constraints_.back());
     }
   }
