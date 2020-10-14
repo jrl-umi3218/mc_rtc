@@ -10,6 +10,7 @@
 #include <mc_solver/ConstraintSet.h>
 
 #include <mc_tasks/MetaTask.h>
+#include <mc_tasks/PostureTask.h>
 
 #include <mc_rtc/Configuration.h>
 
@@ -161,12 +162,14 @@ protected:
   /** tasks in the configuration */
   mc_rtc::Configuration tasks_config_;
   /** RemovePostureTask in the configuration */
-  bool remove_posture_task_ = false;
+  mc_rtc::Configuration remove_posture_task_;
 
   /** Constraints managed by the state if any */
   std::vector<mc_solver::ConstraintSetPtr> constraints_;
   /** Tasks managed by the state if any */
   std::vector<mc_tasks::MetaTaskPtr> tasks_;
+  /** Posture tasks that were removed by this state */
+  std::vector<mc_tasks::PostureTaskPtr> postures_;
 
 private:
   std::string name_ = "";

@@ -60,7 +60,10 @@ void State::configure_(const mc_rtc::Configuration & config)
   {
     tasks_config_.load(config("tasks"));
   }
-  config("RemovePostureTask", remove_posture_task_);
+  if(config.has("RemovePostureTask"))
+  {
+    remove_posture_task_.load(config("RemovePostureTask"));
+  }
   configure(config);
 }
 
@@ -117,9 +120,38 @@ void State::start_(Controller & ctl)
       ctl.addCollisions(r1, r2, collisions);
     }
   }
-  if(remove_posture_task_)
+  if(!remove_posture_task_.empty())
   {
-    ctl.solver().removeTask(ctl.getPostureTask(ctl.robot().name()));
+    const auto & keys = remove_posture_task_.keys();
+    if(keys.empty())
+    {
+      bool remove = remove_posture_task_;
+      if(remove)
+      {
+        for(const auto & robot : ctl.robots())
+        {
+          auto pt = ctl.getPostureTask(robot.name());
+          if(pt)
+          {
+            ctl.solver().removeTask(pt);
+            postures_.push_back(pt);
+          }
+        }
+      }
+    }
+    else
+    {
+      for(const auto & k : keys)
+      {
+        bool remove = remove_posture_task_(k);
+        auto pt = ctl.getPostureTask(k);
+        if(remove && pt)
+        {
+          ctl.solver().removeTask(pt);
+          postures_.push_back(pt);
+        }
+      }
+    }
   }
   if(!constraints_config_.empty())
   {
@@ -150,9 +182,9 @@ void State::start_(Controller & ctl)
 
 void State::teardown_(Controller & ctl)
 {
-  if(remove_posture_task_)
+  for(const auto & pt : postures_)
   {
-    ctl.solver().addTask(ctl.getPostureTask(ctl.robot().name()));
+    ctl.solver().addTask(pt);
   }
   if(remove_contacts_after_config_.size())
   {

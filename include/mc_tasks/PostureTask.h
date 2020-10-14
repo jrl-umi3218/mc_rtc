@@ -120,4 +120,6 @@ private:
   Eigen::VectorXd speed_;
 };
 
+using PostureTaskPtr = std::shared_ptr<PostureTask>;
+
 } // namespace mc_tasks
