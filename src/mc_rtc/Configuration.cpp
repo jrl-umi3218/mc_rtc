@@ -106,7 +106,7 @@ bool Configuration::empty() const
   {
     return value->ObjectEmpty();
   }
-  return true;
+  return value->IsNull();
 }
 
 size_t Configuration::Json::size() const
