@@ -585,7 +585,7 @@ void Configuration::load(const mc_rtc::Configuration & config)
 
   if(target.IsNull())
   {
-    auto & docFrom = *std::static_pointer_cast<internal::RapidJSONDocument>(config.v.doc_);
+    auto & docFrom = *static_cast<internal::RapidJSONDocument *>(config.v.value_);
     target.CopyFrom(docFrom, doc.GetAllocator());
   }
   else
@@ -625,7 +625,7 @@ void Configuration::load(const mc_rtc::Configuration & config)
     }
     else
     {
-      auto & docFrom = *std::static_pointer_cast<internal::RapidJSONDocument>(config.v.doc_);
+      auto & docFrom = *static_cast<internal::RapidJSONDocument *>(config.v.value_);
       target.SetNull();
       target.CopyFrom(docFrom, doc.GetAllocator());
     }
