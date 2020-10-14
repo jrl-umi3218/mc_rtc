@@ -12,6 +12,8 @@
 
 #include <mc_rtc/logging.h>
 
+#include <mc_tasks/CoMTask.h>
+
 #include <boost/test/unit_test.hpp>
 
 namespace mc_control
@@ -72,15 +74,20 @@ public:
     {
       BOOST_REQUIRE(getPostureTask("jvrc1")->inSolver());
     }
-    if(iter_ > 2) // TestConstraints
+    if(iter_ > 2) // TestConstraintsAndTasks
     {
-      BOOST_REQUIRE(executor_.state() == "TestConstraints");
+      BOOST_REQUIRE(executor_.state() == "TestConstraintsAndTasks");
       // There is now a constraint to set l_wrist speed to a constant
       auto bIndex = robot().bodyIndexByName("l_wrist");
       auto speed = robot().bodyVelW()[bIndex].vector();
       Eigen::Vector6d ref = Eigen::Vector6d::Zero();
       ref(5) = 0.001;
       BOOST_REQUIRE((speed - ref).norm() < 5e-4);
+      BOOST_REQUIRE(hasTask<mc_tasks::CoMTask>());
+    }
+    else
+    {
+      BOOST_REQUIRE(!hasTask<mc_tasks::CoMTask>());
     }
     iter_++;
     return ret;
@@ -122,6 +129,19 @@ public:
     }
     const auto & cols = collision_constraints_.at({r1, r2})->cols;
     return std::find(cols.begin(), cols.end(), col) != cols.end();
+  }
+
+  template<typename T>
+  bool hasTask()
+  {
+    for(const auto & t : solver().tasks())
+    {
+      if(dynamic_cast<const T *>(t) != nullptr)
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
 private:

@@ -71,7 +71,7 @@ states:
   TestRemovePostureTask:
     base: HalfSitting
     RemovePostureTask: true
-  TestConstraints:
+  TestConstraintsAndTasks:
     base: HalfSitting
     constraints:
       boundedSpeed:
@@ -81,7 +81,10 @@ states:
           - body: l_wrist
             dof: [1, 1, 1, 1, 1, 1]
             speed: [0, 0, 0, 0, 0, 0.001]
+    tasks:
+      CoM:
+        type: com
 transitions:
   - [TestContactsManipulation, OK, TestCollisionsManipulation, Auto]
   - [TestCollisionsManipulation, OK, TestRemovePostureTask, Auto]
-  - [TestRemovePostureTask, OK, TestConstraints, Auto]
+  - [TestRemovePostureTask, OK, TestConstraintsAndTasks, Auto]
