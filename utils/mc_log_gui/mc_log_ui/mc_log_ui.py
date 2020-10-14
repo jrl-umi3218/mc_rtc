@@ -51,7 +51,7 @@ def read_flat(f, tmp = False):
         return np.frombuffer(fd.read(size * ctypes.sizeof(ctypes.c_double)), np.double)
     def read_string_array(fd, size):
         return [ read_string(fd, read_size(fd)) for i in range(size) ]
-    data = Data()
+    data = {}
     with open(f, 'rb') as fd:
         nrEntries = read_size(fd)
         for i in range(nrEntries):
@@ -66,7 +66,7 @@ def read_flat(f, tmp = False):
     return data
 
 def read_csv(fpath, tmp = False):
-  data = Data()
+  data = {}
   string_entries = {}
   with open(fpath) as fd:
     reader = csv.DictReader(fd, delimiter=';')
@@ -980,7 +980,7 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.ui.tabWidget.currentWidget().activeCanvas.axesDialog()
 
   def load_csv(self, fpath):
-    self.data = read_log(fpath)
+    self.data = Data(read_log(fpath))
     self.data.data_updated.connect(self.update_data)
     i = 0
     while "qIn_{}".format(i) in self.data and "qOut_{}".format(i) in self.data:
