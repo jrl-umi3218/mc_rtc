@@ -960,6 +960,36 @@ BOOST_AUTO_TEST_CASE(TestLoadConfigurationInConfiguration)
   BOOST_REQUIRE(c1("o")("o") == ref_v);
 }
 
+BOOST_AUTO_TEST_CASE(TestNestedLoading)
+{
+  mc_rtc::Configuration c1;
+  c1.add("a", std::vector<int>{0, 1, 2, 3});
+  c1.add("i", 42);
+  {
+    auto nested = c1.add("in");
+    nested.add("value", 42.42);
+  }
+  mc_rtc::Configuration c2;
+  {
+    auto nested = c2.add("nested");
+    nested.add("b", true);
+  }
+  c1("in").load(c2("nested"));
+  BOOST_REQUIRE(c1("in").has("b"));
+  BOOST_REQUIRE(c1("in")("b") == true);
+  c1("in").load(c2("nested")("b"));
+  BOOST_REQUIRE(c1("in").keys().size() == 0);
+  BOOST_REQUIRE(c1("in").size() == 0);
+  BOOST_REQUIRE(c1("in") == true);
+  mc_rtc::Configuration c3;
+  c3.load(c2("nested")("b"));
+  BOOST_REQUIRE(c3 == true);
+  BOOST_CHECK_THROW(c3.add("nested"), mc_rtc::Configuration::Exception);
+  c1.load(c2("nested")("b"));
+  BOOST_REQUIRE(c1 == true);
+  BOOST_CHECK_THROW(c1.add("nested"), mc_rtc::Configuration::Exception);
+}
+
 BOOST_AUTO_TEST_CASE(TestConfigurartionRemove)
 {
   auto config = mc_rtc::Configuration::fromData(sampleConfig(false, true));
