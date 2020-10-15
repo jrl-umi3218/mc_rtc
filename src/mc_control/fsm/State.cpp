@@ -62,7 +62,13 @@ void State::configure_(const mc_rtc::Configuration & config)
   }
   if(config.has("RemovePostureTask"))
   {
+    mc_rtc::log::warning("[MC_RTC_DEPRECATED][{}] RemovePostureTask is deprecated, use DisablePostureTask instead",
+                         name());
     remove_posture_task_.load(config("RemovePostureTask"));
+  }
+  if(config.has("DisablePostureTask"))
+  {
+    remove_posture_task_.load(config("DisablePostureTask"));
   }
   configure(config);
 }
@@ -122,8 +128,7 @@ void State::start_(Controller & ctl)
   }
   if(!remove_posture_task_.empty())
   {
-    const auto & keys = remove_posture_task_.keys();
-    if(keys.empty())
+    if(!remove_posture_task_.size())
     {
       bool remove = remove_posture_task_;
       if(remove)
@@ -141,11 +146,11 @@ void State::start_(Controller & ctl)
     }
     else
     {
-      for(const auto & k : keys)
+      std::vector<std::string> robots = remove_posture_task_;
+      for(const auto & k : robots)
       {
-        bool remove = remove_posture_task_(k);
         auto pt = ctl.getPostureTask(k);
-        if(remove && pt)
+        if(pt)
         {
           ctl.solver().removeTask(pt);
           postures_.push_back(pt);
