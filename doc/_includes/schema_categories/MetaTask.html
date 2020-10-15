@@ -1,0 +1,28 @@
+<p>These objects represent tasks that can be added to the solver.</p>
+
+<p>They can be loaded from C++ with the following code:</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+{% highlight cpp %}
+// Access the meta task loader
+#include <mc_tasks/MetaTaskLoader.h>
+
+// Get the task from a JSON file
+auto task = mc_tasks::MetaTaskLoader::load(solver(), "/my/path/task.json");
+
+// Get the task from a YAML file
+auto task = mc_tasks::MetaTaskLoader::load(solver(), "/my/path/task.yaml");
+
+// Actually you can get the task from any mc_rtc::Configuration entry
+auto task = mc_tasks::MetaTaskLoader::load(solver(), config("task"));
+
+// In all the cases above, task is an std::shared_ptr<mc_tasks::MetaTask>
+// but you can retrieve a more precise type, mc_rtc will check that the
+// task that was retrieved from disk is compatible with the task you requested
+auto task = mc_tasks::MetaTaskLoader::load<mc_tasks::EndEffectorTask>(solver(), config("task"));
+{% endhighlight %}
+  </div>
+</div>
+
+<p>This page shows what data is expected for each task available in mc_rtc.</p>

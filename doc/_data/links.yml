@@ -24,3 +24,5 @@ Choreonoid:
   url: https://choreonoid.org/en/
 mc_rtc_data:
   url: https://github.com/jrl-umi3218/mc_rtc_data
+Eigen:
+  url: https://eigen.tuxfamily.org

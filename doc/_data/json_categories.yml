@@ -1,0 +1,20 @@
+- name: Eigen
+  desc: <p>Objects from the {% link Eigen %} library.</p><p>Data is always stored in row-major order.</p>
+- name: SpaceVecAlg
+  desc: <p>Objects from the {% link SpaceVecAlg %} library.</p>
+- name: RBDyn
+  desc: <p>Objects from the {% link RBDyn %} library.</p>
+- name: Tasks
+  desc: <p>Objects from the {% link Tasks %} library.</p>
+- name: GUI
+  desc: <p>Objects used in <a href="{{site.baseurl}}/tutorials/usage/gui.html">mc_rtc GUI description</a>.</p>
+- name: mc_rbdyn
+  desc: <p>Objects from mc_rbdyn. Used in various places in the framework.</p>
+- name: ConstraintSet
+  desc: "{% include schema_categories/ConstraintSet.html %}"
+- name: MetaTask
+  desc: "{% include schema_categories/MetaTask.html %}"
+- name: State
+  desc: <p>Base states available in mc_rtc.</p><p>This page shows which options are available for each of these states.</p>
+- name: Observers
+  desc: <p>Available observers in mc_rtc.</p><p>This page shows the available options for each observer implementation.</p><p>Please refer to the <a href="{{site.baseurl}}/tutorials/recipes/observers.html">State Observation Pipelines</a> tutorial for details on the observer pipeline configuration.</p>
