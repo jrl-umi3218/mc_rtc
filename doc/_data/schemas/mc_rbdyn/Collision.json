@@ -5,9 +5,9 @@
   {
     "body1": { "type": "string", "description": "First convex body used, wildcards can be used" },
     "body2": { "type": "string", "description": "Second convex body used, wildcards can be used" },
-    "iDist": { "type": "number", "description": "Interaction distance" },
-    "sDist": { "type": "number", "description": "Safety distance" },
-    "damping": { "type": "number", "description": "Damping, 0 enables automatic computation" }
+    "iDist": { "type": "number", "default": 0.05, "description": "Interaction distance" },
+    "sDist": { "type": "number", "default": 0.01, "description": "Safety distance" },
+    "damping": { "type": "number", "default": 0.0, "description": "Damping, 0 enables automatic computation" }
   },
   "required": ["body1", "body2", "iDist", "sDist", "damping"],
   "additionalProperties": false
