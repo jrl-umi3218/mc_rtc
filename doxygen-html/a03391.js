@@ -1,9 +1,9 @@
 var a03391 =
 [
-    [ "MC_TASKS_DLLAPI", "a03391.html#a54b6b62a72f51c6877ce5f6855eae009", null ],
-    [ "MC_TASKS_DLLEXPORT", "a03391.html#a6f58d55d50caa4b695e9ae0db68a84e3", null ],
-    [ "MC_TASKS_DLLIMPORT", "a03391.html#a1ca51f7fba6e50050fa71ee00906116e", null ],
-    [ "MC_TASKS_DLLLOCAL", "a03391.html#a88d2b44a0ab87ccac98cac02f5bc0220", null ],
-    [ "MC_TASKS_LOCAL", "a03391.html#a6fad7ce5639c7536227a82e08f06c0e5", null ],
-    [ "MC_TASKS_VERSION", "a03391.html#a47ff1b35f32c422f53ffee9a1a5d2de4", null ]
+    [ "MC_RTC_GUI_DLLAPI", "a03391.html#a0154310cb006fb3f499c367ca3e861a8", null ],
+    [ "MC_RTC_GUI_DLLEXPORT", "a03391.html#a14ad7305617c58803f8ce0c7541bb508", null ],
+    [ "MC_RTC_GUI_DLLIMPORT", "a03391.html#a9365441c6f8e61e9f8c39bb75c617b43", null ],
+    [ "MC_RTC_GUI_DLLLOCAL", "a03391.html#a0480d192b9c9ae9d9d88bf17771118b2", null ],
+    [ "MC_RTC_GUI_LOCAL", "a03391.html#aa7fe5afca945e356848d1a6b156528fa", null ],
+    [ "MC_RTC_GUI_VERSION", "a03391.html#a3c227096c22154059e88b20b7cd202bc", null ]
 ];

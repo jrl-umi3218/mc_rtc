@@ -1,16 +1,9 @@
 var a03400 =
 [
-    [ "ConfigurationLoader", "a01742.html", "a01742" ],
-    [ "ConfigurationLoader< void >", "a01746.html", "a01746" ],
-    [ "_has_configuration_load_object", "a01750.html", "a01750" ],
-    [ "has_configuration_load_object", "a01754.html", null ],
-    [ "_has_configuration_save_object", "a01758.html", "a01758" ],
-    [ "has_configuration_save_object", "a01762.html", null ],
-    [ "Configuration", "a01766.html", "a01766" ],
-    [ "Exception", "a01774.html", "a01774" ],
-    [ "ConfigurationArrayIterator", "a01778.html", "a01778" ],
-    [ "formatter< mc_rtc::Configuration >", "a01782.html", "a01782" ],
-    [ "operator<<", "a03400.html#a24679a5c44564f7b7426cca4533300bf", null ],
-    [ "Configuration", "a03400.html#a9b620c9005d103e65363b518ba6dca23", null ],
-    [ "ConfigurationArrayIterator", "a03400.html#a781ea11d3b3f97742187d5910b74edfd", null ]
+    [ "MC_TRAJECTORY_DLLAPI", "a03400.html#adff5a6c1e965ae6fdc756a2c5187f9c9", null ],
+    [ "MC_TRAJECTORY_DLLEXPORT", "a03400.html#a531302b8554807c8aca0fcf931c490f3", null ],
+    [ "MC_TRAJECTORY_DLLIMPORT", "a03400.html#a6dc4322483ff7548be6769a3e2d2ae54", null ],
+    [ "MC_TRAJECTORY_DLLLOCAL", "a03400.html#aa1a1e2ac0d81d28e134d91b52199d1e1", null ],
+    [ "MC_TRAJECTORY_LOCAL", "a03400.html#a4d2a4bf4b090297efb1f6dfa124b52e2", null ],
+    [ "MC_TRAJECTORY_VERSION", "a03400.html#acd63e2a4854ce5d3f1eec2e5f2cf7498", null ]
 ];

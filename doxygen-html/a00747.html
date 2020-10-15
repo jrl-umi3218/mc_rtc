@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_tasks::lipm_stabilizer Namespace Reference</title>
+<title>Helpers to obtain robot index/name from configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,127 +70,241 @@ $(document).ready(function(){initNavTree('a00747.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">mc_tasks::lipm_stabilizer Namespace Reference</div>  </div>
+<div class="title">Helpers to obtain robot index/name from configuration</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>The intent of these functions is:  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00776"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00776.html">internal</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02358.html">ContactDescription</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02366.html">StabilizerTask</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Walking stabilization based on linear inverted pendulum tracking.  <a href="a02366.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02374.html">ZMPCC</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ZMP Compensation Control (<a class="el" href="a02374.html" title="ZMP Compensation Control (ZMPCC) ">ZMPCC</a>)  <a href="a02374.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:af644950088ef46324f20a7214021a824"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html#af644950088ef46324f20a7214021a824">HrepXd</a> = std::pair&lt; Eigen::MatrixXd, Eigen::VectorXd &gt;</td></tr>
-<tr class="separator:af644950088ef46324f20a7214021a824"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ca092c9a2df0b34b399ff21a8bc938f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html#a4ca092c9a2df0b34b399ff21a8bc938f">ContactDescriptionVector</a> = std::vector&lt; <a class="el" href="a02358.html">ContactDescription</a>, Eigen::aligned_allocator&lt; <a class="el" href="a02358.html">ContactDescription</a> &gt; &gt;</td></tr>
-<tr class="separator:a4ca092c9a2df0b34b399ff21a8bc938f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61ba26bc4aeec5031be001df091b4b1a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html#a61ba26bc4aeec5031be001df091b4b1a">ZMPCCConfiguration</a> = <a class="el" href="a01646.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a></td></tr>
-<tr class="separator:a61ba26bc4aeec5031be001df091b4b1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e6d2236262d21dcc7ab589b6d6844ba"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html#a8e6d2236262d21dcc7ab589b6d6844ba">StabilizerConfiguration</a> = <a class="el" href="a01638.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a></td></tr>
-<tr class="separator:a8e6d2236262d21dcc7ab589b6d6844ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6237f0269786bf01feaf316a6259b712"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html#a6237f0269786bf01feaf316a6259b712">FDQPWeights</a> = <a class="el" href="a01622.html">mc_rbdyn::lipm_stabilizer::FDQPWeights</a></td></tr>
-<tr class="separator:a6237f0269786bf01feaf316a6259b712"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f51d2adfa451cd98a1b3f3b2ed68ee4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html#a5f51d2adfa451cd98a1b3f3b2ed68ee4">SafetyThresholds</a> = <a class="el" href="a01630.html">mc_rbdyn::lipm_stabilizer::SafetyThresholds</a></td></tr>
-<tr class="separator:a5f51d2adfa451cd98a1b3f3b2ed68ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga70b316b2f0c0caf547e160e74c2a029d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03373.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> const <a class="el" href="a01684.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html#ga70b316b2f0c0caf547e160e74c2a029d">mc_rbdyn::robotFromConfig</a> (const <a class="el" href="a01760.html">mc_rtc::Configuration</a> &amp;config, const <a class="el" href="a01724.html">mc_rbdyn::Robots</a> &amp;robots, const std::string &amp;prefix, bool required=false, const std::string &amp;robotIndexKey=&quot;robotIndex&quot;, const std::string &amp;robotNameKey=&quot;robot&quot;, const std::string &amp;defaultRobotName=&quot;&quot;)</td></tr>
+<tr class="memdesc:ga70b316b2f0c0caf547e160e74c2a029d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains a reference to a loaded robot from configuration (using robotName or robotIndex)  <a href="a00747.html#ga70b316b2f0c0caf547e160e74c2a029d">More...</a><br /></td></tr>
+<tr class="separator:ga70b316b2f0c0caf547e160e74c2a029d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40325ac769295d23f270976eead26245"><td class="memItemLeft" align="right" valign="top">std::string <a class="el" href="a03373.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html#ga40325ac769295d23f270976eead26245">mc_rbdyn::robotNameFromConfig</a> (const <a class="el" href="a01760.html">mc_rtc::Configuration</a> &amp;config, const <a class="el" href="a01724.html">mc_rbdyn::Robots</a> &amp;robots, const std::string &amp;prefix=&quot;&quot;, bool required=false, const std::string &amp;robotIndexKey=&quot;robotIndex&quot;, const std::string &amp;robotNameKey=&quot;robot&quot;, const std::string &amp;defaultRobotName=&quot;&quot;)</td></tr>
+<tr class="memdesc:ga40325ac769295d23f270976eead26245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to obtain the robot name from configuration.  <a href="a00747.html#ga40325ac769295d23f270976eead26245">More...</a><br /></td></tr>
+<tr class="separator:ga40325ac769295d23f270976eead26245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9b711ec2baa5684b8f422d740464b5f"><td class="memItemLeft" align="right" valign="top">unsigned int <a class="el" href="a03373.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html#gaf9b711ec2baa5684b8f422d740464b5f">mc_rbdyn::robotIndexFromConfig</a> (const <a class="el" href="a01760.html">mc_rtc::Configuration</a> &amp;config, const <a class="el" href="a01724.html">mc_rbdyn::Robots</a> &amp;robots, const std::string &amp;prefix=&quot;&quot;, bool required=false, const std::string &amp;robotIndexKey=&quot;robotIndex&quot;, const std::string &amp;robotNameKey=&quot;robot&quot;, const std::string &amp;defaultRobotName=&quot;&quot;)</td></tr>
+<tr class="memdesc:gaf9b711ec2baa5684b8f422d740464b5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to obtain the robot index from configuration.  <a href="a00747.html#gaf9b711ec2baa5684b8f422d740464b5f">More...</a><br /></td></tr>
+<tr class="separator:gaf9b711ec2baa5684b8f422d740464b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a4ca092c9a2df0b34b399ff21a8bc938f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ca092c9a2df0b34b399ff21a8bc938f">&#9670;&nbsp;</a></span>ContactDescriptionVector</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>The intent of these functions is: </p>
+<ul>
+<li>to facilitate supporting managing robots by name in the FSM, while maintaining compatibility with the existing FSMs using robotIndex.</li>
+<li>to facilitate the upcoming transition from Tasks (requires robotIndex) to TVM (using only robotName). When the transition occurs, robotIndexFromConfig can be deprecated, and its uses be replaced with robotNameFromConfig instead. </li>
+</ul>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ga70b316b2f0c0caf547e160e74c2a029d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga70b316b2f0c0caf547e160e74c2a029d">&#9670;&nbsp;</a></span>robotFromConfig()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00747.html#a4ca092c9a2df0b34b399ff21a8bc938f">mc_tasks::lipm_stabilizer::ContactDescriptionVector</a> = typedef std::vector&lt;<a class="el" href="a02358.html">ContactDescription</a>, Eigen::aligned_allocator&lt;<a class="el" href="a02358.html">ContactDescription</a>&gt; &gt;</td>
+          <td class="memname"><a class="el" href="a03373.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> const <a class="el" href="a01684.html">mc_rbdyn::Robot</a>&amp; mc_rbdyn::robotFromConfig </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01760.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01724.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robots</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>prefix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>required</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>robotIndexKey</em> = <code>&quot;robotIndex&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>robotNameKey</em> = <code>&quot;robot&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>defaultRobotName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Obtains a reference to a loaded robot from configuration (using robotName or robotIndex) </p>
+<ul>
+<li>If robotName is present, it is used to find the robot</li>
+<li>Otherwise, it'll attempt to use robotIndex and inform the user that its use is deprecated in favor of robotName</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td>Configuration from which to look for robotName/robotIndex </td></tr>
+    <tr><td class="paramname">robots</td><td>Loaded robots </td></tr>
+    <tr><td class="paramname">prefix</td><td>Prefix used for printint outputs to the user (deprecation warning, non-existing robot, etc). </td></tr>
+    <tr><td class="paramname">required</td><td><ul>
+<li>When true, throws if the robotName/robotIndex is invalid or missing.</li>
+<li>When false, returns the main robot if the robotName/robotIndex is invalid or missing.</li>
+</ul>
+</td></tr>
+    <tr><td class="paramname">robotIndexKey</td><td>Configuration key for robotIndex </td></tr>
+    <tr><td class="paramname">robotNameKey</td><td>Configuration key for robotName </td></tr>
+    <tr><td class="paramname">defaultRobotName</td><td>When empty, return the main robot name, otherwise use the specified name</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a01684.html">Robot</a> as configured by the robotName or robotIndex configuration entry. </dd></dl>
+
+<p class="reference">Referenced by <a class="el" href="a01684.html#afa96f71ad7e9c085d622c4885c15f1bb">mc_rbdyn::Robot::grippers()</a>.</p>
+
 </div>
 </div>
-<a id="a6237f0269786bf01feaf316a6259b712"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6237f0269786bf01feaf316a6259b712">&#9670;&nbsp;</a></span>FDQPWeights</h2>
+<a id="gaf9b711ec2baa5684b8f422d740464b5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf9b711ec2baa5684b8f422d740464b5f">&#9670;&nbsp;</a></span>robotIndexFromConfig()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00747.html#a6237f0269786bf01feaf316a6259b712">mc_tasks::lipm_stabilizer::FDQPWeights</a> = typedef <a class="el" href="a01622.html">mc_rbdyn::lipm_stabilizer::FDQPWeights</a></td>
+          <td class="memname">unsigned int <a class="el" href="a03373.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> mc_rbdyn::robotIndexFromConfig </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01760.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01724.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robots</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>prefix</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>required</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>robotIndexKey</em> = <code>&quot;robotIndex&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>robotNameKey</em> = <code>&quot;robot&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>defaultRobotName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Helper to obtain the robot index from configuration. </p>
+<dl class="section note"><dt>Note</dt><dd>This function will be removed when transitioning to TVM. To facilitate the transition from index-based to named-based robots, this function can be deprecated to help with the transition.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>const <a class="el" href="a01684.html">mc_rbdyn::Robot</a> &amp; <a class="el" href="a00747.html#ga70b316b2f0c0caf547e160e74c2a029d" title="Obtains a reference to a loaded robot from configuration (using robotName or robotIndex) ...">robotFromConfig</a>(const <a class="el" href="a01760.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> &amp; config, const <a class="el" href="a01724.html">mc_rbdyn::Robots</a> &amp; robots, const std::string &amp; prefix, bool required); </dd></dl>
+
+<p class="reference">Referenced by <a class="el" href="a01684.html#afa96f71ad7e9c085d622c4885c15f1bb">mc_rbdyn::Robot::grippers()</a>.</p>
+
 </div>
 </div>
-<a id="af644950088ef46324f20a7214021a824"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af644950088ef46324f20a7214021a824">&#9670;&nbsp;</a></span>HrepXd</h2>
+<a id="ga40325ac769295d23f270976eead26245"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga40325ac769295d23f270976eead26245">&#9670;&nbsp;</a></span>robotNameFromConfig()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00747.html#af644950088ef46324f20a7214021a824">mc_tasks::lipm_stabilizer::HrepXd</a> = typedef std::pair&lt;Eigen::MatrixXd, Eigen::VectorXd&gt;</td>
+          <td class="memname">std::string <a class="el" href="a03373.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> mc_rbdyn::robotNameFromConfig </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01760.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5f51d2adfa451cd98a1b3f3b2ed68ee4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f51d2adfa451cd98a1b3f3b2ed68ee4">&#9670;&nbsp;</a></span>SafetyThresholds</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00747.html#a5f51d2adfa451cd98a1b3f3b2ed68ee4">mc_tasks::lipm_stabilizer::SafetyThresholds</a> = typedef <a class="el" href="a01630.html">mc_rbdyn::lipm_stabilizer::SafetyThresholds</a></td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a01724.html">mc_rbdyn::Robots</a> &amp;&#160;</td>
+          <td class="paramname"><em>robots</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8e6d2236262d21dcc7ab589b6d6844ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e6d2236262d21dcc7ab589b6d6844ba">&#9670;&nbsp;</a></span>StabilizerConfiguration</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00747.html#a8e6d2236262d21dcc7ab589b6d6844ba">mc_tasks::lipm_stabilizer::StabilizerConfiguration</a> = typedef <a class="el" href="a01638.html">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</a></td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>prefix</em> = <code>&quot;&quot;</code>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a61ba26bc4aeec5031be001df091b4b1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61ba26bc4aeec5031be001df091b4b1a">&#9670;&nbsp;</a></span>ZMPCCConfiguration</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00747.html#a61ba26bc4aeec5031be001df091b4b1a">mc_tasks::lipm_stabilizer::ZMPCCConfiguration</a> = typedef <a class="el" href="a01646.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a></td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>required</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>robotIndexKey</em> = <code>&quot;robotIndex&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>robotNameKey</em> = <code>&quot;robot&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>defaultRobotName</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Helper to obtain the robot name from configuration. </p>
+<dl class="section see"><dt>See also</dt><dd>const <a class="el" href="a01684.html">mc_rbdyn::Robot</a> &amp; <a class="el" href="a00747.html#ga70b316b2f0c0caf547e160e74c2a029d" title="Obtains a reference to a loaded robot from configuration (using robotName or robotIndex) ...">robotFromConfig</a>(const <a class="el" href="a01760.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> &amp; config, const <a class="el" href="a01724.html">mc_rbdyn::Robots</a> &amp; robots, const std::string &amp; prefix, bool required); </dd></dl>
+
+<p class="reference">Referenced by <a class="el" href="a01684.html#afa96f71ad7e9c085d622c4885c15f1bb">mc_rbdyn::Robot::grippers()</a>.</p>
 
 </div>
 </div>
@@ -200,8 +314,7 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00746.html">mc_tasks</a></li><li class="navelem"><a class="el" href="a00747.html">lipm_stabilizer</a></li>
-    <li class="footer">Generated on Wed Oct 14 2020 10:56:59 for mc_rtc by
+    <li class="footer">Generated on Thu Oct 15 2020 10:43:08 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

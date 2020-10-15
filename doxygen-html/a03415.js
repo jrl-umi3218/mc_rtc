@@ -1,7 +1,9 @@
 var a03415 =
 [
-    [ "Robot", "a01690.html", "a01690" ],
-    [ "robotFromConfig", "a03415.html#ga70b316b2f0c0caf547e160e74c2a029d", null ],
-    [ "robotIndexFromConfig", "a03415.html#gaf9b711ec2baa5684b8f422d740464b5f", null ],
-    [ "robotNameFromConfig", "a03415.html#ga40325ac769295d23f270976eead26245", null ]
+    [ "Contact", "a02372.html", "a02372" ],
+    [ "ContactDescription", "a02376.html", "a02376" ],
+    [ "ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "a02380.html", "a02380" ],
+    [ "ContactDescriptionVector", "a03415.html#a4ca092c9a2df0b34b399ff21a8bc938f", null ],
+    [ "HrepXd", "a03415.html#af644950088ef46324f20a7214021a824", null ],
+    [ "Left", "a03415.html#aa149c1d1da2ae1c94f1ae91f4919625a", null ]
 ];

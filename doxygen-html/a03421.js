@@ -1,9 +1,7 @@
 var a03421 =
 [
-    [ "MC_RTC_ROS_DLLAPI", "a03421.html#a17fc85a6fd39970f9a707344763058c1", null ],
-    [ "MC_RTC_ROS_DLLEXPORT", "a03421.html#aabc0589237f2cf4df48b8ca69df575a4", null ],
-    [ "MC_RTC_ROS_DLLIMPORT", "a03421.html#a3cbe6a1ac62448731bc867c7068ba36c", null ],
-    [ "MC_RTC_ROS_DLLLOCAL", "a03421.html#a387309c9381fda92ba227506899eeb8b", null ],
-    [ "MC_RTC_ROS_LOCAL", "a03421.html#ac6f294a8922c33b67092dbcf4b692c43", null ],
-    [ "MC_RTC_ROS_VERSION", "a03421.html#a4c77ffabba6fb012e781847cfb5dca02", null ]
+    [ "Robot", "a01696.html", "a01696" ],
+    [ "robotFromConfig", "a03421.html#ga70b316b2f0c0caf547e160e74c2a029d", null ],
+    [ "robotIndexFromConfig", "a03421.html#gaf9b711ec2baa5684b8f422d740464b5f", null ],
+    [ "robotNameFromConfig", "a03421.html#ga40325ac769295d23f270976eead26245", null ]
 ];

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>ros_api.h File Reference</title>
+<title>Robot.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,120 +70,55 @@ $(document).ready(function(){initNavTree('a03421.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">mc_rtc/ros_api.h File Reference</div>  </div>
+<div class="title">mc_rbdyn/Robot.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a4c77ffabba6fb012e781847cfb5dca02"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03421.html#a4c77ffabba6fb012e781847cfb5dca02">MC_RTC_ROS_VERSION</a>&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td></tr>
-<tr class="separator:a4c77ffabba6fb012e781847cfb5dca02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3cbe6a1ac62448731bc867c7068ba36c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03421.html#a3cbe6a1ac62448731bc867c7068ba36c">MC_RTC_ROS_DLLIMPORT</a></td></tr>
-<tr class="separator:a3cbe6a1ac62448731bc867c7068ba36c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabc0589237f2cf4df48b8ca69df575a4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03421.html#aabc0589237f2cf4df48b8ca69df575a4">MC_RTC_ROS_DLLEXPORT</a></td></tr>
-<tr class="separator:aabc0589237f2cf4df48b8ca69df575a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a387309c9381fda92ba227506899eeb8b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03421.html#a387309c9381fda92ba227506899eeb8b">MC_RTC_ROS_DLLLOCAL</a></td></tr>
-<tr class="separator:a387309c9381fda92ba227506899eeb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17fc85a6fd39970f9a707344763058c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03421.html#a17fc85a6fd39970f9a707344763058c1">MC_RTC_ROS_DLLAPI</a>&#160;&#160;&#160;<a class="el" href="a03421.html#a3cbe6a1ac62448731bc867c7068ba36c">MC_RTC_ROS_DLLIMPORT</a></td></tr>
-<tr class="separator:a17fc85a6fd39970f9a707344763058c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6f294a8922c33b67092dbcf4b692c43"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03421.html#ac6f294a8922c33b67092dbcf4b692c43">MC_RTC_ROS_LOCAL</a>&#160;&#160;&#160;<a class="el" href="a03421.html#a387309c9381fda92ba227506899eeb8b">MC_RTC_ROS_DLLLOCAL</a></td></tr>
-<tr class="separator:ac6f294a8922c33b67092dbcf4b692c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><code>#include &lt;<a class="el" href="a00146.html">mc_rbdyn/Base.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00206.html">mc_rbdyn/RobotModule.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00224.html">mc_rbdyn/Surface.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="a00074.html">mc_control/generic_gripper.h</a>&gt;</code><br />
+<code>#include &lt;RBDyn/MultiBody.h&gt;</code><br />
+<code>#include &lt;RBDyn/MultiBodyConfig.h&gt;</code><br />
+<code>#include &lt;RBDyn/MultiBodyGraph.h&gt;</code><br />
+<code>#include &lt;sch/S_Object/S_Object.h&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;unordered_map&gt;</code><br />
+<code>#include &lt;mc_rbdyn/Robot.hpp&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01696.html">mc_rbdyn::Robot</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:a00766"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00766.html">mc_rbdyn</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga70b316b2f0c0caf547e160e74c2a029d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03385.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a> const <a class="el" href="a01696.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00759.html#ga70b316b2f0c0caf547e160e74c2a029d">mc_rbdyn::robotFromConfig</a> (const <a class="el" href="a01772.html">mc_rtc::Configuration</a> &amp;config, const <a class="el" href="a01736.html">mc_rbdyn::Robots</a> &amp;robots, const std::string &amp;prefix, bool required=false, const std::string &amp;robotIndexKey=&quot;robotIndex&quot;, const std::string &amp;robotNameKey=&quot;robot&quot;, const std::string &amp;defaultRobotName=&quot;&quot;)</td></tr>
+<tr class="memdesc:ga70b316b2f0c0caf547e160e74c2a029d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtains a reference to a loaded robot from configuration (using robotName or robotIndex)  <a href="a00759.html#ga70b316b2f0c0caf547e160e74c2a029d">More...</a><br /></td></tr>
+<tr class="separator:ga70b316b2f0c0caf547e160e74c2a029d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40325ac769295d23f270976eead26245"><td class="memItemLeft" align="right" valign="top">std::string <a class="el" href="a03385.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00759.html#ga40325ac769295d23f270976eead26245">mc_rbdyn::robotNameFromConfig</a> (const <a class="el" href="a01772.html">mc_rtc::Configuration</a> &amp;config, const <a class="el" href="a01736.html">mc_rbdyn::Robots</a> &amp;robots, const std::string &amp;prefix=&quot;&quot;, bool required=false, const std::string &amp;robotIndexKey=&quot;robotIndex&quot;, const std::string &amp;robotNameKey=&quot;robot&quot;, const std::string &amp;defaultRobotName=&quot;&quot;)</td></tr>
+<tr class="memdesc:ga40325ac769295d23f270976eead26245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to obtain the robot name from configuration.  <a href="a00759.html#ga40325ac769295d23f270976eead26245">More...</a><br /></td></tr>
+<tr class="separator:ga40325ac769295d23f270976eead26245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9b711ec2baa5684b8f422d740464b5f"><td class="memItemLeft" align="right" valign="top">unsigned int <a class="el" href="a03385.html#a5f64edebd03a669545de1ba699d6cb49">MC_RBDYN_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00759.html#gaf9b711ec2baa5684b8f422d740464b5f">mc_rbdyn::robotIndexFromConfig</a> (const <a class="el" href="a01772.html">mc_rtc::Configuration</a> &amp;config, const <a class="el" href="a01736.html">mc_rbdyn::Robots</a> &amp;robots, const std::string &amp;prefix=&quot;&quot;, bool required=false, const std::string &amp;robotIndexKey=&quot;robotIndex&quot;, const std::string &amp;robotNameKey=&quot;robot&quot;, const std::string &amp;defaultRobotName=&quot;&quot;)</td></tr>
+<tr class="memdesc:gaf9b711ec2baa5684b8f422d740464b5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to obtain the robot index from configuration.  <a href="a00759.html#gaf9b711ec2baa5684b8f422d740464b5f">More...</a><br /></td></tr>
+<tr class="separator:gaf9b711ec2baa5684b8f422d740464b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a17fc85a6fd39970f9a707344763058c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17fc85a6fd39970f9a707344763058c1">&#9670;&nbsp;</a></span>MC_RTC_ROS_DLLAPI</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MC_RTC_ROS_DLLAPI&#160;&#160;&#160;<a class="el" href="a03421.html#a3cbe6a1ac62448731bc867c7068ba36c">MC_RTC_ROS_DLLIMPORT</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aabc0589237f2cf4df48b8ca69df575a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabc0589237f2cf4df48b8ca69df575a4">&#9670;&nbsp;</a></span>MC_RTC_ROS_DLLEXPORT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MC_RTC_ROS_DLLEXPORT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3cbe6a1ac62448731bc867c7068ba36c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3cbe6a1ac62448731bc867c7068ba36c">&#9670;&nbsp;</a></span>MC_RTC_ROS_DLLIMPORT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MC_RTC_ROS_DLLIMPORT</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a387309c9381fda92ba227506899eeb8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a387309c9381fda92ba227506899eeb8b">&#9670;&nbsp;</a></span>MC_RTC_ROS_DLLLOCAL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MC_RTC_ROS_DLLLOCAL</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac6f294a8922c33b67092dbcf4b692c43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6f294a8922c33b67092dbcf4b692c43">&#9670;&nbsp;</a></span>MC_RTC_ROS_LOCAL</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MC_RTC_ROS_LOCAL&#160;&#160;&#160;<a class="el" href="a03421.html#a387309c9381fda92ba227506899eeb8b">MC_RTC_ROS_DLLLOCAL</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4c77ffabba6fb012e781847cfb5dca02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c77ffabba6fb012e781847cfb5dca02">&#9670;&nbsp;</a></span>MC_RTC_ROS_VERSION</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MC_RTC_ROS_VERSION&#160;&#160;&#160;&quot;UNKNOWN-dirty&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_38c8d24aef3972a7f87b834274e76e31.html">plugins</a></li><li class="navelem"><a class="el" href="dir_34d8e42b5ac6f6cb6d4e988599be737f.html">ROS</a></li><li class="navelem"><a class="el" href="dir_0884a74720358c6ca75630db8a4fc3d2.html">include</a></li><li class="navelem"><a class="el" href="dir_230f9193673de73c1c0188f5f8db31a1.html">mc_rtc</a></li><li class="navelem"><a class="el" href="a03421.html">ros_api.h</a></li>
-    <li class="footer">Generated on Wed Oct 14 2020 10:59:58 for mc_rtc by
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_314ec80f2fc36a4630429f4d5408038e.html">mc_rbdyn</a></li><li class="navelem"><a class="el" href="a03421.html">Robot.h</a></li>
+    <li class="footer">Generated on Thu Oct 15 2020 10:46:01 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

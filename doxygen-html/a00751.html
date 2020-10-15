@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<title>mc_observers Namespace Reference</title>
+<title>mc_rtc Namespace Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css">
 <link href="doxygen.css" rel="stylesheet" type="text/css">
 <script type="text/x-mathjax-config">
@@ -70,51 +70,504 @@ $(document).ready(function(){initNavTree('a00751.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">mc_observers Namespace Reference</div>  </div>
+<div class="title">mc_rtc Namespace Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This file holds all <a class="el" href="a01760.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00754.html">mc_rbdyn</a> objects.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:a00770"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00770.html">constants</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00758"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00758.html">gui</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00768"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00768.html">internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00774"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00774.html">io</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00775"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00775.html">log</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01522.html">BodySensorObserver</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01760.html">Configuration</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simplify access to values hold within a JSON file.  <a href="a01760.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01526.html">EncoderObserver</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01772.html">ConfigurationArrayIterator</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01530.html">KinematicInertialObserver</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kinematics-inertial observer of the floating base position with finite differences estimation of the floating base velocity using low-pass filtering.  <a href="a01530.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01736.html">ConfigurationLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure should be specialized to implement serialization for a new type.  <a href="a01736.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01534.html">KinematicInertialPoseObserver</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kinematics-inertial observer of the floating base position.  <a href="a01534.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01384.html">ConfigurationLoader&lt; mc_control::fsm::Contact &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01538.html">Observer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">State observation API.  <a href="a01538.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01580.html">ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01542.html">ObserverLoader</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load <a class="el" href="a01538.html" title="State observation API. ">Observer</a> instances from shared libraries.  <a href="a01542.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01592.html">ConfigurationLoader&lt; mc_rbdyn::Contact &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01546.html">ObserverPipeline</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">State observation pipeline.  <a href="a01546.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01632.html">ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read force distribution QP weights from configuration.  <a href="a01632.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01640.html">ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::SafetyThresholds &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read-write stabilizer safety thresholds from configuration.  <a href="a01640.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01648.html">ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01656.html">ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read force distribution QP weights from configuration.  <a href="a01656.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01584.html">ConfigurationLoader&lt; mc_rbdyn::RobotModule &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01588.html">ConfigurationLoader&lt; mc_rbdyn::RobotModulePtr &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02052.html">ConfigurationLoader&lt; mc_rtc::gui::ArrowConfig &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02036.html">ConfigurationLoader&lt; mc_rtc::gui::Color &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02060.html">ConfigurationLoader&lt; mc_rtc::gui::ForceConfig &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02044.html">ConfigurationLoader&lt; mc_rtc::gui::LineConfig &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02068.html">ConfigurationLoader&lt; mc_rtc::gui::PointConfig &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02368.html">ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01740.html">ConfigurationLoader&lt; void &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01804.html">DataStore</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic data store.  <a href="a01804.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02092.html">Loader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">General wrapper for ltdl functionnalities.  <a href="a02092.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02084.html">LoaderException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception thrown by loader interface.  <a href="a02084.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02100.html">LoaderSandboxData</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds sandbox data.  <a href="a02100.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02116.html">Logger</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs controller data to disk.  <a href="a02116.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02088.html">LTDLHandle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper around lt_dlhandle.  <a href="a02088.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02144.html">MessagePackBuilder</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to build a MessagePack message.  <a href="a02144.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02080.html">ObjectLoader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ltdl wrapper for factory-like classes  <a href="a02080.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02472.html">RobotPublisher</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This structure is able to publish a Robot's state to ROS.  <a href="a02472.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a02468.html">ROSBridge</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows to access ROS functionalities within <a class="el" href="a00751.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a> without explicit ROS dependencies.  <a href="a02468.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a45c5f50ee1e5bcc4959faef24b334643"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#a45c5f50ee1e5bcc4959faef24b334643">ObserverPtr</a> = std::shared_ptr&lt; <a class="el" href="a01538.html">mc_observers::Observer</a> &gt;</td></tr>
-<tr class="separator:a45c5f50ee1e5bcc4959faef24b334643"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04f4430d990b320f494b3a21112c7e3a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#a04f4430d990b320f494b3a21112c7e3a">LTDLHandlePtr</a> = std::shared_ptr&lt; <a class="el" href="a02088.html">LTDLHandle</a> &gt;</td></tr>
+<tr class="separator:a04f4430d990b320f494b3a21112c7e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ac1107b5d5bcf197a41add86ce445c866"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ac1107b5d5bcf197a41add86ce445c866"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00751.html#ac1107b5d5bcf197a41add86ce445c866">fromVectorOrElement</a> (const <a class="el" href="a01760.html">mc_rtc::Configuration</a> &amp;config, const std::string &amp;key, const std::vector&lt; T &gt; &amp;defaultVec)</td></tr>
+<tr class="memdesc:ac1107b5d5bcf197a41add86ce445c866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to convert a read a vector or single element as a vector, use default value if it fails.  <a href="#ac1107b5d5bcf197a41add86ce445c866">More...</a><br /></td></tr>
+<tr class="separator:ac1107b5d5bcf197a41add86ce445c866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c308b4400fb83031251be1f6ab0adb2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9c308b4400fb83031251be1f6ab0adb2"><td class="memTemplItemLeft" align="right" valign="top">std::vector&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00751.html#a9c308b4400fb83031251be1f6ab0adb2">fromVectorOrElement</a> (const <a class="el" href="a01760.html">mc_rtc::Configuration</a> &amp;config, const std::string &amp;key)</td></tr>
+<tr class="memdesc:a9c308b4400fb83031251be1f6ab0adb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to convert a read a vector or single element as a vector.  <a href="#a9c308b4400fb83031251be1f6ab0adb2">More...</a><br /></td></tr>
+<tr class="separator:a9c308b4400fb83031251be1f6ab0adb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bd63387904206fef1971ac84987b3bc"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#a0bd63387904206fef1971ac84987b3bc">debug</a> () noexcept</td></tr>
+<tr class="memdesc:a0bd63387904206fef1971ac84987b3bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if <a class="el" href="a00751.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a> was compiled in debug mode.  <a href="#a0bd63387904206fef1971ac84987b3bc">More...</a><br /></td></tr>
+<tr class="separator:a0bd63387904206fef1971ac84987b3bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a299e6b1f00e482f61b89988dc5b395fb"><td class="memTemplParams" colspan="2">template&lt;typename T , typename FunT , typename... Args&gt; </td></tr>
+<tr class="memitem:a299e6b1f00e482f61b89988dc5b395fb"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00751.html#a299e6b1f00e482f61b89988dc5b395fb">no_sandbox_function_call</a> (FunT create_fn, const Args &amp;... args)</td></tr>
+<tr class="memdesc:a299e6b1f00e482f61b89988dc5b395fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls a function without sandboxing.  <a href="#a299e6b1f00e482f61b89988dc5b395fb">More...</a><br /></td></tr>
+<tr class="separator:a299e6b1f00e482f61b89988dc5b395fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a810352dfb9fa4299b85fa19ac258a308"><td class="memTemplParams" colspan="2">template&lt;typename T , typename FunT , typename... Args&gt; </td></tr>
+<tr class="memitem:a810352dfb9fa4299b85fa19ac258a308"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00751.html#a810352dfb9fa4299b85fa19ac258a308">sandbox_function_call</a> (FunT create_fn, const Args &amp;... args)</td></tr>
+<tr class="memdesc:a810352dfb9fa4299b85fa19ac258a308"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls a function in a sandbox.  <a href="#a810352dfb9fa4299b85fa19ac258a308">More...</a><br /></td></tr>
+<tr class="separator:a810352dfb9fa4299b85fa19ac258a308"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="a00751.html#a8fb61bc6391bc9cd0ef2aa0efff2d641">type_name</a> ()</td></tr>
+<tr class="memdesc:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a human-readable type name.  <a href="#a8fb61bc6391bc9cd0ef2aa0efff2d641">More...</a><br /></td></tr>
+<tr class="separator:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a781ea11d3b3f97742187d5910b74edfd"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#a781ea11d3b3f97742187d5910b74edfd">ConfigurationArrayIterator</a></td></tr>
+<tr class="separator:a781ea11d3b3f97742187d5910b74edfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b620c9005d103e65363b518ba6dca23"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#a9b620c9005d103e65363b518ba6dca23">Configuration</a></td></tr>
+<tr class="separator:a9b620c9005d103e65363b518ba6dca23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab85e3cb123f11bf1f9290abe17a7d49e"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#ab85e3cb123f11bf1f9290abe17a7d49e">OUT_NONE</a> = &quot;\033[00m&quot;</td></tr>
+<tr class="separator:ab85e3cb123f11bf1f9290abe17a7d49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15b005678017d9608ff8f599e34e41de"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#a15b005678017d9608ff8f599e34e41de">OUT_BLUE</a> = &quot;\033[01;34m&quot;</td></tr>
+<tr class="separator:a15b005678017d9608ff8f599e34e41de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ab584d4904b2b1695ae2cb04ca984ca"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#a7ab584d4904b2b1695ae2cb04ca984ca">OUT_GREEN</a> = &quot;\033[01;32m&quot;</td></tr>
+<tr class="separator:a7ab584d4904b2b1695ae2cb04ca984ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb1d99e566cb5c454074579fcfa712f4"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#aeb1d99e566cb5c454074579fcfa712f4">OUT_PURPLE</a> = &quot;\033[01;35m&quot;</td></tr>
+<tr class="separator:aeb1d99e566cb5c454074579fcfa712f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9003469324d75c8934d51654d98ef862"><td class="memItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00751.html#a9003469324d75c8934d51654d98ef862">OUT_RED</a> = &quot;\033[01;31m&quot;</td></tr>
+<tr class="separator:a9003469324d75c8934d51654d98ef862"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Interface used to load robots </p>
+<div class="textblock"><p>This file holds all <a class="el" href="a01760.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> based serialization operation for <a class="el" href="a00754.html">mc_rbdyn</a> objects. </p>
+<p>This file contains classes that are used to configure the visual styles of various elements in the GUI.</p>
+<p>This header contains the base block of all elements in the GUI system.</p>
+<p>This file contains some utility template metaprogramming functions for the GUI.</p>
+<p>Interface used to load observers</p>
+<p>For the implementation details of specific elements look into their dedicated header </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a45c5f50ee1e5bcc4959faef24b334643"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45c5f50ee1e5bcc4959faef24b334643">&#9670;&nbsp;</a></span>ObserverPtr</h2>
+<a id="a04f4430d990b320f494b3a21112c7e3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04f4430d990b320f494b3a21112c7e3a">&#9670;&nbsp;</a></span>LTDLHandlePtr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="a00751.html#a45c5f50ee1e5bcc4959faef24b334643">mc_observers::ObserverPtr</a> = typedef std::shared_ptr&lt;<a class="el" href="a01538.html">mc_observers::Observer</a>&gt;</td>
+          <td class="memname">using <a class="el" href="a00751.html#a04f4430d990b320f494b3a21112c7e3a">mc_rtc::LTDLHandlePtr</a> = typedef std::shared_ptr&lt;<a class="el" href="a02088.html">LTDLHandle</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a0bd63387904206fef1971ac84987b3bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bd63387904206fef1971ac84987b3bc">&#9670;&nbsp;</a></span>debug()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> mc_rtc::debug </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns true if <a class="el" href="a00751.html" title="This file holds all mc_rtc::Configuration based serialization operation for mc_rbdyn objects...">mc_rtc</a> was compiled in debug mode. </p>
+
+</div>
+</div>
+<a id="ac1107b5d5bcf197a41add86ce445c866"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1107b5d5bcf197a41add86ce445c866">&#9670;&nbsp;</a></span>fromVectorOrElement() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;T&gt; mc_rtc::fromVectorOrElement </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01760.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>defaultVec</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Attempts to convert a read a vector or single element as a vector, use default value if it fails. </p>
+<p>Example: </p><div class="fragment"><div class="line">configVector: [&quot;String1&quot;, &quot;String2&quot;]</div><div class="line">configString: &quot;String&quot;</div></div><!-- fragment --><p>The following are valid </p><div class="fragment"><div class="line"><span class="keyword">auto</span> conf = <a class="code" href="a01760.html">mc_rtc::Configuration</a>{};</div><div class="line">conf.<a class="code" href="a01760.html#a6a28ad4e71394b56e27687e9d64a8cda">add</a>(<span class="stringliteral">&quot;configVector&quot;</span>, {<span class="stringliteral">&quot;String1&quot;</span>, <span class="stringliteral">&quot;String2&quot;</span>})</div><div class="line">conf.add(<span class="stringliteral">&quot;configString&quot;</span>, <span class="stringliteral">&quot;String1&quot;</span>);</div><div class="line"><span class="keyword">auto</span> v1 = fromVectorOrElement&lt;std::string&gt;(conf(<span class="stringliteral">&quot;configVector&quot;</span>));</div><div class="line"><span class="keyword">auto</span> v2 = fromVectorOrElement&lt;std::string&gt;(conf(<span class="stringliteral">&quot;configString&quot;</span>));</div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of the element to convert toward </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">config</td><td><a class="el" href="a01760.html" title="Simplify access to values hold within a JSON file. ">Configuration</a> object from which to convert. This should contain either a vector of elements convertible to T ([T, T, ...]) or a single T element.</td></tr>
+    <tr><td class="paramname">key</td><td>Name of the element to read</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Vector containing all elements in the configuration vector or the single item. If it fails, return defaultVec. </dd></dl>
+
+<p class="reference">References <a class="el" href="a01760.html#a6488f8ecfa643aebe3c77e8fd4218160">mc_rtc::Configuration::has()</a>, and <a class="el" href="a01768.html#a036273616d903f906ac28972cc16d902">mc_rtc::Configuration::Exception::silence()</a>.</p>
+
+</div>
+</div>
+<a id="a9c308b4400fb83031251be1f6ab0adb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c308b4400fb83031251be1f6ab0adb2">&#9670;&nbsp;</a></span>fromVectorOrElement() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;T&gt; mc_rtc::fromVectorOrElement </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a01760.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Attempts to convert a read a vector or single element as a vector. </p>
+<p>Variant of fromVectorOrElement(const <a class="el" href="a01760.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> &amp; config, const std::string &amp; key, const std::vector&lt;T&gt; &amp; defaultVec) </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="a01768.html" title="Exception thrown by this class when something bad occurs. ">mc_rtc::Configuration::Exception</a></td><td>If the key is not found or the configuration is neither convertible as std::vector&lt;T&gt; or T. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="reference">References <a class="el" href="a00775.html#a82d6969aa78c74fbe4716532661ea0d8">mc_rtc::log::critical()</a>, <a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>, and <a class="el" href="a01768.html#a036273616d903f906ac28972cc16d902">mc_rtc::Configuration::Exception::silence()</a>.</p>
+
+</div>
+</div>
+<a id="a299e6b1f00e482f61b89988dc5b395fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a299e6b1f00e482f61b89988dc5b395fb">&#9670;&nbsp;</a></span>no_sandbox_function_call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename FunT , typename... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T * mc_rtc::no_sandbox_function_call </td>
+          <td>(</td>
+          <td class="paramtype">FunT&#160;</td>
+          <td class="paramname"><em>create_fn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Args &amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calls a function without sandboxing. </p>
+<p>Only catches exceptions</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Return type of the function</td></tr>
+    <tr><td class="paramname">FunT</td><td>Type of the create function</td></tr>
+    <tr><td class="paramname">Args</td><td>Arguments passed to the creation function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a810352dfb9fa4299b85fa19ac258a308"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a810352dfb9fa4299b85fa19ac258a308">&#9670;&nbsp;</a></span>sandbox_function_call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename FunT , typename... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T* mc_rtc::sandbox_function_call </td>
+          <td>(</td>
+          <td class="paramtype">FunT&#160;</td>
+          <td class="paramname"><em>create_fn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Args &amp;...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calls a function in a sandbox. </p>
+<p>Allows a function call to fail horribly without crashing the main program, allowing us to survive the event, report and throw.</p>
+<p>Only works on Linux.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Return type of the function</td></tr>
+    <tr><td class="paramname">FunT</td><td>Type of the create function</td></tr>
+    <tr><td class="paramname">Args</td><td>Arguments passed to the creation function </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="reference">References <a class="el" href="a02100.html#aecb02006f5f0cd5aeabf7965973d3542">mc_rtc::LoaderSandboxData&lt; T &gt;::complete</a>, <a class="el" href="a02100.html#adf4719d80846e018c3de0290164048ac">mc_rtc::LoaderSandboxData&lt; T &gt;::fn</a>, and <a class="el" href="a02100.html#a0bd1edac4d08d70b609b18efb6942d44">mc_rtc::LoaderSandboxData&lt; T &gt;::ret</a>.</p>
+
+</div>
+</div>
+<a id="a8fb61bc6391bc9cd0ef2aa0efff2d641"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fb61bc6391bc9cd0ef2aa0efff2d641">&#9670;&nbsp;</a></span>type_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string mc_rtc::type_name </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return a human-readable type name. </p>
+<p>Only use for displaying messages as the name is not guaranteed to be the same across compilers and invokation </p>
+
+<p class="reference">References <a class="el" href="a00768.html#af017e274f3cf4699850fdbf753d07fa2">mc_rtc::internal::demangle()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a9b620c9005d103e65363b518ba6dca23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b620c9005d103e65363b518ba6dca23">&#9670;&nbsp;</a></span>Configuration</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> <a class="el" href="a01760.html">mc_rtc::Configuration</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a01760.html#aa4af8f372da0ca5bc835588c737c5877">mc_rtc::Configuration::operator std::array&lt; T, N &gt;()</a>, <a class="el" href="a01760.html#ac26424cf2ed968f1999a3277ab4f7835">mc_rtc::Configuration::operator std::map&lt; std::string, T, C, A &gt;()</a>, <a class="el" href="a01760.html#a552f9761ab8458992b1ef20ad9019602">mc_rtc::Configuration::operator std::pair&lt; T1, T2 &gt;()</a>, <a class="el" href="a01760.html#a7cb85c50202da3906f0af969eb4af6d9">mc_rtc::Configuration::operator std::set&lt; T, C, A &gt;()</a>, <a class="el" href="a01760.html#a0ed2f23cedeb589c8f7f26f54b99b76f">mc_rtc::Configuration::operator std::unordered_set&lt; T, H, E, A &gt;()</a>, <a class="el" href="a01760.html#ab06d6d358eef19d9c4c8748bc7767064">mc_rtc::Configuration::operator std::vector&lt; T, A &gt;()</a>, <a class="el" href="a01760.html#a60d258128cadfb8b4cc30229d169991b">mc_rtc::Configuration::operator T()</a>, and <a class="el" href="a01760.html#a2c8ff7ed5c88e2027d384ec046bbdb42">mc_rtc::Configuration::push()</a>.</p>
+
+</div>
+</div>
+<a id="a781ea11d3b3f97742187d5910b74edfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a781ea11d3b3f97742187d5910b74edfd">&#9670;&nbsp;</a></span>ConfigurationArrayIterator</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="a00377.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a> <a class="el" href="a01772.html">mc_rtc::ConfigurationArrayIterator</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a15b005678017d9608ff8f599e34e41de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15b005678017d9608ff8f599e34e41de">&#9670;&nbsp;</a></span>OUT_BLUE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mc_rtc::OUT_BLUE = &quot;\033[01;34m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7ab584d4904b2b1695ae2cb04ca984ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ab584d4904b2b1695ae2cb04ca984ca">&#9670;&nbsp;</a></span>OUT_GREEN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mc_rtc::OUT_GREEN = &quot;\033[01;32m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab85e3cb123f11bf1f9290abe17a7d49e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab85e3cb123f11bf1f9290abe17a7d49e">&#9670;&nbsp;</a></span>OUT_NONE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mc_rtc::OUT_NONE = &quot;\033[00m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aeb1d99e566cb5c454074579fcfa712f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb1d99e566cb5c454074579fcfa712f4">&#9670;&nbsp;</a></span>OUT_PURPLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mc_rtc::OUT_PURPLE = &quot;\033[01;35m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9003469324d75c8934d51654d98ef862"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9003469324d75c8934d51654d98ef862">&#9670;&nbsp;</a></span>OUT_RED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr auto mc_rtc::OUT_RED = &quot;\033[01;31m&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -127,8 +580,8 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00751.html">mc_observers</a></li>
-    <li class="footer">Generated on Wed Oct 14 2020 10:56:58 for mc_rtc by
+    <li class="navelem"><a class="el" href="a00751.html">mc_rtc</a></li>
+    <li class="footer">Generated on Thu Oct 15 2020 10:43:09 for mc_rtc by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

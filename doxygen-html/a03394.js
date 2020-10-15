@@ -1,9 +1,9 @@
 var a03394 =
 [
-    [ "MC_TRAJECTORY_DLLAPI", "a03394.html#adff5a6c1e965ae6fdc756a2c5187f9c9", null ],
-    [ "MC_TRAJECTORY_DLLEXPORT", "a03394.html#a531302b8554807c8aca0fcf931c490f3", null ],
-    [ "MC_TRAJECTORY_DLLIMPORT", "a03394.html#a6dc4322483ff7548be6769a3e2d2ae54", null ],
-    [ "MC_TRAJECTORY_DLLLOCAL", "a03394.html#aa1a1e2ac0d81d28e134d91b52199d1e1", null ],
-    [ "MC_TRAJECTORY_LOCAL", "a03394.html#a4d2a4bf4b090297efb1f6dfa124b52e2", null ],
-    [ "MC_TRAJECTORY_VERSION", "a03394.html#acd63e2a4854ce5d3f1eec2e5f2cf7498", null ]
+    [ "MC_SOLVER_DLLAPI", "a03394.html#a1f670c9ef41bde54578a3afc8fd75445", null ],
+    [ "MC_SOLVER_DLLEXPORT", "a03394.html#a24ff42006c016a5adc79aec2a1dfc0fe", null ],
+    [ "MC_SOLVER_DLLIMPORT", "a03394.html#a85361305f43d765074b5a82afaa82487", null ],
+    [ "MC_SOLVER_DLLLOCAL", "a03394.html#ae3c35da4cb012ab2f6caea5696a56dae", null ],
+    [ "MC_SOLVER_LOCAL", "a03394.html#ad2b85045fbd2243b5745829691239595", null ],
+    [ "MC_SOLVER_VERSION", "a03394.html#ae4634b29539fd982b8b83c15830c1c37", null ]
 ];

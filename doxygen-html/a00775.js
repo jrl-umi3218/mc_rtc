@@ -1,4 +1,4 @@
 var a00775 =
 [
-    [ "formatter< mc_rtc::Configuration >", "a01782.html", "a01782" ]
+    [ "geom", "a00776.html", null ]
 ];
