@@ -1,11 +1,17 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
 
 #include <mc_control/fsm/api.h>
 #include <mc_control/fsm/states/api.h>
+
+#include <mc_solver/ConstraintSet.h>
+
+#include <mc_tasks/MetaTask.h>
+#include <mc_tasks/PostureTask.h>
+
 #include <mc_rtc/Configuration.h>
 
 namespace mc_control
@@ -135,15 +141,35 @@ protected:
   virtual void teardown(Controller & ctl) = 0;
 
 protected:
+  /** AddContacts in the configuration */
   mc_rtc::Configuration add_contacts_config_;
+  /** RemoveContacts in the configuration */
   mc_rtc::Configuration remove_contacts_config_;
+  /** AddContactsAfter in the configuration */
   mc_rtc::Configuration add_contacts_after_config_;
+  /** RemoveContactsAfter in the configuration */
   mc_rtc::Configuration remove_contacts_after_config_;
+  /** AddCollisions in the configuration */
   mc_rtc::Configuration add_collisions_config_;
+  /** RemoveCollisions in the configuration */
   mc_rtc::Configuration remove_collisions_config_;
+  /** AddCollisionsAfter in the configuration */
   mc_rtc::Configuration add_collisions_after_config_;
+  /** RemoveCollisionsAfter in the configuration */
   mc_rtc::Configuration remove_collisions_after_config_;
-  bool remove_posture_task_ = false;
+  /** constraints in the configuration */
+  mc_rtc::Configuration constraints_config_;
+  /** tasks in the configuration */
+  mc_rtc::Configuration tasks_config_;
+  /** RemovePostureTask in the configuration */
+  mc_rtc::Configuration remove_posture_task_;
+
+  /** Constraints managed by the state if any */
+  std::vector<mc_solver::ConstraintSetPtr> constraints_;
+  /** Tasks managed by the state if any */
+  std::vector<mc_tasks::MetaTaskPtr> tasks_;
+  /** Posture tasks that were removed by this state */
+  std::vector<mc_tasks::PostureTaskPtr> postures_;
 
 private:
   std::string name_ = "";

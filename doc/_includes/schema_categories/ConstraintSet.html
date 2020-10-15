@@ -1,0 +1,28 @@
+<p>These objects represent constraints that can be added to the solver.</p>
+
+<p>They can be loaded from C++ with the following code:</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+{% highlight cpp %}
+// Access the constraint set loader
+#include <mc_solver/ConstraintSetLoader.h>
+
+// Get the constraint from a JSON file
+auto constraint = mc_solver::ConstraintSetLoader::load(solver(), "/my/path/constraint.json");
+
+// Get the constraint from a YAML file
+auto constraint = mc_solver::ConstraintSetLoader::load(solver(), "/my/path/constraint.yaml");
+
+// Actually you can get the constraint from any mc_rtc::Configuration entry
+auto constraint = mc_solver::ConstraintSetLoader::load(solver(), config("constraint"));
+
+// In all the cases above, constraint is an std::shared_ptr<mc_solver::ConstraintSet>
+// but you can retrieve a more precise type, mc_rtc will check that the constraints
+// that was retrieved from disk is compatible with the constraint you requested
+auto constraint = mc_solver::ConstraintSetLoader::load<mc_solver::BoundedSpeedConstr>(solver(), config("constraint"));
+{% endhighlight %}
+  </div>
+</div>
+
+<p>This page shows what data is expected for each constraint available in mc_rtc.</p>

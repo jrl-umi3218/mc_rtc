@@ -1,0 +1,90 @@
+StatesLibraries: ["@FSM_STATES_INSTALL_PREFIX@"]
+StepByStep: false
+Managed: false
+IdleKeepState: true
+robots:
+  ground:
+    module: env/ground
+constraints:
+  - type: dynamics
+    damper: [0.1, 0.01, 0.5]
+  - type: contact
+contacts:
+  - r1: jvrc1
+    r2: ground
+    r1Surface: LeftFoot
+    r2Surface: AllGround
+  - r1: jvrc1
+    r2: ground
+    r1Surface: RightFoot
+    r2Surface: AllGround
+collisions:
+  - useMinimal: true
+states:
+  TestContactsManipulation:
+    base: HalfSitting
+    RemoveContacts: &default-contacts
+      - r1: jvrc1
+        r2: ground
+        r1Surface: LeftFoot
+        r2Surface: AllGround
+      - r1: jvrc1
+        r2: ground
+        r1Surface: RightFoot
+        r2Surface: AllGround
+    AddContacts: &special-contacts
+      - r1: jvrc1
+        r2: ground
+        r1Surface: LeftFootCenter
+        r2Surface: AllGround
+        friction: 0.8
+      - r1: jvrc1
+        r2: ground
+        r1Surface: RightFootCenter
+        r2Surface: AllGround
+        friction: 0.8
+        dof: [1, 1, 0, 1, 1, 1]
+    AddContactsAfter: *default-contacts
+    RemoveContactsAfter: *special-contacts
+  TestCollisionsManipulation:
+    base: HalfSitting
+    AddCollisions: &robot-ground-collisions
+      - r1: jvrc1
+        r2: ground
+        collisions:
+          - body1: L_WRIST_Y_S
+            body2: ground
+            iDist: 0.05
+            sDist: 0.01
+            damping: 0
+    RemoveCollisionsAfter: *robot-ground-collisions
+    RemoveCollisions: &robot-self-collisions
+      - r1: jvrc1
+        r2: jvrc1
+        collisions:
+          - body1: R_WRIST_Y_S
+            body2: R_HIP_Y_S
+            iDist: 0.05
+            sDist: 0.025
+            damping: 0
+    AddCollisionsAfter: *robot-self-collisions
+  TestRemovePostureTask:
+    base: HalfSitting
+    RemovePostureTask: true
+  TestConstraintsAndTasks:
+    base: HalfSitting
+    constraints:
+      boundedSpeed:
+        type: boundedSpeed
+        robot: jvrc1
+        constraints:
+          - body: l_wrist
+            dof: [1, 1, 1, 1, 1, 1]
+            speed: [0, 0, 0, 0, 0, 0.001]
+    tasks:
+      CoM:
+        type: com
+transitions:
+  - [TestContactsManipulation, OK, TestCollisionsManipulation, Auto]
+  - [TestCollisionsManipulation, OK, TestRemovePostureTask, Auto]
+  - [TestRemovePostureTask, OK, TestConstraintsAndTasks, Auto]

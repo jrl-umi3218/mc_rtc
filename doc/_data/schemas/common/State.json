@@ -17,6 +17,16 @@
                             "description": "Add the specified collisions during the state's teardown" },
     "RemoveCollisionsAfter": { "type": "array", "items": { "$ref": "/../../common/fsm_collision.json" },
                                "description": "Remove the specified collisions during the state's teardown" },
-    "RemovePostureTask": { "type": "boolean", "default": false, "description": "If true, remove the main robot posture task at the state's start"}
+    "DisablePostureTask":
+    {
+      "oneOf": [
+        { "type": "boolean", "default": false, "description": "If true, disable all FSM posture tasks during this state execution." },
+        { "type": "array", "items": { "type": "string" }, "description": "Disable the posture tasks for the specified robots during this state execution." }
+      ]
+    },
+    "constraints": { "type": "object",
+                     "description": "Constraints that will be added when the state starts and removed when the state stops.<br/>Keys are names for the constraints and values are <a href=\"{{site.baseurl}}/json.html#ConstraintSet\">ConstraintSet objects</a>." },
+    "tasks": { "type": "object",
+               "description": "Tasks that will be added when the state starts and removed when the state stops.<br/>Keys are names for the tasks and values are <a href=\"{{site.baseurl}}/json.html#MetaTask\">MetaTask objects</a>." }
   }
 }

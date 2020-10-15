@@ -98,7 +98,20 @@ static auto registered = mc_solver::ConstraintSetLoader::register_load_function(
         {
           std::string bName = c("body");
           Eigen::Vector3d bPoint = c("bodyPoint", Eigen::Vector3d::Zero().eval());
-          Eigen::Matrix6d dof = c("dof", Eigen::Matrix6d::Identity().eval());
+          Eigen::Matrix6d dof = Eigen::Matrix6d::Identity();
+          if(c.has("dof"))
+          {
+            const auto & c_dof = c("dof");
+            if(c_dof.size() == 6)
+            {
+              Eigen::Vector6d v = c_dof;
+              dof = v.asDiagonal();
+            }
+            else
+            {
+              dof = c_dof;
+            }
+          }
           if(c.has("speed"))
           {
             ret->addBoundedSpeed(solver, bName, bPoint, dof, c("speed"));

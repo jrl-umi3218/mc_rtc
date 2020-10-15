@@ -1,0 +1,11 @@
+{% capture collapseId %}collapse_{{include.id}}{% endcapture %}
+<div id="{{collapseId}}" class="collapse collapseSchema" style="position:sticky; top: 65px;">
+  <div class="card">
+    <div class="card-header">
+      <h6 class="text-primary font-weight-bold">{{include.id}}</h6>
+    </div>
+    <div class="card-body">
+      {{include.description | liquefy}}
+    </div>
+  </div>
+</div>

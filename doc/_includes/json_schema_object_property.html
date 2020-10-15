@@ -13,17 +13,47 @@
     {% capture PROP_NAME %}<i>{{PROP_NAME}}</i>&nbsp;&nbsp;<small class="text-secondary">(pattern)</small>{% endcapture %}
   {% endif %}
   <td>{{PROP_NAME}}</td>
-  {% if include.has_description %}
-  <td>
-    {% include json_schema_item.html data=include.data id=include.id %}
-  </td>
-  <td>
-    <span class="text-secondary"><small>{{include.description | liquefy}}</small></span>
-  </td>
+  {% if include.data contains "oneOf" %}
+    {% assign oneOf = include.data.oneOf %}
+    {% for data in oneOf %}
+      {% capture id %}{{include.id}}{{forloop.index0}}{% endcapture %}
+      {% if data contains "description" %}
+        <td>
+          {% include json_schema_item.html data=data id=id %}
+        </td>
+        <td>
+          <span class="text-secondary"><small>{{data.description | liquefy}}</small></span>
+        </td>
+      {% else %}
+        <td colspan="2">
+          {% include json_schema_item.html data=data id=id %}
+        </td>
+      {% endif %}
+      {% if forloop.last == false %}
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="2">
+            <strong>OR</strong>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+      {% endif %}
+    {% endfor %}
   {% else %}
-  <td colspan="2">
-    {% include json_schema_item.html data=include.data id=include.id %}
-  </td>
+    {% if include.has_description %}
+    <td>
+      {% include json_schema_item.html data=include.data id=include.id %}
+    </td>
+    <td>
+      <span class="text-secondary"><small>{{include.description | liquefy}}</small></span>
+    </td>
+    {% else %}
+    <td colspan="2">
+      {% include json_schema_item.html data=include.data id=include.id %}
+    </td>
+    {% endif %}
   {% endif %}
 </tr>
 {% if INCLUDE_AFTER != "" %}

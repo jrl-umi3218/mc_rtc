@@ -8,12 +8,12 @@ use_mathjax: true
     <div class="list-group list-group-root well">
     {% for cat in page.menu %}
       {% assign category = cat[0] %}
-      <a id="{{category}}_link" href="#{{ cat[0] }}-objects" class="list-group-item list-group-item-category collapsed" data-toggle="collapse" role="button">
+      <a id="{{category}}_link" href="#{{ cat[0] }}-objects" class="list-group-item list-group-item-category collapsed" data-toggle="collapse" data-category="{{cat[0]}}" role="button">
         <span class="chevron-right">{% octicon chevron-right %}</span>
         <span class="chevron-down" style="display:none;">{% octicon chevron-down %}</span>
         {{ cat[0] }} objects
       </a>
-      <div class="collapse" id="{{ cat[0] }}-objects">
+      <div class="collapse collapseCategory" id="{{ cat[0] }}-objects">
         <div class="list-group">
           {% assign sorted_objects = cat[1] | sort %}
           {% for obj in sorted_objects %}
@@ -40,6 +40,9 @@ use_mathjax: true
         {% include json_schema_with_examples.html schema=schema example_sources=example id=id %}
       {% endfor %}
     {% endfor %}
+    {% for category in site.data.json_categories %}
+      {% include json_schema_category_description.html id=category.name description=category.desc %}
+    {% endfor %}
   </div>
   <div class="col-md-1 col-0"></div>
 </div>
@@ -54,24 +57,63 @@ $(document).ready(function()
   {
     var category = param.split('/')[0];
     var name = param.split('/')[1];
-    $('#collapse_' + category + '_' + name).collapse('show');
+    if(name && name.length)
+    {
+      $('#collapse_' + category + '_' + name).collapse('show');
+      $('#' + category + '_' + name + '_link').toggleClass('active', true);
+    }
+    else
+    {
+      $('#collapse_' + category).collapse('show');
+      $('#' + category + '_link').toggleClass('active', true);
+    }
     $('.chevron-down', $('#' + category + '_link')).toggle();
     $('.chevron-right', $('#' + category + '_link')).toggle();
-    $('#' + category + '_' + name + '_link').toggleClass('active', true);
     $('#' + category + '-objects').collapse();
   }
 
   $('.list-group-item-category').on('click', function() {
             var $this = $(this);
-            $('.chevron-down', this).toggle();
-            $('.chevron-right', this).toggle();
+            var was_active = !$this.hasClass('collapsed');
+            $('.collapseSchema').collapse('hide');
+            $('.collapseCategory').collapse('hide');
+            $('.chevron-down').toggle(false);
+            $('.chevron-right').toggle(true);
+            $('.chevron-down', this).toggle(!was_active);
+            $('.chevron-right', this).toggle(was_active);
+            var category = $this.data("category");
+            $('.list-group-item-category').toggleClass('active', false);
+            $('.list-group-item-schema').toggleClass('active', false);
+            if(!was_active)
+            {
+              $('#collapse_' + category).collapse('show');
+              $this.toggleClass('active', true);
+              window.location.hash = category;
+            }
+            else
+            {
+              $this.toggleClass('active', false);
+              window.location.hash = "";
+            }
+            $('.list-group-item-schema').toggleClass('active', false);
   });
 
   $('.list-group-item-schema').on('click', function() {
             var $this = $(this);
             $('.collapseSchema').collapse('hide');
+            var was_active = $this.hasClass('active');
+            $('.list-group-item-category').toggleClass('active', false);
             $('.list-group-item-schema').toggleClass('active', false);
-            $this.toggleClass('active', true);
+            if(was_active)
+            {
+              var category = $this.data("permalink").split("/")[0];
+              $('#collapse_' + category).collapse('show');
+              $(`#${category}_link`).toggleClass('active', true);
+            }
+            else
+            {
+              $this.toggleClass('active', true);
+            }
             window.location.hash = $this.data("permalink");
   });
 

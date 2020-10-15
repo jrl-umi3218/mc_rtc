@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -257,7 +257,7 @@ private:
   /** Teardown the idle state */
   void teardownIdleState();
 
-private:
+protected:
   /** Map robots' names to index */
   std::map<std::string, size_t> robots_idx_;
 

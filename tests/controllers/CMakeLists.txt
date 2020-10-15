@@ -70,12 +70,24 @@ endmacro()
 macro(controller_test_run NAME NRITER)
   controller_test_common(${NAME})
   if(CMAKE_CONFIGURATION_TYPES)
-    set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIGURATION>/mc_rtc-${NAME}.conf")
+    set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIG>/mc_rtc-${NAME}.conf")
     file(GENERATE
        OUTPUT ${CONFIG_OUT}
        INPUT ${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf)
   else()
     set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/mc_rtc-${NAME}.conf")
+  endif()
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${NAME}.in.yaml")
+    configure_file(${NAME}.in.yaml "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${NAME}.cmake.yaml")
+    if(CMAKE_CONFIGURATION_TYPES)
+      file(GENERATE
+        OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/$<CONFIG>/etc/${NAME}.yaml"
+        INPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${NAME}.cmake.yaml")
+    else()
+      file(GENERATE
+        OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${NAME}.yaml"
+        INPUT "${CMAKE_CURRENT_BINARY_DIR}/${NAME}/etc/${NAME}.cmake.yaml")
+    endif()
   endif()
   set_target_properties(${NAME} PROPERTIES FOLDER tests/controllers/run)
   if(ENABLE_FAST_TESTS)
@@ -159,6 +171,14 @@ controller_test_run(TestCoMTaskController 4001)
 controller_test_run(TestPositionTaskController 5000)
 controller_test_run(TestOrientationTaskController 6001)
 controller_test_run(TestEndEffectorTaskController 4001)
+
+# Test FSM generic state configuration option
+set(FSM_STATES_INSTALL_PREFIX "${PROJECT_BINARY_DIR}/src/mc_control/fsm/states/")
+if(CMAKE_CONFIGURATION_TYPES)
+  set(FSM_STATES_INSTALL_PREFIX "${FSM_STATES_INSTALL_PREFIX}/$<CONFIGURATION>")
+endif()
+controller_test_run(TestFSMStateOptions 100)
+target_link_libraries(TestFSMStateOptions PUBLIC mc_control_fsm)
 
 set(ENABLED_OBSERVERS "\"Encoder\", \"BodySensor\", \"KinematicInertial\"")
 set(RUN_OBSERVERS "\"Encoder\", \"BodySensor\"")

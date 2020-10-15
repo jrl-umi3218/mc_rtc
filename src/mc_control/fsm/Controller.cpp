@@ -124,8 +124,12 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
   /** Load collision managers */
   {
     auto config_collisions = config("collisions", std::vector<mc_rtc::Configuration>{});
-    for(const auto & config_cc : config_collisions)
+    for(auto & config_cc : config_collisions)
     {
+      if(!config_cc.has("type"))
+      {
+        config_cc.add("type", "collision");
+      }
       auto cc = mc_solver::ConstraintSetLoader::load<mc_solver::CollisionsConstraint>(solver(), config_cc);
       auto & r1 = robots().robot(cc->r1Index);
       auto & r2 = robots().robot(cc->r2Index);

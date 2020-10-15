@@ -106,7 +106,7 @@ bool Configuration::empty() const
   {
     return value->ObjectEmpty();
   }
-  return true;
+  return value->IsNull();
 }
 
 size_t Configuration::Json::size() const
@@ -585,7 +585,7 @@ void Configuration::load(const mc_rtc::Configuration & config)
 
   if(target.IsNull())
   {
-    auto & docFrom = *std::static_pointer_cast<internal::RapidJSONDocument>(config.v.doc_);
+    auto & docFrom = *static_cast<internal::RapidJSONDocument *>(config.v.value_);
     target.CopyFrom(docFrom, doc.GetAllocator());
   }
   else
@@ -625,7 +625,7 @@ void Configuration::load(const mc_rtc::Configuration & config)
     }
     else
     {
-      auto & docFrom = *std::static_pointer_cast<internal::RapidJSONDocument>(config.v.doc_);
+      auto & docFrom = *static_cast<internal::RapidJSONDocument *>(config.v.value_);
       target.SetNull();
       target.CopyFrom(docFrom, doc.GetAllocator());
     }
@@ -720,9 +720,13 @@ bool Configuration::operator==(const char * rhs) const
 namespace
 {
 template<typename T>
-void add_impl(const std::string & key, T value, void * json_p, void * doc_p)
+void add_impl(const mc_rtc::Configuration & source, const std::string & key, T value, void * json_p, void * doc_p)
 {
   auto & json = *static_cast<internal::RapidJSONValue *>(json_p);
+  if(!json.IsObject())
+  {
+    throw Configuration::Exception("You cannot add entry into a non-object", source);
+  }
   auto & doc = *static_cast<internal::RapidJSONDocument *>(doc_p);
   auto & allocator = doc.GetAllocator();
   internal::RapidJSONValue value_ = mc_rtc::internal::toJSON(value, allocator);
@@ -755,6 +759,10 @@ void push_impl(const Configuration & source, T value, void * json_p, void * doc_
 
 void Configuration::add_null(const std::string & key)
 {
+  if(!v.isObject())
+  {
+    throw Exception("You cannot add entry into a non-object", v);
+  }
   auto & json = *static_cast<internal::RapidJSONValue *>(v.value_);
   auto & doc = *static_cast<internal::RapidJSONDocument *>(v.doc_.get());
   auto & allocator = doc.GetAllocator();
@@ -787,29 +795,33 @@ void Configuration::push_null()
 }
 
 // clang-format off
-void Configuration::add(const std::string & key, bool value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, int value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, unsigned int value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, int64_t value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, uint64_t value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, double value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, bool value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, int value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, unsigned int value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, int64_t value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, uint64_t value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, double value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const char * value) { add(key, std::string(value)); }
-void Configuration::add(const std::string & key, const std::string & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const Eigen::Vector2d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const Eigen::Vector3d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const Eigen::Vector6d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const Eigen::VectorXd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const Eigen::Quaterniond & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const Eigen::Matrix3d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const Eigen::Matrix6d & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const Eigen::MatrixXd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const sva::PTransformd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const sva::ForceVecd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
-void Configuration::add(const std::string & key, const sva::MotionVecd & value) { add_impl(key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const std::string & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Vector2d & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Vector3d & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Vector6d & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::VectorXd & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Quaterniond & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Matrix3d & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::Matrix6d & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const Eigen::MatrixXd & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const sva::PTransformd & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const sva::ForceVecd & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const sva::MotionVecd & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 // clang-format on
 
 void Configuration::add(const std::string & key, const Configuration & value)
 {
+  if(!v.isObject())
+  {
+    throw Exception("You cannot add entry into a non-object", v);
+  }
   auto & doc = *static_cast<internal::RapidJSONDocument *>(v.doc_.get());
   auto & allocator = doc.GetAllocator();
   auto & json = *static_cast<internal::RapidJSONValue *>(v.value_);
@@ -824,6 +836,10 @@ void Configuration::add(const std::string & key, const Configuration & value)
 
 Configuration Configuration::add(const std::string & key)
 {
+  if(!v.isObject())
+  {
+    throw Exception("You cannot add entry into a non-object", v);
+  }
   auto & doc = *static_cast<internal::RapidJSONDocument *>(v.doc_.get());
   auto & allocator = doc.GetAllocator();
   auto & json = *static_cast<internal::RapidJSONValue *>(v.value_);
