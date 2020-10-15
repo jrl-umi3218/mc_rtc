@@ -25,8 +25,8 @@
       ]
     },
     "constraints": { "type": "object",
-                     "description": "Constraints that will be added when the state starts and removed when the state stops.<br/>Keys are used to identify the constraints in the description." },
+                     "description": "Constraints that will be added when the state starts and removed when the state stops.<br/>Keys are names for the constraints and values are <a href=\"{{site.baseurl}}/json.html#ConstraintSet\">ConstraintSet objects</a>." },
     "tasks": { "type": "object",
-               "description": "Tasks that will be added when the state starts and removed when the state stops.<br/>Keys are the name of the tasks and values are MetaTask objects." }
+               "description": "Tasks that will be added when the state starts and removed when the state stops.<br/>Keys are names for the tasks and values are <a href=\"{{site.baseurl}}/json.html#MetaTask\">MetaTask objects</a>." }
   }
 }
