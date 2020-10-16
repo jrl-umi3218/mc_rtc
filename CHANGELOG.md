@@ -2,13 +2,36 @@
 
 ## [Unreleased]
 
+## [1.6.0] - 2020-10-16
+
+### Changes
+
+- [cmake/loader] When mc_rtc is build in debug mode it will look for loadable libraries (controllers, robots, observers and plugins) in the debug sub-folder of the standard installation location (#78)
+- [cmake/loader] On Windows, mc_rtc will now look for loadable libraries in the `bin/mc_[component]` folder instead of `lib/mc_[component]` and install helper libraries in the `bin` folder (#81)
+- [FSM] `RemovePostureTask` is now `DisablePostureTask`, it disables either all FSM posture tasks for the state's duration if it is set to `true` or disable only the posture tasks for the provided robots (#80)
+- [FSM] `RemovePostureTask` is kept for backward compatibility, it has the same capabilities as `DisablePostureTask` (#80)
+
 ### Added
 
-- [mc_tasks] Add a simple constructor for StabilizerTask
+- [FSM] Posture state has been introduced to interact with the global posture (#67)
+- [FSM] HalfSitting can now handle any robot (#67)
+- [mc_robots] Generate env aliases for the objects (#67)
+- [mc_tasks] Add a simple constructor for StabilizerTask (#69)
+- [cmake] Export mc_rtc observers as targets so they can be used as a base class
+- [mc_rtc] Introduce mc_rtc::debug() (#78)
+- [FSM] `constraints` can be used to load extra-constraints in any state (#80)
+- [FSM] `tasks` can be used to load extra-tasks in any state (#80)
+- [mc_trajectory] Introduce `SequenceInterpolator` to do linear interpolation between values over a time-sequence (#64)
+- [mc_tasks] SplineTrajectoryTask can use `SequenceInterpolator` to use varying gains during the task execution (#64)
 
 ### Fixes
 
-- [mc_observers] Fix configuration reading for anchor frame configuration
+- [mc_observers] Fix configuration reading for anchor frame configuration (#69)
+- Typo in CMake macros for controller build in catkin workspace (#75)
+- Load libraries from a symlink (#76)
+- [mc_log_ui] The open_log function returns a ditionnary as documented
+- [mc_rtc] Configuration::empty() correctly returns false if the Configuration hold a value
+- [mc_rtc] Configuration::load() does not (wrongly) load the full document under some circumstances
 
 ## [1.5.1] - 2020-09-14
 
@@ -197,8 +220,9 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.5.1...HEAD
-[1.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.1
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.6.0
+[1.5.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.1
 [1.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.0
 [1.4.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.4.0
 [1.3.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.3.0
