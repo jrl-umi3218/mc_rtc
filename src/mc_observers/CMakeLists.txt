@@ -6,7 +6,11 @@ macro(add_observer observer_base)
   set_target_properties(${observer_base} PROPERTIES COMPILE_FLAGS "-DMC_OBSERVER_EXPORTS" PREFIX "")
   target_link_libraries(${observer_base} PUBLIC mc_rbdyn mc_rtc_gui mc_control mc_filter)
   target_include_directories(${observer_base} PUBLIC $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/mc_observers>)
-  install(TARGETS ${observer_base} EXPORT mc_rtc_observers DESTINATION ${MC_OBSERVERS_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>)
+  install(TARGETS ${observer_base} EXPORT mc_rtc_observers
+    ARCHIVE DESTINATION "${MC_OBSERVERS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    LIBRARY DESTINATION "${MC_OBSERVERS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    RUNTIME DESTINATION "${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+  )
 endmacro()
 
 add_observer(EncoderObserver)
@@ -14,7 +18,7 @@ add_observer(BodySensorObserver)
 add_observer(KinematicInertialPoseObserver)
 add_observer(KinematicInertialObserver)
 target_link_libraries(KinematicInertialObserver PUBLIC KinematicInertialPoseObserver)
-set_target_properties(KinematicInertialObserver PROPERTIES INSTALL_RPATH ${MC_OBSERVERS_INSTALL_PREFIX})
+set_target_properties(KinematicInertialObserver PROPERTIES INSTALL_RPATH ${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX})
 
 install(
   EXPORT mc_rtc_observers

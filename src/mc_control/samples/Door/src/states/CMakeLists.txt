@@ -3,14 +3,15 @@ macro(add_fsm_state state_name state_SRC state_HDR)
 
   set_target_properties(${state_name} PROPERTIES PREFIX "")
   set_target_properties(${state_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS")
-  set_target_properties(${state_name} PROPERTIES INSTALL_RPATH "${MC_STATES_DEFAULT_INSTALL_PREFIX};${MC_STATES_INSTALL_PREFIX};${Door_STATES_INSTALL_PREFIX}")
+  set_target_properties(${state_name} PROPERTIES INSTALL_RPATH "${MC_STATES_RUNTIME_INSTALL_PREFIX};${MC_Door_STATES_RUNTIME_INSTALL_PREFIX}")
 
   target_link_libraries(${state_name} PUBLIC mc_rtc::mc_control_fsm)
-  if(TARGET ${PROJECT_NAME})
-    target_link_libraries(${state_name} PUBLIC ${PROJECT_NAME})
-  endif()
 
-  install(TARGETS ${state_name} DESTINATION "${Door_STATES_INSTALL_PREFIX}")
+  install(TARGETS ${state_name}
+    ARCHIVE DESTINATION "${MC_Door_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    LIBRARY DESTINATION "${MC_Door_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    RUNTIME DESTINATION "${MC_Door_STATES_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+  )
 endmacro()
 
 macro(add_fsm_state_simple state_name)

@@ -1,5 +1,5 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 macro(add_controller controller_name controller_SRC controller_HDR)
@@ -8,7 +8,11 @@ macro(add_controller controller_name controller_SRC controller_HDR)
   set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS
     "-DMC_CONTROL_EXPORTS" PREFIX "")
   target_link_libraries(${controller_name} PUBLIC mc_control)
-  install(TARGETS ${controller_name} DESTINATION ${MC_CONTROLLER_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>)
+  install(TARGETS ${controller_name}
+    ARCHIVE DESTINATION "${MC_CONTROLLER_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    LIBRARY DESTINATION "${MC_CONTROLLER_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    RUNTIME DESTINATION "${MC_CONTROLLER_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+  )
 endmacro()
 
 if(${BUILD_CONTROLLER_SAMPLES})

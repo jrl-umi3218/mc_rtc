@@ -8,4 +8,4 @@ add_controller("text"
 )
 
 install(FILES etc/Text.conf
-        DESTINATION ${MC_CONTROLLER_INSTALL_PREFIX}/etc/)
+  DESTINATION ${MC_CONTROLLER_RUNTIME_INSTALL_PREFIX}/etc/)

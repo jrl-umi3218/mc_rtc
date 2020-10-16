@@ -11,12 +11,12 @@ StepByStep: false
 IdleKeepState: false
 # Where to look for state libraries
 StatesLibraries:
-- "@MC_STATES_INSTALL_PREFIX@"
-- "@Door_STATES_INSTALL_PREFIX@"
+- "@MC_STATES_RUNTIME_INSTALL_PREFIX@"
+- "@MC_Door_STATES_RUNTIME_INSTALL_PREFIX@"
 # Where to look for state files
 StatesFiles:
-- "@MC_STATES_INSTALL_PREFIX@/data"
-- "@Door_STATES_INSTALL_PREFIX@/data"
+- "@MC_STATES_RUNTIME_INSTALL_PREFIX@/data"
+- "@MC_Door_STATES_DATA_INSTALL_PREFIX@"
 
 # Additional robots to load
 robots:
