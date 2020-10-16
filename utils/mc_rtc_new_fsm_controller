@@ -32,12 +32,12 @@ StepByStep: true
 IdleKeepState: false
 # Where to look for state libraries
 StatesLibraries:
-- "@MC_STATES_DEFAULT_INSTALL_PREFIX@"
-- "@MC_STATES_INSTALL_PREFIX@"
+- "@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@"
+- "@MC_STATES_RUNTIME_INSTALL_PREFIX@"
 # Where to look for state files
 StatesFiles:
-- "@MC_STATES_DEFAULT_INSTALL_PREFIX@/data"
-- "@MC_STATES_INSTALL_PREFIX@/data"
+- "@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@/data"
+- "@MC_STATES_RUNTIME_INSTALL_PREFIX@/data"
 # If true, state factory will be more verbose
 VerboseStateFactory: false
 # Additional robots to load
@@ -99,11 +99,6 @@ install(TARGETS ${{PROJECT_NAME}}
   RUNTIME DESTINATION bin)
 
 add_controller(${{PROJECT_NAME}}_controller lib.cpp "")
-set_target_properties(${{PROJECT_NAME}}_controller PROPERTIES OUTPUT_NAME "${{PROJECT_NAME}}")
-set_target_properties(${{PROJECT_NAME}}_controller PROPERTIES
-  ARCHIVE_OUTPUT_DIRECTORY lib/$<CONFIGURATION>
-  LIBRARY_OUTPUT_DIRECTORY lib/$<CONFIGURATION>
-  RUNTIME_OUTPUT_DIRECTORY lib/$<CONFIGURATION>)
 target_link_libraries(${{PROJECT_NAME}}_controller PUBLIC ${{PROJECT_NAME}})
 """.format(controller_class_name = controller_class_name))
     with open(project_dir + '/src/lib.cpp', 'w') as fd:

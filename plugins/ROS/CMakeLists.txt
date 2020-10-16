@@ -82,4 +82,4 @@ set(plugin_HDR
 add_plugin(ROS "${plugin_SRC}" "${plugin_HDR}")
 set_target_properties(ROS PROPERTIES COMPILE_FLAGS "-DMC_RTC_ROS_PLUGIN_EXPORTS")
 target_link_libraries(ROS PUBLIC mc_rtc_ros mc_tasks_ros)
-install(FILES etc/ROS.yaml DESTINATION "${MC_PLUGINS_INSTALL_PREFIX}/etc")
+install(FILES etc/ROS.yaml DESTINATION "${MC_PLUGINS_RUNTIME_INSTALL_PREFIX}/etc")

@@ -10,7 +10,11 @@ macro(add_robot robot_base)
   set_target_properties(${robot_base} PROPERTIES FOLDER robots)
   target_link_libraries(${robot_base} PUBLIC mc_rbdyn)
   target_include_directories(${robot_base} PRIVATE "../../include/mc_robots")
-  install(TARGETS ${robot_base} DESTINATION ${MC_ROBOTS_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>)
+  install(TARGETS ${robot_base}
+    ARCHIVE DESTINATION "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    LIBRARY DESTINATION "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    RUNTIME DESTINATION "${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+  )
 endmacro()
 
 add_robot(env)
@@ -32,7 +36,7 @@ macro(generate_aliases PATH ALIASES FILE_IN FILE_OUT)
   if(CMAKE_CONFIGURATION_TYPES)
     file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>/aliases/${FILE_OUT}" INPUT "${PATH_OUT}")
   endif()
-  install(FILES "${PATH_OUT}" DESTINATION "${MC_ROBOTS_INSTALL_PREFIX}/aliases/")
+  install(FILES "${PATH_OUT}" DESTINATION "${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}/aliases/")
 endmacro()
 
 append_aliases("${MC_INT_OBJ_DESCRIPTION_PATH}" OBJECT_ALIASES object)

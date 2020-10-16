@@ -1,5 +1,5 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 cmake_minimum_required(VERSION 3.1)
@@ -116,10 +116,19 @@ endmacro()
 find_description_package(mc_env_description)
 find_description_package(mc_int_obj_description)
 
-set(MC_PLUGINS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_plugins)
-set(MC_ROBOTS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_robots)
-set(MC_OBSERVERS_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_observers)
-set(MC_CONTROLLER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/mc_controller)
+macro(mc_rtc_set_prefix NAME FOLDER)
+  set(MC_${NAME}_LIBRARY_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/${FOLDER})
+  if(WIN32)
+    set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/bin/${FOLDER})
+  else()
+    set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/${FOLDER})
+  endif()
+endmacro()
+
+mc_rtc_set_prefix(PLUGINS mc_plugins)
+mc_rtc_set_prefix(ROBOTS mc_robots)
+mc_rtc_set_prefix(OBSERVERS mc_observers)
+mc_rtc_set_prefix(CONTROLLER mc_controller)
 
 configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
 

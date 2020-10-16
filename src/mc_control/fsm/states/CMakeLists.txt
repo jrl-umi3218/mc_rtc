@@ -2,7 +2,7 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
-set(FSM_STATES_INSTALL_DIR "${MC_CONTROLLER_INSTALL_PREFIX}/fsm/states")
+mc_rtc_set_prefix(FSM_STATES mc_controller/fsm/states)
 set(FSM_HDR_DIR "${PROJECT_SOURCE_DIR}/include/mc_control/fsm/states")
 set(FSM_HDR_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include/mc_control/fsm/states")
 
@@ -13,13 +13,17 @@ macro(add_fsm_state state_name state_SRC state_HDR)
   set_target_properties(${state_name} PROPERTIES PREFIX "")
   set_target_properties(${state_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS")
   target_link_libraries(${state_name} PUBLIC mc_control_fsm)
-  install(TARGETS ${state_name} EXPORT mc_rtc_fsm_states DESTINATION ${FSM_STATES_INSTALL_DIR}$<$<CONFIG:debug>:/debug>)
+  install(TARGETS ${state_name} EXPORT mc_rtc_fsm_states
+    ARCHIVE DESTINATION "${MC_FSM_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    LIBRARY DESTINATION "${MC_FSM_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    RUNTIME DESTINATION "${MC_FSM_STATES_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+  )
   install(FILES ${state_HDR} DESTINATION ${FSM_HDR_INSTALL_DIR})
 endmacro()
 
 install(DIRECTORY data
-  DESTINATION ${FSM_STATES_INSTALL_DIR}
-  FILES_MATCHING 
+  DESTINATION ${MC_FSM_STATES_RUNTIME_INSTALL_PREFIX}
+  FILES_MATCHING
   PATTERN "*.json"
   PATTERN "*.yaml")
 
@@ -55,7 +59,11 @@ if(${PYTHON_BINDING})
     set_target_properties(${PYTHON_NAME}State PROPERTIES PREFIX "")
     set_target_properties(${PYTHON_NAME}State PROPERTIES FOLDER controllers/fsm/states)
     target_link_libraries(${PYTHON_NAME}State PUBLIC ${CYTHON_LIB} mc_control_fsm)
-    install(TARGETS ${PYTHON_NAME}State DESTINATION ${FSM_STATES_INSTALL_DIR})
+    install(TARGETS ${PYTHON_NAME}State
+      ARCHIVE DESTINATION "${MC_FSM_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+      LIBRARY DESTINATION "${MC_FSM_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+      RUNTIME DESTINATION "${MC_FSM_STATES_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    )
   endforeach()
 endif()
 
