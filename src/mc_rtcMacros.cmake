@@ -13,7 +13,7 @@ macro(mc_rtc_set_prefix NAME FOLDER)
     set(MC_${NAME}_RUNTIME_INSTALL_PREFIX "${MC_RTC_LIBDIR}/${FOLDER}")
   endif()
   # For backward compatibility
-  set(MC_${NAME}_INSTALL_PREFIX "${MC_RTC_BINDIR}/${FOLDER}")
+  set(MC_${NAME}_INSTALL_PREFIX "${MC_RTC_LIBDIR}/${FOLDER}")
 endmacro()
 
 # -- Controllers --
