@@ -167,7 +167,7 @@ protected:
   /** Constraints managed by the state if any */
   std::vector<mc_solver::ConstraintSetPtr> constraints_;
   /** Tasks managed by the state if any */
-  std::vector<mc_tasks::MetaTaskPtr> tasks_;
+  std::vector<std::pair<mc_tasks::MetaTaskPtr, mc_rtc::Configuration>> tasks_;
   /** Posture tasks that were removed by this state */
   std::vector<mc_tasks::PostureTaskPtr> postures_;
 

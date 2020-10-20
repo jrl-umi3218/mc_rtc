@@ -23,8 +23,8 @@ void MetaTasksState::start(Controller & ctl)
 {
   for(size_t i = 0; i < tasks_.size(); ++i)
   {
-    const auto & t = tasks_[i];
-    const auto & tConfig = tasks_config_(t->name());
+    const auto & t = tasks_[i].first;
+    const auto & tConfig = tasks_[i].second;
     if(tConfig.has("completion"))
     {
       CompletionCriteria crit;
@@ -43,11 +43,12 @@ void MetaTasksState::start(Controller & ctl)
       mc_rtc::log::error_and_throw<std::runtime_error>(
           "[{}] Invalid output task name {}: should be one of the following tasks: {}. Check your \"outputs\" "
           "configuration.",
-          name(), tName, mc_rtc::io::to_string(tasks_, [](const mc_tasks::MetaTaskPtr & t) { return t->name(); }));
+          name(), tName, mc_rtc::io::to_string(tasks_config_.keys()));
     }
     else
     {
-      criterias_[tName].use_output = true;
+      const std::string & name = tasks_config_(tName)("name", tName);
+      criterias_[name].use_output = true;
     }
   }
 }
@@ -58,7 +59,7 @@ bool MetaTasksState::run(Controller &)
   for(auto & c : criterias_)
   {
     auto & tCrit = c.second;
-    const auto & t = *tasks_[tCrit.idx];
+    const auto & t = *tasks_[tCrit.idx].first;
     finished = tCrit.criteria.completed(t) && finished;
   }
   if(finished)
@@ -71,7 +72,7 @@ bool MetaTasksState::run(Controller &)
       {
         auto & tCrit = c.second;
         auto & crit = tCrit.criteria;
-        const auto & t = *tasks_[tCrit.idx];
+        const auto & t = *tasks_[tCrit.idx].first;
         if(tCrit.use_output)
         {
           if(out.size())

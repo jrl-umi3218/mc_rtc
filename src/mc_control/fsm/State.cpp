@@ -178,8 +178,8 @@ void State::start_(Controller & ctl)
       {
         tConfig.add("name", tName);
       }
-      tasks_.push_back(mc_tasks::MetaTaskLoader::load(ctl.solver(), tConfig));
-      ctl.solver().addTask(tasks_.back());
+      tasks_.push_back({mc_tasks::MetaTaskLoader::load(ctl.solver(), tConfig), tConfig});
+      ctl.solver().addTask(tasks_.back().first);
     }
   }
   start(ctl);
@@ -248,7 +248,7 @@ void State::teardown_(Controller & ctl)
   }
   for(const auto & t : tasks_)
   {
-    ctl.solver().removeTask(t);
+    ctl.solver().removeTask(t.first);
   }
   teardown(ctl);
 }
