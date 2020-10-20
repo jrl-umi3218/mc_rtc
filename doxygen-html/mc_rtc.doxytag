@@ -30082,10 +30082,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
-      <type>std::vector&lt; mc_tasks::MetaTaskPtr &gt;</type>
+      <type>std::vector&lt; std::pair&lt; mc_tasks::MetaTaskPtr, mc_rtc::Configuration &gt; &gt;</type>
       <name>tasks_</name>
       <anchorfile>a01408.html</anchorfile>
-      <anchor>a835837bd226bf315e0906830b2bd08ee</anchor>
+      <anchor>a511405fda381c0a02ed23cf0475b1128</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
