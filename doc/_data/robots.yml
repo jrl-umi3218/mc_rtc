@@ -1,5 +1,5 @@
 - name: HRP-2-Kai
-  icon: hrp2.png
+  icon: hrp2.jpg
   pkg:
     desc:
       url: https://gite.lirmm.fr/mc-hrp2/hrp2_drc
