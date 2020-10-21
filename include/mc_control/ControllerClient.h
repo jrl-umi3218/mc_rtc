@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -354,6 +354,13 @@ protected:
 
   /** Called to close a table identified by \p id */
   virtual void table_end(const ElementId & /*id*/) {}
+
+  virtual void robot(const ElementId & id,
+                     const std::vector<std::string> & /*parameters*/,
+                     const std::vector<std::vector<double>> & /*q*/)
+  {
+    default_impl("Robot", id);
+  }
 
   /** Should display a form to send schema-based request to the server
    *

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_control/ControllerClient.h>
@@ -309,6 +309,9 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
       case Elements::Table:
         handle_table(id, data.at(3, std::vector<std::string>{}), data.at(5, std::vector<std::string>{}),
                      data.at(4, std::vector<mc_rtc::Configuration>{}));
+        break;
+      case Elements::Robot:
+        robot(id, data[3], data[4]);
         break;
       default:
         mc_rtc::log::error("Type {} is not handlded by this ControllerClient", static_cast<int>(type));

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -40,7 +40,8 @@ enum class Elements
   Force,
   Arrow,
   XYTheta,
-  Table
+  Table,
+  Robot
 };
 
 /** Element is the common class for every element's type available in the

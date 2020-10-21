@@ -23,6 +23,7 @@
 #include <mc_rtc/gui/NumberSlider.h>
 #include <mc_rtc/gui/Point3D.h>
 #include <mc_rtc/gui/Polygon.h>
+#include <mc_rtc/gui/Robot.h>
 #include <mc_rtc/gui/Rotation.h>
 #include <mc_rtc/gui/Schema.h>
 #include <mc_rtc/gui/StringInput.h>
