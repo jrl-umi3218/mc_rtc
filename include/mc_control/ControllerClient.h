@@ -603,7 +603,7 @@ protected:
 
 private:
   /** Default implementations for widgets' creations display a warning message to the user */
-  void default_impl(const std::string & type, const ElementId & id);
+  virtual void default_impl(const std::string & type, const ElementId & id);
 
   /** Handle details of Point3D elements */
   void handle_point3d(const ElementId & id, const mc_rtc::Configuration & data);
