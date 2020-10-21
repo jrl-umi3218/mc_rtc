@@ -94,6 +94,21 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
   /** Get the current timeout */
   double timeout();
 
+  /** Check if there is an available message from the server and process it
+   *
+   * This is the synchronous pendant to \ref start()
+   *
+   * \param buffer Buffer to receive data from the server, if it is too small,
+   * the buffer is resized and the message is discarded
+   *
+   * \param t_last_received Time when the last message was received, it is
+   * updated if the client receives a message. If a message has not been
+   * received since \ref timeout() then act as if we received an empty message
+   * (server offline).
+   *
+   */
+  void run(std::vector<char> & buffer, std::chrono::system_clock::time_point & t_last_received);
+
 protected:
   /** Should be called when the client is ready to receive data */
   void start();
