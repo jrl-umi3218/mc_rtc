@@ -129,6 +129,13 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
   if(updateNrVars)
   {
     solver().updateNrVars();
+    if(gui())
+    {
+      size_t i = robots.size();
+      gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [i, this]() -> const mc_rbdyn::Robot & {
+                          return this->robots().robots()[i];
+                        }));
+    }
   }
   return r;
 }
