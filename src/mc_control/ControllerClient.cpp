@@ -123,17 +123,28 @@ void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::
   }
   else if(recv > 0)
   {
-    if(recv > static_cast<int>(buff.size()))
+    auto msg_size = recv;
+    while(recv > 0)
+    {
+      msg_size = recv;
+      recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
+    }
+    t_last_received = now;
+    if(msg_size > static_cast<int>(buff.size()))
     {
       mc_rtc::log::warning(
           "Receive buffer was too small to receive the latest state message, will resize for next time");
-      buff.resize(2 * buff.size());
+      auto nsize = buff.size() == 0 ? 65535 : 2 * buff.size();
+      while(msg_size > static_cast<int>(nsize))
+      {
+        nsize = 2 * nsize;
+      }
+      buff.resize(nsize);
       return;
     }
-    t_last_received = now;
     if(run_)
     {
-      handle_gui_state(mc_rtc::Configuration::fromMessagePack(buff.data(), static_cast<size_t>(recv)));
+      handle_gui_state(mc_rtc::Configuration::fromMessagePack(buff.data(), static_cast<size_t>(msg_size)));
     }
   }
 }
