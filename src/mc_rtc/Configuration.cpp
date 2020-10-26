@@ -366,9 +366,28 @@ Configuration::operator Eigen::VectorXd() const
 
 Configuration::operator Eigen::Quaterniond() const
 {
-  if(v.isArray() && v.size() == 4 && v[0].isNumeric())
+  if(v.isArray() && v[0].isNumeric())
   {
-    return Eigen::Quaterniond(v[0].asDouble(), v[1].asDouble(), v[2].asDouble(), v[3].asDouble()).normalized();
+    if(v.size() == 4)
+    {
+      return Eigen::Quaterniond(v[0].asDouble(), v[1].asDouble(), v[2].asDouble(), v[3].asDouble()).normalized();
+    }
+    else if(v.size() == 9)
+    {
+      Eigen::Matrix3d m;
+      for(size_t i = 0; i < 3; ++i)
+      {
+        for(size_t j = 0; j < 3; ++j)
+        {
+          m(static_cast<int>(i), static_cast<int>(j)) = v[3 * i + j].asDouble();
+        }
+      }
+      return Eigen::Quaterniond(m).normalized();
+    }
+    else if(v.size() == 3)
+    {
+      return Eigen::Quaterniond(mc_rbdyn::rpyToMat(v[0].asDouble(), v[1].asDouble(), v[2].asDouble())).normalized();
+    }
   }
   throw Exception("Stored Json value is not a Quaterniond", v);
 }
