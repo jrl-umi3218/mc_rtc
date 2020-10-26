@@ -6,6 +6,8 @@
 
 #include <mc_rtc/gui.h>
 
+#include <SpaceVecAlg/Conversions.h>
+
 #include <chrono>
 #include <thread>
 
@@ -13,6 +15,18 @@
 #  include <boost/math/constants/constants.hpp>
 #  define M_PI boost::math::constants::pi<double>()
 #endif
+
+sva::PTransformd lookAt(const Eigen::Vector3d & position, const Eigen::Vector3d & target, const Eigen::Vector3d & up)
+{
+  Eigen::Matrix3d R;
+  R.col(2) = (target - position).normalized();
+  R.col(0) = up.cross(R.col(2)).normalized();
+  R.col(1) = R.col(2).cross(R.col(0));
+  Eigen::Matrix4d view = Eigen::Matrix4d::Identity();
+  view.topLeftCorner<3, 3>() = R;
+  view.topRightCorner<3, 1>() = position;
+  return sva::conversions::fromHomogeneous(view);
+}
 
 struct DummyProvider
 {
@@ -191,6 +205,11 @@ struct TestServer
       std::make_tuple<std::string, double, int>("World", 0.2001, 4),
       std::make_tuple<std::string, double, int>("!", 0.0001, 42)};
   FakeZMPGraph graph_;
+  std::vector<Eigen::Vector3d> trajectory_ = {Eigen::Vector3d::UnitX(), Eigen::Vector3d::UnitY(),
+                                              -Eigen::Vector3d::UnitX(), -Eigen::Vector3d::UnitY()};
+  std::vector<sva::PTransformd> poseTrajectory_ = {{sva::RotX<double>(0), {1, 1, 1}},
+                                                   {sva::RotX<double>(M_PI / 2), {1, -1, 2}},
+                                                   {sva::RotY<double>(-M_PI / 2) * sva::RotX<double>(M_PI), {1, 1, 3}}};
 };
 
 TestServer::TestServer() : xythetaz_(4)
@@ -323,6 +342,17 @@ TestServer::TestServer() : xythetaz_(4)
       mc_rtc::gui::Point3D("ReadOnly", mc_rtc::gui::PointConfig({1., 0., 0.}, 0.08), [this]() { return v3_; }),
       mc_rtc::gui::Point3D("Interactive", mc_rtc::gui::PointConfig({0., 1., 0.}, 0.08), [this]() { return vInt_; },
                            [this](const Eigen::Vector3d & v) { vInt_ = v; }));
+
+  builder.addElement(
+      {"GUI Markers", "Trajectories"}, mc_rtc::gui::Trajectory("Vector3d", [this]() { return trajectory_; }),
+      mc_rtc::gui::Trajectory("PTransformd", {mc_rtc::gui::Color::Green}, [this]() { return poseTrajectory_; }),
+      mc_rtc::gui::Trajectory("Live 3D", {mc_rtc::gui::Color::Magenta},
+                              [this]() {
+                                return Eigen::Vector3d{cos(t_), sin(t_), 1.0};
+                              }),
+      mc_rtc::gui::Trajectory("Live transform", {mc_rtc::gui::Color::Black}, [this]() {
+        return lookAt({cos(t_), -1, sin(t_)}, {0, 0, 0}, Eigen::Vector3d::UnitZ());
+      }));
 
   mc_rtc::gui::ArrowConfig arrow_config({1., 0., 0.});
   arrow_config.start_point_scale = 0.02;
