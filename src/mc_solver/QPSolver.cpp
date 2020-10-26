@@ -10,6 +10,7 @@
 #include <mc_tasks/MetaTask.h>
 
 #include <mc_rtc/gui/Button.h>
+#include <mc_rtc/gui/Force.h>
 #include <mc_rtc/gui/Form.h>
 
 #include <Tasks/Bounds.h>
@@ -183,6 +184,17 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
       logger_->removeLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S);
     }
   }
+  if(gui_)
+  {
+    for(const auto & contact : contacts_)
+    {
+      const std::string & r1 = robots().robot(contact.r1Index()).name();
+      const std::string & r1S = contact.r1Surface()->name();
+      const std::string & r2 = robots().robot(contact.r2Index()).name();
+      const std::string & r2S = contact.r2Surface()->name();
+      gui_->removeElement({"Contacts"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S));
+    }
+  }
   contacts_ = contacts;
   if(logger_)
   {
@@ -194,6 +206,22 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
       const std::string & r2S = contact.r2Surface()->name();
       logger_->addLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S,
                            [this, &contact]() { return desiredContactForce(contact); });
+    }
+  }
+  if(gui_)
+  {
+    for(const auto & contact : contacts_)
+    {
+      const std::string & r1 = robots().robot(contact.r1Index()).name();
+      const std::string & r1S = contact.r1Surface()->name();
+      const std::string & r2 = robots().robot(contact.r2Index()).name();
+      const std::string & r2S = contact.r2Surface()->name();
+      gui_->addElement({"Contacts"}, mc_rtc::gui::Force(fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S),
+                                                        [this, &contact]() { return desiredContactForce(contact); },
+                                                        [this, &contact]() {
+                                                          return robots().robots()[contact.r1Index()].surfacePose(
+                                                              contact.r1Surface()->name());
+                                                        }));
     }
   }
   uniContacts.clear();
