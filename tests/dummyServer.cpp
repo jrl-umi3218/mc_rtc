@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_control/ControllerServer.h>
@@ -192,6 +192,7 @@ struct TestServer
   Eigen::Vector3d xytheta_{0., 2., M_PI / 3};
   Eigen::VectorXd xythetaz_;
   std::vector<Eigen::Vector3d> polygon_;
+  std::vector<std::vector<Eigen::Vector3d>> polygons_;
   Eigen::Vector3d arrow_start_{0.5, 0.5, 0.};
   Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
   sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
@@ -219,6 +220,25 @@ TestServer::TestServer() : xythetaz_(4)
   polygon_.push_back({1, -1, 0});
   polygon_.push_back({-1, -1, 0});
   polygon_.push_back({-1, 1, 0});
+
+  auto makeFoot = [](const sva::PTransformd & pose) {
+    std::vector<Eigen::Vector3d> points;
+    double width = 0.1;
+    double length = 0.2;
+    points.push_back((sva::PTransformd{Eigen::Vector3d{length / 2, width / 2, 0}} * pose).translation());
+    points.push_back((sva::PTransformd{Eigen::Vector3d{length / 2, -width / 2, 0}} * pose).translation());
+    points.push_back((sva::PTransformd{Eigen::Vector3d{-length / 2, -width / 2, 0}} * pose).translation());
+    points.push_back((sva::PTransformd{Eigen::Vector3d{-length / 2, width / 2, 0}} * pose).translation());
+    return points;
+  };
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0, -0.15, 0)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0, 0.15, 0)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0.3, -0.15, 0)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0.6, 0.15, 0)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0.6, -0.15, 0)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0.9, 0.15, 0.2)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(1.2, -0.15, 0.4)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(1.2, 0.15, 0.4)}));
 
   make_table(3);
 
@@ -342,6 +362,8 @@ TestServer::TestServer() : xythetaz_(4)
       mc_rtc::gui::Point3D("ReadOnly", mc_rtc::gui::PointConfig({1., 0., 0.}, 0.08), [this]() { return v3_; }),
       mc_rtc::gui::Point3D("Interactive", mc_rtc::gui::PointConfig({0., 1., 0.}, 0.08), [this]() { return vInt_; },
                            [this](const Eigen::Vector3d & v) { vInt_ = v; }));
+
+  builder.addElement({"GUI Markers", "Polygons"}, mc_rtc::gui::Polygon("Polygons", [this]() { return polygons_; }));
 
   builder.addElement(
       {"GUI Markers", "Trajectories"}, mc_rtc::gui::Trajectory("Vector3d", [this]() { return trajectory_; }),
