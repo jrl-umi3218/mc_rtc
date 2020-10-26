@@ -394,8 +394,17 @@ void ControllerClient::handle_trajectory(const ElementId & id, const mc_rtc::Con
       catch(mc_rtc::Configuration::Exception & exc)
       {
         exc.silence();
-        Eigen::Vector3d p = data;
-        trajectory(id, p, config);
+        try
+        {
+          Eigen::Vector3d p = data;
+          trajectory(id, p, config);
+        }
+        catch(mc_rtc::Configuration::Exception & exc)
+        {
+          exc.silence();
+          sva::PTransformd pos = data;
+          trajectory(id, pos, config);
+        }
       }
     }
   }
