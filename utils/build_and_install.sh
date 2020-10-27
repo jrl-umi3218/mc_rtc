@@ -1003,8 +1003,8 @@ build_git_dependency_configure_and_build()
 {
   git_dependency_parsing $1
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
-  mkdir -p "$SOURCE_DIR/$git_dep/build"
-  cd "$SOURCE_DIR/$git_dep/build"
+  mkdir -p "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
+  cd "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
   if [[ $OS == "Windows" ]]
   then
     hide_sh
@@ -1144,8 +1144,8 @@ then
   git submodule update --init
   exit_if_error "-- [ERROR] Failed to update submodules"
 fi
-mkdir -p build
-cd build
+mkdir -p $BUILD_SUBDIR
+cd $BUILD_SUBDIR
 if $BUILD_TESTING
 then
   BUILD_TESTING_OPTION=ON
