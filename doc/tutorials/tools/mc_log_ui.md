@@ -115,3 +115,13 @@ You can choose to save as a variety of formats. If you save to SVG (Scalable Vec
 ### Automated figure plotting
 
 The final tool introduced here is `mc_plot_logs`. It expects a binary log and a JSON file describing the logs that you wish to plot (the format is the same as user plots from `mc_log_ui`). It will output a figure for each plot in the provided file.
+
+### Loading multiple logs
+
+It might be desirable to load multiple logs at once for comparison purpose. This can be achieved by the following command:
+
+```bash
+$ mc_log_ui log-1.bin log-2.bin [...] log-N.bin
+```
+
+Or by loading the files through `File -> Compare...` in the menu.

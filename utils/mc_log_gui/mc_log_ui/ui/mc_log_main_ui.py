@@ -49,7 +49,10 @@ class Ui_MainWindow(object):
         self.actionLoad.setObjectName("actionLoad")
         self.actionExit = QtWidgets.QAction(MainWindow)
         self.actionExit.setObjectName("actionExit")
+        self.actionCompare = QtWidgets.QAction(MainWindow)
+        self.actionCompare.setObjectName("actionCompare")
         self.menuFile.addAction(self.actionLoad)
+        self.menuFile.addAction(self.actionCompare)
         self.menuFile.addAction(self.actionExit)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuCommonPlots.menuAction())
@@ -69,6 +72,7 @@ class Ui_MainWindow(object):
         self.menuUserPlots.setTitle(_translate("MainWindow", "User plots"))
         self.actionLoad.setText(_translate("MainWindow", "Load..."))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
+        self.actionCompare.setText(_translate("MainWindow", "Compare..."))
 
 from mc_log_ui.mc_log_tab import MCLogTab
 from mc_log_ui.mc_log_tab_widget import MCLogTabWidget

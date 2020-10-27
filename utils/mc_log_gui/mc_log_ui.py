@@ -16,7 +16,8 @@ if __name__ == '__main__':
   app.setWindowIcon(QtGui.QIcon(get_icon()))
   gui = MCLogUI()
   if len(sys.argv) > 1:
-    gui.load_csv(sys.argv[1])
+    for fpath in sys.argv[1:]:
+      gui.load_csv(fpath, False)
   gui.showMaximized()
 
   def sigint_handler(*args):

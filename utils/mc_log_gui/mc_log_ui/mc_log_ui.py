@@ -632,6 +632,8 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.data = Data()
     self.data.data_updated.connect(self.update_data)
 
+    self.loaded_files = []
+
     self.gridStyles = {'left': LineStyle(linestyle = '--'), 'right': LineStyle(linestyle = ':') }
     self.gridStyleFile = os.path.expanduser("~") + "/.config/mc_log_ui/grid_style.json"
     if os.path.exists(self.gridStyleFile):
@@ -902,7 +904,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       for i in range(self.ui.tabWidget.count() - 1):
         tab = self.ui.tabWidget.widget(i)
         assert(isinstance(tab, MCLogTab))
-        tab.setRobotModule(self.rm)
+        tab.setRobotModule(self.rm, self.loaded_files)
       self.saveDefaultRobot(action.actual())
     except RuntimeError:
       #QtWidgets.QMessageBox.warning(self, "Failed to get RobotModule", "Could not retrieve Robot Module: {}{}Check your console for more details".format(action.text(), os.linesep))
@@ -920,6 +922,12 @@ class MCLogUI(QtWidgets.QMainWindow):
       self.load_csv(fpath)
 
   @QtCore.Slot()
+  def on_actionCompare_triggered(self):
+    fpath = QtWidgets.QFileDialog.getOpenFileName(self, "Log file")[0]
+    if len(fpath):
+      self.load_csv(fpath, False)
+
+  @QtCore.Slot()
   def on_actionExit_triggered(self):
     QtWidgets.QApplication.quit()
 
@@ -929,7 +937,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       plotW = MCLogTab(self)
       plotW.setData(self.data)
       plotW.setGridStyles(self.gridStyles)
-      plotW.setRobotModule(self.rm)
+      plotW.setRobotModule(self.rm, self.loaded_files)
       plotW.setColors(self.colorsScheme.colors())
       plotW.setPolyColors(self.polyColorsScheme.colors())
       j = 1
@@ -979,30 +987,77 @@ class MCLogUI(QtWidgets.QMainWindow):
   def shortcutAxesDialog(self):
     self.ui.tabWidget.currentWidget().activeCanvas.axesDialog()
 
-  def load_csv(self, fpath):
-    self.data = Data(read_log(fpath))
-    self.data.data_updated.connect(self.update_data)
+  def load_csv(self, fpath, clear = True):
+    if clear:
+      self.loaded_files = []
+    data = read_log(fpath)
+    if not 't' in data:
+      print("This GUI assumes a time-entry named t is available in the log, failed loading {}".format(fpath))
+      return
+    if 't' in self.data and not clear:
+      dt = self.data['t'][1] - self.data['t'][0]
+      ndt = data['t'][1] - data['t'][0]
+      if abs(dt - ndt) > 1e-9:
+        print("This GUI assumes you are comparing logs with a similar timestep, already loaded dt = {} but attempted to load dt = {} from {}", dt, ndt, fpath)
+        return
+      pad_left = int(round((self.data['t'][0] - data['t'][0]) / dt))
+      pad_right = int(round((data['t'][-1] - self.data['t'][-1]) / dt))
+      start_t = min(self.data['t'][0], data['t'][0])
+      end_t = max(self.data['t'][-1], data['t'][-1])
+    fpath = os.path.basename(fpath).replace('_', '-')
+    self.loaded_files.append(fpath)
     i = 0
-    while "qIn_{}".format(i) in self.data and "qOut_{}".format(i) in self.data:
-      self.data["error_q_{}".format(i)] = self.data["qOut_{}".format(i)] - self.data["qIn_{}".format(i)]
-      self.data["qIn_limits_lower_{}".format(i)] = np.full_like(self.data["qIn_{}".format(i)], 0)
-      self.data["qIn_limits_upper_{}".format(i)] = np.full_like(self.data["qIn_{}".format(i)], 0)
-      self.data["qOut_limits_lower_{}".format(i)] = self.data["qIn_limits_lower_{}".format(i)]
-      self.data["qOut_limits_upper_{}".format(i)] = self.data["qIn_limits_upper_{}".format(i)]
+    while "qIn_{}".format(i) in data and "qOut_{}".format(i) in data:
+      data["error_q_{}".format(i)] = data["qOut_{}".format(i)] - data["qIn_{}".format(i)]
+      data["qIn_limits_lower_{}".format(i)] = np.full_like(data["qIn_{}".format(i)], 0)
+      data["qIn_limits_upper_{}".format(i)] = np.full_like(data["qIn_{}".format(i)], 0)
+      data["qOut_limits_lower_{}".format(i)] = data["qIn_limits_lower_{}".format(i)]
+      data["qOut_limits_upper_{}".format(i)] = data["qIn_limits_upper_{}".format(i)]
       i += 1
     i = 0
-    while "tauIn_{}".format(i) in self.data:
-      self.data["tauIn_limits_lower_{}".format(i)] = np.full_like(self.data["tauIn_{}".format(i)], 0)
-      self.data["tauIn_limits_upper_{}".format(i)] = np.full_like(self.data["tauIn_{}".format(i)], 0)
+    while "tauIn_{}".format(i) in data:
+      data["tauIn_limits_lower_{}".format(i)] = np.full_like(data["tauIn_{}".format(i)], 0)
+      data["tauIn_limits_upper_{}".format(i)] = np.full_like(data["tauIn_{}".format(i)], 0)
       i += 1
-    while "tauOut_{}".format(i) in self.data:
-      self.data["tauOut_limits_lower_{}".format(i)] = np.full_like(self.data["tauOut_{}".format(i)], 0)
-      self.data["tauOut_limits_upper_{}".format(i)] = np.full_like(self.data["tauOut_{}".format(i)], 0)
+    while "tauOut_{}".format(i) in data:
+      data["tauOut_limits_lower_{}".format(i)] = np.full_like(data["tauOut_{}".format(i)], 0)
+      data["tauOut_limits_upper_{}".format(i)] = np.full_like(data["tauOut_{}".format(i)], 0)
       i += 1
-    if 'perf_SolverBuildAndSolve' in self.data and 'perf_SolverSolve' in self.data:
-      self.data['perf_SolverBuild'] = self.data['perf_SolverBuildAndSolve'] - self.data['perf_SolverSolve']
+    if 'perf_SolverBuildAndSolve' in data and 'perf_SolverSolve' in data:
+      data['perf_SolverBuild'] = data['perf_SolverBuildAndSolve'] - data['perf_SolverSolve']
+    if len(self.loaded_files) > 1:
+      if len(self.loaded_files) == 2:
+        keys = self.data.keys()
+        for k in keys:
+          self.data["{}_{}".format(self.loaded_files[0], k)] = self.data[k]
+          del self.data[k]
+      def pos_or_zero(i):
+        if i > 0:
+          return i
+        else:
+          return 0
+      if pad_left > 0 or pad_right > 0:
+        pleft = pos_or_zero(pad_left)
+        pright = pos_or_zero(pad_right)
+        self.data.data = {k: np.concatenate(([float('nan')]*pleft, v, [float('nan')]*pright)) for k,v in self.data.data.items()}
+      keys = data.keys()
+      for k in keys:
+        def abs_or_zero(i):
+          if i < 0:
+              return -i
+          else:
+              return 0
+        pleft = abs_or_zero(pad_left)
+        pright = abs_or_zero(pad_right)
+        self.data["{}_{}".format(fpath, k)] = np.concatenate(([float('nan')]*pleft, data[k], [float('nan')]*pright))
+      self.data['t'] = np.arange(start_t, end_t, dt)
+      # In some cases rounding errors gives us the wrong size so we use the other log timestep
+      if len(self.data['t']) != len(self.data['{}_{}'.format(fpath, k)]):
+        self.data['t'] = np.arange(start_t, end_t, ndt)
+    else:
+      self.data.data = data
     self.update_data()
-    self.setWindowTitle("MC Log Plotter - {}".format(os.path.basename(fpath)))
+    self.setWindowTitle("MC Log Plotter - {}".format("/".join(self.loaded_files)))
 
   def setColorsScheme(self, scheme):
     self.colorsScheme = scheme
@@ -1023,7 +1078,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       assert(isinstance(tab, MCLogTab))
       tab.setData(self.data)
       tab.setGridStyles(self.gridStyles)
-      tab.setRobotModule(self.rm)
+      tab.setRobotModule(self.rm, self.loaded_files)
       tab.setColors(self.colorsScheme.colors())
       tab.setPolyColors(self.polyColorsScheme.colors())
 

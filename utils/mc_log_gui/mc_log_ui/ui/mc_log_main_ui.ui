@@ -57,6 +57,7 @@
      <string>File</string>
     </property>
     <addaction name="actionLoad"/>
+    <addaction name="actionCompare"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuCommonPlots">
@@ -82,6 +83,11 @@
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionCompare">
+   <property name="text">
+    <string>Compare...</string>
    </property>
   </action>
  </widget>

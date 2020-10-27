@@ -17,6 +17,8 @@ class Data(QtCore.QObject):
     self.data.__setitem__(key, value)
   def __len__(self):
     return self.data.__len__()
+  def __delitem__(self, key):
+    return self.data.__delitem__(key)
   def __contains__(self, key):
     return self.data.__contains__(key)
   def __iter__(self):
