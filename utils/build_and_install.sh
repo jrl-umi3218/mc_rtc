@@ -1004,6 +1004,11 @@ build_git_dependency_configure_and_build()
   git_dependency_parsing $1
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
   mkdir -p "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
+  # Add the build subdirecory to the ignored files list if it is not ignored already
+  if ! grep -Fxq "/$BUILD_SUBDIR/" $SOURCE_DIR/$git_dep/.git/info/exclude ;   
+  then     
+    echo "/$BUILD_SUBDIR/" >> $SOURCE_DIR/$git_dep/.git/info/exclude ;   
+  fi
   cd "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
   if [[ $OS == "Windows" ]]
   then
@@ -1145,6 +1150,11 @@ then
   exit_if_error "-- [ERROR] Failed to update submodules"
 fi
 mkdir -p $BUILD_SUBDIR
+# Add the build subdirecory to the ignored files list if it is not ignored already
+if ! grep -Fxq "/$BUILD_SUBDIR/" .git/info/exclude ;   
+then     
+  echo "/$BUILD_SUBDIR/" >> .git/info/exclude ;   
+fi
 cd $BUILD_SUBDIR
 if $BUILD_TESTING
 then
