@@ -301,6 +301,7 @@
 <li class="toc-entry toc-h3"><a href="#shortcuts">Shortcuts</a></li>
 <li class="toc-entry toc-h3"><a href="#saving-a-figure">Saving a figure</a></li>
 <li class="toc-entry toc-h3"><a href="#automated-figure-plotting">Automated figure plotting</a></li>
+<li class="toc-entry toc-h3"><a href="#loading-multiple-logs">Loading multiple logs</a></li>
 </ul>
             </div>
           </div>
@@ -424,6 +425,15 @@ has been performed. This tool is installed as <code class="language-plaintext hi
 <h3 id="automated-figure-plotting">Automated figure plotting</h3>
 
 <p>The final tool introduced here is <code class="language-plaintext highlighter-rouge">mc_plot_logs</code>. It expects a binary log and a JSON file describing the logs that you wish to plot (the format is the same as user plots from <code class="language-plaintext highlighter-rouge">mc_log_ui</code>). It will output a figure for each plot in the provided file.</p>
+
+<h3 id="loading-multiple-logs">Loading multiple logs</h3>
+
+<p>It might be desirable to load multiple logs at once for comparison purpose. This can be achieved by the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_log_ui log-1.bin log-2.bin <span class="o">[</span>...] log-N.bin
+</code></pre></div></div>
+
+<p>Or by loading the files through <code class="language-plaintext highlighter-rouge">File -&gt; Compare...</code> in the menu.</p>
 
 
         <hr/>
