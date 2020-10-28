@@ -6,6 +6,17 @@
 
 shopt -s expand_aliases
 
+# display the list of parameters for autocompletion
+if [[ $1 == --inputlist ]];
+then
+        echo -h --help -i --install-prefix -s --source-dir --with-ros-support --with-python-support \
+              --python-user-install --python-force-python2 --python-force-python3 --python-build-2-and-3 \
+              --with-lssol --with-hrp2 --with-hrp4 --with-hrp4j --with-hrp5 --with-mc_udp --with-mc_openrtm \
+              --build-type --build-testing --build-benchmarks --install-system-dependencies \
+              --install-system-dependencies --clone-only --skip-update --skip-dirty-update --user-input \
+              -j --build-core --ros-distro --allow-root
+        exit
+fi
 
 ##########################
 #  --  Configuration --  #
@@ -1301,3 +1312,7 @@ else
     echo_log "If you are running zsh, replace setup.bash with setup.zsh in that last line"
   fi
 fi
+
+echo_log "source $this_dir/autocompletion.bash"
+echo_log "If you want autocompletion on the scripts add also the following to your .bashrc/.zshrc"
+echo_log "If you are running zsh, replace autocompletion.bash with autocompletion.zsh in that last line"
