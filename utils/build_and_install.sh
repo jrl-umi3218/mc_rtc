@@ -1019,7 +1019,7 @@ build_git_dependency_configure_and_build()
   then
     custom_install_prefix="$2"
   fi
-  exec_log cmake .. -DCMAKE_INSTALL_PREFIX:STRING="$custom_install_prefix" \
+    exec_log cmake $SOURCE_DIR/$git_dep -DCMAKE_INSTALL_PREFIX:STRING="$custom_install_prefix" \
                     -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
                     -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
                     -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
@@ -1172,7 +1172,7 @@ if ! $WITH_ROS_SUPPORT
 then
   CMAKE_ADDITIONAL_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS} -DDISABLE_ROS=ON"
 fi
-exec_log cmake ../ -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+exec_log cmake $mc_rtc_dir -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
                    -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
                    -DBUILD_TESTING:BOOL=${BUILD_TESTING_OPTION} \
                    -DBUILD_BENCHMARKS:BOOL=${BUILD_BENCHMARKS_OPTION} \
