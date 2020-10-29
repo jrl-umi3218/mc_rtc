@@ -461,7 +461,12 @@ set(mc_control_HDR
 
 add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
-target_link_libraries(mc_control PUBLIC mc_tasks mc_solver mc_rtc_loader mc_observers mc_rtc_utils mc_rtc_gui nanomsg)
+target_link_libraries(mc_control PUBLIC mc_tasks mc_solver mc_rtc_loader mc_observers mc_rtc_utils mc_rtc_gui)
+if(NOT MC_RTC_DISABLE_NETWORK)
+  target_link_libraries(mc_control PUBLIC nanomsg)
+else()
+  target_compile_definitions(mc_control PUBLIC MC_RTC_DISABLE_NETWORK)
+endif()
 install_mc_rtc_lib(mc_control)
 
 set(mc_control_client_SRC

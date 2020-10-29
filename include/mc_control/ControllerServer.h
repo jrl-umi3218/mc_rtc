@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -7,10 +7,6 @@
 #include <mc_control/MCController.h>
 
 #include <mc_rtc/gui/StateBuilder.h>
-
-#include <nanomsg/nn.h>
-#include <nanomsg/pubsub.h>
-#include <nanomsg/reqrep.h>
 
 #include <string>
 #include <vector>
@@ -49,8 +45,14 @@ struct MC_CONTROL_DLLAPI ControllerServer
   /** Handle requests made by the GUI users */
   void handle_requests(mc_rtc::gui::StateBuilder & gui_builder);
 
+  /** Handle requests from raw data */
+  void handle_requests(mc_rtc::gui::StateBuilder & gui, const char * data);
+
   /** Publish the current GUI state */
   void publish(mc_rtc::gui::StateBuilder & gui_builder);
+
+  /** Get latest published data */
+  std::pair<const char *, size_t> data() const;
 
 private:
   unsigned int iter_;
@@ -60,6 +62,7 @@ private:
   int pull_socket_;
 
   std::vector<char> buffer_;
+  size_t buffer_size_ = 0;
 };
 
 } // namespace mc_control

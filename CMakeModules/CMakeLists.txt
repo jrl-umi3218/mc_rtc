@@ -5,8 +5,11 @@
 set(MODULE_FILES
   Findmc_rtc_3rd_party_geos.cmake
   Findmc_rtc_3rd_party_hpp-spline.cmake
-  Findmc_rtc_3rd_party_nanomsg.cmake
 )
+
+if(NOT MC_RTC_DISABLE_NETWORK)
+  list(APPEND MODULE_FILES Findmc_rtc_3rd_party_nanomsg.cmake)
+endif()
 
 if(NOT WIN32)
   list(APPEND MODULE_FILES Findmc_rtc_3rd_party_ltdl.cmake)

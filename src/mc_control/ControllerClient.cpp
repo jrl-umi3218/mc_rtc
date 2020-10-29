@@ -7,9 +7,12 @@
 #include <mc_rtc/gui/StateBuilder.h>
 #include <mc_rtc/logging.h>
 
-#include <nanomsg/nn.h>
-#include <nanomsg/pipeline.h>
-#include <nanomsg/pubsub.h>
+#ifndef MC_RTC_DISABLE_NETWORK
+#  include <nanomsg/nn.h>
+#  include <nanomsg/pipeline.h>
+#  include <nanomsg/pubsub.h>
+#  include <nanomsg/reqrep.h>
+#endif
 
 #include <chrono>
 #include <sstream>
@@ -37,6 +40,8 @@ std::string cat2str(const std::vector<std::string> & cat)
 
 namespace mc_control
 {
+
+#ifndef MC_RTC_DISABLE_NETWORK
 
 namespace
 {
@@ -69,11 +74,15 @@ void init_socket(int & socket, int proto, const std::string & uri, const std::st
 
 } // namespace
 
+#endif
+
 ControllerClient::ControllerClient(const std::string & sub_conn_uri, const std::string & push_conn_uri, double timeout)
 : timeout_(timeout)
 {
+#ifndef MC_RTC_DISABLE_NETWORK
   init_socket(sub_socket_, NN_SUB, sub_conn_uri, "SUB socket");
   init_socket(push_socket_, NN_PUSH, push_conn_uri, "PUSH socket");
+#endif
 }
 
 ControllerClient::~ControllerClient()
@@ -84,24 +93,29 @@ ControllerClient::~ControllerClient()
 void ControllerClient::stop()
 {
   run_ = false;
+#ifndef MC_RTC_DISABLE_NETWORK
   if(sub_th_.joinable())
   {
     sub_th_.join();
   }
   nn_shutdown(sub_socket_, 0);
   nn_shutdown(push_socket_, 0);
+#endif
 }
 
 void ControllerClient::reconnect(const std::string & sub_conn_uri, const std::string & push_conn_uri)
 {
   stop();
+#ifndef MC_RTC_DISABLE_NETWORK
   init_socket(sub_socket_, NN_SUB, sub_conn_uri, "SUB socket");
   init_socket(push_socket_, NN_PUSH, push_conn_uri, "PUSH socket");
+#endif
   start();
 }
 
 void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::time_point & t_last_received)
 {
+#ifndef MC_RTC_DISABLE_NETWORK
   memset(buff.data(), 0, buff.size() * sizeof(char));
   auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
   auto now = std::chrono::system_clock::now();
@@ -142,16 +156,23 @@ void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::
       buff.resize(nsize);
       return;
     }
-    if(run_)
-    {
-      handle_gui_state(mc_rtc::Configuration::fromMessagePack(buff.data(), static_cast<size_t>(msg_size)));
-    }
+    run(buff.data(), static_cast<size_t>(msg_size));
+  }
+#endif
+}
+
+void ControllerClient::run(const char * buffer, size_t bufferSize)
+{
+  if(run_)
+  {
+    handle_gui_state(mc_rtc::Configuration::fromMessagePack(buffer, bufferSize));
   }
 }
 
 void ControllerClient::start()
 {
   run_ = true;
+#ifndef MC_RTC_DISABLE_NETWORK
   sub_th_ = std::thread([this]() {
     std::vector<char> buff(65536);
     auto t_last_received = std::chrono::system_clock::now();
@@ -161,21 +182,35 @@ void ControllerClient::start()
       std::this_thread::sleep_for(std::chrono::microseconds(500));
     }
   });
+#endif
 }
 
 void ControllerClient::send_request(const ElementId & id, const mc_rtc::Configuration & data)
 {
-  mc_rtc::Configuration request;
-  request.add("category", id.category);
-  request.add("name", id.name);
-  request.add("data", data);
-  std::string out = request.dump();
+#ifndef MC_RTC_DISABLE_NETWORK
+  std::string out;
+  raw_request(id, data, out);
   nn_send(push_socket_, out.c_str(), out.size() + 1, NN_DONTWAIT);
+#endif
 }
 
 void ControllerClient::send_request(const ElementId & id)
 {
   send_request(id, mc_rtc::Configuration{});
+}
+
+void ControllerClient::raw_request(const ElementId & id, const mc_rtc::Configuration & data, std::string & out)
+{
+  mc_rtc::Configuration request;
+  request.add("category", id.category);
+  request.add("name", id.name);
+  request.add("data", data);
+  out = request.dump();
+}
+
+void ControllerClient::raw_request(const ElementId & id, td::string & out)
+{
+  raw_request(id, mc_rtc::Configuration{}, out);
 }
 
 void ControllerClient::timeout(double t)

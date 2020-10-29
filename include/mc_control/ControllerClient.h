@@ -10,10 +10,6 @@
 #include <mc_rtc/gui/plot/types.h>
 #include <mc_rtc/gui/types.h>
 
-#include <nanomsg/nn.h>
-#include <nanomsg/pubsub.h>
-#include <nanomsg/reqrep.h>
-
 #include <string>
 #include <thread>
 #include <vector>
@@ -88,6 +84,24 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
   /** Helper for the void case */
   void send_request(const ElementId & id);
 
+  /** Get the raw request data
+   *
+   * out.c_str() can be used to send requests to the raw data interface of ControllerServer
+   */
+  void raw_request(const ElementId & id, const mc_rtc::Configuration & data, std::string & out);
+
+  /** Helper for raw request in simple cases */
+  template<typename T>
+  void raw_request(const ElementId & id, const T & data, std::string & out)
+  {
+    mc_rtc::Configuration c;
+    c.add("data", data);
+    raw_request(id, c("data"), out);
+  }
+
+  /** Helper for the void case */
+  void raw_request(const ElementId & id, std::string & out);
+
   /** Set the timeout of the SUB socket */
   void timeout(double t);
 
@@ -108,6 +122,14 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
    *
    */
   void run(std::vector<char> & buffer, std::chrono::system_clock::time_point & t_last_received);
+
+  /** Run with raw data received from any possible way
+   *
+   * \param buffer Data to be processed
+   *
+   * \param bufferSize Size of data
+   */
+  void run(const char * buffer, size_t bufferSize);
 
 protected:
   /** Should be called when the client is ready to receive data */

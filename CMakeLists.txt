@@ -50,6 +50,8 @@ option(ENABLE_FAST_TESTS "Run controllers tests for a few iterations" OFF)
 
 option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
+option(MC_RTC_DISABLE_NETWORK "Do not build with network support" OFF)
+
 option(DISABLE_ROS "Do not build with ROS support (even if ROS was found)" OFF)
 
 add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer)
@@ -73,8 +75,10 @@ add_subdirectory(3rd-party/ltdl)
 # GEOS (defines/imports target: GEOS::geos)
 find_package(mc_rtc_3rd_party_geos REQUIRED)
 
-# nanomsg (defines/imports target: nanomsg)
-find_package(mc_rtc_3rd_party_nanomsg REQUIRED)
+if(NOT MC_RTC_DISABLE_NETWORK)
+  # nanomsg (defines/imports target: nanomsg)
+  find_package(mc_rtc_3rd_party_nanomsg REQUIRED)
+endif()
 
 # qhull (build re-entrant static version)
 add_subdirectory(3rd-party/qhull)
