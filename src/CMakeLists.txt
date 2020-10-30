@@ -24,6 +24,9 @@ macro(install_mc_rtc_lib_common MC_LIB KWD)
       target_compile_options(${MC_LIB} ${KWD} $<BUILD_INTERFACE:-Werror>)
     endif()
   endif()
+  if(MC_RTC_BUILD_STATIC)
+    target_compile_definitions(${MC_LIB} ${KWD} MC_RTC_BUILD_STATIC)
+  endif()
   add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
 endmacro()
 
@@ -131,8 +134,6 @@ set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EX
 target_link_libraries(mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking mc_rtc_utils)
 if(NOT MC_RTC_BUILD_STATIC)
   target_link_libraries(mc_rtc_loader PUBLIC ${LTDL})
-else()
-  target_compile_definitions(mc_rtc_loader PUBLIC MC_RTC_BUILD_STATIC)
 endif()
 install_mc_rtc_lib(mc_rtc_loader)
 

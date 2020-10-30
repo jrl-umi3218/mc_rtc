@@ -25,5 +25,3 @@ private:
 };
 
 } // namespace mc_control
-
-SIMPLE_CONTROLLER_CONSTRUCTOR("HalfSitPose", mc_control::MCHalfSitPoseController)
