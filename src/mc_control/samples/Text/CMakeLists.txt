@@ -3,8 +3,8 @@
 #
 
 add_controller("text"
-  "mc_text_controller.cpp"
-  "mc_text_controller.h"
+  "${CMAKE_CURRENT_SOURCE_DIR}/mc_text_controller.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/mc_text_controller.h"
 )
 
 install(FILES etc/Text.conf

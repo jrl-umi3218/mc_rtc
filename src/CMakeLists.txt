@@ -459,6 +459,10 @@ mc_control/mc_global_controller_gui.cpp
 mc_control/mc_global_controller_services.cpp
 )
 
+if(MC_RTC_BUILD_STATIC)
+  list(APPEND mc_control_SRC mc_control/ControllerLoader.cpp)
+endif()
+
 set(mc_control_HDR
 ../include/mc_control/api.h
 ../include/mc_control/CompletionCriteria.h
