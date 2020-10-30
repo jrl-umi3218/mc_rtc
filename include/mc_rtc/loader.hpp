@@ -15,6 +15,7 @@ namespace mc_rtc
 template<typename SymT>
 SymT LTDLHandle::get_symbol(const std::string & name)
 {
+#ifndef MC_RTC_BUILD_STATIC
   if(!open())
   {
     return nullptr;
@@ -29,6 +30,9 @@ SymT LTDLHandle::get_symbol(const std::string & name)
     }
   }
   return ret;
+#else
+  return nullptr;
+#endif
 }
 
 template<typename T>
@@ -66,13 +70,13 @@ ObjectLoader<T>::~ObjectLoader()
 template<typename T>
 bool ObjectLoader<T>::has_object(const std::string & object) const
 {
-  return handles_.count(object) != 0;
+  return handles_.count(object) != 0 || callbacks_.has(object);
 }
 
 template<typename T>
 std::vector<std::string> ObjectLoader<T>::objects() const
 {
-  std::vector<std::string> res;
+  std::vector<std::string> res = callbacks_.keys();
   for(const auto & h : handles_)
   {
     res.push_back(h.first);
@@ -90,6 +94,7 @@ template<typename T>
 void ObjectLoader<T>::clear()
 {
   handles_.clear();
+  callbacks_.clear();
 }
 
 template<typename T>
@@ -113,6 +118,20 @@ T * ObjectLoader<T>::create(const std::string & name, Args... args)
     mc_rtc::log::error_and_throw<LoaderException>("Requested creation of object named {} which has not been loaded",
                                                   name);
   }
+  if(handles_.count(name))
+  {
+    return create_from_handles(name, std::forward<Args>(args)...);
+  }
+  else
+  {
+    return create_from_callbacks(name, std::forward<Args>(args)...);
+  }
+}
+
+template<typename T>
+template<typename... Args>
+T * ObjectLoader<T>::create_from_handles(const std::string & name, Args... args)
+{
   unsigned int args_passed = 1 + sizeof...(Args);
   unsigned int args_required = args_passed;
   auto create_args_required = handles_[name]->template get_symbol<unsigned int (*)()>("create_args_required");
@@ -155,6 +174,26 @@ T * ObjectLoader<T>::create(const std::string & name, Args... args)
     deleters_[name] = ObjectDeleter(delete_fn);
   }
   return ptr;
+}
+
+template<typename T>
+template<typename... Args>
+T * ObjectLoader<T>::create_from_callbacks(const std::string & name, Args... args)
+{
+  return callbacks_.call<T *, const typename std::decay<Args>::type &...>(name, std::forward<Args>(args)...);
+}
+
+template<typename T>
+template<typename RetT, typename... Args>
+void ObjectLoader<T>::register_object(const std::string & name, std::function<RetT *(const Args &...)> callback)
+{
+  if(has_object(name))
+  {
+    throw LoaderException(fmt::format("{} is already registered with this loader", name));
+  }
+  static_assert(std::is_base_of<T, RetT>::value, "You cannot register an object that does not derive from the loader base-class");
+  callbacks_.make_call(name, [callback](const Args &... args) -> T * { return callback(args...); });
+  deleters_[name] = ObjectDeleter([](T * ptr) { delete static_cast<RetT *>(ptr); });
 }
 
 template<typename T>

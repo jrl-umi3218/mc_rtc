@@ -50,9 +50,9 @@ ControllerServer::~ControllerServer()
 #endif
 }
 
-void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder, const char * data)
+void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder, const char * dataIn)
 {
-  auto config = mc_rtc::Configuration::fromData(static_cast<const char *>(data));
+  auto config = mc_rtc::Configuration::fromData(static_cast<const char *>(dataIn));
   auto category = config("category", std::vector<std::string>{});
   auto name = config("name", std::string{});
   auto data = config("data", mc_rtc::Configuration{});

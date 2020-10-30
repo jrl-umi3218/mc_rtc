@@ -3,18 +3,23 @@
 #
 
 macro(add_robot robot_base)
-  set(robot_SRC ${robot_base}.cpp)
-  set(robot_HDR ../../include/mc_robots/api.h ${robot_base}.h)
-  add_library(${robot_base} SHARED ${robot_SRC} ${robot_HDR})
-  set_target_properties(${robot_base} PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS" PREFIX "")
-  set_target_properties(${robot_base} PROPERTIES FOLDER robots)
-  target_link_libraries(${robot_base} PUBLIC mc_rbdyn)
-  target_include_directories(${robot_base} PRIVATE "../../include/mc_robots")
-  install(TARGETS ${robot_base}
-    ARCHIVE DESTINATION "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
-    LIBRARY DESTINATION "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
-    RUNTIME DESTINATION "${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
-  )
+  set(robot_SRC "${CMAKE_CURRENT_SOURCE_DIR}/${robot_base}.cpp")
+  set(robot_HDR "${PROJECT_SOURCE_DIR}/include/mc_robots/api.h" "${CMAKE_CURRENT_SOURCE_DIR}/${robot_base}.h")
+  if(MC_RTC_BUILD_STATIC)
+    target_sources(mc_rbdyn PRIVATE ${robot_SRC} ${robot_HDR})
+    target_include_directories(mc_rbdyn PRIVATE "../../include/mc_robots")
+  else()
+    add_library(${robot_base} SHARED ${robot_SRC} ${robot_HDR})
+    set_target_properties(${robot_base} PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS" PREFIX "")
+    set_target_properties(${robot_base} PROPERTIES FOLDER robots)
+    target_link_libraries(${robot_base} PUBLIC mc_rbdyn)
+    target_include_directories(${robot_base} PRIVATE "../../include/mc_robots")
+    install(TARGETS ${robot_base}
+      ARCHIVE DESTINATION "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+      LIBRARY DESTINATION "${MC_ROBOTS_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+      RUNTIME DESTINATION "${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    )
+  endif()
 endmacro()
 
 add_robot(env)
@@ -39,13 +44,21 @@ macro(generate_aliases PATH ALIASES FILE_IN FILE_OUT)
   install(FILES "${PATH_OUT}" DESTINATION "${MC_ROBOTS_RUNTIME_INSTALL_PREFIX}/aliases/")
 endmacro()
 
-append_aliases("${MC_INT_OBJ_DESCRIPTION_PATH}" OBJECT_ALIASES object)
-generate_aliases("${MC_INT_OBJ_DESCRIPTION_PATH}" ${OBJECT_ALIASES} object_aliases.in.yml object_aliases.yml)
+if(EXISTS "${MC_INT_OBJ_DESCRIPTION_PATH}")
+  append_aliases("${MC_INT_OBJ_DESCRIPTION_PATH}" OBJECT_ALIASES object)
+  generate_aliases("${MC_INT_OBJ_DESCRIPTION_PATH}" ${OBJECT_ALIASES} object_aliases.in.yml object_aliases.yml)
+  append_aliases("${MC_INT_OBJ_DESCRIPTION_PATH}" ENV_ALIASES env)
+endif()
 
-append_aliases("${MC_ENV_DESCRIPTION_PATH}" ENV_ALIASES env)
-append_aliases("${MC_INT_OBJ_DESCRIPTION_PATH}" ENV_ALIASES env)
-generate_aliases("${MC_ENV_DESCRIPTION_PATH}" ${ENV_ALIASES} env_aliases.in.yml env_aliases.yml)
+if(EXISTS "${MC_ENV_DESCRIPTION_PATH}")
+  append_aliases("${MC_ENV_DESCRIPTION_PATH}" ENV_ALIASES env)
+  generate_aliases("${MC_ENV_DESCRIPTION_PATH}" ${ENV_ALIASES} env_aliases.in.yml env_aliases.yml)
+endif()
 
 find_description_package(jvrc_description)
 add_robot(jvrc1)
-set_target_properties(jvrc1 PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS -DJVRC_DESCRIPTION_PATH=\"${JVRC_DESCRIPTION_PATH}\"")
+if(TARGET jvrc1)
+  set_target_properties(jvrc1 PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS -DJVRC_DESCRIPTION_PATH=\"${JVRC_DESCRIPTION_PATH}\"")
+else()
+  set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS -DJVRC_DESCRIPTION_PATH=\"${JVRC_DESCRIPTION_PATH}\"")
+endif()

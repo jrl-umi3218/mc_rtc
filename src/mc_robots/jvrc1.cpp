@@ -11,6 +11,8 @@
 
 #include "jvrc1.h"
 
+#include <mc_rbdyn/RobotModuleMacros.h>
+
 #include <mc_rtc/logging.h>
 
 #include <RBDyn/parsers/urdf.h>
@@ -89,3 +91,5 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
 }
 
 } // namespace mc_robots
+
+ROBOT_MODULE_DEFAULT_CONSTRUCTOR("JVRC1", mc_robots::JVRC1RobotModule);

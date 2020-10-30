@@ -208,7 +208,7 @@ void ControllerClient::raw_request(const ElementId & id, const mc_rtc::Configura
   out = request.dump();
 }
 
-void ControllerClient::raw_request(const ElementId & id, td::string & out)
+void ControllerClient::raw_request(const ElementId & id, std::string & out)
 {
   raw_request(id, mc_rtc::Configuration{}, out);
 }

@@ -73,6 +73,7 @@ LTDLHandle::LTDLHandle(const std::string & class_name,
 
 bool LTDLHandle::open()
 {
+#ifndef MC_RTC_BUILD_STATIC
   if(open_)
   {
     return true;
@@ -121,15 +122,20 @@ bool LTDLHandle::open()
   SetEnvironmentVariable("PATH", getPATH());
 #endif
   return open_;
+#else
+  return true;
+#endif
 }
 
 void LTDLHandle::close()
 {
+#ifndef MC_RTC_BUILD_STATIC
   if(open_)
   {
     open_ = false;
     lt_dlclose(handle_);
   }
+#endif
 }
 
 Loader::callback_t Loader::default_cb = [](const std::string &, LTDLHandle &) {};
@@ -140,6 +146,7 @@ unsigned int Loader::init_count_ = 0;
 
 bool Loader::init()
 {
+#ifndef MC_RTC_BUILD_STATIC
   if(init_count_ == 0)
   {
     int err = lt_dlinit();
@@ -150,11 +157,13 @@ bool Loader::init()
     }
   }
   ++init_count_;
+#endif
   return true;
 }
 
 bool Loader::close()
 {
+#ifndef MC_RTC_BUILD_STATIC
   --init_count_;
   if(init_count_ == 0)
   {
@@ -165,6 +174,7 @@ bool Loader::close()
       mc_rtc::log::error_and_throw<LoaderException>("Failed to close ltdl\n{}", error);
     }
   }
+#endif
   return true;
 }
 
@@ -174,6 +184,7 @@ void Loader::load_libraries(const std::string & class_name,
                             bool verbose,
                             Loader::callback_t cb)
 {
+#ifndef MC_RTC_BUILD_STATIC
   std::vector<std::string> debug_paths;
   auto pathsRef = std::cref(pathsIn);
   if(mc_rtc::debug())
@@ -244,6 +255,7 @@ void Loader::load_libraries(const std::string & class_name,
       }
     }
   }
+#endif
 }
 
 } // namespace mc_rtc

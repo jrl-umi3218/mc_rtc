@@ -13,13 +13,17 @@
  * in the libraries that should be loaded through this interface
  */
 
+#include <mc_rtc/DataStore.h>
 #include <mc_rtc/loader_api.h>
 #include <mc_rtc/logging.h>
 
 #include <boost/noncopyable.hpp>
 
+#ifndef MC_RTC_BUILD_STATIC
+#  include <ltdl.h>
+#endif
+
 #include <functional>
-#include <ltdl.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -107,7 +111,9 @@ private:
   std::string path_;
   std::string rpath_;
   bool verbose_;
+#ifndef MC_RTC_BUILD_STATIC
   lt_dlhandle handle_;
+#endif
   bool valid_ = false;
   bool global_ = false;
   bool open_ = false;
@@ -237,6 +243,19 @@ public:
    */
   void set_verbosity(bool verbose);
 
+  /** Register a new loading function
+   *
+   * \param name Name that will be used to create new instance
+   *
+   * \param callback Callback that will be used to create the object
+   *
+   * \tparam RetT Must be derived from T
+   *
+   * \throws LoaderException if the object is already registered
+   */
+  template<typename RetT, typename... Args>
+  void register_object(const std::string & name, std::function<RetT *(const Args &...)> callback);
+
   /** Create a new object of type name
    * \param name the object's name
    * \param Args argument required by the constructor
@@ -276,11 +295,20 @@ protected:
   bool enable_sandbox;
   bool verbose;
   Loader::handle_map_t handles_;
-  std::map<std::string, ObjectDeleter> deleters_;
+  mc_rtc::DataStore callbacks_;
+  std::unordered_map<std::string, ObjectDeleter> deleters_;
 
-  /** Internal function creates a raw pointer then build a shared or unique pointer accordingly */
+  /** Internal function to create a raw pointer */
   template<typename... Args>
   T * create(const std::string & name, Args... args);
+
+  /** Internal function to create a raw pointer from an handle */
+  template<typename... Args>
+  T * create_from_handles(const std::string & name, Args... args);
+
+  /** Internal function to create a raw pointer from a registered callback */
+  template<typename... Args>
+  T * create_from_callbacks(const std::string & name, Args... args);
 };
 
 } // namespace mc_rtc

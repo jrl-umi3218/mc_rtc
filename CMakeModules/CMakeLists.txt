@@ -11,7 +11,7 @@ if(NOT MC_RTC_DISABLE_NETWORK)
   list(APPEND MODULE_FILES Findmc_rtc_3rd_party_nanomsg.cmake)
 endif()
 
-if(NOT WIN32)
+if(NOT WIN32 AND NOT MC_RTC_BUILD_STATIC)
   list(APPEND MODULE_FILES Findmc_rtc_3rd_party_ltdl.cmake)
 endif()
 
