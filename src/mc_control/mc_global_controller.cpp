@@ -750,6 +750,12 @@ bool MCGlobalController::run()
   return running;
 }
 
+ControllerServer & MCGlobalController::server()
+{
+  assert(server_);
+  return *server_;
+}
+
 const mc_solver::QPResultMsg & MCGlobalController::send(const double & t)
 {
   return controller_->send(t);

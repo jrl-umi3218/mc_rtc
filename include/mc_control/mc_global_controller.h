@@ -530,6 +530,9 @@ public:
    */
   bool run();
 
+  /*! \brief Access the server */
+  ControllerServer & server();
+
   /*! \brief Access the result of the latest run
    *
    * \param t Unused
