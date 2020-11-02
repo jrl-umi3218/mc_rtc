@@ -103,7 +103,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
   r.mbc().gravity = mc_rtc::constants::gravity;
   r.forwardKinematics();
   r.forwardVelocity();
-  if(gui_)
+  if(gui_ && updateNrVars)
   {
     auto data = gui_->data();
     if(!data.has("robots"))
