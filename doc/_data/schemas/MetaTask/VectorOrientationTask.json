@@ -29,5 +29,5 @@
       }
     }
   ],
-  "required": ["type", "surface"]
+  "required": ["type", "surface", "bodyVector"]
 }
