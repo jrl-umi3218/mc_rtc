@@ -202,7 +202,7 @@ set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
 target_link_libraries(mc_rbdyn PUBLIC mc_rbdyn_urdf::mc_rbdyn_urdf RBDyn::Parsers Tasks::Tasks mc_rtc_loader mc_rtc_utils mc_filter GEOS::geos)
 # qhull
 target_include_directories(mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull/src")
-target_link_libraries(mc_rbdyn PRIVATE $<BUILD_INTERFACE:qhullcpp qhullstatic_r>)
+target_link_libraries(mc_rbdyn PRIVATE $<BUILD_INTERFACE:qhullcpp> $<BUILD_INTERFACE:qhullstatic_r>)
 install_mc_rtc_lib(mc_rbdyn)
 
 set(mc_rtc_gui_SRC
