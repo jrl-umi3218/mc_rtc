@@ -281,6 +281,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     auto gui_config = config("GUIServer");
     enable_gui_server = gui_config("Enable", false);
     gui_timestep = gui_config("Timestep", 0.05);
+    if(gui_timestep == 0)
+    {
+      gui_timestep = timestep;
+    }
     if(gui_config.has("IPC"))
     {
       auto ipc_config = gui_config("IPC");

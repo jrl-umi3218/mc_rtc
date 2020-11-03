@@ -90,8 +90,9 @@ GUIServer:
   # If true, enable the GUI server, otherwise or if absent, disable this
   # feature
   Enable: true
-  # Publication timestep, actual rate is rounded up depending on the
-  # controller timestep
+  # Publication timestep, actual rate is rounded up depending on the controller
+  # timestep, a value of 0 indicates that the GUI timestep should be equal to
+  # the controller timestep
   Timestep: 0.05
   # IPC (inter-process communication) section, if the section is absent
   # this disables the protocol, if the section is empty it is configured
