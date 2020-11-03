@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_control/mc_global_controller.h>
@@ -120,16 +120,8 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   }
   if(config.enable_gui_server)
   {
-    if(config.gui_server_pub_uris.size() == 0)
-    {
-      mc_rtc::log::warning(
-          "GUI server is enabled but not configured to bind to anything, acting as if it was disabled.");
-    }
-    else
-    {
-      server_.reset(new mc_control::ControllerServer(config.timestep, config.gui_timestep, config.gui_server_pub_uris,
-                                                     config.gui_server_rep_uris));
-    }
+    server_.reset(new mc_control::ControllerServer(config.timestep, config.gui_timestep, config.gui_server_pub_uris,
+                                                   config.gui_server_rep_uris));
   }
 }
 
