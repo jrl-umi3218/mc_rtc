@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <mc_control/ControllerServer.h>
 #include <mc_control/client_api.h>
 
 #include <mc_rtc/Configuration.h>
@@ -64,10 +65,22 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
    */
   ControllerClient(const std::string & sub_conn_uri, const std::string & push_conn_uri, double timeout = 0);
 
+  /** Constructor
+   *
+   * \param server In-memory ControllerServer instance
+   *
+   * \param gui GUI updated by the server
+   *
+   */
+  ControllerClient(ControllerServer & server, mc_rtc::gui::StateBuilder & gui);
+
   ControllerClient(const ControllerClient &) = delete;
   ControllerClient & operator=(const ControllerClient &) = delete;
 
   ~ControllerClient();
+
+  /** Connect to an in-memory server */
+  void connect(ControllerServer & server, mc_rtc::gui::StateBuilder & gui);
 
   /** Send a request to the given element in the given category using data */
   void send_request(const ElementId & id, const mc_rtc::Configuration & data);
@@ -638,13 +651,18 @@ protected:
 
   /* Network elements */
   bool run_ = true;
-  int sub_socket_;
+  int sub_socket_ = -1;
   std::thread sub_th_;
-  int push_socket_;
+  int push_socket_ = -1;
   double timeout_;
 
   /* Hold data from the server */
   mc_rtc::Configuration data_;
+
+  /* Pointer to the server if connected in-memory */
+  ControllerServer * server_ = nullptr;
+  /* Pointer to the GUI if connected in-memory */
+  mc_rtc::gui::StateBuilder * gui_ = nullptr;
 
 private:
   /** Default implementations for widgets' creations display a warning message to the user */

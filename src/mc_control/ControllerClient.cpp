@@ -85,6 +85,18 @@ ControllerClient::ControllerClient(const std::string & sub_conn_uri, const std::
 #endif
 }
 
+ControllerClient::ControllerClient(ControllerServer & server, mc_rtc::gui::StateBuilder & gui)
+{
+  connect(server, gui);
+}
+
+void ControllerClient::connect(ControllerServer & server, mc_rtc::gui::StateBuilder & gui)
+{
+  server_ = &server;
+  gui_ = &gui;
+  run_ = true;
+}
+
 ControllerClient::~ControllerClient()
 {
   stop();
@@ -101,6 +113,8 @@ void ControllerClient::stop()
   nn_shutdown(sub_socket_, 0);
   nn_shutdown(push_socket_, 0);
 #endif
+  server_ = nullptr;
+  gui_ = nullptr;
 }
 
 void ControllerClient::reconnect(const std::string & sub_conn_uri, const std::string & push_conn_uri)
@@ -115,50 +129,71 @@ void ControllerClient::reconnect(const std::string & sub_conn_uri, const std::st
 
 void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::time_point & t_last_received)
 {
-#ifndef MC_RTC_DISABLE_NETWORK
-  memset(buff.data(), 0, buff.size() * sizeof(char));
-  auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
-  auto now = std::chrono::system_clock::now();
-  if(recv < 0)
-  {
-    if(timeout_ > 0 && now - t_last_received > std::chrono::duration<double>(timeout_))
+  auto resize_to_fit = [&](size_t s) {
+    if(buff.size() >= s)
     {
-      t_last_received = now;
-      if(run_)
-      {
-        handle_gui_state(mc_rtc::Configuration{});
-      }
-    }
-    auto err = nn_errno();
-    if(err != EAGAIN)
-    {
-      mc_rtc::log::error("ControllerClient failed to receive with errno: {}", err);
-    }
-  }
-  else if(recv > 0)
-  {
-    auto msg_size = recv;
-    while(recv > 0)
-    {
-      msg_size = recv;
-      recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
-    }
-    t_last_received = now;
-    if(msg_size > static_cast<int>(buff.size()))
-    {
-      mc_rtc::log::warning(
-          "Receive buffer was too small to receive the latest state message, will resize for next time");
-      auto nsize = buff.size() == 0 ? 65535 : 2 * buff.size();
-      while(msg_size > static_cast<int>(nsize))
-      {
-        nsize = 2 * nsize;
-      }
-      buff.resize(nsize);
       return;
     }
-    run(buff.data(), static_cast<size_t>(msg_size));
-  }
+    size_t nsize = buff.size() == 0 ? 65535 : 2 * buff.size();
+    while(nsize < s)
+    {
+      nsize = 2 * nsize;
+    }
+    buff.resize(nsize);
+  };
+  if(sub_socket_ >= 0)
+  {
+#ifndef MC_RTC_DISABLE_NETWORK
+    memset(buff.data(), 0, buff.size() * sizeof(char));
+    auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
+    auto now = std::chrono::system_clock::now();
+    if(recv < 0)
+    {
+      if(timeout_ > 0 && now - t_last_received > std::chrono::duration<double>(timeout_))
+      {
+        t_last_received = now;
+        if(run_)
+        {
+          handle_gui_state(mc_rtc::Configuration{});
+        }
+      }
+      auto err = nn_errno();
+      if(err != EAGAIN)
+      {
+        mc_rtc::log::error("ControllerClient failed to receive with errno: {}", err);
+      }
+    }
+    else if(recv > 0)
+    {
+      auto msg_size = recv;
+      while(recv > 0)
+      {
+        msg_size = recv;
+        recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
+      }
+      t_last_received = now;
+      if(msg_size > static_cast<int>(buff.size()))
+      {
+        mc_rtc::log::warning(
+            "Receive buffer was too small to receive the latest state message, will resize for next time");
+        resize_to_fit(static_cast<size_t>(msg_size));
+        return;
+      }
+      run(buff.data(), static_cast<size_t>(msg_size));
+    }
 #endif
+  }
+  else if(server_ != nullptr)
+  {
+    auto recv = server_->data();
+    if(recv.second == 0)
+    {
+      return;
+    }
+    resize_to_fit(recv.second);
+    memcpy(buff.data(), recv.first, recv.second * sizeof(char));
+    run(buff.data(), recv.second);
+  }
 }
 
 void ControllerClient::run(const char * buffer, size_t bufferSize)
@@ -187,11 +222,15 @@ void ControllerClient::start()
 
 void ControllerClient::send_request(const ElementId & id, const mc_rtc::Configuration & data)
 {
-#ifndef MC_RTC_DISABLE_NETWORK
   std::string out;
   raw_request(id, data, out);
+#ifndef MC_RTC_DISABLE_NETWORK
   nn_send(push_socket_, out.c_str(), out.size() + 1, NN_DONTWAIT);
 #endif
+  if(server_)
+  {
+    server_->handle_requests(*gui_, out.c_str());
+  }
 }
 
 void ControllerClient::send_request(const ElementId & id)

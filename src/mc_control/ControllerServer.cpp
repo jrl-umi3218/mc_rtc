@@ -81,7 +81,7 @@ void ControllerServer::handle_requests(mc_rtc::gui::StateBuilder & gui_builder)
     }
     else
     {
-      handle_requests(gui_builder, buf);
+      handle_requests(gui_builder, static_cast<const char *>(buf));
       nn_freemsg(buf);
     }
   } while(recv > 0);
