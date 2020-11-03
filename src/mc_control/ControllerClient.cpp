@@ -76,8 +76,15 @@ void init_socket(int & socket, int proto, const std::string & uri, const std::st
 
 #endif
 
+ControllerClient::ControllerClient() = default;
+
 ControllerClient::ControllerClient(const std::string & sub_conn_uri, const std::string & push_conn_uri, double timeout)
 : timeout_(timeout)
+{
+  connect(sub_conn_uri, push_conn_uri);
+}
+
+void ControllerClient::connect(const std::string & sub_conn_uri, const std::string & push_conn_uri)
 {
 #ifndef MC_RTC_DISABLE_NETWORK
   init_socket(sub_socket_, NN_SUB, sub_conn_uri, "SUB socket");
@@ -193,6 +200,10 @@ void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::
     resize_to_fit(recv.second);
     memcpy(buff.data(), recv.first, recv.second * sizeof(char));
     run(buff.data(), recv.second);
+  }
+  else
+  {
+    handle_gui_state(mc_rtc::Configuration{});
   }
 }
 

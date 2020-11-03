@@ -53,6 +53,12 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
 
   /** Constructor
    *
+   * Default (disconnected) client
+   */
+  ControllerClient();
+
+  /** Constructor
+   *
    * \param sub_conn_uri URI the SUB socket should connect to
    *
    * \param push_conn_uri URI the PUSH socket should connect to
@@ -78,6 +84,9 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
   ControllerClient & operator=(const ControllerClient &) = delete;
 
   ~ControllerClient();
+
+  /** Connect to the provided uris */
+  void connect(const std::string & sub_conn_uri, const std::string & push_conn_uri);
 
   /** Connect to an in-memory server */
   void connect(ControllerServer & server, mc_rtc::gui::StateBuilder & gui);
