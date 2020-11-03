@@ -89,6 +89,7 @@ void ControllerClient::connect(const std::string & sub_conn_uri, const std::stri
 #ifndef MC_RTC_DISABLE_NETWORK
   init_socket(sub_socket_, NN_SUB, sub_conn_uri, "SUB socket");
   init_socket(push_socket_, NN_PUSH, push_conn_uri, "PUSH socket");
+  run_ = true;
 #endif
 }
 
@@ -119,6 +120,8 @@ void ControllerClient::stop()
   }
   nn_shutdown(sub_socket_, 0);
   nn_shutdown(push_socket_, 0);
+  sub_socket_ = -1;
+  push_socket_ = -1;
 #endif
   server_ = nullptr;
   gui_ = nullptr;
