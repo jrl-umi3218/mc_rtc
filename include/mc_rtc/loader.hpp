@@ -191,7 +191,8 @@ void ObjectLoader<T>::register_object(const std::string & name, std::function<Re
   {
     throw LoaderException(fmt::format("{} is already registered with this loader", name));
   }
-  static_assert(std::is_base_of<T, RetT>::value, "You cannot register an object that does not derive from the loader base-class");
+  static_assert(std::is_base_of<T, RetT>::value,
+                "You cannot register an object that does not derive from the loader base-class");
   callbacks_.make_call(name, [callback](const Args &... args) -> T * { return callback(args...); });
   deleters_[name] = ObjectDeleter([](T * ptr) { delete static_cast<RetT *>(ptr); });
 }

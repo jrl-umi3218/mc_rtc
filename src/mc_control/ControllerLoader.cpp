@@ -15,4 +15,4 @@ mc_rtc::ObjectLoader<MCController> & ControllerLoader::loader()
   return *loader_;
 }
 
-}
+} // namespace mc_control
