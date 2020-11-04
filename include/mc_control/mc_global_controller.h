@@ -766,6 +766,7 @@ public:
     std::string initial_controller = "";
     std::unordered_map<std::string, mc_rtc::Configuration> controllers_configs;
     double timestep = 0.002;
+    bool include_halfsit_controller = true;
 
     bool log_real = false;
 

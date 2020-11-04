@@ -233,6 +233,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         "Enabled entry in mc_rtc must contain at least one controller name");
   }
   config("Default", initial_controller);
+  config("IncludeHalfSitController", include_halfsit_controller);
 
   ////////////////////
   // Initialization //

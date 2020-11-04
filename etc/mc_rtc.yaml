@@ -16,6 +16,8 @@ MainRobot: JVRC1
 Enabled: [CoM]
 # Controller timestep
 Timestep: 0.005
+# Always include the half-sitting controller
+# IncludeHalfSitController: true
 
 #####################################
 # Initialize floating base attitude #

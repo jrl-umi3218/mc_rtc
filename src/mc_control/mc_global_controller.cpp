@@ -84,7 +84,8 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   ControllerLoader::loader().set_verbosity(config.verbose_loader);
 #endif
   if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(), "HalfSitPose")
-     == config.enabled_controllers.end())
+         == config.enabled_controllers.end()
+     && config.include_halfsit_controller)
   {
     config.enabled_controllers.push_back("HalfSitPose");
   }
