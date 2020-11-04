@@ -735,7 +735,13 @@ public:
   /*! \brief Store the controller configuration */
   struct MC_CONTROL_DLLAPI GlobalConfiguration
   {
-    GlobalConfiguration(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm);
+    /** Constructor
+     *
+     * \param conf Configuration file that should be loaded
+     *
+     * \param Main robot module, if null use the MainRobot entry in conf to initialize it
+     */
+    GlobalConfiguration(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm = nullptr);
 
     inline bool enabled(const std::string & ctrl);
 
