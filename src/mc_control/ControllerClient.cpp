@@ -327,7 +327,7 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
                      data.at(4, std::vector<mc_rtc::Configuration>{}));
         break;
       case Elements::Robot:
-        robot(id, data[3], data[4]);
+        robot(id, data[3], data[4], data[5]);
         break;
       default:
         mc_rtc::log::error("Type {} is not handlded by this ControllerClient", static_cast<int>(type));

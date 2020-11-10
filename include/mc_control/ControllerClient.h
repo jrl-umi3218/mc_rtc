@@ -372,7 +372,8 @@ protected:
 
   virtual void robot(const ElementId & id,
                      const std::vector<std::string> & /*parameters*/,
-                     const std::vector<std::vector<double>> & /*q*/)
+                     const std::vector<std::vector<double>> & /*q*/,
+                     const sva::PTransformd & /*posW*/)
   {
     default_impl("Robot", id);
   }

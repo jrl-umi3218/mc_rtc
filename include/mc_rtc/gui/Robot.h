@@ -39,7 +39,7 @@ struct RobotImpl : public Element
 
   static constexpr size_t write_size()
   {
-    return Element::write_size() + 2;
+    return Element::write_size() + 3;
   }
 
   void write(mc_rtc::MessagePackBuilder & builder)
@@ -48,6 +48,7 @@ struct RobotImpl : public Element
     Element::write(builder);
     builder.write(robot.module().parameters());
     builder.write(robot.mbc().q);
+    builder.write(robot.posW());
   }
 
 private:
