@@ -7,8 +7,8 @@
 
 <body>
 <!-- Navigation links -->
-<p><a name="TOP"><b>Up</b></a><b>:</b> <a href="http://www.qhull.org">Home page</a> for Qhull<br>
-<b>Up:</b> <a href="index.htm#TOC">Qhull manual</a>: Table of Contents<br>
+<p><a name="TOP"><b>Up</b></a><b>:</b> <a href="http://www.qhull.org">Home page</a> for Qhull (<a href="../index.htm">local</a>)<br>
+<b>Up:</b> <a href="index.htm#TOC">Qhull manual</a>: contents<br>
 <b>To:</b> <a href="qh-quick.htm#programs">Programs</a>
 &#149; <a href="qh-quick.htm#options">Options</a>
 &#149; <a href="qh-opto.htm#output">Output</a>
@@ -18,7 +18,7 @@
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
 &#149; <a href="qh-optt.htm#trace">Trace</a>
-&#149; <a href="../src/libqhull_r/index.htm">Functions</a><br>
+&#149; <a href="http://www.qhull.org/src/libqhull_r/index.htm">Functions</a> (<a href="../src/libqhull_r/index.htm">local</a>)<br>
 <b>To:</b> <a href="#synopsis">sy</a>nopsis
 &#149; <a href="#input">in</a>put &#149; <a href="#outputs">ou</a>tputs
 &#149; <a href="#controls">co</a>ntrols &#149; <a href="#graphics">gr</a>aphics
@@ -40,15 +40,23 @@ programming.
 
 <blockquote>
 <dl compact>
-    <dt><p><b>Example:</b> rbox c | qconvex <a href="qh-optf.htm#FQ">FQ</a> <a href="qh-optf.htm#FV">FV</a>
-        <a href="qh-opto.htm#n">n</a> | qhalf <a
+    <dt><p><b>Example:</b> rbox c | qconvex
+        <a href="qh-optf.htm#FV">FV</a> <a href="qh-opto.htm#n">n</a> | qhalf <a
         href="qh-optf.htm#Fp">Fp</a></dt>
     <dd>Print the intersection of the facets of a cube.  <tt>rbox c</tt>
-        generates the vertices of a cube.  <tt>qconvex FV n</tt> returns of average
-        of the cube's vertices (in this case, the origin) and the halfspaces
-        that define the cube.  <tt>qhalf Fp</tt> computes the intersection of
-        the halfspaces about the origin.  The intersection is the vertices
-        of the original cube.</dd>
+        generates the vertices of a cube.    <tt>qconvex FV</tt> returns a feasible
+        point for halfspace intersection.   This feasible or interior point,
+        <tt>qconvex FV</tt>, is the average of the cube's vertices (i.e., the origin).
+        <tt>qconvex n</tt> returns the halfspaces that define the cube.
+        <tt>qhalf Fp</tt> computes the intersection of the halfspaces about the
+        feasible point.  The intersection is the vertices of the original cube.</dd>
+
+    <dt><p><b>Example:</b> rbox c | qconvex <a href="qh-optf.htm#FQ">FQ</a>
+        <a href="qh-opto.htm#n">n</a> | qhalf H0.1,0.1,0.1</dt>
+    <dd>Compute the intersection of the facets of a cube and print a summary ('<a href="qh-opto.htm#s">s</a>').
+    Option 'FQ' prints the qconvex command as an input comment for the summary.
+    'qhalf Hn,n,n' specifies the feasible point as <tt>[0.1, 0.1, 0.1]</tt>.  'qhalf H0' would specify the
+    feasible point as the origin.</dd>
 
     <dt><p><b>Example:</b> rbox c d G0.55 | qconvex <a href="qh-optf.htm#FQ">FQ</a> <a href="qh-optf.htm#FV">FV</a>
         <a href="qh-opto.htm#n">n</a> | qhalf <a
@@ -94,6 +102,22 @@ the neighboring intersection points (<a href="qh-optf.htm#Fn">Fn</a>).
 For random inputs, halfspace
 intersections are usually defined by more than <i>d</i> halfspaces.  See the sphere example.
 
+<p>The identity pipeline for Qhull starts with points, produces the halfspaces for their convex hull, and
+intersects these halfspaces, returning the original points.  For example, 'rbox c' is the unit cube.
+<pre>
+	rbox c | qconvex FV n | qhalf Fp
+	3
+	8
+	  -0.5    0.5    0.5
+	   0.5    0.5    0.5
+	  -0.5    0.5   -0.5
+	   0.5    0.5   -0.5
+	   0.5   -0.5    0.5
+	  -0.5   -0.5    0.5
+	   0.5   -0.5   -0.5
+	  -0.5   -0.5   -0.5
+</pre>
+
 <p>You can try triangulated output ('<a href="qh-optq.htm#Qt">Qt</a>') and joggled input ('<a href="qh-optq.htm#QJn">QJ</a>').
 It demonstrates that triangulated output is more accurate than joggled input.
 
@@ -112,47 +136,47 @@ See <a
 href="qh-impre.htm#joggle">Merged facets or joggled input</a>. </p>
 
 <p>The 'qhalf' program is equivalent to
-'<a href=qhull.htm#outputs>qhull H</a>' in 2-d to 4-d, and
-'<a href=qhull.htm#outputs>qhull H</a> <a href=qh-optq.htm#Qx>Qx</a>'
-in 5-d and higher.  It disables the following Qhull
+'<a href=qhull.htm#outputs>qhull H</a>'.  It disables the following Qhull
 <a href=qh-quick.htm#options>options</a>: <i>d n v Qbb QbB Qf Qg Qm
-Qr QR Qv Qx Qz TR E V Fa FA FC FD FS Ft FV Gt Q0,etc</i>.
+Qr Qv Qx Qz TR E V Fa FA FC FD FS Ft FV Gt Q0,etc</i>.
 
 
-<p><b>Copyright &copy; 1995-2015 C.B. Barber</b></p>
+<p><b>Copyright &copy; 1995-2020 C.B. Barber</b></p>
 <hr>
 
 <h3><a href="#TOP">&#187;</a><a name="synopsis">qhalf synopsis</a></h3>
 <pre>
-qhalf- halfspace intersection about a point.
-    input (stdin): [dim, 1, interior point]
-                   dim+1, n
-                   halfspace coefficients + offset
+qhalf -- halfspace intersection about a point.
+    input (stdin): [dimension, 1, interior point]
+                       dimension+1, number of halfspaces, coefficients+offset
     comments start with a non-numeric character
 
-options (qhalf.htm):
+options:
     Hn,n - specify coordinates of interior point
     Qt   - triangulated output
-    QJ   - joggle input instead of merging facets
+    QJ   - joggled input instead of merged facets
     Tv   - verify result: structure, convexity, and redundancy
     .    - concise list of all options
-    -    - one-line description of all options
+    -    - one-line description of each option
+    -?   - this message
+    -V   - version
 
 output options (subset):
     s    - summary of results (default)
     Fp   - intersection coordinates
     Fv   - non-redundant halfspaces incident to each intersection
     Fx   - non-redundant halfspaces
-    o    - OFF file format (dual convex hull)
     G    - Geomview output (dual convex hull)
     m    - Mathematica output (dual convex hull)
+    o    - OFF file format (dual convex hull)
     QVn  - print intersections for halfspace n, -n if not
-    TO file - output results to file, may be enclosed in single quotes
+    TI file - input file, may be enclosed in single quotes
+    TO file - output file, may be enclosed in single quotes
 
 examples:
-    rbox d | qconvex n | qhalf s H0,0,0 Fp
-    rbox c | qconvex FV n | qhalf s i
-    rbox c | qconvex FV n | qhalf s o
+    rbox d | qconvex FQ n | qhalf s H0,0,0 Fp
+    rbox c | qconvex FQ FV n | qhalf s i
+    rbox c | qconvex FQ FV n | qhalf s o
 </pre>
 
 <h3><a href="#TOP">&#187;</a><a name="input">qhalf input</a></h3>
@@ -160,11 +184,11 @@ examples:
 <blockquote>
 <p>The input data on <tt>stdin</tt> consists of:</p>
 <ul>
-    <li>[optional] interior point
+    <li>[optional] feasible point
            <ul>
            <li>dimension
            <li>1
-           <li>coordinates of interior point
+           <li>coordinates of feasible point
            </ul>
     <li>dimension + 1
     <li>number of halfspaces</li>
@@ -172,18 +196,18 @@ examples:
 </ul>
 
 <p>Use I/O redirection (e.g., qhalf &lt; data.txt), a pipe (e.g., rbox c | qconvex FV n | qhalf),
-or the '<a href=qh-optt.htm#TI>TI</a>' option (e.g., qhalf TI data.txt).
+or the '<a href="qh-optt.htm#TI">TI</a>' option (e.g., qhalf TI data.txt).
 
-<p>Qhull needs an interior point to compute the halfspace
-intersection. An interior point is clearly inside all of the halfspaces.
+<p>Qhull needs a feasible point to compute the halfspace
+intersection. A feasible point is clearly inside all of the halfspaces.
 A point is <i>inside</i> a halfspace if its distance to the corresponding hyperplane is negative.
 
-<p>The interior point may be listed at the beginning of the input (as shown above).
+<p>The feasible point may be listed at the beginning of the input (as shown above).
 If not, option
-'Hn,n' defines the interior point as
+'Hn,n' defines the feasible point as
 [n,n,0,...] where <em>0</em> is the default coordinate (e.g.,
 'H0' is the origin).  Use linear programming if you do not know
-the interior point (see <a href="#notes">halfspace notes</a>),</p>
+the feasible point (see <a href="#notes">halfspace notes</a>),</p>
 
 <p>The input to qhalf is a set of halfspaces that are defined by their hyperplanes.
 Each halfspace is defined by
@@ -193,7 +217,7 @@ normal to the halfspace.
 The vector may have any length. If it
 has length one, the offset is the distance from the origin to the
 halfspace's boundary.  Points in the halfspace have a negative distance to the hyperplane.
-The distance from the interior point to each
+The distance from the feasible point to each
 halfspace is likewise negative.</p>
 
 <p>The halfspace format is the same as Qhull's output options '<a
@@ -263,16 +287,17 @@ intersection.</p>
     <dt>&nbsp;</dt>
     <dd><b>Intersections</b></dd>
     <dt><a href="qh-optf.htm#FN">FN</a></dt>
-    <dd>list intersection points for each non-redundant
+    <dd>list intersection points for each
         halfspace.  The first line
-            is the number of non-redundant halfspaces.  Each remaining
-                lines starts with the number of intersection points.  For the cube
+            is the number of halfspaces.  Each remaining
+                line starts with the number of intersection points.  Redundant halfspaces
+                have 0 intersection points.  For the cube
                 example, each halfspace has four intersection points.</dd>
     <dt><a href="qh-optf.htm#Fn">Fn</a></dt>
     <dd>list neighboring intersections for each intersection point.  The first line
-            is the number of intersection points.  Each remaining line
-                starts with the number of neighboring intersections.  For the cube
-                example, each intersection point has three neighboring intersections.
+            is the number of intersection points.  Each following line
+                starts with the number of neighboring intersections.
+                For the cube example, each intersection point has three neighboring intersections.
                 <p>
                 In 3-d, a non-simplicial intersection has more than three neighboring
                 intersections.  For random data (e.g., the sphere example), non-simplicial intersections are the norm.
@@ -285,7 +310,8 @@ intersection.</p>
     <dt><a href="qh-optf.htm#Fp">Fp</a></dt>
     <dd>print intersection coordinates.  The first line is the dimension and the
         second line is the number of intersection points.  The following lines are the
-        coordinates of each intersection.</dd>
+        coordinates of each intersection point.  The "infinity" point,
+[-10.101,-10.101,...] (qh_INFINITE), indicates an unbounded intersection.</dd>
     <dt><a href="qh-optf.htm#FI">FI</a></dt>
     <dd>list intersection IDs.  The first line is the number of
         intersections.  The IDs follow, one per line.</dd>
@@ -297,19 +323,19 @@ intersection.</p>
         non-redundant halfspaces.  The other lines list one halfspace per line.
         A halfspace is <i>non-redundant</i> if it
         defines a facet of the intersection.  Redundant halfspaces are ignored.  For
-        the cube example, all of the halfspaces are non-redundant.
+        the cube example, none of the halfspaces are redundant.
         </dd>
     <dt><a href="qh-optf.htm#Fv">Fv</a></dt>
     <dd>list non-redundant halfspaces incident to each intersection point.
         The first line is the number of
         non-redundant halfspaces.  Each remaining line starts with the number
-        of non-redundant halfspaces.  For the
-         cube example, each intersection is incident to three halfspaces.</dd>
+        of non-redundant halfspaces incident to that point.  For the
+         cube example, each intersection point is incident to three halfspaces.</dd>
     <dt><a href="qh-opto.htm#i">i</a></dt>
     <dd>list non-redundant halfspaces incident to each intersection point.  The first
           line is the number of intersection points.  Each remaining line
-          lists the incident, non-redundant halfspaces.  For the
-         cube example, each intersection is incident to three halfspaces.
+          lists the incident, non-redundant halfspaces for that intersection point.  For the
+         cube example, each intersection point is incident to three halfspaces.
        </dd>
     <dt><a href="qh-optf.htm#Fc">Fc</a></dt>
     <dd>list coplanar halfspaces for each intersection point. The first line is
@@ -317,7 +343,7 @@ intersection.</p>
            the number of coplanar halfspaces.  A coplanar halfspace is listed for
            one intersection point even though it is coplanar to multiple intersection
            points.</dd>
-  <dt><a href="qh-optq.htm#Qc">Qi</a> <a href="qh-optf.htm#Fc">Fc</a></dt>
+  <dt><a href="qh-optq.htm#Qi">Qi</a> <a href="qh-optf.htm#Fc">Fc</a></dt>
     <dd>list redundant halfspaces for each intersection point.  The first line is
            the number of intersection points.  Each remaining line starts with
            the number of redundant halfspaces.  Use options '<a href="qh-optq.htm#Qc">Qc</a> Qi Fc' to list
@@ -338,7 +364,7 @@ intersection.</p>
     <dd>print vertex coordinates of the dual convex hull.  Each vertex corresponds
            to a non-redundant halfspace.  Its coordinates are the negative of the hyperplane's coefficients
            divided by the offset plus the inner product of the coefficients and
-           the interior point (-c/(b+a.p).
+           the feasible point (-c/(b+a.p).
            Options 'p <a href="qh-optq.htm#Qc">Qc</a>' includes coplanar halfspaces.
            Options 'p <a href="qh-optq.htm#Qi">Qi</a>' includes redundant halfspaces.</dd>
     <dt><a href="qh-opto.htm#m">m</a></dt>
@@ -362,10 +388,14 @@ intersection.</p>
     <dd>triangulated output.  If a 3-d intersection is defined by more than
       three hyperplanes, Qhull produces duplicate intersections -- one for
       each extra hyperplane.</dd>
+    <dt><a href="qh-optq.htm#QRn">QRn</a></dt>
+    <dd>randomly rotate the input with a random seed of n.  If n=0, the
+        seed is the time.  If n=-1, use time for the random seed, but do
+        not rotate the input.</dd>
     <dt><a href="qh-optq.htm#QJn">QJ</a></dt>
     <dd>joggle the input instead of merging facets.  In 3-d, this guarantees that
         each intersection is defined by three hyperplanes.</dd>
-    <dt><a href="qh-opto.htm#f">f </a></dt>
+    <dt><a href="qh-opto.htm#f">f</a></dt>
     <dd>facet dump.  Print the data structure for each intersection (i.e.,
         facet)</dd>
     <dt><a href="qh-optt.htm#TFn">TFn</a></dt>
@@ -382,7 +412,7 @@ intersection.</p>
         halfspace intersection in one lower dimension.</dd>
     <dt><a href="qh-optt.htm#Tv">Tv</a></dt>
     <dd>verify result</dd>
-    <dt><a href="qh-optt.htm#TO">TI file</a></dt>
+    <dt><a href="qh-optt.htm#TI">TI file</a></dt>
     <dd>input data from file.  The filename may not use spaces or quotes.</dd>
     <dt><a href="qh-optt.htm#TO">TO file</a></dt>
     <dd>output results to file.  Use single quotes if the filename
@@ -412,7 +442,7 @@ href="qh-eg.htm#half">Halfspace examples</a>.</p>
 
 <p>See <a href="qh-impre.htm#halfspace">halfspace intersection</a> for precision issues related to qhalf.</p>
 
-<p>If you do not know an interior point for the halfspaces, use
+<p>If you do not know a feasible point for the halfspaces, use
 linear programming to find one. Assume, <em>n</em> halfspaces
 defined by: <em>aj*x1+bj*x2+cj*x3+dj&lt;=0, j=1..n</em>.  Perform
 the following linear program: </p>
@@ -429,21 +459,21 @@ the following linear program: </p>
     </p>
 </blockquote>
 
-<p>and conclude that the point <em>[x1/x4,x2/x4,x3/x4]</em> is in
-the interior of all the halfspaces. Since <em>x5</em> is
-optimal, this point is &quot;way in&quot; the interior (good
+<p>and conclude that the point <em>[x1/x4,x2/x4,x3/x4]</em> is
+inside all the halfspaces. Since <em>x5</em> is
+optimal, this feasible point is &quot;clearly inside&quot; the halfspaces (good
 for precision errors).</p>
 
-<p>After finding an interior point, the rest of the intersection
+<p>After finding a feasible point, the rest of the intersection
 algorithm is from Preparata &amp; Shamos [<a
 href="index.htm#pre-sha85">'85</a>, p. 316, &quot;A simple case
-...&quot;]. Translate the halfspaces so that the interior point
+...&quot;]. Translate the halfspaces so that the feasible point
 is the origin. Calculate the dual polytope. The dual polytope is
 the convex hull of the vertices dual to the original faces in
 regard to the unit sphere (i.e., halfspaces at distance <em>d</em>
 from the origin are dual to vertices at distance <em>1/d</em>).
 Then calculate the resulting polytope, which is the dual of the
-dual polytope, and translate the origin back to the interior
+dual polytope, and translate the origin back to the feasible
 point [S. Spitz, S. Teller, D. Strawn].</p>
 
 
@@ -459,11 +489,11 @@ non-redundant halfspace. See <a href="#conventions">convex hull
 conventions</a> and <a href="index.htm#structure">Qhull's data structures</a>.</p>
 
 <ul>
-    <li><em>interior point</em> - a point in the intersection of
-        the halfspaces. Qhull needs an interior point to compute
+    <li><em>feasible or interior point</em> - a point in the intersection of
+        the halfspaces. Qhull needs a feasible point to compute
         the intersection. See <a href="#input">halfspace input</a>.</li>
     <li><em>halfspace</em> - <em>d</em> coordinates for the
-        normal and a signed offset. The distance to an interior
+        normal and a signed offset. The distance to the feasible
         point is negative.</li>
     <li><em>non-redundant halfspace</em> - a halfspace that
         defines an output facet</li>
@@ -488,7 +518,7 @@ conventions</a> and <a href="index.htm#structure">Qhull's data structures</a>.</
 <h3><a href="#TOP">&#187;</a><a name="options">qhalf options</a></h3>
 
 <pre>
-qhalf- compute the intersection of halfspaces about a point
+qhalf -- compute the intersection of halfspaces about a point
     http://www.qhull.org
 
 input (stdin):
@@ -499,32 +529,44 @@ input (stdin):
 
 options:
     Hn,n - specify coordinates of interior point
-    Qt   - triangulated ouput
-    QJ   - joggle input instead of merging facets
     Qc   - keep coplanar halfspaces
     Qi   - keep other redundant halfspaces
+    QJ   - joggled input instead of merged facets
+    Qt   - triangulated output
 
 Qhull control options:
-    QJn  - randomly joggle input in range [-n,n]
+    Qa   - allow input with fewer or more points than coordinates
     Qbk:0Bk:0 - remove k-th coordinate from input
+    QJn  - randomly joggle input in range [-n,n]
+    QRn  - random rotation (n=seed, n=0 time, n=-1 time/no rotate)
     Qs   - search all halfspaces for the initial simplex
-    QGn  - print intersection if redundant to halfspace n, -n for not
+
+Qhull extra options:
+    QGn  - print intersection if visible to halfspace n, -n for not
     QVn  - print intersections for halfspace n, -n if not
+    Qw   - allow option warnings
+    Q12  - allow wide facets and wide dupridge
+    Q14  - merge pinched vertices that create a dupridge
+
+T options:
+    TFn  - report summary when n or more facets created
+    TI file - input file, may be enclosed in single quotes
+    TO file - output file, may be enclosed in single quotes
+    Ts   - statistics
+    Tv   - verify result: structure, convexity, and in-circle test
+    Tz   - send all output to stdout
 
 Trace options:
     T4   - trace at level n, 4=all, 5=mem/gauss, -1= events
+    Ta   - annotate output with message codes
+    TAn  - stop qhull after adding n vertices
+     TCn - stop qhull after building cone for point n
+     TVn - stop qhull after adding point n, -n for before
     Tc   - check frequently during execution
-    Ts   - print statistics
-    Tv   - verify result: structure, convexity, and redundancy
-    Tz   - send all output to stdout
-    TFn  - report summary when n or more facets created
-    TI file - input data from file, no spaces or single quotes
-    TO file - output results to file, may be enclosed in single quotes
-    TPn  - turn on tracing when halfspace n added to intersection
-    TMn  - turn on tracing at merge n
-    TWn  - trace merge facets when width > n
-    TVn  - stop qhull after adding halfspace n, -n for before (see TCn)
-    TCn  - stop qhull after building cone for halfspace n (see TVn)
+    Tf   - flush each qh_fprintf for debugging segfaults
+    TPn - turn on tracing when point n added to hull
+     TMn  - turn on tracing at merge n
+     TWn - trace merge facets when width > n
 
 Precision options:
     Cn   - radius of centrum (roundoff added).  Merge facets if non-convex
@@ -550,15 +592,15 @@ More formats:
     FF   - facet dump without ridges
     FI   - ID of each intersection
     Fm   - merge count for each intersection (511 max)
-    FM   - Maple output (dual convex hull)
+    FM   - Maple output (dual 2-d or 3-d convex hull)
     Fn   - count plus neighboring intersections for each intersection
-    FN   - count plus intersections for each non-redundant halfspace
+    FN   - count plus intersections for each halfspace
     FO   - options and precision constants
     Fp   - dim, count, and intersection coordinates
     FP   - nearest halfspace and distance for each redundant halfspace
     FQ   - command used for qhalf
     Fs   - summary: #int (8), dim, #halfspaces, #non-redundant, #intersections
-                      for output: #non-redundant, #intersections, #coplanar
+                      output: #non-redundant, #intersections, #coplanar
                                   halfspaces, #non-simplicial intersections
                     #real (2), max outer plane, min vertex
     Fv   - count plus non-redundant halfspaces for each intersection
@@ -568,20 +610,20 @@ Geomview output (2-d, 3-d and 4-d; dual convex hull)
     Ga   - all points (i.e., transformed halfspaces) as dots
      Gp  -  coplanar points and vertices as radii
      Gv  -  vertices (i.e., non-redundant halfspaces) as spheres
+    Gc   - centrums
+    GDn  - drop dimension n in 3-d and 4-d output
+    Gh   - hyperplane intersections
     Gi   - inner planes (i.e., halfspace intersections) only
      Gn  -  no planes
      Go  -  outer planes only
-    Gc   - centrums
-    Gh   - hyperplane intersections
     Gr   - ridges
-    GDn  - drop dimension n in 3-d and 4-d output
 
 Print options:
     PAn  - keep n largest facets (i.e., intersections) by area
-    Pdk:n- drop facet if normal[k] &lt;= n (default 0.0)
+    Pdk:n- drop facet if normal[k] <= n (default 0.0)
     PDk:n- drop facet if normal[k] >= n
-    Pg   - print good facets (needs 'QGn' or 'QVn')
     PFn  - keep facets whose area is at least n
+    Pg   - print good facets (needs 'QGn' or 'QVn')
     PG   - print neighbors of good facets
     PMn  - keep n facets with most merges
     Po   - force output.  If error, output neighborhood of facet
@@ -589,13 +631,15 @@ Print options:
 
     .    - list of all options
     -    - one line descriptions of all options
+    -?   - help with examples
+    -V   - version
 </pre>
 
 <!-- Navigation links -->
 <hr>
 
-<p><b>Up:</b> <a href="http://www.qhull.org">Home page</a> for Qhull<br>
-<b>Up:</b> <a href="index.htm#TOC">Qhull manual</a>: Table of Contents<br>
+<p><b>Up:</b> <a href="http://www.qhull.org">Home page</a> for Qhull (<a href="../index.htm">local</a>)<br>
+<b>Up:</b> <a href="index.htm#TOC">Qhull manual</a>: contents<br>
 <b>To:</b> <a href="qh-quick.htm#programs">Programs</a>
 &#149; <a href="qh-quick.htm#options">Options</a>
 &#149; <a href="qh-opto.htm#output">Output</a>
@@ -605,7 +649,7 @@ Print options:
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
 &#149; <a href="qh-optt.htm#trace">Trace</a>
-&#149; <a href="../src/libqhull_r/index.htm">Functions</a><br>
+&#149; <a href="http://www.qhull.org/src/libqhull_r/index.htm">Functions</a> (<a href="../src/libqhull_r/index.htm">local</a>)<br>
 <b>To:</b> <a href="#synopsis">sy</a>nopsis
 &#149; <a href="#input">in</a>put &#149; <a href="#outputs">ou</a>tputs
 &#149; <a href="#controls">co</a>ntrols &#149; <a href="#graphics">gr</a>aphics
@@ -619,7 +663,7 @@ align="middle" width="40" height="40"></a><i>The Geometry Center
 Home Page </i></p>
 
 <p>Comments to: <a href=mailto:qhull@qhull.org>qhull@qhull.org</a>
-</a><br>
+<br>
 Created: Sept. 25, 1995 --- <!-- hhmts start --> Last modified: see top <!-- hhmts end --> </p>
 </body>
 </html>

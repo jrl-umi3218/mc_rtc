@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** Copyright (c) 2008-2015 C.B. Barber. All rights reserved.
-** $Id: //main/2015/qhull/src/qhulltest/qhulltest.cpp#5 $$Change: 2079 $
-** $DateTime: 2016/02/07 17:43:34 $$Author: bbarber $
+** Copyright (c) 2008-2020 C.B. Barber. All rights reserved.
+** $Id: //main/2019/qhull/src/qhulltest/qhulltest.cpp#5 $$Change: 3001 $
+** $DateTime: 2020/07/24 20:43:28 $$Author: bbarber $
 **
 ****************************************************************************/
 
@@ -26,6 +26,8 @@ namespace orgQhull {
 
 void addQhullTests(QStringList &args)
 {
+    // Default tests, use Qhull_test for qhulltest-ok.txt
+    TESTadd_(add_PointCoordinates_test);
     TESTadd_(add_Qhull_test);
 
     if(args.contains("--all")){
@@ -85,7 +87,7 @@ int main(int argc, char *argv[])
     return status;
 }
 
-}//orgQhull
+}//namespace orgQhull
 
 int main(int argc, char *argv[])
 {

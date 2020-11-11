@@ -1,16 +1,22 @@
-; qhull-exports.def -- msvc module-definition file
+; qhull-exports.def -- MSVC module-definition file
 ;
 ;   Generated from depends.exe by cut-and-paste of exported symbols by mingw gcc
-;   [mar'11] 399 symbols 
+;   [jan'14] 391 symbols 
 ;   Annotate as DATA qh_last_random qh_qh qh_qhstat qhmem rbox rbox_inuse
 ;   Annotate as __declspec for outside access in win32 -- qh_qh qh_qhstat
 ;   Same as ../libqhullp/qhull_p-exports.def without qh_save_qhull and qh_restore_qhull
 ;
-; $Id: //main/2015/qhull/src/libqhull/qhull-exports.def#3 $$Change: 2047 $
-; $DateTime: 2016/01/04 22:03:18 $$Author: bbarber $
-; 
+;   Referenced by CMakeLists/add_library, libqhull.pro/DEF_FILE, 
+;   and libqhull.vcxproj/Linker/Input/Module Definition File
+;
+;   If qh_NOmerge, use qhull_r-nomerge-exports.def
+;      Created by -- grep -vE 'qh_all_merges|qh_appendmergeset|qh_basevertices|qh_check_dupridge|qh_checkconnect|qh_compare_facetmerge|qh_comparevisit|qh_copynonconvex|qh_degen_redundant_facet|qh_delridge_merge|qh_find_newvertex|qh_findbest_test|qh_findbestneighbor|qh_flippedmerges|qh_forcedmerges|qh_getmergeset|qh_getmergeset_initial|qh_hashridge|qh_hashridge_find|qh_makeridges|qh_mark_dupridges|qh_maydropneighbor|qh_merge_degenredundant|qh_merge_nonconvex|qh_mergecycle|qh_mergecycle_all|qh_mergecycle_facets|qh_mergecycle_neighbors|qh_mergecycle_ridges|qh_mergecycle_vneighbors|qh_mergefacet|qh_mergefacet2d|qh_mergeneighbors|qh_mergeridges|qh_mergesimplex|qh_mergevertex_del|qh_mergevertex_neighbors|qh_mergevertices|qh_nearcoplanar|qh_nearvertex|qh_neighbor_intersections|qh_newhashtable|qh_newvertex|qh_newvertices|qh_nextridge3d|qh_reducevertices|qh_redundant_vertex|qh_remove_extravertices|qh_rename_sharedvertex|qh_renameridgevertex|qh_renamevertex|qh_test_appendmerge|qh_test_degen_neighbors|qh_test_redundant_neighbors|qh_test_vneighbors|qh_tracemerge|qh_tracemerging|qh_triangulate_facet|qh_triangulate_link|qh_triangulate_mirror|qh_triangulate_null|qh_updatetested|qh_vertexridges|qh_vertexridges_facet|qh_willdelete' qhull-exports.def >qhull-nomerge-exports.def
+;
+; $Id: //main/2019/qhull/src/libqhull/qhull-exports.def#5 $$Change: 3037 $
+; $DateTime: 2020/09/03 17:28:32 $$Author: bbarber $
+;
 ; Define qhull_VERSION in CMakeLists.txt, Makefile, qhull-exports.def, qhull_p-exports.def, qhull_r-exports.def, and qhull-warn.pri
-VERSION 7.0
+VERSION 8.0
 EXPORTS
 qh_addhash
 qh_addpoint
@@ -46,10 +52,12 @@ qh_check_point
 qh_check_points
 qh_checkconnect
 qh_checkconvex
+qh_checkdelridge
 qh_checkfacet
 qh_checkflags
 qh_checkflipped
 qh_checkflipped_all
+qh_checklists
 qh_checkpolygon
 qh_checkvertex
 qh_checkzero
@@ -60,9 +68,7 @@ qh_collectstatistics
 qh_compare_facetarea
 qh_compare_facetmerge
 qh_compare_facetvisit
-qh_compare_vertexpoint
-qh_compareangle
-qh_comparemerge
+qh_compare_nummerge
 qh_comparevisit
 qh_copyfilename
 qh_copynonconvex
@@ -71,10 +77,9 @@ qh_countfacets
 qh_createsimplex
 qh_crossproduct
 qh_degen_redundant_facet
-qh_degen_redundant_neighbors
 qh_deletevisible
 qh_delfacet
-qh_delridge
+qh_delridge_merge
 qh_delvertex
 qh_determinant
 qh_detjoggle
@@ -160,6 +165,7 @@ qh_initstatistics
 qh_initthresholds
 qh_inthresholds
 qh_isvertex
+qh_joggle_restart
 qh_joggleinput
 ; Mark as DATA, otherwise links a separate qh_last_random.  No __declspec.
 qh_last_random      DATA
@@ -174,7 +180,7 @@ qh_malloc
 qh_mark_dupridges
 qh_markkeep
 qh_markvoronoi
-qh_matchduplicates
+qh_matchdupridge
 qh_matchneighbor
 qh_matchnewfacets
 qh_matchvertices
@@ -220,6 +226,7 @@ qh_newridge
 qh_newstats
 qh_newvertex
 qh_newvertices
+qh_nextfacet2d
 qh_nextfurthest
 qh_nextridge3d
 qh_normalize
@@ -244,7 +251,6 @@ qh_pointfacet
 qh_pointid
 qh_pointvertex
 qh_postmerge
-qh_precision
 qh_premerge
 qh_prepare_output
 qh_prependfacet
@@ -277,8 +283,11 @@ qh_printfacetridges
 qh_printfacets
 qh_printhashtable
 qh_printhelp_degenerate
+qh_printhelp_internal
 qh_printhelp_narrowhull
 qh_printhelp_singular
+qh_printhelp_topology
+qh_printhelp_wide
 qh_printhyperplaneintersection
 qh_printline3geom
 qh_printlists
@@ -367,6 +376,7 @@ qh_sethyperplane_gauss
 qh_setin
 qh_setindex
 qh_setlarger
+qh_setlarger_quick
 qh_setlast
 qh_setnew
 qh_setnew_delnthsorted
@@ -390,6 +400,8 @@ qh_stddev
 qh_strtod
 qh_strtol
 qh_test_appendmerge
+qh_test_degen_neighbors
+qh_test_redundant_neighbors
 qh_test_vneighbors
 qh_tracemerge
 qh_tracemerging
@@ -399,7 +411,8 @@ qh_triangulate_link
 qh_triangulate_mirror
 qh_triangulate_null
 qh_updatetested
-qh_updatevertices
+qh_update_vertexneighbors
+qh_update_vertexneighbors_cone
 qh_user_memsizes
 qh_version
 qh_version2
@@ -413,5 +426,5 @@ qh_voronoi_center
 qh_willdelete
 ; Mark as DATA, otherwise links a separate qhmem.  No __declspec
 qhmem                   DATA
-rbox			DATA
+rbox                    DATA
 rbox_inuse              DATA

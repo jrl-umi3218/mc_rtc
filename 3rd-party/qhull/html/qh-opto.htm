@@ -7,8 +7,8 @@
 
 <body>
 <!-- Navigation links -->
-<p><b>Up:</b> <a href="http://www.qhull.org">Home page</a> for Qhull<br>
-<b>Up:</b> <a href="index.htm#TOC">Qhull manual</a>: Table of Contents<br>
+<p><b>Up:</b> <a href="http://www.qhull.org">Home page</a> for Qhull (<a href="../index.htm">local</a>)<br>
+<b>Up:</b> <a href="index.htm#TOC">Qhull manual</a>: contents<br>
 <b>To:</b> <a href="qh-quick.htm#programs">Programs</a>
 &#149; <a href="qh-quick.htm#options">Options</a>
 &#149; <a href="qh-opto.htm#output">Output</a>
@@ -18,7 +18,7 @@
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
 &#149; <a href="qh-optt.htm#trace">Trace</a>
-&#149; <a href="../src/libqhull_r/index.htm">Functions</a></p>
+&#149; <a href="http://www.qhull.org/src/libqhull_r/index.htm">Functions</a> (<a href="../src/libqhull_r/index.htm">local</a>)</p>
 
 <hr>
 <!-- Main text of document -->
@@ -34,7 +34,7 @@ href="qh-optp.htm#print">Print</a>, and <a
 href="qh-optg.htm#geomview">Geomview</a> for other output
 options. </p>
 
-<p><b>Copyright &copy; 1995-2015 C.B. Barber</b></p>
+<p><b>Copyright &copy; 1995-2020 C.B. Barber</b></p>
 
 <hr>
 
@@ -47,7 +47,7 @@ options. </p>
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
 &#149; <a href="qh-optt.htm#trace">Trace</a>
-&#149; <a href="../src/libqhull_r/index.htm">Functions</a></p>
+&#149; <a href="http://www.qhull.org/src/libqhull_r/index.htm">Functions</a> (<a href="../src/libqhull_r/index.htm">local</a>)</p>
 
 <h2>Output options</h2>
 
@@ -58,38 +58,37 @@ Other outputs may be specified as follows. </p>
 <dl compact>
     <dt><a href="#f">f</a></dt>
     <dd>print all fields of all facets</dd>
-    <dt><a href="#n">n</a></dt>
-    <dd>print hyperplane normals with offsets</dd>
-    <dt><a href="#m">m</a></dt>
-    <dd>print Mathematica output (2-d and 3-d)</dd>
-    <dt><a href="#o">o</a></dt>
-    <dd>print OFF file format (dim, points and facets)</dd>
-    <dt><a href="#s">s</a></dt>
-    <dd>print summary to stderr</dd>
-    <dt><a href="#p">p</a></dt>
-    <dd>print vertex and point coordinates</dd>
     <dt><a href="#i">i</a></dt>
     <dd>print vertices incident to each facet </dd>
+    <dt><a href="#m">m</a></dt>
+    <dd>print Mathematica output (2-d and 3-d)</dd>
+    <dt><a href="#n">n</a></dt>
+    <dd>print hyperplane normals with offsets</dd>
+    <dt><a href="#o">o</a></dt>
+    <dd>print OFF file format (dim, points and facets)</dd>
+    <dt><a href="#p">p</a></dt>
+    <dd>print vertex and point coordinates</dd>
+    <dt><a href="#s">s</a></dt>
+    <dd>print summary to stderr</dd>
     <dt>&nbsp;</dt>
     <dt>&nbsp;</dt>
     <dd><b>Related options</b></dd>
     <dt><a href="qh-optf.htm#format">F</a></dt>
     <dd>additional input/output formats</dd>
+    <dt><a href="qh-optf.htm#Ft">Ft</a></dt>
+    <dd>print triangulation with added points</dd>
     <dt><a href="qh-optg.htm#geomview">G</a></dt>
     <dd>Geomview output</dd>
     <dt><a href="qh-optp.htm#print">P</a></dt>
     <dd>Print options</dd>
-    <dt><a href="qh-optf.htm#Ft">Ft</a></dt>
-    <dd>print triangulation with added points</dd>
     <dt>&nbsp;</dt>
 </dl>
 
 <hr>
 
-<h3><a href="#output">&#187;</a><a name="f">f - print all fields of
-all facets </a></h3>
+<h3><a href="#output">&#187;</a><a name="f">f - print all fields of all facets</a></h3>
 
-<p>Print <a href=../src/libqhull.h#facetT>all fields</a> of all facets.
+<p>Print all fields of <a href=http://www.qhull.org/src/libqhull_r/libqhull_r.h#facetT>facetT</a> for all facets.
 The facet is the primary <a href=index.htm#structure>data structure</a> for
 Qhull.
 
@@ -103,8 +102,7 @@ href="qh-code.htm#cpp">C++ interface</a>.</p>
 <p>Use the '<a href="qh-optf.htm#FF">FF</a>' option to print the
 facets but not the ridges. </p>
 
-<h3><a href="#output">&#187;</a><a name="i">i - print vertices
-incident to each facet </a></h3>
+<h3><a href="#output">&#187;</a><a name="i">i - print vertices incident to each facet</a></h3>
 
 <p>The first line is the number of facets. The remaining lines
 list the vertices for each facet, one facet per line. The indices
@@ -127,10 +125,17 @@ ridge. The index of the centrum is higher than any input point.
 Use option '<a href="qh-optf.htm#Fv">Fv</a>' to list the vertices
 of non-simplicial facets as is. Use option '<a
 href="qh-optf.htm#Ft">Ft</a>' to print the coordinates of the
-centrums as well as those of the input points. </p>
+centrums as well as those of the input points.  The centrum indices
+for option 'i' are one more than the centrum indices for option 'Ft'.</p>
 
-<h3><a href="#output">&#187;</a><a name="m">m - print Mathematica
-output </a></h3>
+<p>For halfspace intersection (<a href="qhalf.htm">qhalf</a>), a "facet"
+is an intersection point and a "point" is a halfspace.  Option 'i' lists the
+non-redundant halfspaces incident to each intersection point.
+The first line is the number of non-redundant halfspaces.  Each remaining
+line lists the incident, non-redundant halfspaces for that intersection point.
+</p>
+
+<h3><a href="#output">&#187;</a><a name="m">m - print Mathematica output</a></h3>
 
 <p>Qhull writes a Mathematica file for 2-d and 3-d convex hulls,
 2-d and 3-d halfspace intersections,
@@ -157,8 +162,7 @@ convex hull.
 <p>See <a href="qh-faq.htm#math">Is Qhull available for Mathematica?</a>
 for URLs.
 
-<h3><a href="#output">&#187;</a><a name="n">n - print hyperplane
-normals with offsets </a></h3>
+<h3><a href="#output">&#187;</a><a name="n">n - print hyperplane normals with offsets</a></h3>
 
 <p>The first line is the dimension plus one. The second line is
 the number of facets. The remaining lines are the normals for
@@ -223,8 +227,7 @@ without listing Voronoi vertices.</p>
 <p>If you are using the Qhull library, options 'v o' have the
 side effect of reordering the neighbors for a vertex.</p>
 
-<h3><a href="#output">&#187;</a><a name="p">p - print vertex and
-point coordinates </a></h3>
+<h3><a href="#output">&#187;</a><a name="p">p - print vertex and point coordinates</a></h3>
 
 <p>The first line is the dimension. The second line is the number
 of vertices. The remaining lines are the vertices, one vertex per
@@ -256,8 +259,7 @@ number of vertices, the dimension plus one, and &quot;real&quot;.
 The vertices follow with a leading &quot;1&quot;. Output ends
 with &quot;end&quot;. </p>
 
-<h3><a href="#output">&#187;</a><a name="s">s - print summary to
-stderr </a></h3>
+<h3><a href="#output">&#187;</a><a name="s">s - print summary to stderr</a></h3>
 
 <p>The default output of Qhull is a summary to stderr. Options '<a
 href="qh-optf.htm#FS">FS</a>' and '<a href="qh-optf.htm#Fs">Fs</a>'
@@ -327,8 +329,8 @@ than 0.05. </p>
 <!-- Navigation links -->
 <hr>
 
-<p><b>Up:</b> <a href="http://www.qhull.org">Home page</a> for Qhull<br>
-<b>Up:</b> <a href="index.htm#TOC">Qhull manual</a>: Table of Contents<br>
+<p><b>Up:</b> <a href="http://www.qhull.org">Home page</a> for Qhull (<a href="../index.htm">local</a>)<br>
+<b>Up:</b> <a href="index.htm#TOC">Qhull manual</a>: contents<br>
 <b>To:</b> <a href="qh-quick.htm#programs">Programs</a>
 &#149; <a href="qh-quick.htm#options">Options</a>
 &#149; <a href="qh-opto.htm#output">Output</a>
@@ -338,7 +340,7 @@ than 0.05. </p>
 &#149; <a href="qh-optq.htm#qhull">Qhull</a>
 &#149; <a href="qh-optc.htm#prec">Precision</a>
 &#149; <a href="qh-optt.htm#trace">Trace</a>
-&#149; <a href="../src/libqhull_r/index.htm">Functions</a></p>
+&#149; <a href="http://www.qhull.org/src/libqhull_r/index.htm">Functions</a> (<a href="../src/libqhull_r/index.htm">local</a>)</p>
 <!-- GC common information -->
 <hr>
 
@@ -347,7 +349,7 @@ align="middle" width="40" height="40"></a><i>The Geometry Center
 Home Page </i></p>
 
 <p>Comments to: <a href=mailto:qhull@qhull.org>qhull@qhull.org</a>
-</a><br>
+<br>
 Created: Sept. 25, 1995 --- <!-- hhmts start --> Last modified: see top <!-- hhmts end --> </p>
 </body>
 </html>

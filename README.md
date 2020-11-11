@@ -35,6 +35,6 @@ Please see [mc_rtc installation guide](https://jrl-umi3218.github.io/mc_rtc/tuto
 
 mc\_rtc also uses the following great 3rd party libraries but does not require you to get or install them:
 
- * [Qhull](http://www.qhull.org/) under the [Qhull license](http://www.qhull.org/COPYING.txt)
+ * [Qhull 2020.2](http://www.qhull.org/) under the [Qhull license](http://www.qhull.org/COPYING.txt)
  * [RapidJSON](http://rapidjson.org/) under the [MIT license](https://github.com/Tencent/rapidjson/blob/master/license.txt)
  * [mpack](https://github.com/ludocode/mpack) under the [MIT license](https://github.com/ludocode/mpack/blob/develop/LICENSE)

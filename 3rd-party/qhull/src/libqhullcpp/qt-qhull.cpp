@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** Copyright (c) 2009-2015 C.B. Barber. All rights reserved.
-** $Id: //main/2015/qhull/src/libqhullcpp/qt-qhull.cpp#1 $$Change: 1981 $
-** $DateTime: 2015/09/28 20:26:32 $$Author: bbarber $
+** Copyright (c) 2009-2020 C.B. Barber. All rights reserved.
+** $Id: //main/2019/qhull/src/libqhullcpp/qt-qhull.cpp#7 $$Change: 3032 $
+** $DateTime: 2020/09/01 17:08:51 $$Author: bbarber $
 **
 ****************************************************************************/
 
@@ -30,10 +30,10 @@ namespace orgQhull {
 QList<coordT> Coordinates::
 toQList() const
 {
-    CoordinatesIterator i(*this);
     QList<coordT> cs;
-    while(i.hasNext()){
-        cs.append(i.next());
+    for(int i= 0; i<count(); ++i){
+        coordT a= at(i);
+        cs.append(a);
     }
     return cs;
 }//toQList
@@ -57,7 +57,7 @@ QList<QhullVertex> QhullFacetList::
 vertices_toQList() const
 {
     QList<QhullVertex> vs;
-    QhullVertexSet qvs(qh(), first().getFacetT(), NULL, isSelectAll());
+    QhullVertexSet qvs(qh(), first().getFacetT(), nullptr, isSelectAll());
     for(QhullVertexSet::iterator i=qvs.begin(); i!=qvs.end(); ++i){
         vs.push_back(*i);
     }

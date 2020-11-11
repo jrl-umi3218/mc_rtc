@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** Copyright (c) 2008-2015 C.B. Barber. All rights reserved.
-** $Id: //main/2015/qhull/src/qhulltest/QhullVertex_test.cpp#3 $$Change: 2062 $
-** $DateTime: 2016/01/17 13:13:18 $$Author: bbarber $
+** Copyright (c) 2008-2020 C.B. Barber. All rights reserved.
+** $Id: //main/2019/qhull/src/qhulltest/QhullVertex_test.cpp#4 $$Change: 3001 $
+** $DateTime: 2020/07/24 20:43:28 $$Author: bbarber $
 **
 ****************************************************************************/
 
@@ -97,13 +97,34 @@ t_getSet()
             QCOMPARE(v.dimension(),3);
             QVERIFY(v.id()>=0 && v.id()<9);
             QVERIFY(v.isValid());
+            QhullVertex v2;
+            v2.setVertexT(v.qh(), v.getVertexT());
+            QCOMPARE(v, v2);
             if(i.hasNext()){
                 QCOMPARE(v.next(), i.peekNext());
                 QVERIFY(v.next()!=v);
-                QVERIFY(v.next().previous()==v);
-            }
+                QCOMPARE(v.next().previous(), v);
+                QVERIFY(v.hasNext());
+                QVERIFY(v.next().hasPrevious());
+            }else
+              QVERIFY(!v.hasNext());
             QVERIFY(i.hasPrevious());
             QCOMPARE(v, i.peekPrevious());
+        }
+        while(i.hasPrevious()){
+          const QhullVertex v= i.previous();
+          cout << v.id() << endl;
+          QVERIFY(v.isValid());
+          if(i.hasPrevious()){
+            QVERIFY(v.hasPrevious());
+            QCOMPARE(v.previous(), i.peekPrevious());
+            QVERIFY(v.previous()!=v);
+            QVERIFY(v.previous().hasNext());
+            QCOMPARE(v.previous().next(), v);
+          }else
+            QVERIFY(!v.hasPrevious());
+          QVERIFY(i.hasNext());
+          QCOMPARE(v, i.peekNext());
         }
 
         // test point()
@@ -119,16 +140,31 @@ t_getSet()
 void QhullVertex_test::
 t_foreach()
 {
+    //!\see QhullLinkedList_test::t_java_iterator for test of QhullVertexListIterator
     RboxPoints rcube("c W0 300");  // 300 points on surface of cube
     {
         Qhull q(rcube, "QR0 Qc"); // keep coplanars, thick facet, and rotate the cube
-        foreach (QhullVertex v, q.vertexList()){  // Qt only
+        int count= 0;
+        foreach(QhullVertex v, q.vertexList()){  // Qt only
+            ++count;
             QhullFacetSet fs= v.neighborFacets();
             QCOMPARE(fs.count(), 3);
-            foreach (QhullFacet f, fs){  // Qt only
+            foreach(QhullFacet f, v.neighborFacets()){  // Qt only
                 QVERIFY(f.vertices().contains(v));
             }
         }
+        QCOMPARE(count, q.vertexCount());
+
+        count= 0;
+        for(QhullVertex v : q.vertexList()) { 
+            ++count;
+            QhullFacetSet fs= v.neighborFacets();
+            QCOMPARE(fs.count(), 3);
+            foreach(QhullFacet f, v.neighborFacets()){
+                QVERIFY(f.vertices().contains(v));
+            }
+        }
+        QCOMPARE(count, q.vertexCount());
     }
 }//t_foreach
 
