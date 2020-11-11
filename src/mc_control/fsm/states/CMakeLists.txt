@@ -7,17 +7,21 @@ set(FSM_HDR_DIR "${PROJECT_SOURCE_DIR}/include/mc_control/fsm/states")
 set(FSM_HDR_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include/mc_control/fsm/states")
 
 macro(add_fsm_state state_name state_SRC state_HDR)
-  add_library(${state_name} SHARED  ${state_SRC} ${state_HDR} "${PROJECT_SOURCE_DIR}/include/mc_control/fsm/states/api.h")
-  set_target_properties(${state_name} PROPERTIES FOLDER controllers/fsm/states)
-  set_target_properties(${state_name} PROPERTIES OUTPUT_NAME ${state_name})
-  set_target_properties(${state_name} PROPERTIES PREFIX "")
-  set_target_properties(${state_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS")
-  target_link_libraries(${state_name} PUBLIC mc_control_fsm)
-  install(TARGETS ${state_name} EXPORT mc_rtc_fsm_states
-    ARCHIVE DESTINATION "${MC_FSM_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
-    LIBRARY DESTINATION "${MC_FSM_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
-    RUNTIME DESTINATION "${MC_FSM_STATES_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
-  )
+  if(MC_RTC_BUILD_STATIC)
+    target_sources(mc_control_fsm PRIVATE ${state_SRC} ${state_HDR})
+  else()
+    add_library(${state_name} SHARED  ${state_SRC} ${state_HDR} "${PROJECT_SOURCE_DIR}/include/mc_control/fsm/states/api.h")
+    set_target_properties(${state_name} PROPERTIES FOLDER controllers/fsm/states)
+    set_target_properties(${state_name} PROPERTIES OUTPUT_NAME ${state_name})
+    set_target_properties(${state_name} PROPERTIES PREFIX "")
+    set_target_properties(${state_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS")
+    target_link_libraries(${state_name} PUBLIC mc_control_fsm)
+    install(TARGETS ${state_name} EXPORT mc_rtc_fsm_states
+      ARCHIVE DESTINATION "${MC_FSM_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+      LIBRARY DESTINATION "${MC_FSM_STATES_LIBRARY_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+      RUNTIME DESTINATION "${MC_FSM_STATES_RUNTIME_INSTALL_PREFIX}$<$<CONFIG:debug>:/debug>"
+    )
+  endif()
   install(FILES ${state_HDR} DESTINATION ${FSM_HDR_INSTALL_DIR})
 endmacro()
 
@@ -28,7 +32,7 @@ install(DIRECTORY data
   PATTERN "*.yaml")
 
 macro(add_fsm_state_simple state_name)
-  add_fsm_state(${state_name} ${state_name}.cpp ${FSM_HDR_DIR}/${state_name}.h)
+  add_fsm_state(${state_name} ${CMAKE_CURRENT_SOURCE_DIR}/${state_name}.cpp ${FSM_HDR_DIR}/${state_name}.h)
 endmacro()
 
 add_fsm_state_simple(HalfSitting)
@@ -42,7 +46,6 @@ add_fsm_state_simple(SlidingFootContact)
 add_fsm_state_simple(Meta)
 add_fsm_state_simple(Parallel)
 add_fsm_state_simple(StabilizerStandingState)
-target_link_libraries(StabilizerStandingState PUBLIC mc_planning)
 
 # PythonState
 if(${PYTHON_BINDING})
@@ -67,8 +70,10 @@ if(${PYTHON_BINDING})
   endforeach()
 endif()
 
-install(
-  EXPORT mc_rtc_fsm_states
-  NAMESPACE mc_rtc::fsm::states::
-  DESTINATION "${CONFIG_INSTALL_DIR}"
-)
+if(NOT MC_RTC_BUILD_STATIC)
+  install(
+    EXPORT mc_rtc_fsm_states
+    NAMESPACE mc_rtc::fsm::states::
+    DESTINATION "${CONFIG_INSTALL_DIR}"
+  )
+endif()

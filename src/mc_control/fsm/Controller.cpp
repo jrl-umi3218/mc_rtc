@@ -42,6 +42,10 @@ using clock = typename std::conditional<std::chrono::high_resolution_clock::is_s
                                         std::chrono::steady_clock>::type;
 } // namespace
 
+#ifdef MC_RTC_BUILD_STATIC
+std::unique_ptr<StateFactory> Controller::factory_ptr_;
+#endif
+
 Contact Contact::from_mc_rbdyn(const Controller & ctl, const mc_rbdyn::Contact & contact)
 {
   return {ctl.robots().robot(contact.r1Index()).name(), ctl.robots().robot(contact.r2Index()).name(),
@@ -50,10 +54,18 @@ Contact Contact::from_mc_rbdyn(const Controller & ctl, const mc_rbdyn::Contact &
 
 Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, const mc_rtc::Configuration & config)
 : MCController(std::vector<mc_rbdyn::RobotModulePtr>{rm}, dt, config),
+#ifndef MC_RTC_BUILD_STATIC
   factory_(config("StatesLibraries", std::vector<std::string>{}),
            config("StatesFiles", std::vector<std::string>{}),
            config("VerboseStateFactory", false))
+#else
+  factory_(factory())
+#endif
 {
+#ifdef MC_RTC_BUILD_STATIC
+  factory_.load_files(config("StatesFiles", std::vector<std::string>{}));
+  factory_.set_verbosity(config("VerboseStateFactory", false));
+#endif
   idle_keep_state_ = config("IdleKeepState", false);
   robots_idx_[robot().name()] = 0;
   /** Load additional robots from the configuration */

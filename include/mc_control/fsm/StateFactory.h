@@ -85,6 +85,23 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
   /** Load state using a loader state, returns true if a state was loaded */
   bool load_with_loader(const std::string & state);
 
+  /** Register a new loading function
+   *
+   * \param name Name that will be used to create new instance
+   *
+   * \param callback Callback that will be used to create the object
+   *
+   * \tparam RetT Must be derived from T
+   *
+   * \throws LoaderException if the object is already registered
+   */
+  template<typename RetT, typename... Args>
+  void register_object(const std::string & name, std::function<RetT *(const Args &...)> callback)
+  {
+    mc_rtc::ObjectLoader<State>::register_object(name, callback);
+    states_.push_back(name);
+  }
+
 private:
   /** Create a state from libraries or factory */
   StatePtr create(const std::string & state);

@@ -45,7 +45,9 @@ macro(install_mc_rtc_lib MC_LIB)
     set_target_properties(${MC_LIB} PROPERTIES LINK_FLAGS "--coverage")
   endif()
   set_target_properties(${MC_LIB} PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR} VERSION ${PROJECT_VERSION})
-  add_version_script(${MC_LIB} "${VERSION_SCRIPT_LOCATION}")
+  if(NOT MC_RTC_BUILD_STATIC)
+    add_version_script(${MC_LIB} "${VERSION_SCRIPT_LOCATION}")
+  endif()
   add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
   install(TARGETS ${MC_LIB}
     EXPORT "${TARGETS_EXPORT_NAME}"
@@ -201,8 +203,12 @@ add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
 set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
 target_link_libraries(mc_rbdyn PUBLIC mc_rbdyn_urdf::mc_rbdyn_urdf RBDyn::Parsers Tasks::Tasks mc_rtc_loader mc_rtc_utils mc_filter GEOS::geos)
 # qhull
+if(MC_RTC_BUILD_STATIC)
+  target_link_libraries(mc_rbdyn PRIVATE "-Wl,--no-whole-archive" qhullstatic_r "-Wl,--no-whole-archive" qhullcpp)
+else()
+  target_link_libraries(mc_rbdyn PRIVATE qhullstatic_r qhullcpp)
+endif()
 target_include_directories(mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull/src")
-target_link_libraries(mc_rbdyn PRIVATE $<BUILD_INTERFACE:qhullcpp> $<BUILD_INTERFACE:qhullstatic_r>)
 install_mc_rtc_lib(mc_rbdyn)
 
 set(mc_rtc_gui_SRC
