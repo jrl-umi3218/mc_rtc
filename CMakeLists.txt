@@ -166,6 +166,10 @@ if(${PYTHON_BINDING})
  add_subdirectory(binding/python)
 endif()
 
+add_subdirectory(robots)
+add_subdirectory(observers)
+add_subdirectory(controllers)
+
 install(DIRECTORY include ${CMAKE_BINARY_DIR}/include
           DESTINATION ${CMAKE_INSTALL_PREFIX}
           FILES_MATCHING REGEX "h(pp)?$")
