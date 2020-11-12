@@ -73,9 +73,9 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
                  robots.robot(robotIndex).module().defaultLIPMStabilizerConfiguration().torsoBodyName,
                  dt)
 {
-  reset();
   configure(robots.robot(robotIndex).module().defaultLIPMStabilizerConfiguration());
   setContacts({ContactState::Left, ContactState::Right});
+  reset();
 }
 
 void StabilizerTask::reset()
@@ -106,8 +106,6 @@ void StabilizerTask::reset()
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
 
   omega_ = std::sqrt(constants::gravity.z() / robot().com().z());
-
-  configure(robot().module().defaultLIPMStabilizerConfiguration());
   commitConfig();
 }
 
@@ -927,10 +925,9 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       auto t = std::allocate_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
           Eigen::aligned_allocator<mc_tasks::lipm_stabilizer::StabilizerTask>{}, solver.robots(), solver.realRobots(),
           robotIndex, stabiConf.leftFootSurface, stabiConf.rightFootSurface, stabiConf.torsoBodyName, solver.dt());
-      t->reset();
       t->configure(stabiConf);
       t->load(solver, config);
-      t->commitConfig();
+      t->reset();
       return t;
     });
 }
