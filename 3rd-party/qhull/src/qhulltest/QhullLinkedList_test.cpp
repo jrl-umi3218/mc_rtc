@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** Copyright (c) 2009-2015 C.B. Barber. All rights reserved.
-** $Id: //main/2015/qhull/src/qhulltest/QhullLinkedList_test.cpp#3 $$Change: 2062 $
-** $DateTime: 2016/01/17 13:13:18 $$Author: bbarber $
+** Copyright (c) 2009-2020 C.B. Barber. All rights reserved.
+** $Id: //main/2019/qhull/src/qhulltest/QhullLinkedList_test.cpp#5 $$Change: 3009 $
+** $DateTime: 2020/07/30 19:25:22 $$Author: bbarber $
 **
 ****************************************************************************/
 
@@ -30,7 +30,9 @@ private slots:
     void t_search();
     void t_iterator();
     void t_const_iterator();
+    void t_foreach();
     void t_QhullLinkedList_iterator();
+    void t_java_iterator();
     void t_io();
 };//QhullLinkedList_test
 
@@ -55,11 +57,11 @@ t_construct()
     {
         Qhull q(rcube,"Qt QR0");  // triangulation of rotated unit cube
         QCOMPARE(q.facetCount(), 12);
-        QhullVertexList vs = QhullVertexList(q.beginVertex(), q.endVertex());
+        QhullVertexList vs= QhullVertexList(q.beginVertex(), q.endVertex());
         QCOMPARE(vs.count(), 8);
         QCOMPARE(vs.size(), 8u);
         QVERIFY(!vs.isEmpty());
-        QhullVertexList vs2 = q.vertexList();
+        QhullVertexList vs2= q.vertexList();
         QCOMPARE(vs2.count(), 8);
         QCOMPARE(vs2.size(),8u);
         QVERIFY(!vs2.isEmpty());
@@ -77,7 +79,7 @@ t_convert()
     {
         Qhull q(rcube,"Qt QR0");  // triangulation of rotated unit cube
         QCOMPARE(q.facetCount(), 12);
-        QhullVertexList vs = q.vertexList();
+        QhullVertexList vs= q.vertexList();
         QCOMPARE(vs.size(), 8u);
         QVERIFY(!vs.isEmpty());
         std::vector<QhullVertex> vs2= vs.toStdVector();
@@ -107,7 +109,7 @@ t_element()
 {
     RboxPoints rcube("c");
     Qhull q(rcube,"QR0");  // rotated unit cube
-    QhullVertexList vs = q.vertexList();
+    QhullVertexList vs= q.vertexList();
     QhullVertex v= vs.first();
     QCOMPARE(v.previous(), QhullVertex(NULL));
     QCOMPARE(vs.front(), vs.first());
@@ -122,7 +124,7 @@ t_search()
 {
     RboxPoints rcube("c");
     Qhull q(rcube,"QR0");  // rotated unit cube
-    QhullVertexList vs = q.vertexList();
+    QhullVertexList vs= q.vertexList();
     QhullVertex v(q);
     QVERIFY(!vs.contains(v));
     QCOMPARE(vs.count(v), 0);
@@ -140,7 +142,7 @@ t_iterator()
     RboxPoints rcube("c");
     {
         Qhull q(rcube,"QR0");  // rotated unit cube
-        QhullVertexList vs = q.vertexList();
+        QhullVertexList vs= q.vertexList();
         QhullVertexList::Iterator i= vs.begin();
         QhullVertexList::iterator i2= vs.begin();
         QVERIFY(i==i2);
@@ -201,7 +203,7 @@ t_const_iterator()
     RboxPoints rcube("c");
     {
         Qhull q(rcube,"QR0");  // rotated unit cube
-        QhullVertexList vs = q.vertexList();
+        QhullVertexList vs= q.vertexList();
         QhullVertexList::ConstIterator i= vs.begin();
         QhullVertexList::const_iterator i2= vs.begin();
         QVERIFY(i==i2);
@@ -249,6 +251,42 @@ t_const_iterator()
 }//t_const_iterator
 
 void QhullLinkedList_test::
+t_foreach()
+{
+    RboxPoints rcube("c");
+    // Spot check predicates and accessors.  See QhullLinkedList_test
+    Qhull q(rcube, "QR0");  // rotated unit cube
+    QhullVertex v2= q.firstVertex().next();
+    QhullVertexList vs= q.vertexList();
+
+    bool isV2= false;
+    int count= 0;
+    foreach(QhullVertex v, q.vertexList()) { // Qt only
+        ++count;
+        if(v==v2){
+            isV2= true;
+            QCOMPARE(count, 2);
+        }
+    }
+    QVERIFY(isV2);
+    QCOMPARE(count, q.vertexCount());
+    QCOMPARE(count, vs.count());
+
+    isV2= false;
+    count= 0;
+    for(QhullVertex v : q.vertexList()){
+        ++count;
+        if(v==v2){
+            isV2= true;
+            QCOMPARE(count, 2);
+        }
+    }
+    QVERIFY(isV2);
+    QCOMPARE(count, q.vertexCount());
+    QCOMPARE(count, vs.count());
+}//t_foreach
+
+void QhullLinkedList_test::
 t_QhullLinkedList_iterator()
 {
     RboxPoints rcube("c");
@@ -262,7 +300,7 @@ t_QhullLinkedList_iterator()
     QVERIFY(!i.hasNext());
     QVERIFY(!i.hasPrevious());
 
-    QhullVertexList vs2 = q.vertexList();
+    QhullVertexList vs2= q.vertexList();
     QhullVertexListIterator i2(vs2);
     QCOMPARE(vs2.count(), 8);
     i= vs2;
@@ -278,7 +316,7 @@ t_QhullLinkedList_iterator()
     QVERIFY(!i.hasPrevious());
 
     // i at front, i2 at end/back, 4 neighbors
-    QhullVertexList vs3 = q.vertexList(); // same as vs2
+    QhullVertexList vs3= q.vertexList(); // same as vs2
     QhullVertex v3(vs3.first());
     QhullVertex v4= vs3.first();
     QCOMPARE(v3, v4);
@@ -313,6 +351,32 @@ t_QhullLinkedList_iterator()
     i.toFront();
     QCOMPARE(i.next(), v4);
 }//t_QhullLinkedList_iterator
+
+void QhullLinkedList_test::
+t_java_iterator()
+{
+    RboxPoints rcube("c");
+    // Spot check predicates and accessors.  See QhullLinkedList_test
+    Qhull q(rcube, "QR0");  // rotated unit cube
+    QhullVertex v2= q.firstVertex().next();
+    QhullVertexList vs= q.vertexList();
+
+    bool isV2= false;
+    int count= 0;
+    QhullVertexListIterator i(q.vertexList());
+    while(i.hasNext()){
+        QhullVertex v= i.next();
+        QCOMPARE(i.peekPrevious(), v);
+        ++count;
+        if(v==v2){
+            isV2= true;
+            QCOMPARE(count, 2);
+        }
+    }
+    QVERIFY(isV2);
+    QCOMPARE(count, q.vertexCount());
+    QCOMPARE(count, vs.count());
+}//t_java_iterator
 
 void QhullLinkedList_test::
 t_io()

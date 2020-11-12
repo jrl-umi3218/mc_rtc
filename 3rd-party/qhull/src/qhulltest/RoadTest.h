@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** Copyright (c) 2008-2015 C.B. Barber. All rights reserved.
-** $Id: //main/2015/qhull/src/qhulltest/RoadTest.h#2 $$Change: 2062 $
-** $Date: 2016/01/17 $$Author: bbarber $
+** Copyright (c) 2008-2020 C.B. Barber. All rights reserved.
+** $Id: //main/2019/qhull/src/qhulltest/RoadTest.h#3 $$Change: 3009 $
+** $Date: 2020/07/30 $$Author: bbarber $
 **
 ****************************************************************************/
 
@@ -58,10 +58,10 @@ class RoadTest : public QObject
 #//!\name Class globals
 protected:
     static QList<RoadTest *>
-                        s_testcases; ///! List of testcases to execute.  Initialized via add_...()
-    static int          s_test_count; ///! Total number of tests executed
-    static int          s_test_fail; ///! Number of failed tests
-    static QStringList  s_failed_tests; ///! List of failed tests
+                        s_testcases;    //! List of testcases to execute.  Initialized via add_...()
+    static int          s_test_count;   //! Total number of tests executed
+    static int          s_test_fail;    //! Number of failed tests
+    static QStringList  s_failed_tests; //! List of failed tests
 
 #//!\name Test slots
 public slots:

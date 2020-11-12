@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** Copyright (c) 2008-2015 C.B. Barber. All rights reserved.
-** $Id: //main/2015/qhull/src/qhulltest/QhullFacet_test.cpp#4 $$Change: 2062 $
-** $DateTime: 2016/01/17 13:13:18 $$Author: bbarber $
+** Copyright (c) 2008-2020 C.B. Barber. All rights reserved.
+** $Id: //main/2019/qhull/src/qhulltest/QhullFacet_test.cpp#6 $$Change: 3006 $
+** $DateTime: 2020/07/29 18:28:16 $$Author: bbarber $
 **
 ****************************************************************************/
 
@@ -38,6 +38,7 @@ private slots:
     void t_construct_qh();
     void t_constructConvert();
     void t_getSet();
+    void t_getSet2d();
     void t_value();
     void t_foreach();
     void t_io();
@@ -103,20 +104,41 @@ t_getSet()
         while(i.hasNext()){
             const QhullFacet f= i.next();
             cout << f.id() << endl;
+            QhullFacet f2;
+            f2.setFacetT(f.qh(), f.getFacetT());
+            QCOMPARE(f, f2);
             QCOMPARE(f.dimension(),3);
             QVERIFY(f.id()>0 && f.id()<=39);
             QVERIFY(f.isValid());
             if(i.hasNext()){
                 QCOMPARE(f.next(), i.peekNext());
                 QVERIFY(f.next()!=f);
-            }
+                QCOMPARE(f.next().previous(), f);
+                QVERIFY(f.hasNext());
+                QVERIFY(f.next().hasPrevious());
+            }else
+              QVERIFY(!f.hasNext());
             QVERIFY(i.hasPrevious());
             QCOMPARE(f, i.peekPrevious());
         }
-
+        while(i.hasPrevious()){
+          const QhullFacet f= i.previous();
+          cout << f.id() << endl;
+          QVERIFY(f.isValid());
+          if(i.hasPrevious()){
+            QVERIFY(f.hasPrevious());
+            QCOMPARE(f.previous(), i.peekPrevious());
+            QVERIFY(f.previous()!=f);
+            QVERIFY(f.previous().hasNext());
+            QCOMPARE(f.previous().next(), f);
+          }else
+            QVERIFY(!f.hasPrevious());
+          QVERIFY(i.hasNext());
+          QCOMPARE(f, i.peekNext());
+        }
         // test tricoplanarOwner
-        QhullFacet facet = q.beginFacet();
-        QhullFacet tricoplanarOwner = facet.tricoplanarOwner();
+        QhullFacet facet= q.beginFacet();
+        QhullFacet tricoplanarOwner= facet.tricoplanarOwner();
         int tricoplanarCount= 0;
         i.toFront();
         while(i.hasNext()){
@@ -128,23 +150,26 @@ t_getSet()
         QCOMPARE(tricoplanarCount, 2);
         int tricoplanarCount2= 0;
         foreach (QhullFacet f, q.facetList()){  // Qt only
+            QhullHyperplane hi= f.innerplane();
+            QCOMPARE(hi.count(), 3);
+            double innerOffset= hi.offset() + 0.5;
+            cout << "InnerPlane: " << hi << "   innerOffset+0.5 " << innerOffset << endl;
             QhullHyperplane h= f.hyperplane();
-            cout << "Hyperplane: " << h;
+            double offset= h.offset() + 0.5;
+            cout << "Hyperplane: " << h << "   offset+0.5 " << offset << endl;
             QCOMPARE(h.count(), 3);
             QCOMPARE(h.offset(), -0.5);
             double n= h.norm();
             QCOMPARE(n, 1.0);
-            QhullHyperplane hi= f.innerplane();
-            QCOMPARE(hi.count(), 3);
-            double innerOffset= hi.offset()+0.5;
-            cout << "InnerPlane: " << hi << "   innerOffset+0.5 " << innerOffset << endl;
-            QVERIFY(innerOffset >= 0.0-(2*q.distanceEpsilon())); // A guessed epsilon.  It needs to account for roundoff due to rotation of the vertices
             QhullHyperplane ho= f.outerplane();
             QCOMPARE(ho.count(), 3);
             double outerOffset= ho.offset()+0.5;
             cout << "OuterPlane: " << ho << "   outerOffset+0.5 " << outerOffset << endl;
-            QVERIFY(outerOffset <= 0.0+(2*q.distanceEpsilon())); // A guessed epsilon.  It needs to account for roundoff due to rotation of the vertices
-            QVERIFY(outerOffset-innerOffset < 1e-7);
+            QVERIFY(offset < innerOffset); // the outerOffset is more negative than the innerOffset.  The expected values are -0.5 for the unit cube centered at the origin
+            QVERIFY(outerOffset < offset); // QR1595623290 was 8.4x,   innerOffset+0.5 9.71445e-15, 2.5e-16 max. distance of a new vertex to a facet
+            QVERIFY2(fabs(innerOffset) < (10 * q.distanceEpsilon()), "Guessed epsilon from -0.5 due to rotation");   
+            QVERIFY2(fabs(outerOffset) < (10 * q.distanceEpsilon()), "Guessed epsilon from -0.5 due to rotation");
+
             for(int k= 0; k<3; k++){
                 QVERIFY(ho[k]==hi[k]);
                 QVERIFY(ho[k]==h[k]);
@@ -189,6 +214,26 @@ t_getSet()
         QCOMPARE(voronoiCount, 1);
     }
 }//t_getSet
+
+void QhullFacet_test::
+t_getSet2d()
+{
+    RboxPoints rsquare("c D2");
+    Qhull q(rsquare, "o");  // convex hull of square
+    q.setOutputStream(&cout);
+    cout << "Points and facets.  Facet vertices in counter-clockwise order (option 'o')\n";
+    q.outputQhull();
+    int n= q.facetCount();
+    QhullFacet f= q.firstFacet();
+    QhullVertex v;
+    cout << "Facets and vertices in counter-clockwise order (f.nextFacet2d)\n";
+    for(int i= 0; i<n; ++i){
+        f= f.nextFacet2d(&v);
+        cout << "f" << f.id() << " v" << v.id() << " p" << v.point().id() << "\n";
+    }
+    cout << "Extreme points in counter-clockwise order (option 'Fx')\n";
+    q.outputQhull("Fx");
+}//t_getSet2d
 
 void QhullFacet_test::
 t_value()
@@ -265,6 +310,7 @@ t_io()
         os2 << f;
         QString facetString2= QString::fromStdString(os2.str());
         facetString2.replace(QRegExp("\\s\\s+"), " ");
+        facetString2.replace(QRegExp("seen "), "");
         ostringstream os3;
         q.qh()->setOutputStream(&os3);
         q.outputQhull("f");

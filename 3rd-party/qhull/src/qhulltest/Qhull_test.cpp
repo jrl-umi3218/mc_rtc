@@ -1,25 +1,29 @@
 /****************************************************************************
 **
-** Copyright (c) 2008-2015 C.B. Barber. All rights reserved.
-** $Id: //main/2015/qhull/src/qhulltest/Qhull_test.cpp#4 $$Change: 2062 $
-** $DateTime: 2016/01/17 13:13:18 $$Author: bbarber $
+** Copyright (c) 2008-2020 C.B. Barber. All rights reserved.
+** $Id: //main/2019/qhull/src/qhulltest/Qhull_test.cpp#9 $$Change: 3010 $
+** $DateTime: 2020/07/30 22:14:11 $$Author: bbarber $
 **
 ****************************************************************************/
 
 //pre-compiled headers
 #include <iostream>
+#include <iomanip> // setw
+
 #include "qhulltest/RoadTest.h" // QT_VERSION
 
 #include "libqhullcpp/Qhull.h"
 #include "libqhullcpp/QhullError.h"
 #include "libqhullcpp/RboxPoints.h"
 #include "libqhullcpp/QhullFacetList.h"
+#include "libqhullcpp/QhullFacetSet.h"
+#include "libqhullcpp/QhullVertexSet.h"
 
 using std::cout;
 using std::endl;
 using std::string;
 
-namespace orgQhull {
+namespace orgQhull{
 
 //! Test C++ interface to Qhull
 //! See eg/q_test for tests of Qhull commands
@@ -37,7 +41,7 @@ private slots:
     void t_getQh();
     void t_getValue();
     void t_foreach();
-    void t_modify();
+    void t_diamond();
 };//Qhull_test
 
 void
@@ -56,7 +60,7 @@ cleanup()
 void Qhull_test::
 t_construct()
 {
-    {
+   {
         Qhull q;
         QCOMPARE(q.dimension(),0);
         QVERIFY(q.qh()!=0);
@@ -65,19 +69,19 @@ t_construct()
         try{
             QCOMPARE(q.area(),0.0);
             QFAIL("area() did not fail.");
-        }catch (const std::exception &e) {
+        }catch (const std::exception &e){
             cout << "INFO   : Caught " << e.what();
         }
     }
-    {
+   {
         RboxPoints rbox("10000");
         Qhull q(rbox, "QR0"); // Random points in a randomly rotated cube.
         QCOMPARE(q.dimension(),3);
         QVERIFY(q.volume() < 1.0);
         QVERIFY(q.volume() > 0.99);
     }
-    {
-        double points[] = {
+   {
+        double points[]={
             0, 0,
             1, 0,
             1, 1
@@ -87,6 +91,10 @@ t_construct()
         QCOMPARE(q.facetCount(),3);
         QCOMPARE(q.vertexCount(),3);
         QCOMPARE(q.dimension(),2);
+        double area= (2.0 + sqrt(2.0));
+        double delta= fabs(q.area() - area);
+        double qtDelta= 0.000000000001 * area;
+        cout << "area delta " << delta << ". qFuzzyCompare delta " << qtDelta << endl;
         QCOMPARE(q.area(), 2.0+sqrt(2.0)); // length of boundary
         QCOMPARE(q.volume(), 0.5);        // the 2-d area
     }
@@ -96,8 +104,8 @@ void Qhull_test::
 t_attribute()
 {
     RboxPoints rcube("c");
-    {
-        double normals[] = {
+   {
+        double normals[]={
             0,  -1, -0.5,
            -1,   0, -0.5,
             1,   0, -0.5,
@@ -118,6 +126,7 @@ t_attribute()
         q.qh()->disableOutputStream();  // Same as q.disableOutputStream()
         cout << "Expecting no output from qh_fprintf() in Qhull.cpp\n";
         q.outputQhull();
+        cout << "Expecting output from ~Qhull\n";
     }
 }//t_attribute
 
@@ -126,7 +135,7 @@ void Qhull_test::
 t_message()
 {
     RboxPoints rcube("c");
-    {
+   {
         Qhull q;
         QCOMPARE(q.qhullMessage(), string(""));
         QCOMPARE(q.qhullStatus(), qh_ERRnone);
@@ -134,11 +143,11 @@ t_message()
         try{
             q.runQhull(rcube, "Fd");
             QFAIL("runQhull Fd did not fail.");
-        }catch (const std::exception &e) {
+        }catch (const std::exception &e){
             const char *s= e.what();
             cout << "INFO   : Caught " << s;
             QCOMPARE(QString::fromStdString(s).left(6), QString("QH6029"));
-            // FIXUP QH11025 -- review decision to clearQhullMessage at QhullError()            // Cleared when copied to QhullError
+            // QH11025 FIX: review decision to clearQhullMessage at QhullError()            // Cleared when copied to QhullError
             QVERIFY(!q.hasQhullMessage());
             // QCOMPARE(q.qhullMessage(), QString::fromStdString(s).remove(0, 7));
             // QCOMPARE(q.qhullStatus(), 6029);
@@ -154,7 +163,7 @@ t_message()
         QVERIFY(!q.hasQhullMessage());
         QCOMPARE(QString::fromStdString(q.qhullMessage()), QString(""));
     }
-    {
+   {
         cout << "INFO   : Error stream without output stream\n";
         Qhull q;
         q.setErrorStream(&cout);
@@ -162,17 +171,17 @@ t_message()
         try{
             q.runQhull(rcube, "Fd");
             QFAIL("runQhull Fd did not fail.");
-        }catch (const QhullError &e) {
+        }catch (const QhullError &e){
             cout << "INFO   : Caught " << e;
             QCOMPARE(e.errorCode(), 6029);
         }
-        //FIXUP QH11025 Qhullmessage cleared when QhullError thrown.  Switched to e
+        //QH11025 FIX: Qhullmessage cleared when QhullError thrown.  Switched to e
         //QVERIFY(q.hasQhullMessage());
         //QCOMPARE(QString::fromStdString(q.qhullMessage()).left(6), QString("QH6029"));
         q.clearQhullMessage();
         QVERIFY(!q.hasQhullMessage());
     }
-    {
+   {
         cout << "INFO   : Error output sent to output stream without error stream\n";
         Qhull q;
         q.setErrorStream(0);
@@ -180,19 +189,19 @@ t_message()
         try{
             q.runQhull(rcube, "Tz H0");
             QFAIL("runQhull TZ did not fail.");
-        }catch (const std::exception &e) {
+        }catch (const std::exception &e){
             const char *s= e.what();
             cout << "INFO   : Caught " << s;
             QCOMPARE(QString::fromLatin1(s).left(6), QString("QH6023"));
         }
-        //FIXUP QH11025 Qhullmessage cleared when QhullError thrown.  Switched to e
+        //QH11025 FIX: Qhullmessage cleared when QhullError thrown.  Switched to e
         //QVERIFY(q.hasQhullMessage());
         //QCOMPARE(QString::fromStdString(q.qhullMessage()).left(17), QString("qhull: no message"));
         //QCOMPARE(q.qhullStatus(), 6023);
         q.clearQhullMessage();
         QVERIFY(!q.hasQhullMessage());
     }
-    {
+   {
         cout << "INFO   : No error stream or output stream\n";
         Qhull q;
         q.setErrorStream(0);
@@ -200,12 +209,12 @@ t_message()
         try{
             q.runQhull(rcube, "Fd");
             QFAIL("outputQhull did not fail.");
-        }catch (const std::exception &e) {
+        }catch (const std::exception &e){
             const char *s= e.what();
             cout << "INFO   : Caught " << s;
             QCOMPARE(QString::fromLatin1(s).left(6), QString("QH6029"));
         }
-        //FIXUP QH11025 Qhullmessage cleared when QhullError thrown.  Switched to e
+        //QH11025 FIX: QhullMessage cleared when QhullError thrown.  Switched to e
         //QVERIFY(q.hasQhullMessage());
         //QCOMPARE(QString::fromStdString(q.qhullMessage()).left(9), QString("qhull err"));
         //QCOMPARE(q.qhullStatus(), 6029);
@@ -218,7 +227,7 @@ void Qhull_test::
 t_getSet()
 {
     RboxPoints rcube("c");
-    {
+   {
         Qhull q;
         QVERIFY(!q.initialized());
         q.runQhull(rcube, "s");
@@ -230,7 +239,7 @@ t_getSet()
         q.setErrorStream(&cout);
         q.outputQhull();
     }
-    {
+   {
         Qhull q;
         q.runQhull(rcube, "");
         q.setOutputStream(&cout);
@@ -242,7 +251,7 @@ void Qhull_test::
 t_getQh()
 {
     RboxPoints rcube("c");
-    {
+   {
         Qhull q;
         q.runQhull(rcube, "s");
         QCOMPARE(QString(q.qhullCommand()), QString("qhull s"));
@@ -268,7 +277,7 @@ void Qhull_test::
 t_getValue()
 {
     RboxPoints rcube("c");
-    {
+   {
         Qhull q;
         q.runQhull(rcube, "");
         QCOMPARE(q.area(), 6.0);
@@ -280,7 +289,7 @@ void Qhull_test::
 t_foreach()
 {
     RboxPoints rcube("c");
-    {
+   {
         Qhull q;
         QCOMPARE(q.beginFacet(),q.endFacet());
         QCOMPARE(q.beginVertex(),q.endVertex());
@@ -307,12 +316,13 @@ t_foreach()
         coordT *c3= q.pointCoordinateEnd();
         QVERIFY(c3[-1]==0.5 || c3[-1]==-0.5);
         QCOMPARE(c3-c, 8*3);
-        QCOMPARE(q.vertexList().count(), 8);
+        QhullVertexList vertexList= q.vertexList();
+        QCOMPARE(vertexList.count(), 8);
     }
 }//t_foreach
 
 void Qhull_test::
-t_modify()
+t_diamond()
 {
     //addPoint() tested in t_foreach
     RboxPoints diamond("d");
@@ -320,19 +330,66 @@ t_modify()
     q.setOutputStream(&cout);
     cout << "Expecting vertexList and facetList of a 3-d diamond.\n";
     q.outputQhull();
+
+    cout << "Expecting the same output using std::vector and Qhull classes\n";
+    int dim= q.hullDimension();
+    int numfacets= q.facetList().count();
+    int totneighbors= numfacets*dim;  /* incorrect for non-simplicial facets, see qh_countfacets */
+    cout << dim << "\n" << q.points().size() << " " << numfacets << " " << totneighbors/2 << "\n";
+    std::vector<std::vector<double> > points;
+    for(QhullPoint point : q.points()){
+        points.push_back(point.toStdVector());
+    }
+    for(std::vector<double> point : points){
+        size_t n= point.size();
+        for(size_t i= 0; i < n; ++i){
+            if(i < n - 1){
+                cout << std::setw(6) << point[i] << " ";
+            }else{
+                cout << std::setw(6) << point[i] << "\n";
+            }
+        }
+    }
+    QhullFacetList facets= q.facetList();
+    std::vector<std::vector<int> > facetVertices;
+    for(QhullFacet f : facets){
+        std::vector<int> vertices;
+        if(!f.isTopOrient() && f.isSimplicial()){ /* orient the vertices like option 'o' */
+            QhullVertexSet vs= f.vertices();
+            vertices.push_back(vs[1].point().id());
+            vertices.push_back(vs[0].point().id());
+            for(int i= 2; i < (int)vs.size(); ++i){
+                vertices.push_back(vs[i].point().id());
+            }
+        }else{  /* note: for non-simplicial facets, this code does not duplicate option 'o', see qh_facet3vertex and qh_printfacetNvertex_nonsimplicial */
+            for(QhullVertex vertex : f.vertices()){
+                QhullPoint p= vertex.point();
+                vertices.push_back(p.id());
+            }
+        }
+        facetVertices.push_back(vertices);
+    }
+    for(std::vector<int> vertices : facetVertices){
+        size_t n= vertices.size();
+        cout << n << " ";
+        for(size_t i= 0; i<n; ++i){
+            cout << vertices[i] << " ";
+        }
+        cout << "\n";
+    }
     cout << "Expecting normals of a 3-d diamond.\n";
     q.outputQhull("n");
     // runQhull tested in t_attribute(), t_message(), etc.
-}//t_modify
+}//t_diamond
 
 }//orgQhull
 
 // Redefine Qhull's usermem_r.c in order to report erroneous calls to qh_exit
-void qh_exit(int exitcode) {
+void qh_exit(int exitcode){
     cout << "FAIL!  : Qhull called qh_exit().  Qhull's error handling not available.\n.. See the corresponding Qhull:qhull_message or setErrorStream().\n";
     exit(exitcode);
 }
-void qh_fprintf_stderr(int msgcode, const char *fmt, ... ) {
+void qh_fprintf_stderr(int msgcode, const char *fmt, ... ){
     va_list args;
 
     va_start(args, fmt);
@@ -341,10 +398,10 @@ void qh_fprintf_stderr(int msgcode, const char *fmt, ... ) {
     vfprintf(stderr, fmt, args);
     va_end(args);
 } /* fprintf_stderr */
-void qh_free(void *mem) {
+void qh_free(void *mem){
     free(mem);
 }
-void *qh_malloc(size_t size) {
+void *qh_malloc(size_t size){
     return malloc(size);
 }
 
@@ -352,7 +409,7 @@ void *qh_malloc(size_t size) {
 template<> char * QTest::
 toString(const std::string &s)
 {
-    QByteArray ba = s.c_str();
+    QByteArray ba= s.c_str();
     return qstrdup(ba.data());
 }
 #endif

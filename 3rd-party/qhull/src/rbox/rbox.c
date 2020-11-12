@@ -22,9 +22,9 @@
 #endif
 
 char prompt[]= "\n\
--rbox- generate various point distributions.  Default is random in cube.\n\
+rbox -- generate various point distributions.  Default is random in cube.\n\
 \n\
-args (any order, space separated):                    Version: 2016/01/18\n\
+args (any order, space separated):                    Version: 2019/11/10\n\
   3000    number of random points in cube, lens, spiral, sphere or grid\n\
   D3      dimension 3-d\n\
   c       add a unit cube to the output ('c G2.0' sets size)\n\
@@ -34,7 +34,7 @@ args (any order, space separated):                    Version: 2016/01/18\n\
   s       generate cospherical points\n\
   x       generate random points in simplex, may use 'r' or 'Wn'\n\
   y       same as 'x', plus simplex\n\
-  Cn,r,m  add n nearly coincident points within radius r of m points\n\
+  Cn,r,m  add n nearly adjacent points within radius r of m points\n\
   Pn,m,r  add point [n,m,r] first, pads with 0, maybe repeated\n\
 \n\
   Ln      lens distribution of radius n.  Also 's', 'r', 'G', 'W'.\n\
@@ -52,6 +52,7 @@ args (any order, space separated):                    Version: 2016/01/18\n\
   tn      use n as the random number seed\n\
   z       print integer coordinates, default 'Bn' is %2.2g\n\
 ";
+/* Not including 'V' for rbox version, clumsy coordination with rboxlib.c */
 
 /*--------------------------------------------
 -rbox-  main procedure of rbox application
@@ -65,17 +66,20 @@ int main(int argc, char **argv) {
 
   if (argc == 1) {
     printf(prompt, qh_DEFAULTbox, qh_DEFAULTzbox);
-    return 1;
+    return qh_ERRnone;
   }
   if (argc == 2 && strcmp(argv[1], "D4")==0)
     qh_fprintf_stderr(0, "\nStarting the rbox smoketest for qhull.  An immediate failure indicates\nthat non-reentrant rbox was linked to reentrant routines.  An immediate\nfailure of qhull may indicate that qhull was linked to the wrong\nqhull library.  Also try 'rbox D4 | qhull T1'\n");
 
   command_size= qh_argv_to_command_size(argc, argv);
-  if ((command= (char *)qh_malloc((size_t)command_size))) {
+  if (command_size < 1) {
+    qh_fprintf_stderr(6419, "rbox internal error: expecting qh_argv_to_command_size >= 1.  Got %d.  Exit with error\n", command_size);
+    return_status= qh_ERRqhull;
+  }else if ((command= (char *)qh_malloc((size_t)command_size))) {
     if (!qh_argv_to_command(argc, argv, command, command_size)) {
       qh_fprintf_stderr(6264, "rbox internal error: allocated insufficient memory (%d) for arguments\n", command_size);
-      return_status= qh_ERRinput;
-    }else{
+      return_status= qh_ERRqhull;
+    }else {
       return_status= qh_rboxpoints(stdout, stderr, command);
     }
     qh_free(command);

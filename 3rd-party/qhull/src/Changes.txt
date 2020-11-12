@@ -1,33 +1,909 @@
-$Id: //main/2015/qhull/src/Changes.txt#29 $
+$Id: //main/2019/qhull/src/Changes.txt#77 $$Date: 2020/09/03 $
 
 .............This file lists all changes to qhull and rbox.....................
 
+====
+== Contents
+====
+
+To do
+Qhull 2018-2020
+Qhull 2015
+Qhull 2012.1
+Qhull 2011.1
+Qhull 2010.1 and 2009.1
+Qhull 2003.1
+Qhull 2002.1
+Qhull 3.1 (2001)
+Qhull 2.6 (1999)
+Qhull 2.5 (1998)
+Qhull 2.4 (1997)
+Qhull 2.3 (1996)
+Qhull 2.2 (1995-1996)
+Qhull 2.1 (1995)
+Qhull 2.0 (1994-1995)
+
+====
+== To do
+====
+
+- For a list of enhancement requests, see
+  http://www.qhull.org/html/qh-code.htm#enhance
+- The C++ interface needs documentation.
+  Give C++ a try and make it better.
+  http://github.com/qhull/qhull/wiki
+- Expand the C++ interface for Voronoi diagrams
+  Design for arbitrary dimension with non-simplicial facets
+  Start with 'user_eg3 eg-voronoi eg-fifo'
+  Compute the convex hull of each Voronoi region
+  Compare its facet hyperplanes with eg-fifo
+  Create a data structure for the Voronoi diagram
+  Compare your result to CGAL's 2-d Voronoi diagram
+  Two CGAL halfedges is equivalent to a Qhull ridge
+  https://doc.cgal.org/4.7/Voronoi_diagram_2/group__PkgVoronoiDiagramAdaptor2.html
+
+==================
+== Qhull 2018-2020
+==================
+
 ------------
-Need help
- - Write an incremental addPoint using bucketed inputs and facet location search (see CGAL)
- - Compute hyperplanes in parallel (cf. qh_setfactplane)
- - Create Voronoi volumes and topology using a parallel implementation
- - Produce conformant triangulations for merged facets using option 'Qt' 
- - Integrate 4dview with Geomview 1.9.5
- - Qhull needs RPM and Debian builds (CMake's CPackRMP and CPackDeb).   
- - Qhull needs a mirror/archive site for old and new builds
- - Constrained delaunay triangulation via Shewchuk's algorithm (ACM Symp. Comp. Geo., 1998)
- - More enhancements -- http://www.qhull.org/html/qh-code.htm#enhance
- - The C++ interface needs work.  Give it a try and make it better. 
-   http://github.com/qhull/qhull/wiki
+Qhull 2020.2 2020/08/31 (8.0.2)
 
-Octave creates endpoints for the ridges that would extend to infinity to be able to draw the diagram [M. Voss]
+CMake builds
+- CMakeLists.txt: Fixed /usr/local/lib/pkgconfig for debug builds
+- CMakeLists.txt: Remove qhull_SHARED and qhull_SHAREDP from 'make all'
+  Remove qhull_SHARED and qhull_SHAREDP from qhull_TARGETS_SHARED
+  Use reentrant Qhull (libqhull_r) for user code
+- CMakeLists.txt: If "MSYS Makefiles", change the default CMAKE_INSTALL_PREFIX to "/usr/local"
+  Remove WIN32 conditionals from MAN_INSTALL_DIR and DOC_INSTALL_DIR
+- CMakeLists.txt: Add 'uninstall' to delete the files listed in install_manifest.txt
+- CMakeLists.txt: If LINK_APPS_SHARED, link qhull applications to libqhull_r.so [S. Bruens #69]
+  If BUILD_STATIC_LIBS=OFF or BUILD_SHARED_LIBS=OFF, exclude those libraries [S. Bruens #69]
+  libqhullcpp and user_eg3 are built only if BUILD_STATIC_LIBS is true
+- CMakeModules/CheckLFS.cmake: Moved CMakeModules to the build/ directory
+- CMakeLists.txt: Replace rbox_SOURCES(etc.) with a source file, either reentrant or non-reentrant
+- CMakeLists.txt: Add deprecated libqhull and qhull_p to "# Additional build targets"
+  If not MSVC, add qh_QHpointer to user_egp_DEFINES and qhullp_DEFINES (otherwise qh_lib_check fails)
 
-------
-Qhull 2016.1
- - Move 'extern "C" {}' logic from C++ to C headers [C. Atkins, github]
- 
+Other builds
+- build/README-build.txt: Add description of build/ directory
+- build/qhull*.sln: Remove qhull_p and qhull_p.dll, retain the corresponding DevStudio project files
+  Remove libqhull and qhull.dll, retain the corresponding DevStudio project files
+- Makefile: Add libqhull_r/libqhullstatic_r.a to 'cleanall'
+- Makefile: Add note about installing debug libraries (e.g., libqhull_rd)
+- Makefile,libqhull*/Makefile: Copy README.txt,...,Changes.txt and html/* to ABS_DOCDIR
+- Makefile,libqhull*/Makefile: Add target 'uninstall' to delete installed Qhull files
+- libqhull/qhull-exports.def,qhull-nomerge-exports.def: Add qh_nextfacet2d
+
+Documentation
+- html/qh-code.htm: Add request for Doxygen documentation of the C++ interface
+- html/index.htm,etc: "Contents" instead of "Table of Contents"
+
+Testing
+- eg/make-qhull_qh.sh: Redo help prompt
+- eg/make-qhull_qh.sh: Create src/qhull_qh/_QH_CONVERTED_FILES as a safety check
+- eg/make-qhull_qh.sh: Require destination directory and _QH_CONVERTED_FILES for 'sed-only'
+
+------------
+Qhull Github 
+
+C++ interface
+- libqhullcpp/qt-qhull.cpp: In toQList(), use count() to avoid a type error
+- libqhullcpp/qt-qhull.cpp: In toQList(), use nullptr instead of NULL
+- libqhullcpp/QhullSet.h: Declare 'QList<T> toQList() const' to avoid a prototype error
+
+Builds
+- Qhull build systems: Add wiki page on build systems to GitHub
+- CMakeLists.txt: Use same target name for Debug and non-Debug builds [Spacelm #76]
+- CMakeLists.txt: Remove functional documentation from /usr/local/include/libqhull*
+  Most of the links are broken.
+- CMakeLists.txt: Move Qhull html documentation to /usr/local/share/doc/qhull/html/
+  Otherwise index.htm is overwritten and README links are broken
+- CMakeLists.txt: Add /usr/local/share/doc/qhull/src/Changes.txt
+- Makefile, make install: Remove functional documentation from /usr/local/include/libqhull
+  and /usr/local/include/libqhullinclude/libqhull_r.  Most of the links are broken.
+- Makefile, src/libqhull/Makefile: Add DEPRECATED.txt to /usr/local/include/libqhull
+- Makefile, src/libqhull*/Makefile: Add 'make install' to the welcome prompt
+
+Documentation
+- index.htm: Balance the top-page 'URL:' and 'To:' links
+- index.htm: Send the top-page 'Functions' link to www.qhull.org (better 'src' links)
+- index.htm: Make the bottom-page 'URL:' and 'To:' links the same as the top-page links
+- index.htm: "please use rentrant Qhull (libqhull_r or libqhullstatic_r)"
+- html/index.htm: Add rbox.txt to Contents and rename "Table of Contents"
+- html/index.htm,qh-code.htm,qh-eg.htm,qh-impre.htm: Remove 'please wait while loading'
+- README.txt/Installing Qhull with Qt: The shadow build directory should be at the same level as 'src'
+- README.txt/Compiling Qhull with Qt Creator: Copy steps from 'Installing Qhull with Qt'
+
+------------
+Qhull 8.0.1 (2020.2 2020/07/24)
+
+C++ interface
+- Removed Java-style iterators for Coordinates and PointCoordinates.
+  std::vector has an expensive copy constructor and copy assignment, and
+  a pointer to std::vector is vulnerable to mysterious overwrites (e.g., deleting 
+  a returned value and reusing its memory).  Qt's 'foreach' should not be used for 
+  Coordinates and PointCoordinates.  It copies std::vector
+- QHULL_DECLARE_SEQUENTIAL_ITERATOR: allow temporary results
+  The Jave-style iterator copies the container.  Same as Qt's Q_DECLARE_SEQUENTIAL_ITERATOR
+- QhullHyperplaneIterator,QhullPointIterator,QhullPointsIterator: allow temporary results
+  These Java-style iterators copy the container instead of pointing to the container
+- QhullLinkedListIterator,QhullFacetListIterator,QhullVertexListIterator: allow temporary results
+  These Java-style iterators copy the container instead of pointing to the container
+- QhullSetIterator,QhullFacetSetIterator,QhullPointSetIterator,QhullVertexSetIterator: add documentation about temporary results
+  These Java-style iterators have always copied the container
+- QhullUser.h, user_eg3_r.cpp: Removed C++11 dependencies [G. Romualdi, S. Grein #65, #66,#67]
+  QhullUser.cpp: Use intptr_t to avoid C++11 dependencies  [S. Grein, Spacelm #68]
+- QhullVertex.cpp: moved the copy constructor to the code file.  It was inline. 
+
+Testing and example programs
+- user_eg3_r.cpp: Renamed 'inputSites' to 'voronoiRegions' in qvoronoi_o/qvoronoi_pfn [M. Konecny #72]
+- user_eg3_r.cpp: Replaced C++11's range-based for loops with Qhull's Java-style iterators
+- qh-code.html: Updated qhullcpp code example [M. Konecny #71]
+- QhullFacet_test.cpp: fixed hyperplane epsilon test in t_getSet. The epsilon due to rotation is unknown.
+- Qhull*List_test.cpp,Qhull*Set_test.cpp,QhullRidge_test,QhullVertex_test: test Qt's 'foreach' in t_foreach
+- Qhull*List_test.cpp,Qhull*Set_test.cpp,QhullRidge_test,QhullVertex_test: test C++11 range for in t_foreach
+- Qhull*List_test.cpp,Qhull*Set_test.cpp: test Java-style iterator in t_java_iterator
+- Coordinates_test.cpp,PointCoordinates_test.cpp,QhullHyperplane_test.cpp,QhullPoint_test.cpp,QhullPoints_test.cpp,RboxPoints_test.cpp
+  test C++11 range for, Qt's 'foreach', and Java-style iterators (if available)
+
+Builds
+- README.txt: Fixed "cmake -G" for "Installing Qhull with CMake"
+- README.txt: Added a note on 'make install' to "Installing Qhull on Unix"
+- README.txt: Added 'make test' to "Installing Qhull on Unix"
+- README.txt: Added 'ctest' to "Installing Qhull with CMake"
+- README.txt: Added pkg-config notes to "Installing Qhull with CMake"
+- README.txt: Added usage notes for Windows to "Installing Qhull with CMake"
+- README.txt: Added instructions for downloading MinGW-W64-install.exe
+- build/qhull_p.pc.in,qhull_r.pc.in: Delete obsolete files [T. Roehling #63]
+- build/qhull.pc.in: move qhull.pc.in into the build/ directory [T. Roehling #63]
+
+Documentation
+- qh-code.htm, qhull-news.html: Add Toronto and McCarthy, "Practically accurate floating-point math".
+
+------------
+Qhull 2020.1 2020/05/29 (8.0.0)
+
+Bugs fixed
+- QhullLinkedList::const_iterator: Fixed operator->() for T*.  It returned &i [J. Mirabel 5/1/2020 #61]
+
+API changes
+- RoadError.cpp: stringGlobalLog returns std::string instead of const char* [M. Gehre #46]
+- io_r.c/qh_order_vertexneighbors: order facet neighbors of a vertex by 2-d (orientation), 3-d (adjacency), n-d (f.visitid,id) [I. Gardner]
+- poly2_r.c/qh_nextfacet2d: Return next facet and vertex in qh_ORIENTclock order [N. Katzakis #54]
+
+C++ interface
+- Qhull.cpp: Add isDelaunay().  True if computing Delaunay or Voronoi regions
+  Add prepareVoronoi() for Voronoi output.  See user_eg3_r.cpp for examples
+  ~Qhull: Change 'Qhull output at end' to 'Qhull messages at ~Qhull()' 
+- QhullFacet.cpp: Add visitId() for f.visitid.  Needed for Voronoi output
+  Add nextFacet2d(): Iterate 2-d facets and vertices in counter-clockwise order [N. Katzakis #54]
+  Add setFacetT()
+- QhullRidge.cpp: Add setRidgeT() and qh()
+- QhullUser.cpp: Add a user-modifiable interface to Qhull using a custom qh_fprintf
+  Enhanced qh_fprintf with qhull-2019.1 updates to userprintf_r
+     Option 'Ta' prefixes output with message code, [QHnnnn]
+     Option 'Tf' flushes the output after each message, for tracing segfaults
+     Errors and high-level trace messages prefixed with QHnnnn
+     Debugging traps for qh.tracefacet, qh.traceridge, qh.tracevertex
+- QhullVertex.cpp: Add setVertexT()
+- QhullQh.cpp: moved qh_fprintf to QhullUser
+- RoadLogEvent::toString: do not prepend QHnnnn if format_string starts with QHn or [QHn
+- RboxPoints::appendPoints: use current dimension instead of throwing an error
+- user_eg3 rbox: set dimension for multiple options (e.g., user_eg3 rbox D4 5 qhull)
+- user_eg3 eg-convex: a 3-d convex hull using the C++ interface to Qhull [I. Voutchkov]
+- user_eg3 eg-delaunay: a 2-d Delaunay triangulation using the C++ interface to Qhull
+- user_eg3 eg-voronoi: a 2-d Voronoi diagram using the C++ interface to Qhull
+- user_eg3 eg-fifo: hyperplanes separating Voronoi regions via QhullUser and qh_fprintf
+
+Documentation
+- index.htm: Add Teillaud's http://www.computational-geometry.org/
+- index.htm: Add When to use Qhull and Performance of Qhull to the Qhull Manual
+- html/qconvex.htm: Add orientation for options 'i', 'Fx', and 'o'
+  qconvex .: keep the option prompt to five columns
+- html/qdelaun.htm: qh_findbestfacet may return an adjacent facet for a point
+- html/qhalf.htm,qh-optf.htm,qh-opto.htm: Added notes for options to halfspaces, e.g., 'Fp' and -10.101 [E. Huang #53]
+- html/qhalf.htm,qhalf.c,qhalf_r.c,qh-optf.htm: Fix documentation for 'qhalf FN'.  The output includes all halfspaces.
+- html/qvoronoi.htm,qvoron_f.htm: Fix link for control option, 'TI file'
+- html/qvoronoi.htm,qvoron_f.htm, qh-optf: the hyperplanes for 'Fi' and 'Fo' include the first vertex
+  Option 'Fo' uses the midpoint in place of the vertex at infinity.
+- html/qh-optf.htm: Voronoi options 'Fi' and 'Fo' orient the hyperplane so that the site is below the hyperplane
+- html/qh-optf.htm,qh-optt.htm: Voronoi option 'Fo' does not check the hyperplane with 'Tv'
+  The hyperplane check for 'Fi Tv' uses the midpoint, which 'Fo' already used in place of infinity
+- README.txt/Windows install: install Git for Windows in C:\Git\ instead of Program Files
+  README.txt/Unix install: add options for 32-bit builds w/o -fpic
+  README.txt,Makefile: link libqhullcpp before libqhull_r
+- COPYING.txt: Add a note to COPYING.txt about C.B. Barber [M. Pryczek]
+- libqhull/DEPRECATED.txt: Add link to qh-code.htm#convert
+- Qhull::vertexList: ordered by qh.vertex_list, not by adjacency [N. Katzakis #54]
+- QhullPoints.cpp/extraCoordinatesCount: must be less than point_dimension (-Wconversion)
+- QhullPoints.cpp/indexOf: extra must be less than point_dimension (-Wconversion)
+- io_r.c/qh_detvnorm: add note that qh_sethyperplane_gauss returns nearzero for axis-parallel hyperplanes
+- user_r.h/qh_CPUclock: may be converted to approximate double (-Wconversion)
+- Update copyright to 2020
+
+Build
+- Increase SOVERSION to 8.0 due to ABI breakage in 2019.1 [T. Roehling #58]
+  Change SOVERSION to major.minor due to Qhull's global data structure qhT [T. Roehling #58]
+  Add symbolic link from SONAME_EXT to libqhull_r [T. Roehling #58]
+  Add SO and SONAME_EXT to 'make help'
+- qhull.pc.in: Added for pkg-config support [T. Roehling #60]
+- CMakeLists.txt: Add pkg-config support and change *_INSTALL_DIR to relative paths [T. Roehling #60]
+  Change CMAKE_SOURCE_DIR to CMAKE_CURRENT_SOURCE_DIR to allow qhull as a subdirectory [Morwenn #53, A. De #59, A. Maloney, futex]
+- Makefile: 
+  Add pkg-support [T. Roehling #63]
+  Renamed $DESTDIR as $PREFIX to conform with GNU Makefile standards [T. Roehling #63]
+  $DESTDIR is for staged installs as defined by GNU Makefile standards [T. Roehling #63]
+  Commented out M32=-m32 despite memory savings. It caused build failures, e.g., Mac [J. Hollowed]
+  '-fpic' is required for linking to shared libraries [T. Roehling #63]
+  Replaced -fpic with FPIC=-fpic for gcc builds
+  Added FPIC to CXX_OPTS1 (same as CMakeLists.txt for libqhullcpp)
+  Use 'FPIC=' to disable -fpic (may be faster for 32-bit builds on 64-bit hosts)
+  Extract qhull_VERSION and qhull_SOVERSION from CMakeLists.txt [T. Roehling #63]
+  Move the -lm linker flag to the end of the linker command [T. Roehling #63]
+  Add QhullVertexSet.h to LIBQHULLCPP_HDRS
+  Invoke q_test via bash to avoid "eg not a valid command"
+- Add build/*vcxproj to Unix distribution
+
+Testing and other changes
+- q_test: Add list of executables via 'which'
+  Add tests of user_eg3 with each option and use case
+  Add "Testing done" notification
+  Add "set +v" for echoes
+- qhull-zip.sh: Add early check for 32-bit release build and modified files
+  Add link checks for options
+  Add findf for identifying files for link checks
+  Add prompts for web.archive and md5sum in qh-get.htm
+  
+------------
+Qhull 2019.1 github 2019/10/24
+
+Documentation
+- Review and fix Qhull html and option links
+- README.txt/mingw: Install GitForWindows in C:\Git\
+- libqhull_r/index.htm: Fixed Firefox web access to '.c' and '.h' files (http://qhull.org/src/libqhull_r/)
+
+Bugs fixed
+- merge_r.c/qh_appendmergeset,qh_appendvertexmerge,qh_mergefacet,qh_tracemerge: 
+  fix error check of index for mergetypes
+
+Build
+- CMakeLists.txt: Rename Qhull to QhullExport for QhullConfig.  On MacOS, "Qhull" conflicts with "qhull" [tamasmeszaros #48, C. Xu, tschoonj]
+- CMakeLists.txt: Add POSITION_INDEPENDENT_CODE "TRUE" to set_target_properties for libqhullcpp [J Anderson 11/20/2019 #47]
+
+------------
+Qhull 2019.1 2019/06/21 (7.3.2)
+
+bugs fixed
+- Fixed broken HTML links identified by Firefox Link Analyzer.  Replace old links with web.archive.org (archive.is)
+- Moved live code out of qh_NOtrace regions
+- qh-faq.htm#learn: fixed the Delaunay examples (rbox generates a square, but does not generate two squares)
+- geom2_r.c/qh_maxmin: qh_scalelast for 'd Qbb' to qh.MAXabs_coord instead of qh.MAXwidth [J.R. Roussel, D. Sterratt]
+- geom2_r.c/qh_maxsimplex: estimate targetdet as prevdet*qh.MAXwidth, set mindet to 10*qh_RATIOmaxsimplex [J.R. Roussel, D. Sterratt]
+- global_r.c/qh_freebuild: in high-D, simplicial facets may use long memory
+- global_r.c/qh_initqhull_globals: set qh.DOcheckmax and qh.KEEPnearinside if qh.APPROXhull ('Wn', rbox 100 D3 W1e-1 | qhull QJ W1e-1 Tv)
+- libqhull_r.c/qh_addpoint: add qh.lastmerges to qh_addpoint trace
+- libqhull_r.c/qh_buildcone_mergepinched: called qh_partitioncoplanar with uninitialized 'dist'
+- libqhull_r.c/qh_build_withrestart: if qh_joggle_restart, set v.partitioned for qh.del_vertices.  Avoid error in qh_delvertex from qh_freebuild
+- libqhull_r.c/qh_partitionall: if qh.KEEPnearinside, qh_partitionpoint for non-outside pointset
+- libqhull_r.c/qh_partitioncoplanar: define qh.coplanar_apex to prevent infinite loop of repartition point
+- merge_r.c/qh_checkzero: check opposite vertex against -2*qh.DISTround to account for qh_distround and 'Rn'
+- merge_r.c/qh_comparevisit: fix compare of 'unsigned int'
+- poly2_r.c/qh_findbestfacet: for Delaunay triangulations, may be an adjacent triangle [F. Drielsma]
+  Updated discussion at qh-code.htm/findfacet and examples at user_eg_r.c and user_eg2_r.c
+- poly2_r.c/qh_findfacet_all: do not search visible facets, and if qh_NOupper, f.upperdelaunay facets [P. Virtanen, S. Dominguez, J.Arkin]
+- poly2_r.c/qh_initialhull: reverse orientation if clearly flipped.  qh_ERRsingular if maybe flipped [S. Caron, P. Virtanen, D. Sterratt, others]
+- poly2_r.c/qh_initialhull: test for coplanar qh.interior_point with 'allerror' (dist >= -qh.DISTround) [S. Caron, P. Virtanen, D. Sterratt, others]
+- poly2_r.c/qh_initialhull: call qh_joggle_restart for qh.DELAUNAY if cospherical input sites [P. Celba]
+- poly2_r.c/qh_initbuild: qh_scalelast for 'd Qbb' to qh.MAXabs_coord instead of qh.MAXwidth [J.R. Roussel, D. Sterratt]
+- random_r.c/qh_argv_to_command_size: returned size may be < 1.  If so, rbox.c/main reports an error
+- rboxlib_r.c/qh_rboxpoints: report error for coincident, regular points 'rbox r C1,1e-13'
+- stat_r.c/qh_initstatistics: missing call to qh_allstatistics for qh_newstats.  qh_checkoutput ignored
+- userprintf.c/qh_fprintf: fixed 2019.0.1 bug if 'qh_qh' is NULL for qh_QHpointer
+- Qhull.cpp/outputQhull: fixed missed conditional if qh.GOODvertex == -qh.GOODpoint
+
+documentation and web site
+- Add notes that Qhull 64-bit code uses 50% more memory than 32-bit code.  This slows down Qhull.
+  A future version of Qhull will include memory and performance improvements for 64-bit code.
+- Add the Qhull identity pipeline to html/qhalf.htm
+- Enabled PDF download from portal.acm.org
+- Error exit from qhull,qconvex,etc. returns a 6xxx error code if available
+- Rename md5sum files back to *-tgz.md5sum and *-zip.md5sum
+  Both Firefox and IE convert *.tgz.md5sum and *.zip.md5sum as .tgz/.zip files
+- html/qh-code.htm: add sections on debugging Qhull
+- html/qh-faq.html: reviewed startup questions for Qhull
+- html/qh-opto.htm: the centrum indices for option 'i' are one more than the centrum indices for option 'Ft'
+
+build and test
+- CMakeLists.txt: export QhullTargets for config.cmake.in and find_package [tamasmeszaros]
+- eg/q_benchmark: add 'uname -a' for host identification
+- eg/q_test.bat: update for changes to q_test
+  removed redirects on every line (invoke with redirection)
+- eg/q_test: add some tests for option warnings and errors
+- Makefile: add dependencies for 'install', 'test', 'qtest', and 'qconvex-prompt' [V. Delecroix]
+- Makefile: set -m32 as default for gcc builds.  Uses less memory on 64-bit hosts.
+  disable with 'make M32='
+- Remove 'unused parameter' warnings if qh_NOmerge
+- Tested qh_QHpointer, qh_NOmem, qh_NOmerge, qh_NOtrace, qh_KEEPstatistics 0
+- Tested qh_NOmerge with qh_NOtrace and qh_KEEPstatistics 0. Simpler code, fewer errors, 35% smaller
+- Tested random qh_distplane and qh_setplane qh_RANDOMdist 1e-5, qh_RANDOMdist 1e-13
+- user_r.h: define qh_RANDOMdist to perturb all calls to qh_distplane, qh_newfacetplane by 'Rn'
+
+other changes
+- Replace 'unsigned' with 'unsigned int', for consistency
+- Replace warning 6263 with 7079 in qconvex_r.c, etc.
+- Resolved C warnings for -Wsign-conversion, mostly type casts
+  Continue to use -Wno-sign-conversion for C++ due to countT, boolT, int vs. size_t mismatches
+- Reviewed gcc 8.1.0 warnings.  See Makefile CC_WARNINGS and CXX_WARNINGS
+  Type cast (int)sizeof(facetT),etc. as needed
+- Reviewed error and warning codes for multiple instances of the same code
+- Reviewed file references such as libqhull_r.c vs libqhull.c
+- Reviewed multi-line, error message width for 80 column output
+- global.c/qh_initflags: Add 'qh_QHpointer' to qh_option for option list
+- geom2_r.c/qh_joggleinput: report QH6010, current joggle is too large, as qh_ERRinput
+- geom2_r.c/qh_maxsimplex: report error if qh.MAXwidth not defined, for estimating the determinates
+- geom2_r.c/qh_minmax: if tracing, log min and max coordinates [J.R. Roussel, D. Sterratt]
+- io_r.c/qh_printbegin: rewrote warning QH7053, use 'p' or 'o' for Voronoi centers
+- io_r.c/qh_produce_output2: fflush to maintain execution order of output
+- libqhull_r.c/qh_buildtracing: change qh.lastfacets, qh.lastplanes, qh.lastdist to 'int'
+- libqhull_r.c/qh_build_withrestart: change error QH6229, 101 attempts to joggle input, to qh_ERRinput and 51 attempts
+- merge_r.c/qh_renameridgevertex: report error if old vertex not found
+- poly_r.c/qh_update_vertexneighbors: use qh_setappend instead of qh_setunique for newly created facets (restores 2015.2 code)
+- poly2_r.c/qh_check_point: limit 'Tv' errors to qh_MAXcheckpoint per facet
+- poly2_r.c/qh_initialhull: rewrite QH6329 for cospherical input sites and add qh_printvertexlist [P. Celba]
+- qset_r.c/qh_setlarger_quick: optimize qh_setlarger for quick memory 
+- rboxlib_r.c/qh_rboxpoints2: fix strncat to resolve -Wstringop-truncation warning [D. Sterratt]
+  increased command[] to 250 and decreased seedbuf[] to 50
+- user_r.h/qh_JOGGLEmaxretry: reduced from 100 iterations to 50 iterations
+- user_r.c/qh_new_qhull: allow "qhull" for the qhull_cmd parameter
+- user_eg_r.c/findDelaunay: qh_findbestfacet returns the closest Delaunay triangle or an adjacent triangle
+- user_eg2_r.c/findDelaunay: qh_findbestfacet returns the closest Delaunay triangle or an adjacent triangle
+- userprintf_r.c/qh_fprintf: set qh.last_errcode for MSG_ERROR (6000) codes
+- RboxPoints::qh_fprintf_rbox: print error message to stderr if cpp_object undefined
+
+------------
+Qhull 2019.0.1 2019/05/24 (7.3.1)
+
+Qhull options
+- Disallow unknown options and other option errors, allow option warnings with 'Qw'
+- New option 'Qallow-short': allow input with fewer or more points than coordinates
+- New option 'Qwarn-allow': allow option warnings
+- New option 'TAn': stop after adding n vertices
+- New option 'Tf': flush after qh_fprintf for debugging segfaults
+- New experimental option 'Q14-merge-pinched-vertices': merge pinched vertices due to dupridge
+  Excessive merging leads to additional topological and wide facet errors
+- New experimental option 'Q15-check-duplicates': check for duplicate ridges with the same vertices
+- Option 'Q1' merges by mergetype/angle instead of mergetype/distance, coplanar merges first
+  In 2015.2 by default, Qhull merged by mergetype/angle with lower angles first
+- Option 'TP-1' turns on tracing after qh_buildhull and qh_postmerge
+  It traces qh_check_maxout, qh_prepare_output, qh_triangulate, qh_voronoi_center
+- Options '--help', '-?', and '--' display a short help message
+  Qhull does not support '--' options.  Git for Windows v2.21.0 does not support isatty ('winpty qhull' is OK)
+- Allow Qhull extra options Q12 and Q14 for qconvex/qdelaunay/qhalf/qvoronoi
+- Allow option 'QRn' (random rotate) for qdelaunay/qhalf/qvoronoi
+- Alphabetize short prompts (qhull .)
+- Alphabetize long prompts w/ normal options first (qhull -)
+- Alphabetize option help by option code
+- Add 'Number of merged pinched vertices' to summary ('s')
+- Add 'TI file' to help message for qconvex/qdelaunay/qhalf/qvoronoi
+- Dropped experimental option 'Q16-simplex-merge'.   Centrums are required for convexity
+- Error if 'd', 'v', or 'Hn,n,n' are used together
+- Ignore missing space after 'TI' or 'TO'.  Allow 'TIinputfile' and 'TOoutputfile'
+- Prefix option errors and warnings with 'qhull option error:' or 'qhull option warning:'
+- Remove hidden option 'normals' from help prompts for qdelaunay, qhalf, qvoronoi
+- Reword short prompts to 'Pdrop-d0:0D0', 'QbBound-0:0.5', and 'off_format'
+- Updated qh-quick.htm, 'qhull -', and 'qhull .' for 'T...' and 'Q...' options.
+  Separate help prompts for 'T options' and 'Trace options'
+- Use '-' instead of '_' for word delimiter in option names
+
+Qhull builds, scripts, and debugging
+- Add qh.traceridge, qh.traceridge_id, and qh_delridge for debugging by ridge in qh_fprintf
+- Check for qhull with 'which qhull' instead of 'qhull', avoids hangs in git bash
+- Makefile/CC_WARNINGS: Add instructions for collecting and testing gcc warnings
+- Makefile/benchmark: Add q_benchmark, 10 runs of each
+- Makefile/clean: Delete linked files from src/libqhull and src/libqhull_r, as in their Makefiles
+- Makefile/help: Add 'make all' to 'make help' prompts
+- Makefile/qhullx: Add test of testqset and testqset_r
+- Makefile/qhullx: Create bin/ directory if missing
+- Makefile/test: Add user_eg3 help prompt
+- Makefile/testall: Add q_benchmark, 1 run of each
+- eg/make-vcproj.sh/qhullx: Build bin/qhullx from src/qhullx/ for comparison 
+- eg/q_benchmark: new script for measuring Qhull precision and performance with qtest.sh
+- eg/q_test: update error messages for missing bin/ and bin/libqhull_r.dll
+- eg/q_test: tests of Tf and TAn
+- eg/qhull-zip.sh: add note that it requires road-script.sh from http://www.qhull.org/road/
+- eg/qhull-zip.sh: check source depencencies for prompts
+- eg/qtest.sh: new script for testing Qhull and summarizing its trace files
+- libqhull_r/Makefile: install target creates $INCDIR/libqhull_r and $LIBDIR
+- libqhull_r.h/qh_ERRdebug: define error status for debugging exits
+
+Qhull fixed bugs
+- html/qh-optp.htm: options 'PDk' and 'Pdk' require option 'Pg' to return the closest facet
+- Makefile/qhullx: fixed qhullx compile of testqset and testqset_r
+- PointCoordinates.cpp/appendPoints: read 'in >> p' instead of 'in >> p >> ws'
+  otherwise istream fails if file does not end with whitespace
+- geom_r.c/qh_findbesthorizon: fix test for Zfindjump (bestdist jumps by searchdist)
+- geom_r.c/qh_findbesthorizon: increased minsearch of coplanar facets if ischeckmax and more than 100 neighbors
+- geom_r.c/qh_sethyperplane_det: dropped precision statistic Znearlysingular (it's Zminnorm)
+- geom2_r.c/qh_detjoggle: use 'En' (roundoff) if specified by options
+- geom2_r.c/qh_distround: move adjustment for 'Rn' into qh_distround.  'QJn' did not account for 'Rn'
+- global_r.c/qh_checkflags: handle two-digit Q options in hiddenflags
+- global_r.c/qh_freebuild: do not delete unattached ridges, otherwise a double delete.  Should not occur
+- global_r.c/qh_option: fix potential overflow of qh.qhull_options
+- global_r.c/qh_initflags: fixed incorrect indentation for option 'TO file'
+- global_r.c/qh_initqhull_start2: set qh.NOerrexit True
+- io_r.c/qh_eachvoronoi: allow fp==NULL for QhullQh::qh_fprintf to appendQhullMessage
+- io_r.c/qh_readpoints: error if 'd' or 'v' with 'H', otherwise memory corruption
+- libqhull_r.h/qh.MERGEvertices: fixed comment, 'Q3' disables this feature
+- libqhull_r.c/qh_buildcone_onlygood: cannot qh_delfacet inside FORALLnew_facets
+- libqhull_r.c/qh_partitionpoint: if qh.NARROWhull and bestdist>qh.MINoutside and isnewoutside, 
+  may need to move facet to qh.newfacet_list for qh.next_facet
+- libqhull_r.c/qh_printsummary: Zdistconvex is for checking convexity instead of testing convexity
+- libqhull_r.c/qh_findhorizon: coplanar horizon if apex >= -qh.MAXcoplanar, instead of > -qh.MAXcoplanar
+- mem_r.c/qh_memcheck: define null qh_memcheck if qh_NOmem
+- merge_r.c/qh_mergecycle_all: turn on tracing, 'TMn', for coplanar horizon merge of one facet
+- merge_r.c/qh_mergefacet2d: do not create ridges for neighborB.  The opposite neighbor may be tested
+- merge_r.c/qh_test_centrum_merge: coplanar if centrum >= -qh.centrum_radius, instead of > -qh.centrum_radius
+- merge_r.c/qh_test_nonsimplicial_merge: coplanar if centrum >= -qh.centrum_radius, instead of > -qh.centrum_radius
+- merge_r.c/qh_tracemerging: fixed "qhull has merged" prompt
+- merge_r.c/qh_willdelete: empty f.neighbors and f.ridges, references are no longer valid, will be deleted
+- poly_r.c/qh_checkflipped: flipped if qh.interior_point >= -qh.DISTround, instead of > -qh.DISTround
+- poly2_r.c/qh_addfacetvertex: initialize vertex_i in case f.vertices is empty
+- poly2_r.c/qh_check_maxout: need to include qh.DISTround when checking f.maxoutside with qh.maxoutside
+- poly2_r.c/qh_checkconvex: fix documentation for qh_DATAfault.  It is restricted to qh_initialhull with qh.ZEROcentrum
+- poly2_r.c/qh_checkconvex: coplanar if >= -qh.DISTround, instead of > -qh.DISTround
+- poly2_r.c/qh_checkconvex: check simplicial ridges if !qh.MERGING && qh.ZEROcentrum (unlikely or not-possible)
+- poly2_r.c/qh_findgood: restrict qh.GOODvertex ('QVn') to good facets 
+- poly2_r.c/qh_findgood_all: unless 'Pg', ignore qh.GOODclosest for nearest facet to thresholds. 
+     'PdD' reports 0 good facets
+- poly2_r.c/qh_replacefacetvertex: initialize vertex_n in case f.vertices is empty
+- qconvex.c,qdelaunay.c,etc.: remove automatic 'Qx' for 5-d and higher.  Set by default in qh_initqhull_globals
+- qvoronoi_r.c/qh_prompt: remove disabled option 'TRn' from help prompt
+- random_r.c/qh_argv_to_command: fixed missing braces, same behavior as before
+- rbox_r.c: return 0 exit status on prompt
+- rboxlib.c/qh_rboxpoints: use qh_fprintf_stderr instead of qh_fprintf_rbox.  Avoid qh_errexit_rbox
+- rboxlib.c/qh_rboxpoints2: clear rbox_inuse on exit, as in error exit
+- rboxlib_r.c/qh_rboxpoints2: incorrect string arg to 'rbox error: unknown flag' 
+- rboxlib_r.c/qh_rboxpoints2: remove superfluous qh_free(*simplex)
+- stat_r.c/qh_initstatistics: due to NOerrors cannot use qh_fprintf, use qh_fprintf_stderr instead
+- stat_r.c/qh_stddev: return sqrt of absolute value
+- testqset_r.c: if qh_NOmem, do not call qh_memfreeshort
+- user_eg_r.c,user_eg2_r.c: if qh_NOmem, call qh_freeqhull(qh, qh_ALL) instead of qh_memfreeshort
+- user_eg3_r.cpp: return 0 exit status on prompt
+
+Qhull fixed bugs introduced by 2018.0
+- libqhull_r.c/qh_addpoint: clear qh.retry_addpoint on success
+- libqhull_r.c/qh_buildcone_mergepinched: cannot qh_delfacet inside FORALLnew_facets
+- libqhull_r.c/qh_partitioncoplanar: clear qh.repart_id on exit for infinite recursion detect
+- geom2_4.c/qh_detmaxoutside: move qh_option call to qh_errexit
+- merge_r.c/mergetypes[]: fixed order by mergeT
+- merge_r.c/qh_all_vertexmerges: fix retryfacet for repeated calls
+- merge_r.c/qh_forcedmerge: f.dupridge retained after MRGdupridge
+  hides MRGdegenerate in qh_test_degen_neighbors and qh_test_redundant_neighbors 
+- merge_r.c/qh_postmerge: call qh_freemergesets
+- merge_r.c/qh_test_nonsimplicial_merge: clear iscoplanar if isconcave and any vertex is not coplanar
+- poly2_r.c/qh_triangulate: move reset of f.degenerate into delete facet loop
+
+Qhull C++
+- QhullFacet.cpp: add hasNext() and hasPrevious()
+- QhullVertex.cpp: add hasNext() and hasPrevious()
+- qhulltest-64/QhullFacet_test.cpp,QhullVertex_test.cpp: test hasNext, hasPrevious, and hasPrevious iterator
+- user_eg3.cpp: use 'qhull-cout' for option 'Tz' (trace to cout)
+
+Qhull errors, warnings, and tracing
+- Error messages rewritten and error codes changed (see qh_fprintf)
+  Renumbered Qhull warnings as 'QH7xxx' if needed (e.g., QH9375)
+  Reused unused error and message codes ("def counters" in user_r.h/msgcode)
+  Please check your code if it depends on error and message codes
+- Initialize variables to avoid potential uninitialized warnings
+- Use qh_ERRqhull for Qhull internal errors, "qhull internal error (qh_...): ..."
+- Use 'defined()' for qh_QHpointer_dllimport and qh_dllimport (-Wundef)
+- Use 'defined()' for __cplusplus, _MSC_VER, __MWERKS__, and __POWERPC__ (-Wundef)
+- Use 'Early exit' instead of 'At a premature exit'
+- libqhull_r.h/qh_ERRother: define error status for non-internal errors
+- libqhull_r.h/qh_ERRtopology: define error status for qhull topology errors
+- libqhull_r.h/qh_ERRwide: define error status for wide facets due to qhull precision error
+- geom_r.c/qh_setfacetplane: add qh_printfacet if qh.tracefacet for qh.tracefacet_id
+- global_r.c/qh_freebuild: record previousfacet/ridge/vertex in case a memory fault occurs
+- global_r.c/qh_init_flags: improved error message for 'cannot open file' for 'TO f'
+- global_r.c/qh_init_flags: improved warning message for 'unknown option'
+- global_r.c/qh_initbuild: add trace options to "Trace level ..."
+- global_r.c/qh_initqhull_globals: error if qh.VORONOI without qh.DELAUNAY
+- global_r.c/qh_initqhull_globals: error if numpoints is <1 or >qh_POINTSmax (INT_MAX-16)
+- global_r.c/qh_lib_check: use C-style comment for _CrtSetBreakAlloc
+- io_r.c/qh_printfacetheader: add "max" if f.merges==qh_MAXnummerge (511)
+- io_r.c/qh_readpoints: error if numinput is <1 or >qh_POINTSmax (INT_MAX-16)
+- io_r.c/qh_readpoints: moved up 'chop' of qh.rbox_command to report short input errors
+- io_r.c/qh_readpoints: replace warning QH7073 with error message. Override with Qallow-short
+- libqhull_r.c/qh_addpoint: if 'T4', check qh.visible_list before qh_partitionvisible
+- libqhull_r.c/qh_buildtracing: add delta cpu/facets/hyperplanes to QH1049 'qh_addpoint: add p%d...'
+- merge_r.c/qh_findbest_pinchedvertex: replaced assert with a 'qhull internal error'
+- merge_r.c/qh_check_dupridge: drop advice about reporting wide merges for error QH6271
+- merge_r.c/qh_mark_dupridges: topological error if multiple dupridges for one facet, not handled
+- merge_r.c/qh_test_nonsimplicial_merge: if Qx and many merges, replace centrum_radius with maxoutside
+- poly_r.c/qh_matchneighbor: drop extra warnings for duplicate facet (QH7084)
+- poly_r.c/qh_matchnewfacets: check for simplicial facets on qh.newfacet_list, otherwise memory overwrite by qh_matchneighbor
+- poly2_r.c/qh_checkconvex: identify simplicial checking of vertices (qh.ZEROcentrum, default)
+- poly2_r.c/qh_checkconvex: distinguish above from coplanar for non-convex initial simplex
+- poly2_r.c/qh_checkconvex: "non-convex initial simplex" for qh_joggle_restart
+- poly2_r.c/qh_checkfacet: check f.id and f.vertex_visit
+- poly2_r.c/qh_checklists: check and repair facet and vertex lists for infinite loops or overwritten facets/vertices
+- poly2_r.c/qh_checkpolygon: if qh.NEWfacets, check visible facets for empty f.neighbors and f.ridges
+- poly2_r.c/qh_checkpolygon: add qh_checkvertex
+- poly2_r.c/qh_checkpolygon: check f.previous and v.previous links (for C++)
+- poly2_r.c/qh_checkvertex: add parameters for allchecks and waserror (like qh_checkfacet)
+- poly2_r.c/qh_checkvertex: check v.id and v.vertex_visit
+- qvoronoi.c/hidden_options: hide option 'FM'. Maple output is not available
+- rboxlib_r.c/qh_rboxpoints: use QH6... for error codes instead of warnings
+- stat_r.c/qh_stddev: check for division by 0
+- testqset_r.c: send all messages, except 'OK' to stderr
+- testqset_r.c: reassign unique QH8nnn codes, 8001/etc in use by libqhull_r
+- user_r.c/qh_printhelp_internal: add descriptive message for a Qhull internal error
+- user_r.c/qh_printhelp_narrowhull: add option 'Qs' (search all points)
+- user_r.c/qh_printhelp_topology: add descriptive message for a Qhull topology error
+- user_r.c/qh_printhelp_wide: add descriptive message for a wide merge error
+- user_eg_r.c: add fflush and '=======' markers to interleave stdout with stderr (MSYS2)
+- user_eg2_r.c: add fflush and '=======' markers to interleave stdout with stderr (MSYS2)
+- user_eg2_r.c: add warning about calling qh_addpoint after qh_qhull with 'QJ' (joggle)
+
+Qhull documentation and statistics
+- Add Index to README.txt
+- Add links to Wiki, http://github.com/qhull/qhull/wiki
+- Add links to local home page (index.htm)
+- Add GitHub, Scholar, and Code to navigation bar on home page
+- Change numbered fixups to 'QH110nn FIX:' and renamed as MSG_FIX
+- Chrome and Internet Explorer load '.c' and '.h' files as text/html from the Web
+  These browsers along with Firefox do not read disk files as text/html 
+  Changed 'Functions' link from a local link to "http://www.qhull.org/src/libqhull_r/index.htm"
+- Document implicit parameters at end of parameter list with '/* qh. ... */'
+- Limit maximum length of literals to 1800 characters
+- Move 'called by' comments to start of 'notes:'
+- Option 'QRn' appends the actual QRn to the summary line ('s')
+- Remove references to 'Qx' in 5-d and higher.  It is automatically set by default. 
+- Replace references to 'src/libqhull/*.htm' with reentrant 'src/libqhull_r/*_r.htm'
+- Retitle 'Qhull internals' as 'Qhull code'
+- Use 'nearly adjacent vertices' instead of 'nearly coincident points'
+- Use 'dupridge' instead of 'duplicate ridge' for ridges with more than two neighbors.
+  Reserve 'duplicate ridge' for two ridges with the same vertices.
+- Various edits to documentation (*.htm)
+- Update copyright to 2019
+- eg/q_test: Add examples to q_test "front ends"
+- html/index.htm: Add 'Limitations of merged facets' to the Qhull manual
+- html/index.htm: Add links to qdelaun_f.htm and qvoroin_f.htm (furthest-site)
+- html/qconvex.htm,etc: update synopsis and options
+- html/qh-code.htm: Add 'qh_addpoint' trace to 'Performance of Qhull'
+- html/qh-code.htm: Add a section on 'Debugging Qhull' with subsections for error codes,
+  infinite loops, trace options, core dumps, segfaults, qtest.sh, and memory errors.
+- html/qh-impre.htm: Add 'Topological error' to 'Precision problems'
+- html/qh-impre.htm: Add 'Topological errors' to 'Limitations of merged facets'
+- html/qh-impre.htm: Add "narrow range of values" to 'Uneven dimensions'
+- html/qh-optq.htm: Add note to 'QJ' (joggle) about calls to qh_addpoint
+- html/qh-optt.htm#'Tc': 'T4' makes additional checks beyond check-frequently
+- html/qhalf.htm: Split the first example to clarify the "feasible point" for qhalf
+- html/qhalf.htm: Use 'feasible point' instead of 'interior point' for halfspace intersection
+  Same as Qhull::feasiblePoint and distinguished from qh.interior_point
+- html/qhull.man,qhull.txt: updated man page
+- libqhull_r.h: update documentation for PRINTgood, GOODpoint, GOODvertex
+- qhull_ra.h: include '<limits.h>'.  Used for INT_MAX,etc.
+- stat.h: add zretryadd stats for qh_merge_pinchedvertices
+- stat.h: add zvertextests for distance tests of vertices for merging
+- libqhull_r/*: document global variables as 'qh.'
+- libqhull_r/*: fix libqhull/... links
+- libqhull_r.c/qh_partitioncoplanar: reword Zpartflip as Zpartcorner with updated messages
+- merge_r.c/qh_merge_degenredundant: rename statistic Zneighbor to Zredundant
+- stat_r.c: new or reworded statistics for Zpartcorner, Zparthidden, Zparttwisted, Zpinchduplicate, Zpinchedvertex
+- stat_r.c: rename 'renamed vertex statistics' to 'statistics for vertex merges'
+- stat_r.c: add merge statistics for MRGconcavecoplanar
+- stat_r.c/qh_allstat: add ' ' before parens in statistics 
+- user_eg_r.c,user_eg2_r.c: rewrote prompt
+
+Qhull changes
+- For simple initializers, remove spaces (e.g., 'for (i=0; ...')
+- Normalize spacing for libqhull
+- Normalize spacing as 'for (i=0; ...' for simple initializers
+- Review use of '>' for comparison to negative quantities.  Usually should be '>=', e.g., for coplanar tests
+- Reassigned 8xxx and 9xxx codes as trace codes if traced at T3 or lower
+- Remove unused variables
+- Test floating point values with 0.0 instead of 0 (qh.premerge_centrum,lower_bound,upper_bound)
+- Use SETsecondt_() and SETelemt_() instead of SETelem_() when assigning to a specific type
+- Use '(type *)' for pointer casts.  It makes the cast more visible.
+- Use void for empty parameter lists
+- geom_r.c/qh_findbesthorizon: mark startfacet visited, avoids unnecessary visit
+- geom2_r.c/qh_detmaxoutside: determine precision target qh.MAXoutside (option _maxoutside at error exit)
+  replaces 'maxoutside' computation
+- geom2_r.c/qh_maxsimplex: add ratio test for false narrow hull with search for prevdet [J. Romain]
+- global_r.c/qh_freebuild: free global sets first instead of last, otherwise dangling references
+- io_r.c/qh_compare_nummerge: renamed qh_compare_facetmerge due to conflict with merge_r.h
+- io_r.c/qh_compare_vertexpoint: remove this routine.  Not usable in libqhull_r due to 'qh'
+- io_r.c/qh_printfacetridges: do not print ridge if already printed (e.g., duplicate neighbors for merge of simplicial facets)
+- io_r.c/qh_produce_output2: fflush of qh.fout to show statistics and verification after output (MSYS2)
+- libqhull_r.h/qh.ALLOWwide: rename qh.NOwide to qh.ALLOWwide for 'Q12-allow-wide'
+- libqhull_r.h/qh.IGNOREpinched: replaced qh.MERGEpinched with reversed meaning
+- libqhull_r.c/qh_addpoint: 'TVn' stops after qh_all_vertexmerges, not before qh_resetlists.  Matches documentation
+- merge_r.h/MRGdupridge: renamed MRGridge 
+- merge_r.h/qh_ANGLEconcave,etc.: replace mergetype indicators with qh_ANGLEnone and m.mergetype 
+- merge_r.c/qh_all_vertexmerges: replace qh_getmergeset_initial with qh_getmergeset.  No facets created
+- merge_r.c/qh_all_vertexmerges: move while loop into qh_all_vertexmerges
+- merge_r.c/qh_append_mergeset: ignore merges into a MRGdegen facet (f.degenerate)
+- merge_r.c/qh_buildcone_mergepinched: clean up code and design documentation
+- merge_r.c/qh_compare_anglemerge: renamed qh_compareangle and sort by mergetype as well as angle
+- merge_r.c/qh_compare_facetmerge: merge MRGcoplanar before MRGconcave, opposite order from 2015.2
+                                   sort MRGanglecoplanar by angle
+- merge_r.c/qh_degen_redundant_facet,qh_test_degen_neighbors: moved into qh_mergefacet due to qh_willdelete
+- merge_r.c/qh_getmergeset,qh_getmergeset_initial: set f.tested after testing ridges, not before
+- merge_r.c/qh_next_facetmerge: split out next merge from qh_all_merges and replace qsort
+- merge_r.c/qh_findbest_pinchedvertex,qh_findbest_ridgevertex: dropped selecting merge direction via qh_vertex_isbelow.  Expensive and evidence mixed
+- merge_r.c/qh_freemergesets,qh_initmergesets: pair qh_initmergesets with qh_freemergesets 
+- merge_r.c/qh_freemergesets,qh_initmergesets: drop the 'all' parameter
+- merge_r.c/qh_mergecycle_all: move qh_merge_degenredundant, etc. to end from qh_premerge
+- merge_r.c/qh_mergesimplex: delete facet1 from facet2.neighbors at end, not at ridge
+- merge_r.c/qh_post_merges,qh_all_merges: remove setting of v.delridge on all vertices, not needed
+- merge_r.c/qh_premerge: replace parameter 'apex' with 'apexpointid'.  Only used for logging
+- merge_r.c/qh_premerge: add qh.newfacet_list as an implicit parameter
+- merge_r.c/qh_test_degen_neighbors: split from qh_degen_redundant_neighbors and qh_mergefacet
+- merge_r.c/qh_test_redundant_neighbors: split from qh_degen_redundant_neighbors and qh_mergefacet
+- poly_r.c/qh_attachnewfacets: clear f.neighbors and f.ridges for visible facets, will be deleted
+- poly_r.c/qh_matchnewfacets: remove call to qh_checkflipped_all for qh.FORCEoutput, checked by qh_setfacetplane
+- poly_r.c/qh_update_vertexneighbors: renamed qh_updatevertices. A future version will optimize
+  qh_update_vertexneighbors_cone: optimization for cone of new facets
+- poly2_r.c/qh_checkconvex: immediate skip of f.tricoplanar facets.  Tricoplanar facets not tested.  Called before qh_triangulate
+- poly2_r.c/qh_initbuild: move 'create sentinels' before qh_createsimplex so that qh.vertex_tail is v0 like f0
+- poly2_r.c/qh_initialvertices: cleaned up code for qh_INITIALmax (8-d)
+- poly2_r.c/qh_makenewfacets: clear f.neighbors and f.ridges for visible facets, will be deleted
+- poly2_r.c/qh_matchdupridge: optimize dupridge for flipped->!flipped, good merge, not !flipped->flipped
+- poly2_r.c/qh_matchdupridge_coplanarhorizon: dropped routine.  Results same or slightly worse.  Complex addition, rarely used
+- poly2_r.c/qh_triangulate: rename facet and vertex lists as triangulated_facet_list,etc.
+  qh_triangulate does not maintain qh.newfacet_list or qh.visible_list
+- poly2_r.c/qh_triangulate: ignore qh.NEWfacets. qh_checkpolygon is not valid inside qh_triangulate
+- rboxlib_r.c/qh_rboxpoints2: split function from qh_rboxpoints to avoid -Wclobbered
+- stat_r.c/qh_printstatlevel: remove unused NULLfield
+  
+Qhull C++ changes
+- Use NULL instead of 0 for pointers
+- Remove old style casts such as '(size_t)...'
+- Define initializers for default constructors even if explicitly assigned
+- Update static initializer list for s_empty_facet, s_empty_ridge, s_empty_vertex
+- Coordinates.h: default constructor clears coordinate_array
+- Coordinates.h: default iterator constructor clears i
+- RboxPoints.cpp/qh_fprintf_rbox: add empty default to switch statement
+
+------------
+Qhull 2018.0.1 2018/12/28 (7.3.0)
+
+Qhull options
+ - If unknown option, report error QH6035 instead of warning QH7035. Override with Qw
+ - Add option 'Tf' to flush each qh_fprintf for debugging segfaults
+ - Add Q14-ignore-pinched-vertices: ignore pinched vertices due to dupridge
+   Default if post-merge only ('Cn'), 'Qgood-only', or 2-d convex hulls
+ - Expand Q12-allow-wide to include wide facet errors reported by qh_check_maxout and qh_merge_facet
+ - Add Q16-simplex-merge: test opposite vertex instead of centrum for merges
+ - option 'f' (print facets): updated flags for facets
+   'seen' and 'seen2' flags not listed (listed if tracing)
+   Renamed 'new' to 'newfacet'
+   'isarea' if area is listed for the facet
+   'cycledone' if qh_mergefacet completed  
+   Renamed 'MERGE' to 'MERGEridge' in the facet neighors (for merging)
+   Renamed 'DUP' to 'DUPLICATEridge' in the facet neighors (for merging)
+   Comment '- horizon ridge to visible facet' added for tentative new facets
+ - option 'f' (print facets): updated flags for ridges
+   'mergevertex' and 'mergevertex2' if a ridge vertex will be merged
+   'simplicialtop' and 'simplicialbot' if the top/bottom facet is simplicial
+ - option 'f' (print facets): updated flags for vertices
+   Renamed 'ridgedeleted' to 'delridge'
+   'newfacet' if the vertex belongs to a new facet on qh.newfacet_list
+   'seen' and 'seen2' listed if tracing
+ - Option 'T3' prepend message number for trace levels 0-3
+   e.g., "[QH1040]qh_findhorizon: find horizon..."
+ - Option 'TCone_stop' stops before vertex merge due to duplicate ridges (unlikely)
+ - Option 'Ts' (qh_initbuild): print command prompt at start of run for segfaults
+ - Rename option 'U-coplanar-distance' to 'U-max-coplanar' (qh.MAXcoplanar)
+
+Qhull documentation
  - Explanation of clobbered warning for Qhull::runQhull and qh_new_qhull
  - html/index.htm: Add "Nearly coincident points" to "When to use Qhull"
  - html/index.htm: Add Tomilov's qhullhull.hpp for general position input.
- - index.htm: Add Tomilov's qhullhull.hpp for general position input.
- - qh-faq.htm: Add a note about merging slivers in a Delaunay triangulation [M. Treacy] 
+ - html/qh-eg.htm: Add 'Q0' link to eg.14.sphere.corner
+ - html/qh-faq.htm,qh-code.htm: merge slivers in a Delaunay triangulation [M. Treacy] 
+ - html/qh-optq.htm: Update documentation for 'Qx' and its default behavior
+ - html/qh-impre.htm: Rewrote notes on 'Nearly coincident points within 1e-13'
+ - geom_r.c/qh_distplane: nearly coplanar points may return the same distance for different points 
  
+Qhull builds
+ - Move 'extern "C" {}' logic from C++ to C headers [C. Atkins, nine7nine, W. Scullin, M. Culpo]
+ - build/*-64.vcxproj Updated for tool set 8.1
+ - CMakeLists.txt: Add note for "dynamic linking" of qhull executables [M. Atzeri]
+ - CMakeLists.txt: Revert accidental commit cea6d22 [pchilds, QuLogic, fabiencastan, daniel-packard]
+
+Bugs fixed
+ - html/*.htm: fix trailing </a></br> after 'Comments to:'
+ - libqulll_r.c/qh_findbest: search from newfacet_list instead of f.next if !bestfacet
+ - merge_r.c/qh_find_newvertex: use v.seen to avoid maxvisit > qh.vertex_visit
+ - merge_r.c/qh_merge_simplex: repeat with next ridge after qh_delridge_merge
+ - merge_r.c/qh_vertexridges: 'qh.visit_id += 2' to avoid visit_id collision
+ - poly_r.c/qh_appendfacet: update qh.visible_list if qh.newfacet_list/visible_list are empty
+ - poly2_r.c/qh_check_maxout: check qh.min_vertex if qh.VERIFYoutput/CHECKfrequently
+ - poly2_r.c/qh_checkpolygon: do not report qh.visible_list error if visible_list and newfacet_list are defined but empty
+ - Qhull.cpp/outputQhull: do not call qh_check_points if qh.FORCEoutput
+ - stat_r.c/qh_printallstatistics,qh_printstatistics: 'const char *string' instead of 'char *string' for !qh_KEEPstatistics
+ - user_r.c/qh_new_qhull: do not call qh_check_points if qh.FORCEoutput
+ - user_eg2.c: do not call qh_check_points if qh.FORCEoutput
+ 
+Qhull error reporting
+ - io_r.c/qh_readpoints: improved formating of error "QH6410 ... instead of n points"
+ - libqulll_r.c/qh_findhorizon: error if no neighbors for a visible facet
+ - libqulll_r.c/qh_findbestnew: error if facet sentinel (!facet->next)
+ - libqhull_r.c/qh_nextfurthest: error if infinite loop
+ - libqhull_r.c/qh_partitioncoplanar: error if partition into a visible facet
+ - libqhull_r.c/qh_partitionpoint: error if partition into a visible facet
+ - libqhull_r.c/qh_partitionvisible: error if deleted vertex with an empty qh.newfacet_list
+ - libqulll_r.c/qh_printsummary: if qh.ERREXITcalled and qh.DELAUNAY, update f.good and qh.num_good (qh_findgood_all)
+ - merge_r.c/qh_checkdelfacet: check that mergeset does not reference facet
+ - merge_r.c/qh_checkdelridge: check that qh_delridge_merge is not needed for deleted ridges
+             Call from qh_mergecycle, qh_makenewfacets, qh_attachnewfacets
+ - merge_r.c/qh_maydropneighbor: error if simplicial facet or neighbor
+ - merge_r.c/qh_merge_facet: error if wide merge (allow with 'Q12')
+ - merge_r.c/qh_merge_nonconvex: error if unexected mergetype
+ - poly_r.c/qh_matchneighbor: convert error QH6106 (two facets with same vertices) to a warning (QH7084) and automatic fix
+ - poly2_r.c/qh_check_maxout: error if wide qh.max_outside/min_vertex (allow with 'Q12')
+ - poly2_r.c/qh_check_maxout: warn if wide maxout for vertices (for diagnosing errors)
+ - poly2_r.c/qh_check_maxout: warn if point is outside f.outside (for diagnosing errors)
+ - poly2_r.c/qh_check_maxout: warn if 'f.maxoutside > qh.max_outside'
+ - poly2_r.c/qh_check_maxout: changed comparison from 'dist==maxoutside' to 'dist >= maxoutside' (allow multiple warnings)
+ - poly2_r.c/qh_checkfacet: error if 'redundant' or 'degenerate', but neither 'visible' nor qh.degen_mergeset
+ - poly2_r.c/qh_checkfacet: error if 'dupridge' or 'newmerge', but not 'newfacet'
+ - poly2_r.c/qh_checkfacet: error if neighbor of facet is 'visible' (i.e., deleted)
+ - poly2_r.c/qh_checkfacet: report 'Repaired by qh_remove_extravertices' as trace4 (QH4025) instead of error QH6134
+ - poly2_r.c/qh_checkpolygon: error if qh.visible_list is after qh.newfacet_list
+ - poly2_r.c/qh_checkpolygon: error if f.newfacet before qh.visible_list or qh.newfacet_list
+ - poly2_r.c/qh_checkpolygon: error if qh.newfacet_list without f.newfacet
+ - poly2_r.c/qh_checkpolygon: error if f.visible not on qh.visible_list
+ - poly2_r.c/qh_checkpolygon: error if qh.visible_list without f.visible
+ - poly2_r.c/qh_checkpolygon: error if qh.newfacet_list is not on qh.facet_list
+ - poly2_r.c/qh_checkpolygon: error if v.newfacet not on qh.newvertex_list
+ - poly2_r.c/qh_checkpolygon: error if qh.newvertex_list is not on qh.vertex_list
+ - poly2_r.c/qh_checkpolygon: error if a facet occurs twice in v.neighbors
+ - poly2_r.c/qh_checkpolygon: error if vertex not in f.vertices for facets in v.neighbors
+ - poly2_r.c/qh_checkpolygon: error if facet not in v.neighbors for vertices in f.vertices
+ - poly2_r.c/qh_delvertex: error if vertex previously deleted but not partitioned as a coplanar point
+ - user_r.c/qh_errexit: clear printed flags on statistics (qh_allstatistics)
+ - user_r.c/qh_errprint: print vertex and ridge before facets
+ - user_r.c/qh_printfacetlist: add 'qh_printfacetlist:' for rapid navigation
+ 
+Source code additions
+ - mergeT: expanded for vertices and ridges
+ - mergeType: add MRGconcavecoplanar, MRGtwisted, MRGsubridge, MRGvertices, and MRGcoplanarhorizon
+ - qtT.FLUSHprint: true if 'Tf', flush output on qh_fprintf 
+ - qtT.MERGEpinched: false if 'Q14', merge pinched vertex due to duplicate ridge
+ - qtT.SIMPLEXmerge: true if 'Q16', test_appendmerge tests opposite vertex instead of centrum
+ - qtT.first_newfacet: id of first new facet in qh_buildcone, other new facets were merged
+ - qtT.isRenameVertex: true during qh_merge_pinchedvertices
+ - qtT.NEWtentative: true while new facets are tentative due to qh.MERGEpinched or ONLYgood
+ - qtT.repart_facetid: previous facetid to prevent recursive qh_partitioncoplanar
+ - qtT.retry_addpoint: number of retries of qh_addpoint due to qh.MERGEpinched
+ - qtT.vertex_mergeset: set of vertex merges for qh_next_vertexmerge
+ - ridgeT.mergevertex and mergevertex2 if a ridge vertex will be merged
+ - ridgeT.simplicialtop and simplicialbot if the top/bottom facet is simplicial
+ - vertexT.partitioned: true if deleted vertex partitioned by qh_partitionvisible
+ - geom2_r.c/qh_furthestnewvertex: return furthest unvisited, new vertex to a facet
+ - geom2_r.c/qh_furthestvertex: return furthest unvisited vertex to a facet
+ - geom2_r.c/qh_vertex_bestdist: return nearest distance between vertices
+ - geom2_r.c/qh_vertex_bestdist2: return nearest vertex pair between vertices
+ - geom2_r.c/qh_vertex_isbelow: test vertexA distance to vertexB's simplicial facets and vice versa
+ - libqhull_r.c/qh_buildcone: split out qh_makenewfacets,etc. from qh_addpoint
+ - merge_r.c/qh_all_vertexmerges: perform vertex merges in qh.vertex_mergeset
+ - merge_r.c/qh_appendvertexmerge: append vertex merge to qh.vertex_mergeset
+ - merge_r.c/qh_delridge_merge: split out ridge maintenance from qh_renameridgevertex and qh_merge_simplex
+ - merge_r.c/qh_hasmerge: True if mergeset has mergetype for facetA and facetB
+ - merge_r.c/qh_initmergesets,qh_freemergesets: init/free of qh.*_mergeset with error reporting
+ - merge_r.c/qh_maybe_duplicateridge: add MRGvertices if neighboring facet has another ridge with the same vertices 
+ - merge_r.c/qh_maybe_duplicateridges: add MRGvertices if ridges with the same vertices 
+ - merge_r.c/qh_merge_dupridges: split out conversion of dupridges to MRGridge merges from qh_makeridges
+ - merge_r.c/qh_merge_pinchedvertices- merge pinched vertices in qh.vertex_mergeset to avoid qh_forcedmerges of duplicated ridges
+ - merge_r.c/qh_merge_twisted: merge twisted facets that are above and below their neighbors (4D+ and non-simplicial)
+ - merge_r.c/qh_neighbor_vertices,qh_neighbor_vertices_facet: return neighboring vertices for a vertex (not in subridge)
+ - merge_r.c/qh_next_vertexmerge: select next vertex merge by distance, allow one MRGsubridge merge
+ - merge_r.c/qh_opposite_horizonfacet: return horizon facet for a merge facet and its opposite vertex
+ - merge_r.c/qh_reducevertices: qh_merge_degenredundant if qh_remove_extravertices or qh_rename_sharedvertex 
+ - merge_r.c/qh_remove_mergetype: remove mergetype merges from mergeset
+ - merge_r.c/qh_rename_adjacentvertex: rename oldvertex as newvertex, must be adjacent (i.e., in the same subridge)
+ - merge_r.c/qh_test_cemtrum_merge: split out test centrum convexity from qh_test_appendmerge
+ - merge_r.c/qh_test_nonsimplicial_merge: test nonsimplicial convexity and append non-convex facets to qh.facet_mergeset
+ - merge_r.h/FOREACHmergeA_,FOREACHmerge_i_: add macros for mergeset iteration
+ - poly_r.c/qh_getreplacement: split out new facet for visible facet from qh_partitionvisible and qh_merge_degenredunant
+ - poly2_r.c/qh_addfacetvertex: split out add newvertex to f.vertices if not already there from qh_merge_simplex
+ - poly2_r.c/qh_matchdupridge_coplanarhorizon: match duplicate ridges with the same coplanar horizon, instead of qh_matchdupridge
+ - poly2_r.c/qh_opposite_vertex: return the opposite vertex in facetA to neighbor
+ - poly2_r.c/qh_replacefacetvertex: replace oldvertex with newvertex in f.vertices
+ - user_r.h/qh_RATIOconcavehorizon: ratio of horizon vertex distance to qh.max_outside for concave, twisted new facets in qh_test_nonsimplicial_merge
+ - user_r.h/qh_RATIOconvexmerge: ratio of vertex distance to qh.min_vertex for clearly convex new facets in qh_test_nonsimplicial_merge
+ - user_r.h/qh_RATIOcoplanarapex: ratio of best distance for coplanar apex vs. vertex merge in qh_getpinchedmerges
+ - user_r.h/qh_RATIOcoplanaroutside: ratio to repartition a coplanar point as an outside point in qh_partitioncoplanar and qh_check_maxout
+ - user_r.h/qh_RATIOpinchedsubridge: ratio to qh.ONEmerge to accept vertices in qh_findbest_pinchedvertex
+ - user_r.h/qh_RATIOtrypinched: ratio to qh.ONEmerge to merge twisted facets in qh_merge_twisted
+ - user_r.h/qh_RATIOtwisted: maximum ratio to qh.ONEmerge to merge twisted facets in qh_merge_twisted
+ - user_r.h/qh_WIDEmaxoutside: precision ratio for maximum increase for qh.max_outside in qh_check_maxout
+ - user_r.h/qh_WIDEmaxoutside2: precision ratio for maximum qh.max_outside in qh_check_maxout
+ - user_r.h/qh_WIDEpinched: merge ratio for distance between pinched vertices compared to current facet width for qh_getpinchedmerges and qh_next_vertexmerge 
+ 
+Source code changes
+ - Change " = " to "= " (avoid confusion with "==")
+ - Improved tracing and code comments throughout
+ - Moved qh_check_dupridge from poly2_r.c to merge_r.c.  It is used for merging
+ - Removed qh_compareangle and qh_comparemerge.  Replaced by qh_next_facetmerge
+ - Renamed 'qh_precision' to 'qh_joggle_restart'.  It restarts qhull to avoid a precision error.
+ - Renamed 'Qhull internal error' to 'qhull internal error' for consistency
+ - Renamed mergeT.type to mergetype.  Same as parameters and local variables
+ - Renamed vertexT.newlist to newfacet. True if on a new facet
+ - Renamed qh_matchduplicates to qh_matchdupridge (poly2_r.c).  A 'duplicates' is ridges with duplicate vertices
+ - Use coordT for distances instead of realT.  Needs further review.
+ - qh_NOmerge: include comments in #ifndef
+ - global_r.c/qh_freebuffers: use the same order as qh_initbuffers
+ - global_r.c/qh_freebuild: free the global sets, qh.degen_mergeset,etc.
+ - io_r.c/qh_printfacetheader: print 'MERGEridge' instead of 'MERGE' to match name of flag
+ - io_r.c/qh_printfacetheader: print 'DUPLICATEridge' instead of 'DUP' to match name of flag
+ - libqhull_r.c/qh_partitioncoplanar: change qh.findbestnew to a parameter (search all new facets)
+ - libqhull_r.c/qh_partitioncoplanar: repartition a coplanar point if far outside
+                typically due to a twisted facet in D4+ with almost coincident vertices 
+ - libqhull_r.c/qh_partitionpoint: if outside set is empty, set f.newfacet and adjust qh.facet_next
+ - libqhull_r.c/qh_partitionvisible: prevent duplicate partitions of deleted vertices
+ - libqhull_r.c/qh_partitionvisible: test against !f.next instead of qh.facet_tail.  Both indicate sentinel
+ - mrege_r.h/mergeType: reordered mergetypes is preference order
+ - merge_r.c: identify MRGconcavecoplanar facets that are above and coplanar with their neighbors
+ - merge_r.c/mergetypes: string names for mergeType
+ - merge_r.c/qh_all_merges: clear wasmerge and othermerge on qh_reducevertices.  Avoids extra calls
+ - merge_r.c/qh_appendmergeset: add parameters for m.dist and m.angle
+ - merge_r.c/qh_appendmergeset: initialize all fields of mergeT
+ - merge_r.c/qh_copynonconvex: clear old r.nonconvex for consistency.  Ridge will be deleted soon
+ - merge_r.c/qh_degen_redundant_neighbors: check neighbors of delfacet instead of facet.  Faster and it matches definition
+ - merge_r.c/qh_mark_dupridges: add 'allmerges' parameter for dupridges vs. pinched vertices 
+ - merge_r.c/qh_mark_dupridges: test for duplicate vertices to avoid duplicate MRGridge
+ - merge_r.c/qh_merge_cycle_all: test for duplicate ridges at end of merge_cycle_all (qh_maybe_duplicateridges)
+ - merge_r.c/qh_merge_dupridges: clear mergeridge/mergeridge2 flags (not needed on first call)
+ - merge_r.c/qh_merge_facet: test for qh_degen_redundant_facet and qh_maybe_duplicateridges
+ - merge_r.c/qh_merge_facet: add mergeType parameter for logging
+ - merge_r.c/qh_merge_facet: rename 'apex' to 'opposite' (not always apex)
+ - merge_r.c/qh_merge_simplex: identify 'isnew' instead of 'issame' (more accurate)
+ - merge_r.c/qh_remove_extravertices: skip for simplicial facets
+ - merge_r.c/qh_renamevertex: test qh_maybe_duplicateridge if qh_renameridgevertex 
+ - merge_r.c/qh_renamevertex: test qh_degen_redundant_facet for oldvertex neighbors
+ - merge_r.c/qh_renamevertex: test qh_degen_redundant_neighbors for oldvertex nonsimplicial neighbors
+ - merge_r.c/qh_renamevertex: test qh_maybe_duplicateridge if qh_renameridgevertex 
+ - merge_r.c/qh_renamevertex: test qh_degen_redundant_facet oldfacet
+ - merge_r.c/qh_tracemerge: add mergeType parameter for logging
+ - merge_r.c/qh_test_appendmerge: calls qh_test_centrum_merge or qh_test_nonsimplicial_merge as needed
+ - merge_r.c/qh_vertexridges: add 'allneighbors' parameter to test all neighbors of a vertex
+ - merge_r.c/qh_vertexridges_facet: optimize qh_setin by common cases
+ - poly_r.c/qh_checkflipped: move call from qh_matchnewfacets to qh_setfacetplane.  Allow call of qh_setfacetplane from qh_initialhull to reverse orientation
+ - poly_r.c/qh_matchneighbor: call qh_setfacetplane/qh_checkflipped on-demand to support qh.NEWtentative
+ - poly_r.c/qh_matchnewfacets: returns maxdupdist for duplicate ridges
+ - poly_r.c/qh_matchnewfacets: move qh_joggle_restart from qh_matchduplicates ("ridge with multiple neighbors")
+ - poly_r.c/qh_matchnewfacets: try to match ridges with coplanar horizon (qh_matchdupridge_coplanarhorizon)
+ - poly_r.c/qh_update_vertexneighbors: use qh_setunique to pdate vertex neighbors (due to pinched vertex merge)
+ - poly2_r.c/qh_checkfacet: optimize qh_setequal of ridges with the same vertices
+ - poly2_r.c/qh_checkpolygon: do not include visible facets in totvertices
+ - poly2_r.c/qh_initialhull: use f.flipped instead of qh_distplane/qh_checkflipped (qh_checkflipped called from qh_setfacetplane)
+ - poly2_r.c/qh_matchdupridge: was qh_matchduplicates in qhull 2015.2
+ - poly2_r.c/qh_matchdupridge: detect duplicate facets/ridges and force vertex merge
+ - poly2_r.c/qh_matchdupridge: separate code for qh_DUPLICATEridge/f.tricoplanar for improved logging
+ - poly2_r.c/qh_matchdupridge: if !makematch, collect best match via flipped and qh_getdistance between facets
+ - poly2_r.c/qh_resetlists: clear f.dupridge
+ - poly2_r.c/qh_triangulate: clear f.degenerate at end (degenerate tricoplanar facets)
+ - poly2_r.c/qh_triangulate_link: skip duplicate MRGmirror merges
+ - poly2_r.c/qh_triangulate_mirror: skip duplicate MRGmirror merges and previously deleted MRGmirror facets
+
+------------
+Qhull github 2018
+
+- Fixed confusing indentation [A. Lee 2018/12/28]
+- Add labels for each release [A. Mailaga 2016/7/5]
+- Add 'typename qualifier to QhullSet [D. Gomes 2016/6/16]
+- Make C headers safe for C++ inclusion [C. Atkins 2016/01/20]
+- build/qhull*.pc.in: Removed templates for pkg-config (not updated for Qhull 2015)
+
+=============
+== Qhull 2015
+=============
+
 ------------
 Qhull 2015.2 2016/01/18 (7.2.0) 
  - Fixed memory leak in ~QhullQh [M. Sandim]
@@ -83,7 +959,7 @@ Qhull 2015.2 2016/01/18 (7.2.0)
  - qh_printpoint in io.c skips qh_IDnone like io_r.c
  - qhull_p-exports.def: Added three missing exports
  - set_r.h: Removed countT. Too many issues
- 
+
  - libqhull_r/Makefile: Add help prompts to 'make qtest'
  - libqhull.pro: Add '../libqhull/' to sources and headers
  - libqhull/Makefile: Fixed -I,./,,/src
@@ -100,9 +976,9 @@ Qhull 2015.2 2016/01/18 (7.2.0)
  ------------
 Qhull 2015.1 2016/01/03 (7.1.0) 
  - Add Rbox option 'Cn,r,m' to add nearly coincident points.  Trigger for duplicate ridges
- - Add Qhull option 'Q12' to ignore error on wide merge due to duplicate ridge
+ - Add Qhull option 'Q12' to allow wide merge due to a dupridge
 
- - qh_findbestlower: Call qh_findfacet_all to fix rare "flipped or upper Delaunay" error QH6228.
+ - qh_findbestlower: Call qh_findfacet_all to fix rare "flipped or upper Delaunay" error QH6228 (now QH3025)
    QH6228 input provided by J. Metz.  Reported (date order): L. Fiaschi, N. Bowler, A. Liebscher, V. Vieira, N. Rhinehart, N. Vance, P. Shafer
  - qh_check_dupridge: Check if wide merge due to duplicate ridge from nearly coincident points
  - qh_initialhull: Fix error messages for initial simplex is flat
@@ -235,7 +1111,7 @@ Qhull 2015.0.2 2015/9/1
 ------------
 Qhull 2015.0.1 2015/8/31
 
- Source code changes
+Source code changes
  - Increased size of vertexT.id and ridgeT.id to 2^32 [H. Strandenes, C. Carson, K. Nguyen]
    Reworded the warning message for ridgeT.id overflow.  It does not affect Qhull output
  - Add qh_lib_check to check for a compatible Qhull library.
@@ -247,7 +1123,7 @@ Qhull 2015.0.1 2015/8/31
  - qh_initqhull_start2 sets qh->NOerrexit on initialization
    User must clear NOerrexit after setjmp()
    
- Other source code changes
+Other source code changes
  - Define ptr_intT as 'long long' for __MINGW64__ [A. Voskov]
  - poly_r.c: initialize horizon_skip [K. Schwehr]
  - Removed vertexT.dim and MAX_vdim.  It is not used by reentrant Qhull.
@@ -451,7 +1327,7 @@ C++ interface by class
    Implement print("message")
  - QhullHyperplane
    Add hyperplaneAngle() method
-   Rewrite operator== to use hyperplaneAngle()
+   Rewrite operator==to use hyperplaneAngle()
    Reorganize fields to keep pointers aligned
    Except for default constructor requires Qhull or QhullQh* pointer
    Enable copy assignment
@@ -524,7 +1400,11 @@ C++ interface by class
    Removed
    Replace setGlobalDistanceEpsilon with setFactorEpsilon
    Replace globalDistanceEpsilon with distanceEpsilon
-   
+
+=============
+== Qhull 2012.1
+=============
+
 ------------
 Qhull 2012.1  2012/02/18 6.3.1.1494
  - Fix CMakeLists for libqhull with MATCHES [P. Gajdos]
@@ -693,6 +1573,10 @@ Qhull 2009.1.2 2011/11/21
  - Remove out-of-date material from qhull-go.bat
  - Replaced QHULL-GO with a lnk file
 
+=============
+== Qhull 2011.1
+=============
+
 Qhull 2011.1  2011/05/23 6.2.0.1385 (exe/dll files unchanged)
  - delaunay.vcproj: Fixed qhullstatic_d.lib for debug and minrelsize builds
  - Did not redate the distribution
@@ -801,6 +1685,10 @@ Changes to C++ code
  - Use fabs() instead of abs() to avoid accidental conversions to int
  - Fixed type of vertex->neighbors in qh_printvoronoi [no effect on results]
  - Removed unnecessary if statement in qh_printvoronoi
+
+=============
+== Qhull 2010.1 and 2009.1
+=============
 
 ------------
 qhull 2010.1 2010/01/14
@@ -1040,6 +1928,10 @@ This is a maintenance release done by Rafael Laboissiere <rafael@debian.org>.
    automake/aclocal (1.10.2), and libtool (2.2.6)
  - Some character issues in the man pages are fixed
 
+=============
+== Qhull 2003.1
+=============
+
 ------------
 qhull 2003.1  2003/12/30
 
@@ -1103,6 +1995,10 @@ Changes to examples
  - Fixed options for eg/eg.t23.voronoi.imprecise [B. Pearlmutter]
 
 
+=============
+== Qhull 2002.1
+=============
+
 ------------
 qhull 2002.1  2002/8/20
 
@@ -1143,6 +2039,10 @@ URL updates:
  - Removed URL for Computational Geometry Tribune
  - Changed URL for locate/cglist to software/cglist
  - Used site relative links for qh-home.htm
+
+=============
+== Qhull 3.1 (2001)
+=============
 
 ------------
 qhull 3.1 2001/10/04
@@ -1321,6 +2221,10 @@ Changes to FAQ
  - added FAQ item on meshing non-convex objects
  - added FAQ item on MATLAB and Mathematica interface
 
+=============
+== Qhull 2.6 (1999)
+=============
+
 ------------
 qhull 2.6 1999/04/19
  - fixed memory overwrite (no effect) in qh_initstatistics() [K. Ford]
@@ -1392,6 +2296,10 @@ qhull 2.6 1998/8/12
  - removed 'qh rand_seed' since random number generator is independent of qhull
  - dropt 'qhull-PPC.sit.bin' from the distribution (out-of-date) [M. Harris]
 
+=============
+== Qhull 2.5 (1998)
+=============
+
 ------------
 qhull 2.5 1998/5/4
 
@@ -1437,6 +2345,7 @@ qhull 2.5 1998/1/16
  - renamed qh_JOGGLEmax to qh_JOGGLEmaxincrease
  - updated URL for Fukuda's cdd program
 
+-------------------
 qhull 2.5 1998/1/12
 
 New or modified features
@@ -1512,6 +2421,10 @@ Other changes to Qhull functions
  - separated qh_distround and qh_detroundoff from qh_maxmin
 
 
+=============
+== Qhull 2.4 (1997)
+=============
+
 ------------
 qhull 2.4 97/4/2
 
@@ -1572,6 +2485,10 @@ Changes to the Qhull library
  - added request for unbounded Voronoi rays to Enhancements
     please let me know if you try this
 
+=============
+== Qhull 2.3 (1996)
+=============
+
 ------------
 qhull V2.3 96/6/5
  - fixed total area of Delaunay triangulation. [A. Enge]
@@ -1627,6 +2544,10 @@ qhull V2.3 96/3/25
  - removed some compiler warnings
  - moved 'FO' print of options to just before qh_buildhull
  - changed 'FO' to list difference from -1 for _narrow-hull
+
+=============
+== Qhull 2.2 (1995-1996)
+=============
 
 ------------
 qhull V2.2 96/2/15
@@ -1786,6 +2707,10 @@ qhull V2.2 95/12/4
  - reorganized split between poly/poly2.c and geom/geom2.c
  - reordered object files in Makefile
 
+=============
+== Qhull 2.1 (1995)
+=============
+
 ------------
 qhull V2.1 95/9/25
  - converted qhull.man to html format, many edits
@@ -1797,7 +2722,7 @@ qhull V2.1 95/9/25
  - moved option 'FO' to include default precision options
  - changed default random number generator to qh_rand in geom2.c (user.h)
 
- other code changes
+ Other code changes
  - fixed option comment Pdrop-facets-dim-less, Qbound-dim-low, QbBound-unit-box
  - defined ptr_intT for converting 64-bit ptrs to 'unsigned long' [D. Bremner]
  - defined setelemT to distinguish actual size from pointers [D. Bremner]
@@ -1808,7 +2733,7 @@ qhull V2.1 95/9/25
  - added type conversion to qh_memalloc() calls where missing
  - added type conversion to calls into set.c that return void*
 
- other documentation changes:
+ Other documentation changes:
  - new URLs for graphics images
  - fixed comment for facetT.neighbors in libqhull.h [P. Soikkonen]
  - changed recommendations for precision errors in qh_printhelp_degenerate()
@@ -1860,7 +2785,7 @@ qhull V2.1 6/3/95
 
 qhull V2.1 beta 5/15/95
 
-                ======= main changes ========
+  Main changes
   - added halfspace intersection ('Hn,n,n')
   - facet merging is better, especially for high dimensions
   -   added 'Qx' for exact merges of coplanar points and precision faults
@@ -1877,7 +2802,7 @@ qhull V2.1 beta 5/15/95
   - renamed 'Qv' to 'Q7' since virtual memory does not work well for qhull
   - Qhull is available for the Power Mac (no graphical output)
 
-                 ====== other new and modified options ===========
+  Other new and modified options
   - changed default MINvisible ('Vn') to a multiple of premerge_centrum ('C-n')
   - added 'Un' option to set width of facet for coplanar points.
        This replaces the previous rules for determining coplanar points.
@@ -1905,14 +2830,14 @@ qhull V2.1 beta 5/15/95
   - added warning if mix Geomview output with other outputs ('Po' turns off)
   - options 'o v' for 3-d and higher sort the Voronoi vertices by index
 
-                ======= documentation =======
+  Documentation
   - rewrote the introduction and precision sections
   - added a section on performance
   - added an example on halfspace intersection
   - installed examples of Qhull in
     <http://www.geom.uiuc.edu/graphics/pix/Special_Topics/Computational_Geometry/>
 
-                ======= Makefile, user.h, and messages =======
+  Makefile, user.h, and messages
   - Makefile calls ./qhull, ./rbox, and prints short prompt for qhull
   - added new statistics, e.g., for buildhull
   - changed default qh_RANDOMtype to RAND_MAX with rand()
@@ -1924,7 +2849,7 @@ qhull V2.1 beta 5/15/95
   -   use this instead of redefining qh_merge_nonconvex in user.c
   - simplified user_eg.c.  See qh_call_qhull() in user.c for the full version
 
-                ======== bug fixes ============
+  Bug fixes
   - fixed error in number of points for 'rbox 100 r' (odd distribution)
   - fixed performance error in qh_degen_redundant_neighbors
   - qh_partitionpoint now sets facet->maxoutside for first outside point
@@ -1934,7 +2859,7 @@ qhull V2.1 beta 5/15/95
   - forcing output on error ('Po') fixed for options 'n' 'o' 'i' 's'
   - fixed optimization error on HP machines [fprintf(... *p++)]
 
-                ======== changes to libqhull.h for user code =======
+  Changes to libqhull.h for user code
   - qh_collectstatistics and qh_printstatistics removed from libqhull.h.
       should use qh_printallstatistics instead
   - qh_findbest uses boolT for newfacets
@@ -1947,7 +2872,7 @@ qhull V2.1 beta 5/15/95
   - added dfacet/dvertex for printing facets/vertices while debugging
   - added qh_produce_output and qh_printsummary
 
-                ======== changes to code ==========
+  Changes to code
   - moved qh_setfacetplane from qh_makenewfacets to qh_makenewplanes
   - added qh_setfree2, qh_setcompact, and qh_setduplicate to set.c
   - qh_findgooddist returns list of visible facets instead of setting global
@@ -1959,7 +2884,7 @@ qhull V2.1 beta 5/15/95
   - uses facet->dupridge to indicate duplicated ridges instead of ->seen
   - qh_buildtracing records CPU time relative to qh hulltime instead of 0
 
-                ========== changes to merging =======
+  Changes to merging
   - many performance improvements, especially in high-d.
   - when merging, qh_findbest and qh_findbestnew stops search at qh_DISToutside
   - vertex neighbors delayed until first merge
@@ -1985,6 +2910,10 @@ qhull V2.1 beta 5/15/95
   - added hull_dim factor to qh_BESTcentrum
   - removed horizon preference in qh_merge_nonconvex (qh AVOIDold)
   - facet->keepcentrum if qh WIDEfacet or qh_MAXnewcentrum extra vertices
+
+=============
+== Qhull 2.0 (1994-1995)
+=============
 
 ------------
 qhull V2.02 1/25/95

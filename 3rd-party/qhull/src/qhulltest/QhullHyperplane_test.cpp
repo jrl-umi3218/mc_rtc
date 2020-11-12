@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** Copyright (c) 2009-2015 C.B. Barber. All rights reserved.
-** $Id: //main/2015/qhull/src/qhulltest/QhullHyperplane_test.cpp#4 $$Change: 2064 $
-** $DateTime: 2016/01/18 12:36:08 $$Author: bbarber $
+** Copyright (c) 2009-2020 C.B. Barber. All rights reserved.
+** $Id: //main/2019/qhull/src/qhulltest/QhullHyperplane_test.cpp#4 $$Change: 3001 $
+** $DateTime: 2020/07/24 20:43:28 $$Author: bbarber $
 **
 ****************************************************************************/
 
@@ -45,7 +45,9 @@ private slots:
     void t_operator();
     void t_iterator();
     void t_const_iterator();
+    void t_foreach();
     void t_qhullHyperplane_iterator();
+    void t_java_iterator();
     void t_io();
 };//QhullHyperplane_test
 
@@ -367,11 +369,44 @@ t_const_iterator()
 }//t_const_iterator
 
 void QhullHyperplane_test::
+t_foreach()
+{
+    RboxPoints rcube("c");
+    Qhull q(rcube, "QR0");  // rotated unit cube
+    QhullHyperplane h= q.firstFacet().hyperplane();
+    coordT c2= (h.coordinates())[1];
+    
+    bool isC2= false;
+    int count= 0;
+    foreach(coordT c, q.firstFacet().hyperplane()){
+        ++count;
+        if(c==c2){
+            isC2= true;
+            QCOMPARE(count, 2);
+        }
+    }
+    QVERIFY(isC2);
+    QCOMPARE(count, q.dimension());
+    
+    isC2= false;
+    count= 0;
+    for(coordT c : q.firstFacet().hyperplane()){
+        ++count;
+        if(c==c2){
+            isC2= true;
+            QCOMPARE(count, 2);
+        }
+    }
+    QVERIFY(isC2);
+    QCOMPARE(count, q.dimension());
+}//t_foreach
+
+void QhullHyperplane_test::
 t_qhullHyperplane_iterator()
 {
     RboxPoints rcube("c");
     Qhull q(rcube,"QR0");  // rotated unit cube
-    QhullHyperplane h = q.firstFacet().hyperplane();
+    QhullHyperplane h= q.firstFacet().hyperplane();
     QhullHyperplaneIterator i2(h);
     QCOMPARE(h.dimension(), 3);
     QhullHyperplaneIterator i= h;
@@ -403,6 +438,29 @@ t_qhullHyperplane_iterator()
     i.toFront();
     QCOMPARE(i.next(), h[0]);
 }//t_qhullHyperplane_iterator
+
+void QhullHyperplane_test::
+t_java_iterator()
+{
+    RboxPoints rcube("c");
+    Qhull q(rcube, "QR0");  // rotated unit cube
+    QhullHyperplane h= q.firstFacet().hyperplane();
+    coordT c2= (h.coordinates())[1];
+    
+    bool isC2= false;
+    int count= 0;
+    QhullHyperplaneIterator i(q.firstFacet().hyperplane());
+    while(i.hasNext()){
+        coordT c= i.next();
+        ++count;
+        if(c==c2){
+            isC2= true;
+            QCOMPARE(count, 2);
+        }
+    }
+    QVERIFY(isC2);
+    QCOMPARE(count, q.dimension());
+}//t_java_iterator
 
 void QhullHyperplane_test::
 t_io()

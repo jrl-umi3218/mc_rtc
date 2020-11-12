@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** Copyright (c) 2009-2015 C.B. Barber. All rights reserved.
-** $Id: //main/2015/qhull/src/qhulltest/QhullSet_test.cpp#3 $$Change: 2062 $
-** $DateTime: 2016/01/17 13:13:18 $$Author: bbarber $
+** Copyright (c) 2009-2020 C.B. Barber. All rights reserved.
+** $Id: //main/2019/qhull/src/qhulltest/QhullSet_test.cpp#5 $$Change: 3009 $
+** $DateTime: 2020/07/30 19:25:22 $$Author: bbarber $
 **
 ****************************************************************************/
 
@@ -36,6 +36,7 @@ private slots:
     void t_iterator();
     void t_const_iterator();
     void t_qhullset_iterator();
+    void t_java_iterator();
     void t_io();
 };//QhullSet_test
 
@@ -62,8 +63,8 @@ t_qhullsetbase()
     {
         Qhull q(rcube,"QR0");  // triangulation of rotated unit cube
         // Fake an empty set.  Default constructor not defined.  No memory allocation.
-        QhullFacet f4 = q.beginFacet();
-        QhullFacetSet fs = f4.neighborFacets();
+        QhullFacet f4= q.beginFacet();
+        QhullFacetSet fs= f4.neighborFacets();
         fs.defineAs(q.qh()->other_points); // Force an empty set
         QVERIFY(fs.isEmpty());
         QCOMPARE(fs.count(), 0);
@@ -71,7 +72,7 @@ t_qhullsetbase()
         QCOMPARE(fs.begin(), fs.end()); // beginPointer(), endPointer()
         QVERIFY(QhullSetBase::isEmpty(fs.getSetT()));
 
-        QhullRidgeSet rs = f4.ridges();
+        QhullRidgeSet rs= f4.ridges();
         QVERIFY(!rs.isEmpty());
         QCOMPARE(rs.count(), 4);
         QCOMPARE(rs.size(), 4u);
@@ -82,8 +83,8 @@ t_qhullsetbase()
         QCOMPARE(rs2, rs);
 
         QCOMPARE(q.facetCount(), 6);
-        QhullFacet f = q.beginFacet();
-        QhullFacetSet fs2 = f.neighborFacets();
+        QhullFacet f= q.beginFacet();
+        QhullFacetSet fs2= f.neighborFacets();
         QCOMPARE(fs2.count(), 4);
         QCOMPARE(fs2.size(), 4u);
         QVERIFY(!fs2.isEmpty());
@@ -125,8 +126,8 @@ t_convert()
 
         Qhull q2(rcube,"Qt QR0");  // triangulation of rotated unit cube
         QCOMPARE(q2.facetCount(), 12);
-        QhullFacet f2 = q2.beginFacet();
-        QhullFacetSet fs = f2.neighborFacets();
+        QhullFacet f2= q2.beginFacet();
+        QhullFacetSet fs= f2.neighborFacets();
         QCOMPARE(fs.size(), 3U);
         std::vector<QhullFacet> vs= fs.toStdVector();
         QCOMPARE(vs.size(), fs.size());
@@ -149,15 +150,15 @@ t_element()
 {
     RboxPoints rcube("c");
     Qhull q(rcube,"QR0");  // rotated unit cube
-    QhullFacet f = q.beginFacet();
-    QhullFacetSet fs = f.neighborFacets();
+    QhullFacet f= q.beginFacet();
+    QhullFacetSet fs= f.neighborFacets();
 
     QCOMPARE(fs.at(1), fs[1]);
     QCOMPARE(fs.first(), fs[0]);
     QCOMPARE(fs.front(), fs.first());
     QCOMPARE(fs.last(), fs.at(3));
     QCOMPARE(fs.back(), fs.last());
-    facetT **d = fs.data();
+    facetT **d= fs.data();
     facetT * const *d2= fs.data();
     facetT * const *d3= fs.constData();
     QVERIFY(d==d2);
@@ -187,8 +188,8 @@ t_search()
 {
     RboxPoints rcube("c");
     Qhull q(rcube,"QR0");  // rotated unit cube
-    QhullFacet f = q.beginFacet();
-    QhullFacetSet fs = f.neighborFacets();
+    QhullFacet f= q.beginFacet();
+    QhullFacetSet fs= f.neighborFacets();
     QhullFacet f2= *fs.begin();
     QhullFacet f3= fs.last();
     QVERIFY(fs.contains(f2));
@@ -215,8 +216,8 @@ t_iterator()
     RboxPoints rcube("c");
     {
         Qhull q(rcube,"QR0");  // rotated unit cube
-        QhullFacet f = q.beginFacet();
-        QhullFacetSet fs = f.neighborFacets();
+        QhullFacet f= q.beginFacet();
+        QhullFacetSet fs= f.neighborFacets();
         QhullFacetSet::Iterator i= fs.begin();
         QhullFacetSet::iterator i2= fs.begin();
         QVERIFY(i==i2);
@@ -295,8 +296,8 @@ t_const_iterator()
     RboxPoints rcube("c");
     {
         Qhull q(rcube,"QR0");  // rotated unit cube
-        QhullFacet f = q.beginFacet();
-        QhullFacetSet fs = f.neighborFacets();
+        QhullFacet f= q.beginFacet();
+        QhullFacetSet fs= f.neighborFacets();
         QhullFacetSet::ConstIterator i= fs.begin();
         QhullFacetSet::const_iterator i2= fs.begin();
         QVERIFY(i==i2);
@@ -354,8 +355,8 @@ t_qhullset_iterator()
     RboxPoints rcube("c");
     Qhull q(rcube,"QR0");  // rotated unit cube
     // Fake an empty set.  Default constructor not defined.  No memory allocation.
-    QhullFacet f = q.beginFacet();
-    QhullFacetSet fs = f.neighborFacets();
+    QhullFacet f= q.beginFacet();
+    QhullFacetSet fs= f.neighborFacets();
     fs.defineAs(q.qh()->other_points);
     QhullFacetSetIterator i(fs);
     QCOMPARE(fs.count(), 0);
@@ -365,8 +366,8 @@ t_qhullset_iterator()
     QVERIFY(!i.hasNext());
     QVERIFY(!i.hasPrevious());
 
-    QhullFacet f2 = q.beginFacet();
-    QhullFacetSet fs2 = f2.neighborFacets();
+    QhullFacet f2= q.beginFacet();
+    QhullFacetSet fs2= f2.neighborFacets();
     QhullFacetSetIterator i2(fs2);
     QCOMPARE(fs2.count(), 4);
     i= fs2;
@@ -382,7 +383,7 @@ t_qhullset_iterator()
     QVERIFY(!i.hasPrevious());
 
     // i at front, i2 at end/back, 4 neighbors
-    QhullFacetSet fs3 = f2.neighborFacets(); // same as fs2
+    QhullFacetSet fs3= f2.neighborFacets(); // same as fs2
     QhullFacet f3(fs2[0]);
     QhullFacet f4= fs3[0];
     QCOMPARE(f3, f4);
@@ -408,6 +409,48 @@ t_qhullset_iterator()
     i.toFront();
     QCOMPARE(i.next(), f4);
 }//t_qhullset_iterator
+
+void QhullSet_test::
+t_java_iterator()
+{
+    RboxPoints rcube("c");
+    Qhull q(rcube, "QR0");  // rotated unit cube
+    QhullVertexSet vs= q.firstFacet().vertices();
+    QhullVertex v2= vs.at(1);
+
+    bool isV2= false;
+    int count= 0;
+    QhullVertexSetIterator i(q.firstFacet().vertices());
+    while(i.hasNext()){
+        QhullVertex v= i.next();
+        QCOMPARE(i.peekPrevious(), v);
+        ++count;
+        if(v==v2){
+            isV2= true;
+            QCOMPARE(count, 2);
+        }
+    }
+    QVERIFY(isV2);
+    QCOMPARE(count, vs.count());
+
+    QhullRidgeSet rs= q.firstFacet().ridges();
+    QhullRidge r2= rs.at(1);
+
+    bool isR2= false;
+    count= 0;
+    QhullRidgeSetIterator ir(q.firstFacet().ridges());
+    while(ir.hasNext()){
+        QhullRidge r= ir.next();
+        QCOMPARE(ir.peekPrevious(), r);
+        ++count;
+        if(r==r2){
+            isR2= true;
+            QCOMPARE(count, 2);
+        }
+    }
+    QVERIFY(isR2);
+    QCOMPARE(count, rs.count());
+}//t_java_iterator
 
 void QhullSet_test::
 t_io()

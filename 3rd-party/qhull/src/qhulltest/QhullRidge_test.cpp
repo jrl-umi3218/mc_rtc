@@ -1,8 +1,8 @@
 /****************************************************************************
 **
-** Copyright (c) 2008-2015 C.B. Barber. All rights reserved.
-** $Id: //main/2015/qhull/src/qhulltest/QhullRidge_test.cpp#3 $$Change: 2062 $
-** $DateTime: 2016/01/17 13:13:18 $$Author: bbarber $
+** Copyright (c) 2008-2020 C.B. Barber. All rights reserved.
+** $Id: //main/2019/qhull/src/qhulltest/QhullRidge_test.cpp#4 $$Change: 3001 $
+** $DateTime: 2020/07/24 20:43:28 $$Author: bbarber $
 **
 ****************************************************************************/
 
@@ -34,6 +34,7 @@ private slots:
     void t_construct();
     void t_getSet();
     void t_foreach();
+    void t_java_iterator();
     void t_io();
 };//QhullRidge_test
 
@@ -90,6 +91,9 @@ t_getSet()
         while(i.hasNext()){
             const QhullRidge r= i.next();
             cout << r.id() << endl;
+            QhullRidge r2;
+            r2.setRidgeT(r.qh(), r.getRidgeT());
+            QCOMPARE(r, r2);
             QVERIFY(r.bottomFacet()!=r.topFacet());
             QCOMPARE(r.dimension(), 2); // Ridge one-dimension less than facet
             QVERIFY(r.id()>=0 && r.id()<9*27);
@@ -109,10 +113,10 @@ t_foreach()
     {
         Qhull q(rcube, "QR0"); // rotated cube
         QhullFacet f(q.firstFacet());
-        foreach (const QhullRidge &r, f.ridges()){  // Qt only
+        foreach(const QhullRidge &r, f.ridges()){  // Qt only
             QhullVertexSet vs= r.vertices();
             QCOMPARE(vs.count(), 2);
-            foreach (const QhullVertex &v, vs){  // Qt only
+            foreach(const QhullVertex &v, vs){  // Qt only
                 QVERIFY(f.vertices().contains(v));
             }
         }
@@ -133,8 +137,60 @@ t_foreach()
         }
         QCOMPARE(vs.count(), rs.count());
         QCOMPARE(count, rs.count());
+
+        r2= rs.at(1);
+        bool isR2= false;
+        count= 0;
+        foreach(const QhullRidge &r, f.ridges()) {  // Qt only
+            ++count;
+            if(r==r2){
+                isR2= true;
+                QCOMPARE(count, 2);
+            }
+        }
+        QVERIFY(isR2);
+        QCOMPARE(count, rs.count());
+
+        isR2= false;
+        count= 0;
+        for(const QhullRidge &r : f.ridges()) {
+            ++count;
+            if(r==r2){
+                isR2= true;
+                QCOMPARE(count, 2);
+            }
+        }
+        QVERIFY(isR2);
+        QCOMPARE(count, rs.count());
     }
 }//t_foreach
+
+void QhullRidge_test::
+t_java_iterator()
+{
+    RboxPoints rcube("c");  // cube
+    {
+        Qhull q(rcube, "QR0"); // rotated cube
+        QhullFacet f(q.firstFacet());
+        QhullRidgeSet rs= f.ridges();
+        QhullRidge r2= rs.at(1);
+
+        bool isR2= false;
+        int count= 0;
+        QhullRidgeSetIterator i(f.ridges());
+        while(i.hasNext()){
+            QhullRidge r= i.next();
+            QCOMPARE(i.peekPrevious(), r);
+            ++count;
+            if(r==r2){
+                isR2= true;
+                QCOMPARE(count, 2);
+            }
+        }
+        QVERIFY(isR2);
+        QCOMPARE(count, rs.count());
+    }
+}//t_java_iterator
 
 void QhullRidge_test::
 t_io()
