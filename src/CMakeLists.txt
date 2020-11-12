@@ -259,7 +259,6 @@ target_link_libraries(mc_rtc_gui PUBLIC mc_rbdyn)
 install_mc_rtc_lib(mc_rtc_gui)
 
 add_subdirectory(mc_robots)
-add_subdirectory(mc_observers)
 
 set(mc_solver_SRC
 mc_solver/BoundedSpeedConstr.cpp
@@ -453,6 +452,8 @@ target_include_directories(mc_observers PUBLIC $<BUILD_INTERFACE:${CMAKE_SOURCE_
 set_target_properties(mc_observers PROPERTIES COMPILE_FLAGS "-DMC_OBSERVERS_EXPORTS")
 target_link_libraries(mc_observers PUBLIC mc_filter mc_rbdyn mc_rtc_gui)
 install_mc_rtc_lib(mc_observers)
+
+add_subdirectory(mc_observers)
 
 set(mc_control_SRC
 mc_control/CompletionCriteria.cpp
