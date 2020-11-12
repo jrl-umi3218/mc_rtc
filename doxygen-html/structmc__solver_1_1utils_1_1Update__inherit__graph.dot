@@ -1,0 +1,30 @@
+digraph "mc_solver::utils::Update&lt; UpdateNrVars &gt;"
+{
+ // INTERACTIVE_SVG=YES
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="mc_solver::utils::Update\l\< UpdateNrVars \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="UpdateNrVars",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node2 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="mc_solver::utils::UpdateTag",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1utils_1_1UpdateTag.html"];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Constraint\< tasks::\lqp::Equality, utils\l::UpdateRobot \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1utils_1_1Constraint.html"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="mc_solver::utils::Equality\lConstraint\< utils::UpdateRobot \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1utils_1_1EqualityConstraint.html"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="mc_solver::EqualityConstraint\lRobot",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1EqualityConstraintRobot.html"];
+  Node0 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="Constraint\< tasks::\lqp::GenInequality, utils\l::UpdateRobot \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1utils_1_1Constraint.html"];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="mc_solver::utils::GenInequality\lConstraint\< utils::UpdateRobot \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1utils_1_1GenInequalityConstraint.html"];
+  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="mc_solver::GenInequality\lConstraintRobot",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1GenInequalityConstraintRobot.html"];
+  Node0 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="Constraint\< tasks::\lqp::Inequality, utils\l::UpdateRobot \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1utils_1_1Constraint.html"];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="mc_solver::utils::Inequality\lConstraint\< utils::UpdateRobot \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1utils_1_1InequalityConstraint.html"];
+  Node10 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="mc_solver::InequalityConstraint\lRobot",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__solver_1_1InequalityConstraintRobot.html"];
+}

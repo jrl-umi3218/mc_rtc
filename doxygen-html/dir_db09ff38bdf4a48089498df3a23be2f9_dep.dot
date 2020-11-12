@@ -1,0 +1,11 @@
+digraph "include/mc_rtc/gui/plot" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_dda95c61bc807ada3674ae2fc67687f0 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="gui" fontname="Helvetica", fontsize="10", URL="dir_dda95c61bc807ada3674ae2fc67687f0.html"]
+  dir_db09ff38bdf4a48089498df3a23be2f9 [shape=box, label="plot", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_db09ff38bdf4a48089498df3a23be2f9.html"];
+  }
+  dir_f60bbde16662fb0dce970d667851b692 [shape=box label="details" URL="dir_f60bbde16662fb0dce970d667851b692.html"];
+  dir_db09ff38bdf4a48089498df3a23be2f9->dir_f60bbde16662fb0dce970d667851b692 [headlabel="5", labeldistance=1.5 headhref="dir_000019_000018.html"];
+}

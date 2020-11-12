@@ -1,0 +1,15 @@
+digraph "plugins/ROS" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_38c8d24aef3972a7f87b834274e76e31 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="plugins" fontname="Helvetica", fontsize="10", URL="dir_38c8d24aef3972a7f87b834274e76e31.html"]
+  subgraph clusterdir_34d8e42b5ac6f6cb6d4e988599be737f {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_34d8e42b5ac6f6cb6d4e988599be737f.html"];
+    dir_34d8e42b5ac6f6cb6d4e988599be737f [shape=plaintext label="ROS"];
+    dir_0884a74720358c6ca75630db8a4fc3d2 [shape=box label="include" color="red" fillcolor="white" style="filled" URL="dir_0884a74720358c6ca75630db8a4fc3d2.html"];
+  }
+  }
+  dir_d44c64559bbebec7f509842c48db8b23 [shape=box label="include" fillcolor="white" style="filled" color="red" URL="dir_d44c64559bbebec7f509842c48db8b23.html"];
+  dir_0884a74720358c6ca75630db8a4fc3d2->dir_d44c64559bbebec7f509842c48db8b23 [headlabel="1", labeldistance=1.5 headhref="dir_000024_000000.html"];
+}

@@ -1,7 +1,7 @@
 var NAVTREE =
 [
   [ "mc_rtc", "index.html", [
-    [ "Deprecated List", "a00758.html", null ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
@@ -41,23 +41,23 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-".html",
-"a00302.html#ac7c7c596bdb09e8c01e26e8fb53ce360",
-"a01376.html#a0f4d3238fdc79a6dabd460ce6fbdb217",
-"a01444.html#a1a84decc60058d334a817cdd14704acc",
-"a01484.html#ade9a721cc73a024b045e4f439a6f2cad",
-"a01552.html#a53e962c7b77f5162ffbd2f573156a239",
-"a01624.html#abf31b34d57b3746dd96a745d67b5dbde",
-"a01696.html#ab011a5322c37711cf940653e7b814b50",
-"a01744.html#a6a83f90ee05eb45299d239c701a40f99",
-"a01872.html#a208ba439700a31e9ff94abc76a466472",
-"a02028.html#a53e7fd555139aa959ce1b1888cdea868",
-"a02156.html#a92e09fbed9161cea08676d368e27d0fa",
-"a02292.html#ae56a8607e4c339c9a345155ec613032d",
-"a02384.html#a0878448d283b4e2aa4a0dae3aff044cf",
-"a02432.html#a7bf4110ad02234504fb7e89ff8c9301b",
-"a03370.html#a93d9bb1f3f36bbffb00cf015b0bb0e37",
-"functions_vars_j.html"
+"AbscissaOrdinate_8h.html",
+"Pendulum_8h.html",
+"elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a93bead7e77b18cbfc7d0c892eb65a69f",
+"mc__observers_2api_8h.html#a5ec028a59707a198d06a6b92110d7ee1",
+"structmc__control_1_1ControllerClient.html",
+"structmc__control_1_1MCGlobalController.html#a81d56d40787c8ecff59283a9c85109ca",
+"structmc__control_1_1fsm_1_1PostureState.html#afbc73c24d06a1ef95a85235200d8261b",
+"structmc__observers_1_1KinematicInertialObserver.html#add735e8b844fc3b8f45c91e759dfb784",
+"structmc__rbdyn_1_1ForceSensor.html#a4484970b0298b13fcc9a18b9c93f6f55",
+"structmc__rbdyn_1_1RobotModule.html#a57b63a2f82b40741398b3a167b43592c",
+"structmc__rtc_1_1Configuration.html#a4bd14911f7201bfc8d7ae644ceed153f",
+"structmc__rtc_1_1gui_1_1ArrowConfig.html#a863ad38d78a492d921944bd9093a8f83",
+"structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#a48bd152b874c8b3afbda87b671f0a7f4",
+"structmc__solver_1_1QPSolver.html#a68cf69e4985228c83affeb35320c4c25",
+"structmc__tasks_1_1MetaTask.html#a753237535cc3e200e44ae0fa276f733e",
+"structmc__tasks_1_1VectorOrientationTask.html#ae2ea06fdeee5903edcbfb8da2bd55af4",
+"structmc__trajectory_1_1BSpline.html#ae72e0f0db1744ff5a1e7ea8c8a832d5a"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

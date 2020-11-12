@@ -1,0 +1,9 @@
+digraph "include/mc_rtc/log" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_379a22462e4fb075f5428ea3ff528930 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="mc_rtc" fontname="Helvetica", fontsize="10", URL="dir_379a22462e4fb075f5428ea3ff528930.html"]
+  dir_b6742d8caace21cd527a100fbd03062c [shape=box, label="log", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_b6742d8caace21cd527a100fbd03062c.html"];
+  }
+}

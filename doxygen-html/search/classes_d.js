@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['numberinputimpl',['NumberInputImpl',['../a01932.html',1,'mc_rtc::gui']]],
-  ['numbersliderimpl',['NumberSliderImpl',['../a01936.html',1,'mc_rtc::gui']]]
+  ['numberinputimpl',['NumberInputImpl',['../structmc__rtc_1_1gui_1_1NumberInputImpl.html',1,'mc_rtc::gui']]],
+  ['numbersliderimpl',['NumberSliderImpl',['../structmc__rtc_1_1gui_1_1NumberSliderImpl.html',1,'mc_rtc::gui']]]
 ];

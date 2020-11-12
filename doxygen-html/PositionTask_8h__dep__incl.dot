@@ -1,0 +1,17 @@
+digraph "include/mc_tasks/PositionTask.h"
+{
+ // INTERACTIVE_SVG=YES
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node90 [label="include/mc_tasks/Position\lTask.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node90 -> Node91 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node91 [label="include/mc_tasks/EndEffector\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$EndEffectorTask_8h.html"];
+  Node91 -> Node92 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 [label="include/mc_control\l/fsm/Controller.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Controller_8h.html"];
+  Node91 -> Node93 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 [label="include/mc_tasks/Relative\lEndEffectorTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RelativeEndEffectorTask_8h.html"];
+  Node93 -> Node94 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node94 [label="include/mc_control\l/fsm/states/SlidingFootContact.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$SlidingFootContact_8h.html"];
+  Node91 -> Node95 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node95 [label="include/mc_tasks/Compliance\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ComplianceTask_8h.html"];
+}
