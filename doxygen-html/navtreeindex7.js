@@ -1,5 +1,11 @@
 var NAVTREEINDEX7 =
 {
+"structmc__observers_1_1KinematicInertialObserver.html#a218d679b8851235ad18b2a49b2c71e01":[3,0,4,2,6],
+"structmc__observers_1_1KinematicInertialObserver.html#a230a352457d5b0b03d57ead4b7f1a292":[3,0,4,2,1],
+"structmc__observers_1_1KinematicInertialObserver.html#a2c4b4fe83ab2ad282f02ad6c093e1be6":[3,0,4,2,7],
+"structmc__observers_1_1KinematicInertialObserver.html#a2c973c62cabf96b73042047669579a64":[3,0,4,2,9],
+"structmc__observers_1_1KinematicInertialObserver.html#a50c580f031d943ac2d1eb4e7ca0eb43e":[3,0,4,2,8],
+"structmc__observers_1_1KinematicInertialObserver.html#a8f0200900e2e6bc3bd393ef639811e70":[3,0,4,2,3],
 "structmc__observers_1_1KinematicInertialObserver.html#add735e8b844fc3b8f45c91e759dfb784":[3,0,4,2,5],
 "structmc__observers_1_1KinematicInertialObserver.html#ae9def8bb43e873f01d07d2bd8b95eab7":[3,0,4,2,4],
 "structmc__observers_1_1KinematicInertialObserver.html#af656fb5e6ef17df0623c3efdf418445a":[3,0,4,2,0],
@@ -243,11 +249,5 @@ var NAVTREEINDEX7 =
 "structmc__rbdyn_1_1Flexibility.html#a6937033e6a1e29165b7a1f9b2005232a":[3,0,6,10,0],
 "structmc__rbdyn_1_1Flexibility.html#aae8d1a8eaa685b5efc3eb22b95fbb892":[3,0,6,10,1],
 "structmc__rbdyn_1_1Flexibility.html#ad9fa8b3ad657cbfd784a906f80e2a493":[3,0,6,10,2],
-"structmc__rbdyn_1_1Flexibility.html#aea9ed4cd59fb673fdac0d4f252d90987":[3,0,6,10,3],
-"structmc__rbdyn_1_1ForceSensor.html":[3,0,6,11],
-"structmc__rbdyn_1_1ForceSensor.html#a0d51317c69787f6c822a77e0c2a9c2b6":[3,0,6,11,8],
-"structmc__rbdyn_1_1ForceSensor.html#a0d803a62cce404fbb74677f26a104fee":[3,0,6,11,15],
-"structmc__rbdyn_1_1ForceSensor.html#a1ddf8c264c9370c5777df87328243f4b":[3,0,6,11,2],
-"structmc__rbdyn_1_1ForceSensor.html#a349ba9b2264e0fa126265d2eba36fcb7":[3,0,6,11,12],
-"structmc__rbdyn_1_1ForceSensor.html#a37735354c6d4aaaa666024dd5e86e667":[3,0,6,11,3]
+"structmc__rbdyn_1_1Flexibility.html#aea9ed4cd59fb673fdac0d4f252d90987":[3,0,6,10,3]
 };

@@ -43,21 +43,21 @@ var NAVTREEINDEX =
 [
 "AbscissaOrdinate_8h.html",
 "Pendulum_8h.html",
-"elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a93bead7e77b18cbfc7d0c892eb65a69f",
-"mc__observers_2api_8h.html#a5ec028a59707a198d06a6b92110d7ee1",
-"structmc__control_1_1ControllerClient.html",
-"structmc__control_1_1MCGlobalController.html#a81d56d40787c8ecff59283a9c85109ca",
-"structmc__control_1_1fsm_1_1PostureState.html#afbc73c24d06a1ef95a85235200d8261b",
-"structmc__observers_1_1KinematicInertialObserver.html#add735e8b844fc3b8f45c91e759dfb784",
-"structmc__rbdyn_1_1ForceSensor.html#a4484970b0298b13fcc9a18b9c93f6f55",
-"structmc__rbdyn_1_1RobotModule.html#a57b63a2f82b40741398b3a167b43592c",
-"structmc__rtc_1_1Configuration.html#a4bd14911f7201bfc8d7ae644ceed153f",
-"structmc__rtc_1_1gui_1_1ArrowConfig.html#a863ad38d78a492d921944bd9093a8f83",
-"structmc__rtc_1_1gui_1_1plot_1_1PolygonDescription.html#a48bd152b874c8b3afbda87b671f0a7f4",
-"structmc__solver_1_1QPSolver.html#a68cf69e4985228c83affeb35320c4c25",
-"structmc__tasks_1_1MetaTask.html#a753237535cc3e200e44ae0fa276f733e",
-"structmc__tasks_1_1VectorOrientationTask.html#ae2ea06fdeee5903edcbfb8da2bd55af4",
-"structmc__trajectory_1_1BSpline.html#ae72e0f0db1744ff5a1e7ea8c8a832d5a"
+"elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386",
+"mc__observers_2api_8h.html#a584f0147ac169a854c258384854bd841",
+"structmc__control_1_1CompletionCriteria.html",
+"structmc__control_1_1MCGlobalController.html#a70557a753d071e2eb956e4336a6b79f3",
+"structmc__control_1_1fsm_1_1PostureState.html#a83609f4952920e5a7bc53086f86e05b0",
+"structmc__observers_1_1KinematicInertialObserver.html#a218d679b8851235ad18b2a49b2c71e01",
+"structmc__rbdyn_1_1ForceSensor.html",
+"structmc__rbdyn_1_1RobotModule.html#a33637f65346a81c078c9c04de9e4be0e",
+"structmc__rtc_1_1Configuration.html#a3c79c749a5aaec1610c8d6eb2f826c1e",
+"structmc__rtc_1_1gui_1_1ArrowConfig.html#a225bae119da5006ad51eba798e35585f",
+"structmc__rtc_1_1gui_1_1plot_1_1AxisConfiguration.html#a9e0fde8a6e63e1f3a21bbb9f946b9dcc",
+"structmc__solver_1_1QPSolver.html#a26f03d18cabc6bc384e4ca7a8e172637",
+"structmc__tasks_1_1MetaTask.html#a1f3a8dff16b572ac14d1ab4cf32a9e36",
+"structmc__tasks_1_1VectorOrientationTask.html#a077b7176cf69a042e7c31b7dd5a76490",
+"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#ad9eaefdf3407007a4c8f3dab5220d45c"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

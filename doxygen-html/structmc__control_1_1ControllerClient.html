@@ -109,6 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acfbf74c5219464896a5645a8a9c71418"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd6834ef752be33759988b9b204fccc7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#abd6834ef752be33759988b9b204fccc7">timeout</a> ()</td></tr>
 <tr class="separator:abd6834ef752be33759988b9b204fccc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8079e120ef304ca447b0f36c42598364"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#a8079e120ef304ca447b0f36c42598364">run</a> (std::vector&lt; char &gt; &amp;buffer, std::chrono::system_clock::time_point &amp;t_last_received)</td></tr>
+<tr class="separator:a8079e120ef304ca447b0f36c42598364"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -180,6 +182,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a2459a51b8ba13c7aec975061a9a3a8cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af45508fdb55f9b0fb191121c36b10a7d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#af45508fdb55f9b0fb191121c36b10a7d">table_end</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;)</td></tr>
 <tr class="separator:af45508fdb55f9b0fb191121c36b10a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3efbe9ac079a07e540872820bf951f9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#ae3efbe9ac079a07e540872820bf951f9">robot</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id, const std::vector&lt; std::string &gt; &amp;, const std::vector&lt; std::vector&lt; double &gt;&gt; &amp;, const sva::PTransformd &amp;)</td></tr>
+<tr class="separator:ae3efbe9ac079a07e540872820bf951f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad39ed0c2af0c45bc2a1f7f931e0ed360"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#ad39ed0c2af0c45bc2a1f7f931e0ed360">schema</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id, const std::string &amp;)</td></tr>
 <tr class="separator:ad39ed0c2af0c45bc2a1f7f931e0ed360"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58439f0f063f69e3fce020002e56e93c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#a58439f0f063f69e3fce020002e56e93c">form</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id)</td></tr>
@@ -1920,6 +1924,54 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ae3efbe9ac079a07e540872820bf951f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3efbe9ac079a07e540872820bf951f9">&#9670;&nbsp;</a></span>robot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mc_control::ControllerClient::robot </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::vector&lt; double &gt;&gt; &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const sva::PTransformd &amp;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a323427c958144adfc5a1593775566f36"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a323427c958144adfc5a1593775566f36">&#9670;&nbsp;</a></span>rotation()</h2>
 
@@ -1968,6 +2020,43 @@ Protected Attributes</h2></td></tr>
 <p>Should display a rotation in 3D environment</p>
 <p><code>requestId</code> should be in requests instead of <code>id</code> </p>
 <p>bool <code>ro</code> indicates whether this point is interactive or not </p>
+
+</div>
+</div>
+<a id="a8079e120ef304ca447b0f36c42598364"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8079e120ef304ca447b0f36c42598364">&#9670;&nbsp;</a></span>run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_control::ControllerClient::run </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; char &gt; &amp;&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::chrono::system_clock::time_point &amp;&#160;</td>
+          <td class="paramname"><em>t_last_received</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check if there is an available message from the server and process it</p>
+<p>This is the synchronous pendant to <a class="el" href="structmc__control_1_1ControllerClient.html#a813107a59769a9f711468e4e9111a0ed">start()</a></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Buffer to receive data from the server, if it is too small, the buffer is resized and the message is discarded</td></tr>
+    <tr><td class="paramname">t_last_received</td><td>Time when the last message was received, it is updated if the client receives a message. If a message has not been received since <a class="el" href="structmc__control_1_1ControllerClient.html#abd6834ef752be33759988b9b204fccc7">timeout()</a> then act as if we received an empty message (server offline). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

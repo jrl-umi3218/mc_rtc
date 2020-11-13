@@ -1,5 +1,14 @@
 var NAVTREEINDEX13 =
 {
+"structmc__solver_1_1QPSolver.html#a26f03d18cabc6bc384e4ca7a8e172637":[3,0,8,25,15],
+"structmc__solver_1_1QPSolver.html#a28e05133ff619c24f30a376e951fde51":[3,0,8,25,26],
+"structmc__solver_1_1QPSolver.html#a2d48a1aa9f88ea1c6873000df4299a1d":[3,0,8,25,24],
+"structmc__solver_1_1QPSolver.html#a37580a89d1a0d1a862dfb6b7240e6dd0":[3,0,8,25,4],
+"structmc__solver_1_1QPSolver.html#a4f91d1d6ce556366149d3d947182e5f3":[3,0,8,25,2],
+"structmc__solver_1_1QPSolver.html#a50b2ba3514b0bd8fa4e4775f6a74fc73":[3,0,8,25,32],
+"structmc__solver_1_1QPSolver.html#a53c4d41439ee0e428928a7318fde3f07":[3,0,8,25,39],
+"structmc__solver_1_1QPSolver.html#a58d895e4be36ff13a42b481f28576e38":[3,0,8,25,40],
+"structmc__solver_1_1QPSolver.html#a59755b6d2a453830d66a662767ff3923":[3,0,8,25,25],
 "structmc__solver_1_1QPSolver.html#a68cf69e4985228c83affeb35320c4c25":[3,0,8,25,6],
 "structmc__solver_1_1QPSolver.html#a6ac47f4b98ba6a10a14e6f229b677a0a":[3,0,8,25,28],
 "structmc__solver_1_1QPSolver.html#a6c9e02613427dd8ab79f833d4244186d":[3,0,8,25,21],
@@ -240,14 +249,5 @@ var NAVTREEINDEX13 =
 "structmc__tasks_1_1LookAtTask.html#acdb7b5c10685b0a725af082547b473c9":[3,0,9,10,4],
 "structmc__tasks_1_1MetaTask.html":[3,0,9,12],
 "structmc__tasks_1_1MetaTask.html#a19bd5d3b7b1b36dae48b516457de16a8":[3,0,9,12,2],
-"structmc__tasks_1_1MetaTask.html#a1db4ea4e03d00823e7ee10b444a697b1":[3,0,9,12,12],
-"structmc__tasks_1_1MetaTask.html#a1f3a8dff16b572ac14d1ab4cf32a9e36":[3,0,9,12,22],
-"structmc__tasks_1_1MetaTask.html#a21e9870f7434084d52299f18f8f86da7":[3,0,9,12,20],
-"structmc__tasks_1_1MetaTask.html#a27dbee0df32ae7f803184cb6222fc427":[3,0,9,12,8],
-"structmc__tasks_1_1MetaTask.html#a2f04c2bc3c4806a13bd383826127f7e1":[3,0,9,12,18],
-"structmc__tasks_1_1MetaTask.html#a2fd93334634a24c2955f83cbf71926c1":[3,0,9,12,16],
-"structmc__tasks_1_1MetaTask.html#a44d85f3f65abc8a5f8965efec40ebe7d":[3,0,9,12,11],
-"structmc__tasks_1_1MetaTask.html#a6be5d66b0aba0cac4f65093d5d3b7c7f":[3,0,9,12,1],
-"structmc__tasks_1_1MetaTask.html#a6e55f0bff9a3d49ba0b92e0a4dff9a6f":[3,0,9,12,23],
-"structmc__tasks_1_1MetaTask.html#a745e75d72133feaf9b7aef649485168f":[3,0,9,12,15]
+"structmc__tasks_1_1MetaTask.html#a1db4ea4e03d00823e7ee10b444a697b1":[3,0,9,12,12]
 };

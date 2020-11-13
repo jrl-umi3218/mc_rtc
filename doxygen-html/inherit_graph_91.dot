@@ -70,13 +70,15 @@ digraph "Graphical Class Hierarchy"
   Node8 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node32 [label="mc_rtc::gui::XYThetaROImpl\l\< GetT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1XYThetaROImpl.html"];
   Node0 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node33 [label="mc_rtc::gui::details\l::StaticTableImpl\< GetData \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1StaticTableImpl.html"];
+  Node33 [label="mc_rtc::gui::details\l::RobotImpl\< GetT \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html"];
   Node0 -> Node34 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node34 [label="mc_rtc::gui::details\l::TableImpl\< GetHeader,\l GetData \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1TableImpl.html"];
-  Node34 -> Node35 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node35 [label="mc_rtc::gui::details\l::FormattedTableImpl\l\< GetHeader, GetFormat,\l GetData \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1FormattedTableImpl.html"];
-  Node0 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node36 [label="mc_rtc::gui::ForceROImpl\l\< GetForce, GetSurface \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1ForceROImpl.html"];
-  Node36 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node37 [label="mc_rtc::gui::ForceImpl\l\< GetForce, GetSurface,\l SetForce \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1ForceImpl.html"];
+  Node34 [label="mc_rtc::gui::details\l::StaticTableImpl\< GetData \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1StaticTableImpl.html"];
+  Node0 -> Node35 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node35 [label="mc_rtc::gui::details\l::TableImpl\< GetHeader,\l GetData \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1TableImpl.html"];
+  Node35 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="mc_rtc::gui::details\l::FormattedTableImpl\l\< GetHeader, GetFormat,\l GetData \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1details_1_1FormattedTableImpl.html"];
+  Node0 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="mc_rtc::gui::ForceROImpl\l\< GetForce, GetSurface \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1ForceROImpl.html"];
+  Node37 -> Node38 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 [label="mc_rtc::gui::ForceImpl\l\< GetForce, GetSurface,\l SetForce \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1gui_1_1ForceImpl.html"];
 }

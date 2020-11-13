@@ -7,6 +7,7 @@ var searchData=
   ['returntype',['ReturnType',['../structmc__rtc_1_1gui_1_1details_1_1ReturnType.html',1,'mc_rtc::gui::details']]],
   ['robot',['Robot',['../structmc__rbdyn_1_1Robot.html',1,'mc_rbdyn']]],
   ['robotenvcollisionsconstraint',['RobotEnvCollisionsConstraint',['../structmc__solver_1_1RobotEnvCollisionsConstraint.html',1,'mc_solver']]],
+  ['robotimpl',['RobotImpl',['../structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html',1,'mc_rtc::gui::details']]],
   ['robotloader',['RobotLoader',['../structmc__rbdyn_1_1RobotLoader.html',1,'mc_rbdyn']]],
   ['robotmodule',['RobotModule',['../structmc__rbdyn_1_1RobotModule.html',1,'mc_rbdyn']]],
   ['robotmsg',['RobotMsg',['../structmc__solver_1_1RobotMsg.html',1,'mc_solver']]],

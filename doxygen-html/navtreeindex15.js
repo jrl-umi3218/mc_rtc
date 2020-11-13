@@ -1,5 +1,14 @@
 var NAVTREEINDEX15 =
 {
+"structmc__tasks_1_1VectorOrientationTask.html#a077b7176cf69a042e7c31b7dd5a76490":[3,0,9,25,8],
+"structmc__tasks_1_1VectorOrientationTask.html#a59e4464e07872bfd5e5cbe19cb6b2948":[3,0,9,25,12],
+"structmc__tasks_1_1VectorOrientationTask.html#a60f2e467ea49160a0037f8aa2470bdbc":[3,0,9,25,1],
+"structmc__tasks_1_1VectorOrientationTask.html#a8a2c67e86c6867c837129bb81834ccf4":[3,0,9,25,10],
+"structmc__tasks_1_1VectorOrientationTask.html#a92edeb5ec1b0291f9909f98e8522c37e":[3,0,9,25,7],
+"structmc__tasks_1_1VectorOrientationTask.html#a9531e6144e6dd8823951374d95397d27":[3,0,9,25,5],
+"structmc__tasks_1_1VectorOrientationTask.html#a9773f23cd1f91fa767b7c3ae49b6cb3d":[3,0,9,25,11],
+"structmc__tasks_1_1VectorOrientationTask.html#ac24b6093fa849811dd07a0ab2ace17c0":[3,0,9,25,0],
+"structmc__tasks_1_1VectorOrientationTask.html#ae066b3584e94bfca4abe3f93e2d826c4":[3,0,9,25,6],
 "structmc__tasks_1_1VectorOrientationTask.html#ae2ea06fdeee5903edcbfb8da2bd55af4":[3,0,9,25,4],
 "structmc__tasks_1_1VectorOrientationTask.html#aef3c3a8b836ba15e7bd062d841399ad4":[3,0,9,25,3],
 "structmc__tasks_1_1VectorOrientationTask.html#aff910f1c3ed3b698c50408dfb66eb7c0":[3,0,9,25,13],
@@ -240,14 +249,5 @@ var NAVTREEINDEX15 =
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#ab1b330e62ef0cb3d0d1b4db0a8e886fb":[3,0,9,1,0,0,11],
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#ab56fecf3381766d1faa3ebc2754a9de8":[3,0,9,1,0,0,0],
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#ac7880a19753e73389edd2b9ed0c120d8":[3,0,9,1,0,0,12],
-"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#aced5d5b44832c71dcdde1ebfe46f7c32":[3,0,9,1,0,0,17],
-"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#ad9eaefdf3407007a4c8f3dab5220d45c":[3,0,9,1,0,0,5],
-"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#adee46fe7d5c7596d13f2288c92a7a0c8":[3,0,9,1,0,0,18],
-"structmc__trajectory_1_1BSpline.html":[3,0,10,0],
-"structmc__trajectory_1_1BSpline.html#a206f674c4f9e666083f9aa96b27b7628":[3,0,10,0,3],
-"structmc__trajectory_1_1BSpline.html#a58fe236423f0abd51af3cdcb50017a47":[3,0,10,0,0],
-"structmc__trajectory_1_1BSpline.html#a905828c45debcac32ddbd35718a138a1":[3,0,10,0,2],
-"structmc__trajectory_1_1BSpline.html#ab70108d4c7af3ce67b487bcbe11cab5d":[3,0,10,0,6],
-"structmc__trajectory_1_1BSpline.html#ac34c7879cd2d0a941a6b303c366d16f4":[3,0,10,0,4],
-"structmc__trajectory_1_1BSpline.html#ada383daeac50ae7ac8b720c6096289f5":[3,0,10,0,1]
+"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#aced5d5b44832c71dcdde1ebfe46f7c32":[3,0,9,1,0,0,17]
 };

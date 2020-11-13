@@ -1695,6 +1695,26 @@
   </compound>
   <compound kind="file">
     <name>Robot.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
+    <filename>mc__rtc_2gui_2Robot_8h</filename>
+    <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
+    <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
+    <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
+    <includes id="mc__rbdyn_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rbdyn/Robot.h</includes>
+    <class kind="struct">mc_rtc::gui::details::RobotImpl</class>
+    <namespace>mc_rtc</namespace>
+    <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
+    <member kind="function">
+      <type>details::RobotImpl&lt; GetT &gt;</type>
+      <name>Robot</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a62100aa06fcd2571172fe1f3f2d1183a</anchor>
+      <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>Robot.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_solver/msg/</path>
     <filename>mc__solver_2msg_2Robot_8h</filename>
     <class kind="struct">mc_solver::RobotMsg</class>
@@ -2203,6 +2223,7 @@
     <includes id="NumberSlider_8h" name="NumberSlider.h" local="no" imported="no">mc_rtc/gui/NumberSlider.h</includes>
     <includes id="Point3D_8h" name="Point3D.h" local="no" imported="no">mc_rtc/gui/Point3D.h</includes>
     <includes id="Polygon_8h" name="Polygon.h" local="no" imported="no">mc_rtc/gui/Polygon.h</includes>
+    <includes id="mc__rtc_2gui_2Robot_8h" name="Robot.h" local="no" imported="no">mc_rtc/gui/Robot.h</includes>
     <includes id="Rotation_8h" name="Rotation.h" local="no" imported="no">mc_rtc/gui/Rotation.h</includes>
     <includes id="Schema_8h" name="Schema.h" local="no" imported="no">mc_rtc/gui/Schema.h</includes>
     <includes id="StringInput_8h" name="StringInput.h" local="no" imported="no">mc_rtc/gui/StringInput.h</includes>
@@ -2424,6 +2445,7 @@
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a0f4e1aaabd074689b7d3ead824d1ee8e">Arrow</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386">XYTheta</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a51c45b795d5d18a3e4e0c37e8b20a141">Table</enumvalue>
+      <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433">Robot</enumvalue>
     </member>
   </compound>
   <compound kind="file">
@@ -10218,6 +10240,13 @@
       <anchor>abd6834ef752be33759988b9b204fccc7</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>run</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a8079e120ef304ca447b0f36c42598364</anchor>
+      <arglist>(std::vector&lt; char &gt; &amp;buffer, std::chrono::system_clock::time_point &amp;t_last_received)</arglist>
+    </member>
     <member kind="function" protection="protected">
       <type>void</type>
       <name>start</name>
@@ -10455,6 +10484,13 @@
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>af45508fdb55f9b0fb191121c36b10a7d</anchor>
       <arglist>(const ElementId &amp;)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
+      <name>robot</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>ae3efbe9ac079a07e540872820bf951f9</anchor>
+      <arglist>(const ElementId &amp;id, const std::vector&lt; std::string &gt; &amp;, const std::vector&lt; std::vector&lt; double &gt;&gt; &amp;, const sva::PTransformd &amp;)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
@@ -24146,6 +24182,40 @@
       <arglist></arglist>
     </member>
   </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::RobotImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html</filename>
+    <templarg>GetT</templarg>
+    <base>mc_rtc::gui::Element</base>
+    <member kind="function">
+      <type></type>
+      <name>RobotImpl</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html</anchorfile>
+      <anchor>a9218fde4c0a07c2acc5e2a1c5f215030</anchor>
+      <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html</anchorfile>
+      <anchor>a9c169a3be2ab773a3224ac891205908f</anchor>
+      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr size_t</type>
+      <name>write_size</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html</anchorfile>
+      <anchor>a9b72a2882d2142c399b2cc15d1dcb3a9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static constexpr auto</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html</anchorfile>
+      <anchor>a57448dfa1b7c219ccadbc96892d94648</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
   <compound kind="class">
     <name>mc_rbdyn::RobotLoader</name>
     <filename>structmc__rbdyn_1_1RobotLoader.html</filename>
@@ -35401,6 +35471,7 @@
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a0f4e1aaabd074689b7d3ead824d1ee8e">Arrow</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386">XYTheta</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a51c45b795d5d18a3e4e0c37e8b20a141">Table</enumvalue>
+      <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433">Robot</enumvalue>
     </member>
     <member kind="enumeration">
       <type></type>
@@ -35610,6 +35681,13 @@
       <arglist>(const std::string &amp;name, const Color &amp;color, GetT get_fn)</arglist>
     </member>
     <member kind="function">
+      <type>details::RobotImpl&lt; GetT &gt;</type>
+      <name>Robot</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a62100aa06fcd2571172fe1f3f2d1183a</anchor>
+      <arglist>(const std::string &amp;name, GetT get_fn)</arglist>
+    </member>
+    <member kind="function">
       <type>RotationROImpl&lt; GetT &gt;</type>
       <name>Rotation</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
@@ -35716,6 +35794,7 @@
     <class kind="struct">mc_rtc::gui::details::CheckReturnType&lt; GetT, T, Args... &gt;</class>
     <class kind="struct">mc_rtc::gui::details::FormattedTableImpl</class>
     <class kind="struct">mc_rtc::gui::details::ReturnType</class>
+    <class kind="struct">mc_rtc::gui::details::RobotImpl</class>
     <class kind="struct">mc_rtc::gui::details::StaticTableImpl</class>
     <class kind="struct">mc_rtc::gui::details::TableImpl</class>
     <member kind="typedef">

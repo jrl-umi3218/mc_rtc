@@ -3,7 +3,7 @@ digraph "include/mc_control/GlobalPlugin.h"
  // INTERACTIVE_SVG=YES
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
-  Node140 [label="include/mc_control\l/GlobalPlugin.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node140 -> Node141 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node141 [label="include/mc_control\l/GlobalPluginMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GlobalPluginMacros_8h.html"];
+  Node141 [label="include/mc_control\l/GlobalPlugin.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node141 -> Node142 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node142 [label="include/mc_control\l/GlobalPluginMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GlobalPluginMacros_8h.html"];
 }

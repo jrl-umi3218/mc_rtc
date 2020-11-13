@@ -172,6 +172,7 @@ var hierarchy =
         [ "mc_rtc::gui::TransformROImpl< GetT >", "structmc__rtc_1_1gui_1_1TransformROImpl.html", null ],
         [ "mc_rtc::gui::XYThetaROImpl< GetT >", "structmc__rtc_1_1gui_1_1XYThetaROImpl.html", null ]
       ] ],
+      [ "mc_rtc::gui::details::RobotImpl< GetT >", "structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html", null ],
       [ "mc_rtc::gui::details::StaticTableImpl< GetData >", "structmc__rtc_1_1gui_1_1details_1_1StaticTableImpl.html", null ],
       [ "mc_rtc::gui::details::TableImpl< GetHeader, GetData >", "structmc__rtc_1_1gui_1_1details_1_1TableImpl.html", [
         [ "mc_rtc::gui::details::FormattedTableImpl< GetHeader, GetFormat, GetData >", "structmc__rtc_1_1gui_1_1details_1_1FormattedTableImpl.html", null ]
