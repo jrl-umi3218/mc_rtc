@@ -1,10 +1,12 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_control/ControllerServer.h>
 
 #include <mc_rtc/gui.h>
+
+#include <SpaceVecAlg/Conversions.h>
 
 #include <chrono>
 #include <thread>
@@ -13,6 +15,18 @@
 #  include <boost/math/constants/constants.hpp>
 #  define M_PI boost::math::constants::pi<double>()
 #endif
+
+sva::PTransformd lookAt(const Eigen::Vector3d & position, const Eigen::Vector3d & target, const Eigen::Vector3d & up)
+{
+  Eigen::Matrix3d R;
+  R.col(2) = (target - position).normalized();
+  R.col(0) = up.cross(R.col(2)).normalized();
+  R.col(1) = R.col(2).cross(R.col(0));
+  Eigen::Matrix4d view = Eigen::Matrix4d::Identity();
+  view.topLeftCorner<3, 3>() = R;
+  view.topRightCorner<3, 1>() = position;
+  return sva::conversions::fromHomogeneous(view);
+}
 
 struct DummyProvider
 {
@@ -178,6 +192,7 @@ struct TestServer
   Eigen::Vector3d xytheta_{0., 2., M_PI / 3};
   Eigen::VectorXd xythetaz_;
   std::vector<Eigen::Vector3d> polygon_;
+  std::vector<std::vector<Eigen::Vector3d>> polygons_;
   Eigen::Vector3d arrow_start_{0.5, 0.5, 0.};
   Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
   sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
@@ -191,6 +206,11 @@ struct TestServer
       std::make_tuple<std::string, double, int>("World", 0.2001, 4),
       std::make_tuple<std::string, double, int>("!", 0.0001, 42)};
   FakeZMPGraph graph_;
+  std::vector<Eigen::Vector3d> trajectory_ = {Eigen::Vector3d::UnitX(), Eigen::Vector3d::UnitY(),
+                                              -Eigen::Vector3d::UnitX(), -Eigen::Vector3d::UnitY()};
+  std::vector<sva::PTransformd> poseTrajectory_ = {{sva::RotX<double>(0), {1, 1, 1}},
+                                                   {sva::RotX<double>(M_PI / 2), {1, -1, 2}},
+                                                   {sva::RotY<double>(-M_PI / 2) * sva::RotX<double>(M_PI), {1, 1, 3}}};
 };
 
 TestServer::TestServer() : xythetaz_(4)
@@ -200,6 +220,25 @@ TestServer::TestServer() : xythetaz_(4)
   polygon_.push_back({1, -1, 0});
   polygon_.push_back({-1, -1, 0});
   polygon_.push_back({-1, 1, 0});
+
+  auto makeFoot = [](const sva::PTransformd & pose) {
+    std::vector<Eigen::Vector3d> points;
+    double width = 0.1;
+    double length = 0.2;
+    points.push_back((sva::PTransformd{Eigen::Vector3d{length / 2, width / 2, 0}} * pose).translation());
+    points.push_back((sva::PTransformd{Eigen::Vector3d{length / 2, -width / 2, 0}} * pose).translation());
+    points.push_back((sva::PTransformd{Eigen::Vector3d{-length / 2, -width / 2, 0}} * pose).translation());
+    points.push_back((sva::PTransformd{Eigen::Vector3d{-length / 2, width / 2, 0}} * pose).translation());
+    return points;
+  };
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0, -0.15, 0)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0, 0.15, 0)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0.3, -0.15, 0)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0.6, 0.15, 0)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0.6, -0.15, 0)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(0.9, 0.15, 0.2)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(1.2, -0.15, 0.4)}));
+  polygons_.push_back(makeFoot({Eigen::Vector3d(1.2, 0.15, 0.4)}));
 
   make_table(3);
 
@@ -323,6 +362,19 @@ TestServer::TestServer() : xythetaz_(4)
       mc_rtc::gui::Point3D("ReadOnly", mc_rtc::gui::PointConfig({1., 0., 0.}, 0.08), [this]() { return v3_; }),
       mc_rtc::gui::Point3D("Interactive", mc_rtc::gui::PointConfig({0., 1., 0.}, 0.08), [this]() { return vInt_; },
                            [this](const Eigen::Vector3d & v) { vInt_ = v; }));
+
+  builder.addElement({"GUI Markers", "Polygons"}, mc_rtc::gui::Polygon("Polygons", [this]() { return polygons_; }));
+
+  builder.addElement(
+      {"GUI Markers", "Trajectories"}, mc_rtc::gui::Trajectory("Vector3d", [this]() { return trajectory_; }),
+      mc_rtc::gui::Trajectory("PTransformd", {mc_rtc::gui::Color::Green}, [this]() { return poseTrajectory_; }),
+      mc_rtc::gui::Trajectory("Live 3D", {mc_rtc::gui::Color::Magenta},
+                              [this]() {
+                                return Eigen::Vector3d{cos(t_), sin(t_), 1.0};
+                              }),
+      mc_rtc::gui::Trajectory("Live transform", {mc_rtc::gui::Color::Black}, [this]() {
+        return lookAt({cos(t_), -1, sin(t_)}, {0, 0, 0}, Eigen::Vector3d::UnitZ());
+      }));
 
   mc_rtc::gui::ArrowConfig arrow_config({1., 0., 0.});
   arrow_config.start_point_scale = 0.02;

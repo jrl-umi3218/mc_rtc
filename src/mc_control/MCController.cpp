@@ -125,6 +125,10 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
       bs.push(b.name());
     }
     data("surfaces").add(r.name(), r.availableSurfaces());
+    auto name = r.name();
+    gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot & {
+                        return this->robot(name);
+                      }));
   }
   if(updateNrVars)
   {

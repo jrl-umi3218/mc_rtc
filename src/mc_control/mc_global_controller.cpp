@@ -677,13 +677,6 @@ bool MCGlobalController::run()
     bool r = controller_->run();
     auto end_controller_run_t = clock::now();
 
-    if(server_)
-    {
-      auto start_gui_t = clock::now();
-      server_->handle_requests(*controller_->gui_);
-      server_->publish(*controller_->gui_);
-      gui_dt = clock::now() - start_gui_t;
-    }
     pre_gripper_mbcs_ = controller_->robots().mbcs();
     for(size_t i = 0; i < controller_->robots().size(); ++i)
     {
@@ -704,6 +697,13 @@ bool MCGlobalController::run()
       auto start_log_t = clock::now();
       controller_->logger().log();
       log_dt = clock::now() - start_log_t;
+    }
+    if(server_)
+    {
+      auto start_gui_t = clock::now();
+      server_->handle_requests(*controller_->gui_);
+      server_->publish(*controller_->gui_);
+      gui_dt = clock::now() - start_gui_t;
     }
     controller_run_dt = end_controller_run_t - start_controller_run_t;
     solver_build_and_solve_t = boost_ms(boost_ns(controller_->solver().solveAndBuildTime().wall)).count();

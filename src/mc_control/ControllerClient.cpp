@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_control/ControllerClient.h>
@@ -100,6 +100,55 @@ void ControllerClient::reconnect(const std::string & sub_conn_uri, const std::st
   start();
 }
 
+void ControllerClient::run(std::vector<char> & buff, std::chrono::system_clock::time_point & t_last_received)
+{
+  memset(buff.data(), 0, buff.size() * sizeof(char));
+  auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
+  auto now = std::chrono::system_clock::now();
+  if(recv < 0)
+  {
+    if(timeout_ > 0 && now - t_last_received > std::chrono::duration<double>(timeout_))
+    {
+      t_last_received = now;
+      if(run_)
+      {
+        handle_gui_state(mc_rtc::Configuration{});
+      }
+    }
+    auto err = nn_errno();
+    if(err != EAGAIN)
+    {
+      mc_rtc::log::error("ControllerClient failed to receive with errno: {}", err);
+    }
+  }
+  else if(recv > 0)
+  {
+    auto msg_size = recv;
+    while(recv > 0)
+    {
+      msg_size = recv;
+      recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
+    }
+    t_last_received = now;
+    if(msg_size > static_cast<int>(buff.size()))
+    {
+      mc_rtc::log::warning(
+          "Receive buffer was too small to receive the latest state message, will resize for next time");
+      auto nsize = buff.size() == 0 ? 65535 : 2 * buff.size();
+      while(msg_size > static_cast<int>(nsize))
+      {
+        nsize = 2 * nsize;
+      }
+      buff.resize(nsize);
+      return;
+    }
+    if(run_)
+    {
+      handle_gui_state(mc_rtc::Configuration::fromMessagePack(buff.data(), static_cast<size_t>(msg_size)));
+    }
+  }
+}
+
 void ControllerClient::start()
 {
   run_ = true;
@@ -108,40 +157,7 @@ void ControllerClient::start()
     auto t_last_received = std::chrono::system_clock::now();
     while(run_)
     {
-      memset(buff.data(), 0, buff.size() * sizeof(char));
-      auto recv = nn_recv(sub_socket_, buff.data(), buff.size(), NN_DONTWAIT);
-      auto now = std::chrono::system_clock::now();
-      if(recv < 0)
-      {
-        if(timeout_ > 0 && now - t_last_received > std::chrono::duration<double>(timeout_))
-        {
-          t_last_received = now;
-          if(run_)
-          {
-            handle_gui_state(mc_rtc::Configuration{});
-          }
-        }
-        auto err = nn_errno();
-        if(err != EAGAIN)
-        {
-          mc_rtc::log::error("ControllerClient failed to receive with errno: {}", err);
-        }
-      }
-      else if(recv > 0)
-      {
-        if(recv > static_cast<int>(buff.size()))
-        {
-          mc_rtc::log::warning(
-              "Receive buffer was too small to receive the latest state message, will resize for next time");
-          buff.resize(2 * buff.size());
-          continue;
-        }
-        t_last_received = now;
-        if(run_)
-        {
-          handle_gui_state(mc_rtc::Configuration::fromMessagePack(buff.data(), static_cast<size_t>(recv)));
-        }
-      }
+      run(buff, t_last_received);
       std::this_thread::sleep_for(std::chrono::microseconds(500));
     }
   });
@@ -310,6 +326,9 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
         handle_table(id, data.at(3, std::vector<std::string>{}), data.at(5, std::vector<std::string>{}),
                      data.at(4, std::vector<mc_rtc::Configuration>{}));
         break;
+      case Elements::Robot:
+        robot(id, data[3], data[4], data[5]);
+        break;
       default:
         mc_rtc::log::error("Type {} is not handlded by this ControllerClient", static_cast<int>(type));
         break;
@@ -375,8 +394,17 @@ void ControllerClient::handle_trajectory(const ElementId & id, const mc_rtc::Con
       catch(mc_rtc::Configuration::Exception & exc)
       {
         exc.silence();
-        Eigen::Vector3d p = data;
-        trajectory(id, p, config);
+        try
+        {
+          Eigen::Vector3d p = data;
+          trajectory(id, p, config);
+        }
+        catch(mc_rtc::Configuration::Exception & exc)
+        {
+          exc.silence();
+          sva::PTransformd pos = data;
+          trajectory(id, pos, config);
+        }
       }
     }
   }

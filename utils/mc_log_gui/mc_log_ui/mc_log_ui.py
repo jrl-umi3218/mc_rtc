@@ -203,7 +203,7 @@ class LineStyleDialog(CommonStyleDialog):
     super(LineStyleDialog, self).apply()
     self.style.label = self.labelInput.text()
     self.set_style(self.name, self.style)
-    self.setWindowTitle('Edit {} style'.format(style.label))
+    self.setWindowTitle('Edit {} style'.format(self.style.label))
     self.canvas.draw()
 
 class ColorButtonRightClick(QtWidgets.QPushButton):
