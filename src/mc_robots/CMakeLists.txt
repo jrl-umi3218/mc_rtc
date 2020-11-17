@@ -4,7 +4,7 @@
 
 macro(add_robot robot_base)
   set(robot_SRC "${CMAKE_CURRENT_SOURCE_DIR}/${robot_base}.cpp")
-  set(robot_HDR "${PROJECT_SOURCE_DIR}/include/mc_robots/api.h" "${CMAKE_CURRENT_SOURCE_DIR}/${robot_base}.h")
+  set(robot_HDR "${MC_RTC_SOURCE_DIR}/include/mc_robots/api.h" "${CMAKE_CURRENT_SOURCE_DIR}/${robot_base}.h")
   if(MC_RTC_BUILD_STATIC)
     target_sources(mc_rbdyn PRIVATE ${robot_SRC} ${robot_HDR})
     target_include_directories(mc_rbdyn PRIVATE "../../include/mc_robots")

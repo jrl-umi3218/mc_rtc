@@ -32,6 +32,7 @@ include(cmake/version-script.cmake)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(${PROJECT_NAME} C CXX)
+set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
 
 option(GENERATE_COVERAGE "Generate coverage data" FALSE)
 if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
