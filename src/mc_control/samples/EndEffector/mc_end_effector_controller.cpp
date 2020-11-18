@@ -1,21 +1,15 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
-#include "mc_body6d_controller.h"
+#include "mc_end_effector_controller.h"
 
 #include <mc_rtc/logging.h>
-
-#include <RBDyn/EulerIntegration.h>
-#include <RBDyn/FK.h>
-#include <RBDyn/FV.h>
-
-/* Note all service calls except for controller switches are implemented in mc_global_controller_services.cpp */
 
 namespace mc_control
 {
 
-MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
+MCEndEffectorController::MCEndEffectorController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
 : MCController(robot_module, dt)
 {
   solver().addConstraintSet(contactConstraint);
@@ -39,7 +33,7 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
   }
   else
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("MCBody6dController does not support robot {}", robot().name());
+    mc_rtc::log::error_and_throw<std::runtime_error>("EndEffector sample does not support robot {}", robot().name());
   }
 
   std::string body = robot().mb().bodies().back().name();
@@ -60,11 +54,9 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
     comTask = std::make_shared<mc_tasks::CoMTask>(robots(), robots().robotIndex());
     solver().addTask(comTask);
   }
-
-  mc_rtc::log::success("MCBody6dController init done");
 }
 
-void MCBody6dController::reset(const ControllerResetData & reset_data)
+void MCEndEffectorController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
   efTask->reset();

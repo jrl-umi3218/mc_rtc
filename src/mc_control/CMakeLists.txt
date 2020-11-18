@@ -43,7 +43,7 @@ add_subdirectory(fsm)
 
 if(${BUILD_CONTROLLER_SAMPLES})
   add_subdirectory(samples/Posture)
-  add_subdirectory(samples/Body6d)
+  add_subdirectory(samples/EndEffector)
   add_subdirectory(samples/CoM)
   add_subdirectory(samples/Text)
   add_subdirectory(samples/FSM)
