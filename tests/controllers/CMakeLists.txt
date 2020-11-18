@@ -224,7 +224,7 @@ macro(controller_sample_test_run NAME PATH_SUFFIX NRITER)
 endmacro()
 
 controller_sample_test_run(CoM "" 1000)
-controller_sample_test_run(Body6d "" 1000)
+controller_sample_test_run(EndEffector "" 1000)
 controller_sample_test_run(Posture "" 1000)
 controller_sample_test_run(Text "" 1000)
 file(GENERATE OUTPUT "${TEST_CONTROLLER_PATH}/etc/Text.conf" INPUT "${PROJECT_SOURCE_DIR}/src/mc_control/samples/Text/etc/Text.conf")
