@@ -244,7 +244,10 @@ class PlotYAxis(object):
       self._polyAxis = PlotPolygonAxis(parent, self._axis)
     else:
       self._polyAxis = poly
-    self._axis.set_facecolor((1, 1, 1, 0))
+    try:
+      self._axis.set_facecolor((1, 1, 1, 0))
+    except AttributeError:
+      pass
     box = self._axis.get_position()
     self._axis.autoscale_view(False,True,True)
     self._axis.format_coord = parent.format_coord
