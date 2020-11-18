@@ -52,9 +52,9 @@ option(ENABLE_FAST_TESTS "Run controllers tests for a few iterations" OFF)
 option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
 option(MC_RTC_BUILD_STATIC "Build a static version of mc_rtc, this has no support for pluggable components" OFF)
-option(MC_RTC_DISABLE_NETWORK "Do not build with network support" OFF)
+option(MC_RTC_DISABLE_NETWORK "Build without network support" OFF)
 
-option(DISABLE_ROS "Do not build with ROS support (even if ROS was found)" OFF)
+option(DISABLE_ROS "Build without ROS support (even if ROS was found)" OFF)
 
 add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer)
 add_project_dependency(Tasks REQUIRED)
