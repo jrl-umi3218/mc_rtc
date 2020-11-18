@@ -33,34 +33,45 @@ MCBody6dController::MCBody6dController(std::shared_ptr<mc_rbdyn::RobotModule> ro
     solver().setContacts(
         {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
   }
+  else if(robot().mb().joint(0).dof() == 0)
+  {
+    solver().setContacts({});
+  }
   else
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("MCBody6dController does not support robot {}", robot().name());
   }
 
-  mc_rtc::log::success("MCBody6dController init done");
+  std::string body = robot().mb().bodies().back().name();
   if(robot().hasBody("RARM_LINK7"))
   {
+    body = "RARM_LINK7";
     efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", robots(), robots().robotIndex(), 2.0, 1e5));
   }
   else if(robot().hasBody("r_wrist"))
   {
+    body = "r_wrist";
     efTask.reset(new mc_tasks::EndEffectorTask("r_wrist", robots(), robots().robotIndex(), 2.0, 1e5));
   }
-  else
-  {
-    mc_rtc::log::error_and_throw<std::runtime_error>("MCBody6dController does not support robot {}", robot().name());
-  }
+  efTask = std::make_shared<mc_tasks::EndEffectorTask>(body, robots(), robots().robotIndex(), 2.0, 1e5);
   solver().addTask(efTask);
-  comTask.reset(new mc_tasks::CoMTask(robots(), robots().robotIndex()));
-  solver().addTask(comTask);
+  if(robot().mb().joint(0).dof() != 0)
+  {
+    comTask = std::make_shared<mc_tasks::CoMTask>(robots(), robots().robotIndex());
+    solver().addTask(comTask);
+  }
+
+  mc_rtc::log::success("MCBody6dController init done");
 }
 
 void MCBody6dController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
   efTask->reset();
-  comTask->reset();
+  if(comTask)
+  {
+    comTask->reset();
+  }
 }
 
 } // namespace mc_control
