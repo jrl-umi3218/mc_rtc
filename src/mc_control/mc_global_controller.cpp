@@ -8,6 +8,7 @@
 
 #ifdef MC_RTC_BUILD_STATIC
 #  include <mc_control/ControllerLoader.h>
+#  include <mc_control/GlobalPluginLoader.h>
 #endif
 
 #include <mc_rbdyn/RobotLoader.h>
@@ -48,13 +49,20 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   config.load_plugin_configs();
   try
   {
-    plugin_loader.reset(new mc_rtc::ObjectLoader<mc_control::GlobalPlugin>(
+    plugin_loader_.reset(new mc_rtc::ObjectLoader<mc_control::GlobalPlugin>(
         "MC_RTC_GLOBAL_PLUGIN", config.global_plugin_paths, config.use_sandbox, config.verbose_loader));
   }
   catch(mc_rtc::LoaderException & exc)
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize plugin loader");
   }
+#ifdef MC_RTC_BUILD_STATIC
+  GlobalPluginLoader::loader().enable_sandboxing(config.use_sandbox);
+  GlobalPluginLoader::loader().set_verbosity(config.verbose_loader);
+  auto * plugin_loader = &GlobalPluginLoader::loader();
+#else
+  auto * plugin_loader = plugin_loader_.get();
+#endif
   for(const auto & plugin : config.global_plugins)
   {
     try

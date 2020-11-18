@@ -801,7 +801,7 @@ private:
 
   std::unique_ptr<mc_control::ControllerServer> server_ = nullptr;
 
-  std::unique_ptr<mc_rtc::ObjectLoader<GlobalPlugin>> plugin_loader;
+  std::unique_ptr<mc_rtc::ObjectLoader<GlobalPlugin>> plugin_loader_;
   struct PluginHandle
   {
     PluginHandle(const std::string & name, GlobalPluginPtr plugin) : name(name), plugin(std::move(plugin)) {}
