@@ -510,7 +510,7 @@ class MCLogTab(QtWidgets.QWidget):
     self.x_data = k
     canvas.x_data = k
     canvas.update_x()
-    for _,s in self.specials.iteritems():
+    for _,s in self.specials.items():
       s.plot()
 
   @QtCore.Slot(QtWidgets.QTreeWidgetItem, int)
@@ -721,11 +721,11 @@ class MCLogTab(QtWidgets.QWidget):
         figure._right().grid = LineStyle(**p.grid2)
       else:
         figure._right().grid = p.grid2
-    for y,s in p.style.iteritems():
+    for y,s in p.style.items():
       figure.style_left(y, s)
-    for y,s in p.style2.iteritems():
+    for y,s in p.style2.items():
       figure.style_right(y, s)
-    for param, value in p.extra.iteritems():
+    for param, value in p.extra.items():
       getattr(figure, param)(value)
     return figure
 

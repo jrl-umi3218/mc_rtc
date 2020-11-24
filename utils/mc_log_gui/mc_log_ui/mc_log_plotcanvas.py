@@ -506,7 +506,7 @@ class PlotYAxis(object):
   def remove_plot(self, y):
     if y not in self.plots:
       self._polyAxis.remove_plot(y)
-      for y_label, source in self.source.iteritems():
+      for y_label, source in self.source.items():
         if source == y:
           return self.remove_plot(y_label)
       return

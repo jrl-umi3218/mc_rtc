@@ -45,7 +45,7 @@ def read_flat(f, tmp = False):
         return ctypes.c_bool.from_buffer_copy(fd.read(ctypes.sizeof(ctypes.c_bool))).value
     def read_string(fd, size):
         if size == 0:
-            return "".decode('ascii')
+            return b"".decode('ascii')
         return fd.read(size).decode('ascii')
     def read_array(fd, size):
         return np.frombuffer(fd.read(size * ctypes.sizeof(ctypes.c_double)), np.double)
@@ -437,7 +437,7 @@ class AllLineStyleDialog(QtWidgets.QDialog):
       button.setStyleSheet("background-color: {color}; color: {color}".format(color = color.name()))
 
   def apply(self):
-    for y,widgets in self.plotWidgets.iteritems():
+    for y,widgets in self.plotWidgets.items():
       label = widgets[0].text()
       linestyle = widgets[1].currentText()
       linewidth = float(widgets[2].text())
