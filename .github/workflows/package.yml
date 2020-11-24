@@ -120,6 +120,8 @@ jobs:
       run: |
         set -x
         export PACKAGES_OUT=/tmp/packages-${{ matrix.dist }}-${{ matrix.arch }}
+        export MC_LOG_UI_PYTHON_EXECUTABLE=python
+        export ROS_PYTHON=python2.7
         export ROS_DISTRO=""
         if [ "${{ matrix.dist }}" = "xenial" ]
         then
@@ -131,9 +133,11 @@ jobs:
           export ROS_DISTRO="melodic"
           export PACKAGES_OUT=${PACKAGES_OUT}-${ROS_DISTRO}
         fi
-        if [ "${{ matrix.dist }}" = "focal" -a "${{ matrix.arch }}" = "amd64" ]
+        if [ "${{ matrix.dist }}" = "focal" ]
         then
           export ROS_DISTRO="noetic"
+          export ROS_PYTHON=python3
+          export MC_LOG_UI_PYTHON_EXECUTABLE=python3
           export PACKAGES_OUT=${PACKAGES_OUT}-${ROS_DISTRO}
         fi
         echo "ROS_DISTRO=${ROS_DISTRO}" >> $GITHUB_ENV
@@ -144,10 +148,12 @@ jobs:
           sed -i -e"s/# ros-@ROS_DISTRO@/ ros-${ROS_DISTRO}/" debian/control
           cat debian/control
           sed -i -e"s/@ROS_DISTRO@/${ROS_DISTRO}/" debian/rules
+          sed -i -e"s/@ROS_PYTHON@/${ROS_PYTHON}/" debian/rules
           sed -i -e"s/#export/export/" debian/rules
-          cat debian/rules
           cp debian/ros-ROS_DISTRO-mc-rtc-plugin.install debian/ros-${ROS_DISTRO}-mc-rtc-plugin.install
         fi
+        sed -i -e"s/@MC_LOG_UI_PYTHON_EXECUTABLE@/${MC_LOG_UI_PYTHON_EXECUTABLE}/" debian/rules
+        cat debian/rules
     - name: Build package
       uses: jrl-umi3218/github-actions/build-package-native@master
       with:

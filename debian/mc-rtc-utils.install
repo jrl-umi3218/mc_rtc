@@ -1,4 +1,4 @@
-usr/lib/python2.7/dist-packages/mc_log_ui/*
+usr/lib/python*/dist-packages/mc_log_ui/*
 usr/bin/mc_bin_to_log
 usr/bin/mc_bin_to_flat
 usr/bin/mc_bin_perf
