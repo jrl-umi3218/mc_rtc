@@ -331,7 +331,7 @@ then
 else
   readonly NOT_CLONE_ONLY=true
 fi
-
+export MC_LOG_UI_PYTHON_EXECUTABLE=python
 
 alias git_clone="git clone --recursive"
 git_update()
@@ -507,6 +507,37 @@ echo_log "   ROS_DISTRO=$ROS_DISTRO"
 echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
 echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
 echo_log "   SUDO_CMD=$SUDO_CMD"
+
+###############################################
+#  -- Check python/pip coherency if needed -- #
+###############################################
+
+if [ "x$WITH_PYTHON_SUPPORT" == xON ] && [ "x$PYTHON_FORCE_PYTHON2" == xOFF ] && [ "x$PYTHON_FORCE_PYTHON3" == xOFF ]
+then
+  if ! pip --version | grep -q "`python -c 'import sys; print(\"python {}.{}\".format(sys.version_info.major, sys.version_info.minor));'`"
+  then
+    echo_log "The pip command does not match the corresponding python version, this will lead to errors"
+    echo_log "Either fix your system or use --python-force-python2 true or --python-force-python3 true"
+  fi
+fi
+
+if [ "x$WITH_PYTHON_SUPPORT" == xON ] && ( [ "x$PYTHON_FORCE_PYTHON2" == xON ] || [ "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON ] )
+then
+  if ! pip2 --version | grep -q "`python2 -c 'import sys; print(\"python {}.{}\".format(sys.version_info.major, sys.version_info.minor));'`"
+  then
+    echo_log "The pip2 command does not match the corresponding python2 version, this will lead to errors"
+    echo_log "Resolve the issue at your system level"
+  fi
+fi
+
+if [ "x$WITH_PYTHON_SUPPORT" == xON ] && ( [ "x$PYTHON_FORCE_PYTHON3" == xON ] || [ "x$PYTHON_BUILD_PYTHON3_AND_PYTHON3" == xON ] )
+then
+  if ! pip3 --version | grep -q "`python3 -c 'import sys; print(\"python {}.{}\".format(sys.version_info.major, sys.version_info.minor));'`"
+  then
+    echo_log "The pip3 command does not match the corresponding python3 version, this will lead to errors"
+    echo_log "Resolve the issue at your system level"
+  fi
+fi
 
 ###################################
 #  --  APT/Brew dependencies  --  #
@@ -1016,9 +1047,9 @@ build_git_dependency_configure_and_build()
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
   mkdir -p "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
   # Add the build subdirecory to the ignored files list if it is not ignored already
-  if ! grep -Fxq "/$BUILD_SUBDIR/" $SOURCE_DIR/$git_dep/.git/info/exclude ;   
-  then     
-    echo "/$BUILD_SUBDIR/" >> $SOURCE_DIR/$git_dep/.git/info/exclude ;   
+  if ! grep -Fxq "/$BUILD_SUBDIR/" $SOURCE_DIR/$git_dep/.git/info/exclude ;
+  then
+    echo "/$BUILD_SUBDIR/" >> $SOURCE_DIR/$git_dep/.git/info/exclude ;
   fi
   cd "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
   if [[ $OS == "Windows" ]]
@@ -1036,6 +1067,7 @@ build_git_dependency_configure_and_build()
                     -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
                     -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
                     -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
+                    -DMC_LOG_UI_PYTHON_EXECUTABLE:STRING="${MC_LOG_UI_PYTHON_EXECUTABLE}" \
                     -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
                     ${CMAKE_ADDITIONAL_OPTIONS}
   exit_if_error "-- [ERROR] CMake configuration failed for $git_dep"
@@ -1162,9 +1194,9 @@ then
 fi
 mkdir -p $BUILD_SUBDIR
 # Add the build subdirecory to the ignored files list if it is not ignored already
-if ! grep -Fxq "/$BUILD_SUBDIR/" .git/info/exclude ;   
-then     
-  echo "/$BUILD_SUBDIR/" >> .git/info/exclude ;   
+if ! grep -Fxq "/$BUILD_SUBDIR/" .git/info/exclude ;
+then
+  echo "/$BUILD_SUBDIR/" >> .git/info/exclude ;
 fi
 cd $BUILD_SUBDIR
 if $BUILD_TESTING
@@ -1182,6 +1214,8 @@ fi
 if ! $WITH_ROS_SUPPORT
 then
   CMAKE_ADDITIONAL_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS} -DDISABLE_ROS=ON"
+else
+  CMAKE_ADDITIONAL_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS} -DDISABLE_ROS=OFF"
 fi
 exec_log cmake $mc_rtc_dir -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
                    -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \

@@ -6,9 +6,6 @@
 
   "ObserverPipelines": [@OBSERVER_PIPELINES@],
 
-  "PublishControlState" : false,
-  "PublishRealState" : false,
-
   "Timestep" : 0.005,
 
   "UseSandbox" : @USE_SANDBOX@,

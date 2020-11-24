@@ -4,7 +4,7 @@
 #export ROS_DISTRO=@ROS_DISTRO@
 #export PKG_CONFIG_PATH=/opt/ros/${ROS_DISTRO}/lib/pkgconfig:$PKG_CONFIG_PATH
 #export ROS_MASTER_URI=http://localhost:11311
-#export PYTHONPATH=/opt/ros/${ROS_DISTRO}/lib/python2.7/dist-packages:$PYTHONPATH
+#export PYTHONPATH=/opt/ros/${ROS_DISTRO}/lib/@ROS_PYTHON@/dist-packages:$PYTHONPATH
 #export CMAKE_PREFIX_PATH=/opt/ros/${ROS_DISTRO}:$CMAKE_PREFIX_PATH
 
 TMP = $(CURDIR)/debian/tmp
@@ -13,7 +13,7 @@ TMP = $(CURDIR)/debian/tmp
 	dh $@ --parallel
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DPYTHON_DEB_ROOT=$(TMP)
+	dh_auto_configure -- -DPYTHON_DEB_ROOT=$(TMP) -DMC_LOG_UI_PYTHON_EXECUTABLE=@MC_LOG_UI_PYTHON_EXECUTABLE@
 
 override_dh_auto_install:
 	dh_auto_install

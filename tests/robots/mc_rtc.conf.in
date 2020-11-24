@@ -4,9 +4,6 @@
 
   "Enabled"   : ["Posture"],
 
-  "PublishControlState" : false,
-  "PublishRealState" : false,
-
   "Timestep" : 0.005,
 
   "Log" : false,

@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env @MC_LOG_UI_PYTHON_EXECUTABLE@
 # -*- coding: utf-8 -*-
 
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 import json
