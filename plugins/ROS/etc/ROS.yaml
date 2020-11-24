@@ -1,4 +1,4 @@
-# Controler which data we publish and at what rate
+# Control which data we publish and publishing rate
 publish:
   # Publish the state of the controlled robot (ROS)
   control: true
