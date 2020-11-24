@@ -281,13 +281,23 @@
                 </div>
               </div>
               <ul class="section-nav">
-<li class="toc-entry toc-h2"><a href="#possible-location-for-mc-rtc">Possible location for mc_rtc</a></li>
+<li class="toc-entry toc-h2"><a href="#possible-locations-for-mc-rtc-configuration">Possible locations for mc_rtc configuration</a></li>
 <li class="toc-entry toc-h2"><a href="#configuration-entries">Configuration entries</a>
 <ul>
 <li class="toc-entry toc-h6"><a href="#main-nbsp-entries">Main entries</a></li>
 <li class="toc-entry toc-h6"><a href="#logging-nbsp-options">Logging options</a></li>
-<li class="toc-entry toc-h6"><a href="#ros-nbsp-options">ROS options</a></li>
 <li class="toc-entry toc-h6"><a href="#module-loading-options">Module loading options</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#ros-plugin-configuration">ROS plugin configuration</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#possible-locations">Possible locations</a></li>
+<li class="toc-entry toc-h4"><a href="#configuration-entries">Configuration entries</a>
+<ul>
+<li class="toc-entry toc-h6"><a href="#publish-nbsp-entries">publish entries</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h4"><a href="#sample-configuration">Sample configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -302,14 +312,14 @@
 
 <p>This section covers both the different location where it might be loaded from as well as the main options that can be used in the file.</p>
 
-<h2 id="possible-location-for-mc-rtc">Possible location for mc_rtc</h2>
+<h2 id="possible-locations-for-mc-rtc-configuration">Possible locations for mc_rtc configuration</h2>
 
 
-<p>The following two files will be systematically read by mc_rtc:</p>
+<p>The following two files will be systematically read by mc_rtc (if they exist):</p>
 
 <ol>
   <li><code class="highlight language-bash" data-lang="bash"><span class="nv">$INSTALL_PREFIX</span>/etc/mc_rtc.yaml</code></li>
-  <li><ul><li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></li><li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="nf">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/mc_rtc.conf</span></code></li></ul></li>
+  <li><ul><li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/mc_rtc.yaml</code></li><li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="nf">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/mc_rtc.yaml</span></code></li></ul></li>
 </ol>
 
 <p>The interface might load additional configuration file(s). Please refer to the interface documentation to find out about that.</p>
@@ -402,33 +412,6 @@
 
     <tr class="table-active">
       <th scope="row">
-        <h6 id="ros-nbsp-options">ROS&nbsp;options</h6>
-
-      </th>
-      <td colspan="2">
-The following options only affect the publication of the robot's state in ROS. It has no effect if ROS support is not built in mc_rtc.
-      </td>
-    </tr>
-    <tr>
-  <th scope="row">PublishControlState</th>
-  <td>Publish the robot's control state (mc_rtc controller output).</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">PublishControlState</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
-</tr>
-
-    <tr>
-  <th scope="row">PublishRealState</th>
-  <td>Publish the robot's observed state (i.e. the robot's state obtained from the observer pipeline).</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">PublishRealState</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
-</tr>
-
-    <tr>
-  <th scope="row">PublishTimeStep</th>
-  <td>Control the publication rate of the robot's controlled and real state.</td>
-  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">PublishTimestep</span><span class="pi">:</span> <span class="s">0.01</span></code></pre></figure></td>
-</tr>
-
-    <tr class="table-active">
-      <th scope="row">
         <h6 id="module-loading-options">Module loading options</h6>
 
       </th>
@@ -462,6 +445,85 @@ The following options control the way mc_rtc loads additional modules from libra
 
   </tbody>
 </table>
+
+<h2 id="ros-plugin-configuration">ROS plugin configuration</h2>
+
+
+<h4 id="possible-locations">Possible locations</h4>
+
+
+<p>The following two files will be systematically read by mc_rtc (if they exist):</p>
+
+<ol>
+  <li><code class="highlight language-bash" data-lang="bash"><span class="k">${</span><span class="nv">MC_PLUGINS_RUNTIME_INSTALL_PREFIX</span><span class="k">}</span>/etc/ROS.yaml</code></li>
+  <li><ul><li>Linux/MacOS: <code class="highlight language-bash" data-lang="bash"><span class="nv">$HOME</span>/.config/mc_rtc/plugins/ROS.yaml</code></li><li>Windows: <code class="highlight language-msshell" data-lang="msshell"><span class="o">%</span><span class="nf">APPDATA</span><span class="o">%</span><span class="nx">/mc_rtc/plugins/ROS.yaml</span></code></li></ul></li>
+</ol>
+
+<h4 id="configuration-entries">Configuration entries</h4>
+
+
+<p>The following table describes each possible sections in the ROS plugin configuration and their possible entries.</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Entry</th>
+      <th scope="col">Description</th>
+      <th scope="col">Example/Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">
+        <h6 id="publish-nbsp-entries">publish&nbsp;entries</h6>
+
+      </th>
+      <td colspan="2">The following options only affect the publication of the robot's state in ROS.</td>
+    </tr>
+    <tr>
+  <th scope="row">control</th>
+  <td>Publish the robot's control state (mc_rtc controller output).</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">control</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">env</th>
+  <td>Publish other robots control state (mc_rtc controller output for the non-main robot).</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">env</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">real</th>
+  <td>Publish the robot's observed state (i.e. the robot's state obtained from the observer pipeline).</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">real</span><span class="pi">:</span> <span class="no">true</span></code></pre></figure></td>
+</tr>
+
+    <tr>
+  <th scope="row">timestep</th>
+  <td>Control the publication rate of the robot's controlled and real state.</td>
+  <td><figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">timestep</span><span class="pi">:</span> <span class="s">0.01</span></code></pre></figure></td>
+</tr>
+
+  </tbody>
+</table>
+
+<h4 id="sample-configuration">Sample configuration</h4>
+
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># Control which data we publish and publishing rate</span>
+<span class="na">publish</span><span class="pi">:</span>
+  <span class="c1"># Publish the state of the controlled robot (ROS)</span>
+  <span class="na">control</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="c1"># Publish the state of the other robots (ROS)</span>
+  <span class="na">env</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="c1"># Publish the state of the real robot (ROS)</span>
+  <span class="na">real</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="c1"># Timestep of publication (ROS)</span>
+  <span class="na">timestep</span><span class="pi">:</span> <span class="s">0.01</span></code></pre></figure>
+  </div>
+</div>
 
 
         <hr/>
