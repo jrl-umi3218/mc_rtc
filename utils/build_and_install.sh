@@ -508,6 +508,37 @@ echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
 echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
 echo_log "   SUDO_CMD=$SUDO_CMD"
 
+###############################################
+#  -- Check python/pip coherency if needed -- #
+###############################################
+
+if [ "x$WITH_PYTHON_SUPPORT" == xON ] && [ "x$PYTHON_FORCE_PYTHON2" == xOFF ] && [ "x$PYTHON_FORCE_PYTHON3" == xOFF ]
+then
+  if ! pip --version | grep -q "`python -c 'import sys; print(\"python {}.{}\".format(sys.version_info.major, sys.version_info.minor));'`"
+  then
+    echo_log "The pip command does not match the corresponding python version, this will lead to errors"
+    echo_log "Either fix your system or use --python-force-python2 true or --python-force-python3 true"
+  fi
+fi
+
+if [ "x$WITH_PYTHON_SUPPORT" == xON ] && ( [ "x$PYTHON_FORCE_PYTHON2" == xON ] || [ "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON ] )
+then
+  if ! pip2 --version | grep -q "`python2 -c 'import sys; print(\"python {}.{}\".format(sys.version_info.major, sys.version_info.minor));'`"
+  then
+    echo_log "The pip2 command does not match the corresponding python2 version, this will lead to errors"
+    echo_log "Resolve the issue at your system level"
+  fi
+fi
+
+if [ "x$WITH_PYTHON_SUPPORT" == xON ] && ( [ "x$PYTHON_FORCE_PYTHON3" == xON ] || [ "x$PYTHON_BUILD_PYTHON3_AND_PYTHON3" == xON ] )
+then
+  if ! pip3 --version | grep -q "`python3 -c 'import sys; print(\"python {}.{}\".format(sys.version_info.major, sys.version_info.minor));'`"
+  then
+    echo_log "The pip3 command does not match the corresponding python3 version, this will lead to errors"
+    echo_log "Resolve the issue at your system level"
+  fi
+fi
+
 ###################################
 #  --  APT/Brew dependencies  --  #
 ###################################
@@ -1016,9 +1047,9 @@ build_git_dependency_configure_and_build()
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
   mkdir -p "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
   # Add the build subdirecory to the ignored files list if it is not ignored already
-  if ! grep -Fxq "/$BUILD_SUBDIR/" $SOURCE_DIR/$git_dep/.git/info/exclude ;   
-  then     
-    echo "/$BUILD_SUBDIR/" >> $SOURCE_DIR/$git_dep/.git/info/exclude ;   
+  if ! grep -Fxq "/$BUILD_SUBDIR/" $SOURCE_DIR/$git_dep/.git/info/exclude ;
+  then
+    echo "/$BUILD_SUBDIR/" >> $SOURCE_DIR/$git_dep/.git/info/exclude ;
   fi
   cd "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
   if [[ $OS == "Windows" ]]
@@ -1163,9 +1194,9 @@ then
 fi
 mkdir -p $BUILD_SUBDIR
 # Add the build subdirecory to the ignored files list if it is not ignored already
-if ! grep -Fxq "/$BUILD_SUBDIR/" .git/info/exclude ;   
-then     
-  echo "/$BUILD_SUBDIR/" >> .git/info/exclude ;   
+if ! grep -Fxq "/$BUILD_SUBDIR/" .git/info/exclude ;
+then
+  echo "/$BUILD_SUBDIR/" >> .git/info/exclude ;
 fi
 cd $BUILD_SUBDIR
 if $BUILD_TESTING
