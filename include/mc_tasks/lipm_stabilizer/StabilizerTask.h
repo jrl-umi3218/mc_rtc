@@ -19,6 +19,8 @@
 #include <mc_tasks/lipm_stabilizer/Contact.h>
 #include <mc_tasks/lipm_stabilizer/ZMPCC.h>
 
+#include <state-observation/dynamics-estimators/lipm-dcm-estimator.hpp>
+
 #include <Eigen/QR>
 #include <eigen-quadprog/QuadProg.h>
 
@@ -692,6 +694,10 @@ protected:
 
   bool zmpccOnlyDS_ = true; /**< Only apply ZMPCC in double support */
   ZMPCC zmpcc_; /**< Compute CoM offset due to ZMPCC compensation */
+
+  bool withDcmEstimator_ = true; /** Whether the dcm filtering + bias estimation is active or not*/
+  stateObservation::LipmDcmEstimator dcmEstimator_;
+  bool dcmEstimatorInitialIteration_ = true;
 
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;

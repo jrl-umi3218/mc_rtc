@@ -32,8 +32,9 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
                                const std::string & rightSurface,
                                const std::string & torsoBodyName,
                                double dt)
-: robots_(robots), realRobots_(realRobots), robotIndex_(robotIndex), dcmIntegrator_(dt, /* timeConstant = */ 15.),
-  dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt), mass_(robots.robot(robotIndex).mass())
+: robots_(robots), realRobots_(realRobots), robotIndex_(robotIndex), dcmEstimator_(dt),
+  dcmIntegrator_(dt, /* t`  imeConstant = */ 15.), dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt),
+  mass_(robots.robot(robotIndex).mass())
 {
   type_ = "lipm_stabilizer";
   name_ = type_ + "_" + robots.robot(robotIndex).name();
@@ -101,6 +102,8 @@ void StabilizerTask::reset()
   vdcHeightError_ = 0.;
 
   zmpcc_.reset();
+
+  dcmEstimatorInitialIteration_ = true;
 
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
@@ -659,11 +662,43 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   {
     dcmDerivator_.reset(Eigen::Vector3d::Zero());
     dcmIntegrator_.append(Eigen::Vector3d::Zero());
+    dcmEstimatorInitialIteration_ = false;
   }
   else
   {
     Eigen::Vector3d zmpError = zmpTarget_ - measuredZMP_;
     zmpError.z() = 0.;
+
+    if(withDcmEstimator_)
+    {
+      if(omega_ != dcmEstimator_.getLipmNaturalFrequency())
+      {
+        dcmEstimator_.setLipmNaturalFrequency(omega_);
+      }
+
+      const Eigen::Matrix3d & waistOrientation = robot().posW().rotation().transpose();
+
+      if(dcmEstimatorInitialIteration_)
+      {
+        dcmEstimator_.resetWithMeasurements(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation, true);
+        dcmEstimatorInitialIteration_ = false;
+      }
+      else
+      {
+        dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation);
+      }
+
+      dcmEstimator_.update();
+
+      dcmError_.head<2>() = dcmEstimator_.getUnbiasedDCM();
+      comError.head<2>() -= dcmEstimator_.getBias();
+      comdError.head<2>() = omega_ * (dcmError_.head<2>() - comError.head<2>());
+    }
+    else
+    {
+      dcmEstimatorInitialIteration_ = false;
+    }
+
     dcmDerivator_.update(omega_ * (dcmError_ - zmpError));
     dcmIntegrator_.append(dcmError_);
   }
@@ -680,7 +715,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   // return {pendulum_.com().cross(desiredForce), desiredForce};
   // See https://github.com/stephane-caron/lipm_walking_controller/issues/28
   return {measuredCoM_.cross(desiredForce), desiredForce};
-}
+  }
 
 void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
 {
