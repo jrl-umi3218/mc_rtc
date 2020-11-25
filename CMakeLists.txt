@@ -59,6 +59,7 @@ if(NOT TARGET RBDyn::Parsers)
   message(FATAL_ERROR "RBDyn must be built with parsers support")
 endif()
 add_project_dependency(eigen-quadprog REQUIRED)
+add_project_dependency(state-observation REQUIRED)
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
