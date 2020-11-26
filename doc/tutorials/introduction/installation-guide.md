@@ -109,6 +109,7 @@ Building from sources on other platforms is not well documented at the moment. I
 - [sch-core](https://github.com/jrl-umi3218/sch-core)
 - [Tasks](https://github.com/jrl-umi3218/Tasks)
 - [mc_rtc_data](https://github.com/jrl-umi3218/mc_rtc_data)
+- [state-observation](https://github.com/jrl-umi3218/state-observation)
 
 mc\_rtc also has a ROS plugin that enables automated robot's status publication as ROS topics and facilitate the integration with ROS tools (e.g. RViZ), to build this you will need:
 
