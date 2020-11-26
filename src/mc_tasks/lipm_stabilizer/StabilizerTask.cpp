@@ -715,7 +715,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   // return {pendulum_.com().cross(desiredForce), desiredForce};
   // See https://github.com/stephane-caron/lipm_walking_controller/issues/28
   return {measuredCoM_.cross(desiredForce), desiredForce};
-  }
+}
 
 void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
 {
