@@ -577,7 +577,8 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
   comdTarget_ = comd;
   comddTarget_ = comdd;
   zmpTarget_ = zmp;
-  omega_ = std::sqrt(constants::gravity.z() / comTarget_.z());
+  double comHeight = comTarget_.z() - zmpTarget_.z();
+  omega_ = std::sqrt(constants::gravity.z() / comHeight);
   dcmTarget_ = comTarget_ + comdTarget_ / omega_;
 }
 
