@@ -83,6 +83,28 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                             }),
                  NumberInput("Torso pitch [rad]", [this]() { return c_.torsoPitch; },
                              [this](double pitch) { torsoPitch(pitch); }));
+  gui.addElement({"Tasks", name_, "Advanced", "DCM Bias"},
+                 NumberInput("dcmMeasureErrorStd", [this]() { return c_.dcmBias.dcmMeasureErrorStd; },
+                             [this](double v) {
+                               c_.dcmBias.dcmMeasureErrorStd = v;
+                               dcmEstimator_.setDcmMeasureErrorStd(v);
+                             }),
+                 NumberInput("zmpMeasureErrorStd", [this]() { return c_.dcmBias.zmpMeasureErrorStd; },
+                             [this](double v) {
+                               c_.dcmBias.zmpMeasureErrorStd = v;
+                               dcmEstimator_.setZmpMeasureErrorStd(v);
+                             }),
+                 NumberInput("driftPerSecondStd", [this]() { return c_.dcmBias.biasDriftPerSecondStd; },
+                             [this](double v) {
+                               c_.dcmBias.biasDriftPerSecondStd = v;
+                               dcmEstimator_.setBiasDriftPerSecond(v);
+                             }),
+                 ArrayInput("Bias Limit [m]", {"sagital", "lateral"},
+                            [this]() -> const Eigen::Vector2d & { return c_.dcmBias.biasLimit; },
+                            [this](const Eigen::Vector2d & v) {
+                              c_.dcmBias.biasLimit = v;
+                              dcmEstimator_.setBiasLimit(v);
+                            }));
 
   gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Debug"});
@@ -252,6 +274,11 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_dcmTracking_derivGain", [this]() { return c_.dcmDerivGain; });
   logger.addLogEntry(name_ + "_dcmTracking_integralGain", [this]() { return c_.dcmIntegralGain; });
   logger.addLogEntry(name_ + "_dcmTracking_propGain", [this]() { return c_.dcmPropGain; });
+  logger.addLogEntry(name_ + "_dcmBias_dcmMeasureErrorStd", [this]() { return c_.dcmBias.dcmMeasureErrorStd; });
+  logger.addLogEntry(name_ + "_dcmBias_zmpMeasureErrorStd", [this]() { return c_.dcmBias.zmpMeasureErrorStd; });
+  logger.addLogEntry(name_ + "_dcmBias_driftPerSecondStd", [this]() { return c_.dcmBias.biasDriftPerSecondStd; });
+  logger.addLogEntry(name_ + "_dcmBias_biasLimit",
+                     [this]() -> const Eigen::Vector2d & { return c_.dcmBias.biasLimit; });
   logger.addLogEntry(name_ + "_dfz_damping", [this]() { return c_.dfzDamping; });
   logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque",
                      [this]() { return std::pow(c_.fdqpWeights.ankleTorqueSqrt, 2); });
@@ -327,6 +354,10 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_dcmTracking_derivGain");
   logger.removeLogEntry(name_ + "_dcmTracking_integralGain");
   logger.removeLogEntry(name_ + "_dcmTracking_propGain");
+  logger.removeLogEntry(name_ + "_dcmBias_dcmMeasureErrorStd");
+  logger.removeLogEntry(name_ + "_dcmBias_zmpMeasureErrorStd");
+  logger.removeLogEntry(name_ + "_dcmBias_driftPerSecondStd");
+  logger.removeLogEntry(name_ + "_dcmBias_biasLimit");
   logger.removeLogEntry(name_ + "_dfz_damping");
   logger.removeLogEntry(name_ + "_fdqp_weights_ankleTorque");
   logger.removeLogEntry(name_ + "_fdqp_weights_netWrench");

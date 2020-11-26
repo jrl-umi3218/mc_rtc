@@ -331,6 +331,9 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
     footTask.second->maxLinearVel(c_.copMaxVel.linear());
     footTask.second->maxAngularVel(c_.copMaxVel.angular());
   }
+
+  dcmBiasEstimatorConfiguration(c_.dcmBias);
+
   reconfigure_ = false;
 }
 

@@ -35,6 +35,7 @@ using ZMPCCConfiguration = mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration;
 using StabilizerConfiguration = mc_rbdyn::lipm_stabilizer::StabilizerConfiguration;
 using FDQPWeights = mc_rbdyn::lipm_stabilizer::FDQPWeights;
 using SafetyThresholds = mc_rbdyn::lipm_stabilizer::SafetyThresholds;
+using DCMBiasEstimatorConfiguration = mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration;
 
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
@@ -490,6 +491,27 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     c_.clampGains();
     // only requried because we want to apply the new gains immediately
     copAdmittance(c_.copAdmittance);
+  }
+
+  /**
+   * @brief Changes the parameters of the DCM bias estimator
+   *
+   * @param biasConfig Configuration parameters for the bias estimation
+   */
+  void dcmBiasEstimatorConfiguration(const DCMBiasEstimatorConfiguration & biasConfig)
+  {
+    auto & bc = c_.dcmBias;
+    bc = biasConfig;
+    dcmEstimator_.setBiasDriftPerSecond(bc.biasDriftPerSecondStd);
+    dcmEstimator_.setDcmMeasureErrorStd(bc.dcmMeasureErrorStd);
+    dcmEstimator_.setZmpMeasureErrorStd(bc.zmpMeasureErrorStd);
+    dcmEstimator_.setBiasLimit(bc.biasLimit);
+  }
+
+  /// Get parameters of the DCM bias estimator
+  const DCMBiasEstimatorConfiguration & dcmBiasEstimatorConfiguration() const
+  {
+    return c_.dcmBias;
   }
 
 private:
