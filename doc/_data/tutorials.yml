@@ -137,5 +137,8 @@
       id: new-robot
       title: Integrate a new robot in mc_rtc
     -
+      id: support-mc-rtc-build-static
+      title: Supporting MC_RTC_BUILD_STATIC in your code
+    -
       id: debug-lssol-output-6
       title: Debugging LSSOL output 6
