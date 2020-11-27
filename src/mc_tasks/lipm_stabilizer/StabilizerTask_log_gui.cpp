@@ -84,6 +84,11 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                             }),
                  NumberInput("Torso pitch [rad]", [this]() { return c_.torsoPitch; },
                              [this](double pitch) { torsoPitch(pitch); }));
+  gui.addElement(
+      {"Tasks", name_, "Advanced", "DCM Bias"}, mc_rtc::gui::ElementsStacking::Horizontal,
+      Checkbox("Enabled", [this]() { return withDcmEstimator_; }, [this]() { withDcmEstimator_ = !withDcmEstimator_; }),
+      Checkbox("Use Filtered DCM", [this]() { return useFilteredDcm_; },
+               [this]() { useFilteredDcm_ = !useFilteredDcm_; }));
   gui.addElement({"Tasks", name_, "Advanced", "DCM Bias"},
                  NumberInput("dcmMeasureErrorStd", [this]() { return c_.dcmBias.dcmMeasureErrorStd; },
                              [this](double v) {
@@ -150,9 +155,17 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                         [this, &gui]() {
                           gui.addPlot("CoM Tracking (x)", plot::X("t", [this]() { return t_; }),
                                       plot::Y("com_ref", [this]() { return comTarget_.x(); }, Color::Red),
-                                      plot::Y("com_mes", [this]() { return measuredCoM_.y(); }, Color::Magenta));
+                                      plot::Y("com_mes", [this]() { return measuredCoM_.x(); }, Color::Magenta));
                         }),
                  Button("Stop CoM (x)", [&gui]() { gui.removePlot("CoM Tracking (x)"); }));
+  gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
+                 Button("Plot CoM Tracking (y)",
+                        [this, &gui]() {
+                          gui.addPlot("CoM Tracking (y)", plot::X("t", [this]() { return t_; }),
+                                      plot::Y("com_ref", [this]() { return comTarget_.y(); }, Color::Red),
+                                      plot::Y("com_mes", [this]() { return measuredCoM_.y(); }, Color::Magenta));
+                        }),
+                 Button("Stop CoM (y)", [&gui]() { gui.removePlot("CoM Tracking (y)"); }));
 
   gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM Integrator",

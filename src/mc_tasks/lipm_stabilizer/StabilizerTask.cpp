@@ -694,7 +694,14 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
 
       dcmEstimator_.update();
 
-      dcmError_.head<2>() = dcmEstimator_.getUnbiasedDCM();
+      if(useFilteredDcm_)
+      {
+        dcmError_.head<2>() = dcmEstimator_.getUnbiasedDCM();
+      }
+      else
+      {
+        dcmError_.head<2>() -= dcmEstimator_.getBias();
+      }
       comError.head<2>() -= dcmEstimator_.getBias();
       comdError.head<2>() = omega_ * (dcmError_.head<2>() - comError.head<2>());
       measuredDCMUnbiased_ = dcmTarget_ - dcmError_;

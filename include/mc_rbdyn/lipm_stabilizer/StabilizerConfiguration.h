@@ -8,7 +8,6 @@
 #include <mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h>
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/logging.h>
-#include <state-observation/dynamics-estimators/lipm-dcm-estimator.hpp>
 
 namespace mc_rbdyn
 {
@@ -60,11 +59,11 @@ struct DCMBiasEstimatorConfiguration
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   /// the standard deviation of the dcm estimation error, NOT including the bias [m]
-  double dcmMeasureErrorStd = stateObservation::LipmDcmEstimator::defaultDcmErrorStd;
+  double dcmMeasureErrorStd = 0.01;
   /// the standard deviaiton of the zmp estimation error [m]
-  double zmpMeasureErrorStd = stateObservation::LipmDcmEstimator::defaultZmpErrorStd;
+  double zmpMeasureErrorStd = 0.05;
   /// the standard deviation of the drift [m/s]
-  double biasDriftPerSecondStd = stateObservation::LipmDcmEstimator::defaultBiasDriftSecond;
+  double biasDriftPerSecondStd = 0.02;
   /// Maximum bias in the sagital and lateral directions [m]
   Eigen::Vector2d biasLimit = {0.02, 0.02};
 };
