@@ -103,7 +103,7 @@ void StabilizerTask::reset()
 
   zmpcc_.reset();
 
-  dcmEstimatorInitialIteration_ = true;
+  dcmEstimatorNeedsReset_ = true;
 
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
@@ -666,7 +666,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   {
     dcmDerivator_.reset(Eigen::Vector3d::Zero());
     dcmIntegrator_.append(Eigen::Vector3d::Zero());
-    dcmEstimatorInitialIteration_ = false;
+    dcmEstimatorNeedsReset_ = false;
   }
   else
   {
@@ -682,10 +682,10 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
 
       const Eigen::Matrix3d & waistOrientation = robot().posW().rotation().transpose();
 
-      if(dcmEstimatorInitialIteration_)
+      if(dcmEstimatorNeedsReset_)
       {
         dcmEstimator_.resetWithMeasurements(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation, true);
-        dcmEstimatorInitialIteration_ = false;
+        dcmEstimatorNeedsReset_ = false;
       }
       else
       {
@@ -697,11 +697,12 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
       dcmError_.head<2>() = dcmEstimator_.getUnbiasedDCM();
       comError.head<2>() -= dcmEstimator_.getBias();
       comdError.head<2>() = omega_ * (dcmError_.head<2>() - comError.head<2>());
-      measuredDCM_ = dcmTarget_ - dcmError_;
+      measuredDCMUnbiased_ = dcmTarget_ - dcmError_;
     }
     else
     {
-      dcmEstimatorInitialIteration_ = false;
+      measuredDCMUnbiased_ = measuredDCM_;
+      dcmEstimatorNeedsReset_ = false;
     }
 
     dcmDerivator_.update(omega_ * (dcmError_ - zmpError));

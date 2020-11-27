@@ -24,6 +24,7 @@ inline Eigen::Vector2d vecFromError(const Eigen::Vector3d & error)
 void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   using namespace mc_rtc::gui;
+  using Style = mc_rtc::gui::plot::Style;
 
   // clang-format off
   auto addConfigButtons =
@@ -104,7 +105,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                             [this](const Eigen::Vector2d & v) {
                               c_.dcmBias.biasLimit = v;
                               dcmEstimator_.setBiasLimit(v);
-                            }));
+                            }),
+                 ArrayLabel("Local Bias", [this]() { return dcmEstimator_.getLocalBias(); }));
 
   gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Debug"});
@@ -116,26 +118,30 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM-ZMP Tracking (x)",
                         [this, &gui]() {
-                          gui.addPlot("DCM-ZMP Tracking (x)", plot::X("t", [this]() { return t_; }),
-                                      plot::Y("support_min", [this]() { return supportMin_.x(); }, Color::Red),
-                                      plot::Y("support_max", [this]() { return supportMax_.x(); }, Color::Red),
-                                      plot::Y("dcm_ref", [this]() { return dcmTarget_.x(); }, Color::Red),
-                                      plot::Y("dcm_mes", [this]() { return measuredDCM_.x(); }, Color::Magenta),
-                                      plot::Y("zmp_ref", [this]() { return zmpTarget_.x(); }, Color::Blue),
-                                      plot::Y("zmp_mes", [this]() { return measuredZMP_.x(); }, Color::Cyan));
+                          gui.addPlot(
+                              "DCM-ZMP Tracking (x)", plot::X("t", [this]() { return t_; }),
+                              plot::Y("support_min", [this]() { return supportMin_.x(); }, Color::Red),
+                              plot::Y("support_max", [this]() { return supportMax_.x(); }, Color::Red),
+                              plot::Y("dcm_ref", [this]() { return dcmTarget_.x(); }, Color::Red),
+                              plot::Y("dcm_mes", [this]() { return measuredDCM_.x(); }, Color::Magenta, Style::Dashed),
+                              plot::Y("dcm_unbiased", [this]() { return measuredDCMUnbiased_.x(); }, Color::Magenta),
+                              plot::Y("zmp_ref", [this]() { return zmpTarget_.x(); }, Color::Blue),
+                              plot::Y("zmp_mes", [this]() { return measuredZMP_.x(); }, Color::Cyan));
                         }),
                  Button("Stop DCM-ZMP (x)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (x)"); }));
 
   gui.addElement({"Tasks", name_, "Debug"}, ElementsStacking::Horizontal,
                  Button("Plot DCM-ZMP Tracking (y)",
                         [this, &gui]() {
-                          gui.addPlot("DCM-ZMP Tracking (y)", plot::X("t", [this]() { return t_; }),
-                                      plot::Y("support_min", [this]() { return supportMin_.y(); }, Color::Red),
-                                      plot::Y("support_max", [this]() { return supportMax_.y(); }, Color::Red),
-                                      plot::Y("dcm_ref", [this]() { return dcmTarget_.y(); }, Color::Red),
-                                      plot::Y("dcm_mes", [this]() { return measuredDCM_.y(); }, Color::Magenta),
-                                      plot::Y("zmp_ref", [this]() { return zmpTarget_.y(); }, Color::Blue),
-                                      plot::Y("zmp_mes", [this]() { return measuredZMP_.y(); }, Color::Cyan));
+                          gui.addPlot(
+                              "DCM-ZMP Tracking (y)", plot::X("t", [this]() { return t_; }),
+                              plot::Y("support_min", [this]() { return supportMin_.y(); }, Color::Red),
+                              plot::Y("support_max", [this]() { return supportMax_.y(); }, Color::Red),
+                              plot::Y("dcm_ref", [this]() { return dcmTarget_.y(); }, Color::Red),
+                              plot::Y("dcm_mes", [this]() { return measuredDCM_.y(); }, Color::Magenta, Style::Dashed),
+                              plot::Y("dcm_unbiased", [this]() { return measuredDCMUnbiased_.y(); }, Color::Magenta),
+                              plot::Y("zmp_ref", [this]() { return zmpTarget_.y(); }, Color::Blue),
+                              plot::Y("zmp_mes", [this]() { return measuredZMP_.y(); }, Color::Cyan));
                         }),
                  Button("Stop DCM-ZMP (y)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (y)"); }));
 
@@ -279,6 +285,8 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_dcmBias_driftPerSecondStd", [this]() { return c_.dcmBias.biasDriftPerSecondStd; });
   logger.addLogEntry(name_ + "_dcmBias_biasLimit",
                      [this]() -> const Eigen::Vector2d & { return c_.dcmBias.biasLimit; });
+  logger.addLogEntry(name_ + "_dcmBias_localBias", [this]() { return dcmEstimator_.getLocalBias(); });
+  logger.addLogEntry(name_ + "_dcmBias_bias", [this]() { return dcmEstimator_.getBias(); });
   logger.addLogEntry(name_ + "_dfz_damping", [this]() { return c_.dfzDamping; });
   logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque",
                      [this]() { return std::pow(c_.fdqpWeights.ankleTorqueSqrt, 2); });
@@ -286,20 +294,20 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_fdqp_weights_pressure", [this]() { return std::pow(c_.fdqpWeights.pressureSqrt, 2); });
   logger.addLogEntry(name_ + "_vdc_frequency", [this]() { return c_.vdcFrequency; });
   logger.addLogEntry(name_ + "_vdc_stiffness", [this]() { return c_.vdcStiffness; });
-  logger.addLogEntry(name_ + "_wrench", [this]() { return distribWrench_; });
-  logger.addLogEntry(name_ + "_support_min", [this]() { return supportMin_; });
-  logger.addLogEntry(name_ + "_support_max", [this]() { return supportMax_; });
+  logger.addLogEntry(name_ + "_wrench", [this]() -> const sva::ForceVecd & { return distribWrench_; });
+  logger.addLogEntry(name_ + "_support_min", [this]() -> const Eigen::Vector2d & { return supportMin_; });
+  logger.addLogEntry(name_ + "_support_max", [this]() -> const Eigen::Vector2d & { return supportMax_; });
   logger.addLogEntry(name_ + "_left_foot_ratio", [this]() { return leftFootRatio_; });
 
   // Stabilizer targets
-  logger.addLogEntry(name_ + "_target_pendulum_com", [this]() { return comTarget_; });
-  logger.addLogEntry(name_ + "_target_pendulum_comd", [this]() { return comdTarget_; });
-  logger.addLogEntry(name_ + "_target_pendulum_comdd", [this]() { return comddTarget_; });
-  logger.addLogEntry(name_ + "_target_pendulum_dcm", [this]() { return dcmTarget_; });
+  logger.addLogEntry(name_ + "_target_pendulum_com", [this]() -> const Eigen::Vector3d & { return comTarget_; });
+  logger.addLogEntry(name_ + "_target_pendulum_comd", [this]() -> const Eigen::Vector3d & { return comdTarget_; });
+  logger.addLogEntry(name_ + "_target_pendulum_comdd", [this]() -> const Eigen::Vector3d & { return comddTarget_; });
+  logger.addLogEntry(name_ + "_target_pendulum_dcm", [this]() -> const Eigen::Vector3d & { return dcmTarget_; });
   logger.addLogEntry(name_ + "_target_pendulum_omega", [this]() { return omega_; });
-  logger.addLogEntry(name_ + "_target_pendulum_zmp", [this]() { return zmpTarget_; });
+  logger.addLogEntry(name_ + "_target_pendulum_zmp", [this]() -> const Eigen::Vector3d & { return zmpTarget_; });
 
-  logger.addLogEntry(name_ + "_contactState", [this]() -> double {
+  logger.addLogEntry(name_ + "_contactState", [this]() -> int {
     if(inDoubleSupport())
       return 0;
     else if(inContact(ContactState::Left))
@@ -317,18 +325,20 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() { return robot().surfacePose(footSurface(ContactState::Right)); });
   logger.addLogEntry(name_ + "_controlRobot_com", [this]() { return robot().com(); });
   logger.addLogEntry(name_ + "_controlRobot_comd", [this]() { return robot().comVelocity(); });
-  logger.addLogEntry(name_ + "_controlRobot_posW", [this]() { return robot().posW(); });
+  logger.addLogEntry(name_ + "_controlRobot_posW", [this]() -> const sva::PTransformd & { return robot().posW(); });
 
   logger.addLogEntry(name_ + "_realRobot_LeftFoot",
                      [this]() { return realRobot().surfacePose(footSurface(ContactState::Left)); });
   logger.addLogEntry(name_ + "_realRobot_RightFoot",
                      [this]() { return realRobot().surfacePose(footSurface(ContactState::Right)); });
-  logger.addLogEntry(name_ + "_realRobot_com", [this]() { return measuredCoM_; });
-  logger.addLogEntry(name_ + "_realRobot_comd", [this]() { return measuredCoMd_; });
-  logger.addLogEntry(name_ + "_realRobot_dcm", [this]() -> Eigen::Vector3d { return measuredDCM_; });
-  logger.addLogEntry(name_ + "_realRobot_posW", [this]() { return realRobot().posW(); });
-  logger.addLogEntry(name_ + "_realRobot_wrench", [this]() { return measuredNetWrench_; });
-  logger.addLogEntry(name_ + "_realRobot_zmp", [this]() { return measuredZMP_; });
+  logger.addLogEntry(name_ + "_realRobot_com", [this]() -> const Eigen::Vector3d & { return measuredCoM_; });
+  logger.addLogEntry(name_ + "_realRobot_comd", [this]() -> const Eigen::Vector3d & { return measuredCoMd_; });
+  logger.addLogEntry(name_ + "_realRobot_dcm", [this]() -> const Eigen::Vector3d & { return measuredDCM_; });
+  logger.addLogEntry(name_ + "_realRobot_dcm_unbiased",
+                     [this]() -> const Eigen::Vector3d & { return measuredDCMUnbiased_; });
+  logger.addLogEntry(name_ + "_realRobot_posW", [this]() -> const sva::PTransformd & { return realRobot().posW(); });
+  logger.addLogEntry(name_ + "_realRobot_wrench", [this]() -> const sva::ForceVecd & { return measuredNetWrench_; });
+  logger.addLogEntry(name_ + "_realRobot_zmp", [this]() -> const Eigen::Vector3d & { return measuredZMP_; });
 
   MetaTask::addToLogger(*comTask, logger);
   MetaTask::addToLogger(*pelvisTask, logger);
@@ -358,6 +368,8 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_dcmBias_zmpMeasureErrorStd");
   logger.removeLogEntry(name_ + "_dcmBias_driftPerSecondStd");
   logger.removeLogEntry(name_ + "_dcmBias_biasLimit");
+  logger.removeLogEntry(name_ + "_dcmBias_localBias");
+  logger.removeLogEntry(name_ + "_dcmBias_bias");
   logger.removeLogEntry(name_ + "_dfz_damping");
   logger.removeLogEntry(name_ + "_fdqp_weights_ankleTorque");
   logger.removeLogEntry(name_ + "_fdqp_weights_netWrench");
@@ -385,6 +397,7 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_realRobot_com");
   logger.removeLogEntry(name_ + "_realRobot_comd");
   logger.removeLogEntry(name_ + "_realRobot_dcm");
+  logger.removeLogEntry(name_ + "_realRobot_dcm_unbiased");
   logger.removeLogEntry(name_ + "_realRobot_posW");
   logger.removeLogEntry(name_ + "_realRobot_wrench");
   logger.removeLogEntry(name_ + "_realRobot_zmp");

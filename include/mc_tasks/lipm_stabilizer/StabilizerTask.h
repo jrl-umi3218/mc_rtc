@@ -711,15 +711,17 @@ protected:
   Eigen::Vector3d measuredCoM_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredCoMd_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredZMP_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero(); /// Measured DCM (only used for logging)
+  Eigen::Vector3d measuredDCMUnbiased_ = Eigen::Vector3d::Zero(); /// DCM unbiased (only used for logging)
   sva::ForceVecd measuredNetWrench_ = sva::ForceVecd::Zero();
 
   bool zmpccOnlyDS_ = true; /**< Only apply ZMPCC in double support */
   ZMPCC zmpcc_; /**< Compute CoM offset due to ZMPCC compensation */
 
-  bool withDcmEstimator_ = true; /** Whether the dcm filtering + bias estimation is active or not*/
   stateObservation::LipmDcmEstimator dcmEstimator_;
-  bool dcmEstimatorInitialIteration_ = true;
+  bool withDcmEstimator_ = true; /**< Whether the dcm filtering + bias estimation is active or not*/
+  /**< Whether the estimator needs to be reset (robot in the air, initialization) */
+  bool dcmEstimatorNeedsReset_ = true;
 
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
