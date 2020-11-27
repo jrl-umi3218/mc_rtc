@@ -515,7 +515,7 @@ class LabelsTitleEditDialog(QtWidgets.QDialog):
   def __init__(self, parent, canvas):
     self.canvas = canvas
 
-    self.setWindowTitle('Edit graph title')
+    self.setWindowTitle('Edit graph title, labels and style')
 
     row = 0
 
@@ -579,8 +579,8 @@ class LabelsTitleEditDialog(QtWidgets.QDialog):
     extraRow += 1
 
     self.extraLayout.addWidget(QtWidgets.QLabel("Legend size"), extraRow, 0)
-    self.extraLayout.addWidget(QtWidgets.QLabel("Legend Y1 columns"), extraRow, 1, 1, 2)
-    self.extraLayout.addWidget(QtWidgets.QLabel("Legend Y2 columns"), extraRow, 3, 1, 2)
+    self.extraLayout.addWidget(QtWidgets.QLabel("Legend Y1 columns"), extraRow, 1)
+    self.extraLayout.addWidget(QtWidgets.QLabel("Legend Y2 columns"), extraRow, 2)
     extraRow += 1
 
     self.legendSizeEdit = QtWidgets.QLineEdit(str(canvas.legend_fontsize()))
@@ -590,8 +590,19 @@ class LabelsTitleEditDialog(QtWidgets.QDialog):
     self.y2LegendNColEdit = QtWidgets.QLineEdit(str(canvas.y2_legend_ncol()))
     self.y2LegendNColEdit.setValidator(QtGui.QIntValidator(1, 100))
     self.extraLayout.addWidget(self.legendSizeEdit, extraRow, 0)
-    self.extraLayout.addWidget(self.y1LegendNColEdit, extraRow, 1, 1, 2)
-    self.extraLayout.addWidget(self.y2LegendNColEdit, extraRow, 3, 1, 2)
+    self.extraLayout.addWidget(self.y1LegendNColEdit, extraRow, 1)
+    self.extraLayout.addWidget(self.y2LegendNColEdit, extraRow, 2)
+    extraRow += 1
+
+    self.extraLayout.addWidget(QtWidgets.QLabel("Labels legend size"), extraRow, 0, 1, 2)
+    self.extraLayout.addWidget(QtWidgets.QLabel("Labels legend top offset"), extraRow, 2, 1, 1)
+    extraRow += 1
+
+    self.labelsLegendSizeEdit = QtWidgets.QLineEdit(str(canvas.labels_legend_fontsize()))
+    self.labelsLegendSizeEdit.setValidator(QtGui.QDoubleValidator(1, 1e6, 1))
+    self.labelsLegendTopOffsetEdit = QtWidgets.QLineEdit(str(canvas.labels_legend_top_offset()))
+    self.extraLayout.addWidget(self.labelsLegendSizeEdit, extraRow, 0, 1, 2)
+    self.extraLayout.addWidget(self.labelsLegendTopOffsetEdit, extraRow, 2, 1, 2)
     extraRow += 1
 
     self.layout.addLayout(self.extraLayout, row, 0, extraRow, 3)
@@ -613,6 +624,8 @@ class LabelsTitleEditDialog(QtWidgets.QDialog):
     self.canvas.bottom_offset(float(self.bottomOffsetEdit.text()))
     self.canvas.y1_legend_ncol(int(self.y1LegendNColEdit.text()))
     self.canvas.y2_legend_ncol(int(self.y2LegendNColEdit.text()))
+    self.canvas.labels_legend_fontsize(int(self.labelsLegendSizeEdit.text()))
+    self.canvas.labels_legend_top_offset(float(self.labelsLegendTopOffsetEdit.text()))
     self.canvas.draw()
 
   def accept(self):

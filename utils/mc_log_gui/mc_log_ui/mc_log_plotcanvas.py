@@ -163,6 +163,10 @@ class PlotPolygonAxis(object):
     self.data = {}
     self.plots = OrderedDict()
     self.colors = OrderedDict()
+  def _legend_fontsize(self):
+    return self.figure._labels_legend_fontsize
+  def _legend_top_offset(self):
+    return self.figure._labels_legend_top_offset
   def _plot_string(self, x, y, y_label, style):
     if y_label in self.plots:
       return False
@@ -201,7 +205,7 @@ class PlotPolygonAxis(object):
     xL = 1.0
     if len(self.figure._right()):
       xL = 1.025
-    self._axis.legend(bbox_to_anchor=(xL, 0., 0.2, 0.1), mode="expand", borderaxespad=0.5)
+    self._axis.legend(bbox_to_anchor=(xL, self._legend_top_offset(), 0.2, 0.1), mode="expand", borderaxespad=0.5, fontsize=self._legend_fontsize())
   def remove_plot(self, y):
     if y not in self.plots:
       return
@@ -558,6 +562,8 @@ class PlotFigure(object):
     self._labelpad = 10
     self._tick_labelsize = 10
     self._legend_fontsize = 10
+    self._labels_legend_fontsize = 10
+    self._labels_legend_top_offset = 0.9
     self._top_offset = 0.9
     self._bottom_offset = 0.1
     if self._3D:
@@ -729,6 +735,18 @@ class PlotFigure(object):
     if size is None:
       return self._legend_fontsize
     self._legend_fontsize = size
+    self._legend()
+
+  def labels_legend_fontsize(self, size = None):
+    if size is None:
+      return self._labels_legend_fontsize
+    self._labels_legend_fontsize = size
+    self._legend()
+
+  def labels_legend_top_offset(self, offset = None):
+    if offset is None:
+      return self._labels_legend_top_offset
+    self._labels_legend_top_offset = offset
     self._legend()
 
   def y1_legend_ncol(self, n = None):
