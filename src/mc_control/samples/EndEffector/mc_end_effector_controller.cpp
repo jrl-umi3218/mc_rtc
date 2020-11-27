@@ -6,10 +6,14 @@
 
 #include <mc_rtc/logging.h>
 
+#include <mc_tasks/MetaTaskLoader.h>
+
 namespace mc_control
 {
 
-MCEndEffectorController::MCEndEffectorController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
+MCEndEffectorController::MCEndEffectorController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module,
+                                                 double dt,
+                                                 const mc_rtc::Configuration & config)
 : MCController(robot_module, dt)
 {
   solver().addConstraintSet(contactConstraint);
@@ -40,29 +44,41 @@ MCEndEffectorController::MCEndEffectorController(std::shared_ptr<mc_rbdyn::Robot
   if(robot().hasBody("RARM_LINK7"))
   {
     body = "RARM_LINK7";
-    efTask.reset(new mc_tasks::EndEffectorTask("RARM_LINK7", robots(), robots().robotIndex(), 2.0, 1e5));
   }
   else if(robot().hasBody("r_wrist"))
   {
     body = "r_wrist";
-    efTask.reset(new mc_tasks::EndEffectorTask("r_wrist", robots(), robots().robotIndex(), 2.0, 1e5));
   }
-  efTask = std::make_shared<mc_tasks::EndEffectorTask>(body, robots(), robots().robotIndex(), 2.0, 1e5);
-  solver().addTask(efTask);
+  efTask_ = std::make_shared<mc_tasks::EndEffectorTask>(body, robots(), robots().robotIndex(), 2.0, 1000.0);
+  solver().addTask(efTask_);
   if(robot().mb().joint(0).dof() != 0)
   {
-    comTask = std::make_shared<mc_tasks::CoMTask>(robots(), robots().robotIndex());
-    solver().addTask(comTask);
+    comTask_ = std::make_shared<mc_tasks::CoMTask>(robots(), robots().robotIndex());
+    solver().addTask(comTask_);
+  }
+  postureTask->weight(1.0);
+  if(config.has(robot().name()))
+  {
+    auto tasks = config(robot().name())("tasks", std::vector<mc_rtc::Configuration>{});
+    for(auto & t : tasks)
+    {
+      tasks_.emplace_back(mc_tasks::MetaTaskLoader::load(solver(), t));
+      solver().addTask(tasks_.back());
+    }
   }
 }
 
 void MCEndEffectorController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  efTask->reset();
-  if(comTask)
+  efTask_->reset();
+  if(comTask_)
   {
-    comTask->reset();
+    comTask_->reset();
+  }
+  for(auto & t : tasks_)
+  {
+    t->reset();
   }
 }
 

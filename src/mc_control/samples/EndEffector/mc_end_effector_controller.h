@@ -16,15 +16,18 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI MCEndEffectorController : public MCController
 {
 public:
-  MCEndEffectorController(std::shared_ptr<mc_rbdyn::RobotModule> robot, double dt);
+  MCEndEffectorController(std::shared_ptr<mc_rbdyn::RobotModule> robot,
+                          double dt,
+                          const mc_rtc::Configuration & config);
 
   void reset(const ControllerResetData & reset_data) override;
 
-public:
-  std::shared_ptr<mc_tasks::EndEffectorTask> efTask;
-  std::shared_ptr<mc_tasks::CoMTask> comTask;
+private:
+  std::shared_ptr<mc_tasks::EndEffectorTask> efTask_;
+  std::shared_ptr<mc_tasks::CoMTask> comTask_;
+  std::vector<mc_tasks::MetaTaskPtr> tasks_;
 };
 
 } // namespace mc_control
 
-SIMPLE_CONTROLLER_CONSTRUCTOR("EndEffector", mc_control::MCEndEffectorController)
+CONTROLLER_CONSTRUCTOR("EndEffector", mc_control::MCEndEffectorController)
