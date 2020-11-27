@@ -49,7 +49,7 @@ MCEndEffectorController::MCEndEffectorController(std::shared_ptr<mc_rbdyn::Robot
   {
     body = "r_wrist";
   }
-  efTask_ = std::make_shared<mc_tasks::EndEffectorTask>(body, robots(), robots().robotIndex(), 2.0, 1000.0);
+  efTask_ = std::make_shared<mc_tasks::EndEffectorTask>(body, robots(), robots().robotIndex(), 5.0, 200.0);
   solver().addTask(efTask_);
   if(robot().mb().joint(0).dof() != 0)
   {
