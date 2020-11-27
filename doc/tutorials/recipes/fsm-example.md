@@ -21,6 +21,9 @@ Setting up the FSM
   <li class="nav-item">
     <a class="nav-link" id="pythonCreateTab" data-toggle="tab" href="#pythonCreateTabContent" role="tab" aria-controls="pythonCreateTabContent" aria-selected="false">Python</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" id="githubCreateTab" data-toggle="tab" href="#githubCreateTabContent" role="tab" aria-controls="githubCreateTabContent" aria-selected="false">GitHub</a>
+  </li>
 </ul>
 <div class="tab-content" id="interfaceTabContent">
   <div class="tab-pane show active" id="cppCreateTabContent" role="tabpanel" arial-labelledby="cppCreateTab">
@@ -34,6 +37,13 @@ Setting up the FSM
     <div class="card bg-light">
       <div class="card-body">
         {% include tutorials/recipes/fsm-example/create-python.html %}
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="githubCreateTabContent" role="tabpanel" arial-labelledby="githubCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>Use the <a href="https://github.com/mc-rtc/new-fsm-controller">mc-rtc/new-fsm-controller</a> template project. This is equivalent to using the <code>mc_rtc_new_fsm_controller</code> tool with extra goodies.</p>
       </div>
     </div>
   </div>
