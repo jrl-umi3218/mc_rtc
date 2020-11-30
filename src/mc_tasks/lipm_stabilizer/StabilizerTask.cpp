@@ -631,6 +631,7 @@ void StabilizerTask::run()
     footTasks[ContactState::Left]->setZeroTargetWrench();
   }
 
+  distribZMP_ = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
   updateCoMTaskZMPCC();
   updateFootForceDifferenceControl();
 
@@ -906,10 +907,9 @@ void StabilizerTask::updateCoMTaskZMPCC()
   }
   else
   {
-    auto distribZMP = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
     zmpcc_.configure(c_.zmpcc);
     zmpcc_.enabled(enabled_);
-    zmpcc_.update(distribZMP, measuredZMP_, zmpFrame_, dt_);
+    zmpcc_.update(distribZMP_, measuredZMP_, zmpFrame_, dt_);
   }
   zmpcc_.apply(comTarget_, comdTarget_, comddTarget_);
 }

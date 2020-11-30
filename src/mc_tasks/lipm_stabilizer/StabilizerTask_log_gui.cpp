@@ -130,8 +130,9 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               plot::Y("dcm_ref", [this]() { return dcmTarget_.x(); }, Color::Red),
                               plot::Y("dcm_mes", [this]() { return measuredDCM_.x(); }, Color::Magenta, Style::Dashed),
                               plot::Y("dcm_unbiased", [this]() { return measuredDCMUnbiased_.x(); }, Color::Magenta),
-                              plot::Y("zmp_ref", [this]() { return zmpTarget_.x(); }, Color::Blue),
-                              plot::Y("zmp_mes", [this]() { return measuredZMP_.x(); }, Color::Cyan));
+                              plot::Y("zmp_ref", [this]() { return zmpTarget_.x(); }, Color::Cyan),
+                              plot::Y("zmp_mes", [this]() { return measuredZMP_.x(); }, Color::Blue, Style::Dashed),
+                              plot::Y("zmp_stabi", [this]() { return distribZMP_.x(); }, Color::Blue));
                         }),
                  Button("Stop DCM-ZMP (x)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (x)"); }));
 
@@ -145,8 +146,9 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               plot::Y("dcm_ref", [this]() { return dcmTarget_.y(); }, Color::Red),
                               plot::Y("dcm_mes", [this]() { return measuredDCM_.y(); }, Color::Magenta, Style::Dashed),
                               plot::Y("dcm_unbiased", [this]() { return measuredDCMUnbiased_.y(); }, Color::Magenta),
-                              plot::Y("zmp_ref", [this]() { return zmpTarget_.y(); }, Color::Blue),
-                              plot::Y("zmp_mes", [this]() { return measuredZMP_.y(); }, Color::Cyan));
+                              plot::Y("zmp_ref", [this]() { return zmpTarget_.y(); }, Color::Cyan),
+                              plot::Y("zmp_mes", [this]() { return measuredZMP_.y(); }, Color::Blue, Style::Dashed),
+                              plot::Y("zmp_stabi", [this]() { return distribZMP_.y(); }, Color::Blue));
                         }),
                  Button("Stop DCM-ZMP (y)", [&gui]() { gui.removePlot("DCM-ZMP Tracking (y)"); }));
 
@@ -319,6 +321,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_target_pendulum_dcm", [this]() -> const Eigen::Vector3d & { return dcmTarget_; });
   logger.addLogEntry(name_ + "_target_pendulum_omega", [this]() { return omega_; });
   logger.addLogEntry(name_ + "_target_pendulum_zmp", [this]() -> const Eigen::Vector3d & { return zmpTarget_; });
+  logger.addLogEntry(name_ + "_target_stabilizer_zmp", [this]() -> const Eigen::Vector3d & { return distribZMP_; });
 
   logger.addLogEntry(name_ + "_contactState", [this]() -> int {
     if(inDoubleSupport())
@@ -400,6 +403,7 @@ void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_target_pendulum_dcm");
   logger.removeLogEntry(name_ + "_target_pendulum_omega");
   logger.removeLogEntry(name_ + "_target_pendulum_zmp");
+  logger.removeLogEntry(name_ + "_target_stabilizer_zmp");
   logger.removeLogEntry(name_ + "_controlRobot_LeftFoot");
   logger.removeLogEntry(name_ + "_controlRobot_RightFoot");
   logger.removeLogEntry(name_ + "_controlRobot_com");
