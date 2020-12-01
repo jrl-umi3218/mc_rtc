@@ -693,17 +693,21 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
         dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation);
       }
 
+      /// run the estimation
       dcmEstimator_.update();
 
       if(useFilteredDcm_)
       {
+        /// the estimators provides a filtered DCM
         dcmError_.head<2>() = dcmEstimator_.getUnbiasedDCM();
       }
       else
       {
         dcmError_.head<2>() -= dcmEstimator_.getBias();
       }
+      /// the bias should also correct the CoM
       comError.head<2>() -= dcmEstimator_.getBias();
+      /// the unbiased dcm allows also to get the velocity of the CoM
       comdError.head<2>() = omega_ * (dcmError_.head<2>() - comError.head<2>());
       measuredDCMUnbiased_ = dcmTarget_ - dcmError_;
     }
