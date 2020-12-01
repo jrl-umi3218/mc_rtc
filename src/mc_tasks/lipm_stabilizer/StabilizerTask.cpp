@@ -667,7 +667,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   {
     dcmDerivator_.reset(Eigen::Vector3d::Zero());
     dcmIntegrator_.append(Eigen::Vector3d::Zero());
-    dcmEstimatorNeedsReset_ = false;
+    dcmEstimatorNeedsReset_ = true;
   }
   else
   {
@@ -710,7 +710,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
     else
     {
       measuredDCMUnbiased_ = measuredDCM_;
-      dcmEstimatorNeedsReset_ = false;
+      dcmEstimatorNeedsReset_ = true;
     }
 
     dcmDerivator_.update(omega_ * (dcmError_ - zmpError));
