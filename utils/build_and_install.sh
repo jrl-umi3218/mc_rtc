@@ -1347,6 +1347,7 @@ else
   fi
 fi
 
-echo_log "source $this_dir/autocompletion.bash"
+echo_log ""
 echo_log "If you want autocompletion on the scripts add also the following to your .bashrc/.zshrc"
+echo_log "source $this_dir/autocompletion.bash"
 echo_log "If you are running zsh, replace autocompletion.bash with autocompletion.zsh in that last line"
