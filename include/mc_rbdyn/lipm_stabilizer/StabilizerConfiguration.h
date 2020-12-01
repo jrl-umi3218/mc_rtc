@@ -199,6 +199,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   Eigen::Vector2d copAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
   sva::MotionVecd copMaxVel{{0.3, 0.3, 0.3}, {0.1, 0.1, 0.1}}; /**< Maximal velocity of the cop tasks */
+  double copVelFilterGain = 0.8; /**< Gain of the low-pass filter on the cop task reference velocity */
   ZMPCCConfiguration zmpcc; /**< Configuration of ZMPCC (CoM admittance) */
 
   double dfzAdmittance = 1e-4; /**< Admittance for foot force difference control */
@@ -265,6 +266,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       auto admittance = config("admittance");
       admittance("cop", copAdmittance);
       admittance("maxVel", copMaxVel);
+      admittance("velFilterGain", mc_filter::utils::clamp(copVelFilterGain, 0, 1));
       admittance("dfz", dfzAdmittance);
       admittance("dfz_damping", dfzDamping);
     }
@@ -346,6 +348,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf("admittance").add("cop", copAdmittance);
     conf("admittance").add("dfz", dfzAdmittance);
     conf("admittance").add("dfz_damping", dfzDamping);
+    conf("admittance").add("maxVel", copMaxVel);
+    conf("admittance").add("velFilterGain", copVelFilterGain);
 
     conf.add("zmpcc", zmpcc);
 

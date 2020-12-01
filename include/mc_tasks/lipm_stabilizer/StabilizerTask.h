@@ -451,6 +451,22 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     }
   }
 
+  /* Set the gain of the low-pass velocity filter of the cop tasks */
+  void copVelFilterGain(double gain)
+  {
+    c_.copVelFilterGain = mc_filter::utils::clamp(gain, 0, 1);
+    for(auto & ft : footTasks)
+    {
+      ft.second->velFilterGain(gain);
+    }
+  }
+
+  /* Get the gain of the low-pass velocity filter of the cop tasks */
+  double copVelFilterGain() const noexcept
+  {
+    return c_.copVelFilterGain;
+  }
+
   void vdcFrequency(double freq)
   {
     c_.vdcFrequency = clamp(freq, 0., 10.);

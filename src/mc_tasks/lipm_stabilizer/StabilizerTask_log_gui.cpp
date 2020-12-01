@@ -74,6 +74,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                           [this]() { zmpccOnlyDS_ = !zmpccOnlyDS_; }));
   zmpcc_.addToGUI(gui, {"Tasks", name_, "Advanced"});
   gui.addElement({"Tasks", name_, "Advanced"},
+                 NumberInput("Admittance Velocity Filter", [this]() { return c_.copVelFilterGain; },
+                             [this](double gain) { copVelFilterGain(gain); }),
                  ArrayInput("Vertical drift compensation", {"frequency", "stiffness"},
                             [this]() -> Eigen::Vector2d {
                               return {c_.vdcFrequency, c_.vdcStiffness};

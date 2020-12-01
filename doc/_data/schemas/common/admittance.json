@@ -16,6 +16,7 @@
     },
     "dfz": { "type": "number", "minimum": 0, "default": 1e-4 },
     "dfz_damping": { "type": "number", "minimum": 0, "default": 0 },
+    "velFilterGain": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.8, "description": "Gain for the low-pass filter on reference velocity" },
     "maxVel":
     {
       "type": "object",
