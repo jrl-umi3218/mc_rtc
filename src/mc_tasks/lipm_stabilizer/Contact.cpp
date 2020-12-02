@@ -48,7 +48,7 @@ Contact::Contact(const mc_rbdyn::Robot & robot,
 
   double X = halfLength_;
   double Y = halfWidth_;
-  double mu = friction;
+  double mu = friction_;
   // clang-format off
   wrenchFaceMatrix_ <<
     // mx,  my,  mz,  fx,  fy,            fz,
@@ -81,8 +81,10 @@ void Contact::findSurfaceBoundaries(const mc_rbdyn::Surface & surface)
   double maxLateral = -std::numeric_limits<double>::max();
   for(const auto & point : surfacePoints)
   {
-    double x = point.translation().x();
-    double y = point.translation().y();
+    // Points are defined in body frame, convert to surface frame
+    Eigen::Vector3d surfacePoint = surface.X_b_s().rotation() * point.translation() - surface.X_b_s().translation();
+    double x = surfacePoint.x();
+    double y = surfacePoint.y();
     minSagital = std::min(minSagital, x);
     maxSagital = std::max(maxSagital, x);
     minLateral = std::min(minLateral, y);
