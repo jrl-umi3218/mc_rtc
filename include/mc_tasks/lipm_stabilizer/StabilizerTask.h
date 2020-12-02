@@ -735,8 +735,6 @@ protected:
   ZMPCC zmpcc_; /**< Compute CoM offset due to ZMPCC compensation */
 
   stateObservation::LipmDcmEstimator dcmEstimator_;
-  bool withDcmEstimator_ = true; /**< Whether bias estimation is active */
-  bool useFilteredDcm_ = false; /**< Whether to use the filtered dcm */
   /**< Whether the estimator needs to be reset (robot in the air, initialization) */
   bool dcmEstimatorNeedsReset_ = true;
 

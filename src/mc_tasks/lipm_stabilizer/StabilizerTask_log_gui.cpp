@@ -86,11 +86,11 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                             }),
                  NumberInput("Torso pitch [rad]", [this]() { return c_.torsoPitch; },
                              [this](double pitch) { torsoPitch(pitch); }));
-  gui.addElement(
-      {"Tasks", name_, "Advanced", "DCM Bias"}, mc_rtc::gui::ElementsStacking::Horizontal,
-      Checkbox("Enabled", [this]() { return withDcmEstimator_; }, [this]() { withDcmEstimator_ = !withDcmEstimator_; }),
-      Checkbox("Use Filtered DCM", [this]() { return useFilteredDcm_; },
-               [this]() { useFilteredDcm_ = !useFilteredDcm_; }));
+  gui.addElement({"Tasks", name_, "Advanced", "DCM Bias"}, mc_rtc::gui::ElementsStacking::Horizontal,
+                 Checkbox("Enabled", [this]() { return c_.dcmBias.withDCMBias; },
+                          [this]() { c_.dcmBias.withDCMBias = !c_.dcmBias.withDCMBias; }),
+                 Checkbox("Use Filtered DCM", [this]() { return c_.dcmBias.withDCMFilter; },
+                          [this]() { c_.dcmBias.withDCMFilter = !c_.dcmBias.withDCMFilter; }));
   gui.addElement({"Tasks", name_, "Advanced", "DCM Bias"},
                  NumberInput("dcmMeasureErrorStd", [this]() { return c_.dcmBias.dcmMeasureErrorStd; },
                              [this](double v) {

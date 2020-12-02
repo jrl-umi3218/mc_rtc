@@ -66,8 +66,10 @@ struct DCMBiasEstimatorConfiguration
   double biasDriftPerSecondStd = 0.02;
   /// Maximum bias in the sagital and lateral directions [m]
   Eigen::Vector2d biasLimit = {0.02, 0.02};
-  /// Whether the bias estimation is enabled (false for backwards compatibility, recommended: true)
-  bool enabled = false;
+  /// Whether the DCM bias estimator is enabled (default: false for backwards compatibility)
+  bool withDCMBias = false;
+  /// Whether the DCM filter is enabled
+  bool withDCMFilter = false;
 };
 
 } // namespace lipm_stabilizer
@@ -159,7 +161,9 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfigurat
     config("zmpMeasureErrorStd", bias.zmpMeasureErrorStd);
     config("biasDriftPerSeconStd", bias.biasDriftPerSecondStd);
     config("biasLimit", bias.biasLimit);
-    config("enabled", bias.enabled) return bias;
+    config("withDCMBias", bias.withDCMBias);
+    config("withDCMFilter", bias.withDCMFilter);
+    return bias;
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration & bias)
@@ -169,7 +173,8 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfigurat
     config.add("zmpMeasureErrorStd", bias.zmpMeasureErrorStd);
     config.add("biasDriftPerSeconStd", bias.biasDriftPerSecondStd);
     config.add("biasLimit", bias.biasLimit);
-    config.add("enabled", bias.enabled);
+    config.add("withDCMBias", bias.withDCMBias);
+    config.add("withDCMFilter", bias.withDCMFilter);
     return config;
   }
 };
@@ -285,6 +290,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       dcmTracking("derivator_time_constant", dcmDerivatorTimeConstant);
       dcmTracking("integrator_time_constant", dcmIntegratorTimeConstant);
     }
+    config("dcm_bias", dcmBias);
     if(config.has("tasks"))
     {
       auto tasks = config("tasks");
@@ -334,7 +340,6 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     }
 
     config("zmpcc", zmpcc);
-    config("dcmBias", dcmBias);
   }
 
   mc_rtc::Configuration save() const
@@ -364,6 +369,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf("dcm_tracking").add("derivator_time_constant", dcmDerivatorTimeConstant);
     conf("dcm_tracking").add("integrator_time_constant", dcmIntegratorTimeConstant);
 
+    conf.add("dcm_bias", dcmBias);
+
     conf.add("tasks");
     conf("tasks").add("com");
     conf("tasks")("com").add("active_joints", comActiveJoints);
@@ -388,8 +395,6 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf.add("vdc");
     conf("vdc").add("frequency", vdcFrequency);
     conf("vdc").add("stiffness", vdcStiffness);
-
-    conf.add("dcmBias", dcmBias);
     return conf;
   }
 };

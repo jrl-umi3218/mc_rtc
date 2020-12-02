@@ -674,7 +674,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
     Eigen::Vector3d zmpError = zmpTarget_ - measuredZMP_;
     zmpError.z() = 0.;
 
-    if(withDcmEstimator_)
+    if(c_.dcmBias.withDCMBias)
     {
       if(omega_ != dcmEstimator_.getLipmNaturalFrequency())
       {
@@ -696,7 +696,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
       /// run the estimation
       dcmEstimator_.update();
 
-      if(useFilteredDcm_)
+      if(c_.dcmBias.withDCMFilter)
       {
         /// the estimators provides a filtered DCM
         dcmError_.head<2>() = dcmEstimator_.getUnbiasedDCM();
