@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "title": "DCM Bias Estimator",
+  "description": "Parameters for the DCM bias estimator and filter",
+  "properties":
+  {
+
+    "dcmMeasureErrorStd": { "type": "number", "minimum": 0, "default": 0.01, "description": "" },
+    "zmpMeasureErrorStd": { "type": "number", "minimum": 0, "default": 0.05, "description": "" },
+    "biasDriftPerSeconStd": { "type": "number", "minimum": 0, "default": 0.02, "description": "" },
+    "biasLimit": { "type": "number", "minimum": 0, "default": 0.02, "description": "" },
+    "withDCMBias": { "type": "boolean", "default": "false", "description": "Recommended: true" },
+    "withDCMFilter": { "type": "boolean", "default": "false", "description": "" },
+  }
+}
