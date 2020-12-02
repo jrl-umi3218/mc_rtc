@@ -66,6 +66,8 @@ struct DCMBiasEstimatorConfiguration
   double biasDriftPerSecondStd = 0.02;
   /// Maximum bias in the sagital and lateral directions [m]
   Eigen::Vector2d biasLimit = {0.02, 0.02};
+  /// Whether the bias estimation is enabled (false for backwards compatibility, recommended: true)
+  bool enabled = false;
 };
 
 } // namespace lipm_stabilizer
@@ -157,7 +159,7 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfigurat
     config("zmpMeasureErrorStd", bias.zmpMeasureErrorStd);
     config("biasDriftPerSeconStd", bias.biasDriftPerSecondStd);
     config("biasLimit", bias.biasLimit);
-    return bias;
+    config("enabled", bias.enabled) return bias;
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration & bias)
@@ -167,6 +169,7 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfigurat
     config.add("zmpMeasureErrorStd", bias.zmpMeasureErrorStd);
     config.add("biasDriftPerSeconStd", bias.biasDriftPerSecondStd);
     config.add("biasLimit", bias.biasLimit);
+    config.add("enabled", bias.enabled);
     return config;
   }
 };
