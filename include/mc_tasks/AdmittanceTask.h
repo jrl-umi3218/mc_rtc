@@ -174,6 +174,12 @@ public:
     maxLinearVel_ = maxLinearVel;
   }
 
+  /*! Get the maximum linear velocity of the task */
+  const Eigen::Vector3d & maxLinearVel() const noexcept
+  {
+    return maxLinearVel_;
+  }
+
   /*! \brief Set the maximum angular velocity of the task */
   void maxAngularVel(const Eigen::Vector3d & maxAngularVel)
   {
@@ -184,6 +190,12 @@ public:
       return;
     }
     maxAngularVel_ = maxAngularVel;
+  }
+
+  /*! Get the maximum angular velocity of the task */
+  const Eigen::Vector3d & maxAngularVel() const noexcept
+  {
+    return maxAngularVel_;
   }
 
   /*! \brief Set the gain of the low-pass filter on the reference velocity

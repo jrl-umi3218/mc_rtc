@@ -159,7 +159,7 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfigurat
     mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration bias;
     config("dcmMeasureErrorStd", bias.dcmMeasureErrorStd);
     config("zmpMeasureErrorStd", bias.zmpMeasureErrorStd);
-    config("biasDriftPerSeconStd", bias.biasDriftPerSecondStd);
+    config("biasDriftPerSecondStd", bias.biasDriftPerSecondStd);
     config("biasLimit", bias.biasLimit);
     config("withDCMBias", bias.withDCMBias);
     config("withDCMFilter", bias.withDCMFilter);
@@ -171,7 +171,7 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfigurat
     mc_rtc::Configuration config;
     config.add("dcmMeasureErrorStd", bias.dcmMeasureErrorStd);
     config.add("zmpMeasureErrorStd", bias.zmpMeasureErrorStd);
-    config.add("biasDriftPerSeconStd", bias.biasDriftPerSecondStd);
+    config.add("biasDriftPerSecondStd", bias.biasDriftPerSecondStd);
     config.add("biasLimit", bias.biasLimit);
     config.add("withDCMBias", bias.withDCMBias);
     config.add("withDCMFilter", bias.withDCMFilter);
