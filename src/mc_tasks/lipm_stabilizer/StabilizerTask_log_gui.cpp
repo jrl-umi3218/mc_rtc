@@ -73,19 +73,32 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  Checkbox("Apply CoM admittance only in double support?", [this]() { return zmpccOnlyDS_; },
                           [this]() { zmpccOnlyDS_ = !zmpccOnlyDS_; }));
   zmpcc_.addToGUI(gui, {"Tasks", name_, "Advanced"});
-  gui.addElement({"Tasks", name_, "Advanced"},
-                 NumberInput("Admittance Velocity Filter", [this]() { return c_.copVelFilterGain; },
-                             [this](double gain) { copVelFilterGain(gain); }),
-                 ArrayInput("Vertical drift compensation", {"frequency", "stiffness"},
-                            [this]() -> Eigen::Vector2d {
-                              return {c_.vdcFrequency, c_.vdcStiffness};
-                            },
-                            [this](const Eigen::Vector2d & v) {
-                              vdcFrequency(v(0));
-                              vdcStiffness(v(1));
-                            }),
-                 NumberInput("Torso pitch [rad]", [this]() { return c_.torsoPitch; },
-                             [this](double pitch) { torsoPitch(pitch); }));
+  gui.addElement(
+      {"Tasks", name_, "Advanced"},
+      NumberInput("Admittance Velocity Filter [0-1]", [this]() { return c_.copVelFilterGain; },
+                  [this](double gain) { copVelFilterGain(gain); }),
+      ArrayInput("Max cop angular velocity [rad/s]",
+                 [this]() -> const Eigen::Vector3d & { return footTasks.at(ContactState::Left)->maxAngularVel(); },
+                 [this](const Eigen::Vector3d & v) {
+                   footTasks.at(ContactState::Left)->maxAngularVel(v);
+                   footTasks.at(ContactState::Right)->maxAngularVel(v);
+                 }),
+      ArrayInput("Max cop linear velocity [m/s]",
+                 [this]() -> const Eigen::Vector3d & { return footTasks.at(ContactState::Left)->maxLinearVel(); },
+                 [this](const Eigen::Vector3d & v) {
+                   footTasks.at(ContactState::Left)->maxLinearVel(v);
+                   footTasks.at(ContactState::Right)->maxLinearVel(v);
+                 }),
+      ArrayInput("Vertical drift compensation", {"frequency", "stiffness"},
+                 [this]() -> Eigen::Vector2d {
+                   return {c_.vdcFrequency, c_.vdcStiffness};
+                 },
+                 [this](const Eigen::Vector2d & v) {
+                   vdcFrequency(v(0));
+                   vdcStiffness(v(1));
+                 }),
+      NumberInput("Torso pitch [rad]", [this]() { return c_.torsoPitch; },
+                  [this](double pitch) { torsoPitch(pitch); }));
   gui.addElement({"Tasks", name_, "Advanced", "DCM Bias"}, mc_rtc::gui::ElementsStacking::Horizontal,
                  Checkbox("Enabled", [this]() { return c_.dcmBias.withDCMBias; },
                           [this]() { c_.dcmBias.withDCMBias = !c_.dcmBias.withDCMBias; }),
