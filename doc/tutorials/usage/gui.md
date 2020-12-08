@@ -95,7 +95,7 @@ Button("Push me", []() { std::cout << "Hello!" << std::endl; });
 This element display a checkbox. Its status depends on the value you provide, when you click it that value will be flipped.
 
 ```cpp
-Checkbox("Check me", [this]() { return status_; }, [this](bool b) { status_ = b; });
+Checkbox("Check me", [this]() { return status_; }, [this]() { status_ = !status_; });
 ```
 
 ##### `StringInput`/`IntegerInput`/`Number`/`ArrayInput`

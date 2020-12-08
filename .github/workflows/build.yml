@@ -65,6 +65,10 @@ jobs:
       run: |
         set -e
         sudo rm -f /etc/apt/sources.list.d/dotnetdev.list /etc/apt/sources.list.d/microsoft-prod.list
+    - name: Change Xcode version
+      run: |
+        sudo xcode-select -switch /Applications/Xcode_11.7.app
+      if: startsWith(runner.os, 'macOS')
     - name: Clear environment (script)
       uses: jrl-umi3218/github-actions/install-dependencies@master
       if: matrix.build-type == 'script'
