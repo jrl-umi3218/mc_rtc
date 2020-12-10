@@ -141,7 +141,7 @@ public:
   }
 
   /*! \brief Get the impedance spring parameter represented in the surface. */
-  const sva::ForceVecd & impedanceK() const
+  const sva::ForceVecd & impedanceK() const noexcept
   {
     return impK_;
   }
@@ -256,12 +256,15 @@ protected:
   sva::ForceVecd impK_; // must be set in the Constructor
   sva::MotionVecd wrenchGain_ = sva::MotionVecd::Zero();
 
-  // Relative pose, velocity, and acceleration from desired frame to compliance frame represented in the world frame
-  // To store these values across control cycles, represent them in a constant world frame instead of the time-varying
-  // surface frame.
+  /** Relative pose, velocity, and acceleration from desired frame to compliance frame represented in the world frame.
+   *  To store these values across control cycles, represent them in a constant world frame instead of the time-varying
+   *  surface frame.
+   *  @{
+   */
   sva::PTransformd deltaCompPoseW_ = sva::PTransformd::Identity();
   sva::MotionVecd deltaCompVelW_ = sva::MotionVecd::Zero();
   sva::MotionVecd deltaCompAccelW_ = sva::MotionVecd::Zero();
+  /// @}
 
   // Desired pose, velocity, and acceleration in the world frame
   sva::PTransformd desiredPoseW_ = sva::PTransformd::Identity();

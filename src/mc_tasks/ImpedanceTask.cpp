@@ -28,7 +28,7 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
   const auto & robot = robots.robot(robotIndex);
   type_ = "impedance";
   name_ = "impedance_" + robots.robot(rIndex).name() + "_" + surfaceName;
-  
+
   if(!robot.surfaceHasIndirectForceSensor(surfaceName))
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
@@ -51,12 +51,12 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
   //   + \frac{K_f}{M} (f_m - f_d) where \Delta p_{cd} = p_c - p_d
   // See the Constructor description for the definition of symbols
   deltaCompAccelW_ =
-      T_0_s.invMul( // T_0_s.invMul transforms the MotionVecd value from the surface frame to the world frame
+      T_0_s.invMul( // T_0_s.invMul transforms the MotionVecd value from surface to world frame
           sva::MotionVecd(
               // Compute in the surface frame because the impedance parameters and wrench gain are represented in the
               // surface frame
               impM_.vector().cwiseInverse().cwiseProduct(
-                  // T_0_s transforms the MotionVecd value from the world from to the surface frame
+                  // T_0_s transforms the MotionVecd value from world to surface frame
                   -impD_.vector().cwiseProduct((T_0_s * deltaCompVelW_).vector())
                   - impK_.vector().cwiseProduct((T_0_s * sva::transformVelocity(deltaCompPoseW_)).vector())
                   + wrenchGain_.vector().cwiseProduct((measuredWrench() - targetWrench_).vector()))));
@@ -66,7 +66,7 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
   // 2.1 Integrate velocity to pose
   sva::PTransformd T_0_deltaC(deltaCompPoseW_.rotation());
   // Represent the compliance velocity and acceleration in the deltaCompliance frame and scale by dt
-  sva::MotionVecd mvDeltaCompVelIntegralC = T_0_deltaC * (dt * deltaCompVelW_ + 0.5 * dt * dt * deltaCompAccelW_);
+  sva::MotionVecd mvDeltaCompVelIntegralC = T_0_deltaC * dt * (deltaCompVelW_ + 0.5 * dt * deltaCompAccelW_);
   // Convert the angular velocity to the rotation matrix through AngleAxis representation
   Eigen::AngleAxisd aaDeltaCompVelIntegralC(Eigen::Quaterniond::Identity());
   if(mvDeltaCompVelIntegralC.angular().norm() > 1e-6)
