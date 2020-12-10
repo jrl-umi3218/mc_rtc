@@ -233,6 +233,7 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
       const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "impedance");
       auto t = std::make_shared<mc_tasks::force::ImpedanceTask>(config("surface"), solver.robots(), robotIndex);
+      t->reset();
       t->load(solver, config);
       return t;
     });
