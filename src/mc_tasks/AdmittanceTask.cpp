@@ -9,8 +9,6 @@
 #include <mc_rbdyn/configuration_io.h>
 #include <mc_rbdyn/rpy_utils.h>
 
-#include <mc_filter/utils/clamp.h>
-
 #include <mc_rtc/gui/ArrayLabel.h>
 #include <mc_rtc/gui/Transform.h>
 
@@ -54,7 +52,7 @@ void AdmittanceTask::update(mc_solver::QPSolver &)
   clampInPlaceAndWarn(angularVel, (-maxAngularVel_).eval(), maxAngularVel_, name_ + " angular velocity");
 
   // Filter
-  refVelB_ = 0.8 * refVelB_ + 0.2 * sva::MotionVecd(angularVel, linearVel);
+  refVelB_ = velFilterGain_ * refVelB_ + (1 - velFilterGain_) * sva::MotionVecd(angularVel, linearVel);
 
   // Compute position and rotation delta
   sva::PTransformd delta(mc_rbdyn::rpyToMat(timestep_ * refVelB_.angular()), timestep_ * refVelB_.linear());
@@ -117,6 +115,7 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_measured_wrench", [this]() -> sva::ForceVecd { return measuredWrench(); });
   logger.addLogEntry(name_ + "_target_body_vel", [this]() -> const sva::MotionVecd & { return feedforwardVelB_; });
   logger.addLogEntry(name_ + "_target_wrench", [this]() -> const sva::ForceVecd & { return targetWrench_; });
+  logger.addLogEntry(name_ + "_vel_filter_gain", [this]() { return velFilterGain_; });
 }
 
 void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
@@ -126,6 +125,7 @@ void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_measured_wrench");
   logger.removeLogEntry(name_ + "_target_body_vel");
   logger.removeLogEntry(name_ + "_target_wrench");
+  logger.removeLogEntry(name_ + "_vel_filter_gain");
 }
 
 void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
@@ -142,7 +142,9 @@ void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                          [this]() { return this->targetWrench().vector(); },
                                          [this](const Eigen::Vector6d & a) { this->targetWrench(a); }),
                  mc_rtc::gui::ArrayLabel("measured_wrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() { return this->measuredWrench().vector(); }));
+                                         [this]() { return this->measuredWrench().vector(); }),
+                 mc_rtc::gui::NumberInput("Velocity filter gain", [this]() { return velFilterGain_; },
+                                          [this](double g) { velFilterGain(g); }));
   // Don't add SurfaceTransformTask as target configuration is different
   TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
 }

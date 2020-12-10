@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "title": "DCM Bias Estimator",
+  "description": "A humanoid robot can be modeled as an inverted pendulum. The dynamics can be linearized to obtain a dynamics with a convergent and a divergent component of motion (DCM). The DCM can be measured using the CoM and its velocity, but the CoM position can be biased. The dynamics of the DCM depends on the Zero Moment Point. This estimator uses Kalman Filtering to estimate this bias and give a delay-free filtering of the DCM. For more details please refer to LipmDcmEstimator class in <a href=\"https://jrl-umi3218.github.io/state-observation/doxygen/HEAD/classes.html#letter_l\">state-observation</a>",
+  "properties":
+  {
+
+    "dcmMeasureErrorStd": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.01,
+      "description": "the standard deviation of the dcm estimation error, NOT including the bias (m)"
+    },
+    "zmpMeasureErrorStd": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.05,
+      "description": "the standard deviaiton of the zmp estimation error (m)"
+    },
+    "biasDriftPerSecondStd": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.02,
+      "description": "the standard deviation of the bias drift (m/s)"
+    },
+    "biasLimit": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.02,
+      "description": "the X and Y (expressed in local frame) largest accepted absolute values of the bias (zero means no limit)"
+    },
+    "withDCMBias": {
+      "type": "boolean",
+      "default": "false",
+      "description": "whether the bias estimation is activated"
+    },
+    "withDCMFilter": {
+      "type": "boolean",
+      "default": "false",
+      "description": "whether the DCM is filtered with this estimator"
+    }
+  }
+}

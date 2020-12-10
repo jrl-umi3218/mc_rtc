@@ -19,6 +19,8 @@
 #include <mc_tasks/lipm_stabilizer/Contact.h>
 #include <mc_tasks/lipm_stabilizer/ZMPCC.h>
 
+#include <state-observation/dynamics-estimators/lipm-dcm-estimator.hpp>
+
 #include <Eigen/QR>
 #include <eigen-quadprog/QuadProg.h>
 
@@ -33,6 +35,7 @@ using ZMPCCConfiguration = mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration;
 using StabilizerConfiguration = mc_rbdyn::lipm_stabilizer::StabilizerConfiguration;
 using FDQPWeights = mc_rbdyn::lipm_stabilizer::FDQPWeights;
 using SafetyThresholds = mc_rbdyn::lipm_stabilizer::SafetyThresholds;
+using DCMBiasEstimatorConfiguration = mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration;
 
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
@@ -448,6 +451,22 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     }
   }
 
+  /* Set the gain of the low-pass velocity filter of the cop tasks */
+  void copVelFilterGain(double gain)
+  {
+    c_.copVelFilterGain = mc_filter::utils::clamp(gain, 0, 1);
+    for(auto & ft : footTasks)
+    {
+      ft.second->velFilterGain(gain);
+    }
+  }
+
+  /* Get the gain of the low-pass velocity filter of the cop tasks */
+  double copVelFilterGain() const noexcept
+  {
+    return c_.copVelFilterGain;
+  }
+
   void vdcFrequency(double freq)
   {
     c_.vdcFrequency = clamp(freq, 0., 10.);
@@ -488,6 +507,27 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     c_.clampGains();
     // only requried because we want to apply the new gains immediately
     copAdmittance(c_.copAdmittance);
+  }
+
+  /**
+   * @brief Changes the parameters of the DCM bias estimator
+   *
+   * @param biasConfig Configuration parameters for the bias estimation
+   */
+  void dcmBiasEstimatorConfiguration(const DCMBiasEstimatorConfiguration & biasConfig)
+  {
+    auto & bc = c_.dcmBias;
+    bc = biasConfig;
+    dcmEstimator_.setBiasDriftPerSecond(bc.biasDriftPerSecondStd);
+    dcmEstimator_.setDcmMeasureErrorStd(bc.dcmMeasureErrorStd);
+    dcmEstimator_.setZmpMeasureErrorStd(bc.zmpMeasureErrorStd);
+    dcmEstimator_.setBiasLimit(bc.biasLimit);
+  }
+
+  /// Get parameters of the DCM bias estimator
+  const DCMBiasEstimatorConfiguration & dcmBiasEstimatorConfiguration() const noexcept
+  {
+    return c_.dcmBias;
   }
 
 private:
@@ -687,11 +727,21 @@ protected:
   Eigen::Vector3d measuredCoM_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredCoMd_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredZMP_ = Eigen::Vector3d::Zero();
-  Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero(); /// Measured DCM (only used for logging)
+  Eigen::Vector3d measuredDCMUnbiased_ = Eigen::Vector3d::Zero(); /// DCM unbiased (only used for logging)
   sva::ForceVecd measuredNetWrench_ = sva::ForceVecd::Zero();
 
   bool zmpccOnlyDS_ = true; /**< Only apply ZMPCC in double support */
   ZMPCC zmpcc_; /**< Compute CoM offset due to ZMPCC compensation */
+
+  /**
+   * Filtering of the divergent component of motion (DCM)
+   * and estimation of a bias betweeen the DCM and the corresponding zero moment point for a linearized inverted
+   * pendulum model.
+   */
+  stateObservation::LipmDcmEstimator dcmEstimator_;
+  /**< Whether the estimator needs to be reset (robot in the air, initialization) */
+  bool dcmEstimatorNeedsReset_ = true;
 
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
@@ -704,6 +754,8 @@ protected:
   double runTime_ = 0.;
   double vdcHeightError_ = 0.; /**< Average height error used in vertical drift compensation */
   sva::ForceVecd distribWrench_ = sva::ForceVecd::Zero(); /**< Result of the force distribution QP */
+  Eigen::Vector3d distribZMP_ =
+      Eigen::Vector3d::Zero(); /**< ZMP corresponding to force distribution result (desired ZMP) */
   sva::PTransformd zmpFrame_ = sva::PTransformd::Identity(); /**< Frame in which the ZMP is computed */
 };
 

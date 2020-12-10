@@ -32,8 +32,9 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
                                const std::string & rightSurface,
                                const std::string & torsoBodyName,
                                double dt)
-: robots_(robots), realRobots_(realRobots), robotIndex_(robotIndex), dcmIntegrator_(dt, /* timeConstant = */ 15.),
-  dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt), mass_(robots.robot(robotIndex).mass())
+: robots_(robots), realRobots_(realRobots), robotIndex_(robotIndex), dcmEstimator_(dt),
+  dcmIntegrator_(dt, /* t`  imeConstant = */ 15.), dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt),
+  mass_(robots.robot(robotIndex).mass())
 {
   type_ = "lipm_stabilizer";
   name_ = type_ + "_" + robots.robot(robotIndex).name();
@@ -73,9 +74,9 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
                  robots.robot(robotIndex).module().defaultLIPMStabilizerConfiguration().torsoBodyName,
                  dt)
 {
-  reset();
   configure(robots.robot(robotIndex).module().defaultLIPMStabilizerConfiguration());
   setContacts({ContactState::Left, ContactState::Right});
+  reset();
 }
 
 void StabilizerTask::reset()
@@ -102,12 +103,12 @@ void StabilizerTask::reset()
 
   zmpcc_.reset();
 
+  dcmEstimatorNeedsReset_ = true;
+
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
 
   omega_ = std::sqrt(constants::gravity.z() / robot().com().z());
-
-  configure(robot().module().defaultLIPMStabilizerConfiguration());
   commitConfig();
 }
 
@@ -330,6 +331,9 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
     footTask.second->maxLinearVel(c_.copMaxVel.linear());
     footTask.second->maxAngularVel(c_.copMaxVel.angular());
   }
+
+  dcmBiasEstimatorConfiguration(c_.dcmBias);
+
   reconfigure_ = false;
 }
 
@@ -576,7 +580,8 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
   comdTarget_ = comd;
   comddTarget_ = comdd;
   zmpTarget_ = zmp;
-  omega_ = std::sqrt(constants::gravity.z() / comTarget_.z());
+  double comHeight = comTarget_.z() - zmpTarget_.z();
+  omega_ = std::sqrt(constants::gravity.z() / comHeight);
   dcmTarget_ = comTarget_ + comdTarget_ / omega_;
 }
 
@@ -626,6 +631,7 @@ void StabilizerTask::run()
     footTasks[ContactState::Left]->setZeroTargetWrench();
   }
 
+  distribZMP_ = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
   updateCoMTaskZMPCC();
   updateFootForceDifferenceControl();
 
@@ -661,11 +667,56 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   {
     dcmDerivator_.reset(Eigen::Vector3d::Zero());
     dcmIntegrator_.append(Eigen::Vector3d::Zero());
+    dcmEstimatorNeedsReset_ = true;
   }
   else
   {
     Eigen::Vector3d zmpError = zmpTarget_ - measuredZMP_;
     zmpError.z() = 0.;
+
+    if(c_.dcmBias.withDCMBias)
+    {
+      if(omega_ != dcmEstimator_.getLipmNaturalFrequency())
+      {
+        dcmEstimator_.setLipmNaturalFrequency(omega_);
+      }
+
+      const Eigen::Matrix3d & waistOrientation = robot().posW().rotation().transpose();
+
+      if(dcmEstimatorNeedsReset_)
+      {
+        dcmEstimator_.resetWithMeasurements(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation, true);
+        dcmEstimatorNeedsReset_ = false;
+      }
+      else
+      {
+        dcmEstimator_.setInputs(dcmError_.head<2>(), zmpError.head<2>(), waistOrientation);
+      }
+
+      /// run the estimation
+      dcmEstimator_.update();
+
+      if(c_.dcmBias.withDCMFilter)
+      {
+        /// the estimators provides a filtered DCM
+        dcmError_.head<2>() = dcmEstimator_.getUnbiasedDCM();
+      }
+      else
+      {
+        dcmError_.head<2>() -= dcmEstimator_.getBias();
+      }
+      /// the bias should also correct the CoM
+      comError.head<2>() -= dcmEstimator_.getBias();
+      /// the unbiased dcm allows also to get the velocity of the CoM
+      comdError.head<2>() = omega_ * (dcmError_.head<2>() - comError.head<2>());
+      measuredDCMUnbiased_ = dcmTarget_ - dcmError_;
+    }
+    else
+    {
+      measuredDCMUnbiased_ = measuredDCM_;
+      dcmEstimatorNeedsReset_ = true;
+    }
+
     dcmDerivator_.update(omega_ * (dcmError_ - zmpError));
     dcmIntegrator_.append(dcmError_);
   }
@@ -860,10 +911,9 @@ void StabilizerTask::updateCoMTaskZMPCC()
   }
   else
   {
-    auto distribZMP = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
     zmpcc_.configure(c_.zmpcc);
     zmpcc_.enabled(enabled_);
-    zmpcc_.update(distribZMP, measuredZMP_, zmpFrame_, dt_);
+    zmpcc_.update(distribZMP_, measuredZMP_, zmpFrame_, dt_);
   }
   zmpcc_.apply(comTarget_, comdTarget_, comddTarget_);
 }
@@ -927,10 +977,9 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       auto t = std::allocate_shared<mc_tasks::lipm_stabilizer::StabilizerTask>(
           Eigen::aligned_allocator<mc_tasks::lipm_stabilizer::StabilizerTask>{}, solver.robots(), solver.realRobots(),
           robotIndex, stabiConf.leftFootSurface, stabiConf.rightFootSurface, stabiConf.torsoBodyName, solver.dt());
-      t->reset();
       t->configure(stabiConf);
       t->load(solver, config);
-      t->commitConfig();
+      t->reset();
       return t;
     });
 }

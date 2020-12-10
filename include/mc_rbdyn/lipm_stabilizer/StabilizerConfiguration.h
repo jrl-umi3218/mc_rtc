@@ -14,9 +14,7 @@ namespace mc_rbdyn
 namespace lipm_stabilizer
 {
 
-/** Weights for force distribution quadratic program (FDQP).
- *
- */
+/** Weights for force distribution quadratic program (FDQP). */
 struct MC_RBDYN_DLLAPI FDQPWeights
 {
   FDQPWeights() : ankleTorqueSqrt(std::sqrt(100)), netWrenchSqrt(std::sqrt(10000)), pressureSqrt(std::sqrt(1)) {}
@@ -27,6 +25,51 @@ struct MC_RBDYN_DLLAPI FDQPWeights
   double ankleTorqueSqrt;
   double netWrenchSqrt;
   double pressureSqrt;
+};
+
+/**
+ * @brief Stabilizer safety thresholds
+ *
+ * The corresponding stabilization entries should be clamped within those limits
+ *
+ * \warning Developper note: Do not change the default thresholds here, it is likely
+ * that robot modules and users do not override every single parameter value,
+ * and modifying their default might have serious consequences.
+ */
+struct SafetyThresholds
+{
+  double MAX_AVERAGE_DCM_ERROR = 0.05; /**< Maximum average (integral) DCM error in [m] */
+  double MAX_COP_ADMITTANCE = 0.1; /**< Maximum CoP admittance for foot damping control */
+  double MAX_DCM_D_GAIN = 2.; /**< Maximum DCM derivative gain (no unit) */
+  double MAX_DCM_I_GAIN = 100.; /**< Maximum DCM average integral gain in [Hz] */
+  double MAX_DCM_P_GAIN = 20.; /**< Maximum DCM proportional gain in [Hz] */
+  double MAX_DFZ_ADMITTANCE = 5e-4; /**< Maximum admittance in [s] / [kg] for foot force difference control */
+  double MAX_DFZ_DAMPING = 10.; /**< Maximum normalized damping in [Hz] for foot force difference control */
+  double MAX_FDC_RX_VEL = 0.2; /**< Maximum x-axis angular velocity in [rad] / [s] for foot damping control. */
+  double MAX_FDC_RY_VEL = 0.2; /**< Maximum y-axis angular velocity in [rad] / [s] for foot damping control. */
+  double MAX_FDC_RZ_VEL = 0.2; /**< Maximum z-axis angular velocity in [rad] / [s] for foot damping control. */
+  double MIN_DS_PRESSURE = 15.; /**< Minimum normal contact force in DSP, used to avoid low-pressure
+                                                    targets when close to contact switches. */
+  /**< Minimum force for valid ZMP computation (throws otherwise) */
+  double MIN_NET_TOTAL_FORCE_ZMP = 1.;
+};
+
+/** Parameters for the DCM bias estimator */
+struct DCMBiasEstimatorConfiguration
+{
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+  /// the standard deviation of the dcm estimation error, NOT including the bias [m]
+  double dcmMeasureErrorStd = 0.01;
+  /// the standard deviaiton of the zmp estimation error [m]
+  double zmpMeasureErrorStd = 0.05;
+  /// the standard deviation of the drift [m/s]
+  double biasDriftPerSecondStd = 0.02;
+  /// Maximum bias in the sagital and lateral directions [m]
+  Eigen::Vector2d biasLimit = {0.02, 0.02};
+  /// Whether the DCM bias estimator is enabled (default: false for backwards compatibility)
+  bool withDCMBias = false;
+  /// Whether the DCM filter is enabled
+  bool withDCMFilter = false;
 };
 
 } // namespace lipm_stabilizer
@@ -61,44 +104,7 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::FDQPWeights>
     return config;
   }
 };
-} // namespace mc_rtc
 
-namespace mc_rbdyn
-{
-namespace lipm_stabilizer
-{
-
-/**
- * @brief Stabilizer safety thresholds
- *
- * The corresponding stabilization entries should be clamped within those limits
- *
- * \warning Developper note: Do not change the default thresholds here, it is likely
- * that robot modules and users do not override every single parameter value,
- * and modifying their default might have serious consequences.
- */
-struct SafetyThresholds
-{
-  double MAX_AVERAGE_DCM_ERROR = 0.05; /**< Maximum average (integral) DCM error in [m] */
-  double MAX_COP_ADMITTANCE = 0.1; /**< Maximum CoP admittance for foot damping control */
-  double MAX_DCM_D_GAIN = 2.; /**< Maximum DCM derivative gain (no unit) */
-  double MAX_DCM_I_GAIN = 100.; /**< Maximum DCM average integral gain in [Hz] */
-  double MAX_DCM_P_GAIN = 20.; /**< Maximum DCM proportional gain in [Hz] */
-  double MAX_DFZ_ADMITTANCE = 5e-4; /**< Maximum admittance in [s] / [kg] for foot force difference control */
-  double MAX_DFZ_DAMPING = 10.; /**< Maximum normalized damping in [Hz] for foot force difference control */
-  double MAX_FDC_RX_VEL = 0.2; /**< Maximum x-axis angular velocity in [rad] / [s] for foot damping control. */
-  double MAX_FDC_RY_VEL = 0.2; /**< Maximum y-axis angular velocity in [rad] / [s] for foot damping control. */
-  double MAX_FDC_RZ_VEL = 0.2; /**< Maximum z-axis angular velocity in [rad] / [s] for foot damping control. */
-  double MIN_DS_PRESSURE = 15.; /**< Minimum normal contact force in DSP, used to avoid low-pressure
-                                                    targets when close to contact switches. */
-  /**< Minimum force for valid ZMP computation (throws otherwise) */
-  double MIN_NET_TOTAL_FORCE_ZMP = 1.;
-};
-} // namespace lipm_stabilizer
-} // namespace mc_rbdyn
-
-namespace mc_rtc
-{
 /**
  * @brief Read-write stabilizer safety thresholds from configuration
  */
@@ -141,6 +147,37 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::SafetyThresholds>
     return config;
   }
 };
+
+/**
+ * @brief Read DCMBias estimation parameters
+ */
+template<>
+struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration>
+{
+  static mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration load(const mc_rtc::Configuration & config)
+  {
+    mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration bias;
+    config("dcmMeasureErrorStd", bias.dcmMeasureErrorStd);
+    config("zmpMeasureErrorStd", bias.zmpMeasureErrorStd);
+    config("biasDriftPerSecondStd", bias.biasDriftPerSecondStd);
+    config("biasLimit", bias.biasLimit);
+    config("withDCMBias", bias.withDCMBias);
+    config("withDCMFilter", bias.withDCMFilter);
+    return bias;
+  }
+
+  static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration & bias)
+  {
+    mc_rtc::Configuration config;
+    config.add("dcmMeasureErrorStd", bias.dcmMeasureErrorStd);
+    config.add("zmpMeasureErrorStd", bias.zmpMeasureErrorStd);
+    config.add("biasDriftPerSecondStd", bias.biasDriftPerSecondStd);
+    config.add("biasLimit", bias.biasLimit);
+    config.add("withDCMBias", bias.withDCMBias);
+    config.add("withDCMFilter", bias.withDCMFilter);
+    return config;
+  }
+};
 } // namespace mc_rtc
 
 namespace mc_rbdyn
@@ -170,6 +207,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   Eigen::Vector2d copAdmittance = Eigen::Vector2d::Zero(); /**< Admittance gains for foot damping control */
   sva::MotionVecd copMaxVel{{0.3, 0.3, 0.3}, {0.1, 0.1, 0.1}}; /**< Maximal velocity of the cop tasks */
+  double copVelFilterGain = 0.8; /**< Gain of the low-pass filter on the cop task reference velocity */
   ZMPCCConfiguration zmpcc; /**< Configuration of ZMPCC (CoM admittance) */
 
   double dfzAdmittance = 1e-4; /**< Admittance for foot force difference control */
@@ -201,6 +239,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   double vdcFrequency = 1.; /**< Frequency used in double-support vertical drift compensation */
   double vdcStiffness = 1000.; /**< Stiffness used in single-support vertical drift compensation */
+
+  DCMBiasEstimatorConfiguration dcmBias; /**< Parameters for the DCM bias estimation */
 
   /**
    * @brief Checks that the chosen parameters are within the parameters defined
@@ -234,6 +274,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       auto admittance = config("admittance");
       admittance("cop", copAdmittance);
       admittance("maxVel", copMaxVel);
+      admittance("velFilterGain", mc_filter::utils::clamp(copVelFilterGain, 0, 1));
       admittance("dfz", dfzAdmittance);
       admittance("dfz_damping", dfzDamping);
     }
@@ -249,6 +290,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       dcmTracking("derivator_time_constant", dcmDerivatorTimeConstant);
       dcmTracking("integrator_time_constant", dcmIntegratorTimeConstant);
     }
+    config("dcm_bias", dcmBias);
     if(config.has("tasks"))
     {
       auto tasks = config("tasks");
@@ -314,6 +356,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf("admittance").add("cop", copAdmittance);
     conf("admittance").add("dfz", dfzAdmittance);
     conf("admittance").add("dfz_damping", dfzDamping);
+    conf("admittance").add("maxVel", copMaxVel);
+    conf("admittance").add("velFilterGain", copVelFilterGain);
 
     conf.add("zmpcc", zmpcc);
 
@@ -324,6 +368,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf("dcm_tracking")("gains").add("deriv", dcmDerivGain);
     conf("dcm_tracking").add("derivator_time_constant", dcmDerivatorTimeConstant);
     conf("dcm_tracking").add("integrator_time_constant", dcmIntegratorTimeConstant);
+
+    conf.add("dcm_bias", dcmBias);
 
     conf.add("tasks");
     conf("tasks").add("com");

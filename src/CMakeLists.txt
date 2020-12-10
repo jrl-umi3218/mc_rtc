@@ -375,7 +375,7 @@ set(mc_tasks_HDR
 
 add_library(mc_tasks SHARED ${mc_tasks_SRC} ${mc_tasks_HDR})
 set_target_properties(mc_tasks PROPERTIES COMPILE_FLAGS "-DMC_TASKS_EXPORTS")
-target_link_libraries(mc_tasks PUBLIC mc_solver mc_rbdyn mc_trajectory mc_filter mc_rtc_utils eigen-quadprog::eigen-quadprog)
+target_link_libraries(mc_tasks PUBLIC mc_solver mc_rbdyn mc_trajectory mc_filter mc_rtc_utils eigen-quadprog::eigen-quadprog state-observation::state-observation)
 install_mc_rtc_lib(mc_tasks)
 
 set(mc_planning_SRC
