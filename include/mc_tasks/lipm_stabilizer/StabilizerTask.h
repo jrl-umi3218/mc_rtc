@@ -525,7 +525,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   }
 
   /// Get parameters of the DCM bias estimator
-  const DCMBiasEstimatorConfiguration & dcmBiasEstimatorConfiguration() const
+  const DCMBiasEstimatorConfiguration & dcmBiasEstimatorConfiguration() const noexcept
   {
     return c_.dcmBias;
   }
@@ -734,6 +734,11 @@ protected:
   bool zmpccOnlyDS_ = true; /**< Only apply ZMPCC in double support */
   ZMPCC zmpcc_; /**< Compute CoM offset due to ZMPCC compensation */
 
+  /**
+   * Filtering of the divergent component of motion (DCM)
+   * and estimation of a bias betweeen the DCM and the corresponding zero moment point for a linearized inverted
+   * pendulum model.
+   */
   stateObservation::LipmDcmEstimator dcmEstimator_;
   /**< Whether the estimator needs to be reset (robot in the air, initialization) */
   bool dcmEstimatorNeedsReset_ = true;
