@@ -82,7 +82,7 @@ void Contact::findSurfaceBoundaries(const mc_rbdyn::Surface & surface)
   for(const auto & point : surfacePoints)
   {
     // Points are defined in body frame, convert to surface frame
-    Eigen::Vector3d surfacePoint = surface.X_b_s().rotation() * point.translation() - surface.X_b_s().translation();
+    Eigen::Vector3d surfacePoint = surface.X_b_s().rotation() * (point.translation() - surface.X_b_s().translation());
     double x = surfacePoint.x();
     double y = surfacePoint.y();
     minSagital = std::min(minSagital, x);
