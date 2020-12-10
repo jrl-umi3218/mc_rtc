@@ -35068,6 +35068,44 @@ targetSurface:
   
   
   
+  <td>velFilterGain</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">0 &le; number &le; 1</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.8</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Gain for the low-pass filter on reference velocity</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
   <td>maxVel</td>
   
     
@@ -37979,6 +38017,44 @@ targetSurface:
   
   
   
+  <td>velFilterGain</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">0 &le; number &le; 1</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.8</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Gain for the low-pass filter on reference velocity</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
   <td>maxVel</td>
   
     
@@ -38484,6 +38560,296 @@ targetSurface:
   
 
 
+    </td>
+    
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dcm_bias</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_LIPMStabilizerTask_PROP_dcm_bias" aria-expanded="false" aria-controls="collapseMetaTask_LIPMStabilizerTask_PROP_dcm_bias">DCM Bias Estimator</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>A humanoid robot can be modeled as an inverted pendulum. The dynamics can be linearized to obtain a dynamics with a convergent and a divergent component of motion (DCM). The DCM can be measured using the CoM and its velocity, but the CoM position can be biased. The dynamics of the DCM depends on the Zero Moment Point. This estimator uses Kalman Filtering to estimate this bias and give a delay-free filtering of the DCM. For more details please refer to LipmDcmEstimator class in <a href="https://jrl-umi3218.github.io/state-observation/doxygen/HEAD/classes.html#letter_l">state-observation</a></small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_LIPMStabilizerTask_PROP_dcm_bias">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">DCM Bias Estimator</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">A humanoid robot can be modeled as an inverted pendulum. The dynamics can be linearized to obtain a dynamics with a convergent and a divergent component of motion (DCM). The DCM can be measured using the CoM and its velocity, but the CoM position can be biased. The dynamics of the DCM depends on the Zero Moment Point. This estimator uses Kalman Filtering to estimate this bias and give a delay-free filtering of the DCM. For more details please refer to LipmDcmEstimator class in <a href="https://jrl-umi3218.github.io/state-observation/doxygen/HEAD/classes.html#letter_l">state-observation</a></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dcmMeasureErrorStd</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.01</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>the standard deviation of the dcm estimation error, NOT including the bias (m)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>zmpMeasureErrorStd</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.05</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>the standard deviaiton of the zmp estimation error (m)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>biasDriftPerSecondStd</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.02</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>the standard deviation of the bias drift (m/s)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>biasLimit</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.02</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>the X and Y (expressed in local frame) largest accepted absolute values of the bias (zero means no limit)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>withDCMBias</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-boolean">boolean</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-boolean">false</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>whether the bias estimation is activated</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>withDCMFilter</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-boolean">boolean</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-boolean">false</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>whether the DCM is filtered with this estimator</small></span>
     </td>
     
   
@@ -66947,6 +67313,44 @@ postureTask:
   
   
   
+  <td>velFilterGain</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">0 &le; number &le; 1</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.8</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Gain for the low-pass filter on reference velocity</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
   <td>maxVel</td>
   
     
@@ -67452,6 +67856,296 @@ postureTask:
   
 
 
+    </td>
+    
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dcm_bias</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseState_StabilizerStandingState_PROP_StabilizerConfig_PROP_dcm_bias" aria-expanded="false" aria-controls="collapseState_StabilizerStandingState_PROP_StabilizerConfig_PROP_dcm_bias">DCM Bias Estimator</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>A humanoid robot can be modeled as an inverted pendulum. The dynamics can be linearized to obtain a dynamics with a convergent and a divergent component of motion (DCM). The DCM can be measured using the CoM and its velocity, but the CoM position can be biased. The dynamics of the DCM depends on the Zero Moment Point. This estimator uses Kalman Filtering to estimate this bias and give a delay-free filtering of the DCM. For more details please refer to LipmDcmEstimator class in <a href="https://jrl-umi3218.github.io/state-observation/doxygen/HEAD/classes.html#letter_l">state-observation</a></small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseState_StabilizerStandingState_PROP_StabilizerConfig_PROP_dcm_bias">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">DCM Bias Estimator</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">A humanoid robot can be modeled as an inverted pendulum. The dynamics can be linearized to obtain a dynamics with a convergent and a divergent component of motion (DCM). The DCM can be measured using the CoM and its velocity, but the CoM position can be biased. The dynamics of the DCM depends on the Zero Moment Point. This estimator uses Kalman Filtering to estimate this bias and give a delay-free filtering of the DCM. For more details please refer to LipmDcmEstimator class in <a href="https://jrl-umi3218.github.io/state-observation/doxygen/HEAD/classes.html#letter_l">state-observation</a></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dcmMeasureErrorStd</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.01</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>the standard deviation of the dcm estimation error, NOT including the bias (m)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>zmpMeasureErrorStd</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.05</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>the standard deviaiton of the zmp estimation error (m)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>biasDriftPerSecondStd</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.02</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>the standard deviation of the bias drift (m/s)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>biasLimit</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">0.02</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>the X and Y (expressed in local frame) largest accepted absolute values of the bias (zero means no limit)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>withDCMBias</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-boolean">boolean</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-boolean">false</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>whether the bias estimation is activated</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>withDCMFilter</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-boolean">boolean</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-boolean">false</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>whether the DCM is filtered with this estimator</small></span>
     </td>
     
   

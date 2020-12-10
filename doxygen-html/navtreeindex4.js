@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html#a4c98c9eb5c4adf4c8485ef306bc24c77":[3,0,0,0,0],
 "structmc__control_1_1CompletionCriteria.html":[3,0,2,1],
 "structmc__control_1_1CompletionCriteria.html#a2485b806e905c84cd087fb47287f2240":[3,0,2,1,2],
 "structmc__control_1_1CompletionCriteria.html#a6b2c61033f0f8d2d7f45aeb6e8fb028e":[3,0,2,1,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "structmc__control_1_1MCGlobalController.html#a623f72475e7fa92aea0679bd21553d7f":[3,0,2,9,45],
 "structmc__control_1_1MCGlobalController.html#a67e2b341a7294a04f01a152291976082":[3,0,2,9,34],
 "structmc__control_1_1MCGlobalController.html#a68e21ec603b1a212cf4e4c2fc2cf704d":[3,0,2,9,61],
-"structmc__control_1_1MCGlobalController.html#a6c85b7f6d62514f4e6aef17460600d01":[3,0,2,9,73],
-"structmc__control_1_1MCGlobalController.html#a6d37998fc235be910210d1fb643402df":[3,0,2,9,7]
+"structmc__control_1_1MCGlobalController.html#a6c85b7f6d62514f4e6aef17460600d01":[3,0,2,9,73]
 };

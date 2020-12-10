@@ -5,6 +5,7 @@ var searchData=
   ['vdcfrequency',['vdcFrequency',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a0b4dc848ffc84548ed88a2c6059ff5de',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['vdcheighterror_5f',['vdcHeightError_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ab459d6ba167857323daefe6a3fbef750',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['vdcstiffness',['vdcStiffness',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a34a4b63e93b00c661f926721e284f3e9',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
+  ['velfiltergain_5f',['velFilterGain_',['../structmc__tasks_1_1force_1_1AdmittanceTask.html#adbd26fcf85307988eedde6314fa066b9',1,'mc_tasks::force::AdmittanceTask']]],
   ['velocity',['velocity',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00563.html#a153f91f1d7921845f432a5b553301bae',1,'mc_rbdyn_urdf::Limits']]],
   ['velupdate_5f',['velUpdate_',['../structmc__observers_1_1EncoderObserver.html#a088c5ec59d2288b6a3499c8aae54853b',1,'mc_observers::EncoderObserver']]],
   ['velw_5f',['velW_',['../structmc__observers_1_1BodySensorObserver.html#a4d5cc646377a58ef243bf1d6b8c10f5e',1,'mc_observers::BodySensorObserver']]],

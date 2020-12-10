@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"structmc__control_1_1MCGlobalController.html#a6d37998fc235be910210d1fb643402df":[3,0,2,9,7],
 "structmc__control_1_1MCGlobalController.html#a70557a753d071e2eb956e4336a6b79f3":[3,0,2,9,26],
 "structmc__control_1_1MCGlobalController.html#a70698192db374ec4f01093192a31b9b8":[3,0,2,9,36],
 "structmc__control_1_1MCGlobalController.html#a72e0751e2864a0d6ad5f53baaf227338":[3,0,2,9,85],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "structmc__control_1_1fsm_1_1PauseState.html#abecdfc22b00a1fa457f6beadadf3a069":[3,0,2,0,10,6],
 "structmc__control_1_1fsm_1_1PauseState.html#abf66f94f4a86433976e52ba2751cb60f":[3,0,2,0,10,4],
 "structmc__control_1_1fsm_1_1PauseState.html#ae794e4997ff266a2e709b3a9cf2ba687":[3,0,2,0,10,0],
-"structmc__control_1_1fsm_1_1PostureState.html":[3,0,2,0,11],
-"structmc__control_1_1fsm_1_1PostureState.html#a0dfd66172ec2a4bdf01074f23b5f19e7":[3,0,2,0,11,7]
+"structmc__control_1_1fsm_1_1PostureState.html":[3,0,2,0,11]
 };

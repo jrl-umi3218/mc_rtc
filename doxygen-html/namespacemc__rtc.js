@@ -9,6 +9,7 @@ var namespacemc__rtc =
     [ "ConfigurationLoader< mc_control::fsm::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html", null ],
     [ "ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html", null ],
     [ "ConfigurationLoader< mc_rbdyn::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1Contact_01_4.html", null ],
+    [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html", null ],
     [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::FDQPWeights >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights_01_4.html", null ],
     [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::SafetyThresholds >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds_01_4.html", null ],
     [ "ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration_01_4.html", null ],

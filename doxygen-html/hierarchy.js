@@ -33,6 +33,7 @@ var hierarchy =
     [ "mc_rtc::ConfigurationLoader< mc_control::fsm::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1Contact_01_4.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::FDQPWeights >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::SafetyThresholds >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration_01_4.html", null ],
@@ -125,6 +126,7 @@ var hierarchy =
     [ "mc_control::ControllerResetData", "structmc__control_1_1ControllerResetData.html", null ],
     [ "mc_control::ControllerServer", "structmc__control_1_1ControllerServer.html", null ],
     [ "mc_rtc::DataStore", "structmc__rtc_1_1DataStore.html", null ],
+    [ "mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html", null ],
     [ "mc_control::fsm::ParallelState::DelayedState", "structmc__control_1_1fsm_1_1ParallelState_1_1DelayedState.html", null ],
     [ "mc_rbdyn::Device", "structmc__rbdyn_1_1Device.html", [
       [ "mc_rbdyn::BodySensor", "structmc__rbdyn_1_1BodySensor.html", null ],
@@ -409,10 +411,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],

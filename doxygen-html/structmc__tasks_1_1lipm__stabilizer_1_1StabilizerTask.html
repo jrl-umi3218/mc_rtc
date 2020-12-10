@@ -266,12 +266,20 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="separator:a6863d425eff4e098af4abc8a38ee2326"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b4b1c28b4e34a2f4c4600b4f2ec2245"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0b4b1c28b4e34a2f4c4600b4f2ec2245">measuredDCM_</a> = Eigen::Vector3d::Zero()</td></tr>
 <tr class="separator:a0b4b1c28b4e34a2f4c4600b4f2ec2245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2747ce4f19500c9313bd38400d6c4c3a"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a2747ce4f19500c9313bd38400d6c4c3a">measuredDCMUnbiased_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="memdesc:a2747ce4f19500c9313bd38400d6c4c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measured DCM (only used for logging)  <a href="#a2747ce4f19500c9313bd38400d6c4c3a">More...</a><br /></td></tr>
+<tr class="separator:a2747ce4f19500c9313bd38400d6c4c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d3d079514e89bcafe3d35b1ea2c1018"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1d3d079514e89bcafe3d35b1ea2c1018">measuredNetWrench_</a> = sva::ForceVecd::Zero()</td></tr>
+<tr class="memdesc:a1d3d079514e89bcafe3d35b1ea2c1018"><td class="mdescLeft">&#160;</td><td class="mdescRight">DCM unbiased (only used for logging)  <a href="#a1d3d079514e89bcafe3d35b1ea2c1018">More...</a><br /></td></tr>
 <tr class="separator:a1d3d079514e89bcafe3d35b1ea2c1018"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafe66416fe947aab7f6de7cd369df88f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aafe66416fe947aab7f6de7cd369df88f">zmpccOnlyDS_</a> = true</td></tr>
 <tr class="separator:aafe66416fe947aab7f6de7cd369df88f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e3c1c45795642a29285fa96ef46808f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html">ZMPCC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0e3c1c45795642a29285fa96ef46808f">zmpcc_</a></td></tr>
 <tr class="separator:a0e3c1c45795642a29285fa96ef46808f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32c48e17c2c451c67d804098b17b27e3"><td class="memItemLeft" align="right" valign="top">stateObservation::LipmDcmEstimator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a32c48e17c2c451c67d804098b17b27e3">dcmEstimator_</a></td></tr>
+<tr class="separator:a32c48e17c2c451c67d804098b17b27e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b355d04025f1a2489cc9e5b579d27ea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4b355d04025f1a2489cc9e5b579d27ea">dcmEstimatorNeedsReset_</a> = true</td></tr>
+<tr class="separator:a4b355d04025f1a2489cc9e5b579d27ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe50c92ded00ad8f22e9da9433dee655"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1ExponentialMovingAverage.html">mc_filter::ExponentialMovingAverage</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#abe50c92ded00ad8f22e9da9433dee655">dcmIntegrator_</a></td></tr>
 <tr class="separator:abe50c92ded00ad8f22e9da9433dee655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0238d047704d0cdaca32fe09153e4688"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1StationaryOffset.html">mc_filter::StationaryOffset</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0238d047704d0cdaca32fe09153e4688">dcmDerivator_</a></td></tr>
@@ -294,6 +302,8 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="separator:ab459d6ba167857323daefe6a3fbef750"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acea47979a383c106e0eedc05a02e52bb"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acea47979a383c106e0eedc05a02e52bb">distribWrench_</a> = sva::ForceVecd::Zero()</td></tr>
 <tr class="separator:acea47979a383c106e0eedc05a02e52bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1debc60c12375bc8ebb3dad18a4bf3a6"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1debc60c12375bc8ebb3dad18a4bf3a6">distribZMP_</a></td></tr>
+<tr class="separator:a1debc60c12375bc8ebb3dad18a4bf3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeca99cf5f7b08a8d39bc3a7045d2e46d"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aeca99cf5f7b08a8d39bc3a7045d2e46d">zmpFrame_</a> = sva::PTransformd::Identity()</td></tr>
 <tr class="separator:aeca99cf5f7b08a8d39bc3a7045d2e46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3650503431b3565de847f177114a822e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3650503431b3565de847f177114a822e">torsoPitch</a> (double pitch)</td></tr>
@@ -326,6 +336,10 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="separator:a2ddf955560628fb496d06a267df22205"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14f646fd17e3d7b4aa1c3b4a8b0f856e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a14f646fd17e3d7b4aa1c3b4a8b0f856e">copMaxVel</a> (const sva::MotionVecd &amp;copMaxVel)</td></tr>
 <tr class="separator:a14f646fd17e3d7b4aa1c3b4a8b0f856e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21ae40c129d552fdb1e8558f0b8c18f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a21ae40c129d552fdb1e8558f0b8c18f0">copVelFilterGain</a> (double gain)</td></tr>
+<tr class="separator:a21ae40c129d552fdb1e8558f0b8c18f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a856264c2501b219ecb345d77794bc311"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a856264c2501b219ecb345d77794bc311">copVelFilterGain</a> () const noexcept</td></tr>
+<tr class="separator:a856264c2501b219ecb345d77794bc311"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bf361438294d2c3aad9f0f8b063dc03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5bf361438294d2c3aad9f0f8b063dc03">vdcFrequency</a> (double freq)</td></tr>
 <tr class="separator:a5bf361438294d2c3aad9f0f8b063dc03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4e6c83449cbd6a168ef2bed91f3c0f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad4e6c83449cbd6a168ef2bed91f3c0f5">vdcStiffness</a> (double stiffness)</td></tr>
@@ -339,6 +353,12 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="memitem:ae829737c7cbcedb0635c2d858e7aa68f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae829737c7cbcedb0635c2d858e7aa68f">safetyThresholds</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a5f51d2adfa451cd98a1b3f3b2ed68ee4">SafetyThresholds</a> &amp;thresholds)</td></tr>
 <tr class="memdesc:ae829737c7cbcedb0635c2d858e7aa68f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the safety thresholds.  <a href="#ae829737c7cbcedb0635c2d858e7aa68f">More...</a><br /></td></tr>
 <tr class="separator:ae829737c7cbcedb0635c2d858e7aa68f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ad8d7c6c44e52ea194fe1e48d83fb88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3ad8d7c6c44e52ea194fe1e48d83fb88">dcmBiasEstimatorConfiguration</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#aa199242c8c0d202153b338771c1a5ace">DCMBiasEstimatorConfiguration</a> &amp;biasConfig)</td></tr>
+<tr class="memdesc:a3ad8d7c6c44e52ea194fe1e48d83fb88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the parameters of the DCM bias estimator.  <a href="#a3ad8d7c6c44e52ea194fe1e48d83fb88">More...</a><br /></td></tr>
+<tr class="separator:a3ad8d7c6c44e52ea194fe1e48d83fb88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc69d3ef42354f7f8f104773de7c544d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#aa199242c8c0d202153b338771c1a5ace">DCMBiasEstimatorConfiguration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acc69d3ef42354f7f8f104773de7c544d">dcmBiasEstimatorConfiguration</a> () const noexcept</td></tr>
+<tr class="memdesc:acc69d3ef42354f7f8f104773de7c544d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get parameters of the DCM bias estimator.  <a href="#acc69d3ef42354f7f8f104773de7c544d">More...</a><br /></td></tr>
+<tr class="separator:acc69d3ef42354f7f8f104773de7c544d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7709c43f16a9b418ecf2619d69821a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac7709c43f16a9b418ecf2619d69821a6">addToSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
 <tr class="memdesc:ac7709c43f16a9b418ecf2619d69821a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the task to a solver.  <a href="#ac7709c43f16a9b418ecf2619d69821a6">More...</a><br /></td></tr>
 <tr class="separator:ac7709c43f16a9b418ecf2619d69821a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1013,6 +1033,118 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a21ae40c129d552fdb1e8558f0b8c18f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21ae40c129d552fdb1e8558f0b8c18f0">&#9670;&nbsp;</a></span>copVelFilterGain() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::copVelFilterGain </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>gain</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a856264c2501b219ecb345d77794bc311"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a856264c2501b219ecb345d77794bc311">&#9670;&nbsp;</a></span>copVelFilterGain() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::lipm_stabilizer::StabilizerTask::copVelFilterGain </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3ad8d7c6c44e52ea194fe1e48d83fb88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ad8d7c6c44e52ea194fe1e48d83fb88">&#9670;&nbsp;</a></span>dcmBiasEstimatorConfiguration() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::dcmBiasEstimatorConfiguration </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#aa199242c8c0d202153b338771c1a5ace">DCMBiasEstimatorConfiguration</a> &amp;&#160;</td>
+          <td class="paramname"><em>biasConfig</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Changes the parameters of the DCM bias estimator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">biasConfig</td><td>Configuration parameters for the bias estimation </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acc69d3ef42354f7f8f104773de7c544d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc69d3ef42354f7f8f104773de7c544d">&#9670;&nbsp;</a></span>dcmBiasEstimatorConfiguration() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#aa199242c8c0d202153b338771c1a5ace">DCMBiasEstimatorConfiguration</a>&amp; mc_tasks::lipm_stabilizer::StabilizerTask::dcmBiasEstimatorConfiguration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get parameters of the DCM bias estimator. </p>
 
 </div>
 </div>
@@ -2446,6 +2578,51 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a32c48e17c2c451c67d804098b17b27e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32c48e17c2c451c67d804098b17b27e3">&#9670;&nbsp;</a></span>dcmEstimator_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">stateObservation::LipmDcmEstimator mc_tasks::lipm_stabilizer::StabilizerTask::dcmEstimator_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Filtering of the divergent component of motion (DCM) and estimation of a bias betweeen the DCM and the corresponding zero moment point for a linearized inverted pendulum model.Whether the estimator needs to be reset (robot in the air, initialization) </p>
+
+</div>
+</div>
+<a id="a4b355d04025f1a2489cc9e5b579d27ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b355d04025f1a2489cc9e5b579d27ea">&#9670;&nbsp;</a></span>dcmEstimatorNeedsReset_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_tasks::lipm_stabilizer::StabilizerTask::dcmEstimatorNeedsReset_ = true</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="abe50c92ded00ad8f22e9da9433dee655"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abe50c92ded00ad8f22e9da9433dee655">&#9670;&nbsp;</a></span>dcmIntegrator_</h2>
 
@@ -2601,6 +2778,29 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Result of the force distribution QP </p>
+
+</div>
+</div>
+<a id="a1debc60c12375bc8ebb3dad18a4bf3a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1debc60c12375bc8ebb3dad18a4bf3a6">&#9670;&nbsp;</a></span>distribZMP_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::distribZMP_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">      Eigen::Vector3d::Zero()</div></div><!-- fragment --><p>ZMP corresponding to force distribution result (desired ZMP) </p>
 
 </div>
 </div>
@@ -2829,6 +3029,30 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a2747ce4f19500c9313bd38400d6c4c3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2747ce4f19500c9313bd38400d6c4c3a">&#9670;&nbsp;</a></span>measuredDCMUnbiased_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::measuredDCMUnbiased_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Measured DCM (only used for logging) </p>
+
+</div>
+</div>
 <a id="a1d3d079514e89bcafe3d35b1ea2c1018"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1d3d079514e89bcafe3d35b1ea2c1018">&#9670;&nbsp;</a></span>measuredNetWrench_</h2>
 
@@ -2848,6 +3072,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>DCM unbiased (only used for logging) </p>
 
 </div>
 </div>

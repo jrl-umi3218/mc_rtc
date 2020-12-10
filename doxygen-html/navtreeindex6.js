@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"structmc__control_1_1fsm_1_1PostureState.html#a0dfd66172ec2a4bdf01074f23b5f19e7":[3,0,2,0,11,7],
 "structmc__control_1_1fsm_1_1PostureState.html#a83609f4952920e5a7bc53086f86e05b0":[3,0,2,0,11,6],
 "structmc__control_1_1fsm_1_1PostureState.html#aa410943e2e016eda0929852cf14dc771":[3,0,2,0,11,3],
 "structmc__control_1_1fsm_1_1PostureState.html#ab68cbf75a3beb22126658a57ca72aef7":[3,0,2,0,11,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "structmc__observers_1_1EncoderObserver.html#ab80efb08a7f4ca5d960f423319c9ee59":[3,0,4,1,16],
 "structmc__observers_1_1EncoderObserver.html#ad65144731e89fc2d6ba40c39e9d5b691":[3,0,4,1,7],
 "structmc__observers_1_1EncoderObserver.html#ade68d7a05c230052c3507b327bcf82f1":[3,0,4,1,8],
-"structmc__observers_1_1KinematicInertialObserver.html":[3,0,4,2],
-"structmc__observers_1_1KinematicInertialObserver.html#a1807fabd299a82e90c22e43cde3c885f":[3,0,4,2,2]
+"structmc__observers_1_1KinematicInertialObserver.html":[3,0,4,2]
 };

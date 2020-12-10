@@ -12,6 +12,8 @@ var structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration =
     [ "contactWeight", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ac682b8740dbc4d8f1af7ec01a3d9062b", null ],
     [ "copAdmittance", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#af5eb02096ad548196e57cd8a5aad7a32", null ],
     [ "copMaxVel", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a254b96dec351e68787a55ac10130c6d8", null ],
+    [ "copVelFilterGain", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a830868e9f51b1d6e3926def0786b8da4", null ],
+    [ "dcmBias", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a5a6639f87b0f1da854c48067332e98aa", null ],
     [ "dcmDerivatorTimeConstant", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ae59b68251ee3fe90880e6da86212c935", null ],
     [ "dcmDerivGain", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a1a17a20ec9324108f9313e97cc7f5910", null ],
     [ "dcmIntegralGain", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a26e250e0c089b2808642057977c2af01", null ],

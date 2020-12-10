@@ -74,6 +74,7 @@ var searchData=
   ['copslidingfoottask_5f',['copSlidingFootTask_',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#a7c1b4a8a3223bf5ac6f6a8638ff38f85',1,'mc_control::fsm::SlidingFootContactState']]],
   ['copsupportfoottask_5f',['copSupportFootTask_',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#aa95d9e4bbf8ffb75a92bde4c6b9a81d5',1,'mc_control::fsm::SlidingFootContactState']]],
   ['coptarget_5f',['copTarget_',['../structmc__control_1_1fsm_1_1StabilizerStandingState.html#a7d628fb75354ff6eed63d59a49677694',1,'mc_control::fsm::StabilizerStandingState']]],
+  ['copvelfiltergain',['copVelFilterGain',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a830868e9f51b1d6e3926def0786b8da4',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['crit_5f',['crit_',['../structmc__control_1_1fsm_1_1PostureState.html#a83609f4952920e5a7bc53086f86e05b0',1,'mc_control::fsm::PostureState']]],
   ['criteria',['criteria',['../structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html#aa1d90135dc97508bf146a086b7b8305e',1,'mc_control::fsm::MetaTasksState::TaskCriteria']]],
   ['criterias_5f',['criterias_',['../structmc__control_1_1fsm_1_1MetaTasksState.html#abf365e7d07d5e71915cfa982fc0eb3cd',1,'mc_control::fsm::MetaTasksState']]],

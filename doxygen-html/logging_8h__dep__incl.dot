@@ -36,7 +36,7 @@ digraph "include/mc_rtc/logging.h"
   Node91 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node12 [label="include/mc_tasks/MetaTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$MetaTask_8h.html"];
   Node12 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node39 [label="include/mc_tasks/Trajectory\lTaskGeneric.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$TrajectoryTaskGeneric_8h.html"];
+  Node39 [label="include/mc_tasks/Trajectory\lTaskGeneric.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$TrajectoryTaskGeneric_8h.html"];
   Node39 -> Node40 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node40 [label="include/mc_tasks/Orientation\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$OrientationTask_8h.html"];
   Node40 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -47,7 +47,9 @@ digraph "include/mc_rtc/logging.h"
   Node46 [label="include/mc_tasks/CoMTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$CoMTask_8h.html"];
   Node46 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node39 -> Node47 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node47 [label="include/mc_tasks/Surface\lTransformTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$SurfaceTransformTask_8h.html"];
+  Node47 [label="include/mc_tasks/Surface\lTransformTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$SurfaceTransformTask_8h.html"];
+  Node47 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 [label="include/mc_tasks/Admittance\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$AdmittanceTask_8h.html"];
   Node39 -> Node51 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node51 [label="include/mc_tasks/SplineTrajectory\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$SplineTrajectoryTask_8h.html"];
   Node39 -> Node54 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -56,8 +58,6 @@ digraph "include/mc_rtc/logging.h"
   Node55 [label="include/mc_tasks/VectorOrientation\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$VectorOrientationTask_8h.html"];
   Node39 -> Node59 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node59 [label="include/mc_tasks/Momentum\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$MomentumTask_8h.html"];
-  Node39 -> Node60 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node60 [label="include/mc_tasks/Position\lBasedVisServoTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$PositionBasedVisServoTask_8h.html"];
   Node12 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node91 -> Node63 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node63 [label="include/mc_observers\l/Observer.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Observer_8h.html"];
@@ -84,6 +84,7 @@ digraph "include/mc_rtc/logging.h"
   Node94 -> Node115 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node115 [label="include/mc_rbdyn/RobotLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotLoader_8h.html"];
   Node93 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node92 -> Node117 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node117 [label="include/mc_filter/Exponential\lMovingAverage.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$ExponentialMovingAverage_8h.html"];
   Node117 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

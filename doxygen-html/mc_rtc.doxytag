@@ -1589,9 +1589,11 @@
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::FDQPWeights</class>
-    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::SafetyThresholds</class>
+    <class kind="struct">mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::SafetyThresholds &gt;</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration &gt;</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &gt;</class>
     <namespace>mc_rbdyn</namespace>
@@ -4013,6 +4015,7 @@
     <name>AdmittanceTask.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/</path>
     <filename>AdmittanceTask_8h</filename>
+    <includes id="clamp_8h" name="clamp.h" local="no" imported="no">mc_filter/utils/clamp.h</includes>
     <includes id="SurfaceTransformTask_8h" name="SurfaceTransformTask.h" local="no" imported="no">mc_tasks/SurfaceTransformTask.h</includes>
     <class kind="struct">mc_tasks::force::AdmittanceTask</class>
     <namespace>mc_tasks</namespace>
@@ -4133,6 +4136,13 @@
       <name>SafetyThresholds</name>
       <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
       <anchor>a5f51d2adfa451cd98a1b3f3b2ed68ee4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</type>
+      <name>DCMBiasEstimatorConfiguration</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>aa199242c8c0d202153b338771c1a5ace</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -5062,11 +5072,39 @@
       <arglist>(const Eigen::Vector3d &amp;maxLinearVel)</arglist>
     </member>
     <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>maxLinearVel</name>
+      <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
+      <anchor>ae394a1ad7aa50fc7d7f4e395ce0f0a86</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>maxAngularVel</name>
       <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
       <anchor>a1a82a23ac354e6e380ecd7803e790d27</anchor>
       <arglist>(const Eigen::Vector3d &amp;maxAngularVel)</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>maxAngularVel</name>
+      <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
+      <anchor>af29e748101d2e7dad31dec1da2a3763f</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>velFilterGain</name>
+      <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
+      <anchor>a40e25a8a37d85dfbde690b2c20e84717</anchor>
+      <arglist>(double gain)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>velFilterGain</name>
+      <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
+      <anchor>af5601de3a1b4f06b0a5dad6a249465a6</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -5150,6 +5188,13 @@
       <name>timestep_</name>
       <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
       <anchor>ae1d5d0caedd77b293454ad6209ff6617</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>velFilterGain_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
+      <anchor>adbd26fcf85307988eedde6314fa066b9</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -8315,6 +8360,24 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration &gt;</name>
+    <filename>structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html</filename>
+    <member kind="function" static="yes">
+      <type>static mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</type>
+      <name>load</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html</anchorfile>
+      <anchor>a47ca04aa50776a344b51fbb83af2bfc2</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static mc_rtc::Configuration</type>
+      <name>save</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html</anchorfile>
+      <anchor>ae3782ece92a4f2f1cd0bf725f09fc169</anchor>
+      <arglist>(const mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration &amp;bias)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;</name>
     <filename>structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights_01_4.html</filename>
     <member kind="function" static="yes">
@@ -11113,6 +11176,52 @@
       <anchorfile>structmc__rtc_1_1DataStore.html</anchorfile>
       <anchor>ad1fe100eb7cb874c226ff76ed64f3cfe</anchor>
       <arglist>(const std::string &amp;name)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</name>
+    <filename>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</filename>
+    <member kind="variable">
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW double</type>
+      <name>dcmMeasureErrorStd</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
+      <anchor>abbfe11529cd8bed15f419ef28f84c05a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>zmpMeasureErrorStd</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
+      <anchor>ad377affc6265727ec1d5939522ff053a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>biasDriftPerSecondStd</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
+      <anchor>ab704ebb1e1630afd326b0643c2ebeecb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>Eigen::Vector2d</type>
+      <name>biasLimit</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
+      <anchor>a35f46c04420cf9d3936ebeb71a2ad0de</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>withDCMBias</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
+      <anchor>a7b344157591037726e435994165d846c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>withDCMFilter</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
+      <anchor>a41a4ad61ac746f632ece2ef93aa59b09</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -28379,6 +28488,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
+      <type>double</type>
+      <name>copVelFilterGain</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>a830868e9f51b1d6e3926def0786b8da4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
       <type>ZMPCCConfiguration</type>
       <name>zmpcc</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
@@ -28537,6 +28653,13 @@
       <name>vdcStiffness</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
       <anchor>a34a4b63e93b00c661f926721e284f3e9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>DCMBiasEstimatorConfiguration</type>
+      <name>dcmBias</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>a5a6639f87b0f1da854c48067332e98aa</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -29153,6 +29276,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>measuredDCMUnbiased_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a2747ce4f19500c9313bd38400d6c4c3a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>sva::ForceVecd</type>
       <name>measuredNetWrench_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
@@ -29171,6 +29301,20 @@
       <name>zmpcc_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>a0e3c1c45795642a29285fa96ef46808f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>stateObservation::LipmDcmEstimator</type>
+      <name>dcmEstimator_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a32c48e17c2c451c67d804098b17b27e3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>dcmEstimatorNeedsReset_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a4b355d04025f1a2489cc9e5b579d27ea</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -29248,6 +29392,13 @@
       <name>distribWrench_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>acea47979a383c106e0eedc05a02e52bb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>distribZMP_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a1debc60c12375bc8ebb3dad18a4bf3a6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -29364,6 +29515,20 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>copVelFilterGain</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a21ae40c129d552fdb1e8558f0b8c18f0</anchor>
+      <arglist>(double gain)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>copVelFilterGain</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a856264c2501b219ecb345d77794bc311</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>vdcFrequency</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>a5bf361438294d2c3aad9f0f8b063dc03</anchor>
@@ -29403,6 +29568,20 @@
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>ae829737c7cbcedb0635c2d858e7aa68f</anchor>
       <arglist>(const SafetyThresholds &amp;thresholds)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>dcmBiasEstimatorConfiguration</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a3ad8d7c6c44e52ea194fe1e48d83fb88</anchor>
+      <arglist>(const DCMBiasEstimatorConfiguration &amp;biasConfig)</arglist>
+    </member>
+    <member kind="function">
+      <type>const DCMBiasEstimatorConfiguration &amp;</type>
+      <name>dcmBiasEstimatorConfiguration</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>acc69d3ef42354f7f8f104773de7c544d</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
@@ -35180,6 +35359,7 @@
   <compound kind="namespace">
     <name>mc_rbdyn::lipm_stabilizer</name>
     <filename>namespacemc__rbdyn_1_1lipm__stabilizer.html</filename>
+    <class kind="struct">mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::FDQPWeights</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::SafetyThresholds</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</class>
@@ -35199,6 +35379,7 @@
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_control::fsm::Contact &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::Contact &gt;</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::SafetyThresholds &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &gt;</class>
@@ -36496,6 +36677,13 @@
       <name>SafetyThresholds</name>
       <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
       <anchor>a5f51d2adfa451cd98a1b3f3b2ed68ee4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</type>
+      <name>DCMBiasEstimatorConfiguration</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>aa199242c8c0d202153b338771c1a5ace</anchor>
       <arglist></arglist>
     </member>
   </compound>

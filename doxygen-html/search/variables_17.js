@@ -8,5 +8,7 @@ var searchData=
   ['weight_5f',['weight_',['../structmc__tasks_1_1AddRemoveContactTask.html#a24cf1f1758dde72e116fc9038e9ccf3d',1,'mc_tasks::AddRemoveContactTask']]],
   ['white',['White',['../structmc__rtc_1_1gui_1_1Color.html#a5f5e172d9bab5c0466a472a29524624c',1,'mc_rtc::gui::Color']]],
   ['width',['width',['../structmc__rtc_1_1gui_1_1LineConfig.html#a57cd8fdd493c21993724fe26828cf47c',1,'mc_rtc::gui::LineConfig']]],
+  ['withdcmbias',['withDCMBias',['../structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a7b344157591037726e435994165d846c',1,'mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration']]],
+  ['withdcmfilter',['withDCMFilter',['../structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a41a4ad61ac746f632ece2ef93aa59b09',1,'mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration']]],
   ['wrencherror_5f',['wrenchError_',['../structmc__tasks_1_1force_1_1AdmittanceTask.html#af66ad4d439b2cdfd9b6dc8bf7603cef3',1,'mc_tasks::force::AdmittanceTask']]]
 ];

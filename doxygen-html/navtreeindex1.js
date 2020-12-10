@@ -96,10 +96,11 @@ var NAVTREEINDEX1 =
 "StabilizerStandingState_8h.html":[4,0,0,0,0,0,11],
 "StabilizerStandingState_8h_source.html":[4,0,0,0,0,0,11],
 "StabilizerTask_8h.html":[4,0,0,8,0,1],
-"StabilizerTask_8h.html#a5f51d2adfa451cd98a1b3f3b2ed68ee4":[4,0,0,8,0,1,3],
-"StabilizerTask_8h.html#a61ba26bc4aeec5031be001df091b4b1a":[4,0,0,8,0,1,5],
-"StabilizerTask_8h.html#a6237f0269786bf01feaf316a6259b712":[4,0,0,8,0,1,2],
-"StabilizerTask_8h.html#a8e6d2236262d21dcc7ab589b6d6844ba":[4,0,0,8,0,1,4],
+"StabilizerTask_8h.html#a5f51d2adfa451cd98a1b3f3b2ed68ee4":[4,0,0,8,0,1,4],
+"StabilizerTask_8h.html#a61ba26bc4aeec5031be001df091b4b1a":[4,0,0,8,0,1,6],
+"StabilizerTask_8h.html#a6237f0269786bf01feaf316a6259b712":[4,0,0,8,0,1,3],
+"StabilizerTask_8h.html#a8e6d2236262d21dcc7ab589b6d6844ba":[4,0,0,8,0,1,5],
+"StabilizerTask_8h.html#aa199242c8c0d202153b338771c1a5ace":[4,0,0,8,0,1,2],
 "StabilizerTask_8h_source.html":[4,0,0,8,0,1],
 "StateBuilder_8h.html":[4,0,0,6,0,23],
 "StateBuilder_8h.html#a649ddcaedb769dede3922fa845e71ca4":[4,0,0,6,0,23,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433":[4,0,0,6,0,10,5,22],
 "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a6e2d1c6d37623990d2d3e0919ee03ff1":[4,0,0,6,0,10,5,4],
 "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a7146a60667b422e69fd050fe1df6859a":[4,0,0,6,0,10,5,15],
-"elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a7be1677ccab64a74bebea1ab86131da8":[4,0,0,6,0,10,5,6],
-"elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a87b7760f14fbff78d8819291f36ab9a0":[4,0,0,6,0,10,5,2]
+"elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a7be1677ccab64a74bebea1ab86131da8":[4,0,0,6,0,10,5,6]
 };

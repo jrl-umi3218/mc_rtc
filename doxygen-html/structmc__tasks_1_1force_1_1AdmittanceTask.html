@@ -139,9 +139,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a99d636ebeb1f79aa4cc09409cb1456a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a99d636ebeb1f79aa4cc09409cb1456a1">maxLinearVel</a> (const Eigen::Vector3d &amp;maxLinearVel)</td></tr>
 <tr class="memdesc:a99d636ebeb1f79aa4cc09409cb1456a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum translation velocity of the task.  <a href="#a99d636ebeb1f79aa4cc09409cb1456a1">More...</a><br /></td></tr>
 <tr class="separator:a99d636ebeb1f79aa4cc09409cb1456a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae394a1ad7aa50fc7d7f4e395ce0f0a86"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ae394a1ad7aa50fc7d7f4e395ce0f0a86">maxLinearVel</a> () const noexcept</td></tr>
+<tr class="separator:ae394a1ad7aa50fc7d7f4e395ce0f0a86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a82a23ac354e6e380ecd7803e790d27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a1a82a23ac354e6e380ecd7803e790d27">maxAngularVel</a> (const Eigen::Vector3d &amp;maxAngularVel)</td></tr>
 <tr class="memdesc:a1a82a23ac354e6e380ecd7803e790d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum angular velocity of the task.  <a href="#a1a82a23ac354e6e380ecd7803e790d27">More...</a><br /></td></tr>
 <tr class="separator:a1a82a23ac354e6e380ecd7803e790d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af29e748101d2e7dad31dec1da2a3763f"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#af29e748101d2e7dad31dec1da2a3763f">maxAngularVel</a> () const noexcept</td></tr>
+<tr class="separator:af29e748101d2e7dad31dec1da2a3763f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40e25a8a37d85dfbde690b2c20e84717"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a40e25a8a37d85dfbde690b2c20e84717">velFilterGain</a> (double gain)</td></tr>
+<tr class="memdesc:a40e25a8a37d85dfbde690b2c20e84717"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the gain of the low-pass filter on the reference velocity.  <a href="#a40e25a8a37d85dfbde690b2c20e84717">More...</a><br /></td></tr>
+<tr class="separator:a40e25a8a37d85dfbde690b2c20e84717"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5601de3a1b4f06b0a5dad6a249465a6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#af5601de3a1b4f06b0a5dad6a249465a6">velFilterGain</a> () const noexcept</td></tr>
+<tr class="memdesc:af5601de3a1b4f06b0a5dad6a249465a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the gain of the low-pass filter on the reference velocity.  <a href="#af5601de3a1b4f06b0a5dad6a249465a6">More...</a><br /></td></tr>
+<tr class="separator:af5601de3a1b4f06b0a5dad6a249465a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a530f67ea3aaa3fc0437aa72940de1143"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a530f67ea3aaa3fc0437aa72940de1143">refVelB</a> (const sva::MotionVecd &amp;velB)</td></tr>
 <tr class="memdesc:a530f67ea3aaa3fc0437aa72940de1143"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the reference body velocity.  <a href="#a530f67ea3aaa3fc0437aa72940de1143">More...</a><br /></td></tr>
 <tr class="separator:a530f67ea3aaa3fc0437aa72940de1143"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -342,6 +352,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a658941cdb929605537a9c8fd740138f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1d5d0caedd77b293454ad6209ff6617"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ae1d5d0caedd77b293454ad6209ff6617">timestep_</a></td></tr>
 <tr class="separator:ae1d5d0caedd77b293454ad6209ff6617"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbd26fcf85307988eedde6314fa066b9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#adbd26fcf85307988eedde6314fa066b9">velFilterGain_</a> = 0.8</td></tr>
+<tr class="separator:adbd26fcf85307988eedde6314fa066b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac854c2ff4e850e265a8b18d2e92df0ab"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Surface.html">mc_rbdyn::Surface</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#ac854c2ff4e850e265a8b18d2e92df0ab">surface_</a></td></tr>
 <tr class="separator:ac854c2ff4e850e265a8b18d2e92df0ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afec1507c00f7ab6e535c856c4e6c258e"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#afec1507c00f7ab6e535c856c4e6c258e">admittance_</a> = sva::ForceVecd(Eigen::Vector6d::Zero())</td></tr>
@@ -673,7 +685,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <a id="a1a82a23ac354e6e380ecd7803e790d27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a82a23ac354e6e380ecd7803e790d27">&#9670;&nbsp;</a></span>maxAngularVel()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a82a23ac354e6e380ecd7803e790d27">&#9670;&nbsp;</a></span>maxAngularVel() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -700,8 +712,34 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="af29e748101d2e7dad31dec1da2a3763f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af29e748101d2e7dad31dec1da2a3763f">&#9670;&nbsp;</a></span>maxAngularVel() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const Eigen::Vector3d&amp; mc_tasks::force::AdmittanceTask::maxAngularVel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the maximum angular velocity of the task </p>
+
+</div>
+</div>
 <a id="a99d636ebeb1f79aa4cc09409cb1456a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99d636ebeb1f79aa4cc09409cb1456a1">&#9670;&nbsp;</a></span>maxLinearVel()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a99d636ebeb1f79aa4cc09409cb1456a1">&#9670;&nbsp;</a></span>maxLinearVel() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -725,6 +763,32 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the maximum translation velocity of the task. </p>
+
+</div>
+</div>
+<a id="ae394a1ad7aa50fc7d7f4e395ce0f0a86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae394a1ad7aa50fc7d7f4e395ce0f0a86">&#9670;&nbsp;</a></span>maxLinearVel() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const Eigen::Vector3d&amp; mc_tasks::force::AdmittanceTask::maxLinearVel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Get the maximum linear velocity of the task </p>
 
 </div>
 </div>
@@ -1105,6 +1169,67 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a40e25a8a37d85dfbde690b2c20e84717"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40e25a8a37d85dfbde690b2c20e84717">&#9670;&nbsp;</a></span>velFilterGain() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::force::AdmittanceTask::velFilterGain </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>gain</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the gain of the low-pass filter on the reference velocity. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">gain</td><td>Gain between 0 and 1. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af5601de3a1b4f06b0a5dad6a249465a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5601de3a1b4f06b0a5dad6a249465a6">&#9670;&nbsp;</a></span>velFilterGain() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::force::AdmittanceTask::velFilterGain </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the gain of the low-pass filter on the reference velocity. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="afec1507c00f7ab6e535c856c4e6c258e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afec1507c00f7ab6e535c856c4e6c258e">&#9670;&nbsp;</a></span>admittance_</h2>
@@ -1315,6 +1440,28 @@ Additional Inherited Members</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">double mc_tasks::force::AdmittanceTask::timestep_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adbd26fcf85307988eedde6314fa066b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbd26fcf85307988eedde6314fa066b9">&#9670;&nbsp;</a></span>velFilterGain_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_tasks::force::AdmittanceTask::velFilterGain_ = 0.8</td>
         </tr>
       </table>
   </td>
