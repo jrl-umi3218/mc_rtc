@@ -64,7 +64,7 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
   // 2.1 Integrate velocity to pose
   sva::PTransformd T_0_deltaC(deltaCompPoseW_.rotation());
   // Represent the compliance velocity and acceleration in the deltaCompliance frame and scale by dt
-  sva::MotionVecd mvDeltaCompVelIntegralC = T_0_deltaC * dt * (deltaCompVelW_ + 0.5 * dt * deltaCompAccelW_);
+  sva::MotionVecd mvDeltaCompVelIntegralC = T_0_deltaC * (dt * (deltaCompVelW_ + 0.5 * dt * deltaCompAccelW_));
   // Convert the angular velocity to the rotation matrix through AngleAxis representation
   Eigen::AngleAxisd aaDeltaCompVelIntegralC(Eigen::Quaterniond::Identity());
   if(mvDeltaCompVelIntegralC.angular().norm() > 1e-6)
