@@ -31,10 +31,9 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
 
   if(!robot.surfaceHasIndirectForceSensor(surfaceName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[{}] Surface {} does not have a force sensor attached", name_, surfaceName);
+    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] Surface {} does not have a force sensor attached", name_,
+                                                     surfaceName);
   }
-
 
   // Set impedance parameters
   impedance(sva::ForceVecd(Eigen::Vector3d::Constant(10.0 * impM), Eigen::Vector3d::Constant(impM)),
@@ -50,16 +49,15 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
   //   \Delta \ddot{p}_{cd} = - \frac{D}{M} \Delta \dot{p}_{cd} - \frac{K}{M} \Delta p_{cd})
   //   + \frac{K_f}{M} (f_m - f_d) where \Delta p_{cd} = p_c - p_d
   // See the Constructor description for the definition of symbols
-  deltaCompAccelW_ =
-      T_0_s.invMul( // T_0_s.invMul transforms the MotionVecd value from surface to world frame
-          sva::MotionVecd(
-              // Compute in the surface frame because the impedance parameters and wrench gain are represented in the
-              // surface frame
-              impM_.vector().cwiseInverse().cwiseProduct(
-                  // T_0_s transforms the MotionVecd value from world to surface frame
-                  -impD_.vector().cwiseProduct((T_0_s * deltaCompVelW_).vector())
-                  - impK_.vector().cwiseProduct((T_0_s * sva::transformVelocity(deltaCompPoseW_)).vector())
-                  + wrenchGain_.vector().cwiseProduct((measuredWrench() - targetWrench_).vector()))));
+  deltaCompAccelW_ = T_0_s.invMul( // T_0_s.invMul transforms the MotionVecd value from surface to world frame
+      sva::MotionVecd(
+          // Compute in the surface frame because the impedance parameters and wrench gain are represented in the
+          // surface frame
+          impM_.vector().cwiseInverse().cwiseProduct(
+              // T_0_s transforms the MotionVecd value from world to surface frame
+              -impD_.vector().cwiseProduct((T_0_s * deltaCompVelW_).vector())
+              - impK_.vector().cwiseProduct((T_0_s * sva::transformVelocity(deltaCompPoseW_)).vector())
+              + wrenchGain_.vector().cwiseProduct((measuredWrench() - targetWrench_).vector()))));
 
   // 2. Compute the compliance pose and velocity by time integral
   double dt = solver.dt();
@@ -197,7 +195,8 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
   gui.addElement({"Tasks", name_},
                  // pose
-                 mc_rtc::gui::Transform("desiredPose", [this]() -> const sva::PTransformd & { return this->desiredPose(); },
+                 mc_rtc::gui::Transform("desiredPose",
+                                        [this]() -> const sva::PTransformd & { return this->desiredPose(); },
                                         [this](const sva::PTransformd & pos) { this->desiredPose(pos); }),
                  mc_rtc::gui::Transform("compliancePose", [this]() { return this->compliancePose(); }),
                  mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }),
