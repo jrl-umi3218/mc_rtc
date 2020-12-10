@@ -26,14 +26,15 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
 : SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight)
 {
   const auto & robot = robots.robot(robotIndex);
+  type_ = "impedance";
+  name_ = "impedance_" + robots.robot(rIndex).name() + "_" + surfaceName;
+  
   if(!robot.surfaceHasIndirectForceSensor(surfaceName))
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[mc_tasks::ImpedanceTask] Surface {} does not have a force sensor attached", surfaceName);
+        "[{}] Surface {} does not have a force sensor attached", name_, surfaceName);
   }
 
-  type_ = "impedance";
-  name_ = "impedance_" + robots.robot(rIndex).name() + "_" + surfaceName;
 
   // Set impedance parameters
   impedance(sva::ForceVecd(Eigen::Vector3d::Constant(10.0 * impM), Eigen::Vector3d::Constant(impM)),
@@ -196,7 +197,7 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
   gui.addElement({"Tasks", name_},
                  // pose
-                 mc_rtc::gui::Transform("desiredPose", [this]() { return this->desiredPose(); },
+                 mc_rtc::gui::Transform("desiredPose", [this]() -> const sva::PTransformd & { return this->desiredPose(); },
                                         [this](const sva::PTransformd & pos) { this->desiredPose(pos); }),
                  mc_rtc::gui::Transform("compliancePose", [this]() { return this->compliancePose(); }),
                  mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }),

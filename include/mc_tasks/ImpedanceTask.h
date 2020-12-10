@@ -117,7 +117,7 @@ public:
   }
 
   /*! \brief Get the impedance mass parameter represented in the surface. */
-  const sva::ForceVecd & impedanceM() const
+  const sva::ForceVecd & impedanceM() const noexcept
   {
     return impM_;
   }
@@ -129,7 +129,7 @@ public:
   }
 
   /*! \brief Get the impedance damper parameter represented in the surface. */
-  const sva::ForceVecd & impedanceD() const
+  const sva::ForceVecd & impedanceD() const noexcept
   {
     return impD_;
   }
@@ -153,7 +153,7 @@ public:
   }
 
   /*! \brief Get the wrench gain, which is multiplied by the wrench in the surface frame. */
-  const sva::MotionVecd & wrenchGain() const
+  const sva::MotionVecd & wrenchGain() const noexcept
   {
     return wrenchGain_;
   }
@@ -165,7 +165,7 @@ public:
   }
 
   /*! \brief Get the desired pose of the surface in the world frame. */
-  const sva::PTransformd & desiredPose() const
+  const sva::PTransformd & desiredPose() const noexcept
   {
     return desiredPoseW_;
   }
@@ -177,7 +177,7 @@ public:
   }
 
   /*! \brief Get the desired velocity of the surface in the world frame. */
-  const sva::MotionVecd & desiredVel() const
+  const sva::MotionVecd & desiredVel() const noexcept
   {
     return desiredVelW_;
   }
@@ -189,7 +189,7 @@ public:
   }
 
   /*! \brief Get the desired acceleration of the surface in the world frame. */
-  const sva::MotionVecd & desiredAccel() const
+  const sva::MotionVecd & desiredAccel() const noexcept
   {
     return desiredAccelW_;
   }
@@ -219,7 +219,7 @@ public:
   }
 
   /*! \brief Get the target wrench in the surface frame. */
-  const sva::ForceVecd & targetWrench() const
+  const sva::ForceVecd & targetWrench() const noexcept
   {
     return targetWrench_;
   }
@@ -230,7 +230,7 @@ public:
    */
   void targetWrenchW(const sva::ForceVecd & wrenchW)
   {
-    const auto & X_0_s = robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
+    const auto & X_0_s = robots.robot(rIndex).surfacePose(surfaceName);
     targetWrench(X_0_s.dualMul(wrenchW));
   }
 
