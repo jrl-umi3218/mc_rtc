@@ -1,0 +1,21 @@
+{
+  "type": "impedance",
+  "surface": "RightGripper",
+  "target":
+  {
+    // Rotation expressed as RPY (in radian)
+    // May also be expressed as quaternion or rotation matrix
+    "rotation":    [0.0, 0.0, 0.0],
+    "translation": [0.5, 0.5, 1.0]
+  },
+  "wrench":
+  {
+    "couple": [0.0, 0.0, 0.0],
+    "force": [0.0, 0.0, 20.0]
+  },
+  "wrenchGain":
+  {
+    "couple": [0.0, 0.0, 0.0],
+    "force": [0.0, 0.0, 0.0005]
+  }
+}
