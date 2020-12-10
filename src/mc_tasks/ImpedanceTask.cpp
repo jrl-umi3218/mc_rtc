@@ -22,7 +22,8 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
                              double weight,
                              double impM,
                              double impD,
-                             double impK)
+                             double impK,
+                             double oriScale)
 : SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight)
 {
   const auto & robot = robots.robot(robotIndex);
@@ -36,9 +37,9 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
   }
 
   // Set impedance parameters
-  impedance(sva::ForceVecd(Eigen::Vector3d::Constant(10.0 * impM), Eigen::Vector3d::Constant(impM)),
-            sva::ForceVecd(Eigen::Vector3d::Constant(10.0 * impD), Eigen::Vector3d::Constant(impD)),
-            sva::ForceVecd(Eigen::Vector3d::Constant(10.0 * impK), Eigen::Vector3d::Constant(impK)));
+  impedance(sva::ForceVecd(Eigen::Vector3d::Constant(oriScale * impM), Eigen::Vector3d::Constant(impM)),
+            sva::ForceVecd(Eigen::Vector3d::Constant(oriScale * impD), Eigen::Vector3d::Constant(impD)),
+            sva::ForceVecd(Eigen::Vector3d::Constant(oriScale * impK), Eigen::Vector3d::Constant(impK)));
 }
 
 void ImpedanceTask::update(mc_solver::QPSolver & solver)

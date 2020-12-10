@@ -67,6 +67,9 @@ public:
    *
    * \param impK Impedance spring parameter
    *
+   * \param ori_scale Scale of impedance parameters for orientation (Usually, setting the same parameter as position to
+   * orientation is too sensitive to measured moment)
+   *
    * \throws If the body the task is attempting to control does not have a
    * sensor attached to it
    *
@@ -78,7 +81,8 @@ public:
                 double weight = 1000.0,
                 double impM = 10,
                 double impD = 200,
-                double impK = 1000);
+                double impK = 1000,
+                double oriScale = 10);
 
   /*! \brief Reset the task
    *
