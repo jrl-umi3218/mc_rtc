@@ -11,7 +11,7 @@ if [[ $1 == --inputlist ]];
 then
         echo -h --help -i --install-prefix -s --source-dir --with-ros-support --with-python-support \
               --python-user-install --python-force-python2 --python-force-python3 --python-build-2-and-3 \
-              --with-lssol --with-hrp2 --with-hrp4 --with-hrp4j --with-hrp5 --with-mc_udp --with-mc_openrtm \
+              --with-lssol --with-hrp2 --with-hrp4 --with-hrp4j --with-hrp4cr --with-hrp5 --with-mc_udp --with-mc_openrtm \
               --build-type --build-testing --build-benchmarks --install-system-dependencies \
               --install-system-dependencies --clone-only --skip-update --skip-dirty-update --user-input \
               -j --build-core --ros-distro --allow-root
@@ -92,6 +92,7 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --with-hrp2                              : enable HRP2 (requires mc-hrp2 group access)             (default $WITH_HRP2)
     --with-hrp4                              : enable HRP4 (requires mc-hrp4 group access)             (default $WITH_HRP4)
     --with-hrp4j                             : enable HRP4J (requires mc-hrp4 group access)            (default $WITH_HRP4J)
+    --with-hrp4cr                            : enable HRP4CR (requires isri-aist group access)         (default $WITH_HRP4CR)
     --with-hrp5                              : enable HRP5 (requires mc-hrp5 group access)             (default $WITH_HRP5)
     --with-mc_openrtm                        : enable the mc_openrtm interface (requires hrpsys-base)  (default $WITH_MC_OPENRTM)
     --with-mc_udp                            : enable the mc_udp interface (requires hrpsys-base)      (default $WITH_MC_UDP)
@@ -196,6 +197,12 @@ do
         i=$(($i+1))
         WITH_HRP4J="${!i}"
         check_true_false --with-hrp4j "$WITH_HRP4J"
+        ;;
+
+        --with-hrp4cr)
+        i=$(($i+1))
+        WITH_HRP4CR="${!i}"
+        check_true_false --with-hrp4cr "$WITH_HRP4CR"
         ;;
 
         --with-hrp5)
@@ -382,6 +389,7 @@ echo_log "   WITH_LSSOL=$WITH_LSSOL"
 echo_log "   WITH_HRP2=$WITH_HRP2"
 echo_log "   WITH_HRP4=$WITH_HRP4"
 echo_log "   WITH_HRP4J=$WITH_HRP4J"
+echo_log "   WITH_HRP4CR=$WITH_HRP4CR"
 echo_log "   WITH_HRP5=$WITH_HRP5"
 echo_log "   WITH_MC_UDP=$WITH_MC_UDP"
 echo_log "   MC_UDP_INSTALL_PREFIX=$MC_UDP_INSTALL_PREFIX"
@@ -466,6 +474,7 @@ readonly WITH_LSSOL
 readonly WITH_HRP2
 readonly WITH_HRP4
 readonly WITH_HRP4J
+readonly WITH_HRP4CR
 readonly WITH_HRP5
 readonly WITH_MC_OPENRTM
 readonly MC_OPENRTM_INSTALL_PREFIX
@@ -494,6 +503,7 @@ echo_log "   WITH_LSSOL=$WITH_LSSOL"
 echo_log "   WITH_HRP2=$WITH_HRP2"
 echo_log "   WITH_HRP4=$WITH_HRP4"
 echo_log "   WITH_HRP4J=$WITH_HRP4J"
+echo_log "   WITH_HRP4CR=$WITH_HRP4CR"
 echo_log "   WITH_HRP5=$WITH_HRP5"
 echo_log "   WITH_MC_UDP=$WITH_MC_UDP"
 echo_log "   MC_UDP_INSTALL_PREFIX=$MC_UDP_INSTALL_PREFIX"
@@ -927,6 +937,20 @@ then
   echo_log "-- [OK] Successfully cloned and updated the robot module $git_dep to $repo_dir"
 fi
 
+if $WITH_HRP4CR
+then
+  if $WITH_ROS_SUPPORT
+  then
+    check_and_clone_git_dependency 'isri-aist/hrp4cr_description#main' $CATKIN_DATA_WORKSPACE_SRC
+    echo_log "-- [OK] Successfully cloned and updated the robot description to $git_dep to $repo_dir (catkin)"
+  else
+    check_and_clone_git_dependency 'isri-aist/hrp4cr_description#main' $SOURCE_DIR
+    echo_log "-- [OK] Successfully cloned and updated the robot description $git_dep to $repo_dir (no catkin)"
+  fi
+  check_and_clone_git_dependency 'isri-aist/mc_hrp4cr#main'  $SOURCE_DIR
+  echo_log "-- [OK] Successfully cloned and updated the robot module $git_dep to $repo_dir"
+fi
+
 if $WITH_HRP5
 then
   if $WITH_ROS_SUPPORT
@@ -1283,10 +1307,22 @@ then
   echo_log "-- Installing with HRP4J robot support"
   if ! $WITH_ROS_SUPPORT
   then
-    build_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4j
+    build_git_dependency git@gite.lirmm.fr:mc-hrp4/hrp4j_description
     echo_log "-- [OK] Successfully built the robot description $git_dep (no catkin)"
   fi
   build_git_dependency git@gite.lirmm.fr:mc-hrp4/mc_hrp4j
+  echo_log "-- [OK] Successfully built the robot module $git_dep"
+fi
+
+if $WITH_HRP4CR
+then
+  echo_log "-- Installing with HRP4CR robot support"
+  if ! $WITH_ROS_SUPPORT
+  then
+    build_git_dependency isri-aist/hrp4cr_description
+    echo_log "-- [OK] Successfully built the robot description $git_dep (no catkin)"
+  fi
+  build_git_dependency isri-aist/mc_hrp4cr
   echo_log "-- [OK] Successfully built the robot module $git_dep"
 fi
 
