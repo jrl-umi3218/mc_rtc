@@ -45,45 +45,46 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
 {
   // 1. Compute the compliance acceleration
   sva::PTransformd T_0_s(surfacePose().rotation());
-  // compAccelW_ is represented in the world frame
-  //   \ddot{p}_c = \ddot{p}_d + \frac{D}{M} (\dot{p}_d - \dot{p}_c) + \frac{K}{M} (p_d - p_c) + \frac{K_f}{M} (f_m -
-  //   f_d) See the Constructor description for the definition of symbols
-  compAccelW_ =
-      desiredAccelW_
-      + T_0_s.invMul( // T_0_s.invMul transforms the MotionVecd value from the surface frame to the world frame
-            sva::MotionVecd(
-                // Compute in the surface frame because the impedance parameters and wrench gain are represented in the
-                // surface frame
-                impM_.vector().cwiseInverse().cwiseProduct(
-                    // T_0_s transforms the MotionVecd value from the world from to the surface frame
-                    impD_.vector().cwiseProduct((T_0_s * (desiredVelW_ - compVelW_)).vector())
-                    + impK_.vector().cwiseProduct((T_0_s * transformError(compPoseW_, desiredPoseW_)).vector())
-                    + wrenchGain_.vector().cwiseProduct((measuredWrench() - targetWrench_).vector()))));
+  // deltaCompAccelW_ is represented in the world frame
+  //   \Delta \ddot{p}_{cd} = - \frac{D}{M} \Delta \dot{p}_{cd} - \frac{K}{M} \Delta p_{cd})
+  //   + \frac{K_f}{M} (f_m - f_d) where \Delta p_{cd} = p_c - p_d
+  // See the Constructor description for the definition of symbols
+  deltaCompAccelW_ =
+      T_0_s.invMul( // T_0_s.invMul transforms the MotionVecd value from the surface frame to the world frame
+          sva::MotionVecd(
+              // Compute in the surface frame because the impedance parameters and wrench gain are represented in the
+              // surface frame
+              impM_.vector().cwiseInverse().cwiseProduct(
+                  // T_0_s transforms the MotionVecd value from the world from to the surface frame
+                  -impD_.vector().cwiseProduct((T_0_s * deltaCompVelW_).vector())
+                  - impK_.vector().cwiseProduct((T_0_s * sva::transformVelocity(deltaCompPoseW_)).vector())
+                  + wrenchGain_.vector().cwiseProduct((measuredWrench() - targetWrench_).vector()))));
 
   // 2. Compute the compliance pose and velocity by time integral
   double dt = solver.dt();
   // 2.1 Integrate velocity to pose
-  sva::PTransformd T_0_c(compPoseW_.rotation());
-  // Represent the compliance velocity and acceleration in the compliance frame and scale by dt
-  sva::MotionVecd compDeltaC = T_0_c * (dt * compVelW_ + 0.5 * dt * dt * compAccelW_);
+  sva::PTransformd T_0_deltaC(deltaCompPoseW_.rotation());
+  // Represent the compliance velocity and acceleration in the deltaCompliance frame and scale by dt
+  sva::MotionVecd mvDeltaCompVelIntegralC = T_0_deltaC * (dt * deltaCompVelW_ + 0.5 * dt * dt * deltaCompAccelW_);
   // Convert the angular velocity to the rotation matrix through AngleAxis representation
-  Eigen::AngleAxisd aaCompDeltaC(Eigen::Quaterniond::Identity());
-  if(compDeltaC.angular().norm() > 1e-6)
+  Eigen::AngleAxisd aaDeltaCompVelIntegralC(Eigen::Quaterniond::Identity());
+  if(mvDeltaCompVelIntegralC.angular().norm() > 1e-6)
   {
-    aaCompDeltaC = Eigen::AngleAxisd(compDeltaC.angular().norm(), compDeltaC.angular().normalized());
+    aaDeltaCompVelIntegralC =
+        Eigen::AngleAxisd(mvDeltaCompVelIntegralC.angular().norm(), mvDeltaCompVelIntegralC.angular().normalized());
   }
-  sva::PTransformd compVelIntegral(
+  sva::PTransformd deltaCompVelIntegral(
       // Rotation matrix is transposed because sva::PTransformd uses the left-handed coordinates
-      aaCompDeltaC.toRotationMatrix().transpose(), compDeltaC.linear());
-  // Since compVelIntegral is multiplied by compPoseW_, it must be represented in the compliance frame
-  compPoseW_ = compVelIntegral * compPoseW_;
+      aaDeltaCompVelIntegralC.toRotationMatrix().transpose(), mvDeltaCompVelIntegralC.linear());
+  // Since deltaCompVelIntegral is multiplied by deltaCompPoseW_, it must be represented in the deltaCompliance frame
+  deltaCompPoseW_ = deltaCompVelIntegral * deltaCompPoseW_;
   // 2.2 Integrate acceleration to velocity
-  compVelW_ += dt * compAccelW_;
+  deltaCompVelW_ += dt * deltaCompAccelW_;
 
   // 3. Set compliance values to the targets of SurfaceTransformTask
-  refAccel(T_0_s * compAccelW_); // represented in the surface frame
-  refVelB(T_0_s * compVelW_); // represented in the surface frame
-  target(compPoseW_); // represented in the world frame
+  refAccel(T_0_s * (desiredAccelW_ + deltaCompAccelW_)); // represented in the surface frame
+  refVelB(T_0_s * (desiredVelW_ + deltaCompVelW_)); // represented in the surface frame
+  target(compliancePose()); // represented in the world frame
 }
 
 void ImpedanceTask::reset()
@@ -94,13 +95,13 @@ void ImpedanceTask::reset()
 
   // Set the desired and compliance poses to the SurfaceTransformTask target (i.e., the current pose)
   desiredPoseW_ = target();
-  compPoseW_ = desiredPoseW_;
+  deltaCompPoseW_ = sva::PTransformd::Identity();
 
   // Reset the desired and compliance velocity and acceleration to zero
   desiredVelW_ = sva::MotionVecd::Zero();
   desiredAccelW_ = sva::MotionVecd::Zero();
-  compVelW_ = sva::MotionVecd::Zero();
-  compAccelW_ = sva::MotionVecd::Zero();
+  deltaCompVelW_ = sva::MotionVecd::Zero();
+  deltaCompAccelW_ = sva::MotionVecd::Zero();
 
   // Reset the target wrench to zero
   targetWrench_ = sva::ForceVecd::Zero();
@@ -148,9 +149,9 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_wrenchGain", [this]() -> const sva::MotionVecd & { return wrenchGain_; });
 
   // compliance values
-  logger.addLogEntry(name_ + "_compliancePose", [this]() -> const sva::PTransformd & { return compPoseW_; });
-  logger.addLogEntry(name_ + "_complianceVel", [this]() -> const sva::MotionVecd & { return compVelW_; });
-  logger.addLogEntry(name_ + "_complianceAccel", [this]() -> const sva::MotionVecd & { return compAccelW_; });
+  logger.addLogEntry(name_ + "_deltaCompliancePose", [this]() -> const sva::PTransformd & { return deltaCompPoseW_; });
+  logger.addLogEntry(name_ + "_deltaComplianceVel", [this]() -> const sva::MotionVecd & { return deltaCompVelW_; });
+  logger.addLogEntry(name_ + "_deltaComplianceAccel", [this]() -> const sva::MotionVecd & { return deltaCompAccelW_; });
 
   // desired values
   logger.addLogEntry(name_ + "_desiredPose", [this]() -> const sva::PTransformd & { return desiredPoseW_; });
@@ -174,9 +175,9 @@ void ImpedanceTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_wrenchGain");
 
   // compliance values
-  logger.removeLogEntry(name_ + "_compliancePose");
-  logger.removeLogEntry(name_ + "_complianceVel");
-  logger.removeLogEntry(name_ + "_complianceAccel");
+  logger.removeLogEntry(name_ + "_deltaCompliancePose");
+  logger.removeLogEntry(name_ + "_deltaComplianceVel");
+  logger.removeLogEntry(name_ + "_deltaComplianceAccel");
 
   // desired values
   logger.removeLogEntry(name_ + "_desiredPose");

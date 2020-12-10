@@ -18,8 +18,8 @@ namespace force
  *  to the target of the SurfaceTransformTask, which is the base class of this class.
  *
  *  \f[
- *      M \Delta \ddot{p}_{dc} + D \Delta \dot{p}_{dc} + K \Delta p_{dc} = K_f (f_d - f_m)
-        {\rm where} \Delta p_{dc} = p_d - p_c
+ *      M \Delta \ddot{p}_{cd} + D \Delta \dot{p}_{cd} + K \Delta p_{cd} = K_f (f_m - f_d)
+ *      {\rm where} \Delta p_{cd} = p_c - p_d
  *  \f]
  *  where \f$ p_* \f$ is the end-effector position and orientation, and \f$ f_* \f$ is the end-effector wrench.
  *  Subscripts \f$ d, c, m \f$ mean the desired, compliance, and measured values, respectively.
@@ -200,15 +200,22 @@ public:
     desiredAccelW_ = accel;
   }
 
+  /*! \brief Get the relative pose from desired frame to compliance frame represented in the world frame. */
+  const sva::PTransformd & deltaCompliancePose() const
+  {
+    return deltaCompPoseW_;
+  }
+
   /*! \brief Get the compliance pose of the surface in the world frame.
    *
    *  \note Compliance pose cannot be set by user because it is calculated from the impedance equation internally.
    *  See the Constructor description for the definition of compliance pose.
    *
    */
-  const sva::PTransformd & compliancePose() const
+  const sva::PTransformd compliancePose() const
   {
-    return compPoseW_;
+    sva::PTransformd T_0_d(Eigen::Matrix3d(desiredPoseW_.rotation()));
+    return T_0_d * deltaCompPoseW_ * T_0_d.inv() * desiredPoseW_;
   }
 
   /*! \brief Get the target wrench in the surface frame. */
@@ -249,12 +256,12 @@ protected:
   sva::ForceVecd impK_; // must be set in the Constructor
   sva::MotionVecd wrenchGain_ = sva::MotionVecd::Zero();
 
-  // Compliance pose, velocity, and acceleration in the world frame
+  // Relative pose, velocity, and acceleration from desired frame to compliance frame represented in the world frame
   // To store these values across control cycles, represent them in a constant world frame instead of the time-varying
   // surface frame.
-  sva::PTransformd compPoseW_ = sva::PTransformd::Identity();
-  sva::MotionVecd compVelW_ = sva::MotionVecd::Zero();
-  sva::MotionVecd compAccelW_ = sva::MotionVecd::Zero();
+  sva::PTransformd deltaCompPoseW_ = sva::PTransformd::Identity();
+  sva::MotionVecd deltaCompVelW_ = sva::MotionVecd::Zero();
+  sva::MotionVecd deltaCompAccelW_ = sva::MotionVecd::Zero();
 
   // Desired pose, velocity, and acceleration in the world frame
   sva::PTransformd desiredPoseW_ = sva::PTransformd::Identity();
