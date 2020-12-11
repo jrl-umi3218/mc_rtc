@@ -84,22 +84,25 @@ public:
       if(params.size() == 1)
       {
         guard.unlock();
-        return get_robot_module(params[0]);
+        rm = get_robot_module(params[0]);
       }
       else if(params.size() == 2)
       {
         guard.unlock();
-        return get_robot_module(params[0], params[1]);
+        rm = get_robot_module(params[0], params[1]);
       }
       else if(params.size() == 3)
       {
         guard.unlock();
-        return get_robot_module(params[0], params[1], params[2]);
+        rm = get_robot_module(params[0], params[1], params[2]);
       }
       else
       {
         mc_rtc::log::error_and_throw<mc_rtc::LoaderException>("Aliases can only handle 1 to 3 parameters");
       }
+      rm->_parameters.resize(1);
+      rm->_parameters[0] = name;
+      return rm;
     }
     else
     {
