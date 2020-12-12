@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <mc_filter/LowPass.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 
 namespace mc_tasks
@@ -245,9 +246,27 @@ public:
   }
 
   /*! \brief Get the measured wrench in the surface frame. */
-  sva::ForceVecd measuredWrench() const
+  const sva::ForceVecd & measuredWrench() const
   {
-    return robots.robot(rIndex).surfaceWrench(surfaceName);
+    return measuredWrench_;
+  }
+
+  /*! \brief Get the filtered measured wrench in the surface frame. */
+  const sva::ForceVecd & filteredMeasuredWrench() const
+  {
+    return filteredMeasuredWrench_;
+  }
+
+  /*! \brief Get the cutoff period for the low-pass filter of measured wrench. */
+  double cutoffPeriod()
+  {
+    return lowPass_.cutoffPeriod();
+  }
+
+  /*! \brief Set the cutoff period for the low-pass filter of measured wrench. */
+  void cutoffPeriod(double cutoffPeriod)
+  {
+    lowPass_.cutoffPeriod(cutoffPeriod);
   }
 
   /*! \brief Load parameters from a Configuration object. */
@@ -275,8 +294,12 @@ protected:
   sva::MotionVecd desiredVelW_ = sva::MotionVecd::Zero();
   sva::MotionVecd desiredAccelW_ = sva::MotionVecd::Zero();
 
-  // Target wrench in the surface frame
+  // Wrench in the surface frame
   sva::ForceVecd targetWrench_ = sva::ForceVecd::Zero();
+  sva::ForceVecd measuredWrench_ = sva::ForceVecd::Zero();
+  sva::ForceVecd filteredMeasuredWrench_ = sva::ForceVecd::Zero();
+
+  mc_filter::LowPass<sva::ForceVecd> lowPass_;
 
   void update(mc_solver::QPSolver & solver) override;
 

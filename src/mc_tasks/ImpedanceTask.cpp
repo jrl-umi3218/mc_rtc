@@ -24,7 +24,7 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
                              double impD,
                              double impK,
                              double oriScale)
-: SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight)
+: SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), lowPass_(0.005, 0.05)
 {
   const auto & robot = robots.robot(robotIndex);
   type_ = "impedance";
@@ -44,7 +44,16 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
 
 void ImpedanceTask::update(mc_solver::QPSolver & solver)
 {
-  // 1. Compute the compliance acceleration
+  // 1. Filter the measured wrench
+  if(lowPass_.dt() != solver.dt())
+  {
+    lowPass_.dt(solver.dt());
+  }
+  measuredWrench_ = robots.robot(rIndex).surfaceWrench(surfaceName);
+  lowPass_.update(measuredWrench_);
+  filteredMeasuredWrench_ = lowPass_.eval();
+
+  // 2. Compute the compliance acceleration
   sva::PTransformd T_0_s(surfacePose().rotation());
   // deltaCompAccelW_ is represented in the world frame
   //   \Delta \ddot{p}_{cd} = - \frac{D}{M} \Delta \dot{p}_{cd} - \frac{K}{M} \Delta p_{cd})
@@ -58,11 +67,11 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
               // T_0_s transforms the MotionVecd value from world to surface frame
               -impD_.vector().cwiseProduct((T_0_s * deltaCompVelW_).vector())
               - impK_.vector().cwiseProduct((T_0_s * sva::transformVelocity(deltaCompPoseW_)).vector())
-              + wrenchGain_.vector().cwiseProduct((measuredWrench() - targetWrench_).vector()))));
+              + wrenchGain_.vector().cwiseProduct((filteredMeasuredWrench_ - targetWrench_).vector()))));
 
-  // 2. Compute the compliance pose and velocity by time integral
+  // 3. Compute the compliance pose and velocity by time integral
   double dt = solver.dt();
-  // 2.1 Integrate velocity to pose
+  // 3.1 Integrate velocity to pose
   sva::PTransformd T_0_deltaC(deltaCompPoseW_.rotation());
   // Represent the compliance velocity and acceleration in the deltaCompliance frame and scale by dt
   sva::MotionVecd mvDeltaCompVelIntegralC = T_0_deltaC * (dt * (deltaCompVelW_ + 0.5 * dt * deltaCompAccelW_));
@@ -78,10 +87,10 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
       aaDeltaCompVelIntegralC.toRotationMatrix().transpose(), mvDeltaCompVelIntegralC.linear());
   // Since deltaCompVelIntegral is multiplied by deltaCompPoseW_, it must be represented in the deltaCompliance frame
   deltaCompPoseW_ = deltaCompVelIntegral * deltaCompPoseW_;
-  // 2.2 Integrate acceleration to velocity
+  // 3.2 Integrate acceleration to velocity
   deltaCompVelW_ += dt * deltaCompAccelW_;
 
-  // 3. Set compliance values to the targets of SurfaceTransformTask
+  // 4. Set compliance values to the targets of SurfaceTransformTask
   refAccel(T_0_s * (desiredAccelW_ + deltaCompAccelW_)); // represented in the surface frame
   refVelB(T_0_s * (desiredVelW_ + deltaCompVelW_)); // represented in the surface frame
   target(compliancePose()); // represented in the world frame
@@ -105,6 +114,9 @@ void ImpedanceTask::reset()
 
   // Reset the target wrench to zero
   targetWrench_ = sva::ForceVecd::Zero();
+  measuredWrench_ = sva::ForceVecd::Zero();
+  filteredMeasuredWrench_ = sva::ForceVecd::Zero();
+  lowPass_.reset(sva::ForceVecd::Zero());
 }
 
 void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
@@ -135,6 +147,12 @@ void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   {
     targetWrench(config("wrench"));
   }
+
+  if(config.has("cutoffPeriod"))
+  {
+    cutoffPeriod(config("cutoffPeriod"));
+  }
+
   SurfaceTransformTask::load(solver, config);
 }
 
@@ -160,8 +178,10 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
 
   // wrench
   logger.addLogEntry(name_ + "_targetWrench", [this]() -> const sva::ForceVecd & { return targetWrench_; });
-  logger.addLogEntry(name_ + "_measuredWrench",
-                     [this]() -> sva::ForceVecd { return measuredWrench(); }); // should not be reference
+  logger.addLogEntry(name_ + "_measuredWrench", [this]() -> const sva::ForceVecd & { return measuredWrench_; });
+  logger.addLogEntry(name_ + "_filteredMeasuredWrench",
+                     [this]() -> const sva::ForceVecd & { return filteredMeasuredWrench_; });
+  logger.addLogEntry(name_ + "_cutoffPeriod", [this]() { return cutoffPeriod(); });
 }
 
 void ImpedanceTask::removeFromLogger(mc_rtc::Logger & logger)
@@ -187,6 +207,8 @@ void ImpedanceTask::removeFromLogger(mc_rtc::Logger & logger)
   // wrench
   logger.removeLogEntry(name_ + "_targetWrench");
   logger.removeLogEntry(name_ + "_measuredWrench");
+  logger.removeLogEntry(name_ + "_filteredMeasuredWrench");
+  logger.removeLogEntry(name_ + "_cutoffPeriod");
 }
 
 void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
@@ -219,7 +241,11 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                          [this]() { return this->targetWrench().vector(); },
                                          [this](const Eigen::Vector6d & a) { this->targetWrench(a); }),
                  mc_rtc::gui::ArrayLabel("measuredWrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() { return this->measuredWrench().vector(); }));
+                                         [this]() { return this->measuredWrench_.vector(); }),
+                 mc_rtc::gui::ArrayLabel("filteredMeasuredWrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
+                                         [this]() { return this->filteredMeasuredWrench_.vector(); }),
+                 mc_rtc::gui::NumberInput("cutoffPeriod", [this]() { return this->cutoffPeriod(); },
+                                          [this](double a) { return this->cutoffPeriod(a); }));
 }
 
 } // namespace force
