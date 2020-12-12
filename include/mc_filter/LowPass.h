@@ -33,9 +33,7 @@ struct LowPass
     reset(T::Zero());
   }
 
-  /** Get cutoff period.
-   *
-   */
+  /** Get cutoff period. */
   double cutoffPeriod() const
   {
     return cutoffPeriod_;
@@ -87,9 +85,25 @@ struct LowPass
     return eval_;
   }
 
+  /** Get sampling period.
+   *
+   */
   double dt() const
   {
     return dt_;
+  }
+
+  /** Set sampling period.
+   *
+   * \param dt Sampling period.
+   *
+   * \note the cutoff period is updated to satisfy the Nyquist–Shannon sampling theorem according the new sampling
+   * period.
+   */
+  void dt(double dt)
+  {
+    dt_ = dt;
+    cutoffPeriod(cutoffPeriod_);
   }
 
 private:
