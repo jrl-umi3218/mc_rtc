@@ -6,6 +6,7 @@
 
 #include <mc_filter/LowPass.h>
 #include <mc_filter/utils/clamp.h>
+#include <mc_rtc/constants.h>
 #include <mc_tasks/SurfaceTransformTask.h>
 
 namespace mc_tasks
@@ -317,6 +318,14 @@ protected:
   sva::MotionVecd deltaCompVelW_ = sva::MotionVecd::Zero();
   sva::MotionVecd deltaCompAccelW_ = sva::MotionVecd::Zero();
   /// @}
+
+  // Limits of relative pose, velocity, and acceleration from desired frame to compliance frame.
+  double deltaCompPoseLinLimit_ = 1.0;
+  double deltaCompPoseAngLimit_ = mc_rtc::constants::PI;
+  double deltaCompVelLinLimit_ = 1e3;
+  double deltaCompVelAngLimit_ = 1e3;
+  double deltaCompAccelLinLimit_ = 1e3;
+  double deltaCompAccelAngLimit_ = 1e3;
 
   // Desired pose, velocity, and acceleration in the world frame
   sva::PTransformd desiredPoseW_ = sva::PTransformd::Identity();

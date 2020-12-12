@@ -69,6 +69,21 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
               - impK_.vector().cwiseProduct((T_0_s * sva::transformVelocity(deltaCompPoseW_)).vector())
               + wrenchGain_.vector().cwiseProduct((filteredMeasuredWrench_ - targetWrench_).vector()))));
 
+  if(deltaCompAccelW_.linear().norm() > deltaCompAccelLinLimit_)
+  {
+    mc_rtc::log::warning("linear deltaCompAccel limited from {} to {}", deltaCompAccelW_.linear().norm(),
+                         deltaCompAccelLinLimit_);
+    deltaCompAccelW_.linear().normalize();
+    deltaCompAccelW_.linear() *= deltaCompAccelLinLimit_;
+  }
+  if(deltaCompAccelW_.angular().norm() > deltaCompAccelAngLimit_)
+  {
+    mc_rtc::log::warning("angular deltaCompAccel limited from {} to {}", deltaCompAccelW_.angular().norm(),
+                         deltaCompAccelAngLimit_);
+    deltaCompAccelW_.angular().normalize();
+    deltaCompAccelW_.angular() *= deltaCompAccelAngLimit_;
+  }
+
   // 3. Compute the compliance pose and velocity by time integral
   double dt = solver.dt();
   // 3.1 Integrate velocity to pose
@@ -89,6 +104,36 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
   deltaCompPoseW_ = deltaCompVelIntegral * deltaCompPoseW_;
   // 3.2 Integrate acceleration to velocity
   deltaCompVelW_ += dt * deltaCompAccelW_;
+
+  if(deltaCompVelW_.linear().norm() > deltaCompVelLinLimit_)
+  {
+    mc_rtc::log::warning("linear deltaCompVel limited from {} to {}", deltaCompVelW_.linear().norm(),
+                         deltaCompVelLinLimit_);
+    deltaCompVelW_.linear().normalize();
+    deltaCompVelW_.linear() *= deltaCompVelLinLimit_;
+  }
+  if(deltaCompVelW_.angular().norm() > deltaCompVelAngLimit_)
+  {
+    mc_rtc::log::warning("angular deltaCompVel limited from {} to {}", deltaCompVelW_.angular().norm(),
+                         deltaCompVelLinLimit_);
+    deltaCompVelW_.angular().normalize();
+    deltaCompVelW_.angular() *= deltaCompVelAngLimit_;
+  }
+
+  if(deltaCompPoseW_.translation().norm() > deltaCompPoseLinLimit_)
+  {
+    mc_rtc::log::warning("linear deltaCompPose limited from {} to {}", deltaCompPoseW_.translation().norm(),
+                         deltaCompPoseLinLimit_);
+    deltaCompPoseW_.translation().normalize();
+    deltaCompPoseW_.translation() *= deltaCompPoseLinLimit_;
+  }
+  Eigen::AngleAxisd aaDeltaCompRot(deltaCompPoseW_.rotation());
+  if(aaDeltaCompRot.angle() > deltaCompPoseAngLimit_)
+  {
+    mc_rtc::log::warning("angular deltaCompPose limited from {} to {}", aaDeltaCompRot.angle(), deltaCompPoseAngLimit_);
+    aaDeltaCompRot.angle() = deltaCompPoseAngLimit_;
+    deltaCompPoseW_.rotation() = aaDeltaCompRot.toRotationMatrix();
+  }
 
   // 4. Set compliance values to the targets of SurfaceTransformTask
   refAccel(T_0_s * (desiredAccelW_ + deltaCompAccelW_)); // represented in the surface frame
