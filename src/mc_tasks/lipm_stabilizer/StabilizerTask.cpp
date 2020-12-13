@@ -98,6 +98,7 @@ void StabilizerTask::reset()
   dcmVelError_ = Eigen::Vector3d::Zero();
   dfzForceError_ = 0.;
   dfzHeightError_ = 0.;
+  desiredWrench_ = sva::ForceVecd::Zero();
   distribWrench_ = sva::ForceVecd::Zero();
   vdcHeightError_ = 0.;
 
@@ -614,20 +615,20 @@ void StabilizerTask::run()
   {
     measuredNetWrench_ = sva::ForceVecd::Zero();
   }
-  auto desiredWrench = computeDesiredWrench();
+  desiredWrench_ = computeDesiredWrench();
 
   if(inDoubleSupport())
   {
-    distributeWrench(desiredWrench);
+    distributeWrench(desiredWrench_);
   }
   else if(inContact(ContactState::Left))
   {
-    saturateWrench(desiredWrench, footTasks[ContactState::Left], contacts_.at(ContactState::Left));
+    saturateWrench(desiredWrench_, footTasks[ContactState::Left], contacts_.at(ContactState::Left));
     footTasks[ContactState::Right]->setZeroTargetWrench();
   }
   else
   {
-    saturateWrench(desiredWrench, footTasks[ContactState::Right], contacts_.at(ContactState::Right));
+    saturateWrench(desiredWrench_, footTasks[ContactState::Right], contacts_.at(ContactState::Right));
     footTasks[ContactState::Left]->setZeroTargetWrench();
   }
 
