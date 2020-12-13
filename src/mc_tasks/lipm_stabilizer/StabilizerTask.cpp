@@ -725,7 +725,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   dcmVelError_ = dcmDerivator_.eval();
 
   Eigen::Vector3d desiredCoMAccel = comddTarget_;
-  desiredCoMAccel += omega_ * (c_.dcmPropGain * dcmError_ + comdError);
+  desiredCoMAccel += omega_ * (c_.dcmPropGain * dcmError_ + c_.comdErrorGain * comdError);
   desiredCoMAccel += omega_ * c_.dcmIntegralGain * dcmAverageError_;
   desiredCoMAccel += omega_ * c_.dcmDerivGain * dcmVelError_;
   auto desiredForce = mass_ * (desiredCoMAccel + constants::gravity);

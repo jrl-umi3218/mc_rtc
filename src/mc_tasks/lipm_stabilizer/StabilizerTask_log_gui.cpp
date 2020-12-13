@@ -59,6 +59,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               return {c_.dcmPropGain, c_.dcmIntegralGain, c_.dcmDerivGain};
                             },
                             [this](const Eigen::Vector3d & gains) { dcmGains(gains(0), gains(1), gains(2)); }),
+                 NumberInput("CoMd Error gain", [this]() { return c_.comdErrorGain; },
+                             [this](double a) { c_.comdErrorGain = a; }),
                  ArrayInput("DCM filters", {"Integrator T [s]", "Derivator T [s]"},
                             [this]() -> Eigen::Vector2d {
                               return {dcmIntegrator_.timeConstant(), dcmDerivator_.timeConstant()};
@@ -309,6 +311,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_dcmTracking_derivGain", this, [this]() { return c_.dcmDerivGain; });
   logger.addLogEntry(name_ + "_dcmTracking_integralGain", this, [this]() { return c_.dcmIntegralGain; });
   logger.addLogEntry(name_ + "_dcmTracking_propGain", this, [this]() { return c_.dcmPropGain; });
+  logger.addLogEntry(name_ + "_dcmTracking_comdErrorGain", this, [this]() { return c_.comdErrorGain; });
   logger.addLogEntry(name_ + "_dcmBias_dcmMeasureErrorStd", this, [this]() { return c_.dcmBias.dcmMeasureErrorStd; });
   logger.addLogEntry(name_ + "_dcmBias_zmpMeasureErrorStd", this, [this]() { return c_.dcmBias.zmpMeasureErrorStd; });
   logger.addLogEntry(name_ + "_dcmBias_driftPerSecondStd", this, [this]() { return c_.dcmBias.biasDriftPerSecondStd; });
