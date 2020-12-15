@@ -127,6 +127,9 @@ struct EqualityConstraintLambda : public utils::EqualityConstraint<utils::Update
  * Helper class to write an equality constraint for Tasks. This constraint
  * applies to the wrench associated with a given contact.
  *
+ * The wrench \f$ \mathbf{f}_{cI} \f$ is expressed in the first robot (`cid.r1Index`)
+ * contact surface frame.
+ *
  * This implements \f$ A * \mathbf{f}_{cI} = b \f$
  *
  * Where \f$cI\f$ is the contact id you provide at construction.

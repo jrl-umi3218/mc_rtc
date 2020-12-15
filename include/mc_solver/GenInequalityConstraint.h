@@ -135,6 +135,9 @@ struct GenInequalityConstraintLambda : public utils::GenInequalityConstraint<uti
  * Helper class to write a general inequality constraint for Tasks. This constraint
  * applies to the wrench associated with a given contact.
  *
+ * The wrench \f$ \mathbf{f}_{cI} \f$ is expressed in the first robot (`cid.r1Index`)
+ * contact surface frame.
+ *
  * This implements \f$ L \le A * \mathbf{f}_{cI} \le U \f$
  *
  * Where \f$cI\f$ is the contact id you provide at construction.
