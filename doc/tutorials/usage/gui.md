@@ -98,7 +98,7 @@ This element display a checkbox. Its status depends on the value you provide, wh
 Checkbox("Check me", [this]() { return status_; }, [this]() { status_ = !status_; });
 ```
 
-##### `StringInput`/`IntegerInput`/`Number`/`ArrayInput`
+##### `StringInput`/`IntegerInput`/`NumberInput`/`ArrayInput`
 
 These elements provide inputs for the user. You should use the representation that is most relevant to your data.
 
