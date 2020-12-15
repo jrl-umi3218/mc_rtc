@@ -8,10 +8,14 @@ set(VERSION_SCRIPT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/version-script.lds")
 
 macro(install_mc_rtc_lib_common MC_LIB KWD)
   target_include_directories(${MC_LIB} INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${MC_RTC_INCLUDE_DIR}>)
-  if(WIN32)
-    target_compile_definitions(${MC_LIB} ${KWD} "-DNOMINMAX"  "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
+  if(NOT EMSCRIPTEN)
+    if(WIN32)
+      target_compile_definitions(${MC_LIB} ${KWD} "-DNOMINMAX"  "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
+    else()
+      target_compile_options(${MC_LIB} ${KWD} "-mfpmath=sse" "-msse2")
+    endif()
   else()
-    target_compile_options(${MC_LIB} ${KWD} "-mfpmath=sse" "-msse2")
+    target_compile_options(${MC_LIB} ${KWD} -matomics -s USE_PTHREADS=1)
   endif()
   if(TREAT_WARNINGS_AS_ERRORS)
     if(WIN32)
@@ -19,6 +23,9 @@ macro(install_mc_rtc_lib_common MC_LIB KWD)
     else()
       target_compile_options(${MC_LIB} ${KWD} $<BUILD_INTERFACE:-Werror>)
     endif()
+  endif()
+  if(MC_RTC_BUILD_STATIC)
+    target_compile_definitions(${MC_LIB} ${KWD} MC_RTC_BUILD_STATIC)
   endif()
   add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
 endmacro()
@@ -38,7 +45,9 @@ macro(install_mc_rtc_lib MC_LIB)
     set_target_properties(${MC_LIB} PROPERTIES LINK_FLAGS "--coverage")
   endif()
   set_target_properties(${MC_LIB} PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR} VERSION ${PROJECT_VERSION})
-  add_version_script(${MC_LIB} "${VERSION_SCRIPT_LOCATION}")
+  if(NOT MC_RTC_BUILD_STATIC)
+    add_version_script(${MC_LIB} "${VERSION_SCRIPT_LOCATION}")
+  endif()
   add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
   install(TARGETS ${MC_LIB}
     EXPORT "${TARGETS_EXPORT_NAME}"
@@ -101,8 +110,14 @@ set(mc_rtc_utils_HDR
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
 set_target_properties(mc_rtc_utils PROPERTIES COMPILE_FLAGS "-DMC_RTC_UTILS_EXPORTS")
 target_include_directories(mc_rtc_utils PRIVATE "${PROJECT_BINARY_DIR}/include/mc_rtc")
-target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::filesystem Boost::disable_autolinking yaml-cpp spdlog::spdlog PRIVATE mc_rtc_3rd_party::RapidJSON mpack)
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+target_link_libraries(mc_rtc_utils PUBLIC SpaceVecAlg::SpaceVecAlg Boost::filesystem Boost::disable_autolinking yaml-cpp spdlog::spdlog PRIVATE $<BUILD_INTERFACE:mc_rtc_3rd_party::RapidJSON>)
+if(NOT MC_RTC_BUILD_STATIC)
+  target_link_libraries(mc_rtc_utils PRIVATE mpack)
+else()
+  target_sources(mc_rtc_utils PRIVATE ${PROJECT_SOURCE_DIR}/3rd-party/mpack/mpack.c)
+  target_include_directories(mc_rtc_utils PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/3rd-party/mpack>)
+endif()
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND NOT EMSCRIPTEN)
   target_link_libraries(mc_rtc_utils PUBLIC atomic)
 endif()
 install_mc_rtc_lib(mc_rtc_utils)
@@ -118,7 +133,10 @@ set(mc_rtc_loader_HDR
 
 add_library(mc_rtc_loader SHARED ${mc_rtc_loader_SRC} ${mc_rtc_loader_HDR})
 set_target_properties(mc_rtc_loader PROPERTIES COMPILE_FLAGS "-DMC_RTC_LOADER_EXPORTS")
-target_link_libraries(mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking ${LTDL} mc_rtc_utils)
+target_link_libraries(mc_rtc_loader PUBLIC Boost::filesystem Boost::disable_autolinking mc_rtc_utils)
+if(NOT MC_RTC_BUILD_STATIC)
+  target_link_libraries(mc_rtc_loader PUBLIC ${LTDL})
+endif()
 install_mc_rtc_lib(mc_rtc_loader)
 
 set(mc_rbdyn_SRC
@@ -185,8 +203,12 @@ add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
 set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
 target_link_libraries(mc_rbdyn PUBLIC mc_rbdyn_urdf::mc_rbdyn_urdf RBDyn::Parsers Tasks::Tasks mc_rtc_loader mc_rtc_utils mc_filter GEOS::geos)
 # qhull
+if(MC_RTC_BUILD_STATIC)
+  target_link_libraries(mc_rbdyn PRIVATE "-Wl,--no-whole-archive" qhullstatic_r "-Wl,--no-whole-archive" qhullcpp)
+else()
+  target_link_libraries(mc_rbdyn PRIVATE qhullstatic_r qhullcpp)
+endif()
 target_include_directories(mc_rbdyn SYSTEM PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../3rd-party/qhull/src")
-target_link_libraries(mc_rbdyn PRIVATE qhullcpp qhullstatic_r)
 install_mc_rtc_lib(mc_rbdyn)
 
 set(mc_rtc_gui_SRC
@@ -237,7 +259,6 @@ target_link_libraries(mc_rtc_gui PUBLIC mc_rbdyn)
 install_mc_rtc_lib(mc_rtc_gui)
 
 add_subdirectory(mc_robots)
-add_subdirectory(mc_observers)
 
 set(mc_solver_SRC
 mc_solver/BoundedSpeedConstr.cpp
@@ -432,6 +453,8 @@ set_target_properties(mc_observers PROPERTIES COMPILE_FLAGS "-DMC_OBSERVERS_EXPO
 target_link_libraries(mc_observers PUBLIC mc_filter mc_rbdyn mc_rtc_gui)
 install_mc_rtc_lib(mc_observers)
 
+add_subdirectory(mc_observers)
+
 set(mc_control_SRC
 mc_control/CompletionCriteria.cpp
 mc_control/ControllerServer.cpp
@@ -443,6 +466,11 @@ mc_control/mc_global_controller_configuration.cpp
 mc_control/mc_global_controller_gui.cpp
 mc_control/mc_global_controller_services.cpp
 )
+
+if(MC_RTC_BUILD_STATIC)
+  list(APPEND mc_control_SRC mc_control/ControllerLoader.cpp)
+  list(APPEND mc_control_SRC mc_control/GlobalPluginLoader.cpp)
+endif()
 
 set(mc_control_HDR
 ../include/mc_control/api.h
@@ -461,7 +489,12 @@ set(mc_control_HDR
 
 add_library(mc_control SHARED ${mc_control_SRC} ${mc_control_HDR})
 set_target_properties(mc_control PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
-target_link_libraries(mc_control PUBLIC mc_tasks mc_solver mc_rtc_loader mc_observers mc_rtc_utils mc_rtc_gui nanomsg)
+target_link_libraries(mc_control PUBLIC mc_tasks mc_solver mc_rtc_loader mc_observers mc_rtc_utils mc_rtc_gui)
+if(NOT MC_RTC_DISABLE_NETWORK)
+  target_link_libraries(mc_control PUBLIC nanomsg)
+else()
+  target_compile_definitions(mc_control PUBLIC MC_RTC_DISABLE_NETWORK)
+endif()
 install_mc_rtc_lib(mc_control)
 
 set(mc_control_client_SRC

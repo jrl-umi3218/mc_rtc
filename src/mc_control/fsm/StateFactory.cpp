@@ -194,7 +194,11 @@ void StateFactory::load(const std::string & name, const std::string & base, cons
   }
   if(hasState(name))
   {
+#ifndef MC_RTC_BUILD_STATIC
     mc_rtc::log::error_and_throw<std::runtime_error>("State {} already exists", name);
+#else
+    states_.erase(std::find(states_.begin(), states_.end(), name));
+#endif
   }
   if(verbose)
   {

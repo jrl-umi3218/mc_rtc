@@ -530,6 +530,9 @@ public:
    */
   bool run();
 
+  /*! \brief Access the server */
+  ControllerServer & server();
+
   /*! \brief Access the result of the latest run
    *
    * \param t Unused
@@ -732,7 +735,13 @@ public:
   /*! \brief Store the controller configuration */
   struct MC_CONTROL_DLLAPI GlobalConfiguration
   {
-    GlobalConfiguration(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm);
+    /** Constructor
+     *
+     * \param conf Configuration file that should be loaded
+     *
+     * \param Main robot module, if null use the MainRobot entry in conf to initialize it
+     */
+    GlobalConfiguration(const std::string & conf, std::shared_ptr<mc_rbdyn::RobotModule> rm = nullptr);
 
     inline bool enabled(const std::string & ctrl);
 
@@ -757,6 +766,7 @@ public:
     std::string initial_controller = "";
     std::unordered_map<std::string, mc_rtc::Configuration> controllers_configs;
     double timestep = 0.002;
+    bool include_halfsit_controller = true;
 
     bool log_real = false;
 
@@ -784,14 +794,14 @@ private:
   std::string next_ctrl = "";
   MCController * controller_ = nullptr;
   MCController * next_controller_ = nullptr;
-  std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader;
+  std::unique_ptr<mc_rtc::ObjectLoader<MCController>> controller_loader_;
   std::map<std::string, std::shared_ptr<mc_control::MCController>> controllers;
   std::vector<mc_observers::ObserverPtr> observers_;
   std::map<std::string, mc_observers::ObserverPtr> observersByName_;
 
   std::unique_ptr<mc_control::ControllerServer> server_ = nullptr;
 
-  std::unique_ptr<mc_rtc::ObjectLoader<GlobalPlugin>> plugin_loader;
+  std::unique_ptr<mc_rtc::ObjectLoader<GlobalPlugin>> plugin_loader_;
   struct PluginHandle
   {
     PluginHandle(const std::string & name, GlobalPluginPtr plugin) : name(name), plugin(std::move(plugin)) {}

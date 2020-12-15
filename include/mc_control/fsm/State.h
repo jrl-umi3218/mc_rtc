@@ -184,29 +184,45 @@ using StatePtr = std::shared_ptr<State>;
 
 /* The following macros are used to simplify the required symbol exports */
 
-#ifdef WIN32
-#  define FSM_STATE_API __declspec(dllexport)
-#else
-#  if __GNUC__ >= 4
-#    define FSM_STATE_API __attribute__((visibility("default")))
-#  else
-#    define FSM_STATE_API
-#  endif
-#endif
+#ifndef MC_RTC_BUILD_STATIC
 
-#define EXPORT_SINGLE_STATE(NAME, TYPE)                                   \
-  extern "C"                                                              \
-  {                                                                       \
-    FSM_STATE_API void MC_RTC_FSM_STATE(std::vector<std::string> & names) \
-    {                                                                     \
-      names = {NAME};                                                     \
-    }                                                                     \
-    FSM_STATE_API void destroy(mc_control::fsm::State * ptr)              \
-    {                                                                     \
-      delete ptr;                                                         \
-    }                                                                     \
-    FSM_STATE_API mc_control::fsm::State * create(const std::string &)    \
-    {                                                                     \
-      return new TYPE();                                                  \
-    }                                                                     \
-  }
+#  ifdef WIN32
+#    define FSM_STATE_API __declspec(dllexport)
+#  else
+#    if __GNUC__ >= 4
+#      define FSM_STATE_API __attribute__((visibility("default")))
+#    else
+#      define FSM_STATE_API
+#    endif
+#  endif
+
+#  define EXPORT_SINGLE_STATE(NAME, TYPE)                                   \
+    extern "C"                                                              \
+    {                                                                       \
+      FSM_STATE_API void MC_RTC_FSM_STATE(std::vector<std::string> & names) \
+      {                                                                     \
+        names = {NAME};                                                     \
+      }                                                                     \
+      FSM_STATE_API void destroy(mc_control::fsm::State * ptr)              \
+      {                                                                     \
+        delete ptr;                                                         \
+      }                                                                     \
+      FSM_STATE_API mc_control::fsm::State * create(const std::string &)    \
+      {                                                                     \
+        return new TYPE();                                                  \
+      }                                                                     \
+    }
+
+#else
+
+#  define EXPORT_SINGLE_STATE(NAME, TYPE)                                                              \
+    namespace                                                                                          \
+    {                                                                                                  \
+    static auto registered = []() {                                                                    \
+      using fn_t = std::function<TYPE *()>;                                                            \
+      mc_control::fsm::Controller::factory().register_object(NAME, fn_t([]() { return new TYPE(); })); \
+      return true;                                                                                     \
+    }();                                                                                               \
+    }
+
+#endif

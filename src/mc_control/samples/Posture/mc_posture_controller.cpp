@@ -36,3 +36,5 @@ bool MCPostureController::run()
 }
 
 } // namespace mc_control
+
+SIMPLE_CONTROLLER_CONSTRUCTOR("Posture", mc_control::MCPostureController);

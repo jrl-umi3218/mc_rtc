@@ -60,3 +60,5 @@ void MCHalfSitPoseController::reset(const ControllerResetData & reset_data)
 }
 
 } // namespace mc_control
+
+SIMPLE_CONTROLLER_CONSTRUCTOR("HalfSitPose", mc_control::MCHalfSitPoseController)

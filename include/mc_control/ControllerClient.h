@@ -4,15 +4,12 @@
 
 #pragma once
 
+#include <mc_control/ControllerServer.h>
 #include <mc_control/client_api.h>
 
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/gui/plot/types.h>
 #include <mc_rtc/gui/types.h>
-
-#include <nanomsg/nn.h>
-#include <nanomsg/pubsub.h>
-#include <nanomsg/reqrep.h>
 
 #include <string>
 #include <thread>
@@ -56,6 +53,12 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
 
   /** Constructor
    *
+   * Default (disconnected) client
+   */
+  ControllerClient();
+
+  /** Constructor
+   *
    * \param sub_conn_uri URI the SUB socket should connect to
    *
    * \param push_conn_uri URI the PUSH socket should connect to
@@ -68,10 +71,25 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
    */
   ControllerClient(const std::string & sub_conn_uri, const std::string & push_conn_uri, double timeout = 0);
 
+  /** Constructor
+   *
+   * \param server In-memory ControllerServer instance
+   *
+   * \param gui GUI updated by the server
+   *
+   */
+  ControllerClient(ControllerServer & server, mc_rtc::gui::StateBuilder & gui);
+
   ControllerClient(const ControllerClient &) = delete;
   ControllerClient & operator=(const ControllerClient &) = delete;
 
   ~ControllerClient();
+
+  /** Connect to the provided uris */
+  void connect(const std::string & sub_conn_uri, const std::string & push_conn_uri);
+
+  /** Connect to an in-memory server */
+  void connect(ControllerServer & server, mc_rtc::gui::StateBuilder & gui);
 
   /** Send a request to the given element in the given category using data */
   void send_request(const ElementId & id, const mc_rtc::Configuration & data);
@@ -87,6 +105,24 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
 
   /** Helper for the void case */
   void send_request(const ElementId & id);
+
+  /** Get the raw request data
+   *
+   * out.c_str() can be used to send requests to the raw data interface of ControllerServer
+   */
+  void raw_request(const ElementId & id, const mc_rtc::Configuration & data, std::string & out);
+
+  /** Helper for raw request in simple cases */
+  template<typename T>
+  void raw_request(const ElementId & id, const T & data, std::string & out)
+  {
+    mc_rtc::Configuration c;
+    c.add("data", data);
+    raw_request(id, c("data"), out);
+  }
+
+  /** Helper for the void case */
+  void raw_request(const ElementId & id, std::string & out);
 
   /** Set the timeout of the SUB socket */
   void timeout(double t);
@@ -108,6 +144,14 @@ struct MC_CONTROL_CLIENT_DLLAPI ControllerClient
    *
    */
   void run(std::vector<char> & buffer, std::chrono::system_clock::time_point & t_last_received);
+
+  /** Run with raw data received from any possible way
+   *
+   * \param buffer Data to be processed
+   *
+   * \param bufferSize Size of data
+   */
+  void run(const char * buffer, size_t bufferSize);
 
 protected:
   /** Should be called when the client is ready to receive data */
@@ -616,13 +660,18 @@ protected:
 
   /* Network elements */
   bool run_ = true;
-  int sub_socket_;
+  int sub_socket_ = -1;
   std::thread sub_th_;
-  int push_socket_;
+  int push_socket_ = -1;
   double timeout_;
 
   /* Hold data from the server */
   mc_rtc::Configuration data_;
+
+  /* Pointer to the server if connected in-memory */
+  ControllerServer * server_ = nullptr;
+  /* Pointer to the GUI if connected in-memory */
+  mc_rtc::gui::StateBuilder * gui_ = nullptr;
 
 private:
   /** Default implementations for widgets' creations display a warning message to the user */

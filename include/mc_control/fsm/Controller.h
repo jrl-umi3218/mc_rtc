@@ -239,10 +239,21 @@ struct MC_CONTROL_FSM_DLLAPI Controller : public MCController
   }
 
   /** Access the state factory */
+#ifndef MC_RTC_BUILD_STATIC
   StateFactory & factory()
   {
     return factory_;
   }
+#else
+  static StateFactory & factory()
+  {
+    if(!factory_ptr_)
+    {
+      factory_ptr_.reset(new StateFactory({}, {}, false));
+    }
+    return *factory_ptr_;
+  }
+#endif
 
 private:
   /** Reset all posture tasks */
@@ -286,7 +297,12 @@ protected:
   bool contacts_changed_;
 
   /** State factory */
+#ifndef MC_RTC_BUILD_STATIC
   StateFactory factory_;
+#else
+  static std::unique_ptr<StateFactory> factory_ptr_;
+  StateFactory & factory_;
+#endif
 
   /** Behaviour during idle */
   bool idle_keep_state_ = false;

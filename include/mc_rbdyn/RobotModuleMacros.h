@@ -6,7 +6,9 @@
 
 #include <mc_rbdyn/RobotModule.h>
 
-#include <mc_rtc/version.h>
+#ifndef MC_RTC_BUILD_STATIC
+
+#  include <mc_rtc/version.h>
 
 /* Set of macros to assist with the writing of a RobotModule */
 
@@ -17,64 +19,91 @@
  * MC_RTC_ROBOT_MODULE implementation
  *
  */
-#define ROBOT_MODULE_CHECK_VERSION(NAME)                                                                             \
-  if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                    \
-  {                                                                                                                  \
-    mc_rtc::log::error("{} was compiled with {} but mc_rtc is currently at version {}, you might experience subtle " \
-                       "issues and should recompile your code",                                                      \
-                       NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version());                                             \
-  }
+#  define ROBOT_MODULE_CHECK_VERSION(NAME)                                                                             \
+    if(mc_rtc::MC_RTC_VERSION != mc_rtc::version())                                                                    \
+    {                                                                                                                  \
+      mc_rtc::log::error("{} was compiled with {} but mc_rtc is currently at version {}, you might experience subtle " \
+                         "issues and should recompile your code",                                                      \
+                         NAME, mc_rtc::MC_RTC_VERSION, mc_rtc::version());                                             \
+    }
 
 /*! ROBOT_MODULE_COMMON
  * Declare a destroy symbol and CLASS_NAME symbol
  * Constructor should be declared by the user
  */
-#define ROBOT_MODULE_COMMON(NAME)                                             \
-  ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names) \
-  {                                                                           \
-    ROBOT_MODULE_CHECK_VERSION(NAME)                                          \
-    names = {NAME};                                                           \
-  }                                                                           \
-  ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)                  \
-  {                                                                           \
-    delete ptr;                                                               \
-  }
+#  define ROBOT_MODULE_COMMON(NAME)                                             \
+    ROBOT_MODULE_API void MC_RTC_ROBOT_MODULE(std::vector<std::string> & names) \
+    {                                                                           \
+      ROBOT_MODULE_CHECK_VERSION(NAME)                                          \
+      names = {NAME};                                                           \
+    }                                                                           \
+    ROBOT_MODULE_API void destroy(mc_rbdyn::RobotModule * ptr)                  \
+    {                                                                           \
+      delete ptr;                                                               \
+    }
 
 /*! ROBOT_MODULE_DEFAULT_CONSTRUCTOR
  * Declare an external symbol for creation using a default constructor
  * Also declare destruction symbol
  * Exclusive of ROBOT_MODULE_CANONIC_CONSTRUCTOR
  */
-#define ROBOT_MODULE_DEFAULT_CONSTRUCTOR(NAME, TYPE)                     \
-  extern "C"                                                             \
-  {                                                                      \
-    ROBOT_MODULE_COMMON(NAME)                                            \
-    ROBOT_MODULE_API unsigned int create_args_required()                 \
-    {                                                                    \
-      return 1;                                                          \
-    }                                                                    \
-    ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string &) \
-    {                                                                    \
-      return new TYPE();                                                 \
-    }                                                                    \
-  }
+#  define ROBOT_MODULE_DEFAULT_CONSTRUCTOR(NAME, TYPE)                     \
+    extern "C"                                                             \
+    {                                                                      \
+      ROBOT_MODULE_COMMON(NAME)                                            \
+      ROBOT_MODULE_API unsigned int create_args_required()                 \
+      {                                                                    \
+        return 1;                                                          \
+      }                                                                    \
+      ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string &) \
+      {                                                                    \
+        return new TYPE();                                                 \
+      }                                                                    \
+    }
 
 /*! ROBOT_MODULE_CANONIC_CONSTRUCTOR
  * Declare an external symbol for creation using the cannonical constructor (const string &, const
  * string &) Also declare destruction symbol Exclusive of ROBOT_MODULE_DEFAULT_CONSTRUCTOR
  */
-#define ROBOT_MODULE_CANONIC_CONSTRUCTOR(NAME, TYPE)                          \
-  extern "C"                                                                  \
-  {                                                                           \
-    ROBOT_MODULE_COMMON(NAME)                                                 \
-    ROBOT_MODULE_API unsigned int create_args_required()                      \
-    {                                                                         \
-      return 3;                                                               \
-    }                                                                         \
-    ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string &,      \
-                                                    const std::string & path, \
-                                                    const std::string & name) \
-    {                                                                         \
-      return new TYPE(path, name);                                            \
-    }                                                                         \
-  }
+#  define ROBOT_MODULE_CANONIC_CONSTRUCTOR(NAME, TYPE)                          \
+    extern "C"                                                                  \
+    {                                                                           \
+      ROBOT_MODULE_COMMON(NAME)                                                 \
+      ROBOT_MODULE_API unsigned int create_args_required()                      \
+      {                                                                         \
+        return 3;                                                               \
+      }                                                                         \
+      ROBOT_MODULE_API mc_rbdyn::RobotModule * create(const std::string &,      \
+                                                      const std::string & path, \
+                                                      const std::string & name) \
+      {                                                                         \
+        return new TYPE(path, name);                                            \
+      }                                                                         \
+    }
+
+#else
+
+#  include <mc_rbdyn/RobotLoader.h>
+
+#  define ROBOT_MODULE_DEFAULT_CONSTRUCTOR(NAME, TYPE)                                 \
+    namespace                                                                          \
+    {                                                                                  \
+    static auto registered = []() {                                                    \
+      using fn_t = std::function<TYPE *()>;                                            \
+      mc_rbdyn::RobotLoader::register_object(NAME, fn_t([]() { return new TYPE(); })); \
+      return true;                                                                     \
+    }();                                                                               \
+    }
+
+#  define ROBOT_MODULE_CANONIC_CONSTRUCTOR(NAME, TYPE)                                                          \
+    namespace                                                                                                   \
+    {                                                                                                           \
+    static auto registered = []() {                                                                             \
+      using fn_t = std::function<TYPE *(const std::string &, const std::string &)>;                             \
+      mc_rbdyn::RobotLoader::register_object(                                                                   \
+          NAME, fn_t([](const std::string & path, const std::string & name) { return new TYPE(path, name); })); \
+      return true;                                                                                              \
+    }();                                                                                                        \
+    }
+
+#endif

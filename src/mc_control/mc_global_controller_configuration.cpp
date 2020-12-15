@@ -187,7 +187,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   if(!config("ClearGlobalPluginPath", false))
   {
     global_plugin_paths.insert(global_plugin_paths.begin(), mc_rtc::MC_PLUGINS_INSTALL_PREFIX);
-    auto autoload_path = bfs::path(mc_rtc::MC_PLUGINS_INSTALL_PREFIX) / "autoload";
+  }
+  for(const auto & p : global_plugin_paths)
+  {
+    auto autoload_path = bfs::path(p) / "autoload";
     if(bfs::exists(autoload_path) && bfs::is_directory(autoload_path))
     {
       bfs::directory_iterator dit(autoload_path), endit;
@@ -198,8 +201,12 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         std::ifstream ifs(p.string());
         std::stringstream ss;
         ss << ifs.rdbuf();
-        global_plugins.push_back(ss.str());
-        append_plugin(global_plugins.back(), true);
+        auto plugin = ss.str();
+        if(std::find(global_plugins.begin(), global_plugins.end(), plugin) == global_plugins.end())
+        {
+          global_plugins.push_back(ss.str());
+          append_plugin(global_plugins.back(), true);
+        }
       }
     }
   }
@@ -233,6 +240,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         "Enabled entry in mc_rtc must contain at least one controller name");
   }
   config("Default", initial_controller);
+  config("IncludeHalfSitController", include_halfsit_controller);
 
   ////////////////////
   // Initialization //
@@ -281,6 +289,10 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     auto gui_config = config("GUIServer");
     enable_gui_server = gui_config("Enable", false);
     gui_timestep = gui_config("Timestep", 0.05);
+    if(gui_timestep == 0)
+    {
+      gui_timestep = timestep;
+    }
     if(gui_config.has("IPC"))
     {
       auto ipc_config = gui_config("IPC");

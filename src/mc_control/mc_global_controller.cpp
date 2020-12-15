@@ -1,10 +1,15 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2020 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <mc_control/mc_global_controller.h>
 
 #include <mc_control/GlobalPlugin.h>
+
+#ifdef MC_RTC_BUILD_STATIC
+#  include <mc_control/ControllerLoader.h>
+#  include <mc_control/GlobalPluginLoader.h>
+#endif
 
 #include <mc_rbdyn/RobotLoader.h>
 
@@ -44,13 +49,20 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   config.load_plugin_configs();
   try
   {
-    plugin_loader.reset(new mc_rtc::ObjectLoader<mc_control::GlobalPlugin>(
+    plugin_loader_.reset(new mc_rtc::ObjectLoader<mc_control::GlobalPlugin>(
         "MC_RTC_GLOBAL_PLUGIN", config.global_plugin_paths, config.use_sandbox, config.verbose_loader));
   }
   catch(mc_rtc::LoaderException & exc)
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize plugin loader");
   }
+#ifdef MC_RTC_BUILD_STATIC
+  GlobalPluginLoader::loader().enable_sandboxing(config.use_sandbox);
+  GlobalPluginLoader::loader().set_verbosity(config.verbose_loader);
+  auto * plugin_loader = &GlobalPluginLoader::loader();
+#else
+  auto * plugin_loader = plugin_loader_.get();
+#endif
   for(const auto & plugin : config.global_plugins)
   {
     try
@@ -68,15 +80,20 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   config.load_controllers_configs();
   try
   {
-    controller_loader.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(
+    controller_loader_.reset(new mc_rtc::ObjectLoader<mc_control::MCController>(
         "MC_RTC_CONTROLLER", config.controller_module_paths, config.use_sandbox, config.verbose_loader));
   }
   catch(mc_rtc::LoaderException & exc)
   {
     mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize controller loader");
   }
+#ifdef MC_RTC_BUILD_STATIC
+  ControllerLoader::loader().enable_sandboxing(config.use_sandbox);
+  ControllerLoader::loader().set_verbosity(config.verbose_loader);
+#endif
   if(std::find(config.enabled_controllers.begin(), config.enabled_controllers.end(), "HalfSitPose")
-     == config.enabled_controllers.end())
+         == config.enabled_controllers.end()
+     && config.include_halfsit_controller)
   {
     config.enabled_controllers.push_back("HalfSitPose");
   }
@@ -112,16 +129,8 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   }
   if(config.enable_gui_server)
   {
-    if(config.gui_server_pub_uris.size() == 0)
-    {
-      mc_rtc::log::warning(
-          "GUI server is enabled but not configured to bind to anything, acting as if it was disabled.");
-    }
-    else
-    {
-      server_.reset(new mc_control::ControllerServer(config.timestep, config.gui_timestep, config.gui_server_pub_uris,
-                                                     config.gui_server_rep_uris));
-    }
+    server_.reset(new mc_control::ControllerServer(config.timestep, config.gui_timestep, config.gui_server_pub_uris,
+                                                   config.gui_server_rep_uris));
   }
 }
 
@@ -144,7 +153,11 @@ std::vector<std::string> MCGlobalController::enabled_controllers() const
 
 std::vector<std::string> MCGlobalController::loaded_controllers() const
 {
-  return controller_loader->objects();
+#ifndef MC_RTC_BUILD_STATIC
+  return controller_loader_->objects();
+#else
+  return ControllerLoader::loader().objects();
+#endif
 }
 
 std::vector<std::string> MCGlobalController::loaded_robots() const
@@ -738,6 +751,12 @@ bool MCGlobalController::run()
   return running;
 }
 
+ControllerServer & MCGlobalController::server()
+{
+  assert(server_);
+  return *server_;
+}
+
 const mc_solver::QPResultMsg & MCGlobalController::send(const double & t)
 {
   return controller_->send(t);
@@ -877,6 +896,11 @@ bool MCGlobalController::AddController(const std::string & name)
     controller_name = name.substr(0, sep_pos);
     controller_subname = name.substr(sep_pos + 1);
   }
+#ifndef MC_RTC_BUILD_STATIC
+  auto * controller_loader = controller_loader_.get();
+#else
+  auto * controller_loader = &ControllerLoader::loader();
+#endif
   if(controller_loader->has_object(controller_name))
   {
     mc_rtc::log::info("Create controller {}", controller_name);
@@ -913,7 +937,7 @@ const MCGlobalController::GlobalConfiguration & MCGlobalController::configuratio
 
 void MCGlobalController::add_controller_module_paths(const std::vector<std::string> & paths)
 {
-  controller_loader->load_libraries(paths);
+  controller_loader_->load_libraries(paths);
 }
 
 bool MCGlobalController::AddController(const std::string & name, std::shared_ptr<mc_control::MCController> controller)

@@ -132,9 +132,23 @@ struct DataStore
    *
    * @return true when the object is in the datastore
    */
-  bool has(const std::string & name) const
+  inline bool has(const std::string & name) const noexcept
   {
     return datas_.find(name) != datas_.end();
+  }
+
+  /**
+   * @brief Returns all objects in the datastore
+   */
+  inline std::vector<std::string> keys() const noexcept
+  {
+    std::vector<std::string> out;
+    out.reserve(datas_.size());
+    for(const auto & d : datas_)
+    {
+      out.push_back(d.first);
+    }
+    return out;
   }
 
   /**
@@ -331,7 +345,7 @@ struct DataStore
    * @brief Removes an object from the datastore
    * @param name Name of the stored object
    */
-  void remove(const std::string & name)
+  inline void remove(const std::string & name) noexcept
   {
     auto it = datas_.find(name);
     if(it == datas_.end())
@@ -343,9 +357,17 @@ struct DataStore
   }
 
   /**
+   * @brief Remove all entries in the datastore
+   */
+  inline void clear() noexcept
+  {
+    datas_.clear();
+  }
+
+  /**
    * @brief Name of this datastore
    */
-  const std::string & name() const
+  inline const std::string & name() const noexcept
   {
     return name_;
   }
@@ -355,7 +377,7 @@ struct DataStore
    *
    * @param name Name for the datastore
    */
-  void name(const std::string & name)
+  inline void name(const std::string & name) noexcept
   {
     name_ = name;
   }

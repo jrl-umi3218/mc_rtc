@@ -38,6 +38,14 @@ public:
     return observer_loader->create_object(name, args...);
   }
 
+  template<typename RetT, typename... Args>
+  static void register_object(const std::string & name, std::function<RetT *(const Args &...)> callback)
+  {
+    std::unique_lock<std::mutex> guard{mtx};
+    init();
+    observer_loader->register_object(name, callback);
+  }
+
   /** Add additional directories to the robot module path
    * \param paths Directories to be added to the module path
    */
