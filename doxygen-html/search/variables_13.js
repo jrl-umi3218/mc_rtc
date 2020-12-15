@@ -11,6 +11,7 @@ var searchData=
   ['second',['second',['../structmc__tasks_1_1lipm__stabilizer_1_1ContactDescription.html#a8dad298937c721041146a906fdbddb68',1,'mc_tasks::lipm_stabilizer::ContactDescription']]],
   ['selfcollconstrmng',['selfCollConstrMng',['../structmc__solver_1_1RobotEnvCollisionsConstraint.html#af4e19d19f4f444ec1597600ea3fb43ea',1,'mc_solver::RobotEnvCollisionsConstraint']]],
   ['selfcollisionconstraint',['selfCollisionConstraint',['../structmc__control_1_1MCController.html#ad67e0621398628a6b8f4f700a7455b67',1,'mc_control::MCController']]],
+  ['server_5f',['server_',['../structmc__control_1_1ControllerClient.html#a623d95e96630e3bb80d8a61349a98094',1,'mc_control::ControllerClient']]],
   ['shaft_5fdiam',['shaft_diam',['../structmc__rtc_1_1gui_1_1ArrowConfig.html#a863ad38d78a492d921944bd9093a8f83',1,'mc_rtc::gui::ArrowConfig']]],
   ['sid',['sid',['../structmc__control_1_1ElementId.html#a5753e9c679e8109c6bce7c9a02dd5c37',1,'mc_control::ElementId']]],
   ['side_5f',['side_',['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ae33beeb0efca412dd64fcbad5e984c48',1,'mc_rtc::gui::plot::impl::AbscissaOrdinate::side_()'],['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a73f245b506213662fd3d5f3deb1eb837',1,'mc_rtc::gui::plot::impl::Ordinate::side_()']]],

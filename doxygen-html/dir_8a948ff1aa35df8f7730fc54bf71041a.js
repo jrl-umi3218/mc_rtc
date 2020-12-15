@@ -11,12 +11,18 @@ var dir_8a948ff1aa35df8f7730fc54bf71041a =
       [ "ElementId", "structmc__control_1_1ElementId.html", "structmc__control_1_1ElementId" ],
       [ "ControllerClient", "structmc__control_1_1ControllerClient.html", "structmc__control_1_1ControllerClient" ]
     ] ],
+    [ "ControllerLoader.h", "ControllerLoader_8h.html", [
+      [ "ControllerLoader", "structmc__control_1_1ControllerLoader.html", null ]
+    ] ],
     [ "ControllerServer.h", "ControllerServer_8h.html", [
       [ "ControllerServer", "structmc__control_1_1ControllerServer.html", "structmc__control_1_1ControllerServer" ]
     ] ],
     [ "generic_gripper.h", "generic__gripper_8h.html", "generic__gripper_8h" ],
     [ "GlobalPlugin.h", "GlobalPlugin_8h.html", "GlobalPlugin_8h" ],
     [ "GlobalPlugin_fwd.h", "GlobalPlugin__fwd_8h.html", "GlobalPlugin__fwd_8h" ],
+    [ "GlobalPluginLoader.h", "GlobalPluginLoader_8h.html", [
+      [ "GlobalPluginLoader", "structmc__control_1_1GlobalPluginLoader.html", null ]
+    ] ],
     [ "GlobalPluginMacros.h", "GlobalPluginMacros_8h.html", "GlobalPluginMacros_8h" ],
     [ "mc_controller.h", "mc__controller_8h.html", "mc__controller_8h" ],
     [ "mc_global_controller.h", "mc__global__controller_8h.html", [

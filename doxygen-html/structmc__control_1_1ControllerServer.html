@@ -87,8 +87,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa4ef79cfb9afe739ee67b64b66969f97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a734ffb48f73a37374b9b51c4c7655507"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#a734ffb48f73a37374b9b51c4c7655507">handle_requests</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;gui_builder)</td></tr>
 <tr class="separator:a734ffb48f73a37374b9b51c4c7655507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa597dffa422f0cf699d9240b5b174f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#aaa597dffa422f0cf699d9240b5b174f7">handle_requests</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;gui, const char *<a class="el" href="structmc__control_1_1ControllerServer.html#a9f21b40efd63fa7a522ef961daad027f">data</a>)</td></tr>
+<tr class="separator:aaa597dffa422f0cf699d9240b5b174f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38c2d4255f3f4db5c9315f3c7468b87f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#a38c2d4255f3f4db5c9315f3c7468b87f">publish</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;gui_builder)</td></tr>
 <tr class="separator:a38c2d4255f3f4db5c9315f3c7468b87f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f21b40efd63fa7a522ef961daad027f"><td class="memItemLeft" align="right" valign="top">std::pair&lt; const char *, size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerServer.html#a9f21b40efd63fa7a522ef961daad027f">data</a> () const</td></tr>
+<tr class="separator:a9f21b40efd63fa7a522ef961daad027f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Serves data and allow interaction with the controllers</p>
@@ -166,8 +170,26 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9f21b40efd63fa7a522ef961daad027f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f21b40efd63fa7a522ef961daad027f">&#9670;&nbsp;</a></span>data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt;const char *, size_t&gt; mc_control::ControllerServer::data </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get latest published data </p>
+
+</div>
+</div>
 <a id="a734ffb48f73a37374b9b51c4c7655507"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a734ffb48f73a37374b9b51c4c7655507">&#9670;&nbsp;</a></span>handle_requests()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a734ffb48f73a37374b9b51c4c7655507">&#9670;&nbsp;</a></span>handle_requests() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -182,6 +204,35 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Handle requests made by the GUI users </p>
+
+</div>
+</div>
+<a id="aaa597dffa422f0cf699d9240b5b174f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa597dffa422f0cf699d9240b5b174f7">&#9670;&nbsp;</a></span>handle_requests() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_control::ControllerServer::handle_requests </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;&#160;</td>
+          <td class="paramname"><em>gui</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle requests from raw data </p>
 
 </div>
 </div>

@@ -1,0 +1,458 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Supporting MC_RTC_BUILD_STATIC in your code - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>Introduction</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework usage</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework tools</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Control recipes</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-main-states.html">Main FSM states</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/datastore.html">DataStore: Sharing Objects</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/observers.html">State Observation Pipelines</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">Using the LIPM Stabilizer</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Samples</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/samples/sample-admittance.html">Admittance sample controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Advanced topics</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><strong>Supporting MC_RTC_BUILD_STATIC in your code</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#project-adaptation">Project adaptation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#detecting-you-are-inside-mc_rtc-source-tree">Detecting you are inside mc_rtc source tree</a></li>
+<li class="toc-entry toc-h3"><a href="#finding-dependencies">Finding dependencies</a></li>
+<li class="toc-entry toc-h3"><a href="#adding-mc_rtc-components">Adding mc_rtc components</a></li>
+<li class="toc-entry toc-h3"><a href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#porting-your-mc_rtc-demo-to-the-web">Porting your mc_rtc demo to the web</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#general-emscripten-limitations">General emscripten limitations</a></li>
+<li class="toc-entry toc-h3"><a href="#building-your-online-demo">Building your online demo</a></li>
+<li class="toc-entry toc-h3"><a href="#firefox-and-github-pages-caveats">Firefox and GitHub pages caveats</a></li>
+</ul>
+</li>
+</ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        <h1>Supporting MC_RTC_BUILD_STATIC in your code</h1>
+
+        <p><code class="language-plaintext highlighter-rouge">MC_RTC_BUILD_STATIC</code> is an mc_rtc build option. Its main purpose is to enable the <a href="https://mc-rtc-demo.netlify.app/">online demonstration</a>. This feature entirely disable dynamic loading of controllers, FSM states, robot modules, observers and plugins. Instead, these components must be built-in within mc_rtc libraries.</p>
+
+<p>On this page we first list some of the changes that are required to get your projet to compile with this option. We then give an guideline on how to port your own demonstration to the web.</p>
+
+<h2 id="project-adaptation">Project adaptation</h2>
+
+<p>First of all you must build your controller and all other needed components within mc_rtc source tree. This only requires putting your project in either the <code class="language-plaintext highlighter-rouge">controllers</code>, <code class="language-plaintext highlighter-rouge">observers</code>, <code class="language-plaintext highlighter-rouge">plugins</code> or <code class="language-plaintext highlighter-rouge">robots</code> folder of mc_rtc source tree. They do not have any functional difference, they merely act as a way to organize your projects.</p>
+
+<h3 id="detecting-you-are-inside-mc_rtc-source-tree">Detecting you are inside mc_rtc source tree</h3>
+
+<p>The usual way to find mc_rtc is as follows:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">find_package</span><span class="p">(</span>mc_rtc REQUIRED<span class="p">)</span>
+</code></pre></div></div>
+
+<p>The way to detect if you are inside mc_rtc source tree is simply to check whether you need to find the package at all:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">if</span><span class="p">(</span>NOT TARGET mc_rtc::mc_control<span class="p">)</span>
+  <span class="nb">find_package</span><span class="p">(</span>mc_rtc REQUIRED<span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>If you use the <a href="https://github.com/jrl-umi3218/jrl-cmakemodules">jrl-cmakemodules</a> you should also conditionally include them if building within mc_rtc (all functionalities are avaiable via mc_rtc anyway).</p>
+
+<h3 id="finding-dependencies">Finding dependencies</h3>
+
+<p>Let us say, you need the <a href="https://github.com/jrl-umi3218/copra">copra</a> package in your controller. You would normally use the following CMake code to find the dependency:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">find_package</span><span class="p">(</span>copra REQUIRED<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now that your controller is built with mc_rtc, <code class="language-plaintext highlighter-rouge">copra</code> becomes a dependency of <code class="language-plaintext highlighter-rouge">mc_rtc</code> so it becomes:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">if</span><span class="p">(</span>NOT MC_RTC_BUILD_STATIC<span class="p">)</span>
+  <span class="nf">add_required_dependency</span><span class="p">(</span>copra REQUIRED<span class="p">)</span>
+<span class="nb">else</span><span class="p">()</span>
+  <span class="nb">find_package</span><span class="p">(</span>copra REQUIRED<span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="adding-mc_rtc-components">Adding mc_rtc components</h3>
+
+<p>If you are using the macros provided by <code class="language-plaintext highlighter-rouge">find_package(mc_rtc)</code> (e.g. <code class="language-plaintext highlighter-rouge">add_controller(NAME ...)</code>, <code class="language-plaintext highlighter-rouge">add_robot(NAME ...) and so-on) then most of the hard-work is done for you. Otherwise, you are advised to look into </code>src/CMakeLists.txt` in mc_rtc source tree to understand what you should modify. The main difference is that source paths should be provided as absolute paths instead of relative paths.</p>
+
+<p>There is one caveat to this. If your controller derives from <code class="language-plaintext highlighter-rouge">mc_control::fsm::Controller</code> then you should use <code class="language-plaintext highlighter-rouge">add_fsm_controller(NAME ...)</code> instead.</p>
+
+<p>Furthermore, if you are linking your component with an external library this library should be linked to the related mc_rtc library instead.</p>
+
+<p>For example:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">add_controller</span><span class="p">(</span>myController <span class="s2">"</span><span class="si">${</span><span class="nv">myController_SRC</span><span class="si">}</span><span class="s2">"</span> <span class="s2">"</span><span class="si">${</span><span class="nv">myController_HDR</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">target_link_libraries</span><span class="p">(</span>myController PUBLIC copra::copra<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Becomes:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">if</span><span class="p">(</span>NOT MC_RTC_BUILD_STATIC<span class="p">)</span>
+  <span class="nf">add_controller</span><span class="p">(</span>myController <span class="s2">"</span><span class="si">${</span><span class="nv">myController_SRC</span><span class="si">}</span><span class="s2">"</span> <span class="s2">"</span><span class="si">${</span><span class="nv">myController_HDR</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+  <span class="nb">target_link_libraries</span><span class="p">(</span>myController PUBLIC copra::copra<span class="p">)</span>
+<span class="nb">else</span><span class="p">()</span>
+  <span class="nf">add_fsm_controller</span><span class="p">(</span>myController <span class="s2">"</span><span class="si">${</span><span class="nv">myController_SRC</span><span class="si">}</span><span class="s2">"</span> <span class="s2">"</span><span class="si">${</span><span class="nv">myController_HDR</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+  <span class="nb">target_link_libraries</span><span class="p">(</span>mc_control_fsm PUBLIC copra::copra<span class="p">)</span>
+  <span class="c1"># Would be:</span>
+  <span class="c1"># - mc_control for a non-FSM controller</span>
+  <span class="c1"># - mc_rbdyn for a RobotModule</span>
+  <span class="c1"># - mc_observers for an Observer</span>
+  <span class="c1"># - mc_control for a plugin</span>
+<span class="nb">endif</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="example">Example</h3>
+
+<p>This <a href="https://github.com/gergondet/lipm_walking_controller/commit/f507f63de378a9d80917d9b3f1280a5843bb2b56">patch</a> enables the support of <code class="language-plaintext highlighter-rouge">MC_RTC_BUILD_STATIC</code> in the <a href="https://github.com/jrl-umi3218/lipm_walking_controller">lipm_walking_controller</a>.</p>
+
+<h2 id="porting-your-mc_rtc-demo-to-the-web">Porting your mc_rtc demo to the web</h2>
+
+<p>The web demonstration is made possible by using the <a href="https://emscripten.org/index.html">emscripten</a> project. This project enables the compilation of C++ code to <a href="http://webassembly.org/">WebAssembly</a> which can then run in any compatible browser. Note that, to the best of our knowledge, the entire mc_rtc API is available.</p>
+
+<div class="row">
+  <div class="offset-2 col-8">
+    <div class="alert alert-warning" role="alert">
+      If you choose to deploy an online demonstration of your controller, be aware that both the code (in compiled form) and the data will be de-facto publicly available. If confidentiality is a concern you should refrain from deploying such a demonstration.
+    </div>
+  </div>
+</div>
+
+<h3 id="general-emscripten-limitations">General emscripten limitations</h3>
+
+<p>Please refer to <a href="https://emscripten.org/docs/porting/index.html">emscripten Porting guide</a> for a complete overview of emscripten limitations. In general this should not affect you much.</p>
+
+<p>The most important limitation concerns file system issues. As the web application access files via a virtual filesystem, you must take care of either:</p>
+<ol>
+  <li>Reproducing the build system filesystem hierarchi in the virtual filesystem</li>
+  <li>Taking care of configuring the build with “dummy” paths that are created for the online demonstration</li>
+</ol>
+
+<p>In the case of mc_rtc online demonstration linked below, we use the second approach as it makes it a little easier to control what goes into the demonstration.</p>
+
+<h3 id="building-your-online-demo">Building your online demo</h3>
+
+<p>For now, the recommended approach is to use the existing <a href="https://github.com/mc-rtc/demo/">mc-rtc online demonstration</a> as a basis to adapt your project. You can use this build script to build your demonstration locally before deploying to an online host.</p>
+
+<h3 id="firefox-and-github-pages-caveats">Firefox and GitHub pages caveats</h3>
+
+<p>Be aware that if you choose to host the demonstration on GitHub pages then it will not work on Firefox (as of 2020/11/27 when this tutorial is written) as the web server should provide specific HTTP headers that GitHub pages does not provide and there is currently no way to customize those headers.</p>
+
+<p>The headers are:</p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Cross-Origin-Opener-Policy</span><span class="pi">:</span> <span class="s">same-origin</span>
+<span class="na">Cross-Origin-Embedder-Policy</span><span class="pi">:</span> <span class="s">require-corp</span>
+</code></pre></div></div>
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/advanced/debug-lssol-output-6.html">Next tutorial: Debugging LSSOL output 6</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

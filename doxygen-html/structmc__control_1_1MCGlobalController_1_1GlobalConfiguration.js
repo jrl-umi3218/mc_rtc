@@ -1,6 +1,6 @@
 var structmc__control_1_1MCGlobalController_1_1GlobalConfiguration =
 [
-    [ "GlobalConfiguration", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aca1189c364441ad5d5fa5a1f7b53a4bd", null ],
+    [ "GlobalConfiguration", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a987a966351ac8bc6f17d94cc8103a408", null ],
     [ "enabled", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#ac2d357671c1f2ba1c316a128a6bf6549", null ],
     [ "load_controllers_configs", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a25be914af3f8f7543109624e44f820f2", null ],
     [ "load_plugin_configs", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a4a03b269639f6f50e2b43ecfb7434c6d", null ],
@@ -16,6 +16,7 @@ var structmc__control_1_1MCGlobalController_1_1GlobalConfiguration =
     [ "gui_server_pub_uris", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a669bd8f5926553a0091c2f2118d5d5cb", null ],
     [ "gui_server_rep_uris", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a86b0d00d5943bf98a345f513b03f5388", null ],
     [ "gui_timestep", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aefc4cb0145c34e7595b346186ed8a2d6", null ],
+    [ "include_halfsit_controller", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a098660ebece62cefc4b8cf0e108845e3", null ],
     [ "init_attitude_from_sensor", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a4f838a5287a1cbd4156961e77e389165", null ],
     [ "init_attitude_sensor", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#ab6fb51a60d74fbfcfa7f8effe292aeef", null ],
     [ "initial_controller", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a160c16f13781fc249731c80cb25b9dad", null ],

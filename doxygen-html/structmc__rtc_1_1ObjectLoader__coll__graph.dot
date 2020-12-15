@@ -6,4 +6,6 @@ digraph "mc_rtc::ObjectLoader&lt; T &gt;"
   Node2 [label="mc_rtc::ObjectLoader\< T \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 [label="noncopyable",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" callbacks_" ,fontname="Helvetica"];
+  Node4 [label="mc_rtc::DataStore",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1DataStore.html",tooltip="Generic data store. "];
 }

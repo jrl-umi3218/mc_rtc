@@ -40,6 +40,7 @@ var structmc__control_1_1MCGlobalController =
     [ "robots", "structmc__control_1_1MCGlobalController.html#a8082e0a5cb74de8f79b74fa543cf80d9", null ],
     [ "run", "structmc__control_1_1MCGlobalController.html#a153432b8c6ebfc4f9484deb1439ca3ee", null ],
     [ "send", "structmc__control_1_1MCGlobalController.html#a2d8ba93ec28be3eed4d6d8bfa58c80cf", null ],
+    [ "server", "structmc__control_1_1MCGlobalController.html#a6fa39ac887fc881a4e99c3a30efbb3d3", null ],
     [ "setEncoderValues", "structmc__control_1_1MCGlobalController.html#a2703ab87cc9556a1f18cc883113da33c", null ],
     [ "setEncoderValues", "structmc__control_1_1MCGlobalController.html#a94410b73f4fae3e1115ad37eefe27976", null ],
     [ "setEncoderVelocities", "structmc__control_1_1MCGlobalController.html#a0dca39c45c9a87e08d48b6d34c75c44a", null ],

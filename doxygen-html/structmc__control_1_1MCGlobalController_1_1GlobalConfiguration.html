@@ -92,8 +92,8 @@ Collaboration diagram for mc_control::MCGlobalController::GlobalConfiguration:</
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aca1189c364441ad5d5fa5a1f7b53a4bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aca1189c364441ad5d5fa5a1f7b53a4bd">GlobalConfiguration</a> (const std::string &amp;conf, std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> &gt; rm)</td></tr>
-<tr class="separator:aca1189c364441ad5d5fa5a1f7b53a4bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a987a966351ac8bc6f17d94cc8103a408"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a987a966351ac8bc6f17d94cc8103a408">GlobalConfiguration</a> (const std::string &amp;conf, std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> &gt; rm=nullptr)</td></tr>
+<tr class="separator:a987a966351ac8bc6f17d94cc8103a408"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2d357671c1f2ba1c316a128a6bf6549"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#ac2d357671c1f2ba1c316a128a6bf6549">enabled</a> (const std::string &amp;ctrl)</td></tr>
 <tr class="separator:ac2d357671c1f2ba1c316a128a6bf6549"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25be914af3f8f7543109624e44f820f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a25be914af3f8f7543109624e44f820f2">load_controllers_configs</a> ()</td></tr>
@@ -133,6 +133,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a59375fa06c589ffb9616139fbecd9426"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a570a304a795594860cfd5733a04588c6"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a570a304a795594860cfd5733a04588c6">timestep</a> = 0.002</td></tr>
 <tr class="separator:a570a304a795594860cfd5733a04588c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a098660ebece62cefc4b8cf0e108845e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a098660ebece62cefc4b8cf0e108845e3">include_halfsit_controller</a> = true</td></tr>
+<tr class="separator:a098660ebece62cefc4b8cf0e108845e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7594f385b7a26375665cfe2b4b7624c1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a7594f385b7a26375665cfe2b4b7624c1">log_real</a> = false</td></tr>
 <tr class="separator:a7594f385b7a26375665cfe2b4b7624c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fa58d70b7f6aea1d24376d1e2263adc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a1fa58d70b7f6aea1d24376d1e2263adc">enable_log</a> = true</td></tr>
@@ -157,8 +159,8 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Store the controller configuration. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aca1189c364441ad5d5fa5a1f7b53a4bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca1189c364441ad5d5fa5a1f7b53a4bd">&#9670;&nbsp;</a></span>GlobalConfiguration()</h2>
+<a id="a987a966351ac8bc6f17d94cc8103a408"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a987a966351ac8bc6f17d94cc8103a408">&#9670;&nbsp;</a></span>GlobalConfiguration()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,7 +175,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::shared_ptr&lt; <a class="el" href="structmc__rbdyn_1_1RobotModule.html">mc_rbdyn::RobotModule</a> &gt;&#160;</td>
-          <td class="paramname"><em>rm</em>&#160;</td>
+          <td class="paramname"><em>rm</em> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -182,6 +184,14 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Constructor</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">conf</td><td>Configuration file that should be loaded</td></tr>
+    <tr><td class="paramname">Main</td><td>robot module, if null use the MainRobot entry in conf to initialize it </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -409,6 +419,20 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">double mc_control::MCGlobalController::GlobalConfiguration::gui_timestep = 0.05</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a098660ebece62cefc4b8cf0e108845e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a098660ebece62cefc4b8cf0e108845e3">&#9670;&nbsp;</a></span>include_halfsit_controller</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_control::MCGlobalController::GlobalConfiguration::include_halfsit_controller = true</td>
         </tr>
       </table>
 </div><div class="memdoc">

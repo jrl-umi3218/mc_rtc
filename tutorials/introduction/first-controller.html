@@ -272,6 +272,10 @@
                         
                       
                         
+                        <li><a href="/mc_rtc/tutorials/advanced/support-mc-rtc-build-static.html">Supporting MC_RTC_BUILD_STATIC in your code</a></li>
+                        
+                      
+                        
                         <li><a href="/mc_rtc/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
                         
                       
@@ -311,6 +315,9 @@
   </li>
   <li class="nav-item">
     <a class="nav-link" id="pythonCreateTab" data-toggle="tab" href="#pythonCreateTabContent" role="tab" aria-controls="pythonCreateTabContent" aria-selected="false">Python</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="githubCreateTab" data-toggle="tab" href="#githubCreateTabContent" role="tab" aria-controls="githubCreateTabContent" aria-selected="false">GitHub</a>
   </li>
 </ul>
 <div class="tab-content" id="interfaceTabContent">
@@ -470,6 +477,13 @@ optional arguments:
 
 <p>A key difference between the C++ controller and the Python controller is that the C++ controller let you bypass the call to <code>mc_control::MCController::run()</code> and <code>mc_control::MCController::reset()</code> functions if you like. Whereas in Python, <code>run_callback(self)</code> and <code>reset_callback(self, data)</code> will always be called <strong>after</strong> its C++ counterpart.</p>
 
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane" id="githubCreateTabContent" role="tabpanel" arial-labelledby="githubCreateTab">
+    <div class="card bg-light">
+      <div class="card-body">
+        <p>Use the <a href="https://github.com/mc-rtc/new-controller">mc-rtc/new-controller</a> template project. This is equivalent to using the <code>mc_rtc_new_controller</code> tool with extra goodies.</p>
       </div>
     </div>
   </div>

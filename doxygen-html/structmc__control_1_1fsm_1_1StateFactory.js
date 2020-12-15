@@ -9,5 +9,6 @@ var structmc__control_1_1fsm_1_1StateFactory =
     [ "load_files", "structmc__control_1_1fsm_1_1StateFactory.html#a8218cc8f646019ae30eb81aecd9344f7", null ],
     [ "load_libraries", "structmc__control_1_1fsm_1_1StateFactory.html#a0825995ae6cfda039a931a8c17681931", null ],
     [ "load_with_loader", "structmc__control_1_1fsm_1_1StateFactory.html#a22fb3a0cea2bbb2e18ca6e4bed3f18b0", null ],
+    [ "register_object", "structmc__control_1_1fsm_1_1StateFactory.html#a51a55b568355289e40c8a77222f533f3", null ],
     [ "states", "structmc__control_1_1fsm_1_1StateFactory.html#a5f07722fb8e17b4711973ff782face63", null ]
 ];

@@ -128,6 +128,9 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae6747e5d8a42e424da0e89f2f2ed8363"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae9bc7b4461a90a191a7c1bd8f82fc7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#aae9bc7b4461a90a191a7c1bd8f82fc7e">set_verbosity</a> (bool <a class="el" href="structmc__rtc_1_1ObjectLoader.html#ac2b5e003d3ccd4958a32a83f1981754c">verbose</a>)</td></tr>
 <tr class="separator:aae9bc7b4461a90a191a7c1bd8f82fc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbc1003c6e200934f93eca0d42306fe5"><td class="memTemplParams" colspan="2">template&lt;typename RetT , typename... Args&gt; </td></tr>
+<tr class="memitem:adbc1003c6e200934f93eca0d42306fe5"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#adbc1003c6e200934f93eca0d42306fe5">register_object</a> (const std::string &amp;name, std::function&lt; RetT *(const Args &amp;...)&gt; callback)</td></tr>
+<tr class="separator:adbc1003c6e200934f93eca0d42306fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0fb7a187ae96e784f32978127824fd8"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:ab0fb7a187ae96e784f32978127824fd8"><td class="memTemplItemLeft" align="right" valign="top">std::shared_ptr&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#ab0fb7a187ae96e784f32978127824fd8">create_object</a> (const std::string &amp;name, Args... args)</td></tr>
 <tr class="separator:ab0fb7a187ae96e784f32978127824fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,6 +143,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a0dce6e455c174537d988c115dc31ce80"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a0dce6e455c174537d988c115dc31ce80"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#a0dce6e455c174537d988c115dc31ce80">create</a> (const std::string &amp;name, Args... args)</td></tr>
 <tr class="separator:a0dce6e455c174537d988c115dc31ce80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85c8eb232b0448a1c695ded4daec3edf"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a85c8eb232b0448a1c695ded4daec3edf"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#a85c8eb232b0448a1c695ded4daec3edf">create_from_handles</a> (const std::string &amp;name, Args... args)</td></tr>
+<tr class="separator:a85c8eb232b0448a1c695ded4daec3edf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bb13fcf5a8dc58bb5b4aa04345790d9"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a1bb13fcf5a8dc58bb5b4aa04345790d9"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#a1bb13fcf5a8dc58bb5b4aa04345790d9">create_from_callbacks</a> (const std::string &amp;name, Args... args)</td></tr>
+<tr class="separator:a1bb13fcf5a8dc58bb5b4aa04345790d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -151,8 +160,10 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:ac2b5e003d3ccd4958a32a83f1981754c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c219f5a809cfc139409874145d76a20"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Loader.html#a9c2401890571dbbde00eda2fb1e87710">Loader::handle_map_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#a5c219f5a809cfc139409874145d76a20">handles_</a></td></tr>
 <tr class="separator:a5c219f5a809cfc139409874145d76a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a716eefa0204ce8e39886323aaad00a02"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <a class="el" href="structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html">ObjectDeleter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#a716eefa0204ce8e39886323aaad00a02">deleters_</a></td></tr>
-<tr class="separator:a716eefa0204ce8e39886323aaad00a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3d38a0e58eb0ce60923047b4b698d40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1DataStore.html">mc_rtc::DataStore</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#aa3d38a0e58eb0ce60923047b4b698d40">callbacks_</a></td></tr>
+<tr class="separator:aa3d38a0e58eb0ce60923047b4b698d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd3cb32f499540bf36b44bbfa53018c2"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, <a class="el" href="structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html">ObjectDeleter</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#afd3cb32f499540bf36b44bbfa53018c2">deleters_</a></td></tr>
+<tr class="separator:afd3cb32f499540bf36b44bbfa53018c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br />
@@ -314,7 +325,89 @@ template&lt;typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Internal function creates a raw pointer then build a shared or unique pointer accordingly </p>
+<p>Internal function to create a raw pointer </p>
+
+</div>
+</div>
+<a id="a1bb13fcf5a8dc58bb5b4aa04345790d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bb13fcf5a8dc58bb5b4aa04345790d9">&#9670;&nbsp;</a></span>create_from_callbacks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T* <a class="el" href="structmc__rtc_1_1ObjectLoader.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::create_from_callbacks </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Internal function to create a raw pointer from a registered callback </p>
+
+</div>
+</div>
+<a id="a85c8eb232b0448a1c695ded4daec3edf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85c8eb232b0448a1c695ded4daec3edf">&#9670;&nbsp;</a></span>create_from_handles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<div class="memtemplate">
+template&lt;typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T* <a class="el" href="structmc__rtc_1_1ObjectLoader.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::create_from_handles </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args...&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Internal function to create a raw pointer from an handle </p>
 
 </div>
 </div>
@@ -521,6 +614,58 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
+<a id="adbc1003c6e200934f93eca0d42306fe5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbc1003c6e200934f93eca0d42306fe5">&#9670;&nbsp;</a></span>register_object()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<div class="memtemplate">
+template&lt;typename RetT , typename... Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structmc__rtc_1_1ObjectLoader.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::register_object </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; RetT *(const Args &amp;...)&gt;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Register a new loading function</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Name that will be used to create new instance</td></tr>
+    <tr><td class="paramname">callback</td><td>Callback that will be used to create the object</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">RetT</td><td>Must be derived from T</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="structmc__rtc_1_1LoaderException.html" title="Exception thrown by loader interface. ">LoaderException</a></td><td>if the object is already registered </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aae9bc7b4461a90a191a7c1bd8f82fc7e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aae9bc7b4461a90a191a7c1bd8f82fc7e">&#9670;&nbsp;</a></span>set_verbosity()</h2>
 
@@ -549,6 +694,30 @@ template&lt;typename T&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="aa3d38a0e58eb0ce60923047b4b698d40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3d38a0e58eb0ce60923047b4b698d40">&#9670;&nbsp;</a></span>callbacks_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rtc_1_1DataStore.html">mc_rtc::DataStore</a> <a class="el" href="structmc__rtc_1_1ObjectLoader.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::callbacks_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aab1c409baa5b97ec1e5b58242c572fbe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aab1c409baa5b97ec1e5b58242c572fbe">&#9670;&nbsp;</a></span>class_name</h2>
 
@@ -573,8 +742,8 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="a716eefa0204ce8e39886323aaad00a02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a716eefa0204ce8e39886323aaad00a02">&#9670;&nbsp;</a></span>deleters_</h2>
+<a id="afd3cb32f499540bf36b44bbfa53018c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd3cb32f499540bf36b44bbfa53018c2">&#9670;&nbsp;</a></span>deleters_</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -585,7 +754,7 @@ template&lt;typename T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;std::string, <a class="el" href="structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html">ObjectDeleter</a>&gt; <a class="el" href="structmc__rtc_1_1ObjectLoader.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::deleters_</td>
+          <td class="memname">std::unordered_map&lt;std::string, <a class="el" href="structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html">ObjectDeleter</a>&gt; <a class="el" href="structmc__rtc_1_1ObjectLoader.html">mc_rtc::ObjectLoader</a>&lt; T &gt;::deleters_</td>
         </tr>
       </table>
   </td>

@@ -87,6 +87,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="namespacemc__rbdyn.html#af67e459a90b9a864418fca7d55d959a3">mc_rbdyn::RobotModulePtr</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotLoader.html#ad660aedc7dbf7cd0cd0e60da5fffe4c2">get_robot_module</a> (const std::string &amp;name, const Args &amp;... args)</td></tr>
 <tr class="separator:ad660aedc7dbf7cd0cd0e60da5fffe4c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a1e3e1c0700d5045bf0d6894ef6a8e1"><td class="memTemplParams" colspan="2">template&lt;typename RetT , typename... Args&gt; </td></tr>
+<tr class="memitem:a2a1e3e1c0700d5045bf0d6894ef6a8e1"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotLoader.html#a2a1e3e1c0700d5045bf0d6894ef6a8e1">register_object</a> (const std::string &amp;name, std::function&lt; RetT *(const Args &amp;...)&gt; callback)</td></tr>
+<tr class="separator:a2a1e3e1c0700d5045bf0d6894ef6a8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48f1ada05ff7db2152a00da892183c8b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotLoader.html#a48f1ada05ff7db2152a00da892183c8b">update_robot_module_path</a> (const std::vector&lt; std::string &gt; &amp;paths)</td></tr>
 <tr class="separator:a48f1ada05ff7db2152a00da892183c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86f7b35ed2a4b3d37508f51aa2b29a38"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1RobotLoader.html#a86f7b35ed2a4b3d37508f51aa2b29a38">clear</a> ()</td></tr>
@@ -298,6 +301,44 @@ template&lt;typename... Args&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a2a1e3e1c0700d5045bf0d6894ef6a8e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a1e3e1c0700d5045bf0d6894ef6a8e1">&#9670;&nbsp;</a></span>register_object()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RetT , typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void mc_rbdyn::RobotLoader::register_object </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::function&lt; RetT *(const Args &amp;...)&gt;&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

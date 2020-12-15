@@ -7,6 +7,7 @@ var searchData=
   ['idx',['idx',['../structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html#a15631f7cb4afab3665d62197f9b0aa67',1,'mc_control::fsm::MetaTasksState::TaskCriteria']]],
   ['impl_5f',['impl_',['../structmc__control_1_1fsm_1_1AddRemoveContactState.html#a8921148d58f33c039fe655ad12c6fbb2',1,'mc_control::fsm::AddRemoveContactState']]],
   ['imusensor_5f',['imuSensor_',['../structmc__observers_1_1KinematicInertialPoseObserver.html#a53e962c7b77f5162ffbd2f573156a239',1,'mc_observers::KinematicInertialPoseObserver']]],
+  ['include_5fhalfsit_5fcontroller',['include_halfsit_controller',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a098660ebece62cefc4b8cf0e108845e3',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['inf',['inf',['../structmc__rtc_1_1gui_1_1plot_1_1Range.html#ab995e2707a19a7b8beb6b05bbeffa3b9',1,'mc_rtc::gui::plot::Range']]],
   ['init_5fattitude_5ffrom_5fsensor',['init_attitude_from_sensor',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a4f838a5287a1cbd4156961e77e389165',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['init_5fattitude_5fsensor',['init_attitude_sensor',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#ab6fb51a60d74fbfcfa7f8effe292aeef',1,'mc_control::MCGlobalController::GlobalConfiguration']]],

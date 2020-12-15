@@ -109,6 +109,15 @@ digraph "include/mc_control/ControllerServer.h"
   Node90 [label="mc_rtc/gui/IntegerInput.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$IntegerInput_8h.html"];
   Node90 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node79 -> Node82 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node79 -> Node91 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node91 [label="mc_rtc/gui/NumberInput.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$NumberInput_8h.html"];
+  Node91 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node79 -> Node92 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 [label="mc_rtc/gui/NumberSlider.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$NumberSlider_8h.html"];
+  Node92 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node79 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 [label="mc_rtc/gui/Point3D.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Point3D_8h.html"];
+  Node93 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node79 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node42 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node103 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -140,12 +149,6 @@ digraph "include/mc_control/ControllerServer.h"
   Node1 -> Node71 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node71 [label="mc_control/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mc__control_2api_8h.html"];
   Node0 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node127 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node127 [label="nanomsg/nn.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node128 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node128 [label="nanomsg/pubsub.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node129 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node129 [label="nanomsg/reqrep.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

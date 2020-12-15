@@ -660,12 +660,22 @@
     <name>ControllerClient.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
     <filename>ControllerClient_8h</filename>
+    <includes id="ControllerServer_8h" name="ControllerServer.h" local="no" imported="no">mc_control/ControllerServer.h</includes>
     <includes id="client__api_8h" name="client_api.h" local="no" imported="no">mc_control/client_api.h</includes>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <includes id="plot_2types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/plot/types.h</includes>
     <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
     <class kind="struct">mc_control::ElementId</class>
     <class kind="struct">mc_control::ControllerClient</class>
+    <namespace>mc_control</namespace>
+  </compound>
+  <compound kind="file">
+    <name>ControllerLoader.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
+    <filename>ControllerLoader_8h</filename>
+    <includes id="MCController_8h" name="MCController.h" local="no" imported="no">mc_control/MCController.h</includes>
+    <includes id="loader_8h" name="loader.h" local="no" imported="no">mc_rtc/loader.h</includes>
+    <class kind="class">mc_control::ControllerLoader</class>
     <namespace>mc_control</namespace>
   </compound>
   <compound kind="file">
@@ -970,6 +980,15 @@
       <anchor>a077624dc5665df1a3e145d0283e10c78</anchor>
       <arglist></arglist>
     </member>
+  </compound>
+  <compound kind="file">
+    <name>GlobalPluginLoader.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/</path>
+    <filename>GlobalPluginLoader_8h</filename>
+    <includes id="GlobalPlugin_8h" name="GlobalPlugin.h" local="no" imported="no">mc_control/GlobalPlugin.h</includes>
+    <includes id="loader_8h" name="loader.h" local="no" imported="no">mc_rtc/loader.h</includes>
+    <class kind="class">mc_control::GlobalPluginLoader</class>
+    <namespace>mc_control</namespace>
   </compound>
   <compound kind="file">
     <name>GlobalPluginMacros.h</name>
@@ -3158,6 +3177,7 @@
     <name>loader.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
     <filename>loader_8h</filename>
+    <includes id="DataStore_8h" name="DataStore.h" local="no" imported="no">mc_rtc/DataStore.h</includes>
     <includes id="loader__api_8h" name="loader_api.h" local="no" imported="no">mc_rtc/loader_api.h</includes>
     <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
     <class kind="class">mc_rtc::ObjectLoader</class>
@@ -6504,10 +6524,6 @@
       <arglist></arglist>
     </member>
   </compound>
-  <compound kind="class">
-    <name>Collision</name>
-    <filename>classCollision.html</filename>
-  </compound>
   <compound kind="struct">
     <name>mc_rbdyn::Collision</name>
     <filename>structmc__rbdyn_1_1Collision.html</filename>
@@ -6581,6 +6597,10 @@
       <anchor>affd388406c44197c32f6685e64d7bdb9</anchor>
       <arglist></arglist>
     </member>
+  </compound>
+  <compound kind="class">
+    <name>Collision</name>
+    <filename>classCollision.html</filename>
   </compound>
   <compound kind="class">
     <name>mc_solver::CollisionsConstraint</name>
@@ -10244,8 +10264,22 @@
       <type></type>
       <name>ControllerClient</name>
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a93db9515c75af8109054c83dac3fb8ad</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ControllerClient</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>a6f07073d0c388e08b2fe2bf153220592</anchor>
       <arglist>(const std::string &amp;sub_conn_uri, const std::string &amp;push_conn_uri, double timeout=0)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ControllerClient</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a68b7d122aee852f407797ed75393e028</anchor>
+      <arglist>(ControllerServer &amp;server, mc_rtc::gui::StateBuilder &amp;gui)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -10270,6 +10304,20 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>connect</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a96e383ea996172f0da14360dc55432be</anchor>
+      <arglist>(const std::string &amp;sub_conn_uri, const std::string &amp;push_conn_uri)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>connect</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>af04c2016424462fb277795ac1078073f</anchor>
+      <arglist>(ControllerServer &amp;server, mc_rtc::gui::StateBuilder &amp;gui)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>send_request</name>
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>ade72000ce29ac5d99b1420ebdaa778e4</anchor>
@@ -10291,6 +10339,27 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>raw_request</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>ae9277b82054ae7ec23310d52f5393fc9</anchor>
+      <arglist>(const ElementId &amp;id, const mc_rtc::Configuration &amp;data, std::string &amp;out)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>raw_request</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a55c0ef4b41b4ba4dc57759c387335d60</anchor>
+      <arglist>(const ElementId &amp;id, const T &amp;data, std::string &amp;out)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>raw_request</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>ad71e478b911f2bb391ab06af04c4411f</anchor>
+      <arglist>(const ElementId &amp;id, std::string &amp;out)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>timeout</name>
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>acfbf74c5219464896a5645a8a9c71418</anchor>
@@ -10309,6 +10378,13 @@
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>a8079e120ef304ca447b0f36c42598364</anchor>
       <arglist>(std::vector&lt; char &gt; &amp;buffer, std::chrono::system_clock::time_point &amp;t_last_received)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>run</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>acf4cab847f34bf43e9666bc2c0bd1a85</anchor>
+      <arglist>(const char *buffer, size_t bufferSize)</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
@@ -10716,6 +10792,31 @@
       <anchor>a881be407dfadc093f9ad1dd638922688</anchor>
       <arglist></arglist>
     </member>
+    <member kind="variable" protection="protected">
+      <type>ControllerServer *</type>
+      <name>server_</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a623d95e96630e3bb80d8a61349a98094</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_rtc::gui::StateBuilder *</type>
+      <name>gui_</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a7d6b7149762a3b514b901889af4078c7</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>mc_control::ControllerLoader</name>
+    <filename>structmc__control_1_1ControllerLoader.html</filename>
+    <member kind="function" static="yes">
+      <type>static mc_rtc::ObjectLoader&lt; MCController &gt; &amp;</type>
+      <name>loader</name>
+      <anchorfile>structmc__control_1_1ControllerLoader.html</anchorfile>
+      <anchor>a9249bcbb1c99d7b9f83562d7935f06dc</anchor>
+      <arglist>()</arglist>
+    </member>
   </compound>
   <compound kind="class">
     <name>mc_control::ControllerResetData</name>
@@ -10754,10 +10855,24 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>handle_requests</name>
+      <anchorfile>structmc__control_1_1ControllerServer.html</anchorfile>
+      <anchor>aaa597dffa422f0cf699d9240b5b174f7</anchor>
+      <arglist>(mc_rtc::gui::StateBuilder &amp;gui, const char *data)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>publish</name>
       <anchorfile>structmc__control_1_1ControllerServer.html</anchorfile>
       <anchor>a38c2d4255f3f4db5c9315f3c7468b87f</anchor>
       <arglist>(mc_rtc::gui::StateBuilder &amp;gui_builder)</arglist>
+    </member>
+    <member kind="function">
+      <type>std::pair&lt; const char *, size_t &gt;</type>
+      <name>data</name>
+      <anchorfile>structmc__control_1_1ControllerServer.html</anchorfile>
+      <anchor>a9f21b40efd63fa7a522ef961daad027f</anchor>
+      <arglist>() const</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -11082,8 +11197,15 @@
       <type>bool</type>
       <name>has</name>
       <anchorfile>structmc__rtc_1_1DataStore.html</anchorfile>
-      <anchor>aa4bc5b9b1a870160b05a322809fa75ee</anchor>
-      <arglist>(const std::string &amp;name) const</arglist>
+      <anchor>a52db79536403a647d28a8d563558a21d</anchor>
+      <arglist>(const std::string &amp;name) const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>keys</name>
+      <anchorfile>structmc__rtc_1_1DataStore.html</anchorfile>
+      <anchor>a5f54686319b4449e32312d585dcd4190</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>T &amp;</type>
@@ -11160,22 +11282,29 @@
       <type>void</type>
       <name>remove</name>
       <anchorfile>structmc__rtc_1_1DataStore.html</anchorfile>
-      <anchor>af447ebb9444a9a82c0ee95f115eb480c</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
+      <anchor>a53bfdc28c92e28fc6916a0bcc37ac921</anchor>
+      <arglist>(const std::string &amp;name) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>clear</name>
+      <anchorfile>structmc__rtc_1_1DataStore.html</anchorfile>
+      <anchor>a857f48478ac0771abf73f89fe2ec8ab0</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>const std::string &amp;</type>
       <name>name</name>
       <anchorfile>structmc__rtc_1_1DataStore.html</anchorfile>
-      <anchor>acb052be963744c09faf14aa2b85bf2dc</anchor>
-      <arglist>() const</arglist>
+      <anchor>affcbae987f83f0423b73f9614248579f</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>name</name>
       <anchorfile>structmc__rtc_1_1DataStore.html</anchorfile>
-      <anchor>ad1fe100eb7cb874c226ff76ed64f3cfe</anchor>
-      <arglist>(const std::string &amp;name)</arglist>
+      <anchor>ac1488cc8209d23ae6b0581d895e79c3d</anchor>
+      <arglist>(const std::string &amp;name) noexcept</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -14431,8 +14560,8 @@
       <type></type>
       <name>GlobalConfiguration</name>
       <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
-      <anchor>aca1189c364441ad5d5fa5a1f7b53a4bd</anchor>
-      <arglist>(const std::string &amp;conf, std::shared_ptr&lt; mc_rbdyn::RobotModule &gt; rm)</arglist>
+      <anchor>a987a966351ac8bc6f17d94cc8103a408</anchor>
+      <arglist>(const std::string &amp;conf, std::shared_ptr&lt; mc_rbdyn::RobotModule &gt; rm=nullptr)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -14562,6 +14691,13 @@
     </member>
     <member kind="variable">
       <type>bool</type>
+      <name>include_halfsit_controller</name>
+      <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
+      <anchor>a098660ebece62cefc4b8cf0e108845e3</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
       <name>log_real</name>
       <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
       <anchor>a7594f385b7a26375665cfe2b4b7624c1</anchor>
@@ -14668,6 +14804,17 @@
       <anchorfile>structmc__control_1_1GlobalPlugin.html</anchorfile>
       <anchor>ab661e381f418ad5f9afa4adf25b4f282</anchor>
       <arglist>(mc_control::MCGlobalController &amp;controller)=0</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>mc_control::GlobalPluginLoader</name>
+    <filename>structmc__control_1_1GlobalPluginLoader.html</filename>
+    <member kind="function" static="yes">
+      <type>static mc_rtc::ObjectLoader&lt; GlobalPlugin &gt; &amp;</type>
+      <name>loader</name>
+      <anchorfile>structmc__control_1_1GlobalPluginLoader.html</anchorfile>
+      <anchor>a07a0514ff5bc744064b7534f4f51daf5</anchor>
+      <arglist>()</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -17311,6 +17458,13 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
+      <type>ControllerServer &amp;</type>
+      <name>server</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>a6fa39ac887fc881a4e99c3a30efbb3d3</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
       <type>const mc_solver::QPResultMsg &amp;</type>
       <name>send</name>
       <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
@@ -19401,6 +19555,13 @@
       <arglist>(bool verbose)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>register_object</name>
+      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
+      <anchor>adbc1003c6e200934f93eca0d42306fe5</anchor>
+      <arglist>(const std::string &amp;name, std::function&lt; RetT *(const Args &amp;...)&gt; callback)</arglist>
+    </member>
+    <member kind="function">
       <type>std::shared_ptr&lt; T &gt;</type>
       <name>create_object</name>
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
@@ -19419,6 +19580,20 @@
       <name>create</name>
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
       <anchor>a0dce6e455c174537d988c115dc31ce80</anchor>
+      <arglist>(const std::string &amp;name, Args... args)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>T *</type>
+      <name>create_from_handles</name>
+      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
+      <anchor>a85c8eb232b0448a1c695ded4daec3edf</anchor>
+      <arglist>(const std::string &amp;name, Args... args)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>T *</type>
+      <name>create_from_callbacks</name>
+      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
+      <anchor>a1bb13fcf5a8dc58bb5b4aa04345790d9</anchor>
       <arglist>(const std::string &amp;name, Args... args)</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -19450,10 +19625,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
-      <type>std::map&lt; std::string, ObjectDeleter &gt;</type>
+      <type>mc_rtc::DataStore</type>
+      <name>callbacks_</name>
+      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
+      <anchor>aa3d38a0e58eb0ce60923047b4b698d40</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::unordered_map&lt; std::string, ObjectDeleter &gt;</type>
       <name>deleters_</name>
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
-      <anchor>a716eefa0204ce8e39886323aaad00a02</anchor>
+      <anchor>afd3cb32f499540bf36b44bbfa53018c2</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -19524,6 +19706,13 @@
       <arglist>(bool verbose)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>register_object</name>
+      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
+      <anchor>adbc1003c6e200934f93eca0d42306fe5</anchor>
+      <arglist>(const std::string &amp;name, std::function&lt; RetT *(const Args &amp;...)&gt; callback)</arglist>
+    </member>
+    <member kind="function">
       <type>std::shared_ptr&lt; State &gt;</type>
       <name>create_object</name>
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
@@ -19542,6 +19731,20 @@
       <name>create</name>
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
       <anchor>a0dce6e455c174537d988c115dc31ce80</anchor>
+      <arglist>(const std::string &amp;name, Args... args)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>State *</type>
+      <name>create_from_handles</name>
+      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
+      <anchor>a85c8eb232b0448a1c695ded4daec3edf</anchor>
+      <arglist>(const std::string &amp;name, Args... args)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>State *</type>
+      <name>create_from_callbacks</name>
+      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
+      <anchor>a1bb13fcf5a8dc58bb5b4aa04345790d9</anchor>
       <arglist>(const std::string &amp;name, Args... args)</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -19573,10 +19776,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
-      <type>std::map&lt; std::string, ObjectDeleter &gt;</type>
+      <type>mc_rtc::DataStore</type>
+      <name>callbacks_</name>
+      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
+      <anchor>aa3d38a0e58eb0ce60923047b4b698d40</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::unordered_map&lt; std::string, ObjectDeleter &gt;</type>
       <name>deleters_</name>
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
-      <anchor>a716eefa0204ce8e39886323aaad00a02</anchor>
+      <anchor>afd3cb32f499540bf36b44bbfa53018c2</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -19768,6 +19978,13 @@
       <anchorfile>structmc__observers_1_1ObserverLoader.html</anchorfile>
       <anchor>a3d1ff69617f71a1eb0aea7aedc13caa9</anchor>
       <arglist>(const std::string &amp;name, const Args &amp;... args)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static void</type>
+      <name>register_object</name>
+      <anchorfile>structmc__observers_1_1ObserverLoader.html</anchorfile>
+      <anchor>a01f649018270845352eddfdeeb751285</anchor>
+      <arglist>(const std::string &amp;name, std::function&lt; RetT *(const Args &amp;...)&gt; callback)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static void</type>
@@ -24334,6 +24551,13 @@
       <anchorfile>structmc__rbdyn_1_1RobotLoader.html</anchorfile>
       <anchor>ad660aedc7dbf7cd0cd0e60da5fffe4c2</anchor>
       <arglist>(const std::string &amp;name, const Args &amp;... args)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static void</type>
+      <name>register_object</name>
+      <anchorfile>structmc__rbdyn_1_1RobotLoader.html</anchorfile>
+      <anchor>a2a1e3e1c0700d5045bf0d6894ef6a8e1</anchor>
+      <arglist>(const std::string &amp;name, std::function&lt; RetT *(const Args &amp;...)&gt; callback)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static void</type>
@@ -30079,6 +30303,13 @@
       <anchor>a22fb3a0cea2bbb2e18ca6e4bed3f18b0</anchor>
       <arglist>(const std::string &amp;state)</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>register_object</name>
+      <anchorfile>structmc__control_1_1fsm_1_1StateFactory.html</anchorfile>
+      <anchor>a51a55b568355289e40c8a77222f533f3</anchor>
+      <arglist>(const std::string &amp;name, std::function&lt; RetT *(const Args &amp;...)&gt; callback)</arglist>
+    </member>
   </compound>
   <compound kind="struct">
     <name>mc_rtc::gui::details::StaticTableImpl</name>
@@ -34810,10 +35041,12 @@
     <namespace>mc_control::fsm</namespace>
     <class kind="struct">mc_control::CompletionCriteria</class>
     <class kind="struct">mc_control::ControllerClient</class>
+    <class kind="class">mc_control::ControllerLoader</class>
     <class kind="class">mc_control::ControllerResetData</class>
     <class kind="struct">mc_control::ControllerServer</class>
     <class kind="struct">mc_control::ElementId</class>
     <class kind="struct">mc_control::GlobalPlugin</class>
+    <class kind="class">mc_control::GlobalPluginLoader</class>
     <class kind="struct">mc_control::Gripper</class>
     <class kind="class">mc_control::MCController</class>
     <class kind="struct">mc_control::MCGlobalController</class>

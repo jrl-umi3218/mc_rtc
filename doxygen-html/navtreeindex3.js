@@ -1,5 +1,9 @@
 var NAVTREEINDEX3 =
 {
+"mc__global__controller_8h_source.html":[4,0,0,0,14],
+"mc__observers_2api_8h.html":[4,0,0,2,0],
+"mc__observers_2api_8h.html#a0193ed43a7a8a2bca1082d339d28651e":[4,0,0,2,0,7],
+"mc__observers_2api_8h.html#a094cf177ee9875b67aca0d123880fe86":[4,0,0,2,0,9],
 "mc__observers_2api_8h.html#a55268a03db41d5270bf2614681e1eb51":[4,0,0,2,0,8],
 "mc__observers_2api_8h.html#a584f0147ac169a854c258384854bd841":[4,0,0,2,0,6],
 "mc__observers_2api_8h.html#a5ec028a59707a198d06a6b92110d7ee1":[4,0,0,2,0,2],
@@ -17,8 +21,8 @@ var NAVTREEINDEX3 =
 "mc__planning_2api_8h.html#aca946837554c98dec168efee18c95e5c":[4,0,0,3,0,5],
 "mc__planning_2api_8h.html#aff1ad001b6bf5fdb9fb19cd51c97a75e":[4,0,0,3,0,3],
 "mc__planning_2api_8h_source.html":[4,0,0,3,0],
-"mc__python__controller_8h.html":[4,0,0,0,13],
-"mc__python__controller_8h_source.html":[4,0,0,0,13],
+"mc__python__controller_8h.html":[4,0,0,0,15],
+"mc__python__controller_8h_source.html":[4,0,0,0,15],
 "mc__rbdyn_2Contact_8h.html":[4,0,0,4,7],
 "mc__rbdyn_2Contact_8h.html#a736c36f68b3eff9f08124c8b1a58cba3":[4,0,0,4,7,3],
 "mc__rbdyn_2Contact_8h_source.html":[4,0,0,4,7],
@@ -245,9 +249,5 @@ var NAVTREEINDEX3 =
 "rpy__utils_8h.html#a4626f965b6c407b0bd14e10f98ec42b9":[4,0,0,4,23,5],
 "rpy__utils_8h.html#a5f178afee4c03533ae15c4dc04c143e2":[4,0,0,4,23,2],
 "rpy__utils_8h.html#afa2b9eed96e67a1bdb6abf90bb597063":[4,0,0,4,23,4],
-"rpy__utils_8h_source.html":[4,0,0,4,23],
-"spline__utils_8h.html":[4,0,0,9,7],
-"spline__utils_8h.html#a9fbcf4dd49d2e09b5d33208fae44f11b":[4,0,0,9,7,0],
-"spline__utils_8h_source.html":[4,0,0,9,7],
-"structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html":[3,0,0,0]
+"rpy__utils_8h_source.html":[4,0,0,4,23]
 };

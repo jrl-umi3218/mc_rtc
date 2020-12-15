@@ -42,7 +42,7 @@ var searchData=
   ['loaddata',['loadData',['../structmc__rtc_1_1Configuration.html#a0ffb387fee217c9b635099dbe61c4984',1,'mc_rtc::Configuration']]],
   ['loaded_5fcontrollers',['loaded_controllers',['../structmc__control_1_1MCGlobalController.html#ade9a721cc73a024b045e4f439a6f2cad',1,'mc_control::MCGlobalController']]],
   ['loaded_5frobots',['loaded_robots',['../structmc__control_1_1MCGlobalController.html#a4c165732f9165c80c79e9d77a918dcc7',1,'mc_control::MCGlobalController']]],
-  ['loader',['Loader',['../structmc__rtc_1_1Loader.html',1,'mc_rtc']]],
+  ['loader',['Loader',['../structmc__rtc_1_1Loader.html',1,'mc_rtc::Loader'],['../structmc__control_1_1ControllerLoader.html#a9249bcbb1c99d7b9f83562d7935f06dc',1,'mc_control::ControllerLoader::loader()'],['../structmc__control_1_1GlobalPluginLoader.html#a07a0514ff5bc744064b7534f4f51daf5',1,'mc_control::GlobalPluginLoader::loader()']]],
   ['loader_2eh',['loader.h',['../loader_8h.html',1,'']]],
   ['loader_5fapi_2eh',['loader_api.h',['../loader__api_8h.html',1,'']]],
   ['loader_5fsandbox_2eh',['loader_sandbox.h',['../loader__sandbox_8h.html',1,'']]],
