@@ -10,6 +10,12 @@
 # Defaults to the parent directory of the mc_rtc repository folder
 # export SOURCE_DIR=`cd $(dirname $0)/../; pwd`
 
+# Directory where build is done
+# Defaults to build
+# If the path is absolute (e.g. $HOME/build) then sub-folders are created for each project
+# Otherwise the $BUILD_DIR folder is created inside each source folder and automatically excluded from git
+# export BUILD_DIR=build
+
 # Path in which mc_rtc and its dependencies will be installed
 # Note if different from /usr/local, make sure to appropriately set the paths variables
 # The script will automatically inform you of the required paths after successful installation.

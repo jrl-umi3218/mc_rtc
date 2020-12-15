@@ -80,6 +80,11 @@ else
   echo "     - Edit the options to your liking"
 fi
 
+case $BUILD_SUBDIR in
+  /*) export BUILD_SUBDIR_IS_ABSOLUTE=true;;
+  *) export BUILD_SUBDIR_IS_ABSOLUTE=false;;
+esac
+
 readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --help                (-h)               : print this help
     --install-prefix      (-i) PATH          : the directory used to install everything                (default $INSTALL_PREFIX)
@@ -1069,13 +1074,19 @@ build_git_dependency_configure_and_build()
 {
   git_dependency_parsing $1
   echo "--> Compiling $git_dep (branch $git_dep_branch)"
-  mkdir -p "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
-  # Add the build subdirecory to the ignored files list if it is not ignored already
-  if ! grep -Fxq "/$BUILD_SUBDIR/" $SOURCE_DIR/$git_dep/.git/info/exclude ;
+  if $BUILD_SUBDIR_IS_ABSOLUTE
   then
-    echo "/$BUILD_SUBDIR/" >> $SOURCE_DIR/$git_dep/.git/info/exclude ;
+    mkdir -p "$BUILD_SUBDIR/$git_dep"
+    cd "$BUILD_SUBDIR/$git_dep"
+  else
+    mkdir -p "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
+    # Add the build subdirecory to the ignored files list if it is not ignored already
+    if ! grep -Fxq "/$BUILD_SUBDIR/" $SOURCE_DIR/$git_dep/.git/info/exclude ;
+    then
+      echo "/$BUILD_SUBDIR/" >> $SOURCE_DIR/$git_dep/.git/info/exclude ;
+    fi
+    cd "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
   fi
-  cd "$SOURCE_DIR/$git_dep/$BUILD_SUBDIR"
   if [[ $OS == "Windows" ]]
   then
     hide_sh
@@ -1217,13 +1228,19 @@ then
   git submodule update --init
   exit_if_error "-- [ERROR] Failed to update submodules"
 fi
-mkdir -p $BUILD_SUBDIR
-# Add the build subdirecory to the ignored files list if it is not ignored already
-if ! grep -Fxq "/$BUILD_SUBDIR/" .git/info/exclude ;
+if $BUILD_SUBDIR_IS_ABSOLUTE
 then
-  echo "/$BUILD_SUBDIR/" >> .git/info/exclude ;
+  mkdir -p "$BUILD_SUBDIR/mc_rtc/"
+  cd "$BUILD_SUBDIR/mc_rtc"
+else
+  mkdir -p $BUILD_SUBDIR
+  # Add the build subdirecory to the ignored files list if it is not ignored already
+  if ! grep -Fxq "/$BUILD_SUBDIR/" .git/info/exclude ;
+  then
+    echo "/$BUILD_SUBDIR/" >> .git/info/exclude ;
+  fi
+  cd $BUILD_SUBDIR
 fi
-cd $BUILD_SUBDIR
 if $BUILD_TESTING
 then
   BUILD_TESTING_OPTION=ON
