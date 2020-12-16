@@ -164,6 +164,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Helper class to write an equality constraint for Tasks. This constraint applies to the wrench associated with a given contact.</p>
+<p>The wrench \( \mathbf{f}_{cI} \) is expressed in the first robot (<code>cid.r1Index</code>) contact surface frame.</p>
 <p>This implements \( A * \mathbf{f}_{cI} = b \)</p>
 <p>Where \(cI\) is the contact id you provide at construction.</p>
 <p>You must implement the following functions:</p><ul>
