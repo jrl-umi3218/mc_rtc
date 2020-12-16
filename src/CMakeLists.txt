@@ -404,10 +404,14 @@ install_mc_rtc_lib(mc_tasks)
 
 set(mc_planning_SRC
 mc_planning/Pendulum.cpp
+mc_planning/PreviewControl.cpp
+mc_planning/FootstepManager.cpp
 )
 
 set(mc_planning_HDR
 ../include/mc_planning/Pendulum.h
+../include/mc_planning/PreviewControl.h
+../include/mc_planning/FootstepManager.h
 ../include/mc_planning/api.h
 )
 
