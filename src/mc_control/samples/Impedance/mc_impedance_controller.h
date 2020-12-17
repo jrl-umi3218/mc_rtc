@@ -25,12 +25,12 @@ struct MC_CONTROL_DLLAPI MCImpedanceController : public MCController
   }
 
 protected:
-  std::shared_ptr<mc_tasks::EndEffectorTask> rootLinkTask;
-  std::shared_ptr<mc_tasks::force::ImpedanceTask> impedanceTask;
-
-  double angle = 0.0;
-  double radius = 0.2;
-  Eigen::Vector3d center = Eigen::Vector3d(0.3, 0.5, 1.0);
+  std::shared_ptr<mc_tasks::force::ImpedanceTask> impedanceTask_;
+  double angle_ = 0.0;
+  double radius_ = 0.2;
+  double speed_ = 1.0;
+  Eigen::Vector3d center_ = Eigen::Vector3d(0.3, 0.5, 1.0);
+  Eigen::Matrix3d orientation_ = Eigen::Matrix3d::Identity();
 };
 
 } // namespace mc_control

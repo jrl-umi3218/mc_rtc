@@ -12,6 +12,13 @@ namespace mc_control
 MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
 : MCController(robot_module, dt)
 {
+  if(robot().mb().joint(0).type() != rbd::Joint::Type::Fixed)
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "The \"Impedance\" controller requires a robot with a fixed base (base of robot {} has {} DoF)", robot().name(),
+        robot().mb().joint(0).dof());
+  }
+
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(kinematicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
@@ -22,37 +29,34 @@ MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModu
   postureTask->stiffness(1);
   postureTask->weight(1);
 
-  // add EndEffectorTask for root link
-  rootLinkTask =
-      std::make_shared<mc_tasks::EndEffectorTask>("base_link", robots(), robots().robotIndex(), 100.0, 10000.0);
-  rootLinkTask->set_ef_pose(sva::PTransformd(Eigen::Vector3d(0, 0, 1)));
-  solver().addTask(rootLinkTask);
-
   // add ImpedanceTask of left hand
   Eigen::Vector3d posM = Eigen::Vector3d::Constant(1.0);
   Eigen::Vector3d posK = Eigen::Vector3d(100.0, 100.0, 1000.0);
   Eigen::Vector3d posD = 2 * posM.cwiseProduct(posK).cwiseSqrt();
-  impedanceTask =
+  impedanceTask_ =
       std::make_shared<mc_tasks::force::ImpedanceTask>("LeftGripper", robots(), robots().robotIndex(), 100.0);
-  impedanceTask->impedancePosition(posM, posD, posK);
-  impedanceTask->impedanceOrientation(100 * posM, 100 * posD, 100 * posK);
-  impedanceTask->wrenchGain(sva::MotionVecd(Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()));
+  impedanceTask_->impedancePosition(posM, posD, posK);
+  impedanceTask_->impedanceOrientation(100 * posM, 100 * posD, 100 * posK);
+  impedanceTask_->wrenchGain(sva::MotionVecd(Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()));
 }
 
 void MCImpedanceController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
-  impedanceTask->reset();
-  solver().addTask(impedanceTask);
+  impedanceTask_->reset();
+  solver().addTask(impedanceTask_);
+  center_ = impedanceTask_->desiredPose().translation() + Eigen::Vector3d{0.0, radius_, 0.0};
+  orientation_ = impedanceTask_->desiredPose().rotation();
+  angle_ = 3 * mc_rtc::constants::PI / 2.;
 }
 
 bool MCImpedanceController::run()
 {
-  angle += 3.0 * solver().dt();
 
   // Track the circle trajectory
-  impedanceTask->desiredPose({sva::RotY(mc_rtc::constants::PI),
-                              center + Eigen::Vector3d(radius * std::cos(angle), radius * std::sin(angle), 0)});
+  impedanceTask_->desiredPose(
+      {orientation_, center_ + Eigen::Vector3d(radius_ * std::cos(angle_), radius_ * std::sin(angle_), 0)});
+  angle_ += speed_ * solver().dt();
 
   return mc_control::MCController::run();
 }
