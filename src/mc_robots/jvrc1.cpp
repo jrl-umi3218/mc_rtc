@@ -25,9 +25,9 @@ namespace bfs = boost::filesystem;
 namespace mc_robots
 {
 
-JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC_DESCRIPTION_PATH)), "jvrc1")
+JVRC1RobotModule::JVRC1RobotModule(bool fixed) : RobotModule(std::string(JVRC_VAL_VAL(JVRC_DESCRIPTION_PATH)), "jvrc1")
 {
-  init(rbd::parsers::from_urdf_file(urdf_path, false));
+  init(rbd::parsers::from_urdf_file(urdf_path, fixed));
 
   std::string convexPath = path + "/convex/" + name + "/";
   bfs::path p(convexPath);
@@ -91,5 +91,3 @@ JVRC1RobotModule::JVRC1RobotModule() : RobotModule(std::string(JVRC_VAL_VAL(JVRC
 }
 
 } // namespace mc_robots
-
-ROBOT_MODULE_DEFAULT_CONSTRUCTOR("JVRC1", mc_robots::JVRC1RobotModule);
