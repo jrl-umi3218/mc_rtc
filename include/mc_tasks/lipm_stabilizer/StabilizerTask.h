@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include <mc_filter/LowPass.h>
 #include <mc_filter/ExponentialMovingAverage.h>
 #include <mc_filter/LeakyIntegrator.h>
+#include <mc_filter/LowPass.h>
 #include <mc_filter/StationaryOffset.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/CoPTask.h>
@@ -296,7 +296,8 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   /**
    * @brief Set the wrench that the robot expects to receive from the external contacts.
    *
-   * @param extWrenches External wrenches, which is represented by the vector of the pair of surface name and wrench in the surface frame
+   * @param extWrenches External wrenches, which is represented by the vector of the pair of surface name and wrench in
+   * the surface frame
    */
   void setExtWrenches(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches);
 
@@ -687,9 +688,8 @@ private:
    *  @param extWrenches External wrenches
    *  @param robot Robot used to transform surface wrenches (control robot or real robot)
    */
-  Eigen::Vector3d computeCoMOffset(
-      const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
-      const mc_rbdyn::Robot & robot) const;
+  Eigen::Vector3d computeCoMOffset(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
+                                   const mc_rbdyn::Robot & robot) const;
 
   /** @brief Compute the sum of external wrenches.
    *
@@ -697,9 +697,9 @@ private:
    *  @param robot Robot used to transform surface wrenches (control robot or real robot)
    *  @param com Robot CoM
    */
-  sva::ForceVecd computeExtWrenchSum(
-      const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
-      const mc_rbdyn::Robot & robot, const Eigen::Vector3d & com) const;
+  sva::ForceVecd computeExtWrenchSum(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
+                                     const mc_rbdyn::Robot & robot,
+                                     const Eigen::Vector3d & com) const;
 
   /** @brief Compute the position, force, and moment of the external contacts in the world frame.
    *
@@ -710,9 +710,12 @@ private:
    *  @param [out] force Force of the external contact in the world frame
    *  @param [out] moment Moment of the external contact in the world frame
    */
-  void computeExtContact(
-      const mc_rbdyn::Robot & robot, const std::string & surfaceName, const sva::ForceVecd & surfaceWrench,
-      Eigen::Vector3d & pos, Eigen::Vector3d & force, Eigen::Vector3d & moment) const;
+  void computeExtContact(const mc_rbdyn::Robot & robot,
+                         const std::string & surfaceName,
+                         const sva::ForceVecd & surfaceWrench,
+                         Eigen::Vector3d & pos,
+                         Eigen::Vector3d & force,
+                         Eigen::Vector3d & moment) const;
 
   /* Task-related properties */
 protected:
@@ -835,11 +838,13 @@ protected:
   Eigen::Vector3d comOffsetErrCoM_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by CoM modification */
   Eigen::Vector3d comOffsetErrZMP_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by ZMP modification */
   double comOffsetErrCoMLimit_ = 0.1; /**< Limit of CoM offset error handled by CoM modification */
-  mc_filter::LowPass<sva::ForceVecd> extWrenchSumLowPass_; /**< Low-pass filter of the sum of the measured external wrenches */
+  mc_filter::LowPass<sva::ForceVecd>
+      extWrenchSumLowPass_; /**< Low-pass filter of the sum of the measured external wrenches */
   mc_filter::LowPass<Eigen::Vector3d> comOffsetLowPassExclude_; /**< Low-pass filter of CoM offset to exclude */
   mc_filter::LowPass<Eigen::Vector3d> comOffsetLowPassZmp_; /**< Low-pass filter of CoM offset to compensate by ZMP */
   mc_filter::StationaryOffset<Eigen::Vector3d> comOffsetDerivator_; /**< Derivator of CoM offset */
-  sva::MotionVecd extWrenchGain_ = sva::MotionVecd(Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()); /**< Gain of measured external wrenches */
+  sva::MotionVecd extWrenchGain_ =
+      sva::MotionVecd(Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()); /**< Gain of measured external wrenches */
 
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;

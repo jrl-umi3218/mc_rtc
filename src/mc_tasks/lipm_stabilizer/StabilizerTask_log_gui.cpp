@@ -40,35 +40,35 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   gui.addElement({"Tasks", name_, "Main"}, Button("Disable", [this]() { disable(); }),
                  Button("Reset DCM integrator", [this]() { dcmIntegrator_.reset(Eigen::Vector3d::Zero()); }));
   addConfigButtons({"Tasks", name_, "Main"});
-  gui.addElement({"Tasks", name_, "Main"},
-                 ArrayInput("Foot admittance", {"CoPx", "CoPy"},
-                            [this]() -> Eigen::Vector2d {
-                              return {c_.copAdmittance.x(), c_.copAdmittance.y()};
-                            },
-                            [this](const Eigen::Vector2d & a) { copAdmittance(a); }),
-                 ArrayInput("Foot force difference", {"Admittance", "Damping"},
-                            [this]() -> Eigen::Vector2d {
-                              return {c_.dfzAdmittance, c_.dfzDamping};
-                            },
-                            [this](const Eigen::Vector2d & a) {
-                              dfzAdmittance(a(0));
-                              dfzDamping(a(1));
-                            }),
-                 ArrayInput("DCM gains", {"Prop.", "Integral", "Deriv."},
-                            [this]() -> Eigen::Vector3d {
-                              return {c_.dcmPropGain, c_.dcmIntegralGain, c_.dcmDerivGain};
-                            },
-                            [this](const Eigen::Vector3d & gains) { dcmGains(gains(0), gains(1), gains(2)); }),
-                 NumberInput("CoMd Error gain", [this]() { return c_.comdErrorGain; },
-                             [this](double a) { c_.comdErrorGain = a; }),
-                 ArrayInput("DCM filters", {"Integrator T [s]", "Derivator T [s]"},
-                            [this]() -> Eigen::Vector2d {
-                              return {dcmIntegrator_.timeConstant(), dcmDerivator_.timeConstant()};
-                            },
-                            [this](const Eigen::Vector2d & T) {
-                              dcmIntegratorTimeConstant(T(0));
-                              dcmDerivatorTimeConstant(T(1));
-                            }));
+  gui.addElement(
+      {"Tasks", name_, "Main"},
+      ArrayInput("Foot admittance", {"CoPx", "CoPy"},
+                 [this]() -> Eigen::Vector2d {
+                   return {c_.copAdmittance.x(), c_.copAdmittance.y()};
+                 },
+                 [this](const Eigen::Vector2d & a) { copAdmittance(a); }),
+      ArrayInput("Foot force difference", {"Admittance", "Damping"},
+                 [this]() -> Eigen::Vector2d {
+                   return {c_.dfzAdmittance, c_.dfzDamping};
+                 },
+                 [this](const Eigen::Vector2d & a) {
+                   dfzAdmittance(a(0));
+                   dfzDamping(a(1));
+                 }),
+      ArrayInput("DCM gains", {"Prop.", "Integral", "Deriv."},
+                 [this]() -> Eigen::Vector3d {
+                   return {c_.dcmPropGain, c_.dcmIntegralGain, c_.dcmDerivGain};
+                 },
+                 [this](const Eigen::Vector3d & gains) { dcmGains(gains(0), gains(1), gains(2)); }),
+      NumberInput("CoMd Error gain", [this]() { return c_.comdErrorGain; }, [this](double a) { c_.comdErrorGain = a; }),
+      ArrayInput("DCM filters", {"Integrator T [s]", "Derivator T [s]"},
+                 [this]() -> Eigen::Vector2d {
+                   return {dcmIntegrator_.timeConstant(), dcmDerivator_.timeConstant()};
+                 },
+                 [this](const Eigen::Vector2d & T) {
+                   dcmIntegratorTimeConstant(T(0));
+                   dcmDerivatorTimeConstant(T(1));
+                 }));
   gui.addElement({"Tasks", name_, "Advanced"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Advanced"});
   gui.addElement({"Tasks", name_, "Advanced"},
@@ -129,23 +129,25 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               dcmEstimator_.setBiasLimit(v);
                             }),
                  ArrayLabel("Local Bias", [this]() { return dcmEstimator_.getLocalBias(); }));
-  gui.addElement({"Tasks", name_, "Advanced", "Ext Wrench"},
-                 Checkbox("addExpectedCoMOffset", [this]() { return c_.extWrench.addExpectedCoMOffset; },
-                          [this]() { c_.extWrench.addExpectedCoMOffset = !c_.extWrench.addExpectedCoMOffset; }),
-                 Checkbox("subtractMeasuredValue", [this]() { return c_.extWrench.subtractMeasuredValue; },
-                          [this]() { c_.extWrench.subtractMeasuredValue = !c_.extWrench.subtractMeasuredValue; }),
-                 Checkbox("compensateExtWrenchErr", [this]() { return c_.extWrench.compensateExtWrenchErr; },
-                          [this]() { c_.extWrench.compensateExtWrenchErr = !c_.extWrench.compensateExtWrenchErr; }),
-                 Checkbox("compensateExtWrenchErrD", [this]() { return c_.extWrench.compensateExtWrenchErrD; },
-                          [this]() { c_.extWrench.compensateExtWrenchErrD = !c_.extWrench.compensateExtWrenchErrD; }),
-                 NumberInput("Cutoff period of extWrenchSumLowPass", [this]() { return extWrenchSumLowPass_.cutoffPeriod(); },
-                             [this](double a) { extWrenchSumLowPassCutoffPeriod(a); }),
-                 NumberInput("Cutoff period of comOffsetLowPassExclude", [this]() { return comOffsetLowPassExclude_.cutoffPeriod(); },
-                             [this](double a) { comOffsetLowPassExcludeCutoffPeriod(a); }),
-                 NumberInput("Cutoff period of comOffsetLowPassZmp", [this]() { return comOffsetLowPassZmp_.cutoffPeriod(); },
-                             [this](double a) { comOffsetLowPassZmpCutoffPeriod(a); }),
-                 NumberInput("Time constant of comOffsetDerivator", [this]() { return comOffsetDerivator_.timeConstant(); },
-                             [this](double a) { comOffsetDerivatorTimeConstant(a); }));
+  gui.addElement(
+      {"Tasks", name_, "Advanced", "Ext Wrench"},
+      Checkbox("addExpectedCoMOffset", [this]() { return c_.extWrench.addExpectedCoMOffset; },
+               [this]() { c_.extWrench.addExpectedCoMOffset = !c_.extWrench.addExpectedCoMOffset; }),
+      Checkbox("subtractMeasuredValue", [this]() { return c_.extWrench.subtractMeasuredValue; },
+               [this]() { c_.extWrench.subtractMeasuredValue = !c_.extWrench.subtractMeasuredValue; }),
+      Checkbox("compensateExtWrenchErr", [this]() { return c_.extWrench.compensateExtWrenchErr; },
+               [this]() { c_.extWrench.compensateExtWrenchErr = !c_.extWrench.compensateExtWrenchErr; }),
+      Checkbox("compensateExtWrenchErrD", [this]() { return c_.extWrench.compensateExtWrenchErrD; },
+               [this]() { c_.extWrench.compensateExtWrenchErrD = !c_.extWrench.compensateExtWrenchErrD; }),
+      NumberInput("Cutoff period of extWrenchSumLowPass", [this]() { return extWrenchSumLowPass_.cutoffPeriod(); },
+                  [this](double a) { extWrenchSumLowPassCutoffPeriod(a); }),
+      NumberInput("Cutoff period of comOffsetLowPassExclude",
+                  [this]() { return comOffsetLowPassExclude_.cutoffPeriod(); },
+                  [this](double a) { comOffsetLowPassExcludeCutoffPeriod(a); }),
+      NumberInput("Cutoff period of comOffsetLowPassZmp", [this]() { return comOffsetLowPassZmp_.cutoffPeriod(); },
+                  [this](double a) { comOffsetLowPassZmpCutoffPeriod(a); }),
+      NumberInput("Time constant of comOffsetDerivator", [this]() { return comOffsetDerivator_.timeConstant(); },
+                  [this](double a) { comOffsetDerivatorTimeConstant(a); }));
 
   gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Debug"});

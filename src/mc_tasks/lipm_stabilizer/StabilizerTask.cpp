@@ -33,9 +33,10 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
                                const std::string & torsoBodyName,
                                double dt)
 : robots_(robots), realRobots_(realRobots), robotIndex_(robotIndex), dcmEstimator_(dt),
-  extWrenchSumLowPass_(dt, /* cutoffPeriod = */ 0.05), comOffsetLowPassExclude_(dt, /* cutoffPeriod = */ 0.05), comOffsetLowPassZmp_(dt, /* cutoffPeriod = */ 1.0), comOffsetDerivator_(dt, /* timeConstant = */ 1.),
-  dcmIntegrator_(dt, /* timeConstant = */ 15.), dcmDerivator_(dt, /* timeConstant = */ 1.),
-  dt_(dt), mass_(robots.robot(robotIndex).mass())
+  extWrenchSumLowPass_(dt, /* cutoffPeriod = */ 0.05), comOffsetLowPassExclude_(dt, /* cutoffPeriod = */ 0.05),
+  comOffsetLowPassZmp_(dt, /* cutoffPeriod = */ 1.0), comOffsetDerivator_(dt, /* timeConstant = */ 1.),
+  dcmIntegrator_(dt, /* timeConstant = */ 15.), dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt),
+  mass_(robots.robot(robotIndex).mass())
 {
   type_ = "lipm_stabilizer";
   name_ = type_ + "_" + robots.robot(robotIndex).name();
@@ -624,9 +625,8 @@ void StabilizerTask::setExtWrenches(const std::vector<std::pair<std::string, sva
   }
 }
 
-Eigen::Vector3d StabilizerTask::computeCoMOffset(
-    const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
-    const mc_rbdyn::Robot & robot) const
+Eigen::Vector3d StabilizerTask::computeCoMOffset(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
+                                                 const mc_rbdyn::Robot & robot) const
 {
   Eigen::Vector3d comOffset = Eigen::Vector3d::Zero();
 
@@ -645,7 +645,8 @@ Eigen::Vector3d StabilizerTask::computeCoMOffset(
 
 sva::ForceVecd StabilizerTask::computeExtWrenchSum(
     const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
-    const mc_rbdyn::Robot & robot, const Eigen::Vector3d & com) const
+    const mc_rbdyn::Robot & robot,
+    const Eigen::Vector3d & com) const
 {
   sva::ForceVecd extWrenchSum = sva::ForceVecd::Zero();
 
@@ -661,13 +662,17 @@ sva::ForceVecd StabilizerTask::computeExtWrenchSum(
   return extWrenchSum;
 }
 
-void StabilizerTask::computeExtContact(
-    const mc_rbdyn::Robot & robot, const std::string & surfaceName, const sva::ForceVecd & surfaceWrench,
-    Eigen::Vector3d & pos, Eigen::Vector3d & force, Eigen::Vector3d & moment) const
+void StabilizerTask::computeExtContact(const mc_rbdyn::Robot & robot,
+                                       const std::string & surfaceName,
+                                       const sva::ForceVecd & surfaceWrench,
+                                       Eigen::Vector3d & pos,
+                                       Eigen::Vector3d & force,
+                                       Eigen::Vector3d & moment) const
 {
   sva::PTransformd surfacePose = robot.surfacePose(surfaceName);
   sva::PTransformd T_s_0(Eigen::Matrix3d(surfacePose.rotation().transpose()));
-  // Represent the surface wrench in the frame whose position is same with the surface frame and orientation is same with the world frame
+  // Represent the surface wrench in the frame whose position is same with the surface frame and orientation is same
+  // with the world frame
   sva::ForceVecd surfaceWrenchW = T_s_0.dualMul(surfaceWrench);
   pos = surfacePose.translation();
   force = surfaceWrenchW.force();
@@ -819,7 +824,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
 
   // Calculate CoM offset from measured wrench
   extWrenchesMeasured_.clear();
-  for (const auto & extWrenchTarget : extWrenchesTarget_)
+  for(const auto & extWrenchTarget : extWrenchesTarget_)
   {
     extWrenchesMeasured_.emplace_back(
         extWrenchTarget.first,
@@ -833,7 +838,8 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   comOffsetLowPassZmp_.update(comOffsetErr_);
   comOffsetErrCoM_ = comOffsetLowPassZmp_.eval();
   comOffsetErrZMP_ = comOffsetErr_ - comOffsetErrCoM_;
-  clampInPlaceAndWarn(comOffsetErrCoM_, Eigen::Vector3d::Constant(-comOffsetErrCoMLimit_).eval(), Eigen::Vector3d::Constant(comOffsetErrCoMLimit_).eval(), "comOffsetErrCoM");
+  clampInPlaceAndWarn(comOffsetErrCoM_, Eigen::Vector3d::Constant(-comOffsetErrCoMLimit_).eval(),
+                      Eigen::Vector3d::Constant(comOffsetErrCoMLimit_).eval(), "comOffsetErrCoM");
   comOffsetDerivator_.update(comOffsetErr_);
   if(c_.extWrench.compensateExtWrenchErr)
   {
