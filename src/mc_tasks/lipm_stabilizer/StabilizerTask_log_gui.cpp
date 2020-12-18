@@ -129,6 +129,23 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                               dcmEstimator_.setBiasLimit(v);
                             }),
                  ArrayLabel("Local Bias", [this]() { return dcmEstimator_.getLocalBias(); }));
+  gui.addElement({"Tasks", name_, "Advanced", "Ext Wrench"},
+                 Checkbox("addExpectedCoMOffset", [this]() { return c_.extWrench.addExpectedCoMOffset; },
+                          [this]() { c_.extWrench.addExpectedCoMOffset = !c_.extWrench.addExpectedCoMOffset; }),
+                 Checkbox("subtractMeasuredValue", [this]() { return c_.extWrench.subtractMeasuredValue; },
+                          [this]() { c_.extWrench.subtractMeasuredValue = !c_.extWrench.subtractMeasuredValue; }),
+                 Checkbox("compensateExtWrenchErr", [this]() { return c_.extWrench.compensateExtWrenchErr; },
+                          [this]() { c_.extWrench.compensateExtWrenchErr = !c_.extWrench.compensateExtWrenchErr; }),
+                 Checkbox("compensateExtWrenchErrD", [this]() { return c_.extWrench.compensateExtWrenchErrD; },
+                          [this]() { c_.extWrench.compensateExtWrenchErrD = !c_.extWrench.compensateExtWrenchErrD; }),
+                 NumberInput("Cutoff period of extWrenchSumLowPass", [this]() { return extWrenchSumLowPass_.cutoffPeriod(); },
+                             [this](double a) { extWrenchSumLowPassCutoffPeriod(a); }),
+                 NumberInput("Cutoff period of comOffsetLowPassExclude", [this]() { return comOffsetLowPassExclude_.cutoffPeriod(); },
+                             [this](double a) { comOffsetLowPassExcludeCutoffPeriod(a); }),
+                 NumberInput("Cutoff period of comOffsetLowPassZmp", [this]() { return comOffsetLowPassZmp_.cutoffPeriod(); },
+                             [this](double a) { comOffsetLowPassZmpCutoffPeriod(a); }),
+                 NumberInput("Time constant of comOffsetDerivator", [this]() { return comOffsetDerivator_.timeConstant(); },
+                             [this](double a) { comOffsetDerivatorTimeConstant(a); }));
 
   gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Debug"});
@@ -319,6 +336,13 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() -> const Eigen::Vector2d & { return c_.dcmBias.biasLimit; });
   logger.addLogEntry(name_ + "_dcmBias_localBias", this, [this]() { return dcmEstimator_.getLocalBias(); });
   logger.addLogEntry(name_ + "_dcmBias_bias", this, [this]() { return dcmEstimator_.getBias(); });
+  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetTarget", comOffsetTarget_);
+  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetMeasured", comOffsetMeasured_);
+  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetErr", comOffsetErr_);
+  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetErrCoM", comOffsetErrCoM_);
+  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetErrZMP", comOffsetErrZMP_);
+  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetDerivator", this, [this]() { return comOffsetDerivator_.eval(); });
+  MC_RTC_LOG_HELPER(name_ + "_extWrench_extWrenchGain", extWrenchGain_);
   logger.addLogEntry(name_ + "_dfz_damping", this, [this]() { return c_.dfzDamping; });
   logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque", this,
                      [this]() { return std::pow(c_.fdqpWeights.ankleTorqueSqrt, 2); });

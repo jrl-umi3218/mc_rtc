@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <mc_filter/LowPass.h>
 #include <mc_filter/ExponentialMovingAverage.h>
 #include <mc_filter/LeakyIntegrator.h>
 #include <mc_filter/StationaryOffset.h>
@@ -36,6 +37,7 @@ using StabilizerConfiguration = mc_rbdyn::lipm_stabilizer::StabilizerConfigurati
 using FDQPWeights = mc_rbdyn::lipm_stabilizer::FDQPWeights;
 using SafetyThresholds = mc_rbdyn::lipm_stabilizer::SafetyThresholds;
 using DCMBiasEstimatorConfiguration = mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration;
+using ExtWrenchConfiguration = mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration;
 
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
@@ -291,6 +293,13 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
               const Eigen::Vector3d & comdd,
               const Eigen::Vector3d & zmp);
 
+  /**
+   * @brief Set the wrench that the robot expects to receive from the external contacts.
+   *
+   * @param extWrenches External wrenches, which is represented by the vector of the pair of surface name and wrench in the surface frame
+   */
+  void setExtWrenches(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches);
+
   const Eigen::Vector3d & measuredDCM()
   {
     return measuredDCM_;
@@ -391,6 +400,30 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   {
     c_.dcmDerivatorTimeConstant = dcmDerivatorTimeConstant;
     dcmDerivator_.timeConstant(dcmDerivatorTimeConstant);
+  }
+
+  void extWrenchSumLowPassCutoffPeriod(double extWrenchSumLowPassCutoffPeriod)
+  {
+    c_.extWrench.extWrenchSumLowPassCutoffPeriod = extWrenchSumLowPassCutoffPeriod;
+    extWrenchSumLowPass_.cutoffPeriod(extWrenchSumLowPassCutoffPeriod);
+  }
+
+  void comOffsetLowPassExcludeCutoffPeriod(double comOffsetLowPassExcludeCutoffPeriod)
+  {
+    c_.extWrench.comOffsetLowPassExcludeCutoffPeriod = comOffsetLowPassExcludeCutoffPeriod;
+    comOffsetLowPassExclude_.cutoffPeriod(comOffsetLowPassExcludeCutoffPeriod);
+  }
+
+  void comOffsetLowPassZmpCutoffPeriod(double comOffsetLowPassZmpCutoffPeriod)
+  {
+    c_.extWrench.comOffsetLowPassZmpCutoffPeriod = comOffsetLowPassZmpCutoffPeriod;
+    comOffsetLowPassZmp_.cutoffPeriod(comOffsetLowPassZmpCutoffPeriod);
+  }
+
+  void comOffsetDerivatorTimeConstant(double comOffsetDerivatorTimeConstant)
+  {
+    c_.extWrench.comOffsetDerivatorTimeConstant = comOffsetDerivatorTimeConstant;
+    comOffsetDerivator_.timeConstant(comOffsetDerivatorTimeConstant);
   }
 
   void comWeight(double weight)
@@ -510,7 +543,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   }
 
   /**
-   * @brief Changes the parameters of the DCM bias estimator
+   * @brief Changes the parameters of the DCM bias estimator.
    *
    * @param biasConfig Configuration parameters for the bias estimation
    */
@@ -524,10 +557,26 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     dcmEstimator_.setBiasLimit(bc.biasLimit);
   }
 
-  /// Get parameters of the DCM bias estimator
+  /** @brief Get parameters of the DCM bias estimator. */
   const DCMBiasEstimatorConfiguration & dcmBiasEstimatorConfiguration() const noexcept
   {
     return c_.dcmBias;
+  }
+
+  /**
+   * @brief Changes the parameters for the external wrenches.
+   *
+   * @param extWrenchConfig Configuration parameters for the external wrenches
+   */
+  void extWrenchConfiguration(const ExtWrenchConfiguration & extWrenchConfig)
+  {
+    c_.extWrench = extWrenchConfig;
+  }
+
+  /** @brief Get the parameters for the external wrenches. */
+  const ExtWrenchConfiguration & extWrenchConfiguration() const noexcept
+  {
+    return c_.extWrench;
   }
 
 private:
@@ -633,6 +682,38 @@ private:
     zmpcc_.configure(zmpccConfig);
   }
 
+  /** @brief Compute the CoM offset and the sum wrench from the external wrenches.
+   *
+   *  @param extWrenches External wrenches
+   *  @param robot Robot used to transform surface wrenches (control robot or real robot)
+   */
+  Eigen::Vector3d computeCoMOffset(
+      const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
+      const mc_rbdyn::Robot & robot) const;
+
+  /** @brief Compute the sum of external wrenches.
+   *
+   *  @param extWrenches External wrenches
+   *  @param robot Robot used to transform surface wrenches (control robot or real robot)
+   *  @param com Robot CoM
+   */
+  sva::ForceVecd computeExtWrenchSum(
+      const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
+      const mc_rbdyn::Robot & robot, const Eigen::Vector3d & com) const;
+
+  /** @brief Compute the position, force, and moment of the external contacts in the world frame.
+   *
+   *  @param [in] robot Robot (control robot or real robot)
+   *  @param [in] surfaceName Surface name
+   *  @param [in] surfaceWrench Surface wrench
+   *  @param [out] pos Position of the external contact in the world frame
+   *  @param [out] force Force of the external contact in the world frame
+   *  @param [out] moment Moment of the external contact in the world frame
+   */
+  void computeExtContact(
+      const mc_rbdyn::Robot & robot, const std::string & surfaceName, const sva::ForceVecd & surfaceWrench,
+      Eigen::Vector3d & pos, Eigen::Vector3d & force, Eigen::Vector3d & moment) const;
+
   /* Task-related properties */
 protected:
   void addToSolver(mc_solver::QPSolver & solver) override;
@@ -697,6 +778,7 @@ protected:
   unsigned int robotIndex_;
 
   /** Stabilizer targets */
+  Eigen::Vector3d comTargetRaw_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d comTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d comdTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d comddTarget_ = Eigen::Vector3d::Zero();
@@ -741,6 +823,23 @@ protected:
   stateObservation::LipmDcmEstimator dcmEstimator_;
   /**< Whether the estimator needs to be reset (robot in the air, initialization) */
   bool dcmEstimatorNeedsReset_ = true;
+
+  /** Adding an offset to the CoM for the predictable / measurable external wrenches on the robot surface. */
+  std::vector<std::pair<std::string, sva::ForceVecd>> extWrenchesTarget_; /**< Target (expected) external wrenches */
+  std::vector<std::pair<std::string, sva::ForceVecd>> extWrenchesMeasured_; /**< Measured external wrenches */
+  sva::ForceVecd extWrenchSumTarget_ = sva::ForceVecd::Zero(); /**< Sum of target (expected) external wrenches */
+  sva::ForceVecd extWrenchSumMeasured_ = sva::ForceVecd::Zero(); /**< Sum of measured external wrenches */
+  Eigen::Vector3d comOffsetTarget_ = Eigen::Vector3d::Zero(); /**< Target (expected) CoM offset */
+  Eigen::Vector3d comOffsetMeasured_ = Eigen::Vector3d::Zero(); /**< Measured CoM offset */
+  Eigen::Vector3d comOffsetErr_ = Eigen::Vector3d::Zero(); /**< CoM offset error */
+  Eigen::Vector3d comOffsetErrCoM_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by CoM modification */
+  Eigen::Vector3d comOffsetErrZMP_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by ZMP modification */
+  double comOffsetErrCoMLimit_ = 0.1; /**< Limit of CoM offset error handled by CoM modification */
+  mc_filter::LowPass<sva::ForceVecd> extWrenchSumLowPass_; /**< Low-pass filter of the sum of the measured external wrenches */
+  mc_filter::LowPass<Eigen::Vector3d> comOffsetLowPassExclude_; /**< Low-pass filter of CoM offset to exclude */
+  mc_filter::LowPass<Eigen::Vector3d> comOffsetLowPassZmp_; /**< Low-pass filter of CoM offset to compensate by ZMP */
+  mc_filter::StationaryOffset<Eigen::Vector3d> comOffsetDerivator_; /**< Derivator of CoM offset */
+  sva::MotionVecd extWrenchGain_ = sva::MotionVecd(Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()); /**< Gain of measured external wrenches */
 
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
