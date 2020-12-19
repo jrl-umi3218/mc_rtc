@@ -135,19 +135,26 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                [this]() { c_.extWrench.addExpectedCoMOffset = !c_.extWrench.addExpectedCoMOffset; }),
       Checkbox("subtractMeasuredValue", [this]() { return c_.extWrench.subtractMeasuredValue; },
                [this]() { c_.extWrench.subtractMeasuredValue = !c_.extWrench.subtractMeasuredValue; }),
-      Checkbox("compensateExtWrenchErr", [this]() { return c_.extWrench.compensateExtWrenchErr; },
-               [this]() { c_.extWrench.compensateExtWrenchErr = !c_.extWrench.compensateExtWrenchErr; }),
-      Checkbox("compensateExtWrenchErrD", [this]() { return c_.extWrench.compensateExtWrenchErrD; },
-               [this]() { c_.extWrench.compensateExtWrenchErrD = !c_.extWrench.compensateExtWrenchErrD; }),
+      Checkbox("modifyCoMErr", [this]() { return c_.extWrench.modifyCoMErr; },
+               [this]() { c_.extWrench.modifyCoMErr = !c_.extWrench.modifyCoMErr; }),
+      Checkbox("modifyZMPErr", [this]() { return c_.extWrench.modifyZMPErr; },
+               [this]() { c_.extWrench.modifyZMPErr = !c_.extWrench.modifyZMPErr; }),
+      Checkbox("modifyZMPErrD", [this]() { return c_.extWrench.modifyZMPErrD; },
+               [this]() { c_.extWrench.modifyZMPErrD = !c_.extWrench.modifyZMPErrD; }),
+      NumberInput("Limit of comOffsetErrCoM", [this]() { return c_.extWrench.comOffsetErrCoMLimit; },
+                  [this](double a) { c_.extWrench.comOffsetErrCoMLimit = a; }),
+      NumberInput("Limit of comOffsetErrZMP", [this]() { return c_.extWrench.comOffsetErrZMPLimit; },
+                  [this](double a) { c_.extWrench.comOffsetErrZMPLimit = a; }),
       NumberInput("Cutoff period of extWrenchSumLowPass", [this]() { return extWrenchSumLowPass_.cutoffPeriod(); },
                   [this](double a) { extWrenchSumLowPassCutoffPeriod(a); }),
-      NumberInput("Cutoff period of comOffsetLowPassExclude",
-                  [this]() { return comOffsetLowPassExclude_.cutoffPeriod(); },
-                  [this](double a) { comOffsetLowPassExcludeCutoffPeriod(a); }),
-      NumberInput("Cutoff period of comOffsetLowPassZmp", [this]() { return comOffsetLowPassZmp_.cutoffPeriod(); },
-                  [this](double a) { comOffsetLowPassZmpCutoffPeriod(a); }),
+      NumberInput("Cutoff period of comOffsetLowPass", [this]() { return comOffsetLowPass_.cutoffPeriod(); },
+                  [this](double a) { comOffsetLowPassCutoffPeriod(a); }),
+      NumberInput("Cutoff period of comOffsetLowPassCoM", [this]() { return comOffsetLowPassCoM_.cutoffPeriod(); },
+                  [this](double a) { comOffsetLowPassCoMCutoffPeriod(a); }),
       NumberInput("Time constant of comOffsetDerivator", [this]() { return comOffsetDerivator_.timeConstant(); },
-                  [this](double a) { comOffsetDerivatorTimeConstant(a); }));
+                  [this](double a) { comOffsetDerivatorTimeConstant(a); }),
+      ArrayInput("extWrenchGain", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() { return extWrenchGain().vector(); },
+                 [this](const Eigen::Vector6d & a) { extWrenchGain(a); }));
 
   gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Debug"});
@@ -341,8 +348,12 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetTarget", comOffsetTarget_);
   MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetMeasured", comOffsetMeasured_);
   MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetErr", comOffsetErr_);
-  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetErrCoM", comOffsetErrCoM_);
-  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetErrZMP", comOffsetErrZMP_);
+  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetErr_CoM", comOffsetErrCoM_);
+  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetErr_ZMP", comOffsetErrZMP_);
+  logger.addLogEntry(name_ + "_extWrench_comOffsetErr_CoMLimit", this,
+                     [this]() { return c_.extWrench.comOffsetErrCoMLimit; });
+  logger.addLogEntry(name_ + "_extWrench_comOffsetErr_ZMPLimit", this,
+                     [this]() { return c_.extWrench.comOffsetErrZMPLimit; });
   MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetDerivator", this, [this]() { return comOffsetDerivator_.eval(); });
   MC_RTC_LOG_HELPER(name_ + "_extWrench_extWrenchGain", extWrenchGain_);
   logger.addLogEntry(name_ + "_dfz_damping", this, [this]() { return c_.dfzDamping; });

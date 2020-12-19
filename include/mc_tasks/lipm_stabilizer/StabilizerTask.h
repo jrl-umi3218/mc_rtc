@@ -301,6 +301,18 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    */
   void setExtWrenches(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches);
 
+  /** @brief Get the gain of measured external wrenches. */
+  const sva::MotionVecd & extWrenchGain() const noexcept
+  {
+    return extWrenchGain_;
+  }
+
+  /** @brief Set the gain of measured external wrenches. */
+  void extWrenchGain(const sva::MotionVecd & gain)
+  {
+    extWrenchGain_ = gain;
+  }
+
   const Eigen::Vector3d & measuredDCM()
   {
     return measuredDCM_;
@@ -403,28 +415,28 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     dcmDerivator_.timeConstant(dcmDerivatorTimeConstant);
   }
 
-  void extWrenchSumLowPassCutoffPeriod(double extWrenchSumLowPassCutoffPeriod)
+  void extWrenchSumLowPassCutoffPeriod(double cutoffPeriod)
   {
-    c_.extWrench.extWrenchSumLowPassCutoffPeriod = extWrenchSumLowPassCutoffPeriod;
-    extWrenchSumLowPass_.cutoffPeriod(extWrenchSumLowPassCutoffPeriod);
+    c_.extWrench.extWrenchSumLowPassCutoffPeriod = cutoffPeriod;
+    extWrenchSumLowPass_.cutoffPeriod(cutoffPeriod);
   }
 
-  void comOffsetLowPassExcludeCutoffPeriod(double comOffsetLowPassExcludeCutoffPeriod)
+  void comOffsetLowPassCutoffPeriod(double cutoffPeriod)
   {
-    c_.extWrench.comOffsetLowPassExcludeCutoffPeriod = comOffsetLowPassExcludeCutoffPeriod;
-    comOffsetLowPassExclude_.cutoffPeriod(comOffsetLowPassExcludeCutoffPeriod);
+    c_.extWrench.comOffsetLowPassCutoffPeriod = cutoffPeriod;
+    comOffsetLowPass_.cutoffPeriod(cutoffPeriod);
   }
 
-  void comOffsetLowPassZmpCutoffPeriod(double comOffsetLowPassZmpCutoffPeriod)
+  void comOffsetLowPassCoMCutoffPeriod(double cutoffPeriod)
   {
-    c_.extWrench.comOffsetLowPassZmpCutoffPeriod = comOffsetLowPassZmpCutoffPeriod;
-    comOffsetLowPassZmp_.cutoffPeriod(comOffsetLowPassZmpCutoffPeriod);
+    c_.extWrench.comOffsetLowPassCoMCutoffPeriod = cutoffPeriod;
+    comOffsetLowPassCoM_.cutoffPeriod(cutoffPeriod);
   }
 
-  void comOffsetDerivatorTimeConstant(double comOffsetDerivatorTimeConstant)
+  void comOffsetDerivatorTimeConstant(double timeConstant)
   {
-    c_.extWrench.comOffsetDerivatorTimeConstant = comOffsetDerivatorTimeConstant;
-    comOffsetDerivator_.timeConstant(comOffsetDerivatorTimeConstant);
+    c_.extWrench.comOffsetDerivatorTimeConstant = timeConstant;
+    comOffsetDerivator_.timeConstant(timeConstant);
   }
 
   void comWeight(double weight)
@@ -837,11 +849,11 @@ protected:
   Eigen::Vector3d comOffsetErr_ = Eigen::Vector3d::Zero(); /**< CoM offset error */
   Eigen::Vector3d comOffsetErrCoM_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by CoM modification */
   Eigen::Vector3d comOffsetErrZMP_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by ZMP modification */
-  double comOffsetErrCoMLimit_ = 0.1; /**< Limit of CoM offset error handled by CoM modification */
   mc_filter::LowPass<sva::ForceVecd>
       extWrenchSumLowPass_; /**< Low-pass filter of the sum of the measured external wrenches */
-  mc_filter::LowPass<Eigen::Vector3d> comOffsetLowPassExclude_; /**< Low-pass filter of CoM offset to exclude */
-  mc_filter::LowPass<Eigen::Vector3d> comOffsetLowPassZmp_; /**< Low-pass filter of CoM offset to compensate by ZMP */
+  mc_filter::LowPass<Eigen::Vector3d> comOffsetLowPass_; /**< Low-pass filter of CoM offset */
+  mc_filter::LowPass<Eigen::Vector3d>
+      comOffsetLowPassCoM_; /**< Low-pass filter of CoM offset to extract CoM modification */
   mc_filter::StationaryOffset<Eigen::Vector3d> comOffsetDerivator_; /**< Derivator of CoM offset */
   sva::MotionVecd extWrenchGain_ =
       sva::MotionVecd(Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()); /**< Gain of measured external wrenches */

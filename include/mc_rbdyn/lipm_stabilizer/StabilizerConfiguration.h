@@ -166,18 +166,24 @@ struct ExtWrenchConfiguration
   bool addExpectedCoMOffset = false;
   // Subtract the measured external wrenches instead of target ones
   bool subtractMeasuredValue = false;
-  // Compensate the error of the external wrenches in target and measurement
-  bool compensateExtWrenchErr = false;
-  // Compensate the error velocity of the external wrenches in target and measurement
-  bool compensateExtWrenchErrD = false;
+  // Modify CoM depending on the error of the external wrenches in target and measurement
+  bool modifyCoMErr = false;
+  // Modify ZMP depending on the error of the external wrenches in target and measurement
+  bool modifyZMPErr = false;
+  // Modify ZMP depending on the error velocity of the external wrenches in target and measurement
+  bool modifyZMPErrD = false;
+  // Limit of CoM offset error handled by CoM modification
+  double comOffsetErrCoMLimit = 0.1;
+  // Limit of CoM offset error handled by ZMP modification
+  double comOffsetErrZMPLimit = 0.1;
   // Cutoff period for the low-pass filter of the sum of the measured external wrenches
   double extWrenchSumLowPassCutoffPeriod = 0.05;
-  // Cutoff period for the low-pass filter of CoM offset to exclude
-  double comOffsetLowPassExcludeCutoffPeriod = 0.05;
-  // Cutoff period for the low-pass filter of CoM offset to compensate by ZMP
-  double comOffsetLowPassZmpCutoffPeriod = 1.0;
+  // Cutoff period for the low-pass filter of CoM offset
+  double comOffsetLowPassCutoffPeriod = 0.05;
+  // Cutoff period for the low-pass filter of CoM offset to extract CoM modification
+  double comOffsetLowPassCoMCutoffPeriod = 1.0;
   // Time window for the stationary offset filter of the CoM offset derivator
-  double comOffsetDerivatorTimeConstant = 1.;
+  double comOffsetDerivatorTimeConstant = 1.0;
 };
 
 } // namespace lipm_stabilizer
@@ -253,11 +259,14 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration>
     mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration extWrench;
     config("add_expected_com_offset", extWrench.addExpectedCoMOffset);
     config("subtract_measured_value", extWrench.subtractMeasuredValue);
-    config("compensate_error", extWrench.compensateExtWrenchErr);
-    config("compensate_error_d", extWrench.compensateExtWrenchErrD);
+    config("modify_com_error", extWrench.modifyCoMErr);
+    config("modify_zmp_error", extWrench.modifyZMPErr);
+    config("modify_zmp_error_d", extWrench.modifyZMPErrD);
+    config("com_offset_err_com_limit", extWrench.comOffsetErrCoMLimit);
+    config("com_offset_err_zmp_limit", extWrench.comOffsetErrZMPLimit);
     config("ext_wrench_sum_cutoff", extWrench.extWrenchSumLowPassCutoffPeriod);
-    config("com_offset_cutoff_exclude", extWrench.comOffsetLowPassExcludeCutoffPeriod);
-    config("com_offset_cutoff_zmp", extWrench.comOffsetLowPassZmpCutoffPeriod);
+    config("com_offset_cutoff", extWrench.comOffsetLowPassCutoffPeriod);
+    config("com_offset_com_cutoff", extWrench.comOffsetLowPassCoMCutoffPeriod);
     config("derivator_time_constant", extWrench.comOffsetDerivatorTimeConstant);
     return extWrench;
   }
@@ -267,11 +276,14 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration>
     mc_rtc::Configuration config;
     config.add("add_expected_com_offset", extWrench.addExpectedCoMOffset);
     config.add("subtract_measured_value", extWrench.subtractMeasuredValue);
-    config.add("compensate_error", extWrench.compensateExtWrenchErr);
-    config.add("compensate_error_d", extWrench.compensateExtWrenchErrD);
+    config.add("modify_com_error", extWrench.modifyCoMErr);
+    config.add("modify_zmp_error", extWrench.modifyZMPErr);
+    config.add("modify_zmp_error_d", extWrench.modifyZMPErrD);
+    config.add("com_offset_err_com_limit", extWrench.comOffsetErrCoMLimit);
+    config.add("com_offset_err_zmp_limit", extWrench.comOffsetErrZMPLimit);
     config.add("ext_wrench_sum_cutoff", extWrench.extWrenchSumLowPassCutoffPeriod);
-    config.add("com_offset_cutoff_exclude", extWrench.comOffsetLowPassExcludeCutoffPeriod);
-    config.add("com_offset_cutoff_zmp", extWrench.comOffsetLowPassZmpCutoffPeriod);
+    config.add("com_offset_cutoff", extWrench.comOffsetLowPassCutoffPeriod);
+    config.add("com_offset_com_cutoff", extWrench.comOffsetLowPassCoMCutoffPeriod);
     config.add("derivator_time_constant", extWrench.comOffsetDerivatorTimeConstant);
     return config;
   }
