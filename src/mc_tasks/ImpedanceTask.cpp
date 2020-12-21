@@ -199,6 +199,10 @@ void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   }
 
   SurfaceTransformTask::load(solver, config);
+  // The SurfaceTransformTask::load function above only sets
+  // the TrajectoryTaskGeneric's target, but not the compliance target, so we
+  // need to set it manually here.
+  desiredPoseW_ = SurfaceTransformTask::target();
 }
 
 void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
