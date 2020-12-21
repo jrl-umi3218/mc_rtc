@@ -5,14 +5,14 @@ toc: true
 
 In this page you will find a list of all available sample controllers provided with the framework, along with a brief description of how to run them and what to expect. More complex controllers will be further detailed in their own tutorial page.
 
-# Posture 
+# Posture
 
 The `Posture` controller (see [online demonstration](https://mc-rtc-demo.netlify.app/#robot=JVRC1&controller=EndEffector)) is the simplest controller in the framework. It adds the following tasks and constraints to the QP solver.
 
 
 
 **Tasks**
-- {% doxygen mc_tasks::PostureTask %}: 
+- {% doxygen mc_tasks::PostureTask %}:
 Make each of the robot's DoF target a given joint position. By default this controller will target the current robot encoder values when available, or the default stance for that robot otherwise ({% doxygen mc_rbdyn::RobotModule::stance() %}). Joints can be moved through the joint sliders in the GUI (`Tasks -> posture_jvrc1 -> Target`).
 
 **Constraints**
@@ -21,7 +21,7 @@ Make each of the robot's DoF target a given joint position. By default this cont
 - {% doxygen mc_solver::CollisionsConstraint %}: Self-collision avoidance constraint.
 - {% doxygen mc_solver::CompoundJointConstraint %}: Handle joint limits for compound joints (joints whose limits depend on the value of another joint).
 
-**Supported robots** 
+**Supported robots**
 All [robots]({{site.baseurl}}/robots.html) supported by the framework. Note that for custom robots, all you need to do is define a default set of collision pairs and limits for the `CompoundJointConstraint` if appropriate (see the tutorial on [integrating a new robot]({{site.baseurl}}/tutorials/advanced/new-robot.html)).
 
 **Running**
@@ -34,7 +34,7 @@ Enabled: Posture
 
 # CoM
 
-The `CoM` sample controller (see [online demonstration](https://mc-rtc-demo.netlify.app/#robot=JVRC1&controller=CoM)) has similar tasks and constraints as the `Posture` controller above. 
+The `CoM` sample controller (see [online demonstration](https://mc-rtc-demo.netlify.app/#robot=JVRC1&controller=CoM)) has similar tasks and constraints as the `Posture` controller above.
 
 **Tasks**
 - {% doxygen mc_tasks::PostureTask %}: A posture task with low-weight to provide a default target for all joints.
@@ -46,7 +46,7 @@ The `CoM` sample controller (see [online demonstration](https://mc-rtc-demo.netl
 - {% doxygen mc_solver::CollisionsConstraint %}: Self-collision avoidance constraint.
 - {% doxygen mc_solver::CompoundJointConstraint %}: Handle joint limits for compound joints (joints whose limits depend on the value of another joint).
 
-**Supported robots** 
+**Supported robots**
 All biped [robots]({{site.baseurl}}/robots.html) supported by the framework. Note that for custom robots, all you need to do is define a `LeftFoot` and `RightFoot` surface in [your robot description]({{site.baseurl}}/tutorials/advanced/new-robot.html).
 
 
@@ -62,7 +62,7 @@ Enabled: CoM
 
 The `EndEffector` controller (see [online demonstration](https://mc-rtc-demo.netlify.app/#robot=JVRC1&controller=EndEffector)) has the same tasks and constraints as the `CoM` controller above. In addition to controlling the CoM position, it adds an {% doxygen mc_tasks::EndEffectorTask %} to control the position and orientation of the robot's hand end-effector.
 
-**Supported robots** 
+**Supported robots**
 All biped [robots]({{site.baseurl}}/robots.html) supported by the framework. Note that for custom robots, all you need to do is define a `LeftFoot` and `RightFoot` surfaces and an `r_wrist` body in [your robot]({{site.baseurl}}/tutorials/advanced/new-robot.html).
 
 **Running**
@@ -113,7 +113,7 @@ The `Admittance` sample controller demonstrates the use of the {% doxygen mc_tas
 
 **Detailed description**: see the [Admittance Sample Controller tutorial]({{site.baseurl}}/tutorials/samples/sample-admittance.html)
 
-**Supported robots**: `JVRC1`. 
+**Supported robots**: `JVRC1`.
 
 **Prerequisites**: Please make sure that the hand force sensors have been calibrated beforehand using the [ForceSensorCalibration controller](https://github.com/jrl-umi3218/mc_force_sensor_calibration_controller).
 
@@ -130,7 +130,7 @@ Enabled: Admittance
 
 The `Impedance` sample controller demonstrates the use of the {% doxygen mc_tasks::force::ImpedanceTask %} to simulataneously perform position and force control of the robot's end-effector.
 
-**Supported robots**: `JVRC1`. 
+**Supported robots**: `JVRC1Fixed`.
 
 **Prerequisites**: Please make sure that the hand force sensors have been calibrated beforehand using the [ForceSensorCalibration controller](https://github.com/jrl-umi3218/mc_force_sensor_calibration_controller).
 
@@ -139,17 +139,17 @@ The `Impedance` sample controller demonstrates the use of the {% doxygen mc_task
 To run this controller, simply put in [your mc_rtc configuration]({{site.baseurl}}/tutorials/introduction/configuration.html), and [run the controller]({{site.baseurl}}/tutorials/introduction/running-a-controller.html) using your favorite dynamic simulation (e.g Choreonoid...). In choreonoid you can apply external forces by clicking on the moving hand and dragging it. It will follow you to some extent and return to it's expected position along the trajectory when you relase the force. Note that you may add additional {% doxygen mc_tasks::force::ImpedanceTask %} to the free end-effectors throught the GUI (`Global  -> Add Tasks -> ImpedanceTask`).
 
 ```yaml
-MainRobot: JVRC1
+MainRobot: JVRC1Fixed
 Enabled: Admittance
 ```
 
 # LIPMStabilizer
 
-The `LIPMStabilizer` sample controller demonstrates the use of the {% doxygen mc_tasks::StabilizerTask %} and its corresponding convenience FSM state {% doxygen mc_state::StabilizerStandingState %} though a simple quasi-static FSM making the robot stand and step while keeping balance. 
+The `LIPMStabilizer` sample controller demonstrates the use of the {% doxygen mc_tasks::StabilizerTask %} and its corresponding convenience FSM state {% doxygen mc_state::StabilizerStandingState %} though a simple quasi-static FSM making the robot stand and step while keeping balance.
 
 **Detailed description**: see [the LIPM Stabilizer tutorial]({{site.baseurl}}/tutorials/recipes/lipm-stabilizer.html)
 
-**Supported robots**: All biped [robots]({{site.baseurl}}/robots.html) supported by the framework. 
+**Supported robots**: All biped [robots]({{site.baseurl}}/robots.html) supported by the framework.
 
 **Running**
 
