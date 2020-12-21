@@ -2,6 +2,7 @@
  * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+#include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/MetaTaskLoader.h>
 
@@ -40,7 +41,7 @@ void CoMTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & c
   }
   if(config.has("above"))
   {
-    std::vector<std::string> surfaces = config("above");
+    auto surfaces = mc_rtc::fromVectorOrElement<std::string>(config, "above");
     auto com = this->com();
     Eigen::Vector3d target = Eigen::Vector3d::Zero();
     auto & robot = robotFromConfig(config, solver.robots(), name());

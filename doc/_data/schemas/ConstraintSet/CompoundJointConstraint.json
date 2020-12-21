@@ -1,0 +1,11 @@
+{
+  "title": "mc_solver::CompoundJointConstraint",
+  "description": "Handle compound joint limits (joints whole limits depend on the position of another joint). By default this adds all the compound joints defined in the robot's module.",
+  "type": "object",
+  "properties":
+  {
+    "type": { "enum": ["compoundJoint"] },
+    "robot": { "$ref": "/../../common/ConstraintSet_robot.json" }
+  },
+ "required": ["type"]
+}
