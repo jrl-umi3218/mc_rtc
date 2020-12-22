@@ -228,7 +228,7 @@ public:
    */
   const sva::PTransformd compliancePose() const
   {
-    sva::PTransformd T_0_d(Eigen::Matrix3d(desiredPoseW_.rotation()));
+    sva::PTransformd T_0_d(desiredPoseW_.rotation());
     return T_0_d * deltaCompPoseW_ * T_0_d.inv() * desiredPoseW_;
   }
 
