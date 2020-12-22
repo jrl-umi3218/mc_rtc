@@ -183,11 +183,6 @@ void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
     wrenchGain(config("wrenchGain"));
   }
 
-  if(config.has("target"))
-  {
-    desiredPose(config("target"));
-  }
-
   if(config.has("wrench"))
   {
     targetWrench(config("wrench"));
@@ -202,7 +197,7 @@ void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   // The SurfaceTransformTask::load function above only sets
   // the TrajectoryTaskGeneric's target, but not the compliance target, so we
   // need to set it manually here.
-  desiredPoseW_ = SurfaceTransformTask::target();
+  desiredPose(SurfaceTransformTask::target());
 }
 
 void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
