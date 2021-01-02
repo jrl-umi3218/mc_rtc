@@ -51,12 +51,14 @@ void PreviewControlWalking_Initial::start(mc_control::fsm::Controller & ctl_)
   refZmpTraj_.resize(3, previewSize() + 1);
 
   // Append target footsteps
-  footstepManager_.appendFootstep(
-      mc_planning::Footstep(mc_planning::Foot::Left, sva::PTransformd(Eigen::Vector3d(0.3, 0.1, 0)), ctl.t() + 2.0));
-  footstepManager_.appendFootstep(
-      mc_planning::Footstep(mc_planning::Foot::Right, sva::PTransformd(Eigen::Vector3d(0.6, -0.1, 0)), ctl.t() + 3.0));
-  footstepManager_.appendFootstep(
-      mc_planning::Footstep(mc_planning::Foot::Left, sva::PTransformd(Eigen::Vector3d(0.6, 0.1, 0)), ctl.t() + 4.0));
+  for(int i = 0; i < 10; i++)
+  {
+    mc_planning::Foot foot = i % 2 == 0 ? mc_planning::Foot::Left : mc_planning::Foot::Right;
+    double footPosY = currentFootstance.at(foot).pose.translation().y();
+    sva::PTransformd footPose(Eigen::Vector3d((i + 1) * 0.3, footPosY, 0));
+    double time = ctl.t() + 2.0 + i;
+    footstepManager_.appendFootstep(mc_planning::Footstep(foot, footPose, time));
+  }
 
   // Setup contacts
   setContacts(ctl,
@@ -141,12 +143,6 @@ bool PreviewControlWalking_Initial::run(mc_control::fsm::Controller & ctl_)
   else if(supportPhase_ == mc_planning::SupportPhase::RightSupport)
   {
     swingFootTasks_.at(mc_planning::Foot::Left)->target(footstepManager_.footPose(mc_planning::Foot::Left));
-  }
-
-  if(ctl.t() > 6.0)
-  {
-    output("OK");
-    return true;
   }
 
   return false;
