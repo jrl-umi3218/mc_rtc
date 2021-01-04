@@ -341,6 +341,12 @@ public:
    */
   operator sva::MotionVecd() const;
 
+  /*! \brief Retrieve as an sva::ImpedanceVecd
+   *
+   * \throws If the underlying value is not an object with angular and linear members
+   */
+  operator sva::ImpedanceVecd() const;
+
   /*! \brief Retrieve a vector instance
    *
    * \throws If the underlying value does not hold an array or if
@@ -888,6 +894,12 @@ public:
    */
   void add(const std::string & key, const sva::MotionVecd & value);
 
+  /*! \brief Add an sva::ImpedanceVecd element to the Configuration
+   *
+   * \see add(const std::string&, bool)
+   */
+  void add(const std::string & key, const sva::ImpedanceVecd & value);
+
   /*! \brief Add another Configuration to the Configuration
    *
    * \see add(const std::string&, bool)
@@ -1033,6 +1045,12 @@ public:
    * \see push(bool)
    */
   void push(const sva::MotionVecd & value);
+
+  /*! \brief Insert an sva::ImpedanceVecd element into an array
+   *
+   * \see push(bool)
+   */
+  void push(const sva::ImpedanceVecd & value);
 
   /*! \brief Push a Configuration element into an array
    *

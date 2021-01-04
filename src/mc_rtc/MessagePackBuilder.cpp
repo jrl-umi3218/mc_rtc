@@ -255,6 +255,14 @@ void MessagePackBuilder::write(const sva::MotionVecd & mv)
   finish_array();
 }
 
+void MessagePackBuilder::write(const sva::ImpedanceVecd & iv)
+{
+  start_array(6);
+  write_vector(impl_.get(), iv.angular());
+  write_vector(impl_.get(), iv.linear());
+  finish_array();
+}
+
 void MessagePackBuilder::write(const mc_rtc::Configuration & config)
 {
   config.toMessagePack(*this);
