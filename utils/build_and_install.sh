@@ -573,8 +573,8 @@ then
       /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
     brew update
-    brew cask install $CASK_DEPENDENCIES
     brew install $BREW_DEPENDENCIES
+    brew upgrade $BREW_DEPENDENCIES
     if [ "x$WITH_PYTHON_SUPPORT" == xON ] && $NOT_CLONE_ONLY
     then
       if [ "x$PYTHON_BUILD_PYTHON2_AND_PYTHON3" == xON ]
