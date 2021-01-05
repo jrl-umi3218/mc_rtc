@@ -45,10 +45,6 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
 void ImpedanceTask::update(mc_solver::QPSolver & solver)
 {
   // 1. Filter the measured wrench
-  if(lowPass_.dt() != solver.dt())
-  {
-    lowPass_.dt(solver.dt());
-  }
   measuredWrench_ = robots.robot(rIndex).surfaceWrench(surfaceName);
   lowPass_.update(measuredWrench_);
   filteredMeasuredWrench_ = lowPass_.eval();
@@ -198,6 +194,12 @@ void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   // the TrajectoryTaskGeneric's target, but not the compliance target, so we
   // need to set it manually here.
   desiredPose(SurfaceTransformTask::target());
+}
+
+void ImpedanceTask::addToSolver(mc_solver::QPSolver & solver)
+{
+  lowPass_.dt(solver.dt());
+  SurfaceTransformTask::addToSolver(solver);
 }
 
 void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)

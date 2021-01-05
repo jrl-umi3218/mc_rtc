@@ -340,6 +340,7 @@ protected:
 
   void update(mc_solver::QPSolver & solver) override;
 
+  void addToSolver(mc_solver::QPSolver & solver) override;
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
