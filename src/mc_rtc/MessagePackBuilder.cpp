@@ -241,12 +241,26 @@ void MessagePackBuilder::write(const sva::PTransformd & pt)
 
 void MessagePackBuilder::write(const sva::ForceVecd & fv)
 {
-  write(fv.vector());
+  start_array(6);
+  write_vector(impl_.get(), fv.couple());
+  write_vector(impl_.get(), fv.force());
+  finish_array();
 }
 
 void MessagePackBuilder::write(const sva::MotionVecd & mv)
 {
-  write(mv.vector());
+  start_array(6);
+  write_vector(impl_.get(), mv.angular());
+  write_vector(impl_.get(), mv.linear());
+  finish_array();
+}
+
+void MessagePackBuilder::write(const sva::ImpedanceVecd & iv)
+{
+  start_array(6);
+  write_vector(impl_.get(), iv.angular());
+  write_vector(impl_.get(), iv.linear());
+  finish_array();
 }
 
 void MessagePackBuilder::write(const mc_rtc::Configuration & config)

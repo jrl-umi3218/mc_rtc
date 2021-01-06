@@ -6,4 +6,3 @@ RUN apt-get update -qq && apt-get install -qq cmake cmake-data cython cython3 dh
 RUN apt-get install -qq python-pip || (curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py)
 
 COPY source /source
-RUN cd /source/utils && ./build_and_install.sh --user-input false --build-benchmarks true --allow-root true

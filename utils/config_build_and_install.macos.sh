@@ -1,5 +1,4 @@
-export CASK_DEPENDENCIES="gfortran"
-export BREW_DEPENDENCIES="coreutils pkg-config gnu-sed wget python cmake doxygen libtool tinyxml2 geos boost eigen nanomsg yaml-cpp qt qwt pyqt"
+export BREW_DEPENDENCIES="coreutils pkg-config gnu-sed wget python cmake doxygen libtool tinyxml2 geos boost eigen nanomsg yaml-cpp qt qwt pyqt gcc"
 if $BUILD_BENCHMARKS
 then
   export BREW_DEPENDENCIES="$BREW_DEPENDENCIES google-benchmark"

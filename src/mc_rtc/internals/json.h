@@ -501,6 +501,15 @@ inline RapidJSONValue toJSON(const sva::MotionVecd & mv, RapidJSONDocument::Allo
   return ret;
 }
 
+template<>
+inline RapidJSONValue toJSON(const sva::ImpedanceVecd & mv, RapidJSONDocument::AllocatorType & allocator)
+{
+  RapidJSONValue ret(rapidjson::kObjectType);
+  ret.AddMember("angular", toJSON(mv.angular(), allocator), allocator);
+  ret.AddMember("linear", toJSON(mv.linear(), allocator), allocator);
+  return ret;
+}
+
 } // namespace internal
 
 } // namespace mc_rtc

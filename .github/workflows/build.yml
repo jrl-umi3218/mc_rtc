@@ -65,9 +65,10 @@ jobs:
       run: |
         set -e
         sudo rm -f /etc/apt/sources.list.d/dotnetdev.list /etc/apt/sources.list.d/microsoft-prod.list
-    - name: Change Xcode version
+    - name: macOS cleanup
       run: |
         sudo xcode-select -switch /Applications/Xcode_11.7.app
+        sudo rm '/usr/local/bin/2to3'
       if: startsWith(runner.os, 'macOS')
     - name: Clear environment (script)
       uses: jrl-umi3218/github-actions/install-dependencies@master
@@ -96,8 +97,7 @@ jobs:
         ubuntu: |
           apt: cython cython3 python-nose python3-nose python-numpy python3-numpy python-coverage python3-coverage python-setuptools python3-setuptools libeigen3-dev doxygen doxygen-latex libboost-all-dev libtinyxml2-dev libgeos++-dev libnanomsg-dev libyaml-cpp-dev libltdl-dev
         macos: |
-          cask: gfortran
-          brew: eigen boost tinyxml2 geos nanomsg yaml-cpp pkg-config libtool
+          brew: eigen boost tinyxml2 geos nanomsg yaml-cpp pkg-config libtool gcc
           pip: Cython coverage nose numpy
         windows: |
           pip: Cython coverage nose numpy

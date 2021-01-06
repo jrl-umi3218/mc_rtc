@@ -142,6 +142,12 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
    */
   void write(const sva::MotionVecd & mv);
 
+  /** Write an sva::ImpedanceVecd
+   *
+   * Serialized as an array of size 6 (Angular + Linear)
+   */
+  void write(const sva::ImpedanceVecd & mv);
+
   /** Write an mc_rtc::Configuration
    *
    * Serialied as the JSON data it holds

@@ -522,6 +522,21 @@ Configuration::operator sva::MotionVecd() const
   throw Exception("Stored Json value is not a MotionVecd", v);
 }
 
+Configuration::operator sva::ImpedanceVecd() const
+{
+  if(has("angular") && has("linear"))
+  {
+    Eigen::Vector3d angular = (*this)("angular");
+    return {angular, (*this)("linear")};
+  }
+  else if(size() == 6)
+  {
+    auto & config = *this;
+    return {{config[0], config[1], config[2]}, {config[3], config[4], config[5]}};
+  }
+  throw Exception("Stored Json value is not an ImpedanceVecd", v);
+}
+
 Configuration::Configuration(const std::string & path) : Configuration()
 {
   auto doc = std::static_pointer_cast<internal::RapidJSONDocument>(v.doc_);
@@ -833,6 +848,7 @@ void Configuration::add(const std::string & key, const Eigen::MatrixXd & value) 
 void Configuration::add(const std::string & key, const sva::PTransformd & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const sva::ForceVecd & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 void Configuration::add(const std::string & key, const sva::MotionVecd & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
+void Configuration::add(const std::string & key, const sva::ImpedanceVecd & value) { add_impl(*this, key, value, v.value_, v.doc_.get()); }
 // clang-format on
 
 void Configuration::add(const std::string & key, const Configuration & value)
@@ -940,6 +956,7 @@ void Configuration::push(const Eigen::MatrixXd & value) { push_impl(*this, value
 void Configuration::push(const sva::PTransformd & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 void Configuration::push(const sva::ForceVecd & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 void Configuration::push(const sva::MotionVecd & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
+void Configuration::push(const sva::ImpedanceVecd & value) { push_impl(*this, value, v.value_, v.doc_.get()); }
 // clang-format on
 
 void Configuration::push(const mc_rtc::Configuration & value)
