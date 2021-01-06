@@ -2,6 +2,7 @@ var searchData=
 [
   ['array_3c_20t_2c_20n_20_3e',['array&lt; T, N &gt;',['../structmc__rtc_1_1Configuration.html#aa4af8f372da0ca5bc835588c737c5877',1,'mc_rtc::Configuration']]],
   ['forcevecd',['ForceVecd',['../structmc__rtc_1_1Configuration.html#abde2e86ccecf6e5f45f6cb6a2f6590fd',1,'mc_rtc::Configuration']]],
+  ['impedancevecd',['ImpedanceVecd',['../structmc__rtc_1_1Configuration.html#a570dbad850a519f785f15dc8276e2c30',1,'mc_rtc::Configuration']]],
   ['map_3c_20std_3a_3astring_2c_20t_2c_20c_2c_20a_20_3e',['map&lt; std::string, T, C, A &gt;',['../structmc__rtc_1_1Configuration.html#ac26424cf2ed968f1999a3277ab4f7835',1,'mc_rtc::Configuration']]],
   ['matrix3d',['Matrix3d',['../structmc__rtc_1_1Configuration.html#a7a2df9dbb9a6139d9ff99c6c60ef61a8',1,'mc_rtc::Configuration']]],
   ['matrix6d',['Matrix6d',['../structmc__rtc_1_1Configuration.html#a80b1043ef8da93ff82487f6fb6c13303',1,'mc_rtc::Configuration']]],

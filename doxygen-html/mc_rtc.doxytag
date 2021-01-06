@@ -7574,6 +7574,13 @@
     </member>
     <member kind="function">
       <type></type>
+      <name>operator sva::ImpedanceVecd</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a570dbad850a519f785f15dc8276e2c30</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
       <name>operator std::vector&lt; T, A &gt;</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>ab06d6d358eef19d9c4c8748bc7767064</anchor>
@@ -7906,6 +7913,13 @@
       <type>void</type>
       <name>add</name>
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>ab51f7febc1859fa2d27b6fb3449cac05</anchor>
+      <arglist>(const std::string &amp;key, const sva::ImpedanceVecd &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>add</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>a1be30ae398db04ef0b80adb11efbf9af</anchor>
       <arglist>(const std::string &amp;key, const Configuration &amp;value)</arglist>
     </member>
@@ -8062,6 +8076,13 @@
       <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
       <anchor>abf5e743e0ca14bb22bed349263a3f4b5</anchor>
       <arglist>(const sva::MotionVecd &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>push</name>
+      <anchorfile>structmc__rtc_1_1Configuration.html</anchorfile>
+      <anchor>a8eee7082f32508db0d5683f957d4a396</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;value)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -18590,6 +18611,13 @@
       <type>void</type>
       <name>write</name>
       <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
+      <anchor>ab4c3e3612a75cd29da998497fcc81c4e</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;mv)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
       <anchor>a8ecdea776e00c52344616ef74040065a</anchor>
       <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
     </member>
@@ -18802,6 +18830,13 @@
       <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
       <anchor>a83480f7381e658b282b0132b5b495ce7</anchor>
       <arglist>(const sva::MotionVecd &amp;mv)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
+      <anchor>ab4c3e3612a75cd29da998497fcc81c4e</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;mv)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
