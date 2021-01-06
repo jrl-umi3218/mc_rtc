@@ -304,8 +304,10 @@ namespace
 static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
     "impedance",
     [](mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) {
+      using Allocator = Eigen::aligned_allocator<mc_tasks::force::ImpedanceTask>;
       const auto robotIndex = robotIndexFromConfig(config, solver.robots(), "impedance");
-      auto t = std::make_shared<mc_tasks::force::ImpedanceTask>(config("surface"), solver.robots(), robotIndex);
+      auto t = std::allocate_shared<mc_tasks::force::ImpedanceTask>(Allocator{}, config("surface"), solver.robots(),
+                                                                    robotIndex);
       t->reset();
       t->load(solver, config);
       return t;
