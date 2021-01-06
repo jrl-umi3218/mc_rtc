@@ -132,8 +132,8 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
   }
 
   // 4. Set compliance values to the targets of SurfaceTransformTask
-  refAccel(T_0_s * (desiredAccelW_ + deltaCompAccelW_)); // represented in the surface frame
-  refVelB(T_0_s * (desiredVelW_ + deltaCompVelW_)); // represented in the surface frame
+  refAccel(T_0_s * (targetAccelW_ + deltaCompAccelW_)); // represented in the surface frame
+  refVelB(T_0_s * (targetVelW_ + deltaCompVelW_)); // represented in the surface frame
   target(compliancePose()); // represented in the world frame
 }
 
@@ -143,13 +143,13 @@ void ImpedanceTask::reset()
   // Reset the target velocity and acceleration of SurfaceTransformTask to zero
   SurfaceTransformTask::reset();
 
-  // Set the desired and compliance poses to the SurfaceTransformTask target (i.e., the current pose)
-  desiredPoseW_ = target();
+  // Set the target and compliance poses to the SurfaceTransformTask target (i.e., the current pose)
+  targetPoseW_ = target();
   deltaCompPoseW_ = sva::PTransformd::Identity();
 
-  // Reset the desired and compliance velocity and acceleration to zero
-  desiredVelW_ = sva::MotionVecd::Zero();
-  desiredAccelW_ = sva::MotionVecd::Zero();
+  // Reset the target and compliance velocity and acceleration to zero
+  targetVelW_ = sva::MotionVecd::Zero();
+  targetAccelW_ = sva::MotionVecd::Zero();
   deltaCompVelW_ = sva::MotionVecd::Zero();
   deltaCompAccelW_ = sva::MotionVecd::Zero();
 
@@ -193,7 +193,7 @@ void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurati
   // The SurfaceTransformTask::load function above only sets
   // the TrajectoryTaskGeneric's target, but not the compliance target, so we
   // need to set it manually here.
-  desiredPose(SurfaceTransformTask::target());
+  targetPose(SurfaceTransformTask::target());
 }
 
 void ImpedanceTask::addToSolver(mc_solver::QPSolver & solver)
@@ -217,10 +217,10 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_deltaComplianceVel", [this]() -> const sva::MotionVecd & { return deltaCompVelW_; });
   logger.addLogEntry(name_ + "_deltaComplianceAccel", [this]() -> const sva::MotionVecd & { return deltaCompAccelW_; });
 
-  // desired values
-  logger.addLogEntry(name_ + "_desiredPose", [this]() -> const sva::PTransformd & { return desiredPoseW_; });
-  logger.addLogEntry(name_ + "_desiredVel", [this]() -> const sva::MotionVecd & { return desiredVelW_; });
-  logger.addLogEntry(name_ + "_desiredAccel", [this]() -> const sva::MotionVecd & { return desiredAccelW_; });
+  // target values
+  logger.addLogEntry(name_ + "_targetPose", [this]() -> const sva::PTransformd & { return targetPoseW_; });
+  logger.addLogEntry(name_ + "_targetVel", [this]() -> const sva::MotionVecd & { return targetVelW_; });
+  logger.addLogEntry(name_ + "_targetAccel", [this]() -> const sva::MotionVecd & { return targetAccelW_; });
 
   // wrench
   logger.addLogEntry(name_ + "_targetWrench", [this]() -> const sva::ForceVecd & { return targetWrench_; });
@@ -245,10 +245,10 @@ void ImpedanceTask::removeFromLogger(mc_rtc::Logger & logger)
   logger.removeLogEntry(name_ + "_deltaComplianceVel");
   logger.removeLogEntry(name_ + "_deltaComplianceAccel");
 
-  // desired values
-  logger.removeLogEntry(name_ + "_desiredPose");
-  logger.removeLogEntry(name_ + "_desiredVel");
-  logger.removeLogEntry(name_ + "_desiredAccel");
+  // target values
+  logger.removeLogEntry(name_ + "_targetPose");
+  logger.removeLogEntry(name_ + "_targetVel");
+  logger.removeLogEntry(name_ + "_targetAccel");
 
   // wrench
   logger.removeLogEntry(name_ + "_targetWrench");
@@ -264,9 +264,9 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
   gui.addElement({"Tasks", name_},
                  // pose
-                 mc_rtc::gui::Transform("desiredPose",
-                                        [this]() -> const sva::PTransformd & { return this->desiredPose(); },
-                                        [this](const sva::PTransformd & pos) { this->desiredPose(pos); }),
+                 mc_rtc::gui::Transform("targetPose",
+                                        [this]() -> const sva::PTransformd & { return this->targetPose(); },
+                                        [this](const sva::PTransformd & pos) { this->targetPose(pos); }),
                  mc_rtc::gui::Transform("compliancePose", [this]() { return this->compliancePose(); }),
                  mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }),
                  // impedance parameters

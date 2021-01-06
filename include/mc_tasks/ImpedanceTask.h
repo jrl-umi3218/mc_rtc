@@ -88,7 +88,7 @@ public:
 
   /*! \brief Reset the task
    *
-   * Set the desired and compliance poses to the current surface, and reset the desired and compliance
+   * Set the target and compliance poses to the current surface, and reset the target and compliance
    * velocity and acceleration to zero.
    *
    */
@@ -178,43 +178,43 @@ public:
         mc_filter::utils::clampAndWarn(gain.angular(), wrenchGainAngLower_, wrenchGainAngUpper_, "wrenchGainAngular");
   }
 
-  /*! \brief Get the desired pose of the surface in the world frame. */
-  const sva::PTransformd & desiredPose() const noexcept
+  /*! \brief Get the target pose of the surface in the world frame. */
+  const sva::PTransformd & targetPose() const noexcept
   {
-    return desiredPoseW_;
+    return targetPoseW_;
   }
 
-  /*! \brief Set the desired pose of the surface in the world frame. */
-  void desiredPose(const sva::PTransformd & pose)
+  /*! \brief Set the target pose of the surface in the world frame. */
+  void targetPose(const sva::PTransformd & pose)
   {
-    desiredPoseW_ = pose;
+    targetPoseW_ = pose;
   }
 
-  /*! \brief Get the desired velocity of the surface in the world frame. */
-  const sva::MotionVecd & desiredVel() const noexcept
+  /*! \brief Get the target velocity of the surface in the world frame. */
+  const sva::MotionVecd & targetVel() const noexcept
   {
-    return desiredVelW_;
+    return targetVelW_;
   }
 
-  /*! \brief Set the desired velocity of the surface in the world frame. */
-  void desiredVel(const sva::MotionVecd & vel)
+  /*! \brief Set the target velocity of the surface in the world frame. */
+  void targetVel(const sva::MotionVecd & vel)
   {
-    desiredVelW_ = vel;
+    targetVelW_ = vel;
   }
 
-  /*! \brief Get the desired acceleration of the surface in the world frame. */
-  const sva::MotionVecd & desiredAccel() const noexcept
+  /*! \brief Get the target acceleration of the surface in the world frame. */
+  const sva::MotionVecd & targetAccel() const noexcept
   {
-    return desiredAccelW_;
+    return targetAccelW_;
   }
 
-  /*! \brief Set the desired acceleration of the surface in the world frame. */
-  void desiredAccel(const sva::MotionVecd & accel)
+  /*! \brief Set the target acceleration of the surface in the world frame. */
+  void targetAccel(const sva::MotionVecd & accel)
   {
-    desiredAccelW_ = accel;
+    targetAccelW_ = accel;
   }
 
-  /*! \brief Get the relative pose from desired frame to compliance frame represented in the world frame. */
+  /*! \brief Get the relative pose from target frame to compliance frame represented in the world frame. */
   const sva::PTransformd & deltaCompliancePose() const
   {
     return deltaCompPoseW_;
@@ -228,8 +228,8 @@ public:
    */
   const sva::PTransformd compliancePose() const
   {
-    sva::PTransformd T_0_d(desiredPoseW_.rotation());
-    return T_0_d * deltaCompPoseW_ * T_0_d.inv() * desiredPoseW_;
+    sva::PTransformd T_0_d(targetPoseW_.rotation());
+    return T_0_d * deltaCompPoseW_ * T_0_d.inv() * targetPoseW_;
   }
 
   /*! \brief Get the target wrench in the surface frame. */
@@ -308,7 +308,7 @@ protected:
   const Eigen::Vector3d wrenchGainAngUpper_ = Eigen::Vector3d::Constant(1e6);
   const Eigen::Vector3d wrenchGainAngLower_ = Eigen::Vector3d::Constant(0);
 
-  /** Relative pose, velocity, and acceleration from desired frame to compliance frame represented in the world frame.
+  /** Relative pose, velocity, and acceleration from target frame to compliance frame represented in the world frame.
    *  To store these values across control cycles, represent them in a constant world frame instead of the time-varying
    *  surface frame.
    *  @{
@@ -318,7 +318,7 @@ protected:
   sva::MotionVecd deltaCompAccelW_ = sva::MotionVecd::Zero();
   /// @}
 
-  // Limits of relative pose, velocity, and acceleration from desired frame to compliance frame.
+  // Limits of relative pose, velocity, and acceleration from target frame to compliance frame.
   double deltaCompPoseLinLimit_ = 1.0;
   double deltaCompPoseAngLimit_ = mc_rtc::constants::PI;
   double deltaCompVelLinLimit_ = 1e3;
@@ -326,10 +326,10 @@ protected:
   double deltaCompAccelLinLimit_ = 1e3;
   double deltaCompAccelAngLimit_ = 1e3;
 
-  // Desired pose, velocity, and acceleration in the world frame
-  sva::PTransformd desiredPoseW_ = sva::PTransformd::Identity();
-  sva::MotionVecd desiredVelW_ = sva::MotionVecd::Zero();
-  sva::MotionVecd desiredAccelW_ = sva::MotionVecd::Zero();
+  // Target pose, velocity, and acceleration in the world frame
+  sva::PTransformd targetPoseW_ = sva::PTransformd::Identity();
+  sva::MotionVecd targetVelW_ = sva::MotionVecd::Zero();
+  sva::MotionVecd targetAccelW_ = sva::MotionVecd::Zero();
 
   // Wrench in the surface frame
   sva::ForceVecd targetWrench_ = sva::ForceVecd::Zero();
@@ -347,8 +347,8 @@ protected:
 
 private:
   /** Targets of SurfaceTransformTask should not be set by the user.
-   *  Instead, the user can set the desiredPose, desiredVel, and desiredAccel.
-   *  Targets of SurfaceTransformTask are determined from the desired values through the impedance equation.
+   *  Instead, the user can set the targetPose, targetVel, and targetAccel.
+   *  Targets of SurfaceTransformTask are determined from the target values through the impedance equation.
    */
   using SurfaceTransformTask::refAccel;
   using SurfaceTransformTask::refVelB;
