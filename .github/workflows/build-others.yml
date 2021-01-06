@@ -39,8 +39,11 @@ jobs:
         echo "::group::Dockerfile used to build mc_rtc"
         cat Dockerfile
         echo "::endgroup::"
-        echo "::group::Build"
+        echo "::group::Build base image"
         docker build -t mc-rtc-ci-${{matrix.os}} .
+        echo "::endgroup::"
+        echo "::group::Run install"
+        docker run mc-rtc-ci-${{matrix.os}} /bin/bash -c 'cd /source/utils && ./build_and_install.sh --user-input false --build-benchmarks true --allow-root true'
         echo "::endgroup::"
     - name: Slack Notification
       if: failure()
