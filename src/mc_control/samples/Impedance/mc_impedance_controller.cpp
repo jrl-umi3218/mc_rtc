@@ -43,9 +43,11 @@ MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModu
   Eigen::Vector3d posD = 2 * posM.cwiseProduct(posK).cwiseSqrt();
   impedanceTask_ =
       std::make_shared<mc_tasks::force::ImpedanceTask>("LeftGripper", robots(), robots().robotIndex(), 100.0);
-  impedanceTask_->impedancePosition(posM, posD, posK);
-  impedanceTask_->impedanceOrientation(100 * posM, 100 * posD, 100 * posK);
-  impedanceTask_->wrenchGain(sva::MotionVecd(Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()));
+  auto & gains = impedanceTask_->gains();
+  gains.mass() = {posM, 100 * posM};
+  gains.damper() = {posD, 100 * posD};
+  gains.spring() = {posK, 100 * posK};
+  gains.wrench() = {Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()};
 }
 
 void MCImpedanceController::reset(const ControllerResetData & reset_data)

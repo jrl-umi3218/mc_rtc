@@ -383,6 +383,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h
 ../include/mc_tasks/AdmittanceTask.h
+../include/mc_tasks/ImpedanceGains.h
 ../include/mc_tasks/ImpedanceTask.h
 ../include/mc_tasks/DampingTask.h
 ../include/mc_tasks/CoPTask.h

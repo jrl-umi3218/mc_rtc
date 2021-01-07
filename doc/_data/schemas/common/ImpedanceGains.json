@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "title": "mc_tasks::force::ImpedanceGains",
+  "description": "Impedance gains configuration for mc_tasks::force::ImpedanceTask",
+  "properties":
+  {
+    "mass": { "$ref": "/../../SpaceVecAlg/ImpedanceVecd.json", "description": "Impedance mass parameter represented in the controlled surface" },
+    "damper": { "$ref": "/../../SpaceVecAlg/ImpedanceVecd.json", "description": "Impedance damper parameter represetnted in the controlled surface" },
+    "spring": { "$ref": "/../../SpaceVecAlg/ImpedanceVecd.json", "description": "Impedance spring parameter repesented in the controlled surface" },
+    "wrench": { "$ref": "/../../SpaceVecAlg/ImpedanceVecd.json", "description": "Coefficient-wise gain on the wrench error" }
+  }
+}

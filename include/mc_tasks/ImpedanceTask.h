@@ -4,10 +4,12 @@
 
 #pragma once
 
-#include <mc_filter/LowPass.h>
-#include <mc_filter/utils/clamp.h>
-#include <mc_rtc/constants.h>
+#include <mc_tasks/ImpedanceGains.h>
 #include <mc_tasks/SurfaceTransformTask.h>
+
+#include <mc_filter/LowPass.h>
+
+#include <mc_rtc/constants.h>
 
 namespace mc_tasks
 {
@@ -64,14 +66,6 @@ public:
    *
    * \param weight Task weight
    *
-   * \param impM Impedance mass parameter
-   *
-   * \param impD Impedance damping parameter
-   *
-   * \param impK Impedance spring parameter
-   *
-   * \param ori_scale Scale of impedance parameters for orientation
-   *
    * \throws If the body the task is attempting to control does not have a
    * sensor attached to it
    *
@@ -80,11 +74,7 @@ public:
                 const mc_rbdyn::Robots & robots,
                 unsigned robotIndex,
                 double stiffness = 5.0,
-                double weight = 1000.0,
-                double impM = 10,
-                double impD = 1000,
-                double impK = 1000,
-                double oriScale = 1);
+                double weight = 1000.0);
 
   /*! \brief Reset the task
    *
@@ -94,88 +84,16 @@ public:
    */
   void reset() override;
 
-  /*! \brief Set the impedance parameters in the surface. */
-  void impedance(const sva::ForceVecd & impM, const sva::ForceVecd & impD, const sva::ForceVecd & impK)
+  /*! \brief Access the impedance gains */
+  inline const ImpedanceGains & gains() const noexcept
   {
-    impedancePosition(impM.force(), impD.force(), impK.force());
-    impedanceOrientation(impM.moment(), impD.moment(), impK.moment());
+    return gains_;
   }
 
-  /*! \brief Set the translational impedance parameters in the surface. */
-  void impedancePosition(const Eigen::Vector3d & impMPos,
-                         const Eigen::Vector3d & impDPos,
-                         const Eigen::Vector3d & impKPos)
+  /*! \brief Access the impedance gains */
+  inline ImpedanceGains & gains() noexcept
   {
-    impM_.force() = mc_filter::utils::clampAndWarn(impMPos, impMPosLower_, impMPosUpper_, "impedancePositionM");
-    impD_.force() = mc_filter::utils::clampAndWarn(impDPos, impDPosLower_, impDPosUpper_, "impedancePositionD");
-    impK_.force() = mc_filter::utils::clampAndWarn(impKPos, impKPosLower_, impKPosUpper_, "impedancePositionK");
-  }
-
-  /*! \brief Set the rotational impedance parameters in the surface. */
-  void impedanceOrientation(const Eigen::Vector3d & impMOri,
-                            const Eigen::Vector3d & impDOri,
-                            const Eigen::Vector3d & impKOri)
-  {
-    impM_.moment() = mc_filter::utils::clampAndWarn(impMOri, impMOriLower_, impMOriUpper_, "impedanceOrientationM");
-    impD_.moment() = mc_filter::utils::clampAndWarn(impDOri, impDOriLower_, impDOriUpper_, "impedanceOrientationD");
-    impK_.moment() = mc_filter::utils::clampAndWarn(impKOri, impKOriLower_, impKOriUpper_, "impedanceOrientationK");
-  }
-
-  /*! \brief Get the impedance mass parameter represented in the surface. */
-  const sva::ForceVecd & impedanceM() const noexcept
-  {
-    return impM_;
-  }
-
-  /*! \brief Set the impedance mass parameter represented in the surface. */
-  void impedanceM(const sva::ForceVecd & impM)
-  {
-    impM_.force() = mc_filter::utils::clampAndWarn(impM.force(), impMPosLower_, impMPosUpper_, "impedancePositionM");
-    impM_.moment() =
-        mc_filter::utils::clampAndWarn(impM.moment(), impMOriLower_, impMOriUpper_, "impedanceOrientationM");
-  }
-
-  /*! \brief Get the impedance damper parameter represented in the surface. */
-  const sva::ForceVecd & impedanceD() const noexcept
-  {
-    return impD_;
-  }
-
-  /*! \brief Set the impedance damper parameter represented in the surface. */
-  void impedanceD(const sva::ForceVecd & impD)
-  {
-    impD_.force() = mc_filter::utils::clampAndWarn(impD.force(), impDPosLower_, impDPosUpper_, "impedancePositionD");
-    impD_.moment() =
-        mc_filter::utils::clampAndWarn(impD.moment(), impDOriLower_, impDOriUpper_, "impedanceOrientationD");
-  }
-
-  /*! \brief Get the impedance spring parameter represented in the surface. */
-  const sva::ForceVecd & impedanceK() const noexcept
-  {
-    return impK_;
-  }
-
-  /*! \brief Set the impedance spring parameter represented in the surface. */
-  void impedanceK(const sva::ForceVecd & impK)
-  {
-    impK_.force() = mc_filter::utils::clampAndWarn(impK.force(), impKPosLower_, impKPosUpper_, "impedancePositionK");
-    impK_.moment() =
-        mc_filter::utils::clampAndWarn(impK.moment(), impKOriLower_, impKOriUpper_, "impedanceOrientationK");
-  }
-
-  /*! \brief Get the wrench gain, which is multiplied by the wrench in the surface frame. */
-  const sva::MotionVecd & wrenchGain() const noexcept
-  {
-    return wrenchGain_;
-  }
-
-  /*! \brief Set the wrench gain, which is multiplied by the wrench in the surface frame. */
-  void wrenchGain(const sva::MotionVecd & gain)
-  {
-    wrenchGain_.linear() =
-        mc_filter::utils::clampAndWarn(gain.linear(), wrenchGainLinLower_, wrenchGainLinUpper_, "wrenchGainLinear");
-    wrenchGain_.angular() =
-        mc_filter::utils::clampAndWarn(gain.angular(), wrenchGainAngLower_, wrenchGainAngUpper_, "wrenchGainAngular");
+    return gains_;
   }
 
   /*! \brief Get the target pose of the surface in the world frame. */
@@ -282,31 +200,7 @@ public:
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
 protected:
-  // Impedance parameters represented in the surface frame
-  sva::ForceVecd impM_; // must be set in the Constructor
-  sva::ForceVecd impD_; // must be set in the Constructor
-  sva::ForceVecd impK_; // must be set in the Constructor
-  sva::MotionVecd wrenchGain_ = sva::MotionVecd::Zero();
-
-  // Upper and lower values of impedance parameters
-  const Eigen::Vector3d impMPosUpper_ = Eigen::Vector3d::Constant(1e6);
-  const Eigen::Vector3d impMPosLower_ =
-      Eigen::Vector3d::Constant(1e-6); // must be strictly positive to avoid zero division
-  const Eigen::Vector3d impMOriUpper_ = Eigen::Vector3d::Constant(1e6);
-  const Eigen::Vector3d impMOriLower_ =
-      Eigen::Vector3d::Constant(1e-6); // must be strictly positive to avoid zero division
-  const Eigen::Vector3d impDPosUpper_ = Eigen::Vector3d::Constant(1e6);
-  const Eigen::Vector3d impDPosLower_ = Eigen::Vector3d::Constant(0);
-  const Eigen::Vector3d impDOriUpper_ = Eigen::Vector3d::Constant(1e6);
-  const Eigen::Vector3d impDOriLower_ = Eigen::Vector3d::Constant(0);
-  const Eigen::Vector3d impKPosUpper_ = Eigen::Vector3d::Constant(1e6);
-  const Eigen::Vector3d impKPosLower_ = Eigen::Vector3d::Constant(0);
-  const Eigen::Vector3d impKOriUpper_ = Eigen::Vector3d::Constant(1e6);
-  const Eigen::Vector3d impKOriLower_ = Eigen::Vector3d::Constant(0);
-  const Eigen::Vector3d wrenchGainLinUpper_ = Eigen::Vector3d::Constant(1e6);
-  const Eigen::Vector3d wrenchGainLinLower_ = Eigen::Vector3d::Constant(0);
-  const Eigen::Vector3d wrenchGainAngUpper_ = Eigen::Vector3d::Constant(1e6);
-  const Eigen::Vector3d wrenchGainAngLower_ = Eigen::Vector3d::Constant(0);
+  ImpedanceGains gains_;
 
   /** Relative pose, velocity, and acceleration from target frame to compliance frame represented in the world frame.
    *  To store these values across control cycles, represent them in a constant world frame instead of the time-varying

@@ -24,10 +24,7 @@
         "stiffness": { "default": 5 },
         "target": { "$ref" : "/../../SpaceVecAlg/PTransformd.json" },
         "wrench": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "<b>Wrench target</b> (desired force-torque)" },
-        "impedanceM": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "Impedance mass parameter represented in the controlled surface" },
-        "impedanceD": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "Impedance damper parameter represetnted in the controlled surface" },
-        "impedanceK": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "Impedance spring parameter repesented in the controlled surface" },
-        "wrenchGain": { "$ref": "/../../SpaceVecAlg/MotionVecd.json", "description": "Coefficient-wise gain on the wrench error" },
+        "gains": { "$ref": "/../../common/ImpedanceGains.json", "description": "Impedance gains" },
         "completion": { "$ref": "/../../common/completion_wrench.json" }
       }
     },

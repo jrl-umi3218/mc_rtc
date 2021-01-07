@@ -19,11 +19,7 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
                              const mc_rbdyn::Robots & robots,
                              unsigned int robotIndex,
                              double stiffness,
-                             double weight,
-                             double impM,
-                             double impD,
-                             double impK,
-                             double oriScale)
+                             double weight)
 : SurfaceTransformTask(surfaceName, robots, robotIndex, stiffness, weight), lowPass_(0.005, 0.05)
 {
   const auto & robot = robots.robot(robotIndex);
@@ -35,11 +31,6 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
     mc_rtc::log::error_and_throw<std::runtime_error>("[{}] Surface {} does not have a force sensor attached", name_,
                                                      surfaceName);
   }
-
-  // Set impedance parameters
-  impedance(sva::ForceVecd(Eigen::Vector3d::Constant(oriScale * impM), Eigen::Vector3d::Constant(impM)),
-            sva::ForceVecd(Eigen::Vector3d::Constant(oriScale * impD), Eigen::Vector3d::Constant(impD)),
-            sva::ForceVecd(Eigen::Vector3d::Constant(oriScale * impK), Eigen::Vector3d::Constant(impK)));
 }
 
 void ImpedanceTask::update(mc_solver::QPSolver & solver)
@@ -59,11 +50,11 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
       sva::MotionVecd(
           // Compute in the surface frame because the impedance parameters and wrench gain are represented in the
           // surface frame
-          impM_.vector().cwiseInverse().cwiseProduct(
+          gains().M().vector().cwiseInverse().cwiseProduct(
               // T_0_s transforms the MotionVecd value from world to surface frame
-              -impD_.vector().cwiseProduct((T_0_s * deltaCompVelW_).vector())
-              - impK_.vector().cwiseProduct((T_0_s * sva::transformVelocity(deltaCompPoseW_)).vector())
-              + wrenchGain_.vector().cwiseProduct((filteredMeasuredWrench_ - targetWrench_).vector()))));
+              -gains().D().vector().cwiseProduct((T_0_s * deltaCompVelW_).vector())
+              - gains().K().vector().cwiseProduct((T_0_s * sva::transformVelocity(deltaCompPoseW_)).vector())
+              + gains().wrench().vector().cwiseProduct((filteredMeasuredWrench_ - targetWrench_).vector()))));
 
   if(deltaCompAccelW_.linear().norm() > deltaCompAccelLinLimit_)
   {
@@ -162,33 +153,18 @@ void ImpedanceTask::reset()
 
 void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
 {
-  if(config.has("impedanceM"))
+  if(config.has("gains"))
   {
-    impedanceM(config("impedanceM"));
+    gains_ = config("gains");
   }
-  if(config.has("impedanceD"))
-  {
-    impedanceD(config("impedanceD"));
-  }
-  if(config.has("impedanceK"))
-  {
-    impedanceK(config("impedanceK"));
-  }
-  if(config.has("wrenchGain"))
-  {
-    wrenchGain(config("wrenchGain"));
-  }
-
   if(config.has("wrench"))
   {
     targetWrench(config("wrench"));
   }
-
   if(config.has("cutoffPeriod"))
   {
     cutoffPeriod(config("cutoffPeriod"));
   }
-
   SurfaceTransformTask::load(solver, config);
   // The SurfaceTransformTask::load function above only sets
   // the TrajectoryTaskGeneric's target, but not the compliance target, so we
@@ -207,10 +183,11 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
   SurfaceTransformTask::addToLogger(logger);
 
   // impedance parameters
-  logger.addLogEntry(name_ + "_impedanceM", [this]() -> const sva::ForceVecd & { return impM_; });
-  logger.addLogEntry(name_ + "_impedanceD", [this]() -> const sva::ForceVecd & { return impD_; });
-  logger.addLogEntry(name_ + "_impedanceK", [this]() -> const sva::ForceVecd & { return impK_; });
-  logger.addLogEntry(name_ + "_wrenchGain", [this]() -> const sva::MotionVecd & { return wrenchGain_; });
+  logger.addLogEntry(name_ + "_gains_M", [this]() -> const sva::ImpedanceVecd & { return gains().M().vec(); });
+  logger.addLogEntry(name_ + "_gains_D", [this]() -> const sva::ImpedanceVecd & { return gains().D().vec(); });
+  logger.addLogEntry(name_ + "_gains_K", [this]() -> const sva::ImpedanceVecd & { return gains().K().vec(); });
+  logger.addLogEntry(name_ + "_gains_wrench",
+                     [this]() -> const sva::ImpedanceVecd & { return gains().wrench().vec(); });
 
   // compliance values
   logger.addLogEntry(name_ + "_deltaCompliancePose", [this]() -> const sva::PTransformd & { return deltaCompPoseW_; });
@@ -235,10 +212,10 @@ void ImpedanceTask::removeFromLogger(mc_rtc::Logger & logger)
   SurfaceTransformTask::removeFromLogger(logger);
 
   // impedance parameters
-  logger.removeLogEntry(name_ + "_impedanceM");
-  logger.removeLogEntry(name_ + "_impedanceD");
-  logger.removeLogEntry(name_ + "_impedanceK");
-  logger.removeLogEntry(name_ + "_wrenchGain");
+  logger.removeLogEntry(name_ + "_gains_M");
+  logger.removeLogEntry(name_ + "_gains_D");
+  logger.removeLogEntry(name_ + "_gains_K");
+  logger.removeLogEntry(name_ + "_gains_wrench");
 
   // compliance values
   logger.removeLogEntry(name_ + "_deltaCompliancePose");
@@ -269,19 +246,6 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                         [this](const sva::PTransformd & pos) { this->targetPose(pos); }),
                  mc_rtc::gui::Transform("compliancePose", [this]() { return this->compliancePose(); }),
                  mc_rtc::gui::Transform("pose", [this]() { return this->surfacePose(); }),
-                 // impedance parameters
-                 mc_rtc::gui::ArrayInput("impedanceM", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() { return this->impedanceM().vector(); },
-                                         [this](const Eigen::Vector6d & a) { this->impedanceM(a); }),
-                 mc_rtc::gui::ArrayInput("impedanceD", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() { return this->impedanceD().vector(); },
-                                         [this](const Eigen::Vector6d & a) { this->impedanceD(a); }),
-                 mc_rtc::gui::ArrayInput("impedanceK", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() { return this->impedanceK().vector(); },
-                                         [this](const Eigen::Vector6d & a) { this->impedanceK(a); }),
-                 mc_rtc::gui::ArrayInput("wrenchGain", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() { return this->wrenchGain().vector(); },
-                                         [this](const Eigen::Vector6d & a) { this->wrenchGain(a); }),
                  // wrench
                  mc_rtc::gui::ArrayInput("targetWrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
                                          [this]() { return this->targetWrench().vector(); },
@@ -292,6 +256,19 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                          [this]() { return this->filteredMeasuredWrench_.vector(); }),
                  mc_rtc::gui::NumberInput("cutoffPeriod", [this]() { return this->cutoffPeriod(); },
                                           [this](double a) { return this->cutoffPeriod(a); }));
+  gui.addElement({"Tasks", name_, "Impedance gains"},
+                 mc_rtc::gui::ArrayInput("mass", {"cx", "cy", "cz", "fx", "fy", "fz"},
+                                         [this]() -> const sva::ImpedanceVecd & { return gains().mass().vec(); },
+                                         [this](const Eigen::Vector6d & a) { gains().mass().vec(a); }),
+                 mc_rtc::gui::ArrayInput("damper", {"cx", "cy", "cz", "fx", "fy", "fz"},
+                                         [this]() -> const sva::ImpedanceVecd & { return gains().damper().vec(); },
+                                         [this](const Eigen::Vector6d & a) { gains().damper().vec(a); }),
+                 mc_rtc::gui::ArrayInput("spring", {"cx", "cy", "cz", "fx", "fy", "fz"},
+                                         [this]() -> const sva::ImpedanceVecd & { return gains().spring().vec(); },
+                                         [this](const Eigen::Vector6d & a) { gains().spring().vec(a); }),
+                 mc_rtc::gui::ArrayInput("wrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
+                                         [this]() -> const sva::ImpedanceVecd & { return gains().wrench().vec(); },
+                                         [this](const Eigen::Vector6d & a) { gains().wrench().vec(a); }));
 }
 
 } // namespace force
