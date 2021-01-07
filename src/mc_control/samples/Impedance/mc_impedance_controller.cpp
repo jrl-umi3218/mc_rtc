@@ -12,13 +12,13 @@ namespace mc_control
 MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
 : MCController(robot_module, dt)
 {
-  qpsolver->addConstraintSet(contactConstraint);
-  qpsolver->addConstraintSet(kinematicsConstraint);
-  qpsolver->addConstraintSet(selfCollisionConstraint);
-  qpsolver->addConstraintSet(*compoundJointConstraint);
+  solver().addConstraintSet(contactConstraint);
+  solver().addConstraintSet(kinematicsConstraint);
+  solver().addConstraintSet(selfCollisionConstraint);
+  solver().addConstraintSet(*compoundJointConstraint);
 
   // add PostureTask
-  qpsolver->addTask(postureTask);
+  solver().addTask(postureTask);
   postureTask->stiffness(1);
   postureTask->weight(1);
 
@@ -57,6 +57,7 @@ void MCImpedanceController::reset(const ControllerResetData & reset_data)
   if(comTask_)
   {
     comTask_->reset();
+    solver().addTask(comTask_);
     solver().setContacts(
         {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
   }
