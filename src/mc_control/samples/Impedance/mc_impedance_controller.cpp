@@ -44,9 +44,9 @@ MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModu
   impedanceTask_ =
       std::make_shared<mc_tasks::force::ImpedanceTask>("LeftGripper", robots(), robots().robotIndex(), 100.0);
   auto & gains = impedanceTask_->gains();
-  gains.mass() = {posM, 100 * posM};
-  gains.damper() = {posD, 100 * posD};
-  gains.spring() = {posK, 100 * posK};
+  gains.mass() = {100 * posM, posM};
+  gains.damper() = {100 * posD, posD};
+  gains.spring() = {100 * posK, posK};
   gains.wrench() = {Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()};
 }
 
