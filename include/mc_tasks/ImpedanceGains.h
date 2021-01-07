@@ -164,12 +164,12 @@ struct MC_TASKS_DLLAPI ImpedanceGains
   /** Impedance spring parameter */
   inline const details::ImpedanceVecd<false> & spring() const noexcept
   {
-    return D_;
+    return K_;
   }
   /** Impedance spring parameter */
   inline details::ImpedanceVecd<false> & spring() noexcept
   {
-    return D_;
+    return K_;
   }
 
   /** Impedance wrench gain */
