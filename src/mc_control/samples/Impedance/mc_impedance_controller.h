@@ -6,7 +6,8 @@
 
 #include <mc_control/api.h>
 #include <mc_control/mc_controller.h>
-#include <mc_tasks/EndEffectorTask.h>
+
+#include <mc_tasks/CoMTask.h>
 #include <mc_tasks/ImpedanceTask.h>
 
 namespace mc_control
@@ -19,17 +20,12 @@ struct MC_CONTROL_DLLAPI MCImpedanceController : public MCController
   bool run() override;
   void stop() override;
 
-  void supported_robots(std::vector<std::string> & out) const override
-  {
-    // Hand surface name is specific to the robot
-    out = {"jvrc1"};
-  }
-
 protected:
   void addGUI();
   Eigen::Vector3d circleTrajectory(double angle);
 
 protected:
+  std::shared_ptr<mc_tasks::CoMTask> comTask_;
   std::shared_ptr<mc_tasks::force::ImpedanceTask> impedanceTask_;
   double angle_ = 0.0;
   double radius_ = 0.2;

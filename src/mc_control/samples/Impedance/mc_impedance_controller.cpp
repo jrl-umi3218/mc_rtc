@@ -12,13 +12,6 @@ namespace mc_control
 MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModule> robot_module, double dt)
 : MCController(robot_module, dt)
 {
-  if(robot().mb().joint(0).type() != rbd::Joint::Type::Fixed)
-  {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "The \"Impedance\" controller requires a robot with a fixed base (base of robot {} has {} DoF)", robot().name(),
-        robot().mb().joint(0).dof());
-  }
-
   qpsolver->addConstraintSet(contactConstraint);
   qpsolver->addConstraintSet(kinematicsConstraint);
   qpsolver->addConstraintSet(selfCollisionConstraint);
@@ -28,6 +21,21 @@ MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModu
   qpsolver->addTask(postureTask);
   postureTask->stiffness(1);
   postureTask->weight(1);
+
+  if(!robot().hasSurface("LeftGripper"))
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "The Impedance sample controller requires the main robot to have a LeftGripper surface");
+  }
+  if(robot().mb().joint(0).type() != rbd::Joint::Type::Fixed)
+  {
+    if(!(robot().hasSurface("LeftFoot") && robot().hasSurface("RightFoot")))
+    {
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "The Impedance sample controller cannot handle this robot as it has no Left|RightFoot surfaces");
+    }
+    comTask_ = std::make_shared<mc_tasks::CoMTask>(robots(), robots().robotIndex());
+  }
 
   // add ImpedanceTask of left hand
   Eigen::Vector3d posM = Eigen::Vector3d::Constant(1.0);
@@ -43,10 +51,18 @@ MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModu
 void MCImpedanceController::reset(const ControllerResetData & reset_data)
 {
   MCController::reset(reset_data);
+
+  if(comTask_)
+  {
+    comTask_->reset();
+    solver().setContacts(
+        {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
+  }
+
   impedanceTask_->reset();
   solver().addTask(impedanceTask_);
-  center_ = impedanceTask_->desiredPose().translation() + Eigen::Vector3d{0.0, radius_, 0.0};
-  orientation_ = impedanceTask_->desiredPose().rotation();
+  center_ = impedanceTask_->targetPose().translation() + Eigen::Vector3d{0.0, radius_, 0.0};
+  orientation_ = impedanceTask_->targetPose().rotation();
   angle_ = 3 * mc_rtc::constants::PI / 2.;
 
   addGUI();
@@ -56,7 +72,7 @@ bool MCImpedanceController::run()
 {
 
   // Track the circle trajectory
-  impedanceTask_->desiredPose({orientation_, circleTrajectory(angle_)});
+  impedanceTask_->targetPose({orientation_, circleTrajectory(angle_)});
   angle_ += speed_ * solver().dt();
 
   return mc_control::MCController::run();
