@@ -97,11 +97,18 @@ private:
   sva::ImpedanceVecd vec_;
 };
 
+// Repeat static constexpr declarations
+// See also https://stackoverflow.com/q/8016780
+template<bool b>
+constexpr double ImpedanceVecd<b>::limit;
+
 } // namespace details
 
 /*! \brief Represent impedance gains for an \ref ImpedanceTask */
 struct MC_TASKS_DLLAPI ImpedanceGains
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   /** Impedance mass parameter */
   inline const details::ImpedanceVecd<true> & M() const noexcept
   {
