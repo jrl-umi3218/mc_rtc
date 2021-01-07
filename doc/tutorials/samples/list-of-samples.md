@@ -140,7 +140,7 @@ To run this controller, simply put in [your mc_rtc configuration]({{site.baseurl
 
 ```yaml
 MainRobot: JVRC1Fixed
-Enabled: Admittance
+Enabled: Impedance
 ```
 
 # LIPMStabilizer
