@@ -200,7 +200,7 @@ public:
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
 protected:
-  ImpedanceGains gains_;
+  ImpedanceGains gains_ = ImpedanceGains::Default();
 
   /** Relative pose, velocity, and acceleration from target frame to compliance frame represented in the world frame.
    *  To store these values across control cycles, represent them in a constant world frame instead of the time-varying

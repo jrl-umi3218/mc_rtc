@@ -57,6 +57,18 @@ struct ImpedanceVecd
     linear(v.tail<3>());
   }
 
+  inline void vec(const Eigen::Vector3d & a, const Eigen::Vector3d & l) noexcept
+  {
+    angular(a);
+    linear(l);
+  }
+
+  inline void vec(double a, double l) noexcept
+  {
+    angular(a);
+    linear(l);
+  }
+
   inline const sva::ImpedanceVecd & vec() const noexcept
   {
     return vec_;
@@ -181,6 +193,16 @@ struct MC_TASKS_DLLAPI ImpedanceGains
   inline details::ImpedanceVecd<false> & wrench() noexcept
   {
     return wrench_;
+  }
+
+  /** Returns default gains for the ImpedanceTask */
+  inline static ImpedanceGains Default()
+  {
+    ImpedanceGains out;
+    out.mass().vec(10.0, 10.0);
+    out.damper().vec(1000.0, 1000.0);
+    out.spring().vec(1000.0, 1000.0);
+    return out;
   }
 
 protected:
