@@ -239,6 +239,8 @@ protected:
   void addToLogger(mc_rtc::Logger & logger) override;
   void removeFromLogger(mc_rtc::Logger & logger) override;
 
+  void addGainsForm(mc_rtc::gui::StateBuilder & gui);
+
 private:
   /** Targets of SurfaceTransformTask should not be set by the user.
    *  Instead, the user can set the targetPose, targetVel, and targetAccel.

@@ -7,6 +7,7 @@
 #include <mc_tasks/MetaTaskLoader.h>
 
 #include <mc_rtc/gui/ArrayLabel.h>
+#include <mc_rtc/gui/Form.h>
 #include <mc_rtc/gui/Transform.h>
 
 namespace mc_tasks
@@ -256,19 +257,25 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                          [this]() { return this->filteredMeasuredWrench_.vector(); }),
                  mc_rtc::gui::NumberInput("cutoffPeriod", [this]() { return this->cutoffPeriod(); },
                                           [this](double a) { return this->cutoffPeriod(a); }));
-  gui.addElement({"Tasks", name_, "Impedance gains"},
-                 mc_rtc::gui::ArrayInput("mass", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() -> const sva::ImpedanceVecd & { return gains().mass().vec(); },
-                                         [this](const Eigen::Vector6d & a) { gains().mass().vec(a); }),
-                 mc_rtc::gui::ArrayInput("damper", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() -> const sva::ImpedanceVecd & { return gains().damper().vec(); },
-                                         [this](const Eigen::Vector6d & a) { gains().damper().vec(a); }),
-                 mc_rtc::gui::ArrayInput("spring", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() -> const sva::ImpedanceVecd & { return gains().spring().vec(); },
-                                         [this](const Eigen::Vector6d & a) { gains().spring().vec(a); }),
-                 mc_rtc::gui::ArrayInput("wrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() -> const sva::ImpedanceVecd & { return gains().wrench().vec(); },
-                                         [this](const Eigen::Vector6d & a) { gains().wrench().vec(a); }));
+  addGainsForm(gui);
+}
+
+void ImpedanceTask::addGainsForm(mc_rtc::gui::StateBuilder & gui)
+{
+  gui.removeElement({"Tasks", name_, "Impedance gains"}, "Change gains");
+  gui.addElement(
+      {"Tasks", name_, "Impedance gains"},
+      mc_rtc::gui::Form("Change gains",
+                        [this, &gui](const mc_rtc::Configuration & data) {
+                          auto new_gains = mc_rtc::ConfigurationLoader<ImpedanceGains>::save(gains());
+                          new_gains.load(data);
+                          this->gains() = new_gains;
+                          this->addGainsForm(gui);
+                        },
+                        mc_rtc::gui::FormArrayInput<sva::ImpedanceVecd>{"mass", false, gains().mass().vec()},
+                        mc_rtc::gui::FormArrayInput<sva::ImpedanceVecd>{"damper", false, gains().damper().vec()},
+                        mc_rtc::gui::FormArrayInput<sva::ImpedanceVecd>{"spring", false, gains().spring().vec()},
+                        mc_rtc::gui::FormArrayInput<sva::ImpedanceVecd>{"wrench", false, gains().wrench().vec()}));
 }
 
 } // namespace force
