@@ -45,6 +45,16 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
     }
   }
 
+  config("updatePose", updatePose_);
+  config("updateVel", updateVel_);
+  if(ctl.realRobot(updateRobot_).mb().joint(0).type() == rbd::Joint::Type::Fixed)
+  {
+    mc_rtc::log::warning("[{}] Requested update of the base velocity for robot {} but this robot has a fixed base, "
+                         "velocity update will be ignored",
+                         name(), updateRobot_);
+    updateVel_ = false;
+  }
+
   if(config.has("log"))
   {
     auto lConfig = config("log");
@@ -87,9 +97,22 @@ bool BodySensorObserver::run(const mc_control::MCController & ctl)
     const auto & sensor = robot.bodySensor(fbSensorName_);
     const auto & fb = realRobot.mb().body(0).name();
     sva::PTransformd X_0_s(sensor.orientation(), sensor.position());
+
     const auto X_s_b = sensor.X_b_s().inv();
     sva::PTransformd X_b_fb = realRobot.X_b1_b2(sensor.parentBody(), fb);
     sva::PTransformd X_s_fb = X_b_fb * X_s_b;
+    // Note 1: This renormalizes and reorthogonalizes the rotation matrix to
+    // avoid numerical errors slowly adding up over the course of many
+    // iterations. It would however be better to compute the relative pose
+    // X_b_fb withoug passing through the world frame, which would not be
+    // subject from this denormalization issue.
+    // Note 2: This issue only occurs for fixed-base robots, as the posW()
+    // performs the quaternion conversion and normalization itself
+    {
+      Eigen::Quaterniond rot(X_s_fb.rotation());
+      rot.normalize();
+      X_s_fb.rotation() = rot.toRotationMatrix();
+    }
     posW_ = X_s_fb * X_0_s;
 
     sva::MotionVecd sensorVel(sensor.angularVelocity(), sensor.linearVelocity());
@@ -109,8 +132,14 @@ bool BodySensorObserver::run(const mc_control::MCController & ctl)
 void BodySensorObserver::update(mc_control::MCController & ctl)
 {
   auto & realRobot = ctl.realRobots().robot(updateRobot_);
-  realRobot.posW(posW_);
-  realRobot.velW(velW_);
+  if(updatePose_)
+  {
+    realRobot.posW(posW_);
+  }
+  if(updateVel_)
+  {
+    realRobot.velW(velW_);
+  }
 }
 
 void BodySensorObserver::addToLogger(const mc_control::MCController &,

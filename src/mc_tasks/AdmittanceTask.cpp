@@ -168,6 +168,7 @@ static auto registered = mc_tasks::MetaTaskLoader::register_load_function(
       auto t = std::make_shared<mc_tasks::force::AdmittanceTask>(
           config("surface"), solver.robots(), robotIndexFromConfig(config, solver.robots(), "admittance"));
 
+      t->reset();
       t->load(solver, config);
       return t;
     });

@@ -153,7 +153,8 @@ void ExactCubic::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std
                  mc_rtc::gui::Point3D("Target Position", [this]() -> const Eigen::Vector3d & { return target(); },
                                       [this](const Eigen::Vector3d & pos) { target(pos); }));
 
-  gui.addElement(category, mc_rtc::gui::Trajectory("Trajectory", [this]() { return samples_; }));
+  gui.addElement(category, mc_rtc::gui::Trajectory(
+                               "Trajectory", [this]() -> const std::vector<Eigen::Vector3d> & { return samples_; }));
 
   // Interactive control points (target is handled independently)
   std::vector<std::string> waypointCategory = category;

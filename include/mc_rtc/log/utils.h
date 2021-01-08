@@ -84,6 +84,7 @@ IMPL_MAPPING(Eigen::Quaterniond, Quaterniond);
 IMPL_MAPPING(sva::PTransformd, PTransformd);
 IMPL_MAPPING(sva::ForceVecd, ForceVecd);
 IMPL_MAPPING(sva::MotionVecd, MotionVecd);
+IMPL_MAPPING(sva::ImpedanceVecd, MotionVecd);
 
 #undef IMPL_MAPPING
 

@@ -94,6 +94,8 @@ protected:
   sva::MotionVecd accW_ = sva::MotionVecd::Zero();
   std::string robot_;
   std::string updateRobot_;
+  bool updatePose_ = true;
+  bool updateVel_ = true;
 
   bool logPos_ = true;
   bool logVel_ = true;

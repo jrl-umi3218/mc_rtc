@@ -347,6 +347,7 @@ mc_tasks/BSplineTrajectoryTask.cpp
 mc_tasks/ExactCubicTrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/AdmittanceTask.cpp
+mc_tasks/ImpedanceTask.cpp
 mc_tasks/DampingTask.cpp
 mc_tasks/CoPTask.cpp
 mc_tasks/GazeTask.cpp
@@ -382,6 +383,8 @@ set(mc_tasks_HDR
 ../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h
 ../include/mc_tasks/AdmittanceTask.h
+../include/mc_tasks/ImpedanceGains.h
+../include/mc_tasks/ImpedanceTask.h
 ../include/mc_tasks/DampingTask.h
 ../include/mc_tasks/CoPTask.h
 ../include/mc_tasks/GazeTask.h

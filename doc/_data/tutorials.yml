@@ -120,6 +120,9 @@
   desc: This section explains the sample controllers
   tutorials:
     -
+      id: list-of-samples 
+      title: Available sample controllers 
+    -
       id: sample-admittance
       title: Admittance sample controller
 -

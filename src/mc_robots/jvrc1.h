@@ -14,7 +14,7 @@ namespace mc_robots
 struct MC_ROBOTS_DLLAPI JVRC1RobotModule : public mc_rbdyn::RobotModule
 {
 public:
-  JVRC1RobotModule();
+  JVRC1RobotModule(bool fixed = false);
 };
 
 } // namespace mc_robots

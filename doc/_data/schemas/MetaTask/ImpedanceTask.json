@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "title": "mc_tasks::force::ImpedanceTask",
+  "description": "This task is similar to AdmittanceTask and DampingTask. Unlike those, the robot can adapt to an external force while following a target pose.",
+  "allOf":
+  [
+    {
+      "$ref": "/../../common/MetaTask_common.json"
+    },
+    {
+      "$ref": "/../../common/MetaTask_surface.json"
+    },
+    {
+      "$ref": "/../../common/SurfaceTransformTask.json"
+    },
+    {
+      "$ref": "/../../common/TrajectoryTaskGeneric.json"
+    },
+    {
+      "properties":
+      {
+        "type": { "enum": ["impedance"] },
+        "weight": { "default": 1000},
+        "stiffness": { "default": 5 },
+        "target": { "$ref" : "/../../SpaceVecAlg/PTransformd.json" },
+        "wrench": { "$ref": "/../../SpaceVecAlg/ForceVecd.json", "description": "<b>Wrench target</b> (desired force-torque)" },
+        "gains": { "$ref": "/../../common/ImpedanceGains.json", "description": "Impedance gains" },
+        "completion": { "$ref": "/../../common/completion_wrench.json" }
+      }
+    },
+    {
+      "properties":
+      {
+        "dimWeight": { "$ref": "/../../Eigen/Vector6d.json" }
+      }
+    }
+  ],
+  "required": ["type", "surface"]
+}
