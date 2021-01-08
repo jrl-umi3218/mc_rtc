@@ -109,6 +109,9 @@ $(document).ready(function(){initNavTree('functions_l.html','');});
 <li>LightGray
 : <a class="el" href="structmc__rtc_1_1gui_1_1Color.html#a3df51c77219b7e3811b711250de18017">mc_rtc::gui::Color</a>
 </li>
+<li>linear()
+: <a class="el" href="structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html#afd1316255060bd035cf6c6c31e4b140b">mc_tasks::force::details::ImpedanceVecd&lt; StrictlyPositive &gt;</a>
+</li>
 <li>linearAcceleration()
 : <a class="el" href="structmc__rbdyn_1_1BodySensor.html#a61147130274da6eda00b8d5a1ec0e5e7">mc_rbdyn::BodySensor</a>
 </li>
@@ -146,13 +149,15 @@ $(document).ready(function(){initNavTree('functions_l.html','');});
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html#a6b0037fff03fea12d4af58a981106d43">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::ForceConfig &gt;</a>
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html#af3e94b1809d944da84603540e5d8e587">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::LineConfig &gt;</a>
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html#a68a8a076dbd6c8313d40e7d9dcdce8f2">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PointConfig &gt;</a>
+, <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html#a27cd3f0ff60cc5268b144f132b9c9413">mc_rtc::ConfigurationLoader&lt; mc_tasks::force::ImpedanceGains &gt;</a>
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html#a1528be809a0f45f51c25a46722a101bb">mc_rtc::ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;</a>
 , <a class="el" href="structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html#a8b405815d2c463e01efa6394cca1dc54">mc_rtc::ConfigurationLoader&lt; void &gt;</a>
 , <a class="el" href="structmc__rtc_1_1log_1_1FlatLog.html#aaab239b6569c991b55472d3811e2360b">mc_rtc::log::FlatLog</a>
-, <a class="el" href="structmc__solver_1_1GenericLoader.html#a5da6be5874e61bd328a5452dda08950c">mc_solver::GenericLoader&lt; Derived, T &gt;</a>
+, <a class="el" href="structmc__solver_1_1GenericLoader.html#ab10c87faa2a1fb4721163c6a479fdd78">mc_solver::GenericLoader&lt; Derived, T &gt;</a>
 , <a class="el" href="structmc__tasks_1_1CoMTask.html#a1e128a33ad470c85099edc2f64409a25">mc_tasks::CoMTask</a>
 , <a class="el" href="structmc__tasks_1_1EndEffectorTask.html#ad54a271a90a4ac60b338e5f50d24b743">mc_tasks::EndEffectorTask</a>
 , <a class="el" href="structmc__tasks_1_1force_1_1AdmittanceTask.html#a11f68c4af2082ba57141752b3036e0f1">mc_tasks::force::AdmittanceTask</a>
+, <a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#ab8f7ed4e3d9f2393c9d91ef1a7456eae">mc_tasks::force::ImpedanceTask</a>
 , <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aea4976e383f665df47a0396b85a2db32">mc_tasks::lipm_stabilizer::StabilizerTask</a>
 , <a class="el" href="structmc__tasks_1_1MetaTask.html#a27dbee0df32ae7f803184cb6222fc427">mc_tasks::MetaTask</a>
 , <a class="el" href="structmc__tasks_1_1MomentumTask.html#a722bd3ba35066d38f9d301126f46e8fc">mc_tasks::MomentumTask</a>
@@ -247,7 +252,7 @@ $(document).ready(function(){initNavTree('functions_l.html','');});
 : <a class="el" href="structmc__rtc_1_1Logger.html#a18ce85d2d7612f7029b47a3931c72316">mc_rtc::Logger</a>
 </li>
 <li>logger()
-: <a class="el" href="structmc__solver_1_1QPSolver.html#a6d2e5c1529e97fa15bff07a9092b1339">mc_solver::QPSolver</a>
+: <a class="el" href="structmc__solver_1_1QPSolver.html#ae805619eed38900664c15a1f3be7921f">mc_solver::QPSolver</a>
 </li>
 <li>logger_
 : <a class="el" href="structmc__control_1_1MCController.html#a5de6a08cbbe04ccc032bc4ebbd2773dc">mc_control::MCController</a>
@@ -271,13 +276,16 @@ $(document).ready(function(){initNavTree('functions_l.html','');});
 : <a class="el" href="structmc__tasks_1_1LookAtSurfaceTask.html#af114f86e50d42bb8f1cdae2e5dd8a593">mc_tasks::LookAtSurfaceTask</a>
 </li>
 <li>LookAtTask()
-: <a class="el" href="structmc__tasks_1_1LookAtTask.html#aa8ac514e5194309507f7032f47c0cbd4">mc_tasks::LookAtTask</a>
+: <a class="el" href="structmc__tasks_1_1LookAtTask.html#a6ab5055c130fd2813d825c7bcd508fb9">mc_tasks::LookAtTask</a>
 </li>
 <li>LookAtTFTask()
 : <a class="el" href="structmc__tasks_1_1LookAtTFTask.html#aad7bb499a5ca16373eb9420ee5ac33ab">mc_tasks::LookAtTFTask</a>
 </li>
 <li>LowPass()
 : <a class="el" href="structmc__filter_1_1LowPass.html#ae3ddcbbc84aae62aad621a14a91c39bf">mc_filter::LowPass&lt; T &gt;</a>
+</li>
+<li>lowPass_
+: <a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#a51861dc893e2a8aa733f48423e48c6c1">mc_tasks::force::ImpedanceTask</a>
 </li>
 <li>LowPassFiniteDifferences()
 : <a class="el" href="structmc__filter_1_1LowPassFiniteDifferences.html#a6b34f60855856174042323741e8ca777">mc_filter::LowPassFiniteDifferences&lt; T &gt;</a>
@@ -286,7 +294,7 @@ $(document).ready(function(){initNavTree('functions_l.html','');});
 : <a class="el" href="structmc__filter_1_1LowPassFiniteDifferences.html#aaac75c58b8f9680abe5bd377c9701253">mc_filter::LowPassFiniteDifferences&lt; T &gt;</a>
 </li>
 <li>LTDLHandle()
-: <a class="el" href="structmc__rtc_1_1LTDLHandle.html#aeb254d88dad0c357ba003eb2ef458556">mc_rtc::LTDLHandle</a>
+: <a class="el" href="structmc__rtc_1_1LTDLHandle.html#a1d2ebbcff7e52decbb18a9dc96b7671b">mc_rtc::LTDLHandle</a>
 </li>
 </ul>
 </div><!-- contents -->

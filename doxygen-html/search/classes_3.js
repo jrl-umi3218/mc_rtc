@@ -38,6 +38,7 @@ var searchData=
   ['configurationloader_3c_20mc_5frtc_3a_3agui_3a_3aforceconfig_20_3e',['ConfigurationLoader&lt; mc_rtc::gui::ForceConfig &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html',1,'mc_rtc']]],
   ['configurationloader_3c_20mc_5frtc_3a_3agui_3a_3alineconfig_20_3e',['ConfigurationLoader&lt; mc_rtc::gui::LineConfig &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html',1,'mc_rtc']]],
   ['configurationloader_3c_20mc_5frtc_3a_3agui_3a_3apointconfig_20_3e',['ConfigurationLoader&lt; mc_rtc::gui::PointConfig &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html',1,'mc_rtc']]],
+  ['configurationloader_3c_20mc_5ftasks_3a_3aforce_3a_3aimpedancegains_20_3e',['ConfigurationLoader&lt; mc_tasks::force::ImpedanceGains &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html',1,'mc_rtc']]],
   ['configurationloader_3c_20mc_5ftasks_3a_3alipm_5fstabilizer_3a_3acontactstate_20_3e',['ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html',1,'mc_rtc']]],
   ['configurationloader_3c_20void_20_3e',['ConfigurationLoader&lt; void &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html',1,'mc_rtc']]],
   ['constraint',['Constraint',['../structmc__solver_1_1utils_1_1Constraint.html',1,'mc_solver::utils']]],

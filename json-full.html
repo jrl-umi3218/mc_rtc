@@ -143,6 +143,10 @@
           
             
             
+            <a id="SpaceVecAlg_ImpedanceVecd_link" href="#collapse_SpaceVecAlg_ImpedanceVecd" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="SpaceVecAlg/ImpedanceVecd" aria-controls="collapse_SpaceVecAlg_ImpedanceVecd">ImpedanceVecd</a>
+          
+            
+            
             <a id="SpaceVecAlg_MotionVecd_link" href="#collapse_SpaceVecAlg_MotionVecd" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="SpaceVecAlg/MotionVecd" aria-controls="collapse_SpaceVecAlg_MotionVecd">MotionVecd</a>
           
             
@@ -368,6 +372,10 @@
           
             
             
+            <a id="ConstraintSet_CompoundJointConstraint_link" href="#collapse_ConstraintSet_CompoundJointConstraint" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="ConstraintSet/CompoundJointConstraint" aria-controls="collapse_ConstraintSet_CompoundJointConstraint">CompoundJointConstraint</a>
+          
+            
+            
             <a id="ConstraintSet_ContactConstraint_link" href="#collapse_ConstraintSet_ContactConstraint" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="ConstraintSet/ContactConstraint" aria-controls="collapse_ConstraintSet_ContactConstraint">ContactConstraint</a>
           
             
@@ -426,6 +434,10 @@
             
             
             <a id="MetaTask_GazeTask_link" href="#collapse_MetaTask_GazeTask" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="MetaTask/GazeTask" aria-controls="collapse_MetaTask_GazeTask">GazeTask</a>
+          
+            
+            
+            <a id="MetaTask_ImpedanceTask_link" href="#collapse_MetaTask_ImpedanceTask" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="MetaTask/ImpedanceTask" aria-controls="collapse_MetaTask_ImpedanceTask">force::ImpedanceTask</a>
           
             
             
@@ -1052,6 +1064,191 @@ infTorque: false</pre>
   <pre id="ConstraintSet_CoMIncPlaneConstr_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: CoMIncPlane
 robotIndex: 0</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#ConstraintSet_CoMIncPlaneConstr_exampleyamlCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      
+        
+        
+        
+        
+        
+        
+  
+  
+  
+  <div id="collapse_ConstraintSet_CompoundJointConstraint" class="collapse collapseSchema" style="position:sticky; top: 65px;">
+    
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_solver::CompoundJointConstraint</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CompoundJointConstraint">[API]</a></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Handle compound joint limits (joints whole limits depend on the position of another joint). By default this adds all the compound joints defined in the robot's module.</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>type</strong></td>
+  
+    
+    <td colspan="2">
+      
+  
+  
+    <span class="text-secondary">constant&nbsp;</span>
+  
+  
+  
+    <span class="text-enum">compoundJoint</span>&nbsp;
+  
+
+
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>robot</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the robot affected by this constraint</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_ConstraintSet_CompoundJointConstraint_example" aria-expanded="false" aria-controls="collapse_ConstraintSet_CompoundJointConstraint_example">Example</button>
+      </div>
+      <div id="collapse_ConstraintSet_CompoundJointConstraint_example" class="collapse">
+        <div class="card-body">
+          <ul class="nav nav-tabs" id="ConstraintSet_CompoundJointConstraint_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="constraintset-compoundjointconstraint-examplejsonjsonTab" data-toggle="tab" href="#constraintset-compoundjointconstraint-examplejsonjsonTabContent" role="tab" aria-controls="constraintset-compoundjointconstraint-examplejsonjsonTabContent" aria-selected="true">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="constraintset-compoundjointconstraint-exampleyamlyamlTab" data-toggle="tab" href="#constraintset-compoundjointconstraint-exampleyamlyamlTabContent" role="tab" aria-controls="constraintset-compoundjointconstraint-exampleyamlyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="ConstraintSet_CompoundJointConstraint_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="constraintset-compoundjointconstraint-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="constraintset-compoundjointconstraint-examplejsonjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"compoundJoint"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"robot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jvrc1"</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="ConstraintSet_CompoundJointConstraint_examplejsonCopySource" class="offscreen" aria-hidden=true>{
+  "type": "compoundJoint",
+  "robot": "jvrc1"
+}</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#ConstraintSet_CompoundJointConstraint_examplejsonCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="constraintset-compoundjointconstraint-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="constraintset-compoundjointconstraint-exampleyamlyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="nn">---</span>
+<span class="na">type</span><span class="pi">:</span> <span class="s">compoundJoint</span>
+<span class="na">robot</span><span class="pi">:</span> <span class="s">jvrc1</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="ConstraintSet_CompoundJointConstraint_exampleyamlCopySource" class="offscreen" aria-hidden=true>---
+type: compoundJoint
+robot: jvrc1</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#ConstraintSet_CompoundJointConstraint_exampleyamlCopySource">Copy to clipboard</button>
 
 
     </div>
@@ -4666,6 +4863,249 @@ stiffness: 5.0</pre>
   <pre id="SpaceVecAlg_ForceVecd_exampleyamlCopySource" class="offscreen" aria-hidden=true>couple: [0.0, 0.0, 0.0]
 force: [0.0, 0.0, 0.0]</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#SpaceVecAlg_ForceVecd_exampleyamlCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      
+        
+        
+        
+        
+        
+        
+  
+  
+  
+  <div id="collapse_SpaceVecAlg_ImpedanceVecd" class="collapse collapseSchema" style="position:sticky; top: 65px;">
+    
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">sva::ImpedanceVecd</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>angular</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseSpaceVecAlg_ImpedanceVecd_PROP_angular" aria-expanded="false" aria-controls="collapseSpaceVecAlg_ImpedanceVecd_PROP_angular">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseSpaceVecAlg_ImpedanceVecd_PROP_angular">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>linear</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseSpaceVecAlg_ImpedanceVecd_PROP_linear" aria-expanded="false" aria-controls="collapseSpaceVecAlg_ImpedanceVecd_PROP_linear">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseSpaceVecAlg_ImpedanceVecd_PROP_linear">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_SpaceVecAlg_ImpedanceVecd_example" aria-expanded="false" aria-controls="collapse_SpaceVecAlg_ImpedanceVecd_example">Example</button>
+      </div>
+      <div id="collapse_SpaceVecAlg_ImpedanceVecd_example" class="collapse">
+        <div class="card-body">
+          <ul class="nav nav-tabs" id="SpaceVecAlg_ImpedanceVecd_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="spacevecalg-impedancevecd-examplejsonjsonTab" data-toggle="tab" href="#spacevecalg-impedancevecd-examplejsonjsonTabContent" role="tab" aria-controls="spacevecalg-impedancevecd-examplejsonjsonTabContent" aria-selected="true">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="spacevecalg-impedancevecd-exampleyamlyamlTab" data-toggle="tab" href="#spacevecalg-impedancevecd-exampleyamlyamlTabContent" role="tab" aria-controls="spacevecalg-impedancevecd-exampleyamlyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="SpaceVecAlg_ImpedanceVecd_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="spacevecalg-impedancevecd-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="spacevecalg-impedancevecd-examplejsonjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"angular"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"linear"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="SpaceVecAlg_ImpedanceVecd_examplejsonCopySource" class="offscreen" aria-hidden=true>{
+  "angular": [0.0, 0.0, 0.0],
+  "linear": [0.0, 0.0, 0.0]
+}</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#SpaceVecAlg_ImpedanceVecd_examplejsonCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="spacevecalg-impedancevecd-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="spacevecalg-impedancevecd-exampleyamlyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">angular</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
+<span class="na">linear</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="SpaceVecAlg_ImpedanceVecd_exampleyamlCopySource" class="offscreen" aria-hidden=true>angular: [0.0, 0.0, 0.0]
+linear: [0.0, 0.0, 0.0]</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#SpaceVecAlg_ImpedanceVecd_exampleyamlCopySource">Copy to clipboard</button>
 
 
     </div>
@@ -13909,6 +14349,3596 @@ position: [0.0, 0.0, 0.0]</pre>
 robot: jvrc1
 momentum: [0, 0, 0, 0, 0, 10]</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_MomentumTask_exampleyamlCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      
+        
+        
+        
+        
+        
+        
+  
+  
+  
+  <div id="collapse_MetaTask_ImpedanceTask" class="collapse collapseSchema" style="position:sticky; top: 65px;">
+    
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::force::ImpedanceTask</h6></span><span style="float:right;"><a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask">[API]</a></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">This task is similar to AdmittanceTask and DampingTask. Unlike those, the robot can adapt to an external force while following a target pose.</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>type</strong></td>
+  
+    
+    <td colspan="2">
+      
+  
+  
+    <span class="text-secondary">constant&nbsp;</span>
+  
+  
+  
+    <span class="text-enum">impedance</span>&nbsp;
+  
+
+
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>name</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the task</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>robot</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the robot to which this task applies</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>completion</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_completion" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_completion">Completion Criteria</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Builds a conditional function that returns true when all of its conditions are satisfied.<br/>Some states (e.g MetaTasks) may use these criterias to determine when a task is finished.</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_completion">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Completion Criteria</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Builds a conditional function that returns true when all of its conditions are satisfied.<br/>Some states (e.g MetaTasks) may use these criterias to determine when a task is finished.</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>AND</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array[2]</span>&nbsp;
+
+  [
+  
+    
+    
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_completion_PROP_AND0" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_completion_PROP_AND0">Completion Criteria</a>
+    
+  
+
+,
+  
+    
+    
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_completion_PROP_AND1" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_completion_PROP_AND1">Completion Criteria</a>
+    
+  
+
+
+  
+  ]
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>True when criteria1 and criteria2 are both true</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+    
+    
+    <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_completion_PROP_AND0">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Completion Criteria</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Completion criteria on the left-hand side of the AND comparison</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+    <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_completion_PROP_AND1">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Completion Criteria</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Completion criteria on the right-hand side of the AND comparison</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>OR</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array[2]</span>&nbsp;
+
+  [
+  
+    
+    
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_completion_PROP_OR0" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_completion_PROP_OR0">Completion Criteria</a>
+    
+  
+
+,
+  
+    
+    
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_completion_PROP_OR1" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_completion_PROP_OR1">Completion Criteria</a>
+    
+  
+
+
+  
+  ]
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>True when either criteria1 or criteria2 is true</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+    
+    
+    <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_completion_PROP_OR0">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Completion Criteria</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Completion criteria on the left-hand side of the OR comparison</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+    <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_completion_PROP_OR1">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Completion Criteria</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Completion criteria on the right-hand side of the OR comparison</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>timeout</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>True when the task has been added to the solver for longer than this threshold</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>eval</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>True when the task's error (norm) is below this threshold</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>speed</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>True when the task's velocity (norm) is below this threshold</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>wrench</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_completion_PROP_wrench" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_completion_PROP_wrench">Eigen::Vector6d</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>True when the measured wrench reaches the desired wrench ([torque, force] in controlled surface frame). If some values are NaN, this direction is ignored. Only valid if the controlled surface is attached to a force sensor (throws otherwise).</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_completion_PROP_wrench">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>dimWeight</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_dimWeight" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_dimWeight">Eigen::Vector6d</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Apply an anisotropic weight to the task multiplicative of the task's weight</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_dimWeight">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector6d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[6]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>activeJoints</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>A list of joints used by this task<br>If empty the task uses all available joints</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>unactiveJoints</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>A list of joints not used by this task<br>Has no effect if activeJoints is specified</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>surface</strong></td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of the surface controlled by this task</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>move</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_move" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_move">sva::PTransformd</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Move relative to the current target frame</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_move">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">sva::PTransformd</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Either rotation or translation can be ommited if the other is present</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>rotation</strong></td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_move_PROP_rotation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_move_PROP_rotation">Eigen::Matrix3d</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_move_PROP_rotation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Matrix3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[9]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>translation</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_move_PROP_translation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_move_PROP_translation">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_move_PROP_translation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>moveWorld</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_moveWorld" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_moveWorld">sva::PTransformd</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Move relative to world frame</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_moveWorld">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">sva::PTransformd</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Either rotation or translation can be ommited if the other is present</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>rotation</strong></td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_moveWorld_PROP_rotation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_moveWorld_PROP_rotation">Eigen::Matrix3d</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_moveWorld_PROP_rotation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Matrix3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[9]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>translation</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_moveWorld_PROP_translation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_moveWorld_PROP_translation">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_moveWorld_PROP_translation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>target</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_target" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_target">sva::PTransformd</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Target a world frame pose (position and orientation)</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_target">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">sva::PTransformd</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Either rotation or translation can be ommited if the other is present</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>rotation</strong></td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_target_PROP_rotation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_target_PROP_rotation">Eigen::Matrix3d</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_target_PROP_rotation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Matrix3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[9]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>translation</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_target_PROP_translation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_target_PROP_translation">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_target_PROP_translation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>targetSurface</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_targetSurface" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_targetSurface">targetSurface</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Target as a robot surface</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_targetSurface">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">targetSurface</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Target as a robot surface</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>robot</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-string">MainRobot</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Name of robot to which this surface is attached</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>surface</td>
+  
+    
+    <td colspan="2">
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>offset_translation</td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_targetSurface_PROP_offset_translation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_targetSurface_PROP_offset_translation">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_targetSurface_PROP_offset_translation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>offset_rotation</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_targetSurface_PROP_offset_rotation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_targetSurface_PROP_offset_rotation">Eigen::Matrix3d</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_targetSurface_PROP_offset_rotation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Matrix3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[9]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>relative</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_relative" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_relative">object</a>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Relative target specification, the target is specified relatively to the middle point between two surfaces s1 and s2</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+    
+    <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_relative">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">object</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Relative target specification, the target is specified relatively to the middle point between two surfaces s1 and s2</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>s1</strong></td>
+  
+    
+    <td colspan="2">
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>s2</strong></td>
+  
+    
+    <td colspan="2">
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>target</strong></td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_relative_PROP_target" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_relative_PROP_target">sva::PTransformd</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Either rotation or translation can be ommited if the other is present</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_relative_PROP_target">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">sva::PTransformd</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Either rotation or translation can be ommited if the other is present</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>rotation</strong></td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_relative_PROP_target_PROP_rotation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_relative_PROP_target_PROP_rotation">Eigen::Matrix3d</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_relative_PROP_target_PROP_rotation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Matrix3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[9]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>translation</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_relative_PROP_target_PROP_translation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_relative_PROP_target_PROP_translation">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_relative_PROP_target_PROP_translation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>targetPosition</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_targetPosition" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_targetPosition">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Target a world position</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_targetPosition">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>targetRotation</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_targetRotation" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_targetRotation">Eigen::Matrix3d</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Target a world rotation</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_targetRotation">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Matrix3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Stored in row-major order.<br/>Also accepts arrays of size 3 (RPY) and 4 (Quaternion).</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[9]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>overwriteRPY</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_overwriteRPY" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_overwriteRPY">rpy</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Overwrites the specified roll/pitch/yaw axes with the provided angle (in world frame) while keeping the other axes unchanged (example: keep world yaw rotation intact, but align roll and ptich with the floor plane)</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_overwriteRPY">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">rpy</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Overwrites the specified roll/pitch/yaw axes with the provided angle (in world frame) while keeping the other axes unchanged (example: keep world yaw rotation intact, but align roll and ptich with the floor plane)</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>roll</td>
+  
+    
+    <td colspan="2">
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>pitch</td>
+  
+    
+    <td colspan="2">
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>yaw</td>
+  
+    
+    <td colspan="2">
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>stiffness</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">5</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Task's stiffness. May also be an array of the task's dimension (dimensional stiffness).</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>damping</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">\(2\sqrt{\mathit{stiffness}}\)</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Task's damping. May also be an array of the task's dimension (dimensional damping).</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>weight</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number &ge; 0</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-number">1000</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Task's weight</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>wrench</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_wrench" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_wrench">sva::ForceVecd</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small><b>Wrench target</b> (desired force-torque)</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_wrench">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">sva::ForceVecd</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>couple</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_wrench_PROP_couple" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_wrench_PROP_couple">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_wrench_PROP_couple">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>force</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_wrench_PROP_force" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_wrench_PROP_force">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_wrench_PROP_force">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>gains</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains">mc_tasks::force::ImpedanceGains</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Impedance gains</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_tasks::force::ImpedanceGains</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Impedance gains configuration for mc_tasks::force::ImpedanceTask</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>mass</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_mass" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_mass">sva::ImpedanceVecd</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Impedance mass parameter represented in the controlled surface</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_mass">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">sva::ImpedanceVecd</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>angular</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_mass_PROP_angular" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_mass_PROP_angular">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_mass_PROP_angular">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>linear</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_mass_PROP_linear" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_mass_PROP_linear">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_mass_PROP_linear">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>damper</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_damper" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_damper">sva::ImpedanceVecd</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Impedance damper parameter represetnted in the controlled surface</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_damper">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">sva::ImpedanceVecd</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>angular</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_damper_PROP_angular" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_damper_PROP_angular">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_damper_PROP_angular">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>linear</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_damper_PROP_linear" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_damper_PROP_linear">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_damper_PROP_linear">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>spring</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_spring" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_spring">sva::ImpedanceVecd</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Impedance spring parameter repesented in the controlled surface</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_spring">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">sva::ImpedanceVecd</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>angular</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_spring_PROP_angular" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_spring_PROP_angular">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_spring_PROP_angular">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>linear</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_spring_PROP_linear" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_spring_PROP_linear">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_spring_PROP_linear">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>wrench</td>
+  
+    
+    <td>
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_wrench" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_wrench">sva::ImpedanceVecd</a>
+  
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Coefficient-wise gain on the wrench error</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_wrench">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">sva::ImpedanceVecd</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>angular</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_wrench_PROP_angular" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_wrench_PROP_angular">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_wrench_PROP_angular">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><strong>linear</strong></td>
+  
+    
+    <td colspan="2">
+      
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapseMetaTask_ImpedanceTask_PROP_gains_PROP_wrench_PROP_linear" aria-expanded="false" aria-controls="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_wrench_PROP_linear">Eigen::Vector3d</a>
+  
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapseMetaTask_ImpedanceTask_PROP_gains_PROP_wrench_PROP_linear">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">Eigen::Vector3d</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+      <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_MetaTask_ImpedanceTask_example" aria-expanded="false" aria-controls="collapse_MetaTask_ImpedanceTask_example">Example</button>
+      </div>
+      <div id="collapse_MetaTask_ImpedanceTask_example" class="collapse">
+        <div class="card-body">
+          <ul class="nav nav-tabs" id="MetaTask_ImpedanceTask_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="metatask-impedancetask-examplejsonjsonTab" data-toggle="tab" href="#metatask-impedancetask-examplejsonjsonTabContent" role="tab" aria-controls="metatask-impedancetask-examplejsonjsonTabContent" aria-selected="true">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="metatask-impedancetask-exampleyamlyamlTab" data-toggle="tab" href="#metatask-impedancetask-exampleyamlyamlTabContent" role="tab" aria-controls="metatask-impedancetask-exampleyamlyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="MetaTask_ImpedanceTask_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="metatask-impedancetask-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="metatask-impedancetask-examplejsonjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"impedance"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"surface"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RightGripper"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"target"</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">Rotation</span><span class="w"> </span><span class="err">expressed</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">RPY</span><span class="w"> </span><span class="err">(in</span><span class="w"> </span><span class="err">radian)</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">May</span><span class="w"> </span><span class="err">also</span><span class="w"> </span><span class="err">be</span><span class="w"> </span><span class="err">expressed</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">quaternion</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">rotation</span><span class="w"> </span><span class="err">matrix</span><span class="w">
+    </span><span class="nl">"rotation"</span><span class="p">:</span><span class="w">    </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"translation"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"wrench"</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"couple"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"force"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">20.0</span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"wrenchGain"</span><span class="p">:</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"couple"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"force"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0005</span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="MetaTask_ImpedanceTask_examplejsonCopySource" class="offscreen" aria-hidden=true>{
+  "type": "impedance",
+  "surface": "RightGripper",
+  "target":
+  {
+    // Rotation expressed as RPY (in radian)
+    // May also be expressed as quaternion or rotation matrix
+    "rotation":    [0.0, 0.0, 0.0],
+    "translation": [0.5, 0.5, 1.0]
+  },
+  "wrench":
+  {
+    "couple": [0.0, 0.0, 0.0],
+    "force": [0.0, 0.0, 20.0]
+  },
+  "wrenchGain":
+  {
+    "couple": [0.0, 0.0, 0.0],
+    "force": [0.0, 0.0, 0.0005]
+  }
+}</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_ImpedanceTask_examplejsonCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="metatask-impedancetask-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="metatask-impedancetask-exampleyamlyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="na">type</span><span class="pi">:</span> <span class="s">impedance</span>
+<span class="na">surface</span><span class="pi">:</span> <span class="s">RightGripper</span>
+<span class="na">targetSurface</span><span class="pi">:</span>
+  <span class="na">robot</span><span class="pi">:</span> <span class="s">ground</span>
+  <span class="na">surface</span><span class="pi">:</span> <span class="s">AllGround</span>
+  <span class="na">offset_translation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.5</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">,</span> <span class="nv">1.2</span><span class="pi">]</span>
+  <span class="na">offset_rotation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">3.14</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
+<span class="na">wrench</span><span class="pi">:</span>
+  <span class="na">couple</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
+  <span class="na">force</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">20.0</span><span class="pi">]</span>
+<span class="na">wrenchGain</span><span class="pi">:</span>
+  <span class="na">couple</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">]</span>
+  <span class="na">force</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.0</span><span class="pi">,</span> <span class="nv">0.001</span><span class="pi">]</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="MetaTask_ImpedanceTask_exampleyamlCopySource" class="offscreen" aria-hidden=true>type: impedance
+surface: RightGripper
+targetSurface:
+  robot: ground
+  surface: AllGround
+  offset_translation: [0.5, 0.5, 1.2]
+  offset_rotation: [3.14, 0.0, 0.0]
+wrench:
+  couple: [0.0, 0.0, 0.0]
+  force: [0.0, 0.0, 20.0]
+wrenchGain:
+  couple: [0.0, 0.0, 0.0]
+  force: [0.0, 0.0, 0.001]</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#MetaTask_ImpedanceTask_exampleyamlCopySource">Copy to clipboard</button>
 
 
     </div>
@@ -113243,6 +117273,82 @@ observers:
     </td>
     <td>
       <span class="text-secondary"><small>Name of the robot to update</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>updatePose</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-boolean">boolean</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-boolean">true</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>When true updates the real robot base pose</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>updateVel</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-boolean">boolean</span>
+    
+    
+      &nbsp;<small><span class="text-secondary">default</span></small>&nbsp;<span class="text-boolean">true</span>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>When true updates the real robot base velocity</small></span>
     </td>
     
   

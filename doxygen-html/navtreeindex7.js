@@ -1,5 +1,15 @@
 var NAVTREEINDEX7 =
 {
+"structmc__observers_1_1BodySensorObserver.html#ae2a3a769d0449616911ee977ccb1a3cb":[3,0,4,0,27],
+"structmc__observers_1_1BodySensorObserver.html#ae4f2d8ef44d7eb67b887080c0e13d66d":[3,0,4,0,6],
+"structmc__observers_1_1BodySensorObserver.html#afb584ec0df5887afd174376e9efee8b5":[3,0,4,0,16],
+"structmc__observers_1_1EncoderObserver.html":[3,0,4,1],
+"structmc__observers_1_1EncoderObserver.html#a038463bc586f4b49cf351cd3425a1499":[3,0,4,1,2],
+"structmc__observers_1_1EncoderObserver.html#a03e8f96f2c3140443c6a60bc0d9a607c":[3,0,4,1,3],
+"structmc__observers_1_1EncoderObserver.html#a088c5ec59d2288b6a3499c8aae54853b":[3,0,4,1,18],
+"structmc__observers_1_1EncoderObserver.html#a12831fe5df2163a7f517b95c3158a5ba":[3,0,4,1,14],
+"structmc__observers_1_1EncoderObserver.html#a2186bef7a7415c523bd7930d2ab8de16":[3,0,4,1,10],
+"structmc__observers_1_1EncoderObserver.html#a2477d2b4531716700f65cea898a74274":[3,0,4,1,0],
 "structmc__observers_1_1EncoderObserver.html#a2477d2b4531716700f65cea898a74274a5d2acfcccfdd535f49b67144392ae508":[3,0,4,1,0,1],
 "structmc__observers_1_1EncoderObserver.html#a2477d2b4531716700f65cea898a74274a6adf97f83acf6453d4a6a4b1070f3754":[3,0,4,1,0,2],
 "structmc__observers_1_1EncoderObserver.html#a2477d2b4531716700f65cea898a74274aa1595abbb4c3a326636dd178757cd6c1":[3,0,4,1,0,0],
@@ -239,15 +249,5 @@ var NAVTREEINDEX7 =
 "structmc__rbdyn_1_1CylindricalSurface.html#ae129c776f6d6bdc8b84151121747a46f":[3,0,6,7,7],
 "structmc__rbdyn_1_1CylindricalSurface.html#af7ea1fd2bee8c3d0dacbae34d5242422":[3,0,6,7,3],
 "structmc__rbdyn_1_1Device.html":[3,0,6,8],
-"structmc__rbdyn_1_1Device.html#a018981488a410e62be4605726f953507":[3,0,6,8,16],
-"structmc__rbdyn_1_1Device.html#a0f7c7a08133ec941b3cb8d12dacee6b3":[3,0,6,8,12],
-"structmc__rbdyn_1_1Device.html#a10e51518c0cd7afd26b71fa6d39ae80d":[3,0,6,8,2],
-"structmc__rbdyn_1_1Device.html#a3b2069f13010466c01739606cd39d1a6":[3,0,6,8,20],
-"structmc__rbdyn_1_1Device.html#a5ef29dded30b518781405cde1b243089":[3,0,6,8,3],
-"structmc__rbdyn_1_1Device.html#a5f2b9cec0aafca49e350696f9fcc2cf5":[3,0,6,8,11],
-"structmc__rbdyn_1_1Device.html#a6a5a93f9a1e463e41da680695aca29c7":[3,0,6,8,21],
-"structmc__rbdyn_1_1Device.html#a6ed916e8d88fd2032b790ab143ac7c13":[3,0,6,8,8],
-"structmc__rbdyn_1_1Device.html#a836b2415a1379592403363bdc2dda8b0":[3,0,6,8,5],
-"structmc__rbdyn_1_1Device.html#a89cf1a897146d487c4f2c9c915ff3ec5":[3,0,6,8,13],
-"structmc__rbdyn_1_1Device.html#a9c69d16bdaed36b31375b419cdcddc0b":[3,0,6,8,17]
+"structmc__rbdyn_1_1Device.html#a018981488a410e62be4605726f953507":[3,0,6,8,16]
 };

@@ -45,6 +45,7 @@ var hierarchy =
     [ "mc_rtc::ConfigurationLoader< mc_rtc::gui::ForceConfig >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rtc::gui::LineConfig >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rtc::gui::PointConfig >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_tasks::force::ImpedanceGains >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_tasks::lipm_stabilizer::ContactState >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< void >", "structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html", null ],
     [ "ConstraintFunction", null, [
@@ -234,6 +235,10 @@ var hierarchy =
     [ "mc_rbdyn::RobotModule::Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", null ],
     [ "mc_solver::GenericLoader< Derived, T >::Handle", "structmc__solver_1_1GenericLoader_1_1Handle.html", null ],
     [ "std::hash< mc_control::fsm::Contact >", "structstd_1_1hash_3_01mc__control_1_1fsm_1_1Contact_01_4.html", null ],
+    [ "mc_tasks::force::ImpedanceGains", "structmc__tasks_1_1force_1_1ImpedanceGains.html", null ],
+    [ "mc_tasks::force::details::ImpedanceVecd< StrictlyPositive >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
+    [ "mc_tasks::force::details::ImpedanceVecd< false >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
+    [ "mc_tasks::force::details::ImpedanceVecd< true >", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", null ],
     [ "integral_constant", null, [
       [ "mc_rbdyn::details::are_strings< T, Args... >", "structmc__rbdyn_1_1details_1_1are__strings_3_01T_00_01Args_8_8_8_01_4.html", null ]
     ] ],
@@ -259,6 +264,7 @@ var hierarchy =
     [ "mc_filter::LowPass< T >", "structmc__filter_1_1LowPass.html", [
       [ "mc_filter::LowPassFiniteDifferences< T >", "structmc__filter_1_1LowPassFiniteDifferences.html", null ]
     ] ],
+    [ "mc_filter::LowPass< sva::ForceVecd >", "structmc__filter_1_1LowPass.html", null ],
     [ "mc_filter::LowPass< sva::MotionVecd >", "structmc__filter_1_1LowPass.html", null ],
     [ "mc_rtc::LTDLHandle", "structmc__rtc_1_1LTDLHandle.html", null ],
     [ "map", null, [
@@ -306,7 +312,8 @@ var hierarchy =
             [ "mc_tasks::force::DampingTask", "structmc__tasks_1_1force_1_1DampingTask.html", [
               [ "mc_tasks::force::CoPTask", "structmc__tasks_1_1force_1_1CoPTask.html", null ]
             ] ]
-          ] ]
+          ] ],
+          [ "mc_tasks::force::ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html", null ]
         ] ]
       ] ],
       [ "mc_tasks::TrajectoryTaskGeneric< tasks::qp::TransformTask >", "structmc__tasks_1_1TrajectoryTaskGeneric.html", [

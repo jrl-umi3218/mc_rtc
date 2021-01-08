@@ -3533,6 +3533,13 @@
       <anchor>a70d34eabb941deeb9f0dea2280ae1201</anchor>
       <arglist>(sva::MotionVecd, MotionVecd)</arglist>
     </member>
+    <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>aae268af9ba09c4178e3d3711b5e3a32a</anchor>
+      <arglist>(sva::ImpedanceVecd, MotionVecd)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>utils.h</name>
@@ -4111,6 +4118,33 @@
     <includes id="TrajectoryTaskGeneric_8h" name="TrajectoryTaskGeneric.h" local="no" imported="no">mc_tasks/TrajectoryTaskGeneric.h</includes>
     <class kind="struct">mc_tasks::GazeTask</class>
     <namespace>mc_tasks</namespace>
+  </compound>
+  <compound kind="file">
+    <name>ImpedanceGains.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/</path>
+    <filename>ImpedanceGains_8h</filename>
+    <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
+    <includes id="clamp_8h" name="clamp.h" local="no" imported="no">mc_filter/utils/clamp.h</includes>
+    <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
+    <class kind="struct">mc_tasks::force::details::ImpedanceVecd</class>
+    <class kind="struct">mc_tasks::force::ImpedanceGains</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_tasks::force::ImpedanceGains &gt;</class>
+    <namespace>mc_tasks</namespace>
+    <namespace>mc_tasks::force</namespace>
+    <namespace>mc_tasks::force::details</namespace>
+    <namespace>mc_rtc</namespace>
+  </compound>
+  <compound kind="file">
+    <name>ImpedanceTask.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/</path>
+    <filename>ImpedanceTask_8h</filename>
+    <includes id="ImpedanceGains_8h" name="ImpedanceGains.h" local="no" imported="no">mc_tasks/ImpedanceGains.h</includes>
+    <includes id="SurfaceTransformTask_8h" name="SurfaceTransformTask.h" local="no" imported="no">mc_tasks/SurfaceTransformTask.h</includes>
+    <includes id="LowPass_8h" name="LowPass.h" local="no" imported="no">mc_filter/LowPass.h</includes>
+    <includes id="constants_8h" name="constants.h" local="no" imported="no">mc_rtc/constants.h</includes>
+    <class kind="struct">mc_tasks::force::ImpedanceTask</class>
+    <namespace>mc_tasks</namespace>
+    <namespace>mc_tasks::force</namespace>
   </compound>
   <compound kind="file">
     <name>StabilizerTask.h</name>
@@ -6007,6 +6041,20 @@
       <name>updateRobot_</name>
       <anchorfile>structmc__observers_1_1BodySensorObserver.html</anchorfile>
       <anchor>aa8d9c4d70016890242f717cdd06ff224</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>updatePose_</name>
+      <anchorfile>structmc__observers_1_1BodySensorObserver.html</anchorfile>
+      <anchor>a579b85620df7509e6c9b17ce6eafea8a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>updateVel_</name>
+      <anchorfile>structmc__observers_1_1BodySensorObserver.html</anchorfile>
+      <anchor>ae2a3a769d0449616911ee977ccb1a3cb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -8614,6 +8662,24 @@
       <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html</anchorfile>
       <anchor>a6b4642eb20b0edf5fecba11ffb927a93</anchor>
       <arglist>(const mc_rtc::gui::PointConfig &amp;point)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::ConfigurationLoader&lt; mc_tasks::force::ImpedanceGains &gt;</name>
+    <filename>structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html</filename>
+    <member kind="function" static="yes">
+      <type>static mc_tasks::force::ImpedanceGains</type>
+      <name>load</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html</anchorfile>
+      <anchor>a27cd3f0ff60cc5268b144f132b9c9413</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static mc_rtc::Configuration</type>
+      <name>save</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html</anchorfile>
+      <anchor>a97c67e1306c98af4fc45bc85c2a80b7d</anchor>
+      <arglist>(const mc_tasks::force::ImpedanceGains &amp;ig)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -15490,6 +15556,812 @@
       <arglist>(const mc_control::fsm::Contact &amp;c) const noexcept</arglist>
     </member>
   </compound>
+  <compound kind="struct">
+    <name>mc_tasks::force::ImpedanceGains</name>
+    <filename>structmc__tasks_1_1force_1_1ImpedanceGains.html</filename>
+    <member kind="function">
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW const details::ImpedanceVecd&lt; true &gt; &amp;</type>
+      <name>M</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a6b88536a57828978dc2877d83b65001d</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>details::ImpedanceVecd&lt; true &gt; &amp;</type>
+      <name>M</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a898e2a2ca110dfe75e95402f78cd739f</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const details::ImpedanceVecd&lt; true &gt; &amp;</type>
+      <name>mass</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>af439de9cd741d581b292c2cfc8d8b289</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>details::ImpedanceVecd&lt; true &gt; &amp;</type>
+      <name>mass</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a32892f4c1d6ca689541dbd2fc97a1d30</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const details::ImpedanceVecd&lt; false &gt; &amp;</type>
+      <name>D</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a039734ae57878cec03ded2f15a499737</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>details::ImpedanceVecd&lt; false &gt; &amp;</type>
+      <name>D</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a738759b89bc0325fd66daf8d70be9072</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const details::ImpedanceVecd&lt; false &gt; &amp;</type>
+      <name>damper</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>aa21cd07b2528a1502d4612dec70a1783</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>details::ImpedanceVecd&lt; false &gt; &amp;</type>
+      <name>damper</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a6be8a021cc0967787e4bfcd3619d6a10</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const details::ImpedanceVecd&lt; false &gt; &amp;</type>
+      <name>K</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a076633d27b8ad48da2e8f3a19e275377</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>details::ImpedanceVecd&lt; false &gt; &amp;</type>
+      <name>K</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>af17ffbe654708a0fb9d823ca0af40766</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const details::ImpedanceVecd&lt; false &gt; &amp;</type>
+      <name>spring</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>adfdf8d0b4aabcc9b460d3a91dd8bc02f</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>details::ImpedanceVecd&lt; false &gt; &amp;</type>
+      <name>spring</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a4aa76bf8f0fb24b8683f9ae6a79d76a2</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const details::ImpedanceVecd&lt; false &gt; &amp;</type>
+      <name>wrench</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a5bace86a7fa64130588279be37094b5c</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>details::ImpedanceVecd&lt; false &gt; &amp;</type>
+      <name>wrench</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>aa19366ab8103c6ff0661c54860511d8e</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static ImpedanceGains</type>
+      <name>Default</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>aeff73ae8e61f3bea6441bb952a33a9c0</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>details::ImpedanceVecd&lt; true &gt;</type>
+      <name>M_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>aa4508b0a826c61e6a820c9fb56785cee</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>details::ImpedanceVecd&lt; false &gt;</type>
+      <name>D_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>af7334f9f95bc125183f10487faa6cb93</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>details::ImpedanceVecd&lt; false &gt;</type>
+      <name>K_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a89707b58ca496b54f97c2e02c80e8243</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>details::ImpedanceVecd&lt; false &gt;</type>
+      <name>wrench_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceGains.html</anchorfile>
+      <anchor>a7d9f24350044abdb57754a79aba2ea9e</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_tasks::force::ImpedanceTask</name>
+    <filename>structmc__tasks_1_1force_1_1ImpedanceTask.html</filename>
+    <base>mc_tasks::SurfaceTransformTask</base>
+    <member kind="function">
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
+      <name>ImpedanceTask</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a0ef3a7aced29828c13a1db97ca2c4d0b</anchor>
+      <arglist>(const std::string &amp;surfaceName, const mc_rbdyn::Robots &amp;robots, unsigned robotIndex, double stiffness=5.0, double weight=1000.0)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a5ec5110aafaba8ecda490a3ce43f7676</anchor>
+      <arglist>() override</arglist>
+    </member>
+    <member kind="function">
+      <type>const ImpedanceGains &amp;</type>
+      <name>gains</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a400d65123a02706e466611180d6bf4f0</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>ImpedanceGains &amp;</type>
+      <name>gains</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ae257bdea578b9c3f62b7cbeb8791d2f8</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::PTransformd &amp;</type>
+      <name>targetPose</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ab48cd89c0e4d3fe4413d0df8f83ccd3f</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>targetPose</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ab82147120e3992c1f02313025ea8e2c1</anchor>
+      <arglist>(const sva::PTransformd &amp;pose)</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::MotionVecd &amp;</type>
+      <name>targetVel</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ab334d38e827d6917708178233c7feb9f</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>targetVel</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ad8b7c40175ae9d55ae86d4d89ffabe52</anchor>
+      <arglist>(const sva::MotionVecd &amp;vel)</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::MotionVecd &amp;</type>
+      <name>targetAccel</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a9fd6bbf9a5f6fbc67431ab603f946ac3</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>targetAccel</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a693cd5a9fe5ae71b58dd0ffa29ded801</anchor>
+      <arglist>(const sva::MotionVecd &amp;accel)</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::PTransformd &amp;</type>
+      <name>deltaCompliancePose</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a844b1c2fe28ca0036e829be80d2f3090</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::PTransformd</type>
+      <name>compliancePose</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ab5d822a972b518fc10d7e2444d73b3d2</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::ForceVecd &amp;</type>
+      <name>targetWrench</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a9887a44eed16940dbf620dc109b968cb</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>targetWrenchW</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a61a7f7ed47d98c51238404e7791d7357</anchor>
+      <arglist>(const sva::ForceVecd &amp;wrenchW)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>targetWrench</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ad9dcb8ef222560d520f4822adf3fe3e2</anchor>
+      <arglist>(const sva::ForceVecd &amp;wrench)</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::ForceVecd &amp;</type>
+      <name>measuredWrench</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>af4919382d3f17d9a9fd081e42bf6b6ea</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::ForceVecd &amp;</type>
+      <name>filteredMeasuredWrench</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>acb7157b34fdcca4258a70a6bfd7b7353</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>cutoffPeriod</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a2660635cda0019bde4db57897fb273f5</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>cutoffPeriod</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a1e77e2a302a4cf27533adc9f2da8a293</anchor>
+      <arglist>(double cutoffPeriod)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>load</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ab8f7ed4e3d9f2393c9d91ef1a7456eae</anchor>
+      <arglist>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config) override</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ae6312131c165e96ff3e7cf4e1bf2e6c4</anchor>
+      <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>addToSolver</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a1014edb78929f3768bd4dd9c2260fab1</anchor>
+      <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>addToGUI</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ae6658a431750580958b194b2d0a4963c</anchor>
+      <arglist>(mc_rtc::gui::StateBuilder &amp;gui) override</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>addToLogger</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a2d68f87660e62b62cbaa910632d68a3c</anchor>
+      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>removeFromLogger</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a3c1b818614b0dde7d6905cb5d9338729</anchor>
+      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>ImpedanceGains</type>
+      <name>gains_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a650f1aad54ff5b3f1b7b9a344c975187</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>deltaCompPoseLinLimit_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a7a16fc84a51fc01c5fb4c50ad8fc8f46</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>deltaCompPoseAngLimit_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a16c1d651a15167637fac4f799dfef762</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>deltaCompVelLinLimit_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a6aac1452e731ae1c901b274ad696babc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>deltaCompVelAngLimit_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a52d02e32e84b95ec75eb87ea0e89486a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>deltaCompAccelLinLimit_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>aa034a1be6d85da9b895931ac5d55e38f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>deltaCompAccelAngLimit_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a1cd3a8cd8dd8633b86b784cab515f5f0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::PTransformd</type>
+      <name>targetPoseW_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a34c17bbcd0348e7b67a99241a97aa7f0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>targetVelW_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a4e705a22da0d1a9d49bf015e868be245</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>targetAccelW_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>afda9ff98e5fdb2421896a9179e5e0f2f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::ForceVecd</type>
+      <name>targetWrench_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>aec98a7aad766a8464dc2bf418af12ad4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::ForceVecd</type>
+      <name>measuredWrench_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>acdc427a08b2669b8010a47f912c31a96</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::ForceVecd</type>
+      <name>filteredMeasuredWrench_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>adcee9b37135af91695753725a9f9d139</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::LowPass&lt; sva::ForceVecd &gt;</type>
+      <name>lowPass_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a51861dc893e2a8aa733f48423e48c6c1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::PTransformd</type>
+      <name>deltaCompPoseW_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a81d1902dc6a242225524416168d35fc9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>deltaCompVelW_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>adf26c7977065bdefdf4fc00c526bc365</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>deltaCompAccelW_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a3ef2ca726f8b8257f21d8aefd636ea66</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::PTransformd</type>
+      <name>deltaCompPoseW_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a81d1902dc6a242225524416168d35fc9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>deltaCompVelW_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>adf26c7977065bdefdf4fc00c526bc365</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::MotionVecd</type>
+      <name>deltaCompAccelW_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a3ef2ca726f8b8257f21d8aefd636ea66</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_tasks::force::details::ImpedanceVecd</name>
+    <filename>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</filename>
+    <templarg>StrictlyPositive</templarg>
+    <member kind="function">
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
+      <name>ImpedanceVecd</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a37ea3072f25c6e2a67638f58faee361f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ImpedanceVecd</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a1535fb3d37060f7ff2488e9d335f8ca6</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;v)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ImpedanceVecd</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>adcec6e04f8a148a886ddc9612de460c3</anchor>
+      <arglist>(double angular_, double linear_)</arglist>
+    </member>
+    <member kind="function">
+      <type>ImpedanceVecd &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a81d3d27c6a974f550c916f464f59bcd4</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;v)</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::Vector6d</type>
+      <name>vector</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>ae32fa91f201e480931523c5242ef6204</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>ad4f990865443586d64ad36a08164a48f</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>adb8ace8cfded17727b36db93552cf1d3</anchor>
+      <arglist>(const Eigen::Vector6d &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a3058636047bf6483914b05d2bb54866f</anchor>
+      <arglist>(const Eigen::Vector3d &amp;a, const Eigen::Vector3d &amp;l) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>ab806eb5d0129b204e2f2e4e90d2cef6e</anchor>
+      <arglist>(double a, double l) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::ImpedanceVecd &amp;</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>adb5014718233aecef9fd571589ea6320</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>angular</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a602a43c43854cce8160895b03b34817a</anchor>
+      <arglist>(const Eigen::Vector3d &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>angular</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a42ef95125d0b4c9989eea1ed74cb1413</anchor>
+      <arglist>(double angular) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>angular</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a7a4bc91cba946ddbe1043be48da838d7</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>linear</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>afd1316255060bd035cf6c6c31e4b140b</anchor>
+      <arglist>(const Eigen::Vector3d &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>linear</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a37187ece11c1b67d92751412ce49e9c1</anchor>
+      <arglist>(double linear) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>linear</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a7a2b2ae194302cc32740d2482ec74af0</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>ImpedanceVecd&lt; false &gt;</name>
+    <filename>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</filename>
+    <member kind="function">
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
+      <name>ImpedanceVecd</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a37ea3072f25c6e2a67638f58faee361f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ImpedanceVecd</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a1535fb3d37060f7ff2488e9d335f8ca6</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;v)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ImpedanceVecd</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>adcec6e04f8a148a886ddc9612de460c3</anchor>
+      <arglist>(double angular_, double linear_)</arglist>
+    </member>
+    <member kind="function">
+      <type>ImpedanceVecd &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a81d3d27c6a974f550c916f464f59bcd4</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;v)</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::Vector6d</type>
+      <name>vector</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>ae32fa91f201e480931523c5242ef6204</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>ad4f990865443586d64ad36a08164a48f</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>adb8ace8cfded17727b36db93552cf1d3</anchor>
+      <arglist>(const Eigen::Vector6d &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a3058636047bf6483914b05d2bb54866f</anchor>
+      <arglist>(const Eigen::Vector3d &amp;a, const Eigen::Vector3d &amp;l) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>ab806eb5d0129b204e2f2e4e90d2cef6e</anchor>
+      <arglist>(double a, double l) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::ImpedanceVecd &amp;</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>adb5014718233aecef9fd571589ea6320</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>angular</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a602a43c43854cce8160895b03b34817a</anchor>
+      <arglist>(const Eigen::Vector3d &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>angular</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a42ef95125d0b4c9989eea1ed74cb1413</anchor>
+      <arglist>(double angular) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>angular</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a7a4bc91cba946ddbe1043be48da838d7</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>linear</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>afd1316255060bd035cf6c6c31e4b140b</anchor>
+      <arglist>(const Eigen::Vector3d &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>linear</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a37187ece11c1b67d92751412ce49e9c1</anchor>
+      <arglist>(double linear) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>linear</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a7a2b2ae194302cc32740d2482ec74af0</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>ImpedanceVecd&lt; true &gt;</name>
+    <filename>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</filename>
+    <member kind="function">
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
+      <name>ImpedanceVecd</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a37ea3072f25c6e2a67638f58faee361f</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ImpedanceVecd</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a1535fb3d37060f7ff2488e9d335f8ca6</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;v)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>ImpedanceVecd</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>adcec6e04f8a148a886ddc9612de460c3</anchor>
+      <arglist>(double angular_, double linear_)</arglist>
+    </member>
+    <member kind="function">
+      <type>ImpedanceVecd &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a81d3d27c6a974f550c916f464f59bcd4</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;v)</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::Vector6d</type>
+      <name>vector</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>ae32fa91f201e480931523c5242ef6204</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>ad4f990865443586d64ad36a08164a48f</anchor>
+      <arglist>(const sva::ImpedanceVecd &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>adb8ace8cfded17727b36db93552cf1d3</anchor>
+      <arglist>(const Eigen::Vector6d &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a3058636047bf6483914b05d2bb54866f</anchor>
+      <arglist>(const Eigen::Vector3d &amp;a, const Eigen::Vector3d &amp;l) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>ab806eb5d0129b204e2f2e4e90d2cef6e</anchor>
+      <arglist>(double a, double l) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::ImpedanceVecd &amp;</type>
+      <name>vec</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>adb5014718233aecef9fd571589ea6320</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>angular</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a602a43c43854cce8160895b03b34817a</anchor>
+      <arglist>(const Eigen::Vector3d &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>angular</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a42ef95125d0b4c9989eea1ed74cb1413</anchor>
+      <arglist>(double angular) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>angular</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a7a4bc91cba946ddbe1043be48da838d7</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>linear</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>afd1316255060bd035cf6c6c31e4b140b</anchor>
+      <arglist>(const Eigen::Vector3d &amp;v) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>linear</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a37187ece11c1b67d92751412ce49e9c1</anchor>
+      <arglist>(double linear) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>linear</name>
+      <anchorfile>structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html</anchorfile>
+      <anchor>a7a2b2ae194302cc32740d2482ec74af0</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+  </compound>
   <compound kind="class">
     <name>mc_solver::utils::InequalityConstraint</name>
     <filename>structmc__solver_1_1utils_1_1InequalityConstraint.html</filename>
@@ -16711,6 +17583,80 @@
       <anchor>a41bcea9e9de194a6816f03cacbd534dd</anchor>
       <arglist>() const</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>dt</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>ae3cde740d8c36a8e683eeae38bb4bc00</anchor>
+      <arglist>(double dt)</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>dt_</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>a54232494fa4fa74a08d85acf3f95ab7a</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>LowPass&lt; sva::ForceVecd &gt;</name>
+    <filename>structmc__filter_1_1LowPass.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>LowPass</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>ae3ddcbbc84aae62aad621a14a91c39bf</anchor>
+      <arglist>(double dt, double period=0)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>cutoffPeriod</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>ac48741a383af10509d4678c5a0673f3a</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>cutoffPeriod</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>ac3c92851291e84d2347271125877dc0c</anchor>
+      <arglist>(double period)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>af9ccdd55e5d7f3beabcf4c26bcea9620</anchor>
+      <arglist>(const sva::ForceVecd &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>a03ab891a2b1f5cd2fd2398b7016ba633</anchor>
+      <arglist>(const sva::ForceVecd &amp;newValue)</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::ForceVecd &amp;</type>
+      <name>eval</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>a543781fd1c5ec7b653de6e2189de8fdb</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>dt</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>a41bcea9e9de194a6816f03cacbd534dd</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>dt</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>ae3cde740d8c36a8e683eeae38bb4bc00</anchor>
+      <arglist>(double dt)</arglist>
+    </member>
     <member kind="variable" protection="protected">
       <type>double</type>
       <name>dt_</name>
@@ -16770,6 +17716,13 @@
       <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
       <anchor>a41bcea9e9de194a6816f03cacbd534dd</anchor>
       <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>dt</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>ae3cde740d8c36a8e683eeae38bb4bc00</anchor>
+      <arglist>(double dt)</arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>double</type>
@@ -35659,6 +36612,7 @@
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::ForceConfig &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::LineConfig &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rtc::gui::PointConfig &gt;</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_tasks::force::ImpedanceGains &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_tasks::lipm_stabilizer::ContactState &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; void &gt;</class>
     <class kind="struct">mc_rtc::DataStore</class>
@@ -36683,6 +37637,13 @@
       <arglist>(sva::MotionVecd, MotionVecd)</arglist>
     </member>
     <member kind="function">
+      <type></type>
+      <name>IMPL_MAPPING</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>aae268af9ba09c4178e3d3711b5e3a32a</anchor>
+      <arglist>(sva::ImpedanceVecd, MotionVecd)</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>error_and_throw</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
@@ -36893,10 +37854,18 @@
   <compound kind="namespace">
     <name>mc_tasks::force</name>
     <filename>namespacemc__tasks_1_1force.html</filename>
+    <namespace>mc_tasks::force::details</namespace>
     <class kind="struct">mc_tasks::force::AdmittanceTask</class>
     <class kind="struct">mc_tasks::force::ComplianceTask</class>
     <class kind="struct">mc_tasks::force::CoPTask</class>
     <class kind="struct">mc_tasks::force::DampingTask</class>
+    <class kind="struct">mc_tasks::force::ImpedanceGains</class>
+    <class kind="struct">mc_tasks::force::ImpedanceTask</class>
+  </compound>
+  <compound kind="namespace">
+    <name>mc_tasks::force::details</name>
+    <filename>namespacemc__tasks_1_1force_1_1details.html</filename>
+    <class kind="struct">mc_tasks::force::details::ImpedanceVecd</class>
   </compound>
   <compound kind="namespace">
     <name>mc_tasks::lipm_stabilizer</name>

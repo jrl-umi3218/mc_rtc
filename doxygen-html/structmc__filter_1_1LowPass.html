@@ -103,6 +103,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a543781fd1c5ec7b653de6e2189de8fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41bcea9e9de194a6816f03cacbd534dd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__filter_1_1LowPass.html#a41bcea9e9de194a6816f03cacbd534dd">dt</a> () const</td></tr>
 <tr class="separator:a41bcea9e9de194a6816f03cacbd534dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3cde740d8c36a8e683eeae38bb4bc00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__filter_1_1LowPass.html#ae3cde740d8c36a8e683eeae38bb4bc00">dt</a> (double dt)</td></tr>
+<tr class="separator:ae3cde740d8c36a8e683eeae38bb4bc00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -230,7 +232,7 @@ template&lt;typename T&gt; </div>
 </div>
 </div>
 <a id="a41bcea9e9de194a6816f03cacbd534dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41bcea9e9de194a6816f03cacbd534dd">&#9670;&nbsp;</a></span>dt()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a41bcea9e9de194a6816f03cacbd534dd">&#9670;&nbsp;</a></span>dt() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,6 +255,43 @@ template&lt;typename T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Get sampling period. </p>
+
+</div>
+</div>
+<a id="ae3cde740d8c36a8e683eeae38bb4bc00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3cde740d8c36a8e683eeae38bb4bc00">&#9670;&nbsp;</a></span>dt() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structmc__filter_1_1LowPass.html">mc_filter::LowPass</a>&lt; T &gt;::dt </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set sampling period.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt</td><td>Sampling period.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>the cutoff period is updated to satisfy the Nyquist–Shannon sampling theorem according the new sampling period. </dd></dl>
 
 </div>
 </div>

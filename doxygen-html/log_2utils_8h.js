@@ -51,6 +51,7 @@ var log_2utils_8h =
     [ "IMPL_MAPPING", "log_2utils_8h.html#a85a6ea306358c1ae94b79e65b22cb252", null ],
     [ "IMPL_MAPPING", "log_2utils_8h.html#a42e9d70a432b1bc02a1f5dcff729bfb5", null ],
     [ "IMPL_MAPPING", "log_2utils_8h.html#a70d34eabb941deeb9f0dea2280ae1201", null ],
+    [ "IMPL_MAPPING", "log_2utils_8h.html#aae268af9ba09c4178e3d3711b5e3a32a", null ],
     [ "LogTypeName", "log_2utils_8h.html#a6351f9d1bb2bb7f8f3508cc9f0e36e5e", null ],
     [ "LogTypeNames", "log_2utils_8h.html#a9979086ae04c2369f6ea39d42ec2fcb6", null ]
 ];

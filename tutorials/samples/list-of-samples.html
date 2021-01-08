@@ -1,0 +1,496 @@
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tutorials - Available sample controllers - mc_rtc</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/mc_rtc/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/mc_rtc/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/mc_rtc/assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/mc_rtc/assets/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/mc_rtc/assets/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css" integrity="sha256-iPUhChwurLRCrDCM1+2a2LDe9pfW6Je29o/oA5VPr28=" crossorigin="anonymous" />
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+
+    
+
+    
+
+    <link href="/mc_rtc/css/mc_rtc.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+      <a class="navbar-brand" href="/mc_rtc/index.html"><img src="/mc_rtc/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <div class="navbar-nav mr-auto">
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/interfaces.html">Interfaces</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/robots.html">Robots</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link active" href="/mc_rtc/tutorials.html">Tutorials</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/doxygen.html">API documentation</a>
+          
+          
+          
+          
+          <a class="nav-item nav-link " href="/mc_rtc/json.html">JSON/YAML documentation</a>
+          
+          
+        </div>
+        <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_"><svg height="25" width="25" class="octicon octicon-mark-github" viewBox="0 0 16 16" version="1.1" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
+      </div>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+      <div class="col col-lg-3">
+        <div class="sticky-top sticky-toc">
+          <div class="accordion" id="accordionTutorials">
+            <div class="card">
+              <div class="card-header" id="headingOtherTutorials">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOtherTutorials" aria-expanded="true" aria-controls="collapseOtherTutorials">
+                  Other tutorials
+                </button>
+              </div>
+              <div id="collapseOtherTutorials" class="collapse" arial-labelledby="headingOtherTutorials" data-parent="#accordionTutorials">
+                <div class="card-body">
+                  <ul>
+                    
+                    <li>Introduction</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/installation-guide.html">Installation guide</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/configuration.html">Configuring mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/running-a-controller.html">Running a controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/first-controller.html">Your first controller with mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/com-controller.html">Controlling the CoM</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/ef-controller.html">Controlling an end-effector (and loading)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/introduction/multi-robot-controller.html">Multi-robot controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework usage</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/mc_rtc_configuration.html"><code>mc_rtc::Configuration</code> general purpose configuration</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/logging.html">Logging data</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/console-logging.html">Printing information to the screen</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/gui.html">Graphical User Interface (GUI)</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/live-plotting.html">Display plots live from the controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/usage/ros.html">ROS integration</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Framework tools</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_utils.html">Log manipulation</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_ui.html">Log plotting</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_log_visualization.html">Replay visualization</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_surfaces_visualization.html">Visualizing surfaces</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/tools/mc_convex_visualization.html">Visualizing convexes</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Control recipes</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm.html">Using the FSM facilities</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-main-states.html">Main FSM states</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/fsm-example.html">FSM controller in practice</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/derived-fsm.html">Deriving the FSM controller</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/datastore.html">DataStore: Sharing Objects</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/observers.html">State Observation Pipelines</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">Using the LIPM Stabilizer</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/speed-constraint.html">Constraint the speed of a body</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/moving-a-contact.html">Moving a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/contact-dof.html">Change the DoF constraints on a contact</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-select.html">Select specific joints for a task</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/dim-weight.html">Affect different weight to different axis in the task space</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/joint-stiffness.html">Joints Stiffness</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/recipes/com-constraint.html">Constraining the accessible region of the CoM</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Samples</li>
+                    <ul>
+                      
+                        
+                        <li><strong>Available sample controllers</strong></li>
+                          
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/samples/sample-admittance.html">Admittance sample controller</a></li>
+                        
+                      
+                    </ul>
+                    
+                    <li>Advanced topics</li>
+                    <ul>
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-environment.html">Environment creation for mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/new-robot.html">Integrate a new robot in mc_rtc</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/support-mc-rtc-build-static.html">Supporting MC_RTC_BUILD_STATIC in your code</a></li>
+                        
+                      
+                        
+                        <li><a href="/mc_rtc/tutorials/advanced/debug-lssol-output-6.html">Debugging LSSOL output 6</a></li>
+                        
+                      
+                    </ul>
+                    
+                  </ul>
+                </div>
+              </div>
+              <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#posture">Posture</a></li>
+<li class="toc-entry toc-h1"><a href="#com">CoM</a></li>
+<li class="toc-entry toc-h1"><a href="#endeffector">EndEffector</a></li>
+<li class="toc-entry toc-h1"><a href="#text">Text</a></li>
+<li class="toc-entry toc-h1"><a href="#admittance">Admittance</a></li>
+<li class="toc-entry toc-h1"><a href="#impedance">Impedance</a></li>
+<li class="toc-entry toc-h1"><a href="#lipmstabilizer">LIPMStabilizer</a></li>
+</ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-9" id="tutorial-content">
+        <h1>Available sample controllers</h1>
+
+        <p>In this page you will find a list of all available sample controllers provided with the framework, along with a brief description of how to run them and what to expect. More complex controllers will be further detailed in their own tutorial page.</p>
+
+<h1 id="posture">Posture</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">Posture</code> controller (see <a href="https://mc-rtc-demo.netlify.app/#robot=JVRC1&amp;controller=EndEffector">online demonstration</a>) is the simplest controller in the framework. It adds the following tasks and constraints to the QP solver.</p>
+
+<p><strong>Tasks</strong></p>
+<ul>
+  <li><a href="/mc_rtc/doxygen.html#structmc__tasks_1_1PostureTask" target="blank_">mc_tasks::PostureTask</a>:
+Make each of the robot’s DoF target a given joint position. By default this controller will target the current robot encoder values when available, or the default stance for that robot otherwise (<a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1RobotModule#ae00ee36a0f17eaf23aadcb7643186fa4" target="blank_">mc_rbdyn::RobotModule::stance()</a>). Joints can be moved through the joint sliders in the GUI (<code class="language-plaintext highlighter-rouge">Tasks -&gt; posture_jvrc1 -&gt; Target</code>).</li>
+</ul>
+
+<p><strong>Constraints</strong></p>
+<ul>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1ContactConstraint" target="blank_">mc_solver::ContactConstraint</a>: A controller must always have a contact constraint, but it can have an empty set of contacts.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1KinematicsConstraint" target="blank_">mc_solver::KinematicsConstraint</a>: Joint limits constraint.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CollisionsConstraint" target="blank_">mc_solver::CollisionsConstraint</a>: Self-collision avoidance constraint.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CompoundJointConstraint" target="blank_">mc_solver::CompoundJointConstraint</a>: Handle joint limits for compound joints (joints whose limits depend on the value of another joint).</li>
+</ul>
+
+<p><strong>Supported robots</strong>
+All <a href="/mc_rtc/robots.html">robots</a> supported by the framework. Note that for custom robots, all you need to do is define a default set of collision pairs and limits for the <code class="language-plaintext highlighter-rouge">CompoundJointConstraint</code> if appropriate (see the tutorial on <a href="/mc_rtc/tutorials/advanced/new-robot.html">integrating a new robot</a>).</p>
+
+<p><strong>Running</strong>
+To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite interface.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">Posture</span>
+</code></pre></div></div>
+
+<h1 id="com">CoM</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">CoM</code> sample controller (see <a href="https://mc-rtc-demo.netlify.app/#robot=JVRC1&amp;controller=CoM">online demonstration</a>) has similar tasks and constraints as the <code class="language-plaintext highlighter-rouge">Posture</code> controller above.</p>
+
+<p><strong>Tasks</strong></p>
+<ul>
+  <li><a href="/mc_rtc/doxygen.html#structmc__tasks_1_1PostureTask" target="blank_">mc_tasks::PostureTask</a>: A posture task with low-weight to provide a default target for all joints.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__tasks_1_1CoMTask" target="blank_">mc_tasks::CoMTask</a>: Task controlling the robot’s CoM. By default this controller targets the current task position. You can move this target using the interactive markers in the GUI (rviz).</li>
+</ul>
+
+<p><strong>Constraints</strong></p>
+<ul>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1ContactConstraint" target="blank_">mc_solver::ContactConstraint</a>: Adds contacts between the left/right foot and the ground environment.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1DynamicsConstraint" target="blank_">mc_solver::DynamicsConstraint</a>: In addition to the joint limits constraint provided by the <a href="/mc_rtc/doxygen.html#structmc__solver_1_1KinematicsConstraint" target="blank_">mc_solver::KinematicsConstraint</a> this constraint enables computation of the joint torques and friction cones.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CollisionsConstraint" target="blank_">mc_solver::CollisionsConstraint</a>: Self-collision avoidance constraint.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CompoundJointConstraint" target="blank_">mc_solver::CompoundJointConstraint</a>: Handle joint limits for compound joints (joints whose limits depend on the value of another joint).</li>
+</ul>
+
+<p><strong>Supported robots</strong>
+All biped <a href="/mc_rtc/robots.html">robots</a> supported by the framework. Note that for custom robots, all you need to do is define a <code class="language-plaintext highlighter-rouge">LeftFoot</code> and <code class="language-plaintext highlighter-rouge">RightFoot</code> surface in <a href="/mc_rtc/tutorials/advanced/new-robot.html">your robot description</a>.</p>
+
+<p><strong>Running</strong>
+To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite interface.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">CoM</span>
+</code></pre></div></div>
+
+<h1 id="endeffector">EndEffector</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">EndEffector</code> controller (see <a href="https://mc-rtc-demo.netlify.app/#robot=JVRC1&amp;controller=EndEffector">online demonstration</a>) has the same tasks and constraints as the <code class="language-plaintext highlighter-rouge">CoM</code> controller above. In addition to controlling the CoM position, it adds an <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1EndEffectorTask" target="blank_">mc_tasks::EndEffectorTask</a> to control the position and orientation of the robot’s hand end-effector.</p>
+
+<p><strong>Supported robots</strong>
+All biped <a href="/mc_rtc/robots.html">robots</a> supported by the framework. Note that for custom robots, all you need to do is define a <code class="language-plaintext highlighter-rouge">LeftFoot</code> and <code class="language-plaintext highlighter-rouge">RightFoot</code> surfaces and an <code class="language-plaintext highlighter-rouge">r_wrist</code> body in <a href="/mc_rtc/tutorials/advanced/new-robot.html">your robot</a>.</p>
+
+<p><strong>Running</strong>
+To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite interface.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">EndEffector</span>
+</code></pre></div></div>
+
+<h1 id="text">Text</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">Text</code> sample controller demonstrate use of the mc_tasks::MetaTasks and <a href="/mc_rtc/doxygen.html#structmc__solver_1_1ConstraintSetLoader" target="blank_">mc_solver::ConstraintSetLoader</a> to load [tasks](/mc_rtc/json.html#MetaTask}} and <a href="/mc_rtc/json.html#ConstraintSet">constraints</a> from their YAML configuration.</p>
+
+<p><strong>Running</strong>
+To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite interface.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">Text</span>
+</code></pre></div></div>
+
+<p>The default configuration for this controller is similar to the <code class="language-plaintext highlighter-rouge">EndEffector</code> controller. You can try writing your own configuration in <code class="language-plaintext highlighter-rouge">~/.config/mc_rtc/controllers/Text.yaml</code>. For example, the following configuration re-creates the <code class="language-plaintext highlighter-rouge">CoM</code> controller and moves the <code class="language-plaintext highlighter-rouge">CoM</code> above the <code class="language-plaintext highlighter-rouge">LeftFoot</code> surface:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Text</span><span class="pi">:</span>
+  <span class="na">constraints</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">dynamics</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">contact</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">collision</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">compoundJoint</span>
+  <span class="na">tasks</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">com</span>
+    <span class="na">weight</span><span class="pi">:</span> <span class="m">1000</span>
+    <span class="na">above</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">LeftFoot</span><span class="pi">]</span>
+  <span class="na">contacts</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">LeftFoot</span>
+    <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">AllGround</span>
+    <span class="na">isFixed</span><span class="pi">:</span> <span class="no">false</span>
+  <span class="pi">-</span> <span class="na">r1Surface</span><span class="pi">:</span> <span class="s">RightFoot</span>
+    <span class="na">r2Surface</span><span class="pi">:</span> <span class="s">AllGround</span>
+    <span class="na">isFixed</span><span class="pi">:</span> <span class="no">false</span>
+</code></pre></div></div>
+
+<h1 id="admittance">Admittance</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">Admittance</code> sample controller demonstrates the use of the <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1AdmittanceTask" target="blank_">mc_tasks::force::AdmittanceTask</a> though a simple FSM making the <code class="language-plaintext highlighter-rouge">JVRC1</code> robot push a wall with a desired force.</p>
+
+<p><strong>Detailed description</strong>: see the <a href="/mc_rtc/tutorials/samples/sample-admittance.html">Admittance Sample Controller tutorial</a></p>
+
+<p><strong>Supported robots</strong>: <code class="language-plaintext highlighter-rouge">JVRC1</code>.</p>
+
+<p><strong>Prerequisites</strong>: Please make sure that the hand force sensors have been calibrated beforehand using the <a href="https://github.com/jrl-umi3218/mc_force_sensor_calibration_controller">ForceSensorCalibration controller</a>.</p>
+
+<p><strong>Running</strong></p>
+
+<p>To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite dynamic simulation (e.g Choreonoid…).</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">Admittance</span>
+</code></pre></div></div>
+
+<h1 id="impedance">Impedance</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">Impedance</code> sample controller demonstrates the use of the <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_">mc_tasks::force::ImpedanceTask</a> to simulataneously perform position and force control of the robot’s end-effector.</p>
+
+<p><strong>Supported robots</strong>: <code class="language-plaintext highlighter-rouge">JVRC1Fixed</code>.</p>
+
+<p><strong>Prerequisites</strong>: Please make sure that the hand force sensors have been calibrated beforehand using the <a href="https://github.com/jrl-umi3218/mc_force_sensor_calibration_controller">ForceSensorCalibration controller</a>.</p>
+
+<p><strong>Running</strong></p>
+
+<p>To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite dynamic simulation (e.g Choreonoid…). In choreonoid you can apply external forces by clicking on the moving hand and dragging it. It will follow you to some extent and return to it’s expected position along the trajectory when you relase the force. Note that you may add additional <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_">mc_tasks::force::ImpedanceTask</a> to the free end-effectors throught the GUI (<code class="language-plaintext highlighter-rouge">Global  -&gt; Add Tasks -&gt; ImpedanceTask</code>).</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1Fixed</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">Impedance</span>
+</code></pre></div></div>
+
+<h1 id="lipmstabilizer">LIPMStabilizer</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">LIPMStabilizer</code> sample controller demonstrates the use of the mc_tasks::StabilizerTask and its corresponding convenience FSM state mc_state::StabilizerStandingState though a simple quasi-static FSM making the robot stand and step while keeping balance.</p>
+
+<p><strong>Detailed description</strong>: see <a href="/mc_rtc/tutorials/recipes/lipm-stabilizer.html">the LIPM Stabilizer tutorial</a></p>
+
+<p><strong>Supported robots</strong>: All biped <a href="/mc_rtc/robots.html">robots</a> supported by the framework.</p>
+
+<p><strong>Running</strong></p>
+
+<p>To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite dynamic simulation (e.g Choreonoid…).</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">LIPMStabilizer</span>
+</code></pre></div></div>
+
+
+
+        <hr/>
+        
+        <div class="text-right">
+        <a href="/mc_rtc/tutorials/samples/sample-admittance.html">Next tutorial: Admittance sample controller</a>
+        </div>
+        
+      </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <footer>
+        <hr>
+        <div class="row">
+          <div class="col-8 offset-lg-2 col-lg-6">
+            Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
+          </div>
+          <div class="col-4 col-lg-2 text-right">
+            <a href="/mc_rtc/credits.html">Credits</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+
+</html>

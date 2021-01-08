@@ -1,6 +1,7 @@
 var searchData=
 [
   ['g',['g',['../structmc__rtc_1_1gui_1_1Color.html#acf401312f7e9a75003519e34206904f6',1,'mc_rtc::gui::Color']]],
+  ['gains_5f',['gains_',['../structmc__tasks_1_1force_1_1ImpedanceTask.html#a650f1aad54ff5b3f1b7b9a344c975187',1,'mc_tasks::force::ImpedanceTask']]],
   ['geometry',['geometry',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00587.html#a256eb0c67962f0e49c743df3314bef56',1,'mc_rbdyn_urdf::Visual']]],
   ['get_5ffn_5f',['get_fn_',['../structmc__rtc_1_1gui_1_1DataElement.html#a8a959ac2e5e7551b29b81b77034ea255',1,'mc_rtc::gui::DataElement::get_fn_()'],['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Ordinate.html#a6e0a97eb4969b6d697f5e3d4f957d886',1,'mc_rtc::gui::plot::impl::Ordinate::get_fn_()']]],
   ['get_5fx_5ffn_5f',['get_x_fn_',['../structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a06bb63c46c89243d82cbcb4a7323a3cb',1,'mc_rtc::gui::plot::impl::AbscissaOrdinate']]],

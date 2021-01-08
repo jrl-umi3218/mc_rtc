@@ -34,6 +34,14 @@ var dir_c5d9ba9e59fcda315855869f4a23a264 =
     [ "GazeTask.h", "GazeTask_8h.html", [
       [ "GazeTask", "structmc__tasks_1_1GazeTask.html", "structmc__tasks_1_1GazeTask" ]
     ] ],
+    [ "ImpedanceGains.h", "ImpedanceGains_8h.html", [
+      [ "ImpedanceVecd", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html", "structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd" ],
+      [ "ImpedanceGains", "structmc__tasks_1_1force_1_1ImpedanceGains.html", "structmc__tasks_1_1force_1_1ImpedanceGains" ],
+      [ "ConfigurationLoader< mc_tasks::force::ImpedanceGains >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html", null ]
+    ] ],
+    [ "ImpedanceTask.h", "ImpedanceTask_8h.html", [
+      [ "ImpedanceTask", "structmc__tasks_1_1force_1_1ImpedanceTask.html", "structmc__tasks_1_1force_1_1ImpedanceTask" ]
+    ] ],
     [ "LookAtSurfaceTask.h", "LookAtSurfaceTask_8h.html", [
       [ "LookAtSurfaceTask", "structmc__tasks_1_1LookAtSurfaceTask.html", "structmc__tasks_1_1LookAtSurfaceTask" ]
     ] ],

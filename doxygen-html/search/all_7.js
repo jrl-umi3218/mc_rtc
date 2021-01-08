@@ -1,6 +1,8 @@
 var searchData=
 [
   ['g',['g',['../structmc__rtc_1_1gui_1_1Color.html#acf401312f7e9a75003519e34206904f6',1,'mc_rtc::gui::Color']]],
+  ['gains',['gains',['../structmc__tasks_1_1force_1_1ImpedanceTask.html#a400d65123a02706e466611180d6bf4f0',1,'mc_tasks::force::ImpedanceTask::gains() const noexcept'],['../structmc__tasks_1_1force_1_1ImpedanceTask.html#ae257bdea578b9c3f62b7cbeb8791d2f8',1,'mc_tasks::force::ImpedanceTask::gains() noexcept']]],
+  ['gains_5f',['gains_',['../structmc__tasks_1_1force_1_1ImpedanceTask.html#a650f1aad54ff5b3f1b7b9a344c975187',1,'mc_tasks::force::ImpedanceTask']]],
   ['gazetask',['GazeTask',['../structmc__tasks_1_1GazeTask.html',1,'mc_tasks::GazeTask'],['../structmc__tasks_1_1GazeTask.html#a84332429e702444553058f37edcbe1d8',1,'mc_tasks::GazeTask::GazeTask(const std::string &amp;bodyName, const Eigen::Vector2d &amp;point2d, double depthEstimate, const sva::PTransformd &amp;X_b_gaze, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=500)'],['../structmc__tasks_1_1GazeTask.html#abbb977995875cf7717d4ad89d78b0e12',1,'mc_tasks::GazeTask::GazeTask(const std::string &amp;bodyName, const Eigen::Vector3d &amp;point3d, const sva::PTransformd &amp;X_b_gaze, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=500)']]],
   ['gazetask_2eh',['GazeTask.h',['../GazeTask_8h.html',1,'']]],
   ['generateinterpolatedwaypoints',['generateInterpolatedWaypoints',['../namespacemc__trajectory.html#a9fbcf4dd49d2e09b5d33208fae44f11b',1,'mc_trajectory']]],

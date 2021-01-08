@@ -28,6 +28,8 @@ var structmc__observers_1_1BodySensorObserver =
     [ "posW_", "structmc__observers_1_1BodySensorObserver.html#a7b67ccbf5ae607a9ed7227d64825d4fe", null ],
     [ "robot_", "structmc__observers_1_1BodySensorObserver.html#a6981aac220002179a743e97b840ca0ee", null ],
     [ "updateFrom_", "structmc__observers_1_1BodySensorObserver.html#a41e24212545815c92909fc647cfd4d75", null ],
+    [ "updatePose_", "structmc__observers_1_1BodySensorObserver.html#a579b85620df7509e6c9b17ce6eafea8a", null ],
     [ "updateRobot_", "structmc__observers_1_1BodySensorObserver.html#aa8d9c4d70016890242f717cdd06ff224", null ],
+    [ "updateVel_", "structmc__observers_1_1BodySensorObserver.html#ae2a3a769d0449616911ee977ccb1a3cb", null ],
     [ "velW_", "structmc__observers_1_1BodySensorObserver.html#a4d5cc646377a58ef243bf1d6b8c10f5e", null ]
 ];

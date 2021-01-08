@@ -10,5 +10,6 @@ var searchData=
   ['width',['width',['../structmc__rtc_1_1gui_1_1LineConfig.html#a57cd8fdd493c21993724fe26828cf47c',1,'mc_rtc::gui::LineConfig']]],
   ['withdcmbias',['withDCMBias',['../structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a7b344157591037726e435994165d846c',1,'mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration']]],
   ['withdcmfilter',['withDCMFilter',['../structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html#a41a4ad61ac746f632ece2ef93aa59b09',1,'mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration']]],
+  ['wrench_5f',['wrench_',['../structmc__tasks_1_1force_1_1ImpedanceGains.html#a7d9f24350044abdb57754a79aba2ea9e',1,'mc_tasks::force::ImpedanceGains']]],
   ['wrencherror_5f',['wrenchError_',['../structmc__tasks_1_1force_1_1AdmittanceTask.html#af66ad4d439b2cdfd9b6dc8bf7603cef3',1,'mc_tasks::force::AdmittanceTask']]]
 ];

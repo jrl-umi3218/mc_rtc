@@ -2,7 +2,7 @@ var searchData=
 [
   ['constants',['constants',['../namespacemc__rtc_1_1constants.html',1,'mc_rtc']]],
   ['detail',['detail',['../namespacemc__rbdyn_1_1detail.html',1,'mc_rbdyn']]],
-  ['details',['details',['../namespacemc__rbdyn_1_1details.html',1,'mc_rbdyn::details'],['../namespacemc__rtc_1_1gui_1_1details.html',1,'mc_rtc::gui::details'],['../namespacemc__rtc_1_1log_1_1details.html',1,'mc_rtc::log::details'],['../namespacemc__solver_1_1details.html',1,'mc_solver::details']]],
+  ['details',['details',['../namespacemc__rbdyn_1_1details.html',1,'mc_rbdyn::details'],['../namespacemc__rtc_1_1gui_1_1details.html',1,'mc_rtc::gui::details'],['../namespacemc__rtc_1_1log_1_1details.html',1,'mc_rtc::log::details'],['../namespacemc__solver_1_1details.html',1,'mc_solver::details'],['../namespacemc__tasks_1_1force_1_1details.html',1,'mc_tasks::force::details']]],
   ['force',['force',['../namespacemc__tasks_1_1force.html',1,'mc_tasks']]],
   ['fsm',['fsm',['../namespacemc__control_1_1fsm.html',1,'mc_control']]],
   ['geometry',['Geometry',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00575.html',1,'mc_rbdyn_urdf']]],

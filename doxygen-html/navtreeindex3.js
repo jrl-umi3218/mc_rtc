@@ -1,5 +1,10 @@
 var NAVTREEINDEX3 =
 {
+"mc__controller_8h.html#a53b7790e199f0eb693195a9e0f3183fa":[4,0,0,0,13,0],
+"mc__controller_8h.html#abe63c9c89a7762fc5ef9a7589218978c":[4,0,0,0,13,1],
+"mc__controller_8h.html#ae12249535408100bcdf1007ef0eb8fb8":[4,0,0,0,13,2],
+"mc__controller_8h_source.html":[4,0,0,0,13],
+"mc__global__controller_8h.html":[4,0,0,0,14],
 "mc__global__controller_8h_source.html":[4,0,0,0,14],
 "mc__observers_2api_8h.html":[4,0,0,2,0],
 "mc__observers_2api_8h.html#a0193ed43a7a8a2bca1082d339d28651e":[4,0,0,2,0,7],
@@ -168,6 +173,8 @@ var NAVTREEINDEX3 =
 "namespacemc__tasks.html":[3,0,9],
 "namespacemc__tasks_1_1force.html":[2,0,9,0],
 "namespacemc__tasks_1_1force.html":[3,0,9,0],
+"namespacemc__tasks_1_1force_1_1details.html":[2,0,9,0,0],
+"namespacemc__tasks_1_1force_1_1details.html":[3,0,9,0,0],
 "namespacemc__tasks_1_1lipm__stabilizer.html":[2,0,9,1],
 "namespacemc__tasks_1_1lipm__stabilizer.html":[3,0,9,1],
 "namespacemc__tasks_1_1lipm__stabilizer_1_1internal.html":[2,0,9,1,0],
@@ -242,12 +249,5 @@ var NAVTREEINDEX3 =
 "polygon__utils_8h_source.html":[4,0,0,4,16],
 "ros_8h.html":[4,0,1,0,0,0,0],
 "ros_8h_source.html":[4,0,1,0,0,0,0],
-"rpy__utils_8h.html":[4,0,0,4,23],
-"rpy__utils_8h.html#a04f15be86a9827b0d076764f344406ab":[4,0,0,4,23,3],
-"rpy__utils_8h.html#a058cd1f189f02e2c4986b6aacffa8195":[4,0,0,4,23,1],
-"rpy__utils_8h.html#a0948fb6dc9382e116f65c76261d26ea0":[4,0,0,4,23,0],
-"rpy__utils_8h.html#a4626f965b6c407b0bd14e10f98ec42b9":[4,0,0,4,23,5],
-"rpy__utils_8h.html#a5f178afee4c03533ae15c4dc04c143e2":[4,0,0,4,23,2],
-"rpy__utils_8h.html#afa2b9eed96e67a1bdb6abf90bb597063":[4,0,0,4,23,4],
-"rpy__utils_8h_source.html":[4,0,0,4,23]
+"rpy__utils_8h.html":[4,0,0,4,23]
 };

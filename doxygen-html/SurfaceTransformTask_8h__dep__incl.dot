@@ -14,4 +14,6 @@ digraph "include/mc_tasks/SurfaceTransformTask.h"
   Node94 [label="include/mc_control\l/fsm/states/SlidingFootContact.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$SlidingFootContact_8h.html"];
   Node93 -> Node95 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node95 [label="include/mc_tasks/lipm\l_stabilizer/StabilizerTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$StabilizerTask_8h.html"];
+  Node90 -> Node96 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node96 [label="include/mc_tasks/Impedance\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ImpedanceTask_8h.html"];
 }
