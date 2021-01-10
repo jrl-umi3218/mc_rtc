@@ -87,6 +87,7 @@ void StabilizerTask::reset()
   comTask->reset();
   comTarget_ = comTask->com();
   comTargetRaw_ = comTarget_;
+  zmpTarget_ = Eigen::Vector3d{comTarget_.x(), comTarget_.y(), 0.};
 
   for(auto footTask : footTasks)
   {
@@ -555,7 +556,7 @@ void StabilizerTask::computeLeftFootRatio()
     // Project desired CoM in-between foot-sole ankle frames and compute ratio along the line in-beween the two surfaces
     const Eigen::Vector3d & lankle = contacts_.at(ContactState::Left).anklePose().translation();
     const Eigen::Vector3d & rankle = contacts_.at(ContactState::Right).anklePose().translation();
-    Eigen::Vector3d t_lankle_com = comTarget_ - lankle;
+    Eigen::Vector3d t_lankle_com = zmpTarget_ - lankle;
     Eigen::Vector3d t_lankle_rankle = rankle - lankle;
     double d_proj = t_lankle_com.dot(t_lankle_rankle.normalized());
     leftFootRatio_ = clamp(d_proj / t_lankle_rankle.norm(), 0., 1.);
