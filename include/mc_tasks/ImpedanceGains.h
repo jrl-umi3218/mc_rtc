@@ -93,6 +93,11 @@ struct ImpedanceVecd
     return vec_.angular();
   }
 
+  inline Eigen::Vector3d & angular() noexcept
+  {
+    return vec_.angular();
+  }
+
   inline void linear(const Eigen::Vector3d & v) noexcept
   {
     vec_.linear() = mc_filter::utils::clamp(v, limit, std::numeric_limits<double>::infinity());
@@ -104,6 +109,11 @@ struct ImpedanceVecd
   }
 
   inline const Eigen::Vector3d & linear() const noexcept
+  {
+    return vec_.linear();
+  }
+
+  inline Eigen::Vector3d & linear() noexcept
   {
     return vec_.linear();
   }
