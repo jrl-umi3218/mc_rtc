@@ -78,6 +78,7 @@ mc_rtc_test(testConfigurationHelpers mc_rtc_utils)
 mc_rtc_test(test_io_utils mc_rtc_utils)
 get_filename_component(EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../doc/_examples" ABSOLUTE)
 mc_rtc_test(testSchemaExamples mc_tasks)
+mc_rtc_test(testLogger mc_rtc_utils)
 
 ###########################
 # -- FSM related tests -- #
