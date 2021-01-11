@@ -181,7 +181,7 @@ struct MC_TASKS_DLLAPI Contact
    */
   double xmin() const
   {
-    return contactPolygon_[0].x();
+    return xyMin_.x();
   }
 
   /**
@@ -190,7 +190,7 @@ struct MC_TASKS_DLLAPI Contact
    */
   double xmax() const
   {
-    return contactPolygon_[1].x();
+    return xyMax_.x();
   }
 
   /**
@@ -199,7 +199,7 @@ struct MC_TASKS_DLLAPI Contact
    */
   double ymin() const
   {
-    return contactPolygon_[3].y();
+    return xyMin_.y();
   }
 
   /**
@@ -208,7 +208,7 @@ struct MC_TASKS_DLLAPI Contact
    */
   double ymax() const
   {
-    return contactPolygon_[0].y();
+    return xyMax_.y();
   }
 
 private:
@@ -231,6 +231,9 @@ private:
 
   std::vector<Eigen::Vector3d>
       contactPolygon_; /**< Polygon of the surface boundaries along the sagital/lateral plane */
+
+  Eigen::Vector2d xyMin_ = Eigen::Vector2d::Zero(); /**< Minimum position in support polygon */
+  Eigen::Vector2d xyMax_ = Eigen::Vector2d::Zero(); /**< Maximum position in support polygon */
 };
 
 } // namespace internal
