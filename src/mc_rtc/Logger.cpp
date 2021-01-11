@@ -36,6 +36,7 @@ struct LoggerImpl
   std::string tmpl;
   double log_iter_ = 0;
   bool valid_ = true;
+  std::string path_ = "";
   std::ofstream log_;
 
 protected:
@@ -48,6 +49,7 @@ protected:
   // Open file and write magic number to it right away
   void open(const std::string & path)
   {
+    path_ = path;
     log_.open(path, std::ofstream::binary);
     log_.write((const char *)&Logger::magic, sizeof(Logger::magic));
   }
@@ -288,4 +290,10 @@ double Logger::t() const
 {
   return impl_->log_iter_;
 }
+
+const std::string & Logger::path() const
+{
+  return impl_->path_;
+}
+
 } // namespace mc_rtc

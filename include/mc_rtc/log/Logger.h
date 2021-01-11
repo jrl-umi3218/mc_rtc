@@ -171,6 +171,12 @@ public:
   /** Return the time elapsed since the controller start */
   double t() const;
 
+  /** Access the file opened by this Logger
+   *
+   * \note This is empty before \ref start has been called
+   */
+  const std::string & path() const;
+
 private:
   /** Hold information about a log entry stored in this instance */
   struct LogEntry
