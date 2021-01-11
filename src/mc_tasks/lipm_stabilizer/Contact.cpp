@@ -110,6 +110,15 @@ void Contact::findSurfaceBoundaries(const mc_rbdyn::Surface & surface)
                             + surfacePose_.rotation().inverse() * Eigen::Vector3d{maxSagital, minLateral, 0.});
   contactPolygon_.push_back(surfacePose_.translation()
                             + surfacePose_.rotation().inverse() * Eigen::Vector3d{minSagital, minLateral, 0.});
+
+  const auto & xMinMax =
+      std::minmax_element(contactPolygon_.begin(), contactPolygon_.end(),
+                          [](const Eigen::Vector3d & v1, const Eigen::Vector3d & v2) { return v1.x() < v2.x(); });
+  const auto & yMinMax =
+      std::minmax_element(contactPolygon_.begin(), contactPolygon_.end(),
+                          [](const Eigen::Vector3d & v1, const Eigen::Vector3d & v2) { return v1.y() < v2.y(); });
+  xyMin_ << xMinMax.first->x(), yMinMax.first->y();
+  xyMax_ << xMinMax.second->x(), yMinMax.second->y();
 }
 
 HrepXd Contact::hrep(const Eigen::Vector3d & vertical) const
