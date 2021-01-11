@@ -96,10 +96,16 @@ public:
    */
   void log();
 
-  /** Add a log entry into the log
+  /** Add a log entry into the log with the provided source
    *
    * This function only accepts callable objects that returns a l/rvalue to a
    * serializable object.
+   *
+   * The log entry can be removed by calling:
+   * - \ref removeLogEntry with the same name
+   * - \ref removeLogEntries with the same source
+   *
+   * The later remove all other log entries from the same source
    *
    * \param name Name of the log entry, this should be unique at any given time
    * but the same key can be re-used during the logger's life
@@ -107,10 +113,10 @@ public:
    * \param get_fn A function that provides data that should be logged
    *
    */
-  template<typename T>
-  void addLogEntry(const std::string & name,
-                   T get_fn,
-                   typename std::enable_if<mc_rtc::log::callback_is_serializable<T>::value>::type * = 0)
+  template<typename CallbackT,
+           typename SourceT = void,
+           typename std::enable_if<mc_rtc::log::callback_is_serializable<CallbackT>::value, int>::type = 0>
+  void addLogEntry(const std::string & name, const SourceT * source, CallbackT && get_fn)
   {
     using ret_t = decltype(get_fn());
     using base_t = typename std::decay<ret_t>::type;
@@ -120,9 +126,28 @@ public:
       return;
     }
     log_entries_changed_ = true;
-    log_entries_[name] = [get_fn](mc_rtc::MessagePackBuilder & builder) mutable {
-      mc_rtc::log::LogWriter<base_t>::write(get_fn(), builder);
-    };
+    log_entries_[name] = {source, [get_fn](mc_rtc::MessagePackBuilder & builder) mutable {
+                            mc_rtc::log::LogWriter<base_t>::write(get_fn(), builder);
+                          }};
+  }
+
+  /** Add a log entry into the log with no source
+   *
+   * This function only accepts callable objects that returns a l/rvalue to a
+   * serializable object.
+   *
+   * The log entry can only be removed by calling \ref removeLogEntry with the same name
+   *
+   * \param name Name of the log entry, this should be unique at any given time
+   * but the same key can be re-used during the logger's life
+   *
+   * \param get_fn A function that provides data that should be logged
+   *
+   */
+  template<typename T, typename std::enable_if<mc_rtc::log::callback_is_serializable<T>::value, int>::type = 0>
+  void addLogEntry(const std::string & name, T && get_fn)
+  {
+    addLogEntry(name, static_cast<const void *>(nullptr), std::forward<T>(get_fn));
   }
 
   /** Remove a log entry from the log
@@ -134,16 +159,33 @@ public:
    */
   void removeLogEntry(const std::string & name);
 
+  /** Remove all log entries from a given source
+   *
+   * This has no effect if no log entry is associated to the given source.
+   *
+   * \param source Source whose entries should be removed
+   *
+   */
+  void removeLogEntries(const void * source);
+
   /** Return the time elapsed since the controller start */
   double t() const;
 
 private:
+  /** Hold information about a log entry stored in this instance */
+  struct LogEntry
+  {
+    /** What is the data source (can be nullptr) */
+    const void * source;
+    /** Callback to log data */
+    serialize_fn log_cb;
+  };
   /** Store implementation detail related to the logging policy */
   std::shared_ptr<LoggerImpl> impl_ = nullptr;
   /** Set to true when log entries are added or removed */
   bool log_entries_changed_ = false;
-  /** Contains all the log entries callback */
-  std::unordered_map<std::string, serialize_fn> log_entries_;
+  /** Contains all the log entries */
+  std::unordered_map<std::string, LogEntry> log_entries_;
 };
 
 } // namespace mc_rtc

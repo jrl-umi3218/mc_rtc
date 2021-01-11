@@ -211,7 +211,7 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume)
   {
     if(!log_entries_.count("t"))
     {
-      addLogEntry("t", [this, timestep]() {
+      addLogEntry("t", this, [this, timestep]() {
         impl_->log_iter_ += timestep;
         return impl_->log_iter_ - timestep;
       });
@@ -252,7 +252,7 @@ void Logger::log()
   builder.start_array(2 * log_entries_.size());
   for(auto & e : log_entries_)
   {
-    e.second(builder);
+    e.second.log_cb(builder);
   }
   builder.finish_array();
   builder.finish_array();
@@ -266,6 +266,21 @@ void Logger::removeLogEntry(const std::string & name)
   {
     log_entries_changed_ = true;
     log_entries_.erase(name);
+  }
+}
+
+void Logger::removeLogEntries(const void * source)
+{
+  for(auto it = log_entries_.begin(); it != log_entries_.end();)
+  {
+    if(it->second.source == source)
+    {
+      it = log_entries_.erase(it);
+    }
+    else
+    {
+      ++it;
+    }
   }
 }
 
