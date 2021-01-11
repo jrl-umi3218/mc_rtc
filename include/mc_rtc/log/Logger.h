@@ -177,6 +177,9 @@ public:
    */
   const std::string & path() const;
 
+  /** Flush the log data to disk (only implemented in the synchronous method) */
+  void flush();
+
 private:
   /** Hold information about a log entry stored in this instance */
   struct LogEntry

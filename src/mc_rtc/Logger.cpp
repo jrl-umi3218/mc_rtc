@@ -29,6 +29,7 @@ struct LoggerImpl
 
   virtual void initialize(const bfs::path & path) = 0;
   virtual void write(char * data, size_t size) = 0;
+  virtual void flush() {}
 
   std::vector<char> data_;
 
@@ -61,7 +62,7 @@ struct LoggerNonThreadedPolicyImpl : public LoggerImpl
 {
   LoggerNonThreadedPolicyImpl(const std::string & directory, const std::string & tmpl) : LoggerImpl(directory, tmpl) {}
 
-  virtual void initialize(const bfs::path & path) final
+  void initialize(const bfs::path & path) final
   {
     if(log_.is_open())
     {
@@ -70,11 +71,19 @@ struct LoggerNonThreadedPolicyImpl : public LoggerImpl
     open(path.string());
   }
 
-  virtual void write(char * data, size_t size) final
+  void write(char * data, size_t size) final
   {
     if(valid_)
     {
       fwrite(data, size);
+    }
+  }
+
+  void flush() final
+  {
+    if(valid_)
+    {
+      log_.flush();
     }
   }
 };
@@ -118,7 +127,7 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
     return true;
   }
 
-  virtual void initialize(const bfs::path & path) final
+  void initialize(const bfs::path & path) final
   {
     if(log_.is_open())
     {
@@ -132,7 +141,7 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
     open(path.string());
   }
 
-  virtual void write(char * data, size_t size) final
+  void write(char * data, size_t size) final
   {
     char * ndata = new char[size];
     std::memcpy(ndata, data, size);
@@ -294,6 +303,11 @@ double Logger::t() const
 const std::string & Logger::path() const
 {
   return impl_->path_;
+}
+
+void Logger::flush()
+{
+  impl_->flush();
 }
 
 } // namespace mc_rtc
