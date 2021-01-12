@@ -107,13 +107,22 @@ struct is_serializable
   static constexpr bool value = GetLogType<T>::type != mc_rtc::log::LogType::None;
 };
 
+template<typename...>
+using void_t = void;
+
 /** Type-traits for callables that returns a serializable type
  *
  *  value is true if T() return type (after decaying) is serializable
  *
  */
-template<typename T>
+template<typename T, typename = void>
 struct callback_is_serializable
+{
+  static constexpr bool value = false;
+};
+
+template<typename T>
+struct callback_is_serializable<T, void_t<typename std::result_of<T()>::type>>
 {
   using ret_type = typename std::result_of<T()>::type;
   using base_type = typename std::decay<ret_type>::type;

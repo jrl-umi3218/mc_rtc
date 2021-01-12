@@ -2,6 +2,8 @@
  * Copyright 2015-2021 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
+#define EIGEN_RUNTIME_NO_MALLOC
+
 #include <mc_rtc/log/FlatLog.h>
 #include <mc_rtc/log/Logger.h>
 
@@ -17,10 +19,12 @@ bool operator==(const Eigen::Quaterniond & lhs, const Eigen::Quaterniond & rhs)
 }
 
 /** Check one iteration of the logger */
-template<typename Callback>
+template<bool malloc_allowed = false, typename Callback>
 void check(mc_rtc::Logger & logger, Callback && cb)
 {
+  Eigen::internal::set_is_malloc_allowed(malloc_allowed);
   logger.log();
+  Eigen::internal::set_is_malloc_allowed(true);
   logger.flush();
   mc_rtc::log::FlatLog log(logger.path());
   cb(log);
@@ -36,6 +40,7 @@ void check(const mc_rtc::log::FlatLog & log, const std::string & entry, size_t i
 
 struct LogData
 {
+private:
   /** Some data members supported by the logger */
   bool b = random_bool();
   double d = rnd();
@@ -43,12 +48,32 @@ struct LogData
   Eigen::Vector2d v2d = Eigen::Vector2d::Random();
   Eigen::Vector3d v3d = Eigen::Vector3d::Random();
   Eigen::Vector6d v6d = Eigen::Vector6d::Random();
-  Eigen::VectorXd vxd = Eigen::VectorXd::Random(36);
+  Eigen::VectorXd vxd = Eigen::VectorXd::Random(static_cast<Eigen::DenseIndex>(random_size()));
   Eigen::Quaterniond q = random_quat();
   sva::PTransformd pt = random_pt();
   sva::ForceVecd fv = random_fv();
   sva::MotionVecd mv = random_mv();
   std::vector<double> v = random_vector();
+
+public:
+#define DEFINE_GETTER(MEMBER)                               \
+  auto get_##MEMBER() const->const decltype(this->MEMBER) & \
+  {                                                         \
+    return this->MEMBER;                                    \
+  }
+  DEFINE_GETTER(b)
+  DEFINE_GETTER(d)
+  DEFINE_GETTER(s)
+  DEFINE_GETTER(v2d)
+  DEFINE_GETTER(v3d)
+  DEFINE_GETTER(v6d)
+  DEFINE_GETTER(vxd)
+  DEFINE_GETTER(q)
+  DEFINE_GETTER(pt)
+  DEFINE_GETTER(fv)
+  DEFINE_GETTER(mv)
+  DEFINE_GETTER(v)
+#undef DEFINE_GETTER
 
   /** Change data */
   void refresh()
@@ -74,6 +99,38 @@ struct LogData
     ADD_LOG_ENTRY("sva::MotionVecd", mv);
     ADD_LOG_ENTRY("std::vector<double>", v);
 #undef ADD_LOG_ENTRY
+  }
+
+  void addToLoggerWithMemberPointer(mc_rtc::Logger & logger)
+  {
+    logger.addLogEntry("bool", this, &LogData::b);
+    logger.addLogEntry("double", this, &LogData::d);
+    logger.addLogEntry("std::string", this, &LogData::s);
+    logger.addLogEntry("Eigen::Vector2d", this, &LogData::v2d);
+    logger.addLogEntry("Eigen::Vector3d", this, &LogData::v3d);
+    logger.addLogEntry("Eigen::Vector6d", this, &LogData::v6d);
+    logger.addLogEntry("Eigen::VectorXd", this, &LogData::vxd);
+    logger.addLogEntry("Eigen::Quaterniond", this, &LogData::q);
+    logger.addLogEntry("sva::PTransformd", this, &LogData::pt);
+    logger.addLogEntry("sva::ForceVecd", this, &LogData::fv);
+    logger.addLogEntry("sva::MotionVecd", this, &LogData::mv);
+    logger.addLogEntry("std::vector<double>", this, &LogData::v);
+  }
+
+  void addToLoggerWithGetter(mc_rtc::Logger & logger)
+  {
+    logger.addLogEntry("bool", this, &LogData::get_b);
+    logger.addLogEntry("double", this, &LogData::get_d);
+    logger.addLogEntry("std::string", this, &LogData::get_s);
+    logger.addLogEntry("Eigen::Vector2d", this, &LogData::get_v2d);
+    logger.addLogEntry("Eigen::Vector3d", this, &LogData::get_v3d);
+    logger.addLogEntry("Eigen::Vector6d", this, &LogData::get_v6d);
+    logger.addLogEntry("Eigen::VectorXd", this, &LogData::get_vxd);
+    logger.addLogEntry("Eigen::Quaterniond", this, &LogData::get_q);
+    logger.addLogEntry("sva::PTransformd", this, &LogData::get_pt);
+    logger.addLogEntry("sva::ForceVecd", this, &LogData::get_fv);
+    logger.addLogEntry("sva::MotionVecd", this, &LogData::get_mv);
+    logger.addLogEntry("std::vector<double>", this, &LogData::get_v);
   }
 
   void removeFromLogger(mc_rtc::Logger & logger)
@@ -151,7 +208,8 @@ BOOST_AUTO_TEST_CASE(TestLogger)
   /** Iteration 2, add callbacks without a source */
   LogData data;
   data.addToLogger(logger, false);
-  check(logger, [&data](const mc_rtc::log::FlatLog & log) {
+  /** Malloc is allowed in this test because we provided naive callbacks */
+  check<true>(logger, [&data](const mc_rtc::log::FlatLog & log) {
     std::set<std::string> entries = {"t",
                                      "bool",
                                      "double",
@@ -178,7 +236,8 @@ BOOST_AUTO_TEST_CASE(TestLogger)
   });
   /** Iteration 4, add everything with a source */
   data.addToLogger(logger, true);
-  check(logger, [&data](const mc_rtc::log::FlatLog & log) {
+  /** Malloc is allowed in this test because we provided naive callbacks */
+  check<true>(logger, [&data](const mc_rtc::log::FlatLog & log) {
     BOOST_REQUIRE(log.size() == 4);
     data.check(log);
   });
@@ -192,7 +251,8 @@ BOOST_AUTO_TEST_CASE(TestLogger)
   data.addToLogger(logger, true);
   for(size_t i = 6; i <= 100; ++i)
   {
-    check(logger, [&data, i](const mc_rtc::log::FlatLog & log) {
+    /** Malloc is allowed in this test because we provided naive callbacks */
+    check<true>(logger, [&data, i](const mc_rtc::log::FlatLog & log) {
       BOOST_REQUIRE(log.size() == i);
       data.check(log);
       data.refresh();
@@ -202,6 +262,38 @@ BOOST_AUTO_TEST_CASE(TestLogger)
   logger.removeLogEntries(&data);
   check(logger, [&data](const mc_rtc::log::FlatLog & log) {
     BOOST_REQUIRE(log.size() == 101);
+    data.check_empty(log);
+  });
+  /** Iteration 102 to 150, add from pointer to member, refresh data and check everything is ok */
+  data.addToLoggerWithMemberPointer(logger);
+  for(size_t i = 102; i <= 150; ++i)
+  {
+    check(logger, [&data, i](const mc_rtc::log::FlatLog & log) {
+      BOOST_REQUIRE(log.size() == i);
+      data.check(log);
+      data.refresh();
+    });
+  }
+  /** Iteration 151, remove the data once more */
+  logger.removeLogEntries(&data);
+  check(logger, [&data](const mc_rtc::log::FlatLog & log) {
+    BOOST_REQUIRE(log.size() == 151);
+    data.check_empty(log);
+  });
+  /** Iteration 152 to 200, add from pointer to method, refresh data and check everything is ok */
+  data.addToLoggerWithGetter(logger);
+  for(size_t i = 152; i <= 200; ++i)
+  {
+    check(logger, [&data, i](const mc_rtc::log::FlatLog & log) {
+      BOOST_REQUIRE(log.size() == i);
+      data.check(log);
+      data.refresh();
+    });
+  }
+  /** Iteration 201, remove the data once more */
+  logger.removeLogEntries(&data);
+  check(logger, [&data](const mc_rtc::log::FlatLog & log) {
+    BOOST_REQUIRE(log.size() == 201);
     data.check_empty(log);
   });
 }

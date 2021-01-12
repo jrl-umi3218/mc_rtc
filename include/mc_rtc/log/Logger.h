@@ -110,6 +110,8 @@ public:
    * \param name Name of the log entry, this should be unique at any given time
    * but the same key can be re-used during the logger's life
    *
+   * \param source Source of the log entry
+   *
    * \param get_fn A function that provides data that should be logged
    *
    */
@@ -129,6 +131,44 @@ public:
     log_entries_[name] = {source, [get_fn](mc_rtc::MessagePackBuilder & builder) mutable {
                             mc_rtc::log::LogWriter<base_t>::write(get_fn(), builder);
                           }};
+  }
+
+  /** Add a log entry from a source and a pointer to member
+   *
+   * This is an helper above the source + callback version
+   *
+   * \param name Name of the log entry
+   *
+   * \param source Source of the log entry
+   *
+   * \param member Member pointer for the source data
+   *
+   */
+  template<typename SourceT,
+           typename MemberT,
+           typename std::enable_if<mc_rtc::log::is_serializable<MemberT>::value, int>::type = 0>
+  void addLogEntry(const std::string & name, const SourceT * source, MemberT SourceT::*member)
+  {
+    addLogEntry(name, source, [source, member]() -> const MemberT & { return source->*member; });
+  }
+
+  /** Add a log entry from a source and a pointer to method
+   *
+   * This is an helper above the source + callback version
+   *
+   * \param name Name of the log entry
+   *
+   * \param source Source of the log entry
+   *
+   * \param method Method pointer for the source data
+   */
+  template<
+      typename SourceT,
+      typename MethodT,
+      typename std::enable_if<mc_rtc::log::is_serializable<typename std::decay<MethodT>::type>::value, int>::type = 0>
+  void addLogEntry(const std::string & name, const SourceT * source, MethodT (SourceT::*method)() const)
+  {
+    addLogEntry(name, source, [source, method]() -> MethodT { return (source->*method)(); });
   }
 
   /** Add a log entry into the log with no source
