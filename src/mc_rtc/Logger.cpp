@@ -286,6 +286,7 @@ void Logger::removeLogEntries(const void * source)
   {
     if(it->second.source == source)
     {
+      log_entries_changed_ = true;
       it = log_entries_.erase(it);
     }
     else
