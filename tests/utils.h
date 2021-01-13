@@ -132,7 +132,7 @@ bool random_bool()
 {
   static std::random_device rd;
   static std::mt19937_64 gen(rd());
-  static std::uniform_int_distribution<uint8_t> dis(0, 1);
+  static std::uniform_int_distribution<> dis(0, 1);
   return dis(gen);
 }
 
