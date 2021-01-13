@@ -110,6 +110,31 @@ struct is_serializable
 template<typename...>
 using void_t = void;
 
+/** True for member pointer that are serializable */
+template<typename T>
+struct is_serializable_member
+{
+  static constexpr bool value = false;
+};
+
+template<typename T, typename MemberT>
+struct is_serializable_member<MemberT T::*>
+{
+  static constexpr bool value = is_serializable<typename std::decay<MemberT>::type>::value;
+};
+
+template<typename T>
+struct is_serializable_getter
+{
+  static constexpr bool value = false;
+};
+
+template<typename T, typename MethodRetT>
+struct is_serializable_getter<MethodRetT (T::*)() const>
+{
+  static constexpr bool value = is_serializable<typename std::decay<MethodRetT>::type>::value;
+};
+
 /** Type-traits for callables that returns a serializable type
  *
  *  value is true if T() return type (after decaying) is serializable

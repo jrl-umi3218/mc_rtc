@@ -146,10 +146,33 @@ public:
    */
   template<typename SourceT,
            typename MemberT,
-           typename std::enable_if<mc_rtc::log::is_serializable<MemberT>::value, int>::type = 0>
+           typename std::enable_if<mc_rtc::log::is_serializable_member<MemberT SourceT::*>::value, int>::type = 0>
   void addLogEntry(const std::string & name, const SourceT * source, MemberT SourceT::*member)
   {
     addLogEntry(name, source, [source, member]() -> const MemberT & { return source->*member; });
+  }
+
+  /** Add a log entry from a source and a compile-time pointer to member
+   *
+   * This is slightly more efficient than the source + pointer to member version at the cost of annoying syntax,
+   * typically:
+   * ```cpp
+   * logger.addLogEntry<decltype(&Source::member), &Source::member>("name", &source);
+   * ```
+   *
+   * \param name Name of the log entry
+   *
+   * \param source Source of the log entry
+   *
+   */
+  template<typename MemberPtrT,
+           MemberPtrT member,
+           typename SourceT,
+           typename std::enable_if<mc_rtc::log::is_serializable_member<MemberPtrT>::value, int>::type = 0>
+  void addLogEntry(const std::string & name, const SourceT * source)
+  {
+    using MemberT = decltype(source->*member);
+    addLogEntry(name, source, [source]() -> const MemberT & { return source->*member; });
   }
 
   /** Add a log entry from a source and a pointer to method
@@ -165,10 +188,33 @@ public:
   template<
       typename SourceT,
       typename MethodT,
-      typename std::enable_if<mc_rtc::log::is_serializable<typename std::decay<MethodT>::type>::value, int>::type = 0>
+      typename std::enable_if<mc_rtc::log::is_serializable_getter<MethodT (SourceT::*)() const>::value, int>::type = 0>
   void addLogEntry(const std::string & name, const SourceT * source, MethodT (SourceT::*method)() const)
   {
     addLogEntry(name, source, [source, method]() -> MethodT { return (source->*method)(); });
+  }
+
+  /** Add a log entry from a source and a compile-time pointer to method
+   *
+   * This is slightly more efficient than the source + pointer to method version at the cost of annoying syntax,
+   * typically:
+   * ```cpp
+   * logger.addLogEntry<decltype(&Source::method), &Source::method>("name", &source);
+   * ```
+   *
+   * \param name Name of the log entry
+   *
+   * \param source Source of the log entry
+   *
+   */
+  template<typename MethodPtrT,
+           MethodPtrT method,
+           typename SourceT,
+           typename std::enable_if<mc_rtc::log::is_serializable_getter<MethodPtrT>::value, int>::type = 0>
+  void addLogEntry(const std::string & name, const SourceT * source)
+  {
+    using MethodRetT = decltype((source->*method)());
+    addLogEntry(name, source, [source]() -> MethodRetT { return (source->*method)(); });
   }
 
   /** Add a log entry into the log with no source
@@ -236,5 +282,8 @@ private:
   /** Contains all the log entries */
   std::unordered_map<std::string, LogEntry> log_entries_;
 };
+
+/** Helper to log members or methods */
+#define MC_RTC_LOG_HELPER(LOGGER, NAME, SOURCE, POINTER) LOGGER.addLogEntry<decltype(POINTER), POINTER>(NAME, SOURCE)
 
 } // namespace mc_rtc
