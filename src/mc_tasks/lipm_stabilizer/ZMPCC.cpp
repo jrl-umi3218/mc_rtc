@@ -73,15 +73,14 @@ void ZMPCC::removeFromGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std
 
 void ZMPCC::addToLogger(mc_rtc::Logger & logger, const std::string & name)
 {
-  logger.addLogEntry(name + "_zmpcc_comAdmittance",
+  logger.addLogEntry(name + "_zmpcc_comAdmittance", this,
                      [this]() -> const Eigen::Vector2d & { return config_.comAdmittance; });
-  logger.addLogEntry(name + "_zmpcc_errorZMP", [this]() -> const Eigen::Vector3d & { return error_; });
+  MC_RTC_LOG_HELPER(logger, name + "_zmpcc_errorZMP", this, &ZMPCC::error_);
 }
 
-void ZMPCC::removeFromLogger(mc_rtc::Logger & logger, const std::string & name)
+void ZMPCC::removeFromLogger(mc_rtc::Logger & logger, const std::string &)
 {
-  logger.removeLogEntry(name + "_zmpcc_comAdmittance");
-  logger.removeLogEntry(name + "_zmpcc_errorZMP");
+  logger.removeLogEntries(this);
 }
 
 } // namespace lipm_stabilizer

@@ -32,7 +32,7 @@ public:
    */
   CoMTask(const mc_rbdyn::Robots & robots, unsigned int robotIndex, double stiffness = 5.0, double weight = 100.);
 
-  virtual void reset() override;
+  void reset() override;
 
   /*! \brief Change the CoM target by a given amount
    *
@@ -66,7 +66,6 @@ public:
 protected:
   void addToGUI(mc_rtc::gui::StateBuilder &) override;
   void addToLogger(mc_rtc::Logger & logger) override;
-  void removeFromLogger(mc_rtc::Logger & logger) override;
 
 private:
   unsigned int robot_index_;

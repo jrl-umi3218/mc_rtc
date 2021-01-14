@@ -42,7 +42,7 @@ public:
    *
    * Set the task objective to the current body orientation
    */
-  virtual void reset() override;
+  void reset() override;
 
   /*! \brief Set the body orientation target
    *
@@ -65,7 +65,6 @@ public:
   std::string bodyName;
   unsigned int bIndex;
   void addToLogger(mc_rtc::Logger & logger) override;
-  void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
 } // namespace mc_tasks

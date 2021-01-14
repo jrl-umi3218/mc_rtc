@@ -293,52 +293,53 @@ void StabilizerTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
 void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
 {
   // Globbal log entries added to other categories
-  logger.addLogEntry("perf_" + name_, [this]() { return runTime_; });
+  MC_RTC_LOG_HELPER(logger, "perf_" + name_, this, &StabilizerTask::runTime_);
 
-  logger.addLogEntry(name_ + "_error_dcm_average", [this]() { return dcmAverageError_; });
-  logger.addLogEntry(name_ + "_error_dcm_pos", [this]() { return dcmError_; });
-  logger.addLogEntry(name_ + "_error_dcm_vel", [this]() { return dcmVelError_; });
-  logger.addLogEntry(name_ + "_error_dfz_force", [this]() { return dfzForceError_; });
-  logger.addLogEntry(name_ + "_error_dfz_height", [this]() { return dfzHeightError_; });
-  logger.addLogEntry(name_ + "_error_vdc", [this]() { return vdcHeightError_; });
-  logger.addLogEntry(name_ + "_admittance_cop", [this]() { return c_.copAdmittance; });
-  zmpcc_.addToLogger(logger, name_);
-  logger.addLogEntry(name_ + "_admittance_dfz", [this]() { return c_.dfzAdmittance; });
-  logger.addLogEntry(name_ + "_dcmDerivator_filtered", [this]() { return dcmDerivator_.eval(); });
-  logger.addLogEntry(name_ + "_dcmDerivator_timeConstant", [this]() { return dcmDerivator_.timeConstant(); });
-  logger.addLogEntry(name_ + "_dcmIntegrator_timeConstant", [this]() { return dcmIntegrator_.timeConstant(); });
-  logger.addLogEntry(name_ + "_dcmTracking_derivGain", [this]() { return c_.dcmDerivGain; });
-  logger.addLogEntry(name_ + "_dcmTracking_integralGain", [this]() { return c_.dcmIntegralGain; });
-  logger.addLogEntry(name_ + "_dcmTracking_propGain", [this]() { return c_.dcmPropGain; });
-  logger.addLogEntry(name_ + "_dcmBias_dcmMeasureErrorStd", [this]() { return c_.dcmBias.dcmMeasureErrorStd; });
-  logger.addLogEntry(name_ + "_dcmBias_zmpMeasureErrorStd", [this]() { return c_.dcmBias.zmpMeasureErrorStd; });
-  logger.addLogEntry(name_ + "_dcmBias_driftPerSecondStd", [this]() { return c_.dcmBias.biasDriftPerSecondStd; });
-  logger.addLogEntry(name_ + "_dcmBias_biasLimit",
+  MC_RTC_LOG_HELPER(logger, name_ + "_error_dcm_average", this, &StabilizerTask::dcmAverageError_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_error_dcm_pos", this, &StabilizerTask::dcmError_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_error_dcm_vel", this, &StabilizerTask::dcmVelError_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_error_dfz_force", this, &StabilizerTask::dfzForceError_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_error_dfz_height", this, &StabilizerTask::dfzHeightError_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_error_vdc", this, &StabilizerTask::vdcHeightError_);
+  logger.addLogEntry(name_ + "_admittance_cop", this, [this]() -> const Eigen::Vector2d & { return c_.copAdmittance; });
+  logger.addLogEntry(name_ + "_admittance_dfz", this, [this]() { return c_.dfzAdmittance; });
+  logger.addLogEntry(name_ + "_dcmDerivator_filtered", this, [this]() { return dcmDerivator_.eval(); });
+  logger.addLogEntry(name_ + "_dcmDerivator_timeConstant", this, [this]() { return dcmDerivator_.timeConstant(); });
+  logger.addLogEntry(name_ + "_dcmIntegrator_timeConstant", this, [this]() { return dcmIntegrator_.timeConstant(); });
+  logger.addLogEntry(name_ + "_dcmTracking_derivGain", this, [this]() { return c_.dcmDerivGain; });
+  logger.addLogEntry(name_ + "_dcmTracking_integralGain", this, [this]() { return c_.dcmIntegralGain; });
+  logger.addLogEntry(name_ + "_dcmTracking_propGain", this, [this]() { return c_.dcmPropGain; });
+  logger.addLogEntry(name_ + "_dcmBias_dcmMeasureErrorStd", this, [this]() { return c_.dcmBias.dcmMeasureErrorStd; });
+  logger.addLogEntry(name_ + "_dcmBias_zmpMeasureErrorStd", this, [this]() { return c_.dcmBias.zmpMeasureErrorStd; });
+  logger.addLogEntry(name_ + "_dcmBias_driftPerSecondStd", this, [this]() { return c_.dcmBias.biasDriftPerSecondStd; });
+  logger.addLogEntry(name_ + "_dcmBias_biasLimit", this,
                      [this]() -> const Eigen::Vector2d & { return c_.dcmBias.biasLimit; });
-  logger.addLogEntry(name_ + "_dcmBias_localBias", [this]() { return dcmEstimator_.getLocalBias(); });
-  logger.addLogEntry(name_ + "_dcmBias_bias", [this]() { return dcmEstimator_.getBias(); });
-  logger.addLogEntry(name_ + "_dfz_damping", [this]() { return c_.dfzDamping; });
-  logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque",
+  logger.addLogEntry(name_ + "_dcmBias_localBias", this, [this]() { return dcmEstimator_.getLocalBias(); });
+  logger.addLogEntry(name_ + "_dcmBias_bias", this, [this]() { return dcmEstimator_.getBias(); });
+  logger.addLogEntry(name_ + "_dfz_damping", this, [this]() { return c_.dfzDamping; });
+  logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque", this,
                      [this]() { return std::pow(c_.fdqpWeights.ankleTorqueSqrt, 2); });
-  logger.addLogEntry(name_ + "_fdqp_weights_netWrench", [this]() { return std::pow(c_.fdqpWeights.netWrenchSqrt, 2); });
-  logger.addLogEntry(name_ + "_fdqp_weights_pressure", [this]() { return std::pow(c_.fdqpWeights.pressureSqrt, 2); });
-  logger.addLogEntry(name_ + "_vdc_frequency", [this]() { return c_.vdcFrequency; });
-  logger.addLogEntry(name_ + "_vdc_stiffness", [this]() { return c_.vdcStiffness; });
-  logger.addLogEntry(name_ + "_wrench", [this]() -> const sva::ForceVecd & { return distribWrench_; });
-  logger.addLogEntry(name_ + "_support_min", [this]() -> const Eigen::Vector2d & { return supportMin_; });
-  logger.addLogEntry(name_ + "_support_max", [this]() -> const Eigen::Vector2d & { return supportMax_; });
-  logger.addLogEntry(name_ + "_left_foot_ratio", [this]() { return leftFootRatio_; });
+  logger.addLogEntry(name_ + "_fdqp_weights_netWrench", this,
+                     [this]() { return std::pow(c_.fdqpWeights.netWrenchSqrt, 2); });
+  logger.addLogEntry(name_ + "_fdqp_weights_pressure", this,
+                     [this]() { return std::pow(c_.fdqpWeights.pressureSqrt, 2); });
+  logger.addLogEntry(name_ + "_vdc_frequency", this, [this]() { return c_.vdcFrequency; });
+  logger.addLogEntry(name_ + "_vdc_stiffness", this, [this]() { return c_.vdcStiffness; });
+  MC_RTC_LOG_HELPER(logger, name_ + "_wrench", this, &StabilizerTask::distribWrench_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_support_min", this, &StabilizerTask::supportMin_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_support_max", this, &StabilizerTask::supportMax_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_left_foot_ratio", this, &StabilizerTask::leftFootRatio_);
 
   // Stabilizer targets
-  logger.addLogEntry(name_ + "_target_pendulum_com", [this]() -> const Eigen::Vector3d & { return comTarget_; });
-  logger.addLogEntry(name_ + "_target_pendulum_comd", [this]() -> const Eigen::Vector3d & { return comdTarget_; });
-  logger.addLogEntry(name_ + "_target_pendulum_comdd", [this]() -> const Eigen::Vector3d & { return comddTarget_; });
-  logger.addLogEntry(name_ + "_target_pendulum_dcm", [this]() -> const Eigen::Vector3d & { return dcmTarget_; });
-  logger.addLogEntry(name_ + "_target_pendulum_omega", [this]() { return omega_; });
-  logger.addLogEntry(name_ + "_target_pendulum_zmp", [this]() -> const Eigen::Vector3d & { return zmpTarget_; });
-  logger.addLogEntry(name_ + "_target_stabilizer_zmp", [this]() -> const Eigen::Vector3d & { return distribZMP_; });
+  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_com", this, &StabilizerTask::comTarget_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_comd", this, &StabilizerTask::comdTarget_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_comdd", this, &StabilizerTask::comddTarget_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_dcm", this, &StabilizerTask::dcmTarget_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_omega", this, &StabilizerTask::omega_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_zmp", this, &StabilizerTask::zmpTarget_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_target_stabilizer_zmp", this, &StabilizerTask::distribZMP_);
 
-  logger.addLogEntry(name_ + "_contactState", [this]() -> int {
+  logger.addLogEntry(name_ + "_contactState", this, [this]() -> int {
     if(inDoubleSupport())
       return 0;
     else if(inContact(ContactState::Left))
@@ -350,26 +351,30 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   });
 
   // Log computed robot properties
-  logger.addLogEntry(name_ + "_controlRobot_LeftFoot",
+  logger.addLogEntry(name_ + "_controlRobot_LeftFoot", this,
                      [this]() { return robot().surfacePose(footSurface(ContactState::Left)); });
-  logger.addLogEntry(name_ + "_controlRobot_RightFoot",
+  logger.addLogEntry(name_ + "_controlRobot_RightFoot", this,
                      [this]() { return robot().surfacePose(footSurface(ContactState::Right)); });
-  logger.addLogEntry(name_ + "_controlRobot_com", [this]() { return robot().com(); });
-  logger.addLogEntry(name_ + "_controlRobot_comd", [this]() { return robot().comVelocity(); });
-  logger.addLogEntry(name_ + "_controlRobot_posW", [this]() -> const sva::PTransformd & { return robot().posW(); });
+  logger.addLogEntry(name_ + "_controlRobot_com", this, [this]() { return robot().com(); });
+  logger.addLogEntry(name_ + "_controlRobot_comd", this, [this]() { return robot().comVelocity(); });
+  logger.addLogEntry(name_ + "_controlRobot_posW", this,
+                     [this]() -> const sva::PTransformd & { return robot().posW(); });
 
-  logger.addLogEntry(name_ + "_realRobot_LeftFoot",
+  logger.addLogEntry(name_ + "_realRobot_LeftFoot", this,
                      [this]() { return realRobot().surfacePose(footSurface(ContactState::Left)); });
-  logger.addLogEntry(name_ + "_realRobot_RightFoot",
+  logger.addLogEntry(name_ + "_realRobot_RightFoot", this,
                      [this]() { return realRobot().surfacePose(footSurface(ContactState::Right)); });
-  logger.addLogEntry(name_ + "_realRobot_com", [this]() -> const Eigen::Vector3d & { return measuredCoM_; });
-  logger.addLogEntry(name_ + "_realRobot_comd", [this]() -> const Eigen::Vector3d & { return measuredCoMd_; });
-  logger.addLogEntry(name_ + "_realRobot_dcm", [this]() -> const Eigen::Vector3d & { return measuredDCM_; });
-  logger.addLogEntry(name_ + "_realRobot_dcm_unbiased",
-                     [this]() -> const Eigen::Vector3d & { return measuredDCMUnbiased_; });
-  logger.addLogEntry(name_ + "_realRobot_posW", [this]() -> const sva::PTransformd & { return realRobot().posW(); });
-  logger.addLogEntry(name_ + "_realRobot_wrench", [this]() -> const sva::ForceVecd & { return measuredNetWrench_; });
-  logger.addLogEntry(name_ + "_realRobot_zmp", [this]() -> const Eigen::Vector3d & { return measuredZMP_; });
+  MC_RTC_LOG_HELPER(logger, name_ + "_realRobot_com", this, &StabilizerTask::measuredCoM_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_realRobot_comd", this, &StabilizerTask::measuredCoMd_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_realRobot_dcm", this, &StabilizerTask::measuredDCM_);
+  MC_RTC_LOG_HELPER(logger, name_ + "_realRobot_dcm_unbiased", this, &StabilizerTask::measuredDCMUnbiased_);
+  logger.addLogEntry(name_ + "_realRobot_posW", this,
+                     [this]() -> const sva::PTransformd & { return realRobot().posW(); });
+  logger.addLogEntry(name_ + "_realRobot_wrench", this,
+                     [this]() -> const sva::ForceVecd & { return measuredNetWrench_; });
+  logger.addLogEntry(name_ + "_realRobot_zmp", this, [this]() -> const Eigen::Vector3d & { return measuredZMP_; });
+
+  zmpcc_.addToLogger(logger, name_);
 
   MetaTask::addToLogger(*comTask, logger);
   MetaTask::addToLogger(*pelvisTask, logger);
@@ -378,62 +383,8 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
 
 void StabilizerTask::removeFromLogger(mc_rtc::Logger & logger)
 {
-  logger.removeLogEntry("perf_" + name_);
-  logger.removeLogEntry(name_ + "_contactState");
-  logger.removeLogEntry(name_ + "_error_dcm_average");
-  logger.removeLogEntry(name_ + "_error_dcm_pos");
-  logger.removeLogEntry(name_ + "_error_dcm_vel");
-  logger.removeLogEntry(name_ + "_error_dfz_force");
-  logger.removeLogEntry(name_ + "_error_dfz_height");
-  logger.removeLogEntry(name_ + "_error_vdc");
+  MetaTask::removeFromLogger(logger);
   zmpcc_.removeFromLogger(logger, name_);
-  logger.removeLogEntry(name_ + "_admittance_cop");
-  logger.removeLogEntry(name_ + "_admittance_dfz");
-  logger.removeLogEntry(name_ + "_dcmDerivator_filtered");
-  logger.removeLogEntry(name_ + "_dcmDerivator_timeConstant");
-  logger.removeLogEntry(name_ + "_dcmIntegrator_timeConstant");
-  logger.removeLogEntry(name_ + "_dcmTracking_derivGain");
-  logger.removeLogEntry(name_ + "_dcmTracking_integralGain");
-  logger.removeLogEntry(name_ + "_dcmTracking_propGain");
-  logger.removeLogEntry(name_ + "_dcmBias_dcmMeasureErrorStd");
-  logger.removeLogEntry(name_ + "_dcmBias_zmpMeasureErrorStd");
-  logger.removeLogEntry(name_ + "_dcmBias_driftPerSecondStd");
-  logger.removeLogEntry(name_ + "_dcmBias_biasLimit");
-  logger.removeLogEntry(name_ + "_dcmBias_localBias");
-  logger.removeLogEntry(name_ + "_dcmBias_bias");
-  logger.removeLogEntry(name_ + "_dfz_damping");
-  logger.removeLogEntry(name_ + "_fdqp_weights_ankleTorque");
-  logger.removeLogEntry(name_ + "_fdqp_weights_netWrench");
-  logger.removeLogEntry(name_ + "_fdqp_weights_pressure");
-  logger.removeLogEntry(name_ + "_vdc_frequency");
-  logger.removeLogEntry(name_ + "_vdc_stiffness");
-  logger.removeLogEntry(name_ + "_wrench");
-  logger.removeLogEntry(name_ + "_zmp");
-  logger.removeLogEntry(name_ + "_support_min");
-  logger.removeLogEntry(name_ + "_support_max");
-  logger.removeLogEntry(name_ + "_left_foot_ratio");
-  logger.removeLogEntry(name_ + "_target_pendulum_com");
-  logger.removeLogEntry(name_ + "_target_pendulum_comd");
-  logger.removeLogEntry(name_ + "_target_pendulum_comdd");
-  logger.removeLogEntry(name_ + "_target_pendulum_dcm");
-  logger.removeLogEntry(name_ + "_target_pendulum_omega");
-  logger.removeLogEntry(name_ + "_target_pendulum_zmp");
-  logger.removeLogEntry(name_ + "_target_stabilizer_zmp");
-  logger.removeLogEntry(name_ + "_controlRobot_LeftFoot");
-  logger.removeLogEntry(name_ + "_controlRobot_RightFoot");
-  logger.removeLogEntry(name_ + "_controlRobot_com");
-  logger.removeLogEntry(name_ + "_controlRobot_comd");
-  logger.removeLogEntry(name_ + "_controlRobot_posW");
-  logger.removeLogEntry(name_ + "_realRobot_LeftFoot");
-  logger.removeLogEntry(name_ + "_realRobot_RightFoot");
-  logger.removeLogEntry(name_ + "_realRobot_com");
-  logger.removeLogEntry(name_ + "_realRobot_comd");
-  logger.removeLogEntry(name_ + "_realRobot_dcm");
-  logger.removeLogEntry(name_ + "_realRobot_dcm_unbiased");
-  logger.removeLogEntry(name_ + "_realRobot_posW");
-  logger.removeLogEntry(name_ + "_realRobot_wrench");
-  logger.removeLogEntry(name_ + "_realRobot_zmp");
-
   MetaTask::removeFromLogger(*comTask, logger);
   MetaTask::removeFromLogger(*pelvisTask, logger);
   MetaTask::removeFromLogger(*torsoTask, logger);

@@ -212,14 +212,8 @@ void PostureTask::target(const std::map<std::string, std::vector<double>> & join
 
 void PostureTask::addToLogger(mc_rtc::Logger & logger)
 {
-  logger.addLogEntry(name_ + "_eval", [this]() -> const Eigen::VectorXd & { return pt_.eval(); });
-  logger.addLogEntry(name_ + "_speed", [this]() -> const Eigen::VectorXd & { return speed_; });
-}
-
-void PostureTask::removeFromLogger(mc_rtc::Logger & logger)
-{
-  logger.removeLogEntry(name_ + "_eval");
-  logger.removeLogEntry(name_ + "_speed");
+  logger.addLogEntry(name_ + "_eval", this, [this]() -> const Eigen::VectorXd & { return pt_.eval(); });
+  logger.addLogEntry(name_ + "_speed", this, [this]() -> const Eigen::VectorXd & { return speed_; });
 }
 
 void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

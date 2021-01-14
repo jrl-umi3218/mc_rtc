@@ -198,7 +198,7 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
   if(!addContacts_.empty())
   {
     // Remove previous contacts
-    for(const auto contactT : contactTasks)
+    for(const auto & contactT : contactTasks)
     {
       mc_rtc::log::info("{}: Removing contact {}", name(), contactT->surface());
       MetaTask::removeFromLogger(*contactT, *solver.logger());

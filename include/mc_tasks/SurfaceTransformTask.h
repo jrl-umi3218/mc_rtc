@@ -44,7 +44,7 @@ public:
    * and acceleration to zero.
    *
    */
-  virtual void reset() override;
+  void reset() override;
 
   /*! \brief Get the body Surface target */
   sva::PTransformd target() const;
@@ -91,8 +91,6 @@ public:
       const mc_rtc::Configuration & config) const override;
 
   void addToLogger(mc_rtc::Logger & logger) override;
-
-  void removeFromLogger(mc_rtc::Logger & logger) override;
 
   using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::stiffness;
   using TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::damping;

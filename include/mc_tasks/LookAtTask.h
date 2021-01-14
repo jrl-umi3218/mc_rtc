@@ -60,7 +60,6 @@ struct MC_TASKS_DLLAPI LookAtTask : public VectorOrientationTask
 
 private:
   void addToLogger(mc_rtc::Logger & logger) override;
-  void removeFromLogger(mc_rtc::Logger & logger) override;
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 
 private:

@@ -203,9 +203,10 @@ protected:
    *
    * This will be called by the solver when the task is removed.
    *
-   * The default implementation removes nothing from the log.
+   * The default implementation removes everything registered with the MetaTask instance as a source, it is likely good
+   * enough
    */
-  virtual void removeFromLogger(mc_rtc::Logger &) {}
+  virtual void removeFromLogger(mc_rtc::Logger &);
 
   /*! Helper function to remove a task from the logger when using another MetaTask
    * inside a MetaTask */

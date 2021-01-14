@@ -87,17 +87,9 @@ const Eigen::Vector3d & VectorOrientationTask::actual() const
 void VectorOrientationTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
-  logger.addLogEntry(name_ + "_target", [this]() -> const Eigen::Vector3d & { return targetVector(); });
-  logger.addLogEntry(name_ + "_current", [this]() -> const Eigen::Vector3d & { return actual(); });
-  logger.addLogEntry(name_ + "_error", [this]() -> Eigen::Vector3d { return eval(); });
-}
-
-void VectorOrientationTask::removeFromLogger(mc_rtc::Logger & logger)
-{
-  TrajectoryBase::removeFromLogger(logger);
-  logger.removeLogEntry(name_ + "_target");
-  logger.removeLogEntry(name_ + "_current");
-  logger.removeLogEntry(name_ + "_error");
+  logger.addLogEntry(name_ + "_target", this, [this]() -> const Eigen::Vector3d & { return targetVector(); });
+  MC_RTC_LOG_HELPER(logger, name_ + "_current", this, &VectorOrientationTask::actual);
+  MC_RTC_LOG_HELPER(logger, name_ + "_error", this, &VectorOrientationTask::eval);
 }
 
 void VectorOrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

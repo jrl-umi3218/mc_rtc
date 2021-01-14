@@ -391,19 +391,9 @@ void SplineTrajectoryTask<Derived>::addToLogger(mc_rtc::Logger & logger)
     const auto & robot = this->robots.robot(rIndex_);
     return robot.surfacePose(surfaceName_);
   });
-  logger.addLogEntry(name_ + "_targetPose", [this]() { return this->target(); });
-  logger.addLogEntry(name_ + "_refPose", [this]() { return this->refPose(); });
-  logger.addLogEntry(name_ + "_speed", [this]() -> const Eigen::VectorXd { return this->speed(); });
-}
-
-template<typename Derived>
-void SplineTrajectoryTask<Derived>::removeFromLogger(mc_rtc::Logger & logger)
-{
-  TrajectoryBase::removeFromLogger(logger);
-  logger.removeLogEntry(name_ + "_surfacePose");
-  logger.removeLogEntry(name_ + "_targetPose");
-  logger.removeLogEntry(name_ + "_refPose");
-  logger.removeLogEntry(name_ + "_speed");
+  logger.addLogEntry(name_ + "_targetPose", this, [this]() { return target(); });
+  logger.addLogEntry(name_ + "_refPose", this, [this]() { return refPose(); });
+  MC_RTC_LOG_HELPER(logger, name_ + "_speed", this, &SplineTrajectoryBase::speed);
 }
 
 template<typename Derived>

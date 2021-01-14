@@ -58,7 +58,7 @@ public:
    *
    * Set the task objective to the current body position
    */
-  virtual void reset() override;
+  void reset() override;
 
   /*! \brief Get the body position target */
   Eigen::Vector3d position();
@@ -87,7 +87,6 @@ protected:
   std::string bodyName;
   unsigned int bIndex;
   void addToLogger(mc_rtc::Logger & logger) override;
-  void removeFromLogger(mc_rtc::Logger & logger) override;
 };
 
 } // namespace mc_tasks

@@ -195,17 +195,16 @@ void EndEffectorTask::addToLogger(mc_rtc::Logger & logger)
 {
   positionTask->addToLogger(logger);
   orientationTask->addToLogger(logger);
-  logger.addLogEntry(name_ + "_target", [this]() -> const sva::PTransformd & { return curTransform; });
+  MC_RTC_LOG_HELPER(logger, name_ + "_target", this, &EndEffectorTask::curTransform);
   logger.addLogEntry(
-      name_, [this]() -> const sva::PTransformd & { return robots.robot(robotIndex).mbc().bodyPosW[bodyIndex]; });
+      name_, this, [this]() -> const sva::PTransformd & { return robots.robot(robotIndex).mbc().bodyPosW[bodyIndex]; });
 }
 
 void EndEffectorTask::removeFromLogger(mc_rtc::Logger & logger)
 {
+  MetaTask::removeFromLogger(logger);
   positionTask->removeFromLogger(logger);
   orientationTask->removeFromLogger(logger);
-  logger.removeLogEntry(name_ + "_target");
-  logger.removeLogEntry(name_);
 }
 
 void EndEffectorTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

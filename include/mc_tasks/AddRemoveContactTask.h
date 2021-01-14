@@ -122,13 +122,13 @@ public:
    * \returns Velocity error of the LinVelocity task */
   Eigen::Vector3d velError();
 
-  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
+  void dimWeight(const Eigen::VectorXd & dimW) override;
 
-  virtual Eigen::VectorXd dimWeight() const override;
+  Eigen::VectorXd dimWeight() const override;
 
-  virtual Eigen::VectorXd eval() const override;
+  Eigen::VectorXd eval() const override;
 
-  virtual Eigen::VectorXd speed() const override;
+  Eigen::VectorXd speed() const override;
 
 public:
   mc_rbdyn::Robots & robots;
@@ -169,14 +169,14 @@ private:
   {
   }
 
-  virtual void resetJointsSelector(mc_solver::QPSolver &) override {}
+  void resetJointsSelector(mc_solver::QPSolver &) override {}
 
-  virtual void reset() override {}
+  void reset() override {}
 
 private:
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+  void addToSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+  void removeFromSolver(mc_solver::QPSolver & solver) override;
 
   void update(mc_solver::QPSolver &) override;
 
