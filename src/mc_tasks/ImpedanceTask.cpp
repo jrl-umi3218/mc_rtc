@@ -183,10 +183,10 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
   SurfaceTransformTask::addToLogger(logger);
 
   // impedance parameters
-  logger.addLogEntry(name_ + "_gains_M", [this]() -> const sva::ImpedanceVecd & { return gains().M().vec(); });
-  logger.addLogEntry(name_ + "_gains_D", [this]() -> const sva::ImpedanceVecd & { return gains().D().vec(); });
-  logger.addLogEntry(name_ + "_gains_K", [this]() -> const sva::ImpedanceVecd & { return gains().K().vec(); });
-  logger.addLogEntry(name_ + "_gains_wrench",
+  logger.addLogEntry(name_ + "_gains_M", this, [this]() -> const sva::ImpedanceVecd & { return gains().M().vec(); });
+  logger.addLogEntry(name_ + "_gains_D", this, [this]() -> const sva::ImpedanceVecd & { return gains().D().vec(); });
+  logger.addLogEntry(name_ + "_gains_K", this, [this]() -> const sva::ImpedanceVecd & { return gains().K().vec(); });
+  logger.addLogEntry(name_ + "_gains_wrench", this,
                      [this]() -> const sva::ImpedanceVecd & { return gains().wrench().vec(); });
 
   // compliance values
