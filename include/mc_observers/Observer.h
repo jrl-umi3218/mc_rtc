@@ -115,7 +115,7 @@ struct MC_OBSERVERS_DLLAPI Observer
   }
 
   /*! \brief Remove observer from logger. */
-  void removeFromLogger_(mc_rtc::Logger & logger, std::string category = "")
+  void removeFromLogger_(mc_rtc::Logger & logger, const std::string & category = "")
   {
     removeFromLogger(logger, category + "_" + name_);
   }
@@ -183,12 +183,11 @@ protected:
 
   /*! \brief Remove observer from logger
    *
-   * Default implementation does nothing, each observer implementation is
-   * responsible for removing all logs entry that it added.
+   * The default implementation removes the entry that were registered by this
    *
    * @param category Category in which this observer entries are logged
    */
-  virtual void removeFromLogger(mc_rtc::Logger &, const std::string & /* category */) {}
+  virtual void removeFromLogger(mc_rtc::Logger &, const std::string & /* category */);
 
   /*! \brief Add observer information the GUI.
    *

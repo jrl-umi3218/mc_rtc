@@ -138,23 +138,18 @@ void KinematicInertialPoseObserver::addToLogger(const mc_control::MCController &
                                                 mc_rtc::Logger & logger,
                                                 const std::string & category)
 {
+#define LOG_MEMBER(NAME, MEMBER) \
+  MC_RTC_LOG_HELPER(logger, category + NAME, this, &KinematicInertialPoseObserver::MEMBER)
   if(logPose_)
   {
-    logger.addLogEntry(category + "_posW", [this]() -> const sva::PTransformd & { return pose_; });
+    LOG_MEMBER("_posW", pose_);
   }
   if(logAnchorFrame_)
   {
-    logger.addLogEntry(category + "_anchorFrame", [this]() -> const sva::PTransformd & { return X_0_anchorFrame_; });
-    logger.addLogEntry(category + "_anchorFrameReal",
-                       [this]() -> const sva::PTransformd & { return X_0_anchorFrameReal_; });
+    LOG_MEMBER("_anchorFrame", X_0_anchorFrame_);
+    LOG_MEMBER("_anchorFrameReal", X_0_anchorFrameReal_);
   }
-}
-
-void KinematicInertialPoseObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
-{
-  logger.removeLogEntry(category + "_posW");
-  logger.removeLogEntry(category + "_anchorFrame");
-  logger.removeLogEntry(category + "_anchorFrameReal");
+#undef LOG_MEMBER
 }
 
 void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ctl,

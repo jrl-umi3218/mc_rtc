@@ -79,16 +79,9 @@ void KinematicInertialObserver::addToLogger(const mc_control::MCController & ctl
   KinematicInertialPoseObserver::addToLogger(ctl, logger, category);
   if(logVelocity_)
   {
-    logger.addLogEntry(category + "_velW", [this]() -> const sva::MotionVecd & { return velW_; });
-    logger.addLogEntry(category + "_filter_cutoffPeriod", [this]() { return velFilter_.cutoffPeriod(); });
+    logger.addLogEntry(category + "_velW", this, [this]() -> const sva::MotionVecd & { return velW_; });
+    logger.addLogEntry(category + "_filter_cutoffPeriod", this, [this]() { return velFilter_.cutoffPeriod(); });
   }
-}
-
-void KinematicInertialObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
-{
-  KinematicInertialPoseObserver::removeFromLogger(logger, category);
-  logger.removeLogEntry(category + "_velW");
-  logger.removeLogEntry(category + "_filter_cutoffPeriod");
 }
 
 void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl,
