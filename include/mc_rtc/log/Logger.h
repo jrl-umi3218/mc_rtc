@@ -133,25 +133,6 @@ public:
                           }};
   }
 
-  /** Add a log entry from a source and a pointer to member
-   *
-   * This is an helper above the source + callback version
-   *
-   * \param name Name of the log entry
-   *
-   * \param source Source of the log entry
-   *
-   * \param member Member pointer for the source data
-   *
-   */
-  template<typename SourceT,
-           typename MemberT,
-           typename std::enable_if<mc_rtc::log::is_serializable_member<MemberT SourceT::*>::value, int>::type = 0>
-  void addLogEntry(const std::string & name, const SourceT * source, MemberT SourceT::*member)
-  {
-    addLogEntry(name, source, [source, member]() -> const MemberT & { return source->*member; });
-  }
-
   /** Add a log entry from a source and a compile-time pointer to member
    *
    * This is slightly more efficient than the source + pointer to member version at the cost of annoying syntax,
@@ -173,25 +154,6 @@ public:
   {
     using MemberT = decltype(source->*member);
     addLogEntry(name, source, [source]() -> const MemberT & { return source->*member; });
-  }
-
-  /** Add a log entry from a source and a pointer to method
-   *
-   * This is an helper above the source + callback version
-   *
-   * \param name Name of the log entry
-   *
-   * \param source Source of the log entry
-   *
-   * \param method Method pointer for the source data
-   */
-  template<
-      typename SourceT,
-      typename MethodT,
-      typename std::enable_if<mc_rtc::log::is_serializable_getter<MethodT (SourceT::*)() const>::value, int>::type = 0>
-  void addLogEntry(const std::string & name, const SourceT * source, MethodT (SourceT::*method)() const)
-  {
-    addLogEntry(name, source, [source, method]() -> MethodT { return (source->*method)(); });
   }
 
   /** Add a log entry from a source and a compile-time pointer to method

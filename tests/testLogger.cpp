@@ -103,22 +103,6 @@ public:
 
   void addToLoggerWithMemberPointer(mc_rtc::Logger & logger)
   {
-    logger.addLogEntry("bool", this, &LogData::b);
-    logger.addLogEntry("double", this, &LogData::d);
-    logger.addLogEntry("std::string", this, &LogData::s);
-    logger.addLogEntry("Eigen::Vector2d", this, &LogData::v2d);
-    logger.addLogEntry("Eigen::Vector3d", this, &LogData::v3d);
-    logger.addLogEntry("Eigen::Vector6d", this, &LogData::v6d);
-    logger.addLogEntry("Eigen::VectorXd", this, &LogData::vxd);
-    logger.addLogEntry("Eigen::Quaterniond", this, &LogData::q);
-    logger.addLogEntry("sva::PTransformd", this, &LogData::pt);
-    logger.addLogEntry("sva::ForceVecd", this, &LogData::fv);
-    logger.addLogEntry("sva::MotionVecd", this, &LogData::mv);
-    logger.addLogEntry("std::vector<double>", this, &LogData::v);
-  }
-
-  void addToLoggerWithMemberPointerFast(mc_rtc::Logger & logger)
-  {
     logger.addLogEntry<decltype(&LogData::b), &LogData::b>("bool", this);
     logger.addLogEntry<decltype(&LogData::d), &LogData::d>("double", this);
     logger.addLogEntry<decltype(&LogData::s), &LogData::s>("std::string", this);
@@ -150,22 +134,6 @@ public:
   }
 
   void addToLoggerWithGetter(mc_rtc::Logger & logger)
-  {
-    logger.addLogEntry("bool", this, &LogData::get_b);
-    logger.addLogEntry("double", this, &LogData::get_d);
-    logger.addLogEntry("std::string", this, &LogData::get_s);
-    logger.addLogEntry("Eigen::Vector2d", this, &LogData::get_v2d);
-    logger.addLogEntry("Eigen::Vector3d", this, &LogData::get_v3d);
-    logger.addLogEntry("Eigen::Vector6d", this, &LogData::get_v6d);
-    logger.addLogEntry("Eigen::VectorXd", this, &LogData::get_vxd);
-    logger.addLogEntry("Eigen::Quaterniond", this, &LogData::get_q);
-    logger.addLogEntry("sva::PTransformd", this, &LogData::get_pt);
-    logger.addLogEntry("sva::ForceVecd", this, &LogData::get_fv);
-    logger.addLogEntry("sva::MotionVecd", this, &LogData::get_mv);
-    logger.addLogEntry("std::vector<double>", this, &LogData::get_v);
-  }
-
-  void addToLoggerWithGetterFast(mc_rtc::Logger & logger)
   {
     logger.addLogEntry<decltype(&LogData::get_b), &LogData::get_b>("bool", this);
     logger.addLogEntry<decltype(&LogData::get_d), &LogData::get_d>("double", this);
@@ -370,7 +338,7 @@ BOOST_AUTO_TEST_CASE(TestLogger)
     iter++;
   });
   /** Iteration 202 to 250, add from fast pointer to member, refresh data and check everything is ok */
-  data.addToLoggerWithMemberPointerFast(logger);
+  data.addToLoggerWithMemberPointerMacro(logger);
   for(iter = 202; iter <= 250; ++iter)
   {
     check(logger, [&](const mc_rtc::log::FlatLog & log) {
@@ -387,8 +355,8 @@ BOOST_AUTO_TEST_CASE(TestLogger)
     iter++;
   });
   /** Iteration 252 to 300, add from fast pointer to method, refresh data and check everything is ok */
-  data.addToLoggerWithGetterFast(logger);
-  for(iter = 252; iter <= 300; ++iter)
+  data.addToLoggerWithGetterMacro(logger);
+  for(iter = 252; iter <= 200; ++iter)
   {
     check(logger, [&](const mc_rtc::log::FlatLog & log) {
       BOOST_REQUIRE(log.size() == iter);
@@ -397,40 +365,6 @@ BOOST_AUTO_TEST_CASE(TestLogger)
     });
   }
   /** Iteration 301, remove the data once more */
-  logger.removeLogEntries(&data);
-  check(logger, [&](const mc_rtc::log::FlatLog & log) {
-    BOOST_REQUIRE(log.size() == iter);
-    data.check_empty(log);
-    iter++;
-  });
-  /** Iteration 302 to 350, add from fast pointer to member, refresh data and check everything is ok */
-  data.addToLoggerWithMemberPointerMacro(logger);
-  for(iter = 302; iter <= 350; ++iter)
-  {
-    check(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.size() == iter);
-      data.check(log);
-      data.refresh();
-    });
-  }
-  /** Iteration 351, remove the data once more */
-  logger.removeLogEntries(&data);
-  check(logger, [&](const mc_rtc::log::FlatLog & log) {
-    BOOST_REQUIRE(log.size() == iter);
-    data.check_empty(log);
-    iter++;
-  });
-  /** Iteration 352 to 400, add from fast pointer to method, refresh data and check everything is ok */
-  data.addToLoggerWithGetterMacro(logger);
-  for(iter = 352; iter <= 400; ++iter)
-  {
-    check(logger, [&](const mc_rtc::log::FlatLog & log) {
-      BOOST_REQUIRE(log.size() == iter);
-      data.check(log);
-      data.refresh();
-    });
-  }
-  /** Iteration 401, remove the data once more */
   logger.removeLogEntries(&data);
   check(logger, [&](const mc_rtc::log::FlatLog & log) {
     BOOST_REQUIRE(log.size() == iter);
