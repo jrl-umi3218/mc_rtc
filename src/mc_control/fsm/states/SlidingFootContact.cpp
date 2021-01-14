@@ -82,10 +82,11 @@ void SlidingFootContactState::start(Controller & ctl)
   ctl.contactConstraint().contactConstr->resetDofContacts();
   setHandDofContact(ctl);
   slidingContactId_ = getContactId(ctl, slidingSurface_);
-  ctl.logger().addLogEntry("Sliding_" + slidingSurface_ + "_com_targetIn",
-                           [this]() -> const Eigen::Vector3d & { return com_target0; });
-  ctl.logger().addLogEntry("Sliding_" + slidingSurface_ + "_com_sensor",
-                           [this]() -> const Eigen::Vector3d & { return com_sensor; });
+#define LOG_MEMBER(NAME, MEMBER) \
+  MC_RTC_LOG_HELPER(ctl.logger(), "Sliding_" + slidingSurface_ + NAME, this, &SlidingFootContactState::MEMBER)
+  LOG_MEMBER("_com_targetIn", com_target0);
+  LOG_MEMBER("_com_sensor", com_sensor);
+#undef LOG_MEMBER
   if(wait_for_slide_trigger_)
   {
     auto gui = ctl.gui();
@@ -262,8 +263,7 @@ bool SlidingFootContactState::run(Controller & ctl)
 
 void SlidingFootContactState::teardown(Controller & ctl)
 {
-  ctl.logger().removeLogEntry("Sliding_" + slidingSurface_ + "_com_targetIn");
-  ctl.logger().removeLogEntry("Sliding_" + slidingSurface_ + "_com_sensor");
+  ctl.logger().removeLogEntries(this);
   if(wait_for_slide_trigger_)
   {
     auto gui = ctl.gui();
