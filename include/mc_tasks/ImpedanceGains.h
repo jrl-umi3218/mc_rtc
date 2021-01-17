@@ -6,8 +6,6 @@
 
 #include <mc_tasks/api.h>
 
-#include <mc_filter/utils/clamp.h>
-
 #include <mc_rtc/Configuration.h>
 
 namespace mc_tasks
@@ -80,7 +78,7 @@ struct ImpedanceVecd
 
   inline void angular(const Eigen::Vector3d & v) noexcept
   {
-    vec_.angular() = mc_filter::utils::clamp(v, limit, std::numeric_limits<double>::infinity());
+    vec_.angular() = v.cwiseMax(limit);
   }
 
   inline void angular(double angular) noexcept
@@ -95,7 +93,7 @@ struct ImpedanceVecd
 
   inline void linear(const Eigen::Vector3d & v) noexcept
   {
-    vec_.linear() = mc_filter::utils::clamp(v, limit, std::numeric_limits<double>::infinity());
+    vec_.linear() = v.cwiseMax(limit);
   }
 
   inline void linear(double linear) noexcept
