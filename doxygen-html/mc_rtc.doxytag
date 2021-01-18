@@ -2140,15 +2140,15 @@
       <type>constexpr double</type>
       <name>toDeg</name>
       <anchorfile>namespacemc__rtc_1_1constants.html</anchorfile>
-      <anchor>a357fd1ef503f568cf436fbda923472cf</anchor>
-      <arglist>(const double degrees)</arglist>
+      <anchor>a9790fd3b6c0100cac0f0f7d86c4bec83</anchor>
+      <arglist>(const double rad)</arglist>
     </member>
     <member kind="function">
       <type>constexpr double</type>
       <name>toRad</name>
       <anchorfile>namespacemc__rtc_1_1constants.html</anchorfile>
-      <anchor>a2ca6e1fbd563bfd79d6484a3295d08bd</anchor>
-      <arglist>(const double rad)</arglist>
+      <anchor>a42486cc28b8ed4721ee34ec2e1be876b</anchor>
+      <arglist>(const double degrees)</arglist>
     </member>
     <member kind="variable">
       <type>constexpr double</type>
@@ -4124,7 +4124,6 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/</path>
     <filename>ImpedanceGains_8h</filename>
     <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
-    <includes id="clamp_8h" name="clamp.h" local="no" imported="no">mc_filter/utils/clamp.h</includes>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <class kind="struct">mc_tasks::force::details::ImpedanceVecd</class>
     <class kind="struct">mc_tasks::force::ImpedanceGains</class>
@@ -36731,15 +36730,15 @@
       <type>constexpr double</type>
       <name>toDeg</name>
       <anchorfile>namespacemc__rtc_1_1constants.html</anchorfile>
-      <anchor>a357fd1ef503f568cf436fbda923472cf</anchor>
-      <arglist>(const double degrees)</arglist>
+      <anchor>a9790fd3b6c0100cac0f0f7d86c4bec83</anchor>
+      <arglist>(const double rad)</arglist>
     </member>
     <member kind="function">
       <type>constexpr double</type>
       <name>toRad</name>
       <anchorfile>namespacemc__rtc_1_1constants.html</anchorfile>
-      <anchor>a2ca6e1fbd563bfd79d6484a3295d08bd</anchor>
-      <arglist>(const double rad)</arglist>
+      <anchor>a42486cc28b8ed4721ee34ec2e1be876b</anchor>
+      <arglist>(const double degrees)</arglist>
     </member>
     <member kind="variable">
       <type>constexpr double</type>
