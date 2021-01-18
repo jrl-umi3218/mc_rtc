@@ -18,27 +18,27 @@ const Eigen::Vector3d vertical = Eigen::Vector3d{0., 0., 1.};
 constexpr double PI = static_cast<double>(EIGEN_PI);
 
 /**
- * @brief Converts degrees to radians
- *
- * @param degrees Angle in degrees
- *
- * @return Angle in radians
- */
-constexpr double toDeg(const double degrees)
-{
-  return degrees * 180. / PI;
-}
-
-/**
  * @brief Converts radians to degrees
  *
  * @param rad Angle in radians
  *
  * @return Angle in degrees
  */
-constexpr double toRad(const double rad)
+constexpr double toDeg(const double rad)
 {
-  return rad * PI / 180.;
+  return rad * 180. / PI;
+}
+
+/**
+ * @brief Converts degrees to radians
+ *
+ * @param degrees Angle in degrees
+ *
+ * @return Angle in radians
+ */
+constexpr double toRad(const double degrees)
+{
+  return degrees * PI / 180.;
 }
 
 } // namespace constants
