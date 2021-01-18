@@ -123,7 +123,6 @@ void StabilizerTask::reset()
   comOffsetLowPass_.reset(Eigen::Vector3d::Zero());
   comOffsetLowPassCoM_.reset(Eigen::Vector3d::Zero());
   comOffsetDerivator_.reset(Eigen::Vector3d::Zero());
-  extWrenchGain_ = sva::MotionVecd(Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones());
 
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
