@@ -4124,6 +4124,7 @@
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_tasks/</path>
     <filename>ImpedanceGains_8h</filename>
     <includes id="mc__tasks_2api_8h" name="api.h" local="no" imported="no">mc_tasks/api.h</includes>
+    <includes id="clamp_8h" name="clamp.h" local="no" imported="no">mc_filter/utils/clamp.h</includes>
     <includes id="mc__rtc_2Configuration_8h" name="Configuration.h" local="no" imported="no">mc_rtc/Configuration.h</includes>
     <class kind="struct">mc_tasks::force::details::ImpedanceVecd</class>
     <class kind="struct">mc_tasks::force::ImpedanceGains</class>
