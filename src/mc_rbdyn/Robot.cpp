@@ -1399,6 +1399,11 @@ mc_control::Gripper & Robot::gripper(const std::string & gripper)
   return *grippers_.at(gripper);
 }
 
+bool Robot::hasGripper(const std::string & gripper) const
+{
+  return grippers_.count(gripper);
+}
+
 unsigned int robotIndexFromConfig(const mc_rtc::Configuration & config,
                                   const mc_rbdyn::Robots & robots,
                                   const std::string & prefix,

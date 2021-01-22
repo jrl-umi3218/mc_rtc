@@ -239,6 +239,22 @@ void Gripper::setTargetOpening(double targetOpening)
   setTargetQ(targetQin);
 }
 
+void Gripper::setTargetOpening(const std::string & jointName, double targetOpening)
+{
+  auto it = std::find(active_joints.cbegin(), active_joints.cend(), jointName);
+  if(it == active_joints.cend())
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Attempted to set target for the gripper's joint {} but this joint is not part of the gripper", jointName);
+  }
+  size_t jIdx = static_cast<size_t>(std::distance(it, active_joints.cend()) - 1);
+  targetOpening = mc_filter::utils::clamp(targetOpening, 0, 1);
+  auto targetQ = curPosition();
+  auto cur = curPosition()[jIdx];
+  targetQ[jIdx] = cur + (targetOpening - percentOpen[jIdx]) * (openP[jIdx] - closeP[jIdx]);
+  setTargetQ(targetQ);
+}
+
 void Gripper::percentVMAX(double percent)
 {
   config_.percentVMax = mc_filter::utils::clamp(percent, 0, 1);

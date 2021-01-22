@@ -110,6 +110,11 @@ struct MC_RBDYN_DLLAPI Gripper
    */
   void setTargetOpening(double targetOpening);
 
+  /*! \brief Set the target opening of a single gripper joint
+   * \param targetOpening Opening value ranging from 0 (closed) to 1 (open)
+   */
+  void setTargetOpening(const std::string & jointName, double targetOpening);
+
   /*! \brief Get current configuration
    * \return Current values of the active joints involved in the gripper
    */
@@ -125,6 +130,12 @@ struct MC_RBDYN_DLLAPI Gripper
   inline const std::vector<std::string> & activeJoints() const
   {
     return active_joints;
+  }
+
+  /* \brief Checks whether a joint is an active gripper joint */
+  inline bool hasActiveJoint(const std::string & jointName) const
+  {
+    return std::find(active_joints.begin(), active_joints.end(), jointName) != active_joints.end();
   }
 
   /*! \brief Return all gripper joints configuration

@@ -857,6 +857,9 @@ public:
    */
   mc_control::Gripper & gripper(const std::string & gripper);
 
+  /** Checks whether a gripper is part of this robot */
+  bool hasGripper(const std::string & gripper) const;
+
   inline const std::unordered_map<std::string, mc_control::GripperPtr> & grippersByName() const
   {
     return grippers_;
