@@ -18,6 +18,21 @@ struct MC_RBDYN_DLLAPI ZMPCCConfiguration
   double integratorLeakRate = 0.1; /**< Leak rate */
   double maxCoMOffset = 0.05; /**< Maximum CoM offset due to admittance control in [m] */
   double maxCoMAdmitance = 20; /**< Maximum admittance for CoM admittance control */
+
+  void load(const mc_rtc::Configuration & config)
+  {
+    config("comAdmittance", comAdmittance);
+    config("maxCoMOffset", maxCoMOffset);
+    config("integratorLeakRate", integratorLeakRate);
+  }
+  mc_rtc::Configuration save() const
+  {
+    mc_rtc::Configuration config;
+    config.add("comAdmittance", comAdmittance);
+    config.add("maxCoMOffset", maxCoMOffset);
+    config.add("integratorLeakRate", integratorLeakRate);
+    return config;
+  }
 };
 } // namespace lipm_stabilizer
 } // namespace mc_rbdyn
@@ -33,22 +48,13 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration>
   static mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration load(const mc_rtc::Configuration & config)
   {
     mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration zmpcc;
-    if(config.has("zmpcc"))
-    {
-      config("zmpcc")("comAdmittance", zmpcc.comAdmittance);
-      config("zmpcc")("maxCoMOffset", zmpcc.maxCoMOffset);
-      config("zmpcc")("integratorLeakRate", zmpcc.integratorLeakRate);
-    }
+    zmpcc.load(config);
     return zmpcc;
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration & zmpcc)
   {
-    mc_rtc::Configuration config;
-    config.add("comAdmittance", zmpcc.comAdmittance);
-    config.add("maxCoMOffset", zmpcc.maxCoMOffset);
-    config.add("integratorLeakRate", zmpcc.integratorLeakRate);
-    return config;
+    return zmpcc.save();
   }
 };
 } // namespace mc_rtc
