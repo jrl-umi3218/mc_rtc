@@ -606,7 +606,11 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
                             const Eigen::Vector3d & zmp)
 {
   comTargetRaw_ = com;
-  comTarget_ = comTargetRaw_ - comOffsetTarget_ - comOffsetErrCoM_;
+  comTarget_ = comTargetRaw_ - comOffsetErrCoM_;
+  if(c_.extWrench.addExpectedCoMOffset)
+  {
+    comTarget_ -= comOffsetTarget_;
+  }
   comdTarget_ = comd;
   comddTarget_ = comdd;
   zmpTarget_ = zmp;
@@ -618,10 +622,11 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
 void StabilizerTask::setExtWrenches(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches)
 {
   extWrenchesTarget_ = extWrenches;
+  comOffsetTarget_ = computeCoMOffset(extWrenchesTarget_, robot());
+  comTarget_ = comTargetRaw_ - comOffsetErrCoM_;
   if(c_.extWrench.addExpectedCoMOffset)
   {
-    comOffsetTarget_ = computeCoMOffset(extWrenchesTarget_, robot());
-    comTarget_ = comTargetRaw_ - comOffsetTarget_ - comOffsetErrCoM_;
+    comTarget_ -= comOffsetTarget_;
   }
 }
 
