@@ -88,6 +88,7 @@ void StabilizerTask::reset()
   comTarget_ = comTask->com();
   comTargetRaw_ = comTarget_;
   zmpTarget_ = Eigen::Vector3d{comTarget_.x(), comTarget_.y(), 0.};
+  zmpdTarget_ = Eigen::Vector3d::Zero();
 
   for(auto footTask : footTasks)
   {
@@ -603,7 +604,8 @@ void StabilizerTask::staticTarget(const Eigen::Vector3d & com, double zmpHeight)
 void StabilizerTask::target(const Eigen::Vector3d & com,
                             const Eigen::Vector3d & comd,
                             const Eigen::Vector3d & comdd,
-                            const Eigen::Vector3d & zmp)
+                            const Eigen::Vector3d & zmp,
+                            const Eigen::Vector3d & zmpd)
 {
   comTargetRaw_ = com;
   comTarget_ = comTargetRaw_ - comOffsetErrCoM_;
@@ -614,6 +616,7 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
   comdTarget_ = comd;
   comddTarget_ = comdd;
   zmpTarget_ = zmp;
+  zmpdTarget_ = zmpd;
   double comHeight = comTarget_.z() - zmpTarget_.z();
   omega_ = std::sqrt(constants::gravity.z() / comHeight);
   dcmTarget_ = comTarget_ + comdTarget_ / omega_;
@@ -826,6 +829,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   desiredCoMAccel += omega_ * (c_.dcmPropGain * dcmError_ + c_.comdErrorGain * comdError);
   desiredCoMAccel += omega_ * c_.dcmIntegralGain * dcmAverageError_;
   desiredCoMAccel += omega_ * c_.dcmDerivGain * dcmVelError_;
+  desiredCoMAccel -= omega_ * omega_ * c_.zmpdGain * zmpdTarget_;
 
   // Calculate CoM offset from measured wrench
   extWrenchesMeasured_.clear();

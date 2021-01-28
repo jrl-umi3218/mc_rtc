@@ -284,6 +284,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * @param comd Desired CoM velocity
    * @param comdd Desired CoM acceleration
    * @param zmp Desired ZMP
+   * @param zmpd Desired ZMP velocity
    *
    * \see staticTarget for a helper to define the stabilizer target when the CoM
    * is static
@@ -291,7 +292,8 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   void target(const Eigen::Vector3d & com,
               const Eigen::Vector3d & comd,
               const Eigen::Vector3d & comdd,
-              const Eigen::Vector3d & zmp);
+              const Eigen::Vector3d & zmp,
+              const Eigen::Vector3d & zmpd = Eigen::Vector3d::Zero());
 
   /**
    * @brief Set the wrench that the robot expects to receive from the external contacts.
@@ -798,6 +800,7 @@ protected:
   Eigen::Vector3d comdTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d comddTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d zmpTarget_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d zmpdTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmTarget_ = Eigen::Vector3d::Zero();
   double omega_;
 

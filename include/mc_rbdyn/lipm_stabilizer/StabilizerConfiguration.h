@@ -70,6 +70,7 @@ struct SafetyThresholds
   double MAX_DCM_I_GAIN = 100.; /**< Maximum DCM average integral gain in [Hz] */
   double MAX_DCM_P_GAIN = 20.; /**< Maximum DCM proportional gain in [Hz] */
   double MAX_COMD_GAIN = 10.; /**< Maximum CoMd gain in [Hz] */
+  double MAX_ZMPD_GAIN = 10.; /**< Maximum ZMPd gain in [Hz] */
   double MAX_DFZ_ADMITTANCE = 5e-4; /**< Maximum admittance in [s] / [kg] for foot force difference control */
   double MAX_DFZ_DAMPING = 10.; /**< Maximum normalized damping in [Hz] for foot force difference control */
   double MAX_FDC_RX_VEL = 0.2; /**< Maximum x-axis angular velocity in [rad] / [s] for foot damping control. */
@@ -88,6 +89,7 @@ struct SafetyThresholds
     config("MAX_DCM_I_GAIN", MAX_DCM_I_GAIN);
     config("MAX_DCM_P_GAIN", MAX_DCM_P_GAIN);
     config("MAX_COMD_GAIN", MAX_COMD_GAIN);
+    config("MAX_ZMPD_GAIN", MAX_ZMPD_GAIN);
     config("MAX_DFZ_ADMITTANCE", MAX_DFZ_ADMITTANCE);
     config("MAX_DFZ_DAMPING", MAX_DFZ_DAMPING);
     config("MAX_FDC_RX_VEL", MAX_FDC_RX_VEL);
@@ -106,6 +108,7 @@ struct SafetyThresholds
     config.add("MAX_DCM_I_GAIN", MAX_DCM_I_GAIN);
     config.add("MAX_DCM_P_GAIN", MAX_DCM_P_GAIN);
     config.add("MAX_COMD_GAIN", MAX_COMD_GAIN);
+    config.add("MAX_ZMPD_GAIN", MAX_ZMPD_GAIN);
     config.add("MAX_DFZ_ADMITTANCE", MAX_DFZ_ADMITTANCE);
     config.add("MAX_DFZ_DAMPING", MAX_DFZ_DAMPING);
     config.add("MAX_FDC_RX_VEL", MAX_FDC_RX_VEL);
@@ -327,6 +330,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   double dcmIntegralGain = 5.; /**< Integral gain on DCM error */
   double dcmDerivGain = 0.; /**< Derivative gain on DCM error */
   double comdErrorGain = 1.; /**< Gain on CoMd error */
+  double zmpdGain = 0.; /**< Gain on ZMPd */
   double dcmIntegratorTimeConstant =
       15.; /**< Time window for exponential moving average filter of the DCM integrator */
   double dcmDerivatorTimeConstant = 1.; /**< Time window for the stationary offset filter of the DCM derivator */
@@ -376,6 +380,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     clampInPlaceAndWarn(dcmIntegralGain, 0., s.MAX_DCM_I_GAIN, "DCM integral gain");
     clampInPlaceAndWarn(dcmPropGain, 0., s.MAX_DCM_P_GAIN, "DCM prop gain");
     clampInPlaceAndWarn(comdErrorGain, 0., s.MAX_COMD_GAIN, "CoMd gain");
+    clampInPlaceAndWarn(zmpdGain, 0., s.MAX_ZMPD_GAIN, "ZMPd gain");
     clampInPlaceAndWarn(dfzAdmittance, 0., s.MAX_DFZ_ADMITTANCE, "DFz admittance");
     clampInPlaceAndWarn(dfzDamping, 0., s.MAX_DFZ_DAMPING, "DFz admittance");
   }
@@ -415,6 +420,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
         dcmTracking("gains")("integral", dcmIntegralGain);
         dcmTracking("gains")("deriv", dcmDerivGain);
         dcmTracking("gains")("comdError", comdErrorGain);
+        dcmTracking("gains")("zmpd", zmpdGain);
       }
       dcmTracking("derivator_time_constant", dcmDerivatorTimeConstant);
       dcmTracking("integrator_time_constant", dcmIntegratorTimeConstant);
@@ -523,6 +529,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf("dcm_tracking")("gains").add("integral", dcmIntegralGain);
     conf("dcm_tracking")("gains").add("deriv", dcmDerivGain);
     conf("dcm_tracking")("gains").add("comdError", comdErrorGain);
+    conf("dcm_tracking")("gains").add("zmpd", zmpdGain);
     conf("dcm_tracking").add("derivator_time_constant", dcmDerivatorTimeConstant);
     conf("dcm_tracking").add("integrator_time_constant", dcmIntegratorTimeConstant);
 
