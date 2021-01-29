@@ -2762,6 +2762,13 @@
       <anchor>a2b137bae8372a9a84cdb28508e7de1dd</anchor>
       <arglist>(const std::string &amp;name, const Color &amp;color, GetT get_fn)</arglist>
     </member>
+    <member kind="function">
+      <type>PolygonImpl&lt; GetT &gt;</type>
+      <name>Polygon</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>aed41b5cb5e5b9e7fff1670617e2584be</anchor>
+      <arglist>(const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>Polygons.h</name>
@@ -10653,6 +10660,13 @@
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>a9b237bbf2c2441f2d80e9c2b825dcb1b</anchor>
       <arglist>(const ElementId &amp;id, const std::vector&lt; std::vector&lt; Eigen::Vector3d &gt;&gt; &amp;, const mc_rtc::gui::Color &amp;)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
+      <name>polygon</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a6a40d8da80eede227857901c00cc0e18</anchor>
+      <arglist>(const ElementId &amp;id, const std::vector&lt; std::vector&lt; Eigen::Vector3d &gt;&gt; &amp;points, const mc_rtc::gui::LineConfig &amp;config)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
@@ -22228,8 +22242,8 @@
       <type></type>
       <name>PolygonImpl</name>
       <anchorfile>structmc__rtc_1_1gui_1_1PolygonImpl.html</anchorfile>
-      <anchor>af21492bee86877ea68740b1c555e8d45</anchor>
-      <arglist>(const std::string &amp;name, const Color &amp;color, GetT get_fn)</arglist>
+      <anchor>a413d53c3e929a5449f01e6519af45598</anchor>
+      <arglist>(const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -37081,6 +37095,13 @@
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
       <anchor>a2b137bae8372a9a84cdb28508e7de1dd</anchor>
       <arglist>(const std::string &amp;name, const Color &amp;color, GetT get_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>PolygonImpl&lt; GetT &gt;</type>
+      <name>Polygon</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>aed41b5cb5e5b9e7fff1670617e2584be</anchor>
+      <arglist>(const std::string &amp;name, const LineConfig &amp;config, GetT get_fn)</arglist>
     </member>
     <member kind="function">
       <type>details::RobotImpl&lt; GetT &gt;</type>

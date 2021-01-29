@@ -1,5 +1,7 @@
 var NAVTREEINDEX6 =
 {
+"structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html#aa1d90135dc97508bf146a086b7b8305e":[3,0,2,0,8,0,0],
+"structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html#abc76ec57de7ebd6ad839c05d4d391cde":[3,0,2,0,8,0,2],
 "structmc__control_1_1fsm_1_1ParallelState.html":[3,0,2,0,9],
 "structmc__control_1_1fsm_1_1ParallelState.html#a1a84decc60058d334a817cdd14704acc":[3,0,2,0,9,9],
 "structmc__control_1_1fsm_1_1ParallelState.html#a27657e16b49b92ce49db961c081b6d72":[3,0,2,0,9,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX6 =
 "structmc__observers_1_1BodySensorObserver.html#aacf09f3f0913674473a5d0c52a18aff8":[3,0,4,0,9],
 "structmc__observers_1_1BodySensorObserver.html#abbe0f538927979af74a1f512c945098f":[3,0,4,0,18],
 "structmc__observers_1_1BodySensorObserver.html#ace7a5ef240bc42d89053419e8718eba3":[3,0,4,0,0],
-"structmc__observers_1_1BodySensorObserver.html#ace7a5ef240bc42d89053419e8718eba3a06b185256c71c1aec263c6e22bf8ef6b":[3,0,4,0,0,1],
-"structmc__observers_1_1BodySensorObserver.html#ace7a5ef240bc42d89053419e8718eba3aa1595abbb4c3a326636dd178757cd6c1":[3,0,4,0,0,0],
-"structmc__observers_1_1BodySensorObserver.html#adba11be987f21d8e3bc6f5ced05e4b2c":[3,0,4,0,12]
+"structmc__observers_1_1BodySensorObserver.html#ace7a5ef240bc42d89053419e8718eba3a06b185256c71c1aec263c6e22bf8ef6b":[3,0,4,0,0,1]
 };

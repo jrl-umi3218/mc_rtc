@@ -183,6 +183,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a0f4d3238fdc79a6dabd460ce6fbdb217"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b237bbf2c2441f2d80e9c2b825dcb1b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#a9b237bbf2c2441f2d80e9c2b825dcb1b">polygon</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id, const std::vector&lt; std::vector&lt; Eigen::Vector3d &gt;&gt; &amp;, const <a class="el" href="structmc__rtc_1_1gui_1_1Color.html">mc_rtc::gui::Color</a> &amp;)</td></tr>
 <tr class="separator:a9b237bbf2c2441f2d80e9c2b825dcb1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a40d8da80eede227857901c00cc0e18"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#a6a40d8da80eede227857901c00cc0e18">polygon</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id, const std::vector&lt; std::vector&lt; Eigen::Vector3d &gt;&gt; &amp;points, const <a class="el" href="structmc__rtc_1_1gui_1_1LineConfig.html">mc_rtc::gui::LineConfig</a> &amp;config)</td></tr>
+<tr class="separator:a6a40d8da80eede227857901c00cc0e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ffb3069d9cae0537836e2aa88de1929"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#a6ffb3069d9cae0537836e2aa88de1929">force</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id, const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;, const sva::ForceVecd &amp;, const sva::PTransformd &amp;, const <a class="el" href="structmc__rtc_1_1gui_1_1ForceConfig.html">mc_rtc::gui::ForceConfig</a> &amp;, bool)</td></tr>
 <tr class="separator:a6ffb3069d9cae0537836e2aa88de1929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a092462de7c07034906cc44ad38f112af"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#a092462de7c07034906cc44ad38f112af">arrow</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id, const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;, const Eigen::Vector3d &amp;, const Eigen::Vector3d &amp;, const <a class="el" href="structmc__rtc_1_1gui_1_1ArrowConfig.html">mc_rtc::gui::ArrowConfig</a> &amp;, bool)</td></tr>
@@ -1970,7 +1972,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <a id="a9b237bbf2c2441f2d80e9c2b825dcb1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b237bbf2c2441f2d80e9c2b825dcb1b">&#9670;&nbsp;</a></span>polygon()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b237bbf2c2441f2d80e9c2b825dcb1b">&#9670;&nbsp;</a></span>polygon() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2009,7 +2011,55 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Should display a list of polygons of 3d points in 3D environment</p>
-<p><code>Vector</code> of 3D points </p>
+<p>For backward compatibility, this version has the default implementation and the version that accepts a LineConfig configuration instead of a Color is implemented in terms of this one. The opposite makes more sense in actual implementation of <a class="el" href="structmc__control_1_1ControllerClient.html">ControllerClient</a>.</p>
+<p><code>points</code> Each entry in the vector is a polygon described by its 3D points</p>
+<p><code>color</code> Color of the polygon </p>
+
+</div>
+</div>
+<a id="a6a40d8da80eede227857901c00cc0e18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a40d8da80eede227857901c00cc0e18">&#9670;&nbsp;</a></span>polygon() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mc_control::ControllerClient::polygon </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::vector&lt; Eigen::Vector3d &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>points</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmc__rtc_1_1gui_1_1LineConfig.html">mc_rtc::gui::LineConfig</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Should display a list of polygons of 3D points in 3D environment</p>
+<p>For backward compatibility, this version is implemented to forward the call to the color variant, the concrete implementation makes more sense the other way around.</p>
+<p><code>points</code> Each entry in the vector is a polygon described by its 3D points</p>
+<p><code>config</code> Describe how to display the polygon </p>
 
 </div>
 </div>
