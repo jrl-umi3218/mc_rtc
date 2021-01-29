@@ -287,9 +287,9 @@ void ControllerClient::handle_gui_state(mc_rtc::Configuration state)
   }
   started();
   int version = state[0];
-  if(version != mc_rtc::gui::StateBuilder::PROTOCOL_VERSION)
+  if(version > mc_rtc::gui::StateBuilder::PROTOCOL_VERSION)
   {
-    mc_rtc::log::error("Receive message, version: {} but I can only handle version: {}", version,
+    mc_rtc::log::error("Receive message, version: {} but I can only handle version {} and lower", version,
                        mc_rtc::gui::StateBuilder::PROTOCOL_VERSION);
     handle_category({}, "", {});
     stopped();
@@ -297,10 +297,13 @@ void ControllerClient::handle_gui_state(mc_rtc::Configuration state)
   }
   data_ = state[1];
   handle_category({}, "", state[2]);
-  auto plots = state[3];
-  for(size_t i = 0; i < plots.size(); ++i)
+  if(3 < state.size())
   {
-    handle_plot(plots[i]);
+    auto plots = state[3];
+    for(size_t i = 0; i < plots.size(); ++i)
+    {
+      handle_plot(plots[i]);
+    }
   }
   stopped();
 }
@@ -507,23 +510,31 @@ void ControllerClient::handle_trajectory(const ElementId & id, const mc_rtc::Con
 void ControllerClient::handle_polygon(const ElementId & id, const mc_rtc::Configuration & data_)
 {
   const auto & data = data_[3];
-  mc_rtc::gui::Color color;
+  mc_rtc::gui::LineConfig config;
   if(data_.size() > 4)
   {
-    color.fromMessagePack(data_[4]);
+    if(data_[4].size() == 4)
+    {
+      config.color.fromMessagePack(data_[4]);
+      config.width = 0.005;
+    }
+    else
+    {
+      config.fromMessagePack(data_[4]);
+    }
   }
   try
   {
     const std::vector<std::vector<Eigen::Vector3d>> & points = data;
-    polygon(id, points, color);
+    polygon(id, points, config);
   }
   catch(mc_rtc::Configuration::Exception & exc)
   {
     exc.silence();
     try
     {
-      const std::vector<std::vector<Eigen::Vector3d>> p = {data};
-      polygon(id, p, color);
+      std::vector<Eigen::Vector3d> p = data;
+      polygon(id, {p}, config);
     }
     catch(mc_rtc::Configuration::Exception & exc)
     {

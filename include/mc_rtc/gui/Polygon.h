@@ -27,8 +27,8 @@ struct PolygonImpl : public DataElement<GetT>
 {
   static constexpr auto type = Elements::Polygon;
 
-  PolygonImpl(const std::string & name, const Color & color, GetT get_fn)
-  : DataElement<GetT>(name, get_fn), color_(color)
+  PolygonImpl(const std::string & name, const LineConfig & config, GetT get_fn)
+  : DataElement<GetT>(name, get_fn), config_(config)
   {
     static_assert(
         details::CheckReturnType<GetT, std::vector<Eigen::Vector3d>, std::vector<std::vector<Eigen::Vector3d>>>::value,
@@ -47,11 +47,11 @@ struct PolygonImpl : public DataElement<GetT>
   void write(mc_rtc::MessagePackBuilder & builder)
   {
     DataElement<GetT>::write(builder);
-    color_.write(builder);
+    config_.write(builder);
   }
 
 private:
-  Color color_;
+  LineConfig config_;
 };
 
 /** Helper function to build a PolygonImpl */
@@ -66,6 +66,13 @@ template<typename GetT>
 PolygonImpl<GetT> Polygon(const std::string & name, const Color & color, GetT get_fn)
 {
   return PolygonImpl<GetT>(name, color, get_fn);
+}
+
+/** Helper function to build a PolygonImpl */
+template<typename GetT>
+PolygonImpl<GetT> Polygon(const std::string & name, const LineConfig & config, GetT get_fn)
+{
+  return PolygonImpl<GetT>(name, config, get_fn);
 }
 
 } // namespace gui

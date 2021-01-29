@@ -36,7 +36,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
    * - Adding fields to an existing Element
    * - Adding an Element type
    */
-  static constexpr int8_t PROTOCOL_VERSION = 2;
+  static constexpr int8_t PROTOCOL_VERSION = 3;
 
   /** Constructor */
   StateBuilder();

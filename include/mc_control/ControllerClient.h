@@ -326,13 +326,37 @@ protected:
 
   /** Should display a list of polygons of 3d points in 3D environment
    *
-   * \p Vector of 3D points
+   * For backward compatibility, this version has the default implementation
+   * and the version that accepts a LineConfig configuration instead of a Color
+   * is implemented in terms of this one. The opposite makes more sense in
+   * actual implementation of ControllerClient.
+   *
+   * \p points Each entry in the vector is a polygon described by its 3D points
+   *
+   * \p color Color of the polygon
    */
   virtual void polygon(const ElementId & id,
                        const std::vector<std::vector<Eigen::Vector3d>> & /* points */,
                        const mc_rtc::gui::Color & /* color */)
   {
     default_impl("PolygonArray", id);
+  }
+
+  /** Should display a list of polygons of 3D points in 3D environment
+   *
+   * For backward compatibility, this version is implemented to forward the
+   * call to the color variant, the concrete implementation makes more sense
+   * the other way around.
+   *
+   * \p points Each entry in the vector is a polygon described by its 3D points
+   *
+   * \p config Describe how to display the polygon
+   */
+  virtual void polygon(const ElementId & id,
+                       const std::vector<std::vector<Eigen::Vector3d>> & points,
+                       const mc_rtc::gui::LineConfig & config)
+  {
+    polygon(id, points, config.color);
   }
 
   /** Should display a force in 3D environment

@@ -192,7 +192,11 @@ struct TestServer
   Eigen::Vector3d xytheta_{0., 2., M_PI / 3};
   Eigen::VectorXd xythetaz_;
   std::vector<Eigen::Vector3d> polygon_;
+  std::vector<Eigen::Vector3d> polygonColor_;
+  std::vector<Eigen::Vector3d> polygonLineConfig_;
   std::vector<std::vector<Eigen::Vector3d>> polygons_;
+  std::vector<std::vector<Eigen::Vector3d>> polygonsColor_;
+  std::vector<std::vector<Eigen::Vector3d>> polygonsLineConfig_;
   Eigen::Vector3d arrow_start_{0.5, 0.5, 0.};
   Eigen::Vector3d arrow_end_{0.5, 1., -0.5};
   sva::ForceVecd force_{{0., 0., 0.}, {-50., 50., 100.}};
@@ -216,10 +220,21 @@ struct TestServer
 TestServer::TestServer() : xythetaz_(4)
 {
   xythetaz_ << 1., 2., M_PI / 5, 1;
+
   polygon_.push_back({1, 1, 0});
   polygon_.push_back({1, -1, 0});
   polygon_.push_back({-1, -1, 0});
   polygon_.push_back({-1, 1, 0});
+
+  polygonColor_.push_back({1, 1, 1});
+  polygonColor_.push_back({1, -1, 1});
+  polygonColor_.push_back({-1, -1, 1});
+  polygonColor_.push_back({-1, 1, 1});
+
+  polygonLineConfig_.push_back({1, 1, 2});
+  polygonLineConfig_.push_back({1, -1, 2});
+  polygonLineConfig_.push_back({-1, -1, 2});
+  polygonLineConfig_.push_back({-1, 1, 2});
 
   auto makeFoot = [](const sva::PTransformd & pose) {
     std::vector<Eigen::Vector3d> points;
@@ -239,6 +254,24 @@ TestServer::TestServer() : xythetaz_(4)
   polygons_.push_back(makeFoot({Eigen::Vector3d(0.9, 0.15, 0.2)}));
   polygons_.push_back(makeFoot({Eigen::Vector3d(1.2, -0.15, 0.4)}));
   polygons_.push_back(makeFoot({Eigen::Vector3d(1.2, 0.15, 0.4)}));
+
+  polygonsColor_.push_back(makeFoot({Eigen::Vector3d(0, 1 - 0.15, 0)}));
+  polygonsColor_.push_back(makeFoot({Eigen::Vector3d(0, 1 + 0.15, 0)}));
+  polygonsColor_.push_back(makeFoot({Eigen::Vector3d(0.3, 1 - 0.15, 0)}));
+  polygonsColor_.push_back(makeFoot({Eigen::Vector3d(0.6, 1 + 0.15, 0)}));
+  polygonsColor_.push_back(makeFoot({Eigen::Vector3d(0.6, 1 - 0.15, 0)}));
+  polygonsColor_.push_back(makeFoot({Eigen::Vector3d(0.9, 1 + 0.15, 0.2)}));
+  polygonsColor_.push_back(makeFoot({Eigen::Vector3d(1.2, 1 - 0.15, 0.4)}));
+  polygonsColor_.push_back(makeFoot({Eigen::Vector3d(1.2, 1 + 0.15, 0.4)}));
+
+  polygonsLineConfig_.push_back(makeFoot({Eigen::Vector3d(0, 2 - 0.15, 0)}));
+  polygonsLineConfig_.push_back(makeFoot({Eigen::Vector3d(0, 2 + 0.15, 0)}));
+  polygonsLineConfig_.push_back(makeFoot({Eigen::Vector3d(0.3, 2 - 0.15, 0)}));
+  polygonsLineConfig_.push_back(makeFoot({Eigen::Vector3d(0.6, 2 + 0.15, 0)}));
+  polygonsLineConfig_.push_back(makeFoot({Eigen::Vector3d(0.6, 2 - 0.15, 0)}));
+  polygonsLineConfig_.push_back(makeFoot({Eigen::Vector3d(0.9, 2 + 0.15, 0.2)}));
+  polygonsLineConfig_.push_back(makeFoot({Eigen::Vector3d(1.2, 2 - 0.15, 0.4)}));
+  polygonsLineConfig_.push_back(makeFoot({Eigen::Vector3d(1.2, 2 + 0.15, 0.4)}));
 
   make_table(3);
 
@@ -363,7 +396,14 @@ TestServer::TestServer() : xythetaz_(4)
       mc_rtc::gui::Point3D("Interactive", mc_rtc::gui::PointConfig({0., 1., 0.}, 0.08), [this]() { return vInt_; },
                            [this](const Eigen::Vector3d & v) { vInt_ = v; }));
 
-  builder.addElement({"GUI Markers", "Polygons"}, mc_rtc::gui::Polygon("Polygons", [this]() { return polygons_; }));
+  auto orange = mc_rtc::gui::Color(1.0, 0.5, 0.0);
+  auto pstyle = mc_rtc::gui::LineConfig(mc_rtc::gui::Color::Cyan, 0.1, mc_rtc::gui::LineStyle::Dotted);
+  builder.addElement({"GUI Markers", "Polygons"}, mc_rtc::gui::Polygon("Single polygon", [this]() { return polygon_; }),
+                     mc_rtc::gui::Polygon("Single polygon (color)", orange, [this]() { return polygonColor_; }),
+                     mc_rtc::gui::Polygon("Single polygon (config)", pstyle, [this]() { return polygonLineConfig_; }),
+                     mc_rtc::gui::Polygon("Polygons", [this]() { return polygons_; }),
+                     mc_rtc::gui::Polygon("Polygons (color)", orange, [this]() { return polygonsColor_; }),
+                     mc_rtc::gui::Polygon("Polygons (config)", pstyle, [this]() { return polygonsLineConfig_; }));
 
   builder.addElement(
       {"GUI Markers", "Trajectories"}, mc_rtc::gui::Trajectory("Vector3d", [this]() { return trajectory_; }),
