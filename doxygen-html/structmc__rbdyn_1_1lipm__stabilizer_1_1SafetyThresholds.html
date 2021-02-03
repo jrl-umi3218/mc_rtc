@@ -70,6 +70,7 @@ $(document).ready(function(){initNavTree('structmc__rbdyn_1_1lipm__stabilizer_1_
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -82,6 +83,13 @@ $(document).ready(function(){initNavTree('structmc__rbdyn_1_1lipm__stabilizer_1_
 
 <p><code>#include &lt;<a class="el" href="StabilizerConfiguration_8h_source.html">mc_rbdyn/lipm_stabilizer/StabilizerConfiguration.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ac1276cfbb01a99a72157dc2d2b68ac3d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ac1276cfbb01a99a72157dc2d2b68ac3d">load</a> (const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="separator:ac1276cfbb01a99a72157dc2d2b68ac3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b9bbb849504eb7763660147da1094a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a5b9bbb849504eb7763660147da1094a8">save</a> () const</td></tr>
+<tr class="separator:a5b9bbb849504eb7763660147da1094a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a7280e47779527fa1f63dc2603c00d9da"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a7280e47779527fa1f63dc2603c00d9da">MAX_AVERAGE_DCM_ERROR</a> = 0.05</td></tr>
@@ -113,7 +121,59 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Stabilizer safety thresholds. </p>
 <p>The corresponding stabilization entries should be clamped within those limits</p>
 <dl class="section warning"><dt>Warning</dt><dd>Developper note: Do not change the default thresholds here, it is likely that robot modules and users do not override every single parameter value, and modifying their default might have serious consequences. </dd></dl>
-</div><h2 class="groupheader">Member Data Documentation</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac1276cfbb01a99a72157dc2d2b68ac3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1276cfbb01a99a72157dc2d2b68ac3d">&#9670;&nbsp;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::lipm_stabilizer::SafetyThresholds::load </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5b9bbb849504eb7763660147da1094a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b9bbb849504eb7763660147da1094a8">&#9670;&nbsp;</a></span>save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> mc_rbdyn::lipm_stabilizer::SafetyThresholds::save </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
 <a id="a7280e47779527fa1f63dc2603c00d9da"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7280e47779527fa1f63dc2603c00d9da">&#9670;&nbsp;</a></span>MAX_AVERAGE_DCM_ERROR</h2>
 

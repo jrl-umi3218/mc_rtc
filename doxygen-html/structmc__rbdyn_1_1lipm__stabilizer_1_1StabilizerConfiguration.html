@@ -92,6 +92,10 @@ Collaboration diagram for mc_rbdyn::lipm_stabilizer::StabilizerConfiguration:</d
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a6cf15ba02637b2619905b4fb27f49b2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a6cf15ba02637b2619905b4fb27f49b2c">StabilizerConfiguration</a> ()</td></tr>
+<tr class="separator:a6cf15ba02637b2619905b4fb27f49b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01de7b3d2c97b489adcb94c882e4e83b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a01de7b3d2c97b489adcb94c882e4e83b">StabilizerConfiguration</a> (const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;conf)</td></tr>
+<tr class="separator:a01de7b3d2c97b489adcb94c882e4e83b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf38535cf4d40c07c61d9798683cb15c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#acf38535cf4d40c07c61d9798683cb15c">clampGains</a> ()</td></tr>
 <tr class="memdesc:acf38535cf4d40c07c61d9798683cb15c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks that the chosen parameters are within the parameters defined by the <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html" title="Stabilizer safety thresholds. ">SafetyThresholds</a>.  <a href="#acf38535cf4d40c07c61d9798683cb15c">More...</a><br /></td></tr>
 <tr class="separator:acf38535cf4d40c07c61d9798683cb15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,7 +174,59 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configuration of the LIPMStabilizer. This configuration is meant to be overriden from the <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a>, and the user YAML configuration of the stabilizer task. </p>
 <dl class="section note"><dt>Note</dt><dd>Developper note: Do not change the default gains here, it is likely that robot modules and users do not override every single parameter value, and modifying their default might have serious consequences. </dd></dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a6cf15ba02637b2619905b4fb27f49b2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cf15ba02637b2619905b4fb27f49b2c">&#9670;&nbsp;</a></span>StabilizerConfiguration() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::StabilizerConfiguration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a01de7b3d2c97b489adcb94c882e4e83b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01de7b3d2c97b489adcb94c882e4e83b">&#9670;&nbsp;</a></span>StabilizerConfiguration() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::StabilizerConfiguration </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>conf</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="acf38535cf4d40c07c61d9798683cb15c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acf38535cf4d40c07c61d9798683cb15c">&#9670;&nbsp;</a></span>clampGains()</h2>
 

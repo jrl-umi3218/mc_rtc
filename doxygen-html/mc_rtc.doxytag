@@ -11410,6 +11410,20 @@
   <compound kind="struct">
     <name>mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</name>
     <filename>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>load</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
+      <anchor>a10955f1ae31122a5b54cfe04a51a3613</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rtc::Configuration</type>
+      <name>save</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html</anchorfile>
+      <anchor>a949d57cc11d53d999682457a22896c34</anchor>
+      <arglist>() const</arglist>
+    </member>
     <member kind="variable">
       <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW double</type>
       <name>dcmMeasureErrorStd</name>
@@ -13057,6 +13071,20 @@
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights.html</anchorfile>
       <anchor>a6d926ba6ea4f799ff815395dca3d9912</anchor>
       <arglist>(double netWrench, double ankleTorque, double pressure)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>load</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights.html</anchorfile>
+      <anchor>aef93df80ad100bc6ff7b46286b1f92e4</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rtc::Configuration</type>
+      <name>save</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights.html</anchorfile>
+      <anchor>a59592e52c1a2c68746600855396b13cb</anchor>
+      <arglist>() const</arglist>
     </member>
     <member kind="variable">
       <type>double</type>
@@ -26906,6 +26934,20 @@
   <compound kind="struct">
     <name>mc_rbdyn::lipm_stabilizer::SafetyThresholds</name>
     <filename>structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>load</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html</anchorfile>
+      <anchor>ac1276cfbb01a99a72157dc2d2b68ac3d</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rtc::Configuration</type>
+      <name>save</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html</anchorfile>
+      <anchor>a5b9bbb849504eb7763660147da1094a8</anchor>
+      <arglist>() const</arglist>
+    </member>
     <member kind="variable">
       <type>double</type>
       <name>MAX_AVERAGE_DCM_ERROR</name>
@@ -29642,6 +29684,20 @@
   <compound kind="struct">
     <name>mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</name>
     <filename>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>StabilizerConfiguration</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>a6cf15ba02637b2619905b4fb27f49b2c</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>StabilizerConfiguration</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>a01de7b3d2c97b489adcb94c882e4e83b</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;conf)</arglist>
+    </member>
     <member kind="function">
       <type>void</type>
       <name>clampGains</name>
@@ -35993,6 +36049,20 @@
   <compound kind="struct">
     <name>mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</name>
     <filename>structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>load</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html</anchorfile>
+      <anchor>af93dd33b3fb24e8c64eaa42d7fd4d2f8</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rtc::Configuration</type>
+      <name>save</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html</anchorfile>
+      <anchor>a60c44e27b3e8d70defe3353e7f17ca43</anchor>
+      <arglist>() const</arglist>
+    </member>
     <member kind="variable">
       <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW Eigen::Vector2d</type>
       <name>comAdmittance</name>

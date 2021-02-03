@@ -1,5 +1,7 @@
 var structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds =
 [
+    [ "load", "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ac1276cfbb01a99a72157dc2d2b68ac3d", null ],
+    [ "save", "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a5b9bbb849504eb7763660147da1094a8", null ],
     [ "MAX_AVERAGE_DCM_ERROR", "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a7280e47779527fa1f63dc2603c00d9da", null ],
     [ "MAX_COP_ADMITTANCE", "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#afbeb3c9e613679f1a0e032164e9bb851", null ],
     [ "MAX_DCM_D_GAIN", "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#a6e4162251f42ce05989ad8f40465d3b9", null ],

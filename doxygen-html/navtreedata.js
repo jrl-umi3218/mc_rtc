@@ -51,14 +51,14 @@ var NAVTREEINDEX =
 "structmc__observers_1_1BodySensorObserver.html#ace7a5ef240bc42d89053419e8718eba3aa1595abbb4c3a326636dd178757cd6c1",
 "structmc__rbdyn_1_1Device.html",
 "structmc__rbdyn_1_1Robot.html#aee61e66a131e6f3e24982d4c68ffe958",
-"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abd7dd049c8ac626404fc3af328f09a85",
-"structmc__rtc_1_1MessagePackBuilder.html#ab7c6cb64330027b2fec8e69d218a866d",
-"structmc__rtc_1_1gui_1_1StateBuilder.html#ac8808344c0006e52d845f38ed202afd9",
-"structmc__solver_1_1EqualityConstraintLambda.html",
-"structmc__tasks_1_1EndEffectorTask.html#a22bbf5a8ccec9b59a470638a3043492d",
-"structmc__tasks_1_1SurfaceTransformTask.html#ae93b59f50cc0e9733bbc7551f4c7d294",
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a18cf3bbe16d6f31b76fb67a4db7bf216",
-"utils__api_8h.html#a8c714e5ec4642ad2fbeb874ec1ea290c"
+"structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a830868e9f51b1d6e3926def0786b8da4",
+"structmc__rtc_1_1MessagePackBuilder.html#a8a18d3d529d183d8ebc255f750bd2785",
+"structmc__rtc_1_1gui_1_1StateBuilder.html#a3c57321e693a7631a5f06800817bbe5d",
+"structmc__solver_1_1DynamicsConstraint.html#a08413ca37fc394ed2b3f692f2bcc8e44",
+"structmc__tasks_1_1CoMTask.html#ad6a83e7e89cbae657665c8815c558f4d",
+"structmc__tasks_1_1SurfaceTransformTask.html#a5cf828fa175ab56a7d7c4b774bda7296",
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a077f98071aa5d9ae2b861aba4edbc606",
+"types_8h.html#a23166295a3983f35cb0fa510b4c156c9"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,5 +1,7 @@
 var structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration =
 [
+    [ "StabilizerConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a6cf15ba02637b2619905b4fb27f49b2c", null ],
+    [ "StabilizerConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a01de7b3d2c97b489adcb94c882e4e83b", null ],
     [ "clampGains", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#acf38535cf4d40c07c61d9798683cb15c", null ],
     [ "load", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ad62077263c1af6f677dd4645b663eb8e", null ],
     [ "save", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#afb389e9e183efdcad0db023e57383b98", null ],
