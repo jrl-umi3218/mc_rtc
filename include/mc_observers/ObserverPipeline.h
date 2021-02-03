@@ -287,13 +287,7 @@ protected:
   bool updateObservers_ = true; ///< Whether to update real robots from estimated state.
   bool success_ = false; ///< Whether the pipeline successfully executed
 
-  /** Observers that will be run by the pipeline.
-   *
-   * The pair contains:
-   * - The observer to run
-   * - A boolean set to true if the observer updates the real robot instance
-   *
-   * Provided by MCGlobalController */
+  /** Observers that will be run by the pipeline. */
   std::vector<PipelineObserver> pipelineObservers_;
 };
 
