@@ -178,6 +178,53 @@ Robot Description path: /real/env_*/robot_description
 TF Prefix: /real/env_*
 ```
 
+# Interacting with observer pipelines from code
+
+In some cases, it might be useful to interact with observer pipelines in your code. You might for instance want to:
+- check whether a specific observation pipeline is running
+- check whether some specific observers are present
+- know the status of specific observers from code
+- only perfom actions if some observers are present
+- etc...
+
+## Querying the status of observer pipelines
+
+Here is a short snippet of code to showcase how one can query the status of observer pipelines and take actions accordingly:
+
+```cpp
+bool checkObserverPipeline(const std::string & observerPipelineName)
+{
+  if(!hasObserverPipeline(observerPipeline))
+  {
+    mc_rtc::log::error("This controller does not have a pipeline named {}", observerPipelineName);
+    return false;
+  }
+  const auto & observerp = observerPipeline(observerPipelineName);
+  if(!observerp.success()) // Check if the pipeline failed
+  {
+    mc_rtc::log::error("Required pipeline \"{}\" for real robot observation failed to run!", observerPipelineName);
+    // Check which observer failed
+    for(const auto & observer : observerp.observers())
+    {
+      if(!observer.success())
+      {
+        // Display failure error
+        mc_rtc::log::error("Observer \"{}\" failed with error \"{}\"", observer.observer().name(), observer.observer().error());
+        if(observer.observer.name() == "MyObserver")
+        {
+          // do something specific if this observer failed
+        }
+      }
+    }
+    return false;
+  }
+  return true;
+}
+```
+
+Now calling `checkObserverPipeline("RequiredObserverPipeline");` will inform you if this pipeline does not exist, show exactly which observer is failing and why, and do something specific with `MyObserver` if it is in the pipeline.
+For further available functionnalities, please refer to {% doxygen mc_observers::ObserverPipeline %} documentation.
+
 # Creating your own Observer
 
 The framework loads observers from libraries. For this to work, your observer must inherit from {% doxygen mc_observers::Observer %} and implement the following `virtual` functions:
