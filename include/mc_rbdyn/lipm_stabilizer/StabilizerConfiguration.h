@@ -18,6 +18,7 @@ namespace lipm_stabilizer
 struct MC_RBDYN_DLLAPI FDQPWeights
 {
   FDQPWeights() : ankleTorqueSqrt(std::sqrt(100)), netWrenchSqrt(std::sqrt(10000)), pressureSqrt(std::sqrt(1)) {}
+  /* All weights must be strictly positive */
   FDQPWeights(double netWrench, double ankleTorque, double pressure)
   : ankleTorqueSqrt(std::sqrt(ankleTorque)), netWrenchSqrt(std::sqrt(netWrench)), pressureSqrt(std::sqrt(pressure))
   {
@@ -25,6 +26,31 @@ struct MC_RBDYN_DLLAPI FDQPWeights
   double ankleTorqueSqrt;
   double netWrenchSqrt;
   double pressureSqrt;
+
+  void load(const mc_rtc::Configuration & config)
+  {
+    if(config.has("ankle_torque"))
+    {
+      ankleTorqueSqrt = std::sqrt(static_cast<double>(config("ankle_torque")));
+    }
+    if(config.has("net_wrench"))
+    {
+      netWrenchSqrt = std::sqrt(static_cast<double>(config.has("net_wrench")));
+    }
+    if(config.has("pressure"))
+    {
+      pressureSqrt = std::sqrt(static_cast<double>(config("pressure")));
+    }
+  }
+
+  mc_rtc::Configuration save() const
+  {
+    mc_rtc::Configuration config;
+    config.add("ankle_torque", std::pow(ankleTorqueSqrt, 2));
+    config.add("net_wrench", std::pow(netWrenchSqrt, 2));
+    config.add("pressure", std::pow(pressureSqrt, 2));
+    return config;
+  }
 };
 
 /**
@@ -52,6 +78,40 @@ struct SafetyThresholds
                                                     targets when close to contact switches. */
   /**< Minimum force for valid ZMP computation (throws otherwise) */
   double MIN_NET_TOTAL_FORCE_ZMP = 1.;
+
+  void load(const mc_rtc::Configuration & config)
+  {
+    config("MAX_AVERAGE_DCM_ERROR", MAX_AVERAGE_DCM_ERROR);
+    config("MAX_COP_ADMITTANCE", MAX_COP_ADMITTANCE);
+    config("MAX_DCM_D_GAIN", MAX_DCM_D_GAIN);
+    config("MAX_DCM_I_GAIN", MAX_DCM_I_GAIN);
+    config("MAX_DCM_P_GAIN", MAX_DCM_P_GAIN);
+    config("MAX_DFZ_ADMITTANCE", MAX_DFZ_ADMITTANCE);
+    config("MAX_DFZ_DAMPING", MAX_DFZ_DAMPING);
+    config("MAX_FDC_RX_VEL", MAX_FDC_RX_VEL);
+    config("MAX_FDC_RY_VEL", MAX_FDC_RY_VEL);
+    config("MAX_FDC_RZ_VEL", MAX_FDC_RZ_VEL);
+    config("MIN_DS_PRESSURE", MIN_DS_PRESSURE);
+    config("MIN_NET_TOTAL_FORCE_ZMP", MIN_NET_TOTAL_FORCE_ZMP);
+  }
+
+  mc_rtc::Configuration save() const
+  {
+    mc_rtc::Configuration config;
+    config.add("MAX_AVERAGE_DCM_ERROR", MAX_AVERAGE_DCM_ERROR);
+    config.add("MAX_COP_ADMITTANCE", MAX_COP_ADMITTANCE);
+    config.add("MAX_DCM_D_GAIN", MAX_DCM_D_GAIN);
+    config.add("MAX_DCM_I_GAIN", MAX_DCM_I_GAIN);
+    config.add("MAX_DCM_P_GAIN", MAX_DCM_P_GAIN);
+    config.add("MAX_DFZ_ADMITTANCE", MAX_DFZ_ADMITTANCE);
+    config.add("MAX_DFZ_DAMPING", MAX_DFZ_DAMPING);
+    config.add("MAX_FDC_RX_VEL", MAX_FDC_RX_VEL);
+    config.add("MAX_FDC_RY_VEL", MAX_FDC_RY_VEL);
+    config.add("MAX_FDC_RZ_VEL", MAX_FDC_RZ_VEL);
+    config.add("MIN_DS_PRESSURE", MIN_DS_PRESSURE);
+    config.add("MIN_NET_TOTAL_FORCE_ZMP", MIN_NET_TOTAL_FORCE_ZMP);
+    return config;
+  }
 };
 
 /** Parameters for the DCM bias estimator */
@@ -70,6 +130,28 @@ struct DCMBiasEstimatorConfiguration
   bool withDCMBias = false;
   /// Whether the DCM filter is enabled
   bool withDCMFilter = false;
+
+  void load(const mc_rtc::Configuration & config)
+  {
+    config("dcmMeasureErrorStd", dcmMeasureErrorStd);
+    config("zmpMeasureErrorStd", zmpMeasureErrorStd);
+    config("biasDriftPerSecondStd", biasDriftPerSecondStd);
+    config("biasLimit", biasLimit);
+    config("withDCMBias", withDCMBias);
+    config("withDCMFilter", withDCMFilter);
+  }
+
+  mc_rtc::Configuration save() const
+  {
+    mc_rtc::Configuration config;
+    config.add("dcmMeasureErrorStd", dcmMeasureErrorStd);
+    config.add("zmpMeasureErrorStd", zmpMeasureErrorStd);
+    config.add("biasDriftPerSecondStd", biasDriftPerSecondStd);
+    config.add("biasLimit", biasLimit);
+    config.add("withDCMBias", withDCMBias);
+    config.add("withDCMFilter", withDCMFilter);
+    return config;
+  }
 };
 
 } // namespace lipm_stabilizer
@@ -86,22 +168,13 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::FDQPWeights>
   static mc_rbdyn::lipm_stabilizer::FDQPWeights load(const mc_rtc::Configuration & config)
   {
     mc_rbdyn::lipm_stabilizer::FDQPWeights weights;
-    double ankleTorqueWeight = config("ankle_torque");
-    double netWrenchWeight = config("net_wrench");
-    double pressureWeight = config("pressure");
-    weights.ankleTorqueSqrt = std::sqrt(ankleTorqueWeight);
-    weights.netWrenchSqrt = std::sqrt(netWrenchWeight);
-    weights.pressureSqrt = std::sqrt(pressureWeight);
+    weights.load(config);
     return weights;
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::FDQPWeights & weights)
   {
-    mc_rtc::Configuration config;
-    config.add("ankle_torque", std::pow(weights.ankleTorqueSqrt, 2));
-    config.add("net_wrench", std::pow(weights.netWrenchSqrt, 2));
-    config.add("pressure", std::pow(weights.pressureSqrt, 2));
-    return config;
+    return weights.save();
   }
 };
 
@@ -114,37 +187,13 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::SafetyThresholds>
   static mc_rbdyn::lipm_stabilizer::SafetyThresholds load(const mc_rtc::Configuration & config)
   {
     mc_rbdyn::lipm_stabilizer::SafetyThresholds safety;
-    config("MAX_AVERAGE_DCM_ERROR", safety.MAX_AVERAGE_DCM_ERROR);
-    config("MAX_COP_ADMITTANCE", safety.MAX_COP_ADMITTANCE);
-    config("MAX_DCM_D_GAIN", safety.MAX_DCM_D_GAIN);
-    config("MAX_DCM_I_GAIN", safety.MAX_DCM_I_GAIN);
-    config("MAX_DCM_P_GAIN", safety.MAX_DCM_P_GAIN);
-    config("MAX_DFZ_ADMITTANCE", safety.MAX_DFZ_ADMITTANCE);
-    config("MAX_DFZ_DAMPING", safety.MAX_DFZ_DAMPING);
-    config("MAX_FDC_RX_VEL", safety.MAX_FDC_RX_VEL);
-    config("MAX_FDC_RY_VEL", safety.MAX_FDC_RY_VEL);
-    config("MAX_FDC_RZ_VEL", safety.MAX_FDC_RZ_VEL);
-    config("MIN_DS_PRESSURE", safety.MIN_DS_PRESSURE);
-    config("MIN_NET_TOTAL_FORCE_ZMP", safety.MIN_NET_TOTAL_FORCE_ZMP);
+    safety.load(config);
     return safety;
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::SafetyThresholds & safety)
   {
-    mc_rtc::Configuration config;
-    config.add("MAX_AVERAGE_DCM_ERROR", safety.MAX_AVERAGE_DCM_ERROR);
-    config.add("MAX_COP_ADMITTANCE", safety.MAX_COP_ADMITTANCE);
-    config.add("MAX_DCM_D_GAIN", safety.MAX_DCM_D_GAIN);
-    config.add("MAX_DCM_I_GAIN", safety.MAX_DCM_I_GAIN);
-    config.add("MAX_DCM_P_GAIN", safety.MAX_DCM_P_GAIN);
-    config.add("MAX_DFZ_ADMITTANCE", safety.MAX_DFZ_ADMITTANCE);
-    config.add("MAX_DFZ_DAMPING", safety.MAX_DFZ_DAMPING);
-    config.add("MAX_FDC_RX_VEL", safety.MAX_FDC_RX_VEL);
-    config.add("MAX_FDC_RY_VEL", safety.MAX_FDC_RY_VEL);
-    config.add("MAX_FDC_RZ_VEL", safety.MAX_FDC_RZ_VEL);
-    config.add("MIN_DS_PRESSURE", safety.MIN_DS_PRESSURE);
-    config.add("MIN_NET_TOTAL_FORCE_ZMP", safety.MIN_NET_TOTAL_FORCE_ZMP);
-    return config;
+    return safety.save();
   }
 };
 
@@ -157,25 +206,13 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfigurat
   static mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration load(const mc_rtc::Configuration & config)
   {
     mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration bias;
-    config("dcmMeasureErrorStd", bias.dcmMeasureErrorStd);
-    config("zmpMeasureErrorStd", bias.zmpMeasureErrorStd);
-    config("biasDriftPerSecondStd", bias.biasDriftPerSecondStd);
-    config("biasLimit", bias.biasLimit);
-    config("withDCMBias", bias.withDCMBias);
-    config("withDCMFilter", bias.withDCMFilter);
+    bias.load(config);
     return bias;
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration & bias)
   {
-    mc_rtc::Configuration config;
-    config.add("dcmMeasureErrorStd", bias.dcmMeasureErrorStd);
-    config.add("zmpMeasureErrorStd", bias.zmpMeasureErrorStd);
-    config.add("biasDriftPerSecondStd", bias.biasDriftPerSecondStd);
-    config.add("biasLimit", bias.biasLimit);
-    config.add("withDCMBias", bias.withDCMBias);
-    config.add("withDCMFilter", bias.withDCMFilter);
-    return config;
+    return bias.save();
   }
 };
 } // namespace mc_rtc
@@ -242,6 +279,13 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   DCMBiasEstimatorConfiguration dcmBias; /**< Parameters for the DCM bias estimation */
 
+  StabilizerConfiguration() {}
+
+  StabilizerConfiguration(const mc_rtc::Configuration & conf)
+  {
+    load(conf);
+  }
+
   /**
    * @brief Checks that the chosen parameters are within the parameters defined
    * by the SafetyThresholds
@@ -261,9 +305,16 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   void load(const mc_rtc::Configuration & config)
   {
-    config("safety_tresholds", safetyThresholds);
+    if(config.has("safety_tresholds"))
+    {
+      safetyThresholds.load(config("safety_tresholds"));
+    }
 
-    config("fdqp_weights", fdqpWeights);
+    if(config.has("fdqp_weights"))
+    {
+      fdqpWeights.load(config("fdqp_weights"));
+    }
+
     config("leftFootSurface", leftFootSurface);
     config("rightFootSurface", rightFootSurface);
     config("torsoBodyName", torsoBodyName);
@@ -290,7 +341,10 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       dcmTracking("derivator_time_constant", dcmDerivatorTimeConstant);
       dcmTracking("integrator_time_constant", dcmIntegratorTimeConstant);
     }
-    config("dcm_bias", dcmBias);
+    if(config.has("dcm_bias"))
+    {
+      dcmBias.load(config("dcm_bias"));
+    }
     if(config.has("tasks"))
     {
       auto tasks = config("tasks");
@@ -320,13 +374,29 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       {
         if(tasks("contact").has("damping"))
         {
-          double d = tasks("contact")("damping");
-          contactDamping = sva::MotionVecd({d, d, d}, {d, d, d});
+          try
+          {
+            double d = tasks("contact")("damping");
+            contactDamping = sva::MotionVecd({d, d, d}, {d, d, d});
+          }
+          catch(mc_rtc::Configuration::Exception & e)
+          {
+            e.silence();
+            contactDamping = tasks("contact")("damping");
+          }
         }
         if(tasks("contact").has("stiffness"))
         {
-          double k = tasks("contact")("stiffness");
-          contactStiffness = sva::MotionVecd({k, k, k}, {k, k, k});
+          try
+          {
+            double k = tasks("contact")("stiffness");
+            contactStiffness = sva::MotionVecd({k, k, k}, {k, k, k});
+          }
+          catch(mc_rtc::Configuration::Exception & e)
+          {
+            e.silence();
+            contactStiffness = tasks("contact")("stiffness");
+          }
         }
         tasks("contact")("stiffness", contactStiffness);
         tasks("contact")("weight", contactWeight);
@@ -339,6 +409,10 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       vdc("stiffness", vdcStiffness);
     }
 
+    if(config.has("zmpcc"))
+    {
+      zmpcc.load(config("zmpcc"));
+    }
     config("zmpcc", zmpcc);
   }
 
