@@ -305,9 +305,16 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   void load(const mc_rtc::Configuration & config)
   {
-    config("safety_tresholds", safetyThresholds);
+    if(config.has("safety_tresholds"))
+    {
+      safetyThresholds.load(config("safety_tresholds"));
+    }
 
-    config("fdqp_weights", fdqpWeights);
+    if(config.has("fdqp_weights"))
+    {
+      fdqpWeights.load(config("fdqp_weights"));
+    }
+
     config("leftFootSurface", leftFootSurface);
     config("rightFootSurface", rightFootSurface);
     config("torsoBodyName", torsoBodyName);
@@ -334,7 +341,10 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       dcmTracking("derivator_time_constant", dcmDerivatorTimeConstant);
       dcmTracking("integrator_time_constant", dcmIntegratorTimeConstant);
     }
-    config("dcm_bias", dcmBias);
+    if(config.has("dcm_bias"))
+    {
+      dcmBias.load(config("dcm_bias"));
+    }
     if(config.has("tasks"))
     {
       auto tasks = config("tasks");
@@ -399,6 +409,10 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
       vdc("stiffness", vdcStiffness);
     }
 
+    if(config.has("zmpcc"))
+    {
+      zmpcc.load(config("zmpcc"));
+    }
     config("zmpcc", zmpcc);
   }
 
