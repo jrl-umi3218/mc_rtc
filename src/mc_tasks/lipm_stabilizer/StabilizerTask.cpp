@@ -165,7 +165,7 @@ Eigen::VectorXd StabilizerTask::eval() const
 Eigen::VectorXd StabilizerTask::speed() const
 {
   Eigen::VectorXd res(3 + 3 * contactTasks.size());
-  res.head(3) = comTask->eval();
+  res.head(3) = comTask->speed();
   int i = 0;
   for(const auto & task : contactTasks)
   {
