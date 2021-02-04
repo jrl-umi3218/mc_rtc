@@ -865,7 +865,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   }
   if(c_.extWrench.modifyZMPErrD)
   {
-    desiredCoMAccel -= (omega_ * omega_ / constants::gravity.z()) * comOffsetDerivator_.eval();
+    desiredCoMAccel -= (omega_ * omega_ / c_.zmpdGain) * comOffsetDerivator_.eval();
   }
 
   // Calculate the desired force and moment
