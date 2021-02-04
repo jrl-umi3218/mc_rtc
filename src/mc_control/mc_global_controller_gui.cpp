@@ -37,9 +37,22 @@ void MCGlobalController::initGUI()
                         mc_rtc::gui::NumberSlider("Maximum velocity percentage",
                                                   [g_ptr]() { return g_ptr->percentVMAX(); },
                                                   [g_ptr](double op) { g_ptr->percentVMAX(op); }, 0, 1));
-        category.push_back("Safety");
+
+        auto targetCat = category;
+        targetCat.push_back("Targets");
+        for(const auto & joint : g_ptr->activeJoints())
+        {
+          gui->addElement(targetCat,
+                          mc_rtc::gui::NumberSlider(
+                              joint, [joint, g_ptr]() { return g_ptr->curOpening(joint); },
+                              [joint, g_ptr](double targetOpening) { g_ptr->setTargetOpening(joint, targetOpening); },
+                              0, 1));
+        }
+
+        auto safetyCat = category;
+        safetyCat.push_back("Safety");
         gui->addElement(
-            category,
+            safetyCat,
             mc_rtc::gui::NumberInput(
                 "Actual command diff threshold [deg]",
                 [g_ptr]() { return mc_rtc::constants::toDeg(g_ptr->actualCommandDiffTrigger()); },
