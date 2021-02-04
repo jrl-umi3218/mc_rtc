@@ -6,6 +6,7 @@
 #include <mc_control/fsm/states/Grippers.h>
 #include <mc_filter/utils/clamp.h>
 #include <mc_rtc/constants.h>
+#include <mc_rtc/io_utils.h>
 
 namespace mc_control
 {
@@ -47,22 +48,88 @@ void Grippers::start(Controller & ctl)
 
       if(grippers(g).has("opening"))
       {
-        double open = mc_filter::utils::clamp(static_cast<double>(grippers(g)("opening")), 0, 1);
-        gripper->setTargetOpening(open);
-        grippers_.push_back(std::ref(*gripper));
+        try
+        {
+          std::map<std::string, double> jointsOpening = grippers(g)("opening");
+          for(const auto & jOpen : jointsOpening)
+          {
+            const auto & jName = jOpen.first;
+            if(gripper->hasActiveJoint(jName))
+            {
+              gripper->setTargetOpening(jName, jOpen.second);
+            }
+            else
+            {
+              mc_rtc::log::warning("[{}] Attempted to set target opening for joint \"{}\" which is not part of the "
+                                   "gripper's \"{}\" active joints ([{}])",
+                                   name(), jName, g, mc_rtc::io::to_string(gripper->activeJoints()));
+            }
+          }
+          grippers_.push_back(std::ref(*gripper));
+        }
+        catch(mc_rtc::Configuration::Exception & e)
+        {
+          e.silence();
+          try
+          {
+            double open = grippers(g)("opening");
+            gripper->setTargetOpening(open);
+            grippers_.push_back(std::ref(*gripper));
+          }
+          catch(mc_rtc::Configuration::Exception & e)
+          {
+            e.silence();
+            mc_rtc::log::warning("[{}] Target gripper opening for gripper \"{}\" must either be a map<Joint name "
+                                 "(string), opening (double)> or a double value",
+                                 name(), g);
+          }
+        }
       }
       else if(grippers(g).has("target"))
       {
-        std::vector<double> target = grippers(g)("target");
-        if(gripper->curPosition().size() != target.size())
+        try
         {
-          mc_rtc::log::warning(
-              "[FSM::{}] Provided target for {} does not have the correct size (expected: {}, got: {})", name(), g,
-              gripper->curPosition().size(), target.size());
-          continue;
+          std::map<std::string, double> jointTargets = grippers(g)("target");
+          for(const auto & jTarget : jointTargets)
+          {
+            const auto & jName = jTarget.first;
+            if(gripper->hasActiveJoint(jName))
+            {
+              gripper->setTargetQ(jName, jTarget.second);
+            }
+            else
+            {
+              mc_rtc::log::warning("[{}] Attempted to set target opening for joint \"{}\" which is not part of the "
+                                   "gripper's \"{}\" active joints ([{}])",
+                                   name(), jName, g, mc_rtc::io::to_string(gripper->activeJoints()));
+            }
+          }
+          grippers_.push_back(std::ref(*gripper));
         }
-        gripper->setTargetQ(target);
-        grippers_.push_back(std::ref(*gripper));
+        catch(mc_rtc::Configuration::Exception & e)
+        {
+          e.silence();
+          try
+          {
+            std::vector<double> target = grippers(g)("target");
+            if(gripper->activeJoints().size() != target.size())
+            {
+              mc_rtc::log::warning(
+                  "[FSM::{}] Provided target for {} does not have the correct size (expected: {}, got: {})", name(), g,
+                  gripper->curPosition().size(), target.size());
+              continue;
+            }
+            gripper->setTargetQ(target);
+            grippers_.push_back(std::ref(*gripper));
+          }
+          catch(mc_rtc::Configuration::Exception & e)
+          {
+            e.silence();
+            mc_rtc::log::warning("[{}] Target for gripper \"{}\" must either be a map<joint name (string), target "
+                                 "(double)> or a vector<double> of size {}",
+                                 name(), g, gripper->activeJoints().size());
+          }
+        }
       }
       else
       {
