@@ -43,6 +43,13 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
       observer->configure(ctl_, observerConf("config", mc_rtc::Configuration{}));
       pipelineObservers_.emplace_back(observer, observerConf);
     }
+    else if(!observerConf("required", true))
+    {
+      mc_rtc::log::warning(
+          "[ObserverPipeline::{}] Optional observer \"{}\" is in the observer pipeline configuration but "
+          "is not available, ignoring it.",
+          name_, observerName);
+    }
     else
     {
       mc_rtc::log::error_and_throw<std::runtime_error>(
@@ -95,9 +102,12 @@ bool ObserverPipeline::run()
   {
     auto & observer = pipelineObserver.observer();
     bool res = observer.run(ctl_);
-    success_ = success_ && res;
     if(!res)
     {
+      if(pipelineObserver.successRequired())
+      {
+        success_ = false;
+      }
       if(pipelineObserver.success())
       {
         mc_rtc::log::warning("[ObserverPipeline::{}] Observer {} failed to run", name(), observer.name());

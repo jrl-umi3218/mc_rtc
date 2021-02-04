@@ -24,6 +24,8 @@
           "update": {"type": "boolean", "default": true, "description": "When true, update the state of real robots instances (requires the observer's run to have succeeded)"},
           "log": {"type": "boolean", "default": true, "description": "When true, log estimated values"},
           "gui": {"type": "boolean", "default": true, "description": "When true, show observer in the gui"},
+          "required": {"type": "boolean", "default": true, "description": "When false, ignore this observer if it could not be loaded"},
+          "successRequired": {"type": "boolean", "default": true, "description": "When true, the whole pipeline is considered to have failed if this observer's run() returns false"},
           "config":
           {
             "type": "object",

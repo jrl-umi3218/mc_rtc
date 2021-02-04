@@ -47,6 +47,7 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
       config("update", update_);
       config("log", log_);
       config("gui", gui_);
+      config("successRequired", successRequired_);
     }
 
     /* Const accessor to an observer generic interface
@@ -92,25 +93,33 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
       return const_cast<T &>(static_cast<const PipelineObserver *>(this)->observer<T>());
     }
 
-    bool update() const
+    bool update() const noexcept
     {
       return update_;
     }
 
-    bool log() const
+    bool log() const noexcept
     {
       return log_;
     }
 
-    bool gui() const
+    bool gui() const noexcept
     {
       return gui_;
     }
 
     /** Returns whether the last call to this observer succeeded */
-    bool success() const
+    bool success() const noexcept
     {
       return success_;
+    }
+
+    /** Returns whether this observer must succeed or is allowed to fail
+     * When true, the whole pipeline will fail if this observer fails. Otherwise
+     * the pipeline will keep executing */
+    bool successRequired() const noexcept
+    {
+      return successRequired_;
     }
 
   protected:
@@ -118,6 +127,7 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
     bool update_ = true; //< Whether to update the real robot instance from this observer
     bool log_ = true; //< Whether to log this observer
     bool gui_ = true; //< Whether to display the gui
+    bool successRequired_ = true; //< Whether this observer must succeed or is allowed to fail
     bool success_ = true; //< Whether this observer succeeded
   };
 
@@ -277,13 +287,7 @@ protected:
   bool updateObservers_ = true; ///< Whether to update real robots from estimated state.
   bool success_ = false; ///< Whether the pipeline successfully executed
 
-  /** Observers that will be run by the pipeline.
-   *
-   * The pair contains:
-   * - The observer to run
-   * - A boolean set to true if the observer updates the real robot instance
-   *
-   * Provided by MCGlobalController */
+  /** Observers that will be run by the pipeline. */
   std::vector<PipelineObserver> pipelineObservers_;
 };
 
