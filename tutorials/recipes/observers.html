@@ -304,6 +304,11 @@
 <li class="toc-entry toc-h2"><a href="#visualizing-the-estimated-robot">Visualizing the estimated robot</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h1"><a href="#interacting-with-observer-pipelines-from-code">Interacting with observer pipelines from code</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#querying-the-status-of-observer-pipelines">Querying the status of observer pipelines</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h1"><a href="#creating-your-own-observer">Creating your own Observer</a></li>
 </ul>
             </div>
@@ -499,6 +504,54 @@
 <span class="na">Robot Description path</span><span class="pi">:</span> <span class="s">/real/env_*/robot_description</span>
 <span class="na">TF Prefix</span><span class="pi">:</span> <span class="s">/real/env_*</span>
 </code></pre></div></div>
+
+<h1 id="interacting-with-observer-pipelines-from-code">Interacting with observer pipelines from code</h1>
+
+<p>In some cases, it might be useful to interact with observer pipelines in your code. You might for instance want to:</p>
+<ul>
+  <li>check whether a specific observation pipeline is running</li>
+  <li>check whether some specific observers are present</li>
+  <li>know the status of specific observers from code</li>
+  <li>only perfom actions if some observers are present</li>
+  <li>etc…</li>
+</ul>
+
+<h2 id="querying-the-status-of-observer-pipelines">Querying the status of observer pipelines</h2>
+
+<p>Here is a short snippet of code to showcase how one can query the status of observer pipelines and take actions accordingly:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">checkObserverPipeline</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">observerPipelineName</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">hasObserverPipeline</span><span class="p">(</span><span class="n">observerPipeline</span><span class="p">))</span>
+  <span class="p">{</span>
+    <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">"This controller does not have a pipeline named {}"</span><span class="p">,</span> <span class="n">observerPipelineName</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">observerp</span> <span class="o">=</span> <span class="n">observerPipeline</span><span class="p">(</span><span class="n">observerPipelineName</span><span class="p">);</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">observerp</span><span class="p">.</span><span class="n">success</span><span class="p">())</span> <span class="c1">// Check if the pipeline failed</span>
+  <span class="p">{</span>
+    <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">"Required pipeline </span><span class="se">\"</span><span class="s">{}</span><span class="se">\"</span><span class="s"> for real robot observation failed to run!"</span><span class="p">,</span> <span class="n">observerPipelineName</span><span class="p">);</span>
+    <span class="c1">// Check which observer failed</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">observer</span> <span class="o">:</span> <span class="n">observerp</span><span class="p">.</span><span class="n">observers</span><span class="p">())</span>
+    <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">observer</span><span class="p">.</span><span class="n">success</span><span class="p">())</span>
+      <span class="p">{</span>
+        <span class="c1">// Display failure error</span>
+        <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">"Observer </span><span class="se">\"</span><span class="s">{}</span><span class="se">\"</span><span class="s"> failed with error </span><span class="se">\"</span><span class="s">{}</span><span class="se">\"</span><span class="s">"</span><span class="p">,</span> <span class="n">observer</span><span class="p">.</span><span class="n">observer</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="n">observer</span><span class="p">.</span><span class="n">observer</span><span class="p">().</span><span class="n">error</span><span class="p">());</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">observer</span><span class="p">.</span><span class="n">observer</span><span class="p">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="s">"MyObserver"</span><span class="p">)</span>
+        <span class="p">{</span>
+          <span class="c1">// do something specific if this observer failed</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now calling <code class="language-plaintext highlighter-rouge">checkObserverPipeline("RequiredObserverPipeline");</code> will inform you if this pipeline does not exist, show exactly which observer is failing and why, and do something specific with <code class="language-plaintext highlighter-rouge">MyObserver</code> if it is in the pipeline.
+For further available functionnalities, please refer to <a href="/mc_rtc/doxygen.html#structmc__observers_1_1ObserverPipeline" target="blank_">mc_observers::ObserverPipeline</a> documentation.</p>
 
 <h1 id="creating-your-own-observer">Creating your own Observer</h1>
 

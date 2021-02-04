@@ -42,6 +42,7 @@ var searchData=
   ['sub_5fth_5f',['sub_th_',['../structmc__control_1_1ControllerClient.html#aae3f415ab7a4cd6bfdd69ecfb2d78833',1,'mc_control::ControllerClient']]],
   ['success',['success',['../structmc__control_1_1PythonRWCallback.html#a6cdae0b0b750ab031e2abbb122d93aa1',1,'mc_control::PythonRWCallback']]],
   ['success_5f',['success_',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#ab1fa721bb4f40943cd1f0d798674f9fb',1,'mc_observers::ObserverPipeline::PipelineObserver::success_()'],['../structmc__observers_1_1ObserverPipeline.html#a6bf230530020ea7dc21a18acb4909e53',1,'mc_observers::ObserverPipeline::success_()']]],
+  ['successrequired_5f',['successRequired_',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#a83f156cbff59881e2147acd1ee3f8137',1,'mc_observers::ObserverPipeline::PipelineObserver']]],
   ['supportforcetarget_5f',['supportForceTarget_',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#a7ff906a2c7b36fa3316c2f8daadbb719',1,'mc_control::fsm::SlidingFootContactState']]],
   ['supportmax_5f',['supportMax_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae1133e256a909367f839ecef2528c7be',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['supportmin_5f',['supportMin_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a37b5b7e6f2acd693711f6b1e8c7310db',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],

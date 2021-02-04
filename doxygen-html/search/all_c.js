@@ -57,7 +57,7 @@ var searchData=
   ['loadrsdffromdir',['loadRSDFFromDir',['../structmc__rbdyn_1_1Robot.html#a1554209253be449c1fb4cdd7e3d2478d',1,'mc_rbdyn::Robot']]],
   ['loadvector',['loadVector',['../structmc__rbdyn_1_1Contact.html#a37b8d4f38c38cfac2a4517207d4d6763',1,'mc_rbdyn::Contact']]],
   ['loadyamldata',['loadYAMLData',['../structmc__rtc_1_1Configuration.html#ab49ef6ce388e0698db3574e329de4ccc',1,'mc_rtc::Configuration']]],
-  ['log',['log',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#a442ac1cccd63740eb0e976812a6cdfbe',1,'mc_observers::ObserverPipeline::PipelineObserver::log()'],['../structmc__rtc_1_1Logger.html#aec88caf27ebb9c9615ed4fd51d9ccd98',1,'mc_rtc::Logger::log()']]],
+  ['log',['log',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#a2a8dad1ba36469bea16def1de5b09244',1,'mc_observers::ObserverPipeline::PipelineObserver::log()'],['../structmc__rtc_1_1Logger.html#aec88caf27ebb9c9615ed4fd51d9ccd98',1,'mc_rtc::Logger::log()']]],
   ['log_5f',['log_',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#aba73be3150abc3f17e20c9f6d638ae19',1,'mc_observers::ObserverPipeline::PipelineObserver']]],
   ['log_5fdirectory',['log_directory',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a8eedde988acfcfba5942a52d69f2b1b8',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['log_5ferror',['LOG_ERROR',['../logging_8h.html#ac6c926a2075cbaa39c4e9d12a2cac7e2',1,'logging.h']]],

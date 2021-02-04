@@ -31,7 +31,7 @@ var searchData=
   ['loadrsdffromdir',['loadRSDFFromDir',['../structmc__rbdyn_1_1Robot.html#a1554209253be449c1fb4cdd7e3d2478d',1,'mc_rbdyn::Robot']]],
   ['loadvector',['loadVector',['../structmc__rbdyn_1_1Contact.html#a37b8d4f38c38cfac2a4517207d4d6763',1,'mc_rbdyn::Contact']]],
   ['loadyamldata',['loadYAMLData',['../structmc__rtc_1_1Configuration.html#ab49ef6ce388e0698db3574e329de4ccc',1,'mc_rtc::Configuration']]],
-  ['log',['log',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#a442ac1cccd63740eb0e976812a6cdfbe',1,'mc_observers::ObserverPipeline::PipelineObserver::log()'],['../structmc__rtc_1_1Logger.html#aec88caf27ebb9c9615ed4fd51d9ccd98',1,'mc_rtc::Logger::log()']]],
+  ['log',['log',['../structmc__observers_1_1ObserverPipeline_1_1PipelineObserver.html#a2a8dad1ba36469bea16def1de5b09244',1,'mc_observers::ObserverPipeline::PipelineObserver::log()'],['../structmc__rtc_1_1Logger.html#aec88caf27ebb9c9615ed4fd51d9ccd98',1,'mc_rtc::Logger::log()']]],
   ['logger',['logger',['../structmc__control_1_1MCController.html#ac9542a86bbb7baaf4d40c879b01a4073',1,'mc_control::MCController::logger()'],['../structmc__solver_1_1QPSolver.html#a6d2e5c1529e97fa15bff07a9092b1339',1,'mc_solver::QPSolver::logger(std::shared_ptr&lt; mc_rtc::Logger &gt; logger)'],['../structmc__solver_1_1QPSolver.html#ae805619eed38900664c15a1f3be7921f',1,'mc_solver::QPSolver::logger() const'],['../structmc__rtc_1_1Logger.html#a18ce85d2d7612f7029b47a3931c72316',1,'mc_rtc::Logger::Logger()']]],
   ['logtypename',['LogTypeName',['../namespacemc__rtc_1_1log.html#a6351f9d1bb2bb7f8f3508cc9f0e36e5e',1,'mc_rtc::log']]],
   ['logtypenames',['LogTypeNames',['../namespacemc__rtc_1_1log.html#a9979086ae04c2369f6ea39d42ec2fcb6',1,'mc_rtc::log']]],
