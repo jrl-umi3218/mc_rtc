@@ -17,6 +17,7 @@ namespace fsm
 void Grippers::configure(const mc_rtc::Configuration & config)
 {
   config_.load(config);
+  config("keepSafetyConfig", keepSafetyConfig_);
 }
 
 void Grippers::start(Controller & ctl)
@@ -45,7 +46,10 @@ void Grippers::start(Controller & ctl)
         continue;
       }
       auto & gripper = ctl_grippers.at(g);
-      gripper->saveConfig();
+      if(!keepSafetyConfig_)
+      {
+        gripper->saveConfig();
+      }
       gripper->configure(grippers(g));
       grippers_.push_back(std::ref(*gripper));
     }
@@ -67,7 +71,14 @@ void Grippers::teardown(Controller &)
 {
   for(auto & g : grippers_)
   {
-    g.get().restoreConfig();
+    if(keepSafetyConfig_)
+    { // Make the current safety configuration the new default
+      g.get().saveConfig();
+    }
+    else
+    {
+      g.get().restoreConfig();
+    }
   }
 }
 

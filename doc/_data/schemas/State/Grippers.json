@@ -3,7 +3,7 @@
   [
     {
       "title": "mc_control::fsm::Grippers",
-      "description": "Controllers the gripper of a robot",
+      "description": "Controls the grippers of a robot",
       "type": "object",
       "properties":
       {
@@ -20,7 +20,8 @@
             { "type": "string", "description": "Gripper name" },
             { "$ref": "/../../mc_control/generic_gripper.json" }
           ]
-        }
+        },
+        "keepSafetyConfig": { "type": "boolean", "default": false, "description": "When true, keep this gripper's safety configuration after the state has been destroyed, otherwise restore it to its former value" }
       },
       "required": []
     },
