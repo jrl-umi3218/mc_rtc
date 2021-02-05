@@ -1,7 +1,7 @@
 {
   "type": "object",
   "title": "Gripper target",
-  "description": "Gripper target, one of target or opening is required",
+  "description": "Gripper target and safety configuration",
   "properties":
   {
     "target":
@@ -38,18 +38,9 @@
         }
       ]
     },
-    "percentVMAX": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.25, "description": "Gripper opening speed as a percentage of the maximum velocity" },
     "safety":
     {
-      "type": "object",
-      "title": "Gripper safety parameters",
-      "description": "Parameters to prevent over-torques on position-controlled grippers",
-      "properties":
-      {
-        "iter": { "type": "number", "minimum": 1, "default": 5, "description": "Maximum number of iterations spent above \"threshold\" before the gripper is release by \"release\"" },
-        "threshold": { "type": "number", "minimum": 0, "default": 8, "description": "Encoder-command difference [degrees] over which the gripper is considered in overtorque" },
-        "release":  { "type": "number", "minimum": 0, "default": 2, "description": "Number of degrees by which the gripper should be released when safety is triggered" }
-      }
+      "$ref": "/../../mc_rbdyn/RobotModule.Gripper.Safety.json"
     }
   }
 }

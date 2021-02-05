@@ -78,6 +78,9 @@ struct MC_RBDYN_DLLAPI Gripper
    **/
   void restoreConfig();
 
+  /** \brief Applies a new gripper configuration (safeties and targets) */
+  void configure(const mc_rtc::Configuration & config);
+
   /*! \brief Reset the gripper state to the current actual state of the gripper
    *
    * \param currentQ Current encoder values for the robot

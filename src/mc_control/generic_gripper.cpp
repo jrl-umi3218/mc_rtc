@@ -10,6 +10,7 @@
 
 #include <mc_rtc/constants.h>
 #include <mc_rtc/gui.h>
+#include <mc_rtc/io_utils.h>
 #include <mc_rtc/logging.h>
 
 #include <algorithm>
@@ -206,6 +207,66 @@ void Gripper::saveConfig()
 void Gripper::restoreConfig()
 {
   config_ = savedConfig_;
+}
+
+void Gripper::configure(const mc_rtc::Configuration & config)
+{
+  if(config.has("safety"))
+  {
+    config_.load(config("safety"));
+  }
+  if(config.has("opening"))
+  {
+    try
+    {
+      std::map<std::string, double> jointsOpening = config("opening");
+      for(const auto & jOpen : jointsOpening)
+      {
+        setTargetOpening(jOpen.first, jOpen.second);
+      }
+    }
+    catch(mc_rtc::Configuration::Exception & e)
+    {
+      e.silence();
+      try
+      {
+        setTargetOpening(static_cast<double>(config("opening")));
+      }
+      catch(mc_rtc::Configuration::Exception & e)
+      {
+        e.silence();
+        mc_rtc::log::error_and_throw<std::runtime_error>(
+            "Gripper's target opening must either be a map<Joint name (string), opening (double)> or a double value");
+      }
+    }
+  }
+  else if(config.has("target"))
+  {
+    try
+    {
+      std::map<std::string, double> jointTargets = config("target");
+      for(const auto & jTarget : jointTargets)
+      {
+        setTargetQ(jTarget.first, jTarget.second);
+      }
+    }
+    catch(mc_rtc::Configuration::Exception & e)
+    {
+      e.silence();
+      try
+      {
+        std::vector<double> target = config("target");
+        setTargetQ(target);
+      }
+      catch(mc_rtc::Configuration::Exception & e)
+      {
+        e.silence();
+        mc_rtc::log::error_and_throw<std::runtime_error>(
+            "Gripper's target must either be a map<joint name (string), angle (double)> or a vector<double> of size {}",
+            activeJoints().size());
+      }
+    }
+  }
 }
 
 void Gripper::reset(const std::vector<double> & currentQ)
