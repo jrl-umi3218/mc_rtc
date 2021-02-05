@@ -4,9 +4,41 @@
   "description": "Gripper target, one of target or opening is required",
   "properties":
   {
-    "target": { "type": "array", "items": { "type": "number" }, "description": "Target of active joints in the gripper" },
-    "opening": { "type": "number", "mininimum": 0, "maximum": 1, "description": "Target opening of the gripper" },
-    "percentVMAX": { "type": "number", "mininimum": 0, "maximum": 1, "default": 0.25, "description": "Gripper opening speed as a percentage of the maximum velocity" },
+    "target":
+    {
+      "oneOf":
+      [
+        {
+          "type": "array", "items": { "type": "number" }, "description": "Target of active joints in the gripper"
+        },
+        {
+          "type": "array",
+          "description": "Map of joint names -> joint value",
+          "items":
+          [
+            { "type": "string", "description": "Joint name"},
+            { "type": "number", "description": "Joint target [rad]" }
+          ]
+        }
+      ]
+    },
+    "opening":
+    {
+      "oneOf":
+      [
+        {"type": "number", "minimum": 0, "maximum": 1, "description": "Target opening percentage of the gripper" },
+        {
+          "type": "array",
+          "description": "Map of joint names -> opening percentage",
+          "items":
+          [
+            { "type": "string", "description": "Joint name"},
+            { "type": "number", "description": "Joint target opening percentage" }
+          ]
+        }
+      ]
+    },
+    "percentVMAX": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.25, "description": "Gripper opening speed as a percentage of the maximum velocity" },
     "safety":
     {
       "type": "object",
