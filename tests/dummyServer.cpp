@@ -382,6 +382,10 @@ TestServer::TestServer() : xythetaz_(4)
                      mc_rtc::gui::Transform("ReadOnly Transform", [this]() { return static_; }),
                      mc_rtc::gui::Transform("Interactive Transform", [this]() { return interactive_; },
                                             [this](const sva::PTransformd & p) { interactive_ = p; }),
+                     mc_rtc::gui::XYTheta("XYTheta ReadOnly",
+                                          [this]() -> std::array<double, 4> {
+                                            return {xytheta_.x(), xytheta_.y(), xytheta_.z(), 0.1};
+                                          }),
                      mc_rtc::gui::XYTheta("XYTheta", [this]() { return xytheta_; },
                                           [this](const Eigen::VectorXd & vec) { xytheta_ = vec.head<3>(); }),
                      mc_rtc::gui::XYTheta("XYThetaAltitude", [this]() { return xythetaz_; },

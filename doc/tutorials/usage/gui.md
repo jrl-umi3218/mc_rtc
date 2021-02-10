@@ -214,10 +214,10 @@ This element is a special case of the `Transform` element where only X/Y transla
 
 ```cpp
 // Returns a vector with 3 elements representing the X/Y position and the theta angle
-XYTheta("XYThetaOnGround", [this] -> std::array<double, 3> { return {x, y, theta}; });
+XYTheta("XYThetaOnGround", [this]() -> std::array<double, 3> { return {x, y, theta}; });
 
 // Specify the height with a 4th element
-XYTheta("XYTheta", [this] -> std::array<double, 4> { return {x, y, theta, z}; });
+XYTheta("XYTheta", [this]() -> std::array<double, 4> { return {x, y, theta, z}; });
 ```
 
 ##### `Table`
