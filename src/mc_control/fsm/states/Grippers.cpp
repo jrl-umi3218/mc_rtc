@@ -6,7 +6,6 @@
 #include <mc_control/fsm/states/Grippers.h>
 #include <mc_filter/utils/clamp.h>
 #include <mc_rtc/constants.h>
-#include <mc_rtc/io_utils.h>
 
 namespace mc_control
 {

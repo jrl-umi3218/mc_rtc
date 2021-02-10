@@ -105,8 +105,7 @@ struct MC_RBDYN_DLLAPI Gripper
 
   /*! \brief Set the target configuration of the active joints involved in the gripper
    * \param targetQ Desired values of the active joints involved in the gripper
-   * \throw std::runtime_error If the number of joints targets does not match
-   * the number of active joints
+   * \throw std::runtime_error If the targetQ size does not match the number of active joints
    */
   void setTargetQ(const std::vector<double> & targetQ);
 
@@ -118,7 +117,8 @@ struct MC_RBDYN_DLLAPI Gripper
    */
   void setTargetQ(const std::string & jointName, double targetQ);
 
-  /**
+  /** Get a joint's target angle
+   *
    * \throw std::runtime_error if the joint name does not match any of the
    * gripper's active joints
    */
