@@ -318,19 +318,21 @@ class PlotYAxis(object):
       offset = offset + sign * 0.035 * (self.legendRows() - 3)
     return offset
 
-  def getLimits(self, frame, idx):
+  def getLimits(self, frame0, frame, idx):
     if not len(self):
       return None
-    min_ = np.nanmin(self.data.values()[0][idx][:frame])
-    max_ = np.nanmax(self.data.values()[0][idx][:frame])
+    if np.all(np.isnan(self.data.values()[0][idx][frame0:frame])):
+      return np.nan, np.nan
+    min_ = np.nanmin(self.data.values()[0][idx][frame0:frame])
+    max_ = np.nanmax(self.data.values()[0][idx][frame0:frame])
     for i in range(1, len(self.data.values())):
-      data = self.data.values()[i][idx][:frame]
+      data = self.data.values()[i][idx][frame0:frame]
       min_ = min(np.nanmin(data), min_)
       max_ = max(np.nanmax(data), max_)
     return min_, max_
 
 
-  def setLimits(self, xlim = None, ylim = None, frame = None, zlim = None):
+  def setLimits(self, xlim = None, ylim = None, frame0 = None, frame = None, zlim = None):
     if not len(self):
       return xlim
     dataLim = self._axis.dataLim.get_points()
@@ -338,7 +340,10 @@ class PlotYAxis(object):
       if lim is not None:
         min_, max_ = lim
       elif frame is not None:
-        min_, max_ = self.getLimits(frame, idx)
+        min_, max_ = self.getLimits(frame0, frame, idx)
+        # Ignore limits if all data is nan
+        if np.isnan(min_) or np.isnan(max_):
+            return 0, 0
       else:
         range_ = dataLim[1][idx] - dataLim[0][idx]
         min_ = dataLim[0][idx] - range_ * 0.01
@@ -552,6 +557,7 @@ class PlotFigure(object):
       self.canvas = FigureCanvas(self.fig)
     self.axes = {}
     self._3D = type_ is PlotType._3D
+    self._XY = type_ is PlotType.XY
     self.axes[PlotSide.LEFT] = PlotYAxis(self, _3D = self._3D)
     if not self._3D:
       self.axes[PlotSide.RIGHT] = PlotYAxis(self, self._left().axis(), self._left()._polyAxis, _3D = self._3D)
@@ -611,12 +617,13 @@ class PlotFigure(object):
   def _legend(self):
     self._axes(lambda axis: axis.legend())
 
-  def draw(self, x_limits = None, y1_limits = None, y2_limits = None, frame = None):
+  def draw(self, x_limits = None, y1_limits = None, y2_limits = None, frame0 = None, frame = None):
     if self._3D:
-      x_limits = self._left().setLimits(x_limits, y1_limits, frame = frame, zlim = y2_limits)
+      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame, zlim = y2_limits)
     else:
-      x_limits = self._left().setLimits(x_limits, y1_limits, frame = frame)
-      self._right().setLimits(x_limits, y2_limits, frame = frame)
+      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame)
+    if np.isnan(x_limits[0]) or np.isnan(x_limits[1]):
+      return
     self._legend()
     self._drawGrid()
     top_offset = self._left().legendOffset(self._top_offset, -1)
@@ -634,7 +641,7 @@ class PlotFigure(object):
     ret = self._left().animate(frame0, frame)
     if self._right():
       ret.extend(self._right().animate(frame0, frame))
-    PlotFigure.draw(self, x_limits = x_limits, y1_limits = y1_limits, y2_limits = y2_limits, frame = frame)
+    PlotFigure.draw(self, x_limits = x_limits, y1_limits = y1_limits, y2_limits = y2_limits, frame0 = frame0, frame = frame)
     return ret
 
   def stopAnimation(self):
@@ -1019,7 +1026,8 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
       else:
         self.animationButton.setChecked(False)
     else:
-      self.stopAnimation()
+      if self.animation is not None:
+        self.stopAnimation()
       self.animationButton.setText("Start animation")
 
   def restartAnimation(self):
@@ -1034,37 +1042,81 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.restartAnimation()
     self.draw()
 
+  def getAxisFrameRange(self, x_data, yValues):
+    """Get range from first non-nan data to last non-nan data of a single y axis
+    For XY plots and 3D plots data is considered valid if all components are non-nan
+    """
+    min_i0 = len(x_data)-1
+    max_iN = 0
+    if len(yValues) == 0:
+        return min_i0, max_iN
+  
+    isNull = None
+    if self._3D:
+        # data is [x, y, z, t]
+        isNull = lambda ydata, idx : (ydata[0] is None or np.isnan(ydata[0][idx])) or (ydata[1] is None or np.isnan(ydata[1][idx])) or (ydata[2] is None or np.isnan(ydata[2][idx]))
+    elif self._XY:
+        # data is [x, y, None, t]
+        isNull = lambda ydata, idx : (ydata[0] is None or np.isnan(ydata[0][idx])) or (ydata[1] is None or np.isnan(ydata[1][idx]))
+    else:
+        # data is [t, y]
+        isNull = lambda ydata, idx : (ydata[1] is None or np.isnan(ydata[1][idx]))
+  
+    for y_data in yValues:
+        # look for first non-nan value
+        i0 = 0
+        while i0 < len(x_data) and (np.isnan(x_data[i0]) or isNull(y_data, i0)):
+          i0 += 1
+        iN = len(x_data)-1
+        while iN > i0 and (np.isnan(x_data[iN]) or isNull(y_data, iN)):
+          iN -= 1
+        min_i0 = min(min_i0, i0)
+        max_iN = max(max_iN, iN)
+    return min_i0, max_iN
+
   def getFrameRange(self):
+    """Returns the index corresponding to the time from the first non-nan element to the last non-nan element in the non-nan region of the selected time range
+    """
     if self.data is None or len(self.data) == 0:
       return 0, 0
+    if self._left() is None and self.right() is None:
+      return 0, 0
+
     x_data = self.data[self.x_data]
-    i0 = 0
-    while i0 < len(x_data) and np.isnan(x_data[i0]):
-      i0 += 1
-    iN = i0
-    while iN + 1 < len(x_data) and not np.isnan(x_data[iN + 1]):
-      iN += 1
-    assert(iN > i0 and i0 < len(x_data)),"Strange time range"
-    return i0, iN
+    if self._left() is not None and self._right() is None:
+      return self.getAxisFrameRange(x_data, self._left().data.values())
+    if self._right() is not None and self._left() is None:
+      return self.getAxisFrameRange(x_data, self._right().data.values())
+
+    y1_data = self._left().data.values()
+    y2_data = self._right().data.values()
+    if len(y1_data) == 0 and len(y2_data) == 0:
+        return 0, 0
+
+    y1_range = self.getAxisFrameRange(x_data, y1_data)
+    y2_range = self.getAxisFrameRange(x_data, y2_data)
+    range = [min(y1_range[0], y2_range[0]), max(y1_range[1], y2_range[1])]
+    assert(range[1] > range[0] and range[0] < len(x_data)), "Strange frame range"
+    return range
 
   def lockAxes(self):
     i0, iN = self.getFrameRange()
     if i0 == iN:
       return
     if self.x_limits is None:
-      self.x_limits = self._left().getLimits(iN, 0) or self._right().getLimits(iN, 0)
+      self.x_limits = self._left().getLimits(i0, iN, 0) or self._right().getLimits(i0, iN, 0)
     if self.x_limits is None:
       return
     self.x_locked.setChecked(True)
     if self.y1_limits is None:
-      self.y1_limits = self._left().getLimits(iN, 1)
+      self.y1_limits = self._left().getLimits(i0, iN, 1)
     if self.y1_limits is not None:
       self.y1_locked.setChecked(True)
     if self.y2_limits is None:
       if self._3D:
-        self.y2_limits = self._left().getLimits(iN, 2)
+        self.y2_limits = self._left().getLimits(i0, iN, 2)
       else:
-        self.y2_limits = self._right().getLimits(iN, 1)
+        self.y2_limits = self._right().getLimits(i0, iN, 1)
     if self.y2_limits is not None:
       self.y2_locked.setChecked(True)
     return i0, iN
@@ -1101,12 +1153,14 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     filename, extension = os.path.splitext(fpath)
     if not extension:
       fpath = fpath + '.mp4'
+    print "Saving animation, please wait..."
     if self.animationButton.isChecked():
       self.animation.save(fpath)
     else:
       self.startAnimation()
       self.animation.save(fpath)
       self.stopAnimation()
+    print "Animation saved to %s" % fpath
 
   def axesDialog(self):
     SimpleAxesDialog(self).exec_()
