@@ -9,6 +9,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QComboBox
 
+import os
 import copy
 import math
 import matplotlib
@@ -36,6 +37,7 @@ try:
 except ImportError:
   import mc_log_ui
 from .mc_log_utils import InitDialogWithOkCancel
+from .mc_log_utils import ShowErrorDialog
 
 import sys
 if sys.version_info[0] > 2:
@@ -1090,9 +1092,15 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.draw()
 
   def saveAnimation(self):
-    fpath = QtWidgets.QFileDialog.getSaveFileName(self, "Output file", filter = "Video (*.mp4)")[0]
+    if not self.animation:
+        ShowErrorDialog("Can't save an empty animation")
+        return
+    fpath = QtWidgets.QFileDialog.getSaveFileName(self,  "Output animation", 'output-animation.mp4', filter = "Video (*.mp4)")[0]
     if not len(fpath):
       return
+    filename, extension = os.path.splitext(fpath)
+    if not extension:
+      fpath = fpath + '.mp4'
     if self.animationButton.isChecked():
       self.animation.save(fpath)
     else:
