@@ -968,6 +968,8 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.setupLockButtons()
     self.setupAnimationButtons()
 
+    self.animation_path = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.DocumentsLocation)
+
   def setupLockButtons(self):
     layout = QHBoxLayout()
 
@@ -1157,12 +1159,10 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.draw()
 
   def saveAnimation(self):
-    if not self.animation:
-        ShowErrorDialog("Can't save an empty animation")
-        return
-    fpath = QtWidgets.QFileDialog.getSaveFileName(self,  "Output animation", 'output-animation.mp4', filter = "Video (*.mp4)")[0]
+    fpath = QtWidgets.QFileDialog.getSaveFileName(self,  "Output animation", self.animation_path+"/output-animation.mp4", filter = "Video (*.mp4)")[0]
     if not len(fpath):
       return
+    self.animation_path = os.path.split(fpath)[0]
     filename, extension = os.path.splitext(fpath)
     if not extension:
       fpath = fpath + '.mp4'
@@ -1171,6 +1171,10 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
       self.animation.save(fpath)
     else:
       self.startAnimation()
+      if not self.animation:
+          ShowErrorDialog("Can't save an empty animation")
+          print "Could not save empty animation"
+          return
       self.animation.save(fpath)
       self.stopAnimation()
     print "Animation saved to %s" % fpath
