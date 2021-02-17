@@ -322,7 +322,7 @@ class PlotYAxis(object):
     if not len(self):
       return None
     if np.all(np.isnan(self.data.values()[0][idx][frame0:frame])):
-      return np.nan, np.nan
+      return None
     min_ = np.nanmin(self.data.values()[0][idx][frame0:frame])
     max_ = np.nanmax(self.data.values()[0][idx][frame0:frame])
     for i in range(1, len(self.data.values())):
@@ -336,18 +336,18 @@ class PlotYAxis(object):
     if not len(self):
       return xlim
     dataLim = self._axis.dataLim.get_points()
+    setMargin = lambda min_, max_: [min_ - 0.01 * (max_-min_), max_ + 0.01 * (max_-min_)]
     def setLimit(lim, idx, set_lim):
       if lim is not None:
         min_, max_ = lim
       elif frame is not None:
-        min_, max_ = self.getLimits(frame0, frame, idx)
+        limits =  self.getLimits(frame0, frame, idx)
         # Ignore limits if all data is nan
-        if np.isnan(min_) or np.isnan(max_):
+        if limits is None:
             return 0, 0
+        min_, max_ = setMargin(limits[0], limits[1])
       else:
-        range_ = dataLim[1][idx] - dataLim[0][idx]
-        min_ = dataLim[0][idx] - range_ * 0.01
-        max_ = dataLim[1][idx] + range_ * 0.01
+        min_, max_ = setMargin(dataLim[0][idx], dataLim[1][idx])
       set_lim([min_, max_])
       return min_, max_
     setLimit(ylim, 1, self._axis.set_ylim)
@@ -619,11 +619,23 @@ class PlotFigure(object):
 
   def draw(self, x_limits = None, y1_limits = None, y2_limits = None, frame0 = None, frame = None):
     if self._3D:
-      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame, zlim = y2_limits)
-    else:
-      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame)
-    if np.isnan(x_limits[0]) or np.isnan(x_limits[1]):
-      return
+      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame, zlim = y1_limits)
+    elif x_limits is None:
+        # No limit specified for XY/time plots, compute the best min-max x limits fitting both the left and right curves
+        x1_limits = self._left().getLimits(frame0, frame, 0)
+        x2_limits = self._right().getLimits(frame0, frame, 0)
+        if x1_limits is None and x2_limits is not None:
+            x_limits = x2_limits
+        elif x2_limits is None and x1_limits is not None:
+            x_limits = x1_limits
+        elif x1_limits is None and x2_limits is None:
+            return
+        else:
+          x_limits = [min(x1_limits[0], x2_limits[0]), max(x1_limits[1], x2_limits[1])]
+        range_ = x_limits[1]-x_limits[0]
+        x_limits = [x_limits[0] - range_ * 0.01, x_limits[1] + range_ * 0.01]
+    x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame)
+    x_limits = self._right().setLimits(x_limits, y2_limits, frame0 = frame0, frame = frame)
     self._legend()
     self._drawGrid()
     top_offset = self._left().legendOffset(self._top_offset, -1)
@@ -1082,7 +1094,7 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     if self._left() is None and self.right() is None:
       return 0, 0
 
-    x_data = self.data[self.x_data]
+    x_data = self.data[self.x_data] # time
     if self._left() is not None and self._right() is None:
       return self.getAxisFrameRange(x_data, self._left().data.values())
     if self._right() is not None and self._left() is None:
