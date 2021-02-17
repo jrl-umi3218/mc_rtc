@@ -619,12 +619,14 @@ class PlotFigure(object):
     self._axes(lambda axis: axis.legend())
 
   def draw(self, x_limits = None, y1_limits = None, y2_limits = None, frame0 = None, frame = None):
-    if self._3D:
-      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame, zlim = y1_limits)
-    elif x_limits is None:
+    if x_limits is None:
         # No limit specified for XY/time plots, compute the best min-max x limits fitting both the left and right curves
-        x1_limits = self._left().getLimits(frame0, frame, 0)
-        x2_limits = self._right().getLimits(frame0, frame, 0)
+        x1_limits = None
+        x2_limits = None
+        if self._left() is not None:
+            x1_limits = self._left().getLimits(frame0, frame, 0)
+        if self._right() is not None:
+            x2_limits = self._right().getLimits(frame0, frame, 0)
         if x1_limits is None and x2_limits is not None:
             x_limits = x2_limits
         elif x2_limits is None and x1_limits is not None:
@@ -632,11 +634,18 @@ class PlotFigure(object):
         elif x1_limits is None and x2_limits is None:
             return
         else:
-          x_limits = [min(x1_limits[0], x2_limits[0]), max(x1_limits[1], x2_limits[1])]
+            x_limits = [min(x1_limits[0], x2_limits[0]), max(x1_limits[1], x2_limits[1])]
+        if x_limits is None:
+            return
         range_ = x_limits[1]-x_limits[0]
         x_limits = [x_limits[0] - range_ * 0.01, x_limits[1] + range_ * 0.01]
-        x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame)
-        x_limits = self._right().setLimits(x_limits, y2_limits, frame0 = frame0, frame = frame)
+
+    if self._3D:
+      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame, zlim = y2_limits)
+    else:
+      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame)
+      x_limits = self._right().setLimits(x_limits, y2_limits, frame0 = frame0, frame = frame)
+
     self._legend()
     self._drawGrid()
     top_offset = self._left().legendOffset(self._top_offset, -1)
