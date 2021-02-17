@@ -651,6 +651,9 @@ class PlotFigure(object):
     self.fig.subplots_adjust(left = left_offset, right = right_offset, top = top_offset, bottom = bottom_offset)
 
   def animate(self, frame0, frame, x_limits = None, y1_limits = None, y2_limits = None):
+    if self.onlyShowCheckbox.isChecked():
+      # Handle only show the last N seconds
+      frame0 = max(frame0, frame - int(self.onlyShowSpinBox.value() / (self.dt/1000)))
     ret = self._left().animate(frame0, frame)
     if self._right():
       ret.extend(self._right().animate(frame0, frame))
@@ -1021,6 +1024,13 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.saveAnimationButton = QtWidgets.QPushButton("Save animation")
     self.saveAnimationButton.released.connect(self.saveAnimation)
     animationLayout.addWidget(self.saveAnimationButton)
+    self.onlyShowCheckbox = QtWidgets.QCheckBox("Only show: ")
+    animationLayout.addWidget(self.onlyShowCheckbox)
+    self.onlyShowSpinBox = QtWidgets.QDoubleSpinBox()
+    self.onlyShowSpinBox.setMinimum(0)
+    self.onlyShowSpinBox.setSuffix("s")
+    self.onlyShowSpinBox.setValue(10)
+    animationLayout.addWidget(self.onlyShowSpinBox)
     self.layout.addLayout(animationLayout)
 
   def setData(self, data):
@@ -1142,8 +1152,8 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     if i0 == iN:
       return False
     x_data = self.data[self.x_data]
-    dt = (x_data[i0 + 1] - x_data[i0]) * 1000 # dt in ms
-    step = int(math.ceil(interval/dt))
+    self.dt = (x_data[i0 + 1] - x_data[i0]) * 1000 # dt in ms
+    step = int(math.ceil(interval/self.dt))
     self.frame0 = i0
     self.animation = FuncAnimation(self.fig, self.animate, frames = range(i0 + 1, iN, step), interval = interval)
     self._axes(lambda a: a.startAnimation(i0))
