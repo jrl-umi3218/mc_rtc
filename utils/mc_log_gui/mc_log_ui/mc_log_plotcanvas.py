@@ -345,7 +345,7 @@ class PlotYAxis(object):
         limits =  self.getLimits(frame0, frame, idx)
         # Ignore limits if all data is nan
         if limits is None:
-            return 0, 0
+            return None
         min_, max_ = setMargin(limits[0], limits[1])
       else:
         min_, max_ = setMargin(dataLim[0][idx], dataLim[1][idx])
@@ -635,8 +635,8 @@ class PlotFigure(object):
           x_limits = [min(x1_limits[0], x2_limits[0]), max(x1_limits[1], x2_limits[1])]
         range_ = x_limits[1]-x_limits[0]
         x_limits = [x_limits[0] - range_ * 0.01, x_limits[1] + range_ * 0.01]
-    x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame)
-    x_limits = self._right().setLimits(x_limits, y2_limits, frame0 = frame0, frame = frame)
+        x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame)
+        x_limits = self._right().setLimits(x_limits, y2_limits, frame0 = frame0, frame = frame)
     self._legend()
     self._drawGrid()
     top_offset = self._left().legendOffset(self._top_offset, -1)
