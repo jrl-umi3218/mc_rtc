@@ -142,12 +142,13 @@ class GenerateRangeDialog(QtWidgets.QDialog):
     super(GenerateRangeDialog, self).accept()
 
 def rpyFromMat(E):
-    """Same as mc_rbdyn::rpyFromMat."""
+    """Same as mc_rbdyn::rpyFromMat, but remapped between ]-PI,PI[ to ensure continuity of the plots."""
     roll = atan2(E[1][2], E[2][2]);
     pitch = -asin(E[0][2]);
     yaw = atan2(E[0][1], E[0][0]);
-    return [roll, pitch, yaw]
-
+    # atan(tan(x)) = x mod pi is used here to prevent angle jumps from 0 to 180deg
+    # by remapping the angle between ]-PI, PI[
+    return np.arctan(np.tan([roll, pitch, yaw]))
 
 def rpyFromQuat(quat):
     """Same as mc_rbdyn::rpyFromQuat."""
