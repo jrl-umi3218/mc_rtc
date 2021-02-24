@@ -38,6 +38,8 @@ var searchData=
   ['getlogtype_3c_20std_3a_3avector_3c_20double_2c_20a_20_3e_20_3e',['GetLogType&lt; std::vector&lt; double, A &gt; &gt;',['../structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1vector_3_01double_00_01A_01_4_01_4.html',1,'mc_rtc::log']]],
   ['getposturetask',['getPostureTask',['../structmc__control_1_1fsm_1_1Controller.html#ab5db53d98290f650552bcb57a42353b5',1,'mc_control::fsm::Controller']]],
   ['getraw',['getRaw',['../structmc__rtc_1_1log_1_1FlatLog.html#a13a0da9b94bfeffbdd9f4966a0a38697',1,'mc_rtc::log::FlatLog::getRaw(const std::string &amp;entry) const'],['../structmc__rtc_1_1log_1_1FlatLog.html#a956945a4e75e5814a1910b5b560e9283',1,'mc_rtc::log::FlatLog::getRaw(const std::string &amp;entry, size_t i) const']]],
+  ['gettargetopening',['getTargetOpening',['../structmc__control_1_1Gripper.html#a39397815377ea951403fd34befb1359a',1,'mc_control::Gripper']]],
+  ['gettargetq',['getTargetQ',['../structmc__control_1_1Gripper.html#a6cc3775f48277db0ad4f80ec24af38f2',1,'mc_control::Gripper::getTargetQ(const std::string &amp;jointName) const'],['../structmc__control_1_1Gripper.html#adb8b3c24a0acd644827a3a829f5a48e3',1,'mc_control::Gripper::getTargetQ() const'],['../structmc__control_1_1Gripper.html#a3e965969e9340e69f70016d9fc6a0697',1,'mc_control::Gripper::getTargetQ(size_t jointId) const']]],
   ['gettargetwrench',['getTargetWrench',['../structmc__tasks_1_1force_1_1ComplianceTask.html#a978e9f71933578108ec5eff13b09de0e',1,'mc_tasks::force::ComplianceTask']]],
   ['global',['Global',['../classGlobal.html',1,'']]],
   ['global_5fplugin_5fapi',['GLOBAL_PLUGIN_API',['../GlobalPlugin_8h.html#adda9065a64d1bb53f70cc10616e220fe',1,'GlobalPlugin.h']]],

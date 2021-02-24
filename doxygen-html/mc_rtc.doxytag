@@ -14985,6 +14985,13 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>configure</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a200872123e1278c66747c2a35e991123</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
       <anchor>ada608acad76122b69018232d54480801</anchor>
@@ -15013,10 +15020,45 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>setTargetQ</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a1cbad8b20585770931b8e2496193d5e0</anchor>
+      <arglist>(const std::string &amp;jointName, double targetQ)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>getTargetQ</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a6cc3775f48277db0ad4f80ec24af38f2</anchor>
+      <arglist>(const std::string &amp;jointName) const</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; double &gt;</type>
+      <name>getTargetQ</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>adb8b3c24a0acd644827a3a829f5a48e3</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>setTargetOpening</name>
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
       <anchor>a1627ecadc67cc990de55e11283f2da8b</anchor>
       <arglist>(double targetOpening)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setTargetOpening</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>abab8a5d952afd7d69a39fac45d7a4f74</anchor>
+      <arglist>(const std::string &amp;jointName, double targetOpening)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>getTargetOpening</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a39397815377ea951403fd34befb1359a</anchor>
+      <arglist>(const std::string &amp;jointName) const</arglist>
     </member>
     <member kind="function">
       <type>std::vector&lt; double &gt;</type>
@@ -15024,6 +15066,20 @@
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
       <anchor>ad0e50e298dbf9b0a2be480a40a207c83</anchor>
       <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; double &gt;</type>
+      <name>curOpening</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a38f825e4e67bde2ec4b2f0088b81e91b</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>curOpening</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a6a33a0839ffab15eb5fb0411dd13dc5d</anchor>
+      <arglist>(const std::string &amp;jointName) const</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; std::string &gt; &amp;</type>
@@ -15038,6 +15094,13 @@
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
       <anchor>a6acabadc915ad853670a65f5a83697e2</anchor>
       <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>hasActiveJoint</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a4df55158c2f68b17313b0eb90e74f227</anchor>
+      <arglist>(const std::string &amp;jointName) const</arglist>
     </member>
     <member kind="function">
       <type>const std::vector&lt; double &gt; &amp;</type>
@@ -15122,6 +15185,69 @@
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
       <anchor>ab343f75540cb23dadf80172b9b5e1e79</anchor>
       <arglist></arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>setTargetOpening</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a1f06a62ba8efe640ca4e9ff4745030ba</anchor>
+      <arglist>(size_t activeJointId, double targetOpening)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>setTargetQ</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a1760f434fbb9e5a4b22263f6569af824</anchor>
+      <arglist>(size_t activeJointId, double targetQ)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>setTargetQ_</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>ad45a2f57cc804d0a072e98b61946de48</anchor>
+      <arglist>(size_t activeJoints, double targetQ)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>void</type>
+      <name>setTargetQ_</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a44438b867b1b5a068c94d1c837cacb7e</anchor>
+      <arglist>(const std::vector&lt; double &gt; &amp;targetQ)</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>double</type>
+      <name>curPosition</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a08436bafb2ff8e5862894800d33bef3f</anchor>
+      <arglist>(size_t jointId) const</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>double</type>
+      <name>curOpening</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a4a8fd8850db3e9d9bbb2f2263a85eab3</anchor>
+      <arglist>(size_t jointId) const</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>double</type>
+      <name>targetOpening</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a4561c4e1bc0a57bc1b2537f787fb9334</anchor>
+      <arglist>(size_t jointId) const</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>double</type>
+      <name>getTargetQ</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a3e965969e9340e69f70016d9fc6a0697</anchor>
+      <arglist>(size_t jointId) const</arglist>
+    </member>
+    <member kind="function" protection="protected">
+      <type>double</type>
+      <name>clampQ</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a76b99a848a82fb27651c5f81a8eea5b2</anchor>
+      <arglist>(size_t activeJoint, double q)</arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>std::vector&lt; std::string &gt;</type>
@@ -15369,6 +15495,13 @@
       <name>grippers_</name>
       <anchorfile>structmc__control_1_1fsm_1_1Grippers.html</anchorfile>
       <anchor>abd9bd9863a30fad30f940c0a6baeecab</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>keepSafetyConfig_</name>
+      <anchorfile>structmc__control_1_1fsm_1_1Grippers.html</anchorfile>
+      <anchor>a60f24c6e8135e2439b521ed1d8797df7</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -23843,6 +23976,13 @@
       <arglist>(const std::string &amp;gripper)</arglist>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>hasGripper</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>ae15e501f93c406e3ad5d19ab6904bd4e</anchor>
+      <arglist>(const std::string &amp;gripper) const</arglist>
+    </member>
+    <member kind="function">
       <type>const std::unordered_map&lt; std::string, mc_control::GripperPtr &gt; &amp;</type>
       <name>grippersByName</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -26887,6 +27027,20 @@
       <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html</anchorfile>
       <anchor>a8dd63f7c20eda1e3f4f891a8d4171095</anchor>
       <arglist>(double percentVMax, double actualCommandDiffTrigger=DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER, double releaseSafetyOffset=DEFAULT_RELEASE_OFFSET, unsigned int overCommandLimitIterN=DEFAULT_OVER_COMMAND_LIMIT_ITER_N)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>load</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html</anchorfile>
+      <anchor>ad3eee842b0d7dfe9fcdc53dee342ca85</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rtc::Configuration</type>
+      <name>save</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper_1_1Safety.html</anchorfile>
+      <anchor>a589787482208d4564f0b7fa55bfb8ccc</anchor>
+      <arglist>() const</arglist>
     </member>
     <member kind="variable">
       <type>double</type>

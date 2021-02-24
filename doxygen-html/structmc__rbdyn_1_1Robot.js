@@ -94,6 +94,7 @@ var structmc__rbdyn_1_1Robot =
     [ "hasConvex", "structmc__rbdyn_1_1Robot.html#a75aa71c0145f03a620619e8fe8b96107", null ],
     [ "hasDevice", "structmc__rbdyn_1_1Robot.html#af183f29b2232cbc87cc8dc744f93424e", null ],
     [ "hasForceSensor", "structmc__rbdyn_1_1Robot.html#ae6addeeebfb0b899376ed338b212a33a", null ],
+    [ "hasGripper", "structmc__rbdyn_1_1Robot.html#ae15e501f93c406e3ad5d19ab6904bd4e", null ],
     [ "hasJoint", "structmc__rbdyn_1_1Robot.html#aafb78a38ec8b2037519f030140a95976", null ],
     [ "hasSensor", "structmc__rbdyn_1_1Robot.html#ab011a5322c37711cf940653e7b814b50", null ],
     [ "hasSurface", "structmc__rbdyn_1_1Robot.html#a47874ad9d5abdcd85701b02e2c85cefb", null ],

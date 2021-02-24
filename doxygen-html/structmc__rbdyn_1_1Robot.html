@@ -175,6 +175,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a30b21b6e828397cebd4f015cf9e87f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b970df4059237f37021b47d5aaf2494"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__control_1_1Gripper.html">mc_control::Gripper</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a8b970df4059237f37021b47d5aaf2494">gripper</a> (const std::string &amp;gripper)</td></tr>
 <tr class="separator:a8b970df4059237f37021b47d5aaf2494"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae15e501f93c406e3ad5d19ab6904bd4e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ae15e501f93c406e3ad5d19ab6904bd4e">hasGripper</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a8b970df4059237f37021b47d5aaf2494">gripper</a>) const</td></tr>
+<tr class="separator:ae15e501f93c406e3ad5d19ab6904bd4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b0c83dbee42dff616909c21b90825b8"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::string, <a class="el" href="namespacemc__control.html#a67d3b51822d3e7d0c56d9af675f9eaa1">mc_control::GripperPtr</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a6b0c83dbee42dff616909c21b90825b8">grippersByName</a> () const</td></tr>
 <tr class="separator:a6b0c83dbee42dff616909c21b90825b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa96f71ad7e9c085d622c4885c15f1bb"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="namespacemc__control.html#a39b3dee4f4017bab0f389d9bfd7877dc">mc_control::GripperRef</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#afa96f71ad7e9c085d622c4885c15f1bb">grippers</a> () const</td></tr>
@@ -2692,6 +2694,25 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the sensor exists, false otherwise </dd></dl>
+
+</div>
+</div>
+<a id="ae15e501f93c406e3ad5d19ab6904bd4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae15e501f93c406e3ad5d19ab6904bd4e">&#9670;&nbsp;</a></span>hasGripper()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_rbdyn::Robot::hasGripper </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>gripper</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Checks whether a gripper is part of this robot </p>
 
 </div>
 </div>
