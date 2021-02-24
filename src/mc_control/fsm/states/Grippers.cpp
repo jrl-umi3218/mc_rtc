@@ -16,12 +16,12 @@ namespace fsm
 void Grippers::configure(const mc_rtc::Configuration & config)
 {
   config_.load(config);
-  config("keepSafetyConfig", keepSafetyConfig_);
 }
 
 void Grippers::start(Controller & ctl)
 {
   unsigned int rIndex = 0;
+  config_("keepSafetyConfig", keepSafetyConfig_);
   if(config_.has("robot"))
   {
     if(!ctl.robots().hasRobot(config_("robot")))

@@ -49,10 +49,9 @@ void MCGlobalController::initGUI()
                               0, 1));
         }
 
-        auto safetyCat = category;
-        safetyCat.push_back("Safety");
+        category.push_back("Safety");
         gui->addElement(
-            safetyCat,
+            category,
             mc_rtc::gui::NumberInput(
                 "Actual command diff threshold [deg]",
                 [g_ptr]() { return mc_rtc::constants::toDeg(g_ptr->actualCommandDiffTrigger()); },
