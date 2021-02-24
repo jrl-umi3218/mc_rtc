@@ -1,0 +1,9 @@
+{
+  "opening": 0.3,
+  "safety":
+  {
+    "overCommandLimitIterN": 5,
+    "releaseSafetyOffset":  0.034,
+    "percentVMax": 0.5
+  }
+}
