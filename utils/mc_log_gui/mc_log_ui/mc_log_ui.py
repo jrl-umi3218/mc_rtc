@@ -675,6 +675,8 @@ class MCLogUI(QtWidgets.QMainWindow):
       rGroup = QtWidgets.QActionGroup(rMenu)
       rCategoryMenu = {}
       rActions = []
+      rMenu.addActions([RobotAction("Clear robot", rGroup)])
+      rMenu.addSeparator()
       for r in mc_rbdyn.RobotLoader.available_robots():
         rAct = RobotAction(r, rGroup)
         rAct.setCheckable(True)
@@ -911,19 +913,30 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.saveUserPlots()
 
   def setRobot(self, action):
-    try:
-      self.rm = mc_rbdyn.RobotLoader.get_robot_module(action.actual())
-      self.activeRobotAction = action
+    def clearRobot():
+      self.rm = None
+      if self.activeRobotAction is not None:
+        self.activeRobotAction.setChecked(False)
+      self.activeRobotAction = None
+      action.setChecked(False)
+    def setRobot():
       for i in range(self.ui.tabWidget.count() - 1):
         tab = self.ui.tabWidget.widget(i)
         assert(isinstance(tab, MCLogTab))
         tab.setRobotModule(self.rm, self.loaded_files)
       self.saveDefaultRobot(action.actual())
+
+    if action.actual() == "Clear robot":
+      clearRobot()
+      setRobot()
+      return
+
+    try:
+      self.rm = mc_rbdyn.RobotLoader.get_robot_module(action.actual())
+      self.activeRobotAction = action
     except RuntimeError:
-      #QtWidgets.QMessageBox.warning(self, "Failed to get RobotModule", "Could not retrieve Robot Module: {}{}Check your console for more details".format(action.text(), os.linesep))
-      action.setChecked(False)
-      self.activeRobotAction.setChecked(True)
-      self.rm = None
+        clearRobot()
+    setRobot()
 
   def getCanvas(self):
     return self.ui.tabWidget.currentWidget().activeCanvas
