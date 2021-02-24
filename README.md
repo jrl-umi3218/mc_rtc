@@ -26,7 +26,8 @@ The following interface between `mc_rtc` and 3rd-party framework are available:
 - [mc_openrtm](https://github.com/jrl-umi3218/mc_openrtm) embeds `mc_rtc` into a RTC component, this can be used to control a robot that is using the OpenRTM framework, an example with the virtual JVRC1 robot is also provided;
 - [mc_udp](https://github.com/jrl-umi3218/mc_udp) provides a thin UDP-based client/server. The client is a regular `mc_rtc` interface that gets data through the UDP socket. The server can easily be implemented to interface with your robot. A server to interface with OpenRTM components is provided.
 - [mc_vrep](https://github.com/jrl-umi3218/mc_vrep) interface with the VREP simulation software;
-- [mc_rtc_naoqi](https://github.com/jrl-umi3218/mc_rtc_naoqi) interface with the NAOqi framework (Softbank Robotics robots);
+- [mc_naoqi](https://github.com/jrl-umi3218/mc_naoqi) interface with the NAOqi framework (Softbank Robotics robots);
+- [mc_franka](https://github.com/jrl-umi3218/mc_franka) interface with the libfranka library for Franka Emika robots;
 
 Installing
 ----------
