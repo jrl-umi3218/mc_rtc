@@ -15,7 +15,6 @@ var structmc__tasks_1_1PostureTask =
     [ "load", "structmc__tasks_1_1PostureTask.html#ab45e9fac8713b958118a1768429c7785", null ],
     [ "posture", "structmc__tasks_1_1PostureTask.html#a2299c6226e336a265adc283b2a600639", null ],
     [ "posture", "structmc__tasks_1_1PostureTask.html#ad3d36333bd6d95d5bc742ad1de920ab7", null ],
-    [ "removeFromLogger", "structmc__tasks_1_1PostureTask.html#a46d9f395dba3772018af68c623a42ae7", null ],
     [ "removeFromSolver", "structmc__tasks_1_1PostureTask.html#a37fc0f741d63ef396c13a2ff3a528772", null ],
     [ "reset", "structmc__tasks_1_1PostureTask.html#ac47c167b6a6c59546bbebfcabb5be810", null ],
     [ "resetJointsSelector", "structmc__tasks_1_1PostureTask.html#a53ab7fdbe90e3b309a618bec3bb69859", null ],

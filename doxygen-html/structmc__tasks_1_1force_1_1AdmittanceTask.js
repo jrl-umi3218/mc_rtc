@@ -14,7 +14,6 @@ var structmc__tasks_1_1force_1_1AdmittanceTask =
     [ "measuredWrench", "structmc__tasks_1_1force_1_1AdmittanceTask.html#ac887e6bd95fbafc40c1c4e4465b95b7e", null ],
     [ "poseError", "structmc__tasks_1_1force_1_1AdmittanceTask.html#abe93dbf1a3b1401e71ba92c861d55aa5", null ],
     [ "refVelB", "structmc__tasks_1_1force_1_1AdmittanceTask.html#a530f67ea3aaa3fc0437aa72940de1143", null ],
-    [ "removeFromLogger", "structmc__tasks_1_1force_1_1AdmittanceTask.html#a2a74f0a62a272f2c01332345f1974f3f", null ],
     [ "reset", "structmc__tasks_1_1force_1_1AdmittanceTask.html#a052349477335695173c7765bbac00210", null ],
     [ "surfacePose", "structmc__tasks_1_1force_1_1AdmittanceTask.html#a3958c43db37f34168e7b0b370d8edf23", null ],
     [ "targetPose", "structmc__tasks_1_1force_1_1AdmittanceTask.html#a78745a07e09888ac0774f99fb5e82041", null ],

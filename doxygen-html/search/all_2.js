@@ -4,7 +4,7 @@ var searchData=
   ['balance',['BALANCE',['../structmc__control_1_1fsm_1_1SlidingFootContactState.html#a28b4bbcf2a082a21bdb917678feda880abd50bfdaa74e237144552ad497048642',1,'mc_control::fsm::SlidingFootContactState']]],
   ['base',['Base',['../structmc__rbdyn_1_1Base.html',1,'mc_rbdyn::Base'],['../structmc__solver_1_1utils_1_1EqualityConstraint.html#a30e140ba79389f855367792961934326',1,'mc_solver::utils::EqualityConstraint::Base()'],['../structmc__solver_1_1utils_1_1GenInequalityConstraint.html#a647a3478f1ace415da2dfe9cbd9705e4',1,'mc_solver::utils::GenInequalityConstraint::Base()'],['../structmc__solver_1_1utils_1_1InequalityConstraint.html#aa303f3fb9dbf88ece28ef6ee013af8a8',1,'mc_solver::utils::InequalityConstraint::Base()']]],
   ['base_2eh',['Base.h',['../Base_8h.html',1,'']]],
-  ['base_5ftype',['base_type',['../structmc__rtc_1_1log_1_1callback__is__serializable.html#a36029a9801c5ca972f21e626ea554174',1,'mc_rtc::log::callback_is_serializable']]],
+  ['base_5ftype',['base_type',['../structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html#af27939ca5ec152a0cdee9547e49359fb',1,'mc_rtc::log::callback_is_serializable&lt; T, void_t&lt; typename std::result_of&lt; T()&gt;::type &gt; &gt;']]],
   ['basename',['baseName',['../structmc__rbdyn_1_1Base.html#a29e3501c76c5f562000ea4c144bcb92e',1,'mc_rbdyn::Base']]],
   ['basetype',['baseType',['../structmc__rbdyn_1_1Base.html#aefd54756f82332b9155a61cea33d8cc3',1,'mc_rbdyn::Base']]],
   ['before',['before',['../structmc__control_1_1GlobalPlugin.html#a83ce36f99de7b4a3e7af152ed88e0f5b',1,'mc_control::GlobalPlugin']]],

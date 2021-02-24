@@ -1,6 +1,5 @@
 var NAVTREEINDEX10 =
 {
-"structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#aba691140794cf4004229b6b5f2ac50a3":[3,0,6,1,2,11],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ac1276cfbb01a99a72157dc2d2b68ac3d":[3,0,6,1,2,0],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ac6c9d0b6634fc1c8e48daaf8e2538ea4":[3,0,6,1,2,5],
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#aeb2b96f59a944040f3e0ee88a9fca2cb":[3,0,6,1,2,7],
@@ -246,8 +245,9 @@ var NAVTREEINDEX10 =
 "structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9b":[3,0,7,28,1],
 "structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9ba1515271d5edd3952e5aa146109a98e78":[3,0,7,28,1,0],
 "structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9ba1ba1ba2bd2141794d82c4363b7e533f7":[3,0,7,28,1,1],
+"structmc__rtc_1_1Logger.html#a1281ebd02828e3e56a41e013867a0cb8":[3,0,7,28,8],
 "structmc__rtc_1_1Logger.html#a18ce85d2d7612f7029b47a3931c72316":[3,0,7,28,2],
-"structmc__rtc_1_1Logger.html#a1fe9ebf879c471ae7741170c9e0d6933":[3,0,7,28,4],
-"structmc__rtc_1_1Logger.html#a2b1427e1251ebbd90947468fc4bdf964":[3,0,7,28,6],
-"structmc__rtc_1_1Logger.html#a6fd0d1237a81647e462f7af2b4225d5e":[3,0,7,28,0]
+"structmc__rtc_1_1Logger.html#a1ac561eb83965fa394393d5f48cf2d8e":[3,0,7,28,5],
+"structmc__rtc_1_1Logger.html#a2b1427e1251ebbd90947468fc4bdf964":[3,0,7,28,13],
+"structmc__rtc_1_1Logger.html#a2c33c14a348ab11f39ab33056078e4af":[3,0,7,28,9]
 };

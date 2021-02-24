@@ -293,6 +293,8 @@
               <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h3"><a href="#add-logging-entries">Add logging entries</a>
 <ul>
+<li class="toc-entry toc-h4"><a href="#with-a-logging-source">With a logging source</a></li>
+<li class="toc-entry toc-h4"><a href="#logging-members-or-method">Logging members or method</a></li>
 <li class="toc-entry toc-h4"><a href="#python-interface">Python interface</a></li>
 <li class="toc-entry toc-h4"><a href="#performance-concern">Performance concern</a></li>
 </ul>
@@ -345,6 +347,66 @@ log file is created pointing to the latest created log.</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"entry_name"</span><span class="p">);</span>
 </code></pre></div></div>
+
+<h4 id="with-a-logging-source">With a logging source</h4>
+
+<p>You can specify a logging source:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In this example, "this" is the source</span>
+<span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry_A"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span><span class="p">;</span> <span class="p">});</span>
+<span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry_B"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">b</span><span class="p">;</span> <span class="p">});</span>
+<span class="n">logger</span><span class="p">().</span><span class="n">addLogEntry</span><span class="p">(</span><span class="s">"entry_C"</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">c</span><span class="p">;</span> <span class="p">});</span>
+
+<span class="c1">// You can also group calls with the same source</span>
+<span class="n">logger</span><span class="p">().</span><span class="n">addLogEntries</span><span class="p">(</span><span class="k">this</span><span class="p">,</span>
+                       <span class="s">"entry_A"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">a</span><span class="p">;</span> <span class="p">},</span>
+                       <span class="s">"entry_B"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">b</span><span class="p">;</span> <span class="p">},</span>
+                       <span class="s">"entry_C"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">c</span><span class="p">;</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p>Then all the entries can be removed at once:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntries</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+
+<span class="c1">// This would yield the same result but you would need to keep the addLogEntry and removeLogEntry call in sync</span>
+<span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"entry_A"</span><span class="p">);</span>
+<span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"entry_B"</span><span class="p">);</span>
+<span class="n">logger</span><span class="p">().</span><span class="n">removeLogEntry</span><span class="p">(</span><span class="s">"entry_C"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h4 id="logging-members-or-method">Logging members or method</h4>
+
+<p>As seen above, a common pattern is to load a member or method called on <code class="language-plaintext highlighter-rouge">this</code> instance, this can be done in a simple way. The main benefit of this approach is to avoid the performance caveat highlighted below.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="nc">MyObject</span>
+<span class="p">{</span>
+  <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span> <span class="n">data_</span><span class="p">;</span>
+  <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span> <span class="n">something_</span><span class="p">;</span>
+
+  <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector6d</span> <span class="n">computeVector</span><span class="p">();</span>
+
+  <span class="k">const</span> <span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span> <span class="o">&amp;</span> <span class="n">referenceBody</span><span class="p">();</span>
+  <span class="kt">void</span> <span class="n">referenceBody</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="p">);</span>
+
+  <span class="kt">void</span> <span class="n">addToLogger</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">Logger</span> <span class="o">&amp;</span> <span class="n">logger</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="c1">// This is the actual syntax required in C++11</span>
+    <span class="n">logger</span><span class="p">.</span><span class="n">addLogEntry</span><span class="o">&lt;</span><span class="k">decltype</span><span class="p">(</span><span class="o">&amp;</span><span class="n">MyObject</span><span class="o">::</span><span class="n">data_</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">MyObject</span><span class="o">::</span><span class="n">data_</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"data"</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+    <span class="c1">// We have the following macro helper</span>
+    <span class="n">MC_RTC_LOG_HELPER</span><span class="p">(</span><span class="s">"something"</span><span class="p">,</span> <span class="n">something_</span><span class="p">);</span>
+    <span class="c1">// Also works with methods</span>
+    <span class="n">MC_RTC_LOG_HELPER</span><span class="p">(</span><span class="s">"computeVector"</span><span class="p">,</span> <span class="n">computeVector</span><span class="p">);</span>
+    <span class="c1">// But for overloaded methods we must use another macro to work-around ambiguity issues</span>
+    <span class="n">MC_RTC_LOG_GETTER</span><span class="p">(</span><span class="s">"referenceBody"</span><span class="p">,</span> <span class="n">referenceBody</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">MC_RTC_LOG_HELPER</code> and <code class="language-plaintext highlighter-rouge">MC_RTC_LOG_GETTER</code> make the following two assumptions:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">this</code> is the logging source</li>
+  <li><code class="language-plaintext highlighter-rouge">logger</code> is the logger instance you are adding the data to</li>
+</ul>
 
 <h4 id="python-interface">Python interface</h4>
 

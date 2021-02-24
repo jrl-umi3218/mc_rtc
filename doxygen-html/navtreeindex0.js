@@ -198,6 +198,8 @@ var NAVTREEINDEX0 =
 "LinearInterpolation_8h.html":[4,0,0,9,4],
 "LinearInterpolation_8h_source.html":[4,0,0,9,4],
 "Logger_8h.html":[4,0,0,6,1,2],
+"Logger_8h.html#a0f292ca53baa48d5044772065cc899b4":[4,0,0,6,1,2,1],
+"Logger_8h.html#af8dabb8648cae440b76989b1316f2d58":[4,0,0,6,1,2,2],
 "Logger_8h_source.html":[4,0,0,6,1,2],
 "LookAtSurfaceTask_8h.html":[4,0,0,8,14],
 "LookAtSurfaceTask_8h_source.html":[4,0,0,8,14],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "Observer_8h.html":[4,0,0,2,5],
 "Observer_8h.html#a45c5f50ee1e5bcc4959faef24b334643":[4,0,0,2,5,2],
 "Observer_8h.html#a721e422633105cbc8e8e38736212705c":[4,0,0,2,5,1],
-"Observer_8h_source.html":[4,0,0,2,5],
-"Ordinate_8h.html":[4,0,0,6,0,1,2],
-"Ordinate_8h.html#a5957f379abaa61742baef9909ae18990":[4,0,0,6,0,1,2,3]
+"Observer_8h_source.html":[4,0,0,2,5]
 };

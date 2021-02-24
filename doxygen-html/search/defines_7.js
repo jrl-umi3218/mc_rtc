@@ -65,6 +65,8 @@ var searchData=
   ['mc_5frtc_5floader_5fdlllocal',['MC_RTC_LOADER_DLLLOCAL',['../loader__api_8h.html#a124acbd88de464891bac5a0d4753f3b1',1,'loader_api.h']]],
   ['mc_5frtc_5floader_5flocal',['MC_RTC_LOADER_LOCAL',['../loader__api_8h.html#acf2b4c50e45b046a77958363021c3f17',1,'loader_api.h']]],
   ['mc_5frtc_5floader_5fversion',['MC_RTC_LOADER_VERSION',['../loader__api_8h.html#a20b4289ae8266a5d45b7799ebc1c2cb9',1,'loader_api.h']]],
+  ['mc_5frtc_5flog_5fgetter',['MC_RTC_LOG_GETTER',['../Logger_8h.html#a0f292ca53baa48d5044772065cc899b4',1,'Logger.h']]],
+  ['mc_5frtc_5flog_5fhelper',['MC_RTC_LOG_HELPER',['../Logger_8h.html#af8dabb8648cae440b76989b1316f2d58',1,'Logger.h']]],
   ['mc_5frtc_5fros_5fdllapi',['MC_RTC_ROS_DLLAPI',['../mc__rtc_2ros__api_8h.html#a17fc85a6fd39970f9a707344763058c1',1,'ros_api.h']]],
   ['mc_5frtc_5fros_5fdllexport',['MC_RTC_ROS_DLLEXPORT',['../mc__rtc_2ros__api_8h.html#aabc0589237f2cf4df48b8ca69df575a4',1,'ros_api.h']]],
   ['mc_5frtc_5fros_5fdllimport',['MC_RTC_ROS_DLLIMPORT',['../mc__rtc_2ros__api_8h.html#a3cbe6a1ac62448731bc867c7068ba36c',1,'ros_api.h']]],

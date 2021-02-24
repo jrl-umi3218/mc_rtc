@@ -9,8 +9,7 @@ var structmc__tasks_1_1PositionTask =
     [ "bodyPoint", "structmc__tasks_1_1PositionTask.html#a4bf8127c35886227640928b1a35d2d93", null ],
     [ "position", "structmc__tasks_1_1PositionTask.html#a627a0324b89372679d66aee384cf8626", null ],
     [ "position", "structmc__tasks_1_1PositionTask.html#a0e4c276d1d0f1903e4bec9bd8f8dfb27", null ],
-    [ "removeFromLogger", "structmc__tasks_1_1PositionTask.html#a433188fa6771ae5eb60d49be25a04a22", null ],
-    [ "reset", "structmc__tasks_1_1PositionTask.html#af32bca3285f7bc4cd41ea8a0bd357d43", null ],
+    [ "reset", "structmc__tasks_1_1PositionTask.html#a86e8cb6cb49e5269c931ed57eda6e113", null ],
     [ "EndEffectorTask", "structmc__tasks_1_1PositionTask.html#ab333c1b08462c2014c404b1b2b886246", null ],
     [ "bIndex", "structmc__tasks_1_1PositionTask.html#a922a7fc03cfcae2c0cdb403952a49c5c", null ],
     [ "bodyName", "structmc__tasks_1_1PositionTask.html#ab5a74d25feb1e33ed9895903b23886fc", null ]

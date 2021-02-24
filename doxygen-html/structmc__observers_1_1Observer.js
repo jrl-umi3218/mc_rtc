@@ -15,7 +15,7 @@ var structmc__observers_1_1Observer =
     [ "removeFromGUI", "structmc__observers_1_1Observer.html#a3deb1aa8ae052466d654f6385ada884a", null ],
     [ "removeFromGUI_", "structmc__observers_1_1Observer.html#ac170276078f1d4b1a018b48be0e7bbb1", null ],
     [ "removeFromLogger", "structmc__observers_1_1Observer.html#abecec13c3a2143c51329b142b31b2543", null ],
-    [ "removeFromLogger_", "structmc__observers_1_1Observer.html#a5311631364d1ba27a432481b926c186c", null ],
+    [ "removeFromLogger_", "structmc__observers_1_1Observer.html#a2e721e52ad8618fce8eb1cb0a89697af", null ],
     [ "reset", "structmc__observers_1_1Observer.html#aa59bc21df7afff4f66cecc9315898c6b", null ],
     [ "run", "structmc__observers_1_1Observer.html#a4805153c7a65f4f5ff444fdfd6528d73", null ],
     [ "type", "structmc__observers_1_1Observer.html#a221d24df2ef49cb0f3439a4a99a59cfb", null ],

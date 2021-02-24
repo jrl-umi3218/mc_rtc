@@ -1,5 +1,8 @@
 var NAVTREEINDEX6 =
 {
+"structmc__control_1_1fsm_1_1MessageState.html#a58da17ef00e79d1a799b39a4cb10e186":[3,0,2,0,6,8],
+"structmc__control_1_1fsm_1_1MessageState.html#a803539f968b698dc20c1e393072a8328":[3,0,2,0,6,0],
+"structmc__control_1_1fsm_1_1MessageState.html#ae8548ec14b74cdb3585fe4605bdca0b9":[3,0,2,0,6,5],
 "structmc__control_1_1fsm_1_1MetaState.html":[3,0,2,0,7],
 "structmc__control_1_1fsm_1_1MetaState.html#a53ae3a72e0ae0eb99d74025e11a55686":[3,0,2,0,7,5],
 "structmc__control_1_1fsm_1_1MetaState.html#a7f3dee5b3328e795f56374e1f6a710d1":[3,0,2,0,7,4],
@@ -243,11 +246,8 @@ var NAVTREEINDEX6 =
 "structmc__filter_1_1StationaryOffset.html#ac9dfa7c0425d04a71c179ee05f477d0a":[3,0,3,4,6],
 "structmc__filter_1_1StationaryOffset.html#afd7e9222057cfac1eb12fa155e4c97d8":[3,0,3,4,3],
 "structmc__observers_1_1BodySensorObserver.html":[3,0,4,0],
-"structmc__observers_1_1BodySensorObserver.html#a23564250186a2e8780df9150945dad63":[3,0,4,0,7],
-"structmc__observers_1_1BodySensorObserver.html#a2a497aef03e071004c926032776ac520":[3,0,4,0,8],
-"structmc__observers_1_1BodySensorObserver.html#a2ab22db3a902644b453b677193ea982a":[3,0,4,0,11],
-"structmc__observers_1_1BodySensorObserver.html#a39f442bf4bccd766c10111f31981b4a3":[3,0,4,0,21],
-"structmc__observers_1_1BodySensorObserver.html#a40a80d57f8974b3af7d4f65df95161ab":[3,0,4,0,5],
-"structmc__observers_1_1BodySensorObserver.html#a41e24212545815c92909fc647cfd4d75":[3,0,4,0,24],
-"structmc__observers_1_1BodySensorObserver.html#a4d5cc646377a58ef243bf1d6b8c10f5e":[3,0,4,0,28]
+"structmc__observers_1_1BodySensorObserver.html#a23564250186a2e8780df9150945dad63":[3,0,4,0,6],
+"structmc__observers_1_1BodySensorObserver.html#a2a497aef03e071004c926032776ac520":[3,0,4,0,7],
+"structmc__observers_1_1BodySensorObserver.html#a2ab22db3a902644b453b677193ea982a":[3,0,4,0,10],
+"structmc__observers_1_1BodySensorObserver.html#a39f442bf4bccd766c10111f31981b4a3":[3,0,4,0,20]
 };

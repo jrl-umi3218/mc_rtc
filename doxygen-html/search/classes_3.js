@@ -1,6 +1,7 @@
 var searchData=
 [
   ['callback_5fis_5fserializable',['callback_is_serializable',['../structmc__rtc_1_1log_1_1callback__is__serializable.html',1,'mc_rtc::log']]],
+  ['callback_5fis_5fserializable_3c_20t_2c_20void_5ft_3c_20typename_20std_3a_3aresult_5fof_3c_20t_28_29_3e_3a_3atype_20_3e_20_3e',['callback_is_serializable&lt; T, void_t&lt; typename std::result_of&lt; T()&gt;::type &gt; &gt;',['../structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html',1,'mc_rtc::log']]],
   ['callbackelement',['CallbackElement',['../structmc__rtc_1_1gui_1_1CallbackElement.html',1,'mc_rtc::gui']]],
   ['callbackelement_3c_20dataelement_3c_20gett_20_3e_2c_20callback_20_3e',['CallbackElement&lt; DataElement&lt; GetT &gt;, Callback &gt;',['../structmc__rtc_1_1gui_1_1CallbackElement.html',1,'mc_rtc::gui']]],
   ['callbackelement_3c_20dataelement_3c_20gett_20_3e_2c_20sett_20_3e',['CallbackElement&lt; DataElement&lt; GetT &gt;, SetT &gt;',['../structmc__rtc_1_1gui_1_1CallbackElement.html',1,'mc_rtc::gui']]],

@@ -118,9 +118,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afaf68e30ac5a8d4fdb65a781b124f0cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1Observer.html#afaf68e30ac5a8d4fdb65a781b124f0cb">addToLogger_</a> (const <a class="el" href="structmc__control_1_1MCController.html">mc_control::MCController</a> &amp;ctl, <a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger, const std::string &amp;category=&quot;&quot;)</td></tr>
 <tr class="memdesc:afaf68e30ac5a8d4fdb65a781b124f0cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add observer entries to the logger under the categrory "category + name()".  <a href="#afaf68e30ac5a8d4fdb65a781b124f0cb">More...</a><br /></td></tr>
 <tr class="separator:afaf68e30ac5a8d4fdb65a781b124f0cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5311631364d1ba27a432481b926c186c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1Observer.html#a5311631364d1ba27a432481b926c186c">removeFromLogger_</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger, std::string category=&quot;&quot;)</td></tr>
-<tr class="memdesc:a5311631364d1ba27a432481b926c186c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove observer from logger.  <a href="#a5311631364d1ba27a432481b926c186c">More...</a><br /></td></tr>
-<tr class="separator:a5311631364d1ba27a432481b926c186c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e721e52ad8618fce8eb1cb0a89697af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1Observer.html#a2e721e52ad8618fce8eb1cb0a89697af">removeFromLogger_</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger, const std::string &amp;category=&quot;&quot;)</td></tr>
+<tr class="memdesc:a2e721e52ad8618fce8eb1cb0a89697af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove observer from logger.  <a href="#a2e721e52ad8618fce8eb1cb0a89697af">More...</a><br /></td></tr>
+<tr class="separator:a2e721e52ad8618fce8eb1cb0a89697af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33f44f594be3c724f57552389924ea72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__observers_1_1Observer.html#a33f44f594be3c724f57552389924ea72">addToGUI_</a> (const <a class="el" href="structmc__control_1_1MCController.html">mc_control::MCController</a> &amp;ctl, <a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;gui, std::vector&lt; std::string &gt; category={})</td></tr>
 <tr class="memdesc:a33f44f594be3c724f57552389924ea72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add observer to the gui under category {category, <a class="el" href="structmc__observers_1_1Observer.html#a9266bf0e19a321fd933a1fd29cc6a7e7" title="Set the observer&#39;s name. ">name()</a>}.  <a href="#a33f44f594be3c724f57552389924ea72">More...</a><br /></td></tr>
 <tr class="separator:a33f44f594be3c724f57552389924ea72"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -734,13 +734,13 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Remove observer from logger. </p>
-<p>Default implementation does nothing, each observer implementation is responsible for removing all logs entry that it added.</p>
+<p>The default implementation removes the entry that were registered by this</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">category</td><td>Category in which this observer entries are logged </td></tr>
@@ -748,12 +748,10 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="structmc__observers_1_1KinematicInertialPoseObserver.html#a1d4954a359dc266656c5fb9c02e664a3">mc_observers::KinematicInertialPoseObserver</a>, <a class="el" href="structmc__observers_1_1BodySensorObserver.html#ae4f2d8ef44d7eb67b887080c0e13d66d">mc_observers::BodySensorObserver</a>, <a class="el" href="structmc__observers_1_1EncoderObserver.html#a45c61707bdac0994b7d5b5a98fecf0bd">mc_observers::EncoderObserver</a>, and <a class="el" href="structmc__observers_1_1KinematicInertialObserver.html#ae9def8bb43e873f01d07d2bd8b95eab7">mc_observers::KinematicInertialObserver</a>.</p>
-
 </div>
 </div>
-<a id="a5311631364d1ba27a432481b926c186c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5311631364d1ba27a432481b926c186c">&#9670;&nbsp;</a></span>removeFromLogger_()</h2>
+<a id="a2e721e52ad8618fce8eb1cb0a89697af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e721e52ad8618fce8eb1cb0a89697af">&#9670;&nbsp;</a></span>removeFromLogger_()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -770,7 +768,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>category</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>

@@ -172,9 +172,9 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:adfb4be7a8cd547a301878ba42ee52fb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade3d279eeb005e261c75370747f86b19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#ade3d279eeb005e261c75370747f86b19">addToLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
 <tr class="separator:ade3d279eeb005e261c75370747f86b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46d9f395dba3772018af68c623a42ae7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#a46d9f395dba3772018af68c623a42ae7">removeFromLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
-<tr class="separator:a46d9f395dba3772018af68c623a42ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_structmc__tasks_1_1MetaTask"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_structmc__tasks_1_1MetaTask')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a></td></tr>
+<tr class="memitem:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a1db4ea4e03d00823e7ee10b444a697b1">removeFromLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;)</td></tr>
+<tr class="separator:a1db4ea4e03d00823e7ee10b444a697b1 inherit pro_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a44d85f3f65abc8a5f8965efec40ebe7d">removeFromGUI</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;)</td></tr>
 <tr class="separator:a44d85f3f65abc8a5f8965efec40ebe7d inherit pro_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a753237535cc3e200e44ae0fa276f733e inherit pro_methods_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">virtual std::function&lt; bool(const <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a> &amp;task, std::string &amp;)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a753237535cc3e200e44ae0fa276f733e">buildCompletionCriteria</a> (double dt, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) const</td></tr>
@@ -621,37 +621,6 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Get current posture objective </p>
-
-</div>
-</div>
-<a id="a46d9f395dba3772018af68c623a42ae7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46d9f395dba3772018af68c623a42ae7">&#9670;&nbsp;</a></span>removeFromLogger()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_tasks::PostureTask::removeFromLogger </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Remove entries from the logger</p>
-<p>This will be called by the solver when the task is removed.</p>
-<p>The default implementation removes nothing from the log. </p>
-
-<p>Reimplemented from <a class="el" href="structmc__tasks_1_1MetaTask.html#a1db4ea4e03d00823e7ee10b444a697b1">mc_tasks::MetaTask</a>.</p>
 
 </div>
 </div>

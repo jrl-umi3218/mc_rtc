@@ -3336,6 +3336,20 @@
     <includes id="utils__api_8h" name="utils_api.h" local="no" imported="no">mc_rtc/utils_api.h</includes>
     <class kind="struct">mc_rtc::Logger</class>
     <namespace>mc_rtc</namespace>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_LOG_HELPER</name>
+      <anchorfile>Logger_8h.html</anchorfile>
+      <anchor>af8dabb8648cae440b76989b1316f2d58</anchor>
+      <arglist>(NAME, MEMBER)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_LOG_GETTER</name>
+      <anchorfile>Logger_8h.html</anchorfile>
+      <anchor>a0f292ca53baa48d5044772065cc899b4</anchor>
+      <arglist>(NAME, METHOD)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>utils.h</name>
@@ -3346,7 +3360,12 @@
     <class kind="struct">mc_rtc::log::GetLogType&lt; std::vector&lt; double, A &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::GetLogType&lt; std::array&lt; double, N &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::is_serializable</class>
+    <class kind="struct">mc_rtc::log::is_serializable_member</class>
+    <class kind="struct">mc_rtc::log::is_serializable_member&lt; MemberT T::* &gt;</class>
+    <class kind="struct">mc_rtc::log::is_serializable_getter</class>
+    <class kind="struct">mc_rtc::log::is_serializable_getter&lt; MethodRetT(T::*)() const &gt;</class>
     <class kind="struct">mc_rtc::log::callback_is_serializable</class>
+    <class kind="struct">mc_rtc::log::callback_is_serializable&lt; T, void_t&lt; typename std::result_of&lt; T()&gt;::type &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::LogWriter</class>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::log</namespace>
@@ -3356,6 +3375,13 @@
       <anchorfile>log_2utils_8h.html</anchorfile>
       <anchor>a5e23e6dc4a586d5ce355088cf563b4b9</anchor>
       <arglist>(CPPT, ENUMV)</arglist>
+    </member>
+    <member kind="typedef">
+      <type>void</type>
+      <name>void_t</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a50801f83a6ed3945d8cc199c9b3c4ce3</anchor>
+      <arglist></arglist>
     </member>
     <member kind="enumeration">
       <type></type>
@@ -4874,32 +4900,32 @@
       <anchor>ac356d531abfb403e1d7f66fcb3189bce</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1AddRemoveContactTask.html</anchorfile>
-      <anchor>a83923c85bfda96b94c2d2a8b793ab798</anchor>
+      <anchor>a95ba024725a064ab1d2fbdbc0e1bf37f</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1AddRemoveContactTask.html</anchorfile>
-      <anchor>a2ca17fc43a9a8acce7e7e1d975d33385</anchor>
+      <anchor>a731e2ddc31ca25b93858b1b99ef79abe</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1AddRemoveContactTask.html</anchorfile>
-      <anchor>af45fc0604c6dbf8742fcbf5f29555b7e</anchor>
+      <anchor>a78a2cc264c6e0952eb2eb6bcd98fec94</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1AddRemoveContactTask.html</anchorfile>
-      <anchor>a8e14709c98129124ee03c631274b6afe</anchor>
+      <anchor>aedf7fdb3cd7157deb1c56bc19bf31573</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="variable">
@@ -5199,13 +5225,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
       <anchor>ad8f353f9df118e8fc859bc5ee80a41c9</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1force_1_1AdmittanceTask.html</anchorfile>
-      <anchor>a2a74f0a62a272f2c01332345f1974f3f</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
@@ -5988,13 +6007,6 @@
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__observers_1_1BodySensorObserver.html</anchorfile>
-      <anchor>ae4f2d8ef44d7eb67b887080c0e13d66d</anchor>
-      <arglist>(mc_rtc::Logger &amp;, const std::string &amp;category) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
       <name>addToGUI</name>
       <anchorfile>structmc__observers_1_1BodySensorObserver.html</anchorfile>
       <anchor>a8799c2ebab0110ec2f97bf0e7e4ba52a</anchor>
@@ -6355,25 +6367,38 @@
     <name>mc_rtc::log::callback_is_serializable</name>
     <filename>structmc__rtc_1_1log_1_1callback__is__serializable.html</filename>
     <templarg></templarg>
+    <templarg></templarg>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>value</name>
+      <anchorfile>structmc__rtc_1_1log_1_1callback__is__serializable.html</anchorfile>
+      <anchor>a30715f0ef917d1f59c8970b98963b5d5</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::log::callback_is_serializable&lt; T, void_t&lt; typename std::result_of&lt; T()&gt;::type &gt; &gt;</name>
+    <filename>structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html</filename>
+    <templarg></templarg>
     <member kind="typedef">
       <type>typename std::result_of&lt; T()&gt;::type</type>
       <name>ret_type</name>
-      <anchorfile>structmc__rtc_1_1log_1_1callback__is__serializable.html</anchorfile>
-      <anchor>a38207f8c1014c4e1b2ebb310e3ceb551</anchor>
+      <anchorfile>structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html</anchorfile>
+      <anchor>aef4b08e21ec244022984ccf6e4b74be5</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>typename std::decay&lt; ret_type &gt;::type</type>
       <name>base_type</name>
-      <anchorfile>structmc__rtc_1_1log_1_1callback__is__serializable.html</anchorfile>
-      <anchor>a36029a9801c5ca972f21e626ea554174</anchor>
+      <anchorfile>structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html</anchorfile>
+      <anchor>af27939ca5ec152a0cdee9547e49359fb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr bool</type>
       <name>value</name>
-      <anchorfile>structmc__rtc_1_1log_1_1callback__is__serializable.html</anchorfile>
-      <anchor>aad0ab42aac325e0fa19a1a82d853288b</anchor>
+      <anchorfile>structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html</anchorfile>
+      <anchor>ad44f5a0890f2632185a3e1ed279b91b6</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -7417,11 +7442,11 @@
       <anchor>a4c8786f3b387a997fb2ae923e2843669</anchor>
       <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=5.0, double weight=100.)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1CoMTask.html</anchorfile>
-      <anchor>aced244122dda39108ec801512c4ca339</anchor>
+      <anchor>ad3b7357c19453006b5af45c25a786f9e</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -7471,13 +7496,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1CoMTask.html</anchorfile>
       <anchor>a67f50fc6a98a4d834ab322931766499d</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1CoMTask.html</anchorfile>
-      <anchor>a40670ec23d1459006df4e47398c516ed</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
   </compound>
@@ -11079,13 +11097,6 @@
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1force_1_1CoPTask.html</anchorfile>
-      <anchor>ae2ff4b29d342493a03388741d940106b</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
       <name>addToGUI</name>
       <anchorfile>structmc__tasks_1_1force_1_1CoPTask.html</anchorfile>
       <anchor>a29acffdd2df70a8ec753054414951586</anchor>
@@ -11977,13 +11988,6 @@
       <anchor>a03e8f96f2c3140443c6a60bc0d9a607c</anchor>
       <arglist>(const mc_control::MCController &amp;, mc_rtc::Logger &amp;, const std::string &amp;) override</arglist>
     </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__observers_1_1EncoderObserver.html</anchorfile>
-      <anchor>a45c61707bdac0994b7d5b5a98fecf0bd</anchor>
-      <arglist>(mc_rtc::Logger &amp;, const std::string &amp;) override</arglist>
-    </member>
     <member kind="variable" protection="protected">
       <type>PosUpdate</type>
       <name>posUpdate_</name>
@@ -12073,11 +12077,11 @@
       <anchor>a972b369490a2a1ded5f627ee669e255b</anchor>
       <arglist>(const std::string &amp;bodyName, const Eigen::Vector3d &amp;bodyPoint, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=1000.0)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a9b093324425bd5b4719dc04f1c4e5648</anchor>
+      <anchor>a4ae325b8848afaae12051f1e02462e8b</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -12101,53 +12105,53 @@
       <anchor>a849f1bb907b638b0a2d3513630095155</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a009ffe2f7a31408e70cff8b86d446caa</anchor>
+      <anchor>a566c97665b6d80c1d5e035bf13b74d3a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>ad7483b3be8095c29724a934471ac558e</anchor>
+      <anchor>abe6e3496c8f51c563f75b6507aa4676a</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a36c784af07924cdb90969b93a859fcfd</anchor>
+      <anchor>a7ed97254c1f37a06ef4a05a1a9645c17</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a5798ae85c5b6dbebabd268e3a33b93e2</anchor>
+      <anchor>a4863aefcbb6a6e9a72430a55c2a6f621</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a65456b7b90d53cbf097f88d546bda7fb</anchor>
+      <anchor>a8571303aab2101cb472ae70ee188d695</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a37e497c45f98e4f5e14bc8b7ac0c2305</anchor>
+      <anchor>afd9eb745f23f22752530d3b86329ac61</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a151ebbc4eef8b54a6dc00d10d642f7cb</anchor>
+      <anchor>a1f32884c9cd511e180e1a9d5399766e4</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -12206,18 +12210,18 @@
       <anchor>a0df1bdc1275d182569ec4e306ba6c395</anchor>
       <arglist></arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>removeFromSolver</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a22bbf5a8ccec9b59a470638a3043492d</anchor>
+      <anchor>a945db27954f59e4d0c5c3a12728077d9</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a507e5d683a144133d6de86699a909a67</anchor>
+      <anchor>a249185c608d3c78b7286f00e8bdb735a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="function" protection="protected">
@@ -12227,18 +12231,18 @@
       <anchor>af4fae4001f175768e25f77903af44ecc</anchor>
       <arglist>(mc_solver::QPSolver &amp;) override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a6a2d0705092f1f53d78b2e1993771fc9</anchor>
+      <anchor>a2f2a05a42cb073ee71e2783b2a232ee6</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>removeFromLogger</name>
       <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
-      <anchor>a169354fc16eb7b727164aa3c0cdb08aa</anchor>
+      <anchor>ac22521542e7b290629884352f9014f78</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
@@ -14148,11 +14152,11 @@
       <anchor>abbb977995875cf7717d4ad89d78b0e12</anchor>
       <arglist>(const std::string &amp;bodyName, const Eigen::Vector3d &amp;point3d, const sva::PTransformd &amp;X_b_gaze, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=500)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1GazeTask.html</anchorfile>
-      <anchor>a0be1042d1ec91e59bb2431ba86d226fe</anchor>
+      <anchor>aa486bc5c13fb2ae1baa946e76752c0db</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -15994,8 +15998,8 @@
       <type>double</type>
       <name>cutoffPeriod</name>
       <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
-      <anchor>a2660635cda0019bde4db57897fb273f5</anchor>
-      <arglist>()</arglist>
+      <anchor>aea22f399012aa8a105df6d8fd4b8364c</anchor>
+      <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -16037,13 +16041,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
       <anchor>a2d68f87660e62b62cbaa910632d68a3c</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
-      <anchor>a3c1b818614b0dde7d6905cb5d9338729</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -16846,12 +16843,62 @@
   <compound kind="struct">
     <name>mc_rtc::log::is_serializable</name>
     <filename>structmc__rtc_1_1log_1_1is__serializable.html</filename>
-    <templarg></templarg>
+    <templarg>T</templarg>
     <member kind="variable" static="yes">
       <type>static constexpr bool</type>
       <name>value</name>
       <anchorfile>structmc__rtc_1_1log_1_1is__serializable.html</anchorfile>
       <anchor>a61a101e0e713dff37bd79ec91d6581de</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::log::is_serializable_getter</name>
+    <filename>structmc__rtc_1_1log_1_1is__serializable__getter.html</filename>
+    <templarg></templarg>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>value</name>
+      <anchorfile>structmc__rtc_1_1log_1_1is__serializable__getter.html</anchorfile>
+      <anchor>a99bb9b50b93aea7f4c88eedd9a14cd69</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::log::is_serializable_getter&lt; MethodRetT(T::*)() const &gt;</name>
+    <filename>structmc__rtc_1_1log_1_1is__serializable__getter_3_01MethodRetT_07T_1_1_5_08_07_08_01const_01_4.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>value</name>
+      <anchorfile>structmc__rtc_1_1log_1_1is__serializable__getter_3_01MethodRetT_07T_1_1_5_08_07_08_01const_01_4.html</anchorfile>
+      <anchor>a6392b38fdc24d52cc977b70b0298ecba</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::log::is_serializable_member</name>
+    <filename>structmc__rtc_1_1log_1_1is__serializable__member.html</filename>
+    <templarg></templarg>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>value</name>
+      <anchorfile>structmc__rtc_1_1log_1_1is__serializable__member.html</anchorfile>
+      <anchor>adef804a39a6131b6fba4614ff6675cdd</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::log::is_serializable_member&lt; MemberT T::* &gt;</name>
+    <filename>structmc__rtc_1_1log_1_1is__serializable__member_3_01MemberT_01T_1_1_5_01_4.html</filename>
+    <templarg></templarg>
+    <templarg></templarg>
+    <member kind="variable" static="yes">
+      <type>static constexpr bool</type>
+      <name>value</name>
+      <anchorfile>structmc__rtc_1_1log_1_1is__serializable__member_3_01MemberT_01T_1_1_5_01_4.html</anchorfile>
+      <anchor>a3803162b228ef30c180c9b549ac4495d</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -16922,13 +16969,6 @@
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__observers_1_1KinematicInertialObserver.html</anchorfile>
-      <anchor>ae9def8bb43e873f01d07d2bd8b95eab7</anchor>
-      <arglist>(mc_rtc::Logger &amp;, const std::string &amp;category) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
       <name>addToGUI</name>
       <anchorfile>structmc__observers_1_1KinematicInertialObserver.html</anchorfile>
       <anchor>a230a352457d5b0b03d57ead4b7f1a292</anchor>
@@ -16987,13 +17027,6 @@
       <anchorfile>structmc__observers_1_1KinematicInertialPoseObserver.html</anchorfile>
       <anchor>a4ee29f149c87cc108b3d442e65dd01c9</anchor>
       <arglist>(const mc_control::MCController &amp;ctl, mc_rtc::Logger &amp;, const std::string &amp;category) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__observers_1_1KinematicInertialPoseObserver.html</anchorfile>
-      <anchor>a1d4954a359dc266656c5fb9c02e664a3</anchor>
-      <arglist>(mc_rtc::Logger &amp;, const std::string &amp;category) override</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
@@ -17575,8 +17608,36 @@
       <type>void</type>
       <name>addLogEntry</name>
       <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
-      <anchor>a1fe9ebf879c471ae7741170c9e0d6933</anchor>
-      <arglist>(const std::string &amp;name, T get_fn, typename std::enable_if&lt; mc_rtc::log::callback_is_serializable&lt; T &gt;::value &gt;::type *=0)</arglist>
+      <anchor>a1ac561eb83965fa394393d5f48cf2d8e</anchor>
+      <arglist>(const std::string &amp;name, const SourceT *source, CallbackT &amp;&amp;get_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addLogEntry</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>ae7cc40f50bb8edbcc79c06476f7a4540</anchor>
+      <arglist>(const std::string &amp;name, const SourceT *source)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addLogEntry</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>ae7cc40f50bb8edbcc79c06476f7a4540</anchor>
+      <arglist>(const std::string &amp;name, const SourceT *source)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addLogEntry</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a1281ebd02828e3e56a41e013867a0cb8</anchor>
+      <arglist>(const std::string &amp;name, T &amp;&amp;get_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>addLogEntries</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a6c2708ce7007adcfe7eca5cc3d8f1801</anchor>
+      <arglist>(const SourceT *source, const std::string &amp;name, CallbackT &amp;&amp;get_fn, Args &amp;&amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -17586,11 +17647,32 @@
       <arglist>(const std::string &amp;name)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>removeLogEntries</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a5299ba868f3a7b643978caa1620f19fe</anchor>
+      <arglist>(const void *source)</arglist>
+    </member>
+    <member kind="function">
       <type>double</type>
       <name>t</name>
       <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
       <anchor>aeb0d9597ada6a67eb2a89fcda8c74e7d</anchor>
       <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::string &amp;</type>
+      <name>path</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a89fb05a7430fab3ebe3ccb5061dddc60</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>flush</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a2c33c14a348ab11f39ab33056078e4af</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static const uint8_t</type>
@@ -20503,11 +20585,11 @@
       <anchor>ad208d3c2d0ec9d8a1db4a3b16bb6b0b9</anchor>
       <arglist>(const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=500)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1MomentumTask.html</anchorfile>
-      <anchor>acafe35db18c7d7d1956aeea5b23927ef</anchor>
+      <anchor>ab4c83463d464cb179c2f914fccfcd3b2</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -20529,13 +20611,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1MomentumTask.html</anchorfile>
       <anchor>ac09760de5c209d12568dac6817e79395</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1MomentumTask.html</anchorfile>
-      <anchor>a4e64f81c801d988a04027e39769daca2</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function">
@@ -21022,8 +21097,8 @@
       <type>void</type>
       <name>removeFromLogger_</name>
       <anchorfile>structmc__observers_1_1Observer.html</anchorfile>
-      <anchor>a5311631364d1ba27a432481b926c186c</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger, std::string category=&quot;&quot;)</arglist>
+      <anchor>a2e721e52ad8618fce8eb1cb0a89697af</anchor>
+      <arglist>(mc_rtc::Logger &amp;logger, const std::string &amp;category=&quot;&quot;)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -21513,11 +21588,11 @@
       <anchor>aed570ad6882e85529777864cc33d58ed</anchor>
       <arglist>(const std::string &amp;bodyName, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=500)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1OrientationTask.html</anchorfile>
-      <anchor>a3230ff70e491adbeea990dc62bf0d069</anchor>
+      <anchor>ae68bb89e360bfbc1d9f2be05fcaad936</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -21539,13 +21614,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1OrientationTask.html</anchorfile>
       <anchor>a40b1231973621ed5718acb5451c81462</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1OrientationTask.html</anchorfile>
-      <anchor>a7cc1cfb9ad9fac5d998d025a212e78c9</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="variable">
@@ -22553,11 +22621,11 @@
       <anchor>ab210ce2c552242965b7bd04b02d91517</anchor>
       <arglist>(const std::string &amp;surfaceName, const sva::PTransformd &amp;X_t_s, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=500)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1PositionBasedVisServoTask.html</anchorfile>
-      <anchor>a8c041b0993d362a21630ba766aac3218</anchor>
+      <anchor>a560ab2d140d96dc63db722bcbb9c5bb0</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -22572,13 +22640,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1PositionBasedVisServoTask.html</anchorfile>
       <anchor>a1c5a2a63cff774edab49e058c63344d6</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1PositionBasedVisServoTask.html</anchorfile>
-      <anchor>adb31cd43854da32f63e4b26fbe11b78b</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
   </compound>
@@ -22607,11 +22668,11 @@
       <anchor>a8b27ece320044774405b64dcfd78147c</anchor>
       <arglist>()=default</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1PositionTask.html</anchorfile>
-      <anchor>af32bca3285f7bc4cd41ea8a0bd357d43</anchor>
+      <anchor>a86e8cb6cb49e5269c931ed57eda6e113</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -22654,13 +22715,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1PositionTask.html</anchorfile>
       <anchor>a1ace65857e5ada474531dcffc700924f</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1PositionTask.html</anchorfile>
-      <anchor>a433188fa6771ae5eb60d49be25a04a22</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -22944,13 +22998,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1PostureTask.html</anchorfile>
       <anchor>ade3d279eeb005e261c75370747f86b19</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1PostureTask.html</anchorfile>
-      <anchor>a46d9f395dba3772018af68c623a42ae7</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
   </compound>
@@ -23597,32 +23644,32 @@
       <anchor>a8ebaa7565ec3bdd72adfa57cff39702a</anchor>
       <arglist>(const std::string &amp;bodyName, const Eigen::Vector3d &amp;bodyPoint, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, const std::string &amp;relBodyName, double stiffness=10.0, double weight=1000.0)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1RelativeEndEffectorTask.html</anchorfile>
-      <anchor>a18753486034464f63692f0e818302900</anchor>
+      <anchor>a793bf82d0b0f17d0e9c72cfdd131fa67</anchor>
       <arglist>() override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>add_ef_pose</name>
       <anchorfile>structmc__tasks_1_1RelativeEndEffectorTask.html</anchorfile>
-      <anchor>a203a2b5099b8a34f2182560ce5ca1e64</anchor>
+      <anchor>a4d6f1803464ba94a80db138123662075</anchor>
       <arglist>(const sva::PTransformd &amp;dtr) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>set_ef_pose</name>
       <anchorfile>structmc__tasks_1_1RelativeEndEffectorTask.html</anchorfile>
-      <anchor>a8130a99d7ea7d7e1d064021df41e2de2</anchor>
+      <anchor>a3fc5bfbf363efddcf3f2441b91ff8b0e</anchor>
       <arglist>(const sva::PTransformd &amp;tf) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual sva::PTransformd</type>
+    <member kind="function">
+      <type>sva::PTransformd</type>
       <name>get_ef_pose</name>
       <anchorfile>structmc__tasks_1_1RelativeEndEffectorTask.html</anchorfile>
-      <anchor>a7037b03d6b2cd7b5c50b49577216ec39</anchor>
+      <anchor>a0566da4a9b213b3beda917e35cfb9ad2</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function" protection="protected">
@@ -28703,13 +28750,6 @@
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
-      <anchor>a415719c2bcc08727bbaa09b5c3172188</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
       <name>update</name>
       <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
       <anchor>a6b58c786b84e0d4f82f6e434589c0e80</anchor>
@@ -29169,13 +29209,6 @@
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
-      <anchor>a415719c2bcc08727bbaa09b5c3172188</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
       <name>update</name>
       <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
       <anchor>a6b58c786b84e0d4f82f6e434589c0e80</anchor>
@@ -29625,13 +29658,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
       <anchor>aa7147dba544550aa616caa164a40209a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1SplineTrajectoryTask.html</anchorfile>
-      <anchor>a415719c2bcc08727bbaa09b5c3172188</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
@@ -31860,11 +31886,11 @@
       <anchor>a11dcb669bfded6027ba8d80f9a79a58c</anchor>
       <arglist>(const std::string &amp;surfaceName, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=500)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1SurfaceTransformTask.html</anchorfile>
-      <anchor>aac928f09ec7213f7c50c889e8eb3e4ff</anchor>
+      <anchor>ae52f8b8a4108c6bd4df462cfd724791b</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -31914,13 +31940,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1SurfaceTransformTask.html</anchorfile>
       <anchor>a71392150c13f91caba0fcc4e6ecdacdf</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1SurfaceTransformTask.html</anchorfile>
-      <anchor>af33254a8afa6aa88580e7c54a9b0ac77</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function">
@@ -32128,11 +32147,11 @@
       <anchor>a723271227584b9a8af649ce887d9c947</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a400018484b0f1d1799e02a1af09b8167</anchor>
+      <anchor>a36c813b6646d3cd1bffcdcc618807053</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -32247,46 +32266,46 @@
       <anchor>addeac3a07caaeef74f6f62c7509767c9</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a65007da65141c139006058f34b1f48ef</anchor>
+      <anchor>a71a8aee8ad7e2cbda2c5962914d4b85a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>ab69cebe473f8c5f8a152726476655e6b</anchor>
+      <anchor>a6e39ff3541b03ee5b6d86e8a4d275af2</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <anchor>ac883b849b3e2ceff282f9f3c2b6ca426</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a401e0e9e9dc4acade920f05779540078</anchor>
+      <anchor>abb8d10e88843663fe16476c3106edceb</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <anchor>aa1464f52f125b19c0da325a0ed28fe50</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aad2277ab64458789c4b2e278cf7ff6c7</anchor>
+      <anchor>ad6337742aa921f6fa624e25b1dc6de03</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -32296,25 +32315,25 @@
       <anchor>a28bd17d1de6e94cc16c84ec4057f763f</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a3db0df307cb2a7d9aeb8d8b4afc1c138</anchor>
+      <anchor>a0ce0cd76c9662760eaa0c991eb1384ea</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a464299be73754bdde996cac844877175</anchor>
+      <anchor>a0ef95b65151faf9b4960bbeb5f361308</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aee6254ed615e98f3b2d96a76fac08166</anchor>
+      <anchor>a2fe787929f5caa6ed7245a16e5c61039</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -32360,24 +32379,17 @@
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a349f7130d24ba00e1cf360403c8d507a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
       <name>buildCompletionCriteria</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
       <anchor>a6b12fa2e9307d9fb9c760d05b1c04133</anchor>
       <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a1af5b0e8d37ab0976c14641471493bc5</anchor>
+      <anchor>a47f11ff827dba6b36e793b2bf9321e7a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -32455,11 +32467,11 @@
       <anchor>a723271227584b9a8af649ce887d9c947</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a400018484b0f1d1799e02a1af09b8167</anchor>
+      <anchor>a36c813b6646d3cd1bffcdcc618807053</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -32574,46 +32586,46 @@
       <anchor>addeac3a07caaeef74f6f62c7509767c9</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a65007da65141c139006058f34b1f48ef</anchor>
+      <anchor>a71a8aee8ad7e2cbda2c5962914d4b85a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>ab69cebe473f8c5f8a152726476655e6b</anchor>
+      <anchor>a6e39ff3541b03ee5b6d86e8a4d275af2</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <anchor>ac883b849b3e2ceff282f9f3c2b6ca426</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a401e0e9e9dc4acade920f05779540078</anchor>
+      <anchor>abb8d10e88843663fe16476c3106edceb</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <anchor>aa1464f52f125b19c0da325a0ed28fe50</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aad2277ab64458789c4b2e278cf7ff6c7</anchor>
+      <anchor>ad6337742aa921f6fa624e25b1dc6de03</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -32623,25 +32635,25 @@
       <anchor>a28bd17d1de6e94cc16c84ec4057f763f</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a3db0df307cb2a7d9aeb8d8b4afc1c138</anchor>
+      <anchor>a0ce0cd76c9662760eaa0c991eb1384ea</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a464299be73754bdde996cac844877175</anchor>
+      <anchor>a0ef95b65151faf9b4960bbeb5f361308</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aee6254ed615e98f3b2d96a76fac08166</anchor>
+      <anchor>a2fe787929f5caa6ed7245a16e5c61039</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -32687,24 +32699,17 @@
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a349f7130d24ba00e1cf360403c8d507a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
       <name>buildCompletionCriteria</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
       <anchor>a6b12fa2e9307d9fb9c760d05b1c04133</anchor>
       <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a1af5b0e8d37ab0976c14641471493bc5</anchor>
+      <anchor>a47f11ff827dba6b36e793b2bf9321e7a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -32782,11 +32787,11 @@
       <anchor>a723271227584b9a8af649ce887d9c947</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a400018484b0f1d1799e02a1af09b8167</anchor>
+      <anchor>a36c813b6646d3cd1bffcdcc618807053</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -32901,46 +32906,46 @@
       <anchor>addeac3a07caaeef74f6f62c7509767c9</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a65007da65141c139006058f34b1f48ef</anchor>
+      <anchor>a71a8aee8ad7e2cbda2c5962914d4b85a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>ab69cebe473f8c5f8a152726476655e6b</anchor>
+      <anchor>a6e39ff3541b03ee5b6d86e8a4d275af2</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <anchor>ac883b849b3e2ceff282f9f3c2b6ca426</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a401e0e9e9dc4acade920f05779540078</anchor>
+      <anchor>abb8d10e88843663fe16476c3106edceb</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <anchor>aa1464f52f125b19c0da325a0ed28fe50</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aad2277ab64458789c4b2e278cf7ff6c7</anchor>
+      <anchor>ad6337742aa921f6fa624e25b1dc6de03</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -32950,25 +32955,25 @@
       <anchor>a28bd17d1de6e94cc16c84ec4057f763f</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a3db0df307cb2a7d9aeb8d8b4afc1c138</anchor>
+      <anchor>a0ce0cd76c9662760eaa0c991eb1384ea</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a464299be73754bdde996cac844877175</anchor>
+      <anchor>a0ef95b65151faf9b4960bbeb5f361308</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aee6254ed615e98f3b2d96a76fac08166</anchor>
+      <anchor>a2fe787929f5caa6ed7245a16e5c61039</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -33014,24 +33019,17 @@
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a349f7130d24ba00e1cf360403c8d507a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
       <name>buildCompletionCriteria</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
       <anchor>a6b12fa2e9307d9fb9c760d05b1c04133</anchor>
       <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a1af5b0e8d37ab0976c14641471493bc5</anchor>
+      <anchor>a47f11ff827dba6b36e793b2bf9321e7a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -33109,11 +33107,11 @@
       <anchor>a723271227584b9a8af649ce887d9c947</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a400018484b0f1d1799e02a1af09b8167</anchor>
+      <anchor>a36c813b6646d3cd1bffcdcc618807053</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -33228,46 +33226,46 @@
       <anchor>addeac3a07caaeef74f6f62c7509767c9</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a65007da65141c139006058f34b1f48ef</anchor>
+      <anchor>a71a8aee8ad7e2cbda2c5962914d4b85a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>ab69cebe473f8c5f8a152726476655e6b</anchor>
+      <anchor>a6e39ff3541b03ee5b6d86e8a4d275af2</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <anchor>ac883b849b3e2ceff282f9f3c2b6ca426</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a401e0e9e9dc4acade920f05779540078</anchor>
+      <anchor>abb8d10e88843663fe16476c3106edceb</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <anchor>aa1464f52f125b19c0da325a0ed28fe50</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aad2277ab64458789c4b2e278cf7ff6c7</anchor>
+      <anchor>ad6337742aa921f6fa624e25b1dc6de03</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -33277,25 +33275,25 @@
       <anchor>a28bd17d1de6e94cc16c84ec4057f763f</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a3db0df307cb2a7d9aeb8d8b4afc1c138</anchor>
+      <anchor>a0ce0cd76c9662760eaa0c991eb1384ea</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a464299be73754bdde996cac844877175</anchor>
+      <anchor>a0ef95b65151faf9b4960bbeb5f361308</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aee6254ed615e98f3b2d96a76fac08166</anchor>
+      <anchor>a2fe787929f5caa6ed7245a16e5c61039</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -33341,24 +33339,17 @@
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a349f7130d24ba00e1cf360403c8d507a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
       <name>buildCompletionCriteria</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
       <anchor>a6b12fa2e9307d9fb9c760d05b1c04133</anchor>
       <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a1af5b0e8d37ab0976c14641471493bc5</anchor>
+      <anchor>a47f11ff827dba6b36e793b2bf9321e7a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -33436,11 +33427,11 @@
       <anchor>a723271227584b9a8af649ce887d9c947</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a400018484b0f1d1799e02a1af09b8167</anchor>
+      <anchor>a36c813b6646d3cd1bffcdcc618807053</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -33555,46 +33546,46 @@
       <anchor>addeac3a07caaeef74f6f62c7509767c9</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a65007da65141c139006058f34b1f48ef</anchor>
+      <anchor>a71a8aee8ad7e2cbda2c5962914d4b85a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>ab69cebe473f8c5f8a152726476655e6b</anchor>
+      <anchor>a6e39ff3541b03ee5b6d86e8a4d275af2</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <anchor>ac883b849b3e2ceff282f9f3c2b6ca426</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a401e0e9e9dc4acade920f05779540078</anchor>
+      <anchor>abb8d10e88843663fe16476c3106edceb</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <anchor>aa1464f52f125b19c0da325a0ed28fe50</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aad2277ab64458789c4b2e278cf7ff6c7</anchor>
+      <anchor>ad6337742aa921f6fa624e25b1dc6de03</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -33604,25 +33595,25 @@
       <anchor>a28bd17d1de6e94cc16c84ec4057f763f</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a3db0df307cb2a7d9aeb8d8b4afc1c138</anchor>
+      <anchor>a0ce0cd76c9662760eaa0c991eb1384ea</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a464299be73754bdde996cac844877175</anchor>
+      <anchor>a0ef95b65151faf9b4960bbeb5f361308</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aee6254ed615e98f3b2d96a76fac08166</anchor>
+      <anchor>a2fe787929f5caa6ed7245a16e5c61039</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -33668,24 +33659,17 @@
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a349f7130d24ba00e1cf360403c8d507a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
       <name>buildCompletionCriteria</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
       <anchor>a6b12fa2e9307d9fb9c760d05b1c04133</anchor>
       <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a1af5b0e8d37ab0976c14641471493bc5</anchor>
+      <anchor>a47f11ff827dba6b36e793b2bf9321e7a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -33763,11 +33747,11 @@
       <anchor>a723271227584b9a8af649ce887d9c947</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a400018484b0f1d1799e02a1af09b8167</anchor>
+      <anchor>a36c813b6646d3cd1bffcdcc618807053</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -33882,46 +33866,46 @@
       <anchor>addeac3a07caaeef74f6f62c7509767c9</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a65007da65141c139006058f34b1f48ef</anchor>
+      <anchor>a71a8aee8ad7e2cbda2c5962914d4b85a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>ab69cebe473f8c5f8a152726476655e6b</anchor>
+      <anchor>a6e39ff3541b03ee5b6d86e8a4d275af2</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <anchor>ac883b849b3e2ceff282f9f3c2b6ca426</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a401e0e9e9dc4acade920f05779540078</anchor>
+      <anchor>abb8d10e88843663fe16476c3106edceb</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <anchor>aa1464f52f125b19c0da325a0ed28fe50</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aad2277ab64458789c4b2e278cf7ff6c7</anchor>
+      <anchor>ad6337742aa921f6fa624e25b1dc6de03</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -33931,25 +33915,25 @@
       <anchor>a28bd17d1de6e94cc16c84ec4057f763f</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a3db0df307cb2a7d9aeb8d8b4afc1c138</anchor>
+      <anchor>a0ce0cd76c9662760eaa0c991eb1384ea</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a464299be73754bdde996cac844877175</anchor>
+      <anchor>a0ef95b65151faf9b4960bbeb5f361308</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aee6254ed615e98f3b2d96a76fac08166</anchor>
+      <anchor>a2fe787929f5caa6ed7245a16e5c61039</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -33995,24 +33979,17 @@
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a349f7130d24ba00e1cf360403c8d507a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
       <name>buildCompletionCriteria</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
       <anchor>a6b12fa2e9307d9fb9c760d05b1c04133</anchor>
       <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a1af5b0e8d37ab0976c14641471493bc5</anchor>
+      <anchor>a47f11ff827dba6b36e793b2bf9321e7a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -34090,11 +34067,11 @@
       <anchor>a723271227584b9a8af649ce887d9c947</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a400018484b0f1d1799e02a1af09b8167</anchor>
+      <anchor>a36c813b6646d3cd1bffcdcc618807053</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -34209,46 +34186,46 @@
       <anchor>addeac3a07caaeef74f6f62c7509767c9</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a65007da65141c139006058f34b1f48ef</anchor>
+      <anchor>a71a8aee8ad7e2cbda2c5962914d4b85a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>ab69cebe473f8c5f8a152726476655e6b</anchor>
+      <anchor>a6e39ff3541b03ee5b6d86e8a4d275af2</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <anchor>ac883b849b3e2ceff282f9f3c2b6ca426</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a401e0e9e9dc4acade920f05779540078</anchor>
+      <anchor>abb8d10e88843663fe16476c3106edceb</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <anchor>aa1464f52f125b19c0da325a0ed28fe50</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aad2277ab64458789c4b2e278cf7ff6c7</anchor>
+      <anchor>ad6337742aa921f6fa624e25b1dc6de03</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -34258,25 +34235,25 @@
       <anchor>a28bd17d1de6e94cc16c84ec4057f763f</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a3db0df307cb2a7d9aeb8d8b4afc1c138</anchor>
+      <anchor>a0ce0cd76c9662760eaa0c991eb1384ea</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a464299be73754bdde996cac844877175</anchor>
+      <anchor>a0ef95b65151faf9b4960bbeb5f361308</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aee6254ed615e98f3b2d96a76fac08166</anchor>
+      <anchor>a2fe787929f5caa6ed7245a16e5c61039</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -34322,24 +34299,17 @@
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a349f7130d24ba00e1cf360403c8d507a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
       <name>buildCompletionCriteria</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
       <anchor>a6b12fa2e9307d9fb9c760d05b1c04133</anchor>
       <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a1af5b0e8d37ab0976c14641471493bc5</anchor>
+      <anchor>a47f11ff827dba6b36e793b2bf9321e7a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -34417,11 +34387,11 @@
       <anchor>a723271227584b9a8af649ce887d9c947</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a400018484b0f1d1799e02a1af09b8167</anchor>
+      <anchor>a36c813b6646d3cd1bffcdcc618807053</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -34536,46 +34506,46 @@
       <anchor>addeac3a07caaeef74f6f62c7509767c9</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a65007da65141c139006058f34b1f48ef</anchor>
+      <anchor>a71a8aee8ad7e2cbda2c5962914d4b85a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>ab69cebe473f8c5f8a152726476655e6b</anchor>
+      <anchor>a6e39ff3541b03ee5b6d86e8a4d275af2</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <anchor>ac883b849b3e2ceff282f9f3c2b6ca426</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a401e0e9e9dc4acade920f05779540078</anchor>
+      <anchor>abb8d10e88843663fe16476c3106edceb</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <anchor>aa1464f52f125b19c0da325a0ed28fe50</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aad2277ab64458789c4b2e278cf7ff6c7</anchor>
+      <anchor>ad6337742aa921f6fa624e25b1dc6de03</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -34585,25 +34555,25 @@
       <anchor>a28bd17d1de6e94cc16c84ec4057f763f</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a3db0df307cb2a7d9aeb8d8b4afc1c138</anchor>
+      <anchor>a0ce0cd76c9662760eaa0c991eb1384ea</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a464299be73754bdde996cac844877175</anchor>
+      <anchor>a0ef95b65151faf9b4960bbeb5f361308</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aee6254ed615e98f3b2d96a76fac08166</anchor>
+      <anchor>a2fe787929f5caa6ed7245a16e5c61039</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -34649,24 +34619,17 @@
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a349f7130d24ba00e1cf360403c8d507a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
       <name>buildCompletionCriteria</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
       <anchor>a6b12fa2e9307d9fb9c760d05b1c04133</anchor>
       <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a1af5b0e8d37ab0976c14641471493bc5</anchor>
+      <anchor>a47f11ff827dba6b36e793b2bf9321e7a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -34744,11 +34707,11 @@
       <anchor>a723271227584b9a8af649ce887d9c947</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a400018484b0f1d1799e02a1af09b8167</anchor>
+      <anchor>a36c813b6646d3cd1bffcdcc618807053</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -34863,46 +34826,46 @@
       <anchor>addeac3a07caaeef74f6f62c7509767c9</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a65007da65141c139006058f34b1f48ef</anchor>
+      <anchor>a71a8aee8ad7e2cbda2c5962914d4b85a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>ab69cebe473f8c5f8a152726476655e6b</anchor>
+      <anchor>a6e39ff3541b03ee5b6d86e8a4d275af2</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <anchor>ac883b849b3e2ceff282f9f3c2b6ca426</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a401e0e9e9dc4acade920f05779540078</anchor>
+      <anchor>abb8d10e88843663fe16476c3106edceb</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <anchor>aa1464f52f125b19c0da325a0ed28fe50</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aad2277ab64458789c4b2e278cf7ff6c7</anchor>
+      <anchor>ad6337742aa921f6fa624e25b1dc6de03</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -34912,25 +34875,25 @@
       <anchor>a28bd17d1de6e94cc16c84ec4057f763f</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a3db0df307cb2a7d9aeb8d8b4afc1c138</anchor>
+      <anchor>a0ce0cd76c9662760eaa0c991eb1384ea</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a464299be73754bdde996cac844877175</anchor>
+      <anchor>a0ef95b65151faf9b4960bbeb5f361308</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aee6254ed615e98f3b2d96a76fac08166</anchor>
+      <anchor>a2fe787929f5caa6ed7245a16e5c61039</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -34976,24 +34939,17 @@
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a349f7130d24ba00e1cf360403c8d507a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
       <name>buildCompletionCriteria</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
       <anchor>a6b12fa2e9307d9fb9c760d05b1c04133</anchor>
       <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a1af5b0e8d37ab0976c14641471493bc5</anchor>
+      <anchor>a47f11ff827dba6b36e793b2bf9321e7a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -35071,11 +35027,11 @@
       <anchor>a723271227584b9a8af649ce887d9c947</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a400018484b0f1d1799e02a1af09b8167</anchor>
+      <anchor>a36c813b6646d3cd1bffcdcc618807053</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -35190,46 +35146,46 @@
       <anchor>addeac3a07caaeef74f6f62c7509767c9</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a65007da65141c139006058f34b1f48ef</anchor>
+      <anchor>a71a8aee8ad7e2cbda2c5962914d4b85a</anchor>
       <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>ab69cebe473f8c5f8a152726476655e6b</anchor>
+      <anchor>a6e39ff3541b03ee5b6d86e8a4d275af2</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a568cbb2dd1a32fa24a3d257dbc7f7ab7</anchor>
+      <anchor>ac883b849b3e2ceff282f9f3c2b6ca426</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectActiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a401e0e9e9dc4acade920f05779540078</anchor>
+      <anchor>abb8d10e88843663fe16476c3106edceb</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a17f76beb2ace280540b5687701343fa8</anchor>
+      <anchor>aa1464f52f125b19c0da325a0ed28fe50</anchor>
       <arglist>(const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}, bool checkJoints=true)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>selectUnactiveJoints</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aad2277ab64458789c4b2e278cf7ff6c7</anchor>
+      <anchor>ad6337742aa921f6fa624e25b1dc6de03</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
@@ -35239,25 +35195,25 @@
       <anchor>a28bd17d1de6e94cc16c84ec4057f763f</anchor>
       <arglist>()</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>resetJointsSelector</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a3db0df307cb2a7d9aeb8d8b4afc1c138</anchor>
+      <anchor>a0ce0cd76c9662760eaa0c991eb1384ea</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>eval</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a464299be73754bdde996cac844877175</anchor>
+      <anchor>a0ef95b65151faf9b4960bbeb5f361308</anchor>
       <arglist>() const override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual Eigen::VectorXd</type>
+    <member kind="function">
+      <type>Eigen::VectorXd</type>
       <name>speed</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>aee6254ed615e98f3b2d96a76fac08166</anchor>
+      <anchor>a2fe787929f5caa6ed7245a16e5c61039</anchor>
       <arglist>() const override</arglist>
     </member>
     <member kind="function">
@@ -35303,24 +35259,17 @@
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a349f7130d24ba00e1cf360403c8d507a</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
       <type>std::function&lt; bool(const mc_tasks::MetaTask &amp;task, std::string &amp;)&gt;</type>
       <name>buildCompletionCriteria</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
       <anchor>a6b12fa2e9307d9fb9c760d05b1c04133</anchor>
       <arglist>(double dt, const mc_rtc::Configuration &amp;config) const override</arglist>
     </member>
-    <member kind="function" protection="protected" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function" protection="protected">
+      <type>void</type>
       <name>addToSolver</name>
       <anchorfile>structmc__tasks_1_1TrajectoryTaskGeneric.html</anchorfile>
-      <anchor>a1af5b0e8d37ab0976c14641471493bc5</anchor>
+      <anchor>a47f11ff827dba6b36e793b2bf9321e7a</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -35751,11 +35700,11 @@
       <anchor>a60f2e467ea49160a0037f8aa2470bdbc</anchor>
       <arglist>(const std::string &amp;bodyName, const Eigen::Vector3d &amp;bodyVector, const mc_rbdyn::Robots &amp;robots, unsigned int robotIndex, double stiffness=2.0, double weight=500)</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
+    <member kind="function">
+      <type>void</type>
       <name>reset</name>
       <anchorfile>structmc__tasks_1_1VectorOrientationTask.html</anchorfile>
-      <anchor>a04b7aba6c4e4d4abd746c19e12c650e6</anchor>
+      <anchor>abf5eb7b4f6111f5141f6113a6aa80146</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function">
@@ -35812,13 +35761,6 @@
       <name>addToLogger</name>
       <anchorfile>structmc__tasks_1_1VectorOrientationTask.html</anchorfile>
       <anchor>ae2ea06fdeee5903edcbfb8da2bd55af4</anchor>
-      <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>removeFromLogger</name>
-      <anchorfile>structmc__tasks_1_1VectorOrientationTask.html</anchorfile>
-      <anchor>a077b7176cf69a042e7c31b7dd5a76490</anchor>
       <arglist>(mc_rtc::Logger &amp;logger) override</arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -37670,11 +37612,16 @@
     <filename>namespacemc__rtc_1_1log.html</filename>
     <namespace>mc_rtc::log::details</namespace>
     <class kind="struct">mc_rtc::log::callback_is_serializable</class>
+    <class kind="struct">mc_rtc::log::callback_is_serializable&lt; T, void_t&lt; typename std::result_of&lt; T()&gt;::type &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::FlatLog</class>
     <class kind="struct">mc_rtc::log::GetLogType</class>
     <class kind="struct">mc_rtc::log::GetLogType&lt; std::array&lt; double, N &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::GetLogType&lt; std::vector&lt; double, A &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::is_serializable</class>
+    <class kind="struct">mc_rtc::log::is_serializable_getter</class>
+    <class kind="struct">mc_rtc::log::is_serializable_getter&lt; MethodRetT(T::*)() const &gt;</class>
+    <class kind="struct">mc_rtc::log::is_serializable_member</class>
+    <class kind="struct">mc_rtc::log::is_serializable_member&lt; MemberT T::* &gt;</class>
     <class kind="struct">mc_rtc::log::LogWriter</class>
     <member kind="typedef">
       <type>std::function&lt; bool(const std::vector&lt; std::string &gt; &amp;, std::vector&lt; FlatLog::record &gt; &amp;, double)&gt;</type>
@@ -37695,6 +37642,13 @@
       <name>binary_log_copy_callback</name>
       <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
       <anchor>a1c86e8f30b914960080029679897a749</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>void</type>
+      <name>void_t</name>
+      <anchorfile>namespacemc__rtc_1_1log.html</anchorfile>
+      <anchor>a50801f83a6ed3945d8cc199c9b3c4ce3</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">

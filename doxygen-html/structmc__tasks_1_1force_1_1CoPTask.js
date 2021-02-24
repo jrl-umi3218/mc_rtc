@@ -6,7 +6,6 @@ var structmc__tasks_1_1force_1_1CoPTask =
     [ "buildCompletionCriteria", "structmc__tasks_1_1force_1_1CoPTask.html#a7467766fa42546e99c0d253aac7af98d", null ],
     [ "measuredCoP", "structmc__tasks_1_1force_1_1CoPTask.html#acf756c0e7e6aa1fbb60feb6491427411", null ],
     [ "measuredCoPW", "structmc__tasks_1_1force_1_1CoPTask.html#a16f95e7ea6a037950ea6b8eb5e57b58d", null ],
-    [ "removeFromLogger", "structmc__tasks_1_1force_1_1CoPTask.html#ae2ff4b29d342493a03388741d940106b", null ],
     [ "reset", "structmc__tasks_1_1force_1_1CoPTask.html#a08e79c703fb2f70db56a7c64e27acd02", null ],
     [ "setZeroTargetWrench", "structmc__tasks_1_1force_1_1CoPTask.html#ae95ca91c45eb45a1946e84377ddffa8b", null ],
     [ "targetCoP", "structmc__tasks_1_1force_1_1CoPTask.html#a4ace3b81e36d8ac60271b68b78c4f58a", null ],

@@ -1,0 +1,5 @@
+var structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205 =
+[
+    [ "base_type", "structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html#af27939ca5ec152a0cdee9547e49359fb", null ],
+    [ "ret_type", "structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html#aef4b08e21ec244022984ccf6e4b74be5", null ]
+];

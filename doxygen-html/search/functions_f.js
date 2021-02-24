@@ -4,7 +4,7 @@ var searchData=
   ['parent',['parent',['../structmc__rbdyn_1_1Device.html#aa4fa7c2fd9c533abc6e1bd965f128650',1,'mc_rbdyn::Device::parent() const'],['../structmc__rbdyn_1_1Device.html#aa195d74e93e262d231b44efaf6217758',1,'mc_rbdyn::Device::parent(const std::string &amp;p)']]],
   ['parentbody',['parentBody',['../structmc__rbdyn_1_1BodySensor.html#ab5d6323b65ec6e712804d0c8590c8b55',1,'mc_rbdyn::BodySensor::parentBody()'],['../structmc__rbdyn_1_1ForceSensor.html#a6629c5e91037493e31492c2ee4c88ffb',1,'mc_rbdyn::ForceSensor::parentBody()']]],
   ['parsemultibodygraphfromurdf',['parseMultiBodyGraphFromURDF',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00015.html#a405459fdf14f8089f31d20102316fa78',1,'mc_rbdyn_urdf']]],
-  ['path',['path',['../structmc__rtc_1_1LTDLHandle.html#aab506987ae59f5623e4875126b3ad06b',1,'mc_rtc::LTDLHandle']]],
+  ['path',['path',['../structmc__rtc_1_1LTDLHandle.html#aab506987ae59f5623e4875126b3ad06b',1,'mc_rtc::LTDLHandle::path()'],['../structmc__rtc_1_1Logger.html#a89fb05a7430fab3ebe3ccb5061dddc60',1,'mc_rtc::Logger::path()']]],
   ['pause',['pause',['../structmc__tasks_1_1SplineTrajectoryTask.html#aea7ce56cb05ec2f4fa98d4980e9cd356',1,'mc_tasks::SplineTrajectoryTask::pause(bool paused)'],['../structmc__tasks_1_1SplineTrajectoryTask.html#a936e06384b9ad6a4cdab2e8545e9b0aa',1,'mc_tasks::SplineTrajectoryTask::pause() const noexcept']]],
   ['pelvisstiffness',['pelvisStiffness',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3d5cd1bd8c0913ab7b70e83ef2528a26',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['pelvisweight',['pelvisWeight',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac7a0a6f3280418d898ffbca9fcc0d247',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],

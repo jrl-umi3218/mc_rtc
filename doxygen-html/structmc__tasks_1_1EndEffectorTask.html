@@ -106,9 +106,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a972b369490a2a1ded5f627ee669e255b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a972b369490a2a1ded5f627ee669e255b">EndEffectorTask</a> (const std::string &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#af41ef875b2819415282f6e416345e992">bodyName</a>, const Eigen::Vector3d &amp;bodyPoint, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;<a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a5faa0d85f0343702e3917d74b831dad7">robots</a>, unsigned int <a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a0e692c5560525128f88961376cc6272f">robotIndex</a>, double stiffness=2.0, double weight=1000.0)</td></tr>
 <tr class="memdesc:a972b369490a2a1ded5f627ee669e255b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor with bodyPoint.  <a href="#a972b369490a2a1ded5f627ee669e255b">More...</a><br /></td></tr>
 <tr class="separator:a972b369490a2a1ded5f627ee669e255b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b093324425bd5b4719dc04f1c4e5648"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a9b093324425bd5b4719dc04f1c4e5648">reset</a> () override</td></tr>
-<tr class="memdesc:a9b093324425bd5b4719dc04f1c4e5648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the task.  <a href="#a9b093324425bd5b4719dc04f1c4e5648">More...</a><br /></td></tr>
-<tr class="separator:a9b093324425bd5b4719dc04f1c4e5648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ae325b8848afaae12051f1e02462e8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a4ae325b8848afaae12051f1e02462e8b">reset</a> () override</td></tr>
+<tr class="memdesc:a4ae325b8848afaae12051f1e02462e8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the task.  <a href="#a4ae325b8848afaae12051f1e02462e8b">More...</a><br /></td></tr>
+<tr class="separator:a4ae325b8848afaae12051f1e02462e8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01f1c5053c8e6a7b8fa1cbd30936bd3b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a01f1c5053c8e6a7b8fa1cbd30936bd3b">add_ef_pose</a> (const sva::PTransformd &amp;dtr)</td></tr>
 <tr class="memdesc:a01f1c5053c8e6a7b8fa1cbd30936bd3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment the target position.  <a href="#a01f1c5053c8e6a7b8fa1cbd30936bd3b">More...</a><br /></td></tr>
 <tr class="separator:a01f1c5053c8e6a7b8fa1cbd30936bd3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,27 +118,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a849f1bb907b638b0a2d3513630095155"><td class="memItemLeft" align="right" valign="top">virtual sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a849f1bb907b638b0a2d3513630095155">get_ef_pose</a> ()</td></tr>
 <tr class="memdesc:a849f1bb907b638b0a2d3513630095155"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current target positions.  <a href="#a849f1bb907b638b0a2d3513630095155">More...</a><br /></td></tr>
 <tr class="separator:a849f1bb907b638b0a2d3513630095155"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a009ffe2f7a31408e70cff8b86d446caa"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a009ffe2f7a31408e70cff8b86d446caa">dimWeight</a> (const Eigen::VectorXd &amp;dimW) override</td></tr>
-<tr class="memdesc:a009ffe2f7a31408e70cff8b86d446caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the task's dimension weight vector.  <a href="#a009ffe2f7a31408e70cff8b86d446caa">More...</a><br /></td></tr>
-<tr class="separator:a009ffe2f7a31408e70cff8b86d446caa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7483b3be8095c29724a934471ac558e"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#ad7483b3be8095c29724a934471ac558e">dimWeight</a> () const override</td></tr>
-<tr class="memdesc:ad7483b3be8095c29724a934471ac558e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current task's dim weight vector.  <a href="#ad7483b3be8095c29724a934471ac558e">More...</a><br /></td></tr>
-<tr class="separator:ad7483b3be8095c29724a934471ac558e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36c784af07924cdb90969b93a859fcfd"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a36c784af07924cdb90969b93a859fcfd">selectActiveJoints</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</td></tr>
-<tr class="memdesc:a36c784af07924cdb90969b93a859fcfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup an active joints selector.  <a href="#a36c784af07924cdb90969b93a859fcfd">More...</a><br /></td></tr>
-<tr class="separator:a36c784af07924cdb90969b93a859fcfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5798ae85c5b6dbebabd268e3a33b93e2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a5798ae85c5b6dbebabd268e3a33b93e2">selectUnactiveJoints</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</td></tr>
-<tr class="memdesc:a5798ae85c5b6dbebabd268e3a33b93e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup an unactive joints selector.  <a href="#a5798ae85c5b6dbebabd268e3a33b93e2">More...</a><br /></td></tr>
-<tr class="separator:a5798ae85c5b6dbebabd268e3a33b93e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65456b7b90d53cbf097f88d546bda7fb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a65456b7b90d53cbf097f88d546bda7fb">resetJointsSelector</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:a65456b7b90d53cbf097f88d546bda7fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset active joints selection.  <a href="#a65456b7b90d53cbf097f88d546bda7fb">More...</a><br /></td></tr>
-<tr class="separator:a65456b7b90d53cbf097f88d546bda7fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37e497c45f98e4f5e14bc8b7ac0c2305"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a37e497c45f98e4f5e14bc8b7ac0c2305">eval</a> () const override</td></tr>
-<tr class="memdesc:a37e497c45f98e4f5e14bc8b7ac0c2305"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task error.  <a href="#a37e497c45f98e4f5e14bc8b7ac0c2305">More...</a><br /></td></tr>
-<tr class="separator:a37e497c45f98e4f5e14bc8b7ac0c2305"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a151ebbc4eef8b54a6dc00d10d642f7cb"><td class="memItemLeft" align="right" valign="top">virtual Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a151ebbc4eef8b54a6dc00d10d642f7cb">speed</a> () const override</td></tr>
-<tr class="memdesc:a151ebbc4eef8b54a6dc00d10d642f7cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task velocity.  <a href="#a151ebbc4eef8b54a6dc00d10d642f7cb">More...</a><br /></td></tr>
-<tr class="separator:a151ebbc4eef8b54a6dc00d10d642f7cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a566c97665b6d80c1d5e035bf13b74d3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a566c97665b6d80c1d5e035bf13b74d3a">dimWeight</a> (const Eigen::VectorXd &amp;dimW) override</td></tr>
+<tr class="memdesc:a566c97665b6d80c1d5e035bf13b74d3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the task's dimension weight vector.  <a href="#a566c97665b6d80c1d5e035bf13b74d3a">More...</a><br /></td></tr>
+<tr class="separator:a566c97665b6d80c1d5e035bf13b74d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe6e3496c8f51c563f75b6507aa4676a"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#abe6e3496c8f51c563f75b6507aa4676a">dimWeight</a> () const override</td></tr>
+<tr class="memdesc:abe6e3496c8f51c563f75b6507aa4676a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current task's dim weight vector.  <a href="#abe6e3496c8f51c563f75b6507aa4676a">More...</a><br /></td></tr>
+<tr class="separator:abe6e3496c8f51c563f75b6507aa4676a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ed97254c1f37a06ef4a05a1a9645c17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a7ed97254c1f37a06ef4a05a1a9645c17">selectActiveJoints</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</td></tr>
+<tr class="memdesc:a7ed97254c1f37a06ef4a05a1a9645c17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup an active joints selector.  <a href="#a7ed97254c1f37a06ef4a05a1a9645c17">More...</a><br /></td></tr>
+<tr class="separator:a7ed97254c1f37a06ef4a05a1a9645c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4863aefcbb6a6e9a72430a55c2a6f621"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a4863aefcbb6a6e9a72430a55c2a6f621">selectUnactiveJoints</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</td></tr>
+<tr class="memdesc:a4863aefcbb6a6e9a72430a55c2a6f621"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup an unactive joints selector.  <a href="#a4863aefcbb6a6e9a72430a55c2a6f621">More...</a><br /></td></tr>
+<tr class="separator:a4863aefcbb6a6e9a72430a55c2a6f621"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8571303aab2101cb472ae70ee188d695"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a8571303aab2101cb472ae70ee188d695">resetJointsSelector</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
+<tr class="memdesc:a8571303aab2101cb472ae70ee188d695"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset active joints selection.  <a href="#a8571303aab2101cb472ae70ee188d695">More...</a><br /></td></tr>
+<tr class="separator:a8571303aab2101cb472ae70ee188d695"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd9eb745f23f22752530d3b86329ac61"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#afd9eb745f23f22752530d3b86329ac61">eval</a> () const override</td></tr>
+<tr class="memdesc:afd9eb745f23f22752530d3b86329ac61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task error.  <a href="#afd9eb745f23f22752530d3b86329ac61">More...</a><br /></td></tr>
+<tr class="separator:afd9eb745f23f22752530d3b86329ac61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f32884c9cd511e180e1a9d5399766e4"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a1f32884c9cd511e180e1a9d5399766e4">speed</a> () const override</td></tr>
+<tr class="memdesc:a1f32884c9cd511e180e1a9d5399766e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task velocity.  <a href="#a1f32884c9cd511e180e1a9d5399766e4">More...</a><br /></td></tr>
+<tr class="separator:a1f32884c9cd511e180e1a9d5399766e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad54a271a90a4ac60b338e5f50d24b743"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#ad54a271a90a4ac60b338e5f50d24b743">load</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
 <tr class="memdesc:ad54a271a90a4ac60b338e5f50d24b743"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load parameters from a Configuration object.  <a href="#ad54a271a90a4ac60b338e5f50d24b743">More...</a><br /></td></tr>
 <tr class="separator:ad54a271a90a4ac60b338e5f50d24b743"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,19 +171,19 @@ Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a22bbf5a8ccec9b59a470638a3043492d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a22bbf5a8ccec9b59a470638a3043492d">removeFromSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:a22bbf5a8ccec9b59a470638a3043492d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the task from a solver.  <a href="#a22bbf5a8ccec9b59a470638a3043492d">More...</a><br /></td></tr>
-<tr class="separator:a22bbf5a8ccec9b59a470638a3043492d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a507e5d683a144133d6de86699a909a67"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a507e5d683a144133d6de86699a909a67">addToSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:a507e5d683a144133d6de86699a909a67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the task to a solver.  <a href="#a507e5d683a144133d6de86699a909a67">More...</a><br /></td></tr>
-<tr class="separator:a507e5d683a144133d6de86699a909a67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a945db27954f59e4d0c5c3a12728077d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a945db27954f59e4d0c5c3a12728077d9">removeFromSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
+<tr class="memdesc:a945db27954f59e4d0c5c3a12728077d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the task from a solver.  <a href="#a945db27954f59e4d0c5c3a12728077d9">More...</a><br /></td></tr>
+<tr class="separator:a945db27954f59e4d0c5c3a12728077d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a249185c608d3c78b7286f00e8bdb735a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a249185c608d3c78b7286f00e8bdb735a">addToSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
+<tr class="memdesc:a249185c608d3c78b7286f00e8bdb735a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the task to a solver.  <a href="#a249185c608d3c78b7286f00e8bdb735a">More...</a><br /></td></tr>
+<tr class="separator:a249185c608d3c78b7286f00e8bdb735a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4fae4001f175768e25f77903af44ecc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#af4fae4001f175768e25f77903af44ecc">update</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;) override</td></tr>
 <tr class="memdesc:af4fae4001f175768e25f77903af44ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the task.  <a href="#af4fae4001f175768e25f77903af44ecc">More...</a><br /></td></tr>
 <tr class="separator:af4fae4001f175768e25f77903af44ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a2d0705092f1f53d78b2e1993771fc9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a6a2d0705092f1f53d78b2e1993771fc9">addToLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
-<tr class="separator:a6a2d0705092f1f53d78b2e1993771fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a169354fc16eb7b727164aa3c0cdb08aa"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a169354fc16eb7b727164aa3c0cdb08aa">removeFromLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
-<tr class="separator:a169354fc16eb7b727164aa3c0cdb08aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f2a05a42cb073ee71e2783b2a232ee6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a2f2a05a42cb073ee71e2783b2a232ee6">addToLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
+<tr class="separator:a2f2a05a42cb073ee71e2783b2a232ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac22521542e7b290629884352f9014f78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#ac22521542e7b290629884352f9014f78">removeFromLogger</a> (<a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;logger) override</td></tr>
+<tr class="separator:ac22521542e7b290629884352f9014f78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a445bf38376823f52f538c7dcce64fb98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1EndEffectorTask.html#a445bf38376823f52f538c7dcce64fb98">addToGUI</a> (<a class="el" href="structmc__rtc_1_1gui_1_1StateBuilder.html">mc_rtc::gui::StateBuilder</a> &amp;gui) override</td></tr>
 <tr class="separator:a445bf38376823f52f538c7dcce64fb98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_structmc__tasks_1_1MetaTask"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_structmc__tasks_1_1MetaTask')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a></td></tr>
@@ -373,7 +373,7 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a203a2b5099b8a34f2182560ce5ca1e64">mc_tasks::RelativeEndEffectorTask</a>.</p>
+<p>Reimplemented in <a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a4d6f1803464ba94a80db138123662075">mc_tasks::RelativeEndEffectorTask</a>.</p>
 
 </div>
 </div>
@@ -410,8 +410,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a6a2d0705092f1f53d78b2e1993771fc9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a2d0705092f1f53d78b2e1993771fc9">&#9670;&nbsp;</a></span>addToLogger()</h2>
+<a id="a2f2a05a42cb073ee71e2783b2a232ee6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f2a05a42cb073ee71e2783b2a232ee6">&#9670;&nbsp;</a></span>addToLogger()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -420,7 +420,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_tasks::EndEffectorTask::addToLogger </td>
+          <td class="memname">void mc_tasks::EndEffectorTask::addToLogger </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -441,8 +441,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a507e5d683a144133d6de86699a909a67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a507e5d683a144133d6de86699a909a67">&#9670;&nbsp;</a></span>addToSolver()</h2>
+<a id="a249185c608d3c78b7286f00e8bdb735a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a249185c608d3c78b7286f00e8bdb735a">&#9670;&nbsp;</a></span>addToSolver()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -451,7 +451,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_tasks::EndEffectorTask::addToSolver </td>
+          <td class="memname">void mc_tasks::EndEffectorTask::addToSolver </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em></td><td>)</td>
@@ -477,8 +477,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a009ffe2f7a31408e70cff8b86d446caa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a009ffe2f7a31408e70cff8b86d446caa">&#9670;&nbsp;</a></span>dimWeight() <span class="overload">[1/2]</span></h2>
+<a id="a566c97665b6d80c1d5e035bf13b74d3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a566c97665b6d80c1d5e035bf13b74d3a">&#9670;&nbsp;</a></span>dimWeight() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -487,7 +487,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_tasks::EndEffectorTask::dimWeight </td>
+          <td class="memname">void mc_tasks::EndEffectorTask::dimWeight </td>
           <td>(</td>
           <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
           <td class="paramname"><em>dimW</em></td><td>)</td>
@@ -514,8 +514,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ad7483b3be8095c29724a934471ac558e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7483b3be8095c29724a934471ac558e">&#9670;&nbsp;</a></span>dimWeight() <span class="overload">[2/2]</span></h2>
+<a id="abe6e3496c8f51c563f75b6507aa4676a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe6e3496c8f51c563f75b6507aa4676a">&#9670;&nbsp;</a></span>dimWeight() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -524,7 +524,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual Eigen::VectorXd mc_tasks::EndEffectorTask::dimWeight </td>
+          <td class="memname">Eigen::VectorXd mc_tasks::EndEffectorTask::dimWeight </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -543,8 +543,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a37e497c45f98e4f5e14bc8b7ac0c2305"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37e497c45f98e4f5e14bc8b7ac0c2305">&#9670;&nbsp;</a></span>eval()</h2>
+<a id="afd9eb745f23f22752530d3b86329ac61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd9eb745f23f22752530d3b86329ac61">&#9670;&nbsp;</a></span>eval()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -553,7 +553,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual Eigen::VectorXd mc_tasks::EndEffectorTask::eval </td>
+          <td class="memname">Eigen::VectorXd mc_tasks::EndEffectorTask::eval </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -599,7 +599,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Returns the current target positions. </p>
 <dl class="section return"><dt>Returns</dt><dd>Current target position </dd></dl>
 
-<p>Reimplemented in <a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a7037b03d6b2cd7b5c50b49577216ec39">mc_tasks::RelativeEndEffectorTask</a>.</p>
+<p>Reimplemented in <a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a0566da4a9b213b3beda917e35cfb9ad2">mc_tasks::RelativeEndEffectorTask</a>.</p>
 
 </div>
 </div>
@@ -643,8 +643,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a169354fc16eb7b727164aa3c0cdb08aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a169354fc16eb7b727164aa3c0cdb08aa">&#9670;&nbsp;</a></span>removeFromLogger()</h2>
+<a id="ac22521542e7b290629884352f9014f78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac22521542e7b290629884352f9014f78">&#9670;&nbsp;</a></span>removeFromLogger()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -653,7 +653,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_tasks::EndEffectorTask::removeFromLogger </td>
+          <td class="memname">void mc_tasks::EndEffectorTask::removeFromLogger </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structmc__rtc_1_1Logger.html">mc_rtc::Logger</a> &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -668,14 +668,14 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Remove entries from the logger</p>
 <p>This will be called by the solver when the task is removed.</p>
-<p>The default implementation removes nothing from the log. </p>
+<p>The default implementation removes everything registered with the <a class="el" href="structmc__tasks_1_1MetaTask.html" title="Represents a generic task. ">MetaTask</a> instance as a source, it is likely good enough </p>
 
 <p>Reimplemented from <a class="el" href="structmc__tasks_1_1MetaTask.html#a1db4ea4e03d00823e7ee10b444a697b1">mc_tasks::MetaTask</a>.</p>
 
 </div>
 </div>
-<a id="a22bbf5a8ccec9b59a470638a3043492d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22bbf5a8ccec9b59a470638a3043492d">&#9670;&nbsp;</a></span>removeFromSolver()</h2>
+<a id="a945db27954f59e4d0c5c3a12728077d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a945db27954f59e4d0c5c3a12728077d9">&#9670;&nbsp;</a></span>removeFromSolver()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -684,7 +684,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_tasks::EndEffectorTask::removeFromSolver </td>
+          <td class="memname">void mc_tasks::EndEffectorTask::removeFromSolver </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em></td><td>)</td>
@@ -710,8 +710,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a9b093324425bd5b4719dc04f1c4e5648"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b093324425bd5b4719dc04f1c4e5648">&#9670;&nbsp;</a></span>reset()</h2>
+<a id="a4ae325b8848afaae12051f1e02462e8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ae325b8848afaae12051f1e02462e8b">&#9670;&nbsp;</a></span>reset()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -720,7 +720,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_tasks::EndEffectorTask::reset </td>
+          <td class="memname">void mc_tasks::EndEffectorTask::reset </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -738,12 +738,12 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="structmc__tasks_1_1MetaTask.html#a7821083f6def1d54f22ea7c0e223e21a">mc_tasks::MetaTask</a>.</p>
 
-<p>Reimplemented in <a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a18753486034464f63692f0e818302900">mc_tasks::RelativeEndEffectorTask</a>.</p>
+<p>Reimplemented in <a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a793bf82d0b0f17d0e9c72cfdd131fa67">mc_tasks::RelativeEndEffectorTask</a>.</p>
 
 </div>
 </div>
-<a id="a65456b7b90d53cbf097f88d546bda7fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65456b7b90d53cbf097f88d546bda7fb">&#9670;&nbsp;</a></span>resetJointsSelector()</h2>
+<a id="a8571303aab2101cb472ae70ee188d695"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8571303aab2101cb472ae70ee188d695">&#9670;&nbsp;</a></span>resetJointsSelector()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -752,7 +752,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_tasks::EndEffectorTask::resetJointsSelector </td>
+          <td class="memname">void mc_tasks::EndEffectorTask::resetJointsSelector </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em></td><td>)</td>
@@ -778,8 +778,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a36c784af07924cdb90969b93a859fcfd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36c784af07924cdb90969b93a859fcfd">&#9670;&nbsp;</a></span>selectActiveJoints()</h2>
+<a id="a7ed97254c1f37a06ef4a05a1a9645c17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ed97254c1f37a06ef4a05a1a9645c17">&#9670;&nbsp;</a></span>selectActiveJoints()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -788,7 +788,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_tasks::EndEffectorTask::selectActiveJoints </td>
+          <td class="memname">void mc_tasks::EndEffectorTask::selectActiveJoints </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em>, </td>
@@ -834,8 +834,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a5798ae85c5b6dbebabd268e3a33b93e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5798ae85c5b6dbebabd268e3a33b93e2">&#9670;&nbsp;</a></span>selectUnactiveJoints()</h2>
+<a id="a4863aefcbb6a6e9a72430a55c2a6f621"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4863aefcbb6a6e9a72430a55c2a6f621">&#9670;&nbsp;</a></span>selectUnactiveJoints()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -844,7 +844,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void mc_tasks::EndEffectorTask::selectUnactiveJoints </td>
+          <td class="memname">void mc_tasks::EndEffectorTask::selectUnactiveJoints </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;&#160;</td>
           <td class="paramname"><em>solver</em>, </td>
@@ -922,12 +922,12 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a8130a99d7ea7d7e1d064021df41e2de2">mc_tasks::RelativeEndEffectorTask</a>.</p>
+<p>Reimplemented in <a class="el" href="structmc__tasks_1_1RelativeEndEffectorTask.html#a3fc5bfbf363efddcf3f2441b91ff8b0e">mc_tasks::RelativeEndEffectorTask</a>.</p>
 
 </div>
 </div>
-<a id="a151ebbc4eef8b54a6dc00d10d642f7cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a151ebbc4eef8b54a6dc00d10d642f7cb">&#9670;&nbsp;</a></span>speed()</h2>
+<a id="a1f32884c9cd511e180e1a9d5399766e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f32884c9cd511e180e1a9d5399766e4">&#9670;&nbsp;</a></span>speed()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -936,7 +936,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual Eigen::VectorXd mc_tasks::EndEffectorTask::speed </td>
+          <td class="memname">Eigen::VectorXd mc_tasks::EndEffectorTask::speed </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>

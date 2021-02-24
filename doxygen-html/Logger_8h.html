@@ -71,7 +71,8 @@ $(document).ready(function(){initNavTree('Logger_8h.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">Logger.h File Reference</div>  </div>
 </div><!--header-->
@@ -108,7 +109,73 @@ Classes</h2></td></tr>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacemc__rtc"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html">mc_rtc</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:af8dabb8648cae440b76989b1316f2d58"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Logger_8h.html#af8dabb8648cae440b76989b1316f2d58">MC_RTC_LOG_HELPER</a>(NAME,  MEMBER)</td></tr>
+<tr class="separator:af8dabb8648cae440b76989b1316f2d58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f292ca53baa48d5044772065cc899b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Logger_8h.html#a0f292ca53baa48d5044772065cc899b4">MC_RTC_LOG_GETTER</a>(NAME,  METHOD)</td></tr>
+<tr class="separator:a0f292ca53baa48d5044772065cc899b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a0f292ca53baa48d5044772065cc899b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f292ca53baa48d5044772065cc899b4">&#9670;&nbsp;</a></span>MC_RTC_LOG_GETTER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RTC_LOG_GETTER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">METHOD&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                                             \</div><div class="line">  {                                                                              \</div><div class="line">    using MethodRetT = decltype(this-&gt;METHOD());                                 \</div><div class="line">    logger.addLogEntry(NAME, <span class="keyword">this</span>, [<span class="keyword">this</span>]() -&gt; MethodRetT { <span class="keywordflow">return</span> METHOD(); }); \</div><div class="line">  } <span class="keywordflow">while</span>(0)</div></div><!-- fragment --><p>Helper to log ambiguous getter methods </p>
+
+</div>
+</div>
+<a id="af8dabb8648cae440b76989b1316f2d58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8dabb8648cae440b76989b1316f2d58">&#9670;&nbsp;</a></span>MC_RTC_LOG_HELPER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MC_RTC_LOG_HELPER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">NAME, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">MEMBER&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                                          \</div><div class="line">  {                                                                           \</div><div class="line">    using ThisT = <span class="keyword">typename</span> std::remove_pointer&lt;decltype(this)&gt;::type;         \</div><div class="line">    logger.addLogEntry&lt;decltype(&amp;ThisT::MEMBER), &amp;ThisT::MEMBER&gt;(NAME, <span class="keyword">this</span>); \</div><div class="line">  } <span class="keywordflow">while</span>(0)</div></div><!-- fragment --><p>Helper to log members or methods with "this" source to the logger variable </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->

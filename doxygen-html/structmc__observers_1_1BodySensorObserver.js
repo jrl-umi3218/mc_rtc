@@ -9,7 +9,6 @@ var structmc__observers_1_1BodySensorObserver =
     [ "addToLogger", "structmc__observers_1_1BodySensorObserver.html#a4ef62f1518fd7282ef6bec6f48058d22", null ],
     [ "configure", "structmc__observers_1_1BodySensorObserver.html#a82c12053cd7ee0e5fc56a93ed799c542", null ],
     [ "posW", "structmc__observers_1_1BodySensorObserver.html#a40a80d57f8974b3af7d4f65df95161ab", null ],
-    [ "removeFromLogger", "structmc__observers_1_1BodySensorObserver.html#ae4f2d8ef44d7eb67b887080c0e13d66d", null ],
     [ "reset", "structmc__observers_1_1BodySensorObserver.html#a23564250186a2e8780df9150945dad63", null ],
     [ "run", "structmc__observers_1_1BodySensorObserver.html#a2a497aef03e071004c926032776ac520", null ],
     [ "update", "structmc__observers_1_1BodySensorObserver.html#aacf09f3f0913674473a5d0c52a18aff8", null ],

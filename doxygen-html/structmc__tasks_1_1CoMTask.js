@@ -9,6 +9,5 @@ var structmc__tasks_1_1CoMTask =
     [ "com", "structmc__tasks_1_1CoMTask.html#afab16ec288652d1509a90a4df324e3ff", null ],
     [ "load", "structmc__tasks_1_1CoMTask.html#a1e128a33ad470c85099edc2f64409a25", null ],
     [ "move_com", "structmc__tasks_1_1CoMTask.html#ad6a83e7e89cbae657665c8815c558f4d", null ],
-    [ "removeFromLogger", "structmc__tasks_1_1CoMTask.html#a40670ec23d1459006df4e47398c516ed", null ],
-    [ "reset", "structmc__tasks_1_1CoMTask.html#aced244122dda39108ec801512c4ca339", null ]
+    [ "reset", "structmc__tasks_1_1CoMTask.html#ad3b7357c19453006b5af45c25a786f9e", null ]
 ];

@@ -29,7 +29,6 @@ var structmc__tasks_1_1SplineTrajectoryTask =
     [ "pause", "structmc__tasks_1_1SplineTrajectoryTask.html#a936e06384b9ad6a4cdab2e8545e9b0aa", null ],
     [ "refPose", "structmc__tasks_1_1SplineTrajectoryTask.html#a6d3a61eea75bf5fa5125564e9d5752e2", null ],
     [ "refPose", "structmc__tasks_1_1SplineTrajectoryTask.html#a3b6ce55a9a60ddf211b8221be9507603", null ],
-    [ "removeFromLogger", "structmc__tasks_1_1SplineTrajectoryTask.html#a415719c2bcc08727bbaa09b5c3172188", null ],
     [ "setGains", "structmc__tasks_1_1SplineTrajectoryTask.html#a902ea270230783f5a3a9c61c8e72fa49", null ],
     [ "setGains", "structmc__tasks_1_1SplineTrajectoryTask.html#aa477ee50908bbb25fa0a9bb80e81ae5b", null ],
     [ "stiffness", "structmc__tasks_1_1SplineTrajectoryTask.html#a3754c421be82d0d654b1e3c6d6e269fe", null ],

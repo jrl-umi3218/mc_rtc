@@ -14,7 +14,6 @@ var structmc__observers_1_1EncoderObserver =
     [ "EncoderObserver", "structmc__observers_1_1EncoderObserver.html#a038463bc586f4b49cf351cd3425a1499", null ],
     [ "addToLogger", "structmc__observers_1_1EncoderObserver.html#a03e8f96f2c3140443c6a60bc0d9a607c", null ],
     [ "configure", "structmc__observers_1_1EncoderObserver.html#a89f499d2d14498469f00e0a758b7fc0c", null ],
-    [ "removeFromLogger", "structmc__observers_1_1EncoderObserver.html#a45c61707bdac0994b7d5b5a98fecf0bd", null ],
     [ "reset", "structmc__observers_1_1EncoderObserver.html#a2934c6f44a6b49aae0e8e412b04d37c1", null ],
     [ "run", "structmc__observers_1_1EncoderObserver.html#ad65144731e89fc2d6ba40c39e9d5b691", null ],
     [ "update", "structmc__observers_1_1EncoderObserver.html#ade68d7a05c230052c3507b327bcf82f1", null ],

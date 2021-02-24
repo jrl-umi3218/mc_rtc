@@ -7,6 +7,5 @@ var structmc__tasks_1_1MomentumTask =
     [ "load", "structmc__tasks_1_1MomentumTask.html#a722bd3ba35066d38f9d301126f46e8fc", null ],
     [ "momentum", "structmc__tasks_1_1MomentumTask.html#a6ba0b4c9ecf9da4571b8c052b325c5d3", null ],
     [ "momentum", "structmc__tasks_1_1MomentumTask.html#a288104247dc5c93a7915300458da2f06", null ],
-    [ "removeFromLogger", "structmc__tasks_1_1MomentumTask.html#a4e64f81c801d988a04027e39769daca2", null ],
-    [ "reset", "structmc__tasks_1_1MomentumTask.html#acafe35db18c7d7d1956aeea5b23927ef", null ]
+    [ "reset", "structmc__tasks_1_1MomentumTask.html#ab4c83463d464cb179c2f914fccfcd3b2", null ]
 ];
