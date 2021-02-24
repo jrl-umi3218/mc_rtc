@@ -198,6 +198,25 @@ public:
     addLogEntry(name, static_cast<const void *>(nullptr), std::forward<T>(get_fn));
   }
 
+  /** Add multiple entries at once with the same entry
+   *
+   * \see addLogEntry for requirements on the callbacks
+   *
+   * \param source Source of the log entry
+   *
+   * \param name Name of the log entry
+   *
+   * \param get_fn A function that provides data that should be logged
+   *
+   * \param args A serie of name, get_fn values
+   */
+  template<typename SourceT, typename CallbackT, typename... Args>
+  void addLogEntries(const SourceT * source, const std::string & name, CallbackT && get_fn, Args &&... args)
+  {
+    addLogEntry(name, source, get_fn);
+    addLogEntries(source, std::forward<Args>(args)...);
+  }
+
   /** Remove a log entry from the log
    *
    * This has no effect if the log entry does not exist.
@@ -243,9 +262,28 @@ private:
   bool log_entries_changed_ = false;
   /** Contains all the log entries */
   std::unordered_map<std::string, LogEntry> log_entries_;
+
+  /** Terminal condition for addLogEntries */
+  template<typename SourceT>
+  void addLogEntries(const SourceT *)
+  {
+  }
 };
 
-/** Helper to log members or methods */
-#define MC_RTC_LOG_HELPER(LOGGER, NAME, SOURCE, POINTER) LOGGER.addLogEntry<decltype(POINTER), POINTER>(NAME, SOURCE)
+/** Helper to log members or methods with "this" source to the logger variable */
+#define MC_RTC_LOG_HELPER(NAME, MEMBER)                                       \
+  do                                                                          \
+  {                                                                           \
+    using ThisT = typename std::remove_pointer<decltype(this)>::type;         \
+    logger.addLogEntry<decltype(&ThisT::MEMBER), &ThisT::MEMBER>(NAME, this); \
+  } while(0)
+
+/** Helper to log ambiguous getter methods */
+#define MC_RTC_LOG_GETTER(NAME, METHOD)                                          \
+  do                                                                             \
+  {                                                                              \
+    using MethodRetT = decltype(this->METHOD());                                 \
+    logger.addLogEntry(NAME, this, [this]() -> MethodRetT { return METHOD(); }); \
+  } while(0)
 
 } // namespace mc_rtc

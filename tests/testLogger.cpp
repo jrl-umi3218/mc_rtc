@@ -119,18 +119,18 @@ public:
 
   void addToLoggerWithMemberPointerMacro(mc_rtc::Logger & logger)
   {
-    MC_RTC_LOG_HELPER(logger, "bool", this, &LogData::b);
-    MC_RTC_LOG_HELPER(logger, "double", this, &LogData::d);
-    MC_RTC_LOG_HELPER(logger, "std::string", this, &LogData::s);
-    MC_RTC_LOG_HELPER(logger, "Eigen::Vector2d", this, &LogData::v2d);
-    MC_RTC_LOG_HELPER(logger, "Eigen::Vector3d", this, &LogData::v3d);
-    MC_RTC_LOG_HELPER(logger, "Eigen::Vector6d", this, &LogData::v6d);
-    MC_RTC_LOG_HELPER(logger, "Eigen::VectorXd", this, &LogData::vxd);
-    MC_RTC_LOG_HELPER(logger, "Eigen::Quaterniond", this, &LogData::q);
-    MC_RTC_LOG_HELPER(logger, "sva::PTransformd", this, &LogData::pt);
-    MC_RTC_LOG_HELPER(logger, "sva::ForceVecd", this, &LogData::fv);
-    MC_RTC_LOG_HELPER(logger, "sva::MotionVecd", this, &LogData::mv);
-    MC_RTC_LOG_HELPER(logger, "std::vector<double>", this, &LogData::v);
+    MC_RTC_LOG_HELPER("bool", b);
+    MC_RTC_LOG_HELPER("double", d);
+    MC_RTC_LOG_HELPER("std::string", s);
+    MC_RTC_LOG_HELPER("Eigen::Vector2d", v2d);
+    MC_RTC_LOG_HELPER("Eigen::Vector3d", v3d);
+    MC_RTC_LOG_HELPER("Eigen::Vector6d", v6d);
+    MC_RTC_LOG_HELPER("Eigen::VectorXd", vxd);
+    MC_RTC_LOG_HELPER("Eigen::Quaterniond", q);
+    MC_RTC_LOG_HELPER("sva::PTransformd", pt);
+    MC_RTC_LOG_HELPER("sva::ForceVecd", fv);
+    MC_RTC_LOG_HELPER("sva::MotionVecd", mv);
+    MC_RTC_LOG_HELPER("std::vector<double>", v);
   }
 
   void addToLoggerWithGetter(mc_rtc::Logger & logger)
@@ -151,18 +151,18 @@ public:
 
   void addToLoggerWithGetterMacro(mc_rtc::Logger & logger)
   {
-    MC_RTC_LOG_HELPER(logger, "bool", this, &LogData::get_b);
-    MC_RTC_LOG_HELPER(logger, "double", this, &LogData::get_d);
-    MC_RTC_LOG_HELPER(logger, "std::string", this, &LogData::get_s);
-    MC_RTC_LOG_HELPER(logger, "Eigen::Vector2d", this, &LogData::get_v2d);
-    MC_RTC_LOG_HELPER(logger, "Eigen::Vector3d", this, &LogData::get_v3d);
-    MC_RTC_LOG_HELPER(logger, "Eigen::Vector6d", this, &LogData::get_v6d);
-    MC_RTC_LOG_HELPER(logger, "Eigen::VectorXd", this, &LogData::get_vxd);
-    MC_RTC_LOG_HELPER(logger, "Eigen::Quaterniond", this, &LogData::get_q);
-    MC_RTC_LOG_HELPER(logger, "sva::PTransformd", this, &LogData::get_pt);
-    MC_RTC_LOG_HELPER(logger, "sva::ForceVecd", this, &LogData::get_fv);
-    MC_RTC_LOG_HELPER(logger, "sva::MotionVecd", this, &LogData::get_mv);
-    MC_RTC_LOG_HELPER(logger, "std::vector<double>", this, &LogData::get_v);
+    MC_RTC_LOG_HELPER("bool", get_b);
+    MC_RTC_LOG_HELPER("double", get_d);
+    MC_RTC_LOG_HELPER("std::string", get_s);
+    MC_RTC_LOG_HELPER("Eigen::Vector2d", get_v2d);
+    MC_RTC_LOG_HELPER("Eigen::Vector3d", get_v3d);
+    MC_RTC_LOG_HELPER("Eigen::Vector6d", get_v6d);
+    MC_RTC_LOG_HELPER("Eigen::VectorXd", get_vxd);
+    MC_RTC_LOG_HELPER("Eigen::Quaterniond", get_q);
+    MC_RTC_LOG_HELPER("sva::PTransformd", get_pt);
+    MC_RTC_LOG_HELPER("sva::ForceVecd", get_fv);
+    MC_RTC_LOG_HELPER("sva::MotionVecd", get_mv);
+    MC_RTC_LOG_HELPER("std::vector<double>", get_v);
   }
 
   void removeFromLogger(mc_rtc::Logger & logger)

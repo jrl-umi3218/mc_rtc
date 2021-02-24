@@ -391,9 +391,9 @@ void SplineTrajectoryTask<Derived>::addToLogger(mc_rtc::Logger & logger)
     const auto & robot = this->robots.robot(rIndex_);
     return robot.surfacePose(surfaceName_);
   });
-  logger.addLogEntry(name_ + "_targetPose", this, [this]() { return target(); });
-  logger.addLogEntry(name_ + "_refPose", this, [this]() { return refPose(); });
-  MC_RTC_LOG_HELPER(logger, name_ + "_speed", this, &SplineTrajectoryBase::speed);
+  MC_RTC_LOG_GETTER(name_ + "_targetPose", target);
+  MC_RTC_LOG_GETTER(name_ + "_refPose", refPose);
+  MC_RTC_LOG_HELPER(name_ + "_speed", speed);
 }
 
 template<typename Derived>

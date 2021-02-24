@@ -148,7 +148,8 @@ void StabilizerStandingState::start(Controller & ctl)
                                  D_ = 2 * std::sqrt(K_);
                                }));
 
-#define LOG_MEMBER(NAME, MEMBER) MC_RTC_LOG_HELPER(ctl.logger(), name() + NAME, this, &StabilizerStandingState::MEMBER)
+#define LOG_MEMBER(NAME, MEMBER) MC_RTC_LOG_HELPER(name() + NAME, MEMBER)
+  auto & logger = ctl.logger();
   LOG_MEMBER("_stiffness", K_);
   LOG_MEMBER("_damping", D_);
   LOG_MEMBER("_targetCoM", comTarget_);

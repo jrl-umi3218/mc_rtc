@@ -425,13 +425,16 @@ void TrajectoryTaskGeneric<T>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 template<typename T>
 void TrajectoryTaskGeneric<T>::addToLogger(mc_rtc::Logger & logger)
 {
-  logger.addLogEntry(name_ + "_damping", this, [this]() { return damping_(0); });
-  logger.addLogEntry(name_ + "_stiffness", this, [this]() { return stiffness_(0); });
-  logger.addLogEntry(name_ + "_dimWeight", this, [this]() { return dimWeight(); });
-  MC_RTC_LOG_HELPER(logger, name_ + "_dimDamping", this, &TrajectoryBase::damping_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_dimStiffness", this, &TrajectoryBase::stiffness_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_refVel", this, &TrajectoryBase::refVel_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_refAccel", this, &TrajectoryBase::refAccel_);
+  // clang-format off
+  logger.addLogEntries(this,
+                       name_ + "_damping", [this]() { return damping_(0); },
+                       name_ + "_stiffness", [this]() { return stiffness_(0); });
+  // clang-format on
+  MC_RTC_LOG_GETTER(name_ + "_dimWeight", dimWeight);
+  MC_RTC_LOG_HELPER(name_ + "_dimDamping", damping_);
+  MC_RTC_LOG_HELPER(name_ + "_dimStiffness", stiffness_);
+  MC_RTC_LOG_HELPER(name_ + "_refVel", refVel_);
+  MC_RTC_LOG_HELPER(name_ + "_refAccel", refAccel_);
 }
 
 template<typename T>

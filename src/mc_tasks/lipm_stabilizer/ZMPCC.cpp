@@ -75,7 +75,7 @@ void ZMPCC::addToLogger(mc_rtc::Logger & logger, const std::string & name)
 {
   logger.addLogEntry(name + "_zmpcc_comAdmittance", this,
                      [this]() -> const Eigen::Vector2d & { return config_.comAdmittance; });
-  MC_RTC_LOG_HELPER(logger, name + "_zmpcc_errorZMP", this, &ZMPCC::error_);
+  MC_RTC_LOG_HELPER(name + "_zmpcc_errorZMP", error_);
 }
 
 void ZMPCC::removeFromLogger(mc_rtc::Logger & logger, const std::string &)

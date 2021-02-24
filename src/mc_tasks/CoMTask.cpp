@@ -90,8 +90,8 @@ const Eigen::Vector3d & CoMTask::actual() const
 void CoMTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
-  MC_RTC_LOG_HELPER(logger, name_ + "_pos", this, &CoMTask::actual);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target", this, &CoMTask::cur_com_);
+  MC_RTC_LOG_HELPER(name_ + "_pos", actual);
+  MC_RTC_LOG_HELPER(name_ + "_target", cur_com_);
 }
 
 void CoMTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

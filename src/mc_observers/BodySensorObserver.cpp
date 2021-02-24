@@ -147,20 +147,18 @@ void BodySensorObserver::addToLogger(const mc_control::MCController &,
                                      const std::string & category)
 {
   auto cat = category + "_" + fbSensorName_;
-#define LOG_MEMBER(NAME, MEMBER) MC_RTC_LOG_HELPER(logger, cat + NAME, this, &BodySensorObserver::MEMBER)
   if(logPos_)
   {
-    LOG_MEMBER("_posW", posW_);
+    MC_RTC_LOG_HELPER(cat + "_posW", posW_);
   }
   if(logVel_)
   {
-    LOG_MEMBER("_velW", velW_);
+    MC_RTC_LOG_HELPER(cat + "_velW", velW_);
   }
   if(logAcc_)
   {
-    LOG_MEMBER("_accW", accW_);
+    MC_RTC_LOG_HELPER(cat + "_accW", accW_);
   }
-#undef LOG_MEMBER
 }
 
 void BodySensorObserver::addToGUI(const mc_control::MCController & ctl,

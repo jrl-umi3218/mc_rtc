@@ -82,8 +82,8 @@ void SlidingFootContactState::start(Controller & ctl)
   ctl.contactConstraint().contactConstr->resetDofContacts();
   setHandDofContact(ctl);
   slidingContactId_ = getContactId(ctl, slidingSurface_);
-#define LOG_MEMBER(NAME, MEMBER) \
-  MC_RTC_LOG_HELPER(ctl.logger(), "Sliding_" + slidingSurface_ + NAME, this, &SlidingFootContactState::MEMBER)
+#define LOG_MEMBER(NAME, MEMBER) MC_RTC_LOG_HELPER("Sliding_" + slidingSurface_ + NAME, MEMBER)
+  auto & logger = ctl.logger();
   LOG_MEMBER("_com_targetIn", com_target0);
   LOG_MEMBER("_com_sensor", com_sensor);
 #undef LOG_MEMBER

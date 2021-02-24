@@ -293,14 +293,14 @@ void StabilizerTask::removeFromGUI(mc_rtc::gui::StateBuilder & gui)
 void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
 {
   // Globbal log entries added to other categories
-  MC_RTC_LOG_HELPER(logger, "perf_" + name_, this, &StabilizerTask::runTime_);
+  MC_RTC_LOG_HELPER("perf_" + name_, runTime_);
 
-  MC_RTC_LOG_HELPER(logger, name_ + "_error_dcm_average", this, &StabilizerTask::dcmAverageError_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_error_dcm_pos", this, &StabilizerTask::dcmError_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_error_dcm_vel", this, &StabilizerTask::dcmVelError_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_error_dfz_force", this, &StabilizerTask::dfzForceError_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_error_dfz_height", this, &StabilizerTask::dfzHeightError_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_error_vdc", this, &StabilizerTask::vdcHeightError_);
+  MC_RTC_LOG_HELPER(name_ + "_error_dcm_average", dcmAverageError_);
+  MC_RTC_LOG_HELPER(name_ + "_error_dcm_pos", dcmError_);
+  MC_RTC_LOG_HELPER(name_ + "_error_dcm_vel", dcmVelError_);
+  MC_RTC_LOG_HELPER(name_ + "_error_dfz_force", dfzForceError_);
+  MC_RTC_LOG_HELPER(name_ + "_error_dfz_height", dfzHeightError_);
+  MC_RTC_LOG_HELPER(name_ + "_error_vdc", vdcHeightError_);
   logger.addLogEntry(name_ + "_admittance_cop", this, [this]() -> const Eigen::Vector2d & { return c_.copAdmittance; });
   logger.addLogEntry(name_ + "_admittance_dfz", this, [this]() { return c_.dfzAdmittance; });
   logger.addLogEntry(name_ + "_dcmDerivator_filtered", this, [this]() { return dcmDerivator_.eval(); });
@@ -325,19 +325,19 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() { return std::pow(c_.fdqpWeights.pressureSqrt, 2); });
   logger.addLogEntry(name_ + "_vdc_frequency", this, [this]() { return c_.vdcFrequency; });
   logger.addLogEntry(name_ + "_vdc_stiffness", this, [this]() { return c_.vdcStiffness; });
-  MC_RTC_LOG_HELPER(logger, name_ + "_wrench", this, &StabilizerTask::distribWrench_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_support_min", this, &StabilizerTask::supportMin_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_support_max", this, &StabilizerTask::supportMax_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_left_foot_ratio", this, &StabilizerTask::leftFootRatio_);
+  MC_RTC_LOG_HELPER(name_ + "_wrench", distribWrench_);
+  MC_RTC_LOG_HELPER(name_ + "_support_min", supportMin_);
+  MC_RTC_LOG_HELPER(name_ + "_support_max", supportMax_);
+  MC_RTC_LOG_HELPER(name_ + "_left_foot_ratio", leftFootRatio_);
 
   // Stabilizer targets
-  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_com", this, &StabilizerTask::comTarget_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_comd", this, &StabilizerTask::comdTarget_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_comdd", this, &StabilizerTask::comddTarget_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_dcm", this, &StabilizerTask::dcmTarget_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_omega", this, &StabilizerTask::omega_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target_pendulum_zmp", this, &StabilizerTask::zmpTarget_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target_stabilizer_zmp", this, &StabilizerTask::distribZMP_);
+  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_com", comTarget_);
+  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_comd", comdTarget_);
+  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_comdd", comddTarget_);
+  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_dcm", dcmTarget_);
+  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_omega", omega_);
+  MC_RTC_LOG_HELPER(name_ + "_target_pendulum_zmp", zmpTarget_);
+  MC_RTC_LOG_HELPER(name_ + "_target_stabilizer_zmp", distribZMP_);
 
   logger.addLogEntry(name_ + "_contactState", this, [this]() -> int {
     if(inDoubleSupport())
@@ -364,10 +364,10 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() { return realRobot().surfacePose(footSurface(ContactState::Left)); });
   logger.addLogEntry(name_ + "_realRobot_RightFoot", this,
                      [this]() { return realRobot().surfacePose(footSurface(ContactState::Right)); });
-  MC_RTC_LOG_HELPER(logger, name_ + "_realRobot_com", this, &StabilizerTask::measuredCoM_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_realRobot_comd", this, &StabilizerTask::measuredCoMd_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_realRobot_dcm", this, &StabilizerTask::measuredDCM_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_realRobot_dcm_unbiased", this, &StabilizerTask::measuredDCMUnbiased_);
+  MC_RTC_LOG_HELPER(name_ + "_realRobot_com", measuredCoM_);
+  MC_RTC_LOG_HELPER(name_ + "_realRobot_comd", measuredCoMd_);
+  MC_RTC_LOG_HELPER(name_ + "_realRobot_dcm", measuredDCM_);
+  MC_RTC_LOG_HELPER(name_ + "_realRobot_dcm_unbiased", measuredDCMUnbiased_);
   logger.addLogEntry(name_ + "_realRobot_posW", this,
                      [this]() -> const sva::PTransformd & { return realRobot().posW(); });
   logger.addLogEntry(name_ + "_realRobot_wrench", this,

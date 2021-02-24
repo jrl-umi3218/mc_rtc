@@ -111,11 +111,11 @@ void AdmittanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 {
   SurfaceTransformTask::addToLogger(logger);
-  MC_RTC_LOG_HELPER(logger, name_ + "_admittance", this, &AdmittanceTask::admittance_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_measured_wrench", this, &AdmittanceTask::measuredWrench);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target_body_vel", this, &AdmittanceTask::feedforwardVelB_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target_wrench", this, &AdmittanceTask::targetWrench_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_vel_filter_gain", this, &AdmittanceTask::velFilterGain_);
+  MC_RTC_LOG_HELPER(name_ + "_admittance", admittance_);
+  MC_RTC_LOG_HELPER(name_ + "_measured_wrench", measuredWrench);
+  MC_RTC_LOG_HELPER(name_ + "_target_body_vel", feedforwardVelB_);
+  MC_RTC_LOG_HELPER(name_ + "_target_wrench", targetWrench_);
+  MC_RTC_LOG_HELPER(name_ + "_vel_filter_gain", velFilterGain_);
 }
 
 void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

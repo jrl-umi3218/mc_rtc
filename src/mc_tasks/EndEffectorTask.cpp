@@ -195,7 +195,7 @@ void EndEffectorTask::addToLogger(mc_rtc::Logger & logger)
 {
   positionTask->addToLogger(logger);
   orientationTask->addToLogger(logger);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target", this, &EndEffectorTask::curTransform);
+  MC_RTC_LOG_HELPER(name_ + "_target", curTransform);
   logger.addLogEntry(
       name_, this, [this]() -> const sva::PTransformd & { return robots.robot(robotIndex).mbc().bodyPosW[bodyIndex]; });
 }

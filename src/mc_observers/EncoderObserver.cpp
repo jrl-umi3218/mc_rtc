@@ -209,7 +209,7 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
   {
     if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
     {
-      MC_RTC_LOG_HELPER(logger, category + "_encoderFiniteDifferences", this, &EncoderObserver::encodersVelocity_);
+      MC_RTC_LOG_HELPER(category + "_encoderFiniteDifferences", encodersVelocity_);
     }
     else if(velUpdate_ == VelUpdate::EncoderVelocities)
     {

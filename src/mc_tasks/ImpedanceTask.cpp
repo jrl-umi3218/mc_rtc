@@ -190,19 +190,19 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() -> const sva::ImpedanceVecd & { return gains().wrench().vec(); });
 
   // compliance values
-  MC_RTC_LOG_HELPER(logger, name_ + "_deltaCompliancePose", this, &ImpedanceTask::deltaCompPoseW_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_deltaComplianceVel", this, &ImpedanceTask::deltaCompVelW_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_deltaComplianceAccel", this, &ImpedanceTask::deltaCompAccelW_);
+  MC_RTC_LOG_HELPER(name_ + "_deltaCompliancePose", deltaCompPoseW_);
+  MC_RTC_LOG_HELPER(name_ + "_deltaComplianceVel", deltaCompVelW_);
+  MC_RTC_LOG_HELPER(name_ + "_deltaComplianceAccel", deltaCompAccelW_);
 
   // target values
-  MC_RTC_LOG_HELPER(logger, name_ + "_targetPose", this, &ImpedanceTask::targetPoseW_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_targetVel", this, &ImpedanceTask::targetVelW_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_targetAccel", this, &ImpedanceTask::targetAccelW_);
+  MC_RTC_LOG_HELPER(name_ + "_targetPose", targetPoseW_);
+  MC_RTC_LOG_HELPER(name_ + "_targetVel", targetVelW_);
+  MC_RTC_LOG_HELPER(name_ + "_targetAccel", targetAccelW_);
 
   // wrench
-  MC_RTC_LOG_HELPER(logger, name_ + "_targetWrench", this, &ImpedanceTask::targetWrench_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_measuredWrench", this, &ImpedanceTask::measuredWrench_);
-  MC_RTC_LOG_HELPER(logger, name_ + "_filteredMeasuredWrench", this, &ImpedanceTask::filteredMeasuredWrench_);
+  MC_RTC_LOG_HELPER(name_ + "_targetWrench", targetWrench_);
+  MC_RTC_LOG_HELPER(name_ + "_measuredWrench", measuredWrench_);
+  MC_RTC_LOG_HELPER(name_ + "_filteredMeasuredWrench", filteredMeasuredWrench_);
   logger.addLogEntry(name_ + "_cutoffPeriod", this, [this]() { return cutoffPeriod(); });
 }
 

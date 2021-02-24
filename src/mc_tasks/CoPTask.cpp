@@ -45,8 +45,8 @@ void CoPTask::update(mc_solver::QPSolver & solver)
 void CoPTask::addToLogger(mc_rtc::Logger & logger)
 {
   DampingTask::addToLogger(logger);
-  MC_RTC_LOG_HELPER(logger, name_ + "_measured_cop", this, &CoPTask::measuredCoP);
-  MC_RTC_LOG_HELPER(logger, name_ + "_target_cop", this, &CoPTask::targetCoP_);
+  MC_RTC_LOG_HELPER(name_ + "_measured_cop", measuredCoP);
+  MC_RTC_LOG_HELPER(name_ + "_target_cop", targetCoP_);
 }
 
 void CoPTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
