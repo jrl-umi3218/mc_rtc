@@ -111,21 +111,11 @@ void AdmittanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configurat
 void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 {
   SurfaceTransformTask::addToLogger(logger);
-  logger.addLogEntry(name_ + "_admittance", [this]() -> const sva::ForceVecd & { return admittance_; });
-  logger.addLogEntry(name_ + "_measured_wrench", [this]() -> sva::ForceVecd { return measuredWrench(); });
-  logger.addLogEntry(name_ + "_target_body_vel", [this]() -> const sva::MotionVecd & { return feedforwardVelB_; });
-  logger.addLogEntry(name_ + "_target_wrench", [this]() -> const sva::ForceVecd & { return targetWrench_; });
-  logger.addLogEntry(name_ + "_vel_filter_gain", [this]() { return velFilterGain_; });
-}
-
-void AdmittanceTask::removeFromLogger(mc_rtc::Logger & logger)
-{
-  SurfaceTransformTask::removeFromLogger(logger);
-  logger.removeLogEntry(name_ + "_admittance");
-  logger.removeLogEntry(name_ + "_measured_wrench");
-  logger.removeLogEntry(name_ + "_target_body_vel");
-  logger.removeLogEntry(name_ + "_target_wrench");
-  logger.removeLogEntry(name_ + "_vel_filter_gain");
+  MC_RTC_LOG_HELPER(name_ + "_admittance", admittance_);
+  MC_RTC_LOG_HELPER(name_ + "_measured_wrench", measuredWrench);
+  MC_RTC_LOG_HELPER(name_ + "_target_body_vel", feedforwardVelB_);
+  MC_RTC_LOG_HELPER(name_ + "_target_wrench", targetWrench_);
+  MC_RTC_LOG_HELPER(name_ + "_vel_filter_gain", velFilterGain_);
 }
 
 void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

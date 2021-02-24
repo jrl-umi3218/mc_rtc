@@ -57,13 +57,13 @@ public:
                           double stiffness = 10.0,
                           double weight = 1000.0);
 
-  virtual void reset() override;
+  void reset() override;
 
-  virtual void add_ef_pose(const sva::PTransformd & dtr) override;
+  void add_ef_pose(const sva::PTransformd & dtr) override;
 
-  virtual void set_ef_pose(const sva::PTransformd & tf) override;
+  void set_ef_pose(const sva::PTransformd & tf) override;
 
-  virtual sva::PTransformd get_ef_pose() override;
+  sva::PTransformd get_ef_pose() override;
 
 protected:
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;

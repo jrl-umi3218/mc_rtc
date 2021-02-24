@@ -77,7 +77,6 @@ struct MC_OBSERVER_DLLAPI KinematicInertialPoseObserver : public Observer
 
 protected:
   void addToLogger(const mc_control::MCController & ctl, mc_rtc::Logger &, const std::string & category) override;
-  void removeFromLogger(mc_rtc::Logger &, const std::string & category) override;
   void addToGUI(const mc_control::MCController &,
                 mc_rtc::gui::StateBuilder &,
                 const std::vector<std::string> & category) override;

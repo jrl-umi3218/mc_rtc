@@ -45,17 +45,8 @@ void CoPTask::update(mc_solver::QPSolver & solver)
 void CoPTask::addToLogger(mc_rtc::Logger & logger)
 {
   DampingTask::addToLogger(logger);
-  logger.addLogEntry(name_ + "_measured_cop", [this]() -> Eigen::Vector2d { return measuredCoP(); });
-  logger.addLogEntry(name_ + "_target_cop", [this]() -> const Eigen::Vector2d & { return targetCoP_; });
-}
-
-void CoPTask::removeFromLogger(mc_rtc::Logger & logger)
-{
-  DampingTask::removeFromLogger(logger);
-  logger.removeLogEntry(name_ + "_measured_cop");
-  logger.removeLogEntry(name_ + "_measured_copW");
-  logger.removeLogEntry(name_ + "_target_cop");
-  logger.removeLogEntry(name_ + "_target_copW");
+  MC_RTC_LOG_HELPER(name_ + "_measured_cop", measuredCoP);
+  MC_RTC_LOG_HELPER(name_ + "_target_cop", targetCoP_);
 }
 
 void CoPTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

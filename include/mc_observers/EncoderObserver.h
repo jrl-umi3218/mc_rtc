@@ -59,7 +59,6 @@ struct MC_OBSERVER_DLLAPI EncoderObserver : public Observer
 
 protected:
   void addToLogger(const mc_control::MCController &, mc_rtc::Logger &, const std::string &) override;
-  void removeFromLogger(mc_rtc::Logger &, const std::string &) override;
 
 protected:
   /*! Position update type */

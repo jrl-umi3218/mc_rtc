@@ -74,16 +74,9 @@ void OrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 void OrientationTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
-  logger.addLogEntry(name_ + "_target", [this]() { return Eigen::Quaterniond(orientation()); });
-  logger.addLogEntry(name_,
+  logger.addLogEntry(name_ + "_target", this, [this]() { return Eigen::Quaterniond(orientation()); });
+  logger.addLogEntry(name_, this,
                      [this]() { return Eigen::Quaterniond(robots.robot(rIndex).mbc().bodyPosW[bIndex].rotation()); });
-}
-
-void OrientationTask::removeFromLogger(mc_rtc::Logger & logger)
-{
-  TrajectoryBase::removeFromLogger(logger);
-  logger.removeLogEntry(name_ + "_target");
-  logger.removeLogEntry(name_);
 }
 
 } // namespace mc_tasks

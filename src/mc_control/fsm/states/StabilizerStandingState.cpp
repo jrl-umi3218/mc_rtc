@@ -148,10 +148,13 @@ void StabilizerStandingState::start(Controller & ctl)
                                  D_ = 2 * std::sqrt(K_);
                                }));
 
-  ctl.logger().addLogEntry(name() + "_stiffness", [this]() { return K_; });
-  ctl.logger().addLogEntry(name() + "_damping", [this]() { return D_; });
-  ctl.logger().addLogEntry(name() + "_targetCoM", [this]() -> const Eigen::Vector3d & { return comTarget_; });
-  ctl.logger().addLogEntry(name() + "_targetCoP", [this]() -> const Eigen::Vector3d & { return copTarget_; });
+#define LOG_MEMBER(NAME, MEMBER) MC_RTC_LOG_HELPER(name() + NAME, MEMBER)
+  auto & logger = ctl.logger();
+  LOG_MEMBER("_stiffness", K_);
+  LOG_MEMBER("_damping", D_);
+  LOG_MEMBER("_targetCoM", comTarget_);
+  LOG_MEMBER("_targetCoP", copTarget_);
+#undef LOG_MEMBER
 
   // Provide accessor callbacks on the datastore
   ctl.datastore().make_call("StabilizerStandingState::getCoMTarget",
@@ -243,10 +246,7 @@ void StabilizerStandingState::teardown(Controller & ctl)
 {
   ctl.solver().removeTask(stabilizerTask_);
   ctl.gui()->removeCategory({"FSM", name()});
-  ctl.logger().removeLogEntry(name() + "_stiffness");
-  ctl.logger().removeLogEntry(name() + "_damping");
-  ctl.logger().removeLogEntry(name() + "_targetCoM");
-  ctl.logger().removeLogEntry(name() + "_targetCoP");
+  ctl.logger().removeLogEntries(this);
 
   ctl.datastore().remove("StabilizerStandingState::getCoMTarget");
   ctl.datastore().remove("StabilizerStandingState::setCoMTarget");

@@ -78,7 +78,7 @@ public:
    *
    * Set the task objective to the current body orientation
    */
-  virtual void reset() override;
+  void reset() override;
 
   /*! \brief Set the current error
    *

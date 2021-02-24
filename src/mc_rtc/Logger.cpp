@@ -29,6 +29,7 @@ struct LoggerImpl
 
   virtual void initialize(const bfs::path & path) = 0;
   virtual void write(char * data, size_t size) = 0;
+  virtual void flush() {}
 
   std::vector<char> data_;
 
@@ -36,6 +37,7 @@ struct LoggerImpl
   std::string tmpl;
   double log_iter_ = 0;
   bool valid_ = true;
+  std::string path_ = "";
   std::ofstream log_;
 
 protected:
@@ -48,6 +50,7 @@ protected:
   // Open file and write magic number to it right away
   void open(const std::string & path)
   {
+    path_ = path;
     log_.open(path, std::ofstream::binary);
     log_.write((const char *)&Logger::magic, sizeof(Logger::magic));
   }
@@ -59,7 +62,7 @@ struct LoggerNonThreadedPolicyImpl : public LoggerImpl
 {
   LoggerNonThreadedPolicyImpl(const std::string & directory, const std::string & tmpl) : LoggerImpl(directory, tmpl) {}
 
-  virtual void initialize(const bfs::path & path) final
+  void initialize(const bfs::path & path) final
   {
     if(log_.is_open())
     {
@@ -68,11 +71,19 @@ struct LoggerNonThreadedPolicyImpl : public LoggerImpl
     open(path.string());
   }
 
-  virtual void write(char * data, size_t size) final
+  void write(char * data, size_t size) final
   {
     if(valid_)
     {
       fwrite(data, size);
+    }
+  }
+
+  void flush() final
+  {
+    if(valid_)
+    {
+      log_.flush();
     }
   }
 };
@@ -116,7 +127,7 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
     return true;
   }
 
-  virtual void initialize(const bfs::path & path) final
+  void initialize(const bfs::path & path) final
   {
     if(log_.is_open())
     {
@@ -130,7 +141,7 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
     open(path.string());
   }
 
-  virtual void write(char * data, size_t size) final
+  void write(char * data, size_t size) final
   {
     char * ndata = new char[size];
     std::memcpy(ndata, data, size);
@@ -211,7 +222,7 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume)
   {
     if(!log_entries_.count("t"))
     {
-      addLogEntry("t", [this, timestep]() {
+      addLogEntry("t", this, [this, timestep]() {
         impl_->log_iter_ += timestep;
         return impl_->log_iter_ - timestep;
       });
@@ -252,7 +263,7 @@ void Logger::log()
   builder.start_array(2 * log_entries_.size());
   for(auto & e : log_entries_)
   {
-    e.second(builder);
+    e.second.log_cb(builder);
   }
   builder.finish_array();
   builder.finish_array();
@@ -269,8 +280,35 @@ void Logger::removeLogEntry(const std::string & name)
   }
 }
 
+void Logger::removeLogEntries(const void * source)
+{
+  for(auto it = log_entries_.begin(); it != log_entries_.end();)
+  {
+    if(it->second.source == source)
+    {
+      log_entries_changed_ = true;
+      it = log_entries_.erase(it);
+    }
+    else
+    {
+      ++it;
+    }
+  }
+}
+
 double Logger::t() const
 {
   return impl_->log_iter_;
 }
+
+const std::string & Logger::path() const
+{
+  return impl_->path_;
+}
+
+void Logger::flush()
+{
+  impl_->flush();
+}
+
 } // namespace mc_rtc

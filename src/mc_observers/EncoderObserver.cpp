@@ -184,22 +184,24 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
   {
     if(posUpdate_ == PosUpdate::EncoderValues)
     {
-      logger.addLogEntry(category + "_encoderValues", [this, &ctl]() { return ctl.robot(robot_).encoderValues(); });
+      logger.addLogEntry(category + "_encoderValues", this,
+                         [this, &ctl]() -> const std::vector<double> & { return ctl.robot(robot_).encoderValues(); });
     }
-    else if(velUpdate_ == VelUpdate::Control)
+    else if(posUpdate_ == PosUpdate::Control)
     {
       std::vector<double> qOut(ctl.robot(robot_).refJointOrder().size(), 0);
-      logger.addLogEntry(category + "_controlValues", [this, &ctl, qOut]() mutable -> const std::vector<double> & {
-        for(size_t i = 0; i < qOut.size(); ++i)
-        {
-          auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
-          if(jIdx != -1)
-          {
-            qOut[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0];
-          }
-        }
-        return qOut;
-      });
+      logger.addLogEntry(category + "_controlValues", this,
+                         [this, &ctl, qOut]() mutable -> const std::vector<double> & {
+                           for(size_t i = 0; i < qOut.size(); ++i)
+                           {
+                             auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
+                             if(jIdx != -1)
+                             {
+                               qOut[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0];
+                             }
+                           }
+                           return qOut;
+                         });
     }
   }
 
@@ -207,37 +209,31 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
   {
     if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
     {
-      logger.addLogEntry(category + "_encoderFiniteDifferences", [this]() { return encodersVelocity_; });
+      MC_RTC_LOG_HELPER(category + "_encoderFiniteDifferences", encodersVelocity_);
     }
     else if(velUpdate_ == VelUpdate::EncoderVelocities)
     {
-      logger.addLogEntry(category + "_encoderVelocities",
-                         [this, &ctl]() { return ctl.robot(robot_).encoderVelocities(); });
+      logger.addLogEntry(category + "_encoderVelocities", this, [this, &ctl]() -> const std::vector<double> & {
+        return ctl.robot(robot_).encoderVelocities();
+      });
     }
     else if(velUpdate_ == VelUpdate::Control)
     {
       std::vector<double> alpha(ctl.robot(robot_).refJointOrder().size(), 0);
-      logger.addLogEntry(category + "_controlVelocities", [this, &ctl, alpha]() mutable -> const std::vector<double> & {
-        for(size_t i = 0; i < alpha.size(); ++i)
-        {
-          auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
-          if(jIdx != -1)
-          {
-            alpha[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0];
-          }
-        }
-        return alpha;
-      });
+      logger.addLogEntry(category + "_controlVelocities", this,
+                         [this, &ctl, alpha]() mutable -> const std::vector<double> & {
+                           for(size_t i = 0; i < alpha.size(); ++i)
+                           {
+                             auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
+                             if(jIdx != -1)
+                             {
+                               alpha[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0];
+                             }
+                           }
+                           return alpha;
+                         });
     }
   }
-}
-void EncoderObserver::removeFromLogger(mc_rtc::Logger & logger, const std::string & category)
-{
-  logger.removeLogEntry(category + "_" + name() + "encoderValues");
-  logger.removeLogEntry(category + "_" + name() + "controlValues");
-  logger.removeLogEntry(category + "_" + name() + "encoderFiniteDifferences");
-  logger.removeLogEntry(category + "_" + name() + "encoderVelocities");
-  logger.removeLogEntry(category + "_" + name() + "controlVelocities");
 }
 
 } // namespace mc_observers

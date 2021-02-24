@@ -55,7 +55,7 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
    * Set the task objective (i.e. target vector in the world frame) to the
    * current body vector
    */
-  virtual void reset() override;
+  void reset() override;
 
   /*! \brief Set the body vector to be controlled
    *
@@ -101,7 +101,6 @@ struct MC_TASKS_DLLAPI VectorOrientationTask : public TrajectoryTaskGeneric<task
 protected:
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void addToLogger(mc_rtc::Logger & logger) override;
-  void removeFromLogger(mc_rtc::Logger & logger) override;
 
 protected:
   std::string bodyName;

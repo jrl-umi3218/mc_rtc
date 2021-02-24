@@ -185,7 +185,7 @@ public:
   }
 
   /*! \brief Get the cutoff period for the low-pass filter of measured wrench. */
-  double cutoffPeriod()
+  double cutoffPeriod() const
   {
     return lowPass_.cutoffPeriod();
   }
@@ -237,7 +237,6 @@ protected:
   void addToSolver(mc_solver::QPSolver & solver) override;
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
   void addToLogger(mc_rtc::Logger & logger) override;
-  void removeFromLogger(mc_rtc::Logger & logger) override;
 
 private:
   /** Targets of SurfaceTransformTask should not be set by the user.

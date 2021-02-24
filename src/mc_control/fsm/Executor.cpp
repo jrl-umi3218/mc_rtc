@@ -72,13 +72,14 @@ void Executor::init(Controller & ctl,
   {
     log_entry += "_Main";
   }
-  ctl.logger().addLogEntry(log_entry, [this]() { return curr_state_; });
-  ctl.logger().addLogEntry("perf_" + log_entry, [this]() {
+  ctl.logger().addLogEntry(log_entry, this, [this]() { return curr_state_; });
+  log_entry = "perf_" + log_entry;
+  ctl.logger().addLogEntry(log_entry, this, [this]() {
     return state_create_dt_.count() + state_run_dt_.count() + state_teardown_dt_.count();
   });
-  ctl.logger().addLogEntry("perf_" + log_entry + "_create", [this]() { return state_create_dt_.count(); });
-  ctl.logger().addLogEntry("perf_" + log_entry + "_run", [this]() { return state_run_dt_.count(); });
-  ctl.logger().addLogEntry("perf_" + log_entry + "_teardown", [this]() { return state_teardown_dt_.count(); });
+  ctl.logger().addLogEntry(log_entry + "_create", this, [this]() { return state_create_dt_.count(); });
+  ctl.logger().addLogEntry(log_entry + "_run", this, [this]() { return state_run_dt_.count(); });
+  ctl.logger().addLogEntry(log_entry + "_teardown", this, [this]() { return state_teardown_dt_.count(); });
 }
 
 bool Executor::run(Controller & ctl, bool keep_state)
@@ -161,20 +162,7 @@ void Executor::teardown(Controller & ctl)
   {
     ctl.gui()->removeCategory(category_);
   }
-  std::string log_entry = "Executor";
-  if(name_.size())
-  {
-    log_entry += "_" + name_;
-  }
-  else
-  {
-    log_entry += "_Main";
-  }
-  ctl.logger().removeLogEntry(log_entry);
-  ctl.logger().removeLogEntry("perf_" + log_entry);
-  ctl.logger().removeLogEntry("perf_" + log_entry + "_create");
-  ctl.logger().removeLogEntry("perf_" + log_entry + "_run");
-  ctl.logger().removeLogEntry("perf_" + log_entry + "_teardown");
+  ctl.logger().removeLogEntries(this);
 }
 
 bool Executor::complete(Controller & ctl, bool keep_state)

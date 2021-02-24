@@ -183,55 +183,27 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
   SurfaceTransformTask::addToLogger(logger);
 
   // impedance parameters
-  logger.addLogEntry(name_ + "_gains_M", [this]() -> const sva::ImpedanceVecd & { return gains().M().vec(); });
-  logger.addLogEntry(name_ + "_gains_D", [this]() -> const sva::ImpedanceVecd & { return gains().D().vec(); });
-  logger.addLogEntry(name_ + "_gains_K", [this]() -> const sva::ImpedanceVecd & { return gains().K().vec(); });
-  logger.addLogEntry(name_ + "_gains_wrench",
+  logger.addLogEntry(name_ + "_gains_M", this, [this]() -> const sva::ImpedanceVecd & { return gains().M().vec(); });
+  logger.addLogEntry(name_ + "_gains_D", this, [this]() -> const sva::ImpedanceVecd & { return gains().D().vec(); });
+  logger.addLogEntry(name_ + "_gains_K", this, [this]() -> const sva::ImpedanceVecd & { return gains().K().vec(); });
+  logger.addLogEntry(name_ + "_gains_wrench", this,
                      [this]() -> const sva::ImpedanceVecd & { return gains().wrench().vec(); });
 
   // compliance values
-  logger.addLogEntry(name_ + "_deltaCompliancePose", [this]() -> const sva::PTransformd & { return deltaCompPoseW_; });
-  logger.addLogEntry(name_ + "_deltaComplianceVel", [this]() -> const sva::MotionVecd & { return deltaCompVelW_; });
-  logger.addLogEntry(name_ + "_deltaComplianceAccel", [this]() -> const sva::MotionVecd & { return deltaCompAccelW_; });
+  MC_RTC_LOG_HELPER(name_ + "_deltaCompliancePose", deltaCompPoseW_);
+  MC_RTC_LOG_HELPER(name_ + "_deltaComplianceVel", deltaCompVelW_);
+  MC_RTC_LOG_HELPER(name_ + "_deltaComplianceAccel", deltaCompAccelW_);
 
   // target values
-  logger.addLogEntry(name_ + "_targetPose", [this]() -> const sva::PTransformd & { return targetPoseW_; });
-  logger.addLogEntry(name_ + "_targetVel", [this]() -> const sva::MotionVecd & { return targetVelW_; });
-  logger.addLogEntry(name_ + "_targetAccel", [this]() -> const sva::MotionVecd & { return targetAccelW_; });
+  MC_RTC_LOG_HELPER(name_ + "_targetPose", targetPoseW_);
+  MC_RTC_LOG_HELPER(name_ + "_targetVel", targetVelW_);
+  MC_RTC_LOG_HELPER(name_ + "_targetAccel", targetAccelW_);
 
   // wrench
-  logger.addLogEntry(name_ + "_targetWrench", [this]() -> const sva::ForceVecd & { return targetWrench_; });
-  logger.addLogEntry(name_ + "_measuredWrench", [this]() -> const sva::ForceVecd & { return measuredWrench_; });
-  logger.addLogEntry(name_ + "_filteredMeasuredWrench",
-                     [this]() -> const sva::ForceVecd & { return filteredMeasuredWrench_; });
-  logger.addLogEntry(name_ + "_cutoffPeriod", [this]() { return cutoffPeriod(); });
-}
-
-void ImpedanceTask::removeFromLogger(mc_rtc::Logger & logger)
-{
-  SurfaceTransformTask::removeFromLogger(logger);
-
-  // impedance parameters
-  logger.removeLogEntry(name_ + "_gains_M");
-  logger.removeLogEntry(name_ + "_gains_D");
-  logger.removeLogEntry(name_ + "_gains_K");
-  logger.removeLogEntry(name_ + "_gains_wrench");
-
-  // compliance values
-  logger.removeLogEntry(name_ + "_deltaCompliancePose");
-  logger.removeLogEntry(name_ + "_deltaComplianceVel");
-  logger.removeLogEntry(name_ + "_deltaComplianceAccel");
-
-  // target values
-  logger.removeLogEntry(name_ + "_targetPose");
-  logger.removeLogEntry(name_ + "_targetVel");
-  logger.removeLogEntry(name_ + "_targetAccel");
-
-  // wrench
-  logger.removeLogEntry(name_ + "_targetWrench");
-  logger.removeLogEntry(name_ + "_measuredWrench");
-  logger.removeLogEntry(name_ + "_filteredMeasuredWrench");
-  logger.removeLogEntry(name_ + "_cutoffPeriod");
+  MC_RTC_LOG_HELPER(name_ + "_targetWrench", targetWrench_);
+  MC_RTC_LOG_HELPER(name_ + "_measuredWrench", measuredWrench_);
+  MC_RTC_LOG_HELPER(name_ + "_filteredMeasuredWrench", filteredMeasuredWrench_);
+  logger.addLogEntry(name_ + "_cutoffPeriod", this, [this]() { return cutoffPeriod(); });
 }
 
 void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

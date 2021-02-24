@@ -98,8 +98,6 @@ protected:
 
   void addToLogger(mc_rtc::Logger & logger) override;
 
-  void removeFromLogger(mc_rtc::Logger & logger) override;
-
 private:
   /** True if added to solver */
   bool inSolver_ = false;

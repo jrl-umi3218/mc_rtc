@@ -53,16 +53,10 @@ void MomentumTask::momentum(const sva::ForceVecd & m)
 void MomentumTask::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
-  logger.addLogEntry(name_ + "_target_momentum", [this]() { return momentum(); });
+  logger.addLogEntry(name_ + "_target_momentum", this, [this]() { return momentum(); });
   // FIXME Not correct with dimWeight
-  logger.addLogEntry(name_ + "_momentum", [this]() { return sva::ForceVecd(momentum().vector() - errorT->eval()); });
-}
-
-void MomentumTask::removeFromLogger(mc_rtc::Logger & logger)
-{
-  TrajectoryBase::removeFromLogger(logger);
-  logger.removeLogEntry(name_ + "_momentum");
-  logger.removeLogEntry(name_ + "_target_momentum");
+  logger.addLogEntry(name_ + "_momentum", this,
+                     [this]() { return sva::ForceVecd(momentum().vector() - errorT->eval()); });
 }
 
 void MomentumTask::addToGUI(mc_rtc::gui::StateBuilder & gui)

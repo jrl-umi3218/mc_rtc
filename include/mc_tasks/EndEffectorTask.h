@@ -56,7 +56,7 @@ public:
    *
    * Set the task objective to the current end-effector position
    */
-  virtual void reset() override;
+  void reset() override;
 
   /*! \brief Increment the target position
    *
@@ -79,25 +79,23 @@ public:
    */
   virtual sva::PTransformd get_ef_pose();
 
-  virtual void dimWeight(const Eigen::VectorXd & dimW) override;
+  void dimWeight(const Eigen::VectorXd & dimW) override;
 
-  virtual Eigen::VectorXd dimWeight() const override;
+  Eigen::VectorXd dimWeight() const override;
 
-  virtual void selectActiveJoints(
-      mc_solver::QPSolver & solver,
-      const std::vector<std::string> & activeJointsName,
-      const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {}) override;
+  void selectActiveJoints(mc_solver::QPSolver & solver,
+                          const std::vector<std::string> & activeJointsName,
+                          const std::map<std::string, std::vector<std::array<int, 2>>> & activeDofs = {}) override;
 
-  virtual void selectUnactiveJoints(
-      mc_solver::QPSolver & solver,
-      const std::vector<std::string> & unactiveJointsName,
-      const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {}) override;
+  void selectUnactiveJoints(mc_solver::QPSolver & solver,
+                            const std::vector<std::string> & unactiveJointsName,
+                            const std::map<std::string, std::vector<std::array<int, 2>>> & unactiveDofs = {}) override;
 
-  virtual void resetJointsSelector(mc_solver::QPSolver & solver) override;
+  void resetJointsSelector(mc_solver::QPSolver & solver) override;
 
-  virtual Eigen::VectorXd eval() const override;
+  Eigen::VectorXd eval() const override;
 
-  virtual Eigen::VectorXd speed() const override;
+  Eigen::VectorXd speed() const override;
 
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
@@ -113,14 +111,15 @@ public:
   sva::PTransformd curTransform;
 
 protected:
-  virtual void removeFromSolver(mc_solver::QPSolver & solver) override;
+  void removeFromSolver(mc_solver::QPSolver & solver) override;
 
-  virtual void addToSolver(mc_solver::QPSolver & solver) override;
+  void addToSolver(mc_solver::QPSolver & solver) override;
 
   void update(mc_solver::QPSolver &) override;
 
-  virtual void addToLogger(mc_rtc::Logger & logger) override;
-  virtual void removeFromLogger(mc_rtc::Logger & logger) override;
+  void addToLogger(mc_rtc::Logger & logger) override;
+
+  void removeFromLogger(mc_rtc::Logger & logger) override;
 
   void addToGUI(mc_rtc::gui::StateBuilder & gui) override;
 };

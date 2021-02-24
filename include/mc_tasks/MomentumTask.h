@@ -37,7 +37,7 @@ public:
    * Set the task target to the current momentum and reset desired velocity and acceleration to zero.
    *
    */
-  virtual void reset() override;
+  void reset() override;
 
   /*! \brief Get the current target momentum */
   sva::ForceVecd momentum() const;
@@ -50,8 +50,6 @@ public:
   void momentum(const sva::ForceVecd & mom);
 
   void addToLogger(mc_rtc::Logger & logger) override;
-
-  void removeFromLogger(mc_rtc::Logger & logger) override;
 
   /*! \brief Load parameters from a Configuration object */
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
