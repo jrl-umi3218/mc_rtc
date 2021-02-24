@@ -61,6 +61,7 @@ struct MC_CONTROL_FSM_STATE_DLLAPI Grippers : State
 protected:
   mc_rtc::Configuration config_;
   std::vector<mc_control::GripperRef> grippers_;
+  bool keepSafetyConfig_ = false; /// When true, keep the gripper safety configuration after the state is destroyed
 };
 
 } // namespace fsm

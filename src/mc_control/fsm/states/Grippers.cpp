@@ -21,6 +21,7 @@ void Grippers::configure(const mc_rtc::Configuration & config)
 void Grippers::start(Controller & ctl)
 {
   unsigned int rIndex = 0;
+  config_("keepSafetyConfig", keepSafetyConfig_);
   if(config_.has("robot"))
   {
     if(!ctl.robots().hasRobot(config_("robot")))
@@ -44,50 +45,12 @@ void Grippers::start(Controller & ctl)
         continue;
       }
       auto & gripper = ctl_grippers.at(g);
-
-      if(grippers(g).has("opening"))
+      if(!keepSafetyConfig_)
       {
-        double open = mc_filter::utils::clamp(static_cast<double>(grippers(g)("opening")), 0, 1);
-        gripper->setTargetOpening(open);
-        grippers_.push_back(std::ref(*gripper));
+        gripper->saveConfig();
       }
-      else if(grippers(g).has("target"))
-      {
-        std::vector<double> target = grippers(g)("target");
-        if(gripper->curPosition().size() != target.size())
-        {
-          mc_rtc::log::warning(
-              "[FSM::{}] Provided target for {} does not have the correct size (expected: {}, got: {})", name(), g,
-              gripper->curPosition().size(), target.size());
-          continue;
-        }
-        gripper->setTargetQ(target);
-        grippers_.push_back(std::ref(*gripper));
-      }
-      else
-      {
-        mc_rtc::log::warning("[FSM::{}] {} has no opening or target specified", name(), g);
-        continue;
-      }
-
-      gripper->saveConfig();
-      gripper->percentVMAX(grippers(g)("percentVMAX", gripper->percentVMAX()));
-      if(grippers(g).has("safety"))
-      {
-        const auto & safety = grippers(g)("safety");
-        if(safety.has("threshold"))
-        {
-          gripper->actualCommandDiffTrigger(mc_rtc::constants::toRad(safety("threshold")));
-        }
-        if(safety.has("iter"))
-        {
-          gripper->overCommandLimitIterN(safety("iter"));
-        }
-        if(safety.has("release"))
-        {
-          gripper->releaseSafetyOffset(mc_rtc::constants::toRad(safety("release")));
-        }
-      }
+      gripper->configure(grippers(g));
+      grippers_.push_back(std::ref(*gripper));
     }
   }
 }
@@ -107,7 +70,14 @@ void Grippers::teardown(Controller &)
 {
   for(auto & g : grippers_)
   {
-    g.get().restoreConfig();
+    if(keepSafetyConfig_)
+    { // Make the current safety configuration the new default
+      g.get().saveConfig();
+    }
+    else
+    {
+      g.get().restoreConfig();
+    }
   }
 }
 

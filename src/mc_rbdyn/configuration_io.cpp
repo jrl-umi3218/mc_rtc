@@ -577,23 +577,15 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper>::save(
 mc_rbdyn::RobotModule::Gripper::Safety ConfigurationLoader<mc_rbdyn::RobotModule::Gripper::Safety>::load(
     const mc_rtc::Configuration & config)
 {
-  return {
-      config("percentVMax", mc_rbdyn::RobotModule::Gripper::Safety::DEFAULT_PERCENT_VMAX),
-      config("actualCommandDiffTrigger", mc_rbdyn::RobotModule::Gripper::Safety::DEFAULT_ACTUAL_COMMAND_DIFF_TRIGGER),
-      config("releaseSafetyOffset", mc_rbdyn::RobotModule::Gripper::Safety::DEFAULT_RELEASE_OFFSET),
-      std::max<unsigned int>(1, config("overCommandLimitIterN",
-                                       mc_rbdyn::RobotModule::Gripper::Safety::DEFAULT_OVER_COMMAND_LIMIT_ITER_N))};
+  mc_rbdyn::RobotModule::Gripper::Safety safety;
+  safety.load(config);
+  return safety;
 }
 
 mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule::Gripper::Safety>::save(
     const mc_rbdyn::RobotModule::Gripper::Safety & safety)
 {
-  mc_rtc::Configuration config;
-  config.add("percentVMax", safety.percentVMax);
-  config.add("actualCommandDiffTrigger", safety.actualCommandDiffTrigger);
-  config.add("releaseSafetyOffset", safety.releaseSafetyOffset);
-  config.add("overCommandLimitIterN", safety.overCommandLimitIterN);
-  return config;
+  return safety.save();
 }
 
 rbd::parsers::Geometry::Box ConfigurationLoader<rbd::parsers::Geometry::Box>::load(const mc_rtc::Configuration & config)

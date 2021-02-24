@@ -78,6 +78,9 @@ struct MC_RBDYN_DLLAPI Gripper
    **/
   void restoreConfig();
 
+  /** \brief Applies a new gripper configuration (safeties and targets) */
+  void configure(const mc_rtc::Configuration & config);
+
   /*! \brief Reset the gripper state to the current actual state of the gripper
    *
    * \param currentQ Current encoder values for the robot
@@ -102,18 +105,73 @@ struct MC_RBDYN_DLLAPI Gripper
 
   /*! \brief Set the target configuration of the active joints involved in the gripper
    * \param targetQ Desired values of the active joints involved in the gripper
+   * \throw std::runtime_error If the targetQ size does not match the number of active joints
    */
   void setTargetQ(const std::vector<double> & targetQ);
 
-  /*! \brief Set the target opening of the gripper
+  /*! \brief Set the target configuration of the specified active joint
+   * \param jointName Name of the gripper's active joint to move
+   * \param targetQ Desired value of the active joint
+   * \throw std::runtime_error if the joint name does not match any of the
+   * gripper's active joints
+   */
+  void setTargetQ(const std::string & jointName, double targetQ);
+
+  /** Get a joint's target angle
+   *
+   * \throw std::runtime_error if the joint name does not match any of the
+   * gripper's active joints
+   */
+  double getTargetQ(const std::string & jointName) const;
+
+  /** Get the current gripper's target
+   * \note returns the current gripper position if no target has been set
+   * */
+  std::vector<double> getTargetQ() const;
+
+  /*! \brief Set the target opening of all gripper joints simultaneously
    * \param targetOpening Opening value ranging from 0 (closed) to 1 (open)
+   *
+   * \note If the individual joint targets were set manually, they will move to
+   * match this new opening target. Depending on the maximum allowed velocity, this may result
+   * in fast gripper joint motions. Use with care if the gripper is currently
+   * grasping objects or close to collisions with the environment.
    */
   void setTargetOpening(double targetOpening);
+
+  /*! \brief Set the target opening of a single gripper joint
+   * \param jointName Name of the active joint to move
+   * \param targetOpening Opening value ranging from 0 (closed) to 1 (open)
+   * \throw std::runtime_error if the joint name does not match any of the
+   * gripper's active joints
+   */
+  void setTargetOpening(const std::string & jointName, double targetOpening);
+
+  /** \brief Get the target opening of a single gripper joint
+   * \param jointName Name of the active joint
+   * \throw std::runtime_error if the joint name does not match any of the
+   * gripper's active joints
+   * \return The joint's target opening percentage
+   */
+  double getTargetOpening(const std::string & jointName) const;
 
   /*! \brief Get current configuration
    * \return Current values of the active joints involved in the gripper
    */
   std::vector<double> curPosition() const;
+
+  /*! \brief Get current opening percentage
+   * \return Current opening percentage of the active joints involved in the gripper
+   */
+  std::vector<double> curOpening() const;
+
+  /** \brief Get the current opening of a single gripper joint
+   * \param jointName Name of the active joint
+   * \throw std::runtime_error if the joint name does not match any of the
+   * gripper's active joints
+   * \return The joint's current opening percentage
+   */
+  double curOpening(const std::string & jointName) const;
 
   /*! \brief Returns all joints involved in the gripper */
   inline const std::vector<std::string> & joints() const
@@ -125,6 +183,12 @@ struct MC_RBDYN_DLLAPI Gripper
   inline const std::vector<std::string> & activeJoints() const
   {
     return active_joints;
+  }
+
+  /* \brief Checks whether a joint is an active gripper joint */
+  inline bool hasActiveJoint(const std::string & jointName) const
+  {
+    return std::find(active_joints.begin(), active_joints.end(), jointName) != active_joints.end();
   }
 
   /*! \brief Return all gripper joints configuration
@@ -205,6 +269,40 @@ struct MC_RBDYN_DLLAPI Gripper
    * \return True if gripper is not moving, False if it is moving
    */
   bool complete() const;
+
+protected:
+  /*! \brief Set the target opening of a single gripper joint by index
+   * \param activeJointId Index of the active joint
+   * \param targetOpening Opening value ranging from 0 (closed) to 1 (open)
+   */
+  void setTargetOpening(size_t activeJointId, double targetOpening);
+
+  /*! \brief Set the target configuration of the specified active joint
+   * \param activeJointId Index of the gripper's active joint to move
+   * \param targetQ Desired value of the active joint. Clamps the target within
+   * the joint limits.
+   */
+  void setTargetQ(size_t activeJointId, double targetQ);
+
+  /// Fast version of setTargetQ(size_t, double) without clamping
+  void setTargetQ_(size_t activeJoints, double targetQ);
+  /// Fast version of setTargetQ(std::vector<double>)
+  void setTargetQ_(const std::vector<double> & targetQ);
+
+  /// Current position of an active joint
+  double curPosition(size_t jointId) const;
+
+  /// Current opening percentage of an active joint
+  double curOpening(size_t jointId) const;
+
+  /// Target opening percentage of an active joint
+  double targetOpening(size_t jointId) const;
+
+  /// Target opening angle of an active joint
+  double getTargetQ(size_t jointId) const;
+
+  /// Clamp an active joint value within its joint limits
+  double clampQ(size_t activeJoint, double q);
 
 protected:
   /*! Name of joints involved in the gripper */

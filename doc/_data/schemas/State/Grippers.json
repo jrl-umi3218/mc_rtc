@@ -3,7 +3,7 @@
   [
     {
       "title": "mc_control::fsm::Grippers",
-      "description": "Controllers the gripper of a robot",
+      "description": "Controls the grippers of a robot",
       "type": "object",
       "properties":
       {
@@ -11,14 +11,17 @@
                    "title": "Robot this is applied to",
                    "description": "If ommited, the state applies to the main robot"
         },
-        "grippers": { "type": "object",
-                      "title": "Grippers' target",
-                      "properties":
-                      {
-                        "*": { "$ref": "/../../common/fsm_gripper.json" }
-                      },
-                      "description": "Keys are interpreted as grippers' name"
-        }
+        "grippers":
+        {
+          "type": "array",
+          "description": "Map of gripper name -> gripper configuration",
+          "items":
+          [
+            { "type": "string", "description": "Gripper name" },
+            { "$ref": "/../../mc_control/generic_gripper.json" }
+          ]
+        },
+        "keepSafetyConfig": { "type": "boolean", "default": false, "description": "When true, keep this gripper's safety configuration after the state has been destroyed, otherwise restore it to its former value" }
       },
       "required": []
     },

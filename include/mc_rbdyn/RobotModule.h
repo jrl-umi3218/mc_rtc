@@ -126,6 +126,12 @@ struct MC_RBDYN_DLLAPI RobotModule
         releaseSafetyOffset(releaseSafetyOffset), overCommandLimitIterN(overCommandLimitIterN)
       {
       }
+
+      /*! Load safety parameters from a configuration object */
+      void load(const mc_rtc::Configuration & config);
+      /*! Save safety parameters */
+      mc_rtc::Configuration save() const;
+
       /*! Percentage of max velocity of active joints in the gripper */
       double percentVMax;
       /*! Difference between the command and the reality that triggers the safety */
