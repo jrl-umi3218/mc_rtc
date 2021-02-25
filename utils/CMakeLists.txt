@@ -43,15 +43,19 @@ configure_file(mc_rtc_new_controller.in.py "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_n
 set(AROBASE "@")
 configure_file(mc_rtc_new_fsm_controller.in.py "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_fsm_controller" @ONLY)
 unset(AROBASE)
-set(UTILS_SCRIPT
-  "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_controller"
-  "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_fsm_controller"
-)
 if(NOT WIN32)
+  set(UTILS_SCRIPT
+    "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_controller"
+    "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_fsm_controller"
+  )
   install(PROGRAMS ${UTILS_SCRIPT} DESTINATION bin)
 else()
+  set(UTILS_SCRIPT
+    mc_rtc_new_controller
+    mc_rtc_new_fsm_controller
+  )
   foreach(PGM ${UTILS_SCRIPT})
-    install(PROGRAMS ${PGM} DESTINATION bin RENAME ${PGM}.py)
+    install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/${PGM}" DESTINATION bin RENAME ${PGM}.py)
   endforeach()
 endif()
 
