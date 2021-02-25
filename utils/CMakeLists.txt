@@ -2,6 +2,10 @@
 # Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
+if(NOT DEFINED MC_LOG_UI_PYTHON_EXECUTABLE)
+  set(MC_LOG_UI_PYTHON_EXECUTABLE "python")
+endif()
+
 find_package(Boost REQUIRED COMPONENTS program_options timer)
 
 macro(add_mc_rtc_utils NAME)
@@ -35,9 +39,13 @@ if(NOT MC_RTC_BUILD_STATIC)
 else()
 endif()
 
+configure_file(mc_rtc_new_controller.in.py "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_controller" @ONLY)
+set(AROBASE "@")
+configure_file(mc_rtc_new_fsm_controller.in.py "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_fsm_controller" @ONLY)
+unset(AROBASE)
 set(UTILS_SCRIPT
-  mc_rtc_new_controller
-  mc_rtc_new_fsm_controller
+  "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_controller"
+  "${CMAKE_CURRENT_BINARY_DIR}/mc_rtc_new_fsm_controller"
 )
 if(NOT WIN32)
   install(PROGRAMS ${UTILS_SCRIPT} DESTINATION bin)

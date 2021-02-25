@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env @MC_LOG_UI_PYTHON_EXECUTABLE@
 # -*- coding: utf-8 -*-
 
 #
@@ -32,12 +32,12 @@ StepByStep: true
 IdleKeepState: false
 # Where to look for state libraries
 StatesLibraries:
-- "@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@"
-- "@MC_STATES_RUNTIME_INSTALL_PREFIX@"
+- "@AROBASE@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@AROBASE@"
+- "@AROBASE@MC_STATES_RUNTIME_INSTALL_PREFIX@AROBASE@"
 # Where to look for state files
 StatesFiles:
-- "@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@/data"
-- "@MC_STATES_RUNTIME_INSTALL_PREFIX@/data"
+- "@AROBASE@MC_STATES_DEFAULT_RUNTIME_INSTALL_PREFIX@AROBASE@/data"
+- "@AROBASE@MC_STATES_RUNTIME_INSTALL_PREFIX@AROBASE@/data"
 # If true, state factory will be more verbose
 VerboseStateFactory: false
 # Additional robots to load
