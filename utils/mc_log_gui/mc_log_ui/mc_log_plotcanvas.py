@@ -1200,9 +1200,12 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.draw()
 
   def saveAnimation(self):
-    if not self.animation:
-        ShowErrorDialog("Can't save an empty animation")
-        return
+    if not self.animationButton.isChecked():
+      self.startAnimation()
+      if not self.animation:
+          ShowErrorDialog("Can't save an empty animation")
+          return
+      self.stopAnimation()
 
     fpath = QtWidgets.QFileDialog.getSaveFileName(self,  "Output animation", self.animation_path+"/output-animation.mp4", filter = "Video (*.mp4)")[0]
     if not len(fpath):
@@ -1211,10 +1214,6 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     filename, extension = os.path.splitext(fpath)
     if not extension:
       fpath = fpath + '.mp4'
-
-    if not self.animationButton.isChecked():
-      self.startAnimation()
-      self.stopAnimation()
 
     self.savingAnimation = True
     self.saveAnimationDialog.show()
