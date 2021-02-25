@@ -965,6 +965,19 @@ class SimpleAxesDialog(QtWidgets.QDialog):
     QtWidgets.QDialog.accept(self)
     self.apply()
 
+class SaveAnimationDialog(QtWidgets.QDialog):
+  def __init__(self, parent):
+    super(QtWidgets.QDialog, self).__init__(parent)
+    self.setModal(True)
+    self.parent = parent
+    self.layout = QtWidgets.QVBoxLayout(self)
+    label = QtWidgets.QLabel("Saving animation, please wait...", self)
+    self.layout.addWidget(label)
+    self.progress = QtWidgets.QProgressBar(self)
+    self.layout.addWidget(self.progress)
+  def closeEvent(self, event):
+    event.ignore()
+
 class PlotCanvasWithToolbar(PlotFigure, QWidget):
   def __init__(self, parent = None, mode = PlotType.TIME):
     PlotFigure.__init__(self, mode, True)
@@ -981,6 +994,8 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.setupAnimationButtons()
 
     self.animation_path = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.DocumentsLocation)
+    self.savingAnimation = False
+    self.saveAnimationDialog = SaveAnimationDialog(self)
 
   def setupLockButtons(self):
     layout = QHBoxLayout()
@@ -1164,12 +1179,19 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.dt = (x_data[i0 + 1] - x_data[i0]) * 1000 # dt in ms
     step = int(math.ceil(interval/self.dt))
     self.frame0 = i0
+    self.saveAnimationDialog.progress.setRange(i0, iN)
     self.animation = FuncAnimation(self.fig, self.animate, frames = range(i0 + 1, iN, step), interval = interval)
     self._axes(lambda a: a.startAnimation(i0))
     self.draw()
     return True
 
   def animate(self, frame):
+    # Matplotlib's animation.save() call is blocking, and cannot be called from a thread.
+    # However, it calls this animate function for each frame. Thus we manually call Qt's event loop to keep rendering the GUI
+    # and allow the saving dialog to display, and the plot to be displayed on screen
+    if self.savingAnimation:
+      self.saveAnimationDialog.progress.setValue(frame)
+      QtWidgets.QApplication.processEvents()
     return PlotFigure.animate(self, self.frame0, frame, self.x_limits, self.y1_limits, self.y2_limits)
 
   def stopAnimation(self):
@@ -1178,6 +1200,10 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.draw()
 
   def saveAnimation(self):
+    if not self.animation:
+        ShowErrorDialog("Can't save an empty animation")
+        return
+
     fpath = QtWidgets.QFileDialog.getSaveFileName(self,  "Output animation", self.animation_path+"/output-animation.mp4", filter = "Video (*.mp4)")[0]
     if not len(fpath):
       return
@@ -1185,18 +1211,16 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     filename, extension = os.path.splitext(fpath)
     if not extension:
       fpath = fpath + '.mp4'
-    print "Saving animation, please wait..."
-    if self.animationButton.isChecked():
-      self.animation.save(fpath)
-    else:
+
+    if not self.animationButton.isChecked():
       self.startAnimation()
-      if not self.animation:
-          ShowErrorDialog("Can't save an empty animation")
-          print "Could not save empty animation"
-          return
-      self.animation.save(fpath)
       self.stopAnimation()
-    print "Animation saved to %s" % fpath
+
+    self.savingAnimation = True
+    self.saveAnimationDialog.show()
+    self.animation.save(fpath)
+    self.savingAnimation = False
+    self.saveAnimationDialog.hide()
 
   def axesDialog(self):
     SimpleAxesDialog(self).exec_()
