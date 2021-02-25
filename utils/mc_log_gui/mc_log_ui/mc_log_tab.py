@@ -461,13 +461,12 @@ class MCLogTab(QtWidgets.QWidget):
     for c in [self.ui.canvas, self.XYCanvas, self._3DCanvas]:
       c.setPolyColors(colors)
 
-  def setRobotModule(self, rm, loaded_files):
+  def setRobotModule(self, rm, filtered_joints_prefix, loaded_files):
     self.rm = rm
     def findQList(ySelector):
-      qList = ySelector.findItems("q", QtCore.Qt.MatchStartsWith | QtCore.Qt.MatchRecursive)
-      qList += ySelector.findItems("alpha", QtCore.Qt.MatchStartsWith | QtCore.Qt.MatchRecursive)
-      qList += ySelector.findItems("error", QtCore.Qt.MatchStartsWith | QtCore.Qt.MatchRecursive)
-      qList += ySelector.findItems("tau", QtCore.Qt.MatchStartsWith | QtCore.Qt.MatchRecursive)
+      qList = []
+      for qPrefix in filtered_joints_prefix:
+          qList += ySelector.findItems(qPrefix, QtCore.Qt.MatchStartsWith | QtCore.Qt.MatchRecursive)
       return qList
     def clearQNames(qList):
       def update_child_display(items):
@@ -681,7 +680,7 @@ class MCLogTab(QtWidgets.QWidget):
     tab = MCLogTab(parent, type_)
     tab.x_data = x_data
     tab.setData(parent.data)
-    tab.setRobotModule(parent.rm, parent.loaded_files)
+    tab.setRobotModule(parent.rm, parent.jointKeyPrefixes, parent.loaded_files)
     if type_ is PlotType.TIME:
       for y,yl in zip(y1, y1_label):
         tab.tree_view.select(y, tab.ui.y1Selector, 0)
