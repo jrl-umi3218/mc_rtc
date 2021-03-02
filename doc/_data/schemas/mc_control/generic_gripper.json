@@ -9,16 +9,16 @@
       "oneOf":
       [
         {
-          "type": "array", "items": { "type": "number" }, "description": "Target of active joints in the gripper"
+          "type": "array", "items": { "type": "number" }, "description": "Target for all active joints in the gripper"
         },
         {
-          "type": "array",
-          "description": "Map of joint names -> joint value",
-          "items":
-          [
-            { "type": "string", "description": "Joint name"},
-            { "type": "number", "description": "Joint target [rad]" }
-          ]
+          "type": "object",
+          "title": "Per-joint target",
+          "description": "Keys are joint names and values are the corresponding target joint angle",
+          "properties":
+          {
+            "*": { "type": "number", "description": "Joint target [rad]" }
+          }
         }
       ]
     },
@@ -28,13 +28,13 @@
       [
         {"type": "number", "minimum": 0, "maximum": 1, "description": "Target opening percentage of the gripper" },
         {
-          "type": "array",
-          "description": "Map of joint names -> opening percentage",
-          "items":
-          [
-            { "type": "string", "description": "Joint name"},
-            { "type": "number", "minimum": 0, "maximum": 1,  "description": "Joint target opening percentage" }
-          ]
+          "type": "object",
+          "title": "Per-joint opening",
+          "description": "Keys are joint names and values are the corresponding target opening percentage",
+          "properties":
+          {
+            "*": { "type": "number", "minimum": 0, "maximum": 1,  "description": "Joint target opening percentage" }
+          }
         }
       ]
     },

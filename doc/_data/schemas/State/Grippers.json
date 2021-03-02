@@ -13,13 +13,13 @@
         },
         "grippers":
         {
-          "type": "array",
+          "type": "object",
+          "title": "Grippers configuration",
           "description": "Map of gripper name -> gripper configuration",
-          "items":
-          [
-            { "type": "string", "description": "Gripper name" },
-            { "$ref": "/../../mc_control/generic_gripper.json" }
-          ]
+          "properties": 
+          {
+            "*": { "$ref": "/../../mc_control/generic_gripper.json" }
+          }
         },
         "keepSafetyConfig": { "type": "boolean", "default": false, "description": "When true, keep this gripper's safety configuration after the state has been destroyed, otherwise restore it to its former value" }
       },
