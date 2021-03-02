@@ -132,7 +132,7 @@ module Jekyll
             default = parent[key_out]["default"].dup()
           end
           if category != "definitions"
-            parent[key_out] = site.data["schemas"][category][name].dup()
+            parent[key_out] = resolveAllOf(site.data["schemas"][category][name].dup())
             if parent[key_out].has_key?("title")
               parent[key_out]["REF"] = "#{category}.#{name}"
             end
