@@ -75,7 +75,7 @@ Enabled: EndEffector
 
 # Text
 
-The `Text` sample controller demonstrate use of the {% doxygen mc_tasks::MetaTasks %} and {% doxygen mc_solver::ConstraintSetLoader %} to load [tasks]({{site.baseurl}}/json.html#MetaTask) and [constraints]({{site.baseurl}}/json.html#ConstraintSet) from their YAML configuration.
+The `Text` sample controller demonstrate the use of {% doxygen mc_tasks::MetaTaskLoader %} and {% doxygen mc_solver::ConstraintSetLoader %} to respectively load [tasks]({{site.baseurl}}/json.html#MetaTask) and [constraints]({{site.baseurl}}/json.html#ConstraintSet) from their YAML configuration.
 
 **Running**
 To run this controller, simply put in [your mc_rtc configuration]({{site.baseurl}}/tutorials/introduction/configuration.html), and [run the controller]({{site.baseurl}}/tutorials/introduction/running-a-controller.html) using your favorite interface.
