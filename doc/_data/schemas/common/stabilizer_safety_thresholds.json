@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "Safety thresholds for the stabilizer parameters",
+  "title": "mc_rbyn::lipm_stabilizer::SafetyThresholds",
   "description": "These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See {% doxygen mc_rbdyn::lipm_stabilizer::SafetyThresholds %}",
   "properties":
   {

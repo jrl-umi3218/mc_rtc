@@ -7,7 +7,10 @@
       "type": "object",
       "properties":
       {
-        "StabilizerConfig": { "$ref": "/../common/StabilizerTask.json" },
+        "StabilizerConfig": 
+        { 
+          "$ref": "/../common/StabilizerTask.json" 
+        },
         "stiffness": { "type": "number", "minimum": 0, "default": 5, "description": "Stiffness of CoM target" },
         "damping": { "type": "number", "minimum": 0, "description": "Damping of CoM target (default=2*sqrt(stiffness))" },
         "above": { "type": "string", "description": "Put CoM over the special frames LeftAnkle, RightAnkle or Center, or any other valid surface on the robot"},

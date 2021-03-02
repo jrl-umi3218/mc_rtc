@@ -1,0 +1,13 @@
+{
+  "allOf":
+  [
+    {
+      "type": "object",
+      "title": "mc_rbdyn::lipm_stabilizer::StabilizerConfiguration",
+      "description": "Stabilizer configuration (DCM tracking, admittance, tasks weights, etc). A default configuration for these configuration entries is provided by each robot's {% doxygen mc_rbdyn::RobotModule %}."
+    },
+    {
+      "$ref": "/../../common/StabilizerConfiguration.json"
+    }
+  ]
+}

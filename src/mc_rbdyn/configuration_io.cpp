@@ -857,6 +857,10 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
       rm._grippers.push_back(loadGripper(g, rm.gripperSafety()));
     }
   }
+  if(config.has("lipmStabilizer"))
+  {
+    rm._lipmStabilizerConfig.load(config("lipmStabilizer"));
+  }
 
   return rm;
 }
@@ -930,6 +934,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   config.add("ref_joint_order", rm._ref_joint_order);
   config.add("default_attitude", rm._default_attitude);
   config.add("gripperSafety", rm._gripperSafety);
+  config.add("lipmStabilizer", rm._lipmStabilizerConfig);
   return config;
 }
 

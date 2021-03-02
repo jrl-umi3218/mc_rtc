@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "DCM Bias Estimator",
+  "title": "mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration",
   "description": "A humanoid robot can be modeled as an inverted pendulum. The dynamics can be linearized to obtain a dynamics with a convergent and a divergent component of motion (DCM). The DCM can be measured using the CoM and its velocity, but the CoM position can be biased. The dynamics of the DCM depends on the Zero Moment Point. This estimator uses Kalman Filtering to estimate this bias and give a delay-free filtering of the DCM. For more details please refer to LipmDcmEstimator class in <a href=\"https://jrl-umi3218.github.io/state-observation/doxygen/HEAD/classes.html#letter_l\">state-observation</a>",
   "properties":
   {
