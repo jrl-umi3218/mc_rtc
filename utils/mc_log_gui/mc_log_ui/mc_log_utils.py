@@ -40,3 +40,9 @@ def InitDialogWithOkCancel(fun = None, Layout = QtWidgets.QFormLayout , apply_ =
     return wrap_init(fun)
   else:
     return wrap_init
+
+def ShowErrorDialog(text, parent = None):
+    err_diag = QtWidgets.QMessageBox(parent)
+    err_diag.setIcon(QtWidgets.QMessageBox.Critical)
+    err_diag.setText(text)
+    err_diag.exec_()

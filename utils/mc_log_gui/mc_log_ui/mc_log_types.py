@@ -27,7 +27,7 @@ class PlotType(Enum):
   _3D = 2
 
 class LineStyle(object):
-  def __init__(self, color = 'black', linestyle = '-', linewidth = 0.5, visible = False, label = ""):
+  def __init__(self, color = 'black', linestyle = '-', linewidth = 1.0, visible = False, label = ""):
     self.color = color
     self.linestyle = linestyle
     self.linewidth = linewidth
@@ -49,7 +49,7 @@ class GraphLabels(object):
     self.y2_label = y2_label
 
 class ColorsSchemeConfiguration(object):
-  def __init__(self, f, default = 'Set1'):
+  def __init__(self, f, default = 'tab10'):
     cm = default
     ncolors = 12
     data = {}

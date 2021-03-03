@@ -668,13 +668,18 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.polyColorsFile = os.path.expanduser("~") + "/.config/mc_log_ui/poly_colors.json"
     self.polyColorsScheme = ColorsSchemeConfiguration(self.polyColorsFile, 'Pastel1')
 
+    self.jointKeyPrefixes = ["q", "alpha", "tau", "error"]
+
     self.activeRobotAction = None
     self.rm = None
     if mc_rbdyn is not None:
       rMenu = QtWidgets.QMenu("Robot", self.ui.menubar)
       rGroup = QtWidgets.QActionGroup(rMenu)
+      cGroup = QtWidgets.QActionGroup(rMenu)
       rCategoryMenu = {}
       rActions = []
+      rMenu.addActions([RobotAction("Clear robot", cGroup)])
+      rMenu.addSeparator()
       for r in mc_rbdyn.RobotLoader.available_robots():
         rAct = RobotAction(r, rGroup)
         rAct.setCheckable(True)
@@ -699,6 +704,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       self.activeRobotAction.setChecked(True)
       self.setRobot(self.activeRobotAction)
       rGroup.triggered.connect(self.setRobot)
+      cGroup.triggered.connect(self.setRobot)
       self.ui.menubar.addMenu(rMenu)
 
     self.styleMenu = QtWidgets.QMenu("Style", self.ui.menubar)
@@ -841,10 +847,22 @@ class MCLogUI(QtWidgets.QMainWindow):
       defaultTitle = ""
     title, ok = QtWidgets.QInputDialog.getText(self, "User plot", "Title of your plot:", text = defaultTitle)
     if ok:
+      def convertJointIndex(key):
+        if self.rm is not None:
+          if any(key.startswith(x) for x in self.jointKeyPrefixes):
+            try:
+              prefix, separator, jName = key.rpartition("_")
+              rjo = self.rm.ref_joint_order()
+              if jName in rjo:
+                jIndex = rjo.index(jName)
+                return prefix + separator + str(jIndex)
+            except RuntimeError:
+              return key
+        return key
       type_ = tab.plotType()
       if type_ is PlotType.TIME:
-        y1 = filter(lambda k: k in self.data.keys(), canvas._left().plots.keys())
-        y2 = filter(lambda k: k in self.data.keys(), canvas._right().plots.keys())
+        y1 = [convertJointIndex(x) for x in filter(lambda k: convertJointIndex(k) in self.data.keys(), canvas._left().plots.keys())]
+        y2 = [convertJointIndex(x) for x in filter(lambda k: convertJointIndex(k) in self.data.keys(), canvas._right().plots.keys())]
         y1d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 0, tab.specials.values()))
         y2d = map(lambda sp: "{}_{}".format(sp.name, sp.id), filter(lambda sp: sp.idx == 1, tab.specials.values()))
       else:
@@ -855,9 +873,9 @@ class MCLogUI(QtWidgets.QMainWindow):
           y2 = []
         y1d = []
         y2d = []
-      style = { y: canvas.style_left(y) for y in canvas._left().plots.keys() }
+      style = { convertJointIndex(y): canvas.style_left(y) for y in canvas._left().plots.keys() }
       if canvas._right():
-        style2 = { y: canvas.style_right(y) for y in canvas._right().plots.keys() }
+        style2 = { convertJointIndex(y): canvas.style_right(y) for y in canvas._right().plots.keys() }
       else:
         style2 = {}
       grid = canvas._left().grid
@@ -911,19 +929,30 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.saveUserPlots()
 
   def setRobot(self, action):
-    try:
-      self.rm = mc_rbdyn.RobotLoader.get_robot_module(action.actual())
-      self.activeRobotAction = action
+    def clearRobot():
+      self.rm = None
+      if self.activeRobotAction is not None:
+        self.activeRobotAction.setChecked(False)
+      self.activeRobotAction = None
+      action.setChecked(False)
+    def setRobot():
       for i in range(self.ui.tabWidget.count() - 1):
         tab = self.ui.tabWidget.widget(i)
         assert(isinstance(tab, MCLogTab))
-        tab.setRobotModule(self.rm, self.loaded_files)
+        tab.setRobotModule(self.rm, self.jointKeyPrefixes, self.loaded_files)
       self.saveDefaultRobot(action.actual())
+
+    if action.actual() == "Clear robot":
+      clearRobot()
+      setRobot()
+      return
+
+    try:
+      self.rm = mc_rbdyn.RobotLoader.get_robot_module(action.actual())
+      self.activeRobotAction = action
     except RuntimeError:
-      #QtWidgets.QMessageBox.warning(self, "Failed to get RobotModule", "Could not retrieve Robot Module: {}{}Check your console for more details".format(action.text(), os.linesep))
-      action.setChecked(False)
-      self.activeRobotAction.setChecked(True)
-      self.rm = None
+        clearRobot()
+    setRobot()
 
   def getCanvas(self):
     return self.ui.tabWidget.currentWidget().activeCanvas
@@ -950,7 +979,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       plotW = MCLogTab(self)
       plotW.setData(self.data)
       plotW.setGridStyles(self.gridStyles)
-      plotW.setRobotModule(self.rm, self.loaded_files)
+      plotW.setRobotModule(self.rm, self.jointKeyPrefixes, self.loaded_files)
       plotW.setColors(self.colorsScheme.colors())
       plotW.setPolyColors(self.polyColorsScheme.colors())
       j = 1
@@ -1091,7 +1120,7 @@ class MCLogUI(QtWidgets.QMainWindow):
       assert(isinstance(tab, MCLogTab))
       tab.setData(self.data)
       tab.setGridStyles(self.gridStyles)
-      tab.setRobotModule(self.rm, self.loaded_files)
+      tab.setRobotModule(self.rm, self.jointKeyPrefixes, self.loaded_files)
       tab.setColors(self.colorsScheme.colors())
       tab.setPolyColors(self.polyColorsScheme.colors())
 

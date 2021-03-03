@@ -9,6 +9,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QComboBox
 
+import os
 import copy
 import math
 import matplotlib
@@ -36,6 +37,7 @@ try:
 except ImportError:
   import mc_log_ui
 from .mc_log_utils import InitDialogWithOkCancel
+from .mc_log_utils import ShowErrorDialog
 
 import sys
 if sys.version_info[0] > 2:
@@ -316,31 +318,36 @@ class PlotYAxis(object):
       offset = offset + sign * 0.035 * (self.legendRows() - 3)
     return offset
 
-  def getLimits(self, frame, idx):
+  def getLimits(self, frame0, frame, idx):
     if not len(self):
       return None
-    min_ = np.nanmin(self.data.values()[0][idx][:frame])
-    max_ = np.nanmax(self.data.values()[0][idx][:frame])
+    if np.all(np.isnan(self.data.values()[0][idx][frame0:frame])):
+      return None
+    min_ = np.nanmin(self.data.values()[0][idx][frame0:frame])
+    max_ = np.nanmax(self.data.values()[0][idx][frame0:frame])
     for i in range(1, len(self.data.values())):
-      data = self.data.values()[i][idx][:frame]
+      data = self.data.values()[i][idx][frame0:frame]
       min_ = min(np.nanmin(data), min_)
       max_ = max(np.nanmax(data), max_)
     return min_, max_
 
 
-  def setLimits(self, xlim = None, ylim = None, frame = None, zlim = None):
+  def setLimits(self, xlim = None, ylim = None, frame0 = None, frame = None, zlim = None):
     if not len(self):
       return xlim
     dataLim = self._axis.dataLim.get_points()
+    setMargin = lambda min_, max_: [min_ - 0.01 * (max_-min_), max_ + 0.01 * (max_-min_)]
     def setLimit(lim, idx, set_lim):
       if lim is not None:
         min_, max_ = lim
       elif frame is not None:
-        min_, max_ = self.getLimits(frame, idx)
+        limits =  self.getLimits(frame0, frame, idx)
+        # Ignore limits if all data is nan
+        if limits is None:
+            return None
+        min_, max_ = setMargin(limits[0], limits[1])
       else:
-        range_ = dataLim[1][idx] - dataLim[0][idx]
-        min_ = dataLim[0][idx] - range_ * 0.01
-        max_ = dataLim[1][idx] + range_ * 0.01
+        min_, max_ = setMargin(dataLim[0][idx], dataLim[1][idx])
       set_lim([min_, max_])
       return min_, max_
     setLimit(ylim, 1, self._axis.set_ylim)
@@ -449,24 +456,26 @@ class PlotYAxis(object):
 
   def startAnimation(self, i0):
     for y_label in self.plots.keys():
-      style = self.style(y_label)
+      plotStyle = self.style(y_label)
       self.plots[y_label].remove()
       if not self._3D:
-        self.plots[y_label] = self._axis.plot(self.data[y_label][0][i0], self.data[y_label][1][i0], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+        self.plots[y_label] = self._axis.plot(self.data[y_label][0][i0], self.data[y_label][1][i0], label = y_label)[0]
       else:
-        self.plots[y_label] = self._axis.plot([self.data[y_label][0][i0]], [self.data[y_label][1][i0]], [self.data[y_label][2][0]], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+        self.plots[y_label] = self._axis.plot([self.data[y_label][0][i0]], [self.data[y_label][1][i0]], [self.data[y_label][2][0]], label = y_label)[0]
+      self.style(y_label, plotStyle)
 
   def stopAnimation(self):
     for y_label in self.plots.keys():
-      style = self.style(y_label)
+      plotStyle = self.style(y_label)
       self.plots[y_label].remove()
       if self.filtered[y_label] is not None:
         if not self._3D:
-          self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+          self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], label = y_label)[0]
         else:
-          self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], self.filtered[y_label][2], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+          self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], self.filtered[y_label][2], label = y_label)[0]
       else:
-        self.plots[y_label] = self._axis.plot(self.data[y_label][0], self.data[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+        self.plots[y_label] = self._axis.plot(self.data[y_label][0], self.data[y_label][1], label = y_label)[0]
+      self.style(y_label, plotStyle)
 
   def add_plot(self, x, y, y_label, style = None):
     return self._plot(self._data()[x], self._data()[y], y_label, style, source = y)
@@ -550,6 +559,7 @@ class PlotFigure(object):
       self.canvas = FigureCanvas(self.fig)
     self.axes = {}
     self._3D = type_ is PlotType._3D
+    self._XY = type_ is PlotType.XY
     self.axes[PlotSide.LEFT] = PlotYAxis(self, _3D = self._3D)
     if not self._3D:
       self.axes[PlotSide.RIGHT] = PlotYAxis(self, self._left().axis(), self._left()._polyAxis, _3D = self._3D)
@@ -609,12 +619,34 @@ class PlotFigure(object):
   def _legend(self):
     self._axes(lambda axis: axis.legend())
 
-  def draw(self, x_limits = None, y1_limits = None, y2_limits = None, frame = None):
+  def draw(self, x_limits = None, y1_limits = None, y2_limits = None, frame0 = None, frame = None):
+    if x_limits is None:
+        # No limit specified for XY/time plots, compute the best min-max x limits fitting both the left and right curves
+        x1_limits = None
+        x2_limits = None
+        if self._left() is not None:
+            x1_limits = self._left().getLimits(frame0, frame, 0)
+        if self._right() is not None:
+            x2_limits = self._right().getLimits(frame0, frame, 0)
+        if x1_limits is None and x2_limits is not None:
+            x_limits = x2_limits
+        elif x2_limits is None and x1_limits is not None:
+            x_limits = x1_limits
+        elif x1_limits is None and x2_limits is None:
+            return
+        else:
+            x_limits = [min(x1_limits[0], x2_limits[0]), max(x1_limits[1], x2_limits[1])]
+        if x_limits is None:
+            return
+        range_ = x_limits[1]-x_limits[0]
+        x_limits = [x_limits[0] - range_ * 0.01, x_limits[1] + range_ * 0.01]
+
     if self._3D:
-      x_limits = self._left().setLimits(x_limits, y1_limits, frame = frame, zlim = y2_limits)
+      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame, zlim = y2_limits)
     else:
-      x_limits = self._left().setLimits(x_limits, y1_limits, frame = frame)
-      self._right().setLimits(x_limits, y2_limits, frame = frame)
+      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame)
+      x_limits = self._right().setLimits(x_limits, y2_limits, frame0 = frame0, frame = frame)
+
     self._legend()
     self._drawGrid()
     top_offset = self._left().legendOffset(self._top_offset, -1)
@@ -629,10 +661,13 @@ class PlotFigure(object):
     self.fig.subplots_adjust(left = left_offset, right = right_offset, top = top_offset, bottom = bottom_offset)
 
   def animate(self, frame0, frame, x_limits = None, y1_limits = None, y2_limits = None):
+    if self.onlyShowCheckbox.isChecked():
+      # Handle only show the last N seconds
+      frame0 = max(frame0, frame - int(self.onlyShowSpinBox.value() / (self.dt/1000)))
     ret = self._left().animate(frame0, frame)
     if self._right():
       ret.extend(self._right().animate(frame0, frame))
-    PlotFigure.draw(self, x_limits = x_limits, y1_limits = y1_limits, y2_limits = y2_limits, frame = frame)
+    PlotFigure.draw(self, x_limits = x_limits, y1_limits = y1_limits, y2_limits = y2_limits, frame0 = frame0, frame = frame)
     return ret
 
   def stopAnimation(self):
@@ -931,6 +966,19 @@ class SimpleAxesDialog(QtWidgets.QDialog):
     QtWidgets.QDialog.accept(self)
     self.apply()
 
+class SaveAnimationDialog(QtWidgets.QDialog):
+  def __init__(self, parent):
+    super(QtWidgets.QDialog, self).__init__(parent)
+    self.setModal(True)
+    self.parent = parent
+    self.layout = QtWidgets.QVBoxLayout(self)
+    label = QtWidgets.QLabel("Saving animation, please wait...", self)
+    self.layout.addWidget(label)
+    self.progress = QtWidgets.QProgressBar(self)
+    self.layout.addWidget(self.progress)
+  def closeEvent(self, event):
+    event.ignore()
+
 class PlotCanvasWithToolbar(PlotFigure, QWidget):
   def __init__(self, parent = None, mode = PlotType.TIME):
     PlotFigure.__init__(self, mode, True)
@@ -945,6 +993,10 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
 
     self.setupLockButtons()
     self.setupAnimationButtons()
+
+    self.animation_path = QtCore.QStandardPaths.writableLocation(QtCore.QStandardPaths.DocumentsLocation)
+    self.savingAnimation = False
+    self.saveAnimationDialog = SaveAnimationDialog(self)
 
   def setupLockButtons(self):
     layout = QHBoxLayout()
@@ -997,6 +1049,13 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.saveAnimationButton = QtWidgets.QPushButton("Save animation")
     self.saveAnimationButton.released.connect(self.saveAnimation)
     animationLayout.addWidget(self.saveAnimationButton)
+    self.onlyShowCheckbox = QtWidgets.QCheckBox("Only show: ")
+    animationLayout.addWidget(self.onlyShowCheckbox)
+    self.onlyShowSpinBox = QtWidgets.QDoubleSpinBox()
+    self.onlyShowSpinBox.setMinimum(0)
+    self.onlyShowSpinBox.setSuffix("s")
+    self.onlyShowSpinBox.setValue(10)
+    animationLayout.addWidget(self.onlyShowSpinBox)
     self.layout.addLayout(animationLayout)
 
   def setData(self, data):
@@ -1017,7 +1076,8 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
       else:
         self.animationButton.setChecked(False)
     else:
-      self.stopAnimation()
+      if self.animation is not None:
+        self.stopAnimation()
       self.animationButton.setText("Start animation")
 
   def restartAnimation(self):
@@ -1032,37 +1092,81 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.restartAnimation()
     self.draw()
 
+  def getAxisFrameRange(self, x_data, yValues):
+    """Get range from first non-nan data to last non-nan data of a single y axis
+    For XY plots and 3D plots data is considered valid if all components are non-nan
+    """
+    min_i0 = len(x_data)-1
+    max_iN = 0
+    if len(yValues) == 0:
+        return min_i0, max_iN
+  
+    isNull = None
+    if self._3D:
+        # data is [x, y, z, t]
+        isNull = lambda ydata, idx : (ydata[0] is None or np.isnan(ydata[0][idx])) or (ydata[1] is None or np.isnan(ydata[1][idx])) or (ydata[2] is None or np.isnan(ydata[2][idx]))
+    elif self._XY:
+        # data is [x, y, None, t]
+        isNull = lambda ydata, idx : (ydata[0] is None or np.isnan(ydata[0][idx])) or (ydata[1] is None or np.isnan(ydata[1][idx]))
+    else:
+        # data is [t, y]
+        isNull = lambda ydata, idx : (ydata[1] is None or np.isnan(ydata[1][idx]))
+  
+    for y_data in yValues:
+        # look for first non-nan value
+        i0 = 0
+        while i0 < len(x_data) and (np.isnan(x_data[i0]) or isNull(y_data, i0)):
+          i0 += 1
+        iN = len(x_data)-1
+        while iN > i0 and (np.isnan(x_data[iN]) or isNull(y_data, iN)):
+          iN -= 1
+        min_i0 = min(min_i0, i0)
+        max_iN = max(max_iN, iN)
+    return min_i0, max_iN
+
   def getFrameRange(self):
+    """Returns the index corresponding to the time from the first non-nan element to the last non-nan element in the non-nan region of the selected time range
+    """
     if self.data is None or len(self.data) == 0:
       return 0, 0
-    x_data = self.data[self.x_data]
-    i0 = 0
-    while i0 < len(x_data) and np.isnan(x_data[i0]):
-      i0 += 1
-    iN = i0
-    while iN + 1 < len(x_data) and not np.isnan(x_data[iN + 1]):
-      iN += 1
-    assert(iN > i0 and i0 < len(x_data)),"Strange time range"
-    return i0, iN
+    if self._left() is None and self.right() is None:
+      return 0, 0
+
+    x_data = self.data[self.x_data] # time
+    if self._left() is not None and self._right() is None:
+      return self.getAxisFrameRange(x_data, self._left().data.values())
+    if self._right() is not None and self._left() is None:
+      return self.getAxisFrameRange(x_data, self._right().data.values())
+
+    y1_data = self._left().data.values()
+    y2_data = self._right().data.values()
+    if len(y1_data) == 0 and len(y2_data) == 0:
+        return 0, 0
+
+    y1_range = self.getAxisFrameRange(x_data, y1_data)
+    y2_range = self.getAxisFrameRange(x_data, y2_data)
+    range = [min(y1_range[0], y2_range[0]), max(y1_range[1], y2_range[1])]
+    assert(range[1] > range[0] and range[0] < len(x_data)), "Strange frame range"
+    return range
 
   def lockAxes(self):
     i0, iN = self.getFrameRange()
     if i0 == iN:
       return
     if self.x_limits is None:
-      self.x_limits = self._left().getLimits(iN, 0) or self._right().getLimits(iN, 0)
+      self.x_limits = self._left().getLimits(i0, iN, 0) or self._right().getLimits(i0, iN, 0)
     if self.x_limits is None:
       return
     self.x_locked.setChecked(True)
     if self.y1_limits is None:
-      self.y1_limits = self._left().getLimits(iN, 1)
+      self.y1_limits = self._left().getLimits(i0, iN, 1)
     if self.y1_limits is not None:
       self.y1_locked.setChecked(True)
     if self.y2_limits is None:
       if self._3D:
-        self.y2_limits = self._left().getLimits(iN, 2)
+        self.y2_limits = self._left().getLimits(i0, iN, 2)
       else:
-        self.y2_limits = self._right().getLimits(iN, 1)
+        self.y2_limits = self._right().getLimits(i0, iN, 1)
     if self.y2_limits is not None:
       self.y2_locked.setChecked(True)
     return i0, iN
@@ -1073,15 +1177,22 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     if i0 == iN:
       return False
     x_data = self.data[self.x_data]
-    dt = (x_data[i0 + 1] - x_data[i0]) * 1000 # dt in ms
-    step = int(math.ceil(interval/dt))
+    self.dt = (x_data[i0 + 1] - x_data[i0]) * 1000 # dt in ms
+    step = int(math.ceil(interval/self.dt))
     self.frame0 = i0
+    self.saveAnimationDialog.progress.setRange(i0, iN)
     self.animation = FuncAnimation(self.fig, self.animate, frames = range(i0 + 1, iN, step), interval = interval)
     self._axes(lambda a: a.startAnimation(i0))
     self.draw()
     return True
 
   def animate(self, frame):
+    # Matplotlib's animation.save() call is blocking, and cannot be called from a thread.
+    # However, it calls this animate function for each frame. Thus we manually call Qt's event loop to keep rendering the GUI
+    # and allow the saving dialog to display, and the plot to be displayed on screen
+    if self.savingAnimation:
+      self.saveAnimationDialog.progress.setValue(frame)
+      QtWidgets.QApplication.processEvents()
     return PlotFigure.animate(self, self.frame0, frame, self.x_limits, self.y1_limits, self.y2_limits)
 
   def stopAnimation(self):
@@ -1090,15 +1201,26 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.draw()
 
   def saveAnimation(self):
-    fpath = QtWidgets.QFileDialog.getSaveFileName(self, "Output file", filter = "Video (*.mp4)")[0]
+    if not self.animationButton.isChecked():
+      self.startAnimation()
+      if not self.animation:
+          ShowErrorDialog("Can't save an empty animation")
+          return
+      self.stopAnimation()
+
+    fpath = QtWidgets.QFileDialog.getSaveFileName(self,  "Output animation", self.animation_path+"/output-animation.mp4", filter = "Video (*.mp4)")[0]
     if not len(fpath):
       return
-    if self.animationButton.isChecked():
-      self.animation.save(fpath)
-    else:
-      self.startAnimation()
-      self.animation.save(fpath)
-      self.stopAnimation()
+    self.animation_path = os.path.split(fpath)[0]
+    filename, extension = os.path.splitext(fpath)
+    if not extension:
+      fpath = fpath + '.mp4'
+
+    self.savingAnimation = True
+    self.saveAnimationDialog.show()
+    self.animation.save(fpath)
+    self.savingAnimation = False
+    self.saveAnimationDialog.hide()
 
   def axesDialog(self):
     SimpleAxesDialog(self).exec_()
