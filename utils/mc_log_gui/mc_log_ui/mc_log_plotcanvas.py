@@ -456,24 +456,26 @@ class PlotYAxis(object):
 
   def startAnimation(self, i0):
     for y_label in self.plots.keys():
-      style = self.style(y_label)
+      plotStyle = self.style(y_label)
       self.plots[y_label].remove()
       if not self._3D:
-        self.plots[y_label] = self._axis.plot(self.data[y_label][0][i0], self.data[y_label][1][i0], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+        self.plots[y_label] = self._axis.plot(self.data[y_label][0][i0], self.data[y_label][1][i0], label = y_label)[0]
       else:
-        self.plots[y_label] = self._axis.plot([self.data[y_label][0][i0]], [self.data[y_label][1][i0]], [self.data[y_label][2][0]], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+        self.plots[y_label] = self._axis.plot([self.data[y_label][0][i0]], [self.data[y_label][1][i0]], [self.data[y_label][2][0]], label = y_label)[0]
+      self.style(y_label, plotStyle)
 
   def stopAnimation(self):
     for y_label in self.plots.keys():
-      style = self.style(y_label)
+      plotStyle = self.style(y_label)
       self.plots[y_label].remove()
       if self.filtered[y_label] is not None:
         if not self._3D:
-          self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+          self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], label = y_label)[0]
         else:
-          self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], self.filtered[y_label][2], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+          self.plots[y_label] = self._axis.plot(self.filtered[y_label][0], self.filtered[y_label][1], self.filtered[y_label][2], label = y_label)[0]
       else:
-        self.plots[y_label] = self._axis.plot(self.data[y_label][0], self.data[y_label][1], label = y_label, color = style.color, linestyle = style.linestyle, linewidth = style.linewidth)[0]
+        self.plots[y_label] = self._axis.plot(self.data[y_label][0], self.data[y_label][1], label = y_label)[0]
+      self.style(y_label, plotStyle)
 
   def add_plot(self, x, y, y_label, style = None):
     return self._plot(self._data()[x], self._data()[y], y_label, style, source = y)
