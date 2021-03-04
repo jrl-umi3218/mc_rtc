@@ -321,12 +321,14 @@ class PlotYAxis(object):
   def getLimits(self, frame0, frame, idx):
     if not len(self):
       return None
-    if np.all(np.isnan(self.data.values()[0][idx][frame0:frame])):
+    values = iter(self.data.values())
+    value0 = next(values)
+    if np.all(np.isnan(value0[idx][frame0:frame])):
       return None
-    min_ = np.nanmin(self.data.values()[0][idx][frame0:frame])
-    max_ = np.nanmax(self.data.values()[0][idx][frame0:frame])
-    for i in range(1, len(self.data.values())):
-      data = self.data.values()[i][idx][frame0:frame]
+    min_ = np.nanmin(value0[idx][frame0:frame])
+    max_ = np.nanmax(value0[idx][frame0:frame])
+    for value in values:
+      data = value[idx][frame0:frame]
       min_ = min(np.nanmin(data), min_)
       max_ = max(np.nanmax(data), max_)
     return min_, max_
