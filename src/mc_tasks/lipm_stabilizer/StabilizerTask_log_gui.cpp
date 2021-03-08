@@ -356,7 +356,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
                      [this]() { return c_.extWrench.comOffsetErrCoMLimit; });
   logger.addLogEntry(name_ + "_extWrench_comOffsetErr_ZMPLimit", this,
                      [this]() { return c_.extWrench.comOffsetErrZMPLimit; });
-  MC_RTC_LOG_HELPER(name_ + "_extWrench_comOffsetDerivator", this, [this]() { return comOffsetDerivator_.eval(); });
+  logger.addLogEntry(name_ + "_extWrench_comOffsetDerivator", this, [this]() { return comOffsetDerivator_.eval(); });
   MC_RTC_LOG_HELPER(name_ + "_extWrench_extWrenchGain", extWrenchGain_);
   logger.addLogEntry(name_ + "_dfz_damping", this, [this]() { return c_.dfzDamping; });
   logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque", this,
