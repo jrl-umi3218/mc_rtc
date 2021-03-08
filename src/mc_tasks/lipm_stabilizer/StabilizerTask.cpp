@@ -646,7 +646,16 @@ Eigen::Vector3d StabilizerTask::computeCoMOffset(const std::vector<std::pair<std
     comOffset.x() += (pos.z() - zmpTarget_.z()) * force.x() - pos.x() * force.z() + moment.y();
     comOffset.y() += (pos.z() - zmpTarget_.z()) * force.y() - pos.y() * force.z() - moment.x();
   }
-  comOffset /= robot.mass() * (comddTarget_.z() + constants::gravity.z());
+  double verticalComAcc = comddTarget_.z() + constants::gravity.z();
+  double verticalComAccThre = 1e-3;
+  if(std::abs(verticalComAcc) < verticalComAccThre)
+  {
+    mc_rtc::log::warning(
+        "[StabilizerTask::computeCoMOffset] overwrite verticalComAcc because it's too close to zero: {}",
+        verticalComAcc);
+    verticalComAcc = verticalComAcc >= 0 ? verticalComAccThre : -verticalComAccThre;
+  }
+  comOffset /= robot.mass() * verticalComAcc;
 
   return comOffset;
 }
