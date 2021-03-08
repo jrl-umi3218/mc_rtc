@@ -177,7 +177,7 @@ struct ExtWrenchConfiguration
   bool modifyZMPErrD = false;
   // Limit of CoM offset error handled by CoM modification
   double comOffsetErrCoMLimit = 0.1;
-  // Limit of CoM offset error handled by ZMP modification
+  // Limit of CoM offset error handled by ZMP modification [m]
   double comOffsetErrZMPLimit = 0.1;
   // Cutoff period for the low-pass filter of the sum of the measured external wrenches
   double extWrenchSumLowPassCutoffPeriod = 0.05;
