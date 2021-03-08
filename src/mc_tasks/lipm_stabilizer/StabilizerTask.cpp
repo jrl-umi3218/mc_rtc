@@ -553,7 +553,7 @@ void StabilizerTask::computeLeftFootRatio()
 {
   if(inDoubleSupport())
   {
-    // Project desired CoM in-between foot-sole ankle frames and compute ratio along the line in-beween the two surfaces
+    // Project desired ZMP in-between foot-sole ankle frames and compute ratio along the line in-beween the two surfaces
     const Eigen::Vector3d & lankle = contacts_.at(ContactState::Left).anklePose().translation();
     const Eigen::Vector3d & rankle = contacts_.at(ContactState::Right).anklePose().translation();
     Eigen::Vector3d t_lankle_com = zmpTarget_ - lankle;

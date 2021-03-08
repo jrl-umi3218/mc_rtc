@@ -284,7 +284,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * @param comd Desired CoM velocity
    * @param comdd Desired CoM acceleration
    * @param zmp Desired ZMP
-   * @param zmpd Desired ZMP velocity
+   * @param zmpd Desired ZMP velocity (can be omitted when zmpdGain in StabilizerConfiguration is zero)
    *
    * \see staticTarget for a helper to define the stabilizer target when the CoM
    * is static
@@ -619,7 +619,7 @@ private:
   void checkInTheAir();
 
   /** Computes the ratio of force distribution between the feet based on
-   * the reference CoM and contact ankle positions.
+   * the reference ZMP and contact ankle positions.
    */
   void computeLeftFootRatio();
 
