@@ -699,7 +699,7 @@ private:
 
   /** @brief Compute the CoM offset and the sum wrench from the external wrenches.
    *
-   *  @param extWrenches External wrenches
+   *  @param extWrenches External wrenches (expressed in surface frame)
    *  @param robot Robot used to transform surface wrenches (control robot or real robot)
    */
   Eigen::Vector3d computeCoMOffset(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
