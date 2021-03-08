@@ -707,7 +707,7 @@ private:
 
   /** @brief Compute the sum of external wrenches.
    *
-   *  @param extWrenches External wrenches
+   *  @param extWrenches External wrenches (expressed in surface frame)
    *  @param robot Robot used to transform surface wrenches (control robot or real robot)
    *  @param com Robot CoM
    */
