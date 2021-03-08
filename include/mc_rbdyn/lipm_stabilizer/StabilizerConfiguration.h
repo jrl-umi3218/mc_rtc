@@ -195,6 +195,38 @@ struct ExtWrenchConfiguration
   double comOffsetLowPassCoMCutoffPeriod = 1.0;
   /// Time window for the stationary offset filter of the CoM offset derivator
   double comOffsetDerivatorTimeConstant = 1.0;
+
+  void load(const mc_rtc::Configuration & config)
+  {
+    config("add_expected_com_offset", addExpectedCoMOffset);
+    config("subtract_measured_value", subtractMeasuredValue);
+    config("modify_com_error", modifyCoMErr);
+    config("modify_zmp_error", modifyZMPErr);
+    config("modify_zmp_error_d", modifyZMPErrD);
+    config("com_offset_err_com_limit", comOffsetErrCoMLimit);
+    config("com_offset_err_zmp_limit", comOffsetErrZMPLimit);
+    config("ext_wrench_sum_cutoff", extWrenchSumLowPassCutoffPeriod);
+    config("com_offset_cutoff", comOffsetLowPassCutoffPeriod);
+    config("com_offset_com_cutoff", comOffsetLowPassCoMCutoffPeriod);
+    config("derivator_time_constant", comOffsetDerivatorTimeConstant);
+  }
+
+  mc_rtc::Configuration save() const
+  {
+    mc_rtc::Configuration config;
+    config.add("add_expected_com_offset", addExpectedCoMOffset);
+    config.add("subtract_measured_value", subtractMeasuredValue);
+    config.add("modify_com_error", modifyCoMErr);
+    config.add("modify_zmp_error", modifyZMPErr);
+    config.add("modify_zmp_error_d", modifyZMPErrD);
+    config.add("com_offset_err_com_limit", comOffsetErrCoMLimit);
+    config.add("com_offset_err_zmp_limit", comOffsetErrZMPLimit);
+    config.add("ext_wrench_sum_cutoff", extWrenchSumLowPassCutoffPeriod);
+    config.add("com_offset_cutoff", comOffsetLowPassCutoffPeriod);
+    config.add("com_offset_com_cutoff", comOffsetLowPassCoMCutoffPeriod);
+    config.add("derivator_time_constant", comOffsetDerivatorTimeConstant);
+    return config;
+  }
 };
 
 } // namespace lipm_stabilizer
@@ -268,35 +300,13 @@ struct ConfigurationLoader<mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration>
   static mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration load(const mc_rtc::Configuration & config)
   {
     mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration extWrench;
-    config("add_expected_com_offset", extWrench.addExpectedCoMOffset);
-    config("subtract_measured_value", extWrench.subtractMeasuredValue);
-    config("modify_com_error", extWrench.modifyCoMErr);
-    config("modify_zmp_error", extWrench.modifyZMPErr);
-    config("modify_zmp_error_d", extWrench.modifyZMPErrD);
-    config("com_offset_err_com_limit", extWrench.comOffsetErrCoMLimit);
-    config("com_offset_err_zmp_limit", extWrench.comOffsetErrZMPLimit);
-    config("ext_wrench_sum_cutoff", extWrench.extWrenchSumLowPassCutoffPeriod);
-    config("com_offset_cutoff", extWrench.comOffsetLowPassCutoffPeriod);
-    config("com_offset_com_cutoff", extWrench.comOffsetLowPassCoMCutoffPeriod);
-    config("derivator_time_constant", extWrench.comOffsetDerivatorTimeConstant);
+    extWrench.load(config);
     return extWrench;
   }
 
   static mc_rtc::Configuration save(const mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration & extWrench)
   {
-    mc_rtc::Configuration config;
-    config.add("add_expected_com_offset", extWrench.addExpectedCoMOffset);
-    config.add("subtract_measured_value", extWrench.subtractMeasuredValue);
-    config.add("modify_com_error", extWrench.modifyCoMErr);
-    config.add("modify_zmp_error", extWrench.modifyZMPErr);
-    config.add("modify_zmp_error_d", extWrench.modifyZMPErrD);
-    config.add("com_offset_err_com_limit", extWrench.comOffsetErrCoMLimit);
-    config.add("com_offset_err_zmp_limit", extWrench.comOffsetErrZMPLimit);
-    config.add("ext_wrench_sum_cutoff", extWrench.extWrenchSumLowPassCutoffPeriod);
-    config.add("com_offset_cutoff", extWrench.comOffsetLowPassCutoffPeriod);
-    config.add("com_offset_com_cutoff", extWrench.comOffsetLowPassCoMCutoffPeriod);
-    config.add("derivator_time_constant", extWrench.comOffsetDerivatorTimeConstant);
-    return config;
+    return extWrench.save();
   }
 };
 } // namespace mc_rtc
