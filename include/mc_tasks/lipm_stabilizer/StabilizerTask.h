@@ -842,7 +842,11 @@ protected:
   /**< Whether the estimator needs to be reset (robot in the air, initialization) */
   bool dcmEstimatorNeedsReset_ = true;
 
-  /** Adding an offset to the CoM for the predictable / measurable external wrenches on the robot surface. */
+  /** @name Members related to stabilization in the presence of external wrenches
+   *
+   *  Adding an offset to the CoM for the predictable / measurable external wrenches on the robot surface.
+   *  @{
+   */
   std::vector<std::pair<std::string, sva::ForceVecd>> extWrenchesTarget_; /**< Target (expected) external wrenches */
   std::vector<std::pair<std::string, sva::ForceVecd>> extWrenchesMeasured_; /**< Measured external wrenches */
   sva::ForceVecd extWrenchSumTarget_ = sva::ForceVecd::Zero(); /**< Sum of target (expected) external wrenches */
@@ -860,6 +864,7 @@ protected:
   mc_filter::StationaryOffset<Eigen::Vector3d> comOffsetDerivator_; /**< Derivator of CoM offset */
   sva::MotionVecd extWrenchGain_ =
       sva::MotionVecd(Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()); /**< Gain of measured external wrenches */
+  /** @} */
 
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
