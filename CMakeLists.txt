@@ -151,6 +151,10 @@ if(MSVC)
   set(CMAKE_MSVCIDE_RUN_PATH "\$(SolutionDir)/3rd-party/ltdl/\$(Configuration);\$(SolutionDir)/src/\$(Configuration);\$(SolutionDir)/src/mc_control/fsm/\$(Configuration)")
 endif(MSVC)
 
+if(WIN32)
+  add_definitions(/bigobj)
+endif(WIN32)
+
 include(CMakeModules/ListAllFiles.cmake)
 
 add_subdirectory(CMakeModules)
