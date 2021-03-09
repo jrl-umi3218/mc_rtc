@@ -49,7 +49,7 @@ gui()->addXYPlot(
                         [this]() { return cos(t); }, [this]() { return sin(t); },
                         Color::Red),
   mc_rtc::gui::plot::Polygon("Square",
-                             []() { return PolygonDescription({{-1, 1}, {-1, 1}, {1, 1}, {1, -1}}, Color::Blue); })
+                             []() { return PolygonDescription({{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}, Color::Blue); })
 );
 {% endraw %}
 {% endcapture %}
