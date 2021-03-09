@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2021 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -246,6 +246,12 @@ public:
 
   /** Flush the log data to disk (only implemented in the synchronous method) */
   void flush();
+
+  /** Returns the number of entries currently in the log */
+  inline size_t size() const
+  {
+    return log_entries_.size();
+  }
 
 private:
   /** Hold information about a log entry stored in this instance */
