@@ -4,17 +4,18 @@
 
 #include <mc_control/CompletionCriteria.h>
 #include <mc_rbdyn/RobotLoader.h>
+#include <mc_rtc/pragma.h>
 #include <mc_tasks/CoMTask.h>
 
 #include <spdlog/spdlog.h>
 
 #include "benchmark/benchmark.h"
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wpedantic"
-#pragma GCC diagnostic ignored "-Wconversion"
-#pragma GCC diagnostic ignored "-Wunknown-pragmas"
-#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+MC_RTC_diagnostic_push;
+MC_RTC_diagnostic_ignored(GCC, "-Wpedantic");
+MC_RTC_diagnostic_ignored(GCC, "-Wconversion");
+MC_RTC_diagnostic_ignored(GCC, "-Wunknown-pragmas");
+MC_RTC_diagnostic_ignored(GCC, "-Wunused-but-set-variable");
 
 const double dt = 0.005;
 
@@ -201,3 +202,5 @@ static void BM_EvalAndSpeedOrTimeoutConfigure(benchmark::State & state)
 BENCHMARK(BM_EvalAndSpeedOrTimeoutConfigure);
 
 BENCHMARK_MAIN();
+
+MC_RTC_diagnostic_pop;

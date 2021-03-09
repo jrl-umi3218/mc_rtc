@@ -7,6 +7,7 @@
 
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/Robots.h>
+#include <mc_rtc/pragma.h>
 #include <mc_solver/ConstraintSet.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/api.h>
@@ -33,34 +34,33 @@ struct StateBuilder;
 namespace mc_solver
 {
 
-#pragma GCC diagnostic push
 // Work around GCC bug see: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=43407
-#pragma GCC diagnostic ignored "-Wattributes"
+MC_RTC_diagnostic_push;
+MC_RTC_diagnostic_ignored(GCC, "-Wattributes");
 
-/** Describe the type of feedback used to control the robot */
-enum class MC_SOLVER_DLLAPI FeedbackType
-{
-  /** No feedback, i.e. open-loop control */
-  None,
-  /** Use encoder values for actuated joints */
-  Joints,
-  /** Joints + encoder velocity obtained from numerical differentiation */
-  JointsWVelocity,
-  /** Run in closed loop w.r.t realRobots. The user is responsible for ensuring
-   * that the observed state of the real robots is valid */
-  ObservedRobots
-};
+    /** Describe the type of feedback used to control the robot */
+    enum class MC_SOLVER_DLLAPI FeedbackType {
+      /** No feedback, i.e. open-loop control */
+      None,
+      /** Use encoder values for actuated joints */
+      Joints,
+      /** Joints + encoder velocity obtained from numerical differentiation */
+      JointsWVelocity,
+      /** Run in closed loop w.r.t realRobots. The user is responsible for ensuring
+       * that the observed state of the real robots is valid */
+      ObservedRobots
+    };
 
-#pragma GCC diagnostic pop
+MC_RTC_diagnostic_pop;
 
-/** \class QPSolver
- *
- * Wraps a tasks::qp::QPSolver instance
- *
- * Always ensure that the solver is up-to-date
- */
+    /** \class QPSolver
+     *
+     * Wraps a tasks::qp::QPSolver instance
+     *
+     * Always ensure that the solver is up-to-date
+     */
 
-struct MC_SOLVER_DLLAPI QPSolver
+    struct MC_SOLVER_DLLAPI QPSolver
 {
 public:
   /** Constructor

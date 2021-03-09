@@ -6,6 +6,7 @@
 #include <mc_rbdyn/Robots.h>
 #include <mc_rbdyn/SCHAddon.h>
 #include <mc_rtc/logging.h>
+#include <mc_rtc/pragma.h>
 
 #include <RBDyn/FK.h>
 #include <RBDyn/parsers/urdf.h>
@@ -41,11 +42,8 @@ inline void update(std::map<X, Y> & oldData, const std::map<X, Y> & nData)
 namespace mc_rbdyn
 {
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#ifdef __clang__
-#  pragma clang diagnostic ignored "-Wshorten-64-to-32"
-#endif
+MC_RTC_diagnostic_push;
+MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion", ClangOnly, "-Wshorten-64-to-32");
 
 Robots::Robots() : robots_(), mbs_(), mbcs_(), robotIndex_(0), envIndex_(0) {}
 
@@ -520,6 +518,6 @@ const RobotModule & Robots::robotModule(size_t idx) const
   return robot_modules_[idx];
 }
 
-#pragma GCC diagnostic pop
+MC_RTC_diagnostic_pop;
 
 } // namespace mc_rbdyn
