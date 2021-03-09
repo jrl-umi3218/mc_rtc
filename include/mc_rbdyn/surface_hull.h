@@ -5,7 +5,7 @@
 #ifndef _H_MCRBDYNSURFACEHULL_H_
 #define _H_MCRBDYNSURFACEHULL_H_
 
-#include<mc_rtc/pragma.h>
+#include <mc_rtc/pragma.h>
 
 MC_RTC_diagnostic_push;
 MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion");

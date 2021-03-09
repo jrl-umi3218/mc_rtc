@@ -38,29 +38,30 @@ namespace mc_solver
 MC_RTC_diagnostic_push;
 MC_RTC_diagnostic_ignored(GCC, "-Wattributes");
 
-    /** Describe the type of feedback used to control the robot */
-    enum class MC_SOLVER_DLLAPI FeedbackType {
-      /** No feedback, i.e. open-loop control */
-      None,
-      /** Use encoder values for actuated joints */
-      Joints,
-      /** Joints + encoder velocity obtained from numerical differentiation */
-      JointsWVelocity,
-      /** Run in closed loop w.r.t realRobots. The user is responsible for ensuring
-       * that the observed state of the real robots is valid */
-      ObservedRobots
-    };
+/** Describe the type of feedback used to control the robot */
+enum class MC_SOLVER_DLLAPI FeedbackType
+{
+  /** No feedback, i.e. open-loop control */
+  None,
+  /** Use encoder values for actuated joints */
+  Joints,
+  /** Joints + encoder velocity obtained from numerical differentiation */
+  JointsWVelocity,
+  /** Run in closed loop w.r.t realRobots. The user is responsible for ensuring
+   * that the observed state of the real robots is valid */
+  ObservedRobots
+};
 
 MC_RTC_diagnostic_pop;
 
-    /** \class QPSolver
-     *
-     * Wraps a tasks::qp::QPSolver instance
-     *
-     * Always ensure that the solver is up-to-date
-     */
+/** \class QPSolver
+ *
+ * Wraps a tasks::qp::QPSolver instance
+ *
+ * Always ensure that the solver is up-to-date
+ */
 
-    struct MC_SOLVER_DLLAPI QPSolver
+struct MC_SOLVER_DLLAPI QPSolver
 {
 public:
   /** Constructor
