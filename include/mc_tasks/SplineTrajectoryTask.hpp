@@ -388,8 +388,8 @@ void SplineTrajectoryTask<Derived>::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
   logger.addLogEntry(name_ + "_surfacePose", this, [this]() {
-    const auto & robot = this->robots.robot(this->rIndex_);
-    return robot.surfacePose(this->surfaceName_);
+    const auto & robot = this->robots.robot(rIndex_);
+    return robot.surfacePose(surfaceName_);
   });
   MC_RTC_LOG_GETTER(name_ + "_targetPose", target);
   MC_RTC_LOG_GETTER(name_ + "_refPose", refPose);
