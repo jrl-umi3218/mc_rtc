@@ -160,3 +160,21 @@ MainRobot: JVRC1
 Enabled: LIPMStabilizer
 ```
 
+# ExternalForces
+
+The `ExternalForces` sample controller demonstrates a biped robot exerting specified external forces with {% doxygen mc_tasks::StabilizerTask %} and {% doxygen mc_tasks::force::ImpedanceTask %} though a simple FSM making the `JVRC1` robot push a wall with desired forces.
+
+**Supported robots**: `JVRC1`.
+
+**Prerequisites**: Please make sure that the hand force sensors have been calibrated beforehand using the [ForceSensorCalibration controller](https://github.com/jrl-umi3218/mc_force_sensor_calibration_controller).
+
+**Running**
+
+To run the sample, you need a dynamic simulator in order to simulate the force sensors. This tutorial is intended to be used with {% link mc_openrtm %} and {% link Choreonoid %}, and the provided simulation file `sim_mc_wall.cnoid`. If you use another simulator, you will need to adapt the instructions, and create a scene with a wall `55cm` away from the robot.
+
+Put in [your mc_rtc configuration]({{site.baseurl}}/tutorials/introduction/configuration.html), and [run the controller]({{site.baseurl}}/tutorials/introduction/running-a-controller.html) with Choreonoid. The robot reaches both hands to the wall and applies the specified external forces of the sine wave to the wall with leaning forward.
+
+```yaml
+MainRobot: JVRC1
+Enabled: ExternalForces
+```
