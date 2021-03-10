@@ -52,13 +52,13 @@ var NAVTREEINDEX =
 "structmc__rbdyn_1_1Contact.html#aa64e9ae1b141768ff36beab5ababfe62",
 "structmc__rbdyn_1_1Robot.html#ace64ab0161e9b00e262b408733d19629",
 "structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html#ac1276cfbb01a99a72157dc2d2b68ac3d",
-"structmc__rtc_1_1Logger.html#a5299ba868f3a7b643978caa1620f19fe",
-"structmc__rtc_1_1gui_1_1PointConfig.html#a1561d8ebb70e3cb79de4ccab8c1d9f39",
-"structmc__solver_1_1CollisionsConstraint.html#ad35e4c70b095a3dd62bcc640f5fc3cae",
-"structmc__tasks_1_1AddRemoveContactTask.html#aa408d0703b72d18dc3337fe383bcd840",
-"structmc__tasks_1_1SplineTrajectoryTask.html#a936e06384b9ad6a4cdab2e8545e9b0aa",
-"structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html#a37187ece11c1b67d92751412ce49e9c1",
-"structmc__trajectory_1_1Spline.html#ad1c51f62601c8adaf5e25ff4df9ce969"
+"structmc__rtc_1_1Logger.html#a2c33c14a348ab11f39ab33056078e4af",
+"structmc__rtc_1_1gui_1_1PointConfig.html#a0c87c28f6793444f6e36faa286ada4f5",
+"structmc__solver_1_1CollisionsConstraint.html#a9a46b2c285695e166eefc0814938e2b4",
+"structmc__tasks_1_1AddRemoveContactTask.html#a98b07421e0322187bb0e5fae5b595f1d",
+"structmc__tasks_1_1SplineTrajectoryTask.html#a8d2ac7fd3779da3324969baf637212bf",
+"structmc__tasks_1_1force_1_1details_1_1ImpedanceVecd.html#a1535fb3d37060f7ff2488e9d335f8ca6",
+"structmc__trajectory_1_1Spline.html#ab65b7eb21021b049516c60e986a4ee88"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

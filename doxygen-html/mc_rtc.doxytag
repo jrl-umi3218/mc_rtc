@@ -17674,6 +17674,13 @@
       <anchor>a2c33c14a348ab11f39ab33056078e4af</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function">
+      <type>size_t</type>
+      <name>size</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>a0741f5b75b8a3b54ed0f761b546e13e0</anchor>
+      <arglist>() const</arglist>
+    </member>
     <member kind="variable" static="yes">
       <type>static const uint8_t</type>
       <name>magic</name>
@@ -31471,6 +31478,13 @@
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
       <anchor>ac8808344c0006e52d845f38ed202afd9</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>size_t</type>
+      <name>size</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
+      <anchor>a7e6582bb6ecddab6159fab5a71c95cfb</anchor>
+      <arglist>() const</arglist>
     </member>
     <member kind="variable" static="yes">
       <type>static constexpr int8_t</type>

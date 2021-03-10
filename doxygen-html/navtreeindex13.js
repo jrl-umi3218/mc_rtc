@@ -1,5 +1,7 @@
 var NAVTREEINDEX13 =
 {
+"structmc__solver_1_1CollisionsConstraint.html#a9a46b2c285695e166eefc0814938e2b4":[3,0,8,3,0],
+"structmc__solver_1_1CollisionsConstraint.html#abd70fa0653a8fbdc8d9e397694340626":[3,0,8,3,5],
 "structmc__solver_1_1CollisionsConstraint.html#ad35e4c70b095a3dd62bcc640f5fc3cae":[3,0,8,3,4],
 "structmc__solver_1_1CollisionsConstraint.html#ad7757edd53edcdbda1ba8da7513acc74":[3,0,8,3,8],
 "structmc__solver_1_1CollisionsConstraint.html#aeb19fca872f0ad264f1babf3fcb19da8":[3,0,8,3,10],
@@ -247,7 +249,5 @@ var NAVTREEINDEX13 =
 "structmc__tasks_1_1AddRemoveContactTask.html#a8846f1a33c20ed70bf425b49027aba12":[3,0,9,3,12],
 "structmc__tasks_1_1AddRemoveContactTask.html#a92268af15885043be699e14dc3683fda":[3,0,9,3,6],
 "structmc__tasks_1_1AddRemoveContactTask.html#a94e15cb317d7a258015b7eabfb2a1109":[3,0,9,3,11],
-"structmc__tasks_1_1AddRemoveContactTask.html#a95ba024725a064ab1d2fbdbc0e1bf37f":[3,0,9,3,2],
-"structmc__tasks_1_1AddRemoveContactTask.html#a98b07421e0322187bb0e5fae5b595f1d":[3,0,9,3,16],
-"structmc__tasks_1_1AddRemoveContactTask.html#a9fe42ac857795cdd634819a17a5238b5":[3,0,9,3,21]
+"structmc__tasks_1_1AddRemoveContactTask.html#a95ba024725a064ab1d2fbdbc0e1bf37f":[3,0,9,3,2]
 };

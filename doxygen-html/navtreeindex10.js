@@ -242,12 +242,12 @@ var NAVTREEINDEX10 =
 "structmc__rtc_1_1LoaderSandboxData.html#adf4719d80846e018c3de0290164048ac":[3,0,7,27,1],
 "structmc__rtc_1_1LoaderSandboxData.html#aecb02006f5f0cd5aeabf7965973d3542":[3,0,7,27,0],
 "structmc__rtc_1_1Logger.html":[3,0,7,28],
+"structmc__rtc_1_1Logger.html#a0741f5b75b8a3b54ed0f761b546e13e0":[3,0,7,28,15],
 "structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9b":[3,0,7,28,1],
 "structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9ba1515271d5edd3952e5aa146109a98e78":[3,0,7,28,1,0],
 "structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9ba1ba1ba2bd2141794d82c4363b7e533f7":[3,0,7,28,1,1],
 "structmc__rtc_1_1Logger.html#a1281ebd02828e3e56a41e013867a0cb8":[3,0,7,28,8],
 "structmc__rtc_1_1Logger.html#a18ce85d2d7612f7029b47a3931c72316":[3,0,7,28,2],
 "structmc__rtc_1_1Logger.html#a1ac561eb83965fa394393d5f48cf2d8e":[3,0,7,28,5],
-"structmc__rtc_1_1Logger.html#a2b1427e1251ebbd90947468fc4bdf964":[3,0,7,28,13],
-"structmc__rtc_1_1Logger.html#a2c33c14a348ab11f39ab33056078e4af":[3,0,7,28,9]
+"structmc__rtc_1_1Logger.html#a2b1427e1251ebbd90947468fc4bdf964":[3,0,7,28,13]
 };

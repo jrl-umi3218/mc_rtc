@@ -1,15 +1,16 @@
 var NAVTREEINDEX11 =
 {
+"structmc__rtc_1_1Logger.html#a2c33c14a348ab11f39ab33056078e4af":[3,0,7,28,9],
 "structmc__rtc_1_1Logger.html#a5299ba868f3a7b643978caa1620f19fe":[3,0,7,28,12],
 "structmc__rtc_1_1Logger.html#a6c2708ce7007adcfe7eca5cc3d8f1801":[3,0,7,28,4],
 "structmc__rtc_1_1Logger.html#a6fd0d1237a81647e462f7af2b4225d5e":[3,0,7,28,0],
 "structmc__rtc_1_1Logger.html#a7692f0ca12a02805cba83a9422de5a4e":[3,0,7,28,3],
-"structmc__rtc_1_1Logger.html#a7a6f0685999b14f4bf67cd30dce03413":[3,0,7,28,15],
+"structmc__rtc_1_1Logger.html#a7a6f0685999b14f4bf67cd30dce03413":[3,0,7,28,16],
 "structmc__rtc_1_1Logger.html#a89fb05a7430fab3ebe3ccb5061dddc60":[3,0,7,28,11],
 "structmc__rtc_1_1Logger.html#a986b2719c1337aa9d1e84e2b0b34481c":[3,0,7,28,14],
 "structmc__rtc_1_1Logger.html#ae7cc40f50bb8edbcc79c06476f7a4540":[3,0,7,28,6],
 "structmc__rtc_1_1Logger.html#ae7cc40f50bb8edbcc79c06476f7a4540":[3,0,7,28,7],
-"structmc__rtc_1_1Logger.html#aeb0d9597ada6a67eb2a89fcda8c74e7d":[3,0,7,28,16],
+"structmc__rtc_1_1Logger.html#aeb0d9597ada6a67eb2a89fcda8c74e7d":[3,0,7,28,17],
 "structmc__rtc_1_1Logger.html#aec88caf27ebb9c9615ed4fd51d9ccd98":[3,0,7,28,10],
 "structmc__rtc_1_1MessagePackBuilder.html":[3,0,7,30],
 "structmc__rtc_1_1MessagePackBuilder.html#a01c67ae50c59f128747e4b94ffaa5a5f":[3,0,7,30,19],
@@ -248,6 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1gui_1_1Point3DROImpl.html#a3a11467db7f88a9eab78a93aee90227b":[3,0,7,0,31,1],
 "structmc__rtc_1_1gui_1_1Point3DROImpl.html#adbfe7a2b3ff83932027e08f0c95d663b":[3,0,7,0,31,0],
 "structmc__rtc_1_1gui_1_1PointConfig.html":[3,0,7,0,32],
-"structmc__rtc_1_1gui_1_1PointConfig.html#a08c22b5386fde106ddf066db1992436f":[3,0,7,0,32,4],
-"structmc__rtc_1_1gui_1_1PointConfig.html#a0c87c28f6793444f6e36faa286ada4f5":[3,0,7,0,32,3]
+"structmc__rtc_1_1gui_1_1PointConfig.html#a08c22b5386fde106ddf066db1992436f":[3,0,7,0,32,4]
 };

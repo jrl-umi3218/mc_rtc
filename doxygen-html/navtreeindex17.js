@@ -1,5 +1,7 @@
 var NAVTREEINDEX17 =
 {
+"structmc__trajectory_1_1Spline.html#ab65b7eb21021b049516c60e986a4ee88":[3,0,10,5,2],
+"structmc__trajectory_1_1Spline.html#ac9d0e0942c1fbfaeade4bc6350221f6e":[3,0,10,5,6],
 "structmc__trajectory_1_1Spline.html#ad1c51f62601c8adaf5e25ff4df9ce969":[3,0,10,5,10],
 "structmc__trajectory_1_1Spline.html#afe26e8f1495983c2e3f9917b8ef20e76":[3,0,10,5,0],
 "structstd_1_1hash_3_01mc__control_1_1fsm_1_1Contact_01_4.html":[3,0,12,0],

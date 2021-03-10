@@ -18,6 +18,7 @@ var structmc__rtc_1_1Logger =
     [ "removeLogEntries", "structmc__rtc_1_1Logger.html#a5299ba868f3a7b643978caa1620f19fe", null ],
     [ "removeLogEntry", "structmc__rtc_1_1Logger.html#a2b1427e1251ebbd90947468fc4bdf964", null ],
     [ "setup", "structmc__rtc_1_1Logger.html#a986b2719c1337aa9d1e84e2b0b34481c", null ],
+    [ "size", "structmc__rtc_1_1Logger.html#a0741f5b75b8a3b54ed0f761b546e13e0", null ],
     [ "start", "structmc__rtc_1_1Logger.html#a7a6f0685999b14f4bf67cd30dce03413", null ],
     [ "t", "structmc__rtc_1_1Logger.html#aeb0d9597ada6a67eb2a89fcda8c74e7d", null ]
 ];
