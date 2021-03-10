@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2021 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #include <boost/filesystem.hpp>
@@ -40,6 +40,11 @@ static auto em =
 static auto robots = mc_rbdyn::loadRobotAndEnv(*rm, *em);
 static std::unique_ptr<mc_solver::QPSolver> solver_ptr = [](std::shared_ptr<mc_rbdyn::Robots> robots) {
   std::unique_ptr<mc_solver::QPSolver> solver(new mc_solver::QPSolver(robots, 0.005));
+  solver->logger(std::make_shared<mc_rtc::Logger>(mc_rtc::Logger::Policy::NON_THREADED, ".", ""));
+  solver->logger()->start("schema-examples", 0.005);
+  solver->gui(std::make_shared<mc_rtc::gui::StateBuilder>());
+  solver->updateNrVars();
+  solver->updateConstrSize();
   return solver;
 }(robots);
 static mc_solver::QPSolver & solver = *solver_ptr;
@@ -72,6 +77,12 @@ struct TaskExamples
     {                                                                   \
       mc_rtc::Configuration json(TaskExamples<TaskT>::json().string()); \
       auto task = mc_tasks::MetaTaskLoader::load<TaskT>(solver, json);  \
+      size_t nLogEntriesBefore = solver.logger()->size();               \
+      size_t nGUIEntriesBefore = solver.gui()->size();                  \
+      solver.addTask(task);                                             \
+      solver.removeTask(task);                                          \
+      BOOST_REQUIRE(nLogEntriesBefore == solver.logger()->size());      \
+      BOOST_REQUIRE(nGUIEntriesBefore == solver.gui()->size());         \
     }                                                                   \
     {                                                                   \
       mc_rtc::Configuration yaml(TaskExamples<TaskT>::yaml().string()); \

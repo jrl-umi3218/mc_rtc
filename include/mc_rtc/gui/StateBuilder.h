@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+ * Copyright 2015-2021 CNRS-UM LIRMM, CNRS-AIST JRL
  */
 
 #pragma once
@@ -245,6 +245,12 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
    */
   mc_rtc::Configuration data();
 
+  /** Return the number of elements in the GUI */
+  inline size_t size() const
+  {
+    return elements_.size();
+  }
+
 private:
   template<typename T>
   void addElementImpl(const std::vector<std::string> & category, ElementsStacking stacking, T element, size_t rem = 0);
@@ -288,6 +294,16 @@ private:
     std::vector<Category>::iterator find(const std::string & name);
     /** For each category, keeps track of the line id for next elements added */
     int id;
+    /** Returns the number of elements in this category and its sub-categories */
+    inline size_t size() const
+    {
+      size_t s = 0;
+      for(const auto & c : sub)
+      {
+        s += c.size();
+      }
+      return s + elements.size();
+    }
   };
   Category elements_;
 

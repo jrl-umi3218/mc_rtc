@@ -387,7 +387,7 @@ template<typename Derived>
 void SplineTrajectoryTask<Derived>::addToLogger(mc_rtc::Logger & logger)
 {
   TrajectoryBase::addToLogger(logger);
-  logger.addLogEntry(name_ + "_surfacePose", [this]() {
+  logger.addLogEntry(name_ + "_surfacePose", this, [this]() {
     const auto & robot = this->robots.robot(rIndex_);
     return robot.surfacePose(surfaceName_);
   });
