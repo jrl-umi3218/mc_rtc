@@ -107,7 +107,7 @@ A default `DataStore` instance is available in the `mc_control::MCController` cl
   // Create a lambda function and store it as an std::function
   datastore().make_call("lambda", [](double t) {});
   // Retrieve the lambda
-  auto & lambdaFun = datastore().get<std::function<void(double)>("lambda") {});
+  auto & lambdaFun = datastore().get<std::function<void(double)>("lambda");
   // Call function
   lambdaFun(42);
   // Call directly through the datastore (the function return type and arguments type must be repeated)
