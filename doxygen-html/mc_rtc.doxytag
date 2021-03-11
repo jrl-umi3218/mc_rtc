@@ -1913,6 +1913,7 @@
     <name>rpy_utils.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>rpy__utils_8h</filename>
+    <includes id="pragma_8h" name="pragma.h" local="no" imported="no">mc_rtc/pragma.h</includes>
     <namespace>mc_rbdyn</namespace>
     <member kind="function">
       <type>Eigen::Matrix3d</type>
@@ -2020,9 +2021,17 @@
     <name>surface_hull.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rbdyn/</path>
     <filename>surface__hull_8h</filename>
+    <includes id="pragma_8h" name="pragma.h" local="no" imported="no">mc_rtc/pragma.h</includes>
     <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
     <namespace>sch</namespace>
     <namespace>mc_rbdyn</namespace>
+    <member kind="function">
+      <type></type>
+      <name>MC_RTC_diagnostic_ignored</name>
+      <anchorfile>surface__hull_8h.html</anchorfile>
+      <anchor>ac669b13a9685c455aaf56d2c46c56c9c</anchor>
+      <arglist>(GCC, &quot;-Wsign-conversion&quot;)</arglist>
+    </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI sch::S_Object *</type>
       <name>surface_to_sch</name>
@@ -2057,6 +2066,20 @@
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>a70b7277a0499a32774e608f8def99043</anchor>
       <arglist>(const mc_rbdyn::GripperSurface &amp;surface, const double &amp;depth)</arglist>
+    </member>
+    <member kind="variable">
+      <type></type>
+      <name>MC_RTC_diagnostic_push</name>
+      <anchorfile>surface__hull_8h.html</anchorfile>
+      <anchor>a283a7e227c8155707d74b3f725c0017d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type></type>
+      <name>MC_RTC_diagnostic_pop</name>
+      <anchorfile>surface__hull_8h.html</anchorfile>
+      <anchor>ab0e6217e933f0421879d64956a6133e1</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -3731,6 +3754,172 @@
     <namespace>mc_rtc</namespace>
   </compound>
   <compound kind="file">
+    <name>pragma.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
+    <filename>pragma_8h</filename>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_PP_ID</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>af3a2e2d6c980d07a49970e25c5d41480</anchor>
+      <arglist>(x)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_STRINGIFY_</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>ae64eef40bbdd1c92469f30e64b774e04</anchor>
+      <arglist>(x)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_STRINGIFY</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>ae40018a9e89fd64d3d3f790ca47cfa7f</anchor>
+      <arglist>(x)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_PRAGMA</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a8b26cd59b48fd7f9a75f848ec1963e65</anchor>
+      <arglist>(x)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_WN</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>aa077be087e9b5e0e80d29ceb922af636</anchor>
+      <arglist>(fun,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_0</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a4af0974096a7f82dbf9a9d12ed30a90a</anchor>
+      <arglist>(fun)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_1</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>aec845bab774899526515c76978058a55</anchor>
+      <arglist>(fun, X, Y)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_2</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>aa5c3a443aa863d55c2eddad4de772b85</anchor>
+      <arglist>(fun, X, Y,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_3</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>aa30117a8c590694c7766b22ceef74b0d</anchor>
+      <arglist>(fun, X, Y,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_4</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a6803324242017bdb17050394560aeb5a</anchor>
+      <arglist>(fun, X, Y,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_5</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>af448ba39ad2935ff76446bc1979522da</anchor>
+      <arglist>(fun, X, Y,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_6</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a313ee4f04812fed7e80a7704f2170a87</anchor>
+      <arglist>(fun, X, Y,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_7</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a11c29fa750e184bef82b6be408687315</anchor>
+      <arglist>(fun, X, Y,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_8</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>ac00f36990364a7007d671684da1574b8</anchor>
+      <arglist>(fun, X, Y,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_9</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>ab032378e87b8c10476e9aee3cc528e4a</anchor>
+      <arglist>(fun, X, Y,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP2_10</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>aa9db95d32724926b4d70ab2a9f946bd6</anchor>
+      <arglist>(fun, X, Y,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_GET_MACRO</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a7bc988f4aa0896d1c3894abe5f5dbd13</anchor>
+      <arglist>(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, NAME,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MAP_TWO_ARGS</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a68ae92d9a7368007a7f93d6e5bee5454</anchor>
+      <arglist>(fun,...)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_GCC_diagnostic_ignored</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>abb0fdda60b84f4da1bf5f29993d5ac52</anchor>
+      <arglist>(x)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_ClangOnly_diagnostic_ignored</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>ac787813b16519f3f73b107be57393b2c</anchor>
+      <arglist>(x)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_GCCOnly_diagnostic_ignored</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a2134aaaf2025a8052f43fee929131bf1</anchor>
+      <arglist>(x)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_MSVC_diagnostic_ignored</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a02fba0b09122a66e1ebc4148d27ae52a</anchor>
+      <arglist>(x)</arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>MC_RTC_diagnostic_ignored_</name>
+      <anchorfile>pragma_8h.html</anchorfile>
+      <anchor>a50f154e9e60e5f9860cc22930076d527</anchor>
+      <arglist>(c, w)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>type_name.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
     <filename>type__name_8h</filename>
@@ -3969,6 +4158,7 @@
     <filename>QPSolver_8h</filename>
     <includes id="mc__rbdyn_2Contact_8h" name="Contact.h" local="no" imported="no">mc_rbdyn/Contact.h</includes>
     <includes id="Robots_8h" name="Robots.h" local="no" imported="no">mc_rbdyn/Robots.h</includes>
+    <includes id="pragma_8h" name="pragma.h" local="no" imported="no">mc_rtc/pragma.h</includes>
     <includes id="ConstraintSet_8h" name="ConstraintSet.h" local="no" imported="no">mc_solver/ConstraintSet.h</includes>
     <includes id="DynamicsConstraint_8h" name="DynamicsConstraint.h" local="no" imported="no">mc_solver/DynamicsConstraint.h</includes>
     <includes id="mc__solver_2api_8h" name="api.h" local="no" imported="no">mc_solver/api.h</includes>
@@ -3978,6 +4168,20 @@
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::gui</namespace>
     <namespace>mc_solver</namespace>
+    <member kind="function">
+      <type></type>
+      <name>MC_RTC_diagnostic_ignored</name>
+      <anchorfile>namespacemc__solver.html</anchorfile>
+      <anchor>a25d2e53d89c11e2d3e9c21f2c47d6411</anchor>
+      <arglist>(GCC, &quot;-Wattributes&quot;)</arglist>
+    </member>
+    <member kind="variable">
+      <type></type>
+      <name>MC_RTC_diagnostic_push</name>
+      <anchorfile>namespacemc__solver.html</anchorfile>
+      <anchor>a3abcae13ae6d54c4a566bec723415c8a</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="variable">
       <type></type>
       <name>None</name>
@@ -3997,6 +4201,13 @@
       <name>JointsWVelocity</name>
       <anchorfile>QPSolver_8h.html</anchorfile>
       <anchor>af8afc30b1dee8cadc825a905926db9b1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type></type>
+      <name>MC_RTC_diagnostic_pop</name>
+      <anchorfile>namespacemc__solver.html</anchorfile>
+      <anchor>a07e91e98f4265acb98b084bbfd5e884b</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -37988,6 +38199,27 @@
       <name>ConstraintSetPtr</name>
       <anchorfile>namespacemc__solver.html</anchorfile>
       <anchor>a9bce96d8d352ebedfffce2e42e0300ab</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>MC_RTC_diagnostic_ignored</name>
+      <anchorfile>namespacemc__solver.html</anchorfile>
+      <anchor>a25d2e53d89c11e2d3e9c21f2c47d6411</anchor>
+      <arglist>(GCC, &quot;-Wattributes&quot;)</arglist>
+    </member>
+    <member kind="variable">
+      <type></type>
+      <name>MC_RTC_diagnostic_push</name>
+      <anchorfile>namespacemc__solver.html</anchorfile>
+      <anchor>a3abcae13ae6d54c4a566bec723415c8a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type></type>
+      <name>MC_RTC_diagnostic_pop</name>
+      <anchorfile>namespacemc__solver.html</anchorfile>
+      <anchor>a07e91e98f4265acb98b084bbfd5e884b</anchor>
       <arglist></arglist>
     </member>
   </compound>
