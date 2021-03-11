@@ -5,15 +5,16 @@
 /*! This library create function throws */
 #include <mc_rbdyn/RobotModule.h>
 #include <mc_rtc/config.h>
+#include <mc_rtc/pragma.h>
 
 struct SegfaultRobot : public mc_rbdyn::RobotModule
 {
   SegfaultRobot() : RobotModule(std::string(mc_rtc::MC_ENV_DESCRIPTION_PATH), std::string("ground"))
   {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wnull-dereference"
+    MC_RTC_diagnostic_push;
+    MC_RTC_diagnostic_ignored(GCC, "-Wnull-dereference");
     *(int *)0 = 0;
-#pragma GCC diagnostic pop
+    MC_RTC_diagnostic_pop;
   }
 };
 

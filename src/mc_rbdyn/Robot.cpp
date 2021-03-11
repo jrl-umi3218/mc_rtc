@@ -11,6 +11,7 @@
 #include <mc_rbdyn/surface_utils.h>
 #include <mc_rtc/constants.h>
 #include <mc_rtc/logging.h>
+#include <mc_rtc/pragma.h>
 
 #include <RBDyn/CoM.h>
 #include <RBDyn/EulerIntegration.h>
@@ -229,11 +230,8 @@ namespace mc_rbdyn
 
 // We can safely ignore those since they are due to different index types and
 // our index never go near unsafe territories
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
-#ifdef __clang__
-#  pragma clang diagnostic ignored "-Wshorten-64-to-32"
-#endif
+MC_RTC_diagnostic_push;
+MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion", ClangOnly, "-Wshorten-64-to-32");
 
 Robot::Robot(const std::string & name,
              Robots & robots,
@@ -1368,7 +1366,7 @@ void mc_rbdyn::Robot::addSurface(SurfacePtr surface, bool doNotReplace)
   surfaces_[surface->name()] = std::move(surface);
 }
 
-#pragma GCC diagnostic pop
+MC_RTC_diagnostic_pop;
 
 double mc_rbdyn::Robot::mass() const
 {

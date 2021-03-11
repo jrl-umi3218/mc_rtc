@@ -5,10 +5,12 @@
 #ifndef _H_MCRBDYNSURFACEHULL_H_
 #define _H_MCRBDYNSURFACEHULL_H_
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wsign-conversion"
+#include <mc_rtc/pragma.h>
+
+MC_RTC_diagnostic_push;
+MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion");
 #include <Eigen/Core>
-#pragma GCC diagnostic pop
+MC_RTC_diagnostic_pop;
 #include <mc_rbdyn/api.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>

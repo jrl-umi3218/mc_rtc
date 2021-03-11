@@ -7,6 +7,7 @@
 
 #include <mc_rbdyn/Contact.h>
 #include <mc_rbdyn/Robots.h>
+#include <mc_rtc/pragma.h>
 #include <mc_solver/ConstraintSet.h>
 #include <mc_solver/DynamicsConstraint.h>
 #include <mc_solver/api.h>
@@ -33,9 +34,9 @@ struct StateBuilder;
 namespace mc_solver
 {
 
-#pragma GCC diagnostic push
 // Work around GCC bug see: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=43407
-#pragma GCC diagnostic ignored "-Wattributes"
+MC_RTC_diagnostic_push;
+MC_RTC_diagnostic_ignored(GCC, "-Wattributes");
 
 /** Describe the type of feedback used to control the robot */
 enum class MC_SOLVER_DLLAPI FeedbackType
@@ -51,7 +52,7 @@ enum class MC_SOLVER_DLLAPI FeedbackType
   ObservedRobots
 };
 
-#pragma GCC diagnostic pop
+MC_RTC_diagnostic_pop;
 
 /** \class QPSolver
  *

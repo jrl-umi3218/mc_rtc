@@ -18,7 +18,7 @@ macro(install_mc_rtc_lib_common MC_LIB KWD)
     target_compile_options(${MC_LIB} ${KWD} -matomics -s USE_PTHREADS=1)
   endif()
   if(TREAT_WARNINGS_AS_ERRORS)
-    if(WIN32)
+    if(MSVC)
       target_compile_options(${MC_LIB} ${KWD} $<BUILD_INTERFACE:/WX>)
     else()
       target_compile_options(${MC_LIB} ${KWD} $<BUILD_INTERFACE:-Werror>)
@@ -40,6 +40,9 @@ endmacro()
 macro(install_mc_rtc_lib MC_LIB)
   set_target_properties(${MC_LIB} PROPERTIES FOLDER mc_libraries/${MC_LIB})
   install_mc_rtc_lib_common(${MC_LIB} PUBLIC)
+  if(MSVC)
+    target_compile_options(${MC_LIB} PRIVATE "/bigobj")
+  endif()
   if(GENERATE_COVERAGE)
     target_compile_options(${MC_LIB} PRIVATE "--coverage")
     set_target_properties(${MC_LIB} PROPERTIES LINK_FLAGS "--coverage")
@@ -105,6 +108,7 @@ set(mc_rtc_utils_HDR
   ../include/mc_rtc/DataStore.h
   ../include/mc_rtc/type_name.h
   ../include/mc_rtc/debug.h
+  ../include/mc_rtc/pragma.h
 )
 
 add_library(mc_rtc_utils SHARED ${mc_rtc_utils_SRC} ${mc_rtc_utils_HDR})
