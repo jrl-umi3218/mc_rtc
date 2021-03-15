@@ -120,6 +120,9 @@ public:
   /*! \brief Update the publisher */
   void update(double dt, const mc_rbdyn::Robot & robot);
 
+  /*! \brief Reset the publishing rate */
+  void set_rate(double rate);
+
 private:
   std::unique_ptr<RobotPublisherImpl> impl;
 };

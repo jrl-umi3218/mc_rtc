@@ -88,8 +88,11 @@ struct RobotPublisherImpl
 
   void update(double dt, const mc_rbdyn::Robot & robot);
 
+  void set_rate(double rate);
+
 private:
   ros::NodeHandle & nh;
+  ros::Rate rosRate;
   ros::Publisher j_state_pub;
   ros::Publisher imu_pub;
   ros::Publisher odom_pub;
@@ -124,7 +127,7 @@ private:
 };
 
 RobotPublisherImpl::RobotPublisherImpl(ros::NodeHandle & nh, const std::string & prefix, double rate, double dt)
-: nh(nh), j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix + "joint_states", 1)),
+: nh(nh), rosRate(rate), j_state_pub(this->nh.advertise<sensor_msgs::JointState>(prefix + "joint_states", 1)),
   imu_pub(this->nh.advertise<sensor_msgs::Imu>(prefix + "imu", 1)),
   odom_pub(this->nh.advertise<nav_msgs::Odometry>(prefix + "odom", 1)), tf_caster(), prefix(prefix), use_real(false),
   running(true), seq(0), msgs(), rate(rate), skip(static_cast<unsigned int>(ceil(1 / (rate * dt)))),
@@ -363,9 +366,16 @@ void RobotPublisher::update(double dt, const mc_rbdyn::Robot & robot)
   }
 }
 
+void RobotPublisher::set_rate(double rate)
+{
+  if(impl)
+  {
+    impl->set_rate(rate);
+  }
+}
+
 void RobotPublisherImpl::publishThread()
 {
-  ros::Rate rt(rate);
   RobotStateData msg;
   while(running && ros::ok())
   {
@@ -395,8 +405,16 @@ void RobotPublisherImpl::publishThread()
         mc_rtc::log::warning(e.what());
       }
     }
-    rt.sleep();
+    rosRate.sleep();
   }
+}
+
+void RobotPublisherImpl::set_rate(double rateIn)
+{
+  double ctl_dt = 1 / (rate * skip);
+  rate = rateIn;
+  skip = static_cast<unsigned int>(ceil(1 / (rate * ctl_dt)));
+  rosRate = ros::Rate(rate);
 }
 
 inline bool ros_init(const std::string & name)
@@ -441,6 +459,11 @@ void ROSBridge::set_publisher_timestep(double timestep)
 {
   static auto & impl = impl_();
   impl.publish_rate = 1 / timestep;
+  for(auto & rpub_it : impl.rpubs)
+  {
+    auto & rpub = *rpub_it.second.get();
+    rpub.set_rate(impl.publish_rate);
+  }
 }
 
 void ROSBridge::init_robot_publisher(const std::string & publisher,
