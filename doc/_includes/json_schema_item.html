@@ -64,5 +64,6 @@
     <span class="text-danger">Cannot handle object type: {{type}}</span>
   {% endif %}
 {% else %}
-  <span class="text-danger">Cannot handle data: {{include.data}}</span>
+  <span class="text-danger">Cannot handle data:</span>
+  <div class="highlight_json">{% highlight json %}{{include.data | pretty_json }}{% endhighlight %}</div>
 {% endif %}

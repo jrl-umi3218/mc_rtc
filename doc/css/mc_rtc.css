@@ -135,6 +135,11 @@ body
   margin-bottom: 10px;
 }
 
+.card .card-schema table
+{
+  table-layout:fixed;
+}
+
 .object-property
 {
   margin-bottom: 10px;
