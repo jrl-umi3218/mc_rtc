@@ -135,9 +135,14 @@ body
   margin-bottom: 10px;
 }
 
-.card .card-schema table
+.card-body table
 {
   table-layout:fixed;
+}
+
+.card-body .btn
+{
+  word-break: break-word;
 }
 
 .object-property
