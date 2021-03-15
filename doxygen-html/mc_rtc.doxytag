@@ -26580,6 +26580,13 @@
       <anchor>addd581f3eed02925519d0b823b8eb99c</anchor>
       <arglist>(double dt, const mc_rbdyn::Robot &amp;robot)</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>set_rate</name>
+      <anchorfile>structmc__rtc_1_1RobotPublisher.html</anchorfile>
+      <anchor>a1ff98ac0dc276543e910f89fcbb0f1b4</anchor>
+      <arglist>(double rate)</arglist>
+    </member>
   </compound>
   <compound kind="struct">
     <name>mc_rbdyn::Robots</name>

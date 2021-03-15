@@ -110,9 +110,10 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1ROSBridge.html":[3,0,7,33],
 "structmc__rtc_1_1RobotPublisher.html":[3,0,7,32],
 "structmc__rtc_1_1RobotPublisher.html#a1928a3476891ae7d2c5dd0506f8935f8":[3,0,7,32,2],
+"structmc__rtc_1_1RobotPublisher.html#a1ff98ac0dc276543e910f89fcbb0f1b4":[3,0,7,32,3],
 "structmc__rtc_1_1RobotPublisher.html#a4c712f7481ae4d07e59f11bd4df8c2d7":[3,0,7,32,1],
 "structmc__rtc_1_1RobotPublisher.html#a848a9be5477c8e775ec83f546aab552d":[3,0,7,32,0],
-"structmc__rtc_1_1RobotPublisher.html#addd581f3eed02925519d0b823b8eb99c":[3,0,7,32,3],
+"structmc__rtc_1_1RobotPublisher.html#addd581f3eed02925519d0b823b8eb99c":[3,0,7,32,4],
 "structmc__rtc_1_1gui_1_1ArrayInputImpl.html":[3,0,7,0,2],
 "structmc__rtc_1_1gui_1_1ArrayInputImpl.html#a91070d8d8f19e1ee2ae32c3438184647":[3,0,7,0,2,2],
 "structmc__rtc_1_1gui_1_1ArrayInputImpl.html#aa25c4430a4386d5d792f4cb6614f87bb":[3,0,7,0,2,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1gui_1_1IntegerInputImpl.html#a5b3e150b460bd7c5b4fc426a1d08e370":[3,0,7,0,25,1],
 "structmc__rtc_1_1gui_1_1IntegerInputImpl.html#abb43e816875fdb07339135c65fa7982e":[3,0,7,0,25,0],
 "structmc__rtc_1_1gui_1_1LabelImpl.html":[3,0,7,0,26],
-"structmc__rtc_1_1gui_1_1LabelImpl.html#a8d875328b3e6dcc3d22287cdc7b65d9f":[3,0,7,0,26,0],
-"structmc__rtc_1_1gui_1_1LabelImpl.html#aa27962fafec53add87be74c45388891a":[3,0,7,0,26,1]
+"structmc__rtc_1_1gui_1_1LabelImpl.html#a8d875328b3e6dcc3d22287cdc7b65d9f":[3,0,7,0,26,0]
 };

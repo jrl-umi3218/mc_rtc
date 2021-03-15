@@ -1,5 +1,6 @@
 var NAVTREEINDEX13 =
 {
+"structmc__rtc_1_1log_1_1is__serializable.html":[3,0,7,2,6],
 "structmc__rtc_1_1log_1_1is__serializable__getter.html":[3,0,7,2,7],
 "structmc__rtc_1_1log_1_1is__serializable__getter_3_01MethodRetT_07T_1_1_5_08_07_08_01const_01_4.html":[3,0,7,2,8],
 "structmc__rtc_1_1log_1_1is__serializable__member.html":[3,0,7,2,9],
@@ -248,6 +249,5 @@ var NAVTREEINDEX13 =
 "structmc__solver_1_1utils_1_1UpdateForce.html#ac7cfe8520ea50dc9cbf285f433769d11":[3,0,8,1,7,0],
 "structmc__solver_1_1utils_1_1UpdateNrVarsData.html":[3,0,8,1,8],
 "structmc__solver_1_1utils_1_1UpdateNrVarsData.html#a3c4a15ad329aedecdfd932aaffe4ff76":[3,0,8,1,8,1],
-"structmc__solver_1_1utils_1_1UpdateNrVarsData.html#ac7940f913dbc5037ed042609f685bfaa":[3,0,8,1,8,0],
-"structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html":[3,0,8,1,9]
+"structmc__solver_1_1utils_1_1UpdateNrVarsData.html#ac7940f913dbc5037ed042609f685bfaa":[3,0,8,1,8,0]
 };

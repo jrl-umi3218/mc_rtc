@@ -1,5 +1,6 @@
 var NAVTREEINDEX14 =
 {
+"structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html":[3,0,8,1,9],
 "structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html#a3c7ce960742e1844186550b503af6207":[3,0,8,1,9,1],
 "structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html#a855dd9e41399b5a6271e9b4e02576b23":[3,0,8,1,9,2],
 "structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html#a9d6f46e4b6e93b51903495758aecd406":[3,0,8,1,9,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX14 =
 "structmc__tasks_1_1SmoothTask.html#ad0b3cad2b0a949faddd0259779446d7f":[3,0,9,21,3],
 "structmc__tasks_1_1SmoothTask.html#ad253e94eb032bbb85f32e85be175fe81":[3,0,9,21,0],
 "structmc__tasks_1_1SmoothTask.html#ad8423422fde0f1394bc52751fe14dcfd":[3,0,9,21,15],
-"structmc__tasks_1_1SmoothTask.html#adee8384a9d270de1bc58484c584974d1":[3,0,9,21,11],
-"structmc__tasks_1_1SplineTrajectoryTask.html":[3,0,9,22]
+"structmc__tasks_1_1SmoothTask.html#adee8384a9d270de1bc58484c584974d1":[3,0,9,21,11]
 };

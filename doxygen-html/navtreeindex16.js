@@ -1,5 +1,6 @@
 var NAVTREEINDEX16 =
 {
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#a61a7f7ed47d98c51238404e7791d7357":[3,0,9,0,6,22],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#a650f1aad54ff5b3f1b7b9a344c975187":[3,0,9,0,6,34],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#a693cd5a9fe5ae71b58dd0ffa29ded801":[3,0,9,0,6,15],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#a6aac1452e731ae1c901b274ad696babc":[3,0,9,0,6,31],
@@ -248,6 +249,5 @@ var NAVTREEINDEX16 =
 "structmc__trajectory_1_1InterpolatedRotation.html#aa0cdeef0cd6d5a0f7daea52f53bac171":[3,0,10,2,4],
 "structmc__trajectory_1_1InterpolatedRotation.html#acbce3f9de05b28314ad0f61bb753d940":[3,0,10,2,0],
 "structmc__trajectory_1_1LinearInterpolation.html":[3,0,10,3],
-"structmc__trajectory_1_1LinearInterpolation.html#a283b5bb138c051d1a3e3ef6d7690dedf":[3,0,10,3,0],
-"structmc__trajectory_1_1SequenceInterpolator.html":[3,0,10,4]
+"structmc__trajectory_1_1LinearInterpolation.html#a283b5bb138c051d1a3e3ef6d7690dedf":[3,0,10,3,0]
 };

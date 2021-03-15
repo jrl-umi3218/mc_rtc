@@ -1,5 +1,6 @@
 var NAVTREEINDEX15 =
 {
+"structmc__tasks_1_1SplineTrajectoryTask.html":[3,0,9,22],
 "structmc__tasks_1_1SplineTrajectoryTask.html#a05b539bc8a2cb07958b1a6f2e8b1ac66":[3,0,9,22,32],
 "structmc__tasks_1_1SplineTrajectoryTask.html#a0c340cd68671108b95e7b4f287983e85":[3,0,9,22,16],
 "structmc__tasks_1_1SplineTrajectoryTask.html#a0debf08c0f670560ff53a465b38cbce2":[3,0,9,22,8],
@@ -248,6 +249,5 @@ var NAVTREEINDEX15 =
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#a4e705a22da0d1a9d49bf015e868be245":[3,0,9,0,6,39],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#a51861dc893e2a8aa733f48423e48c6c1":[3,0,9,0,6,35],
 "structmc__tasks_1_1force_1_1ImpedanceTask.html#a52d02e32e84b95ec75eb87ea0e89486a":[3,0,9,0,6,30],
-"structmc__tasks_1_1force_1_1ImpedanceTask.html#a5ec5110aafaba8ecda490a3ce43f7676":[3,0,9,0,6,13],
-"structmc__tasks_1_1force_1_1ImpedanceTask.html#a61a7f7ed47d98c51238404e7791d7357":[3,0,9,0,6,22]
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#a5ec5110aafaba8ecda490a3ce43f7676":[3,0,9,0,6,13]
 };

@@ -53,12 +53,12 @@ var NAVTREEINDEX =
 "structmc__rbdyn_1_1Robot.html#aac0e0346563b3ba8d3fda355e27367a8",
 "structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html",
 "structmc__rtc_1_1LTDLHandle.html#a1d2ebbcff7e52decbb18a9dc96b7671b",
-"structmc__rtc_1_1gui_1_1LineConfig.html",
-"structmc__rtc_1_1log_1_1is__serializable__getter.html",
-"structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html#a3c7ce960742e1844186550b503af6207",
-"structmc__tasks_1_1SplineTrajectoryTask.html#a05b539bc8a2cb07958b1a6f2e8b1ac66",
-"structmc__tasks_1_1force_1_1ImpedanceTask.html#a650f1aad54ff5b3f1b7b9a344c975187",
-"structmc__trajectory_1_1SequenceInterpolator.html#a0b03ecdb30393152c9e511862aad9571"
+"structmc__rtc_1_1gui_1_1LabelImpl.html#aa27962fafec53add87be74c45388891a",
+"structmc__rtc_1_1log_1_1is__serializable.html",
+"structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html",
+"structmc__tasks_1_1SplineTrajectoryTask.html",
+"structmc__tasks_1_1force_1_1ImpedanceTask.html#a61a7f7ed47d98c51238404e7791d7357",
+"structmc__trajectory_1_1SequenceInterpolator.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
