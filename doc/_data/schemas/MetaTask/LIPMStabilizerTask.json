@@ -13,26 +13,32 @@
       }
     },
     {
-      "properties":
-      {
-        "*" :
+      "$ref": "/../../common/LIPMStabilizerTaskConfiguration.json"
+    },
+    {
+      "allOf":
+      [
         {
-          "allOf":
-          [
+          "properties":
+          {
+            "*" :
             {
               "type": "object",
               "title": "Robot-specific stabilizer configuration",
               "description": "You may specify different configuration entries on a per-robot basis. In this case the key is the robot name and the values are the configuration parameters you want to modify for that robot"
-            },
+            }
+          }
+        },
+        {
+          "properties":
+          {
+            "*" :
             {
               "$ref": "/../../common/LIPMStabilizerTaskConfiguration.json"
             }
-          ]
+          }
         }
-      }
-    },
-    {
-      "$ref": "/../../common/LIPMStabilizerTaskConfiguration.json"
+      ]
     }
   ],
   "required": ["type", "contacts"]

@@ -91,7 +91,7 @@ module Jekyll
       if schema.has_key?("allOf")
         schema["allOf"].each_index{ | index |
           resolveAllOf(schema["allOf"][index])
-          schema = schema.deep_merge(schema["allOf"][index])
+          schema = schema.deep_merge(resolveAllOf(schema["allOf"][index]))
         }
         schema.delete("allOf");
       end
