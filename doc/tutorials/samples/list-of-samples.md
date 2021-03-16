@@ -121,6 +121,10 @@ The `Admittance` sample controller demonstrates the use of the {% doxygen mc_tas
 
 To run this controller, simply put in [your mc_rtc configuration]({{site.baseurl}}/tutorials/introduction/configuration.html), and [run the controller]({{site.baseurl}}/tutorials/introduction/running-a-controller.html) using your favorite dynamic simulation (e.g Choreonoid...).
 
+**See also**
+
+For a similar but more advanced example, see the [ExternalForces](#externalforces) sample.
+
 ```yaml
 MainRobot: JVRC1
 Enabled: AdmittanceSample
@@ -162,7 +166,7 @@ Enabled: LIPMStabilizer
 
 # ExternalForces
 
-The `ExternalForces` sample controller demonstrates a biped robot exerting specified external forces with {% doxygen mc_tasks::StabilizerTask %} and {% doxygen mc_tasks::force::ImpedanceTask %} though a simple FSM making the `JVRC1` robot push a wall with desired forces.
+The `ExternalForces` sample controller demonstrates a biped robot exerting specified external forces with {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %} and {% doxygen mc_tasks::force::ImpedanceTask %} though a simple FSM making the `JVRC1` robot push a wall with desired forces.
 
 **Supported robots**: `JVRC1`.
 
