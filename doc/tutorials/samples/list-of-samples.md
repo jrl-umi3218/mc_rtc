@@ -111,6 +111,11 @@ Text:
 
 The `Admittance` sample controller demonstrates the use of the {% doxygen mc_tasks::force::AdmittanceTask %} though a simple FSM making the `JVRC1` robot push a wall with a desired force.
 
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/B_L_xPynhvU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
 **Detailed description**: see the [Admittance Sample Controller tutorial]({{site.baseurl}}/tutorials/samples/sample-admittance.html)
 
 **Supported robots**: `JVRC1`.
@@ -167,6 +172,10 @@ Enabled: LIPMStabilizer
 # ExternalForces
 
 The `ExternalForces` sample controller demonstrates a biped robot exerting specified external forces with {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %} and {% doxygen mc_tasks::force::ImpedanceTask %} though a simple FSM making the `JVRC1` robot push a wall with desired forces.
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/in3cUozkU-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 **Supported robots**: `JVRC1`.
 

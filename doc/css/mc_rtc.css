@@ -258,3 +258,8 @@ body
   padding-top: 58px;
   margin-top: -58px;
 }
+.embed-responsive
+{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
