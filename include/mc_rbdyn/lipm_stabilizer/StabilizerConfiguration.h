@@ -181,7 +181,7 @@ struct ExtWrenchConfiguration
   bool modifyCoMErr = false;
   /// Modify ZMP depending on the error of the external wrenches in target and measurement
   bool modifyZMPErr = false;
-  /// Modify ZMP depending on the error velocity of the external wrenches in target and measurement
+  /// Modify ZMP velocity depending on the error velocity of the external wrenches in target and measurement
   bool modifyZMPErrD = false;
   /// Limit of CoM offset error handled by CoM modification
   double comOffsetErrCoMLimit = 0.1;
