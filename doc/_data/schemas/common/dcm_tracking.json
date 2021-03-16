@@ -9,12 +9,14 @@
       "type": "object",
       "properties":
       {
-        "prop": { "type": "number", "minimum": 0, "default": 1 },
-        "integral": { "type": "number", "minimum": 0, "default": 5 },
-        "deriv": { "type": "number", "minimum": 0, "default": 0 }
+        "prop": { "type": "number", "minimum": 0, "default": 1, "description": "Proportional gain on DCM error" },
+        "integral": { "type": "number", "minimum": 0, "default": 5, "description": "Integral gain on DCM error" },
+        "deriv": { "type": "number", "minimum": 0, "default": 0, "description": "Derivative gain on DCM error" },
+        "comdError": { "type": "number", "minimum": 0, "default": 1, "description": "Gain on CoM derivative error"},
+        "zmpd": { "type": "number", "minimum": 0, "default": 0, "description": "Gain on ZMP derivative" }
       }
     },
-    "derivator_time_constant": { "type": "number", "minimum": 0, "default": 1 },
-    "integrator_time_constant": { "type": "number", "minimum": 0, "default": 15 }
+    "derivator_time_constant": { "type": "number", "minimum": 0, "default": 1, "description": "Time window for exponential moving average filter of the DCM integrator [s]" },
+    "integrator_time_constant": { "type": "number", "minimum": 0, "default": 15, "description": "Time window for the stationary offset filter of the DCM derivator [s]" }
   }
 }
