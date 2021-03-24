@@ -588,6 +588,10 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   void externalWrenchConfiguration(const ExternalWrenchConfiguration & extWrenchConfig)
   {
     c_.extWrench = extWrenchConfig;
+    extWrenchSumLowPass_.cutoffPeriod(c_.extWrench.extWrenchSumLowPassCutoffPeriod);
+    comOffsetLowPass_.cutoffPeriod(c_.extWrench.comOffsetLowPassCutoffPeriod);
+    comOffsetLowPassCoM_.cutoffPeriod(c_.extWrench.comOffsetLowPassCoMCutoffPeriod);
+    comOffsetDerivator_.timeConstant(c_.extWrench.comOffsetDerivatorTimeConstant);
   }
 
   /** @brief Get the parameters for the external wrenches. */
