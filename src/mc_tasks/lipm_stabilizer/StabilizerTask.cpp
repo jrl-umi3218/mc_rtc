@@ -642,10 +642,9 @@ Eigen::Vector3d StabilizerTask::computeCoMOffset(const std::vector<std::pair<std
                                                  const mc_rbdyn::Robot & robot) const
 {
   Eigen::Vector3d comOffset = Eigen::Vector3d::Zero();
-
+  Eigen::Vector3d pos, force, moment;
   for(const auto & extWrench : extWrenches)
   {
-    Eigen::Vector3d pos, force, moment;
     computeExtContact(robot, extWrench.first, extWrench.second, pos, force, moment);
 
     comOffset.x() += (pos.z() - zmpTarget_.z()) * force.x() - pos.x() * force.z() + moment.y();

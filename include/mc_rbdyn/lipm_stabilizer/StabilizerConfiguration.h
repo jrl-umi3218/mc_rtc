@@ -167,7 +167,7 @@ struct DCMBiasEstimatorConfiguration
  *  - modifyZMPErrD should theoretically be true, but it depends on the derivative of the measured external forces, so
  *    it becomes sensitive to the noises in the measurement noise.
  *  - subtractMeasuredValue is a more experimental and the option inspired from
- *    https://github.com/stephane-caron/lipm_walking_controller/discussions/28. Normally set to false.
+ *    https://github.com/stephane-caron/lipm_walking_controller/discussions/28 Normally set to false.
  */
 struct ExternalWrenchConfiguration
 {

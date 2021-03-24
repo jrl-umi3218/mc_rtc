@@ -20,7 +20,7 @@ struct MC_CONTROL_DLLAPI ExternalForcesController : public mc_control::fsm::Cont
     out = {"jvrc1"};
   }
 
-  double t() const noexcept
+  inline double t() const noexcept
   {
     return t_;
   }
