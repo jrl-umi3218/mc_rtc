@@ -298,7 +298,8 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   /**
    * @brief Set the wrench that the robot expects to receive from the external contacts.
    *
-   * Change the configurations in ExternalWrenchConfiguration to handle external wrenches because external wrenches are ignored by default. \see ExternalWrenchConfiguration
+   * Change the configurations in ExternalWrenchConfiguration to handle external wrenches because external wrenches are
+   * ignored by default. \see ExternalWrenchConfiguration
    *
    * @param surfaceNames Names of the surface to which the external wrench is applied
    * @param targetWrenches Target (expected) external wrenches
@@ -714,7 +715,7 @@ private:
    *  @param robot Robot used to transform surface wrenches (control robot or real robot)
    */
   Eigen::Vector3d computeCoMOffset(
-      const std::function<const sva::ForceVecd & (const ExternalWrench & extWrench)> & wrenchFunc,
+      const std::function<const sva::ForceVecd &(const ExternalWrench & extWrench)> & wrenchFunc,
       const mc_rbdyn::Robot & robot) const;
 
   /** @brief Compute the sum of external wrenches.
@@ -724,7 +725,7 @@ private:
    *  @param com Robot CoM
    */
   sva::ForceVecd computeExternalWrenchSum(
-      const std::function<const sva::ForceVecd & (const ExternalWrench & extWrench)> & wrenchFunc,
+      const std::function<const sva::ForceVecd &(const ExternalWrench & extWrench)> & wrenchFunc,
       const mc_rbdyn::Robot & robot,
       const Eigen::Vector3d & com) const;
 
