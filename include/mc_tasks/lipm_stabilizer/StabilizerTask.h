@@ -298,6 +298,8 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   /**
    * @brief Set the wrench that the robot expects to receive from the external contacts.
    *
+   * Change the configurations in ExternalWrenchConfiguration to handle external wrenches because external wrenches are ignored by default. \see ExternalWrenchConfiguration
+   *
    * @param extWrenches External wrenches, which is represented by the vector of the pair of surface name and wrench in
    * the surface frame
    */

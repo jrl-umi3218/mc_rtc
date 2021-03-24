@@ -624,6 +624,11 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
 
 void StabilizerTask::setExternalWrenches(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches)
 {
+  if(!(c_.extWrench.addExpectedCoMOffset || c_.extWrench.modifyCoMErr || c_.extWrench.modifyZMPErr || c_.extWrench.modifyZMPErrD))
+  {
+    mc_rtc::log::warning("[StabilizerTask] external wrenches are set, but the configurations for handling them are invalid.");
+  }
+
   extWrenchesTarget_ = extWrenches;
   comOffsetTarget_ = computeCoMOffset(extWrenchesTarget_, robot());
   comTarget_ = comTargetRaw_ - comOffsetErrCoM_;
