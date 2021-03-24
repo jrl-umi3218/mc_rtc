@@ -28,8 +28,6 @@ void UpdateForces::start(mc_control::fsm::Controller & _ctl)
     }
   }
 
-  stabilizerTask_->externalWrenchGain(sva::MotionVecd(Eigen::Vector3d::Zero(), Eigen::Vector3d::UnitZ()));
-
   startTime_ = ctl.t();
 
   output("OK");
@@ -42,13 +40,17 @@ bool UpdateForces::run(mc_control::fsm::Controller & _ctl)
   // Set target external forces of StabilizerTask and ImpedanceTask
   sva::ForceVecd targetWrench(Eigen::Vector3d::Zero(),
                               Eigen::Vector3d(0, 0, -20 * (1 - std::cos(0.5 * (ctl.t() - startTime_)))));
-  std::vector<std::pair<std::string, sva::ForceVecd>> extWrenches = {};
+  std::vector<std::string> surfaceNames;
+  std::vector<sva::ForceVecd> targetWrenches;
+  std::vector<sva::MotionVecd> gains;
   for(const auto & impedanceTask : impedanceTasks_)
   {
     impedanceTask->targetWrench(targetWrench);
-    extWrenches.emplace_back(impedanceTask->surface(), targetWrench);
+    surfaceNames.push_back(impedanceTask->surface());
+    targetWrenches.push_back(targetWrench);
+    gains.emplace_back(Eigen::Vector3d::Zero(), Eigen::Vector3d::UnitZ());
   }
-  stabilizerTask_->setExternalWrenches(extWrenches);
+  stabilizerTask_->setExternalWrenches(surfaceNames, targetWrenches, gains);
 
   return false;
 }

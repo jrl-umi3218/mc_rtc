@@ -153,9 +153,7 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       NumberInput("Cutoff period of comOffsetLowPassCoM", [this]() { return comOffsetLowPassCoM_.cutoffPeriod(); },
                   [this](double a) { comOffsetLowPassCoMCutoffPeriod(a); }),
       NumberInput("Time constant of comOffsetDerivator", [this]() { return comOffsetDerivator_.timeConstant(); },
-                  [this](double a) { comOffsetDerivatorTimeConstant(a); }),
-      ArrayInput("externalWrenchGain", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() { return externalWrenchGain().vector(); },
-                 [this](const Eigen::Vector6d & a) { externalWrenchGain(a); }));
+                  [this](double a) { comOffsetDerivatorTimeConstant(a); }));
 
   gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Debug"});
@@ -357,7 +355,6 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_extWrench_comOffsetErr_ZMPLimit", this,
                      [this]() { return c_.extWrench.comOffsetErrZMPLimit; });
   logger.addLogEntry(name_ + "_extWrench_comOffsetDerivator", this, [this]() { return comOffsetDerivator_.eval(); });
-  MC_RTC_LOG_HELPER(name_ + "_extWrench_extWrenchGain", extWrenchGain_);
   logger.addLogEntry(name_ + "_dfz_damping", this, [this]() { return c_.dfzDamping; });
   logger.addLogEntry(name_ + "_fdqp_weights_ankleTorque", this,
                      [this]() { return std::pow(c_.fdqpWeights.ankleTorqueSqrt, 2); });

@@ -300,22 +300,13 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * Change the configurations in ExternalWrenchConfiguration to handle external wrenches because external wrenches are ignored by default. \see ExternalWrenchConfiguration
    *
-   * @param extWrenches External wrenches, which is represented by the vector of the pair of surface name and wrench in
-   * the surface frame
+   * @param surfaceNames Names of the surface to which the external wrench is applied
+   * @param targetWrenches Target (expected) external wrenches
+   * @param gains Gains of measured external wrenches
    */
-  void setExternalWrenches(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches);
-
-  /** @brief Get the gain of measured external wrenches. */
-  const sva::MotionVecd & externalWrenchGain() const noexcept
-  {
-    return extWrenchGain_;
-  }
-
-  /** @brief Set the gain of measured external wrenches. */
-  void externalWrenchGain(const sva::MotionVecd & gain)
-  {
-    extWrenchGain_ = gain;
-  }
+  void setExternalWrenches(const std::vector<std::string> & surfaceNames,
+                           const std::vector<sva::ForceVecd> & targetWrenches,
+                           const std::vector<sva::MotionVecd> & gains);
 
   const Eigen::Vector3d & measuredDCM()
   {
@@ -703,23 +694,39 @@ private:
     zmpcc_.configure(zmpccConfig);
   }
 
+  /** @brief External wrench. */
+  struct ExternalWrench
+  {
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    /// Target (expected) external wrench
+    sva::ForceVecd target;
+    /// Measured external wrench
+    sva::ForceVecd measured;
+    /// Gain of measured external wrench
+    sva::MotionVecd gain;
+    /// Name of the surface to which the external wrench is applied
+    std::string surfaceName;
+  };
+
   /** @brief Compute the CoM offset and the sum wrench from the external wrenches.
    *
-   *  @param extWrenches External wrenches (expressed in surface frame)
+   *  @param wrenchFunc Function to retrieve external wrench from ExternalWrench instance
    *  @param robot Robot used to transform surface wrenches (control robot or real robot)
    */
-  Eigen::Vector3d computeCoMOffset(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
-                                   const mc_rbdyn::Robot & robot) const;
+  Eigen::Vector3d computeCoMOffset(
+      const std::function<const sva::ForceVecd & (const ExternalWrench & extWrench)> & wrenchFunc,
+      const mc_rbdyn::Robot & robot) const;
 
   /** @brief Compute the sum of external wrenches.
    *
-   *  @param extWrenches External wrenches (expressed in surface frame)
+   *  @param wrenchFunc Function to retrieve external wrench from ExternalWrench instance
    *  @param robot Robot used to transform surface wrenches (control robot or real robot)
    *  @param com Robot CoM
    */
-  sva::ForceVecd computeExtWrenchSum(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches,
-                                     const mc_rbdyn::Robot & robot,
-                                     const Eigen::Vector3d & com) const;
+  sva::ForceVecd computeExternalWrenchSum(
+      const std::function<const sva::ForceVecd & (const ExternalWrench & extWrench)> & wrenchFunc,
+      const mc_rbdyn::Robot & robot,
+      const Eigen::Vector3d & com) const;
 
   /** @brief Compute the position, force, and moment of the external contacts in the world frame.
    *
@@ -730,12 +737,12 @@ private:
    *  @param [out] force Force of the external contact in the world frame
    *  @param [out] moment Moment of the external contact in the world frame
    */
-  void computeExtContact(const mc_rbdyn::Robot & robot,
-                         const std::string & surfaceName,
-                         const sva::ForceVecd & surfaceWrench,
-                         Eigen::Vector3d & pos,
-                         Eigen::Vector3d & force,
-                         Eigen::Vector3d & moment) const;
+  void computeExternalContact(const mc_rbdyn::Robot & robot,
+                              const std::string & surfaceName,
+                              const sva::ForceVecd & surfaceWrench,
+                              Eigen::Vector3d & pos,
+                              Eigen::Vector3d & force,
+                              Eigen::Vector3d & moment) const;
 
   /* Task-related properties */
 protected:
@@ -853,8 +860,7 @@ protected:
    *  Adding an offset to the CoM for the predictable / measurable external wrenches on the robot surface.
    *  @{
    */
-  std::vector<std::pair<std::string, sva::ForceVecd>> extWrenchesTarget_; /**< Target (expected) external wrenches */
-  std::vector<std::pair<std::string, sva::ForceVecd>> extWrenchesMeasured_; /**< Measured external wrenches */
+  std::vector<ExternalWrench> extWrenches_;
   sva::ForceVecd extWrenchSumTarget_ = sva::ForceVecd::Zero(); /**< Sum of target (expected) external wrenches */
   sva::ForceVecd extWrenchSumMeasured_ = sva::ForceVecd::Zero(); /**< Sum of measured external wrenches */
   Eigen::Vector3d comOffsetTarget_ = Eigen::Vector3d::Zero(); /**< Target (expected) CoM offset */
@@ -868,8 +874,6 @@ protected:
   mc_filter::LowPass<Eigen::Vector3d>
       comOffsetLowPassCoM_; /**< Low-pass filter of CoM offset to extract CoM modification */
   mc_filter::StationaryOffset<Eigen::Vector3d> comOffsetDerivator_; /**< Derivator of CoM offset */
-  sva::MotionVecd extWrenchGain_ =
-      sva::MotionVecd(Eigen::Vector3d::Ones(), Eigen::Vector3d::Ones()); /**< Gain of measured external wrenches */
   /** @} */
 
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
