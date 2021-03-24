@@ -645,8 +645,7 @@ void StabilizerTask::setExternalWrenches(const std::vector<std::string> & surfac
     }
   }
 
-  comOffsetTarget_ = computeCoMOffset(
-      [](const ExternalWrench & extWrench) -> const sva::ForceVecd & { return extWrench.target; }, robot());
+  comOffsetTarget_ = computeCoMOffset<&ExternalWrench::target>(robot());
   comTarget_ = comTargetRaw_ - comOffsetErrCoM_;
   if(c_.extWrench.addExpectedCoMOffset)
   {
@@ -654,15 +653,14 @@ void StabilizerTask::setExternalWrenches(const std::vector<std::string> & surfac
   }
 }
 
-Eigen::Vector3d StabilizerTask::computeCoMOffset(
-    const std::function<const sva::ForceVecd &(const ExternalWrench & extWrench)> & wrenchFunc,
-    const mc_rbdyn::Robot & robot) const
+template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
+Eigen::Vector3d StabilizerTask::computeCoMOffset(const mc_rbdyn::Robot & robot) const
 {
   Eigen::Vector3d comOffset = Eigen::Vector3d::Zero();
   Eigen::Vector3d pos, force, moment;
   for(const auto & extWrench : extWrenches_)
   {
-    computeExternalContact(robot, extWrench.surfaceName, wrenchFunc(extWrench), pos, force, moment);
+    computeExternalContact(robot, extWrench.surfaceName, extWrench.*TargetOrMeasured, pos, force, moment);
 
     comOffset.x() += (pos.z() - zmpTarget_.z()) * force.x() - pos.x() * force.z() + moment.y();
     comOffset.y() += (pos.z() - zmpTarget_.z()) * force.y() - pos.y() * force.z() - moment.x();
@@ -681,16 +679,15 @@ Eigen::Vector3d StabilizerTask::computeCoMOffset(
   return comOffset;
 }
 
-sva::ForceVecd StabilizerTask::computeExternalWrenchSum(
-    const std::function<const sva::ForceVecd &(const ExternalWrench & extWrench)> & wrenchFunc,
-    const mc_rbdyn::Robot & robot,
-    const Eigen::Vector3d & com) const
+template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
+sva::ForceVecd StabilizerTask::computeExternalWrenchSum(const mc_rbdyn::Robot & robot,
+                                                        const Eigen::Vector3d & com) const
 {
   sva::ForceVecd extWrenchSum = sva::ForceVecd::Zero();
   Eigen::Vector3d pos, force, moment;
   for(const auto & extWrench : extWrenches_)
   {
-    computeExternalContact(robot, extWrench.surfaceName, wrenchFunc(extWrench), pos, force, moment);
+    computeExternalContact(robot, extWrench.surfaceName, extWrench.*TargetOrMeasured, pos, force, moment);
 
     extWrenchSum.force() += force;
     extWrenchSum.moment() += (pos - com).cross(force) + moment;
@@ -873,8 +870,7 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
       extWrench.measured = extWrench.target;
     }
   }
-  comOffsetMeasured_ = computeCoMOffset(
-      [](const ExternalWrench & extWrench) -> const sva::ForceVecd & { return extWrench.measured; }, realRobot());
+  comOffsetMeasured_ = computeCoMOffset<&ExternalWrench::measured>(realRobot());
 
   // Modify the desired CoM and ZMP depending on the external wrench error
   comOffsetLowPass_.update(comOffsetMeasured_ - comOffsetTarget_);
@@ -908,11 +904,8 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   Eigen::Vector3d desiredMoment = Eigen::Vector3d::Zero();
 
   // Subtract the external wrenches from the desired force and moment
-  extWrenchSumTarget_ = computeExternalWrenchSum(
-      [](const ExternalWrench & extWrench) -> const sva::ForceVecd & { return extWrench.target; }, robot(), comTarget_);
-  extWrenchSumLowPass_.update(computeExternalWrenchSum(
-      [](const ExternalWrench & extWrench) -> const sva::ForceVecd & { return extWrench.measured; }, realRobot(),
-      measuredCoM_));
+  extWrenchSumTarget_ = computeExternalWrenchSum<&ExternalWrench::target>(robot(), comTarget_);
+  extWrenchSumLowPass_.update(computeExternalWrenchSum<&ExternalWrench::measured>(realRobot(), measuredCoM_));
   extWrenchSumMeasured_ = extWrenchSumLowPass_.eval();
   if(c_.extWrench.subtractMeasuredValue)
   {
@@ -1148,6 +1141,18 @@ void StabilizerTask::updateFootForceDifferenceControl()
   leftFootTask->refVelB(0.5 * (velT - velF));
   rightFootTask->refVelB(0.5 * (velT + velF));
 }
+
+template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::target>(
+    const mc_rbdyn::Robot &) const;
+template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::measured>(
+    const mc_rbdyn::Robot &) const;
+
+template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::target>(
+    const mc_rbdyn::Robot &,
+    const Eigen::Vector3d &) const;
+template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::measured>(
+    const mc_rbdyn::Robot &,
+    const Eigen::Vector3d &) const;
 
 } // namespace lipm_stabilizer
 } // namespace mc_tasks

@@ -711,23 +711,20 @@ private:
 
   /** @brief Compute the CoM offset and the sum wrench from the external wrenches.
    *
-   *  @param wrenchFunc Function to retrieve external wrench from ExternalWrench instance
+   *  @tparam TargetOrMeasured Change depending on the used wrenches
    *  @param robot Robot used to transform surface wrenches (control robot or real robot)
    */
-  Eigen::Vector3d computeCoMOffset(
-      const std::function<const sva::ForceVecd &(const ExternalWrench & extWrench)> & wrenchFunc,
-      const mc_rbdyn::Robot & robot) const;
+  template<sva::ForceVecd ExternalWrench::*TargetOrMeasured>
+  Eigen::Vector3d computeCoMOffset(const mc_rbdyn::Robot & robot) const;
 
   /** @brief Compute the sum of external wrenches.
    *
-   *  @param wrenchFunc Function to retrieve external wrench from ExternalWrench instance
+   *  @tparam TargetOrMeasured Change depending on the used wrenches
    *  @param robot Robot used to transform surface wrenches (control robot or real robot)
    *  @param com Robot CoM
    */
-  sva::ForceVecd computeExternalWrenchSum(
-      const std::function<const sva::ForceVecd &(const ExternalWrench & extWrench)> & wrenchFunc,
-      const mc_rbdyn::Robot & robot,
-      const Eigen::Vector3d & com) const;
+  template<sva::ForceVecd ExternalWrench::*TargetOrMeasured>
+  sva::ForceVecd computeExternalWrenchSum(const mc_rbdyn::Robot & robot, const Eigen::Vector3d & com) const;
 
   /** @brief Compute the position, force, and moment of the external contacts in the world frame.
    *
@@ -893,6 +890,18 @@ protected:
       Eigen::Vector3d::Zero(); /**< ZMP corresponding to force distribution result (desired ZMP) */
   sva::PTransformd zmpFrame_ = sva::PTransformd::Identity(); /**< Frame in which the ZMP is computed */
 };
+
+extern template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::target>(
+    const mc_rbdyn::Robot &) const;
+extern template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::measured>(
+    const mc_rbdyn::Robot &) const;
+
+extern template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::target>(
+    const mc_rbdyn::Robot &,
+    const Eigen::Vector3d &) const;
+extern template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::measured>(
+    const mc_rbdyn::Robot &,
+    const Eigen::Vector3d &) const;
 
 } // namespace lipm_stabilizer
 } // namespace mc_tasks
