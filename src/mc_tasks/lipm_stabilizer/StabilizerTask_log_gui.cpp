@@ -154,8 +154,8 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                   [this](double a) { comOffsetLowPassCoMCutoffPeriod(a); }),
       NumberInput("Time constant of comOffsetDerivator", [this]() { return comOffsetDerivator_.timeConstant(); },
                   [this](double a) { comOffsetDerivatorTimeConstant(a); }),
-      ArrayInput("extWrenchGain", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() { return extWrenchGain().vector(); },
-                 [this](const Eigen::Vector6d & a) { extWrenchGain(a); }));
+      ArrayInput("externalWrenchGain", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() { return externalWrenchGain().vector(); },
+                 [this](const Eigen::Vector6d & a) { externalWrenchGain(a); }));
 
   gui.addElement({"Tasks", name_, "Debug"}, Button("Disable", [this]() { disable(); }));
   addConfigButtons({"Tasks", name_, "Debug"});

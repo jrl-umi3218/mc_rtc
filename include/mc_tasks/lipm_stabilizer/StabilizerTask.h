@@ -37,7 +37,7 @@ using StabilizerConfiguration = mc_rbdyn::lipm_stabilizer::StabilizerConfigurati
 using FDQPWeights = mc_rbdyn::lipm_stabilizer::FDQPWeights;
 using SafetyThresholds = mc_rbdyn::lipm_stabilizer::SafetyThresholds;
 using DCMBiasEstimatorConfiguration = mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration;
-using ExtWrenchConfiguration = mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration;
+using ExternalWrenchConfiguration = mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration;
 
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
@@ -301,16 +301,16 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * @param extWrenches External wrenches, which is represented by the vector of the pair of surface name and wrench in
    * the surface frame
    */
-  void setExtWrenches(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches);
+  void setExternalWrenches(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches);
 
   /** @brief Get the gain of measured external wrenches. */
-  const sva::MotionVecd & extWrenchGain() const noexcept
+  const sva::MotionVecd & externalWrenchGain() const noexcept
   {
     return extWrenchGain_;
   }
 
   /** @brief Set the gain of measured external wrenches. */
-  void extWrenchGain(const sva::MotionVecd & gain)
+  void externalWrenchGain(const sva::MotionVecd & gain)
   {
     extWrenchGain_ = gain;
   }
@@ -583,13 +583,13 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * @param extWrenchConfig Configuration parameters for the external wrenches
    */
-  void extWrenchConfiguration(const ExtWrenchConfiguration & extWrenchConfig)
+  void externalWrenchConfiguration(const ExternalWrenchConfiguration & extWrenchConfig)
   {
     c_.extWrench = extWrenchConfig;
   }
 
   /** @brief Get the parameters for the external wrenches. */
-  const ExtWrenchConfiguration & extWrenchConfiguration() const noexcept
+  const ExternalWrenchConfiguration & externalWrenchConfiguration() const noexcept
   {
     return c_.extWrench;
   }

@@ -622,7 +622,7 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
   dcmTarget_ = comTarget_ + comdTarget_ / omega_;
 }
 
-void StabilizerTask::setExtWrenches(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches)
+void StabilizerTask::setExternalWrenches(const std::vector<std::pair<std::string, sva::ForceVecd>> & extWrenches)
 {
   extWrenchesTarget_ = extWrenches;
   comOffsetTarget_ = computeCoMOffset(extWrenchesTarget_, robot());
