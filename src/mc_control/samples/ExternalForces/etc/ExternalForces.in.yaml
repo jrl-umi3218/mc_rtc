@@ -57,7 +57,7 @@ states:
       Stabilizer:
         type: lipm_stabilizer
         contacts: [Left, Right]
-        ext_wrench:
+        external_wrench:
           ## general ##
           add_expected_com_offset: true
           subtract_measured_value: false

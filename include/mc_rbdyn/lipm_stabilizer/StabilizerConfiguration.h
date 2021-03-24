@@ -447,9 +447,9 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     {
       dcmBias.load(config("dcm_bias"));
     }
-    if(config.has("ext_wrench"))
+    if(config.has("external_wrench"))
     {
-      extWrench.load(config("ext_wrench"));
+      extWrench.load(config("external_wrench"));
     }
     if(config.has("tasks"))
     {
@@ -552,7 +552,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf("dcm_tracking").add("integrator_time_constant", dcmIntegratorTimeConstant);
 
     conf.add("dcm_bias", dcmBias);
-    conf.add("ext_wrench", extWrench);
+    conf.add("external_wrench", extWrench);
 
     conf.add("tasks");
     conf("tasks").add("com");
