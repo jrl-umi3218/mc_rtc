@@ -1,7 +1,7 @@
 {
   "type": "object",
-  "title": "mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration",
-  "description": "Parameters for external wrench compensation. See {% doxygen mc_rbdyn::lipm_stabilizer::ExtWrenchConfiguration %} for detailed usage.",
+  "title": "mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration",
+  "description": "Parameters for external wrench compensation. See {% doxygen mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration %} for detailed usage.",
   "properties":
   {
     "add_expected_com_offset": {
