@@ -1,0 +1,11 @@
+{
+  "allOf":
+  [
+    {
+        "$ref": "/../../common/StabilizerConfiguration.json"
+    },
+    {
+        "$ref": "/../../common/StabilizerTask_common.json"
+    }
+  ]
+}

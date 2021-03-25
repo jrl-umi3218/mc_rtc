@@ -179,7 +179,12 @@
     {
       "type": "array", "items": { "type": "string" }
     },
-    "gripperSafety": { "$ref": "/../../mc_rbdyn/RobotModule.Gripper.Safety.json" }
+    "gripperSafety": { "$ref": "/../../mc_rbdyn/RobotModule.Gripper.Safety.json" },
+    "lipmStabilizer": 
+    { 
+      "$ref": "/../../mc_rbdyn/StabilizerConfiguration.json",
+      "description": "Default configuration for {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %}"
+    }
   },
   "required": ["path", "name", "urdf_path"],
   "additionalProperties": false,

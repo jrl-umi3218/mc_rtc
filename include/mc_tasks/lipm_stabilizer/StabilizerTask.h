@@ -9,6 +9,7 @@
 
 #include <mc_filter/ExponentialMovingAverage.h>
 #include <mc_filter/LeakyIntegrator.h>
+#include <mc_filter/LowPass.h>
 #include <mc_filter/StationaryOffset.h>
 #include <mc_tasks/CoMTask.h>
 #include <mc_tasks/CoPTask.h>
@@ -36,6 +37,7 @@ using StabilizerConfiguration = mc_rbdyn::lipm_stabilizer::StabilizerConfigurati
 using FDQPWeights = mc_rbdyn::lipm_stabilizer::FDQPWeights;
 using SafetyThresholds = mc_rbdyn::lipm_stabilizer::SafetyThresholds;
 using DCMBiasEstimatorConfiguration = mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration;
+using ExternalWrenchConfiguration = mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration;
 
 /** Walking stabilization based on linear inverted pendulum tracking.
  *
@@ -224,12 +226,12 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * @return The projected ankle frame expressed in world frame.
    */
-  const sva::PTransformd & contactAnklePose(ContactState s) const
+  inline const sva::PTransformd & contactAnklePose(ContactState s) const
   {
     return contacts_.at(s).anklePose();
   }
 
-  const std::string & footSurface(ContactState s) const
+  inline const std::string & footSurface(ContactState s) const
   {
     return footTasks.at(s)->surface();
   }
@@ -239,7 +241,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * @return Left foot ratio between [0,1]
    */
-  double leftFootRatio() const
+  inline double leftFootRatio() const noexcept
   {
     return leftFootRatio_;
   }
@@ -282,6 +284,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * @param comd Desired CoM velocity
    * @param comdd Desired CoM acceleration
    * @param zmp Desired ZMP
+   * @param zmpd Desired ZMP velocity (can be omitted when zmpdGain in StabilizerConfiguration is zero)
    *
    * \see staticTarget for a helper to define the stabilizer target when the CoM
    * is static
@@ -289,44 +292,59 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   void target(const Eigen::Vector3d & com,
               const Eigen::Vector3d & comd,
               const Eigen::Vector3d & comdd,
-              const Eigen::Vector3d & zmp);
+              const Eigen::Vector3d & zmp,
+              const Eigen::Vector3d & zmpd = Eigen::Vector3d::Zero());
 
-  const Eigen::Vector3d & measuredDCM()
+  /**
+   * @brief Set the wrench that the robot expects to receive from the external contacts.
+   *
+   * Change the configurations in ExternalWrenchConfiguration to handle external wrenches because external wrenches are
+   * ignored by default. \see ExternalWrenchConfiguration
+   *
+   * @param surfaceNames Names of the surface to which the external wrench is applied
+   * @param targetWrenches Target (expected) external wrenches
+   * @param gains Gains of measured external wrenches
+   */
+  void setExternalWrenches(const std::vector<std::string> & surfaceNames,
+                           const std::vector<sva::ForceVecd> & targetWrenches,
+                           const std::vector<sva::MotionVecd> & gains);
+
+  inline const Eigen::Vector3d & measuredDCM() noexcept
   {
     return measuredDCM_;
   }
 
-  const Eigen::Vector3d & measuredZMP()
+  inline const Eigen::Vector3d & measuredZMP() noexcept
   {
     return measuredZMP_;
   }
 
-  const Eigen::Vector3d & measuredCoM()
+  inline const Eigen::Vector3d & measuredCoM() noexcept
   {
     return measuredCoM_;
   }
 
-  const Eigen::Vector3d & measuredCoMd()
+  inline const Eigen::Vector3d & measuredCoMd() noexcept
   {
     return measuredCoM_;
   }
 
-  bool inContact(ContactState state) const
+  inline bool inContact(ContactState state) const noexcept
   {
     return contacts_.count(state);
   }
 
-  bool inDoubleSupport() const
+  inline bool inDoubleSupport() const noexcept
   {
     return contacts_.size() == 2;
   }
 
-  const mc_rbdyn::Robot & robot() const
+  inline const mc_rbdyn::Robot & robot() const noexcept
   {
     return robots_.robot(robotIndex_);
   }
 
-  const mc_rbdyn::Robot & realRobot() const
+  inline const mc_rbdyn::Robot & realRobot() const noexcept
   {
     return realRobots_.robot(robotIndex_);
   }
@@ -345,67 +363,91 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    * \see commitConfig() Make the current configuration the new default
    * @{
    */
-  void torsoPitch(double pitch)
+  inline void torsoPitch(double pitch) noexcept
   {
     c_.torsoPitch = pitch;
   }
 
-  void torsoWeight(double weight)
+  inline void torsoWeight(double weight) noexcept
   {
     c_.torsoWeight = weight;
     torsoTask->weight(c_.torsoWeight);
   }
 
-  void torsoStiffness(double stiffness)
+  inline void torsoStiffness(double stiffness) noexcept
   {
     c_.torsoStiffness = stiffness;
     torsoTask->stiffness(stiffness);
   }
 
-  void pelvisWeight(double weight)
+  inline void pelvisWeight(double weight) noexcept
   {
     c_.pelvisWeight = weight;
     pelvisTask->weight(c_.pelvisWeight);
   }
 
-  void pelvisStiffness(double stiffness)
+  inline void pelvisStiffness(double stiffness) noexcept
   {
     c_.pelvisStiffness = stiffness;
     pelvisTask->stiffness(stiffness);
   }
 
-  void dcmGains(double p, double i, double d)
+  inline void dcmGains(double p, double i, double d) noexcept
   {
     c_.dcmPropGain = clamp(p, 0., c_.safetyThresholds.MAX_DCM_P_GAIN);
     c_.dcmIntegralGain = clamp(i, 0., c_.safetyThresholds.MAX_DCM_I_GAIN);
     c_.dcmDerivGain = clamp(d, 0., c_.safetyThresholds.MAX_DCM_D_GAIN);
   }
 
-  void dcmIntegratorTimeConstant(double dcmIntegratorTimeConstant)
+  inline void dcmIntegratorTimeConstant(double dcmIntegratorTimeConstant) noexcept
   {
     c_.dcmIntegratorTimeConstant = dcmIntegratorTimeConstant;
     dcmIntegrator_.timeConstant(dcmIntegratorTimeConstant);
   }
 
-  void dcmDerivatorTimeConstant(double dcmDerivatorTimeConstant)
+  inline void dcmDerivatorTimeConstant(double dcmDerivatorTimeConstant) noexcept
   {
     c_.dcmDerivatorTimeConstant = dcmDerivatorTimeConstant;
     dcmDerivator_.timeConstant(dcmDerivatorTimeConstant);
   }
 
-  void comWeight(double weight)
+  inline void extWrenchSumLowPassCutoffPeriod(double cutoffPeriod) noexcept
+  {
+    c_.extWrench.extWrenchSumLowPassCutoffPeriod = cutoffPeriod;
+    extWrenchSumLowPass_.cutoffPeriod(cutoffPeriod);
+  }
+
+  inline void comOffsetLowPassCutoffPeriod(double cutoffPeriod) noexcept
+  {
+    c_.extWrench.comOffsetLowPassCutoffPeriod = cutoffPeriod;
+    comOffsetLowPass_.cutoffPeriod(cutoffPeriod);
+  }
+
+  inline void comOffsetLowPassCoMCutoffPeriod(double cutoffPeriod) noexcept
+  {
+    c_.extWrench.comOffsetLowPassCoMCutoffPeriod = cutoffPeriod;
+    comOffsetLowPassCoM_.cutoffPeriod(cutoffPeriod);
+  }
+
+  inline void comOffsetDerivatorTimeConstant(double timeConstant) noexcept
+  {
+    c_.extWrench.comOffsetDerivatorTimeConstant = timeConstant;
+    comOffsetDerivator_.timeConstant(timeConstant);
+  }
+
+  inline void comWeight(double weight) noexcept
   {
     c_.comWeight = weight;
     comTask->weight(weight);
   }
 
-  void comStiffness(const Eigen::Vector3d & stiffness)
+  inline void comStiffness(const Eigen::Vector3d & stiffness) noexcept
   {
     c_.comStiffness = stiffness;
     comTask->stiffness(stiffness);
   }
 
-  void contactWeight(double weight)
+  inline void contactWeight(double weight) noexcept
   {
     c_.contactWeight = weight;
     for(auto footT : contactTasks)
@@ -414,7 +456,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     }
   }
 
-  void contactStiffness(const sva::MotionVecd & stiffness)
+  inline void contactStiffness(const sva::MotionVecd & stiffness) noexcept
   {
     c_.contactStiffness = stiffness;
     for(auto contactT : contactTasks)
@@ -423,7 +465,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     }
   }
 
-  void contactDamping(const sva::MotionVecd & damping)
+  inline void contactDamping(const sva::MotionVecd & damping) noexcept
   {
     c_.contactDamping = damping;
     for(auto contactT : contactTasks)
@@ -432,7 +474,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     }
   }
 
-  void copAdmittance(const Eigen::Vector2d & copAdmittance)
+  inline void copAdmittance(const Eigen::Vector2d & copAdmittance) noexcept
   {
     c_.copAdmittance = clamp(copAdmittance, 0., c_.safetyThresholds.MAX_COP_ADMITTANCE);
     for(auto contactT : contactTasks)
@@ -441,7 +483,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     }
   }
 
-  void copMaxVel(const sva::MotionVecd & copMaxVel)
+  inline void copMaxVel(const sva::MotionVecd & copMaxVel) noexcept
   {
     c_.copMaxVel = copMaxVel;
     for(const auto & footTask : footTasks)
@@ -452,7 +494,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   }
 
   /* Set the gain of the low-pass velocity filter of the cop tasks */
-  void copVelFilterGain(double gain)
+  inline void copVelFilterGain(double gain) noexcept
   {
     c_.copVelFilterGain = mc_filter::utils::clamp(gain, 0, 1);
     for(auto & ft : footTasks)
@@ -462,32 +504,32 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   }
 
   /* Get the gain of the low-pass velocity filter of the cop tasks */
-  double copVelFilterGain() const noexcept
+  inline double copVelFilterGain() const noexcept
   {
     return c_.copVelFilterGain;
   }
 
-  void vdcFrequency(double freq)
+  inline void vdcFrequency(double freq) noexcept
   {
     c_.vdcFrequency = clamp(freq, 0., 10.);
   }
 
-  void vdcStiffness(double stiffness)
+  inline void vdcStiffness(double stiffness) noexcept
   {
     c_.vdcStiffness = clamp(stiffness, 0., 1e4);
   }
 
-  void dfzAdmittance(double dfzAdmittance)
+  inline void dfzAdmittance(double dfzAdmittance) noexcept
   {
     c_.dfzAdmittance = clamp(dfzAdmittance, 0., c_.safetyThresholds.MAX_DFZ_ADMITTANCE);
   }
 
-  void dfzDamping(double dfzDamping)
+  inline void dfzDamping(double dfzDamping) noexcept
   {
     c_.dfzDamping = clamp(dfzDamping, 0., c_.safetyThresholds.MAX_DFZ_DAMPING);
   }
 
-  void fdqpWeights(const FDQPWeights & fdqp)
+  inline void fdqpWeights(const FDQPWeights & fdqp) noexcept
   {
     c_.fdqpWeights = fdqp;
   }
@@ -501,7 +543,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
    *
    * @param thresholds New safety thresholds
    */
-  void safetyThresholds(const SafetyThresholds & thresholds)
+  inline void safetyThresholds(const SafetyThresholds & thresholds) noexcept
   {
     c_.safetyThresholds = thresholds;
     c_.clampGains();
@@ -510,11 +552,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
   }
 
   /**
-   * @brief Changes the parameters of the DCM bias estimator
+   * @brief Changes the parameters of the DCM bias estimator.
    *
    * @param biasConfig Configuration parameters for the bias estimation
    */
-  void dcmBiasEstimatorConfiguration(const DCMBiasEstimatorConfiguration & biasConfig)
+  inline void dcmBiasEstimatorConfiguration(const DCMBiasEstimatorConfiguration & biasConfig) noexcept
   {
     auto & bc = c_.dcmBias;
     bc = biasConfig;
@@ -524,10 +566,30 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     dcmEstimator_.setBiasLimit(bc.biasLimit);
   }
 
-  /// Get parameters of the DCM bias estimator
-  const DCMBiasEstimatorConfiguration & dcmBiasEstimatorConfiguration() const noexcept
+  /** @brief Get parameters of the DCM bias estimator. */
+  inline const DCMBiasEstimatorConfiguration & dcmBiasEstimatorConfiguration() const noexcept
   {
     return c_.dcmBias;
+  }
+
+  /**
+   * @brief Changes the parameters for the external wrenches.
+   *
+   * @param extWrenchConfig Configuration parameters for the external wrenches
+   */
+  inline void externalWrenchConfiguration(const ExternalWrenchConfiguration & extWrenchConfig) noexcept
+  {
+    c_.extWrench = extWrenchConfig;
+    extWrenchSumLowPass_.cutoffPeriod(c_.extWrench.extWrenchSumLowPassCutoffPeriod);
+    comOffsetLowPass_.cutoffPeriod(c_.extWrench.comOffsetLowPassCutoffPeriod);
+    comOffsetLowPassCoM_.cutoffPeriod(c_.extWrench.comOffsetLowPassCoMCutoffPeriod);
+    comOffsetDerivator_.timeConstant(c_.extWrench.comOffsetDerivatorTimeConstant);
+  }
+
+  /** @brief Get the parameters for the external wrenches. */
+  inline const ExternalWrenchConfiguration & externalWrenchConfiguration() const noexcept
+  {
+    return c_.extWrench;
   }
 
 private:
@@ -555,7 +617,7 @@ private:
   void checkInTheAir();
 
   /** Computes the ratio of force distribution between the feet based on
-   * the reference CoM and contact ankle positions.
+   * the reference ZMP and contact ankle positions.
    */
   void computeLeftFootRatio();
 
@@ -622,16 +684,63 @@ private:
   void updateZMPFrame();
 
   /** Get 6D contact admittance vector from 2D CoP admittance. */
-  sva::ForceVecd contactAdmittance() const
+  inline sva::ForceVecd contactAdmittance() const noexcept
   {
     return {{c_.copAdmittance.y(), c_.copAdmittance.x(), 0.}, {0., 0., 0.}};
   }
 
-  void zmpcc(const ZMPCCConfiguration & zmpccConfig)
+  inline void zmpcc(const ZMPCCConfiguration & zmpccConfig) noexcept
   {
     c_.zmpcc = zmpccConfig;
     zmpcc_.configure(zmpccConfig);
   }
+
+  /** @brief External wrench. */
+  struct ExternalWrench
+  {
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    /// Target (expected) external wrench
+    sva::ForceVecd target;
+    /// Measured external wrench
+    sva::ForceVecd measured;
+    /// Gain of measured external wrench
+    sva::MotionVecd gain;
+    /// Name of the surface to which the external wrench is applied
+    std::string surfaceName;
+  };
+
+  /** @brief Compute the CoM offset and the sum wrench from the external wrenches.
+   *
+   *  @tparam TargetOrMeasured Change depending on the used wrenches
+   *  @param robot Robot used to transform surface wrenches (control robot or real robot)
+   */
+  template<sva::ForceVecd ExternalWrench::*TargetOrMeasured>
+  Eigen::Vector3d computeCoMOffset(const mc_rbdyn::Robot & robot) const;
+
+  /** @brief Compute the sum of external wrenches.
+   *
+   *  @tparam TargetOrMeasured Change depending on the used wrenches
+   *  @param robot Robot used to transform surface wrenches (control robot or real robot)
+   *  @param com Robot CoM
+   */
+  template<sva::ForceVecd ExternalWrench::*TargetOrMeasured>
+  sva::ForceVecd computeExternalWrenchSum(const mc_rbdyn::Robot & robot, const Eigen::Vector3d & com) const;
+
+  /** @brief Compute the position, force, and moment of the external contacts in the world frame.
+   *
+   *  @param [in] robot Robot (control robot or real robot)
+   *  @param [in] surfaceName Surface name
+   *  @param [in] surfaceWrench Surface wrench
+   *  @param [out] pos Position of the external contact in the world frame
+   *  @param [out] force Force of the external contact in the world frame
+   *  @param [out] moment Moment of the external contact in the world frame
+   */
+  void computeExternalContact(const mc_rbdyn::Robot & robot,
+                              const std::string & surfaceName,
+                              const sva::ForceVecd & surfaceWrench,
+                              Eigen::Vector3d & pos,
+                              Eigen::Vector3d & force,
+                              Eigen::Vector3d & moment) const;
 
   /* Task-related properties */
 protected:
@@ -697,10 +806,12 @@ protected:
   unsigned int robotIndex_;
 
   /** Stabilizer targets */
+  Eigen::Vector3d comTargetRaw_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d comTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d comdTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d comddTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d zmpTarget_ = Eigen::Vector3d::Zero();
+  Eigen::Vector3d zmpdTarget_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d dcmTarget_ = Eigen::Vector3d::Zero();
   double omega_;
 
@@ -742,6 +853,27 @@ protected:
   /**< Whether the estimator needs to be reset (robot in the air, initialization) */
   bool dcmEstimatorNeedsReset_ = true;
 
+  /** @name Members related to stabilization in the presence of external wrenches
+   *
+   *  Adding an offset to the CoM for the predictable / measurable external wrenches on the robot surface.
+   *  @{
+   */
+  std::vector<ExternalWrench> extWrenches_;
+  sva::ForceVecd extWrenchSumTarget_ = sva::ForceVecd::Zero(); /**< Sum of target (expected) external wrenches */
+  sva::ForceVecd extWrenchSumMeasured_ = sva::ForceVecd::Zero(); /**< Sum of measured external wrenches */
+  Eigen::Vector3d comOffsetTarget_ = Eigen::Vector3d::Zero(); /**< Target (expected) CoM offset */
+  Eigen::Vector3d comOffsetMeasured_ = Eigen::Vector3d::Zero(); /**< Measured CoM offset */
+  Eigen::Vector3d comOffsetErr_ = Eigen::Vector3d::Zero(); /**< CoM offset error */
+  Eigen::Vector3d comOffsetErrCoM_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by CoM modification */
+  Eigen::Vector3d comOffsetErrZMP_ = Eigen::Vector3d::Zero(); /**< CoM offset error handled by ZMP modification */
+  mc_filter::LowPass<sva::ForceVecd>
+      extWrenchSumLowPass_; /**< Low-pass filter of the sum of the measured external wrenches */
+  mc_filter::LowPass<Eigen::Vector3d> comOffsetLowPass_; /**< Low-pass filter of CoM offset */
+  mc_filter::LowPass<Eigen::Vector3d>
+      comOffsetLowPassCoM_; /**< Low-pass filter of CoM offset to extract CoM modification */
+  mc_filter::StationaryOffset<Eigen::Vector3d> comOffsetDerivator_; /**< Derivator of CoM offset */
+  /** @} */
+
   mc_filter::ExponentialMovingAverage<Eigen::Vector3d> dcmIntegrator_;
   mc_filter::StationaryOffset<Eigen::Vector3d> dcmDerivator_;
   bool inTheAir_ = false; /**< Is the robot in the air? */
@@ -752,11 +884,24 @@ protected:
   double mass_ = 38.; /**< Robot mass in [kg] */
   double runTime_ = 0.;
   double vdcHeightError_ = 0.; /**< Average height error used in vertical drift compensation */
+  sva::ForceVecd desiredWrench_ = sva::ForceVecd::Zero(); /**< Result of the DCM feedback */
   sva::ForceVecd distribWrench_ = sva::ForceVecd::Zero(); /**< Result of the force distribution QP */
   Eigen::Vector3d distribZMP_ =
       Eigen::Vector3d::Zero(); /**< ZMP corresponding to force distribution result (desired ZMP) */
   sva::PTransformd zmpFrame_ = sva::PTransformd::Identity(); /**< Frame in which the ZMP is computed */
 };
+
+extern template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::target>(
+    const mc_rbdyn::Robot &) const;
+extern template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::measured>(
+    const mc_rbdyn::Robot &) const;
+
+extern template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::target>(
+    const mc_rbdyn::Robot &,
+    const Eigen::Vector3d &) const;
+extern template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::measured>(
+    const mc_rbdyn::Robot &,
+    const Eigen::Vector3d &) const;
 
 } // namespace lipm_stabilizer
 } // namespace mc_tasks

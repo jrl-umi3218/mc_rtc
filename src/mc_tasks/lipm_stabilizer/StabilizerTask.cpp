@@ -33,7 +33,9 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
                                const std::string & torsoBodyName,
                                double dt)
 : robots_(robots), realRobots_(realRobots), robotIndex_(robotIndex), dcmEstimator_(dt),
-  dcmIntegrator_(dt, /* t`  imeConstant = */ 15.), dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt),
+  extWrenchSumLowPass_(dt, /* cutoffPeriod = */ 0.05), comOffsetLowPass_(dt, /* cutoffPeriod = */ 0.05),
+  comOffsetLowPassCoM_(dt, /* cutoffPeriod = */ 1.0), comOffsetDerivator_(dt, /* timeConstant = */ 1.),
+  dcmIntegrator_(dt, /* timeConstant = */ 15.), dcmDerivator_(dt, /* timeConstant = */ 1.), dt_(dt),
   mass_(robots.robot(robotIndex).mass())
 {
   type_ = "lipm_stabilizer";
@@ -84,6 +86,9 @@ void StabilizerTask::reset()
   t_ = 0;
   comTask->reset();
   comTarget_ = comTask->com();
+  comTargetRaw_ = comTarget_;
+  zmpTarget_ = Eigen::Vector3d{comTarget_.x(), comTarget_.y(), 0.};
+  zmpdTarget_ = Eigen::Vector3d::Zero();
 
   for(auto footTask : footTasks)
   {
@@ -98,12 +103,26 @@ void StabilizerTask::reset()
   dcmVelError_ = Eigen::Vector3d::Zero();
   dfzForceError_ = 0.;
   dfzHeightError_ = 0.;
+  desiredWrench_ = sva::ForceVecd::Zero();
   distribWrench_ = sva::ForceVecd::Zero();
   vdcHeightError_ = 0.;
 
   zmpcc_.reset();
 
   dcmEstimatorNeedsReset_ = true;
+
+  extWrenches_.clear();
+  extWrenchSumTarget_ = sva::ForceVecd::Zero();
+  extWrenchSumMeasured_ = sva::ForceVecd::Zero();
+  comOffsetTarget_ = Eigen::Vector3d::Zero();
+  comOffsetMeasured_ = Eigen::Vector3d::Zero();
+  comOffsetErr_ = Eigen::Vector3d::Zero();
+  comOffsetErrCoM_ = Eigen::Vector3d::Zero();
+  comOffsetErrZMP_ = Eigen::Vector3d::Zero();
+  extWrenchSumLowPass_.reset(sva::ForceVecd::Zero());
+  comOffsetLowPass_.reset(Eigen::Vector3d::Zero());
+  comOffsetLowPassCoM_.reset(Eigen::Vector3d::Zero());
+  comOffsetDerivator_.reset(Eigen::Vector3d::Zero());
 
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
@@ -260,6 +279,11 @@ void StabilizerTask::enable()
   dcmIntegrator_.reset(Eigen::Vector3d::Zero());
   dcmDerivator_.reset(Eigen::Vector3d::Zero());
 
+  extWrenchSumLowPass_.reset(sva::ForceVecd::Zero());
+  comOffsetLowPass_.reset(Eigen::Vector3d::Zero());
+  comOffsetLowPassCoM_.reset(Eigen::Vector3d::Zero());
+  comOffsetDerivator_.reset(Eigen::Vector3d::Zero());
+
   configure(lastConfig_);
   zmpcc_.enabled(true);
   enabled_ = true;
@@ -308,6 +332,11 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
   dcmDerivator_.timeConstant(c_.dcmDerivatorTimeConstant);
   dcmIntegrator_.timeConstant(c_.dcmIntegratorTimeConstant);
   dcmIntegrator_.saturation(c_.safetyThresholds.MAX_AVERAGE_DCM_ERROR);
+
+  extWrenchSumLowPass_.cutoffPeriod(c_.extWrench.extWrenchSumLowPassCutoffPeriod);
+  comOffsetLowPass_.cutoffPeriod(c_.extWrench.comOffsetLowPassCutoffPeriod);
+  comOffsetLowPassCoM_.cutoffPeriod(c_.extWrench.comOffsetLowPassCoMCutoffPeriod);
+  comOffsetDerivator_.timeConstant(c_.extWrench.comOffsetDerivatorTimeConstant);
 
   // // Configure upper-body tasks
   pelvisTask->stiffness(c_.pelvisStiffness);
@@ -523,10 +552,10 @@ void StabilizerTask::computeLeftFootRatio()
 {
   if(inDoubleSupport())
   {
-    // Project desired CoM in-between foot-sole ankle frames and compute ratio along the line in-beween the two surfaces
+    // Project desired ZMP in-between foot-sole ankle frames and compute ratio along the line in-beween the two surfaces
     const Eigen::Vector3d & lankle = contacts_.at(ContactState::Left).anklePose().translation();
     const Eigen::Vector3d & rankle = contacts_.at(ContactState::Right).anklePose().translation();
-    Eigen::Vector3d t_lankle_com = comTarget_ - lankle;
+    Eigen::Vector3d t_lankle_com = zmpTarget_ - lankle;
     Eigen::Vector3d t_lankle_rankle = rankle - lankle;
     double d_proj = t_lankle_com.dot(t_lankle_rankle.normalized());
     leftFootRatio_ = clamp(d_proj / t_lankle_rankle.norm(), 0., 1.);
@@ -574,15 +603,114 @@ void StabilizerTask::staticTarget(const Eigen::Vector3d & com, double zmpHeight)
 void StabilizerTask::target(const Eigen::Vector3d & com,
                             const Eigen::Vector3d & comd,
                             const Eigen::Vector3d & comdd,
-                            const Eigen::Vector3d & zmp)
+                            const Eigen::Vector3d & zmp,
+                            const Eigen::Vector3d & zmpd)
 {
-  comTarget_ = com;
+  comTargetRaw_ = com;
+  comTarget_ = comTargetRaw_ - comOffsetErrCoM_;
+  if(c_.extWrench.addExpectedCoMOffset)
+  {
+    comTarget_ -= comOffsetTarget_;
+  }
   comdTarget_ = comd;
   comddTarget_ = comdd;
   zmpTarget_ = zmp;
+  zmpdTarget_ = zmpd;
   double comHeight = comTarget_.z() - zmpTarget_.z();
   omega_ = std::sqrt(constants::gravity.z() / comHeight);
   dcmTarget_ = comTarget_ + comdTarget_ / omega_;
+}
+
+void StabilizerTask::setExternalWrenches(const std::vector<std::string> & surfaceNames,
+                                         const std::vector<sva::ForceVecd> & targetWrenches,
+                                         const std::vector<sva::MotionVecd> & gains)
+{
+  if(surfaceNames.size() > 0
+     && !(c_.extWrench.addExpectedCoMOffset || c_.extWrench.modifyCoMErr || c_.extWrench.modifyZMPErr
+          || c_.extWrench.modifyZMPErrD))
+  {
+    mc_rtc::log::warning(
+        "[StabilizerTask] external wrenches are set, but the configurations for handling them are invalid.");
+  }
+
+  extWrenches_.clear();
+  for(unsigned int i = 0; i < surfaceNames.size(); i++)
+  {
+    extWrenches_.push_back({targetWrenches[i], sva::ForceVecd::Zero(), gains[i], surfaceNames[i]});
+    if(!robot().surfaceHasIndirectForceSensor(surfaceNames[i]))
+    {
+      mc_rtc::log::warning(
+          "[StabilizerTask] surface {} does not have force sensor. The target force is used as the measured force.",
+          surfaceNames[i]);
+    }
+  }
+
+  comOffsetTarget_ = computeCoMOffset<&ExternalWrench::target>(robot());
+  comTarget_ = comTargetRaw_ - comOffsetErrCoM_;
+  if(c_.extWrench.addExpectedCoMOffset)
+  {
+    comTarget_ -= comOffsetTarget_;
+  }
+}
+
+template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
+Eigen::Vector3d StabilizerTask::computeCoMOffset(const mc_rbdyn::Robot & robot) const
+{
+  Eigen::Vector3d comOffset = Eigen::Vector3d::Zero();
+  Eigen::Vector3d pos, force, moment;
+  for(const auto & extWrench : extWrenches_)
+  {
+    computeExternalContact(robot, extWrench.surfaceName, extWrench.*TargetOrMeasured, pos, force, moment);
+
+    comOffset.x() += (pos.z() - zmpTarget_.z()) * force.x() - pos.x() * force.z() + moment.y();
+    comOffset.y() += (pos.z() - zmpTarget_.z()) * force.y() - pos.y() * force.z() - moment.x();
+  }
+  double verticalComAcc = comddTarget_.z() + constants::gravity.z();
+  double verticalComAccThre = 1e-3;
+  if(std::abs(verticalComAcc) < verticalComAccThre)
+  {
+    mc_rtc::log::warning(
+        "[StabilizerTask::computeCoMOffset] overwrite verticalComAcc because it's too close to zero: {}",
+        verticalComAcc);
+    verticalComAcc = verticalComAcc >= 0 ? verticalComAccThre : -verticalComAccThre;
+  }
+  comOffset /= robot.mass() * verticalComAcc;
+
+  return comOffset;
+}
+
+template<sva::ForceVecd StabilizerTask::ExternalWrench::*TargetOrMeasured>
+sva::ForceVecd StabilizerTask::computeExternalWrenchSum(const mc_rbdyn::Robot & robot,
+                                                        const Eigen::Vector3d & com) const
+{
+  sva::ForceVecd extWrenchSum = sva::ForceVecd::Zero();
+  Eigen::Vector3d pos, force, moment;
+  for(const auto & extWrench : extWrenches_)
+  {
+    computeExternalContact(robot, extWrench.surfaceName, extWrench.*TargetOrMeasured, pos, force, moment);
+
+    extWrenchSum.force() += force;
+    extWrenchSum.moment() += (pos - com).cross(force) + moment;
+  }
+
+  return extWrenchSum;
+}
+
+void StabilizerTask::computeExternalContact(const mc_rbdyn::Robot & robot,
+                                            const std::string & surfaceName,
+                                            const sva::ForceVecd & surfaceWrench,
+                                            Eigen::Vector3d & pos,
+                                            Eigen::Vector3d & force,
+                                            Eigen::Vector3d & moment) const
+{
+  sva::PTransformd surfacePose = robot.surfacePose(surfaceName);
+  sva::PTransformd T_s_0(Eigen::Matrix3d(surfacePose.rotation().transpose()));
+  // Represent the surface wrench in the frame whose position is same with the surface frame and orientation is same
+  // with the world frame
+  sva::ForceVecd surfaceWrenchW = T_s_0.dualMul(surfaceWrench);
+  pos = surfacePose.translation();
+  force = surfaceWrenchW.force();
+  moment = surfaceWrenchW.moment();
 }
 
 void StabilizerTask::run()
@@ -614,20 +742,20 @@ void StabilizerTask::run()
   {
     measuredNetWrench_ = sva::ForceVecd::Zero();
   }
-  auto desiredWrench = computeDesiredWrench();
+  desiredWrench_ = computeDesiredWrench();
 
   if(inDoubleSupport())
   {
-    distributeWrench(desiredWrench);
+    distributeWrench(desiredWrench_);
   }
   else if(inContact(ContactState::Left))
   {
-    saturateWrench(desiredWrench, footTasks[ContactState::Left], contacts_.at(ContactState::Left));
+    saturateWrench(desiredWrench_, footTasks[ContactState::Left], contacts_.at(ContactState::Left));
     footTasks[ContactState::Right]->setZeroTargetWrench();
   }
   else
   {
-    saturateWrench(desiredWrench, footTasks[ContactState::Right], contacts_.at(ContactState::Right));
+    saturateWrench(desiredWrench_, footTasks[ContactState::Right], contacts_.at(ContactState::Right));
     footTasks[ContactState::Left]->setZeroTargetWrench();
   }
 
@@ -724,15 +852,76 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
   dcmVelError_ = dcmDerivator_.eval();
 
   Eigen::Vector3d desiredCoMAccel = comddTarget_;
-  desiredCoMAccel += omega_ * (c_.dcmPropGain * dcmError_ + comdError);
+  desiredCoMAccel += omega_ * (c_.dcmPropGain * dcmError_ + c_.comdErrorGain * comdError);
   desiredCoMAccel += omega_ * c_.dcmIntegralGain * dcmAverageError_;
   desiredCoMAccel += omega_ * c_.dcmDerivGain * dcmVelError_;
-  auto desiredForce = mass_ * (desiredCoMAccel + constants::gravity);
+  desiredCoMAccel -= omega_ * omega_ * c_.zmpdGain * zmpdTarget_;
+
+  // Calculate CoM offset from measured wrench
+  for(auto & extWrench : extWrenches_)
+  {
+    if(robot().surfaceHasIndirectForceSensor(extWrench.surfaceName))
+    {
+      extWrench.measured =
+          sva::ForceVecd(extWrench.gain.vector().cwiseProduct(robot().surfaceWrench(extWrench.surfaceName).vector()));
+    }
+    else
+    {
+      extWrench.measured = extWrench.target;
+    }
+  }
+  comOffsetMeasured_ = computeCoMOffset<&ExternalWrench::measured>(realRobot());
+
+  // Modify the desired CoM and ZMP depending on the external wrench error
+  comOffsetLowPass_.update(comOffsetMeasured_ - comOffsetTarget_);
+  comOffsetErr_ = comOffsetLowPass_.eval();
+  if(c_.extWrench.modifyCoMErr)
+  {
+    comOffsetLowPassCoM_.update(comOffsetErr_);
+  }
+  else
+  {
+    comOffsetLowPassCoM_.update(Eigen::Vector3d::Zero());
+  }
+  comOffsetErrCoM_ = comOffsetLowPassCoM_.eval();
+  comOffsetErrZMP_ = comOffsetErr_ - comOffsetErrCoM_;
+  clampInPlaceAndWarn(comOffsetErrCoM_, Eigen::Vector3d::Constant(-c_.extWrench.comOffsetErrCoMLimit).eval(),
+                      Eigen::Vector3d::Constant(c_.extWrench.comOffsetErrCoMLimit).eval(), "comOffsetErrCoM");
+  clampInPlaceAndWarn(comOffsetErrZMP_, Eigen::Vector3d::Constant(-c_.extWrench.comOffsetErrZMPLimit).eval(),
+                      Eigen::Vector3d::Constant(c_.extWrench.comOffsetErrZMPLimit).eval(), "comOffsetErrZMP");
+  comOffsetDerivator_.update(comOffsetErr_);
+  if(c_.extWrench.modifyZMPErr)
+  {
+    desiredCoMAccel -= omega_ * omega_ * comOffsetErrZMP_;
+  }
+  if(c_.extWrench.modifyZMPErrD)
+  {
+    desiredCoMAccel -= (omega_ * omega_ / c_.zmpdGain) * comOffsetDerivator_.eval();
+  }
+
+  // Calculate the desired force and moment
+  Eigen::Vector3d desiredForce = mass_ * (desiredCoMAccel + constants::gravity);
+  Eigen::Vector3d desiredMoment = Eigen::Vector3d::Zero();
+
+  // Subtract the external wrenches from the desired force and moment
+  extWrenchSumTarget_ = computeExternalWrenchSum<&ExternalWrench::target>(robot(), comTarget_);
+  extWrenchSumLowPass_.update(computeExternalWrenchSum<&ExternalWrench::measured>(realRobot(), measuredCoM_));
+  extWrenchSumMeasured_ = extWrenchSumLowPass_.eval();
+  if(c_.extWrench.subtractMeasuredValue)
+  {
+    desiredForce -= extWrenchSumMeasured_.force();
+    desiredMoment -= extWrenchSumMeasured_.moment();
+  }
+  else
+  {
+    desiredForce -= extWrenchSumTarget_.force();
+    desiredMoment -= extWrenchSumTarget_.moment();
+  }
 
   // Previous implementation (up to v1.3):
   // return {pendulum_.com().cross(desiredForce), desiredForce};
   // See https://github.com/stephane-caron/lipm_walking_controller/issues/28
-  return {measuredCoM_.cross(desiredForce), desiredForce};
+  return {measuredCoM_.cross(desiredForce) + desiredMoment, desiredForce};
 }
 
 void StabilizerTask::distributeWrench(const sva::ForceVecd & desiredWrench)
@@ -952,6 +1141,18 @@ void StabilizerTask::updateFootForceDifferenceControl()
   leftFootTask->refVelB(0.5 * (velT - velF));
   rightFootTask->refVelB(0.5 * (velT + velF));
 }
+
+template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::target>(
+    const mc_rbdyn::Robot &) const;
+template Eigen::Vector3d StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::measured>(
+    const mc_rbdyn::Robot &) const;
+
+template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::target>(
+    const mc_rbdyn::Robot &,
+    const Eigen::Vector3d &) const;
+template sva::ForceVecd StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::measured>(
+    const mc_rbdyn::Robot &,
+    const Eigen::Vector3d &) const;
 
 } // namespace lipm_stabilizer
 } // namespace mc_tasks

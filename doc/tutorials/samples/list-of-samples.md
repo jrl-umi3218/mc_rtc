@@ -75,7 +75,7 @@ Enabled: EndEffector
 
 # Text
 
-The `Text` sample controller demonstrate use of the {% doxygen mc_tasks::MetaTasks %} and {% doxygen mc_solver::ConstraintSetLoader %} to load [tasks]({{site.baseurl}}/json.html#MetaTask) and [constraints]({{site.baseurl}}/json.html#ConstraintSet) from their YAML configuration.
+The `Text` sample controller demonstrate the use of {% doxygen mc_tasks::MetaTaskLoader %} and {% doxygen mc_solver::ConstraintSetLoader %} to respectively load [tasks]({{site.baseurl}}/json.html#MetaTask) and [constraints]({{site.baseurl}}/json.html#ConstraintSet) from their YAML configuration.
 
 **Running**
 To run this controller, simply put in [your mc_rtc configuration]({{site.baseurl}}/tutorials/introduction/configuration.html), and [run the controller]({{site.baseurl}}/tutorials/introduction/running-a-controller.html) using your favorite interface.
@@ -111,6 +111,11 @@ Text:
 
 The `Admittance` sample controller demonstrates the use of the {% doxygen mc_tasks::force::AdmittanceTask %} though a simple FSM making the `JVRC1` robot push a wall with a desired force.
 
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/B_L_xPynhvU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+
 **Detailed description**: see the [Admittance Sample Controller tutorial]({{site.baseurl}}/tutorials/samples/sample-admittance.html)
 
 **Supported robots**: `JVRC1`.
@@ -120,6 +125,10 @@ The `Admittance` sample controller demonstrates the use of the {% doxygen mc_tas
 **Running**
 
 To run this controller, simply put in [your mc_rtc configuration]({{site.baseurl}}/tutorials/introduction/configuration.html), and [run the controller]({{site.baseurl}}/tutorials/introduction/running-a-controller.html) using your favorite dynamic simulation (e.g Choreonoid...).
+
+**See also**
+
+For a similar but more advanced example, see the [ExternalForces](#externalforces) sample.
 
 ```yaml
 MainRobot: JVRC1
@@ -160,3 +169,25 @@ MainRobot: JVRC1
 Enabled: LIPMStabilizer
 ```
 
+# ExternalForces
+
+The `ExternalForces` sample controller demonstrates a biped robot exerting specified external forces with {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %} and {% doxygen mc_tasks::force::ImpedanceTask %} though a simple FSM making the `JVRC1` robot push a wall with desired forces.
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/in3cUozkU-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+**Supported robots**: `JVRC1`.
+
+**Prerequisites**: Please make sure that the hand force sensors have been calibrated beforehand using the [ForceSensorCalibration controller](https://github.com/jrl-umi3218/mc_force_sensor_calibration_controller).
+
+**Running**
+
+To run the sample, you need a dynamic simulator in order to simulate the force sensors. This tutorial is intended to be used with {% link mc_openrtm %} and {% link Choreonoid %}, and the provided simulation file `sim_mc_wall.cnoid`. If you use another simulator, you will need to adapt the instructions, and create a scene with a wall `55cm` away from the robot.
+
+Put in [your mc_rtc configuration]({{site.baseurl}}/tutorials/introduction/configuration.html), and [run the controller]({{site.baseurl}}/tutorials/introduction/running-a-controller.html) with Choreonoid. The robot reaches both hands to the wall and applies the specified external forces of the sine wave to the wall with leaning forward.
+
+```yaml
+MainRobot: JVRC1
+Enabled: ExternalForces
+```

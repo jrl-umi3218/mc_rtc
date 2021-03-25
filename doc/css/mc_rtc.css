@@ -135,6 +135,16 @@ body
   margin-bottom: 10px;
 }
 
+.card-body table
+{
+  table-layout:fixed;
+}
+
+.card-body .btn
+{
+  word-break: break-word;
+}
+
 .object-property
 {
   margin-bottom: 10px;
@@ -247,4 +257,9 @@ body
 {
   padding-top: 58px;
   margin-top: -58px;
+}
+.embed-responsive
+{
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

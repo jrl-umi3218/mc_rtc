@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "title": "Force distribution QP parameters",
+  "title": "mc_rbdyn::lipm_stabilizer::FDQPWeights",
   "description": "Force distribution QP parameters",
   "properties":
   {

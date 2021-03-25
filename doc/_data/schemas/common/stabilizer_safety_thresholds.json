@@ -1,20 +1,22 @@
 {
   "type": "object",
-  "title": "Safety thresholds for the stabilizer parameters",
+  "title": "mc_rbyn::lipm_stabilizer::SafetyThresholds",
   "description": "These thresholds are intended to make the stabilizer behaviour safer against invalid parameter choices, and sensor noise. Change these values with caution. See {% doxygen mc_rbdyn::lipm_stabilizer::SafetyThresholds %}",
   "properties":
   {
-    "MAX_AVERAGE_DCM_ERROR": { "type": "number", "minimum": 0, "default": 0.05 },
-    "MAX_COP_ADMITTANCE": { "type": "number", "minimum": 0, "default": 0.1 },
-    "MAX_DCM_D_GAIN": { "type": "number", "minimum": 0, "default": 2 },
-    "MAX_DCM_I_GAIN": { "type": "number", "minimum": 0, "default": 100 },
-    "MAX_DCM_P_GAIN": { "type": "number", "minimum": 0, "default": 20 },
-    "MAX_DFZ_ADMITTANCE": { "type": "number", "minimum": 0, "default": 5e-4 },
-    "MAX_DFZ_DAMPING": { "type": "number", "minimum": 0, "default": 10 },
-    "MAX_FDC_RX_VEL": { "type": "number", "minimum": 0, "default": 0.2 },
-    "MAX_FDC_RY_VEL": { "type": "number", "minimum": 0, "default": 0.2 },
-    "MAX_FDC_RZ_VEL": { "type": "number", "minimum": 0, "default": 0.2 },
-    "MIN_DS_PRESSURE": { "type": "number", "minimum": 0, "default": 15 },
+    "MAX_AVERAGE_DCM_ERROR": { "type": "number", "minimum": 0, "default": 0.05, "description": "Maximum average (integral) DCM error in [m]"  },
+    "MAX_COP_ADMITTANCE": { "type": "number", "minimum": 0, "default": 0.1, "description": "Maximum CoP admittance for foot damping control" },
+    "MAX_DCM_D_GAIN": { "type": "number", "minimum": 0, "default": 2, "description": "Maximum DCM derivative gain (no unit)" },
+    "MAX_DCM_I_GAIN": { "type": "number", "minimum": 0, "default": 100, "description": "Maximum DCM average integral gain in [Hz]" },
+    "MAX_DCM_P_GAIN": { "type": "number", "minimum": 0, "default": 20, "description": "Maximum DCM proportional gain in [Hz]" },
+    "MAX_COMD_GAIN": { "type": "number", "minimum": 0, "default": 10, "description": "Maximum CoMd gain in [Hz]" },
+    "MAX_ZMPD_GAIN": { "type": "number", "minimum": 0, "default": 10, "description": "Maximum ZMPd gain in [Hz]" },
+    "MAX_DFZ_ADMITTANCE": { "type": "number", "minimum": 0, "default": 5e-4 , "description": "Maximum admittance in [s] / [kg] for foot force difference control" },
+    "MAX_DFZ_DAMPING": { "type": "number", "minimum": 0, "default": 10 , "description": "Maximum normalized damping in [Hz] for foot force difference control" },
+    "MAX_FDC_RX_VEL": { "type": "number", "minimum": 0, "default": 0.2, "description": "Maximum x-axis angular velocity in [rad] / [s] for foot damping control" },
+    "MAX_FDC_RY_VEL": { "type": "number", "minimum": 0, "default": 0.2, "description": "Maximum y-axis angular velocity in [rad] / [s] for foot damping control"  },
+    "MAX_FDC_RZ_VEL": { "type": "number", "minimum": 0, "default": 0.2, "description": "Maximum z-axis angular velocity in [rad] / [s] for foot damping control"  },
+    "MIN_DS_PRESSURE": { "type": "number", "minimum": 0, "default": 15, "description": "Minimum normal contact force in DSP, used to avoid low-pressure targets when close to contact switches" },
     "MIN_NET_TOTAL_FORCE_ZMP": { "type": "number", "minimum": 0, "default": 1 }
   }
 }

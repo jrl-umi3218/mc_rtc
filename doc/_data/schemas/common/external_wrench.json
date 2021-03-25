@@ -1,0 +1,70 @@
+{
+  "type": "object",
+  "title": "mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration",
+  "description": "Parameters for external wrench compensation. See {% doxygen mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration %} for detailed usage.",
+  "properties":
+  {
+    "add_expected_com_offset": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Whether to add the CoM offset expected from the external wrenches."
+    },
+    "subtract_measured_value": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Use the measured external wrenches instead of target ones"
+    },
+    "modify_com_error": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Modify CoM depending on the error of the external wrenches in target and measurement"
+    },
+    "modify_zmp_error": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Modify ZMP depending on the error of the external wrenches in target and measurement"
+    },
+    "modify_zmp_error_d": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Modify ZMP velocity depending on the error of the external wrenches in target and measurement"
+    },
+
+    "com_offset_err_com_limit": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.1,
+      "description": "Limit of CoM offset error handled by CoM modification [m]"
+    },
+    "com_offset_err_zmp_limit": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.1,
+      "description": "Limit of ZMP offset error handled by ZMP modification [m]"
+    },
+    "ext_wrench_sum_cutoff": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.05,
+      "description": "Cutoff period [s] for the low-pass filter of the sum of the measured external wrenches"
+    },
+    "com_offset_cutoff": {
+      "type": "number",
+      "minimum": 0,
+      "default": 0.05,
+      "description": "Cutoff period [s] for the low-pass filter of CoM offset"
+    },
+    "com_offset_com_cutoff": {
+      "type": "number",
+      "minimum": 0,
+      "default": 1.0,
+      "description": "Cutoff period [s] for the low-pass filter of CoM offset to extract CoM modification"
+    },
+    "derivator_time_constant": {
+      "type": "number",
+      "minimum": 0,
+      "default": 1.0,
+      "description": "Time window [s] for the stationary offset filter of the CoM offset derivator"
+    }
+  }
+}

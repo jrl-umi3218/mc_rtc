@@ -1,7 +1,6 @@
 {
   "title": "mc_rbdyn::RobotModule::Gripper::Safety",
   "type": "object",
-  "title": "Gripper safety parameters",
   "description": "Parameters to prevent over-torques on position-controlled grippers",
   "properties":
   {

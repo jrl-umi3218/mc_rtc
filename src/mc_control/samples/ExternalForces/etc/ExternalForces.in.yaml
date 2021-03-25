@@ -1,0 +1,156 @@
+###
+# Sample usage of the consideration of external forces on the hands
+###
+---
+## If true, the FSM transitions are managed by an external tool
+Managed: false
+# If true and the FSM is self-managed, transitions should be triggered
+StepByStep: false
+# Change idle behaviour, if true the state is kept until transition,
+# otherwise the FSM holds the last state until transition
+IdleKeepState: true
+# Where to look for state libraries
+StatesLibraries:
+- "@MC_STATES_RUNTIME_INSTALL_PREFIX@"
+- "@MC_ExternalForces_STATES_RUNTIME_INSTALL_PREFIX@"
+# Where to look for state files
+StatesFiles:
+- "@MC_STATES_RUNTIME_INSTALL_PREFIX@/data"
+- "@MC_ExternalForces_STATES_RUNTIME_INSTALL_PREFIX@/data"
+
+# Additional robots to load
+robots:
+  ground:
+    module: env/ground
+# General constraints, always on
+constraints:
+- type: contact
+# The dynamics constraint cannot be used because it does not know the external forces
+- type: kinematics
+  damper: [0.1, 0.01, 0.5]
+- type: compoundJoint
+# Collision constraint
+collisions:
+- type: collision
+  useMinimal: true
+# Initial set of contacts
+contacts:
+- r1: jvrc1
+  r1Surface: LeftFoot
+  r2: ground
+  r2Surface: AllGround
+- r1: jvrc1
+  r1Surface: RightFoot
+  r2: ground
+  r2Surface: AllGround
+jvrc1:
+  posture:
+    stiffness: 1.0
+    weight: 10.0
+
+# Implement some additional text states
+states:
+  # Stay standing
+  ExternalForces::Standing:
+    base: MetaTasks
+    tasks:
+      Stabilizer:
+        type: lipm_stabilizer
+        contacts: [Left, Right]
+        external_wrench:
+          ## general ##
+          add_expected_com_offset: true
+          subtract_measured_value: false
+          ## com offset ##
+          modify_com_error: true
+          modify_zmp_error: true
+          modify_zmp_error_d: false
+          com_offset_err_com_limit: 0.1
+          com_offset_err_zmp_limit: 0.1
+          ## filter ##
+          ext_wrench_sum_cutoff: 0.05
+          com_offset_cutoff: 0.05
+          com_offset_com_cutoff: 10.0
+          derivator_time_constant: 1.0
+      ImpedanceLeft:
+        type: impedance
+        surface: LeftGripper
+        gains:
+          mass:
+            angular: [2.0, 2.0, 2.0]
+            linear: [10.0, 10.0, 10.0]
+          damper:
+            angular: [200.0, 200.0, 200.0]
+            linear: [1500.0, 1500.0, 1500.0]
+          spring:
+            angular: [200.0, 200.0, 200.0]
+            linear: [1500.0, 1500.0, 200.0]
+          wrench:
+            angular: [0.0, 0.0, 0.0]
+            linear: [1.0, 1.0, 1.0]
+        target:
+          translation: [0.3, 0.4, 1.0]
+          rotation: [1.57, 0, 1.57]
+        completion:
+          timeout: 3
+      ImpedanceRight:
+        type: impedance
+        surface: RightGripper
+        gains:
+          mass:
+            angular: [2.0, 2.0, 2.0]
+            linear: [10.0, 10.0, 10.0]
+          damper:
+            angular: [200.0, 200.0, 200.0]
+            linear: [1500.0, 1500.0, 1500.0]
+          spring:
+            angular: [200.0, 200.0, 200.0]
+            linear: [1500.0, 1500.0, 200.0]
+          wrench:
+            angular: [0.0, 0.0, 0.0]
+            linear: [1.0, 1.0, 1.0]
+        target:
+          translation: [0.3, -0.4, 1.0]
+          rotation: [-1.57, 0, -1.57]
+        completion:
+          timeout: 3
+
+  # Reach hands to the wall
+  ExternalForces::Reaching:
+    base: ExternalForces::Standing
+    tasks:
+      ImpedanceLeft:
+        target:
+          translation: [0.52, 0.4, 1.0]
+        completion:
+          AND:
+            - eval: 0.02
+            - speed: 0.01
+      ImpedanceRight:
+        target:
+          translation: [0.52, -0.4, 1.0]
+        completion:
+          AND:
+            - eval: 0.02
+            - speed: 0.01
+
+  # Lean against the wall
+  ExternalForces::Leaning:
+    base: Parallel
+    states: [ExternalForces::Reaching, ExternalForces::UpdateForces]
+
+
+transitions:
+  - [ExternalForces::Standing, OK, ExternalForces::Reaching, Auto]
+  - [ExternalForces::Reaching, OK, ExternalForces::Leaning, Auto]
+
+# Initial state
+init: ExternalForces::Standing
+
+# Observers pipeline
+ObserverPipelines:
+  name: MainRobotObservation
+  gui: true
+  observers:
+    - type: Encoder
+    - type: KinematicInertial

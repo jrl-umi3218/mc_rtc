@@ -3,11 +3,14 @@
   [
     {
       "title": "mc_control::fsm::StabilizerStandingState",
-      "description": "Simple state managing the LIPM Stabilizer.<br />It provides set-point position target to the CoM, from which a full dynamic trajectory (com, comd, comdd, zmp) is computed and provided as reference to the lipm_stabilizer::StabilizerTask",
+      "description": "This state creates a {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %}, and provides set-point position target to the CoM, from which a full dynamic trajectory (com, comd, comdd, zmp) is computed and provided as reference to the lipm_stabilizer::StabilizerTask. For further information, refer to the <a href=\"{{site.baseurl}}/tutorials/recipes/lipm-stabilizer.html#using-the-stabilizer-fsm\">tutorial</a> and the <a href=\"{{site.baseurl}}/tutorials/samples/list-of-samples.html#lipmstabilizer\">LIPMStabilizer sample controller</a>.",
       "type": "object",
       "properties":
       {
-        "StabilizerConfig": { "$ref": "/../common/StabilizerTask.json" },
+        "StabilizerConfig":
+        {
+          "$ref": "/../MetaTask/LIPMStabilizerTask.json"
+        },
         "stiffness": { "type": "number", "minimum": 0, "default": 5, "description": "Stiffness of CoM target" },
         "damping": { "type": "number", "minimum": 0, "description": "Damping of CoM target (default=2*sqrt(stiffness))" },
         "above": { "type": "string", "description": "Put CoM over the special frames LeftAnkle, RightAnkle or Center, or any other valid surface on the robot"},

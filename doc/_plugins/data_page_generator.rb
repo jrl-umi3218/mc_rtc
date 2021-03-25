@@ -91,7 +91,7 @@ module Jekyll
       if schema.has_key?("allOf")
         schema["allOf"].each_index{ | index |
           resolveAllOf(schema["allOf"][index])
-          schema = schema.deep_merge(schema["allOf"][index])
+          schema = schema.deep_merge(resolveAllOf(schema["allOf"][index]))
         }
         schema.delete("allOf");
       end
@@ -132,7 +132,8 @@ module Jekyll
             default = parent[key_out]["default"].dup()
           end
           if category != "definitions"
-            parent[key_out] = site.data["schemas"][category][name].dup()
+            # Merge with surrounding schema 
+            parent[key_out] = resolveAllOf(site.data["schemas"][category][name])
             if parent[key_out].has_key?("title")
               parent[key_out]["REF"] = "#{category}.#{name}"
             end

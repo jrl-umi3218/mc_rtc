@@ -208,3 +208,7 @@ The remainder of the FSM is dedicated to getting the robot back to its initial c
     tasks:
     # [...]
 ```
+
+## See also
+
+For a more advanced example featuring stabilization based on the linear inverted pendulum model and external force compensation, please see the [ExternalForces]({{site.baseurl}}/tutorials/samples/list-of-samples.html#externalforces) sample controller.

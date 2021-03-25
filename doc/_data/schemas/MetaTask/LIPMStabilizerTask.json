@@ -1,51 +1,44 @@
 {
-  "title": "mc_tasks::lipm_stabilizer::StabilizerTask",
-  "description": "The stabilizer task attempts to make the real system track as best as possible the desired state of the CoM (position, velocity, acceleration) and ZMP based on the LIPM model. The reference desired dynamic state must be valid, and continuous (i.e obtained from a walking MPC). A suitable state observation pipeline is required to observe the CoM position and velocity and ZMP of the real system (e.g [Encoder, KinematicInertialObserver]). Default gains are defined in the RobotModule and may be overriden from configuration (the default gains reported in this schemas are those of mc_rtc in case none is provided by the RobotModule).<br />See the <a href=\"{{site.baseurl}}/tutorials/recipes/lipm-stabilizer.html\">LIPM Stabilizer tutorial</a> and the API Documentation {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %} for further information.",
-  "type": "object",
   "allOf":
   [
     {
+      "type": "object",
+      "title": "mc_tasks::lipm_stabilizer::StabilizerTask",
+      "description": "The stabilizer task attempts to make the real system track as best as possible the desired state of the CoM (position, velocity, acceleration) and ZMP based on the LIPM model. The reference desired dynamic state must be valid, and continuous (i.e obtained from a walking MPC). A suitable <a href=\"{{site.baseurl}}/tutorials/recipes/observers.html\">state observation pipeline</a> is required to observe the CoM position and velocity and ZMP of the real system (e.g [Encoder, KinematicInertialObserver]). Default gains are defined in the robot module ({% doxygen mc_rbdyn::RobotModule %}) and may be overriden from configuration (the default gains reported in this schemas are those of mc_rtc in case none is provided by the RobotModule).<br />See the <a href=\"{{site.baseurl}}/tutorials/recipes/lipm-stabilizer.html\">LIPM Stabilizer tutorial</a> and the API Documentation {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %} for further information.",
       "properties":
       {
         "type": { "enum": ["lipm_stabilizer"] },
         "name": { "type": "string" },
-
-        "robot_name" :
-        {
-          "type": "object",
-          "title": "Robot-specific stabilizer configuration",
-          "description": "Per-robot configuration, entries specidied here will overwite the global stabilizer configuration entries",
-          "properties":
-          {
-            "friction": { "type": "number", "minimum": 0 },
-            "tasks":
-            {
-              "type": "object",
-              "title": "Tasks configuration",
-              "description": "Configuration of the tasks managed by the stabilizer: CoM, left and right contact CoP tasks, and torso and pelvis regularization tasks",
-              "properties":
-              {
-                "com": {"$ref": "/../../common/com.json"},
-                "contact": {"$ref": "/../../common/contact.json"},
-                "pelvis": {"$ref": "/../../common/pelvis.json"},
-                "torso": {"$ref": "/../../common/torso.json"}
-              }
-            },
-            "fdqp_weights": {"$ref": "/../../common/fdqp_weights.json"},
-            "vdc": {"$ref": "/../../common/vdc.json"},
-            "admittance": {"$ref": "/../../common/admittance.json"},
-            "dcm_tracking": {"$ref": "/../../common/dcm_tracking.json"},
-            "contacts":
-            {
-              "type": "array",
-              "items": { "type": "string" }
-            }
-          }
-        }
+        "robot": { "$ref": "/../../common/MetaTask_robot.json" }
       }
     },
     {
-      "$ref": "/../../common/StabilizerTask_common.json"
+      "$ref": "/../../common/LIPMStabilizerTaskConfiguration.json"
+    },
+    {
+      "allOf":
+      [
+        {
+          "properties":
+          {
+            "*" :
+            {
+              "type": "object",
+              "title": "Robot-specific stabilizer configuration",
+              "description": "You may specify different configuration entries on a per-robot basis. In this case the key is the robot name and the values are the configuration parameters you want to modify for that robot"
+            }
+          }
+        },
+        {
+          "properties":
+          {
+            "*" :
+            {
+              "$ref": "/../../common/LIPMStabilizerTaskConfiguration.json"
+            }
+          }
+        }
+      ]
     }
   ],
   "required": ["type", "contacts"]

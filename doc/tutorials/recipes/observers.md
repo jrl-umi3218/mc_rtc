@@ -210,7 +210,7 @@ bool checkObserverPipeline(const std::string & observerPipelineName)
       {
         // Display failure error
         mc_rtc::log::error("Observer \"{}\" failed with error \"{}\"", observer.observer().name(), observer.observer().error());
-        if(observer.observer.name() == "MyObserver")
+        if(observer.observer().name() == "MyObserver")
         {
           // do something specific if this observer failed
         }
@@ -252,7 +252,7 @@ To compile your own observer, you can use the provided macro, which takes care o
 add_observer(YourObserverName YourObserver.cpp YourObserver.h)
 ```
 
-Note: If you wish to inherit from one of the default observers provided along with the framework, you will need to link against it. For example, if you inherit from {% doxygen mc_observers::BodySensorObserver %} you need to link against the corresponding `mc_observers::BodySensorObserver %} target:
+Note: If you wish to inherit from one of the default observers provided along with the framework, you will need to link against it. For example, if you inherit from {% doxygen mc_observers::BodySensorObserver %} you need to link against the corresponding `mc_observers::BodySensorObserver` target:
 
 ```cmake
 target_link_libraries(YourObserverName PUBLIC mc_observers::BodySensorObserver)

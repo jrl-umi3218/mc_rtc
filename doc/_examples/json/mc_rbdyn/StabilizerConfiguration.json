@@ -1,0 +1,57 @@
+{
+  "leftFootSurface": "LeftFoot",
+  "rightFootSurface": "RightFoot",
+  "friction": 0.7,
+  "torsoBodyName": "CHEST_LINK1",
+  "tasks": {
+    "com": {
+      "stiffness": [
+        1000,
+        1000,
+        100
+      ],
+      "weight": 1000,
+      "active_joints": [
+        "Root",
+        "RLEG_JOINT0",
+        "RLEG_JOINT1",
+        "RLEG_JOINT2",
+        "RLEG_JOINT3",
+        "RLEG_JOINT4",
+        "RLEG_JOINT5",
+        "LLEG_JOINT0",
+        "LLEG_JOINT1",
+        "LLEG_JOINT2",
+        "LLEG_JOINT3",
+        "LLEG_JOINT4",
+        "LLEG_JOINT5"
+      ],
+      "height": 0.87
+    },
+    "contact": {
+      "damping": 300,
+      "stiffness": 1,
+      "weight": 10000
+    }
+  },
+  "fdqp_weights": {
+    "net_wrench": 10000,
+    "ankle_torque": 100,
+    "pressure": 1
+  },
+  "admittance": {
+    "cop": [
+      0.001,
+      0.001
+    ]
+  },
+  "dcm_tracking": {
+    "gains": {
+      "prop": 3,
+      "integral": 20,
+      "deriv": 0.5
+    },
+    "derivator_time_constant": 5,
+    "integrator_time_constant": 30
+  }
+}

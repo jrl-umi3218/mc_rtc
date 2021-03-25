@@ -1,7 +1,7 @@
 {
   "type": "object",
   "title": "Stabilizer Contact Target",
-  "description": "Stabilizer Contact Target",
+  "description": "Stabilizer Contact Target (default: current contact surface pose)",
   "properties":
   {
     "rotation": { "$ref": "/../../Eigen/Vector3d.json" },
