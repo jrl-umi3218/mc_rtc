@@ -26,6 +26,6 @@
     "admittance": {"$ref": "/../../common/admittance.json"},
     "dcm_tracking": {"$ref": "/../../common/dcm_tracking.json"},
     "dcm_bias": {"$ref": "/../../common/dcm_bias.json"},
-    "ext_wrench": {"$ref": "/../../common/ext_wrench.json"}
+    "external_wrench": {"$ref": "/../../common/external_wrench.json"}
   }
 }
