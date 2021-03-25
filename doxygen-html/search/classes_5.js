@@ -18,5 +18,6 @@ var searchData=
   ['exception',['Exception',['../structmc__rtc_1_1Configuration_1_1Exception.html',1,'mc_rtc::Configuration']]],
   ['executor',['Executor',['../structmc__control_1_1fsm_1_1Executor.html',1,'mc_control::fsm']]],
   ['exponentialmovingaverage',['ExponentialMovingAverage',['../structmc__filter_1_1ExponentialMovingAverage.html',1,'mc_filter']]],
-  ['exponentialmovingaverage_3c_20eigen_3a_3avector3d_20_3e',['ExponentialMovingAverage&lt; Eigen::Vector3d &gt;',['../structmc__filter_1_1ExponentialMovingAverage.html',1,'mc_filter']]]
+  ['exponentialmovingaverage_3c_20eigen_3a_3avector3d_20_3e',['ExponentialMovingAverage&lt; Eigen::Vector3d &gt;',['../structmc__filter_1_1ExponentialMovingAverage.html',1,'mc_filter']]],
+  ['externalwrenchconfiguration',['ExternalWrenchConfiguration',['../structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html',1,'mc_rbdyn::lipm_stabilizer']]]
 ];

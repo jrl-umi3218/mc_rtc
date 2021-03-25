@@ -10,4 +10,6 @@ digraph "include/mc_filter/LowPass.h"
   Node10 [label="include/mc_observers\l/KinematicInertialObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$KinematicInertialObserver_8h.html"];
   Node8 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node11 [label="include/mc_tasks/Impedance\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ImpedanceTask_8h.html"];
+  Node8 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="include/mc_tasks/lipm\l_stabilizer/StabilizerTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$StabilizerTask_8h.html"];
 }

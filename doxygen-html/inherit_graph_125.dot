@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rtc::LoaderSandboxData\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1LoaderSandboxData.html",tooltip="Holds sandbox data. "];
+  Node0 [label="mc_rtc::internal::lambda\l_traits\< RetT(C::*)(Args...)\>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1internal_1_1lambda__traits_3_01RetT_07C_1_1_5_08_07Args_8_8_8_08_4.html"];
 }

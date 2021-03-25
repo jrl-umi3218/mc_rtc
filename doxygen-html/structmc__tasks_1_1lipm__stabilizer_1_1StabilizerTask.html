@@ -72,6 +72,7 @@ $(document).ready(function(){initNavTree('structmc__tasks_1_1lipm__stabilizer_1_
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">mc_tasks::lipm_stabilizer::StabilizerTask Struct Reference</div>  </div>
@@ -152,33 +153,36 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a18cf3bbe16d6f31b76fb67a4db7bf216"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f59f1f61174faf255e2fd32e61a72fa"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4f59f1f61174faf255e2fd32e61a72fa">footSurface</a> (ContactState s) const</td></tr>
 <tr class="separator:a4f59f1f61174faf255e2fd32e61a72fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad11d62616938f7b665640ee5dbf0dc7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aad11d62616938f7b665640ee5dbf0dc7">leftFootRatio</a> () const</td></tr>
-<tr class="memdesc:aad11d62616938f7b665640ee5dbf0dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolation paremeter between left and right foot.  <a href="#aad11d62616938f7b665640ee5dbf0dc7">More...</a><br /></td></tr>
-<tr class="separator:aad11d62616938f7b665640ee5dbf0dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0e7fbe84007494ab0c5b5db90b92768"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac0e7fbe84007494ab0c5b5db90b92768">anchorFrame</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;<a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa5456b94e95138e35e7e5738de51512a">robot</a>) const</td></tr>
+<tr class="memitem:a91cb5583f420f95611496de2bf2e43b1"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a91cb5583f420f95611496de2bf2e43b1">leftFootRatio</a> () const noexcept</td></tr>
+<tr class="memdesc:a91cb5583f420f95611496de2bf2e43b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolation paremeter between left and right foot.  <a href="#a91cb5583f420f95611496de2bf2e43b1">More...</a><br /></td></tr>
+<tr class="separator:a91cb5583f420f95611496de2bf2e43b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0e7fbe84007494ab0c5b5db90b92768"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac0e7fbe84007494ab0c5b5db90b92768">anchorFrame</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;<a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad69940b8fb336e2728359e8a1014958b">robot</a>) const</td></tr>
 <tr class="memdesc:ac0e7fbe84007494ab0c5b5db90b92768"><td class="mdescLeft">&#160;</td><td class="mdescRight">computes the anchorFrame compatible with the state observers (e.g KinematicInertial)  <a href="#ac0e7fbe84007494ab0c5b5db90b92768">More...</a><br /></td></tr>
 <tr class="separator:ac0e7fbe84007494ab0c5b5db90b92768"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeca8ec3501161284eebe42d34b7433d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aeca8ec3501161284eebe42d34b7433d3">staticTarget</a> (const Eigen::Vector3d &amp;com, double zmpHeight=0)</td></tr>
 <tr class="separator:aeca8ec3501161284eebe42d34b7433d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbe9f9871a4c131a6c2176eeaf0a5dc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acbe9f9871a4c131a6c2176eeaf0a5dc4">target</a> (const Eigen::Vector3d &amp;com, const Eigen::Vector3d &amp;comd, const Eigen::Vector3d &amp;comdd, const Eigen::Vector3d &amp;zmp)</td></tr>
-<tr class="memdesc:acbe9f9871a4c131a6c2176eeaf0a5dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a dynamic target to the stabilizer.  <a href="#acbe9f9871a4c131a6c2176eeaf0a5dc4">More...</a><br /></td></tr>
-<tr class="separator:acbe9f9871a4c131a6c2176eeaf0a5dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8701a57a809d6623b80306bd6cc9609a"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8701a57a809d6623b80306bd6cc9609a">measuredDCM</a> ()</td></tr>
-<tr class="separator:a8701a57a809d6623b80306bd6cc9609a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52698baf31cd96e73a65d30009db86ff"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a52698baf31cd96e73a65d30009db86ff">measuredZMP</a> ()</td></tr>
-<tr class="separator:a52698baf31cd96e73a65d30009db86ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a297f2b26b3156ed4ebae0ee789b89a8b"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a297f2b26b3156ed4ebae0ee789b89a8b">measuredCoM</a> ()</td></tr>
-<tr class="separator:a297f2b26b3156ed4ebae0ee789b89a8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b4613e8df107c406a9b434c06b9b27a"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0b4613e8df107c406a9b434c06b9b27a">measuredCoMd</a> ()</td></tr>
-<tr class="separator:a0b4613e8df107c406a9b434c06b9b27a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93b9dbba22bc61bcba9c36af64167b0e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a93b9dbba22bc61bcba9c36af64167b0e">inContact</a> (ContactState state) const</td></tr>
-<tr class="separator:a93b9dbba22bc61bcba9c36af64167b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae33cd7a56736b6d070f229493ba14ed5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae33cd7a56736b6d070f229493ba14ed5">inDoubleSupport</a> () const</td></tr>
-<tr class="separator:ae33cd7a56736b6d070f229493ba14ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5456b94e95138e35e7e5738de51512a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa5456b94e95138e35e7e5738de51512a">robot</a> () const</td></tr>
-<tr class="separator:aa5456b94e95138e35e7e5738de51512a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ad771c0db927eff99269276ef551e86"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3ad771c0db927eff99269276ef551e86">realRobot</a> () const</td></tr>
-<tr class="separator:a3ad771c0db927eff99269276ef551e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a8a726b9e64cf46649652479923b3cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8a8a726b9e64cf46649652479923b3cf">target</a> (const Eigen::Vector3d &amp;com, const Eigen::Vector3d &amp;comd, const Eigen::Vector3d &amp;comdd, const Eigen::Vector3d &amp;zmp, const Eigen::Vector3d &amp;zmpd=Eigen::Vector3d::Zero())</td></tr>
+<tr class="memdesc:a8a8a726b9e64cf46649652479923b3cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a dynamic target to the stabilizer.  <a href="#a8a8a726b9e64cf46649652479923b3cf">More...</a><br /></td></tr>
+<tr class="separator:a8a8a726b9e64cf46649652479923b3cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab68f4f026a0e51b572c2b6fb39c81fdb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ab68f4f026a0e51b572c2b6fb39c81fdb">setExternalWrenches</a> (const std::vector&lt; std::string &gt; &amp;surfaceNames, const std::vector&lt; sva::ForceVecd &gt; &amp;targetWrenches, const std::vector&lt; sva::MotionVecd &gt; &amp;gains)</td></tr>
+<tr class="memdesc:ab68f4f026a0e51b572c2b6fb39c81fdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the wrench that the robot expects to receive from the external contacts.  <a href="#ab68f4f026a0e51b572c2b6fb39c81fdb">More...</a><br /></td></tr>
+<tr class="separator:ab68f4f026a0e51b572c2b6fb39c81fdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae78207848e03e1b1153ad47f812aeb3c"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae78207848e03e1b1153ad47f812aeb3c">measuredDCM</a> () noexcept</td></tr>
+<tr class="separator:ae78207848e03e1b1153ad47f812aeb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41fed4c5c24646bb999d0ad8048b6c9d"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a41fed4c5c24646bb999d0ad8048b6c9d">measuredZMP</a> () noexcept</td></tr>
+<tr class="separator:a41fed4c5c24646bb999d0ad8048b6c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad173d40ca3a81fe661d64d90fcf92106"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad173d40ca3a81fe661d64d90fcf92106">measuredCoM</a> () noexcept</td></tr>
+<tr class="separator:ad173d40ca3a81fe661d64d90fcf92106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33c41662a68ba76b375b5f9dcd878475"><td class="memItemLeft" align="right" valign="top">const Eigen::Vector3d &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a33c41662a68ba76b375b5f9dcd878475">measuredCoMd</a> () noexcept</td></tr>
+<tr class="separator:a33c41662a68ba76b375b5f9dcd878475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a23476f42cf53f5f5569d3ccfd9ca01"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a7a23476f42cf53f5f5569d3ccfd9ca01">inContact</a> (ContactState state) const noexcept</td></tr>
+<tr class="separator:a7a23476f42cf53f5f5569d3ccfd9ca01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b06822132971cbaa5a212cc611ce926"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4b06822132971cbaa5a212cc611ce926">inDoubleSupport</a> () const noexcept</td></tr>
+<tr class="separator:a4b06822132971cbaa5a212cc611ce926"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad69940b8fb336e2728359e8a1014958b"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad69940b8fb336e2728359e8a1014958b">robot</a> () const noexcept</td></tr>
+<tr class="separator:ad69940b8fb336e2728359e8a1014958b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a649fbf45bbb740cf97fbe2c19a50cac8"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a649fbf45bbb740cf97fbe2c19a50cac8">realRobot</a> () const noexcept</td></tr>
+<tr class="separator:a649fbf45bbb740cf97fbe2c19a50cac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_structmc__tasks_1_1MetaTask"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structmc__tasks_1_1MetaTask')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a></td></tr>
 <tr class="memitem:aea3e513dfe137830b38272336451b8cc inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#aea3e513dfe137830b38272336451b8cc">~MetaTask</a> ()</td></tr>
 <tr class="separator:aea3e513dfe137830b38272336451b8cc inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,6 +192,69 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa98468771424ad14d60915a6b52e927b inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a94831a7f067fdd5b05e03e83bfc4166b">name</a> () const</td></tr>
 <tr class="separator:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:abe50c92ded00ad8f22e9da9433dee655"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1ExponentialMovingAverage.html">mc_filter::ExponentialMovingAverage</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#abe50c92ded00ad8f22e9da9433dee655">dcmIntegrator_</a></td></tr>
+<tr class="separator:abe50c92ded00ad8f22e9da9433dee655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0238d047704d0cdaca32fe09153e4688"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1StationaryOffset.html">mc_filter::StationaryOffset</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0238d047704d0cdaca32fe09153e4688">dcmDerivator_</a></td></tr>
+<tr class="separator:a0238d047704d0cdaca32fe09153e4688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22569ac33f8c0e99bb674520373c41c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a22569ac33f8c0e99bb674520373c41c6">inTheAir_</a> = false</td></tr>
+<tr class="separator:a22569ac33f8c0e99bb674520373c41c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29892a01046ffddb485441466a5dfbe0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a29892a01046ffddb485441466a5dfbe0">dfzForceError_</a> = 0.</td></tr>
+<tr class="separator:a29892a01046ffddb485441466a5dfbe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac424f24910f5856c99a44c359865dc2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aac424f24910f5856c99a44c359865dc2">dfzHeightError_</a> = 0.</td></tr>
+<tr class="separator:aac424f24910f5856c99a44c359865dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78355a7b3bb963abe0bc160f0d51bcb9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a78355a7b3bb963abe0bc160f0d51bcb9">dt_</a> = 0.005</td></tr>
+<tr class="separator:a78355a7b3bb963abe0bc160f0d51bcb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a077f98071aa5d9ae2b861aba4edbc606"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a077f98071aa5d9ae2b861aba4edbc606">leftFootRatio_</a> = 0.5</td></tr>
+<tr class="separator:a077f98071aa5d9ae2b861aba4edbc606"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadea2267fb6365e262900d3da4e40d98"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aadea2267fb6365e262900d3da4e40d98">mass_</a> = 38.</td></tr>
+<tr class="separator:aadea2267fb6365e262900d3da4e40d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c5ff776bf36beaee2182776ba4feca0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1c5ff776bf36beaee2182776ba4feca0">runTime_</a> = 0.</td></tr>
+<tr class="separator:a1c5ff776bf36beaee2182776ba4feca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab459d6ba167857323daefe6a3fbef750"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ab459d6ba167857323daefe6a3fbef750">vdcHeightError_</a> = 0.</td></tr>
+<tr class="separator:ab459d6ba167857323daefe6a3fbef750"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a706d2d0fed1d66103c2bcf669dd47bb8"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a706d2d0fed1d66103c2bcf669dd47bb8">desiredWrench_</a> = sva::ForceVecd::Zero()</td></tr>
+<tr class="separator:a706d2d0fed1d66103c2bcf669dd47bb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acea47979a383c106e0eedc05a02e52bb"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acea47979a383c106e0eedc05a02e52bb">distribWrench_</a> = sva::ForceVecd::Zero()</td></tr>
+<tr class="separator:acea47979a383c106e0eedc05a02e52bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1debc60c12375bc8ebb3dad18a4bf3a6"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1debc60c12375bc8ebb3dad18a4bf3a6">distribZMP_</a></td></tr>
+<tr class="separator:a1debc60c12375bc8ebb3dad18a4bf3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeca99cf5f7b08a8d39bc3a7045d2e46d"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aeca99cf5f7b08a8d39bc3a7045d2e46d">zmpFrame_</a> = sva::PTransformd::Identity()</td></tr>
+<tr class="separator:aeca99cf5f7b08a8d39bc3a7045d2e46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">Members related to stabilization in the presence of external wrenches</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>Adding an offset to the CoM for the predictable / measurable external wrenches on the robot surface. </p>
+</div></td></tr>
+<tr class="memitem:a0993fc2ce03fd1856f69165cb3731f67"><td class="memItemLeft" align="right" valign="top">std::vector&lt; ExternalWrench &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0993fc2ce03fd1856f69165cb3731f67">extWrenches_</a></td></tr>
+<tr class="separator:a0993fc2ce03fd1856f69165cb3731f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16db8e5921026c24b38ac1bd298443af"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a16db8e5921026c24b38ac1bd298443af">extWrenchSumTarget_</a> = sva::ForceVecd::Zero()</td></tr>
+<tr class="separator:a16db8e5921026c24b38ac1bd298443af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40e319f4a2cadb78b98f47b7ef930bf9"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a40e319f4a2cadb78b98f47b7ef930bf9">extWrenchSumMeasured_</a> = sva::ForceVecd::Zero()</td></tr>
+<tr class="separator:a40e319f4a2cadb78b98f47b7ef930bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a157a2ca5ae25905e6db6c0a522e38b27"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a157a2ca5ae25905e6db6c0a522e38b27">comOffsetTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="separator:a157a2ca5ae25905e6db6c0a522e38b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f0dfeb868178dce27d2ea0553c10c0f"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8f0dfeb868178dce27d2ea0553c10c0f">comOffsetMeasured_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="separator:a8f0dfeb868178dce27d2ea0553c10c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9df595049e717e34a82d0630c343720"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae9df595049e717e34a82d0630c343720">comOffsetErr_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="separator:ae9df595049e717e34a82d0630c343720"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c8e267e4ec305048932bc4345a5f53b"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a9c8e267e4ec305048932bc4345a5f53b">comOffsetErrCoM_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="separator:a9c8e267e4ec305048932bc4345a5f53b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ca80b3de904c482671181d285cb0678"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3ca80b3de904c482671181d285cb0678">comOffsetErrZMP_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="separator:a3ca80b3de904c482671181d285cb0678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5094aa1b658e2b4ddf331365b722502f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1LowPass.html">mc_filter::LowPass</a>&lt; sva::ForceVecd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5094aa1b658e2b4ddf331365b722502f">extWrenchSumLowPass_</a></td></tr>
+<tr class="separator:a5094aa1b658e2b4ddf331365b722502f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2ed3dfcd791e23381b75323a91e78af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1LowPass.html">mc_filter::LowPass</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa2ed3dfcd791e23381b75323a91e78af">comOffsetLowPass_</a></td></tr>
+<tr class="separator:aa2ed3dfcd791e23381b75323a91e78af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8c2388cc9072d464325878e4ffaa7cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1LowPass.html">mc_filter::LowPass</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac8c2388cc9072d464325878e4ffaa7cc">comOffsetLowPassCoM_</a></td></tr>
+<tr class="separator:ac8c2388cc9072d464325878e4ffaa7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab92a8406c48cafe9353ca84b2cfb9c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1StationaryOffset.html">mc_filter::StationaryOffset</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aab92a8406c48cafe9353ca84b2cfb9c8">comOffsetDerivator_</a></td></tr>
+<tr class="separator:aab92a8406c48cafe9353ca84b2cfb9c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_structmc__tasks_1_1MetaTask"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_structmc__tasks_1_1MetaTask')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a></td></tr>
+<tr class="memitem:addf8dbe10befa2b37c8e7ea386561775 inherit pro_attribs_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#addf8dbe10befa2b37c8e7ea386561775">type_</a></td></tr>
+<tr class="separator:addf8dbe10befa2b37c8e7ea386561775 inherit pro_attribs_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e55f0bff9a3d49ba0b92e0a4dff9a6f inherit pro_attribs_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a6e55f0bff9a3d49ba0b92e0a4dff9a6f">name_</a></td></tr>
+<tr class="separator:a6e55f0bff9a3d49ba0b92e0a4dff9a6f inherit pro_attribs_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Setters to reconfigure the stabilizer online</h2></td></tr>
@@ -226,6 +293,8 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="separator:a01584b7cc75fc92846251632bec2e835"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a23a5f961e6993f20ebe16f246736e1cc"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a23a5f961e6993f20ebe16f246736e1cc">robotIndex_</a></td></tr>
 <tr class="separator:a23a5f961e6993f20ebe16f246736e1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a107dcb5409d4bb7639ff2145f0a36009"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a107dcb5409d4bb7639ff2145f0a36009">comTargetRaw_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="separator:a107dcb5409d4bb7639ff2145f0a36009"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6f2964c1be8b168193c80636bc0b583"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af6f2964c1be8b168193c80636bc0b583">comTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
 <tr class="separator:af6f2964c1be8b168193c80636bc0b583"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3aac681a66c5968dde54b17f47d27fd"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa3aac681a66c5968dde54b17f47d27fd">comdTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
@@ -234,6 +303,8 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="separator:a1a9150a5ae2456a5943fef824a02febf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae15134e2c9dad716a90a85d146969e0"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aae15134e2c9dad716a90a85d146969e0">zmpTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
 <tr class="separator:aae15134e2c9dad716a90a85d146969e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c672fb72b1a5aa4c11b45df3ef55dbb"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5c672fb72b1a5aa4c11b45df3ef55dbb">zmpdTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
+<tr class="separator:a5c672fb72b1a5aa4c11b45df3ef55dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af0234fd0ce9a193f6a591b70f29448db"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af0234fd0ce9a193f6a591b70f29448db">dcmTarget_</a> = Eigen::Vector3d::Zero()</td></tr>
 <tr class="separator:af0234fd0ce9a193f6a591b70f29448db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9eccc2bdf062ef36fc1f2647bc87f6d5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a9eccc2bdf062ef36fc1f2647bc87f6d5">omega_</a></td></tr>
@@ -280,85 +351,73 @@ Setters to reconfigure the stabilizer online</h2></td></tr>
 <tr class="separator:a32c48e17c2c451c67d804098b17b27e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b355d04025f1a2489cc9e5b579d27ea"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4b355d04025f1a2489cc9e5b579d27ea">dcmEstimatorNeedsReset_</a> = true</td></tr>
 <tr class="separator:a4b355d04025f1a2489cc9e5b579d27ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe50c92ded00ad8f22e9da9433dee655"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1ExponentialMovingAverage.html">mc_filter::ExponentialMovingAverage</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#abe50c92ded00ad8f22e9da9433dee655">dcmIntegrator_</a></td></tr>
-<tr class="separator:abe50c92ded00ad8f22e9da9433dee655"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0238d047704d0cdaca32fe09153e4688"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1StationaryOffset.html">mc_filter::StationaryOffset</a>&lt; Eigen::Vector3d &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0238d047704d0cdaca32fe09153e4688">dcmDerivator_</a></td></tr>
-<tr class="separator:a0238d047704d0cdaca32fe09153e4688"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22569ac33f8c0e99bb674520373c41c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a22569ac33f8c0e99bb674520373c41c6">inTheAir_</a> = false</td></tr>
-<tr class="separator:a22569ac33f8c0e99bb674520373c41c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29892a01046ffddb485441466a5dfbe0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a29892a01046ffddb485441466a5dfbe0">dfzForceError_</a> = 0.</td></tr>
-<tr class="separator:a29892a01046ffddb485441466a5dfbe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac424f24910f5856c99a44c359865dc2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aac424f24910f5856c99a44c359865dc2">dfzHeightError_</a> = 0.</td></tr>
-<tr class="separator:aac424f24910f5856c99a44c359865dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78355a7b3bb963abe0bc160f0d51bcb9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a78355a7b3bb963abe0bc160f0d51bcb9">dt_</a> = 0.005</td></tr>
-<tr class="separator:a78355a7b3bb963abe0bc160f0d51bcb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a077f98071aa5d9ae2b861aba4edbc606"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a077f98071aa5d9ae2b861aba4edbc606">leftFootRatio_</a> = 0.5</td></tr>
-<tr class="separator:a077f98071aa5d9ae2b861aba4edbc606"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadea2267fb6365e262900d3da4e40d98"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aadea2267fb6365e262900d3da4e40d98">mass_</a> = 38.</td></tr>
-<tr class="separator:aadea2267fb6365e262900d3da4e40d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c5ff776bf36beaee2182776ba4feca0"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1c5ff776bf36beaee2182776ba4feca0">runTime_</a> = 0.</td></tr>
-<tr class="separator:a1c5ff776bf36beaee2182776ba4feca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab459d6ba167857323daefe6a3fbef750"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ab459d6ba167857323daefe6a3fbef750">vdcHeightError_</a> = 0.</td></tr>
-<tr class="separator:ab459d6ba167857323daefe6a3fbef750"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acea47979a383c106e0eedc05a02e52bb"><td class="memItemLeft" align="right" valign="top">sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acea47979a383c106e0eedc05a02e52bb">distribWrench_</a> = sva::ForceVecd::Zero()</td></tr>
-<tr class="separator:acea47979a383c106e0eedc05a02e52bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1debc60c12375bc8ebb3dad18a4bf3a6"><td class="memItemLeft" align="right" valign="top">Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1debc60c12375bc8ebb3dad18a4bf3a6">distribZMP_</a></td></tr>
-<tr class="separator:a1debc60c12375bc8ebb3dad18a4bf3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeca99cf5f7b08a8d39bc3a7045d2e46d"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aeca99cf5f7b08a8d39bc3a7045d2e46d">zmpFrame_</a> = sva::PTransformd::Identity()</td></tr>
-<tr class="separator:aeca99cf5f7b08a8d39bc3a7045d2e46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3650503431b3565de847f177114a822e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3650503431b3565de847f177114a822e">torsoPitch</a> (double pitch)</td></tr>
-<tr class="separator:a3650503431b3565de847f177114a822e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a262bcb93fbc688aa8a68d19931cff137"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a262bcb93fbc688aa8a68d19931cff137">torsoWeight</a> (double weight)</td></tr>
-<tr class="separator:a262bcb93fbc688aa8a68d19931cff137"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ef6e028d5d9e608991a81f5ffdea8e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0ef6e028d5d9e608991a81f5ffdea8e8">torsoStiffness</a> (double stiffness)</td></tr>
-<tr class="separator:a0ef6e028d5d9e608991a81f5ffdea8e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7a0a6f3280418d898ffbca9fcc0d247"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac7a0a6f3280418d898ffbca9fcc0d247">pelvisWeight</a> (double weight)</td></tr>
-<tr class="separator:ac7a0a6f3280418d898ffbca9fcc0d247"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d5cd1bd8c0913ab7b70e83ef2528a26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3d5cd1bd8c0913ab7b70e83ef2528a26">pelvisStiffness</a> (double stiffness)</td></tr>
-<tr class="separator:a3d5cd1bd8c0913ab7b70e83ef2528a26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d26b36f1efe73e9f0936076d421d946"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4d26b36f1efe73e9f0936076d421d946">dcmGains</a> (double p, double i, double d)</td></tr>
-<tr class="separator:a4d26b36f1efe73e9f0936076d421d946"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9521d406e6c5b204001b9dad834abfb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a9521d406e6c5b204001b9dad834abfb6">dcmIntegratorTimeConstant</a> (double dcmIntegratorTimeConstant)</td></tr>
-<tr class="separator:a9521d406e6c5b204001b9dad834abfb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6eff54bb218c03249faed4a42877ba9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad6eff54bb218c03249faed4a42877ba9">dcmDerivatorTimeConstant</a> (double dcmDerivatorTimeConstant)</td></tr>
-<tr class="separator:ad6eff54bb218c03249faed4a42877ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2389dea00b81116acc1a2c96a0fd05d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a2389dea00b81116acc1a2c96a0fd05d6">comWeight</a> (double weight)</td></tr>
-<tr class="separator:a2389dea00b81116acc1a2c96a0fd05d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fffdeb9143fd2d238c6ad95739155d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a9fffdeb9143fd2d238c6ad95739155d1">comStiffness</a> (const Eigen::Vector3d &amp;stiffness)</td></tr>
-<tr class="separator:a9fffdeb9143fd2d238c6ad95739155d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcd2acc4f84e187da875983de963f3e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#afcd2acc4f84e187da875983de963f3e4">contactWeight</a> (double weight)</td></tr>
-<tr class="separator:afcd2acc4f84e187da875983de963f3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9444ed6380999d3b8938066a340c4e17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a9444ed6380999d3b8938066a340c4e17">contactStiffness</a> (const sva::MotionVecd &amp;stiffness)</td></tr>
-<tr class="separator:a9444ed6380999d3b8938066a340c4e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f36f08a740bf6c17c88a9ea39e7f341"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0f36f08a740bf6c17c88a9ea39e7f341">contactDamping</a> (const sva::MotionVecd &amp;damping)</td></tr>
-<tr class="separator:a0f36f08a740bf6c17c88a9ea39e7f341"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ddf955560628fb496d06a267df22205"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a2ddf955560628fb496d06a267df22205">copAdmittance</a> (const Eigen::Vector2d &amp;copAdmittance)</td></tr>
-<tr class="separator:a2ddf955560628fb496d06a267df22205"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14f646fd17e3d7b4aa1c3b4a8b0f856e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a14f646fd17e3d7b4aa1c3b4a8b0f856e">copMaxVel</a> (const sva::MotionVecd &amp;copMaxVel)</td></tr>
-<tr class="separator:a14f646fd17e3d7b4aa1c3b4a8b0f856e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21ae40c129d552fdb1e8558f0b8c18f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a21ae40c129d552fdb1e8558f0b8c18f0">copVelFilterGain</a> (double gain)</td></tr>
-<tr class="separator:a21ae40c129d552fdb1e8558f0b8c18f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc4360c9ae88e17ad408826deaeeb1c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#adc4360c9ae88e17ad408826deaeeb1c9">torsoPitch</a> (double pitch) noexcept</td></tr>
+<tr class="separator:adc4360c9ae88e17ad408826deaeeb1c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8304c9dda559e368bae68116dfad3d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad8304c9dda559e368bae68116dfad3d5">torsoWeight</a> (double weight) noexcept</td></tr>
+<tr class="separator:ad8304c9dda559e368bae68116dfad3d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15becbde64e05238765cbb514f9163b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a15becbde64e05238765cbb514f9163b0">torsoStiffness</a> (double stiffness) noexcept</td></tr>
+<tr class="separator:a15becbde64e05238765cbb514f9163b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdc4a7009a01993765860ad699cf587e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#abdc4a7009a01993765860ad699cf587e">pelvisWeight</a> (double weight) noexcept</td></tr>
+<tr class="separator:abdc4a7009a01993765860ad699cf587e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0128311eb332240ff25a3c0ada010148"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0128311eb332240ff25a3c0ada010148">pelvisStiffness</a> (double stiffness) noexcept</td></tr>
+<tr class="separator:a0128311eb332240ff25a3c0ada010148"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a255c7b9c2e0434e97d450f4089908299"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a255c7b9c2e0434e97d450f4089908299">dcmGains</a> (double p, double i, double d) noexcept</td></tr>
+<tr class="separator:a255c7b9c2e0434e97d450f4089908299"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac26f74f6c9313363b2691105da3eae52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac26f74f6c9313363b2691105da3eae52">dcmIntegratorTimeConstant</a> (double dcmIntegratorTimeConstant) noexcept</td></tr>
+<tr class="separator:ac26f74f6c9313363b2691105da3eae52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93949613824347661e94f1ca1388f62f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a93949613824347661e94f1ca1388f62f">dcmDerivatorTimeConstant</a> (double dcmDerivatorTimeConstant) noexcept</td></tr>
+<tr class="separator:a93949613824347661e94f1ca1388f62f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0837cd5e41e827e59bfcae07f3b0c7b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae0837cd5e41e827e59bfcae07f3b0c7b">extWrenchSumLowPassCutoffPeriod</a> (double cutoffPeriod) noexcept</td></tr>
+<tr class="separator:ae0837cd5e41e827e59bfcae07f3b0c7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae25dfdb1beb2bdc5536aac8a933d5293"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae25dfdb1beb2bdc5536aac8a933d5293">comOffsetLowPassCutoffPeriod</a> (double cutoffPeriod) noexcept</td></tr>
+<tr class="separator:ae25dfdb1beb2bdc5536aac8a933d5293"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2efd683545dd3072d7d3aa04dfe96fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa2efd683545dd3072d7d3aa04dfe96fa">comOffsetLowPassCoMCutoffPeriod</a> (double cutoffPeriod) noexcept</td></tr>
+<tr class="separator:aa2efd683545dd3072d7d3aa04dfe96fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9516bd1875642db8c5ca3f278063e21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa9516bd1875642db8c5ca3f278063e21">comOffsetDerivatorTimeConstant</a> (double timeConstant) noexcept</td></tr>
+<tr class="separator:aa9516bd1875642db8c5ca3f278063e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af16c27e6e64e0c3bf0a3ee8a84f14aee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af16c27e6e64e0c3bf0a3ee8a84f14aee">comWeight</a> (double weight) noexcept</td></tr>
+<tr class="separator:af16c27e6e64e0c3bf0a3ee8a84f14aee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abffee740af84bea06469fdb39fa22e27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#abffee740af84bea06469fdb39fa22e27">comStiffness</a> (const Eigen::Vector3d &amp;stiffness) noexcept</td></tr>
+<tr class="separator:abffee740af84bea06469fdb39fa22e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c6c91f136cf063c621fc841bff276ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3c6c91f136cf063c621fc841bff276ff">contactWeight</a> (double weight) noexcept</td></tr>
+<tr class="separator:a3c6c91f136cf063c621fc841bff276ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a89ad7ab4194e7fadb94d17769f4b28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1a89ad7ab4194e7fadb94d17769f4b28">contactStiffness</a> (const sva::MotionVecd &amp;stiffness) noexcept</td></tr>
+<tr class="separator:a1a89ad7ab4194e7fadb94d17769f4b28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8826dde36c6bbc913699999b10947e55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8826dde36c6bbc913699999b10947e55">contactDamping</a> (const sva::MotionVecd &amp;damping) noexcept</td></tr>
+<tr class="separator:a8826dde36c6bbc913699999b10947e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b6105d75689301db9d974c1119069da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5b6105d75689301db9d974c1119069da">copAdmittance</a> (const Eigen::Vector2d &amp;copAdmittance) noexcept</td></tr>
+<tr class="separator:a5b6105d75689301db9d974c1119069da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d023011b4bb8a38750097910f91b76a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4d023011b4bb8a38750097910f91b76a">copMaxVel</a> (const sva::MotionVecd &amp;copMaxVel) noexcept</td></tr>
+<tr class="separator:a4d023011b4bb8a38750097910f91b76a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74e21f2251aece81dbf19552fab22744"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a74e21f2251aece81dbf19552fab22744">copVelFilterGain</a> (double gain) noexcept</td></tr>
+<tr class="separator:a74e21f2251aece81dbf19552fab22744"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a856264c2501b219ecb345d77794bc311"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a856264c2501b219ecb345d77794bc311">copVelFilterGain</a> () const noexcept</td></tr>
 <tr class="separator:a856264c2501b219ecb345d77794bc311"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bf361438294d2c3aad9f0f8b063dc03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5bf361438294d2c3aad9f0f8b063dc03">vdcFrequency</a> (double freq)</td></tr>
-<tr class="separator:a5bf361438294d2c3aad9f0f8b063dc03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4e6c83449cbd6a168ef2bed91f3c0f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ad4e6c83449cbd6a168ef2bed91f3c0f5">vdcStiffness</a> (double stiffness)</td></tr>
-<tr class="separator:ad4e6c83449cbd6a168ef2bed91f3c0f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5893162539f91dabff88ef70e5398910"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a5893162539f91dabff88ef70e5398910">dfzAdmittance</a> (double dfzAdmittance)</td></tr>
-<tr class="separator:a5893162539f91dabff88ef70e5398910"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ed19101f6b02d9b9cee17a225736d4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4ed19101f6b02d9b9cee17a225736d4d">dfzDamping</a> (double dfzDamping)</td></tr>
-<tr class="separator:a4ed19101f6b02d9b9cee17a225736d4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6eda628186ece0a40622a86815b4c92"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af6eda628186ece0a40622a86815b4c92">fdqpWeights</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a6237f0269786bf01feaf316a6259b712">FDQPWeights</a> &amp;fdqp)</td></tr>
-<tr class="separator:af6eda628186ece0a40622a86815b4c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae829737c7cbcedb0635c2d858e7aa68f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae829737c7cbcedb0635c2d858e7aa68f">safetyThresholds</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a5f51d2adfa451cd98a1b3f3b2ed68ee4">SafetyThresholds</a> &amp;thresholds)</td></tr>
-<tr class="memdesc:ae829737c7cbcedb0635c2d858e7aa68f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the safety thresholds.  <a href="#ae829737c7cbcedb0635c2d858e7aa68f">More...</a><br /></td></tr>
-<tr class="separator:ae829737c7cbcedb0635c2d858e7aa68f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ad8d7c6c44e52ea194fe1e48d83fb88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3ad8d7c6c44e52ea194fe1e48d83fb88">dcmBiasEstimatorConfiguration</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#aa199242c8c0d202153b338771c1a5ace">DCMBiasEstimatorConfiguration</a> &amp;biasConfig)</td></tr>
-<tr class="memdesc:a3ad8d7c6c44e52ea194fe1e48d83fb88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the parameters of the DCM bias estimator.  <a href="#a3ad8d7c6c44e52ea194fe1e48d83fb88">More...</a><br /></td></tr>
-<tr class="separator:a3ad8d7c6c44e52ea194fe1e48d83fb88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87e39ffd522ed054a2f5d066d04f98f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a87e39ffd522ed054a2f5d066d04f98f2">vdcFrequency</a> (double freq) noexcept</td></tr>
+<tr class="separator:a87e39ffd522ed054a2f5d066d04f98f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a902360523f74d1b286d46e5d3743c7b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a902360523f74d1b286d46e5d3743c7b6">vdcStiffness</a> (double stiffness) noexcept</td></tr>
+<tr class="separator:a902360523f74d1b286d46e5d3743c7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fd7403b0681845c2b1209bdc6a8a00a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1fd7403b0681845c2b1209bdc6a8a00a">dfzAdmittance</a> (double dfzAdmittance) noexcept</td></tr>
+<tr class="separator:a1fd7403b0681845c2b1209bdc6a8a00a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ed512bddf3fb21126e5029218746f39"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a4ed512bddf3fb21126e5029218746f39">dfzDamping</a> (double dfzDamping) noexcept</td></tr>
+<tr class="separator:a4ed512bddf3fb21126e5029218746f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61511c4f2321084adc649936db38ca70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a61511c4f2321084adc649936db38ca70">fdqpWeights</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a6237f0269786bf01feaf316a6259b712">FDQPWeights</a> &amp;fdqp) noexcept</td></tr>
+<tr class="separator:a61511c4f2321084adc649936db38ca70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41a809b5612edf600a57d53917f6fc62"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a41a809b5612edf600a57d53917f6fc62">safetyThresholds</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a5f51d2adfa451cd98a1b3f3b2ed68ee4">SafetyThresholds</a> &amp;thresholds) noexcept</td></tr>
+<tr class="memdesc:a41a809b5612edf600a57d53917f6fc62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the safety thresholds.  <a href="#a41a809b5612edf600a57d53917f6fc62">More...</a><br /></td></tr>
+<tr class="separator:a41a809b5612edf600a57d53917f6fc62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46080b804a13b9c7856cfc629470e51b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a46080b804a13b9c7856cfc629470e51b">dcmBiasEstimatorConfiguration</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#aa199242c8c0d202153b338771c1a5ace">DCMBiasEstimatorConfiguration</a> &amp;biasConfig) noexcept</td></tr>
+<tr class="memdesc:a46080b804a13b9c7856cfc629470e51b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the parameters of the DCM bias estimator.  <a href="#a46080b804a13b9c7856cfc629470e51b">More...</a><br /></td></tr>
+<tr class="separator:a46080b804a13b9c7856cfc629470e51b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc69d3ef42354f7f8f104773de7c544d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#aa199242c8c0d202153b338771c1a5ace">DCMBiasEstimatorConfiguration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acc69d3ef42354f7f8f104773de7c544d">dcmBiasEstimatorConfiguration</a> () const noexcept</td></tr>
 <tr class="memdesc:acc69d3ef42354f7f8f104773de7c544d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get parameters of the DCM bias estimator.  <a href="#acc69d3ef42354f7f8f104773de7c544d">More...</a><br /></td></tr>
 <tr class="separator:acc69d3ef42354f7f8f104773de7c544d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b4d0a866a7eb38fdb14567d4ef78995"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a7b4d0a866a7eb38fdb14567d4ef78995">externalWrenchConfiguration</a> (const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a8a1b1cfcd83c685c2836975375af2251">ExternalWrenchConfiguration</a> &amp;extWrenchConfig) noexcept</td></tr>
+<tr class="memdesc:a7b4d0a866a7eb38fdb14567d4ef78995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the parameters for the external wrenches.  <a href="#a7b4d0a866a7eb38fdb14567d4ef78995">More...</a><br /></td></tr>
+<tr class="separator:a7b4d0a866a7eb38fdb14567d4ef78995"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8e7a8dde0d29233a6eee898f128361a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a8a1b1cfcd83c685c2836975375af2251">ExternalWrenchConfiguration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa8e7a8dde0d29233a6eee898f128361a">externalWrenchConfiguration</a> () const noexcept</td></tr>
+<tr class="memdesc:aa8e7a8dde0d29233a6eee898f128361a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parameters for the external wrenches.  <a href="#aa8e7a8dde0d29233a6eee898f128361a">More...</a><br /></td></tr>
+<tr class="separator:aa8e7a8dde0d29233a6eee898f128361a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7709c43f16a9b418ecf2619d69821a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ac7709c43f16a9b418ecf2619d69821a6">addToSolver</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
 <tr class="memdesc:ac7709c43f16a9b418ecf2619d69821a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the task to a solver.  <a href="#ac7709c43f16a9b418ecf2619d69821a6">More...</a><br /></td></tr>
 <tr class="separator:ac7709c43f16a9b418ecf2619d69821a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -404,11 +463,6 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a780d496b8148d863b2aa0462abcba525 inherit pro_static_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d90bfa419602be569c6098e822cdb0d inherit pro_static_methods_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a5d90bfa419602be569c6098e822cdb0d">ensureHasJoints</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;robot, const std::vector&lt; std::string &gt; &amp;joints, const std::string &amp;prefix)</td></tr>
 <tr class="separator:a5d90bfa419602be569c6098e822cdb0d inherit pro_static_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_structmc__tasks_1_1MetaTask"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_structmc__tasks_1_1MetaTask')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="structmc__tasks_1_1MetaTask.html">mc_tasks::MetaTask</a></td></tr>
-<tr class="memitem:addf8dbe10befa2b37c8e7ea386561775 inherit pro_attribs_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#addf8dbe10befa2b37c8e7ea386561775">type_</a></td></tr>
-<tr class="separator:addf8dbe10befa2b37c8e7ea386561775 inherit pro_attribs_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e55f0bff9a3d49ba0b92e0a4dff9a6f inherit pro_attribs_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a6e55f0bff9a3d49ba0b92e0a4dff9a6f">name_</a></td></tr>
-<tr class="separator:a6e55f0bff9a3d49ba0b92e0a4dff9a6f inherit pro_attribs_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Walking stabilization based on linear inverted pendulum tracking.</p>
@@ -668,7 +722,7 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Anchor frame in-between the feet according to <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aad11d62616938f7b665640ee5dbf0dc7" title="Interpolation paremeter between left and right foot. ">leftFootRatio()</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Anchor frame in-between the feet according to <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a91cb5583f420f95611496de2bf2e43b1" title="Interpolation paremeter between left and right foot. ">leftFootRatio()</a> </dd></dl>
 
 </div>
 </div>
@@ -739,8 +793,86 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a9fffdeb9143fd2d238c6ad95739155d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9fffdeb9143fd2d238c6ad95739155d1">&#9670;&nbsp;</a></span>comStiffness()</h2>
+<a id="aa9516bd1875642db8c5ca3f278063e21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9516bd1875642db8c5ca3f278063e21">&#9670;&nbsp;</a></span>comOffsetDerivatorTimeConstant()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetDerivatorTimeConstant </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>timeConstant</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa2efd683545dd3072d7d3aa04dfe96fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2efd683545dd3072d7d3aa04dfe96fa">&#9670;&nbsp;</a></span>comOffsetLowPassCoMCutoffPeriod()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetLowPassCoMCutoffPeriod </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>cutoffPeriod</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae25dfdb1beb2bdc5536aac8a933d5293"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae25dfdb1beb2bdc5536aac8a933d5293">&#9670;&nbsp;</a></span>comOffsetLowPassCutoffPeriod()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetLowPassCutoffPeriod </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>cutoffPeriod</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abffee740af84bea06469fdb39fa22e27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abffee740af84bea06469fdb39fa22e27">&#9670;&nbsp;</a></span>comStiffness()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -758,15 +890,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a2389dea00b81116acc1a2c96a0fd05d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2389dea00b81116acc1a2c96a0fd05d6">&#9670;&nbsp;</a></span>comWeight()</h2>
+<a id="af16c27e6e64e0c3bf0a3ee8a84f14aee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af16c27e6e64e0c3bf0a3ee8a84f14aee">&#9670;&nbsp;</a></span>comWeight()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -784,7 +916,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -906,8 +1038,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a0f36f08a740bf6c17c88a9ea39e7f341"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f36f08a740bf6c17c88a9ea39e7f341">&#9670;&nbsp;</a></span>contactDamping()</h2>
+<a id="a8826dde36c6bbc913699999b10947e55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8826dde36c6bbc913699999b10947e55">&#9670;&nbsp;</a></span>contactDamping()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -925,15 +1057,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a9444ed6380999d3b8938066a340c4e17"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9444ed6380999d3b8938066a340c4e17">&#9670;&nbsp;</a></span>contactStiffness()</h2>
+<a id="a1a89ad7ab4194e7fadb94d17769f4b28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a89ad7ab4194e7fadb94d17769f4b28">&#9670;&nbsp;</a></span>contactStiffness()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -951,15 +1083,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="afcd2acc4f84e187da875983de963f3e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afcd2acc4f84e187da875983de963f3e4">&#9670;&nbsp;</a></span>contactWeight()</h2>
+<a id="a3c6c91f136cf063c621fc841bff276ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c6c91f136cf063c621fc841bff276ff">&#9670;&nbsp;</a></span>contactWeight()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -977,15 +1109,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a2ddf955560628fb496d06a267df22205"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ddf955560628fb496d06a267df22205">&#9670;&nbsp;</a></span>copAdmittance()</h2>
+<a id="a5b6105d75689301db9d974c1119069da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b6105d75689301db9d974c1119069da">&#9670;&nbsp;</a></span>copAdmittance()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1003,15 +1135,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a14f646fd17e3d7b4aa1c3b4a8b0f856e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14f646fd17e3d7b4aa1c3b4a8b0f856e">&#9670;&nbsp;</a></span>copMaxVel()</h2>
+<a id="a4d023011b4bb8a38750097910f91b76a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d023011b4bb8a38750097910f91b76a">&#9670;&nbsp;</a></span>copMaxVel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1029,15 +1161,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a21ae40c129d552fdb1e8558f0b8c18f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21ae40c129d552fdb1e8558f0b8c18f0">&#9670;&nbsp;</a></span>copVelFilterGain() <span class="overload">[1/2]</span></h2>
+<a id="a74e21f2251aece81dbf19552fab22744"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74e21f2251aece81dbf19552fab22744">&#9670;&nbsp;</a></span>copVelFilterGain() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1055,7 +1187,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1087,8 +1219,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a3ad8d7c6c44e52ea194fe1e48d83fb88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ad8d7c6c44e52ea194fe1e48d83fb88">&#9670;&nbsp;</a></span>dcmBiasEstimatorConfiguration() <span class="overload">[1/2]</span></h2>
+<a id="a46080b804a13b9c7856cfc629470e51b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46080b804a13b9c7856cfc629470e51b">&#9670;&nbsp;</a></span>dcmBiasEstimatorConfiguration() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1106,7 +1238,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1148,8 +1280,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ad6eff54bb218c03249faed4a42877ba9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6eff54bb218c03249faed4a42877ba9">&#9670;&nbsp;</a></span>dcmDerivatorTimeConstant()</h2>
+<a id="a93949613824347661e94f1ca1388f62f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93949613824347661e94f1ca1388f62f">&#9670;&nbsp;</a></span>dcmDerivatorTimeConstant()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1167,15 +1299,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a4d26b36f1efe73e9f0936076d421d946"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d26b36f1efe73e9f0936076d421d946">&#9670;&nbsp;</a></span>dcmGains()</h2>
+<a id="a255c7b9c2e0434e97d450f4089908299"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a255c7b9c2e0434e97d450f4089908299">&#9670;&nbsp;</a></span>dcmGains()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1209,15 +1341,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a9521d406e6c5b204001b9dad834abfb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9521d406e6c5b204001b9dad834abfb6">&#9670;&nbsp;</a></span>dcmIntegratorTimeConstant()</h2>
+<a id="ac26f74f6c9313363b2691105da3eae52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac26f74f6c9313363b2691105da3eae52">&#9670;&nbsp;</a></span>dcmIntegratorTimeConstant()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1235,15 +1367,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a5893162539f91dabff88ef70e5398910"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5893162539f91dabff88ef70e5398910">&#9670;&nbsp;</a></span>dfzAdmittance()</h2>
+<a id="a1fd7403b0681845c2b1209bdc6a8a00a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fd7403b0681845c2b1209bdc6a8a00a">&#9670;&nbsp;</a></span>dfzAdmittance()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1261,15 +1393,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a4ed19101f6b02d9b9cee17a225736d4d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ed19101f6b02d9b9cee17a225736d4d">&#9670;&nbsp;</a></span>dfzDamping()</h2>
+<a id="a4ed512bddf3fb21126e5029218746f39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ed512bddf3fb21126e5029218746f39">&#9670;&nbsp;</a></span>dfzDamping()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1287,7 +1419,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1362,8 +1494,95 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="af6eda628186ece0a40622a86815b4c92"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6eda628186ece0a40622a86815b4c92">&#9670;&nbsp;</a></span>fdqpWeights()</h2>
+<a id="a7b4d0a866a7eb38fdb14567d4ef78995"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b4d0a866a7eb38fdb14567d4ef78995">&#9670;&nbsp;</a></span>externalWrenchConfiguration() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::externalWrenchConfiguration </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a8a1b1cfcd83c685c2836975375af2251">ExternalWrenchConfiguration</a> &amp;&#160;</td>
+          <td class="paramname"><em>extWrenchConfig</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Changes the parameters for the external wrenches. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">extWrenchConfig</td><td>Configuration parameters for the external wrenches </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa8e7a8dde0d29233a6eee898f128361a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8e7a8dde0d29233a6eee898f128361a">&#9670;&nbsp;</a></span>externalWrenchConfiguration() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a8a1b1cfcd83c685c2836975375af2251">ExternalWrenchConfiguration</a>&amp; mc_tasks::lipm_stabilizer::StabilizerTask::externalWrenchConfiguration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the parameters for the external wrenches. </p>
+
+</div>
+</div>
+<a id="ae0837cd5e41e827e59bfcae07f3b0c7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0837cd5e41e827e59bfcae07f3b0c7b">&#9670;&nbsp;</a></span>extWrenchSumLowPassCutoffPeriod()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::extWrenchSumLowPassCutoffPeriod </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>cutoffPeriod</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a61511c4f2321084adc649936db38ca70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61511c4f2321084adc649936db38ca70">&#9670;&nbsp;</a></span>fdqpWeights()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1381,7 +1600,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1414,8 +1633,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a93b9dbba22bc61bcba9c36af64167b0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93b9dbba22bc61bcba9c36af64167b0e">&#9670;&nbsp;</a></span>inContact()</h2>
+<a id="a7a23476f42cf53f5f5569d3ccfd9ca01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a23476f42cf53f5f5569d3ccfd9ca01">&#9670;&nbsp;</a></span>inContact()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1433,15 +1652,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ae33cd7a56736b6d070f229493ba14ed5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae33cd7a56736b6d070f229493ba14ed5">&#9670;&nbsp;</a></span>inDoubleSupport()</h2>
+<a id="a4b06822132971cbaa5a212cc611ce926"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b06822132971cbaa5a212cc611ce926">&#9670;&nbsp;</a></span>inDoubleSupport()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1458,15 +1677,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aad11d62616938f7b665640ee5dbf0dc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad11d62616938f7b665640ee5dbf0dc7">&#9670;&nbsp;</a></span>leftFootRatio()</h2>
+<a id="a91cb5583f420f95611496de2bf2e43b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91cb5583f420f95611496de2bf2e43b1">&#9670;&nbsp;</a></span>leftFootRatio()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1483,7 +1702,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1533,8 +1752,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a297f2b26b3156ed4ebae0ee789b89a8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a297f2b26b3156ed4ebae0ee789b89a8b">&#9670;&nbsp;</a></span>measuredCoM()</h2>
+<a id="ad173d40ca3a81fe661d64d90fcf92106"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad173d40ca3a81fe661d64d90fcf92106">&#9670;&nbsp;</a></span>measuredCoM()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1551,15 +1770,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a0b4613e8df107c406a9b434c06b9b27a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b4613e8df107c406a9b434c06b9b27a">&#9670;&nbsp;</a></span>measuredCoMd()</h2>
+<a id="a33c41662a68ba76b375b5f9dcd878475"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33c41662a68ba76b375b5f9dcd878475">&#9670;&nbsp;</a></span>measuredCoMd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1576,15 +1795,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a8701a57a809d6623b80306bd6cc9609a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8701a57a809d6623b80306bd6cc9609a">&#9670;&nbsp;</a></span>measuredDCM()</h2>
+<a id="ae78207848e03e1b1153ad47f812aeb3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae78207848e03e1b1153ad47f812aeb3c">&#9670;&nbsp;</a></span>measuredDCM()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1601,15 +1820,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a52698baf31cd96e73a65d30009db86ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52698baf31cd96e73a65d30009db86ff">&#9670;&nbsp;</a></span>measuredZMP()</h2>
+<a id="a41fed4c5c24646bb999d0ad8048b6c9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41fed4c5c24646bb999d0ad8048b6c9d">&#9670;&nbsp;</a></span>measuredZMP()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1626,15 +1845,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3d5cd1bd8c0913ab7b70e83ef2528a26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d5cd1bd8c0913ab7b70e83ef2528a26">&#9670;&nbsp;</a></span>pelvisStiffness()</h2>
+<a id="a0128311eb332240ff25a3c0ada010148"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0128311eb332240ff25a3c0ada010148">&#9670;&nbsp;</a></span>pelvisStiffness()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1652,15 +1871,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ac7a0a6f3280418d898ffbca9fcc0d247"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7a0a6f3280418d898ffbca9fcc0d247">&#9670;&nbsp;</a></span>pelvisWeight()</h2>
+<a id="abdc4a7009a01993765860ad699cf587e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdc4a7009a01993765860ad699cf587e">&#9670;&nbsp;</a></span>pelvisWeight()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1678,15 +1897,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3ad771c0db927eff99269276ef551e86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ad771c0db927eff99269276ef551e86">&#9670;&nbsp;</a></span>realRobot()</h2>
+<a id="a649fbf45bbb740cf97fbe2c19a50cac8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a649fbf45bbb740cf97fbe2c19a50cac8">&#9670;&nbsp;</a></span>realRobot()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1703,7 +1922,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1859,8 +2078,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="aa5456b94e95138e35e7e5738de51512a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5456b94e95138e35e7e5738de51512a">&#9670;&nbsp;</a></span>robot()</h2>
+<a id="ad69940b8fb336e2728359e8a1014958b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad69940b8fb336e2728359e8a1014958b">&#9670;&nbsp;</a></span>robot()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1877,7 +2096,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1903,8 +2122,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="ae829737c7cbcedb0635c2d858e7aa68f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae829737c7cbcedb0635c2d858e7aa68f">&#9670;&nbsp;</a></span>safetyThresholds()</h2>
+<a id="a41a809b5612edf600a57d53917f6fc62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41a809b5612edf600a57d53917f6fc62">&#9670;&nbsp;</a></span>safetyThresholds()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1922,7 +2141,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2016,6 +2235,51 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="ab68f4f026a0e51b572c2b6fb39c81fdb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab68f4f026a0e51b572c2b6fb39c81fdb">&#9670;&nbsp;</a></span>setExternalWrenches()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::setExternalWrenches </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>surfaceNames</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; sva::ForceVecd &gt; &amp;&#160;</td>
+          <td class="paramname"><em>targetWrenches</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; sva::MotionVecd &gt; &amp;&#160;</td>
+          <td class="paramname"><em>gains</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the wrench that the robot expects to receive from the external contacts. </p>
+<p>Change the configurations in ExternalWrenchConfiguration to handle external wrenches because external wrenches are ignored by default. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a8a1b1cfcd83c685c2836975375af2251">ExternalWrenchConfiguration</a></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">surfaceNames</td><td>Names of the surface to which the external wrench is applied </td></tr>
+    <tr><td class="paramname">targetWrenches</td><td>Target (expected) external wrenches </td></tr>
+    <tr><td class="paramname">gains</td><td>Gains of measured external wrenches </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a291e8bd69f054b3cce5117e721356185"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a291e8bd69f054b3cce5117e721356185">&#9670;&nbsp;</a></span>speed()</h2>
 
@@ -2084,12 +2348,12 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acbe9f9871a4c131a6c2176eeaf0a5dc4" title="Provides a dynamic target to the stabilizer. ">target</a> for dynamic motions. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8a8a726b9e64cf46649652479923b3cf" title="Provides a dynamic target to the stabilizer. ">target</a> for dynamic motions. </dd></dl>
 
 </div>
 </div>
-<a id="acbe9f9871a4c131a6c2176eeaf0a5dc4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbe9f9871a4c131a6c2176eeaf0a5dc4">&#9670;&nbsp;</a></span>target()</h2>
+<a id="a8a8a726b9e64cf46649652479923b3cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a8a726b9e64cf46649652479923b3cf">&#9670;&nbsp;</a></span>target()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2116,7 +2380,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
-          <td class="paramname"><em>zmp</em>&#160;</td>
+          <td class="paramname"><em>zmp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname"><em>zmpd</em> = <code>Eigen::Vector3d::Zero()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -2134,16 +2404,17 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramname">com</td><td>Desired CoM position </td></tr>
     <tr><td class="paramname">comd</td><td>Desired CoM velocity </td></tr>
     <tr><td class="paramname">comdd</td><td>Desired CoM acceleration </td></tr>
-    <tr><td class="paramname">zmp</td><td>Desired ZMP</td></tr>
+    <tr><td class="paramname">zmp</td><td>Desired ZMP </td></tr>
+    <tr><td class="paramname">zmpd</td><td>Desired ZMP velocity (can be omitted when zmpdGain in StabilizerConfiguration is zero)</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aeca8ec3501161284eebe42d34b7433d3">staticTarget</a> for a helper to define the stabilizer <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acbe9f9871a4c131a6c2176eeaf0a5dc4" title="Provides a dynamic target to the stabilizer. ">target</a> when the CoM is static </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aeca8ec3501161284eebe42d34b7433d3">staticTarget</a> for a helper to define the stabilizer <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8a8a726b9e64cf46649652479923b3cf" title="Provides a dynamic target to the stabilizer. ">target</a> when the CoM is static </dd></dl>
 
 </div>
 </div>
-<a id="a3650503431b3565de847f177114a822e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3650503431b3565de847f177114a822e">&#9670;&nbsp;</a></span>torsoPitch()</h2>
+<a id="adc4360c9ae88e17ad408826deaeeb1c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc4360c9ae88e17ad408826deaeeb1c9">&#9670;&nbsp;</a></span>torsoPitch()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2161,15 +2432,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a0ef6e028d5d9e608991a81f5ffdea8e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ef6e028d5d9e608991a81f5ffdea8e8">&#9670;&nbsp;</a></span>torsoStiffness()</h2>
+<a id="a15becbde64e05238765cbb514f9163b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15becbde64e05238765cbb514f9163b0">&#9670;&nbsp;</a></span>torsoStiffness()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2187,15 +2458,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a262bcb93fbc688aa8a68d19931cff137"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a262bcb93fbc688aa8a68d19931cff137">&#9670;&nbsp;</a></span>torsoWeight()</h2>
+<a id="ad8304c9dda559e368bae68116dfad3d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8304c9dda559e368bae68116dfad3d5">&#9670;&nbsp;</a></span>torsoWeight()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2213,7 +2484,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2257,8 +2528,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a5bf361438294d2c3aad9f0f8b063dc03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bf361438294d2c3aad9f0f8b063dc03">&#9670;&nbsp;</a></span>vdcFrequency()</h2>
+<a id="a87e39ffd522ed054a2f5d066d04f98f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87e39ffd522ed054a2f5d066d04f98f2">&#9670;&nbsp;</a></span>vdcFrequency()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2276,15 +2547,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ad4e6c83449cbd6a168ef2bed91f3c0f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4e6c83449cbd6a168ef2bed91f3c0f5">&#9670;&nbsp;</a></span>vdcStiffness()</h2>
+<a id="a902360523f74d1b286d46e5d3743c7b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a902360523f74d1b286d46e5d3743c7b6">&#9670;&nbsp;</a></span>vdcStiffness()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2302,7 +2573,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -2400,6 +2671,190 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="aab92a8406c48cafe9353ca84b2cfb9c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab92a8406c48cafe9353ca84b2cfb9c8">&#9670;&nbsp;</a></span>comOffsetDerivator_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__filter_1_1StationaryOffset.html">mc_filter::StationaryOffset</a>&lt;Eigen::Vector3d&gt; mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetDerivator_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Derivator of CoM offset </p>
+
+</div>
+</div>
+<a id="ae9df595049e717e34a82d0630c343720"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9df595049e717e34a82d0630c343720">&#9670;&nbsp;</a></span>comOffsetErr_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetErr_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>CoM offset error </p>
+
+</div>
+</div>
+<a id="a9c8e267e4ec305048932bc4345a5f53b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c8e267e4ec305048932bc4345a5f53b">&#9670;&nbsp;</a></span>comOffsetErrCoM_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetErrCoM_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>CoM offset error handled by CoM modification </p>
+
+</div>
+</div>
+<a id="a3ca80b3de904c482671181d285cb0678"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ca80b3de904c482671181d285cb0678">&#9670;&nbsp;</a></span>comOffsetErrZMP_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetErrZMP_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>CoM offset error handled by ZMP modification </p>
+
+</div>
+</div>
+<a id="aa2ed3dfcd791e23381b75323a91e78af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2ed3dfcd791e23381b75323a91e78af">&#9670;&nbsp;</a></span>comOffsetLowPass_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__filter_1_1LowPass.html">mc_filter::LowPass</a>&lt;Eigen::Vector3d&gt; mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetLowPass_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Low-pass filter of CoM offset </p>
+
+</div>
+</div>
+<a id="ac8c2388cc9072d464325878e4ffaa7cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8c2388cc9072d464325878e4ffaa7cc">&#9670;&nbsp;</a></span>comOffsetLowPassCoM_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__filter_1_1LowPass.html">mc_filter::LowPass</a>&lt;Eigen::Vector3d&gt; mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetLowPassCoM_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Low-pass filter of CoM offset to extract CoM modification </p>
+
+</div>
+</div>
+<a id="a8f0dfeb868178dce27d2ea0553c10c0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f0dfeb868178dce27d2ea0553c10c0f">&#9670;&nbsp;</a></span>comOffsetMeasured_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetMeasured_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Measured CoM offset </p>
+
+</div>
+</div>
+<a id="a157a2ca5ae25905e6db6c0a522e38b27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a157a2ca5ae25905e6db6c0a522e38b27">&#9670;&nbsp;</a></span>comOffsetTarget_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::comOffsetTarget_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Target (expected) CoM offset </p>
+
+</div>
+</div>
 <a id="af6f2964c1be8b168193c80636bc0b583"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af6f2964c1be8b168193c80636bc0b583">&#9670;&nbsp;</a></span>comTarget_</h2>
 
@@ -2411,6 +2866,28 @@ Additional Inherited Members</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::comTarget_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a107dcb5409d4bb7639ff2145f0a36009"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a107dcb5409d4bb7639ff2145f0a36009">&#9670;&nbsp;</a></span>comTargetRaw_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::comTargetRaw_ = Eigen::Vector3d::Zero()</td>
         </tr>
       </table>
   </td>
@@ -2712,6 +3189,29 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a706d2d0fed1d66103c2bcf669dd47bb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a706d2d0fed1d66103c2bcf669dd47bb8">&#9670;&nbsp;</a></span>desiredWrench_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">sva::ForceVecd mc_tasks::lipm_stabilizer::StabilizerTask::desiredWrench_ = sva::ForceVecd::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Result of the DCM feedback </p>
+
+</div>
+</div>
 <a id="a29892a01046ffddb485441466a5dfbe0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a29892a01046ffddb485441466a5dfbe0">&#9670;&nbsp;</a></span>dfzForceError_</h2>
 
@@ -2846,6 +3346,97 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0993fc2ce03fd1856f69165cb3731f67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0993fc2ce03fd1856f69165cb3731f67">&#9670;&nbsp;</a></span>extWrenches_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;ExternalWrench&gt; mc_tasks::lipm_stabilizer::StabilizerTask::extWrenches_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5094aa1b658e2b4ddf331365b722502f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5094aa1b658e2b4ddf331365b722502f">&#9670;&nbsp;</a></span>extWrenchSumLowPass_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__filter_1_1LowPass.html">mc_filter::LowPass</a>&lt;sva::ForceVecd&gt; mc_tasks::lipm_stabilizer::StabilizerTask::extWrenchSumLowPass_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Low-pass filter of the sum of the measured external wrenches </p>
+
+</div>
+</div>
+<a id="a40e319f4a2cadb78b98f47b7ef930bf9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40e319f4a2cadb78b98f47b7ef930bf9">&#9670;&nbsp;</a></span>extWrenchSumMeasured_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">sva::ForceVecd mc_tasks::lipm_stabilizer::StabilizerTask::extWrenchSumMeasured_ = sva::ForceVecd::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sum of measured external wrenches </p>
+
+</div>
+</div>
+<a id="a16db8e5921026c24b38ac1bd298443af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16db8e5921026c24b38ac1bd298443af">&#9670;&nbsp;</a></span>extWrenchSumTarget_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">sva::ForceVecd mc_tasks::lipm_stabilizer::StabilizerTask::extWrenchSumTarget_ = sva::ForceVecd::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sum of target (expected) external wrenches </p>
 
 </div>
 </div>
@@ -3456,6 +4047,28 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Only apply <a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html">ZMPCC</a> in double support </p>
+
+</div>
+</div>
+<a id="a5c672fb72b1a5aa4c11b45df3ef55dbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c672fb72b1a5aa4c11b45df3ef55dbb">&#9670;&nbsp;</a></span>zmpdTarget_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::zmpdTarget_ = Eigen::Vector3d::Zero()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

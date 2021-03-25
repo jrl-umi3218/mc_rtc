@@ -72,7 +72,8 @@ $(document).ready(function(){initNavTree('namespacemc__tasks_1_1lipm__stabilizer
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mc_tasks::lipm_stabilizer Namespace Reference</div>  </div>
 </div><!--header-->
@@ -108,6 +109,19 @@ Typedefs</h2></td></tr>
 <tr class="separator:a5f51d2adfa451cd98a1b3f3b2ed68ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa199242c8c0d202153b338771c1a5ace"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#aa199242c8c0d202153b338771c1a5ace">DCMBiasEstimatorConfiguration</a> = <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html">mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</a></td></tr>
 <tr class="separator:aa199242c8c0d202153b338771c1a5ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a1b1cfcd83c685c2836975375af2251"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a8a1b1cfcd83c685c2836975375af2251">ExternalWrenchConfiguration</a> = <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html">mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration</a></td></tr>
+<tr class="separator:a8a1b1cfcd83c685c2836975375af2251"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a3867c9c55a9b154439b74f2f35eb1f7d"><td class="memItemLeft" align="right" valign="top">template Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a3867c9c55a9b154439b74f2f35eb1f7d">StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;) const</td></tr>
+<tr class="separator:a3867c9c55a9b154439b74f2f35eb1f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7aa9f4851b07165e94068424b7c39bf"><td class="memItemLeft" align="right" valign="top">template Eigen::Vector3d&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#ae7aa9f4851b07165e94068424b7c39bf">StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;) const</td></tr>
+<tr class="separator:ae7aa9f4851b07165e94068424b7c39bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae21f6735cfe70bc1be33b8d4013434b3"><td class="memItemLeft" align="right" valign="top">template sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#ae21f6735cfe70bc1be33b8d4013434b3">StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;, const Eigen::Vector3d &amp;) const</td></tr>
+<tr class="separator:ae21f6735cfe70bc1be33b8d4013434b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d8b50c213771d3e5677471854ada3cd"><td class="memItemLeft" align="right" valign="top">template sva::ForceVecd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a0d8b50c213771d3e5677471854ada3cd">StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</a> (const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;, const Eigen::Vector3d &amp;) const</td></tr>
+<tr class="separator:a0d8b50c213771d3e5677471854ada3cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a4ca092c9a2df0b34b399ff21a8bc938f"></a>
@@ -132,6 +146,20 @@ Typedefs</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#aa199242c8c0d202153b338771c1a5ace">mc_tasks::lipm_stabilizer::DCMBiasEstimatorConfiguration</a> = typedef <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html">mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8a1b1cfcd83c685c2836975375af2251"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a1b1cfcd83c685c2836975375af2251">&#9670;&nbsp;</a></span>ExternalWrenchConfiguration</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a8a1b1cfcd83c685c2836975375af2251">mc_tasks::lipm_stabilizer::ExternalWrenchConfiguration</a> = typedef <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html">mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -202,6 +230,99 @@ Typedefs</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="namespacemc__tasks_1_1lipm__stabilizer.html#a61ba26bc4aeec5031be001df091b4b1a">mc_tasks::lipm_stabilizer::ZMPCCConfiguration</a> = typedef <a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration.html">mc_rbdyn::lipm_stabilizer::ZMPCCConfiguration</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ae7aa9f4851b07165e94068424b7c39bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7aa9f4851b07165e94068424b7c39bf">&#9670;&nbsp;</a></span>StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::measured >()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">template Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::measured &gt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3867c9c55a9b154439b74f2f35eb1f7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3867c9c55a9b154439b74f2f35eb1f7d">&#9670;&nbsp;</a></span>StabilizerTask::computeCoMOffset<&StabilizerTask::ExternalWrench::target >()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">template Eigen::Vector3d mc_tasks::lipm_stabilizer::StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::target &gt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0d8b50c213771d3e5677471854ada3cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d8b50c213771d3e5677471854ada3cd">&#9670;&nbsp;</a></span>StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::measured >()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">template sva::ForceVecd mc_tasks::lipm_stabilizer::StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::measured &gt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae21f6735cfe70bc1be33b8d4013434b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae21f6735cfe70bc1be33b8d4013434b3">&#9670;&nbsp;</a></span>StabilizerTask::computeExternalWrenchSum<&StabilizerTask::ExternalWrench::target >()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">template sva::ForceVecd mc_tasks::lipm_stabilizer::StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::target &gt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Robot.html">mc_rbdyn::Robot</a> &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Eigen::Vector3d &amp;&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">

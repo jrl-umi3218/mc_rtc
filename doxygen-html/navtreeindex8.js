@@ -1,5 +1,10 @@
 var NAVTREEINDEX8 =
 {
+"structmc__rbdyn_1_1Collision.html#a664a8719f81b8fee2d2b26cd3cf645ab":[3,0,6,4,2],
+"structmc__rbdyn_1_1Collision.html#aab32d2891597a9ec0d7f76e3dd0723a9":[3,0,6,4,4],
+"structmc__rbdyn_1_1Collision.html#afaef9be2f1209c8cc63876f13b8da184":[3,0,6,4,0],
+"structmc__rbdyn_1_1Collision.html#afde353de6419a4e248eec0851f664968":[3,0,6,4,6],
+"structmc__rbdyn_1_1Collision.html#affd388406c44197c32f6685e64d7bdb9":[3,0,6,4,7],
 "structmc__rbdyn_1_1CompoundJointConstraintDescription.html":[3,0,6,5],
 "structmc__rbdyn_1_1CompoundJointConstraintDescription.html#a0cc1f94178b76862c60dd6d6c86ddb07":[3,0,6,5,3],
 "structmc__rbdyn_1_1CompoundJointConstraintDescription.html#a4fc963a5996bfafc4e1e0675e9db6b6a":[3,0,6,5,0],
@@ -244,10 +249,5 @@ var NAVTREEINDEX8 =
 "structmc__rbdyn_1_1Robot.html#a9520af131693e9b873ce4c37513cfa1d":[3,0,6,18,83],
 "structmc__rbdyn_1_1Robot.html#a95798f9588d0656c61558ab20ad935b4":[3,0,6,18,104],
 "structmc__rbdyn_1_1Robot.html#a9eac94be22b1481eaae48d110d97c49e":[3,0,6,18,60],
-"structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e":[3,0,6,18,117],
-"structmc__rbdyn_1_1Robot.html#a9fa7e717817cab5e190f17d0397ff934":[3,0,6,18,143],
-"structmc__rbdyn_1_1Robot.html#aa176323f1dd1dc8f29ad40ccd4b23c9d":[3,0,6,18,55],
-"structmc__rbdyn_1_1Robot.html#aa17c3d6b4bff8b9bcbedad822a86fdbc":[3,0,6,18,52],
-"structmc__rbdyn_1_1Robot.html#aa4b724e51881215dd4293f9578656755":[3,0,6,18,134],
-"structmc__rbdyn_1_1Robot.html#aa9ece4044d66c5fb62667f7dc91dd6d4":[3,0,6,18,78]
+"structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e":[3,0,6,18,117]
 };

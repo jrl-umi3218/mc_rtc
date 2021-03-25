@@ -1610,9 +1610,11 @@
     <class kind="struct">mc_rbdyn::lipm_stabilizer::FDQPWeights</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::SafetyThresholds</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</class>
+    <class kind="struct">mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::SafetyThresholds &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration &gt;</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration &gt;</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &gt;</class>
     <namespace>mc_rbdyn</namespace>
@@ -4395,6 +4397,7 @@
     <filename>StabilizerTask_8h</filename>
     <includes id="ExponentialMovingAverage_8h" name="ExponentialMovingAverage.h" local="no" imported="no">mc_filter/ExponentialMovingAverage.h</includes>
     <includes id="LeakyIntegrator_8h" name="LeakyIntegrator.h" local="no" imported="no">mc_filter/LeakyIntegrator.h</includes>
+    <includes id="LowPass_8h" name="LowPass.h" local="no" imported="no">mc_filter/LowPass.h</includes>
     <includes id="StationaryOffset_8h" name="StationaryOffset.h" local="no" imported="no">mc_filter/StationaryOffset.h</includes>
     <includes id="CoMTask_8h" name="CoMTask.h" local="no" imported="no">mc_tasks/CoMTask.h</includes>
     <includes id="CoPTask_8h" name="CoPTask.h" local="no" imported="no">mc_tasks/CoPTask.h</includes>
@@ -4441,6 +4444,41 @@
       <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
       <anchor>aa199242c8c0d202153b338771c1a5ace</anchor>
       <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration</type>
+      <name>ExternalWrenchConfiguration</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>a8a1b1cfcd83c685c2836975375af2251</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>template Eigen::Vector3d</type>
+      <name>StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>a3867c9c55a9b154439b74f2f35eb1f7d</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;) const</arglist>
+    </member>
+    <member kind="function">
+      <type>template Eigen::Vector3d</type>
+      <name>StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>ae7aa9f4851b07165e94068424b7c39bf</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;) const</arglist>
+    </member>
+    <member kind="function">
+      <type>template sva::ForceVecd</type>
+      <name>StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>ae21f6735cfe70bc1be33b8d4013434b3</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;, const Eigen::Vector3d &amp;) const</arglist>
+    </member>
+    <member kind="function">
+      <type>template sva::ForceVecd</type>
+      <name>StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>a0d8b50c213771d3e5677471854ada3cd</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;, const Eigen::Vector3d &amp;) const</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -8699,6 +8737,24 @@
       <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html</anchorfile>
       <anchor>ae3782ece92a4f2f1cd0bf725f09fc169</anchor>
       <arglist>(const mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration &amp;bias)</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration &gt;</name>
+    <filename>structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration_01_4.html</filename>
+    <member kind="function" static="yes">
+      <type>static mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration</type>
+      <name>load</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration_01_4.html</anchorfile>
+      <anchor>a58e66c802f4a6d18222c252a7d6ff27f</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static mc_rtc::Configuration</type>
+      <name>save</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration_01_4.html</anchorfile>
+      <anchor>a6b937f1c608a5571964397c56f70dbba</anchor>
+      <arglist>(const mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration &amp;extWrench)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -13267,6 +13323,101 @@
       <name>saturation_</name>
       <anchorfile>structmc__filter_1_1ExponentialMovingAverage.html</anchorfile>
       <anchor>aa39c03dbafb64fa46f4be54499b3ed48</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration</name>
+    <filename>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>load</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>a7ffbc94c90b9db18e568822089740ce3</anchor>
+      <arglist>(const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>mc_rtc::Configuration</type>
+      <name>save</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>a7a1b1da557ad35b9642820ed8a28464c</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>addExpectedCoMOffset</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>a3e6307777775e934c7f102650565ef93</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>subtractMeasuredValue</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>a0c6ab2b29c544d4087d747936d9e4446</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>modifyCoMErr</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>a507c635c55a7cddbc95dc46fb9261907</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>modifyZMPErr</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>a07f7e6178872a0fba9b61975b707b1c4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>modifyZMPErrD</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>abfe6e931e6f6f77dd2ca657c0d5e3840</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>comOffsetErrCoMLimit</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>a37cc2ccf9652f8868edf8d8ee1f13edc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>comOffsetErrZMPLimit</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>ad636aa194409ba418d4f4c6377d0fe71</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>extWrenchSumLowPassCutoffPeriod</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>abc2551e9efb790f462bf04173f5333cb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>comOffsetLowPassCutoffPeriod</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>af5d1903ed4c7cc1a0071edf8752d9e58</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>comOffsetLowPassCoMCutoffPeriod</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>a2a8cb02f8574c718d60edde5cb1276a2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>comOffsetDerivatorTimeConstant</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html</anchorfile>
+      <anchor>a0c30e8b5d771f6d5ca4e80fc73c785f4</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -18045,6 +18196,73 @@
     </member>
     <member kind="function">
       <type>const T &amp;</type>
+      <name>eval</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>a543781fd1c5ec7b653de6e2189de8fdb</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>dt</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>a41bcea9e9de194a6816f03cacbd534dd</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>dt</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>ae3cde740d8c36a8e683eeae38bb4bc00</anchor>
+      <arglist>(double dt)</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>dt_</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>a54232494fa4fa74a08d85acf3f95ab7a</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>LowPass&lt; Eigen::Vector3d &gt;</name>
+    <filename>structmc__filter_1_1LowPass.html</filename>
+    <member kind="function">
+      <type></type>
+      <name>LowPass</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>ae3ddcbbc84aae62aad621a14a91c39bf</anchor>
+      <arglist>(double dt, double period=0)</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>cutoffPeriod</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>ac48741a383af10509d4678c5a0673f3a</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>cutoffPeriod</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>ac3c92851291e84d2347271125877dc0c</anchor>
+      <arglist>(double period)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>af9ccdd55e5d7f3beabcf4c26bcea9620</anchor>
+      <arglist>(const Eigen::Vector3d &amp;value)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>update</name>
+      <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
+      <anchor>a03ab891a2b1f5cd2fd2398b7016ba633</anchor>
+      <arglist>(const Eigen::Vector3d &amp;newValue)</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
       <name>eval</name>
       <anchorfile>structmc__filter_1_1LowPass.html</anchorfile>
       <anchor>a543781fd1c5ec7b653de6e2189de8fdb</anchor>
@@ -27425,6 +27643,20 @@
     </member>
     <member kind="variable">
       <type>double</type>
+      <name>MAX_COMD_GAIN</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html</anchorfile>
+      <anchor>a421d3ed8e7c051add55a77503588ed4e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>MAX_ZMPD_GAIN</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html</anchorfile>
+      <anchor>ab31f8fcab66cbe034d5c5e918eecb1fc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
       <name>MAX_DFZ_ADMITTANCE</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html</anchorfile>
       <anchor>aeb2b96f59a944040f3e0ee88a9fca2cb</anchor>
@@ -30238,6 +30470,20 @@
     </member>
     <member kind="variable">
       <type>double</type>
+      <name>comdErrorGain</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>af22ce2c152009124ffa98a0e08fa898d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
+      <name>zmpdGain</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>a1c98bf56a034264da108e725e6256a5b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>double</type>
       <name>dcmIntegratorTimeConstant</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
       <anchor>a6cf18b92b08365adf4dfdbdbb041d5c2</anchor>
@@ -30360,6 +30606,13 @@
       <name>dcmBias</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
       <anchor>a5a6639f87b0f1da854c48067332e98aa</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>ExternalWrenchConfiguration</type>
+      <name>extWrench</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>ae1daed2b128d2c870942bc007cc26976</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -30657,8 +30910,8 @@
       <type>double</type>
       <name>leftFootRatio</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>aad11d62616938f7b665640ee5dbf0dc7</anchor>
-      <arglist>() const</arglist>
+      <anchor>a91cb5583f420f95611496de2bf2e43b1</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>sva::PTransformd</type>
@@ -30678,64 +30931,253 @@
       <type>void</type>
       <name>target</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>acbe9f9871a4c131a6c2176eeaf0a5dc4</anchor>
-      <arglist>(const Eigen::Vector3d &amp;com, const Eigen::Vector3d &amp;comd, const Eigen::Vector3d &amp;comdd, const Eigen::Vector3d &amp;zmp)</arglist>
+      <anchor>a8a8a726b9e64cf46649652479923b3cf</anchor>
+      <arglist>(const Eigen::Vector3d &amp;com, const Eigen::Vector3d &amp;comd, const Eigen::Vector3d &amp;comdd, const Eigen::Vector3d &amp;zmp, const Eigen::Vector3d &amp;zmpd=Eigen::Vector3d::Zero())</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>setExternalWrenches</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>ab68f4f026a0e51b572c2b6fb39c81fdb</anchor>
+      <arglist>(const std::vector&lt; std::string &gt; &amp;surfaceNames, const std::vector&lt; sva::ForceVecd &gt; &amp;targetWrenches, const std::vector&lt; sva::MotionVecd &gt; &amp;gains)</arglist>
     </member>
     <member kind="function">
       <type>const Eigen::Vector3d &amp;</type>
       <name>measuredDCM</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a8701a57a809d6623b80306bd6cc9609a</anchor>
-      <arglist>()</arglist>
+      <anchor>ae78207848e03e1b1153ad47f812aeb3c</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>const Eigen::Vector3d &amp;</type>
       <name>measuredZMP</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a52698baf31cd96e73a65d30009db86ff</anchor>
-      <arglist>()</arglist>
+      <anchor>a41fed4c5c24646bb999d0ad8048b6c9d</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>const Eigen::Vector3d &amp;</type>
       <name>measuredCoM</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a297f2b26b3156ed4ebae0ee789b89a8b</anchor>
-      <arglist>()</arglist>
+      <anchor>ad173d40ca3a81fe661d64d90fcf92106</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>const Eigen::Vector3d &amp;</type>
       <name>measuredCoMd</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a0b4613e8df107c406a9b434c06b9b27a</anchor>
-      <arglist>()</arglist>
+      <anchor>a33c41662a68ba76b375b5f9dcd878475</anchor>
+      <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>inContact</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a93b9dbba22bc61bcba9c36af64167b0e</anchor>
-      <arglist>(ContactState state) const</arglist>
+      <anchor>a7a23476f42cf53f5f5569d3ccfd9ca01</anchor>
+      <arglist>(ContactState state) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>inDoubleSupport</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>ae33cd7a56736b6d070f229493ba14ed5</anchor>
-      <arglist>() const</arglist>
+      <anchor>a4b06822132971cbaa5a212cc611ce926</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const mc_rbdyn::Robot &amp;</type>
       <name>robot</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>aa5456b94e95138e35e7e5738de51512a</anchor>
-      <arglist>() const</arglist>
+      <anchor>ad69940b8fb336e2728359e8a1014958b</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const mc_rbdyn::Robot &amp;</type>
       <name>realRobot</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a3ad771c0db927eff99269276ef551e86</anchor>
-      <arglist>() const</arglist>
+      <anchor>a649fbf45bbb740cf97fbe2c19a50cac8</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;</type>
+      <name>dcmIntegrator_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>abe50c92ded00ad8f22e9da9433dee655</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::StationaryOffset&lt; Eigen::Vector3d &gt;</type>
+      <name>dcmDerivator_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a0238d047704d0cdaca32fe09153e4688</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>inTheAir_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a22569ac33f8c0e99bb674520373c41c6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>dfzForceError_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a29892a01046ffddb485441466a5dfbe0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>dfzHeightError_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aac424f24910f5856c99a44c359865dc2</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>dt_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a78355a7b3bb963abe0bc160f0d51bcb9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>leftFootRatio_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a077f98071aa5d9ae2b861aba4edbc606</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>mass_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aadea2267fb6365e262900d3da4e40d98</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>runTime_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a1c5ff776bf36beaee2182776ba4feca0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>double</type>
+      <name>vdcHeightError_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>ab459d6ba167857323daefe6a3fbef750</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::ForceVecd</type>
+      <name>desiredWrench_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a706d2d0fed1d66103c2bcf669dd47bb8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::ForceVecd</type>
+      <name>distribWrench_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>acea47979a383c106e0eedc05a02e52bb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>distribZMP_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a1debc60c12375bc8ebb3dad18a4bf3a6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::PTransformd</type>
+      <name>zmpFrame_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aeca99cf5f7b08a8d39bc3a7045d2e46d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; ExternalWrench &gt;</type>
+      <name>extWrenches_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a0993fc2ce03fd1856f69165cb3731f67</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::ForceVecd</type>
+      <name>extWrenchSumTarget_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a16db8e5921026c24b38ac1bd298443af</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::ForceVecd</type>
+      <name>extWrenchSumMeasured_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a40e319f4a2cadb78b98f47b7ef930bf9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>comOffsetTarget_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a157a2ca5ae25905e6db6c0a522e38b27</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>comOffsetMeasured_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a8f0dfeb868178dce27d2ea0553c10c0f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>comOffsetErr_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>ae9df595049e717e34a82d0630c343720</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>comOffsetErrCoM_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a9c8e267e4ec305048932bc4345a5f53b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>comOffsetErrZMP_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a3ca80b3de904c482671181d285cb0678</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::LowPass&lt; sva::ForceVecd &gt;</type>
+      <name>extWrenchSumLowPass_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a5094aa1b658e2b4ddf331365b722502f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::LowPass&lt; Eigen::Vector3d &gt;</type>
+      <name>comOffsetLowPass_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aa2ed3dfcd791e23381b75323a91e78af</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::LowPass&lt; Eigen::Vector3d &gt;</type>
+      <name>comOffsetLowPassCoM_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>ac8c2388cc9072d464325878e4ffaa7cc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::StationaryOffset&lt; Eigen::Vector3d &gt;</type>
+      <name>comOffsetDerivator_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aab92a8406c48cafe9353ca84b2cfb9c8</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>std::unordered_map&lt; ContactState, internal::Contact, EnumClassHash, std::equal_to&lt; ContactState &gt;, Eigen::aligned_allocator&lt; std::pair&lt; const ContactState, internal::Contact &gt; &gt; &gt;</type>
@@ -30837,6 +31279,13 @@
     </member>
     <member kind="variable" protection="protected">
       <type>Eigen::Vector3d</type>
+      <name>comTargetRaw_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a107dcb5409d4bb7639ff2145f0a36009</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
       <name>comTarget_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>af6f2964c1be8b168193c80636bc0b583</anchor>
@@ -30861,6 +31310,13 @@
       <name>zmpTarget_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>aae15134e2c9dad716a90a85d146969e0</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>zmpdTarget_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a5c672fb72b1a5aa4c11b45df3ef55dbb</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -31017,208 +31473,145 @@
       <anchor>a4b355d04025f1a2489cc9e5b579d27ea</anchor>
       <arglist></arglist>
     </member>
-    <member kind="variable" protection="protected">
-      <type>mc_filter::ExponentialMovingAverage&lt; Eigen::Vector3d &gt;</type>
-      <name>dcmIntegrator_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>abe50c92ded00ad8f22e9da9433dee655</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>mc_filter::StationaryOffset&lt; Eigen::Vector3d &gt;</type>
-      <name>dcmDerivator_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a0238d047704d0cdaca32fe09153e4688</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>bool</type>
-      <name>inTheAir_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a22569ac33f8c0e99bb674520373c41c6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>double</type>
-      <name>dfzForceError_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a29892a01046ffddb485441466a5dfbe0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>double</type>
-      <name>dfzHeightError_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>aac424f24910f5856c99a44c359865dc2</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>double</type>
-      <name>dt_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a78355a7b3bb963abe0bc160f0d51bcb9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>double</type>
-      <name>leftFootRatio_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a077f98071aa5d9ae2b861aba4edbc606</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>double</type>
-      <name>mass_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>aadea2267fb6365e262900d3da4e40d98</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>double</type>
-      <name>runTime_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a1c5ff776bf36beaee2182776ba4feca0</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>double</type>
-      <name>vdcHeightError_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>ab459d6ba167857323daefe6a3fbef750</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>sva::ForceVecd</type>
-      <name>distribWrench_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>acea47979a383c106e0eedc05a02e52bb</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>Eigen::Vector3d</type>
-      <name>distribZMP_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a1debc60c12375bc8ebb3dad18a4bf3a6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>sva::PTransformd</type>
-      <name>zmpFrame_</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>aeca99cf5f7b08a8d39bc3a7045d2e46d</anchor>
-      <arglist></arglist>
-    </member>
     <member kind="function">
       <type>void</type>
       <name>torsoPitch</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a3650503431b3565de847f177114a822e</anchor>
-      <arglist>(double pitch)</arglist>
+      <anchor>adc4360c9ae88e17ad408826deaeeb1c9</anchor>
+      <arglist>(double pitch) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>torsoWeight</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a262bcb93fbc688aa8a68d19931cff137</anchor>
-      <arglist>(double weight)</arglist>
+      <anchor>ad8304c9dda559e368bae68116dfad3d5</anchor>
+      <arglist>(double weight) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>torsoStiffness</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a0ef6e028d5d9e608991a81f5ffdea8e8</anchor>
-      <arglist>(double stiffness)</arglist>
+      <anchor>a15becbde64e05238765cbb514f9163b0</anchor>
+      <arglist>(double stiffness) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>pelvisWeight</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>ac7a0a6f3280418d898ffbca9fcc0d247</anchor>
-      <arglist>(double weight)</arglist>
+      <anchor>abdc4a7009a01993765860ad699cf587e</anchor>
+      <arglist>(double weight) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>pelvisStiffness</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a3d5cd1bd8c0913ab7b70e83ef2528a26</anchor>
-      <arglist>(double stiffness)</arglist>
+      <anchor>a0128311eb332240ff25a3c0ada010148</anchor>
+      <arglist>(double stiffness) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>dcmGains</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a4d26b36f1efe73e9f0936076d421d946</anchor>
-      <arglist>(double p, double i, double d)</arglist>
+      <anchor>a255c7b9c2e0434e97d450f4089908299</anchor>
+      <arglist>(double p, double i, double d) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>dcmIntegratorTimeConstant</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a9521d406e6c5b204001b9dad834abfb6</anchor>
-      <arglist>(double dcmIntegratorTimeConstant)</arglist>
+      <anchor>ac26f74f6c9313363b2691105da3eae52</anchor>
+      <arglist>(double dcmIntegratorTimeConstant) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>dcmDerivatorTimeConstant</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>ad6eff54bb218c03249faed4a42877ba9</anchor>
-      <arglist>(double dcmDerivatorTimeConstant)</arglist>
+      <anchor>a93949613824347661e94f1ca1388f62f</anchor>
+      <arglist>(double dcmDerivatorTimeConstant) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>extWrenchSumLowPassCutoffPeriod</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>ae0837cd5e41e827e59bfcae07f3b0c7b</anchor>
+      <arglist>(double cutoffPeriod) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>comOffsetLowPassCutoffPeriod</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>ae25dfdb1beb2bdc5536aac8a933d5293</anchor>
+      <arglist>(double cutoffPeriod) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>comOffsetLowPassCoMCutoffPeriod</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aa2efd683545dd3072d7d3aa04dfe96fa</anchor>
+      <arglist>(double cutoffPeriod) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>comOffsetDerivatorTimeConstant</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aa9516bd1875642db8c5ca3f278063e21</anchor>
+      <arglist>(double timeConstant) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>comWeight</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a2389dea00b81116acc1a2c96a0fd05d6</anchor>
-      <arglist>(double weight)</arglist>
+      <anchor>af16c27e6e64e0c3bf0a3ee8a84f14aee</anchor>
+      <arglist>(double weight) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>comStiffness</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a9fffdeb9143fd2d238c6ad95739155d1</anchor>
-      <arglist>(const Eigen::Vector3d &amp;stiffness)</arglist>
+      <anchor>abffee740af84bea06469fdb39fa22e27</anchor>
+      <arglist>(const Eigen::Vector3d &amp;stiffness) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>contactWeight</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>afcd2acc4f84e187da875983de963f3e4</anchor>
-      <arglist>(double weight)</arglist>
+      <anchor>a3c6c91f136cf063c621fc841bff276ff</anchor>
+      <arglist>(double weight) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>contactStiffness</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a9444ed6380999d3b8938066a340c4e17</anchor>
-      <arglist>(const sva::MotionVecd &amp;stiffness)</arglist>
+      <anchor>a1a89ad7ab4194e7fadb94d17769f4b28</anchor>
+      <arglist>(const sva::MotionVecd &amp;stiffness) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>contactDamping</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a0f36f08a740bf6c17c88a9ea39e7f341</anchor>
-      <arglist>(const sva::MotionVecd &amp;damping)</arglist>
+      <anchor>a8826dde36c6bbc913699999b10947e55</anchor>
+      <arglist>(const sva::MotionVecd &amp;damping) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>copAdmittance</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a2ddf955560628fb496d06a267df22205</anchor>
-      <arglist>(const Eigen::Vector2d &amp;copAdmittance)</arglist>
+      <anchor>a5b6105d75689301db9d974c1119069da</anchor>
+      <arglist>(const Eigen::Vector2d &amp;copAdmittance) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>copMaxVel</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a14f646fd17e3d7b4aa1c3b4a8b0f856e</anchor>
-      <arglist>(const sva::MotionVecd &amp;copMaxVel)</arglist>
+      <anchor>a4d023011b4bb8a38750097910f91b76a</anchor>
+      <arglist>(const sva::MotionVecd &amp;copMaxVel) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>copVelFilterGain</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a21ae40c129d552fdb1e8558f0b8c18f0</anchor>
-      <arglist>(double gain)</arglist>
+      <anchor>a74e21f2251aece81dbf19552fab22744</anchor>
+      <arglist>(double gain) noexcept</arglist>
     </member>
     <member kind="function">
       <type>double</type>
@@ -31231,56 +31624,70 @@
       <type>void</type>
       <name>vdcFrequency</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a5bf361438294d2c3aad9f0f8b063dc03</anchor>
-      <arglist>(double freq)</arglist>
+      <anchor>a87e39ffd522ed054a2f5d066d04f98f2</anchor>
+      <arglist>(double freq) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>vdcStiffness</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>ad4e6c83449cbd6a168ef2bed91f3c0f5</anchor>
-      <arglist>(double stiffness)</arglist>
+      <anchor>a902360523f74d1b286d46e5d3743c7b6</anchor>
+      <arglist>(double stiffness) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>dfzAdmittance</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a5893162539f91dabff88ef70e5398910</anchor>
-      <arglist>(double dfzAdmittance)</arglist>
+      <anchor>a1fd7403b0681845c2b1209bdc6a8a00a</anchor>
+      <arglist>(double dfzAdmittance) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>dfzDamping</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a4ed19101f6b02d9b9cee17a225736d4d</anchor>
-      <arglist>(double dfzDamping)</arglist>
+      <anchor>a4ed512bddf3fb21126e5029218746f39</anchor>
+      <arglist>(double dfzDamping) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>fdqpWeights</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>af6eda628186ece0a40622a86815b4c92</anchor>
-      <arglist>(const FDQPWeights &amp;fdqp)</arglist>
+      <anchor>a61511c4f2321084adc649936db38ca70</anchor>
+      <arglist>(const FDQPWeights &amp;fdqp) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>safetyThresholds</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>ae829737c7cbcedb0635c2d858e7aa68f</anchor>
-      <arglist>(const SafetyThresholds &amp;thresholds)</arglist>
+      <anchor>a41a809b5612edf600a57d53917f6fc62</anchor>
+      <arglist>(const SafetyThresholds &amp;thresholds) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>dcmBiasEstimatorConfiguration</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
-      <anchor>a3ad8d7c6c44e52ea194fe1e48d83fb88</anchor>
-      <arglist>(const DCMBiasEstimatorConfiguration &amp;biasConfig)</arglist>
+      <anchor>a46080b804a13b9c7856cfc629470e51b</anchor>
+      <arglist>(const DCMBiasEstimatorConfiguration &amp;biasConfig) noexcept</arglist>
     </member>
     <member kind="function">
       <type>const DCMBiasEstimatorConfiguration &amp;</type>
       <name>dcmBiasEstimatorConfiguration</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>acc69d3ef42354f7f8f104773de7c544d</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>externalWrenchConfiguration</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a7b4d0a866a7eb38fdb14567d4ef78995</anchor>
+      <arglist>(const ExternalWrenchConfiguration &amp;extWrenchConfig) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const ExternalWrenchConfiguration &amp;</type>
+      <name>externalWrenchConfiguration</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aa8e7a8dde0d29233a6eee898f128361a</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function" protection="protected">
@@ -31345,6 +31752,90 @@
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>abfb302989c1f34fe7131c72bd74e33a5</anchor>
       <arglist>(const StabilizerConfiguration &amp;config)</arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; ExternalWrench &gt;</type>
+      <name>extWrenches_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a0993fc2ce03fd1856f69165cb3731f67</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::ForceVecd</type>
+      <name>extWrenchSumTarget_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a16db8e5921026c24b38ac1bd298443af</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>sva::ForceVecd</type>
+      <name>extWrenchSumMeasured_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a40e319f4a2cadb78b98f47b7ef930bf9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>comOffsetTarget_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a157a2ca5ae25905e6db6c0a522e38b27</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>comOffsetMeasured_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a8f0dfeb868178dce27d2ea0553c10c0f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>comOffsetErr_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>ae9df595049e717e34a82d0630c343720</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>comOffsetErrCoM_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a9c8e267e4ec305048932bc4345a5f53b</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>Eigen::Vector3d</type>
+      <name>comOffsetErrZMP_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a3ca80b3de904c482671181d285cb0678</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::LowPass&lt; sva::ForceVecd &gt;</type>
+      <name>extWrenchSumLowPass_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a5094aa1b658e2b4ddf331365b722502f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::LowPass&lt; Eigen::Vector3d &gt;</type>
+      <name>comOffsetLowPass_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aa2ed3dfcd791e23381b75323a91e78af</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::LowPass&lt; Eigen::Vector3d &gt;</type>
+      <name>comOffsetLowPassCoM_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>ac8c2388cc9072d464325878e4ffaa7cc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>mc_filter::StationaryOffset&lt; Eigen::Vector3d &gt;</type>
+      <name>comOffsetDerivator_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>aab92a8406c48cafe9353ca84b2cfb9c8</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -37006,6 +37497,7 @@
     <name>mc_rbdyn::lipm_stabilizer</name>
     <filename>namespacemc__rbdyn_1_1lipm__stabilizer.html</filename>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration</class>
+    <class kind="struct">mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::FDQPWeights</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::SafetyThresholds</class>
     <class kind="struct">mc_rbdyn::lipm_stabilizer::StabilizerConfiguration</class>
@@ -37026,6 +37518,7 @@
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::Contact &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration &gt;</class>
+    <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::FDQPWeights &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::SafetyThresholds &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::lipm_stabilizer::StabilizerConfiguration &gt;</class>
@@ -38387,6 +38880,41 @@
       <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
       <anchor>aa199242c8c0d202153b338771c1a5ace</anchor>
       <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration</type>
+      <name>ExternalWrenchConfiguration</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>a8a1b1cfcd83c685c2836975375af2251</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>template Eigen::Vector3d</type>
+      <name>StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>a3867c9c55a9b154439b74f2f35eb1f7d</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;) const</arglist>
+    </member>
+    <member kind="function">
+      <type>template Eigen::Vector3d</type>
+      <name>StabilizerTask::computeCoMOffset&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>ae7aa9f4851b07165e94068424b7c39bf</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;) const</arglist>
+    </member>
+    <member kind="function">
+      <type>template sva::ForceVecd</type>
+      <name>StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::target &gt;</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>ae21f6735cfe70bc1be33b8d4013434b3</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;, const Eigen::Vector3d &amp;) const</arglist>
+    </member>
+    <member kind="function">
+      <type>template sva::ForceVecd</type>
+      <name>StabilizerTask::computeExternalWrenchSum&lt;&amp;StabilizerTask::ExternalWrench::measured &gt;</name>
+      <anchorfile>namespacemc__tasks_1_1lipm__stabilizer.html</anchorfile>
+      <anchor>a0d8b50c213771d3e5677471854ada3cd</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;, const Eigen::Vector3d &amp;) const</arglist>
     </member>
   </compound>
   <compound kind="namespace">

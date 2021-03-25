@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rbdyn::Mimic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Mimic.html",tooltip="Stores mimic joint information. "];
+  Node0 [label="mc_rbdyn::lipm_stabilizer\l::StabilizerConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html",tooltip="Configuration of the LIPMStabilizer. This configuration is meant to be overriden from the RobotModule..."];
 }

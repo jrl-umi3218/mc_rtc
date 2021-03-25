@@ -35,6 +35,7 @@ var hierarchy =
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1Contact_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::DCMBiasEstimatorConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html", null ],
+    [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::FDQPWeights >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1FDQPWeights_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::SafetyThresholds >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds_01_4.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_rbdyn::lipm_stabilizer::StabilizerConfiguration >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration_01_4.html", null ],
@@ -196,6 +197,7 @@ var hierarchy =
     [ "mc_control::fsm::Executor", "structmc__control_1_1fsm_1_1Executor.html", null ],
     [ "mc_filter::ExponentialMovingAverage< VectorT >", "structmc__filter_1_1ExponentialMovingAverage.html", null ],
     [ "mc_filter::ExponentialMovingAverage< Eigen::Vector3d >", "structmc__filter_1_1ExponentialMovingAverage.html", null ],
+    [ "mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration", "structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html", null ],
     [ "false_type", null, [
       [ "mc_control::MCController::DeprecatedAnchorFrame< T >", "structmc__control_1_1MCController_1_1DeprecatedAnchorFrame.html", null ]
     ] ],
@@ -269,6 +271,7 @@ var hierarchy =
     [ "mc_filter::LowPass< T >", "structmc__filter_1_1LowPass.html", [
       [ "mc_filter::LowPassFiniteDifferences< T >", "structmc__filter_1_1LowPassFiniteDifferences.html", null ]
     ] ],
+    [ "mc_filter::LowPass< Eigen::Vector3d >", "structmc__filter_1_1LowPass.html", null ],
     [ "mc_filter::LowPass< sva::ForceVecd >", "structmc__filter_1_1LowPass.html", null ],
     [ "mc_filter::LowPass< sva::MotionVecd >", "structmc__filter_1_1LowPass.html", null ],
     [ "mc_rtc::LTDLHandle", "structmc__rtc_1_1LTDLHandle.html", null ],

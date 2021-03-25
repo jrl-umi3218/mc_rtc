@@ -4,5 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node0 [label="mc_rtc::ConfigurationLoader\l\< mc_rbdyn::lipm_stabilizer\l::DCMBiasEstimatorConfiguration \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration_01_4.html",tooltip="Read DCMBias estimation parameters. "];
+  Node0 [label="mc_rtc::ConfigurationLoader\l\< mc_rbdyn::CompoundJointConstraint\lDescription \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html"];
 }

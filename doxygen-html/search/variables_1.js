@@ -12,6 +12,7 @@ var searchData=
   ['add_5fcontacts_5fafter_5fconfig_5f',['add_contacts_after_config_',['../structmc__control_1_1fsm_1_1State.html#a57c8d5de04fd74feef0699a82a72123f',1,'mc_control::fsm::State']]],
   ['add_5fcontacts_5fconfig_5f',['add_contacts_config_',['../structmc__control_1_1fsm_1_1State.html#ad5e8acab9275900efb0a32ffaf155bed',1,'mc_control::fsm::State']]],
   ['addcontacts_5f',['addContacts_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af0aa6726e77f2dc1d7f371980426fdef',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
+  ['addexpectedcomoffset',['addExpectedCoMOffset',['../structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html#a3e6307777775e934c7f102650565ef93',1,'mc_rbdyn::lipm_stabilizer::ExternalWrenchConfiguration']]],
   ['addremovecontactstateimpl',['AddRemoveContactStateImpl',['../namespacemc__control_1_1fsm.html#a2deb94750a61f8f86801bd02f4149d5e',1,'mc_control::fsm']]],
   ['admittance_5f',['admittance_',['../structmc__tasks_1_1force_1_1AdmittanceTask.html#afec1507c00f7ab6e535c856c4e6c258e',1,'mc_tasks::force::AdmittanceTask']]],
   ['advancedgui_5f',['advancedGUI_',['../structmc__observers_1_1BodySensorObserver.html#adba11be987f21d8e3bc6f5ced05e4b2c',1,'mc_observers::BodySensorObserver']]],

@@ -6,6 +6,7 @@ var structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration =
     [ "load", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ad62077263c1af6f677dd4645b663eb8e", null ],
     [ "save", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#afb389e9e183efdcad0db023e57383b98", null ],
     [ "comActiveJoints", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#af0f590199c5cb9ba6aa7b25f56447811", null ],
+    [ "comdErrorGain", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#af22ce2c152009124ffa98a0e08fa898d", null ],
     [ "comHeight", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abd54fe3cf92a100a19f0a5bf408272d6", null ],
     [ "comStiffness", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abaec169e8fcf147bf63785088fd3c896", null ],
     [ "comWeight", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abd7dd049c8ac626404fc3af328f09a85", null ],
@@ -23,6 +24,7 @@ var structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration =
     [ "dcmPropGain", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#aaae1753ce0d0a7154330565e0788ffb1", null ],
     [ "dfzAdmittance", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ad3f20459a99d3de2b16e882b592bffbd", null ],
     [ "dfzDamping", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ac97586a249bbe2430e958b9fa1e7f7d7", null ],
+    [ "extWrench", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ae1daed2b128d2c870942bc007cc26976", null ],
     [ "fdqpWeights", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#aa9d26f0bb6e592ef0f94549e30da5972", null ],
     [ "friction", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a2711f393aa208d546265f1ccdaa4f927", null ],
     [ "leftFootSurface", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a30cc86b398c8b84bb07fd032e35d76e9", null ],
@@ -36,5 +38,6 @@ var structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration =
     [ "torsoWeight", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a6ea68278767553d037dba6b104327cdd", null ],
     [ "vdcFrequency", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a0b4dc848ffc84548ed88a2c6059ff5de", null ],
     [ "vdcStiffness", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a34a4b63e93b00c661f926721e284f3e9", null ],
-    [ "zmpcc", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a7202444717b6eb8868bf2478e45901b0", null ]
+    [ "zmpcc", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a7202444717b6eb8868bf2478e45901b0", null ],
+    [ "zmpdGain", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a1c98bf56a034264da108e725e6256a5b", null ]
 ];

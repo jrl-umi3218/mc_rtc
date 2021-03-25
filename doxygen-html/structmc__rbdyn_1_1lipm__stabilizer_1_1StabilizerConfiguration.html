@@ -134,6 +134,10 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a26e250e0c089b2808642057977c2af01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a17a20ec9324108f9313e97cc7f5910"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a1a17a20ec9324108f9313e97cc7f5910">dcmDerivGain</a> = 0.</td></tr>
 <tr class="separator:a1a17a20ec9324108f9313e97cc7f5910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af22ce2c152009124ffa98a0e08fa898d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#af22ce2c152009124ffa98a0e08fa898d">comdErrorGain</a> = 1.</td></tr>
+<tr class="separator:af22ce2c152009124ffa98a0e08fa898d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c98bf56a034264da108e725e6256a5b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a1c98bf56a034264da108e725e6256a5b">zmpdGain</a> = 0.</td></tr>
+<tr class="separator:a1c98bf56a034264da108e725e6256a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cf18b92b08365adf4dfdbdbb041d5c2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a6cf18b92b08365adf4dfdbdbb041d5c2">dcmIntegratorTimeConstant</a></td></tr>
 <tr class="separator:a6cf18b92b08365adf4dfdbdbb041d5c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae59b68251ee3fe90880e6da86212c935"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ae59b68251ee3fe90880e6da86212c935">dcmDerivatorTimeConstant</a> = 1.</td></tr>
@@ -170,6 +174,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a34a4b63e93b00c661f926721e284f3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a6639f87b0f1da854c48067332e98aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1DCMBiasEstimatorConfiguration.html">DCMBiasEstimatorConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a5a6639f87b0f1da854c48067332e98aa">dcmBias</a></td></tr>
 <tr class="separator:a5a6639f87b0f1da854c48067332e98aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1daed2b128d2c870942bc007cc26976"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html">ExternalWrenchConfiguration</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ae1daed2b128d2c870942bc007cc26976">extWrench</a></td></tr>
+<tr class="separator:ae1daed2b128d2c870942bc007cc26976"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configuration of the LIPMStabilizer. This configuration is meant to be overriden from the <a class="el" href="structmc__rbdyn_1_1RobotModule.html">RobotModule</a>, and the user YAML configuration of the stabilizer task. </p>
@@ -318,6 +324,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Joints used by CoM IK task </p>
+
+</div>
+</div>
+<a id="af22ce2c152009124ffa98a0e08fa898d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af22ce2c152009124ffa98a0e08fa898d">&#9670;&nbsp;</a></span>comdErrorGain</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::comdErrorGain = 1.</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gain on CoMd error </p>
 
 </div>
 </div>
@@ -576,6 +597,21 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ae1daed2b128d2c870942bc007cc26976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1daed2b128d2c870942bc007cc26976">&#9670;&nbsp;</a></span>extWrench</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rbdyn_1_1lipm__stabilizer_1_1ExternalWrenchConfiguration.html">ExternalWrenchConfiguration</a> mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::extWrench</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parameters for the external wrenches </p>
+
+</div>
+</div>
 <a id="aa9d26f0bb6e592ef0f94549e30da5972"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa9d26f0bb6e592ef0f94549e30da5972">&#9670;&nbsp;</a></span>fdqpWeights</h2>
 
@@ -781,6 +817,21 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Configuration of ZMPCC (CoM admittance) </p>
+
+</div>
+</div>
+<a id="a1c98bf56a034264da108e725e6256a5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c98bf56a034264da108e725e6256a5b">&#9670;&nbsp;</a></span>zmpdGain</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double mc_rbdyn::lipm_stabilizer::StabilizerConfiguration::zmpdGain = 0.</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gain on ZMPd </p>
 
 </div>
 </div>

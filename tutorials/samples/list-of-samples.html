@@ -304,6 +304,7 @@
 <li class="toc-entry toc-h1"><a href="#admittance">Admittance</a></li>
 <li class="toc-entry toc-h1"><a href="#impedance">Impedance</a></li>
 <li class="toc-entry toc-h1"><a href="#lipmstabilizer">LIPMStabilizer</a></li>
+<li class="toc-entry toc-h1"><a href="#externalforces">ExternalForces</a></li>
 </ul>
             </div>
           </div>
@@ -386,7 +387,7 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 
 <h1 id="text">Text</h1>
 
-<p>The <code class="language-plaintext highlighter-rouge">Text</code> sample controller demonstrate use of the mc_tasks::MetaTasks and <a href="/mc_rtc/doxygen.html#structmc__solver_1_1ConstraintSetLoader" target="blank_">mc_solver::ConstraintSetLoader</a> to load <a href="/mc_rtc/json.html#MetaTask">tasks</a> and <a href="/mc_rtc/json.html#ConstraintSet">constraints</a> from their YAML configuration.</p>
+<p>The <code class="language-plaintext highlighter-rouge">Text</code> sample controller demonstrate the use of <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1MetaTaskLoader" target="blank_">mc_tasks::MetaTaskLoader</a> and <a href="/mc_rtc/doxygen.html#structmc__solver_1_1ConstraintSetLoader" target="blank_">mc_solver::ConstraintSetLoader</a> to respectively load <a href="/mc_rtc/json.html#MetaTask">tasks</a> and <a href="/mc_rtc/json.html#ConstraintSet">constraints</a> from their YAML configuration.</p>
 
 <p><strong>Running</strong>
 To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite interface.</p>
@@ -420,6 +421,10 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 
 <p>The <code class="language-plaintext highlighter-rouge">Admittance</code> sample controller demonstrates the use of the <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1AdmittanceTask" target="blank_">mc_tasks::force::AdmittanceTask</a> though a simple FSM making the <code class="language-plaintext highlighter-rouge">JVRC1</code> robot push a wall with a desired force.</p>
 
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/B_L_xPynhvU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+
 <p><strong>Detailed description</strong>: see the <a href="/mc_rtc/tutorials/samples/sample-admittance.html">Admittance Sample Controller tutorial</a></p>
 
 <p><strong>Supported robots</strong>: <code class="language-plaintext highlighter-rouge">JVRC1</code>.</p>
@@ -429,6 +434,10 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 <p><strong>Running</strong></p>
 
 <p>To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite dynamic simulation (e.g Choreonoid…).</p>
+
+<p><strong>See also</strong></p>
+
+<p>For a similar but more advanced example, see the <a href="#externalforces">ExternalForces</a> sample.</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
 <span class="na">Enabled</span><span class="pi">:</span> <span class="s">AdmittanceSample</span>
@@ -466,6 +475,27 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 <span class="na">Enabled</span><span class="pi">:</span> <span class="s">LIPMStabilizer</span>
 </code></pre></div></div>
 
+<h1 id="externalforces">ExternalForces</h1>
+
+<p>The <code class="language-plaintext highlighter-rouge">ExternalForces</code> sample controller demonstrates a biped robot exerting specified external forces with <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask" target="blank_">mc_tasks::lipm_stabilizer::StabilizerTask</a> and <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_">mc_tasks::force::ImpedanceTask</a> though a simple FSM making the <code class="language-plaintext highlighter-rouge">JVRC1</code> robot push a wall with desired forces.</p>
+
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/in3cUozkU-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+
+<p><strong>Supported robots</strong>: <code class="language-plaintext highlighter-rouge">JVRC1</code>.</p>
+
+<p><strong>Prerequisites</strong>: Please make sure that the hand force sensors have been calibrated beforehand using the <a href="https://github.com/jrl-umi3218/mc_force_sensor_calibration_controller">ForceSensorCalibration controller</a>.</p>
+
+<p><strong>Running</strong></p>
+
+<p>To run the sample, you need a dynamic simulator in order to simulate the force sensors. This tutorial is intended to be used with <a href="https://github.com/jrl-umi3218/mc_openrtm" target="blank_">mc_openrtm</a> and <a href="https://choreonoid.org/en/" target="blank_">Choreonoid</a>, and the provided simulation file <code class="language-plaintext highlighter-rouge">sim_mc_wall.cnoid</code>. If you use another simulator, you will need to adapt the instructions, and create a scene with a wall <code class="language-plaintext highlighter-rouge">55cm</code> away from the robot.</p>
+
+<p>Put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> with Choreonoid. The robot reaches both hands to the wall and applies the specified external forces of the sine wave to the wall with leaning forward.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1</span>
+<span class="na">Enabled</span><span class="pi">:</span> <span class="s">ExternalForces</span>
+</code></pre></div></div>
 
 
         <hr/>

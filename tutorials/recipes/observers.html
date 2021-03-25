@@ -538,7 +538,7 @@
       <span class="p">{</span>
         <span class="c1">// Display failure error</span>
         <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">"Observer </span><span class="se">\"</span><span class="s">{}</span><span class="se">\"</span><span class="s"> failed with error </span><span class="se">\"</span><span class="s">{}</span><span class="se">\"</span><span class="s">"</span><span class="p">,</span> <span class="n">observer</span><span class="p">.</span><span class="n">observer</span><span class="p">().</span><span class="n">name</span><span class="p">(),</span> <span class="n">observer</span><span class="p">.</span><span class="n">observer</span><span class="p">().</span><span class="n">error</span><span class="p">());</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">observer</span><span class="p">.</span><span class="n">observer</span><span class="p">.</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="s">"MyObserver"</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">observer</span><span class="p">.</span><span class="n">observer</span><span class="p">().</span><span class="n">name</span><span class="p">()</span> <span class="o">==</span> <span class="s">"MyObserver"</span><span class="p">)</span>
         <span class="p">{</span>
           <span class="c1">// do something specific if this observer failed</span>
         <span class="p">}</span>
@@ -577,7 +577,7 @@ For further available functionnalities, please refer to <a href="/mc_rtc/doxygen
 <div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">add_observer</span><span class="p">(</span>YourObserverName YourObserver.cpp YourObserver.h<span class="p">)</span>
 </code></pre></div></div>
 
-<p>Note: If you wish to inherit from one of the default observers provided along with the framework, you will need to link against it. For example, if you inherit from <a href="/mc_rtc/doxygen.html#structmc__observers_1_1BodySensorObserver" target="blank_">mc_observers::BodySensorObserver</a> you need to link against the corresponding `mc_observers::BodySensorObserver %} target:</p>
+<p>Note: If you wish to inherit from one of the default observers provided along with the framework, you will need to link against it. For example, if you inherit from <a href="/mc_rtc/doxygen.html#structmc__observers_1_1BodySensorObserver" target="blank_">mc_observers::BodySensorObserver</a> you need to link against the corresponding <code class="language-plaintext highlighter-rouge">mc_observers::BodySensorObserver</code> target:</p>
 
 <div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">target_link_libraries</span><span class="p">(</span>YourObserverName PUBLIC mc_observers::BodySensorObserver<span class="p">)</span>
 </code></pre></div></div>

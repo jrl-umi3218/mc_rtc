@@ -36,5 +36,7 @@ var searchData=
   ['exception',['Exception',['../structmc__rtc_1_1Configuration_1_1Exception.html#ae817c10e94b5dac7d6790f39138db9ff',1,'mc_rtc::Configuration::Exception::Exception(const std::string &amp;msg, const Json &amp;v)'],['../structmc__rtc_1_1Configuration_1_1Exception.html#a7fb4c7e9f42ab610bc546f16c23e5bd4',1,'mc_rtc::Configuration::Exception::Exception(const std::string &amp;msg, const Configuration &amp;c)']]],
   ['expand_5fstance',['expand_stance',['../structmc__rbdyn_1_1RobotModule.html#aa6f2c53b2567e6fbd62f8694db311a9d',1,'mc_rbdyn::RobotModule']]],
   ['exponentialmovingaverage',['ExponentialMovingAverage',['../structmc__filter_1_1ExponentialMovingAverage.html#a156a26de235d293b4e94cb1f269dd16c',1,'mc_filter::ExponentialMovingAverage']]],
-  ['extrastiffness',['extraStiffness',['../namespacemc__tasks.html#aa673a5574c449b983c740d35cddf6669',1,'mc_tasks']]]
+  ['externalwrenchconfiguration',['externalWrenchConfiguration',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a7b4d0a866a7eb38fdb14567d4ef78995',1,'mc_tasks::lipm_stabilizer::StabilizerTask::externalWrenchConfiguration(const ExternalWrenchConfiguration &amp;extWrenchConfig) noexcept'],['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa8e7a8dde0d29233a6eee898f128361a',1,'mc_tasks::lipm_stabilizer::StabilizerTask::externalWrenchConfiguration() const noexcept']]],
+  ['extrastiffness',['extraStiffness',['../namespacemc__tasks.html#aa673a5574c449b983c740d35cddf6669',1,'mc_tasks']]],
+  ['extwrenchsumlowpasscutoffperiod',['extWrenchSumLowPassCutoffPeriod',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae0837cd5e41e827e59bfcae07f3b0c7b',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]]
 ];
