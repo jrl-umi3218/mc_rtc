@@ -1,3 +1,9 @@
+mc-rtc (1.7.0-1ubuntu1) unstable; urgency=medium
+
+  * Update upstream: see CHANGELOG.md
+
+ -- Pierre Gergondet <pierre.gergondet+ppa@gmail.com>  Tue, 30 Mar 2021 10:08:49 +0800
+
 mc-rtc (1.6.0-1ubuntu1) unstable; urgency=medium
 
   * Update upstream: see CHANGELOG.md

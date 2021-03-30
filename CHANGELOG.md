@@ -2,6 +2,54 @@
 
 ## [Unreleased]
 
+## [1.7.0] - 2021-03-30
+
+### New packages
+
+- Interface
+  - [mc_franka](https://github.com/jrl-umi3218/mc_franka) for libfranka integration
+- Robot
+  - [mc_panda](https://github.com/jrl-umi3218/mc_panda) for working with the Panda robot in mc_rtc
+- GUI (experimental)
+  - [mc_rtc-raylib](https://github.com/gergondet/mc_rtc-raylib/)
+  - [mc_rtc-magnum](https://github.com/gergondet/mc_rtc-magnum/)
+
+### Changes
+
+- [Grippers] Allow to specify per-joint target angle and enforce joint limits in such cases (#125)
+- [mc_log_ui] Greatly improve animation support (#126)
+- [mc_rbdyn] Aliases are preserved as loading parameters for the RobotModule
+- [mc_rtc] Allow to specify a data source for logging, entries can then be removed through this source (#115)
+- [mc_rtc] When deserializing a Quaternion object, accept matrix and RPY representations
+- [meta] Template projects for new controllers and robot modules are now available under the mc-rtc organization https://github.com/mc-rtc/
+- [observers] Allow to specify optional observers and potentially failing observers (#123)
+- [QHull] Update to QHull 2020.2 (#87)
+- [Stabilizer] Add the possibility to estimate DCM bias (#105)
+- [Stabilizer] Can now handle external forces (#95)
+- [utils] Make Python executable modifiable, defaults on python3 for Ubuntu 20.04
+
+### Added
+
+- [global] Add MC_RTC_DISABLE_NETWORK option and MC_RTC_BUILD_STATIC option, allow to build a wasm version of the framework (#88)
+- [GUI] `LineConfig` can be provided for `Polygon` elements (#118)
+- [GUI] Add the `Robot` type to publish robots to non-ROS GUI
+- [mc_rtc] Add support for logging `sva::ImpedanceVecd`
+- [mc_tasks] Added ImpedanceTask (#100)
+- [utils] Allow to specify a different (potentially absolute) build directory (#82)
+- [utils] Auto-completion support for build-and-install (#83)
+- [utils] Added support for HRP4CR (#106)
+
+### Fixes
+
+- [mc_rtc] Performance improvement for writing `sva::ForceVecd` and `sva::MotionVecd` in the log
+- [ROS] Fix an issue where the publication rate was not enforced properly (#133)
+- [Stabilizer] Fix min/max bug in contact computation (only affected logging/GUI) (#114)
+- [Stabilizer] Fix `speed()` method (#124)
+- [Stabilizer] Improve consistency when loading the configuration (#122)
+- [utils] Correctly set DISABLE_ROS option in every case
+- [web] Various typos in tutorials and website (#99, #107, #108, #116, #128, #132)
+- [Windows] Fix pragma warnings and add `/bigobj` flag (#129)
+
 ## [1.6.0] - 2020-10-16
 
 ### Changes
@@ -220,7 +268,8 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.7.0
 [1.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.6.0
 [1.5.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.1
 [1.5.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.0
