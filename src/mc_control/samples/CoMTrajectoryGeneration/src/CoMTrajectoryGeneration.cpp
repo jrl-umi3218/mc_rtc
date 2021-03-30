@@ -17,11 +17,7 @@ bool CoMTrajectoryGeneration::run()
 void CoMTrajectoryGeneration::reset(const mc_control::ControllerResetData & reset_data)
 {
   mc_control::fsm::Controller::reset(reset_data);
-  datastore().make_call("KinematicAnchorFrame::" + robot().name(),
-                          [](const mc_rbdyn::Robot & robot)
-                          {
-                            return sva::interpolate(robot.surfacePose("LeftFootCenter"),
-                                                    robot.surfacePose("RightFootCenter"),
-                                                    0.5);
-                          });
+  datastore().make_call("KinematicAnchorFrame::" + robot().name(), [](const mc_rbdyn::Robot & robot) {
+    return sva::interpolate(robot.surfacePose("LeftFootCenter"), robot.surfacePose("RightFootCenter"), 0.5);
+  });
 }

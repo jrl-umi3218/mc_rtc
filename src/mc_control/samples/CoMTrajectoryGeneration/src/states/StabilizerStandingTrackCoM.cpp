@@ -33,19 +33,13 @@ void StabilizerStandingTrackCoM::start(mc_control::fsm::Controller & ctl)
                                    const Eigen::Vector3d & comdd,
                                    const Eigen::Vector3d & zmp) { stabilizerTask_->target(com, comd, comdd, zmp); });
   // Update anchor frame for the KinematicInertial observer
+  ctl.datastore().remove("KinematicAnchorFrame::" + ctl.robot().name());
   ctl.datastore().make_call("KinematicAnchorFrame::" + ctl.robot().name(),
                             [this](const mc_rbdyn::Robot & robot) { return stabilizerTask_->anchorFrame(robot); });
 }
 
 bool StabilizerStandingTrackCoM::run(mc_control::fsm::Controller & ctl)
 {
-  // Update anchor frame for the KinematicInertial observer
-  ctl.datastore().remove("KinematicAnchorFrame::" + ctl.robot().name());
-  ctl.datastore().make_call("KinematicAnchorFrame::" + ctl.robot().name(),
-                          [this](const mc_rbdyn::Robot & robot)
-                          {
-                            return stabilizerTask_->anchorFrame(robot);
-                          });
   output("OK");
   return false;
 }
@@ -61,13 +55,10 @@ void StabilizerStandingTrackCoM::teardown(mc_control::fsm::Controller & ctl)
   double leftFootRatio = stabilizerTask_->leftFootRatio();
   std::string leftSurface = stabilizerTask_->footSurface(mc_tasks::lipm_stabilizer::ContactState::Left);
   std::string rightSurface = stabilizerTask_->footSurface(mc_tasks::lipm_stabilizer::ContactState::Right);
-  ctl.datastore().make_call("KinematicAnchorFrame::" + ctl.robot().name(),
-                          [leftFootRatio, leftSurface, rightSurface](const mc_rbdyn::Robot & robot)
-                          {
-                            return sva::interpolate(robot.surfacePose(leftSurface),
-                                                    robot.surfacePose(rightSurface),
-                                                    leftFootRatio);
-                          });
+  ctl.datastore().make_call("KinematicAnchorFrame::" + ctl.robot().name(), [leftFootRatio, leftSurface, rightSurface](
+                                                                               const mc_rbdyn::Robot & robot) {
+    return sva::interpolate(robot.surfacePose(leftSurface), robot.surfacePose(rightSurface), leftFootRatio);
+  });
 }
 
 } // namespace mc_samples

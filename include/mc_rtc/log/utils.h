@@ -117,7 +117,6 @@ IMPL_ENUM_TO_TYPE_MAPPING(Eigen::Quaterniond, Quaterniond);
 IMPL_ENUM_TO_TYPE_MAPPING(sva::PTransformd, PTransformd);
 IMPL_ENUM_TO_TYPE_MAPPING(sva::ForceVecd, ForceVecd);
 IMPL_ENUM_TO_TYPE_MAPPING(sva::MotionVecd, MotionVecd);
-IMPL_ENUM_TO_TYPE_MAPPING(sva::ImpedanceVecd, MotionVecd);
 IMPL_ENUM_TO_TYPE_MAPPING(std::vector<double>, VectorDouble);
 #undef IMPL_ENUM_TO_TYPE_MAPPING
 

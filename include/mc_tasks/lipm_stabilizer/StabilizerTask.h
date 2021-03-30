@@ -836,7 +836,6 @@ protected:
   Eigen::Vector3d dcmRef_ = Eigen::Vector3d::Zero(); ///< Desired DCM
   ///@}
 
-
   double omega_ = 0.; ///< Pendulum frequency
   double t_ = 0.; /**< Time elapsed since the task is running */
 

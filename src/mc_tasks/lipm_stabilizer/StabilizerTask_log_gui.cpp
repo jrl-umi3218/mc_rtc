@@ -385,8 +385,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   MC_RTC_LOG_HELPER(name_ + "_stabilized_dcm", dcmTarget_);
   MC_RTC_LOG_HELPER(name_ + "_stabilized_zmp", zmpTarget_);
 
-  logger.addLogEntry(name_ + "_contactState", this,
-    [this]() -> double {
+  logger.addLogEntry(name_ + "_contactState", this, [this]() -> double {
     if(inDoubleSupport())
       return 0;
     else if(inContact(ContactState::Left))
