@@ -377,7 +377,7 @@
     <span class="na">update</span><span class="pi">:</span> <span class="no">true</span>                         <span class="c1">#   update the real robot instance from its results</span>
     <span class="na">gui</span><span class="pi">:</span> <span class="no">true</span>                            <span class="c1">#   Displays the estimated velocity as an arrow (default)</span>
     <span class="na">config</span><span class="pi">:</span>
-      <span class="na">bodySensor</span><span class="pi">:</span> <span class="s">Accelerometer</span>          <span class="c1"># This observer only uses roll and pitch rotation information from this sensor</span>
+      <span class="na">imuBodySensor</span><span class="pi">:</span> <span class="s">Accelerometer</span>       <span class="c1"># This observer only uses roll and pitch rotation information from this sensor</span>
                                          <span class="c1"># along with a kinematic anchor point and the robot kinematics between the anchor</span>
                                          <span class="c1"># frame and the floating base frame. The anchor frame is expected to be provided</span>
                                          <span class="c1"># through a datastore callback (see below for details)</span>
@@ -468,7 +468,7 @@
 
 <p>The method expects the roll and pitch rotation angle w.r.t gravity to be provided by a sensor. The rotation along the gravity vector (yaw) is assumed to be unobservable by sensor (as is the case for IMU), and is instead replaced by the desired rotation of the control robot to provide a complete estimation of the sensor’s frame.</p>
 
-<p>The estimation of position relies on the assumption that the contact position is known and only concerns itself with estimating the position that best matches the observed orientation. This is achieved by providing a anchor point in-between the assumed contact positions. When static a suitable choice of anchor frame is a point center in-between all contacts. When performing motions such as walking, the anchor frame is expected to be smoothly interpolated in-between the contacts such that there is no discontinuity when contact transition occurs. This frame is expected to be provided through a datastore callback <a href="/mc_rtc/tutorial/recipes/datastore.html">datastore</a>.</p>
+<p>The estimation of position relies on the assumption that the contact position is known and only concerns itself with estimating the position that best matches the observed orientation. This is achieved by providing a anchor point in-between the assumed contact positions. When static a suitable choice of anchor frame is a point center in-between all contacts. When performing motions such as walking, the anchor frame is expected to be smoothly interpolated in-between the contacts such that there is no discontinuity when contact transition occurs. This frame is expected to be provided through a datastore callback <a href="/mc_rtc/tutorials/recipes/datastore.html">datastore</a>.</p>
 
 <p>For example, in the pipeline described in the previous section, the anchor frame is provided as a frame center between the two expected feet contact.</p>
 
@@ -522,7 +522,7 @@
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="nf">checkObserverPipeline</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">observerPipelineName</span><span class="p">)</span>
 <span class="p">{</span>
-  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">hasObserverPipeline</span><span class="p">(</span><span class="n">observerPipeline</span><span class="p">))</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">hasObserverPipeline</span><span class="p">(</span><span class="n">observerPipelineName</span><span class="p">))</span>
   <span class="p">{</span>
     <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">"This controller does not have a pipeline named {}"</span><span class="p">,</span> <span class="n">observerPipelineName</span><span class="p">);</span>
     <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
