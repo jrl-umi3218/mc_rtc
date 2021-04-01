@@ -196,6 +196,24 @@ public:
     lowPass_.cutoffPeriod(cutoffPeriod);
   }
 
+  /*! \brief Get whether hold mode is enabled. */
+  bool hold() const noexcept
+  {
+    return hold_;
+  }
+
+  /*! \brief Set hold mode.
+   *
+   *  In hold mode, the compliance modification (deltaCompPoseW_) is automatically updated so that the final target pose
+   * sent to the QP (i.e. compliancePose()) remains constant even if the user-specified target pose changes. This is
+   * useful when the user wants to change the target pose without moving the object held by the robot (e.g., when there
+   * is an error in the object pose and it is corrected based on vision sensor measurements).
+   */
+  void setHold(bool hold)
+  {
+    hold_ = hold;
+  }
+
   /*! \brief Load parameters from a Configuration object. */
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
@@ -222,6 +240,7 @@ protected:
 
   // Target pose, velocity, and acceleration in the world frame
   sva::PTransformd targetPoseW_ = sva::PTransformd::Identity();
+  sva::PTransformd prevTargetPoseW_ = sva::PTransformd::Identity();
   sva::MotionVecd targetVelW_ = sva::MotionVecd::Zero();
   sva::MotionVecd targetAccelW_ = sva::MotionVecd::Zero();
 
@@ -231,6 +250,10 @@ protected:
   sva::ForceVecd filteredMeasuredWrench_ = sva::ForceVecd::Zero();
 
   mc_filter::LowPass<sva::ForceVecd> lowPass_;
+
+  // Hold mode
+  bool hold_ = false;
+  sva::PTransformd holdOffsetPose_ = sva::PTransformd::Identity();
 
   void update(mc_solver::QPSolver & solver) override;
 
