@@ -33,6 +33,18 @@ bool is_valid_hash(std::size_t h)
   return is_valid_hash<T>(h) || is_valid_hash<U, Args...>(h);
 }
 
+template<typename T>
+bool is_valid_name(const std::string & name)
+{
+  return name == type_name<T>();
+}
+
+template<typename T, typename U, typename... Args>
+bool is_valid_name(const std::string & name)
+{
+  return is_valid_name<T>(name) || is_valid_name<U, Args...>(name);
+}
+
 /** Extract return type and argument types from a lambda by accessing ::operator() */
 template<typename T>
 struct lambda_traits : public lambda_traits<decltype(&T::operator())>
@@ -397,6 +409,8 @@ private:
     std::string (*type)();
     /** Check requested type */
     bool (*same)(std::size_t);
+    /** Fallback on checking the demangled name */
+    bool (*same_name)(const std::string &);
     /** Call destructor and delete the buffer */
     void (*destroy)(Data &);
     /** Destructor */
@@ -424,6 +438,7 @@ private:
     {
       this->type = &type_name<T>;
       this->same = &internal::is_valid_hash<T, ArgsT...>;
+      this->same_name = &internal::is_valid_name<T, ArgsT...>;
       this->destroy = [](Data & self) {
         T * p = reinterpret_cast<T *>(self.buffer.release());
         p->~T();
@@ -436,7 +451,7 @@ private:
   template<typename T>
   const T & safe_cast(const Data & data, const std::string & name) const
   {
-    if(!data.same(typeid(T).hash_code()))
+    if(!data.same(typeid(T).hash_code()) && !data.same_name(type_name<T>()))
     {
       log::error_and_throw<std::runtime_error>(
           "[{} Object for key \"{}\" does not have the same type as the stored type. Stored {} but requested {}.",
@@ -450,7 +465,7 @@ private:
   {
     const auto & data = get_data(name);
     using fn_t = std::function<RetT(FuncArgsT...)>;
-    if(!data.same(typeid(fn_t).hash_code()))
+    if(!data.same(typeid(fn_t).hash_code()) && !data.same_name(type_name<fn_t>()))
     {
       log::error_and_throw<std::runtime_error>("[{}] Function for key \"{}\" does not have the same signature as the "
                                                "requested one. Stored {} but requested {}",
