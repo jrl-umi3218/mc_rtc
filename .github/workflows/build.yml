@@ -67,7 +67,6 @@ jobs:
         sudo rm -f /etc/apt/sources.list.d/dotnetdev.list /etc/apt/sources.list.d/microsoft-prod.list
     - name: macOS cleanup
       run: |
-        sudo xcode-select -switch /Applications/Xcode_11.7.app
         sudo rm '/usr/local/bin/2to3'
       if: startsWith(runner.os, 'macOS')
     - name: Clear environment (script)
