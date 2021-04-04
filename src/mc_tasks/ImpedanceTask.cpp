@@ -226,7 +226,6 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
   MC_RTC_LOG_HELPER(name_ + "_filteredMeasuredWrench", filteredMeasuredWrench_);
   logger.addLogEntry(name_ + "_cutoffPeriod", this, [this]() { return cutoffPeriod(); });
 
-  // hold
   MC_RTC_LOG_HELPER(name_ + "_hold", hold_);
   MC_RTC_LOG_HELPER(name_ + "_holdOffsetPose", holdOffsetPose_);
 }
@@ -253,7 +252,6 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                          [this]() { return this->filteredMeasuredWrench_.vector(); }),
                  mc_rtc::gui::NumberInput("cutoffPeriod", [this]() { return this->cutoffPeriod(); },
                                           [this](double a) { return this->cutoffPeriod(a); }),
-                 // hold
                  mc_rtc::gui::Checkbox("hold", [this]() { return hold_; }, [this]() { hold_ = !hold_; }));
   gui.addElement({"Tasks", name_, "Impedance gains"},
                  mc_rtc::gui::ArrayInput("mass", {"cx", "cy", "cz", "fx", "fy", "fz"},

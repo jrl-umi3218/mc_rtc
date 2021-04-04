@@ -197,7 +197,7 @@ public:
   }
 
   /*! \brief Get whether hold mode is enabled. */
-  bool hold() const noexcept
+  inline bool hold() const noexcept
   {
     return hold_;
   }
@@ -209,7 +209,7 @@ public:
    * useful when the user wants to change the target pose without moving the object held by the robot (e.g., when there
    * is an error in the object pose and it is corrected based on vision sensor measurements).
    */
-  void setHold(bool hold)
+  inline void hold(bool hold) noexcept
   {
     hold_ = hold;
   }
