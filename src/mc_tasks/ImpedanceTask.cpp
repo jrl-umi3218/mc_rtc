@@ -130,7 +130,8 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
     holdOffsetPose_ = prevTargetPoseW_ * targetPoseW_.inv();
     // Transform to target pose frame (see compliancePose implementation)
     sva::PTransformd T_0_d(targetPoseW_.rotation());
-    deltaCompPoseW_ = deltaCompPoseW_ * T_0_d.inv() * holdOffsetPose_ * T_0_d;
+    // deltaCompPoseW_ = deltaCompPoseW_ * T_0_d.inv() * holdOffsetPose_ * T_0_d;
+    deltaCompPoseW_ = T_0_d.inv() * SurfaceTransformTask::target() * targetPoseW_.inv() * T_0_d;
   }
   else
   {
