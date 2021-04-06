@@ -32,6 +32,7 @@ var searchData=
   ['is_5fabscissa',['is_Abscissa',['../namespacemc__rtc_1_1gui_1_1plot.html#a73e5c8e2228efe9d85770fa3233df148',1,'mc_rtc::gui::plot']]],
   ['is_5fnot_5fabscissa',['is_not_Abscissa',['../namespacemc__rtc_1_1gui_1_1plot.html#ad9dd006fddf621ad45bc2ed39819cb7b',1,'mc_rtc::gui::plot::is_not_Abscissa()'],['../namespacemc__rtc_1_1gui_1_1plot.html#a4b35e42f9bdc831051bad630befc19d0',1,'mc_rtc::gui::plot::is_not_Abscissa()']]],
   ['is_5fvalid_5fhash',['is_valid_hash',['../namespacemc__rtc_1_1internal.html#a759676405e1815363e6d9094dd1919b1',1,'mc_rtc::internal::is_valid_hash(std::size_t h)'],['../namespacemc__rtc_1_1internal.html#a0f0cc0f5914bc62d93b19fda0ed53e75',1,'mc_rtc::internal::is_valid_hash(std::size_t h)']]],
+  ['is_5fvalid_5fname',['is_valid_name',['../namespacemc__rtc_1_1internal.html#ae1593091ff32313db1baa24bf770172c',1,'mc_rtc::internal::is_valid_name(const std::string &amp;name)'],['../namespacemc__rtc_1_1internal.html#a149f9b7b1184a0044b4f351e534e26ef',1,'mc_rtc::internal::is_valid_name(const std::string &amp;name)']]],
   ['isfixed',['isFixed',['../structmc__rbdyn_1_1Contact.html#a7cc9fdeb70bb0ce49c00d052513430b2',1,'mc_rbdyn::Contact']]],
   ['ismember',['isMember',['../structmc__rtc_1_1Configuration.html#a983c430fc82d271e83397cc546197c6d',1,'mc_rtc::Configuration']]],
   ['isnone',['isNone',['../structmc__rbdyn_1_1Collision.html#a664a8719f81b8fee2d2b26cd3cf645ab',1,'mc_rbdyn::Collision']]],

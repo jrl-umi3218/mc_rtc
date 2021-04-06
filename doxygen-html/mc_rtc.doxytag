@@ -2234,6 +2234,20 @@
       <anchor>a0f0cc0f5914bc62d93b19fda0ed53e75</anchor>
       <arglist>(std::size_t h)</arglist>
     </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_valid_name</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>ae1593091ff32313db1baa24bf770172c</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_valid_name</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a149f9b7b1184a0044b4f351e534e26ef</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>debug.h</name>
@@ -38297,6 +38311,20 @@
       <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
       <anchor>a0f0cc0f5914bc62d93b19fda0ed53e75</anchor>
       <arglist>(std::size_t h)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_valid_name</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>ae1593091ff32313db1baa24bf770172c</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_valid_name</name>
+      <anchorfile>namespacemc__rtc_1_1internal.html</anchorfile>
+      <anchor>a149f9b7b1184a0044b4f351e534e26ef</anchor>
+      <arglist>(const std::string &amp;name)</arglist>
     </member>
     <member kind="function">
       <type>MC_RTC_UTILS_DLLAPI std::string</type>

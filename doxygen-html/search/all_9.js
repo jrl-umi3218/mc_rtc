@@ -74,6 +74,7 @@ var searchData=
   ['is_5fserializable_5fmember',['is_serializable_member',['../structmc__rtc_1_1log_1_1is__serializable__member.html',1,'mc_rtc::log']]],
   ['is_5fserializable_5fmember_3c_20membert_20t_3a_3a_2a_20_3e',['is_serializable_member&lt; MemberT T::* &gt;',['../structmc__rtc_1_1log_1_1is__serializable__member_3_01MemberT_01T_1_1_5_01_4.html',1,'mc_rtc::log']]],
   ['is_5fvalid_5fhash',['is_valid_hash',['../namespacemc__rtc_1_1internal.html#a759676405e1815363e6d9094dd1919b1',1,'mc_rtc::internal::is_valid_hash(std::size_t h)'],['../namespacemc__rtc_1_1internal.html#a0f0cc0f5914bc62d93b19fda0ed53e75',1,'mc_rtc::internal::is_valid_hash(std::size_t h)']]],
+  ['is_5fvalid_5fname',['is_valid_name',['../namespacemc__rtc_1_1internal.html#ae1593091ff32313db1baa24bf770172c',1,'mc_rtc::internal::is_valid_name(const std::string &amp;name)'],['../namespacemc__rtc_1_1internal.html#a149f9b7b1184a0044b4f351e534e26ef',1,'mc_rtc::internal::is_valid_name(const std::string &amp;name)']]],
   ['isfixed',['isFixed',['../structmc__rbdyn_1_1Contact.html#a7cc9fdeb70bb0ce49c00d052513430b2',1,'mc_rbdyn::Contact']]],
   ['ismember',['isMember',['../structmc__rtc_1_1Configuration.html#a983c430fc82d271e83397cc546197c6d',1,'mc_rtc::Configuration']]],
   ['isnone',['isNone',['../structmc__rbdyn_1_1Collision.html#a664a8719f81b8fee2d2b26cd3cf645ab',1,'mc_rbdyn::Collision']]],

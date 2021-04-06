@@ -1,5 +1,7 @@
 var NAVTREEINDEX16 =
 {
+"structmc__tasks_1_1force_1_1ImpedanceGains.html#a6b88536a57828978dc2877d83b65001d":[3,0,9,0,5,6],
+"structmc__tasks_1_1force_1_1ImpedanceGains.html#a6be8a021cc0967787e4bfcd3619d6a10":[3,0,9,0,5,3],
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a738759b89bc0325fd66daf8d70be9072":[3,0,9,0,5,1],
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a7d9f24350044abdb57754a79aba2ea9e":[3,0,9,0,5,17],
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a89707b58ca496b54f97c2e02c80e8243":[3,0,9,0,5,15],
@@ -247,7 +249,5 @@ var NAVTREEINDEX16 =
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a326db6cb41cb9ee4d824d52a8ddbe0e1":[3,0,9,1,0,0,2],
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a335b37445d20098b896931675aaedc34":[3,0,9,1,0,0,13],
 "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a58a17b848f5db25d422c17d56c82f6b0":[3,0,9,1,0,0,16],
-"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a5b6cfbb78cfb49c05589e1f861355853":[3,0,9,1,0,0,10],
-"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a5f40394e257213822ca9b73a581b2c10":[3,0,9,1,0,0,9],
-"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a65934b1c7c1f5ba59139c2b2d4351971":[3,0,9,1,0,0,1]
+"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a5b6cfbb78cfb49c05589e1f861355853":[3,0,9,1,0,0,10]
 };

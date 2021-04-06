@@ -8,5 +8,7 @@ var DataStore_8h =
     [ "Allocator< T, typename T::eigen_aligned_operator_new_marker_type >", "structmc__rtc_1_1internal_1_1Allocator_3_01T_00_01typename_01T_1_1eigen__aligned__operator__new__marker__type_01_4.html", null ],
     [ "DataStore", "structmc__rtc_1_1DataStore.html", "structmc__rtc_1_1DataStore" ],
     [ "is_valid_hash", "DataStore_8h.html#a759676405e1815363e6d9094dd1919b1", null ],
-    [ "is_valid_hash", "DataStore_8h.html#a0f0cc0f5914bc62d93b19fda0ed53e75", null ]
+    [ "is_valid_hash", "DataStore_8h.html#a0f0cc0f5914bc62d93b19fda0ed53e75", null ],
+    [ "is_valid_name", "DataStore_8h.html#ae1593091ff32313db1baa24bf770172c", null ],
+    [ "is_valid_name", "DataStore_8h.html#a149f9b7b1184a0044b4f351e534e26ef", null ]
 ];
