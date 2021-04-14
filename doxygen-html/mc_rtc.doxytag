@@ -16385,6 +16385,20 @@
       <arglist>(double cutoffPeriod)</arglist>
     </member>
     <member kind="function">
+      <type>bool</type>
+      <name>hold</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a368728466058fc1edfef2c7d665409df</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>hold</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>a2c8e9929610ccffee183379536524cad</anchor>
+      <arglist>(bool hold) noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>load</name>
       <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
@@ -16515,6 +16529,13 @@
       <name>lowPass_</name>
       <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
       <anchor>a51861dc893e2a8aa733f48423e48c6c1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>hold_</name>
+      <anchorfile>structmc__tasks_1_1force_1_1ImpedanceTask.html</anchorfile>
+      <anchor>ae1abae5aed22bdd4007eaccabffdc4ca</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">

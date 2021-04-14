@@ -157,6 +157,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1e77e2a302a4cf27533adc9f2da8a293"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#a1e77e2a302a4cf27533adc9f2da8a293">cutoffPeriod</a> (double cutoffPeriod)</td></tr>
 <tr class="memdesc:a1e77e2a302a4cf27533adc9f2da8a293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cutoff period for the low-pass filter of measured wrench.  <a href="#a1e77e2a302a4cf27533adc9f2da8a293">More...</a><br /></td></tr>
 <tr class="separator:a1e77e2a302a4cf27533adc9f2da8a293"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a368728466058fc1edfef2c7d665409df"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#a368728466058fc1edfef2c7d665409df">hold</a> () const noexcept</td></tr>
+<tr class="memdesc:a368728466058fc1edfef2c7d665409df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get whether hold mode is enabled.  <a href="#a368728466058fc1edfef2c7d665409df">More...</a><br /></td></tr>
+<tr class="separator:a368728466058fc1edfef2c7d665409df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c8e9929610ccffee183379536524cad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#a2c8e9929610ccffee183379536524cad">hold</a> (bool hold) noexcept</td></tr>
+<tr class="memdesc:a2c8e9929610ccffee183379536524cad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set hold mode.  <a href="#a2c8e9929610ccffee183379536524cad">More...</a><br /></td></tr>
+<tr class="separator:a2c8e9929610ccffee183379536524cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8f7ed4e3d9f2393c9d91ef1a7456eae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#ab8f7ed4e3d9f2393c9d91ef1a7456eae">load</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
 <tr class="memdesc:ab8f7ed4e3d9f2393c9d91ef1a7456eae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load parameters from a Configuration object.  <a href="#ab8f7ed4e3d9f2393c9d91ef1a7456eae">More...</a><br /></td></tr>
 <tr class="separator:ab8f7ed4e3d9f2393c9d91ef1a7456eae"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -378,6 +384,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:adcee9b37135af91695753725a9f9d139"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51861dc893e2a8aa733f48423e48c6c1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmc__filter_1_1LowPass.html">mc_filter::LowPass</a>&lt; sva::ForceVecd &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#a51861dc893e2a8aa733f48423e48c6c1">lowPass_</a></td></tr>
 <tr class="separator:a51861dc893e2a8aa733f48423e48c6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1abae5aed22bdd4007eaccabffdc4ca"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#ae1abae5aed22bdd4007eaccabffdc4ca">hold_</a> = false</td></tr>
+<tr class="separator:ae1abae5aed22bdd4007eaccabffdc4ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader"></div></td></tr>
 <tr class="memitem:a81d1902dc6a242225524416168d35fc9"><td class="memItemLeft" align="right" valign="top">sva::PTransformd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#a81d1902dc6a242225524416168d35fc9">deltaCompPoseW_</a> = sva::PTransformd::Identity()</td></tr>
 <tr class="separator:a81d1902dc6a242225524416168d35fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -801,6 +809,62 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Access the impedance gains. </p>
+
+</div>
+</div>
+<a id="a368728466058fc1edfef2c7d665409df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a368728466058fc1edfef2c7d665409df">&#9670;&nbsp;</a></span>hold() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_tasks::force::ImpedanceTask::hold </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get whether hold mode is enabled. </p>
+
+</div>
+</div>
+<a id="a2c8e9929610ccffee183379536524cad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c8e9929610ccffee183379536524cad">&#9670;&nbsp;</a></span>hold() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::force::ImpedanceTask::hold </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>hold</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set hold mode. </p>
+<p>In hold mode, the compliance modification (deltaCompPoseW_) is automatically updated so that the final target pose sent to the QP (i.e. <a class="el" href="structmc__tasks_1_1force_1_1ImpedanceTask.html#ab5d822a972b518fc10d7e2444d73b3d2" title="Get the compliance pose of the surface in the world frame. ">compliancePose()</a>) remains constant even if the user-specified target pose changes. A typical use case for hold mode is to set the current end-effector pose as targetPose. Thanks to the hold mode, the robot does not move the end-effector pose, but the deltaCompPoseW_ becomes smaller, and the external force exerted by the spring term of impedance dynamics becomes smaller. Without the hold mode, the mass and damper effects of impedance dynamics would cause the compliancePose to temporarily deviate from the commanded targetPose, causes unintended movement of the end-effector. </p>
 
 </div>
 </div>
@@ -1419,6 +1483,28 @@ Additional Inherited Members</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structmc__tasks_1_1force_1_1ImpedanceGains.html">ImpedanceGains</a> mc_tasks::force::ImpedanceTask::gains_ = <a class="el" href="structmc__tasks_1_1force_1_1ImpedanceGains.html#aeff73ae8e61f3bea6441bb952a33a9c0">ImpedanceGains::Default</a>()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae1abae5aed22bdd4007eaccabffdc4ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1abae5aed22bdd4007eaccabffdc4ca">&#9670;&nbsp;</a></span>hold_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mc_tasks::force::ImpedanceTask::hold_ = false</td>
         </tr>
       </table>
   </td>

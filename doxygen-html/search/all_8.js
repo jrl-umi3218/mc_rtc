@@ -45,6 +45,8 @@ var searchData=
   ['hasvalues',['hasValues',['../structmc__trajectory_1_1SequenceInterpolator.html#a0b03ecdb30393152c9e511862aad9571',1,'mc_trajectory::SequenceInterpolator']]],
   ['head_5fdiam',['head_diam',['../structmc__rtc_1_1gui_1_1ArrowConfig.html#a26256e219f431d46b0294dae46f9a080',1,'mc_rtc::gui::ArrowConfig']]],
   ['head_5flen',['head_len',['../structmc__rtc_1_1gui_1_1ArrowConfig.html#a79bdd719f1213d5d0649b7ea1182b559',1,'mc_rtc::gui::ArrowConfig']]],
+  ['hold',['hold',['../structmc__tasks_1_1force_1_1ImpedanceTask.html#a368728466058fc1edfef2c7d665409df',1,'mc_tasks::force::ImpedanceTask::hold() const noexcept'],['../structmc__tasks_1_1force_1_1ImpedanceTask.html#a2c8e9929610ccffee183379536524cad',1,'mc_tasks::force::ImpedanceTask::hold(bool hold) noexcept']]],
+  ['hold_5f',['hold_',['../structmc__tasks_1_1force_1_1ImpedanceTask.html#ae1abae5aed22bdd4007eaccabffdc4ca',1,'mc_tasks::force::ImpedanceTask']]],
   ['horizontal',['Horizontal',['../namespacemc__rtc_1_1gui.html#a649ddcaedb769dede3922fa845e71ca4ac1b5fa03ecdb95d4a45dd1c40b02527f',1,'mc_rtc::gui']]],
   ['hrep',['hrep',['../structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a8f5506ed9550e264f73e26e6178b30e0',1,'mc_tasks::lipm_stabilizer::internal::Contact']]],
   ['hrepxd',['HrepXd',['../namespacemc__tasks_1_1lipm__stabilizer.html#af644950088ef46324f20a7214021a824',1,'mc_tasks::lipm_stabilizer']]],

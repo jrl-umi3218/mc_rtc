@@ -58,7 +58,7 @@ var NAVTREEINDEX =
 "structmc__solver_1_1utils_1_1GenInequalityConstraint.html#a72ffdce8cb16cfd75fb337488cc44160",
 "structmc__tasks_1_1RelativeEndEffectorTask.html#a0566da4a9b213b3beda917e35cfb9ad2",
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a6b88536a57828978dc2877d83b65001d",
-"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a5f40394e257213822ca9b73a581b2c10"
+"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html#a335b37445d20098b896931675aaedc34"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
