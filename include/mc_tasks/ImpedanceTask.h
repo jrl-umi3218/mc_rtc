@@ -205,9 +205,12 @@ public:
   /*! \brief Set hold mode.
    *
    *  In hold mode, the compliance modification (deltaCompPoseW_) is automatically updated so that the final target pose
-   * sent to the QP (i.e. compliancePose()) remains constant even if the user-specified target pose changes. This is
-   * useful when the user wants to change the target pose without moving the object held by the robot (e.g., when there
-   * is an error in the object pose and it is corrected based on vision sensor measurements).
+   * sent to the QP (i.e. compliancePose()) remains constant even if the user-specified target pose changes. A typical
+   * use case for hold mode is to set the current end-effector pose as targetPose. Thanks to the hold mode, the robot
+   * does not move the end-effector pose, but the deltaCompPoseW_ becomes smaller, and the external force exerted by the
+   * spring term of impedance dynamics becomes smaller. Without the hold mode, the mass and damper effects of impedance
+   * dynamics would cause the compliancePose to temporarily deviate from the commanded targetPose, causes unintended
+   * movement of the end-effector.
    */
   inline void hold(bool hold) noexcept
   {
@@ -240,7 +243,6 @@ protected:
 
   // Target pose, velocity, and acceleration in the world frame
   sva::PTransformd targetPoseW_ = sva::PTransformd::Identity();
-  sva::PTransformd prevTargetPoseW_ = sva::PTransformd::Identity();
   sva::MotionVecd targetVelW_ = sva::MotionVecd::Zero();
   sva::MotionVecd targetAccelW_ = sva::MotionVecd::Zero();
 
@@ -253,7 +255,6 @@ protected:
 
   // Hold mode
   bool hold_ = false;
-  sva::PTransformd holdOffsetPose_ = sva::PTransformd::Identity();
 
   void update(mc_solver::QPSolver & solver) override;
 

@@ -123,21 +123,14 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
     deltaCompPoseW_.rotation() = aaDeltaCompRot.toRotationMatrix();
   }
 
-  // 4. Update deltaCompPoseW_ in hold mode
+  // 4. Update deltaCompPoseW_ in hold mode (See the hold method documentation for more information)
   if(hold_)
   {
-    // holdOffsetPose_ is the inverse transformation of targetPoseW_ * prevTargetPoseW_.inv()
-    holdOffsetPose_ = prevTargetPoseW_ * targetPoseW_.inv();
     // Transform to target pose frame (see compliancePose implementation)
     sva::PTransformd T_0_d(targetPoseW_.rotation());
-    // deltaCompPoseW_ = deltaCompPoseW_ * T_0_d.inv() * holdOffsetPose_ * T_0_d;
+    // The previous compliancePose() is stored in SurfaceTransformTask::target()
     deltaCompPoseW_ = T_0_d.inv() * SurfaceTransformTask::target() * targetPoseW_.inv() * T_0_d;
   }
-  else
-  {
-    holdOffsetPose_ = sva::PTransformd::Identity();
-  }
-  prevTargetPoseW_ = targetPoseW_;
 
   // 5. Set compliance values to the targets of SurfaceTransformTask
   refAccel(T_0_s * (targetAccelW_ + deltaCompAccelW_)); // represented in the surface frame
@@ -153,7 +146,6 @@ void ImpedanceTask::reset()
 
   // Set the target and compliance poses to the SurfaceTransformTask target (i.e., the current pose)
   targetPoseW_ = target();
-  prevTargetPoseW_ = targetPoseW_;
   deltaCompPoseW_ = sva::PTransformd::Identity();
 
   // Reset the target and compliance velocity and acceleration to zero
@@ -170,7 +162,6 @@ void ImpedanceTask::reset()
 
   // Reset hold
   hold_ = false;
-  holdOffsetPose_ = sva::PTransformd::Identity();
 }
 
 void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
@@ -228,7 +219,6 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
   logger.addLogEntry(name_ + "_cutoffPeriod", this, [this]() { return cutoffPeriod(); });
 
   MC_RTC_LOG_HELPER(name_ + "_hold", hold_);
-  MC_RTC_LOG_HELPER(name_ + "_holdOffsetPose", holdOffsetPose_);
 }
 
 void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
