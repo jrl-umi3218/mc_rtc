@@ -7,6 +7,7 @@
 #include <mc_tasks/MetaTaskLoader.h>
 
 #include <mc_rtc/gui/ArrayLabel.h>
+#include <mc_rtc/gui/Checkbox.h>
 #include <mc_rtc/gui/Transform.h>
 
 namespace mc_tasks
@@ -122,7 +123,16 @@ void ImpedanceTask::update(mc_solver::QPSolver & solver)
     deltaCompPoseW_.rotation() = aaDeltaCompRot.toRotationMatrix();
   }
 
-  // 4. Set compliance values to the targets of SurfaceTransformTask
+  // 4. Update deltaCompPoseW_ in hold mode (See the hold method documentation for more information)
+  if(hold_)
+  {
+    // Transform to target pose frame (see compliancePose implementation)
+    sva::PTransformd T_0_d(targetPoseW_.rotation());
+    // The previous compliancePose() is stored in SurfaceTransformTask::target()
+    deltaCompPoseW_ = T_0_d.inv() * SurfaceTransformTask::target() * targetPoseW_.inv() * T_0_d;
+  }
+
+  // 5. Set compliance values to the targets of SurfaceTransformTask
   refAccel(T_0_s * (targetAccelW_ + deltaCompAccelW_)); // represented in the surface frame
   refVelB(T_0_s * (targetVelW_ + deltaCompVelW_)); // represented in the surface frame
   target(compliancePose()); // represented in the world frame
@@ -149,6 +159,9 @@ void ImpedanceTask::reset()
   measuredWrench_ = sva::ForceVecd::Zero();
   filteredMeasuredWrench_ = sva::ForceVecd::Zero();
   lowPass_.reset(sva::ForceVecd::Zero());
+
+  // Reset hold
+  hold_ = false;
 }
 
 void ImpedanceTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config)
@@ -204,6 +217,8 @@ void ImpedanceTask::addToLogger(mc_rtc::Logger & logger)
   MC_RTC_LOG_HELPER(name_ + "_measuredWrench", measuredWrench_);
   MC_RTC_LOG_HELPER(name_ + "_filteredMeasuredWrench", filteredMeasuredWrench_);
   logger.addLogEntry(name_ + "_cutoffPeriod", this, [this]() { return cutoffPeriod(); });
+
+  MC_RTC_LOG_HELPER(name_ + "_hold", hold_);
 }
 
 void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
@@ -227,7 +242,8 @@ void ImpedanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                  mc_rtc::gui::ArrayLabel("filteredMeasuredWrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
                                          [this]() { return this->filteredMeasuredWrench_.vector(); }),
                  mc_rtc::gui::NumberInput("cutoffPeriod", [this]() { return this->cutoffPeriod(); },
-                                          [this](double a) { return this->cutoffPeriod(a); }));
+                                          [this](double a) { return this->cutoffPeriod(a); }),
+                 mc_rtc::gui::Checkbox("hold", [this]() { return hold_; }, [this]() { hold_ = !hold_; }));
   gui.addElement({"Tasks", name_, "Impedance gains"},
                  mc_rtc::gui::ArrayInput("mass", {"cx", "cy", "cz", "fx", "fy", "fz"},
                                          [this]() -> const sva::ImpedanceVecd & { return gains().mass().vec(); },
