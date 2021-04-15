@@ -740,7 +740,9 @@ clone_git_dependency()
     fi
     cd "$2/$git_dep"
     if ! git checkout "$git_dep_branch" -B $git_dep_branch; then
-      echo_log "[ERROR] Failed to checkout branch ${git_dep_branch}"
+      if ! git checkout "origin/$git_dep_branch" -B $git_dep_branch; then
+        echo_log "[ERROR] Failed to checkout branch ${git_dep_branch}"
+      fi
     fi
     git submodule sync --recursive && git submodule update --init --recursive
   else
