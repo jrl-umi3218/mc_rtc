@@ -102,7 +102,7 @@ set_target_properties(mc_rtc_3rd_party::RapidJSON PROPERTIES
 )
 
 # spdlog
-add_project_dependency(spdlog 1.6.1 REQUIRED)
+add_project_dependency(spdlog 1.5.0 REQUIRED)
 
 macro(find_description_package PACKAGE)
   set(PACKAGE_PATH_VAR "${PACKAGE}_PATH")

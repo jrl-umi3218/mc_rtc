@@ -421,6 +421,7 @@ exec_log cmake --version
 exec_log python --version
 
 echo_log "-- Loading extra configuration for $OSTYPE"
+export SYSTEM_HAS_SPDLOG=OFF
 if [[ $OSTYPE == "darwin"* ]]
 then
   . $this_dir/config_build_and_install.macos.sh
@@ -870,7 +871,12 @@ check_and_clone_git_dependency()
 }
 
 # If the dependencies have already been cloned, check if the local state of the repository is clean before upgrading
-GIT_DEPENDENCIES="gabime/spdlog#v1.6.1 humanoid-path-planner/hpp-spline#v4.7.0 jrl-umi3218/SpaceVecAlg jrl-umi3218/state-observation jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
+GIT_DEPENDENCIES="humanoid-path-planner/hpp-spline#v4.7.0 jrl-umi3218/SpaceVecAlg jrl-umi3218/state-observation jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
+if [ "x$SYSTEM_HAS_SPDLOG" == xOFF ]
+then
+  GIT_DEPENDENCIES="gabime/spdlog#v1.6.1 $GIT_DEPENDENCIES"
+fi
+
 for repo in $GIT_DEPENDENCIES; do
   check_and_clone_git_dependency $repo $SOURCE_DIR
 done
