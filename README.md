@@ -2,6 +2,7 @@ mc_rtc
 ======
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-green.svg)](https://opensource.org/licenses/BSD-2-Clause)
+[![Hosted By: Cloudsmith](https://img.shields.io/badge/OSS%20hosting%20by-cloudsmith-blue?logo=cloudsmith)](https://cloudsmith.com)
 [![CI](https://github.com/jrl-umi3218/mc_rtc/workflows/CI%20of%20mc_rtc/badge.svg?branch=master)](https://github.com/jrl-umi3218/mc_rtc/actions?query=workflow%3A%22CI+of+mc_rtc%22)
 [![Website](https://img.shields.io/badge/website-online-brightgreen?logo=read-the-docs&style=flat)](https://jrl-umi3218.github.io/mc_rtc/)
 

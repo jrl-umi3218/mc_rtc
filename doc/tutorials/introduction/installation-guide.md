@@ -4,33 +4,19 @@ install_apt:
   - name: Install stable version
     lang: bash
     source: |
-      # Make sure you have required tools
-      sudo apt install apt-transport-https lsb-release ca-certificates gnupg
-      # Add our key
-      sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 892EA6EE273707C6495A6FB6220D644C64666806
-      # Add our repository
-      sudo sh -c 'echo "deb https://dl.bintray.com/gergondet/multi-contact-release $(lsb_release -sc) main" | \
-      sudo tee /etc/apt/sources.list.d/multi-contact.list'
-      # Update packages list
-      sudo apt update
+      # Setup the mirror
+      curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/stable/setup.deb.sh' | sudo -E bash
       # Install packages
-      sudo apt install libmc-rtc-dev mc-rtc-utils python3-mc-rtc
+      sudo apt install libmc-rtc-dev mc-rtc-utils
       # Assuming you have a ROS distribution mirror setup
       sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin
   - name: Install head version
     lang: bash
     source: |
-      # Make sure you have required tools
-      sudo apt install apt-transport-https lsb-release ca-certificates gnupg
-      # Add our key
-      sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 892EA6EE273707C6495A6FB6220D644C64666806
-      # Add our repository
-      sudo sh -c 'echo "deb https://dl.bintray.com/gergondet/multi-contact-head $(lsb_release -sc) main" | \
-      sudo tee /etc/apt/sources.list.d/multi-contact.list'
-      # Update packages list
-      sudo apt update
+      # Setup the mirror
+      curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/head/setup.deb.sh' | sudo -E bash
       # Install packages
-      sudo apt install libmc-rtc-dev mc-rtc-utils python3-mc-rtc
+      sudo apt install libmc-rtc-dev mc-rtc-utils
       # Assuming you have a ROS distribution mirror setup
       sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin
 toc: true
