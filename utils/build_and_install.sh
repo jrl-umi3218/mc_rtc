@@ -1160,8 +1160,11 @@ build_catkin_workspace()
 ###############################
 
 export OLD_CMAKE_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS}"
-export CMAKE_ADDITIONAL_OPTIONS="-DSPDLOG_BUILD_EXAMPLE:BOOL=OFF -DSPDLOG_BUILD_SHARED:BOOL=ON ${CMAKE_ADDITIONAL_OPTIONS}"
-build_git_dependency_no_test gabime/spdlog
+if [ "x$SYSTEM_HAS_SPDLOG" == xOFF ]
+then
+  export CMAKE_ADDITIONAL_OPTIONS="-DSPDLOG_BUILD_EXAMPLE:BOOL=OFF -DSPDLOG_BUILD_SHARED:BOOL=ON ${CMAKE_ADDITIONAL_OPTIONS}"
+  build_git_dependency_no_test gabime/spdlog
+fi
 export CMAKE_ADDITIONAL_OPTIONS="-DBUILD_PYTHON_INTERFACE:BOOL=OFF ${OLD_CMAKE_OPTIONS}"
 build_git_dependency_no_test humanoid-path-planner/hpp-spline
 build_git_dependency jrl-umi3218/state-observation
