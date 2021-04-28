@@ -135,29 +135,24 @@ jobs:
     - name: Setup ROS packages
       run: |
         set -x
-        export PACKAGES_OUT=/tmp/packages-${{ matrix.dist }}-${{ matrix.arch }}
         export MC_LOG_UI_PYTHON_EXECUTABLE=python
         export ROS_PYTHON=python2.7
         export ROS_DISTRO=""
         if [ "${{ matrix.dist }}" = "xenial" ]
         then
           export ROS_DISTRO="kinetic"
-          export PACKAGES_OUT=${PACKAGES_OUT}-${ROS_DISTRO}
         fi
         if [ "${{ matrix.dist }}" = "bionic" -a "${{ matrix.arch }}" = "amd64" ]
         then
           export ROS_DISTRO="melodic"
-          export PACKAGES_OUT=${PACKAGES_OUT}-${ROS_DISTRO}
         fi
         if [ "${{ matrix.dist }}" = "focal" ]
         then
           export ROS_DISTRO="noetic"
           export ROS_PYTHON=python3
           export MC_LOG_UI_PYTHON_EXECUTABLE=python3
-          export PACKAGES_OUT=${PACKAGES_OUT}-${ROS_DISTRO}
         fi
         echo "ROS_DISTRO=${ROS_DISTRO}" >> $GITHUB_ENV
-        echo "PACKAGES_OUT=${PACKAGES_OUT}" >> $GITHUB_ENV
         if [ "${ROS_DISTRO}" != "" ]
         then
           sed -e"s/@ROS_DISTRO@/${ROS_DISTRO}/" debian/control.ros | tee -a debian/control
@@ -180,7 +175,7 @@ jobs:
     - uses: actions/upload-artifact@v1
       with:
         name: packages-${{ matrix.dist }}-${{ matrix.arch }}
-        path: ${{ env.PACKAGES_OUT }}
+        path: /tmp/packages-${{ matrix.dist }}-${{ matrix.arch }}/
       if: env.PACKAGE_UPLOAD == 'true'
   # This job upload binary packages for Ubuntu
   upload-packages:
