@@ -388,6 +388,66 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
   return robot;
 }
 
+namespace
+{
+
+inline void addGripperToGUI(mc_control::Gripper * g_ptr,
+                            mc_rtc::gui::StateBuilder & gui,
+                            std::vector<std::string> && category)
+{
+  gui.addElement(category, mc_rtc::gui::Button("Open", [g_ptr]() { g_ptr->setTargetOpening(1); }),
+                 mc_rtc::gui::Button("Close", [g_ptr]() { g_ptr->setTargetOpening(0); }),
+                 mc_rtc::gui::NumberSlider(
+                     "Opening percentage", [g_ptr]() { return g_ptr->opening(); },
+                     [g_ptr](double op) { g_ptr->setTargetOpening(op); }, 0, 1),
+                 mc_rtc::gui::NumberSlider(
+                     "Maximum velocity percentage", [g_ptr]() { return g_ptr->percentVMAX(); },
+                     [g_ptr](double op) { g_ptr->percentVMAX(op); }, 0, 1));
+
+  category.push_back("Targets");
+  for(const auto & joint : g_ptr->activeJoints())
+  {
+    gui.addElement(category,
+                   mc_rtc::gui::NumberSlider(
+                       joint, [joint, g_ptr]() { return g_ptr->curOpening(joint); },
+                       [joint, g_ptr](double targetOpening) { g_ptr->setTargetOpening(joint, targetOpening); }, 0, 1));
+  }
+
+  category.pop_back();
+  category.push_back("Safety");
+  if(g_ptr->is_metric())
+  {
+    gui.addElement(category,
+                   mc_rtc::gui::NumberInput(
+                       "Actual command diff threshold [m]", [g_ptr]() { return g_ptr->actualCommandDiffTrigger(); },
+                       [g_ptr](double m) { g_ptr->actualCommandDiffTrigger(m); }),
+                   mc_rtc::gui::NumberInput(
+                       "Over command limiter iterations",
+                       [g_ptr]() -> double { return g_ptr->overCommandLimitIterN(); },
+                       [g_ptr](double N) { g_ptr->overCommandLimitIterN(static_cast<unsigned int>(N)); }),
+                   mc_rtc::gui::NumberInput(
+                       "Release offset [m]", [g_ptr]() { return g_ptr->releaseSafetyOffset(); },
+                       [g_ptr](double m) { g_ptr->releaseSafetyOffset(m); }));
+  }
+  else
+  {
+    gui.addElement(
+        category,
+        mc_rtc::gui::NumberInput(
+            "Actual command diff threshold [deg]",
+            [g_ptr]() { return mc_rtc::constants::toDeg(g_ptr->actualCommandDiffTrigger()); },
+            [g_ptr](double deg) { g_ptr->actualCommandDiffTrigger(mc_rtc::constants::toRad(deg)); }),
+        mc_rtc::gui::NumberInput(
+            "Over command limiter iterations", [g_ptr]() -> double { return g_ptr->overCommandLimitIterN(); },
+            [g_ptr](double N) { g_ptr->overCommandLimitIterN(static_cast<unsigned int>(N)); }),
+        mc_rtc::gui::NumberInput(
+            "Release offset [deg]", [g_ptr]() { return mc_rtc::constants::toDeg(g_ptr->releaseSafetyOffset()); },
+            [g_ptr](double deg) { g_ptr->releaseSafetyOffset(mc_rtc::constants::toRad(deg)); }));
+  }
+}
+
+} // namespace
+
 mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
                                           const std::string & name,
                                           mc_rbdyn::Robots & robots,
@@ -417,8 +477,13 @@ void MCController::addRobotToGUI(const mc_rbdyn::Robot & r)
   data("joints").add(r.name(), r.module().ref_joint_order());
   data("frames").add(r.name(), r.frames());
   auto name = r.name();
-  gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot &
-                                                   { return this->outputRobot(name); }));
+  gui()->addElement(
+      {"Robots"},
+      mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot & { return this->outputRobot(name); }));
+  for(const auto & g : r.grippersByName())
+  {
+    addGripperToGUI(g.second.get(), *gui(), {"Global", "Grippers", r.name(), g.first});
+  }
 }
 
 void MCController::addRobotToLog(const mc_rbdyn::Robot & r)
@@ -582,12 +647,15 @@ void MCController::removeRobot(const std::string & name)
   if(gui_)
   {
     gui_->removeElement({"Robots"}, name);
+    gui_->removeCategory({"Global", "Grippers", name});
     auto data = gui_->data();
     std::vector<std::string> robots = data("robots");
     robots.erase(std::find(robots.begin(), robots.end(), name));
     data.add("robots", robots);
     data("bodies").remove(name);
     data("surfaces").remove(name);
+    data("joints").remove(name);
+    data("frames").remove(name);
   }
   outputRealRobots().removeRobot(name);
   outputRobots().removeRobot(name);
