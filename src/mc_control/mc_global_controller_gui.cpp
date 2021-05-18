@@ -22,7 +22,6 @@ void MCGlobalController::initGUI()
     auto gui = controller_->gui();
     gui->removeCategory({"Global", "Log"});
     gui->addElement({"Global", "Log"}, mc_rtc::gui::Button("Start a new log", [this]() { this->refreshLog(); }));
-    gui->removeCategory({"Global", "Grippers"});
     gui->removeCategory({"Global", "Change controller"});
     gui->addElement({"Global", "Change controller"},
                     mc_rtc::gui::Label("Current controller", [this]() { return current_ctrl; }),

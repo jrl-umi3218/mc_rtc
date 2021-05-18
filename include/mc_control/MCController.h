@@ -204,7 +204,7 @@ public:
 
   /** This function is called when the controller is stopped.
    *
-   * The default implementation does nothing.
+   * The default implementation does some cleanup in the GUI.
    *
    * For example, it can be overriden to signal threads launched by the
    * controller to pause.
