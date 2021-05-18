@@ -322,26 +322,35 @@ MCController::~MCController()
 
 mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name)
 {
+  assert(rm.get());
+  return loadRobot(*rm, name);
+}
+
+mc_rbdyn::Robot & MCController::loadRobot(const mc_rbdyn::RobotModule & rm, const std::string & name)
+{
   // Load canonical robot model (for output and display)
-  mc_rbdyn::RobotModulePtr canonicalModule = nullptr;
-  const auto & cp = rm->canonicalParameters();
-  if(cp == rm->parameters()) { canonicalModule = rm; }
+  mc_rbdyn::RobotModulePtr canonicalModulePtr = nullptr;
+  const mc_rbdyn::RobotModule * canonicalModule = nullptr;
+  const auto & cp = rm.canonicalParameters();
+  if(cp == rm.parameters()) { canonicalModule = &rm; }
   else
   {
-    canonicalModule = mc_rbdyn::RobotLoader::get_robot_module(cp);
+    canonicalModulePtr = mc_rbdyn::RobotLoader::get_robot_module(cp);
     if(!canonicalModule)
     {
       mc_rtc::log::critical("Failed to load the canonical module for {}, acting as if canonical was self", name);
-      canonicalModule = rm;
+      canonicalModule = &rm;
     }
     else
     {
-      if(!mc_rbdyn::check_module_compatibility(*rm, *canonicalModule))
+      canonicalModule = canonicalModulePtr.get();
+      if(!mc_rbdyn::check_module_compatibility(rm, *canonicalModule))
       {
         mc_rtc::log::error_and_throw("Incompatibilities between a robot module and its canonical representation");
       }
     }
   }
+  assert(canonicalModule);
   mc_rbdyn::LoadRobotParameters params{};
   auto & robot = loadRobot(rm, name, robots(), params);
   params.warn_on_missing_files(false).data(robot.data());
@@ -363,7 +372,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
                        canonicalModule->name);
     mc_rtc::log::error_and_throw("Failed to initialize grippers");
   };
-  auto & outputRobot = loadRobot(canonicalModule, name, *outputRobots_, params);
+  auto & outputRobot = loadRobot(*canonicalModule, name, *outputRobots_, params);
   for(const auto & gripper : canonicalModule->grippers())
   {
     auto mimics = gripper.mimics();
@@ -380,7 +389,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std
     }
     robot.data()->grippersRef.push_back(std::ref(*robot.data()->grippers[gripper.name]));
   }
-  loadRobot(canonicalModule, name, *outputRealRobots_, params);
+  loadRobot(*canonicalModule, name, *outputRealRobots_, params);
   addRobotToLog(robot);
   addRobotToGUI(robot);
   if(solver().backend() == Backend::Tasks) { tasks_solver(solver()).updateNrVars(); }
@@ -453,8 +462,16 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
                                           mc_rbdyn::Robots & robots,
                                           const mc_rbdyn::LoadRobotParameters & params)
 {
-  assert(rm);
-  auto & r = robots.load(name, *rm, params);
+  assert(rm.get());
+  return loadRobot(*rm, name, robots, params);
+}
+
+mc_rbdyn::Robot & MCController::loadRobot(const mc_rbdyn::RobotModule & rm,
+                                          const std::string & name,
+                                          mc_rbdyn::Robots & robots,
+                                          const mc_rbdyn::LoadRobotParameters & params)
+{
+  auto & r = robots.load(name, rm, params);
   r.mbc().gravity = mc_rtc::constants::gravity;
   r.forwardKinematics();
   r.forwardVelocity();
