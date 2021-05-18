@@ -264,6 +264,136 @@ struct MC_RBDYN_DLLAPI RobotModule
   /** Construct from a parser result */
   RobotModule(const std::string & name, const rbd::parsers::ParserResult & res);
 
+  /** Gives fine control over the connection operation \see RobotModule::connect */
+  struct ConnectionParameters
+  {
+    /** @name General parameters
+     *
+     * These parameters affect the general output
+     *
+     * @{
+     */
+
+    /** Where all the temporary assembly files are put, defaults to a randomly generated temporary folder */
+    std::string path = "";
+    /** Name of the resulting robot, defaults to `this.name`_`prefix`_`other.name` */
+    std::string name = "";
+    /** Path to the resulting robot's URDF file, defaults to `outputPath`/urdf/`name`.urdf */
+    std::string urdf_path;
+    /** Path to the resulting robot's RSDF files, defaults to `outputPath`/rsdf/`name`/ */
+    std::string rsdf_dir;
+    /** Path to the calibration directory, defaults to `outputPath`/calib/ */
+    std::string calib_dir;
+    /** Whether the default gripper safety parameters are taken from this (default) or other */
+    bool useGripperSafetyFromThis = true;
+    /** Whether the default LIPM stabilizer configuration is taken from this (default) or other */
+    bool useLIPMStabilizerConfigFromThis = true;
+
+    /** @} */
+    /* End General parameters section */
+
+    /** @name Connection joint
+     *
+     * These parameters let you control how the two RobotModule are connected
+     *
+     * @{
+     */
+
+    /** Type of joint used for connection, defaults to rbd::Joint::Type::Fixed */
+    rbd::Joint::Type jointType = rbd::Joint::Type::Fixed;
+    /** Joint axis, defaults to Eigen::Vector3d::UnitZ() */
+    Eigen::Vector3d jointAxis = Eigen::Vector3d::UnitZ();
+    /** Is joint forward, defaults to true */
+    bool jointForward = true;
+    /** Joint name, must be unique in the assembly, defaults to `this.name`_connect_`prefix`_`other.name` */
+    std::string jointName = "";
+    /** Default (half-sitting) configuration for the connection joint */
+    std::vector<double> jointStance = {};
+    /** Joint limits (position, velocity, torque) for the connection joint, \ref RobotModule::connect will throw if the
+     * limits are not compatible with the connection joint */
+    std::array<std::vector<double>, 6> jointLimits = {};
+    /** Joint acceleration limits for the connection joint, can remain empty regardless of the joint type but throws if
+     * the provided limits are not compatible with the connection joint otherwise */
+    std::array<std::vector<double>, 2> jointAccelerationLimits = {};
+    /** Joint torque derivative limits for the connection joint, can remain empty regardless of the joint type but
+     * throws if the provided limits are not compatible with the connection joint otherwise */
+    std::array<std::vector<double>, 2> jointTorqueDerivativeLimits = {};
+    /** Transformation from this_body to the connection joint, defaults to identity */
+    sva::PTransformd X_this_connection = sva::PTransformd::Identity();
+    /** Transformation from other_body to the connection joint, defaults to identity */
+    sva::PTransformd X_other_connection = sva::PTransformd::Identity();
+
+    /** @} */
+    /* End Connection joint section */
+
+    /** @name Name mapping
+     *
+     * These parameters let you define a finer mapping between names in other and the names in the resulting
+     * RobotModule. If a specific mapping is provided, then the provided name is used instead, otherwise the default is
+     * used, i.e. the provided prefix is applied to the name
+     *
+     * @{
+     */
+
+    using mapping_t = std::unordered_map<std::string, std::string>;
+
+    /** Remap body names */
+    mapping_t bodyMapping;
+
+    /** Remap joint names */
+    mapping_t jointMapping;
+
+    /** Remap convex names (applies to stpbv and collision transformations mapping) */
+    mapping_t convexMapping;
+
+    /** Remap gripper names */
+    mapping_t gripperMapping;
+
+    /** Remap surface names */
+    mapping_t surfaceMapping;
+
+    /** Remap force sensor names */
+    mapping_t forceSensorMapping;
+
+    /** Remap body sensor names */
+    mapping_t bodySensorMapping;
+
+    /** Remap device names */
+    mapping_t deviceMapping;
+
+    /** @} */
+    /* End Name mapping section */
+  };
+
+  /** Create a new RobotModule by connecting this instance with another RobotModule
+   *
+   * \param other The module that will be connected to this instance
+   *
+   * \param this_body Which body in this RobotModule is used to connect the two instances
+   *
+   * \param other_body Which body in the other RobotModule is used to connect the two instances
+   *
+   * \param prefix Prefix applied to every named entities in \p other before they are added to the resulting module
+   *
+   * \param params Parameters that control how \p other is transformed during the connection, \see ConnectionParameters
+   * documentation for details
+   *
+   * \note If \p other is has a floating then this base is eliminated in the process
+   *
+   * \note Devices from both instances are cloned into the new instance as needed
+   *
+   * \note You are responsible for handling force sensor calibration files, by default this function creates an empty
+   * calibration directory that you can populate with appropriate files
+   *
+   * \throws If a name collision occurs and in conditions specified by wrong \p params
+   *
+   */
+  RobotModule connect(const mc_rbdyn::RobotModule & other,
+                      const std::string & this_body,
+                      const std::string & other_body,
+                      const std::string & prefix,
+                      const ConnectionParameters & params) const;
+
   /** Initialize the module from a parser result
    *
    * - Initialize mb, mbc and mbg
