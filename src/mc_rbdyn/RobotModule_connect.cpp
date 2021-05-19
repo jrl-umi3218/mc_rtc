@@ -445,7 +445,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   }
   for(const auto & j : other._ref_joint_order)
   {
-    out._ref_joint_order.push_back(j);
+    out._ref_joint_order.push_back(jointName(j));
   }
 
   /** Update grippers */
