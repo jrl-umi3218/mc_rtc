@@ -168,7 +168,12 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   for(size_t i = 1; i < other.mb.joints().size(); ++i)
   {
     const auto & joint = other.mb.joint(static_cast<int>(i));
-    mbg.addJoint({joint.type(), axisFromJoint(joint), joint.forward(), jointName(joint.name())});
+    rbd::Joint j{joint.type(), axisFromJoint(joint), joint.forward(), jointName(joint.name())};
+    if(joint.isMimic())
+    {
+      j.makeMimic(jointName(joint.mimicName()), joint.mimicMultiplier(), joint.mimicOffset());
+    }
+    mbg.addJoint(j);
   }
   // Add all connections except the root<->world connection
   for(size_t i = 1; i < other.mb.joints().size(); ++i)
