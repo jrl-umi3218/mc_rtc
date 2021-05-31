@@ -8,7 +8,7 @@ fi
 
 mc_rtc_extra_steps()
 {
-  curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py && sudo python get-pip.py && rm -f get-pip.py
+  curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py && sudo python2 get-pip.py && rm -f get-pip.py
   sudo pip install matplotlib
   export MC_LOG_UI_PYTHON_EXECUTABLE=python3
 }
