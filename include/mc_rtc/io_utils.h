@@ -5,6 +5,7 @@
 #pragma once
 #include <algorithm>
 #include <functional>
+#include <limits>
 #include <sstream>
 #include <string>
 
