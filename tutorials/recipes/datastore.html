@@ -344,7 +344,7 @@
 </code></pre></div>    </div>
   </li>
   <li>If an object with the same name already exists, an exception will be raised. To avoid this, you can either check whether the datastore already has such an element with
-    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="p">(</span><span class="n">datastore</span><span class="p">().</span><span class="n">has</span><span class="p">(</span><span class="s">"key"</span><span class="p">))</span>
+    <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">datastore</span><span class="p">().</span><span class="n">has</span><span class="p">(</span><span class="s">"key"</span><span class="p">))</span>
 <span class="p">{</span>
   <span class="n">datastore</span><span class="p">().</span><span class="n">make</span><span class="o">&lt;</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"key"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
 <span class="p">}</span>
