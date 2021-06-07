@@ -33,7 +33,7 @@ A default `DataStore` instance is available in the `mc_control::MCController` cl
 
 - If an object with the same name already exists, an exception will be raised. To avoid this, you can either check whether the datastore already has such an element with
   ```cpp
-  if(datastore().has("key"))
+  if(!datastore().has("key"))
   {
     datastore().make<Eigen::Vector3d>("key", 1, 2, 3);
   }
