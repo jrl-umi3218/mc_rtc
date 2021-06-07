@@ -1174,11 +1174,13 @@ then
   build_git_dependency jrl-umi3218/Eigen3ToPython eigen
 fi
 build_git_dependency jrl-umi3218/SpaceVecAlg sva
+export CMAKE_ADDITIONAL_OPTIONS="-DCMAKE_CXX_STANDARD=11 ${OLD_CMAKE_OPTIONS}"
 build_git_dependency jrl-umi3218/sch-core
 if [ "x$WITH_PYTHON_SUPPORT" == xON ]
 then
   build_git_dependency jrl-umi3218/sch-core-python sch
 fi
+export CMAKE_ADDITIONAL_OPTIONS="${OLD_CMAKE_OPTIONS}"
 build_git_dependency jrl-umi3218/RBDyn rbdyn
 build_git_dependency jrl-umi3218/eigen-qld eigen_qld
 build_git_dependency jrl-umi3218/eigen-quadprog

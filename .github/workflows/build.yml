@@ -123,6 +123,7 @@ jobs:
           - path: jrl-umi3218/Eigen3ToPython
           - path: jrl-umi3218/SpaceVecAlg
           - path: jrl-umi3218/sch-core
+            options: -DCMAKE_CXX_STANDARD=11
           - path: jrl-umi3218/eigen-qld
           - path: jrl-umi3218/sch-core-python
           - path: jrl-umi3218/RBDyn
