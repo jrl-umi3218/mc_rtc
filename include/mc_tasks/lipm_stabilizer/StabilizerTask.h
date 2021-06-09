@@ -823,6 +823,8 @@ protected:
   StabilizerConfiguration defaultConfig_;
   /**< Last valid stabilizer configuration. */
   StabilizerConfiguration lastConfig_;
+  /**< Stabilizer configuration to disable. */
+  StabilizerConfiguration disableConfig_;
   /**< Online stabilizer configuration, can be set from the GUI. Defaults to defaultConfig_ */
   StabilizerConfiguration c_;
   /**< Whether the stabilizer needs to be reconfigured at the next

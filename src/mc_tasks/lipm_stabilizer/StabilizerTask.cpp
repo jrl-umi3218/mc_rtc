@@ -246,7 +246,7 @@ void StabilizerTask::update(mc_solver::QPSolver & solver)
   // Prevent configuration changes while the stabilizer is disabled
   if(!enabled_)
   {
-    c_ = lastConfig_;
+    c_ = disableConfig_;
     zmpcc_.configure(c_.zmpcc);
   }
   if(reconfigure_) configure_(solver);
@@ -294,14 +294,17 @@ void StabilizerTask::disable()
   mc_rtc::log::info("[StabilizerTask] disabled");
   // Save current configuration to be reused when re-enabling
   lastConfig_ = c_;
+  disableConfig_ = c_;
   // Set the stabilizer gains to zero
-  c_.copAdmittance.setZero();
-  c_.dcmDerivGain = 0.;
-  c_.dcmIntegralGain = 0.;
-  c_.dcmPropGain = 0.;
-  c_.dfzAdmittance = 0.;
-  c_.vdcFrequency = 0.;
-  c_.vdcStiffness = 0.;
+  disableConfig_.copAdmittance.setZero();
+  disableConfig_.dcmDerivGain = 0.;
+  disableConfig_.dcmIntegralGain = 0.;
+  disableConfig_.dcmPropGain = 0.;
+  disableConfig_.comdErrorGain = 0.;
+  disableConfig_.zmpdGain = 0.;
+  disableConfig_.dfzAdmittance = 0.;
+  disableConfig_.vdcFrequency = 0.;
+  disableConfig_.vdcStiffness = 0.;
   zmpcc_.enabled(false);
   enabled_ = false;
 }
@@ -317,6 +320,7 @@ void StabilizerTask::configure(const StabilizerConfiguration & config)
 {
   checkConfiguration(config);
   lastConfig_ = config;
+  disableConfig_ = config;
   c_ = config;
   c_.clampGains();
   reconfigure_ = true;
