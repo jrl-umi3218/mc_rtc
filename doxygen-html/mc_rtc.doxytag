@@ -31391,6 +31391,13 @@
     </member>
     <member kind="variable" protection="protected">
       <type>StabilizerConfiguration</type>
+      <name>disableConfig_</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a8c319bbb0af50167b9628ae561183d5a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>StabilizerConfiguration</type>
       <name>c_</name>
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>aa9ae12de4d5a45e87630efb9c45c7121</anchor>

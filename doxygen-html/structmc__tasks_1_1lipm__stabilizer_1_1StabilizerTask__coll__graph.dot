@@ -7,7 +7,7 @@ digraph "mc_tasks::lipm_stabilizer::StabilizerTask"
   Node2 [label="mc_tasks::lipm_stabilizer\l::StabilizerTask",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
   Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node3 [label="mc_tasks::MetaTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__tasks_1_1MetaTask.html",tooltip="Represents a generic task. "];
-  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" lastConfig_\nc_\ndefaultConfig_" ,fontname="Helvetica"];
+  Node4 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" disableConfig_\nlastConfig_\nc_\ndefaultConfig_" ,fontname="Helvetica"];
   Node4 [label="mc_rbdyn::lipm_stabilizer\l::StabilizerConfiguration",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html",tooltip="Configuration of the LIPMStabilizer. This configuration is meant to be overriden from the RobotModule..."];
   Node5 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" safetyThresholds" ,fontname="Helvetica"];
   Node5 [label="mc_rbdyn::lipm_stabilizer\l::SafetyThresholds",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds.html",tooltip="Stabilizer safety thresholds. "];

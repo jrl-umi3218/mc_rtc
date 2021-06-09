@@ -103,6 +103,7 @@ var structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask =
     [ "desiredWrench_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a706d2d0fed1d66103c2bcf669dd47bb8", null ],
     [ "dfzForceError_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a29892a01046ffddb485441466a5dfbe0", null ],
     [ "dfzHeightError_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aac424f24910f5856c99a44c359865dc2", null ],
+    [ "disableConfig_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8c319bbb0af50167b9628ae561183d5a", null ],
     [ "distribWrench_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acea47979a383c106e0eedc05a02e52bb", null ],
     [ "distribZMP_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1debc60c12375bc8ebb3dad18a4bf3a6", null ],
     [ "dt_", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a78355a7b3bb963abe0bc160f0d51bcb9", null ],
