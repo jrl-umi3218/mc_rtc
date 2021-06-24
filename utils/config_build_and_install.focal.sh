@@ -1,6 +1,6 @@
 export ROS_DISTRO=noetic
 export SYSTEM_HAS_SPDLOG=ON
-export APT_DEPENDENCIES="curl wget cmake build-essential gfortran doxygen cython cython3 python-nose python3-nose python-numpy python3-numpy python-coverage python3-coverage python-setuptools python3-setuptools libeigen3-dev doxygen doxygen-latex libboost-all-dev libtinyxml2-dev libgeos++-dev libnanomsg-dev libyaml-cpp-dev libltdl-dev qt5-default libqwt-qt5-dev python3-matplotlib python3-pyqt5 libspdlog-dev"
+export APT_DEPENDENCIES="curl wget cmake build-essential gfortran doxygen cython cython3 python-nose python3-nose python-numpy python3-numpy python-coverage python3-coverage python-setuptools python3-setuptools libeigen3-dev doxygen doxygen-latex libboost-all-dev libtinyxml2-dev libgeos++-dev libnanomsg-dev libyaml-cpp-dev libltdl-dev qt5-default libqwt-qt5-dev python3-matplotlib python3-pyqt5 libspdlog-dev ninja-build"
 if $BUILD_BENCHMARKS
 then
   export APT_DEPENDENCIES="$APT_DEPENDENCIES libbenchmark-dev"

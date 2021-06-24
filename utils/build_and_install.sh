@@ -422,6 +422,8 @@ exec_log python --version
 
 echo_log "-- Loading extra configuration for $OSTYPE"
 export SYSTEM_HAS_SPDLOG=OFF
+export SYSTEM_HAS_NINJA=ON
+export DISABLE_NINJA=OFF
 if [[ $OSTYPE == "darwin"* ]]
 then
   . $this_dir/config_build_and_install.macos.sh
@@ -1104,7 +1106,13 @@ build_git_dependency_configure_and_build()
   then
     custom_install_prefix="$2"
   fi
+  cmake_generator=""
+  if [ "x$SYSTEM_HAS_NINJA" == xON ] && [ "x$DISABLE_NINJA" != xON ] && [ ! -f Makefile ]
+  then
+    cmake_generator="-GNinja"
+  fi
     exec_log cmake $SOURCE_DIR/$git_dep -DCMAKE_INSTALL_PREFIX:STRING="$custom_install_prefix" \
+                    -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON \
                     -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
                     -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
                     -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
@@ -1112,6 +1120,7 @@ build_git_dependency_configure_and_build()
                     -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
                     -DMC_LOG_UI_PYTHON_EXECUTABLE:STRING="${MC_LOG_UI_PYTHON_EXECUTABLE}" \
                     -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+                    ${cmake_generator} \
                     ${CMAKE_ADDITIONAL_OPTIONS}
   exit_if_error "-- [ERROR] CMake configuration failed for $git_dep"
   build_project $git_dep
@@ -1184,6 +1193,7 @@ then
 fi
 export CMAKE_ADDITIONAL_OPTIONS="${OLD_CMAKE_OPTIONS}"
 build_git_dependency jrl-umi3218/RBDyn rbdyn
+export DISABLE_NINJA=ON
 build_git_dependency jrl-umi3218/eigen-qld eigen_qld
 build_git_dependency jrl-umi3218/eigen-quadprog
 if $WITH_LSSOL
@@ -1192,6 +1202,7 @@ then
   build_git_dependency git@gite.lirmm.fr:multi-contact/eigen-lssol
   echo_log "-- [OK] Successfully built $git_dep to $repo_dir"
 fi
+export DISABLE_NINJA=OFF
 
 build_git_dependency jrl-umi3218/Tasks tasks
 build_git_dependency jrl-umi3218/mc_rbdyn_urdf mc_rbdyn_urdf
@@ -1272,7 +1283,13 @@ then
 else
   CMAKE_ADDITIONAL_OPTIONS="${CMAKE_ADDITIONAL_OPTIONS} -DDISABLE_ROS=OFF"
 fi
+cmake_generator=""
+if [ "x$SYSTEM_HAS_NINJA" == xON ] && [ "x$DISABLE_NINJA" != xON ] && [ ! -f Makefile ]
+then
+  cmake_generator="-GNinja"
+fi
 exec_log cmake $mc_rtc_dir -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+                   -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON \
                    -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
                    -DBUILD_TESTING:BOOL=${BUILD_TESTING_OPTION} \
                    -DBUILD_BENCHMARKS:BOOL=${BUILD_BENCHMARKS_OPTION} \
@@ -1281,6 +1298,8 @@ exec_log cmake $mc_rtc_dir -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
                    -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
                    -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
                    -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
+                   -DMC_LOG_UI_PYTHON_EXECUTABLE:STRING="${MC_LOG_UI_PYTHON_EXECUTABLE}" \
+                   ${cmake_generator} \
                    ${CMAKE_ADDITIONAL_OPTIONS}
 exit_if_error "CMake configuration failed for mc_rtc"
 build_project mc_rtc
