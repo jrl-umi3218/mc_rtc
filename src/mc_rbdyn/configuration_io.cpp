@@ -734,9 +734,74 @@ mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Geometry>::save(const rb
   return config;
 }
 
+rbd::parsers::Material::Color ConfigurationLoader<rbd::parsers::Material::Color>::load(
+    const mc_rtc::Configuration & config)
+{
+  return rbd::parsers::Material::Color{config("r"), config("g"), config("b"), config("a")};
+}
+
+mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Material::Color>::save(const rbd::parsers::Material::Color & col)
+{
+  mc_rtc::Configuration config;
+  config.add("r", col.r);
+  config.add("g", col.g);
+  config.add("b", col.b);
+  config.add("a", col.a);
+  return config;
+}
+
+rbd::parsers::Material::Texture ConfigurationLoader<rbd::parsers::Material::Texture>::load(
+    const mc_rtc::Configuration & config)
+{
+  return rbd::parsers::Material::Texture{config("filename")};
+}
+
+mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Material::Texture>::save(
+    const rbd::parsers::Material::Texture & text)
+{
+  mc_rtc::Configuration config;
+  config.add("filename", text.filename);
+  return config;
+}
+
+rbd::parsers::Material ConfigurationLoader<rbd::parsers::Material>::load(const mc_rtc::Configuration & config)
+{
+  rbd::parsers::Material mat;
+  if(config.has("color"))
+  {
+    mat.type = rbd::parsers::Material::Type::COLOR;
+    rbd::parsers::Material::Color c = config("color");
+    mat.data = c;
+  }
+  else if(config.has("texture"))
+  {
+    mat.type = rbd::parsers::Material::Type::TEXTURE;
+    rbd::parsers::Material::Texture t = config("texture");
+    mat.data = t;
+  }
+  return mat;
+}
+
+mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Material>::save(const rbd::parsers::Material & mat)
+{
+  mc_rtc::Configuration config;
+  switch(mat.type)
+  {
+    case rbd::parsers::Material::Type::COLOR:
+      config.add("color", boost::get<rbd::parsers::Material::Color>(mat.data));
+      break;
+    case rbd::parsers::Material::Type::TEXTURE:
+      config.add("texture", boost::get<rbd::parsers::Material::Texture>(mat.data));
+      break;
+    default:
+      break;
+  }
+  return config;
+}
+
 rbd::parsers::Visual ConfigurationLoader<rbd::parsers::Visual>::load(const mc_rtc::Configuration & config)
 {
-  return {config("name"), config("origin"), config("geometry")};
+  return {config("name"), config("origin"), config("geometry"), config("material")};
 }
 
 mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Visual>::save(const rbd::parsers::Visual & vis)
@@ -745,6 +810,7 @@ mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Visual>::save(const rbd:
   config.add("name", vis.name);
   config.add("origin", vis.origin);
   config.add("geometry", vis.geometry);
+  config.add("material", vis.material);
   return config;
 }
 
