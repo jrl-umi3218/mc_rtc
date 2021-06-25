@@ -20,6 +20,7 @@ else()
     set(MC_RTC_VERSION "${PROJECT_VERSION}")
   endif()
 endif()
+set(MC_RTC_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 
 set(FILE_IN "${PROJECT_SOURCE_DIR}/include/mc_rtc/version.h.in")
 set(FILE_OUT "${PROJECT_BINARY_DIR}/include/mc_rtc/version.h")
