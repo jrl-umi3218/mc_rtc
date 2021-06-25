@@ -233,6 +233,23 @@ struct MC_RTC_UTILS_DLLAPI MessagePackBuilder
     finish_array();
   }
 
+  /** Write an Eigen::Ref */
+  template<typename Type, int Options, typename StrideType>
+  void write(const Eigen::Ref<Type, Options, StrideType> & v)
+  {
+#if not EIGEN_VERSION_AT_LEAST(3, 2, 90)
+    using Index = Eigen::DenseIndex;
+#else
+    using Index = Eigen::Index;
+#endif
+    start_array(v.size());
+    for(Index i = 0; i < v.size(); ++i)
+    {
+      write(v(i));
+    }
+    finish_array();
+  }
+
   /** @} */
   /* End Add data to the MessagePack section (containers) */
 

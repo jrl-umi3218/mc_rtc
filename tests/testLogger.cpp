@@ -45,10 +45,10 @@ private:
   bool b = random_bool();
   double d = rnd();
   std::string s = random_string();
-  Eigen::Vector2d v2d = Eigen::Vector2d::Random();
-  Eigen::Vector3d v3d = Eigen::Vector3d::Random();
-  Eigen::Vector6d v6d = Eigen::Vector6d::Random();
-  Eigen::VectorXd vxd = Eigen::VectorXd::Random(static_cast<Eigen::DenseIndex>(random_size()));
+  mutable Eigen::Vector2d v2d = Eigen::Vector2d::Random();
+  mutable Eigen::Vector3d v3d = Eigen::Vector3d::Random();
+  mutable Eigen::Vector6d v6d = Eigen::Vector6d::Random();
+  mutable Eigen::VectorXd vxd = Eigen::VectorXd::Random(static_cast<Eigen::DenseIndex>(random_size()));
   Eigen::Quaterniond q = random_quat();
   sva::PTransformd pt = random_pt();
   sva::ForceVecd fv = random_fv();
@@ -75,6 +75,21 @@ public:
   DEFINE_GETTER(v)
 #undef DEFINE_GETTER
 
+#define DEFINE_GET_AS_REF(MEMBER)                                               \
+  auto get_##MEMBER##_as_ref() const->Eigen::Ref<decltype(this->MEMBER)>        \
+  {                                                                             \
+    return this->MEMBER;                                                        \
+  }                                                                             \
+  auto get_##MEMBER##_as_cref() const->Eigen::Ref<const decltype(this->MEMBER)> \
+  {                                                                             \
+    return this->MEMBER;                                                        \
+  }
+  DEFINE_GET_AS_REF(v2d)
+  DEFINE_GET_AS_REF(v3d)
+  DEFINE_GET_AS_REF(v6d)
+  DEFINE_GET_AS_REF(vxd)
+#undef DEFINE_GET_AS_REF
+
   /** Change data */
   void refresh()
   {
@@ -99,6 +114,20 @@ public:
     ADD_LOG_ENTRY("sva::MotionVecd", mv);
     ADD_LOG_ENTRY("std::vector<double>", v);
 #undef ADD_LOG_ENTRY
+#define ADD_LOG_ENTRY_AS_REF(NAME, MEMBER)                                                       \
+  {                                                                                              \
+    using RefT = Eigen::Ref<decltype(MEMBER)>;                                                   \
+    using CRefT = Eigen::Ref<const decltype(MEMBER)>;                                            \
+    withSource ? logger.addLogEntry(NAME "_as_ref", this, [this]() -> RefT { return MEMBER; })   \
+               : logger.addLogEntry(NAME "_as_ref", [this]() -> RefT { return MEMBER; });        \
+    withSource ? logger.addLogEntry(NAME "_as_cref", this, [this]() -> CRefT { return MEMBER; }) \
+               : logger.addLogEntry(NAME "_as_cref", [this]() -> RefT { return MEMBER; });       \
+  }
+    ADD_LOG_ENTRY_AS_REF("v2d", v2d);
+    ADD_LOG_ENTRY_AS_REF("v3d", v3d);
+    ADD_LOG_ENTRY_AS_REF("v6d", v6d);
+    ADD_LOG_ENTRY_AS_REF("vxd", vxd);
+#undef ADD_LOG_ENTRY_AS_REF
   }
 
   void addToLoggerWithMemberPointer(mc_rtc::Logger & logger)
@@ -115,6 +144,19 @@ public:
     logger.addLogEntry<decltype(&LogData::fv), &LogData::fv>("sva::ForceVecd", this);
     logger.addLogEntry<decltype(&LogData::mv), &LogData::mv>("sva::MotionVecd", this);
     logger.addLogEntry<decltype(&LogData::v), &LogData::v>("std::vector<double>", this);
+#define ADD_LOG_ENTRY_AS_REF(NAME, MEMBER)                                           \
+  {                                                                                  \
+    using RefT = Eigen::Ref<decltype(MEMBER)>;                                       \
+    using CRefT = Eigen::Ref<const decltype(MEMBER)>;                                \
+    logger.addLogEntry(NAME "_as_ref", this, [this]() -> RefT { return MEMBER; });   \
+    logger.addLogEntry(NAME "_as_cref", this, [this]() -> CRefT { return MEMBER; }); \
+  }
+    // Avoid special casing the check
+    ADD_LOG_ENTRY_AS_REF("v2d", v2d);
+    ADD_LOG_ENTRY_AS_REF("v3d", v3d);
+    ADD_LOG_ENTRY_AS_REF("v6d", v6d);
+    ADD_LOG_ENTRY_AS_REF("vxd", vxd);
+#undef ADD_LOG_ENTRY_AS_REF
   }
 
   void addToLoggerWithMemberPointerMacro(mc_rtc::Logger & logger)
@@ -131,6 +173,19 @@ public:
     MC_RTC_LOG_HELPER("sva::ForceVecd", fv);
     MC_RTC_LOG_HELPER("sva::MotionVecd", mv);
     MC_RTC_LOG_HELPER("std::vector<double>", v);
+#define ADD_LOG_ENTRY_AS_REF(NAME, MEMBER)                                           \
+  {                                                                                  \
+    using RefT = Eigen::Ref<decltype(MEMBER)>;                                       \
+    using CRefT = Eigen::Ref<const decltype(MEMBER)>;                                \
+    logger.addLogEntry(NAME "_as_ref", this, [this]() -> RefT { return MEMBER; });   \
+    logger.addLogEntry(NAME "_as_cref", this, [this]() -> CRefT { return MEMBER; }); \
+  }
+    // Avoid special casing the check
+    ADD_LOG_ENTRY_AS_REF("v2d", v2d);
+    ADD_LOG_ENTRY_AS_REF("v3d", v3d);
+    ADD_LOG_ENTRY_AS_REF("v6d", v6d);
+    ADD_LOG_ENTRY_AS_REF("vxd", vxd);
+#undef ADD_LOG_ENTRY_AS_REF
   }
 
   void addToLoggerWithGetter(mc_rtc::Logger & logger)
@@ -147,6 +202,14 @@ public:
     logger.addLogEntry<decltype(&LogData::get_fv), &LogData::get_fv>("sva::ForceVecd", this);
     logger.addLogEntry<decltype(&LogData::get_mv), &LogData::get_mv>("sva::MotionVecd", this);
     logger.addLogEntry<decltype(&LogData::get_v), &LogData::get_v>("std::vector<double>", this);
+    logger.addLogEntry<decltype(&LogData::get_v2d_as_ref), &LogData::get_v2d_as_ref>("v2d_as_ref", this);
+    logger.addLogEntry<decltype(&LogData::get_v2d_as_cref), &LogData::get_v2d_as_cref>("v2d_as_cref", this);
+    logger.addLogEntry<decltype(&LogData::get_v3d_as_ref), &LogData::get_v3d_as_ref>("v3d_as_ref", this);
+    logger.addLogEntry<decltype(&LogData::get_v3d_as_cref), &LogData::get_v3d_as_cref>("v3d_as_cref", this);
+    logger.addLogEntry<decltype(&LogData::get_v6d_as_ref), &LogData::get_v6d_as_ref>("v6d_as_ref", this);
+    logger.addLogEntry<decltype(&LogData::get_v6d_as_cref), &LogData::get_v6d_as_cref>("v6d_as_cref", this);
+    logger.addLogEntry<decltype(&LogData::get_vxd_as_ref), &LogData::get_vxd_as_ref>("vxd_as_ref", this);
+    logger.addLogEntry<decltype(&LogData::get_vxd_as_cref), &LogData::get_vxd_as_cref>("vxd_as_cref", this);
   }
 
   void addToLoggerWithGetterMacro(mc_rtc::Logger & logger)
@@ -163,6 +226,14 @@ public:
     MC_RTC_LOG_HELPER("sva::ForceVecd", get_fv);
     MC_RTC_LOG_HELPER("sva::MotionVecd", get_mv);
     MC_RTC_LOG_HELPER("std::vector<double>", get_v);
+    MC_RTC_LOG_HELPER("v2d_as_ref", get_v2d_as_ref);
+    MC_RTC_LOG_HELPER("v2d_as_cref", get_v2d_as_cref);
+    MC_RTC_LOG_HELPER("v3d_as_ref", get_v3d_as_ref);
+    MC_RTC_LOG_HELPER("v3d_as_cref", get_v3d_as_cref);
+    MC_RTC_LOG_HELPER("v6d_as_ref", get_v6d_as_ref);
+    MC_RTC_LOG_HELPER("v6d_as_cref", get_v6d_as_cref);
+    MC_RTC_LOG_HELPER("vxd_as_ref", get_vxd_as_ref);
+    MC_RTC_LOG_HELPER("vxd_as_cref", get_vxd_as_cref);
   }
 
   void removeFromLogger(mc_rtc::Logger & logger)
@@ -179,6 +250,14 @@ public:
     logger.removeLogEntry("sva::ForceVecd");
     logger.removeLogEntry("sva::MotionVecd");
     logger.removeLogEntry("std::vector<double>");
+    logger.removeLogEntry("v2d_as_ref");
+    logger.removeLogEntry("v2d_as_cref");
+    logger.removeLogEntry("v3d_as_ref");
+    logger.removeLogEntry("v3d_as_cref");
+    logger.removeLogEntry("vxd_as_ref");
+    logger.removeLogEntry("v6d_as_ref");
+    logger.removeLogEntry("v6d_as_cref");
+    logger.removeLogEntry("vxd_as_cref");
   }
 
   /** Check that the latest entry in the FlatLog has the same values as in the class */
@@ -198,6 +277,14 @@ public:
     ::check(log, "sva::ForceVecd", idx, fv);
     ::check(log, "sva::MotionVecd", idx, mv);
     ::check(log, "std::vector<double>", idx, v);
+    ::check(log, "v2d_as_ref", idx, v2d);
+    ::check(log, "v2d_as_cref", idx, v2d);
+    ::check(log, "v3d_as_ref", idx, v3d);
+    ::check(log, "v3d_as_cref", idx, v3d);
+    ::check(log, "v6d_as_ref", idx, v6d);
+    ::check(log, "v6d_as_cref", idx, v6d);
+    ::check(log, "vxd_as_ref", idx, vxd);
+    ::check(log, "vxd_as_cref", idx, vxd);
   }
 
   /** Check that the entry at the given index has none of the class data */
@@ -215,6 +302,14 @@ public:
     BOOST_REQUIRE(log.getRaw<sva::ForceVecd>("sva::ForceVecd", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<sva::MotionVecd>("sva::MotionVecd", idx) == nullptr);
     BOOST_REQUIRE(log.getRaw<std::vector<double>>("std::vector<double>", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::Vector2d>("v2d_as_ref", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::Vector2d>("v2d_as_cref", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::Vector3d>("v3d_as_ref", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::Vector3d>("v3d_as_cref", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::Vector6d>("v6d_as_ref", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::Vector6d>("v6d_as_cref", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::VectorXd>("vxd_as_ref", idx) == nullptr);
+    BOOST_REQUIRE(log.getRaw<Eigen::VectorXd>("vxd_as_cref", idx) == nullptr);
   }
 
   /** Shortcut to check the latest iteration is empty */
@@ -256,7 +351,15 @@ BOOST_AUTO_TEST_CASE(TestLogger)
                                      "sva::PTransformd",
                                      "sva::ForceVecd",
                                      "sva::MotionVecd",
-                                     "std::vector<double>"};
+                                     "std::vector<double>",
+                                     "v2d_as_ref",
+                                     "v2d_as_cref",
+                                     "v3d_as_ref",
+                                     "v3d_as_cref",
+                                     "v6d_as_ref",
+                                     "v6d_as_cref",
+                                     "vxd_as_ref",
+                                     "vxd_as_cref"};
     BOOST_REQUIRE(log.entries() == entries);
     BOOST_REQUIRE(log.size() == iter);
     data.check_empty(log, 0);
