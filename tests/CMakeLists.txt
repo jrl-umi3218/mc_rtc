@@ -127,6 +127,7 @@ set_target_properties(dummyClient PROPERTIES FOLDER tests/GUI)
 target_link_libraries(dummyClient PUBLIC mc_control_client)
 
 add_executable(dummyServer dummyServer.cpp)
+target_include_directories(dummyServer PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
 set_target_properties(dummyServer PROPERTIES FOLDER tests/GUI)
 target_link_libraries(dummyServer PUBLIC mc_control)
 

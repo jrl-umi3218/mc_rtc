@@ -420,6 +420,17 @@ void ControllerClient::handle_widget(const ElementId & id, const mc_rtc::Configu
       case Elements::Robot:
         robot(id, data[3], data[4], data[5]);
         break;
+      case Elements::Visual:
+        if(data[4].size() == 3)
+        {
+          Eigen::Vector3d pos = data[4];
+          visual(id, data[3], {pos});
+        }
+        else
+        {
+          visual(id, data[3], data[4]);
+        }
+        break;
       default:
         mc_rtc::log::error("Type {} is not handlded by this ControllerClient", static_cast<int>(type));
         break;

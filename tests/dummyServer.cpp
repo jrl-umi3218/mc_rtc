@@ -16,6 +16,58 @@
 #  define M_PI boost::math::constants::pi<double>()
 #endif
 
+#include "utils.h"
+
+void setColor(rbd::parsers::Visual & visual, const mc_rtc::gui::Color & color)
+{
+  rbd::parsers::Material mat;
+  rbd::parsers::Material::Color col;
+  col.r = color.r;
+  col.g = color.g;
+  col.b = color.b;
+  col.a = color.a;
+  mat.type = rbd::parsers::Material::Type::COLOR;
+  mat.data = col;
+  visual.material = mat;
+}
+
+rbd::parsers::Visual makeSphere(double radius)
+{
+  rbd::parsers::Geometry::Sphere s;
+  s.radius = radius;
+  rbd::parsers::Visual out;
+  out.origin = sva::PTransformd::Identity();
+  out.geometry.type = rbd::parsers::Geometry::Type::SPHERE;
+  out.geometry.data = s;
+  setColor(out, {1, 0, 0, 0.2});
+  return out;
+}
+
+rbd::parsers::Visual makeCylinder(double radius, double length)
+{
+  rbd::parsers::Geometry::Cylinder c;
+  c.length = length;
+  c.radius = radius;
+  rbd::parsers::Visual out;
+  out.origin = sva::PTransformd::Identity();
+  out.geometry.type = rbd::parsers::Geometry::Type::CYLINDER;
+  out.geometry.data = c;
+  setColor(out, {0, 1, 0, 0.2});
+  return out;
+}
+
+rbd::parsers::Visual makeBox(const Eigen::Vector3d & dim)
+{
+  rbd::parsers::Geometry::Box b;
+  b.size = dim;
+  rbd::parsers::Visual out;
+  out.origin = sva::PTransformd::Identity();
+  out.geometry.type = rbd::parsers::Geometry::Type::BOX;
+  out.geometry.data = b;
+  setColor(out, {0, 0, 1, 0.2});
+  return out;
+}
+
 sva::PTransformd lookAt(const Eigen::Vector3d & position, const Eigen::Vector3d & target, const Eigen::Vector3d & up)
 {
   Eigen::Matrix3d R;
@@ -172,6 +224,8 @@ struct TestServer
 
   void make_table(size_t s);
 
+  void switch_visual(const std::string & visual);
+
   mc_control::ControllerServer server{1.0, 1.0, {"ipc:///tmp/mc_rtc_pub.ipc"}, {"ipc:///tmp/mc_rtc_rep.ipc"}};
   DummyProvider provider;
   mc_rtc::gui::StateBuilder builder;
@@ -215,6 +269,16 @@ struct TestServer
   std::vector<sva::PTransformd> poseTrajectory_ = {{sva::RotX<double>(0), {1, 1, 1}},
                                                    {sva::RotX<double>(M_PI / 2), {1, -1, 2}},
                                                    {sva::RotY<double>(-M_PI / 2) * sva::RotX<double>(M_PI), {1, 1, 3}}};
+  rbd::parsers::Visual visual_;
+  std::string visualChoice_ = "sphere";
+  double sphereRadius_ = 1.0;
+  double cylinderRadius_ = 1.0;
+  double cylinderLength_ = 1.0;
+  Eigen::Vector3d boxDim_ = Eigen::Vector3d::Ones();
+  std::string robotVisual_ = "NECK_P_S";
+  sva::PTransformd visualPos_ = sva::PTransformd::Identity();
+
+  std::shared_ptr<mc_rbdyn::Robots> robots_;
 };
 
 TestServer::TestServer() : xythetaz_(4)
@@ -527,6 +591,104 @@ TestServer::TestServer() : xythetaz_(4)
                       mc_rtc::gui::plot::Polygons("feet", [this]() { return graph_.feet; }));
   };
   add_demo_plot("Fake ZMP", fake_zmp_plot);
+
+  switch_visual("sphere");
+
+  configureRobotLoader();
+  robots_ = mc_rbdyn::loadRobot(*mc_rbdyn::RobotLoader::get_robot_module("JVRC1"));
+  auto & robot = robots_->robot("jvrc1");
+  robot.posW({Eigen::Vector3d{-2.0, 0.0, robot.posW().translation().z()}});
+  builder.addElement(
+      {"Robot"}, mc_rtc::gui::Robot("jvrc1", [this]() -> const mc_rbdyn::Robot & { return robots_->robot("jvrc1"); }));
+}
+
+void TestServer::switch_visual(const std::string & choice)
+{
+  visualChoice_ = choice;
+  builder.removeCategory({"Visual"});
+  builder.addElement({"Visual"}, mc_rtc::gui::ComboInput(
+                                     "Choice", {"sphere", "box", "cylinder", "mesh"},
+                                     [this]() -> const std::string & { return visualChoice_; },
+                                     [this](const std::string & c) { switch_visual(c); }));
+  if(choice == "sphere")
+  {
+    visual_ = makeSphere(sphereRadius_);
+    builder.addElement({"Visual"}, mc_rtc::gui::NumberInput(
+                                       "radius", [this]() { return sphereRadius_; },
+                                       [this](double r) {
+                                         auto & v = boost::get<rbd::parsers::Geometry::Sphere>(visual_.geometry.data);
+                                         v.radius = r;
+                                         sphereRadius_ = r;
+                                       }));
+  }
+  else if(choice == "box")
+  {
+    visual_ = makeBox(boxDim_);
+    builder.addElement({"Visual"},
+                       mc_rtc::gui::ArrayInput(
+                           "dimensions", {"x", "y", "z"}, [this]() -> const Eigen::Vector3d & { return boxDim_; },
+                           [this](const Eigen::Vector3d & v) {
+                             auto & b = boost::get<rbd::parsers::Geometry::Box>(visual_.geometry.data);
+                             b.size = v;
+                             boxDim_ = v;
+                           }));
+  }
+  else if(choice == "cylinder")
+  {
+    visual_ = makeCylinder(cylinderRadius_, cylinderLength_);
+    builder.addElement({"Visual"},
+                       mc_rtc::gui::NumberInput(
+                           "radius", [this]() { return cylinderRadius_; },
+                           [this](double r) {
+                             auto & c = boost::get<rbd::parsers::Geometry::Cylinder>(visual_.geometry.data);
+                             c.radius = r;
+                             cylinderRadius_ = r;
+                           }),
+                       mc_rtc::gui::NumberInput(
+                           "length", [this]() { return cylinderLength_; },
+                           [this](double r) {
+                             auto & c = boost::get<rbd::parsers::Geometry::Cylinder>(visual_.geometry.data);
+                             c.length = r;
+                             cylinderLength_ = r;
+                           }));
+  }
+  else if(choice == "mesh")
+  {
+    const auto & robot = robots_->robot("jvrc1");
+    const auto & visuals = robot.module()._visual.at(robotVisual_);
+    for(auto & v : visuals)
+    {
+      builder.addElement({"Visual"}, mc_rtc::gui::Visual(
+                                         v.name, [&]() -> const rbd::parsers::Visual { return v; },
+                                         [this]() -> const sva::PTransformd & { return visualPos_; }));
+    }
+    std::vector<std::string> choices;
+    choices.reserve(robot.mb().bodies().size());
+    for(const auto & b : robot.mb().bodies())
+    {
+      if(robot.module()._visual.count(b.name()))
+      {
+        choices.push_back(b.name());
+      }
+    }
+    builder.addElement({"Visual"}, mc_rtc::gui::ComboInput(
+                                       "body", choices, [this]() { return robotVisual_; },
+                                       [this](const std::string & s) {
+                                         robotVisual_ = s;
+                                         switch_visual("mesh");
+                                       }));
+  }
+  builder.addElement({"Visual", "Position"},
+                     mc_rtc::gui::Transform(
+                         "position", [this]() -> const sva::PTransformd & { return visualPos_; },
+                         [this](const sva::PTransformd & p) { visualPos_ = p; }));
+  if(choice == "mesh")
+  {
+    return;
+  }
+  builder.addElement({"Visual"}, mc_rtc::gui::Visual(
+                                     choice, [this]() -> const rbd::parsers::Visual & { return visual_; },
+                                     [this]() -> const sva::PTransformd & { return visualPos_; }));
 }
 
 template<typename T>
