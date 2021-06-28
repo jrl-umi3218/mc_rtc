@@ -75,13 +75,13 @@ void RelativeEndEffectorTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   EndEffectorTask::addToGUI(gui);
   gui.removeElement({"Tasks", name_}, "pos_target");
-  gui.addElement(
-      {"Tasks", name_},
-      mc_rtc::gui::Transform("pos_target",
-                             [this]() { return curTransform * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx]; },
-                             [this](const sva::PTransformd & X_0_target) {
-                               set_ef_pose(X_0_target * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx].inv());
-                             }));
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Transform(
+                     "pos_target",
+                     [this]() { return curTransform * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx]; },
+                     [this](const sva::PTransformd & X_0_target) {
+                       set_ef_pose(X_0_target * robots.robot(robotIndex).mbc().bodyPosW[relBodyIdx].inv());
+                     }));
 }
 
 } // namespace mc_tasks

@@ -175,23 +175,25 @@ void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ct
     }
   };
 
-  gui.addElement(
-      category,
-      mc_rtc::gui::Checkbox("Show anchor frame (control)", [this]() { return showAnchorFrame_; },
-                            [this, showHideAnchorFrame]() {
-                              showAnchorFrame_ = !showAnchorFrame_;
-                              showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
-                            }),
-      mc_rtc::gui::Checkbox("Show anchor frame (real)", [this]() { return showAnchorFrameReal_; },
-                            [this, showHideAnchorFrame]() {
-                              showAnchorFrameReal_ = !showAnchorFrameReal_;
-                              showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
-                            }),
-      mc_rtc::gui::Checkbox("Show pose", [this]() { return showPose_; },
-                            [this, showHidePose]() {
-                              showPose_ = !showPose_;
-                              showHidePose();
-                            }));
+  gui.addElement(category,
+                 mc_rtc::gui::Checkbox(
+                     "Show anchor frame (control)", [this]() { return showAnchorFrame_; },
+                     [this, showHideAnchorFrame]() {
+                       showAnchorFrame_ = !showAnchorFrame_;
+                       showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);
+                     }),
+                 mc_rtc::gui::Checkbox(
+                     "Show anchor frame (real)", [this]() { return showAnchorFrameReal_; },
+                     [this, showHideAnchorFrame]() {
+                       showAnchorFrameReal_ = !showAnchorFrameReal_;
+                       showHideAnchorFrame("Anchor Frame (real)", showAnchorFrameReal_, X_0_anchorFrameReal_);
+                     }),
+                 mc_rtc::gui::Checkbox(
+                     "Show pose", [this]() { return showPose_; },
+                     [this, showHidePose]() {
+                       showPose_ = !showPose_;
+                       showHidePose();
+                     }));
 
   if(advancedGUI_)
   {
@@ -203,8 +205,9 @@ void KinematicInertialPoseObserver::addToGUI(const mc_control::MCController & ct
 
     auto advancedCat = category;
     advancedCat.push_back("Advanced");
-    gui.addElement(advancedCat, mc_rtc::gui::ComboInput("BodySensor", sensorNames, [this]() { return imuSensor_; },
-                                                        [this](const std::string & sensor) { imuSensor_ = sensor; }));
+    gui.addElement(advancedCat, mc_rtc::gui::ComboInput(
+                                    "BodySensor", sensorNames, [this]() { return imuSensor_; },
+                                    [this](const std::string & sensor) { imuSensor_ = sensor; }));
   }
 
   showHideAnchorFrame("Anchor Frame (control)", showAnchorFrame_, X_0_anchorFrame_);

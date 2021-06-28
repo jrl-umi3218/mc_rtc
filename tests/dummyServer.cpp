@@ -279,9 +279,11 @@ TestServer::TestServer() : xythetaz_(4)
                      mc_rtc::gui::Table("Static", static_table_header, [this]() { return static_table_data; }),
                      mc_rtc::gui::Table("Static formatted", static_table_header, {"s: {}", "d: {:0.2f}", "i: {:0.0f}"},
                                         [this]() { return static_table_data; }),
-                     mc_rtc::gui::Table("Dynamic", [this]() { return table_header; }, [this]() { return table_data; }),
-                     mc_rtc::gui::Table("Dynamic formatted", [this]() { return table_header; },
-                                        [this]() { return table_format; }, [this]() { return table_data; }),
+                     mc_rtc::gui::Table(
+                         "Dynamic", [this]() { return table_header; }, [this]() { return table_data; }),
+                     mc_rtc::gui::Table(
+                         "Dynamic formatted", [this]() { return table_header; }, [this]() { return table_format; },
+                         [this]() { return table_data; }),
                      mc_rtc::gui::Button("Add row", [this]() { make_table(table_data.size() + 1); }));
   auto data = builder.data();
   data.add("DataComboInput", std::vector<std::string>{"Choice A", "Choice B", "Choice C", "Obiwan Kenobi"});
@@ -308,97 +310,102 @@ TestServer::TestServer() : xythetaz_(4)
                      mc_rtc::gui::Button("Foo", []() { mc_rtc::log::info("Foo pushed"); }),
                      mc_rtc::gui::Button("Bar", []() { mc_rtc::log::info("Bar pushed"); }));
   builder.addElement({"Checkbox example"},
-                     mc_rtc::gui::Checkbox("Checkbox", [this]() { return check_; }, [this]() { check_ = !check_; }));
-  builder.addElement({"StringInput example"}, mc_rtc::gui::StringInput("StringInput", [this]() { return string_; },
-                                                                       [this](const std::string & data) {
-                                                                         string_ = data;
-                                                                         std::cout << "string_ changed to " << string_
-                                                                                   << std::endl;
-                                                                       }));
-  builder.addElement({"IntegerInput example"}, mc_rtc::gui::IntegerInput("IntegerInput", [this]() { return int_; },
-                                                                         [this](int data) {
-                                                                           int_ = data;
-                                                                           std::cout << "int_ changed to " << int_
-                                                                                     << std::endl;
-                                                                         }));
-  builder.addElement({"NumberInput example"}, mc_rtc::gui::NumberInput("NumberInput", [this]() { return d_; },
-                                                                       [this](double data) {
-                                                                         d_ = data;
-                                                                         std::cout << "d_ changed to " << d_
-                                                                                   << std::endl;
-                                                                       }));
-  builder.addElement({"NumberSlider example"}, mc_rtc::gui::NumberSlider("NumberSlider", [this]() { return slide_; },
-                                                                         [this](double s) {
-                                                                           slide_ = s;
-                                                                           std::cout << "slide_ changed to " << slide_
-                                                                                     << std::endl;
-                                                                         },
-                                                                         -100.0, 100.0));
-  builder.addElement({"ArrayInput example"}, mc_rtc::gui::ArrayInput("ArrayInput", [this]() { return v_; },
-                                                                     [this](const Eigen::VectorXd & data) {
-                                                                       v_ = data;
-                                                                       std::cout << "v_ changed to " << v_.transpose()
-                                                                                 << std::endl;
-                                                                     }));
-  builder.addElement({"ArrayInput with labels example"},
-                     mc_rtc::gui::ArrayInput("ArrayInput with labels", {"x", "y", "z"}, [this]() { return v3_; },
-                                             [this](const Eigen::Vector3d & data) {
-                                               v3_ = data;
-                                               std::cout << "v3_ changed to " << v3_.transpose() << std::endl;
-                                             }));
-  builder.addElement({"ComboInput"},
-                     mc_rtc::gui::ComboInput("ComboInput", {"a", "b", "c", "d"}, [this]() { return combo_; },
-                                             [this](const std::string & s) {
-                                               combo_ = s;
-                                               std::cout << "combo_ changed to " << combo_ << std::endl;
-                                             }));
-  builder.addElement({"DataComboInput"},
-                     mc_rtc::gui::DataComboInput("DataComboInput", {"DataComboInput"}, [this]() { return data_combo_; },
-                                                 [this](const std::string & s) {
-                                                   data_combo_ = s;
-                                                   std::cout << "data_combo_ changed to " << data_combo_ << std::endl;
+                     mc_rtc::gui::Checkbox(
+                         "Checkbox", [this]() { return check_; }, [this]() { check_ = !check_; }));
+  builder.addElement({"StringInput example"}, mc_rtc::gui::StringInput(
+                                                  "StringInput", [this]() { return string_; },
+                                                  [this](const std::string & data) {
+                                                    string_ = data;
+                                                    std::cout << "string_ changed to " << string_ << std::endl;
+                                                  }));
+  builder.addElement({"IntegerInput example"}, mc_rtc::gui::IntegerInput(
+                                                   "IntegerInput", [this]() { return int_; },
+                                                   [this](int data) {
+                                                     int_ = data;
+                                                     std::cout << "int_ changed to " << int_ << std::endl;
+                                                   }));
+  builder.addElement({"NumberInput example"}, mc_rtc::gui::NumberInput(
+                                                  "NumberInput", [this]() { return d_; },
+                                                  [this](double data) {
+                                                    d_ = data;
+                                                    std::cout << "d_ changed to " << d_ << std::endl;
+                                                  }));
+  builder.addElement({"NumberSlider example"}, mc_rtc::gui::NumberSlider(
+                                                   "NumberSlider", [this]() { return slide_; },
+                                                   [this](double s) {
+                                                     slide_ = s;
+                                                     std::cout << "slide_ changed to " << slide_ << std::endl;
+                                                   },
+                                                   -100.0, 100.0));
+  builder.addElement({"ArrayInput example"}, mc_rtc::gui::ArrayInput(
+                                                 "ArrayInput", [this]() { return v_; },
+                                                 [this](const Eigen::VectorXd & data) {
+                                                   v_ = data;
+                                                   std::cout << "v_ changed to " << v_.transpose() << std::endl;
                                                  }));
+  builder.addElement({"ArrayInput with labels example"},
+                     mc_rtc::gui::ArrayInput(
+                         "ArrayInput with labels", {"x", "y", "z"}, [this]() { return v3_; },
+                         [this](const Eigen::Vector3d & data) {
+                           v3_ = data;
+                           std::cout << "v3_ changed to " << v3_.transpose() << std::endl;
+                         }));
+  builder.addElement({"ComboInput"}, mc_rtc::gui::ComboInput(
+                                         "ComboInput", {"a", "b", "c", "d"}, [this]() { return combo_; },
+                                         [this](const std::string & s) {
+                                           combo_ = s;
+                                           std::cout << "combo_ changed to " << combo_ << std::endl;
+                                         }));
+  builder.addElement({"DataComboInput"}, mc_rtc::gui::DataComboInput(
+                                             "DataComboInput", {"DataComboInput"}, [this]() { return data_combo_; },
+                                             [this](const std::string & s) {
+                                               data_combo_ = s;
+                                               std::cout << "data_combo_ changed to " << data_combo_ << std::endl;
+                                             }));
   builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "MetaTask", [](const mc_rtc::Configuration & c) {
                        std::cout << "Got schema request:\n" << c.dump(true) << std::endl;
                      }));
+  builder.addElement({"Contacts", "Add"},
+                     mc_rtc::gui::Form(
+                         "Add contact",
+                         [](const mc_rtc::Configuration & data) {
+                           std::cout << "Got data" << std::endl << data.dump(true) << std::endl;
+                         },
+                         mc_rtc::gui::FormCheckbox{"Enabled", false, true},
+                         mc_rtc::gui::FormIntegerInput{"INT", false, 42},
+                         mc_rtc::gui::FormNumberInput{"NUMBER", false, 0.42},
+                         mc_rtc::gui::FormStringInput{"STRING", false, "a certain string"},
+                         mc_rtc::gui::FormArrayInput<Eigen::Vector3d>{"ARRAY_FIXED_SIZE", false, {1, 2, 3}},
+                         mc_rtc::gui::FormArrayInput<std::vector<double>>{"ARRAY_UNBOUNDED", false},
+                         mc_rtc::gui::FormComboInput{"CHOOSE WISELY", false, {"A", "B", "C", "D"}},
+                         mc_rtc::gui::FormDataComboInput{"R0", false, {"robots"}},
+                         mc_rtc::gui::FormDataComboInput{"R0 surface", false, {"surfaces", "$R0"}},
+                         mc_rtc::gui::FormDataComboInput{"R1", false, {"robots"}},
+                         mc_rtc::gui::FormDataComboInput{"R1 surface", false, {"surfaces", "$R1"}}));
   builder.addElement(
-      {"Contacts", "Add"},
-      mc_rtc::gui::Form("Add contact",
-                        [](const mc_rtc::Configuration & data) {
-                          std::cout << "Got data" << std::endl << data.dump(true) << std::endl;
-                        },
-                        mc_rtc::gui::FormCheckbox{"Enabled", false, true},
-                        mc_rtc::gui::FormIntegerInput{"INT", false, 42},
-                        mc_rtc::gui::FormNumberInput{"NUMBER", false, 0.42},
-                        mc_rtc::gui::FormStringInput{"STRING", false, "a certain string"},
-                        mc_rtc::gui::FormArrayInput<Eigen::Vector3d>{"ARRAY_FIXED_SIZE", false, {1, 2, 3}},
-                        mc_rtc::gui::FormArrayInput<std::vector<double>>{"ARRAY_UNBOUNDED", false},
-                        mc_rtc::gui::FormComboInput{"CHOOSE WISELY", false, {"A", "B", "C", "D"}},
-                        mc_rtc::gui::FormDataComboInput{"R0", false, {"robots"}},
-                        mc_rtc::gui::FormDataComboInput{"R0 surface", false, {"surfaces", "$R0"}},
-                        mc_rtc::gui::FormDataComboInput{"R1", false, {"robots"}},
-                        mc_rtc::gui::FormDataComboInput{"R1 surface", false, {"surfaces", "$R1"}}));
-  builder.addElement({"GUI Markers", "Transforms"},
-                     mc_rtc::gui::Transform("ReadOnly Transform", [this]() { return static_; }),
-                     mc_rtc::gui::Transform("Interactive Transform", [this]() { return interactive_; },
-                                            [this](const sva::PTransformd & p) { interactive_ = p; }),
-                     mc_rtc::gui::XYTheta("XYTheta ReadOnly",
-                                          [this]() -> std::array<double, 4> {
-                                            return {xytheta_.x(), xytheta_.y(), xytheta_.z(), 0.1};
-                                          }),
-                     mc_rtc::gui::XYTheta("XYTheta", [this]() { return xytheta_; },
-                                          [this](const Eigen::VectorXd & vec) { xytheta_ = vec.head<3>(); }),
-                     mc_rtc::gui::XYTheta("XYThetaAltitude", [this]() { return xythetaz_; },
-                                          [this](const Eigen::VectorXd & vec) { xythetaz_ = vec; }),
-                     mc_rtc::gui::Rotation("ReadOnly Rotation", [this]() { return rotStatic_; }),
-                     mc_rtc::gui::Rotation("Interactive Rotation", [this]() { return rotInteractive_; },
-                                           [this](const Eigen::Quaterniond & q) { rotInteractive_.rotation() = q; }));
+      {"GUI Markers", "Transforms"}, mc_rtc::gui::Transform("ReadOnly Transform", [this]() { return static_; }),
+      mc_rtc::gui::Transform(
+          "Interactive Transform", [this]() { return interactive_; },
+          [this](const sva::PTransformd & p) { interactive_ = p; }),
+      mc_rtc::gui::XYTheta("XYTheta ReadOnly",
+                           [this]() -> std::array<double, 4> {
+                             return {xytheta_.x(), xytheta_.y(), xytheta_.z(), 0.1};
+                           }),
+      mc_rtc::gui::XYTheta(
+          "XYTheta", [this]() { return xytheta_; }, [this](const Eigen::VectorXd & vec) { xytheta_ = vec.head<3>(); }),
+      mc_rtc::gui::XYTheta(
+          "XYThetaAltitude", [this]() { return xythetaz_; }, [this](const Eigen::VectorXd & vec) { xythetaz_ = vec; }),
+      mc_rtc::gui::Rotation("ReadOnly Rotation", [this]() { return rotStatic_; }),
+      mc_rtc::gui::Rotation(
+          "Interactive Rotation", [this]() { return rotInteractive_; },
+          [this](const Eigen::Quaterniond & q) { rotInteractive_.rotation() = q; }));
 
   builder.addElement(
       {"GUI Markers", "Point3D"},
       mc_rtc::gui::Point3D("ReadOnly", mc_rtc::gui::PointConfig({1., 0., 0.}, 0.08), [this]() { return v3_; }),
-      mc_rtc::gui::Point3D("Interactive", mc_rtc::gui::PointConfig({0., 1., 0.}, 0.08), [this]() { return vInt_; },
-                           [this](const Eigen::Vector3d & v) { vInt_ = v; }));
+      mc_rtc::gui::Point3D(
+          "Interactive", mc_rtc::gui::PointConfig({0., 1., 0.}, 0.08), [this]() { return vInt_; },
+          [this](const Eigen::Vector3d & v) { vInt_ = v; }));
 
   auto orange = mc_rtc::gui::Color(1.0, 0.5, 0.0);
   auto pstyle = mc_rtc::gui::LineConfig(mc_rtc::gui::Color::Cyan, 0.1, mc_rtc::gui::LineStyle::Dotted);
@@ -423,26 +430,29 @@ TestServer::TestServer() : xythetaz_(4)
   mc_rtc::gui::ArrowConfig arrow_config({1., 0., 0.});
   arrow_config.start_point_scale = 0.02;
   arrow_config.end_point_scale = 0.02;
-  builder.addElement(
-      {"GUI Markers", "Arrows"},
-      mc_rtc::gui::Arrow("ArrowRO", arrow_config,
+  builder.addElement({"GUI Markers", "Arrows"},
+                     mc_rtc::gui::Arrow(
+                         "ArrowRO", arrow_config,
                          []() {
                            return Eigen::Vector3d{2, 2, 0};
                          },
                          []() {
                            return Eigen::Vector3d{2.5, 2.5, 0.5};
                          }),
-      mc_rtc::gui::Arrow("Arrow", arrow_config, [this]() { return arrow_start_; },
+                     mc_rtc::gui::Arrow(
+                         "Arrow", arrow_config, [this]() { return arrow_start_; },
                          [this](const Eigen::Vector3d & start) { arrow_start_ = start; },
                          [this]() { return arrow_end_; }, [this](const Eigen::Vector3d & end) { arrow_end_ = end; }),
-      mc_rtc::gui::Force("ForceRO", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(1., 0., 0.)),
+                     mc_rtc::gui::Force(
+                         "ForceRO", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(1., 0., 0.)),
                          []() {
                            return sva::ForceVecd(Eigen::Vector3d{0., 0., 0.}, Eigen::Vector3d{10., 0., 100.});
                          },
                          []() {
                            return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
                          }),
-      mc_rtc::gui::Force("Force", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(0., 1., 0.)), [this]() { return force_; },
+                     mc_rtc::gui::Force(
+                         "Force", mc_rtc::gui::ForceConfig(mc_rtc::gui::Color(0., 1., 0.)), [this]() { return force_; },
                          [this](const sva::ForceVecd & force) { force_ = force; },
                          []() {
                            return sva::PTransformd{Eigen::Vector3d{2, 2, 0}};
@@ -453,27 +463,34 @@ TestServer::TestServer() : xythetaz_(4)
   using Side = mc_rtc::gui::plot::Side;
   auto sin_cos_plot = [this](const std::string & name) {
     builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
-                    mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color::Red),
-                    mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color::Blue));
+                    mc_rtc::gui::plot::Y(
+                        "sin(t)", [this]() { return std::sin(t_); }, Color::Red),
+                    mc_rtc::gui::plot::Y(
+                        "cos(t)", [this]() { return std::cos(t_); }, Color::Blue));
   };
   add_demo_plot("sin(t)/cos(t)", sin_cos_plot);
   auto demo_style_plot = [this](const std::string & name) {
     builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
-                    mc_rtc::gui::plot::Y("Solid", [this]() { return std::cos(t_); }, Color::Red).style(Style::Solid),
-                    mc_rtc::gui::plot::Y("Dashed", [this]() { return 2 - std::cos(t_); }, Color::Blue, Style::Dashed),
-                    mc_rtc::gui::plot::Y("Dotted", [this]() { return std::sin(t_); }, Color::Green)
+                    mc_rtc::gui::plot::Y(
+                        "Solid", [this]() { return std::cos(t_); }, Color::Red)
+                        .style(Style::Solid),
+                    mc_rtc::gui::plot::Y(
+                        "Dashed", [this]() { return 2 - std::cos(t_); }, Color::Blue, Style::Dashed),
+                    mc_rtc::gui::plot::Y(
+                        "Dotted", [this]() { return std::sin(t_); }, Color::Green)
                         .style(Style::Dotted)
                         .side(Side::Right),
-                    mc_rtc::gui::plot::Y("Point", [this]() { return 2 - std::sin(t_); }, Color::Magenta, Style::Point,
-                                         Side::Right));
+                    mc_rtc::gui::plot::Y(
+                        "Point", [this]() { return 2 - std::sin(t_); }, Color::Magenta, Style::Point, Side::Right));
   };
   add_demo_plot("Demo style", demo_style_plot);
   auto fix_axis_plot = [this](const std::string & name) {
-    builder.addPlot(
-        name, mc_rtc::gui::plot::X("t", [this]() { return t_; }), {"Y1", {0, 1}}, // Fix both min and max
-        {"Y2", {-Range::inf, 0}}, // Only fix max
-        mc_rtc::gui::plot::Y("sin(t)", [this]() { return std::sin(t_); }, Color::Red),
-        mc_rtc::gui::plot::Y("cos(t)", [this]() { return std::cos(t_); }, Color::Blue, Style::Solid, Side::Right));
+    builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }), {"Y1", {0, 1}}, // Fix both min and max
+                    {"Y2", {-Range::inf, 0}}, // Only fix max
+                    mc_rtc::gui::plot::Y(
+                        "sin(t)", [this]() { return std::sin(t_); }, Color::Red),
+                    mc_rtc::gui::plot::Y(
+                        "cos(t)", [this]() { return std::cos(t_); }, Color::Blue, Style::Solid, Side::Right));
   };
   add_demo_plot("Fix axis", fix_axis_plot);
   using PolygonDescription = mc_rtc::gui::plot::PolygonDescription;
@@ -481,8 +498,8 @@ TestServer::TestServer() : xythetaz_(4)
   using Points = std::vector<Point>;
   auto circle_plot = [this](const std::string & name) {
     builder.addXYPlot(name, {"X (m)", {-1, 1}}, {"Y (m)", {-1, 1}},
-                      mc_rtc::gui::plot::XY("Round", [this]() { return std::cos(t_); },
-                                            [this]() { return std::sin(t_); }, Color::Red),
+                      mc_rtc::gui::plot::XY(
+                          "Round", [this]() { return std::cos(t_); }, [this]() { return std::sin(t_); }, Color::Red),
                       mc_rtc::gui::plot::Polygon("Square", []() {
                         return PolygonDescription(Points{Point{-1, -1}, Point{-1, 1}, Point{1, 1}, Point{1, -1}},
                                                   Color::Blue)
@@ -504,8 +521,9 @@ TestServer::TestServer() : xythetaz_(4)
   auto fake_zmp_plot = [this](const std::string & name) {
     graph_.reset(t_);
     builder.addXYPlot(name,
-                      mc_rtc::gui::plot::XY("ZMP", [this]() { return graph_.zmp_x; }, [this] { return graph_.zmp_y; },
-                                            [this]() { return graph_.color(); }),
+                      mc_rtc::gui::plot::XY(
+                          "ZMP", [this]() { return graph_.zmp_x; }, [this] { return graph_.zmp_y; },
+                          [this]() { return graph_.color(); }),
                       mc_rtc::gui::plot::Polygons("feet", [this]() { return graph_.feet; }));
   };
   add_demo_plot("Fake ZMP", fake_zmp_plot);

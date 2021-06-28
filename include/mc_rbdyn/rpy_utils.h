@@ -24,10 +24,10 @@ namespace mc_rbdyn
  */
 inline Eigen::Matrix3d rpyToMat(const double & r, const double & p, const double & y)
 {
-  MC_RTC_diagnostic_push;
-  MC_RTC_diagnostic_ignored(GCC, "-Wconversion");
+  MC_RTC_diagnostic_push
+  MC_RTC_diagnostic_ignored(GCC, "-Wconversion")
   return sva::RotX(r) * sva::RotY(p) * sva::RotZ(y);
-  MC_RTC_diagnostic_pop;
+  MC_RTC_diagnostic_pop
 }
 
 /** Rotation matrix from roll-pitch-yaw angles.

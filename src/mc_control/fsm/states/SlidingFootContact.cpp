@@ -118,10 +118,12 @@ void SlidingFootContactState::start(Controller & ctl)
                                           ctl.contactConstraint().contactConstr->updateDofContacts();
                                           ctl.solver().addTask(copSlidingFootTask_);
                                         }),
-                    mc_rtc::gui::ArrayInput("Sliding target", {"x", "y"}, [this]() { return move_; },
-                                            [this](const Eigen::Vector2d & move) { move_ = move; }),
-                    mc_rtc::gui::ComboInput("Next foot", {slidingSurface_, supportSurface_}, [this]() { return next_; },
-                                            [this](const std::string & s) { next_ = s; }),
+                    mc_rtc::gui::ArrayInput(
+                        "Sliding target", {"x", "y"}, [this]() { return move_; },
+                        [this](const Eigen::Vector2d & move) { move_ = move; }),
+                    mc_rtc::gui::ComboInput(
+                        "Next foot", {slidingSurface_, supportSurface_}, [this]() { return next_; },
+                        [this](const std::string & s) { next_ = s; }),
                     mc_rtc::gui::Button("SLIDE!", [this]() {
                       if(phase_ == Phase::REACH_SUPPORT && !slide_triggered_)
                       {

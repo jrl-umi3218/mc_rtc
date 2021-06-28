@@ -174,9 +174,9 @@ void CollisionsConstraint::addMonitorButton(int collId, const mc_rbdyn::Collisio
     auto & gui = *gui_;
     std::string name = col.body1 + "/" + col.body2;
     category_.push_back("Monitors");
-    gui.addElement(category_,
-                   mc_rtc::gui::Checkbox("Monitor " + name, [collId, this]() { return monitored_.count(collId) != 0; },
-                                         [collId, this]() { toggleCollisionMonitor(collId); }));
+    gui.addElement(category_, mc_rtc::gui::Checkbox(
+                                  "Monitor " + name, [collId, this]() { return monitored_.count(collId) != 0; },
+                                  [collId, this]() { toggleCollisionMonitor(collId); }));
     category_.pop_back();
   }
 }

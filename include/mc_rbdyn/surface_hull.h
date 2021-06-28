@@ -7,10 +7,10 @@
 
 #include <mc_rtc/pragma.h>
 
-MC_RTC_diagnostic_push;
-MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion");
+MC_RTC_diagnostic_push
+MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion")
 #include <Eigen/Core>
-MC_RTC_diagnostic_pop;
+MC_RTC_diagnostic_pop
 #include <mc_rbdyn/api.h>
 
 #include <SpaceVecAlg/SpaceVecAlg>

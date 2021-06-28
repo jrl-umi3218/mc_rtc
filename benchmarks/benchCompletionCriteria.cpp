@@ -11,11 +11,11 @@
 
 #include "benchmark/benchmark.h"
 
-MC_RTC_diagnostic_push;
-MC_RTC_diagnostic_ignored(GCC, "-Wpedantic");
-MC_RTC_diagnostic_ignored(GCC, "-Wconversion");
-MC_RTC_diagnostic_ignored(GCC, "-Wunknown-pragmas");
-MC_RTC_diagnostic_ignored(GCC, "-Wunused-but-set-variable");
+MC_RTC_diagnostic_push
+MC_RTC_diagnostic_ignored(GCC, "-Wpedantic")
+MC_RTC_diagnostic_ignored(GCC, "-Wconversion")
+MC_RTC_diagnostic_ignored(GCC, "-Wunknown-pragmas")
+MC_RTC_diagnostic_ignored(GCC, "-Wunused-but-set-variable")
 
 const double dt = 0.005;
 
@@ -203,4 +203,4 @@ BENCHMARK(BM_EvalAndSpeedOrTimeoutConfigure);
 
 BENCHMARK_MAIN();
 
-MC_RTC_diagnostic_pop;
+MC_RTC_diagnostic_pop

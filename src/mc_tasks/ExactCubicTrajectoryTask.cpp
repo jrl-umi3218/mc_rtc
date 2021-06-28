@@ -81,9 +81,10 @@ void ExactCubicTrajectoryTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 
   gui.addElement(
       {"Tasks", name_, "Velocity Constraints"},
-      mc_rtc::gui::Arrow("Initial", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
-                         [this]() -> Eigen::Vector3d { return initialPose_.translation(); },
-                         [this]() -> Eigen::Vector3d { return initialPose_.translation() + bspline.init_vel(); }),
+      mc_rtc::gui::Arrow(
+          "Initial", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
+          [this]() -> Eigen::Vector3d { return initialPose_.translation(); },
+          [this]() -> Eigen::Vector3d { return initialPose_.translation() + bspline.init_vel(); }),
       mc_rtc::gui::Arrow(
           "Final", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 1., 1.)),
           [this]() -> Eigen::Vector3d { return SplineTrajectoryBase::target().translation(); },

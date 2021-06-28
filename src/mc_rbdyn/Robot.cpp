@@ -230,8 +230,8 @@ namespace mc_rbdyn
 
 // We can safely ignore those since they are due to different index types and
 // our index never go near unsafe territories
-MC_RTC_diagnostic_push;
-MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion", ClangOnly, "-Wshorten-64-to-32");
+MC_RTC_diagnostic_push
+MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion", ClangOnly, "-Wshorten-64-to-32")
 
 Robot::Robot(const std::string & name,
              Robots & robots,
@@ -1366,7 +1366,7 @@ void mc_rbdyn::Robot::addSurface(SurfacePtr surface, bool doNotReplace)
   surfaces_[surface->name()] = std::move(surface);
 }
 
-MC_RTC_diagnostic_pop;
+MC_RTC_diagnostic_pop
 
 double mc_rbdyn::Robot::mass() const
 {

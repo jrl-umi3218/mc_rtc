@@ -120,21 +120,23 @@ void AdmittanceTask::addToLogger(mc_rtc::Logger & logger)
 
 void AdmittanceTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
-  gui.addElement({"Tasks", name_},
-                 mc_rtc::gui::Transform("pos_target", [this]() { return this->targetPose(); },
-                                        [this](const sva::PTransformd & pos) { this->targetPose(pos); }),
-                 mc_rtc::gui::Transform(
-                     "pos", [this]() { return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex)); }),
-                 mc_rtc::gui::ArrayInput("admittance", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() { return this->admittance().vector(); },
-                                         [this](const Eigen::Vector6d & a) { this->admittance(a); }),
-                 mc_rtc::gui::ArrayInput("wrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() { return this->targetWrench().vector(); },
-                                         [this](const Eigen::Vector6d & a) { this->targetWrench(a); }),
-                 mc_rtc::gui::ArrayLabel("measured_wrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
-                                         [this]() { return this->measuredWrench().vector(); }),
-                 mc_rtc::gui::NumberInput("Velocity filter gain", [this]() { return velFilterGain_; },
-                                          [this](double g) { velFilterGain(g); }));
+  gui.addElement(
+      {"Tasks", name_},
+      mc_rtc::gui::Transform(
+          "pos_target", [this]() { return this->targetPose(); },
+          [this](const sva::PTransformd & pos) { this->targetPose(pos); }),
+      mc_rtc::gui::Transform(
+          "pos", [this]() { return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex)); }),
+      mc_rtc::gui::ArrayInput(
+          "admittance", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() { return this->admittance().vector(); },
+          [this](const Eigen::Vector6d & a) { this->admittance(a); }),
+      mc_rtc::gui::ArrayInput(
+          "wrench", {"cx", "cy", "cz", "fx", "fy", "fz"}, [this]() { return this->targetWrench().vector(); },
+          [this](const Eigen::Vector6d & a) { this->targetWrench(a); }),
+      mc_rtc::gui::ArrayLabel("measured_wrench", {"cx", "cy", "cz", "fx", "fy", "fz"},
+                              [this]() { return this->measuredWrench().vector(); }),
+      mc_rtc::gui::NumberInput(
+          "Velocity filter gain", [this]() { return velFilterGain_; }, [this](double g) { velFilterGain(g); }));
   // Don't add SurfaceTransformTask as target configuration is different
   TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
 }

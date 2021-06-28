@@ -96,21 +96,23 @@ void KinematicInertialObserver::addToGUI(const mc_control::MCController & ctl,
     gui.removeElement(cat, name);
     if(showVelocity_)
     {
-      gui.addElement(cat, mc_rtc::gui::Arrow(name, velocityArrowConfig_,
-                                             [this]() -> const Eigen::Vector3d & { return posW().translation(); },
-                                             [this]() -> Eigen::Vector3d {
-                                               const Eigen::Vector3d p = posW().translation();
-                                               Eigen::Vector3d end = p + velW().linear();
-                                               return end;
-                                             }));
+      gui.addElement(cat, mc_rtc::gui::Arrow(
+                              name, velocityArrowConfig_,
+                              [this]() -> const Eigen::Vector3d & { return posW().translation(); },
+                              [this]() -> Eigen::Vector3d {
+                                const Eigen::Vector3d p = posW().translation();
+                                Eigen::Vector3d end = p + velW().linear();
+                                return end;
+                              }));
     }
   };
 
-  gui.addElement(category, mc_rtc::gui::Checkbox("Show velocity", [this]() { return showVelocity_; },
-                                                 [this, showHideVel]() {
-                                                   showVelocity_ = !showVelocity_;
-                                                   showHideVel();
-                                                 }));
+  gui.addElement(category, mc_rtc::gui::Checkbox(
+                               "Show velocity", [this]() { return showVelocity_; },
+                               [this, showHideVel]() {
+                                 showVelocity_ = !showVelocity_;
+                                 showHideVel();
+                               }));
 
   gui.addElement(
       category,

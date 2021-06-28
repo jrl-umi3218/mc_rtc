@@ -130,23 +130,26 @@ void StabilizerStandingState::start(Controller & ctl)
         mc_rtc::gui::Button("Right foot", [this]() {
           targetCoP(stabilizerTask_->contactAnklePose(ContactState::Right).translation());
         }));
-    ctl.gui()->addElement(
-        {"FSM", name(), "Move"},
-        mc_rtc::gui::ArrayInput("CoM Target", [this]() -> const Eigen::Vector3d & { return comTarget_; },
-                                [this](const Eigen::Vector3d & com) { targetCoM(com); }),
-        mc_rtc::gui::ArrayInput("Move CoM", []() -> Eigen::Vector3d { return Eigen::Vector3d::Zero(); },
-                                [this](const Eigen::Vector3d & com) { targetCoM(comTarget_ + com); }));
+    ctl.gui()->addElement({"FSM", name(), "Move"},
+                          mc_rtc::gui::ArrayInput(
+                              "CoM Target", [this]() -> const Eigen::Vector3d & { return comTarget_; },
+                              [this](const Eigen::Vector3d & com) { targetCoM(com); }),
+                          mc_rtc::gui::ArrayInput(
+                              "Move CoM", []() -> Eigen::Vector3d { return Eigen::Vector3d::Zero(); },
+                              [this](const Eigen::Vector3d & com) { targetCoM(comTarget_ + com); }));
   }
 
-  ctl.gui()->addElement(
-      {"FSM", name(), "Gains"},
-      mc_rtc::gui::NumberInput("CoM stiffness", [this]() { return K_; }, [this](const double & s) { K_ = s; }),
-      mc_rtc::gui::NumberInput("CoM damping", [this]() { return D_; }, [this](const double & d) { D_ = d; }),
-      mc_rtc::gui::NumberInput("CoM stiffness & damping", [this]() { return K_; },
-                               [this](const double & g) {
-                                 K_ = g;
-                                 D_ = 2 * std::sqrt(K_);
-                               }));
+  ctl.gui()->addElement({"FSM", name(), "Gains"},
+                        mc_rtc::gui::NumberInput(
+                            "CoM stiffness", [this]() { return K_; }, [this](const double & s) { K_ = s; }),
+                        mc_rtc::gui::NumberInput(
+                            "CoM damping", [this]() { return D_; }, [this](const double & d) { D_ = d; }),
+                        mc_rtc::gui::NumberInput(
+                            "CoM stiffness & damping", [this]() { return K_; },
+                            [this](const double & g) {
+                              K_ = g;
+                              D_ = 2 * std::sqrt(K_);
+                            }));
 
 #define LOG_MEMBER(NAME, MEMBER) MC_RTC_LOG_HELPER(name() + NAME, MEMBER)
   auto & logger = ctl.logger();

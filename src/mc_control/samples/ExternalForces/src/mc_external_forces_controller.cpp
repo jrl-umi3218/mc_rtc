@@ -21,19 +21,21 @@ void ExternalForcesController::reset(const mc_control::ControllerResetData & res
   auto handForceConfig = mc_rtc::gui::ForceConfig(mc_rtc::gui::Color::Red);
   handForceConfig.force_scale *= 10;
   gui()->addElement({"Forces"},
-                    mc_rtc::gui::Force("LeftGripperForce", handForceConfig,
-                                       [this]() { return robot().surfaceWrench("LeftGripper"); },
-                                       [this]() { return robot().surfacePose("LeftGripper"); }),
-                    mc_rtc::gui::Force("RightGripperForce", handForceConfig,
-                                       [this]() { return robot().surfaceWrench("RightGripper"); },
-                                       [this]() { return robot().surfacePose("RightGripper"); }));
+                    mc_rtc::gui::Force(
+                        "LeftGripperForce", handForceConfig, [this]() { return robot().surfaceWrench("LeftGripper"); },
+                        [this]() { return robot().surfacePose("LeftGripper"); }),
+                    mc_rtc::gui::Force(
+                        "RightGripperForce", handForceConfig,
+                        [this]() { return robot().surfaceWrench("RightGripper"); },
+                        [this]() { return robot().surfacePose("RightGripper"); }));
 
-  gui()->addPlot(
-      "Surface wrenches", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
-      mc_rtc::gui::plot::Y("LeftGripperForceZ", [this]() { return robot().surfaceWrench("LeftGripper").force().z(); },
-                           mc_rtc::gui::Color::Red),
-      mc_rtc::gui::plot::Y("RightGripperForceZ", [this]() { return robot().surfaceWrench("RightGripper").force().z(); },
-                           mc_rtc::gui::Color::Red));
+  gui()->addPlot("Surface wrenches", mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                 mc_rtc::gui::plot::Y(
+                     "LeftGripperForceZ", [this]() { return robot().surfaceWrench("LeftGripper").force().z(); },
+                     mc_rtc::gui::Color::Red),
+                 mc_rtc::gui::plot::Y(
+                     "RightGripperForceZ", [this]() { return robot().surfaceWrench("RightGripper").force().z(); },
+                     mc_rtc::gui::Color::Red));
 }
 
 bool ExternalForcesController::run()

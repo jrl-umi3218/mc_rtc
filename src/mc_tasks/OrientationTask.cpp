@@ -57,18 +57,18 @@ Eigen::Matrix3d OrientationTask::orientation()
 void OrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTaskGeneric<tasks::qp::OrientationTask>::addToGUI(gui);
-  gui.addElement(
-      {"Tasks", name_},
-      mc_rtc::gui::Rotation("ori_target",
-                            [this]() -> sva::PTransformd {
-                              const auto & curPos = robots.robot(rIndex).mbc().bodyPosW[bIndex];
-                              return sva::PTransformd(this->orientation(), curPos.translation());
-                            },
-                            [this](const Eigen::Quaterniond & ori) { this->orientation(ori.toRotationMatrix()); }),
-      mc_rtc::gui::Rotation("ori", [this]() -> sva::PTransformd {
-        const auto & curPos = robots.robot(rIndex).mbc().bodyPosW[bIndex];
-        return curPos;
-      }));
+  gui.addElement({"Tasks", name_},
+                 mc_rtc::gui::Rotation(
+                     "ori_target",
+                     [this]() -> sva::PTransformd {
+                       const auto & curPos = robots.robot(rIndex).mbc().bodyPosW[bIndex];
+                       return sva::PTransformd(this->orientation(), curPos.translation());
+                     },
+                     [this](const Eigen::Quaterniond & ori) { this->orientation(ori.toRotationMatrix()); }),
+                 mc_rtc::gui::Rotation("ori", [this]() -> sva::PTransformd {
+                   const auto & curPos = robots.robot(rIndex).mbc().bodyPosW[bIndex];
+                   return curPos;
+                 }));
 }
 
 void OrientationTask::addToLogger(mc_rtc::Logger & logger)

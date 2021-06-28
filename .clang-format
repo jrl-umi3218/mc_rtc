@@ -100,6 +100,7 @@ SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard:        Cpp11
+StatementMacros: [MC_RTC_diagnostic_push,MC_RTC_diagnostic_pop,MC_RTC_diagnostic_ignored]
 TabWidth:        2
 UseTab:          Never
 ...

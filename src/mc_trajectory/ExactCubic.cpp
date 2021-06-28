@@ -149,9 +149,9 @@ std::vector<Eigen::Vector3d> ExactCubic::sampleTrajectory()
 
 void ExactCubic::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
-  gui.addElement(category,
-                 mc_rtc::gui::Point3D("Target Position", [this]() -> const Eigen::Vector3d & { return target(); },
-                                      [this](const Eigen::Vector3d & pos) { target(pos); }));
+  gui.addElement(category, mc_rtc::gui::Point3D(
+                               "Target Position", [this]() -> const Eigen::Vector3d & { return target(); },
+                               [this](const Eigen::Vector3d & pos) { target(pos); }));
 
   gui.addElement(category, mc_rtc::gui::Trajectory(
                                "Trajectory", [this]() -> const std::vector<Eigen::Vector3d> & { return samples_; }));
@@ -162,11 +162,13 @@ void ExactCubic::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std
   for(unsigned int i = 0; i < waypoints_.size(); ++i)
   {
     gui.addElement(waypointCategory,
-                   mc_rtc::gui::Point3D("Waypoint " + std::to_string(i),
-                                        [this, i]() -> const Eigen::Vector3d & { return waypoint(i).second; },
-                                        [this, i](const Eigen::Vector3d & pos) { waypoint(i, pos); }),
-                   mc_rtc::gui::NumberInput("Time " + std::to_string(i), [this, i]() { return waypointTime(i); },
-                                            [this, i](double t) { waypoint(i, t); }));
+                   mc_rtc::gui::Point3D(
+                       "Waypoint " + std::to_string(i),
+                       [this, i]() -> const Eigen::Vector3d & { return waypoint(i).second; },
+                       [this, i](const Eigen::Vector3d & pos) { waypoint(i, pos); }),
+                   mc_rtc::gui::NumberInput(
+                       "Time " + std::to_string(i), [this, i]() { return waypointTime(i); },
+                       [this, i](double t) { waypoint(i, t); }));
   }
 }
 

@@ -47,10 +47,10 @@ struct MockTask : public mc_tasks::CoMTask
     {
       Eigen::Vector3d myCrit = config("MYCRITERIA");
       return [myCrit](const mc_tasks::MetaTask & t, std::string & out) {
-        MC_RTC_diagnostic_push;
-        MC_RTC_diagnostic_ignored(GCC, "-Wunused-value");
+        MC_RTC_diagnostic_push
+        MC_RTC_diagnostic_ignored(GCC, "-Wunused-value")
         BOOST_REQUIRE_NO_THROW(dynamic_cast<const MockTask &>(t));
-        MC_RTC_diagnostic_pop;
+        MC_RTC_diagnostic_pop
         const auto & self = static_cast<const MockTask &>(t);
         const auto & eval_ = self.eval_;
         if(eval_.x() < myCrit.x() && eval_.y() < myCrit.y() && eval_.z() < myCrit.z())

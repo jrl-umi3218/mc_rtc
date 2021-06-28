@@ -97,8 +97,9 @@ void VectorOrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   TrajectoryBase::addToGUI(gui);
   gui.addElement(
       {"Tasks", name_},
-      mc_rtc::gui::ArrayInput("Target Direction", {"x", "y", "z"}, [this]() { return targetVector(); },
-                              [this](const Eigen::Vector3d & target) { targetVector(target); }),
+      mc_rtc::gui::ArrayInput(
+          "Target Direction", {"x", "y", "z"}, [this]() { return targetVector(); },
+          [this](const Eigen::Vector3d & target) { targetVector(target); }),
       mc_rtc::gui::Arrow(
           "Actual", mc_rtc::gui::ArrowConfig(mc_rtc::gui::Color(0., 0., 1.)),
           [this]() -> const Eigen::Vector3d & { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); },
@@ -111,15 +112,15 @@ void VectorOrientationTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
           [this]() -> Eigen::Vector3d {
             return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * targetVector();
           }),
-      mc_rtc::gui::Point3D("Arrow end point",
-                           [this]() -> Eigen::Vector3d {
-                             return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * targetVector();
-                           },
-                           [this](const Eigen::Vector3d & point) {
-                             Eigen::Vector3d direction =
-                                 point - robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
-                             targetVector(direction);
-                           }));
+      mc_rtc::gui::Point3D(
+          "Arrow end point",
+          [this]() -> Eigen::Vector3d {
+            return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation() + .25 * targetVector();
+          },
+          [this](const Eigen::Vector3d & point) {
+            Eigen::Vector3d direction = point - robots.robot(rIndex).mbc().bodyPosW[bIndex].translation();
+            targetVector(direction);
+          }));
 }
 } // namespace mc_tasks
 
