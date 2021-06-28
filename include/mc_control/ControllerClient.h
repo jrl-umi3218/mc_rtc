@@ -438,12 +438,22 @@ protected:
   /** Called to close a table identified by \p id */
   virtual void table_end(const ElementId & /*id*/) {}
 
+  /** Should display a robot model, the RobotModule can be created using \p parameters, its configuration is in \q and
+   * its world position is in \p posW */
   virtual void robot(const ElementId & id,
                      const std::vector<std::string> & /*parameters*/,
                      const std::vector<std::vector<double>> & /*q*/,
                      const sva::PTransformd & /*posW*/)
   {
     default_impl("Robot", id);
+  }
+
+  /** Should display the visual element \p visual at the position \p pose */
+  virtual void visual(const ElementId & id,
+                      [[maybe_unused]] const rbd::parsers::Visual & visual,
+                      [[maybe_unused]] const sva::PTransformd & pose)
+  {
+    default_impl("Visual", id);
   }
 
   /** Should display a form to send schema-based request to the server

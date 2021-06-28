@@ -77,9 +77,9 @@ std::vector<Eigen::Vector3d> BSpline::sampleTrajectory()
 
 void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)
 {
-  gui.addElement(category,
-                 mc_rtc::gui::Point3D("Target Position", [this]() -> const Eigen::Vector3d & { return target(); },
-                                      [this](const Eigen::Vector3d & pos) { target(pos); }));
+  gui.addElement(category, mc_rtc::gui::Point3D(
+                               "Target Position", [this]() -> const Eigen::Vector3d & { return target(); },
+                               [this](const Eigen::Vector3d & pos) { target(pos); }));
 
   // Display trajectory
   gui.addElement(category, mc_rtc::gui::Trajectory(
@@ -90,13 +90,13 @@ void BSpline::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::s
   waypointCategory.push_back("Position Control Points");
   for(unsigned int i = 0; i < this->waypoints().size(); ++i)
   {
-    gui.addElement(waypointCategory,
-                   mc_rtc::gui::Point3D("Waypoint " + std::to_string(i),
-                                        [this, i]() -> const Eigen::Vector3d & { return waypoints_[i]; },
-                                        [this, i](const Eigen::Vector3d & pos) {
-                                          waypoints_[i] = pos;
-                                          this->waypoints(waypoints_);
-                                        }));
+    gui.addElement(waypointCategory, mc_rtc::gui::Point3D(
+                                         "Waypoint " + std::to_string(i),
+                                         [this, i]() -> const Eigen::Vector3d & { return waypoints_[i]; },
+                                         [this, i](const Eigen::Vector3d & pos) {
+                                           waypoints_[i] = pos;
+                                           this->waypoints(waypoints_);
+                                         }));
   }
 }
 

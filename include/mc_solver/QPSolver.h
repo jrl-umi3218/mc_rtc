@@ -35,8 +35,8 @@ namespace mc_solver
 {
 
 // Work around GCC bug see: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=43407
-MC_RTC_diagnostic_push;
-MC_RTC_diagnostic_ignored(GCC, "-Wattributes");
+MC_RTC_diagnostic_push
+MC_RTC_diagnostic_ignored(GCC, "-Wattributes")
 
 /** Describe the type of feedback used to control the robot */
 enum class MC_SOLVER_DLLAPI FeedbackType
@@ -52,7 +52,7 @@ enum class MC_SOLVER_DLLAPI FeedbackType
   ObservedRobots
 };
 
-MC_RTC_diagnostic_pop;
+MC_RTC_diagnostic_pop
 
 /** \class QPSolver
  *

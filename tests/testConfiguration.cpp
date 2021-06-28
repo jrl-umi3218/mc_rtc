@@ -316,10 +316,10 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     config("v6d", c);
     BOOST_CHECK_EQUAL(c, zero);
 
-    MC_RTC_diagnostic_push;
-    MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable");
+    MC_RTC_diagnostic_push
+    MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
     BOOST_CHECK_THROW(Eigen::Vector3d d = config("v6d"), mc_rtc::Configuration::Exception);
-    MC_RTC_diagnostic_pop;
+    MC_RTC_diagnostic_pop
 
     Eigen::Vector3d e = Eigen::Vector3d::Zero();
     e = config("dict")("v3d");
@@ -347,10 +347,10 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
     config("v3d", c);
     BOOST_CHECK_EQUAL(c, zero);
 
-    MC_RTC_diagnostic_push;
-    MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable");
+    MC_RTC_diagnostic_push
+    MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
     BOOST_CHECK_THROW(Eigen::Vector6d d = config("v3d"), mc_rtc::Configuration::Exception);
-    MC_RTC_diagnostic_pop;
+    MC_RTC_diagnostic_pop
 
     Eigen::Vector6d e = Eigen::Vector6d::Zero();
     e = config("dict")("v6d");
@@ -1039,8 +1039,8 @@ BOOST_AUTO_TEST_CASE(TestConfigurationErrorMessage)
 {
   auto config = mc_rtc::Configuration::fromYAMLData(YAML_DATA3);
   CHECK_ERROR_MESSAGE("No entry named NONE in the configuration (error path: ())", config("NONE"));
-  MC_RTC_diagnostic_push;
-  MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable");
+  MC_RTC_diagnostic_push
+  MC_RTC_diagnostic_ignored(GCC, "-Wunused", ClangOnly, "-Wunknown-warning-option", GCC, "-Wunused-but-set-variable")
   CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"v3d\"))", Eigen::Vector6d v = config("v3d"));
   CHECK_ERROR_MESSAGE("Stored Json value is not a Vector6d (error path: (\"v3dPair\")[0])",
                       Eigen::Vector6d v = config("v3dPair")[0]);
@@ -1061,5 +1061,5 @@ BOOST_AUTO_TEST_CASE(TestConfigurationErrorMessage)
   CHECK_ERROR_MESSAGE(
       "Stored Json value is not a Vector6d (error path: (\"deep\")[2](\"object1\")(\"key2\")[1](\"object2\")(\"v3d\"))",
       Eigen::Vector6d v = config("deep")[2]("object1")("key2")[1]("object2")("v3d"));
-  MC_RTC_diagnostic_pop;
+  MC_RTC_diagnostic_pop
 }

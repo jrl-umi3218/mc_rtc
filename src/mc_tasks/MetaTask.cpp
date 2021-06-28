@@ -54,8 +54,9 @@ void MetaTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   if(dimWeight().size())
   {
     gui.addElement({"Tasks", name_, "Gains", "Dimensional"},
-                   mc_rtc::gui::ArrayInput("weight", [this]() { return this->dimWeight(); },
-                                           [this](const Eigen::VectorXd & v) { this->dimWeight(v); }));
+                   mc_rtc::gui::ArrayInput(
+                       "weight", [this]() { return this->dimWeight(); },
+                       [this](const Eigen::VectorXd & v) { this->dimWeight(v); }));
   }
 }
 

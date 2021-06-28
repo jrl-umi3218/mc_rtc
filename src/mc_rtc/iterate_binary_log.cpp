@@ -88,11 +88,12 @@ bool iterate_binary_log(const std::string & f,
     {
       t = log.getTime(t_index);
     }
-    if(!callback(log.keys(), log.records(), t,
-                 [&log](mc_rtc::MessagePackBuilder & builder, const std::vector<std::string> & keys) {
-                   log.copy(builder, keys);
-                 },
-                 buffer.data(), entrySize))
+    if(!callback(
+           log.keys(), log.records(), t,
+           [&log](mc_rtc::MessagePackBuilder & builder, const std::vector<std::string> & keys) {
+             log.copy(builder, keys);
+           },
+           buffer.data(), entrySize))
     {
       return false;
     }

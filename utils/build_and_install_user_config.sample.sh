@@ -13,8 +13,8 @@
 # Directory where build is done
 # Defaults to build
 # If the path is absolute (e.g. $HOME/build) then sub-folders are created for each project
-# Otherwise the $BUILD_DIR folder is created inside each source folder and automatically excluded from git
-# export BUILD_DIR=build
+# Otherwise the $BUILD_SUBDIR folder is created inside each source folder and automatically excluded from git
+# export BUILD_SUBDIR=build
 
 # Path in which mc_rtc and its dependencies will be installed
 # Note if different from /usr/local, make sure to appropriately set the paths variables

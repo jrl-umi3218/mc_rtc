@@ -194,8 +194,9 @@ void SurfaceTransformTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTaskGeneric<tasks::qp::SurfaceTransformTask>::addToGUI(gui);
   gui.addElement({"Tasks", name_},
-                 mc_rtc::gui::Transform("pos_target", [this]() { return this->target(); },
-                                        [this](const sva::PTransformd & pos) { this->target(pos); }),
+                 mc_rtc::gui::Transform(
+                     "pos_target", [this]() { return this->target(); },
+                     [this](const sva::PTransformd & pos) { this->target(pos); }),
                  mc_rtc::gui::Transform("pos", [this]() {
                    return robots.robot(rIndex).surface(surfaceName).X_0_s(robots.robot(rIndex));
                  }));

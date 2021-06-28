@@ -59,9 +59,9 @@ void Executor::init(Controller & ctl,
                     mc_rtc::gui::Label("Next state ready", [this]() { return ready(); }),
                     mc_rtc::gui::Label("Next state", [this]() { return next_state(); }),
                     mc_rtc::gui::Button("Start next state", [this]() { next(); }),
-                    mc_rtc::gui::Form("Force transition",
-                                      [this](const mc_rtc::Configuration & c) { this->resume(c("State")); },
-                                      mc_rtc::gui::FormDataComboInput("State", true, {"states"})));
+                    mc_rtc::gui::Form(
+                        "Force transition", [this](const mc_rtc::Configuration & c) { this->resume(c("State")); },
+                        mc_rtc::gui::FormDataComboInput("State", true, {"states"})));
   }
   std::string log_entry = "Executor";
   if(name_.size())

@@ -145,12 +145,16 @@ struct LoggerThreadedPolicyImpl : public LoggerImpl
   {
     char * ndata = new char[size];
     std::memcpy(ndata, data, size);
-    data_.push({ndata, size});
+    if(!data_.push({ndata, size}))
+    {
+      mc_rtc::log::critical("Data cannot be added to the log");
+      delete[] ndata;
+    }
   }
 
   std::thread log_sync_th_;
   bool log_sync_th_run_ = true;
-  CircularBuffer<std::pair<char *, size_t>, 512> data_;
+  CircularBuffer<std::pair<char *, size_t>, 2048> data_;
   std::pair<char *, size_t> pop_;
 };
 } // namespace

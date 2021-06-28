@@ -15,15 +15,15 @@ class RobotLoadingFixture : public benchmark::Fixture
 public:
   void SetUp(const ::benchmark::State &)
   {
-    MC_RTC_diagnostic_push;
-    MC_RTC_diagnostic_ignored(GCC, "-Wunused-variable");
+    MC_RTC_diagnostic_push
+    MC_RTC_diagnostic_ignored(GCC, "-Wunused-variable")
     static bool initialized = []() {
       spdlog::set_level(spdlog::level::err);
       mc_rbdyn::RobotLoader::clear();
       mc_rbdyn::RobotLoader::update_robot_module_path({"@CMAKE_CURRENT_BINARY_DIR@/../src/mc_robots"});
       return true;
     }();
-    MC_RTC_diagnostic_pop;
+    MC_RTC_diagnostic_pop
   }
 
   void TearDown(const ::benchmark::State &) {}

@@ -41,7 +41,8 @@ enum class Elements
   Arrow,
   XYTheta,
   Table,
-  Robot
+  Robot,
+  Visual
 };
 
 /** Element is the common class for every element's type available in the

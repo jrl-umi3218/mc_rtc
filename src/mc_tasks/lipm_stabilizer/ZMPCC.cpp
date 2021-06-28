@@ -55,14 +55,16 @@ void ZMPCC::addToGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::str
 {
   using namespace mc_rtc::gui;
   gui.addElement(category,
-                 ArrayInput("CoM admittance", {"Ax", "Ay"},
-                            [this]() -> const Eigen::Vector2d & { return config_.comAdmittance; },
-                            [this](const Eigen::Vector2d & a) { config_.comAdmittance = a; }),
-                 NumberInput("CoM integrator leak rate [Hz]", [this]() { return integrator_.rate(); },
-                             [this](double T) {
-                               integrator_.rate(T);
-                               config_.integratorLeakRate = T;
-                             }));
+                 ArrayInput(
+                     "CoM admittance", {"Ax", "Ay"},
+                     [this]() -> const Eigen::Vector2d & { return config_.comAdmittance; },
+                     [this](const Eigen::Vector2d & a) { config_.comAdmittance = a; }),
+                 NumberInput(
+                     "CoM integrator leak rate [Hz]", [this]() { return integrator_.rate(); },
+                     [this](double T) {
+                       integrator_.rate(T);
+                       config_.integratorLeakRate = T;
+                     }));
 }
 
 void ZMPCC::removeFromGUI(mc_rtc::gui::StateBuilder & gui, const std::vector<std::string> & category)

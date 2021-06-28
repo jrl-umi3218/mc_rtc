@@ -67,6 +67,8 @@ add_custom_command(OUTPUT ${VERSION_HEADER}
   COMMAND ${CMAKE_COMMAND} -DPROJECT_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
                            -DPROJECT_BINARY_DIR="${PROJECT_BINARY_DIR}"
                            -DPROJECT_VERSION="${PROJECT_VERSION}"
+                           -DPROJECT_VERSION_MAJOR="${PROJECT_VERSION_MAJOR}"
+                           -DMC_RTC_DEVELOPER_MODE="${MC_RTC_DEVELOPER_MODE}"
                             -P "${PROJECT_SOURCE_DIR}/CMakeModules/MakeVersionHeader.cmake"
   DEPENDS ${MC_RTC_ALL_FILES}
 )
@@ -245,6 +247,7 @@ set(mc_rtc_gui_HDR
   ../include/mc_rtc/gui/Trajectory.h
   ../include/mc_rtc/gui/Transform.h
   ../include/mc_rtc/gui/types.h
+  ../include/mc_rtc/gui/Visual.h
   ../include/mc_rtc/gui/XYTheta.h
   ../include/mc_rtc/gui/details/traits.h
 

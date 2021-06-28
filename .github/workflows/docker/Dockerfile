@@ -3,6 +3,6 @@ FROM @BASE_IMAGE@
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -qq && apt-get install -qq cmake cmake-data cython cython3 dh-python javascript-common libarchive13 libblas3 libeigen3-dev libexpat1-dev libjs-jquery libjs-jquery-isonscreen libjs-jquery-metadata libjs-jquery-tablesorter libjsoncpp1 liblapack3 liblzo2-2 libpython2.7 libpython2.7-dev libpython2.7-minimal libpython2.7-stdlib libpython3-dev librhash0 libuv1 pkg-config python python-all python-coverage python-dev python-nose python-numpy python-pkg-resources python-setuptools python2.7 python2.7-dev python2.7-minimal python3-all python3-coverage python3-dev python3-pip python3-nose python3-numpy python3-setuptools devscripts build-essential equivs gfortran apt-transport-https curl python-wheel-common lsb-release sudo
-RUN apt-get install -qq python-pip || (curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py && python get-pip.py)
+RUN apt-get install -qq python-pip || (curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py && python2 get-pip.py && rm -f get-pip.py)
 
 COPY source /source

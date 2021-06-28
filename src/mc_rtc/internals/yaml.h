@@ -30,15 +30,7 @@ namespace
 template<typename T>
 bool try_convert(const YAML::Node & node, T & out)
 {
-  try
-  {
-    out = node.as<T>();
-    return true;
-  }
-  catch(const YAML::TypedBadConversion<T> &)
-  {
-  }
-  return false;
+  return YAML::convert<T>::decode(node, out);
 }
 
 /** Attempt to convert a YAML node to the provided type and push it in a provided Configuration

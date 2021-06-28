@@ -88,8 +88,9 @@ void PositionTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
   TrajectoryTaskGeneric<tasks::qp::PositionTask>::addToGUI(gui);
   gui.addElement(
       {"Tasks", name_},
-      mc_rtc::gui::Point3D("pos_target", [this]() { return this->position(); },
-                           [this](const Eigen::Vector3d & pos) { this->position(pos); }),
+      mc_rtc::gui::Point3D(
+          "pos_target", [this]() { return this->position(); },
+          [this](const Eigen::Vector3d & pos) { this->position(pos); }),
       mc_rtc::gui::Point3D("pos", [this]() { return robots.robot(rIndex).mbc().bodyPosW[bIndex].translation(); }));
 }
 

@@ -4,10 +4,10 @@
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
-MC_RTC_diagnostic_push;
-MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion");
+MC_RTC_diagnostic_push
+MC_RTC_diagnostic_ignored(GCC, "-Wsign-conversion")
 #include "mc_bin_flatbuffers/MCLog_generated.h"
-MC_RTC_diagnostic_pop;
+MC_RTC_diagnostic_pop
 #include <cmath>
 #include <fstream>
 #include <sstream>
@@ -99,10 +99,10 @@ struct NumericLogLine : public LogLine
     uint64_t key_s = 0;
     is.read((char *)&key_s, sizeof(uint64_t));
     key_.resize(key_s);
-    MC_RTC_diagnostic_push;
-    MC_RTC_diagnostic_ignored(GCC, "-Wcast-qual");
+    MC_RTC_diagnostic_push
+    MC_RTC_diagnostic_ignored(GCC, "-Wcast-qual")
     is.read((char *)key_.data(), static_cast<long>(key_s * sizeof(char)));
-    MC_RTC_diagnostic_pop;
+    MC_RTC_diagnostic_pop
     is.read((char *)&key_s, sizeof(uint64_t));
     data_.resize(key_s);
     LogData<true>::read(is, data_);
@@ -150,10 +150,10 @@ struct StringLogLine : public LogLine
     uint64_t key_s = 0;
     is.read((char *)&key_s, sizeof(uint64_t));
     key_.resize(key_s);
-    MC_RTC_diagnostic_push;
-    MC_RTC_diagnostic_ignored(GCC, "-Wcast-qual");
+    MC_RTC_diagnostic_push
+    MC_RTC_diagnostic_ignored(GCC, "-Wcast-qual")
     is.read((char *)key_.data(), static_cast<long>(key_s * sizeof(char)));
-    MC_RTC_diagnostic_pop;
+    MC_RTC_diagnostic_pop
     is.read((char *)&key_s, sizeof(uint64_t));
     data_.resize(key_s);
     LogData<false>::read(is, data_);

@@ -1,0 +1,30 @@
+name: Check formatting of mc_rtc sources
+
+on:
+  push:
+    paths-ignore:
+      # Changes to those files don't mandate running CI
+      - ".gitlab-ci.yml"
+      - ".jrl-ci"
+      - ".github/workflows/package.yml"
+      - ".github/workflows/sources/*"
+      - ".github/workflows/build-others.yml"
+      - ".github/workflows/docker/*"
+      - "debian/**"
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+jobs:
+  clang-format:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install clang-format-10
+      run: |
+        sudo apt-get -qq update
+        sudo apt-get -qq install clang-format-10
+    - name: Run clang-format-check
+      run: |
+        ./.clang-format-check.sh

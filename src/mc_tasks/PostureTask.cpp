@@ -219,11 +219,12 @@ void PostureTask::addToLogger(mc_rtc::Logger & logger)
 void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   MetaTask::addToGUI(gui);
-  gui.addElement({"Tasks", name_, "Gains"},
-                 mc_rtc::gui::NumberInput("stiffness", [this]() { return this->stiffness(); },
-                                          [this](const double & s) { this->stiffness(s); }),
-                 mc_rtc::gui::NumberInput("weight", [this]() { return this->weight(); },
-                                          [this](const double & w) { this->weight(w); }));
+  gui.addElement(
+      {"Tasks", name_, "Gains"},
+      mc_rtc::gui::NumberInput(
+          "stiffness", [this]() { return this->stiffness(); }, [this](const double & s) { this->stiffness(s); }),
+      mc_rtc::gui::NumberInput(
+          "weight", [this]() { return this->weight(); }, [this](const double & w) { this->weight(w); }));
   std::vector<std::string> active_gripper_joints;
   for(const auto & g : robots_.robot(rIndex_).grippers())
   {
@@ -258,17 +259,17 @@ void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
     };
     if(isContinuous)
     {
-      gui.addElement({"Tasks", name_, "Target"},
-                     mc_rtc::gui::NumberInput(j.name(), [this, jIndex]() { return this->posture_[jIndex][0]; },
-                                              [jIndex, updatePosture](double v) { updatePosture(jIndex, v); }));
+      gui.addElement({"Tasks", name_, "Target"}, mc_rtc::gui::NumberInput(
+                                                     j.name(), [this, jIndex]() { return this->posture_[jIndex][0]; },
+                                                     [jIndex, updatePosture](double v) { updatePosture(jIndex, v); }));
     }
     else
     {
       gui.addElement({"Tasks", name_, "Target"},
-                     mc_rtc::gui::NumberSlider(j.name(), [this, jIndex]() { return this->posture_[jIndex][0]; },
-                                               [jIndex, updatePosture](double v) { updatePosture(jIndex, v); },
-                                               robots_.robot(rIndex_).ql()[jIndex][0],
-                                               robots_.robot(rIndex_).qu()[jIndex][0]));
+                     mc_rtc::gui::NumberSlider(
+                         j.name(), [this, jIndex]() { return this->posture_[jIndex][0]; },
+                         [jIndex, updatePosture](double v) { updatePosture(jIndex, v); },
+                         robots_.robot(rIndex_).ql()[jIndex][0], robots_.robot(rIndex_).qu()[jIndex][0]));
     }
   }
 }

@@ -100,6 +100,19 @@ struct GetLogType<std::array<double, N>>
   static constexpr mc_rtc::log::LogType type = mc_rtc::log::LogType::VectorDouble;
 };
 
+template<typename Type, int Options, typename StrideType>
+struct GetLogType<Eigen::Ref<Type, Options, StrideType>>
+{
+  // clang-format off
+  static constexpr mc_rtc::log::LogType type =
+    Type::ColsAtCompileTime != 1 ? mc_rtc::log::LogType::None :
+    Type::RowsAtCompileTime == 2 ? mc_rtc::log::LogType::Vector2d :
+    Type::RowsAtCompileTime == 3 ? mc_rtc::log::LogType::Vector3d :
+    Type::RowsAtCompileTime == 6 ? mc_rtc::log::LogType::Vector6d :
+                                   mc_rtc::log::LogType::VectorXd;
+  // clang-format on
+};
+
 /** True if the given type is serializable in the log */
 template<typename T>
 struct is_serializable

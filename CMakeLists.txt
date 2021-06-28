@@ -53,6 +53,7 @@ option(BUILD_BENCHMARKS "Build benchmarks" OFF)
 
 option(MC_RTC_BUILD_STATIC "Build a static version of mc_rtc, this has no support for pluggable components" OFF)
 option(MC_RTC_DISABLE_NETWORK "Build without network support" OFF)
+option(MC_RTC_DEVELOPER_MODE "Disable exact version embedding to speed up recompilations" OFF)
 
 option(DISABLE_ROS "Build without ROS support (even if ROS was found)" OFF)
 
