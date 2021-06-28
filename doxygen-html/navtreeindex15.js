@@ -1,5 +1,11 @@
 var NAVTREEINDEX15 =
 {
+"structmc__tasks_1_1PostureTask.html#ade3d279eeb005e261c75370747f86b19":[3,0,9,18,2],
+"structmc__tasks_1_1PostureTask.html#adfb4be7a8cd547a301878ba42ee52fb3":[3,0,9,18,1],
+"structmc__tasks_1_1PostureTask.html#af3d5a7f71a7bfbc3cd92a40a8b5d432b":[3,0,9,18,18],
+"structmc__tasks_1_1PostureTask.html#afda9cd7d8bab32bc0644da110f06a4e3":[3,0,9,18,19],
+"structmc__tasks_1_1RelativeEndEffectorTask.html":[3,0,9,19],
+"structmc__tasks_1_1RelativeEndEffectorTask.html#a0158f37c233bf4855f02a8fdacd90729":[3,0,9,19,0],
 "structmc__tasks_1_1RelativeEndEffectorTask.html#a0566da4a9b213b3beda917e35cfb9ad2":[3,0,9,19,4],
 "structmc__tasks_1_1RelativeEndEffectorTask.html#a3fc5bfbf363efddcf3f2441b91ff8b0e":[3,0,9,19,6],
 "structmc__tasks_1_1RelativeEndEffectorTask.html#a4d6f1803464ba94a80db138123662075":[3,0,9,19,2],
@@ -243,11 +249,5 @@ var NAVTREEINDEX15 =
 "structmc__tasks_1_1force_1_1ComplianceTask.html#afdc2f323bda36fb60212f95f6671d22a":[3,0,9,0,2,9],
 "structmc__tasks_1_1force_1_1DampingTask.html":[3,0,9,0,4],
 "structmc__tasks_1_1force_1_1DampingTask.html#a2c1e4bcf5659f1aa07ed16afb7df9110":[3,0,9,0,4,0],
-"structmc__tasks_1_1force_1_1DampingTask.html#aa65d048edcb0c01c8863f7da13750f8a":[3,0,9,0,4,1],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html":[3,0,9,0,5],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a039734ae57878cec03ded2f15a499737":[3,0,9,0,5,0],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a076633d27b8ad48da2e8f3a19e275377":[3,0,9,0,5,4],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a32892f4c1d6ca689541dbd2fc97a1d30":[3,0,9,0,5,9],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a4aa76bf8f0fb24b8683f9ae6a79d76a2":[3,0,9,0,5,11],
-"structmc__tasks_1_1force_1_1ImpedanceGains.html#a5bace86a7fa64130588279be37094b5c":[3,0,9,0,5,12]
+"structmc__tasks_1_1force_1_1DampingTask.html#aa65d048edcb0c01c8863f7da13750f8a":[3,0,9,0,4,1]
 };

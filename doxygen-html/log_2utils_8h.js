@@ -3,6 +3,7 @@ var log_2utils_8h =
     [ "GetLogType", "structmc__rtc_1_1log_1_1GetLogType.html", null ],
     [ "GetLogType< std::vector< double, A > >", "structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1vector_3_01double_00_01A_01_4_01_4.html", null ],
     [ "GetLogType< std::array< double, N > >", "structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1array_3_01double_00_01N_01_4_01_4.html", null ],
+    [ "GetLogType< Eigen::Ref< Type, Options, StrideType > >", "structmc__rtc_1_1log_1_1GetLogType_3_01Eigen_1_1Ref_3_01Type_00_01Options_00_01StrideType_01_4_01_4.html", null ],
     [ "is_serializable", "structmc__rtc_1_1log_1_1is__serializable.html", null ],
     [ "is_serializable_member", "structmc__rtc_1_1log_1_1is__serializable__member.html", null ],
     [ "is_serializable_member< MemberT T::* >", "structmc__rtc_1_1log_1_1is__serializable__member_3_01MemberT_01T_1_1_5_01_4.html", null ],

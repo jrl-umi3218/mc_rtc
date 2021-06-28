@@ -183,6 +183,7 @@ var hierarchy =
       [ "mc_rtc::gui::details::TableImpl< GetHeader, GetData >", "structmc__rtc_1_1gui_1_1details_1_1TableImpl.html", [
         [ "mc_rtc::gui::details::FormattedTableImpl< GetHeader, GetFormat, GetData >", "structmc__rtc_1_1gui_1_1details_1_1FormattedTableImpl.html", null ]
       ] ],
+      [ "mc_rtc::gui::details::VisualImpl< GetVisual, GetPos >", "structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html", null ],
       [ "mc_rtc::gui::ForceROImpl< GetForce, GetSurface >", "structmc__rtc_1_1gui_1_1ForceROImpl.html", [
         [ "mc_rtc::gui::ForceImpl< GetForce, GetSurface, SetForce >", "structmc__rtc_1_1gui_1_1ForceImpl.html", null ]
       ] ]
@@ -228,6 +229,7 @@ var hierarchy =
       [ "mc_tasks::MetaTaskLoader", "structmc__tasks_1_1MetaTaskLoader.html", null ]
     ] ],
     [ "mc_rtc::log::GetLogType< T >", "structmc__rtc_1_1log_1_1GetLogType.html", null ],
+    [ "mc_rtc::log::GetLogType< Eigen::Ref< Type, Options, StrideType > >", "structmc__rtc_1_1log_1_1GetLogType_3_01Eigen_1_1Ref_3_01Type_00_01Options_00_01StrideType_01_4_01_4.html", null ],
     [ "mc_rtc::log::GetLogType< std::array< double, N > >", "structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1array_3_01double_00_01N_01_4_01_4.html", null ],
     [ "mc_rtc::log::GetLogType< std::vector< double, A > >", "structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1vector_3_01double_00_01A_01_4_01_4.html", null ],
     [ "Global", "classGlobal.html", null ],
@@ -428,10 +430,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],

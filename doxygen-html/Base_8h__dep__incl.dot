@@ -84,9 +84,7 @@ digraph "include/mc_rbdyn/Base.h"
   Node66 [label="include/mc_solver/Constraint\lSetLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ConstraintSetLoader_8h.html"];
   Node65 -> Node62 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 -> Node67 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node67 [label="include/mc_solver/utils\l/ContactWrenchMatrixToLambda\lMatrix.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ContactWrenchMatrixToLambdaMatrix_8h.html"];
-  Node67 -> Node68 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node68 [label="include/mc_solver/utils\l/Update.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Update_8h.html"];
+  Node67 [label="include/mc_solver/utils\l/ContactWrenchMatrixToLambda\lMatrix.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$ContactWrenchMatrixToLambdaMatrix_8h.html"];
   Node6 -> Node73 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node73 [label="include/mc_solver/Kinematics\lConstraint.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$KinematicsConstraint_8h.html"];
   Node73 -> Node74 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -124,4 +122,7 @@ digraph "include/mc_rbdyn/Base.h"
   Node84 [label="include/mc_observers\l/KinematicInertialObserver.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$KinematicInertialObserver_8h.html"];
   Node4 -> Node85 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node85 [label="include/mc_rbdyn/configuration_io.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$configuration__io_8h.html"];
+  Node85 -> Node86 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node86 [label="include/mc_rtc/gui\l/Visual.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Visual_8h.html"];
+  Node86 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

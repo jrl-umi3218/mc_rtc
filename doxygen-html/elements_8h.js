@@ -28,6 +28,7 @@ var elements_8h =
       [ "Arrow", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a0f4e1aaabd074689b7d3ead824d1ee8e", null ],
       [ "XYTheta", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386", null ],
       [ "Table", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a51c45b795d5d18a3e4e0c37e8b20a141", null ],
-      [ "Robot", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433", null ]
+      [ "Robot", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433", null ],
+      [ "Visual", "elements_8h.html#a32d283e5c35e7fd7dcddbc0199bfdc06a4557e77491fe3dbd9a6055aeb0ed00d7", null ]
     ] ]
 ];

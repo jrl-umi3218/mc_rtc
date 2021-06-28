@@ -7,5 +7,6 @@ var namespacemc__rtc_1_1gui_1_1details =
     [ "ReturnType", "structmc__rtc_1_1gui_1_1details_1_1ReturnType.html", "structmc__rtc_1_1gui_1_1details_1_1ReturnType" ],
     [ "RobotImpl", "structmc__rtc_1_1gui_1_1details_1_1RobotImpl.html", "structmc__rtc_1_1gui_1_1details_1_1RobotImpl" ],
     [ "StaticTableImpl", "structmc__rtc_1_1gui_1_1details_1_1StaticTableImpl.html", "structmc__rtc_1_1gui_1_1details_1_1StaticTableImpl" ],
-    [ "TableImpl", "structmc__rtc_1_1gui_1_1details_1_1TableImpl.html", "structmc__rtc_1_1gui_1_1details_1_1TableImpl" ]
+    [ "TableImpl", "structmc__rtc_1_1gui_1_1details_1_1TableImpl.html", "structmc__rtc_1_1gui_1_1details_1_1TableImpl" ],
+    [ "VisualImpl", "structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html", "structmc__rtc_1_1gui_1_1details_1_1VisualImpl" ]
 ];

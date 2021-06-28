@@ -203,6 +203,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:af45508fdb55f9b0fb191121c36b10a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3efbe9ac079a07e540872820bf951f9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#ae3efbe9ac079a07e540872820bf951f9">robot</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id, const std::vector&lt; std::string &gt; &amp;, const std::vector&lt; std::vector&lt; double &gt;&gt; &amp;, const sva::PTransformd &amp;)</td></tr>
 <tr class="separator:ae3efbe9ac079a07e540872820bf951f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b43612261dde372c8f9f7d78a3b747e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#a2b43612261dde372c8f9f7d78a3b747e">visual</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id, [[maybe_unused]] const rbd::parsers::Visual &amp;visual, [[maybe_unused]] const sva::PTransformd &amp;pose)</td></tr>
+<tr class="separator:a2b43612261dde372c8f9f7d78a3b747e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad39ed0c2af0c45bc2a1f7f931e0ed360"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#ad39ed0c2af0c45bc2a1f7f931e0ed360">schema</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id, const std::string &amp;)</td></tr>
 <tr class="separator:ad39ed0c2af0c45bc2a1f7f931e0ed360"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58439f0f063f69e3fce020002e56e93c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#a58439f0f063f69e3fce020002e56e93c">form</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;id)</td></tr>
@@ -2263,6 +2265,7 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Should display a robot model, the RobotModule can be created using <code>parameters</code>, its configuration is in  and its world position is in <code>posW</code> </p>
 
 </div>
 </div>
@@ -3058,6 +3061,49 @@ template&lt;typename T &gt; </div>
 <p>Should display a PTransform in 3D environment</p>
 <p><code>requestId</code> should be in requests instead of <code>id</code> </p>
 <p>bool <code>ro</code> indicates whether this point is interactive or not </p>
+
+</div>
+</div>
+<a id="a2b43612261dde372c8f9f7d78a3b747e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b43612261dde372c8f9f7d78a3b747e">&#9670;&nbsp;</a></span>visual()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mc_control::ControllerClient::visual </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">[[maybe_unused] ] const rbd::parsers::Visual &amp;&#160;</td>
+          <td class="paramname"><em>visual</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">[[maybe_unused] ] const sva::PTransformd &amp;&#160;</td>
+          <td class="paramname"><em>pose</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Should display the visual element <code>visual</code> at the position <code>pose</code> </p>
 
 </div>
 </div>

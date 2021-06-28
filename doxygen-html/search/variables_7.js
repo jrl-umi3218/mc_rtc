@@ -10,7 +10,7 @@ var searchData=
   ['global_5fplugin_5fpaths',['global_plugin_paths',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a66adac4c10fc9599308e15741a15f0a6',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['global_5fplugins',['global_plugins',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a9b7cb460139df0aa576f76bfb45e4bc2',1,'mc_control::MCGlobalController::GlobalConfiguration']]],
   ['goal_5f',['goal_',['../structmc__control_1_1fsm_1_1PauseState.html#aabaccc34e1562ea3f396dc2105274b44',1,'mc_control::fsm::PauseState']]],
-  ['gravity',['gravity',['../namespacemc__rtc_1_1constants.html#acf271123cee2ac958b9ae0f9220ea422',1,'mc_rtc::constants::gravity()'],['../namespacemc__rtc_1_1constants.html#a04b344c34834432afcfcc1ac86bff22c',1,'mc_rtc::constants::GRAVITY()']]],
+  ['gravity',['GRAVITY',['../namespacemc__rtc_1_1constants.html#a04b344c34834432afcfcc1ac86bff22c',1,'mc_rtc::constants::GRAVITY()'],['../namespacemc__rtc_1_1constants.html#acf271123cee2ac958b9ae0f9220ea422',1,'mc_rtc::constants::gravity()']]],
   ['gray',['Gray',['../structmc__rtc_1_1gui_1_1Color.html#a4f74e46e6c7c8bcc08298e143ffeb25d',1,'mc_rtc::gui::Color']]],
   ['green',['Green',['../structmc__rtc_1_1gui_1_1Color.html#abdba78af0ed851bf27d15fed39883f8f',1,'mc_rtc::gui::Color']]],
   ['grippers_5f',['grippers_',['../structmc__control_1_1fsm_1_1Grippers.html#abd9bd9863a30fad30f940c0a6baeecab',1,'mc_control::fsm::Grippers']]],

@@ -70,6 +70,7 @@ var structmc__control_1_1ControllerClient =
     [ "trajectory", "structmc__control_1_1ControllerClient.html#ad809e856748eb8b70110bf2e2ffb3e6a", null ],
     [ "trajectory", "structmc__control_1_1ControllerClient.html#a0f4d3238fdc79a6dabd460ce6fbdb217", null ],
     [ "transform", "structmc__control_1_1ControllerClient.html#ae0c7c17c332c1d82f8dae1db99d587bb", null ],
+    [ "visual", "structmc__control_1_1ControllerClient.html#a2b43612261dde372c8f9f7d78a3b747e", null ],
     [ "xytheta", "structmc__control_1_1ControllerClient.html#a16b34b76a04260ab27ba965dbd6af346", null ],
     [ "data_", "structmc__control_1_1ControllerClient.html#a881be407dfadc093f9ad1dd638922688", null ],
     [ "gui_", "structmc__control_1_1ControllerClient.html#a7d6b7149762a3b514b901889af4078c7", null ],

@@ -33,8 +33,6 @@ digraph "include/mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h"
   Node68 [label="include/mc_tasks/SplineTrajectory\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$SplineTrajectoryTask_8h.html"];
   Node55 -> Node71 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node71 [label="include/mc_tasks/GazeTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GazeTask_8h.html"];
-  Node55 -> Node72 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node72 [label="include/mc_tasks/VectorOrientation\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$VectorOrientationTask_8h.html"];
   Node25 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node78 [label="include/mc_tasks/AddRemove\lContactTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$AddRemoveContactTask_8h.html"];
   Node25 -> Node60 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -110,15 +108,18 @@ digraph "include/mc_rbdyn/lipm_stabilizer/ZMPCCConfiguration.h"
   Node102 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node102 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node48 [label="include/mc_control\l/fsm/states/Grippers.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Grippers_8h.html"];
-  Node21 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node21 -> Node103 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node103 [label="include/mc_rbdyn/configuration_io.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$configuration__io_8h.html"];
-  Node21 -> Node104 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node104 [label="include/mc_rbdyn/RobotLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotLoader_8h.html"];
+  Node103 -> Node104 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node104 [label="include/mc_rtc/gui\l/Visual.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Visual_8h.html"];
+  Node104 -> Node95 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node21 -> Node105 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node105 [label="include/mc_rbdyn/RobotModule\lMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotModuleMacros_8h.html"];
+  Node105 [label="include/mc_rbdyn/RobotLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotLoader_8h.html"];
+  Node21 -> Node106 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node106 [label="include/mc_rbdyn/RobotModule\lMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotModuleMacros_8h.html"];
   Node20 -> Node60 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node19 -> Node106 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node106 [label="include/mc_tasks/lipm\l_stabilizer/ZMPCC.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ZMPCC_8h.html"];
-  Node106 -> Node60 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 -> Node107 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node107 [label="include/mc_tasks/lipm\l_stabilizer/ZMPCC.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ZMPCC_8h.html"];
+  Node107 -> Node60 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

@@ -33,8 +33,6 @@ digraph "include/mc_rbdyn/Device.h"
   Node54 [label="include/mc_tasks/SplineTrajectory\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$SplineTrajectoryTask_8h.html"];
   Node41 -> Node57 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node57 [label="include/mc_tasks/GazeTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GazeTask_8h.html"];
-  Node41 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node58 [label="include/mc_tasks/VectorOrientation\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$VectorOrientationTask_8h.html"];
   Node11 -> Node64 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node64 [label="include/mc_tasks/AddRemove\lContactTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$AddRemoveContactTask_8h.html"];
   Node11 -> Node46 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -110,16 +108,19 @@ digraph "include/mc_rbdyn/Device.h"
   Node88 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node88 -> Node34 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node34 [label="include/mc_control\l/fsm/states/Grippers.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Grippers_8h.html"];
-  Node7 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 [label="include/mc_rbdyn/configuration_io.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$configuration__io_8h.html"];
-  Node7 -> Node90 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node90 [label="include/mc_rbdyn/RobotLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotLoader_8h.html"];
+  Node89 -> Node90 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node90 [label="include/mc_rtc/gui\l/Visual.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Visual_8h.html"];
+  Node90 -> Node81 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 -> Node91 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node91 [label="include/mc_rbdyn/RobotModule\lMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotModuleMacros_8h.html"];
+  Node91 [label="include/mc_rbdyn/RobotLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotLoader_8h.html"];
+  Node7 -> Node92 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 [label="include/mc_rbdyn/RobotModule\lMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotModuleMacros_8h.html"];
   Node6 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5 -> Node92 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node92 [label="include/mc_rbdyn/ForceSensor.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ForceSensor_8h.html"];
-  Node92 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node92 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 -> Node93 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 [label="include/mc_rbdyn/ForceSensor.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ForceSensor_8h.html"];
+  Node93 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

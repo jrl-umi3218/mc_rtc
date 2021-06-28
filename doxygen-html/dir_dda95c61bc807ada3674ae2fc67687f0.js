@@ -29,5 +29,6 @@ var dir_dda95c61bc807ada3674ae2fc67687f0 =
     [ "Trajectory.h", "Trajectory_8h.html", "Trajectory_8h" ],
     [ "Transform.h", "Transform_8h.html", "Transform_8h" ],
     [ "types.h", "types_8h.html", "types_8h" ],
+    [ "Visual.h", "Visual_8h.html", "Visual_8h" ],
     [ "XYTheta.h", "XYTheta_8h.html", "XYTheta_8h" ]
 ];

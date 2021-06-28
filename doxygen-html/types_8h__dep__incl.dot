@@ -56,7 +56,7 @@ digraph "include/mc_rtc/gui/types.h"
   Node28 -> Node82 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node82 [label="include/mc_tasks/MetaTask\lLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$MetaTaskLoader_8h.html"];
   Node27 -> Node83 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node83 [label="include/mc_observers\l/Observer.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Observer_8h.html"];
+  Node83 [label="include/mc_observers\l/Observer.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Observer_8h.html"];
   Node83 -> Node84 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node84 [label="include/mc_observers\l/ObserverPipeline.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ObserverPipeline_8h.html"];
   Node84 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -68,8 +68,6 @@ digraph "include/mc_rtc/gui/types.h"
   Node87 [label="include/mc_observers\l/KinematicInertialPoseObserver.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$KinematicInertialPoseObserver_8h.html"];
   Node83 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 [label="include/mc_observers\l/ObserverLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ObserverLoader_8h.html"];
-  Node83 -> Node90 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node90 [label="include/mc_observers\l/ObserverMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ObserverMacros_8h.html"];
   Node27 -> Node84 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node27 -> Node91 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node91 [label="include/mc_rtc/gui.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$gui_8h.html"];
@@ -126,7 +124,10 @@ digraph "include/mc_rtc/gui/types.h"
   Node108 [label="include/mc_rtc/gui\l/Transform.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Transform_8h.html"];
   Node108 -> Node91 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node23 -> Node109 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node109 [label="include/mc_rtc/gui\l/XYTheta.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$XYTheta_8h.html"];
+  Node109 [label="include/mc_rtc/gui\l/Visual.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Visual_8h.html"];
   Node109 -> Node91 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node23 -> Node110 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node110 [label="include/mc_rtc/gui\l/XYTheta.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$XYTheta_8h.html"];
+  Node110 -> Node91 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node23 -> Node35 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

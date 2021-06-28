@@ -217,7 +217,8 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386">Elements::XYTheta</a>, 
 <a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a51c45b795d5d18a3e4e0c37e8b20a141">Elements::Table</a>, 
-<a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433">Elements::Robot</a>
+<a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433">Elements::Robot</a>, 
+<a class="el" href="namespacemc__rtc_1_1gui.html#a32d283e5c35e7fd7dcddbc0199bfdc06a4557e77491fe3dbd9a6055aeb0ed00d7">Elements::Visual</a>
 <br />
  }</td></tr>
 <tr class="separator:a32d283e5c35e7fd7dcddbc0199bfdc06"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -355,6 +356,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a96cb90761dce6d6e3441d779e7184847"><td class="memTemplParams" colspan="2">template&lt;typename GetT , typename SetT &gt; </td></tr>
 <tr class="memitem:a96cb90761dce6d6e3441d779e7184847"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1gui_1_1TransformImpl.html">TransformImpl</a>&lt; GetT, SetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a96cb90761dce6d6e3441d779e7184847">Transform</a> (const std::string &amp;name, GetT get_fn, SetT set_fn)</td></tr>
 <tr class="separator:a96cb90761dce6d6e3441d779e7184847"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cf7a01c7c66698472b6299464cd40c5"><td class="memTemplParams" colspan="2">template&lt;typename GetVisual , typename GetPos &gt; </td></tr>
+<tr class="memitem:a1cf7a01c7c66698472b6299464cd40c5"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html">details::VisualImpl</a>&lt; GetVisual, GetPos &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a1cf7a01c7c66698472b6299464cd40c5">Visual</a> (const std::string &amp;name, GetVisual get_visual_fn, GetPos get_pos_fn)</td></tr>
+<tr class="separator:a1cf7a01c7c66698472b6299464cd40c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaa2ebe2ecb490f266fe541318646561"><td class="memTemplParams" colspan="2">template&lt;typename GetT &gt; </td></tr>
 <tr class="memitem:aaaa2ebe2ecb490f266fe541318646561"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structmc__rtc_1_1gui_1_1XYThetaROImpl.html">XYThetaROImpl</a>&lt; GetT &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#aaaa2ebe2ecb490f266fe541318646561">XYTheta</a> (const std::string &amp;name, GetT get_fn)</td></tr>
 <tr class="separator:aaaa2ebe2ecb490f266fe541318646561"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -464,6 +468,7 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386"></a>XYTheta&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a32d283e5c35e7fd7dcddbc0199bfdc06a51c45b795d5d18a3e4e0c37e8b20a141"></a>Table&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433"></a>Robot&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a32d283e5c35e7fd7dcddbc0199bfdc06a4557e77491fe3dbd9a6055aeb0ed00d7"></a>Visual&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -2088,6 +2093,43 @@ template&lt;typename GetT , typename SetT &gt; </div>
       </table>
 </div><div class="memdoc">
 <p>Helper function to create a Transform element (editable) </p>
+
+</div>
+</div>
+<a id="a1cf7a01c7c66698472b6299464cd40c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cf7a01c7c66698472b6299464cd40c5">&#9670;&nbsp;</a></span>Visual()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename GetVisual , typename GetPos &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html">details::VisualImpl</a>&lt;GetVisual, GetPos&gt; mc_rtc::gui::Visual </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GetVisual&#160;</td>
+          <td class="paramname"><em>get_visual_fn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">GetPos&#160;</td>
+          <td class="paramname"><em>get_pos_fn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Helper function to create a <a class="el" href="structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html">details::VisualImpl</a> </p>
 
 </div>
 </div>

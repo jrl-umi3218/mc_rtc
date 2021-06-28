@@ -2025,14 +2025,13 @@
     <filename>surface__hull_8h</filename>
     <includes id="pragma_8h" name="pragma.h" local="no" imported="no">mc_rtc/pragma.h</includes>
     <includes id="mc__rbdyn_2api_8h" name="api.h" local="no" imported="no">mc_rbdyn/api.h</includes>
-    <namespace>sch</namespace>
     <namespace>mc_rbdyn</namespace>
     <member kind="function">
-      <type></type>
+      <type>MC_RTC_diagnostic_push</type>
       <name>MC_RTC_diagnostic_ignored</name>
       <anchorfile>surface__hull_8h.html</anchorfile>
-      <anchor>ac669b13a9685c455aaf56d2c46c56c9c</anchor>
-      <arglist>(GCC, &quot;-Wsign-conversion&quot;)</arglist>
+      <anchor>a39ac8d618c1d38040aa4b12ef2fd64f5</anchor>
+      <arglist>(GCC, &quot;-Wsign-conversion&quot;) MC_RTC_diagnostic_pop namespace sch</arglist>
     </member>
     <member kind="function">
       <type>MC_RBDYN_DLLAPI sch::S_Object *</type>
@@ -2068,20 +2067,6 @@
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>a70b7277a0499a32774e608f8def99043</anchor>
       <arglist>(const mc_rbdyn::GripperSurface &amp;surface, const double &amp;depth)</arglist>
-    </member>
-    <member kind="variable">
-      <type></type>
-      <name>MC_RTC_diagnostic_push</name>
-      <anchorfile>surface__hull_8h.html</anchorfile>
-      <anchor>a283a7e227c8155707d74b3f725c0017d</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type></type>
-      <name>MC_RTC_diagnostic_pop</name>
-      <anchorfile>surface__hull_8h.html</anchorfile>
-      <anchor>ab0e6217e933f0421879d64956a6133e1</anchor>
-      <arglist></arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2290,6 +2275,7 @@
     <includes id="Table_8h" name="Table.h" local="no" imported="no">mc_rtc/gui/Table.h</includes>
     <includes id="Trajectory_8h" name="Trajectory.h" local="no" imported="no">mc_rtc/gui/Trajectory.h</includes>
     <includes id="Transform_8h" name="Transform.h" local="no" imported="no">mc_rtc/gui/Transform.h</includes>
+    <includes id="Visual_8h" name="Visual.h" local="no" imported="no">mc_rtc/gui/Visual.h</includes>
     <includes id="XYTheta_8h" name="XYTheta.h" local="no" imported="no">mc_rtc/gui/XYTheta.h</includes>
     <includes id="plot_8h" name="plot.h" local="no" imported="no">mc_rtc/gui/plot.h</includes>
   </compound>
@@ -2506,6 +2492,7 @@
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386">XYTheta</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a51c45b795d5d18a3e4e0c37e8b20a141">Table</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433">Robot</enumvalue>
+      <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a4557e77491fe3dbd9a6055aeb0ed00d7">Visual</enumvalue>
     </member>
   </compound>
   <compound kind="file">
@@ -3165,6 +3152,27 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>Visual.h</name>
+    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
+    <filename>Visual_8h</filename>
+    <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
+    <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
+    <includes id="types_8h" name="types.h" local="no" imported="no">mc_rtc/gui/types.h</includes>
+    <includes id="configuration__io_8h" name="configuration_io.h" local="no" imported="no">mc_rbdyn/configuration_io.h</includes>
+    <includes id="MessagePackBuilder_8h" name="MessagePackBuilder.h" local="yes" imported="no">mc_rtc/MessagePackBuilder.h</includes>
+    <class kind="struct">mc_rtc::gui::details::VisualImpl</class>
+    <namespace>mc_rtc</namespace>
+    <namespace>mc_rtc::gui</namespace>
+    <namespace>mc_rtc::gui::details</namespace>
+    <member kind="function">
+      <type>details::VisualImpl&lt; GetVisual, GetPos &gt;</type>
+      <name>Visual</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a1cf7a01c7c66698472b6299464cd40c5</anchor>
+      <arglist>(const std::string &amp;name, GetVisual get_visual_fn, GetPos get_pos_fn)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>XYTheta.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>XYTheta_8h</filename>
@@ -3398,6 +3406,7 @@
     <class kind="struct">mc_rtc::log::GetLogType</class>
     <class kind="struct">mc_rtc::log::GetLogType&lt; std::vector&lt; double, A &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::GetLogType&lt; std::array&lt; double, N &gt; &gt;</class>
+    <class kind="struct">mc_rtc::log::GetLogType&lt; Eigen::Ref&lt; Type, Options, StrideType &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::is_serializable</class>
     <class kind="struct">mc_rtc::log::is_serializable_member</class>
     <class kind="struct">mc_rtc::log::is_serializable_member&lt; MemberT T::* &gt;</class>
@@ -4185,46 +4194,11 @@
     <namespace>mc_rtc::gui</namespace>
     <namespace>mc_solver</namespace>
     <member kind="function">
-      <type></type>
+      <type>MC_RTC_diagnostic_push</type>
       <name>MC_RTC_diagnostic_ignored</name>
       <anchorfile>namespacemc__solver.html</anchorfile>
-      <anchor>a25d2e53d89c11e2d3e9c21f2c47d6411</anchor>
-      <arglist>(GCC, &quot;-Wattributes&quot;)</arglist>
-    </member>
-    <member kind="variable">
-      <type></type>
-      <name>MC_RTC_diagnostic_push</name>
-      <anchorfile>namespacemc__solver.html</anchorfile>
-      <anchor>a3abcae13ae6d54c4a566bec723415c8a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type></type>
-      <name>None</name>
-      <anchorfile>QPSolver_8h.html</anchorfile>
-      <anchor>ac7485dcc8d256a6f197ed7802687f252</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type></type>
-      <name>Joints</name>
-      <anchorfile>QPSolver_8h.html</anchorfile>
-      <anchor>afe16a7652eeda60792bb24b8bce8455c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type></type>
-      <name>JointsWVelocity</name>
-      <anchorfile>QPSolver_8h.html</anchorfile>
-      <anchor>af8afc30b1dee8cadc825a905926db9b1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type></type>
-      <name>MC_RTC_diagnostic_pop</name>
-      <anchorfile>namespacemc__solver.html</anchorfile>
-      <anchor>a07e91e98f4265acb98b084bbfd5e884b</anchor>
-      <arglist></arglist>
+      <anchor>a619a755cd27458e3c3e0203be40caf76</anchor>
+      <arglist>(GCC, &quot;-Wattributes&quot;) enum class MC_SOLVER_DLLAPI FeedbackType</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -11032,6 +11006,13 @@
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
+      <name>visual</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a2b43612261dde372c8f9f7d78a3b747e</anchor>
+      <arglist>(const ElementId &amp;id, [[maybe_unused]] const rbd::parsers::Visual &amp;visual, [[maybe_unused]] const sva::PTransformd &amp;pose)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
       <name>schema</name>
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>ad39ed0c2af0c45bc2a1f7f931e0ed360</anchor>
@@ -15030,6 +15011,20 @@
       <name>type</name>
       <anchorfile>structmc__rtc_1_1log_1_1GetLogType.html</anchorfile>
       <anchor>a7b718d634332b545266bbe2298a624d4</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::log::GetLogType&lt; Eigen::Ref&lt; Type, Options, StrideType &gt; &gt;</name>
+    <filename>structmc__rtc_1_1log_1_1GetLogType_3_01Eigen_1_1Ref_3_01Type_00_01Options_00_01StrideType_01_4_01_4.html</filename>
+    <templarg></templarg>
+    <templarg>Options</templarg>
+    <templarg></templarg>
+    <member kind="variable" static="yes">
+      <type>static constexpr mc_rtc::log::LogType</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1log_1_1GetLogType_3_01Eigen_1_1Ref_3_01Type_00_01Options_00_01StrideType_01_4_01_4.html</anchorfile>
+      <anchor>a398a7ff87a94fb2329f34dcbb78d79e9</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -20347,6 +20342,13 @@
       <type>void</type>
       <name>write</name>
       <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
+      <anchor>a511066bbf8b9b1bb9ebfc4ecefffc30c</anchor>
+      <arglist>(const Eigen::Ref&lt; Type, Options, StrideType &gt; &amp;v)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
       <anchor>ab7c6cb64330027b2fec8e69d218a866d</anchor>
       <arglist>()</arglist>
     </member>
@@ -20566,6 +20568,13 @@
       <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
       <anchor>abbdabc927f9f2c4313903839283637ac</anchor>
       <arglist>(const std::tuple&lt; Args... &gt; &amp;t)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1MessagePackBuilder.html</anchorfile>
+      <anchor>a511066bbf8b9b1bb9ebfc4ecefffc30c</anchor>
+      <arglist>(const Eigen::Ref&lt; Type, Options, StrideType &gt; &amp;v)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -36544,6 +36553,48 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::gui::details::VisualImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html</filename>
+    <templarg>GetVisual</templarg>
+    <templarg>GetPos</templarg>
+    <base>mc_rtc::gui::Element</base>
+    <member kind="function">
+      <type></type>
+      <name>VisualImpl</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html</anchorfile>
+      <anchor>a2e58a2b352d14220d82b1e617355b5a5</anchor>
+      <arglist>(const std::string &amp;name, GetVisual get_visual_fn, GetPos get_pos_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>VisualImpl</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html</anchorfile>
+      <anchor>a4511aa8b84c4255283b8b2307cc42039</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html</anchorfile>
+      <anchor>afab77b99157866bd7fe837f09b9e6121</anchor>
+      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr size_t</type>
+      <name>write_size</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html</anchorfile>
+      <anchor>a7a1971b740238bf99df3d15cea1bd2d6</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static constexpr auto</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html</anchorfile>
+      <anchor>ae34b64c2aa4d202fa2ab2f698857ef2d</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rbdyn::VisualMap</name>
     <filename>structmc__rbdyn_1_1VisualMap.html</filename>
     <member kind="function">
@@ -37835,6 +37886,7 @@
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a93b34e4f6ff555f9cc248bae9cd00386">XYTheta</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a51c45b795d5d18a3e4e0c37e8b20a141">Table</enumvalue>
       <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a5d1eca158c00250d9c4c32d947b7c433">Robot</enumvalue>
+      <enumvalue file="namespacemc__rtc_1_1gui.html" anchor="a32d283e5c35e7fd7dcddbc0199bfdc06a4557e77491fe3dbd9a6055aeb0ed00d7">Visual</enumvalue>
     </member>
     <member kind="enumeration">
       <type></type>
@@ -38142,6 +38194,13 @@
       <arglist>(const std::string &amp;name, GetT get_fn, SetT set_fn)</arglist>
     </member>
     <member kind="function">
+      <type>details::VisualImpl&lt; GetVisual, GetPos &gt;</type>
+      <name>Visual</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a1cf7a01c7c66698472b6299464cd40c5</anchor>
+      <arglist>(const std::string &amp;name, GetVisual get_visual_fn, GetPos get_pos_fn)</arglist>
+    </member>
+    <member kind="function">
       <type>XYThetaROImpl&lt; GetT &gt;</type>
       <name>XYTheta</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
@@ -38167,6 +38226,7 @@
     <class kind="struct">mc_rtc::gui::details::RobotImpl</class>
     <class kind="struct">mc_rtc::gui::details::StaticTableImpl</class>
     <class kind="struct">mc_rtc::gui::details::TableImpl</class>
+    <class kind="struct">mc_rtc::gui::details::VisualImpl</class>
     <member kind="typedef">
       <type>typename ReturnType&lt; GetT &gt;::type</type>
       <name>ReturnTypeT</name>
@@ -38396,6 +38456,7 @@
     <class kind="struct">mc_rtc::log::callback_is_serializable&lt; T, void_t&lt; typename std::result_of&lt; T()&gt;::type &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::FlatLog</class>
     <class kind="struct">mc_rtc::log::GetLogType</class>
+    <class kind="struct">mc_rtc::log::GetLogType&lt; Eigen::Ref&lt; Type, Options, StrideType &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::GetLogType&lt; std::array&lt; double, N &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::GetLogType&lt; std::vector&lt; double, A &gt; &gt;</class>
     <class kind="struct">mc_rtc::log::is_serializable</class>
@@ -38758,25 +38819,11 @@
       <arglist></arglist>
     </member>
     <member kind="function">
-      <type></type>
+      <type>MC_RTC_diagnostic_push</type>
       <name>MC_RTC_diagnostic_ignored</name>
       <anchorfile>namespacemc__solver.html</anchorfile>
-      <anchor>a25d2e53d89c11e2d3e9c21f2c47d6411</anchor>
-      <arglist>(GCC, &quot;-Wattributes&quot;)</arglist>
-    </member>
-    <member kind="variable">
-      <type></type>
-      <name>MC_RTC_diagnostic_push</name>
-      <anchorfile>namespacemc__solver.html</anchorfile>
-      <anchor>a3abcae13ae6d54c4a566bec723415c8a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type></type>
-      <name>MC_RTC_diagnostic_pop</name>
-      <anchorfile>namespacemc__solver.html</anchorfile>
-      <anchor>a07e91e98f4265acb98b084bbfd5e884b</anchor>
-      <arglist></arglist>
+      <anchor>a619a755cd27458e3c3e0203be40caf76</anchor>
+      <arglist>(GCC, &quot;-Wattributes&quot;) enum class MC_SOLVER_DLLAPI FeedbackType</arglist>
     </member>
   </compound>
   <compound kind="namespace">

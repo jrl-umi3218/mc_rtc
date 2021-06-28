@@ -18,8 +18,6 @@ digraph "include/mc_rtc/gui/elements.h"
   Node20 [label="include/mc_control\l/MCController.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$MCController_8h.html"];
   Node20 -> Node21 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node21 [label="include/mc_control\l/ControllerServer.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$ControllerServer_8h.html"];
-  Node21 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node22 [label="include/mc_control\l/ControllerClient.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$ControllerClient_8h.html"];
   Node19 -> Node31 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node31 [label="include/mc_control\l/fsm/State.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$State_8h.html"];
   Node31 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -131,6 +129,9 @@ digraph "include/mc_rtc/gui/elements.h"
   Node104 [label="include/mc_rtc/gui\l/Transform.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Transform_8h.html"];
   Node104 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node13 -> Node105 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node105 [label="include/mc_rtc/gui\l/XYTheta.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$XYTheta_8h.html"];
+  Node105 [label="include/mc_rtc/gui\l/Visual.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Visual_8h.html"];
   Node105 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 -> Node106 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node106 [label="include/mc_rtc/gui\l/XYTheta.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$XYTheta_8h.html"];
+  Node106 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

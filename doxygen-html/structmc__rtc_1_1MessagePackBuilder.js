@@ -39,5 +39,6 @@ var structmc__rtc_1_1MessagePackBuilder =
     [ "write", "structmc__rtc_1_1MessagePackBuilder.html#a766e1234e36e2068ee419b6d5aef8083", null ],
     [ "write", "structmc__rtc_1_1MessagePackBuilder.html#a1e1b7151bf1db5da13fae7bcadf04d4d", null ],
     [ "write", "structmc__rtc_1_1MessagePackBuilder.html#abbdabc927f9f2c4313903839283637ac", null ],
+    [ "write", "structmc__rtc_1_1MessagePackBuilder.html#a511066bbf8b9b1bb9ebfc4ecefffc30c", null ],
     [ "write_object", "structmc__rtc_1_1MessagePackBuilder.html#a791ef2952ffb1a6f8b4db3118b8d9e35", null ]
 ];

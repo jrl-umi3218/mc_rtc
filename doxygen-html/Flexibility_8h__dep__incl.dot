@@ -15,7 +15,7 @@ digraph "include/mc_rbdyn/Flexibility.h"
   Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node8 [label="include/mc_tasks/MetaTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$MetaTask_8h.html"];
   Node8 -> Node38 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node38 [label="include/mc_tasks/Trajectory\lTaskGeneric.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$TrajectoryTaskGeneric_8h.html"];
+  Node38 [label="include/mc_tasks/Trajectory\lTaskGeneric.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$TrajectoryTaskGeneric_8h.html"];
   Node38 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node39 [label="include/mc_tasks/Orientation\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$OrientationTask_8h.html"];
   Node39 -> Node43 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -35,8 +35,6 @@ digraph "include/mc_rbdyn/Flexibility.h"
   Node55 [label="include/mc_tasks/VectorOrientation\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$VectorOrientationTask_8h.html"];
   Node38 -> Node59 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node59 [label="include/mc_tasks/Momentum\lTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$MomentumTask_8h.html"];
-  Node38 -> Node60 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node60 [label="include/mc_tasks/Position\lBasedVisServoTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$PositionBasedVisServoTask_8h.html"];
   Node8 -> Node61 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node61 [label="include/mc_tasks/AddRemove\lContactTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$AddRemoveContactTask_8h.html"];
   Node8 -> Node43 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -112,12 +110,15 @@ digraph "include/mc_rbdyn/Flexibility.h"
   Node85 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node85 -> Node31 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node31 [label="include/mc_control\l/fsm/states/Grippers.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Grippers_8h.html"];
-  Node4 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node86 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node86 [label="include/mc_rbdyn/configuration_io.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$configuration__io_8h.html"];
-  Node4 -> Node87 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node87 [label="include/mc_rbdyn/RobotLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotLoader_8h.html"];
+  Node86 -> Node87 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node87 [label="include/mc_rtc/gui\l/Visual.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Visual_8h.html"];
+  Node87 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node4 -> Node88 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node88 [label="include/mc_rbdyn/RobotModule\lMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotModuleMacros_8h.html"];
+  Node88 [label="include/mc_rbdyn/RobotLoader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotLoader_8h.html"];
+  Node4 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node89 [label="include/mc_rbdyn/RobotModule\lMacros.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$RobotModuleMacros_8h.html"];
   Node3 -> Node86 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

@@ -73,8 +73,7 @@ $(document).ready(function(){initNavTree('namespacemc__solver.html','');});
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">mc_solver Namespace Reference</div>  </div>
 </div><!--header-->
@@ -160,15 +159,8 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a25d2e53d89c11e2d3e9c21f2c47d6411"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__solver.html#a25d2e53d89c11e2d3e9c21f2c47d6411">MC_RTC_diagnostic_ignored</a> (GCC, &quot;-Wattributes&quot;)</td></tr>
-<tr class="separator:a25d2e53d89c11e2d3e9c21f2c47d6411"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a3abcae13ae6d54c4a566bec723415c8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__solver.html#a3abcae13ae6d54c4a566bec723415c8a">MC_RTC_diagnostic_push</a></td></tr>
-<tr class="separator:a3abcae13ae6d54c4a566bec723415c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07e91e98f4265acb98b084bbfd5e884b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__solver.html#a07e91e98f4265acb98b084bbfd5e884b">MC_RTC_diagnostic_pop</a></td></tr>
-<tr class="separator:a07e91e98f4265acb98b084bbfd5e884b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a619a755cd27458e3c3e0203be40caf76"><td class="memItemLeft" align="right" valign="top">MC_RTC_diagnostic_push&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__solver.html#a619a755cd27458e3c3e0203be40caf76">MC_RTC_diagnostic_ignored</a> (GCC, &quot;-Wattributes&quot;) enum class <a class="el" href="mc__solver_2api_8h.html#a1f670c9ef41bde54578a3afc8fd75445">MC_SOLVER_DLLAPI</a> FeedbackType</td></tr>
+<tr class="separator:a619a755cd27458e3c3e0203be40caf76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="afa4d95156100f691a3f35392f403217f"></a>
@@ -214,14 +206,14 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a25d2e53d89c11e2d3e9c21f2c47d6411"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25d2e53d89c11e2d3e9c21f2c47d6411">&#9670;&nbsp;</a></span>MC_RTC_diagnostic_ignored()</h2>
+<a id="a619a755cd27458e3c3e0203be40caf76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a619a755cd27458e3c3e0203be40caf76">&#9670;&nbsp;</a></span>MC_RTC_diagnostic_ignored()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">mc_solver::MC_RTC_diagnostic_ignored </td>
+          <td class="memname">MC_RTC_diagnostic_push mc_solver::MC_RTC_diagnostic_ignored </td>
           <td>(</td>
           <td class="paramtype">GCC&#160;</td>
           <td class="paramname">, </td>
@@ -239,35 +231,11 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a07e91e98f4265acb98b084bbfd5e884b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07e91e98f4265acb98b084bbfd5e884b">&#9670;&nbsp;</a></span>MC_RTC_diagnostic_pop</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_solver::MC_RTC_diagnostic_pop</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3abcae13ae6d54c4a566bec723415c8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3abcae13ae6d54c4a566bec723415c8a">&#9670;&nbsp;</a></span>MC_RTC_diagnostic_push</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">mc_solver::MC_RTC_diagnostic_push</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Describe the type of feedback used to control the robot </p>
+<p>No feedback, i.e. open-loop control</p>
+<p>Use encoder values for actuated joints</p>
+<p>Joints + encoder velocity obtained from numerical differentiation</p>
+<p>Run in closed loop w.r.t realRobots. The user is responsible for ensuring that the observed state of the real robots is valid </p>
 
 </div>
 </div>

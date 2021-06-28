@@ -13,6 +13,7 @@ var searchData=
   ['geninequalityconstraintrobot',['GenInequalityConstraintRobot',['../structmc__solver_1_1GenInequalityConstraintRobot.html',1,'mc_solver']]],
   ['geometry',['Geometry',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00567.html',1,'mc_rbdyn_urdf']]],
   ['getlogtype',['GetLogType',['../structmc__rtc_1_1log_1_1GetLogType.html',1,'mc_rtc::log']]],
+  ['getlogtype_3c_20eigen_3a_3aref_3c_20type_2c_20options_2c_20stridetype_20_3e_20_3e',['GetLogType&lt; Eigen::Ref&lt; Type, Options, StrideType &gt; &gt;',['../structmc__rtc_1_1log_1_1GetLogType_3_01Eigen_1_1Ref_3_01Type_00_01Options_00_01StrideType_01_4_01_4.html',1,'mc_rtc::log']]],
   ['getlogtype_3c_20std_3a_3aarray_3c_20double_2c_20n_20_3e_20_3e',['GetLogType&lt; std::array&lt; double, N &gt; &gt;',['../structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1array_3_01double_00_01N_01_4_01_4.html',1,'mc_rtc::log']]],
   ['getlogtype_3c_20std_3a_3avector_3c_20double_2c_20a_20_3e_20_3e',['GetLogType&lt; std::vector&lt; double, A &gt; &gt;',['../structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1vector_3_01double_00_01A_01_4_01_4.html',1,'mc_rtc::log']]],
   ['global',['Global',['../classGlobal.html',1,'']]],

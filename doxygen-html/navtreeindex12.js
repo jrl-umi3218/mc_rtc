@@ -1,5 +1,6 @@
 var NAVTREEINDEX12 =
 {
+"structmc__rtc_1_1gui_1_1FormComboInput.html#a072a747dd87980f5fc0d65fb401ddd90":[3,0,7,0,20,1],
 "structmc__rtc_1_1gui_1_1FormComboInput.html#ade120c97d849d5c36e15391f84a24422":[3,0,7,0,20,2],
 "structmc__rtc_1_1gui_1_1FormComboInput.html#afbedbea2356966c5929c16f6405886c3":[3,0,7,0,20,0],
 "structmc__rtc_1_1gui_1_1FormDataComboInput.html":[3,0,7,0,21],
@@ -145,6 +146,10 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1gui_1_1details_1_1TableImpl.html":[3,0,7,0,0,7],
 "structmc__rtc_1_1gui_1_1details_1_1TableImpl.html#a8920ca35975825d364222609aadd5019":[3,0,7,0,0,7,1],
 "structmc__rtc_1_1gui_1_1details_1_1TableImpl.html#a89c897966d440e80a2c13884f51fa69d":[3,0,7,0,0,7,0],
+"structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html":[3,0,7,0,0,8],
+"structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html#a2e58a2b352d14220d82b1e617355b5a5":[3,0,7,0,0,8,0],
+"structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html#a4511aa8b84c4255283b8b2307cc42039":[3,0,7,0,0,8,1],
+"structmc__rtc_1_1gui_1_1details_1_1VisualImpl.html#afab77b99157866bd7fe837f09b9e6121":[3,0,7,0,0,8,2],
 "structmc__rtc_1_1gui_1_1plot_1_1AxisConfiguration.html":[3,0,7,0,1,1],
 "structmc__rtc_1_1gui_1_1plot_1_1AxisConfiguration.html#a1d461d7275261bd5c496e415a523bd89":[3,0,7,0,1,1,9],
 "structmc__rtc_1_1gui_1_1plot_1_1AxisConfiguration.html#a4b812f4837d01d6a931c415e518f67fb":[3,0,7,0,1,1,7],
@@ -244,10 +249,5 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1log_1_1FlatLog.html#a16c024635d4ff9c7a817ace5507a75d4":[3,0,7,2,2,3],
 "structmc__rtc_1_1log_1_1FlatLog.html#a2916d448d9bf2a1369b20cbc5566375e":[3,0,7,2,2,7],
 "structmc__rtc_1_1log_1_1FlatLog.html#a6ce88d6a3e1430c270cef304996f6a30":[3,0,7,2,2,14],
-"structmc__rtc_1_1log_1_1FlatLog.html#a712bdde57ac85de8725792a6040bd9e9":[3,0,7,2,2,5],
-"structmc__rtc_1_1log_1_1FlatLog.html#a84715eb2284b398ea0fbe5de1b919179":[3,0,7,2,2,8],
-"structmc__rtc_1_1log_1_1FlatLog.html#a904ba6cf9174416a99863f91d6e221df":[3,0,7,2,2,2],
-"structmc__rtc_1_1log_1_1FlatLog.html#a92db42485fe91e0df8355298a344280d":[3,0,7,2,2,17],
-"structmc__rtc_1_1log_1_1FlatLog.html#a92e0893128fd656707b37b31c26dd9e9":[3,0,7,2,2,12],
-"structmc__rtc_1_1log_1_1FlatLog.html#a956945a4e75e5814a1910b5b560e9283":[3,0,7,2,2,11]
+"structmc__rtc_1_1log_1_1FlatLog.html#a712bdde57ac85de8725792a6040bd9e9":[3,0,7,2,2,5]
 };
