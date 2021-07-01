@@ -105,6 +105,12 @@ target_include_directories(test_controller_ticker PRIVATE ${CONFIG_HEADER_INCLUD
 # Adding a project configuration file (for MSVC only)
 generate_msvc_dot_user_file(test_controller_ticker)
 
+add_executable(test_controller_restart test_controller_restart.cpp)
+set_target_properties(test_controller_restart PROPERTIES FOLDER tests/ticker)
+target_link_libraries(test_controller_restart PUBLIC mc_control)
+target_include_directories(test_controller_restart PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
+generate_msvc_dot_user_file(test_controller_restart)
+
 if(NOT DISABLE_CONTROLLER_TESTS)
   add_subdirectory(controllers)
 endif()
