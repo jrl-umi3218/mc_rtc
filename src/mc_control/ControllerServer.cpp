@@ -45,8 +45,8 @@ ControllerServer::ControllerServer(double dt,
 ControllerServer::~ControllerServer()
 {
 #ifndef MC_RTC_DISABLE_NETWORK
-  nn_shutdown(pub_socket_, 0);
-  nn_shutdown(pull_socket_, 0);
+  nn_close(pub_socket_);
+  nn_close(pull_socket_);
 #endif
 }
 
