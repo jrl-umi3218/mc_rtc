@@ -411,11 +411,32 @@ install_mc_rtc_lib(mc_tasks)
 
 set(mc_planning_SRC
 mc_planning/Pendulum.cpp
+mc_planning/LinearTimeVariantInvertedPendulum.cpp
+mc_planning/LinearControl3.cpp
+mc_planning/LIPMControlByPoleAssign.cpp
+mc_planning/LIPMControlByPoleAssignWithExternalForce.cpp
+mc_planning/MathFunction.cpp
+mc_planning/State.cpp
+mc_planning/generator.cpp
+mc_planning/PreviewWindow.cpp
 )
 
+set(mc_planning_HDR_DIR
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/mc_planning>$<INSTALL_INTERFACE:include/mc_planning>)
+
 set(mc_planning_HDR
-../include/mc_planning/Pendulum.h
-../include/mc_planning/api.h
+  ${mc_planning_HDR_DIR}/Pendulum.h
+  ${mc_planning_HDR_DIR}/api.h
+  ${mc_planning_HDR_DIR}/LinearTimeVariantInvertedPendulum.h
+  ${mc_planning_HDR_DIR}/LinearControl3.h
+  ${mc_planning_HDR_DIR}/LIPMControlByPoleAssign.h
+  ${mc_planning_HDR_DIR}/LIPMControlByPoleAssignWithExternalForce.h
+  ${mc_planning_HDR_DIR}/InterpolatorBase.h
+  ${mc_planning_HDR_DIR}/CubicSplineBase.h
+  ${mc_planning_HDR_DIR}/ClampedCubicSpline.h
+  ${mc_planning_HDR_DIR}/generator.h
+  ${mc_planning_HDR_DIR}/PreviewSteps.h
+  ${mc_planning_HDR_DIR}/PreviewWindow.h
 )
 
 add_library(mc_planning SHARED ${mc_planning_SRC} ${mc_planning_HDR})

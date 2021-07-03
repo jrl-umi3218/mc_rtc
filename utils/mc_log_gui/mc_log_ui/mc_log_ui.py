@@ -1034,13 +1034,33 @@ class MCLogUI(QtWidgets.QMainWindow):
       self.loaded_files = []
     data = read_log(fpath)
     if not 't' in data:
-      print("This GUI assumes a time-entry named t is available in the log, failed loading {}".format(fpath))
-      return
+      error = "This GUI assumes a time-entry named t is available in the log, failed loading {}".format(fpath)
+      if self.isVisible():
+        err_diag = QtWidgets.QMessageBox(self)
+        err_diag.setModal(True)
+        err_diag.setText(error)
+        err_diag.exec_()
+        return
+      else:
+        print(error)
+        self.close()
+        exit(1)
     if 't' in self.data and not clear:
       dt = self.data['t'][1] - self.data['t'][0]
       ndt = data['t'][1] - data['t'][0]
       if abs(dt - ndt) > 1e-9:
-        print("This GUI assumes you are comparing logs with a similar timestep, already loaded dt = {} but attempted to load dt = {} from {}", dt, ndt, fpath)
+        print()
+        error = "This GUI assumes you are comparing logs with a similar timestep, already loaded dt = {} but attempted to load dt = {} from {}".format(dt, ndt, fpath)
+        if self.isVisible():
+          err_diag = QtWidgets.QMessageBox(self)
+          err_diag.setModal(True)
+          err_diag.setText(error)
+          err_diag.exec_()
+          return
+        else:
+          print(error)
+          self.close()
+          exit(1)
         return
       pad_left = int(round((self.data['t'][0] - data['t'][0]) / dt))
       pad_right = int(round((data['t'][-1] - self.data['t'][-1]) / dt))

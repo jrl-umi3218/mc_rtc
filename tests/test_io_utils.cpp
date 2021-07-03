@@ -52,3 +52,14 @@ BOOST_AUTO_TEST_CASE(TestIOUtils)
 
   BOOST_CHECK(to_string(std::vector<std::string>{"a", "aa", "aaa"}, lambda, " + ") == "1 + 2 + 3");
 }
+
+BOOST_AUTO_TEST_CASE(TestIOUtilsEigen)
+{
+  using namespace mc_rtc::io;
+  // Trajectory of size 2*n_preview+1
+  std::vector<Eigen::Vector3d> steps;
+  steps.push_back(Eigen::Vector3d::Random());
+  steps.push_back(Eigen::Vector3d::Random());
+  BOOST_REQUIRE(!to_string(steps, [](const Eigen::Vector3d & v) -> Eigen::RowVector3d { return v; }, "\n").empty());
+  BOOST_REQUIRE(!to_string(steps).empty());
+}

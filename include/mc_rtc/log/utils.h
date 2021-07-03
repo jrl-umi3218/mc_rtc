@@ -57,36 +57,68 @@ struct GetLogType
   static constexpr mc_rtc::log::LogType type = mc_rtc::log::LogType::None;
 };
 
-#define IMPL_MAPPING(CPPT, ENUMV)                                             \
+#define IMPL_TYPE_TO_ENUM_MAPPING(CPPT, ENUMV)                                \
   template<>                                                                  \
   struct GetLogType<CPPT>                                                     \
   {                                                                           \
     static constexpr mc_rtc::log::LogType type = mc_rtc::log::LogType::ENUMV; \
   }
 
-IMPL_MAPPING(bool, Bool);
-IMPL_MAPPING(int8_t, Int8_t);
-IMPL_MAPPING(int16_t, Int16_t);
-IMPL_MAPPING(int32_t, Int32_t);
-IMPL_MAPPING(int64_t, Int64_t);
-IMPL_MAPPING(uint8_t, Uint8_t);
-IMPL_MAPPING(uint16_t, Uint16_t);
-IMPL_MAPPING(uint32_t, Uint32_t);
-IMPL_MAPPING(uint64_t, Uint64_t);
-IMPL_MAPPING(float, Float);
-IMPL_MAPPING(double, Double);
-IMPL_MAPPING(std::string, String);
-IMPL_MAPPING(Eigen::Vector2d, Vector2d);
-IMPL_MAPPING(Eigen::Vector3d, Vector3d);
-IMPL_MAPPING(Eigen::Vector6d, Vector6d);
-IMPL_MAPPING(Eigen::VectorXd, VectorXd);
-IMPL_MAPPING(Eigen::Quaterniond, Quaterniond);
-IMPL_MAPPING(sva::PTransformd, PTransformd);
-IMPL_MAPPING(sva::ForceVecd, ForceVecd);
-IMPL_MAPPING(sva::MotionVecd, MotionVecd);
-IMPL_MAPPING(sva::ImpedanceVecd, MotionVecd);
+IMPL_TYPE_TO_ENUM_MAPPING(bool, Bool);
+IMPL_TYPE_TO_ENUM_MAPPING(int8_t, Int8_t);
+IMPL_TYPE_TO_ENUM_MAPPING(int16_t, Int16_t);
+IMPL_TYPE_TO_ENUM_MAPPING(int32_t, Int32_t);
+IMPL_TYPE_TO_ENUM_MAPPING(int64_t, Int64_t);
+IMPL_TYPE_TO_ENUM_MAPPING(uint8_t, Uint8_t);
+IMPL_TYPE_TO_ENUM_MAPPING(uint16_t, Uint16_t);
+IMPL_TYPE_TO_ENUM_MAPPING(uint32_t, Uint32_t);
+IMPL_TYPE_TO_ENUM_MAPPING(uint64_t, Uint64_t);
+IMPL_TYPE_TO_ENUM_MAPPING(float, Float);
+IMPL_TYPE_TO_ENUM_MAPPING(double, Double);
+IMPL_TYPE_TO_ENUM_MAPPING(std::string, String);
+IMPL_TYPE_TO_ENUM_MAPPING(Eigen::Vector2d, Vector2d);
+IMPL_TYPE_TO_ENUM_MAPPING(Eigen::Vector3d, Vector3d);
+IMPL_TYPE_TO_ENUM_MAPPING(Eigen::Vector6d, Vector6d);
+IMPL_TYPE_TO_ENUM_MAPPING(Eigen::VectorXd, VectorXd);
+IMPL_TYPE_TO_ENUM_MAPPING(Eigen::Quaterniond, Quaterniond);
+IMPL_TYPE_TO_ENUM_MAPPING(sva::PTransformd, PTransformd);
+IMPL_TYPE_TO_ENUM_MAPPING(sva::ForceVecd, ForceVecd);
+IMPL_TYPE_TO_ENUM_MAPPING(sva::MotionVecd, MotionVecd);
+IMPL_TYPE_TO_ENUM_MAPPING(sva::ImpedanceVecd, MotionVecd);
+IMPL_TYPE_TO_ENUM_MAPPING(std::vector<double>, VectorDouble);
+#undef IMPL_TYPE_TO_ENUM_MAPPING
 
-#undef IMPL_MAPPING
+template<mc_rtc::log::LogType>
+struct GetType;
+
+#define IMPL_ENUM_TO_TYPE_MAPPING(CPPT, ENUMV) \
+  template<>                                   \
+  struct GetType<mc_rtc::log::LogType::ENUMV>  \
+  {                                            \
+    using type = CPPT;                         \
+  };
+IMPL_ENUM_TO_TYPE_MAPPING(bool, Bool);
+IMPL_ENUM_TO_TYPE_MAPPING(int8_t, Int8_t);
+IMPL_ENUM_TO_TYPE_MAPPING(int16_t, Int16_t);
+IMPL_ENUM_TO_TYPE_MAPPING(int32_t, Int32_t);
+IMPL_ENUM_TO_TYPE_MAPPING(int64_t, Int64_t);
+IMPL_ENUM_TO_TYPE_MAPPING(uint8_t, Uint8_t);
+IMPL_ENUM_TO_TYPE_MAPPING(uint16_t, Uint16_t);
+IMPL_ENUM_TO_TYPE_MAPPING(uint32_t, Uint32_t);
+IMPL_ENUM_TO_TYPE_MAPPING(uint64_t, Uint64_t);
+IMPL_ENUM_TO_TYPE_MAPPING(float, Float);
+IMPL_ENUM_TO_TYPE_MAPPING(double, Double);
+IMPL_ENUM_TO_TYPE_MAPPING(std::string, String);
+IMPL_ENUM_TO_TYPE_MAPPING(Eigen::Vector2d, Vector2d);
+IMPL_ENUM_TO_TYPE_MAPPING(Eigen::Vector3d, Vector3d);
+IMPL_ENUM_TO_TYPE_MAPPING(Eigen::Vector6d, Vector6d);
+IMPL_ENUM_TO_TYPE_MAPPING(Eigen::VectorXd, VectorXd);
+IMPL_ENUM_TO_TYPE_MAPPING(Eigen::Quaterniond, Quaterniond);
+IMPL_ENUM_TO_TYPE_MAPPING(sva::PTransformd, PTransformd);
+IMPL_ENUM_TO_TYPE_MAPPING(sva::ForceVecd, ForceVecd);
+IMPL_ENUM_TO_TYPE_MAPPING(sva::MotionVecd, MotionVecd);
+IMPL_ENUM_TO_TYPE_MAPPING(std::vector<double>, VectorDouble);
+#undef IMPL_ENUM_TO_TYPE_MAPPING
 
 template<typename A>
 struct GetLogType<std::vector<double, A>>

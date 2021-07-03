@@ -488,6 +488,7 @@ void StabilizerTask::setContacts(const ContactDescriptionVector & contacts)
         "requires at least one contact to be set.");
   }
   contacts_.clear();
+  addContacts_.clear();
 
   // Reset support area boundaries
   supportMin_ = std::numeric_limits<double>::max() * Eigen::Vector2d::Ones();
@@ -623,6 +624,13 @@ void StabilizerTask::target(const Eigen::Vector3d & com,
   double comHeight = comTarget_.z() - zmpTarget_.z();
   omega_ = std::sqrt(constants::gravity.z() / comHeight);
   dcmTarget_ = comTarget_ + comdTarget_ / omega_;
+
+  // Only stored for logging purposes
+  comRef_ = com;
+  comdRef_ = comd;
+  comddRef_ = comdd;
+  zmpRef_ = zmp;
+  dcmRef_ = dcmTarget_;
 }
 
 void StabilizerTask::setExternalWrenches(const std::vector<std::string> & surfaceNames,
@@ -762,8 +770,8 @@ void StabilizerTask::run()
     saturateWrench(desiredWrench_, footTasks[ContactState::Right], contacts_.at(ContactState::Right));
     footTasks[ContactState::Left]->setZeroTargetWrench();
   }
-
-  distribZMP_ = mc_rbdyn::zmp(distribWrench_, zmpFrame_);
+  // Distributed ZMP
+  zmpTarget_ = mc_rbdyn::zmp(desiredWrench_, zmpFrame_, c_.safetyThresholds.MIN_NET_TOTAL_FORCE_ZMP);
   updateCoMTaskZMPCC();
   updateFootForceDifferenceControl();
 
@@ -1106,9 +1114,12 @@ void StabilizerTask::updateCoMTaskZMPCC()
   {
     zmpcc_.configure(c_.zmpcc);
     zmpcc_.enabled(enabled_);
-    zmpcc_.update(distribZMP_, measuredZMP_, zmpFrame_, dt_);
+    // Distributed ZMP
+    zmpcc_.update(zmpTarget_, measuredZMP_, zmpFrame_, dt_);
   }
   zmpcc_.apply(comTarget_, comdTarget_, comddTarget_);
+  // Update the DCM target based on ZMPCC result
+  dcmTarget_ = comTarget_ + comdTarget_ / omega_;
 }
 
 void StabilizerTask::updateFootForceDifferenceControl()

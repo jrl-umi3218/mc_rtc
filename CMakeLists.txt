@@ -33,6 +33,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 project(${PROJECT_NAME} C CXX)
 set(MC_RTC_SOURCE_DIR "${PROJECT_SOURCE_DIR}")
+set(DOXYGEN_EXAMPLE_PATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DOCDIR}/doxygen-html/examples")
 
 option(GENERATE_COVERAGE "Generate coverage data" FALSE)
 if("${CMAKE_CXX_FLAGS}" MATCHES "--coverage")
@@ -46,6 +47,7 @@ option(TREAT_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 
 option(BUILD_CONTROLLER_SAMPLES "Build sample controllers in the project" ON)
 option(DISABLE_CONTROLLER_TESTS "Disable controller unit tests" OFF)
+option(DISABLE_LOG_REGRESSION_TESTS "Disable tests checking regressions against downloaded logs" ON)
 option(DISABLE_ROBOT_TESTS "Disable RobotModule unit tests" OFF)
 option(ENABLE_FAST_TESTS "Run controllers tests for a few iterations" OFF)
 
@@ -56,6 +58,17 @@ option(MC_RTC_DISABLE_NETWORK "Build without network support" OFF)
 option(MC_RTC_DEVELOPER_MODE "Disable exact version embedding to speed up recompilations" OFF)
 
 option(DISABLE_ROS "Build without ROS support (even if ROS was found)" OFF)
+
+# By default, neither clang nor gcc produce color output if they detect the output medium
+# is not a terminal (e.g Ninja).
+option (FORCE_COLORED_OUTPUT "Always produce ANSI-colored output (GNU/Clang only)." OFF)
+if (${FORCE_COLORED_OUTPUT})
+  if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_compile_options (-fdiagnostics-color=always)
+  elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    add_compile_options (-fcolor-diagnostics)
+  endif()
+endif()
 
 add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer)
 add_project_dependency(Tasks REQUIRED)
@@ -157,6 +170,7 @@ include(CMakeModules/ListAllFiles.cmake)
 add_subdirectory(CMakeModules)
 add_subdirectory(doc)
 add_subdirectory(src)
+add_subdirectory(samples)
 add_subdirectory(plugins)
 if(${BUILD_TESTING})
   add_subdirectory(tests)
