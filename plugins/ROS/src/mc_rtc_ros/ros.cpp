@@ -111,7 +111,7 @@ private:
   };
 
   /* Hold the address of the last init/update call */
-  const mc_rbdyn::Robot * previous_robot;
+  const mc_rbdyn::Robot * previous_robot = nullptr;
   RobotStateData data;
   bool use_real;
 
@@ -488,6 +488,17 @@ void ROSBridge::update_robot_publisher(const std::string & publisher, double dt,
     impl.rpubs[publisher]->init(robot);
   }
   impl.rpubs[publisher]->update(dt, robot);
+}
+
+void ROSBridge::stop_robot_publisher(const std::string & publisher)
+{
+  static auto & impl = impl_();
+  auto it = impl.rpubs.find(publisher);
+  if(it == impl.rpubs.end())
+  {
+    return;
+  }
+  impl.rpubs.erase(it);
 }
 
 void ROSBridge::shutdown()

@@ -80,6 +80,12 @@ struct MC_RTC_ROS_DLLAPI ROSBridge
    */
   static void update_robot_publisher(const std::string & publisher, double dt, const mc_rbdyn::Robot & robot);
 
+  /** Stop the publication of a robot
+   *
+   * \param publisher Name of the publisher
+   */
+  static void stop_robot_publisher(const std::string & publisher);
+
   /*! \brief Stop ROS */
   static void shutdown();
 
