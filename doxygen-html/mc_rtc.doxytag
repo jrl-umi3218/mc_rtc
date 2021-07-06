@@ -27456,6 +27456,13 @@
     </member>
     <member kind="function" static="yes">
       <type>static void</type>
+      <name>stop_robot_publisher</name>
+      <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>
+      <anchor>a52bd7ffa7137fa42036438687165fde5</anchor>
+      <arglist>(const std::string &amp;publisher)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static void</type>
       <name>shutdown</name>
       <anchorfile>structmc__rtc_1_1ROSBridge.html</anchorfile>
       <anchor>a9ad7c399069ed81e3fb57a415babe0e8</anchor>
