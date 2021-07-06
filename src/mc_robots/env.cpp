@@ -38,6 +38,10 @@ EnvRobotModule::EnvRobotModule(const std::string & env_path, const std::string &
       }
     }
   }
+  if(!fixed)
+  {
+    _bodySensors.emplace_back("FloatingBase", mb.body(0).name(), sva::PTransformd::Identity());
+  }
 }
 
 } // namespace mc_robots
