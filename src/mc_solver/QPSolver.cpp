@@ -350,14 +350,14 @@ bool QPSolver::runOpenLoop()
   {
     for(size_t i = 0; i < robots_p->mbs().size(); ++i)
     {
-      rbd::MultiBody & mb = robots_p->mbs()[i];
-      rbd::MultiBodyConfig & mbc = robots_p->mbcs()[i];
-      if(mb.nrDof() > 0)
+      auto & robot = robots().robot(i);
+      if(robot.mb().nrDof() > 0)
       {
-        solver.updateMbc(mbc, static_cast<int>(i));
-        rbd::eulerIntegration(mb, mbc, timeStep);
-        rbd::forwardKinematics(mb, mbc);
-        rbd::forwardVelocity(mb, mbc);
+        solver.updateMbc(robot.mbc(), static_cast<int>(i));
+        robot.eulerIntegration(timeStep);
+        robot.forwardKinematics();
+        robot.forwardVelocity();
+        robot.forwardAcceleration();
       }
     }
     return true;
