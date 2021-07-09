@@ -361,10 +361,13 @@ Robot::Robot(const std::string & name,
   }
 
   forceSensors_ = module_.forceSensors();
-  for(auto & fs : forceSensors_)
+  if(loadFiles)
   {
-    bfs::path calib_file = bfs::path(module_.calib_dir) / std::string("calib_data." + fs.name());
-    fs.loadCalibrator(calib_file.string(), mbc().gravity);
+    for(auto & fs : forceSensors_)
+    {
+      bfs::path calib_file = bfs::path(module_.calib_dir) / std::string("calib_data." + fs.name());
+      fs.loadCalibrator(calib_file.string(), mbc().gravity);
+    }
   }
   for(size_t i = 0; i < forceSensors_.size(); ++i)
   {
@@ -1324,6 +1327,10 @@ void Robot::copy(Robots & robots, const std::string & copyName, unsigned int rob
     }
   }
   fixSCH(robot, robot.convexes_, robot.collisionTransforms_);
+  for(size_t i = 0; i < forceSensors_.size(); ++i)
+  {
+    robot.forceSensors_[i].copyCalibrator(forceSensors_[i]);
+  }
 }
 
 void Robot::copy(Robots & robots, const std::string & copyName, unsigned int robots_idx) const

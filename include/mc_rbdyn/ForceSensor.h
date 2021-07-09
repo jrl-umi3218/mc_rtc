@@ -146,6 +146,13 @@ public:
    */
   void loadCalibrator(const std::string & calib_file, const Eigen::Vector3d & gravity = {0., 0., 9.81});
 
+  /** Copy the calibration data from another force sensor
+   *
+   * @param other Other force sensor from which the data is copied
+   *
+   */
+  void copyCalibrator(const mc_rbdyn::ForceSensor & other);
+
   /**
    * Reset the force calibration to its default values such that the calibrator
    * has no effect on the sensor wrench

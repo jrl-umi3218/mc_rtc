@@ -184,6 +184,11 @@ void ForceSensor::loadCalibrator(const std::string & calib_file, const Eigen::Ve
   }
 }
 
+void ForceSensor::copyCalibrator(const mc_rbdyn::ForceSensor & other)
+{
+  calibration_ = std::make_shared<detail::ForceSensorCalibData>(*other.calibration_);
+}
+
 void ForceSensor::resetCalibrator()
 {
   calibration_->reset();
