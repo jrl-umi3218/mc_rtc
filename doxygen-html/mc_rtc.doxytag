@@ -13904,6 +13904,13 @@
     </member>
     <member kind="function">
       <type>void</type>
+      <name>copyCalibrator</name>
+      <anchorfile>structmc__rbdyn_1_1ForceSensor.html</anchorfile>
+      <anchor>a43271baa3d0937f8f68cf447764bcabf</anchor>
+      <arglist>(const mc_rbdyn::ForceSensor &amp;other)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
       <name>resetCalibrator</name>
       <anchorfile>structmc__rbdyn_1_1ForceSensor.html</anchorfile>
       <anchor>a4484970b0298b13fcc9a18b9c93f6f55</anchor>
@@ -13943,6 +13950,13 @@
       <anchorfile>structmc__rbdyn_1_1ForceSensor.html</anchorfile>
       <anchor>a0d51317c69787f6c822a77e0c2a9c2b6</anchor>
       <arglist>(const std::string &amp;calib_file, const Eigen::Vector3d &amp;gravity={0., 0., 9.81})</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>copyCalibrator</name>
+      <anchorfile>structmc__rbdyn_1_1ForceSensor.html</anchorfile>
+      <anchor>a43271baa3d0937f8f68cf447764bcabf</anchor>
+      <arglist>(const mc_rbdyn::ForceSensor &amp;other)</arglist>
     </member>
     <member kind="function">
       <type>void</type>

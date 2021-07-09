@@ -136,6 +136,8 @@ Public Member Functions</h2></td></tr>
 </div></td></tr>
 <tr class="memitem:a0d51317c69787f6c822a77e0c2a9c2b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1ForceSensor.html#a0d51317c69787f6c822a77e0c2a9c2b6">loadCalibrator</a> (const std::string &amp;calib_file, const Eigen::Vector3d &amp;gravity={0., 0., 9.81})</td></tr>
 <tr class="separator:a0d51317c69787f6c822a77e0c2a9c2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43271baa3d0937f8f68cf447764bcabf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1ForceSensor.html#a43271baa3d0937f8f68cf447764bcabf">copyCalibrator</a> (const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">mc_rbdyn::ForceSensor</a> &amp;other)</td></tr>
+<tr class="separator:a43271baa3d0937f8f68cf447764bcabf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4484970b0298b13fcc9a18b9c93f6f55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1ForceSensor.html#a4484970b0298b13fcc9a18b9c93f6f55">resetCalibrator</a> ()</td></tr>
 <tr class="separator:a4484970b0298b13fcc9a18b9c93f6f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95d5b7f0eb0f2eea86ff77013df65787"><td class="memItemLeft" align="right" valign="top">const sva::PTransformd &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1ForceSensor.html#a95d5b7f0eb0f2eea86ff77013df65787">X_fsmodel_fsactual</a> () const</td></tr>
@@ -354,6 +356,31 @@ Additional Inherited Members</h2></td></tr>
 <p>Perform a device copy </p>
 
 <p>Implements <a class="el" href="structmc__rbdyn_1_1Device.html#a836b2415a1379592403363bdc2dda8b0">mc_rbdyn::Device</a>.</p>
+
+</div>
+</div>
+<a id="a43271baa3d0937f8f68cf447764bcabf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43271baa3d0937f8f68cf447764bcabf">&#9670;&nbsp;</a></span>copyCalibrator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rbdyn::ForceSensor::copyCalibrator </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1ForceSensor.html">mc_rbdyn::ForceSensor</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Copy the calibration data from another force sensor</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>Other force sensor from which the data is copied </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -1,5 +1,6 @@
 var NAVTREEINDEX15 =
 {
+"structmc__tasks_1_1PostureTask.html#add36165bd4f34b697789531972948e22":[3,0,9,18,7],
 "structmc__tasks_1_1PostureTask.html#ade3d279eeb005e261c75370747f86b19":[3,0,9,18,2],
 "structmc__tasks_1_1PostureTask.html#adfb4be7a8cd547a301878ba42ee52fb3":[3,0,9,18,1],
 "structmc__tasks_1_1PostureTask.html#af3d5a7f71a7bfbc3cd92a40a8b5d432b":[3,0,9,18,18],
@@ -248,6 +249,5 @@ var NAVTREEINDEX15 =
 "structmc__tasks_1_1force_1_1ComplianceTask.html#af4b7d4df6aeeff1f359b6465dadb29d4":[3,0,9,0,2,13],
 "structmc__tasks_1_1force_1_1ComplianceTask.html#afdc2f323bda36fb60212f95f6671d22a":[3,0,9,0,2,9],
 "structmc__tasks_1_1force_1_1DampingTask.html":[3,0,9,0,4],
-"structmc__tasks_1_1force_1_1DampingTask.html#a2c1e4bcf5659f1aa07ed16afb7df9110":[3,0,9,0,4,0],
-"structmc__tasks_1_1force_1_1DampingTask.html#aa65d048edcb0c01c8863f7da13750f8a":[3,0,9,0,4,1]
+"structmc__tasks_1_1force_1_1DampingTask.html#a2c1e4bcf5659f1aa07ed16afb7df9110":[3,0,9,0,4,0]
 };

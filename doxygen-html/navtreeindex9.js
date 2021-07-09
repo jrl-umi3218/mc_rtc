@@ -1,5 +1,6 @@
 var NAVTREEINDEX9 =
 {
+"structmc__rbdyn_1_1Robot.html#a95798f9588d0656c61558ab20ad935b4":[3,0,6,18,104],
 "structmc__rbdyn_1_1Robot.html#a9eac94be22b1481eaae48d110d97c49e":[3,0,6,18,60],
 "structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e":[3,0,6,18,117],
 "structmc__rbdyn_1_1Robot.html#a9fa7e717817cab5e190f17d0397ff934":[3,0,6,18,143],
@@ -248,6 +249,5 @@ var NAVTREEINDEX9 =
 "structmc__rbdyn_1_1Surface.html#af30be45b61b6a2d617ff2e18bb2f4903":[3,0,6,23,16],
 "structmc__rbdyn_1_1VisualMap.html":[3,0,6,24],
 "structmc__rbdyn_1_1VisualMap.html#a12a6994b9750a77e0543846be016a263":[3,0,6,24,5],
-"structmc__rbdyn_1_1VisualMap.html#a5a7913eda1566657722387ae559127ab":[3,0,6,24,3],
-"structmc__rbdyn_1_1VisualMap.html#a7b4d1a9917b3bc796db270228d699411":[3,0,6,24,4]
+"structmc__rbdyn_1_1VisualMap.html#a5a7913eda1566657722387ae559127ab":[3,0,6,24,3]
 };

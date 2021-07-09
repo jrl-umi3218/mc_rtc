@@ -1,5 +1,6 @@
 var NAVTREEINDEX10 =
 {
+"structmc__rbdyn_1_1VisualMap.html#a7b4d1a9917b3bc796db270228d699411":[3,0,6,24,4],
 "structmc__rbdyn_1_1VisualMap.html#a9ce12bfdd7e0edfaa4afbcce9764279a":[3,0,6,24,2],
 "structmc__rbdyn_1_1VisualMap.html#aace9203b0cf03c1813dbb51060a1681d":[3,0,6,24,6],
 "structmc__rbdyn_1_1VisualMap.html#abd6e8a7131d62002125d9cdc291719bf":[3,0,6,24,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX10 =
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html":[3,0,7,23],
 "structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html":[3,0,7,24],
 "structmc__rtc_1_1Configuration_1_1Exception.html":[3,0,7,3,0],
-"structmc__rtc_1_1Configuration_1_1Exception.html#a02a511274c6edbdfcf14ecc723a495c5":[3,0,7,3,0,5],
-"structmc__rtc_1_1Configuration_1_1Exception.html#a036273616d903f906ac28972cc16d902":[3,0,7,3,0,4]
+"structmc__rtc_1_1Configuration_1_1Exception.html#a02a511274c6edbdfcf14ecc723a495c5":[3,0,7,3,0,5]
 };

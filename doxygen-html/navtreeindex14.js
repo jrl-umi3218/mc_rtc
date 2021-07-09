@@ -1,5 +1,6 @@
 var NAVTREEINDEX14 =
 {
+"structmc__solver_1_1utils_1_1EqualityConstraint.html#a3cac80832dee69a3d8449bdcf37c8b19":[3,0,8,1,2,3],
 "structmc__solver_1_1utils_1_1EqualityConstraint.html#a48e36fd2b8881ffa1e7ba7a5b885f51d":[3,0,8,1,2,5],
 "structmc__solver_1_1utils_1_1EqualityConstraint.html#ac9c31eab66ce20859ff84a59e1689f67":[3,0,8,1,2,2],
 "structmc__solver_1_1utils_1_1EqualityConstraint.html#ae98f12b4064111652efd273fe72e4352":[3,0,8,1,2,4],
@@ -248,6 +249,5 @@ var NAVTREEINDEX14 =
 "structmc__tasks_1_1PostureTask.html#ab65cad427dd26ba032f9512de7fc374c":[3,0,9,18,9],
 "structmc__tasks_1_1PostureTask.html#ac47c167b6a6c59546bbebfcabb5be810":[3,0,9,18,16],
 "structmc__tasks_1_1PostureTask.html#acb550b5465420b15d564c8df277b849a":[3,0,9,18,23],
-"structmc__tasks_1_1PostureTask.html#ad3d36333bd6d95d5bc742ad1de920ab7":[3,0,9,18,14],
-"structmc__tasks_1_1PostureTask.html#add36165bd4f34b697789531972948e22":[3,0,9,18,7]
+"structmc__tasks_1_1PostureTask.html#ad3d36333bd6d95d5bc742ad1de920ab7":[3,0,9,18,14]
 };

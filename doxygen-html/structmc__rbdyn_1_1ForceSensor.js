@@ -6,6 +6,7 @@ var structmc__rbdyn_1_1ForceSensor =
     [ "ForceSensor", "structmc__rbdyn_1_1ForceSensor.html#a37735354c6d4aaaa666024dd5e86e667", null ],
     [ "~ForceSensor", "structmc__rbdyn_1_1ForceSensor.html#a6b1376cf071908ece67005fdef95ea40", null ],
     [ "clone", "structmc__rbdyn_1_1ForceSensor.html#ab419d0879fbcd5e3b88b57a30070f55b", null ],
+    [ "copyCalibrator", "structmc__rbdyn_1_1ForceSensor.html#a43271baa3d0937f8f68cf447764bcabf", null ],
     [ "couple", "structmc__rbdyn_1_1ForceSensor.html#af437477c82db35d456f99ebef763b8a4", null ],
     [ "force", "structmc__rbdyn_1_1ForceSensor.html#ab2f342cd1d41306f103b913de674d5bd", null ],
     [ "loadCalibrator", "structmc__rbdyn_1_1ForceSensor.html#a0d51317c69787f6c822a77e0c2a9c2b6", null ],
