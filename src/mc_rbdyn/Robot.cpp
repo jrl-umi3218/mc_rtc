@@ -317,22 +317,42 @@ Robot::Robot(const std::string & name,
   if(loadFiles)
   {
     loadSCH(*this, module_.convexHull(), &sch::mc_rbdyn::Polyhedron, convexes_, collisionTransforms_);
-  }
-  for(const auto & c : module_._collision)
-  {
-    const auto & body = c.first;
-    const auto & collisions = c.second;
-    if(collisions.size() == 1)
+    for(const auto & c : module_._collision)
     {
-      VisualToConvex(name_, body, body, collisions[0], convexes_, collisionTransforms_);
-      continue;
-    }
-    size_t added = 0;
-    for(const auto & col : collisions)
-    {
-      if(VisualToConvex(name_, body + "_" + std::to_string(added), body, col, convexes_, collisionTransforms_))
+      const auto & body = c.first;
+      const auto & collisions = c.second;
+      if(collisions.size() == 1)
       {
-        added++;
+        VisualToConvex(name_, body, body, collisions[0], convexes_, collisionTransforms_);
+        continue;
+      }
+      size_t added = 0;
+      for(const auto & col : collisions)
+      {
+        if(VisualToConvex(name_, body + "_" + std::to_string(added), body, col, convexes_, collisionTransforms_))
+        {
+          added++;
+        }
+      }
+    }
+    for(const auto & o : module_.collisionObjects())
+    {
+      if(convexes_.count(o.first) != 0)
+      {
+        mc_rtc::log::warning("While loading {}, another object named {} was already loaded, the object specified in "
+                             "collisionObjects will be ignored",
+                             name_, o.first);
+        continue;
+      }
+      convexes_[o.first] = {o.second.first, S_ObjectPtr(o.second.second->clone())};
+      auto it = module_.collisionTransforms().find(o.first);
+      if(it != module_.collisionTransforms().end())
+      {
+        collisionTransforms_[o.first] = it->second;
+      }
+      else
+      {
+        collisionTransforms_[o.first] = sva::PTransformd::Identity();
       }
     }
   }
@@ -1082,7 +1102,7 @@ const std::map<std::string, Robot::convex_pair_t> & Robot::convexes() const
 
 void Robot::addConvex(const std::string & cName,
                       const std::string & body,
-                      Robot::S_ObjectPtr convex,
+                      S_ObjectPtr convex,
                       const sva::PTransformd & X_b_c)
 {
   if(convexes_.count(cName))
@@ -1313,18 +1333,7 @@ void Robot::copy(Robots & robots, const std::string & copyName, unsigned int rob
   robot.fixSurfaces();
   for(const auto & cH : convexes_)
   {
-    // FIXME Should implement sch::S_Object::clone in sch-core but this should be good enough for now
-    sch::S_Polyhedron * poly = dynamic_cast<sch::S_Polyhedron *>(cH.second.second.get());
-    if(poly)
-    {
-      robot.convexes_[cH.first] = {cH.second.first, std::make_shared<sch::S_Polyhedron>(*poly)};
-    }
-    else
-    {
-      mc_rtc::log::warning("Could not copy the convex {} as it's not an sch::S_Polyhedron object, send complaint to "
-                           "mc_rtc maintainers...",
-                           cH.first);
-    }
+    robot.convexes_[cH.first] = {cH.second.first, S_ObjectPtr(cH.second.second->clone())};
   }
   fixSCH(robot, robot.convexes_, robot.collisionTransforms_);
   for(size_t i = 0; i < forceSensors_.size(); ++i)

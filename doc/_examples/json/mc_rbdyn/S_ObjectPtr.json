@@ -1,0 +1,19 @@
+// Box example
+{
+  "type": "box",
+  "width": 0.1,
+  "height": 0.2,
+  "depth": 0.3
+}
+// Sphere example
+{
+  "type": "sphere",
+  "radius": 0.5
+}
+// Cylinder example
+{
+  "type": "cylinder",
+  "p1": [0, 0, 0],
+  "p2": [0.5, 0, 0.5],
+  "radius": 0.1
+}
