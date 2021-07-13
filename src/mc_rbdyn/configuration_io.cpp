@@ -7,6 +7,17 @@
 
 #include <RBDyn/parsers/urdf.h>
 
+#include <sch-core/STP_BV.h>
+#include <sch-core/STP_BV_P.h>
+#include <sch-core/S_Box.h>
+#include <sch-core/S_Capsule.h>
+#include <sch-core/S_Cone.h>
+#include <sch-core/S_Cylinder.h>
+#include <sch-core/S_Point.h>
+#include <sch-core/S_Polyhedron.h>
+#include <sch-core/S_Sphere.h>
+#include <sch-core/S_Superellipsoid.h>
+
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 
@@ -814,6 +825,175 @@ mc_rtc::Configuration ConfigurationLoader<rbd::parsers::Visual>::save(const rbd:
   return config;
 }
 
+mc_rbdyn::S_ObjectPtr ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::load(const mc_rtc::Configuration & config)
+{
+  auto schPointFromConfig = [](const mc_rtc::Configuration & c) {
+    sch::Point3 p;
+    p[0] = c[0];
+    p[1] = c[1];
+    p[2] = c[2];
+    return p;
+  };
+  std::string type = config("type");
+  if(type == "box")
+  {
+    return std::make_shared<sch::S_Box>(config("width"), config("height"), config("depth"));
+  }
+  else if(type == "capsule")
+  {
+    auto p1 = schPointFromConfig(config("p1"));
+    auto p2 = schPointFromConfig(config("p2"));
+    return std::make_shared<sch::S_Capsule>(p1, p2, config("radius"));
+  }
+  else if(type == "cone")
+  {
+    return std::make_shared<sch::S_Cone>(config("angle"), config("height"));
+  }
+  else if(type == "cylinder")
+  {
+    auto p1 = schPointFromConfig(config("p1"));
+    auto p2 = schPointFromConfig(config("p2"));
+    mc_rtc::log::critical("Loaded p1: {} {} {}", p1.m_x, p1.m_y, p1.m_z);
+    mc_rtc::log::critical("Loaded p2: {} {} {}", p2.m_x, p2.m_y, p2.m_z);
+    return std::make_shared<sch::S_Cylinder>(p1, p2, config("radius"));
+  }
+  else if(type == "point")
+  {
+    return std::make_shared<sch::S_Point>();
+  }
+  else if(type == "polyhedron")
+  {
+    auto out = std::make_shared<sch::S_Polyhedron>();
+    out->constructFromFile(config("filename"));
+    return out;
+  }
+  else if(type == "sphere")
+  {
+    return std::make_shared<sch::S_Sphere>(config("radius"));
+  }
+  else if(type == "stp-bv")
+  {
+    auto out = std::make_shared<sch::STP_BV>();
+    out->constructFromFile(config("filename"));
+    return out;
+  }
+  else if(type == "stp-bv-p")
+  {
+    auto out = std::make_shared<sch::STP_BV_P>();
+    out->constructFromFile(config("filename"));
+    return out;
+  }
+  else if(type == "superellipsoid")
+  {
+    return std::make_shared<sch::S_Superellipsoid>(config("a"), config("b"), config("c"), config("epsilon1"),
+                                                   config("epsilon2"));
+  }
+  mc_rtc::log::error_and_throw<std::runtime_error>("Unknown type {} in store S_Object", type);
+}
+
+mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::S_ObjectPtr>::save(const mc_rbdyn::S_ObjectPtr & object)
+{
+  mc_rtc::Configuration out;
+  auto schPointToConfig = [&out](const sch::Point3 & p, const std::string & name) {
+    auto pOut = out.array(name, 3);
+    pOut.push(p[0]);
+    pOut.push(p[1]);
+    pOut.push(p[2]);
+  };
+  auto type = object->getType();
+  if(type == sch::S_Object::TBox)
+  {
+    auto box = dynamic_cast<sch::S_Box *>(object.get());
+    if(!box)
+    {
+      goto failed_cast;
+    }
+    double width, height, depth;
+    box->getBoxParameters(width, height, depth);
+    out.add("type", "box");
+    out.add("width", width);
+    out.add("height", height);
+    out.add("depth", depth);
+  }
+  else if(type == sch::S_Object::TCapsule)
+  {
+    auto capsule = dynamic_cast<sch::S_Capsule *>(object.get());
+    if(!capsule)
+    {
+      goto failed_cast;
+    }
+    out.add("type", "capsule");
+    schPointToConfig(capsule->getP1(), "p1");
+    schPointToConfig(capsule->getP2(), "p2");
+    out.add("radius", capsule->getRadius());
+  }
+  else if(type == sch::S_Object::TCone)
+  {
+    auto cone = dynamic_cast<sch::S_Cone *>(object.get());
+    if(!cone)
+    {
+      goto failed_cast;
+    }
+    out.add("type", "cone");
+    out.add("angle", cone->getAngle());
+    out.add("height", cone->getHeight());
+  }
+  else if(type == sch::S_Object::TCylinder)
+  {
+    auto cylinder = dynamic_cast<sch::S_Cylinder *>(object.get());
+    if(!cylinder)
+    {
+      goto failed_cast;
+    }
+    out.add("type", "cylinder");
+    schPointToConfig(cylinder->getP1(), "p1");
+    schPointToConfig(cylinder->getP2(), "p2");
+    out.add("radius", cylinder->getRadius());
+  }
+  else if(type == sch::S_Object::TPoint)
+  {
+    out.add("type", "point");
+  }
+  else if(type == sch::S_Object::TSphere)
+  {
+    auto sphere = dynamic_cast<sch::S_Sphere *>(object.get());
+    if(!sphere)
+    {
+      goto failed_cast;
+    }
+    out.add("type", "sphere");
+    out.add("radius", sphere->getRadius());
+  }
+  else if(type == sch::S_Object::TPolyhedron || type == sch::S_Object::TSTP_BV
+          || type == sch::S_Object::TSTP_BV_WithPolyhedron)
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Polyhedron and STP-BV objects cannot be saved this way");
+  }
+  else if(type == sch::S_Object::TSuperellipsoid)
+  {
+    auto se = dynamic_cast<sch::S_Superellipsoid *>(object.get());
+    if(!se)
+    {
+      goto failed_cast;
+    }
+    double a, b, c, epsilon1, epsilon2;
+    se->getEllipsoidParameter(a, b, c, epsilon1, epsilon2);
+    out.add("type", "superellipsoid");
+    out.add("a", a);
+    out.add("b", b);
+    out.add("c", c);
+    out.add("epsilon1", epsilon1);
+    out.add("epsilon2", epsilon2);
+  }
+  else
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("New sch-core object type is not handled by this save function");
+  }
+  return out;
+failed_cast:
+  mc_rtc::log::error_and_throw<std::runtime_error>("Failed to cast the object to its deduced type");
+}
+
 mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_rtc::Configuration & config)
 {
   bfs::path path((std::string)config("path"));
@@ -840,6 +1020,18 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
       mc_rtc::log::error_and_throw<std::runtime_error>("Could not open model for {} at {}", rm.name, rm.urdf_path);
     }
     rm.init(rbd::parsers::from_urdf_file(rm.urdf_path, fixed));
+    auto ctfs = config("collisionTransforms", std::map<std::string, sva::PTransformd>{});
+    for(const auto & ctf : ctfs)
+    {
+      if(rm._collisionTransforms.count(ctf.first))
+      {
+        mc_rtc::log::warning("The collision transform for {} was already loaded from the URDF, the one specified in "
+                             "the module will be ignored",
+                             ctf.first);
+        continue;
+      }
+      rm._collisionTransforms[ctf.first] = ctf.second;
+    }
   }
   if(config.has("accelerationBounds"))
   {
@@ -882,6 +1074,7 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
       cH.second.second = (path / chPath).string();
     }
   }
+  config("collisionObjects", rm._collisionObjects);
   config("stpbvHulls", rm._stpbvHull);
   for(auto & sH : rm._stpbvHull)
   {
@@ -989,6 +1182,7 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   {
     sH.second.second = relative(sH.second.second, rm.path).string();
   }
+  config.add("collisionObjects", rm._collisionObjects);
   config.add("stpbvHulls", rm._stpbvHull);
   config.add("flexibilities", rm._flexibility);
   config.add("forceSensors", rm._forceSensors);

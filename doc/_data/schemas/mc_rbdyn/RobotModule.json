@@ -89,16 +89,35 @@
     },
     "convexHulls":
     {
-      "description": "Each key should be a body name, each entry in the vector associated to a key should be the collision object name and the path to the convex file",
+      "description": "Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and the path to the convex file",
       "type": "object",
       "patternProperties":
       {
         "*": { "$ref": "#/definitions/string_pair" }
       }
     },
+    "collisionObjects":
+    {
+      "description": "Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and a definition of the object",
+      "type": "object",
+      "patternProperties":
+      {
+        "*":
+        {
+          "type": "array",
+          "items":
+          [
+            { "type": "string" },
+            { "$ref": "/../../mc_rbdyn/S_ObjectPtr.json" }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    },
     "stpbvHulls":
     {
-      "description": "Each key should be a body name, each entry in the vector associated to a key should be the collision object name and the path to the convex file",
+      "description": "Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and the path to the convex file",
       "type": "object",
       "patternProperties":
       {
@@ -180,8 +199,8 @@
       "type": "array", "items": { "type": "string" }
     },
     "gripperSafety": { "$ref": "/../../mc_rbdyn/RobotModule.Gripper.Safety.json" },
-    "lipmStabilizer": 
-    { 
+    "lipmStabilizer":
+    {
       "$ref": "/../../mc_rbdyn/StabilizerConfiguration.json",
       "description": "Default configuration for {% doxygen mc_tasks::lipm_stabilizer::StabilizerTask %}"
     }

@@ -14,8 +14,6 @@
 #include <RBDyn/MultiBodyConfig.h>
 #include <RBDyn/MultiBodyGraph.h>
 
-#include <sch/S_Object/S_Object.h>
-
 #include <memory>
 #include <unordered_map>
 
@@ -30,7 +28,6 @@ struct MC_RBDYN_DLLAPI Robot
   friend struct Robots;
 
 public:
-  using S_ObjectPtr = std::shared_ptr<sch::S_Object>;
   using convex_pair_t = std::pair<std::string, S_ObjectPtr>;
 
 public:

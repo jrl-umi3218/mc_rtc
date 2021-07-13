@@ -22,6 +22,8 @@
 
 #include <RBDyn/parsers/common.h>
 
+#include <sch/S_Object/S_Object.h>
+
 #include <array>
 #include <map>
 #include <vector>
@@ -30,6 +32,8 @@
 
 namespace mc_rbdyn
 {
+
+using S_ObjectPtr = std::shared_ptr<sch::S_Object>;
 
 /** Holds a vector of unique pointers
  *
@@ -311,7 +315,9 @@ struct MC_RBDYN_DLLAPI RobotModule
 
   /** Returns a map describing the convex hulls for the robot
    *
-   * A key defines a valid collision name, a value is composed of two strings:
+   * A key defines a valid collision name, there should be no collision with the names in \ref collisionObjects()
+   *
+   * A value is composed of two strings:
    *
    * 1. the name of the body the convex is attached to
    *
@@ -323,6 +329,24 @@ struct MC_RBDYN_DLLAPI RobotModule
   const std::map<std::string, std::pair<std::string, std::string>> & convexHull() const
   {
     return _convexHull;
+  }
+
+  /** Returns a map describing collision objects for the robot
+   *
+   * A key defines a valid collision name, there should be no collision with the names \ref convexHull()
+   *
+   * A value is composed of two strings:
+   *
+   * 1. the name of the body the object is attached to
+   *
+   * 2. the collision object
+   *
+   * The transformation between the convex and the body it's attached to are
+   * provided in a separate map see \ref collisionTransforms()
+   */
+  const std::map<std::string, std::pair<std::string, S_ObjectPtr>> & collisionObjects() const
+  {
+    return _collisionObjects;
   }
 
   /** Returns a map describing the STPBV hulls for the robot
@@ -546,6 +570,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   std::map<std::string, std::vector<double>> _stance;
   /** \see convexHull() */
   std::map<std::string, std::pair<std::string, std::string>> _convexHull;
+  /** \see collisionObjects() */
+  std::map<std::string, std::pair<std::string, S_ObjectPtr>> _collisionObjects;
   /** \see stpbvHull() */
   std::map<std::string, std::pair<std::string, std::string>> _stpbvHull;
   /** Holds visual representation of bodies in the robot */
