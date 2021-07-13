@@ -123,6 +123,8 @@ digraph "include/mc_control/generic_gripper.h"
   Node39 [label="mc_rbdyn_urdf/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag$a00002.html"];
   Node2 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node40 [label="RBDyn/parsers/common.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node2 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 [label="sch/S_Object/S_Object.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node2 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

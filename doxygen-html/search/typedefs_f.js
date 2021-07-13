@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['s_5fobjectptr',['S_ObjectPtr',['../structmc__rbdyn_1_1Robot.html#a28270fdeec598bc23d8761191a6226d4',1,'mc_rbdyn::Robot']]],
+  ['s_5fobjectptr',['S_ObjectPtr',['../namespacemc__rbdyn.html#ac3517607389b845ee6ffdee65cbc8a63',1,'mc_rbdyn']]],
   ['safetythresholds',['SafetyThresholds',['../namespacemc__tasks_1_1lipm__stabilizer.html#a5f51d2adfa451cd98a1b3f3b2ed68ee4',1,'mc_tasks::lipm_stabilizer']]],
   ['sensor',['Sensor',['../namespacemc__rbdyn.html#a243aca157f29f1aebb2c1210ac166a83',1,'mc_rbdyn']]],
   ['sensorptr',['SensorPtr',['../namespacemc__rbdyn.html#aa1e86054c466a23bfdcb3470f71c8aad',1,'mc_rbdyn']]],

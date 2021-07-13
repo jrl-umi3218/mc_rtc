@@ -1,5 +1,7 @@
 var NAVTREEINDEX16 =
 {
+"structmc__tasks_1_1force_1_1DampingTask.html":[3,0,9,0,4],
+"structmc__tasks_1_1force_1_1DampingTask.html#a2c1e4bcf5659f1aa07ed16afb7df9110":[3,0,9,0,4,0],
 "structmc__tasks_1_1force_1_1DampingTask.html#aa65d048edcb0c01c8863f7da13750f8a":[3,0,9,0,4,1],
 "structmc__tasks_1_1force_1_1ImpedanceGains.html":[3,0,9,0,5],
 "structmc__tasks_1_1force_1_1ImpedanceGains.html#a039734ae57878cec03ded2f15a499737":[3,0,9,0,5,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX16 =
 "structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#aada037584c879e69d66e658653912815":[3,0,9,1,3,3],
 "structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#acdb0bbf4b891e1b1f980b49094d65f3d":[3,0,9,1,3,6],
 "structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#adf1a26be8c1a383107550957a6d40b13":[3,0,9,1,3,8],
-"structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#aeb470a80e8c6b811cbe485350f83d15b":[3,0,9,1,3,18],
-"structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#af7d8d84e9eabf8762d42feae2ce8457d":[3,0,9,1,3,17],
-"structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html":[3,0,9,1,0,0]
+"structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#aeb470a80e8c6b811cbe485350f83d15b":[3,0,9,1,3,18]
 };

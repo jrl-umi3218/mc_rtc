@@ -162,10 +162,10 @@ digraph "include/mc_rtc/gui.h"
   Node90 [label="mc_rbdyn/configuration_io.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$configuration__io_8h.html"];
   Node90 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node89 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node101 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node101 [label="mc_rtc/gui/XYTheta.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$XYTheta_8h.html"];
-  Node101 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node101 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node101 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node102 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node102 [label="mc_rtc/gui/XYTheta.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$XYTheta_8h.html"];
+  Node102 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node102 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node102 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

@@ -360,6 +360,10 @@
           
             
             
+            <a id="mc_rbdyn_S_ObjectPtr_link" href="#collapse_mc_rbdyn_S_ObjectPtr" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="mc_rbdyn/S_ObjectPtr" aria-controls="collapse_mc_rbdyn_S_ObjectPtr">S_ObjectPtr</a>
+          
+            
+            
             <a id="mc_rbdyn_Springs_link" href="#collapse_mc_rbdyn_Springs" class="list-group-item list-group-item-schema" data-toggle="collapse" role="button" aria-expanded="false" data-permalink="mc_rbdyn/Springs" aria-controls="collapse_mc_rbdyn_Springs">Springs</a>
           
             
@@ -61015,7 +61019,7 @@ dcm_tracking:
 
     </td>
     <td>
-      <span class="text-secondary"><small>Each key should be a body name, each entry in the vector associated to a key should be the collision object name and the path to the convex file</small></span>
+      <span class="text-secondary"><small>Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and the path to the convex file</small></span>
     </td>
     
   
@@ -61030,7 +61034,7 @@ dcm_tracking:
   <div class="card-header">
     <span style="float:left;"><h6 class="text-primary font-weight-bold">object</h6></span><span style="float:right;"></span><br />
     <div class="float-right">
-      <small class="text-muted text-right">Each key should be a body name, each entry in the vector associated to a key should be the collision object name and the path to the convex file</small>
+      <small class="text-muted text-right">Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and the path to the convex file</small>
     </div>
   </div>
   <div class="card-body">
@@ -61110,6 +61114,704 @@ dcm_tracking:
   
   
   
+  <td>collisionObjects</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapsemc_rbdyn_RobotModule_PROP_collisionObjects" aria-expanded="false" aria-controls="collapsemc_rbdyn_RobotModule_PROP_collisionObjects">object</a>
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and a definition of the object</small></span>
+    </td>
+    
+  
+</tr>
+
+  
+    
+    <tr class="collapse" id="collapsemc_rbdyn_RobotModule_PROP_collisionObjects">
+      <td colspan="3">
+        
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">object</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right">Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and a definition of the object</small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td><i>*</i>&nbsp;&nbsp;<small class="text-secondary">(pattern)</small></td>
+  
+    
+    <td colspan="2">
+      
+  
+  
+    
+    <span class="text-secondary">array[2]</span>&nbsp;
+
+  [
+  
+    
+    
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+,
+  
+    
+    
+  <a class="btn btn-outline-primary btn-sm" role="button" data-toggle="collapse" data-target="#collapsemc_rbdyn_RobotModule_PROP_collisionObjects_PROP_STAR1" aria-expanded="false" aria-controls="collapsemc_rbdyn_RobotModule_PROP_collisionObjects_PROP_STAR1">mc_rbdyn::S_ObjectPtr</a>
+  
+  
+
+
+  
+  ]
+
+
+  
+
+
+    </td>
+    
+  
+</tr>
+
+  
+  <tr class="collapse" id="collapsemc_rbdyn_RobotModule_PROP_collisionObjects_PROP_STAR1">
+    <td colspan="3">
+      
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::S_ObjectPtr</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>type</td>
+  
+    
+    <td>
+      
+  
+  
+    <span class="text-secondary">enum&nbsp;</span>
+  
+  
+  
+    <span class="text-enum">box</span>&nbsp;
+  
+    <span class="text-enum">capsule</span>&nbsp;
+  
+    <span class="text-enum">cone</span>&nbsp;
+  
+    <span class="text-enum">cylinder</span>&nbsp;
+  
+    <span class="text-enum">point</span>&nbsp;
+  
+    <span class="text-enum">polyhedron</span>&nbsp;
+  
+    <span class="text-enum">sphere</span>&nbsp;
+  
+    <span class="text-enum">stp-bv</span>&nbsp;
+  
+    <span class="text-enum">stp-bv-p</span>&nbsp;
+  
+    <span class="text-enum">superellipsoid</span>&nbsp;
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Type of sch object</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>width</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Width of the box (if type == box)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>height</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Height of the box (if type == box)<br/>Height of the cone (if type == cone)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>depth</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Depth of the box (if type == box)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>angle</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Angle of the cone (if type == cone)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>p1</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Starting point of the capsule (if type == capsule)<br/>Starting point of the cylinder (if type == cylinder)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>p2</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>End point of the capsule (if type == capsule)<br/>End point of the cylinder (if type == cylinder)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>radius</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Radius of the capsule (if type == capsule)<br/>Radius of the cylinder (if type == cylinder)<br/>Radius of the sphere (if type == sphere)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>filename</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Path to the file with data for the object (if type == polyhedron or type == stp-bv or type == stp-bv-p</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>a</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>First parameter of the superellipsoid (if type == superellipsoid</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>b</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Second parameter of the superellipsoid (if type == superellipsoid</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>c</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Third parameter of the superellipsoid (if type == superellipsoid</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>epsilon1</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Epsilon 1 parameter of the superellipsoid (if type == superellipsoid</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>epsilon2</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Epsilon 2 parameter of the superellipsoid (if type == superellipsoid</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    </td>
+  </tr>
+  
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+      </td>
+    </tr>
+    
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
   <td>stpbvHulls</td>
   
     
@@ -61125,7 +61827,7 @@ dcm_tracking:
 
     </td>
     <td>
-      <span class="text-secondary"><small>Each key should be a body name, each entry in the vector associated to a key should be the collision object name and the path to the convex file</small></span>
+      <span class="text-secondary"><small>Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and the path to the convex file</small></span>
     </td>
     
   
@@ -61140,7 +61842,7 @@ dcm_tracking:
   <div class="card-header">
     <span style="float:left;"><h6 class="text-primary font-weight-bold">object</h6></span><span style="float:right;"></span><br />
     <div class="float-right">
-      <small class="text-muted text-right">Each key should be a body name, each entry in the vector associated to a key should be the collision object name and the path to the convex file</small>
+      <small class="text-muted text-right">Each key should be a collision object name, each entry in the vector associated to a key should be the parent's body name and the path to the convex file</small>
     </div>
   </div>
   <div class="card-body">
@@ -69776,6 +70478,714 @@ iDist: 0.05
 sDist: 0.01
 damping: 0</pre>
   <button class="btn btn-primary copy-button" data-clipboard-target="#mc_rbdyn_Collision_exampleyamlCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      
+        
+        
+        
+        
+        
+        
+  
+  
+  
+  <div id="collapse_mc_rbdyn_S_ObjectPtr" class="collapse collapseSchema" style="position:sticky; top: 65px;">
+    
+<div class="card card-schema">
+  <div class="card-header">
+    <span style="float:left;"><h6 class="text-primary font-weight-bold">mc_rbdyn::S_ObjectPtr</h6></span><span style="float:right;"></span><br />
+    <div class="float-right">
+      <small class="text-muted text-right"></small>
+    </div>
+  </div>
+  <div class="card-body">
+    
+      
+<table class="table table-borderless table-hover object-property">
+<tbody>
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>type</td>
+  
+    
+    <td>
+      
+  
+  
+    <span class="text-secondary">enum&nbsp;</span>
+  
+  
+  
+    <span class="text-enum">box</span>&nbsp;
+  
+    <span class="text-enum">capsule</span>&nbsp;
+  
+    <span class="text-enum">cone</span>&nbsp;
+  
+    <span class="text-enum">cylinder</span>&nbsp;
+  
+    <span class="text-enum">point</span>&nbsp;
+  
+    <span class="text-enum">polyhedron</span>&nbsp;
+  
+    <span class="text-enum">sphere</span>&nbsp;
+  
+    <span class="text-enum">stp-bv</span>&nbsp;
+  
+    <span class="text-enum">stp-bv-p</span>&nbsp;
+  
+    <span class="text-enum">superellipsoid</span>&nbsp;
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Type of sch object</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>width</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Width of the box (if type == box)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>height</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Height of the box (if type == box)<br/>Height of the cone (if type == cone)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>depth</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Depth of the box (if type == box)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>angle</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Angle of the cone (if type == cone)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>p1</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Starting point of the capsule (if type == capsule)<br/>Starting point of the cylinder (if type == cylinder)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>p2</td>
+  
+    
+    <td>
+      
+  
+  
+    
+    <span class="text-secondary">array[3]</span>&nbsp;
+
+  
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+
+
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>End point of the capsule (if type == capsule)<br/>End point of the cylinder (if type == cylinder)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>radius</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Radius of the capsule (if type == capsule)<br/>Radius of the cylinder (if type == cylinder)<br/>Radius of the sphere (if type == sphere)</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>filename</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-string">string</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Path to the file with data for the object (if type == polyhedron or type == stp-bv or type == stp-bv-p</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>a</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>First parameter of the superellipsoid (if type == superellipsoid</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>b</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Second parameter of the superellipsoid (if type == superellipsoid</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>c</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Third parameter of the superellipsoid (if type == superellipsoid</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>epsilon1</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Epsilon 1 parameter of the superellipsoid (if type == superellipsoid</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+  
+  
+  
+  
+  
+  <tr>
+  
+  
+  
+  
+  
+  <td>epsilon2</td>
+  
+    
+    <td>
+      
+  
+  
+    
+      <span class="text-number">number</span>
+    
+    
+  
+
+
+    </td>
+    <td>
+      <span class="text-secondary"><small>Epsilon 2 parameter of the superellipsoid (if type == superellipsoid</small></span>
+    </td>
+    
+  
+</tr>
+
+
+
+
+
+</tbody>
+</table>
+
+    
+  </div>
+</div>
+
+
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_mc_rbdyn_S_ObjectPtr_example" aria-expanded="false" aria-controls="collapse_mc_rbdyn_S_ObjectPtr_example">Example</button>
+      </div>
+      <div id="collapse_mc_rbdyn_S_ObjectPtr_example" class="collapse">
+        <div class="card-body">
+          <ul class="nav nav-tabs" id="mc_rbdyn_S_ObjectPtr_exampleTab" role="tablist">
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link active" id="mc-rbdyn-s-objectptr-examplejsonjsonTab" data-toggle="tab" href="#mc-rbdyn-s-objectptr-examplejsonjsonTabContent" role="tab" aria-controls="mc-rbdyn-s-objectptr-examplejsonjsonTabContent" aria-selected="true">JSON</a>
+    </li>
+  
+    <li class="nav-item">
+      
+      
+      <a class="nav-link" id="mc-rbdyn-s-objectptr-exampleyamlyamlTab" data-toggle="tab" href="#mc-rbdyn-s-objectptr-exampleyamlyamlTabContent" role="tab" aria-controls="mc-rbdyn-s-objectptr-exampleyamlyamlTabContent" aria-selected="false">YAML</a>
+    </li>
+  
+</ul>
+<div class="tab-content" id="mc_rbdyn_S_ObjectPtr_exampleTabContent">
+  
+    
+    
+    <div class="tab-pane show active" id="mc-rbdyn-s-objectptr-examplejsonjsonTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-s-objectptr-examplejsonjsonTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-json" data-lang="json"><span class="err">//</span><span class="w"> </span><span class="err">Box</span><span class="w"> </span><span class="err">example</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"box"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"width"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"height"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"depth"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.3</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">Sphere</span><span class="w"> </span><span class="err">example</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sphere"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"radius"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="err">//</span><span class="w"> </span><span class="err">Cylinder</span><span class="w"> </span><span class="err">example</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cylinder"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"p1"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"p2"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"radius"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="mc_rbdyn_S_ObjectPtr_examplejsonCopySource" class="offscreen" aria-hidden=true>// Box example
+{
+  "type": "box",
+  "width": 0.1,
+  "height": 0.2,
+  "depth": 0.3
+}
+// Sphere example
+{
+  "type": "sphere",
+  "radius": 0.5
+}
+// Cylinder example
+{
+  "type": "cylinder",
+  "p1": [0, 0, 0],
+  "p2": [0.5, 0, 0.5],
+  "radius": 0.1
+}</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#mc_rbdyn_S_ObjectPtr_examplejsonCopySource">Copy to clipboard</button>
+
+
+    </div>
+  
+    
+    
+    <div class="tab-pane" id="mc-rbdyn-s-objectptr-exampleyamlyamlTabContent" role="tabpanel" arial-labelledby="mc-rbdyn-s-objectptr-exampleyamlyamlTab">
+      
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="c1"># Box example</span>
+<span class="na">type</span><span class="pi">:</span> <span class="s">box</span>
+<span class="na">width</span><span class="pi">:</span> <span class="m">0.1</span>
+<span class="na">height</span><span class="pi">:</span> <span class="m">0.2</span>
+<span class="na">depth</span><span class="pi">:</span> <span class="m">0.3</span>
+<span class="c1"># Sphere example</span>
+<span class="na">type</span><span class="pi">:</span> <span class="s">sphere</span>
+<span class="na">radius</span><span class="pi">:</span> <span class="m">0.5</span>
+<span class="c1"># Cylinder example</span>
+<span class="na">type</span><span class="pi">:</span> <span class="s">cylinder</span>
+<span class="na">p1</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">]</span>
+<span class="na">p2</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.5</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0.5</span><span class="pi">]</span>
+<span class="na">radius</span><span class="pi">:</span> <span class="s">0.1</span></code></pre></figure>
+
+  </div>
+</div>
+
+  
+  <pre id="mc_rbdyn_S_ObjectPtr_exampleyamlCopySource" class="offscreen" aria-hidden=true># Box example
+type: box
+width: 0.1
+height: 0.2
+depth: 0.3
+# Sphere example
+type: sphere
+radius: 0.5
+# Cylinder example
+type: cylinder
+p1: [0, 0, 0]
+p2: [0.5, 0, 0.5]
+radius: 0.1</pre>
+  <button class="btn btn-primary copy-button" data-clipboard-target="#mc_rbdyn_S_ObjectPtr_exampleyamlCopySource">Copy to clipboard</button>
 
 
     </div>

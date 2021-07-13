@@ -119,6 +119,8 @@ digraph "include/mc_rbdyn/RobotModule.h"
   Node37 [label="mc_rbdyn_urdf/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag$a00002.html"];
   Node0 -> Node38 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node38 [label="RBDyn/parsers/common.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 [label="sch/S_Object/S_Object.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

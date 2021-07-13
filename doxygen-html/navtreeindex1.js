@@ -60,10 +60,11 @@ var NAVTREEINDEX1 =
 "RobotModuleMacros_8h.html#aefdd7a13affe8001b4bf38b8e94fcd50":[4,0,0,4,21,2],
 "RobotModuleMacros_8h_source.html":[4,0,0,4,21],
 "RobotModule_8h.html":[4,0,0,4,20],
-"RobotModule_8h.html#a44d55a51f42d585c340944099985fa8e":[4,0,0,4,20,9],
+"RobotModule_8h.html#a44d55a51f42d585c340944099985fa8e":[4,0,0,4,20,10],
 "RobotModule_8h.html#a95605f5cb57b7c5b39027072bedbbc04":[4,0,0,4,20,7],
 "RobotModule_8h.html#a983157fccbdda235351228ec75cbd167":[4,0,0,4,20,5],
-"RobotModule_8h.html#aa4f40fc0642de7f1debd053f9c5d393f":[4,0,0,4,20,8],
+"RobotModule_8h.html#aa4f40fc0642de7f1debd053f9c5d393f":[4,0,0,4,20,9],
+"RobotModule_8h.html#ac3517607389b845ee6ffdee65cbc8a63":[4,0,0,4,20,8],
 "RobotModule_8h.html#af67e459a90b9a864418fca7d55d959a3":[4,0,0,4,20,6],
 "RobotModule_8h_source.html":[4,0,0,4,20],
 "Robots_8h.html":[4,0,0,4,22],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "dir_c5d9ba9e59fcda315855869f4a23a264.html":[4,0,0,8],
 "dir_d44c64559bbebec7f509842c48db8b23.html":[4,0,0],
 "dir_db09ff38bdf4a48089498df3a23be2f9.html":[4,0,0,6,0,1],
-"dir_dd557f61e1b89092937f946325ef4783.html":[4,0,0,2],
-"dir_dda95c61bc807ada3674ae2fc67687f0.html":[4,0,0,6,0]
+"dir_dd557f61e1b89092937f946325ef4783.html":[4,0,0,2]
 };

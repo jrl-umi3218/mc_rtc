@@ -1,5 +1,6 @@
 var NAVTREEINDEX7 =
 {
+"structmc__filter_1_1LeakyIntegrator.html#a1c6f1172e2ed09d564b4df366e5d7f21":[3,0,3,1,4],
 "structmc__filter_1_1LeakyIntegrator.html#a5d1fe6b17b1cab5807291e292f25b778":[3,0,3,1,1],
 "structmc__filter_1_1LeakyIntegrator.html#aa7768ba3fcbdb293ff11e389f5161826":[3,0,3,1,0],
 "structmc__filter_1_1LeakyIntegrator.html#aa8cf04d67353d666454a4e5f689ace5e":[3,0,3,1,6],
@@ -248,6 +249,5 @@ var NAVTREEINDEX7 =
 "structmc__rbdyn_1_1BodySensor.html#af860930bcdb938be5d229fa702b4bf0b":[3,0,6,3,13],
 "structmc__rbdyn_1_1Collision.html":[3,0,6,4],
 "structmc__rbdyn_1_1Collision.html#a169addbd06a09743b06287121884f027":[3,0,6,4,5],
-"structmc__rbdyn_1_1Collision.html#a212f22fc390d0f873dc67244cdbdbce7":[3,0,6,4,1],
-"structmc__rbdyn_1_1Collision.html#a2853ab9ab669747303ccda6b22bb7d77":[3,0,6,4,9]
+"structmc__rbdyn_1_1Collision.html#a212f22fc390d0f873dc67244cdbdbce7":[3,0,6,4,1]
 };

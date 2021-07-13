@@ -84,9 +84,7 @@ $(document).ready(function(){initNavTree('structmc__rbdyn_1_1Robot.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a28270fdeec598bc23d8761191a6226d4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a28270fdeec598bc23d8761191a6226d4">S_ObjectPtr</a> = std::shared_ptr&lt; sch::S_Object &gt;</td></tr>
-<tr class="separator:a28270fdeec598bc23d8761191a6226d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeaf56b7bf79a4e2be37e3c8615d156ad"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aeaf56b7bf79a4e2be37e3c8615d156ad">convex_pair_t</a> = std::pair&lt; std::string, <a class="el" href="structmc__rbdyn_1_1Robot.html#a28270fdeec598bc23d8761191a6226d4">S_ObjectPtr</a> &gt;</td></tr>
+<tr class="memitem:aeaf56b7bf79a4e2be37e3c8615d156ad"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aeaf56b7bf79a4e2be37e3c8615d156ad">convex_pair_t</a> = std::pair&lt; std::string, <a class="el" href="namespacemc__rbdyn.html#ac3517607389b845ee6ffdee65cbc8a63">S_ObjectPtr</a> &gt;</td></tr>
 <tr class="separator:aeaf56b7bf79a4e2be37e3c8615d156ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -127,7 +125,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2b2dc756cfb84c337de115384febab34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa176323f1dd1dc8f29ad40ccd4b23c9d"><td class="memItemLeft" align="right" valign="top">const std::map&lt; std::string, <a class="el" href="structmc__rbdyn_1_1Robot.html#aeaf56b7bf79a4e2be37e3c8615d156ad">convex_pair_t</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#aa176323f1dd1dc8f29ad40ccd4b23c9d">convexes</a> () const</td></tr>
 <tr class="separator:aa176323f1dd1dc8f29ad40ccd4b23c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae30c16125ec220e6525f86339d894a3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ae30c16125ec220e6525f86339d894a3c">addConvex</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>, const std::string &amp;body, <a class="el" href="structmc__rbdyn_1_1Robot.html#a28270fdeec598bc23d8761191a6226d4">S_ObjectPtr</a> <a class="el" href="structmc__rbdyn_1_1Robot.html#a7fa487585e4b6d447c69ba78d9eca203">convex</a>, const sva::PTransformd &amp;X_b_c=sva::PTransformd::Identity())</td></tr>
+<tr class="memitem:ae30c16125ec220e6525f86339d894a3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ae30c16125ec220e6525f86339d894a3c">addConvex</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>, const std::string &amp;body, <a class="el" href="namespacemc__rbdyn.html#ac3517607389b845ee6ffdee65cbc8a63">S_ObjectPtr</a> <a class="el" href="structmc__rbdyn_1_1Robot.html#a7fa487585e4b6d447c69ba78d9eca203">convex</a>, const sva::PTransformd &amp;X_b_c=sva::PTransformd::Identity())</td></tr>
 <tr class="separator:ae30c16125ec220e6525f86339d894a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3296b923f06db47d80641b7acf46e5bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a3296b923f06db47d80641b7acf46e5bf">removeConvex</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>)</td></tr>
 <tr class="separator:a3296b923f06db47d80641b7acf46e5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -476,21 +474,7 @@ Friends</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="structmc__rbdyn_1_1Robot.html#aeaf56b7bf79a4e2be37e3c8615d156ad">mc_rbdyn::Robot::convex_pair_t</a> =  std::pair&lt;std::string, <a class="el" href="structmc__rbdyn_1_1Robot.html#a28270fdeec598bc23d8761191a6226d4">S_ObjectPtr</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a28270fdeec598bc23d8761191a6226d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28270fdeec598bc23d8761191a6226d4">&#9670;&nbsp;</a></span>S_ObjectPtr</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="structmc__rbdyn_1_1Robot.html#a28270fdeec598bc23d8761191a6226d4">mc_rbdyn::Robot::S_ObjectPtr</a> =  std::shared_ptr&lt;sch::S_Object&gt;</td>
+          <td class="memname">using <a class="el" href="structmc__rbdyn_1_1Robot.html#aeaf56b7bf79a4e2be37e3c8615d156ad">mc_rbdyn::Robot::convex_pair_t</a> =  std::pair&lt;std::string, <a class="el" href="namespacemc__rbdyn.html#ac3517607389b845ee6ffdee65cbc8a63">S_ObjectPtr</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -652,7 +636,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structmc__rbdyn_1_1Robot.html#a28270fdeec598bc23d8761191a6226d4">S_ObjectPtr</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacemc__rbdyn.html#ac3517607389b845ee6ffdee65cbc8a63">S_ObjectPtr</a>&#160;</td>
           <td class="paramname"><em>convex</em>, </td>
         </tr>
         <tr>

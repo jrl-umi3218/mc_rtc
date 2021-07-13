@@ -1792,6 +1792,13 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
+      <type>std::shared_ptr&lt; sch::S_Object &gt;</type>
+      <name>S_ObjectPtr</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ac3517607389b845ee6ffdee65cbc8a63</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
       <type>std::shared_ptr&lt; RobotModule &gt;</type>
       <name>RobotModulePtr</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
@@ -24209,13 +24216,6 @@
     <name>mc_rbdyn::Robot</name>
     <filename>structmc__rbdyn_1_1Robot.html</filename>
     <member kind="typedef">
-      <type>std::shared_ptr&lt; sch::S_Object &gt;</type>
-      <name>S_ObjectPtr</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>a28270fdeec598bc23d8761191a6226d4</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
       <type>std::pair&lt; std::string, S_ObjectPtr &gt;</type>
       <name>convex_pair_t</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -26429,6 +26429,13 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>const std::map&lt; std::string, std::pair&lt; std::string, S_ObjectPtr &gt; &gt; &amp;</type>
+      <name>collisionObjects</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a5f8b8da35780c72a0455713fca1486a5</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
       <type>const std::map&lt; std::string, std::pair&lt; std::string, std::string &gt; &gt; &amp;</type>
       <name>stpbvHull</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
@@ -26664,6 +26671,13 @@
       <name>_convexHull</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a65db2f156200c10f888f52bf12875e64</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::map&lt; std::string, std::pair&lt; std::string, S_ObjectPtr &gt; &gt;</type>
+      <name>_collisionObjects</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a97cc4ac9b4bfbf45c36e4407e836505c</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -37320,6 +37334,13 @@
       <name>SensorPtr</name>
       <anchorfile>namespacemc__rbdyn.html</anchorfile>
       <anchor>aa1e86054c466a23bfdcb3470f71c8aad</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::shared_ptr&lt; sch::S_Object &gt;</type>
+      <name>S_ObjectPtr</name>
+      <anchorfile>namespacemc__rbdyn.html</anchorfile>
+      <anchor>ac3517607389b845ee6ffdee65cbc8a63</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">

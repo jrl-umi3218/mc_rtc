@@ -1,5 +1,7 @@
 var NAVTREEINDEX10 =
 {
+"structmc__rbdyn_1_1VisualMap.html#a12a6994b9750a77e0543846be016a263":[3,0,6,24,5],
+"structmc__rbdyn_1_1VisualMap.html#a5a7913eda1566657722387ae559127ab":[3,0,6,24,3],
 "structmc__rbdyn_1_1VisualMap.html#a7b4d1a9917b3bc796db270228d699411":[3,0,6,24,4],
 "structmc__rbdyn_1_1VisualMap.html#a9ce12bfdd7e0edfaa4afbcce9764279a":[3,0,6,24,2],
 "structmc__rbdyn_1_1VisualMap.html#aace9203b0cf03c1813dbb51060a1681d":[3,0,6,24,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX10 =
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html":[3,0,7,21],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html":[3,0,7,22],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html":[3,0,7,23],
-"structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html":[3,0,7,24],
-"structmc__rtc_1_1Configuration_1_1Exception.html":[3,0,7,3,0],
-"structmc__rtc_1_1Configuration_1_1Exception.html#a02a511274c6edbdfcf14ecc723a495c5":[3,0,7,3,0,5]
+"structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html":[3,0,7,24]
 };

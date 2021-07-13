@@ -4,6 +4,7 @@ var searchData=
   ['_5fbodysensors',['_bodySensors',['../structmc__rbdyn_1_1RobotModule.html#a850abf7b9eb7e6ef1f3ca70fc495c6e4',1,'mc_rbdyn::RobotModule']]],
   ['_5fbounds',['_bounds',['../structmc__rbdyn_1_1RobotModule.html#af19dd43ad8642aabc8c406e0972c5d65',1,'mc_rbdyn::RobotModule']]],
   ['_5fcollision',['_collision',['../structmc__rbdyn_1_1RobotModule.html#ab30a1f088ce9b008c0b619185554d751',1,'mc_rbdyn::RobotModule']]],
+  ['_5fcollisionobjects',['_collisionObjects',['../structmc__rbdyn_1_1RobotModule.html#a97cc4ac9b4bfbf45c36e4407e836505c',1,'mc_rbdyn::RobotModule']]],
   ['_5fcollisiontransforms',['_collisionTransforms',['../structmc__rbdyn_1_1RobotModule.html#a57b63a2f82b40741398b3a167b43592c',1,'mc_rbdyn::RobotModule']]],
   ['_5fcommonselfcollisions',['_commonSelfCollisions',['../structmc__rbdyn_1_1RobotModule.html#a064f95b0a8e134739d1f7ab194afe42f',1,'mc_rbdyn::RobotModule']]],
   ['_5fcompoundjoints',['_compoundJoints',['../structmc__rbdyn_1_1RobotModule.html#a0b4dd720e3b699b37947c3453a93e126',1,'mc_rbdyn::RobotModule']]],

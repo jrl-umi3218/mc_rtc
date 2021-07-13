@@ -1,7 +1,6 @@
 var structmc__rbdyn_1_1Robot =
 [
     [ "convex_pair_t", "structmc__rbdyn_1_1Robot.html#aeaf56b7bf79a4e2be37e3c8615d156ad", null ],
-    [ "S_ObjectPtr", "structmc__rbdyn_1_1Robot.html#a28270fdeec598bc23d8761191a6226d4", null ],
     [ "Robot", "structmc__rbdyn_1_1Robot.html#a023a2a4a841760ae65a2d868bb6139fa", null ],
     [ "Robot", "structmc__rbdyn_1_1Robot.html#a51de36111dee056232ab11ac45067d62", null ],
     [ "accW", "structmc__rbdyn_1_1Robot.html#a8c7a59334340cf8b44a10c6c9cb64d76", null ],
