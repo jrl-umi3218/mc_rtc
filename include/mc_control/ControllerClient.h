@@ -475,7 +475,8 @@ protected:
   virtual void form_checkbox(const ElementId & /*formId*/,
                              const std::string & /*name*/,
                              bool /*required*/,
-                             bool /*default*/)
+                             bool /*default*/,
+                             bool /*default_from_user*/)
   {
   }
 
@@ -483,7 +484,8 @@ protected:
   virtual void form_integer_input(const ElementId & /*formId*/,
                                   const std::string & /*name*/,
                                   bool /*required*/,
-                                  int /*default*/)
+                                  int /*default*/,
+                                  bool /*default_from_user*/)
   {
   }
 
@@ -491,7 +493,8 @@ protected:
   virtual void form_number_input(const ElementId & /*formId*/,
                                  const std::string & /*name*/,
                                  bool /*required*/,
-                                 double /*default*/)
+                                 double /*default*/,
+                                 bool /*default_from_user*/)
   {
   }
 
@@ -499,7 +502,8 @@ protected:
   virtual void form_string_input(const ElementId & /*formId*/,
                                  const std::string & /*name*/,
                                  bool /*required*/,
-                                 const std::string & /*default*/)
+                                 const std::string & /*default*/,
+                                 bool /*default_from_user*/)
   {
   }
 
@@ -508,7 +512,8 @@ protected:
                                 const std::string & /*name*/,
                                 bool /*required*/,
                                 const Eigen::VectorXd & /*default*/,
-                                bool /*fixed_size*/)
+                                bool /*fixed_size*/,
+                                bool /*default_from_user*/)
   {
   }
 
