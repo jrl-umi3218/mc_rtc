@@ -471,7 +471,10 @@ protected:
     default_impl("Form", id);
   }
 
-  /** A checkbox within a form */
+  /** A checkbox within a form
+   *
+   * This is kept for backward compatibility, mc_rtc never calls this version and you should implement the full version
+   */
   virtual void form_checkbox(const ElementId & /*formId*/,
                              const std::string & /*name*/,
                              bool /*required*/,
@@ -479,7 +482,20 @@ protected:
   {
   }
 
-  /** An integer input within a form */
+  /** A checkbox within a form */
+  virtual void form_checkbox(const ElementId & formId,
+                             const std::string & name,
+                             bool required,
+                             bool default_,
+                             bool /*default_from_user*/)
+  {
+    form_checkbox(formId, name, required, default_);
+  }
+
+  /** An integer input within a form
+   *
+   * This is kept for backward compatibility, mc_rtc never calls this version and you should implement the full version
+   */
   virtual void form_integer_input(const ElementId & /*formId*/,
                                   const std::string & /*name*/,
                                   bool /*required*/,
@@ -487,7 +503,20 @@ protected:
   {
   }
 
-  /** A number input within a form */
+  /** An integer input within a form */
+  virtual void form_integer_input(const ElementId & formId,
+                                  const std::string & name,
+                                  bool required,
+                                  int default_,
+                                  bool /*default_from_user*/)
+  {
+    form_integer_input(formId, name, required, default_);
+  }
+
+  /** A number input within a form
+   *
+   * This is kept for backward compatibility, mc_rtc never calls this version and you should implement the full version
+   */
   virtual void form_number_input(const ElementId & /*formId*/,
                                  const std::string & /*name*/,
                                  bool /*required*/,
@@ -495,7 +524,20 @@ protected:
   {
   }
 
-  /** A string input within a form */
+  /** A number input within a form */
+  virtual void form_number_input(const ElementId & formId,
+                                 const std::string & name,
+                                 bool required,
+                                 double default_,
+                                 bool /*default_from_user*/)
+  {
+    form_number_input(formId, name, required, default_);
+  }
+
+  /** A string input within a form
+   *
+   * This is kept for backward compatibility, mc_rtc never calls this version and you should implement the full version
+   */
   virtual void form_string_input(const ElementId & /*formId*/,
                                  const std::string & /*name*/,
                                  bool /*required*/,
@@ -503,13 +545,37 @@ protected:
   {
   }
 
-  /** An array input within a form */
+  /** A string input within a form */
+  virtual void form_string_input(const ElementId & formId,
+                                 const std::string & name,
+                                 bool required,
+                                 const std::string & default_,
+                                 bool /*default_from_user*/)
+  {
+    form_string_input(formId, name, required, default_);
+  }
+
+  /** An array input within a form
+   *
+   * This is kept for backward compatibility, mc_rtc never calls this version and you should implement the full version
+   */
   virtual void form_array_input(const ElementId & /*formId*/,
                                 const std::string & /*name*/,
                                 bool /*required*/,
                                 const Eigen::VectorXd & /*default*/,
                                 bool /*fixed_size*/)
   {
+  }
+
+  /** An array input within a form */
+  virtual void form_array_input(const ElementId & formId,
+                                const std::string & name,
+                                bool required,
+                                const Eigen::VectorXd & default_,
+                                bool fixed_size,
+                                bool /*default_from_user*/)
+  {
+    form_array_input(formId, name, required, default_, fixed_size);
   }
 
   /** A combo input within a form

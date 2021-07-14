@@ -115,20 +115,24 @@ template<typename T, Elements element>
 struct FormDataInput : public FormElement<FormDataInput<T, element>, element>
 {
   FormDataInput(const std::string & name, bool required, const T & def)
-  : FormElement<FormDataInput<T, element>, element>(name, required), def_(def)
+  : FormElement<FormDataInput<T, element>, element>(name, required), def_(def), has_def_(true)
   {
   }
 
-  FormDataInput(const std::string & name, bool required) : FormDataInput<T, element>(name, required, {}) {}
+  FormDataInput(const std::string & name, bool required) : FormDataInput<T, element>(name, required, {})
+  {
+    has_def_ = false;
+  }
 
   static constexpr size_t write_size_()
   {
-    return 1;
+    return 2;
   }
 
   void write_(mc_rtc::MessagePackBuilder & builder)
   {
     builder.write(def_);
+    builder.write(has_def_);
   }
 
   /** Invalid element */
@@ -136,6 +140,7 @@ struct FormDataInput : public FormElement<FormDataInput<T, element>, element>
 
 private:
   T def_;
+  bool has_def_;
 };
 
 using FormCheckbox = FormDataInput<bool, Elements::Checkbox>;
@@ -147,24 +152,27 @@ template<typename T>
 struct FormArrayInput : public FormElement<FormArrayInput<T>, Elements::ArrayInput>
 {
   FormArrayInput(const std::string & name, bool required, const T & def, bool fixed_size = true)
-  : FormElement<FormArrayInput, Elements::ArrayInput>(name, required), def_(def), fixed_size_(fixed_size)
+  : FormElement<FormArrayInput, Elements::ArrayInput>(name, required), def_(def), fixed_size_(fixed_size),
+    has_def_(true)
   {
   }
 
   FormArrayInput(const std::string & name, bool required, bool fixed_size = false)
   : FormArrayInput<T>(name, required, {}, fixed_size)
   {
+    has_def_ = false;
   }
 
   static constexpr size_t write_size_()
   {
-    return 2;
+    return 3;
   }
 
   void write_(mc_rtc::MessagePackBuilder & builder)
   {
     builder.write(def_);
     builder.write(fixed_size_);
+    builder.write(has_def_);
   }
 
   /** Invalid element */
@@ -173,6 +181,7 @@ struct FormArrayInput : public FormElement<FormArrayInput<T>, Elements::ArrayInp
 private:
   T def_;
   bool fixed_size_;
+  bool has_def_;
 };
 
 struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
