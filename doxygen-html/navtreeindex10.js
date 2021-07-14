@@ -1,5 +1,10 @@
 var NAVTREEINDEX10 =
 {
+"structmc__rbdyn_1_1Surface.html#ad714df25bed40fed15f512f0a09db694":[3,0,6,23,12],
+"structmc__rbdyn_1_1Surface.html#ad9239b4ea2aad13c55bd6ba6698826ad":[3,0,6,23,14],
+"structmc__rbdyn_1_1Surface.html#adc29cfce0c121597c6805119fd4419b0":[3,0,6,23,13],
+"structmc__rbdyn_1_1Surface.html#af30be45b61b6a2d617ff2e18bb2f4903":[3,0,6,23,16],
+"structmc__rbdyn_1_1VisualMap.html":[3,0,6,24],
 "structmc__rbdyn_1_1VisualMap.html#a12a6994b9750a77e0543846be016a263":[3,0,6,24,5],
 "structmc__rbdyn_1_1VisualMap.html#a5a7913eda1566657722387ae559127ab":[3,0,6,24,3],
 "structmc__rbdyn_1_1VisualMap.html#a7b4d1a9917b3bc796db270228d699411":[3,0,6,24,4],
@@ -244,10 +249,5 @@ var NAVTREEINDEX10 =
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration_01_4.html":[3,0,7,14],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ArrowConfig_01_4.html":[3,0,7,17],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1Color_01_4.html":[3,0,7,18],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html":[3,0,7,19],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html":[3,0,7,20],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1PointConfig_01_4.html":[3,0,7,21],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1force_1_1ImpedanceGains_01_4.html":[3,0,7,22],
-"structmc__rtc_1_1ConfigurationLoader_3_01mc__tasks_1_1lipm__stabilizer_1_1ContactState_01_4.html":[3,0,7,23],
-"structmc__rtc_1_1ConfigurationLoader_3_01void_01_4.html":[3,0,7,24]
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ForceConfig_01_4.html":[3,0,7,19]
 };

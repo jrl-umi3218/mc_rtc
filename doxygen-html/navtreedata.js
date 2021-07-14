@@ -46,19 +46,19 @@ var NAVTREEINDEX =
 "dir_dda95c61bc807ada3674ae2fc67687f0.html",
 "mc__control_2fsm_2api_8h.html#a4907a97f0041ceb9c310d2b8cd0c027d",
 "plot_2types_8h.html#ae8d436e1212bee55dfdb14d50b0d6be9",
-"structmc__control_1_1MCController.html#a49fc72e5be121546b68cd1d8b4edccc8",
-"structmc__control_1_1fsm_1_1Executor.html#aadfab91a3042bf4f737c0089e51c86d3",
-"structmc__filter_1_1LeakyIntegrator.html#a1c6f1172e2ed09d564b4df366e5d7f21",
-"structmc__rbdyn_1_1Collision.html#a2853ab9ab669747303ccda6b22bb7d77",
-"structmc__rbdyn_1_1Robot.html#a95798f9588d0656c61558ab20ad935b4",
-"structmc__rbdyn_1_1VisualMap.html#a12a6994b9750a77e0543846be016a263",
-"structmc__rtc_1_1Configuration_1_1Exception.html",
-"structmc__rtc_1_1gui_1_1FormArrayInput.html#ab1cac61405d81079609b79e20b161e84",
-"structmc__rtc_1_1log_1_1FlatLog.html#a2916d448d9bf2a1369b20cbc5566375e",
-"structmc__solver_1_1utils_1_1EqualityConstraint.html",
-"structmc__tasks_1_1PostureTask.html#acb550b5465420b15d564c8df277b849a",
-"structmc__tasks_1_1force_1_1DampingTask.html",
-"structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#af7d8d84e9eabf8762d42feae2ce8457d"
+"structmc__control_1_1MCController.html#a3d17bb7e20af4d312617d7d5f6288889",
+"structmc__control_1_1fsm_1_1Executor.html#a6418feaa36246f3f192b6d358b8f1f7e",
+"structmc__filter_1_1ExponentialMovingAverage.html#accd3db44b24084922b2d1915e378b2fb",
+"structmc__rbdyn_1_1BodySensor.html#adb95b5d1ba5be5b51912cfc058f2371d",
+"structmc__rbdyn_1_1Robot.html#a901f76e997eccaa20ef748302229edf6",
+"structmc__rbdyn_1_1Surface.html#ad714df25bed40fed15f512f0a09db694",
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1LineConfig_01_4.html",
+"structmc__rtc_1_1gui_1_1ForceROImpl.html#a57c555bb17d91446dfa6fc4b3c3721f1",
+"structmc__rtc_1_1internal_1_1lambda__traits_3_01RetT_07C_1_1_5_08_07Args_8_8_8_08_4.html",
+"structmc__solver_1_1utils_1_1Constraint.html#ae5a2073ed0b8b0432593221fec955e4e",
+"structmc__tasks_1_1PostureTask.html#aa4725eea7614be3d2bcb54e16aa0f15c",
+"structmc__tasks_1_1force_1_1ComplianceTask.html#ade42094d33ea2b4967c7c7c49b10e953",
+"structmc__tasks_1_1lipm__stabilizer_1_1ZMPCC.html#aa6a76ddd8651adac9e8772a9ef2ca396"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

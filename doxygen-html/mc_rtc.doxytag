@@ -11041,10 +11041,24 @@
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
+      <name>form_checkbox</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a451e2eedd8665e2455ec6098349c5c88</anchor>
+      <arglist>(const ElementId &amp;formId, const std::string &amp;name, bool required, bool default_, bool)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
       <name>form_integer_input</name>
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>aa9a4c2dc5ad1bd01264a7f7a206273de</anchor>
       <arglist>(const ElementId &amp;, const std::string &amp;, bool, int)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
+      <name>form_integer_input</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a8a7445782cb8de9f56e2f50b5c46c018</anchor>
+      <arglist>(const ElementId &amp;formId, const std::string &amp;name, bool required, int default_, bool)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
@@ -11055,6 +11069,13 @@
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
+      <name>form_number_input</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>a18931c3676c4593502ee21b61bd687d2</anchor>
+      <arglist>(const ElementId &amp;formId, const std::string &amp;name, bool required, double default_, bool)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
       <name>form_string_input</name>
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>ab0dd6c14e71101fda3c7cfaf169424d7</anchor>
@@ -11062,10 +11083,24 @@
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
+      <name>form_string_input</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>aa88d3332a97e8d78a946195308647910</anchor>
+      <arglist>(const ElementId &amp;formId, const std::string &amp;name, bool required, const std::string &amp;default_, bool)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
       <name>form_array_input</name>
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>acfa7906e586edddddcdf3603a2904c70</anchor>
       <arglist>(const ElementId &amp;, const std::string &amp;, bool, const Eigen::VectorXd &amp;, bool)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
+      <name>form_array_input</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>ac4268ff16133bc178a51e5d82bf26216</anchor>
+      <arglist>(const ElementId &amp;formId, const std::string &amp;name, bool required, const Eigen::VectorXd &amp;default_, bool fixed_size, bool)</arglist>
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
