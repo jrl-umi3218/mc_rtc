@@ -214,6 +214,8 @@ void PostureTask::addToLogger(mc_rtc::Logger & logger)
 {
   logger.addLogEntry(name_ + "_eval", this, [this]() -> const Eigen::VectorXd & { return pt_.eval(); });
   logger.addLogEntry(name_ + "_speed", this, [this]() -> const Eigen::VectorXd & { return speed_; });
+  logger.addLogEntry(name_ + "_refVel", this, [this]() -> const Eigen::VectorXd & { return refVel(); });
+  logger.addLogEntry(name_ + "_refAccel", this, [this]() -> const Eigen::VectorXd & { return refAccel(); });
 }
 
 void PostureTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
