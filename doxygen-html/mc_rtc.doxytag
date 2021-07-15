@@ -23425,6 +23425,34 @@
       <arglist>(const std::vector&lt; std::vector&lt; double &gt;&gt; &amp;p)</arglist>
     </member>
     <member kind="function">
+      <type>void</type>
+      <name>refVel</name>
+      <anchorfile>structmc__tasks_1_1PostureTask.html</anchorfile>
+      <anchor>a6ea106c9e2ebc76e2f806c0952dccb4c</anchor>
+      <arglist>(const Eigen::VectorXd &amp;refVel) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::VectorXd &amp;</type>
+      <name>refVel</name>
+      <anchorfile>structmc__tasks_1_1PostureTask.html</anchorfile>
+      <anchor>afd5d9cc2500a4a70e7e7674a1ba95a9f</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>refAccel</name>
+      <anchorfile>structmc__tasks_1_1PostureTask.html</anchorfile>
+      <anchor>a3c239b3603638379a2bb5457a226e0a9</anchor>
+      <arglist>(const Eigen::VectorXd &amp;refAccel) noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::VectorXd &amp;</type>
+      <name>refAccel</name>
+      <anchorfile>structmc__tasks_1_1PostureTask.html</anchorfile>
+      <anchor>ae2c51b7404320b8b41cff466ef24e0b4</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>std::vector&lt; std::vector&lt; double &gt; &gt;</type>
       <name>posture</name>
       <anchorfile>structmc__tasks_1_1PostureTask.html</anchorfile>
