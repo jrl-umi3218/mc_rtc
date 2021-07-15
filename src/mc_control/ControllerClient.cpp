@@ -684,19 +684,19 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
     switch(type)
     {
       case Elements::Checkbox:
-        form_checkbox(id, name, required, el[3], el[4]);
+        form_checkbox(id, name, required, el[3], el.size() > 4 ? el[4] : true);
         break;
       case Elements::IntegerInput:
-        form_integer_input(id, name, required, el[3], el[4]);
+        form_integer_input(id, name, required, el[3], el.size() > 4 ? el[4] : true);
         break;
       case Elements::NumberInput:
-        form_number_input(id, name, required, el[3], el[4]);
+        form_number_input(id, name, required, el[3], el.size() > 4 ? el[4] : true);
         break;
       case Elements::StringInput:
-        form_string_input(id, name, required, el[3], el[4]);
+        form_string_input(id, name, required, el[3], el.size() > 4 ? el[4] : true);
         break;
       case Elements::ArrayInput:
-        form_array_input(id, name, required, el[3], el[4], el[5]);
+        form_array_input(id, name, required, el[3], el[4], el.size() > 5 ? el[5] : true);
         break;
       case Elements::ComboInput:
         form_combo_input(id, name, required, el[3], el[4]);
