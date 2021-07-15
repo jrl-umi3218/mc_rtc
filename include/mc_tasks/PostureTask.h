@@ -50,6 +50,38 @@ public:
   /** Change posture objective */
   void posture(const std::vector<std::vector<double>> & p);
 
+  /** Change reference velocity
+   *
+   * \p refVel Should be of size nrDof
+   */
+  inline void refVel(const Eigen::VectorXd & refVel) noexcept
+  {
+    assert(refVel.size() == robots_.robots()[rIndex_].mb().nrDof());
+    pt_.refVel(refVel);
+  }
+
+  /** Access the reference velocity */
+  inline const Eigen::VectorXd & refVel() const noexcept
+  {
+    return pt_.refVel();
+  }
+
+  /** Change reference acceleration
+   *
+   * \p refAccel Should be of size nrDof
+   */
+  inline void refAccel(const Eigen::VectorXd & refAccel) noexcept
+  {
+    assert(refAccel.size() == robots_.robots()[rIndex_].mb().nrDof());
+    pt_.refAccel(refAccel);
+  }
+
+  /** Access the reference acceleration */
+  inline const Eigen::VectorXd & refAccel() const noexcept
+  {
+    return pt_.refAccel();
+  }
+
   /** Get current posture objective */
   std::vector<std::vector<double>> posture() const;
 
