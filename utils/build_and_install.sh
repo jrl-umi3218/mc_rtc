@@ -914,10 +914,10 @@ if $WITH_HRP2
 then
   if $WITH_ROS_SUPPORT
   then
-    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc $CATKIN_DATA_WORKSPACE_SRC
+    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc_description $CATKIN_DATA_WORKSPACE_SRC
     echo_log "-- [OK] Successfully cloned and updated the robot description to $git_dep to $repo_dir (catkin)"
   else
-    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc $SOURCE_DIR
+    check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc_description $SOURCE_DIR
     echo_log "-- [OK] Successfully cloned and updated the robot description $git_dep to $repo_dir (no catkin)"
   fi
   check_and_clone_git_dependency git@gite.lirmm.fr:mc-hrp2/mc-hrp2 $SOURCE_DIR
@@ -1333,7 +1333,7 @@ then
   echo_log "-- Installing with HRP2 robot support"
   if ! $WITH_ROS_SUPPORT
   then
-    build_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc
+    build_git_dependency git@gite.lirmm.fr:mc-hrp2/hrp2_drc_description
     echo_log "-- [OK] Successfully built the robot description $git_dep (no catkin)"
   fi
   build_git_dependency git@gite.lirmm.fr:mc-hrp2/mc-hrp2
