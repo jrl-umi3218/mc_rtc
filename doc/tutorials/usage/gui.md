@@ -144,7 +144,7 @@ These elements will display two things:
 
 ```cpp
 // Read-only variant does not provide a callback to set the data
-Point3d("Point", [this]() { return v3_; });
+Point3D("Point", [this]() { return v3_; });
 
 // Read-write variant
 
