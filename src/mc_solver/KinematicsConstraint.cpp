@@ -16,8 +16,9 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots, unsi
   const mc_rbdyn::Robot & robot = robots.robot(robotIndex);
   tasks::QBound qBound(robot.ql(), robot.qu());
   tasks::AlphaDBound aDBound(robot.al(), robot.au());
-  jointLimitsConstr.reset(
-      new tasks::qp::JointLimitsConstr(robots.mbs(), static_cast<int>(robotIndex), qBound, aDBound, timeStep));
+  tasks::AlphaDDBound aDDBound(robot.jl(), robot.ju());
+  jointLimitsConstr.reset(new tasks::qp::JointLimitsConstr(robots.mbs(), static_cast<int>(robotIndex), qBound, aDBound,
+                                                           aDDBound, timeStep));
 }
 
 KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots,
@@ -36,6 +37,8 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots,
   std::vector<std::vector<double>> vu = robot.vu();
   std::vector<std::vector<double>> al = robot.al();
   std::vector<std::vector<double>> au = robot.au();
+  std::vector<std::vector<double>> jl = robot.jl();
+  std::vector<std::vector<double>> ju = robot.ju();
   for(auto & vi : vl)
   {
     for(auto & v : vi)
@@ -52,10 +55,11 @@ KinematicsConstraint::KinematicsConstraint(const mc_rbdyn::Robots & robots,
   }
   tasks::AlphaBound alphaBound(vl, vu);
   tasks::AlphaDBound alphaDBound(al, au);
+  tasks::AlphaDDBound alphaDDBound(jl, ju);
 
   damperJointLimitsConstr.reset(new tasks::qp::DamperJointLimitsConstr(robots.mbs(), static_cast<int>(robotIndex),
-                                                                       qBound, alphaBound, alphaDBound, percentInter,
-                                                                       percentSecur, offset, timeStep));
+                                                                       qBound, alphaBound, alphaDBound, alphaDDBound,
+                                                                       percentInter, percentSecur, offset, timeStep));
 }
 
 void KinematicsConstraint::addToSolver(const std::vector<rbd::MultiBody> & mbs, tasks::qp::QPSolver & solver)

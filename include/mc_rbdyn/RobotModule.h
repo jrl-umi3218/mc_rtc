@@ -95,6 +95,15 @@ struct MC_RBDYN_DLLAPI RobotModule
    */
   using accelerationBounds_t = std::vector<std::map<std::string, std::vector<double>>>;
 
+  /*! Holds information regarding the additional jerk bounds (specified in addition to urdf limits)
+   *
+   * The vector should have 2 entries:
+   * - lower/upper jerk bounds
+   *
+   * Each entry is a map joint name <-> bound
+   */
+  using jerkBounds_t = std::vector<std::map<std::string, std::vector<double>>>;
+
   /*! Holds information regarding the additional torque-derivative bounds (specified in addition to urdf limits)
    *
    * The vector should have 2 entries:
@@ -282,6 +291,20 @@ struct MC_RBDYN_DLLAPI RobotModule
   const std::vector<std::map<std::string, std::vector<double>>> & accelerationBounds() const
   {
     return _accelerationBounds;
+  }
+
+  /** Returns the robot's jerk bounds
+   *
+   * The vector should hold 2 string -> vector<double> map
+   *
+   * Each map's keys are joint names and values are joint limits.
+   *
+   * They should be provided in the following order:
+   * - jerk limits (lower/upper)
+   */
+  const std::vector<std::map<std::string, std::vector<double>>> & jerkBounds() const
+  {
+    return _jerkBounds;
   }
 
   /** Returns the robot's torque-derivative bounds
@@ -564,6 +587,8 @@ struct MC_RBDYN_DLLAPI RobotModule
   bounds_t _bounds;
   /** \see accelerationBounds() */
   accelerationBounds_t _accelerationBounds;
+  /** \see jerkBounds() */
+  jerkBounds_t _jerkBounds;
   /** \see torqueDerivativeBounds() */
   torqueDerivativeBounds_t _torqueDerivativeBounds;
   /** \see stance() */

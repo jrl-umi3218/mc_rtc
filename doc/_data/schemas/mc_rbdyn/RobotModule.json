@@ -46,6 +46,17 @@
       "minItems": 2,
       "maxItems": 2
     },
+    "jerkBounds":
+    {
+      "description": "Jerk bounds (lower/upper). Overwrite those specified in bounds if present",
+      "type": "array",
+      "items":
+      {
+        "$ref": "#/definitions/joint_bound_map"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
     "torqueDerivativeBounds":
     {
       "description": "Torque derivative bounds (lower/upper). Overwrite those specified in bounds if present",

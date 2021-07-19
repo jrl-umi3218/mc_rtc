@@ -1044,6 +1044,17 @@ mc_rbdyn::RobotModule ConfigurationLoader<mc_rbdyn::RobotModule>::load(const mc_
     rm._accelerationBounds[0] = aBounds[0];
     rm._accelerationBounds[1] = aBounds[1];
   }
+  if(config.has("jerkBounds"))
+  {
+    mc_rbdyn::RobotModule::bounds_t jBounds = config("jerkBounds");
+    if(jBounds.size() != 2)
+    {
+      mc_rtc::log::error_and_throw<std::runtime_error>("jerkBounds entry should be an array of size 2");
+    }
+    rm._jerkBounds.resize(2);
+    rm._jerkBounds[0] = jBounds[0];
+    rm._jerkBounds[1] = jBounds[1];
+  }
   if(config.has("torqueDerivativeBounds"))
   {
     mc_rbdyn::RobotModule::bounds_t tdBounds = config("torqueDerivativeBounds");
@@ -1157,6 +1168,11 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
     mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number ({}) of _accelerationBounds entries in RobotModule",
                                                      rm._accelerationBounds.size());
   }
+  if(rm._jerkBounds.size() != 0 && rm._jerkBounds.size() != 2)
+  {
+    mc_rtc::log::error_and_throw<std::runtime_error>("Wrong number ({}) of _jerkBounds entries in RobotModule",
+                                                     rm._jerkBounds.size());
+  }
   if(rm._torqueDerivativeBounds.size() != 0 && rm._torqueDerivativeBounds.size() != 2)
   {
     mc_rtc::log::error_and_throw<std::runtime_error>(
@@ -1165,6 +1181,10 @@ mc_rtc::Configuration ConfigurationLoader<mc_rbdyn::RobotModule>::save(const mc_
   if(rm._accelerationBounds.size() == 2)
   {
     config.add("accelerationBounds", rm._accelerationBounds);
+  }
+  if(rm._jerkBounds.size() == 2)
+  {
+    config.add("jerkBounds", rm._jerkBounds);
   }
   if(rm._torqueDerivativeBounds.size() == 2)
   {

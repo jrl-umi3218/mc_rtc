@@ -372,6 +372,10 @@ public:
   const std::vector<std::vector<double>> & al() const;
   /** Access the robot's angular upper acceleration limits (const) */
   const std::vector<std::vector<double>> & au() const;
+  /** Access the robot's angular lower jerk limits (const) */
+  const std::vector<std::vector<double>> & jl() const;
+  /** Access the robot's angular upper jerk limits (const) */
+  const std::vector<std::vector<double>> & ju() const;
   /** Access the robot's angular lower torque limits (const) */
   const std::vector<std::vector<double>> & tl() const;
   /** Access the robot's angular upper torque limits (const) */
@@ -392,6 +396,10 @@ public:
   std::vector<std::vector<double>> & al();
   /** Access the robot's angular upper acceleration limits */
   std::vector<std::vector<double>> & au();
+  /** Access the robot's angular lower jerk limits */
+  std::vector<std::vector<double>> & jl();
+  /** Access the robot's angular upper jerk limits */
+  std::vector<std::vector<double>> & ju();
   /** Access the robot's angular lower torque limits */
   std::vector<std::vector<double>> & tl();
   /** Access the robot's angular upper torque limits */
@@ -880,6 +888,8 @@ private:
   std::vector<std::vector<double>> vu_;
   std::vector<std::vector<double>> al_;
   std::vector<std::vector<double>> au_;
+  std::vector<std::vector<double>> jl_;
+  std::vector<std::vector<double>> ju_;
   std::vector<std::vector<double>> tl_;
   std::vector<std::vector<double>> tu_;
   std::vector<std::vector<double>> tdl_;

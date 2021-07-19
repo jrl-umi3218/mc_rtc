@@ -34,6 +34,7 @@ namespace
 using bound_t = std::vector<std::vector<double>>;
 using bounds_t = std::tuple<bound_t, bound_t, bound_t, bound_t, bound_t, bound_t>;
 using accelerationBounds_t = std::tuple<bound_t, bound_t>;
+using jerkBounds_t = std::tuple<bound_t, bound_t>;
 using torqueDerivativeBounds_t = std::tuple<bound_t, bound_t>;
 using rm_bounds_t = mc_rbdyn::RobotModule::bounds_t;
 using rm_bound_t = rm_bounds_t::value_type;
@@ -102,6 +103,26 @@ accelerationBounds_t acceleration_bounds(const rbd::MultiBody & mb, const rm_bou
   };
   return std::make_tuple(fill_bound(mb, "lower acceleration", safe_bounds(0), &rbd::Joint::dof, -INFINITY, -INFINITY),
                          fill_bound(mb, "upper acceleration", safe_bounds(1), &rbd::Joint::dof, INFINITY, INFINITY));
+}
+
+/** Generate jerk bounds compatible with the given MultiBody
+ *
+ * If bounds is provided, use the values provided to build the bounds.
+ *
+ * Otherwise, default bounds are returned.
+ */
+jerkBounds_t jerk_bounds(const rbd::MultiBody & mb, const rm_bounds_t & bounds)
+{
+  rm_bound_t default_bound = {};
+  auto safe_bounds = [&bounds, &default_bound](size_t idx) -> const rm_bound_t & {
+    if(idx < bounds.size())
+    {
+      return bounds[idx];
+    }
+    return default_bound;
+  };
+  return std::make_tuple(fill_bound(mb, "lower jerk", safe_bounds(0), &rbd::Joint::dof, -INFINITY, -INFINITY),
+                         fill_bound(mb, "upper jerk", safe_bounds(1), &rbd::Joint::dof, INFINITY, INFINITY));
 }
 
 /** Generate torque-derivative bounds compatible with the given MultiBody
@@ -305,10 +326,19 @@ Robot::Robot(const std::string & name,
   }
   std::tie(al_, au_) = acceleration_bounds(mb(), module_.accelerationBounds());
 
+  if(module_.jerkBounds().size() != 0 && module_.jerkBounds().size() != 2)
+  {
+    mc_rtc::log::error_and_throw<std::invalid_argument>(
+        "The additional jerk bounds of RobotModule \"{}\" have a size of {} "
+        "instead of 2 ([jl, ju]).",
+        module_.name, module_.jerkBounds().size());
+  }
+  std::tie(jl_, ju_) = jerk_bounds(mb(), module_.jerkBounds());
+
   if(module_.torqueDerivativeBounds().size() != 0 && module_.torqueDerivativeBounds().size() != 2)
   {
     mc_rtc::log::error_and_throw<std::invalid_argument>(
-        "The additional acceleration bounds of RobotModule \"{}\" have a size of {} "
+        "The additional torque-derivative bounds of RobotModule \"{}\" have a size of {} "
         "instead of 2 ([tdl, tdu]).",
         module_.name, module_.torqueDerivativeBounds().size());
   }
@@ -819,6 +849,14 @@ const std::vector<std::vector<double>> & Robot::au() const
 {
   return au_;
 }
+const std::vector<std::vector<double>> & Robot::jl() const
+{
+  return jl_;
+}
+const std::vector<std::vector<double>> & Robot::ju() const
+{
+  return ju_;
+}
 const std::vector<std::vector<double>> & Robot::tl() const
 {
   return tl_;
@@ -858,6 +896,14 @@ std::vector<std::vector<double>> & Robot::al()
 std::vector<std::vector<double>> & Robot::au()
 {
   return au_;
+}
+std::vector<std::vector<double>> & Robot::jl()
+{
+  return jl_;
+}
+std::vector<std::vector<double>> & Robot::ju()
+{
+  return ju_;
 }
 std::vector<std::vector<double>> & Robot::tl()
 {
