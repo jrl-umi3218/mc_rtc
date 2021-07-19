@@ -21,6 +21,15 @@ struct ROSPlugin : public mc_control::GlobalPlugin
 
   void after(mc_control::MCGlobalController & controller) override;
 
+  inline mc_control::GlobalPlugin::GlobalPluginConfiguration configuration() override
+  {
+    mc_control::GlobalPlugin::GlobalPluginConfiguration out;
+    out.should_always_run = true;
+    out.should_run_after = true;
+    out.should_run_before = false;
+    return out;
+  }
+
   ~ROSPlugin() override;
 
 private:

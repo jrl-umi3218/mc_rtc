@@ -812,10 +812,22 @@ private:
     ~PluginHandle();
     std::string name;
     GlobalPluginPtr plugin;
-    duration_ms plugin_before_dt{0};
-    duration_ms plugin_after_dt{0};
   };
   std::vector<PluginHandle> plugins_;
+  struct PluginBefore
+  {
+    GlobalPlugin * plugin;
+    duration_ms plugin_before_dt;
+  };
+  std::vector<PluginBefore> plugins_before_;
+  std::vector<GlobalPlugin *> plugins_before_always_;
+  struct PluginAfter
+  {
+    GlobalPlugin * plugin;
+    duration_ms plugin_after_dt;
+  };
+  std::vector<PluginAfter> plugins_after_;
+  std::vector<GlobalPlugin *> plugins_after_always_;
 
   void initGUI();
 
