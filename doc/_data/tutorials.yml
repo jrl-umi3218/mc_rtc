@@ -131,6 +131,9 @@
   desc: These tutorials cover specific topics that most user should not have to deal with.
   tutorials:
     -
+      id: new-plugin
+      title: Implement a new plugin for mc_rtc
+    -
       id: new-interface
       title: Implement a new mc_rtc interface
     -
