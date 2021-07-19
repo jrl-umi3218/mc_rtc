@@ -107,7 +107,7 @@ readonly HELP_STRING="$(basename $0) [OPTIONS] ...
     --python-force-python3          {true, false} : whether to enforce the use of Python 3             (default $PYTHON_FORCE_PYTHON3)
     --python-build-2-and-3          {true, false} : whether to build both Python 2 and Python 3        (default $PYTHON_BUILD_PYTHON2_AND_PYTHON3)
     --with-ros-support              {true, false} : whether to build with ROS support                  (default $WITH_ROS_SUPPORT)
-    --ros-distro                    NAME          : the ros distro to use                              (default $ROS_DISTRO)
+    --ros-distro                    NAME          : the ros distro to use                              (default $MC_ROS_DISTRO)
     --install-system-dependencies      {true, false} : whether to install system packages              (default $INSTALL_SYSTEM_DEPENDENCIES)
     --clone-only                       {true, false} : only perform cloning                            (default $CLONE_ONLY)
     --skip-update                      {true, false} : skip git update                                 (default $SKIP_UPDATE)
@@ -282,7 +282,7 @@ do
 
         --ros-distro)
         i=$(($i+1))
-        ROS_DISTRO="${!i}"
+        MC_ROS_DISTRO="${!i}"
         ;;
 
         --allow-root)
@@ -432,9 +432,9 @@ then
   if [ -f $this_dir/config_build_and_install.`lsb_release -sc`.sh ]
   then
     . $this_dir/config_build_and_install.`lsb_release -sc`.sh
-    ROS_APT_DEPENDENCIES="ros-${ROS_DISTRO}-ros-base ros-${ROS_DISTRO}-rosdoc-lite ros-${ROS_DISTRO}-common-msgs ros-${ROS_DISTRO}-tf2-ros ros-${ROS_DISTRO}-xacro ros-${ROS_DISTRO}-rviz"
+    ROS_APT_DEPENDENCIES="ros-${MC_ROS_DISTRO}-ros-base ros-${MC_ROS_DISTRO}-rosdoc-lite ros-${MC_ROS_DISTRO}-common-msgs ros-${MC_ROS_DISTRO}-tf2-ros ros-${MC_ROS_DISTRO}-xacro ros-${MC_ROS_DISTRO}-rviz"
   else
-    ROS_DISTRO=""
+    MC_ROS_DISTRO=""
     APT_DEPENDENCIES=""
     ROS_APT_DEPENDENCIES=""
   fi
@@ -521,7 +521,7 @@ echo_log "   SKIP_UPDATE=$SKIP_UPDATE"
 echo_log "   SKIP_DIRTY_UPDATE=$SKIP_DIRTY_UPDATE"
 echo_log "   BUILD_LOGFILE=$BUILD_LOGFILE"
 echo_log "   ASK_USER_INPUT=$ASK_USER_INPUT"
-echo_log "   ROS_DISTRO=$ROS_DISTRO"
+echo_log "   MC_ROS_DISTRO=$MC_ROS_DISTRO"
 echo_log "   APT_DEPENDENCIES=$APT_DEPENDENCIES"
 echo_log "   ROS_APT_DEPENDENCIES=$ROS_APT_DEPENDENCIES"
 echo_log "   SUDO_CMD=$SUDO_CMD"
@@ -635,7 +635,7 @@ then
   echo_log "================================"
   echo_log "== Setting up ROS environment =="
   echo_log "================================"
-  if [ ! -e /opt/ros/${ROS_DISTRO}/setup.bash ] && $NOT_CLONE_ONLY
+  if [ "$ROS_DISTRO" != "$MC_ROS_DISTRO" ] && $NOT_CLONE_ONLY
   then
     if [ $OS = Ubuntu -o $OS = Debian ]
     then
@@ -649,11 +649,14 @@ then
   fi
   if [ $OS = Ubuntu -o $OS = Debian ]
   then
-    install_apt $ROS_APT_DEPENDENCIES
+    if $ROS_FROM_APT
+    then
+      install_apt $ROS_APT_DEPENDENCIES
+    fi 
   fi
   if $NOT_CLONE_ONLY
   then
-    . /opt/ros/${ROS_DISTRO}/setup.bash
+    . /opt/ros/${MC_ROS_DISTRO}/setup.bash
   fi
   CATKIN_DATA_WORKSPACE=$SOURCE_DIR/catkin_data_ws
   CATKIN_DATA_WORKSPACE_SRC=${CATKIN_DATA_WORKSPACE}/src

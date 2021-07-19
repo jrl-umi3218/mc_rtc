@@ -40,9 +40,10 @@
 
 ##
 # Whether to build with ROS support
-# On Ubuntu, ROS will be installed if you enable ROS support and it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc_rtc with ROS support;
+# On Ubuntu, ROS will be installed if you enable ROS support and ROS_FROM_APT and if it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc_rtc with ROS support;
 ##
 #export WITH_ROS_SUPPORT="true"
+#export ROS_FROM_APT="true"
 
 ##
 # Python settings
