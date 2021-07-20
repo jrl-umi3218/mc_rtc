@@ -436,6 +436,7 @@ void TrajectoryTaskGeneric<T>::addToLogger(mc_rtc::Logger & logger)
                        name_ + "_damping", [this]() { return damping_(0); },
                        name_ + "_stiffness", [this]() { return stiffness_(0); });
   // clang-format on
+  MC_RTC_LOG_HELPER(name_ + "_weight", weight_);
   MC_RTC_LOG_GETTER(name_ + "_dimWeight", dimWeight);
   MC_RTC_LOG_HELPER(name_ + "_dimDamping", damping_);
   MC_RTC_LOG_HELPER(name_ + "_dimStiffness", stiffness_);
