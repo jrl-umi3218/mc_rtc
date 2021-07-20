@@ -51,6 +51,7 @@ var searchData=
   ['globalplugin',['GlobalPlugin',['../structmc__control_1_1GlobalPlugin.html',1,'mc_control']]],
   ['globalplugin_2eh',['GlobalPlugin.h',['../GlobalPlugin_8h.html',1,'']]],
   ['globalplugin_5ffwd_2eh',['GlobalPlugin_fwd.h',['../GlobalPlugin__fwd_8h.html',1,'']]],
+  ['globalpluginconfiguration',['GlobalPluginConfiguration',['../structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html',1,'mc_control::GlobalPlugin']]],
   ['globalpluginloader',['GlobalPluginLoader',['../structmc__control_1_1GlobalPluginLoader.html',1,'mc_control']]],
   ['globalpluginloader_2eh',['GlobalPluginLoader.h',['../GlobalPluginLoader_8h.html',1,'']]],
   ['globalpluginmacros_2eh',['GlobalPluginMacros.h',['../GlobalPluginMacros_8h.html',1,'']]],

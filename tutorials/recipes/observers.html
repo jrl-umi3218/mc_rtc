@@ -270,6 +270,10 @@
                     <ul>
                       
                         
+                        <li><a href="/mc_rtc/tutorials/advanced/new-plugin.html">Implement a new plugin for mc_rtc</a></li>
+                        
+                      
+                        
                         <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
                         
                       
@@ -327,13 +331,13 @@
 <ul>
   <li><strong>Encoder Observer</strong>: estimates a robot’s joint state (position and velocity) and computes forward kinematics and velocities to obtain body positions and velocities. Various inputs may be used: encoder position, encoder velocity (obtained from a velocity sensor or by finite differences of position), another robot’s joint values, etc.</li>
   <li><strong>BodySensor Observer</strong>: sets a robot’s floating base state from measurements provided by a sensor attached to a robot body and the kinematics between the sensor and the floating base. This is typically be used to exploit ground truth measurement from a simulator, or exploit the results of an external component providing information about the floating base (MOCAP, embedded estimator on the robot plateform, etc).</li>
-  <li><strong>KinematicInertial Observer</strong>: estimates a robot’s floating base pose (position + orientation) and velocity (low-pass filtered finite differences of position) from a <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1BodySensor" target="blank_">mc_rbdyn::BodySensor</a> (IMU orientation) and a kinematic anchor frame.</li>
+  <li><strong>KinematicInertial Observer</strong>: estimates a robot’s floating base pose (position + orientation) and velocity (low-pass filtered finite differences of position) from a <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1BodySensor" target="blank_"><code>mc_rbdyn::BodySensor</code></a> (IMU orientation) and a kinematic anchor frame.</li>
 </ul>
 
-<p>To represent the robots, the framework provides two sets of robot instances (<a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robots" target="blank_">mc_rbdyn::Robots</a>):</p>
+<p>To represent the robots, the framework provides two sets of robot instances (<a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robots" target="blank_"><code>mc_rbdyn::Robots</code></a>):</p>
 <ul>
-  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1MCController#adc557ecb7d64eb2d8be551f7cf6678cd" target="blank_">mc_control::MCController::robots()</a> represents the control state (desired) of the robots.</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1MCController#a1443aed08b26c319294465b1caa1e221" target="blank_">mc_control::MCController::realRobots()</a> represents the state of the real robots. It’s the role of the observer pipeline to define how these robot states are estimated.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1MCController#adc557ecb7d64eb2d8be551f7cf6678cd" target="blank_"><code>mc_control::MCController::robots()</code></a> represents the control state (desired) of the robots.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__control_1_1MCController#a1443aed08b26c319294465b1caa1e221" target="blank_"><code>mc_control::MCController::realRobots()</code></a> represents the state of the real robots. It’s the role of the observer pipeline to define how these robot states are estimated.</li>
 </ul>
 
 <h1 id="configuring-the-observer-pipelines">Configuring the observer pipelines</h1>
@@ -424,26 +428,26 @@
 <h2 id="encoder-observer">Encoder observer</h2>
 
 <ul>
-  <li>API: <a href="/mc_rtc/doxygen.html#structmc__observers_1_1EncoderObserver" target="blank_">mc_observers::EncoderObserver</a></li>
+  <li>API: <a href="/mc_rtc/doxygen.html#structmc__observers_1_1EncoderObserver" target="blank_"><code>mc_observers::EncoderObserver</code></a></li>
   <li><a href="../../json.html#Observers/Encoder">JSON Schema</a></li>
 </ul>
 
 <p>The encoder observer may be used to obtain the position and velocity of all actuated joints.</p>
 
 <ul>
-  <li>Joint values can be obtained from sensor as provided by <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a1191c63affb21cb0e15698a48ee83355" target="blank_">mc_rbdyn::Robot::encoderValues()</a> or using the joint state of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a485eb8aa4ceb0a0a5010844d16e47f95" target="blank_">mc_rbdyn::Robot::q()</a>.</li>
-  <li>Joint velocities can be obtained from a joint velocity sensor <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#ad88153372c03f393b45a9d7ac88df0c5" target="blank_">mc_rbdyn::Robot::encoderVelocities()</a>, estimated by finite differences of the (estimated) position, or using the joint velocities of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a5773f91f2a9d0eb5cb4b6a0943551a1b" target="blank_">mc_rbdyn::Robot::alpha()</a></li>
-  <li>The observer will compute forward kinematics <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#ae46b693d4431e61db9f1d4a05f66dd5e" target="blank_">mc_rbdyn::Robot::forwardKinematics()</a> and forward velocity <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#afd93342dd86da6803288346a3798d374" target="blank_">mc_rbdyn::Robot::forwardVelocity()</a> to update the corresponding body positions and velocities (which may be required by subsequent observers).</li>
+  <li>Joint values can be obtained from sensor as provided by <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a1191c63affb21cb0e15698a48ee83355" target="blank_"><code>mc_rbdyn::Robot::encoderValues()</code></a> or using the joint state of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a485eb8aa4ceb0a0a5010844d16e47f95" target="blank_"><code>mc_rbdyn::Robot::q()</code></a>.</li>
+  <li>Joint velocities can be obtained from a joint velocity sensor <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#ad88153372c03f393b45a9d7ac88df0c5" target="blank_"><code>mc_rbdyn::Robot::encoderVelocities()</code></a>, estimated by finite differences of the (estimated) position, or using the joint velocities of another robot <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#a5773f91f2a9d0eb5cb4b6a0943551a1b" target="blank_"><code>mc_rbdyn::Robot::alpha()</code></a></li>
+  <li>The observer will compute forward kinematics <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#ae46b693d4431e61db9f1d4a05f66dd5e" target="blank_"><code>mc_rbdyn::Robot::forwardKinematics()</code></a> and forward velocity <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1Robot#afd93342dd86da6803288346a3798d374" target="blank_"><code>mc_rbdyn::Robot::forwardVelocity()</code></a> to update the corresponding body positions and velocities (which may be required by subsequent observers).</li>
 </ul>
 
 <h2 id="bodysensor-observer">BodySensor observer</h2>
 
 <ul>
-  <li>API: <a href="/mc_rtc/doxygen.html#structmc__observers_1_1BodySensorObserver" target="blank_">mc_observers::BodySensorObserver</a></li>
+  <li>API: <a href="/mc_rtc/doxygen.html#structmc__observers_1_1BodySensorObserver" target="blank_"><code>mc_observers::BodySensorObserver</code></a></li>
   <li><a href="../../json.html#Observers/BodySensor">JSON Schema</a></li>
 </ul>
 
-<p>The BodySensor observer allows to estimate the state of the floating base from information provided by a <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1BodySensor" target="blank_">mc_rbdyn::BodySensor</a>. BodySensors are sensors attached to a robot body representing measurements of its state. A <code class="language-plaintext highlighter-rouge">BodySensor</code> may contain:</p>
+<p>The BodySensor observer allows to estimate the state of the floating base from information provided by a <a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1BodySensor" target="blank_"><code>mc_rbdyn::BodySensor</code></a>. BodySensors are sensors attached to a robot body representing measurements of its state. A <code class="language-plaintext highlighter-rouge">BodySensor</code> may contain:</p>
 
 <ul>
   <li>Transformation between the sensor and the body to which it is attached [required]</li>
@@ -459,7 +463,7 @@
 <h2 id="kinematicinertial-observer">KinematicInertial observer</h2>
 
 <ul>
-  <li>API: <a href="/mc_rtc/doxygen.html#structmc__observers_1_1KinematicInertialObserver" target="blank_">mc_observers::KinematicInertialObserver</a></li>
+  <li>API: <a href="/mc_rtc/doxygen.html#structmc__observers_1_1KinematicInertialObserver" target="blank_"><code>mc_observers::KinematicInertialObserver</code></a></li>
   <li><a href="../../json.html#Observers/KinematicInertial">JSON Schema</a></li>
   <li><a href="https://scaron.info/teaching/floating-base-estimation.html">Detailed explanation of the method by Stéphane Caron</a></li>
 </ul>
@@ -488,7 +492,7 @@
 
 <p>This observer then computes the floating base linear and angular velocity by finite differences of the estimated position and orientation. This velocity is low-pass filtered.</p>
 
-<p>You can find examples of this observer in use in the <a href="/mc_rtc/tutorials/samples/sample-admittance.html">Admittance sample controller tutorial</a>, the <a href="/mc_rtc/doxygen.html#structmc__control_1_1fsm_1_1StabilizerStandingState" target="blank_">mc_control::fsm::StabilizerStandingState</a>, and a more complex use in the <a href="https://github.com/jrl-umi3218/lipm_walking_controller">LIPMWalking controller</a>.</p>
+<p>You can find examples of this observer in use in the <a href="/mc_rtc/tutorials/samples/sample-admittance.html">Admittance sample controller tutorial</a>, the <a href="/mc_rtc/doxygen.html#structmc__control_1_1fsm_1_1StabilizerStandingState" target="blank_"><code>mc_control::fsm::StabilizerStandingState</code></a>, and a more complex use in the <a href="https://github.com/jrl-umi3218/lipm_walking_controller">LIPMWalking controller</a>.</p>
 
 <h2 id="visualizing-the-estimated-robot">Visualizing the estimated robot</h2>
 
@@ -551,11 +555,11 @@
 </code></pre></div></div>
 
 <p>Now calling <code class="language-plaintext highlighter-rouge">checkObserverPipeline("RequiredObserverPipeline");</code> will inform you if this pipeline does not exist, show exactly which observer is failing and why, and do something specific with <code class="language-plaintext highlighter-rouge">MyObserver</code> if it is in the pipeline.
-For further available functionnalities, please refer to <a href="/mc_rtc/doxygen.html#structmc__observers_1_1ObserverPipeline" target="blank_">mc_observers::ObserverPipeline</a> documentation.</p>
+For further available functionnalities, please refer to <a href="/mc_rtc/doxygen.html#structmc__observers_1_1ObserverPipeline" target="blank_"><code>mc_observers::ObserverPipeline</code></a> documentation.</p>
 
 <h1 id="creating-your-own-observer">Creating your own Observer</h1>
 
-<p>The framework loads observers from libraries. For this to work, your observer must inherit from <a href="/mc_rtc/doxygen.html#structmc__observers_1_1Observer" target="blank_">mc_observers::Observer</a> and implement the following <code class="language-plaintext highlighter-rouge">virtual</code> functions:</p>
+<p>The framework loads observers from libraries. For this to work, your observer must inherit from <a href="/mc_rtc/doxygen.html#structmc__observers_1_1Observer" target="blank_"><code>mc_observers::Observer</code></a> and implement the following <code class="language-plaintext highlighter-rouge">virtual</code> functions:</p>
 
 <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// YourObserver.h</span>
 <span class="kt">void</span> <span class="n">configure</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span> <span class="o">&amp;</span> <span class="cm">/*ctl*/</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="cm">/*config*/</span><span class="p">)</span> <span class="k">override</span>
@@ -577,7 +581,7 @@ For further available functionnalities, please refer to <a href="/mc_rtc/doxygen
 <div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">add_observer</span><span class="p">(</span>YourObserverName YourObserver.cpp YourObserver.h<span class="p">)</span>
 </code></pre></div></div>
 
-<p>Note: If you wish to inherit from one of the default observers provided along with the framework, you will need to link against it. For example, if you inherit from <a href="/mc_rtc/doxygen.html#structmc__observers_1_1BodySensorObserver" target="blank_">mc_observers::BodySensorObserver</a> you need to link against the corresponding <code class="language-plaintext highlighter-rouge">mc_observers::BodySensorObserver</code> target:</p>
+<p>Note: If you wish to inherit from one of the default observers provided along with the framework, you will need to link against it. For example, if you inherit from <a href="/mc_rtc/doxygen.html#structmc__observers_1_1BodySensorObserver" target="blank_"><code>mc_observers::BodySensorObserver</code></a> you need to link against the corresponding <code class="language-plaintext highlighter-rouge">mc_observers::BodySensorObserver</code> target:</p>
 
 <div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">target_link_libraries</span><span class="p">(</span>YourObserverName PUBLIC mc_observers::BodySensorObserver<span class="p">)</span>
 </code></pre></div></div>

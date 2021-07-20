@@ -1,5 +1,10 @@
 var NAVTREEINDEX8 =
 {
+"structmc__rbdyn_1_1BodySensor.html#ab5d6323b65ec6e712804d0c8590c8b55":[3,0,6,3,20],
+"structmc__rbdyn_1_1BodySensor.html#ab9ffa63a5396c7eb000ea7fbf716d086":[3,0,6,3,4],
+"structmc__rbdyn_1_1BodySensor.html#abcf42c2151733e3ef80c9594cb37a43a":[3,0,6,3,18],
+"structmc__rbdyn_1_1BodySensor.html#ac39771d679356af14ab9b5e8a738bfbb":[3,0,6,3,17],
+"structmc__rbdyn_1_1BodySensor.html#ad01dc341ccff4cab51488c3cbffe21ee":[3,0,6,3,14],
 "structmc__rbdyn_1_1BodySensor.html#adb95b5d1ba5be5b51912cfc058f2371d":[3,0,6,3,23],
 "structmc__rbdyn_1_1BodySensor.html#af860930bcdb938be5d229fa702b4bf0b":[3,0,6,3,13],
 "structmc__rbdyn_1_1Collision.html":[3,0,6,4],
@@ -244,10 +249,5 @@ var NAVTREEINDEX8 =
 "structmc__rbdyn_1_1Robot.html#a81e766814295ca73b3bf6da8e90f4421":[3,0,6,18,20],
 "structmc__rbdyn_1_1Robot.html#a8353aa6a66630a85c9249298ed960c6a":[3,0,6,18,88],
 "structmc__rbdyn_1_1Robot.html#a86619b4049ec59d383a445bafe43830e":[3,0,6,18,43],
-"structmc__rbdyn_1_1Robot.html#a8a8dbaec40be4ad0be51f4df67502d39":[3,0,6,18,153],
-"structmc__rbdyn_1_1Robot.html#a8ad8d3434a21adb16f8c41a5444ea067":[3,0,6,18,122],
-"structmc__rbdyn_1_1Robot.html#a8b970df4059237f37021b47d5aaf2494":[3,0,6,18,85],
-"structmc__rbdyn_1_1Robot.html#a8c7a59334340cf8b44a10c6c9cb64d76":[3,0,6,18,3],
-"structmc__rbdyn_1_1Robot.html#a8fa1d2571113230a15a6726fb06b91fa":[3,0,6,18,162],
-"structmc__rbdyn_1_1Robot.html#a900ba960e115fa967889ebdb842f6a3e":[3,0,6,18,113]
+"structmc__rbdyn_1_1Robot.html#a8a8dbaec40be4ad0be51f4df67502d39":[3,0,6,18,153]
 };

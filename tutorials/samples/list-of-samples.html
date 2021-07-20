@@ -272,6 +272,10 @@
                     <ul>
                       
                         
+                        <li><a href="/mc_rtc/tutorials/advanced/new-plugin.html">Implement a new plugin for mc_rtc</a></li>
+                        
+                      
+                        
                         <li><a href="/mc_rtc/tutorials/advanced/new-interface.html">Implement a new mc_rtc interface</a></li>
                         
                       
@@ -321,16 +325,16 @@
 
 <p><strong>Tasks</strong></p>
 <ul>
-  <li><a href="/mc_rtc/doxygen.html#structmc__tasks_1_1PostureTask" target="blank_">mc_tasks::PostureTask</a>:
-Make each of the robot’s DoF target a given joint position. By default this controller will target the current robot encoder values when available, or the default stance for that robot otherwise (<a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1RobotModule#ae00ee36a0f17eaf23aadcb7643186fa4" target="blank_">mc_rbdyn::RobotModule::stance()</a>). Joints can be moved through the joint sliders in the GUI (<code class="language-plaintext highlighter-rouge">Tasks -&gt; posture_jvrc1 -&gt; Target</code>).</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__tasks_1_1PostureTask" target="blank_"><code>mc_tasks::PostureTask</code></a>:
+Make each of the robot’s DoF target a given joint position. By default this controller will target the current robot encoder values when available, or the default stance for that robot otherwise (<a href="/mc_rtc/doxygen.html#structmc__rbdyn_1_1RobotModule#ae00ee36a0f17eaf23aadcb7643186fa4" target="blank_"><code>mc_rbdyn::RobotModule::stance()</code></a>). Joints can be moved through the joint sliders in the GUI (<code class="language-plaintext highlighter-rouge">Tasks -&gt; posture_jvrc1 -&gt; Target</code>).</li>
 </ul>
 
 <p><strong>Constraints</strong></p>
 <ul>
-  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1ContactConstraint" target="blank_">mc_solver::ContactConstraint</a>: A controller must always have a contact constraint, but it can have an empty set of contacts.</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1KinematicsConstraint" target="blank_">mc_solver::KinematicsConstraint</a>: Joint limits constraint.</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CollisionsConstraint" target="blank_">mc_solver::CollisionsConstraint</a>: Self-collision avoidance constraint.</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CompoundJointConstraint" target="blank_">mc_solver::CompoundJointConstraint</a>: Handle joint limits for compound joints (joints whose limits depend on the value of another joint).</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1ContactConstraint" target="blank_"><code>mc_solver::ContactConstraint</code></a>: A controller must always have a contact constraint, but it can have an empty set of contacts.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1KinematicsConstraint" target="blank_"><code>mc_solver::KinematicsConstraint</code></a>: Joint limits constraint.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CollisionsConstraint" target="blank_"><code>mc_solver::CollisionsConstraint</code></a>: Self-collision avoidance constraint.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CompoundJointConstraint" target="blank_"><code>mc_solver::CompoundJointConstraint</code></a>: Handle joint limits for compound joints (joints whose limits depend on the value of another joint).</li>
 </ul>
 
 <p><strong>Supported robots</strong>
@@ -349,16 +353,16 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 
 <p><strong>Tasks</strong></p>
 <ul>
-  <li><a href="/mc_rtc/doxygen.html#structmc__tasks_1_1PostureTask" target="blank_">mc_tasks::PostureTask</a>: A posture task with low-weight to provide a default target for all joints.</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__tasks_1_1CoMTask" target="blank_">mc_tasks::CoMTask</a>: Task controlling the robot’s CoM. By default this controller targets the current task position. You can move this target using the interactive markers in the GUI (rviz).</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__tasks_1_1PostureTask" target="blank_"><code>mc_tasks::PostureTask</code></a>: A posture task with low-weight to provide a default target for all joints.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__tasks_1_1CoMTask" target="blank_"><code>mc_tasks::CoMTask</code></a>: Task controlling the robot’s CoM. By default this controller targets the current task position. You can move this target using the interactive markers in the GUI (rviz).</li>
 </ul>
 
 <p><strong>Constraints</strong></p>
 <ul>
-  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1ContactConstraint" target="blank_">mc_solver::ContactConstraint</a>: Adds contacts between the left/right foot and the ground environment.</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1DynamicsConstraint" target="blank_">mc_solver::DynamicsConstraint</a>: In addition to the joint limits constraint provided by the <a href="/mc_rtc/doxygen.html#structmc__solver_1_1KinematicsConstraint" target="blank_">mc_solver::KinematicsConstraint</a> this constraint enables computation of the joint torques and friction cones.</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CollisionsConstraint" target="blank_">mc_solver::CollisionsConstraint</a>: Self-collision avoidance constraint.</li>
-  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CompoundJointConstraint" target="blank_">mc_solver::CompoundJointConstraint</a>: Handle joint limits for compound joints (joints whose limits depend on the value of another joint).</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1ContactConstraint" target="blank_"><code>mc_solver::ContactConstraint</code></a>: Adds contacts between the left/right foot and the ground environment.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1DynamicsConstraint" target="blank_"><code>mc_solver::DynamicsConstraint</code></a>: In addition to the joint limits constraint provided by the <a href="/mc_rtc/doxygen.html#structmc__solver_1_1KinematicsConstraint" target="blank_"><code>mc_solver::KinematicsConstraint</code></a> this constraint enables computation of the joint torques and friction cones.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CollisionsConstraint" target="blank_"><code>mc_solver::CollisionsConstraint</code></a>: Self-collision avoidance constraint.</li>
+  <li><a href="/mc_rtc/doxygen.html#structmc__solver_1_1CompoundJointConstraint" target="blank_"><code>mc_solver::CompoundJointConstraint</code></a>: Handle joint limits for compound joints (joints whose limits depend on the value of another joint).</li>
 </ul>
 
 <p><strong>Supported robots</strong>
@@ -373,7 +377,7 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 
 <h1 id="endeffector">EndEffector</h1>
 
-<p>The <code class="language-plaintext highlighter-rouge">EndEffector</code> controller (see <a href="https://mc-rtc-demo.netlify.app/#robot=JVRC1&amp;controller=EndEffector">online demonstration</a>) has the same tasks and constraints as the <code class="language-plaintext highlighter-rouge">CoM</code> controller above. In addition to controlling the CoM position, it adds an <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1EndEffectorTask" target="blank_">mc_tasks::EndEffectorTask</a> to control the position and orientation of the robot’s hand end-effector.</p>
+<p>The <code class="language-plaintext highlighter-rouge">EndEffector</code> controller (see <a href="https://mc-rtc-demo.netlify.app/#robot=JVRC1&amp;controller=EndEffector">online demonstration</a>) has the same tasks and constraints as the <code class="language-plaintext highlighter-rouge">CoM</code> controller above. In addition to controlling the CoM position, it adds an <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1EndEffectorTask" target="blank_"><code>mc_tasks::EndEffectorTask</code></a> to control the position and orientation of the robot’s hand end-effector.</p>
 
 <p><strong>Supported robots</strong>
 All biped <a href="/mc_rtc/robots.html">robots</a> supported by the framework. Note that for custom robots, all you need to do is define a <code class="language-plaintext highlighter-rouge">LeftFoot</code> and <code class="language-plaintext highlighter-rouge">RightFoot</code> surfaces and an <code class="language-plaintext highlighter-rouge">r_wrist</code> body in <a href="/mc_rtc/tutorials/advanced/new-robot.html">your robot</a>.</p>
@@ -387,7 +391,7 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 
 <h1 id="text">Text</h1>
 
-<p>The <code class="language-plaintext highlighter-rouge">Text</code> sample controller demonstrate the use of <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1MetaTaskLoader" target="blank_">mc_tasks::MetaTaskLoader</a> and <a href="/mc_rtc/doxygen.html#structmc__solver_1_1ConstraintSetLoader" target="blank_">mc_solver::ConstraintSetLoader</a> to respectively load <a href="/mc_rtc/json.html#MetaTask">tasks</a> and <a href="/mc_rtc/json.html#ConstraintSet">constraints</a> from their YAML configuration.</p>
+<p>The <code class="language-plaintext highlighter-rouge">Text</code> sample controller demonstrate the use of <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1MetaTaskLoader" target="blank_"><code>mc_tasks::MetaTaskLoader</code></a> and <a href="/mc_rtc/doxygen.html#structmc__solver_1_1ConstraintSetLoader" target="blank_"><code>mc_solver::ConstraintSetLoader</code></a> to respectively load <a href="/mc_rtc/json.html#MetaTask">tasks</a> and <a href="/mc_rtc/json.html#ConstraintSet">constraints</a> from their YAML configuration.</p>
 
 <p><strong>Running</strong>
 To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite interface.</p>
@@ -419,7 +423,7 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 
 <h1 id="admittance">Admittance</h1>
 
-<p>The <code class="language-plaintext highlighter-rouge">Admittance</code> sample controller demonstrates the use of the <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1AdmittanceTask" target="blank_">mc_tasks::force::AdmittanceTask</a> though a simple FSM making the <code class="language-plaintext highlighter-rouge">JVRC1</code> robot push a wall with a desired force.</p>
+<p>The <code class="language-plaintext highlighter-rouge">Admittance</code> sample controller demonstrates the use of the <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1AdmittanceTask" target="blank_"><code>mc_tasks::force::AdmittanceTask</code></a> though a simple FSM making the <code class="language-plaintext highlighter-rouge">JVRC1</code> robot push a wall with a desired force.</p>
 
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/B_L_xPynhvU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
@@ -445,7 +449,7 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 
 <h1 id="impedance">Impedance</h1>
 
-<p>The <code class="language-plaintext highlighter-rouge">Impedance</code> sample controller demonstrates the use of the <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_">mc_tasks::force::ImpedanceTask</a> to simulataneously perform position and force control of the robot’s end-effector.</p>
+<p>The <code class="language-plaintext highlighter-rouge">Impedance</code> sample controller demonstrates the use of the <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_"><code>mc_tasks::force::ImpedanceTask</code></a> to simulataneously perform position and force control of the robot’s end-effector.</p>
 
 <p><strong>Supported robots</strong>: <code class="language-plaintext highlighter-rouge">JVRC1Fixed</code>.</p>
 
@@ -453,7 +457,7 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 
 <p><strong>Running</strong></p>
 
-<p>To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite dynamic simulation (e.g Choreonoid…). In choreonoid you can apply external forces by clicking on the moving hand and dragging it. It will follow you to some extent and return to it’s expected position along the trajectory when you relase the force. Note that you may add additional <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_">mc_tasks::force::ImpedanceTask</a> to the free end-effectors throught the GUI (<code class="language-plaintext highlighter-rouge">Global  -&gt; Add Tasks -&gt; ImpedanceTask</code>).</p>
+<p>To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/configuration.html">your mc_rtc configuration</a>, and <a href="/mc_rtc/tutorials/introduction/running-a-controller.html">run the controller</a> using your favorite dynamic simulation (e.g Choreonoid…). In choreonoid you can apply external forces by clicking on the moving hand and dragging it. It will follow you to some extent and return to it’s expected position along the trajectory when you relase the force. Note that you may add additional <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_"><code>mc_tasks::force::ImpedanceTask</code></a> to the free end-effectors throught the GUI (<code class="language-plaintext highlighter-rouge">Global  -&gt; Add Tasks -&gt; ImpedanceTask</code>).</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">MainRobot</span><span class="pi">:</span> <span class="s">JVRC1Fixed</span>
 <span class="na">Enabled</span><span class="pi">:</span> <span class="s">Impedance</span>
@@ -477,7 +481,7 @@ To run this controller, simply put in <a href="/mc_rtc/tutorials/introduction/co
 
 <h1 id="externalforces">ExternalForces</h1>
 
-<p>The <code class="language-plaintext highlighter-rouge">ExternalForces</code> sample controller demonstrates a biped robot exerting specified external forces with <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask" target="blank_">mc_tasks::lipm_stabilizer::StabilizerTask</a> and <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_">mc_tasks::force::ImpedanceTask</a> though a simple FSM making the <code class="language-plaintext highlighter-rouge">JVRC1</code> robot push a wall with desired forces.</p>
+<p>The <code class="language-plaintext highlighter-rouge">ExternalForces</code> sample controller demonstrates a biped robot exerting specified external forces with <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask" target="blank_"><code>mc_tasks::lipm_stabilizer::StabilizerTask</code></a> and <a href="/mc_rtc/doxygen.html#structmc__tasks_1_1force_1_1ImpedanceTask" target="blank_"><code>mc_tasks::force::ImpedanceTask</code></a> though a simple FSM making the <code class="language-plaintext highlighter-rouge">JVRC1</code> robot push a wall with desired forces.</p>
 
 <div class="embed-responsive embed-responsive-16by9">
   <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/in3cUozkU-A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>

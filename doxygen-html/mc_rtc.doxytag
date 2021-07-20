@@ -958,6 +958,7 @@
     <filename>GlobalPlugin_8h</filename>
     <includes id="mc__global__controller_8h" name="mc_global_controller.h" local="no" imported="no">mc_control/mc_global_controller.h</includes>
     <class kind="struct">mc_control::GlobalPlugin</class>
+    <class kind="struct">mc_control::GlobalPlugin::GlobalPluginConfiguration</class>
     <namespace>mc_control</namespace>
     <member kind="define">
       <type>#define</type>
@@ -15329,12 +15330,20 @@
   <compound kind="struct">
     <name>mc_control::GlobalPlugin</name>
     <filename>structmc__control_1_1GlobalPlugin.html</filename>
+    <class kind="struct">mc_control::GlobalPlugin::GlobalPluginConfiguration</class>
     <member kind="function" virtualness="virtual">
       <type>virtual</type>
       <name>~GlobalPlugin</name>
       <anchorfile>structmc__control_1_1GlobalPlugin.html</anchorfile>
       <anchor>ae68386345dfc2a1820747a566d37c4af</anchor>
       <arglist>()=default</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual GlobalPluginConfiguration</type>
+      <name>configuration</name>
+      <anchorfile>structmc__control_1_1GlobalPlugin.html</anchorfile>
+      <anchor>ae3212f0cbf1958e84a6363bd7f9336bb</anchor>
+      <arglist>()</arglist>
     </member>
     <member kind="function" virtualness="pure">
       <type>virtual void</type>
@@ -15363,6 +15372,31 @@
       <anchorfile>structmc__control_1_1GlobalPlugin.html</anchorfile>
       <anchor>ab661e381f418ad5f9afa4adf25b4f282</anchor>
       <arglist>(mc_control::MCGlobalController &amp;controller)=0</arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_control::GlobalPlugin::GlobalPluginConfiguration</name>
+    <filename>structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html</filename>
+    <member kind="variable">
+      <type>bool</type>
+      <name>should_run_before</name>
+      <anchorfile>structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html</anchorfile>
+      <anchor>a8d5d8ec0e6f797e19f52c661902581c6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>should_run_after</name>
+      <anchorfile>structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html</anchorfile>
+      <anchor>a5eac14f1a695e60030cd2a104e75168f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>should_always_run</name>
+      <anchorfile>structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html</anchorfile>
+      <anchor>a4acbf002781aa0c45fbd43c8829c0bbd</anchor>
+      <arglist></arglist>
     </member>
   </compound>
   <compound kind="class">

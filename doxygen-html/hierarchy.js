@@ -235,6 +235,7 @@ var hierarchy =
     [ "Global", "classGlobal.html", null ],
     [ "mc_control::MCGlobalController::GlobalConfiguration", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html", null ],
     [ "mc_control::GlobalPlugin", "structmc__control_1_1GlobalPlugin.html", null ],
+    [ "mc_control::GlobalPlugin::GlobalPluginConfiguration", "structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html", null ],
     [ "mc_control::GlobalPluginLoader", "structmc__control_1_1GlobalPluginLoader.html", null ],
     [ "mc_control::Gripper", "structmc__control_1_1Gripper.html", null ],
     [ "mc_rbdyn::RobotModule::Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", null ],
@@ -430,10 +431,10 @@ var hierarchy =
     ] ],
     [ "mc_control::fsm::MetaTasksState::TaskCriteria", "structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html", null ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
     ] ],
     [ "testnullptr", null, [
-      [ "mc_rtc::internal::has_configuration_load_object< T >", "structmc__rtc_1_1internal_1_1has__configuration__load__object.html", null ]
+      [ "mc_rtc::internal::has_configuration_save_object< T, Args >", "structmc__rtc_1_1internal_1_1has__configuration__save__object.html", null ]
     ] ],
     [ "mc_control::fsm::Transition", "structmc__control_1_1fsm_1_1Transition.html", null ],
     [ "mc_control::fsm::TransitionMap", "structmc__control_1_1fsm_1_1TransitionMap.html", null ],

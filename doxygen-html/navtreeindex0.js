@@ -164,7 +164,7 @@ var NAVTREEINDEX0 =
 "GlobalPluginMacros_8h.html#a60707c92a995568bdfdb187f6d76074e":[4,0,0,0,12,0],
 "GlobalPluginMacros_8h_source.html":[4,0,0,0,12],
 "GlobalPlugin_8h.html":[4,0,0,0,9],
-"GlobalPlugin_8h.html#adda9065a64d1bb53f70cc10616e220fe":[4,0,0,0,9,1],
+"GlobalPlugin_8h.html#adda9065a64d1bb53f70cc10616e220fe":[4,0,0,0,9,2],
 "GlobalPlugin_8h_source.html":[4,0,0,0,9],
 "GlobalPlugin__fwd_8h.html":[4,0,0,0,10],
 "GlobalPlugin__fwd_8h.html#a077624dc5665df1a3e145d0283e10c78":[4,0,0,0,10,0],
