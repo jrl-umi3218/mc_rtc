@@ -22,6 +22,35 @@ struct MC_CONTROL_DLLAPI GlobalPlugin
 {
   virtual ~GlobalPlugin() = default;
 
+  /** Holds detail regarding how the plugin runs
+   *
+   * The plugin should return a configuration via \ref configuration()
+   *
+   * The default constructor for this object implies that:
+   * - the plugin uses before/after
+   * - the plugin runs even when the globla controller is not running
+   */
+  struct MC_CONTROL_DLLAPI GlobalPluginConfiguration
+  {
+    /** True if this plugin should run before the global controller (i.e. implements \ref before) */
+    bool should_run_before = true;
+    /** True if this plugin should run after the global controller (i.e. implements \ref after) */
+    bool should_run_after = true;
+    /** True if this plugin should run regardless of the gc.running status, if false, this plugin only runs when
+     * gc.running is true */
+    bool should_always_run = true;
+  };
+
+  /** Returns the plugin running configuration
+   *
+   * This impacts which functions are called and when they are called
+   *
+   */
+  virtual GlobalPluginConfiguration configuration()
+  {
+    return {};
+  }
+
   /** Initialize the plugin
    *
    * This function is called when the plugin is created by the

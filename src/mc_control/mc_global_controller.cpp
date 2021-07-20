@@ -68,6 +68,24 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     try
     {
       plugins_.emplace_back(plugin, plugin_loader->create_unique_object(plugin));
+      GlobalPlugin * plugin = plugins_.back().plugin.get();
+      const auto & plugin_config = plugins_.back().plugin->configuration();
+      if(plugin_config.should_run_before)
+      {
+        plugins_before_.push_back({plugin, duration_ms{0}});
+        if(plugin_config.should_always_run)
+        {
+          plugins_before_always_.push_back(plugin);
+        }
+      }
+      if(plugin_config.should_run_after)
+      {
+        plugins_after_.push_back({plugin, duration_ms{0}});
+        if(plugin_config.should_always_run)
+        {
+          plugins_after_always_.push_back(plugin);
+        }
+      }
     }
     catch(mc_rtc::LoaderException & exc)
     {
@@ -670,14 +688,14 @@ bool MCGlobalController::run()
     initGUI();
     mc_rtc::log::success("Controller {} activated", current_ctrl);
   }
-  for(auto & plugin : plugins_)
-  {
-    auto start_t = clock::now();
-    plugin.plugin->before(*this);
-    plugin.plugin_before_dt = clock::now() - start_t;
-  }
   if(running)
   {
+    for(auto & plugin : plugins_before_)
+    {
+      auto start_t = clock::now();
+      plugin.plugin->before(*this);
+      plugin.plugin_before_dt = clock::now() - start_t;
+    }
     for(size_t i = 0; i < pre_gripper_mbcs_.size() && i < controller_->robots().size(); ++i)
     {
       controller_->robots().robot(i).mbc() = pre_gripper_mbcs_[i];
@@ -725,9 +743,19 @@ bool MCGlobalController::run()
     {
       running = false;
     }
+    for(auto & plugin : plugins_after_)
+    {
+      auto start_t = clock::now();
+      plugin.plugin->after(*this);
+      plugin.plugin_after_dt = clock::now() - start_t;
+    }
   }
   else
   {
+    for(auto & plugin : plugins_before_always_)
+    {
+      plugin->before(*this);
+    }
     controller_run_dt.zero();
     solver_build_and_solve_t = 0;
     solver_solve_t = 0;
@@ -738,12 +766,10 @@ bool MCGlobalController::run()
       server_->publish(*controller_->gui_);
       gui_dt = clock::now() - start_gui_t;
     }
-  }
-  for(auto & plugin : plugins_)
-  {
-    auto start_t = clock::now();
-    plugin.plugin->after(*this);
-    plugin.plugin_after_dt = clock::now() - start_t;
+    for(auto & plugin : plugins_after_always_)
+    {
+      plugin->after(*this);
+    }
   }
   global_run_dt = clock::now() - start_run_t;
   // Percentage of time not spent inside the user code
@@ -1092,14 +1118,27 @@ void MCGlobalController::setup_log()
   controller->logger().addLogEntry("perf_Log", [this]() { return log_dt.count(); });
   controller->logger().addLogEntry("perf_Gui", [this]() { return gui_dt.count(); });
   controller->logger().addLogEntry("perf_FrameworkCost", [this]() { return framework_cost; });
-  for(const auto & plugin : plugins_)
+  auto getPluginName = [this](GlobalPlugin * plugin) -> const std::string & {
+    for(auto & p : plugins_)
+    {
+      if(p.plugin.get() == plugin)
+      {
+        return p.name;
+      }
+    }
+    mc_rtc::log::error_and_throw<std::runtime_error>(
+        "Impossible error, searched for a plugin name from a pointer to a plugin that was not loaded");
+  };
+  for(const auto & plugin : plugins_before_)
   {
-    controller->logger().addLogEntry("perf_Plugins_" + plugin.name, [&plugin]() {
-      return plugin.plugin_before_dt.count() + plugin.plugin_after_dt.count();
-    });
-    controller->logger().addLogEntry("perf_Plugins_" + plugin.name + "_before",
+    const auto & name = getPluginName(plugin.plugin);
+    controller->logger().addLogEntry(fmt::format("perf_Plugins_{}_before", name),
                                      [&plugin]() { return plugin.plugin_before_dt.count(); });
-    controller->logger().addLogEntry("perf_Plugins_" + plugin.name + "_after",
+  }
+  for(const auto & plugin : plugins_after_)
+  {
+    const auto & name = getPluginName(plugin.plugin);
+    controller->logger().addLogEntry(fmt::format("perf_Plugins_{}_after", name),
                                      [&plugin]() { return plugin.plugin_after_dt.count(); });
   }
   // Log system wall time as nanoseconds since epoch (can be used to manage synchronization with ros)
