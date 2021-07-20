@@ -393,6 +393,17 @@ void Controller::addCollisions(const std::string & r1,
                                const std::string & r2,
                                const std::vector<mc_rbdyn::Collision> & collisions)
 {
+  if(r1 != r2 && collision_constraints_.count({r2, r1}))
+  {
+    std::vector<mc_rbdyn::Collision> swapped;
+    swapped.reserve(collisions.size());
+    for(const auto & c : collisions)
+    {
+      swapped.push_back({c.body2, c.body1, c.iDist, c.sDist, c.damping});
+    }
+    addCollisions(r2, r1, swapped);
+    return;
+  }
   if(!collision_constraints_.count({r1, r2}))
   {
     if(robots_idx_.count(r1) * robots_idx_.count(r2) == 0)
