@@ -153,9 +153,18 @@ void CollisionsConstraint::__addCollision(const mc_solver::QPSolver & solver, co
     return;
   }
   cols.push_back(col);
-  collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c,
-                           static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c, col.iDist, col.sDist,
-                           col.damping, defaultDampingOffset);
+  if(r1.mb().nrDof() == 0)
+  {
+    collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c,
+                             static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c, col.iDist, col.sDist,
+                             col.damping, defaultDampingOffset);
+  }
+  else
+  {
+    collConstr->addCollision(robots.mbs(), collId, static_cast<int>(r1Index), body1.first, body1.second.get(), X_b1_c,
+                             static_cast<int>(r2Index), body2.first, body2.second.get(), X_b2_c, col.iDist, col.sDist,
+                             col.damping, defaultDampingOffset);
+  }
   if(solver.gui())
   {
     if(!gui_)
