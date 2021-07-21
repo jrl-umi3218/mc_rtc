@@ -95,14 +95,7 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
                  unsigned int robotIndex,
                  double dt);
 
-  /** Set a name for the task
-   *
-   * This name will be used to identify the task in logs, GUI...
-   *
-   * The name should be set before being added to the solver.
-   *
-   */
-  virtual inline void name(const std::string & name) override
+  inline void name(const std::string & name) override
   {
     name_ = name;
 

@@ -55,7 +55,7 @@ public:
   }
 
   /** Get the name of the task */
-  virtual inline const std::string & name() const
+  inline const std::string & name() const
   {
     return name_;
   }
