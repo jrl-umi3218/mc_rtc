@@ -49,7 +49,7 @@ public:
    * The name should be set before being added to the solver.
    *
    */
-  void name(const std::string & name)
+  virtual inline void name(const std::string & name)
   {
     name_ = name;
   }

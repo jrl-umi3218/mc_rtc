@@ -54,14 +54,7 @@ StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
   torsoTask = std::make_shared<mc_tasks::OrientationTask>(torsoBodyName, robots_, robotIndex_);
 
   // Rename the tasks managed by the stabilizer
-  // Doing so helps making the logs more consistent, and having a fixed name
-  // allows for predifined custom plots in the log ui.
-  const auto n = name_ + "_Tasks";
-  comTask->name(n + "_com");
-  leftCoP->name(n + "_cop_left");
-  rightCoP->name(n + "_cop_right");
-  pelvisTask->name(n + "_pelvis");
-  torsoTask->name(n + "_torso");
+  name(name_);
 }
 
 StabilizerTask::StabilizerTask(const mc_rbdyn::Robots & robots,
@@ -219,7 +212,10 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
     // Remove previous contacts
     for(const auto & contactT : contactTasks)
     {
-      mc_rtc::log::info("{}: Removing contact {}", name(), contactT->surface());
+      if(c_.verbose)
+      {
+        mc_rtc::log::info("{}: Removing contact {}", name(), contactT->surface());
+      }
       MetaTask::removeFromLogger(*contactT, *solver.logger());
       MetaTask::removeFromSolver(*contactT, solver);
     }
@@ -230,7 +226,10 @@ void StabilizerTask::updateContacts(mc_solver::QPSolver & solver)
     for(const auto contactState : addContacts_)
     {
       auto footTask = footTasks[contactState];
-      mc_rtc::log::info("{}: Adding contact {}", name(), footTask->surface());
+      if(c_.verbose)
+      {
+        mc_rtc::log::info("{}: Adding contact {}", name(), footTask->surface());
+      }
       MetaTask::addToSolver(*footTask, solver);
       MetaTask::addToLogger(*footTask, *solver.logger());
       contactTasks.push_back(footTask);
