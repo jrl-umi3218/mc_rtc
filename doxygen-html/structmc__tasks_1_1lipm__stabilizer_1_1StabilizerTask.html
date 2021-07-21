@@ -109,6 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acbc98793917ce33829d717f289906192"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#acbc98793917ce33829d717f289906192">StabilizerTask</a> (const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;robots, const <a class="el" href="structmc__rbdyn_1_1Robots.html">mc_rbdyn::Robots</a> &amp;realRobots, unsigned int robotIndex, double dt)</td></tr>
 <tr class="memdesc:acbc98793917ce33829d717f289906192"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a stabilizer meta task.  <a href="#acbc98793917ce33829d717f289906192">More...</a><br /></td></tr>
 <tr class="separator:acbc98793917ce33829d717f289906192"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e01dabf47eec2038cf3db88324df2d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3e01dabf47eec2038cf3db88324df2d3">name</a> (const std::string &amp;name) override</td></tr>
+<tr class="separator:a3e01dabf47eec2038cf3db88324df2d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65b51a83fbd47db891199fdafdc50220"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a65b51a83fbd47db891199fdafdc50220">reset</a> () override</td></tr>
 <tr class="memdesc:a65b51a83fbd47db891199fdafdc50220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the stabilizer tasks and parameters to their default configuration.  <a href="#a65b51a83fbd47db891199fdafdc50220">More...</a><br /></td></tr>
 <tr class="separator:a65b51a83fbd47db891199fdafdc50220"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,8 +190,6 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aea3e513dfe137830b38272336451b8cc inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#ac090b29eae1954585e32572d40731ca1">type</a> () const</td></tr>
 <tr class="separator:ac090b29eae1954585e32572d40731ca1 inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa98468771424ad14d60915a6b52e927b inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#aa98468771424ad14d60915a6b52e927b">name</a> (const std::string &amp;name)</td></tr>
-<tr class="separator:aa98468771424ad14d60915a6b52e927b inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1MetaTask.html#a94831a7f067fdd5b05e03e83bfc4166b">name</a> () const</td></tr>
 <tr class="separator:a94831a7f067fdd5b05e03e83bfc4166b inherit pub_methods_structmc__tasks_1_1MetaTask"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -1851,6 +1851,37 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3e01dabf47eec2038cf3db88324df2d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e01dabf47eec2038cf3db88324df2d3">&#9670;&nbsp;</a></span>name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_tasks::lipm_stabilizer::StabilizerTask::name </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set a name for the task</p>
+<p>This name will be used to identify the task in logs, GUI...</p>
+<p>The name should be set before being added to the solver. </p>
+
+<p>Reimplemented from <a class="el" href="structmc__tasks_1_1MetaTask.html#aac5374371bf979a30705fe2db701c13b">mc_tasks::MetaTask</a>.</p>
 
 </div>
 </div>

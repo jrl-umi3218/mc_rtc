@@ -31,13 +31,14 @@ var structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration =
     [ "pelvisStiffness", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a42b1aa4d6be73c7a9986292e8ca1e3e2", null ],
     [ "pelvisWeight", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a8bc2c7d4a6964408929e7b23ff63667c", null ],
     [ "rightFootSurface", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ac0c774614c0a1f30b19d139295f48c89", null ],
-    [ "safetyThresholds", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a38de596f3705f2f43807b8400e8c73b3", null ],
+    [ "safetyThresholds", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a4d88d0c612afd2fc60d4b60efa76bc3f", null ],
     [ "torsoBodyName", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abaf5f231ddd92e45c3947448560a43ec", null ],
     [ "torsoPitch", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a4342762c90bd3857760f991d3424cf47", null ],
     [ "torsoStiffness", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a4c91236b2c0d11ebfe65ab78668a873a", null ],
     [ "torsoWeight", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a6ea68278767553d037dba6b104327cdd", null ],
     [ "vdcFrequency", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a0b4dc848ffc84548ed88a2c6059ff5de", null ],
     [ "vdcStiffness", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a34a4b63e93b00c661f926721e284f3e9", null ],
+    [ "verbose", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#ad3172aea56993c54869ca977f7eed0d1", null ],
     [ "zmpcc", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a7202444717b6eb8868bf2478e45901b0", null ],
     [ "zmpdGain", "structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a1c98bf56a034264da108e725e6256a5b", null ]
 ];

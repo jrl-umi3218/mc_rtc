@@ -49,6 +49,7 @@ var structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask =
     [ "measuredCoMd", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a33c41662a68ba76b375b5f9dcd878475", null ],
     [ "measuredDCM", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae78207848e03e1b1153ad47f812aeb3c", null ],
     [ "measuredZMP", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a41fed4c5c24646bb999d0ad8048b6c9d", null ],
+    [ "name", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a3e01dabf47eec2038cf3db88324df2d3", null ],
     [ "pelvisStiffness", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a0128311eb332240ff25a3c0ada010148", null ],
     [ "pelvisWeight", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#abdc4a7009a01993765860ad699cf587e", null ],
     [ "realRobot", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a649fbf45bbb740cf97fbe2c19a50cac8", null ],

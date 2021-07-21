@@ -9,7 +9,7 @@ var structmc__tasks_1_1MetaTask =
     [ "dimWeight", "structmc__tasks_1_1MetaTask.html#ae6437fb02541a7c63e177ee13170b5a4", null ],
     [ "eval", "structmc__tasks_1_1MetaTask.html#ad6451130cee8c71e4045d48f7b8b7a18", null ],
     [ "load", "structmc__tasks_1_1MetaTask.html#a27dbee0df32ae7f803184cb6222fc427", null ],
-    [ "name", "structmc__tasks_1_1MetaTask.html#aa98468771424ad14d60915a6b52e927b", null ],
+    [ "name", "structmc__tasks_1_1MetaTask.html#aac5374371bf979a30705fe2db701c13b", null ],
     [ "name", "structmc__tasks_1_1MetaTask.html#a94831a7f067fdd5b05e03e83bfc4166b", null ],
     [ "removeFromGUI", "structmc__tasks_1_1MetaTask.html#a44d85f3f65abc8a5f8965efec40ebe7d", null ],
     [ "removeFromLogger", "structmc__tasks_1_1MetaTask.html#a1db4ea4e03d00823e7ee10b444a697b1", null ],

@@ -20820,11 +20820,11 @@
       <anchor>ac090b29eae1954585e32572d40731ca1</anchor>
       <arglist>() const</arglist>
     </member>
-    <member kind="function">
-      <type>void</type>
+    <member kind="function" virtualness="virtual">
+      <type>virtual void</type>
       <name>name</name>
       <anchorfile>structmc__tasks_1_1MetaTask.html</anchorfile>
-      <anchor>aa98468771424ad14d60915a6b52e927b</anchor>
+      <anchor>aac5374371bf979a30705fe2db701c13b</anchor>
       <arglist>(const std::string &amp;name)</arglist>
     </member>
     <member kind="function">
@@ -30547,10 +30547,17 @@
       <arglist>() const</arglist>
     </member>
     <member kind="variable">
-      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW SafetyThresholds</type>
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW bool</type>
+      <name>verbose</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>ad3172aea56993c54869ca977f7eed0d1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>SafetyThresholds</type>
       <name>safetyThresholds</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
-      <anchor>a38de596f3705f2f43807b8400e8c73b3</anchor>
+      <anchor>a4d88d0c612afd2fc60d4b60efa76bc3f</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -30962,6 +30969,13 @@
       <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
       <anchor>acbc98793917ce33829d717f289906192</anchor>
       <arglist>(const mc_rbdyn::Robots &amp;robots, const mc_rbdyn::Robots &amp;realRobots, unsigned int robotIndex, double dt)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>name</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html</anchorfile>
+      <anchor>a3e01dabf47eec2038cf3db88324df2d3</anchor>
+      <arglist>(const std::string &amp;name) override</arglist>
     </member>
     <member kind="function">
       <type>void</type>

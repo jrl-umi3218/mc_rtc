@@ -1,5 +1,6 @@
 var NAVTREEINDEX11 =
 {
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1SafetyThresholds_01_4.html":[3,0,7,12],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration_01_4.html":[3,0,7,13],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1lipm__stabilizer_1_1ZMPCCConfiguration_01_4.html":[3,0,7,14],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rtc_1_1gui_1_1ArrowConfig_01_4.html":[3,0,7,17],
@@ -248,6 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1gui_1_1ForceConfig.html#a78b1ea720927b2fa64a4f54b403a9184":[3,0,7,0,16,3],
 "structmc__rtc_1_1gui_1_1ForceConfig.html#a9a4b2dd24ef25e1505a01f37a899349c":[3,0,7,0,16,2],
 "structmc__rtc_1_1gui_1_1ForceConfig.html#aa43d330299a7e98bf4f71bb41203ef82":[3,0,7,0,16,0],
-"structmc__rtc_1_1gui_1_1ForceConfig.html#ab5a33c69de1d469bbb53b17ed0530968":[3,0,7,0,16,5],
-"structmc__rtc_1_1gui_1_1ForceImpl.html":[3,0,7,0,17]
+"structmc__rtc_1_1gui_1_1ForceConfig.html#ab5a33c69de1d469bbb53b17ed0530968":[3,0,7,0,16,5]
 };
