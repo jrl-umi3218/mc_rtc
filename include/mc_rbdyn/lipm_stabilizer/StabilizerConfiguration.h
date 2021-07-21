@@ -352,6 +352,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 {
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+  bool verbose = true; /**< Enable verbose output messages */
+
   SafetyThresholds safetyThresholds;
   FDQPWeights fdqpWeights;
 
@@ -428,6 +430,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
 
   void load(const mc_rtc::Configuration & config)
   {
+    config("verbose", verbose);
+
     if(config.has("safety_tresholds"))
     {
       safetyThresholds.load(config("safety_tresholds"));
@@ -548,6 +552,8 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   mc_rtc::Configuration save() const
   {
     mc_rtc::Configuration conf;
+    conf.add("verbose", verbose);
+
     conf.add("safety_tresholds", safetyThresholds);
     conf.add("fdqp_weights", fdqpWeights);
 
