@@ -114,7 +114,7 @@ controller_test_construction_failure(NoDestroyController)
 controller_test_construction_failure(NoCreateController)
 
 set(LOG_ENABLED "true")
-controller_test_run(TestPostureController 400)
+controller_test_run(TestPostureController 1000)
 # These tests require a /tmp LogDirectory and symlinks to access the
 # *-latest.log symlink created by mc_rtc
 if(NOT DEFINED PYTHON_DEB_ROOT)
@@ -125,7 +125,7 @@ if(NOT DEFINED PYTHON_DEB_ROOT)
   if(ENABLE_FAST_TESTS)
     set(NRITER 5)
   else()
-    set(NRITER 400)
+    set(NRITER 1000)
   endif()
   add_test(NAME TestPostureControllerLog COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/check_log.py" "TestPostureController" ${NRITER} ${UTILS_BIN_DIR})
 
