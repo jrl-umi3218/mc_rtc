@@ -13,6 +13,7 @@ var structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask =
     [ "comOffsetDerivatorTimeConstant", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa9516bd1875642db8c5ca3f278063e21", null ],
     [ "comOffsetLowPassCoMCutoffPeriod", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa2efd683545dd3072d7d3aa04dfe96fa", null ],
     [ "comOffsetLowPassCutoffPeriod", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#ae25dfdb1beb2bdc5536aac8a933d5293", null ],
+    [ "comOffsetTarget", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a136d6fa382469eb01738751657dc18e1", null ],
     [ "comStiffness", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#abffee740af84bea06469fdb39fa22e27", null ],
     [ "comWeight", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af16c27e6e64e0c3bf0a3ee8a84f14aee", null ],
     [ "config", "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a8475056ad2eabba42d0f46c310361e84", null ],
