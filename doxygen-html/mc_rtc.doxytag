@@ -25043,6 +25043,20 @@
     </member>
     <member kind="function">
       <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>jl</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a890c6fcf28ad497b922aaff1b536968a</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>ju</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a112f8dbb672b9911d63f479d57525241</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
       <name>tl</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>afd4cbabd88c9ee4565a2555dcc0208ae</anchor>
@@ -25109,6 +25123,20 @@
       <name>au</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>ab0b41cfc1ed67b789573ca788b6e79cf</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>jl</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a8f86bf8a4708ee63e116eb6bdd0f5bdf</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>ju</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a28c3d7ef8c743eebe234bf8f4fd418e8</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -25870,6 +25898,20 @@
     </member>
     <member kind="function">
       <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>jl</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a890c6fcf28ad497b922aaff1b536968a</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>ju</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a112f8dbb672b9911d63f479d57525241</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
       <name>tl</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>afd4cbabd88c9ee4565a2555dcc0208ae</anchor>
@@ -25936,6 +25978,20 @@
       <name>au</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>ab0b41cfc1ed67b789573ca788b6e79cf</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>jl</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a8f86bf8a4708ee63e116eb6bdd0f5bdf</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; double &gt; &gt; &amp;</type>
+      <name>ju</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>a28c3d7ef8c743eebe234bf8f4fd418e8</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -26450,6 +26506,13 @@
     </member>
     <member kind="typedef">
       <type>std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt;&gt;</type>
+      <name>jerkBounds_t</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>a8af84d89b2a37dbf89aec26e11b022eb</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt;&gt;</type>
       <name>torqueDerivativeBounds_t</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a225813431ae1e40a0e452b103504b636</anchor>
@@ -26502,6 +26565,13 @@
       <name>accelerationBounds</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a7a2fb5d58157ab88f81a263cdd583d90</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; std::map&lt; std::string, std::vector&lt; double &gt; &gt; &gt; &amp;</type>
+      <name>jerkBounds</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>ad22b6a0a6be201cdcf15639d5e210d94</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
@@ -26747,6 +26817,13 @@
       <name>_accelerationBounds</name>
       <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
       <anchor>a392097f1562229e352b6079edd9e2941</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>jerkBounds_t</type>
+      <name>_jerkBounds</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule.html</anchorfile>
+      <anchor>aea1ceebb2d15dc034da0cad4033cacdf</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
