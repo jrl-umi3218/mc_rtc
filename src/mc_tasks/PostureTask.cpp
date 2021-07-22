@@ -85,17 +85,22 @@ void PostureTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
                                        const std::map<std::string, std::vector<std::array<int, 2>>> &)
 {
   ensureHasJoints(robots_.robot(rIndex_), unactiveJointsName, "[" + name() + "::selectUnActiveJoints]");
-  std::vector<tasks::qp::JointStiffness> jsv;
+  Eigen::VectorXd dimW = pt_.dimWeight();
+  dimW.setOnes();
+  const auto & robot = robots_.robots()[rIndex_];
   for(const auto & j : unactiveJointsName)
   {
-    jsv.emplace_back(j, 0.0);
+    auto jIndex = static_cast<int>(robot.jointIndexByName(j));
+    const auto & joint = robot.mb().joint(jIndex);
+    const auto & dofIndex = robot.mb().jointPosInDof(jIndex);
+    dimW.segment(dofIndex, joint.dof()).setZero();
   }
-  pt_.jointsStiffness(solver.robots().mbs(), jsv);
+  pt_.dimWeight(dimW);
 }
 
 void PostureTask::resetJointsSelector(mc_solver::QPSolver & solver)
 {
-  pt_.jointsStiffness(solver.robots().mbs(), {});
+  selectUnactiveJoints(solver, {});
 }
 
 Eigen::VectorXd PostureTask::eval() const
