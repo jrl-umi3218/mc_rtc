@@ -346,6 +346,11 @@ struct MC_TASKS_DLLAPI StabilizerTask : public MetaTask
     return measuredCoM_;
   }
 
+  inline const Eigen::Vector3d & comOffsetTarget() noexcept
+  {
+    return comOffsetTarget_;
+  }
+
   inline bool inContact(ContactState state) const noexcept
   {
     return contacts_.count(state);
