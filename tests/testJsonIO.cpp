@@ -437,7 +437,7 @@ bool operator==(const mc_rbdyn::RobotModule & lhs, const mc_rbdyn::RobotModule &
   return bfs::path(lhs.path) == bfs::path(rhs.path) && lhs.name == rhs.name
          && bfs::path(lhs.urdf_path) == bfs::path(rhs.urdf_path) && bfs::path(lhs.rsdf_dir) == bfs::path(rhs.rsdf_dir)
          && bfs::path(lhs.calib_dir) == bfs::path(rhs.calib_dir) && lhs._bounds == rhs._bounds
-         && lhs._accelerationBounds == rhs._accelerationBounds
+         && lhs._accelerationBounds == rhs._accelerationBounds && lhs._jerkBounds == rhs._jerkBounds
          && lhs._torqueDerivativeBounds == rhs._torqueDerivativeBounds && lhs._stance == rhs._stance
          && compareHulls(lhs._convexHull, rhs._convexHull) && compareHulls(lhs._stpbvHull, rhs._stpbvHull)
          && compare_vector_maps(lhs._visual, rhs._visual) && lhs._collisionTransforms == rhs._collisionTransforms
