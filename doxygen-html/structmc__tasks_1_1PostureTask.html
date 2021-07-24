@@ -104,18 +104,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab45e9fac8713b958118a1768429c7785"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#ab45e9fac8713b958118a1768429c7785">load</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config) override</td></tr>
 <tr class="memdesc:ab45e9fac8713b958118a1768429c7785"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load parameters from a Configuration object.  <a href="#ab45e9fac8713b958118a1768429c7785">More...</a><br /></td></tr>
 <tr class="separator:ab45e9fac8713b958118a1768429c7785"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a956fb062557c6d0789eb2424a9a2c06b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#a956fb062557c6d0789eb2424a9a2c06b">dimWeight</a> (const Eigen::VectorXd &amp;) override</td></tr>
-<tr class="separator:a956fb062557c6d0789eb2424a9a2c06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54864d44b0a39971ffe82a3c08b8c711"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#a54864d44b0a39971ffe82a3c08b8c711">dimWeight</a> (const Eigen::VectorXd &amp;dimW) override</td></tr>
+<tr class="memdesc:a54864d44b0a39971ffe82a3c08b8c711"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the task dimensional weight.  <a href="#a54864d44b0a39971ffe82a3c08b8c711">More...</a><br /></td></tr>
+<tr class="separator:a54864d44b0a39971ffe82a3c08b8c711"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add36165bd4f34b697789531972948e22"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#add36165bd4f34b697789531972948e22">dimWeight</a> () const override</td></tr>
+<tr class="memdesc:add36165bd4f34b697789531972948e22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current task's dim weight vector.  <a href="#add36165bd4f34b697789531972948e22">More...</a><br /></td></tr>
 <tr class="separator:add36165bd4f34b697789531972948e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3d5a7f71a7bfbc3cd92a40a8b5d432b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#af3d5a7f71a7bfbc3cd92a40a8b5d432b">selectActiveJoints</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;activeJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;activeDofs={}) override</td></tr>
-<tr class="memdesc:af3d5a7f71a7bfbc3cd92a40a8b5d432b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup an active joints selector.  <a href="#af3d5a7f71a7bfbc3cd92a40a8b5d432b">More...</a><br /></td></tr>
+<tr class="memdesc:af3d5a7f71a7bfbc3cd92a40a8b5d432b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select active joints for this task.  <a href="#af3d5a7f71a7bfbc3cd92a40a8b5d432b">More...</a><br /></td></tr>
 <tr class="separator:af3d5a7f71a7bfbc3cd92a40a8b5d432b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afda9cd7d8bab32bc0644da110f06a4e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#afda9cd7d8bab32bc0644da110f06a4e3">selectUnactiveJoints</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver, const std::vector&lt; std::string &gt; &amp;unactiveJointsName, const std::map&lt; std::string, std::vector&lt; std::array&lt; int, 2 &gt;&gt;&gt; &amp;unactiveDofs={}) override</td></tr>
-<tr class="memdesc:afda9cd7d8bab32bc0644da110f06a4e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup an unactive joints selector.  <a href="#afda9cd7d8bab32bc0644da110f06a4e3">More...</a><br /></td></tr>
+<tr class="memdesc:afda9cd7d8bab32bc0644da110f06a4e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select inactive joints for this task.  <a href="#afda9cd7d8bab32bc0644da110f06a4e3">More...</a><br /></td></tr>
 <tr class="separator:afda9cd7d8bab32bc0644da110f06a4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53ab7fdbe90e3b309a618bec3bb69859"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#a53ab7fdbe90e3b309a618bec3bb69859">resetJointsSelector</a> (<a class="el" href="structmc__solver_1_1QPSolver.html">mc_solver::QPSolver</a> &amp;solver) override</td></tr>
-<tr class="memdesc:a53ab7fdbe90e3b309a618bec3bb69859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset active joints selection.  <a href="#a53ab7fdbe90e3b309a618bec3bb69859">More...</a><br /></td></tr>
+<tr class="memdesc:a53ab7fdbe90e3b309a618bec3bb69859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the joint selector effect.  <a href="#a53ab7fdbe90e3b309a618bec3bb69859">More...</a><br /></td></tr>
 <tr class="separator:a53ab7fdbe90e3b309a618bec3bb69859"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a529169e0178306b0eec9bf0f428752c7"><td class="memItemLeft" align="right" valign="top">Eigen::VectorXd&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__tasks_1_1PostureTask.html#a529169e0178306b0eec9bf0f428752c7">eval</a> () const override</td></tr>
 <tr class="memdesc:a529169e0178306b0eec9bf0f428752c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the task error.  <a href="#a529169e0178306b0eec9bf0f428752c7">More...</a><br /></td></tr>
@@ -392,8 +394,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a956fb062557c6d0789eb2424a9a2c06b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a956fb062557c6d0789eb2424a9a2c06b">&#9670;&nbsp;</a></span>dimWeight() <span class="overload">[1/2]</span></h2>
+<a id="a54864d44b0a39971ffe82a3c08b8c711"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54864d44b0a39971ffe82a3c08b8c711">&#9670;&nbsp;</a></span>dimWeight() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -405,7 +407,7 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">void mc_tasks::PostureTask::dimWeight </td>
           <td>(</td>
           <td class="paramtype">const Eigen::VectorXd &amp;&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><em>dimW</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -415,7 +417,9 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Does not make much sense for <a class="el" href="structmc__tasks_1_1PostureTask.html">PostureTask</a>, prefer selectActiveJoints or selectUnactiveJoints </p>
+
+<p>Set the task dimensional weight. </p>
+<p>For simple cases (using 0/1 as weights) prefer <a class="el" href="structmc__tasks_1_1PostureTask.html#af3d5a7f71a7bfbc3cd92a40a8b5d432b">selectActiveJoints</a> or <a class="el" href="structmc__tasks_1_1PostureTask.html#afda9cd7d8bab32bc0644da110f06a4e3">selectUnactiveJoints</a> which are simpler to use </p>
 
 <p>Implements <a class="el" href="structmc__tasks_1_1MetaTask.html#a98221b876dab3cc67fbd60036213eb46">mc_tasks::MetaTask</a>.</p>
 
@@ -443,7 +447,8 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Does not make much sense for <a class="el" href="structmc__tasks_1_1PostureTask.html">PostureTask</a>, prefer selectActiveJoints or selectUnactiveJoints </p>
+
+<p>Get the current task's dim weight vector. </p>
 
 <p>Implements <a class="el" href="structmc__tasks_1_1MetaTask.html#ae6437fb02541a7c63e177ee13170b5a4">mc_tasks::MetaTask</a>.</p>
 
@@ -829,13 +834,8 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reset active joints selection. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver where the task is involved </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Reset the joint selector effect. </p>
+<p>Reset dimWeight to ones </p>
 
 <p>Implements <a class="el" href="structmc__tasks_1_1MetaTask.html#a745e75d72133feaf9b7aef649485168f">mc_tasks::MetaTask</a>.</p>
 
@@ -881,17 +881,8 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Setup an active joints selector. </p>
-<p>This function setups a tasks::qp;:JointsSelector for the task. Only the provided joints will be used to solve the task.</p>
-<dl class="section note"><dt>Note</dt><dd>Calling this method or the related selectUnactiveJoints should reset the current joints' selection</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver where the task is involved</td></tr>
-    <tr><td class="paramname">activeJointsName</td><td>Active joints in the task</td></tr>
-    <tr><td class="paramname">activeDofs</td><td>Allow to select only part of the dofs of a joint </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Select active joints for this task. </p>
+<p>Manipulate <a class="el" href="structmc__tasks_1_1PostureTask.html#a54864d44b0a39971ffe82a3c08b8c711">dimWeight()</a> to achieve its effect </p>
 
 <p>Implements <a class="el" href="structmc__tasks_1_1MetaTask.html#a2fd93334634a24c2955f83cbf71926c1">mc_tasks::MetaTask</a>.</p>
 
@@ -937,17 +928,8 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Setup an unactive joints selector. </p>
-<p>This function setups a tasks::qp;:JointsSelector for the task. All joints will be used to realize the task except those provided here.</p>
-<dl class="section note"><dt>Note</dt><dd>Calling this method or the related selectActiveJoints should reset the current joints' selection</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">solver</td><td>Solver where the task is involved</td></tr>
-    <tr><td class="paramname">unactiveJointsName</td><td>Active joints in the task</td></tr>
-    <tr><td class="paramname">unactiveDofs</td><td>Allow to select only part of the dofs of a joint </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Select inactive joints for this task. </p>
+<p>Manipulate <a class="el" href="structmc__tasks_1_1PostureTask.html#a54864d44b0a39971ffe82a3c08b8c711">dimWeight()</a> to achieve its effect </p>
 
 <p>Implements <a class="el" href="structmc__tasks_1_1MetaTask.html#aa4d582c6cd1934d8a4ac2fed6fb296da">mc_tasks::MetaTask</a>.</p>
 

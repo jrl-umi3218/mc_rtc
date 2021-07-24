@@ -23406,8 +23406,8 @@
       <type>void</type>
       <name>dimWeight</name>
       <anchorfile>structmc__tasks_1_1PostureTask.html</anchorfile>
-      <anchor>a956fb062557c6d0789eb2424a9a2c06b</anchor>
-      <arglist>(const Eigen::VectorXd &amp;) override</arglist>
+      <anchor>a54864d44b0a39971ffe82a3c08b8c711</anchor>
+      <arglist>(const Eigen::VectorXd &amp;dimW) override</arglist>
     </member>
     <member kind="function">
       <type>Eigen::VectorXd</type>

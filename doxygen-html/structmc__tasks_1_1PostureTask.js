@@ -6,7 +6,7 @@ var structmc__tasks_1_1PostureTask =
     [ "addToSolver", "structmc__tasks_1_1PostureTask.html#a875f742c1356787157c780f8c82140f1", null ],
     [ "damping", "structmc__tasks_1_1PostureTask.html#a46a7f613e697f5f5f1ad7db24d108649", null ],
     [ "damping", "structmc__tasks_1_1PostureTask.html#a0d4d5b303516826dac52c0177ac8f505", null ],
-    [ "dimWeight", "structmc__tasks_1_1PostureTask.html#a956fb062557c6d0789eb2424a9a2c06b", null ],
+    [ "dimWeight", "structmc__tasks_1_1PostureTask.html#a54864d44b0a39971ffe82a3c08b8c711", null ],
     [ "dimWeight", "structmc__tasks_1_1PostureTask.html#add36165bd4f34b697789531972948e22", null ],
     [ "eval", "structmc__tasks_1_1PostureTask.html#a529169e0178306b0eec9bf0f428752c7", null ],
     [ "inSolver", "structmc__tasks_1_1PostureTask.html#ab65cad427dd26ba032f9512de7fc374c", null ],
