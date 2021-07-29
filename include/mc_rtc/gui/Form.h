@@ -189,20 +189,23 @@ struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
   inline FormComboInput(const std::string & name,
                         bool required,
                         const std::vector<std::string> & values,
-                        bool send_index = false)
-  : FormElement<FormComboInput, Elements::ComboInput>(name, required), values_(values), send_index_(send_index)
+                        bool send_index = false,
+                        int def = -1)
+  : FormElement<FormComboInput, Elements::ComboInput>(name, required), values_(values), def_(def),
+    send_index_(send_index)
   {
   }
 
   static constexpr size_t write_size_()
   {
-    return 2;
+    return 3;
   }
 
   inline void write_(mc_rtc::MessagePackBuilder & builder)
   {
     builder.write(values_);
     builder.write(send_index_);
+    builder.write(def_);
   }
 
   /** Invalid element */
@@ -211,6 +214,7 @@ struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
 private:
   std::vector<std::string> values_;
   bool send_index_ = false;
+  int def_;
 };
 
 struct FormDataComboInput : public FormElement<FormDataComboInput, Elements::DataComboInput>

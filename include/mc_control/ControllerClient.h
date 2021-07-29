@@ -580,6 +580,18 @@ protected:
 
   /** A combo input within a form
    *
+   * This is kept for backward compatibility, mc_rtc never calls this version and you should implement the full version
+   */
+  virtual void form_combo_input(const ElementId & /*formId*/,
+                                const std::string & /*name*/,
+                                bool /*required*/,
+                                const std::vector<std::string> & /*values*/,
+                                bool /*send_index*/)
+  {
+  }
+
+  /** A combo input within a form
+   *
    * \p formId Identifier of the form
    *
    * \p name Name of the entry
@@ -591,12 +603,14 @@ protected:
    * \p send_index If true, the implementation should send back the index
    * rather than the value
    */
-  virtual void form_combo_input(const ElementId & /*formId*/,
-                                const std::string & /*name*/,
-                                bool /*required*/,
-                                const std::vector<std::string> & /*values*/,
-                                bool /*send_index*/)
+  virtual void form_combo_input(const ElementId & formId,
+                                const std::string & name,
+                                bool required,
+                                const std::vector<std::string> & values,
+                                bool send_index,
+                                int /*def*/)
   {
+    form_combo_input(formId, name, required, values, send_index);
   }
 
   /** A data combo input within a form
