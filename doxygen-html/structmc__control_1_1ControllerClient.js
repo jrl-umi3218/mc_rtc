@@ -23,6 +23,7 @@ var structmc__control_1_1ControllerClient =
     [ "form_checkbox", "structmc__control_1_1ControllerClient.html#ae3244e80dcf44ec423924b09a6b39095", null ],
     [ "form_checkbox", "structmc__control_1_1ControllerClient.html#a451e2eedd8665e2455ec6098349c5c88", null ],
     [ "form_combo_input", "structmc__control_1_1ControllerClient.html#aaf37cf840f4ecec192fb6fdfe02ed017", null ],
+    [ "form_combo_input", "structmc__control_1_1ControllerClient.html#acc7dd35ed0c4a8ccdb9b375906bf4846", null ],
     [ "form_data_combo_input", "structmc__control_1_1ControllerClient.html#a10ed23f9fa2c7a960a36178b64d83ac6", null ],
     [ "form_integer_input", "structmc__control_1_1ControllerClient.html#aa9a4c2dc5ad1bd01264a7f7a206273de", null ],
     [ "form_integer_input", "structmc__control_1_1ControllerClient.html#a8a7445782cb8de9f56e2f50b5c46c018", null ],

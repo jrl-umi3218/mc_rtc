@@ -1,5 +1,6 @@
 var NAVTREEINDEX11 =
 {
+"structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html":[3,0,7,6],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html":[3,0,7,7],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1Contact_01_4.html":[3,0,7,8],
 "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1RobotModulePtr_01_4.html":[3,0,7,16],
@@ -248,6 +249,5 @@ var NAVTREEINDEX11 =
 "structmc__rtc_1_1gui_1_1Element.html#a7b365cbe4764d76aafa03495be0ecd5d":[3,0,7,0,15,8],
 "structmc__rtc_1_1gui_1_1Element.html#ab8e71ecce7dab695777a1a11faf119f7":[3,0,7,0,15,6],
 "structmc__rtc_1_1gui_1_1Element.html#ad2e559a17ad52901a5e726ca03f300c6":[3,0,7,0,15,3],
-"structmc__rtc_1_1gui_1_1ForceConfig.html":[3,0,7,0,16],
-"structmc__rtc_1_1gui_1_1ForceConfig.html#a172deb6bbb037afc2955e6ce0495a1cd":[3,0,7,0,16,6]
+"structmc__rtc_1_1gui_1_1ForceConfig.html":[3,0,7,0,16]
 };

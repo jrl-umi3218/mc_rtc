@@ -231,6 +231,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:ac4268ff16133bc178a51e5d82bf26216"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf37cf840f4ecec192fb6fdfe02ed017"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#aaf37cf840f4ecec192fb6fdfe02ed017">form_combo_input</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;, const std::string &amp;, bool, const std::vector&lt; std::string &gt; &amp;, bool)</td></tr>
 <tr class="separator:aaf37cf840f4ecec192fb6fdfe02ed017"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc7dd35ed0c4a8ccdb9b375906bf4846"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#acc7dd35ed0c4a8ccdb9b375906bf4846">form_combo_input</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;formId, const std::string &amp;name, bool required, const std::vector&lt; std::string &gt; &amp;values, bool send_index, int)</td></tr>
+<tr class="separator:acc7dd35ed0c4a8ccdb9b375906bf4846"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10ed23f9fa2c7a960a36178b64d83ac6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#a10ed23f9fa2c7a960a36178b64d83ac6">form_data_combo_input</a> (const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;, const std::string &amp;, bool, const std::vector&lt; std::string &gt; &amp;, bool)</td></tr>
 <tr class="separator:a10ed23f9fa2c7a960a36178b64d83ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fb1503ce946c0835a3d9514f5337f05"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1ControllerClient.html#a3fb1503ce946c0835a3d9514f5337f05">start_plot</a> (uint64_t, const std::string &amp;)</td></tr>
@@ -1151,7 +1153,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <a id="aaf37cf840f4ecec192fb6fdfe02ed017"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf37cf840f4ecec192fb6fdfe02ed017">&#9670;&nbsp;</a></span>form_combo_input()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf37cf840f4ecec192fb6fdfe02ed017">&#9670;&nbsp;</a></span>form_combo_input() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1187,6 +1189,68 @@ Protected Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>A combo input within a form</p>
+<p>This is kept for backward compatibility, <a class="el" href="namespacemc__rtc.html">mc_rtc</a> never calls this version and you should implement the full version </p>
+
+</div>
+</div>
+<a id="acc7dd35ed0c4a8ccdb9b375906bf4846"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc7dd35ed0c4a8ccdb9b375906bf4846">&#9670;&nbsp;</a></span>form_combo_input() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void mc_control::ControllerClient::form_combo_input </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmc__control_1_1ElementId.html">ElementId</a> &amp;&#160;</td>
+          <td class="paramname"><em>formId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>required</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>values</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>send_index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>

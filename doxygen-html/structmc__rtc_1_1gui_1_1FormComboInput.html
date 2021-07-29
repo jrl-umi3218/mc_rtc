@@ -96,8 +96,8 @@ Collaboration diagram for mc_rtc::gui::FormComboInput:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afbedbea2356966c5929c16f6405886c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1FormComboInput.html#afbedbea2356966c5929c16f6405886c3">FormComboInput</a> (const std::string &amp;name, bool required, const std::vector&lt; std::string &gt; &amp;values, bool send_index=false)</td></tr>
-<tr class="separator:afbedbea2356966c5929c16f6405886c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabd26d907ca0cc2e882bab1dba2be99c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1FormComboInput.html#aabd26d907ca0cc2e882bab1dba2be99c">FormComboInput</a> (const std::string &amp;name, bool required, const std::vector&lt; std::string &gt; &amp;values, bool send_index=false, int def=-1)</td></tr>
+<tr class="separator:aabd26d907ca0cc2e882bab1dba2be99c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade120c97d849d5c36e15391f84a24422"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1FormComboInput.html#ade120c97d849d5c36e15391f84a24422">write_</a> (<a class="el" href="structmc__rtc_1_1MessagePackBuilder.html">mc_rtc::MessagePackBuilder</a> &amp;builder)</td></tr>
 <tr class="separator:ade120c97d849d5c36e15391f84a24422"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a072a747dd87980f5fc0d65fb401ddd90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1FormComboInput.html#a072a747dd87980f5fc0d65fb401ddd90">FormComboInput</a> ()</td></tr>
@@ -131,8 +131,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a6d6a6611a29a0e94107a8fd97706a43b inherit pro_attribs_structmc__rtc_1_1gui_1_1FormElement"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="afbedbea2356966c5929c16f6405886c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbedbea2356966c5929c16f6405886c3">&#9670;&nbsp;</a></span>FormComboInput() <span class="overload">[1/2]</span></h2>
+<a id="aabd26d907ca0cc2e882bab1dba2be99c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabd26d907ca0cc2e882bab1dba2be99c">&#9670;&nbsp;</a></span>FormComboInput() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -162,7 +162,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>send_index</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>send_index</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>def</em> = <code>-1</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

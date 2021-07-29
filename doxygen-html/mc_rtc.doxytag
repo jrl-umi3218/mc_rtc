@@ -11112,6 +11112,13 @@
     </member>
     <member kind="function" protection="protected" virtualness="virtual">
       <type>virtual void</type>
+      <name>form_combo_input</name>
+      <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
+      <anchor>acc7dd35ed0c4a8ccdb9b375906bf4846</anchor>
+      <arglist>(const ElementId &amp;formId, const std::string &amp;name, bool required, const std::vector&lt; std::string &gt; &amp;values, bool send_index, int)</arglist>
+    </member>
+    <member kind="function" protection="protected" virtualness="virtual">
+      <type>virtual void</type>
       <name>form_data_combo_input</name>
       <anchorfile>structmc__control_1_1ControllerClient.html</anchorfile>
       <anchor>a10ed23f9fa2c7a960a36178b64d83ac6</anchor>
@@ -14126,8 +14133,8 @@
       <type></type>
       <name>FormComboInput</name>
       <anchorfile>structmc__rtc_1_1gui_1_1FormComboInput.html</anchorfile>
-      <anchor>afbedbea2356966c5929c16f6405886c3</anchor>
-      <arglist>(const std::string &amp;name, bool required, const std::vector&lt; std::string &gt; &amp;values, bool send_index=false)</arglist>
+      <anchor>aabd26d907ca0cc2e882bab1dba2be99c</anchor>
+      <arglist>(const std::string &amp;name, bool required, const std::vector&lt; std::string &gt; &amp;values, bool send_index=false, int def=-1)</arglist>
     </member>
     <member kind="function">
       <type>void</type>

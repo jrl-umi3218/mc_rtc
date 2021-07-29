@@ -1,5 +1,6 @@
 var NAVTREEINDEX17 =
 {
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af0234fd0ce9a193f6a591b70f29448db":[3,0,9,1,2,99],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af0aa6726e77f2dc1d7f371980426fdef":[3,0,9,1,2,75],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af16c27e6e64e0c3bf0a3ee8a84f14aee":[3,0,9,1,2,15],
 "structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#af6f2964c1be8b168193c80636bc0b583":[3,0,9,1,2,87],
