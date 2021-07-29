@@ -592,16 +592,13 @@ protected:
    *
    * \p send_index If true, the implementation should send back the index
    * rather than the value
-   *
-   * \p default_from_user whether the default value is provided from user
    */
   virtual void form_combo_input(const ElementId & /*formId*/,
                                 const std::string & /*name*/,
                                 bool /*required*/,
                                 const std::vector<std::string> & /*values*/,
-                                int /*def*/,
                                 bool /*send_index*/,
-                                bool /*default_from_user*/)
+                                int /*def*/)
   {
   }
 

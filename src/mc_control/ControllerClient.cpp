@@ -699,7 +699,15 @@ void ControllerClient::handle_form(const ElementId & id, const mc_rtc::Configura
         form_array_input(id, name, required, el[3], el[4], el.size() > 5 ? el[5] : true);
         break;
       case Elements::ComboInput:
-        form_combo_input(id, name, required, el[3], el[4], el[5], el[6]);
+        if(el.size() == 5)
+        {
+          // For backward compatibility
+          form_combo_input(id, name, required, el[3], el[4], -1);
+        }
+        else
+        {
+          form_combo_input(id, name, required, el[3], el[4], el[5]);
+        }
         break;
       case Elements::DataComboInput:
         form_data_combo_input(id, name, required, el[3], el[4]);
