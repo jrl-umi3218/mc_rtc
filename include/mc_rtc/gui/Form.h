@@ -213,8 +213,8 @@ struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
 
 private:
   std::vector<std::string> values_;
-  int def_;
   bool send_index_ = false;
+  int def_;
 };
 
 struct FormDataComboInput : public FormElement<FormDataComboInput, Elements::DataComboInput>
