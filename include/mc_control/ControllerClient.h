@@ -588,10 +588,10 @@ protected:
    *
    * \p values Possible values
    *
-   * \p def default index
-   *
    * \p send_index If true, the implementation should send back the index
    * rather than the value
+   *
+   * \p def default index
    */
   virtual void form_combo_input(const ElementId & /*formId*/,
                                 const std::string & /*name*/,
