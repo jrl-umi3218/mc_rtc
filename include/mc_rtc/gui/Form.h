@@ -198,7 +198,7 @@ struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
 
   static constexpr size_t write_size_()
   {
-    return 4;
+    return 3;
   }
 
   inline void write_(mc_rtc::MessagePackBuilder & builder)
