@@ -199,8 +199,7 @@ class PlotPolygonAxis(object):
         self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = color)))
       # Store the last value. This is the initial value for the next label.
       i0 = i
-      if i < len(y):
-        label = y[i0]
+      label = y[i0]
       i += 1
     return True
   def legend(self):
