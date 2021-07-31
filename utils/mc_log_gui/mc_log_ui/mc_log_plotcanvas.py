@@ -180,19 +180,24 @@ class PlotPolygonAxis(object):
     label = y[i0]
     while i < len(y):
       if y[i] == label and i + 1 != len(y):
+        # Continue if the y value is same as that of previous timestep
         i += 1
         continue
+      # Add new color if the y value is new
       if label not in self.colors[y_label]:
         self.colors[y_label][label] = self.figure._next_poly_color()
       color = self.colors[y_label][label]
+      # Determine the last timestep of this label
       if i + 1 < len(y) and not np.isnan(x[i + 1]):
         xi = x[i + 1]
       else:
         xi = x[i]
         if np.isnan(xi):
           xi = x[i - 1]
+      # Make rectangle to draw
       if len(label) > 0:
         self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = color)))
+      # Store the last value. This is the initial value for the next label.
       i0 = i
       if i < len(y):
         label = y[i0]
