@@ -182,9 +182,6 @@ class PlotPolygonAxis(object):
       if y[i] == label and i + 1 != len(y):
         i += 1
         continue
-      if len(label) == 0:
-        i += 1
-        continue
       if label not in self.colors[y_label]:
         self.colors[y_label][label] = self.figure._next_poly_color()
       color = self.colors[y_label][label]
@@ -194,7 +191,8 @@ class PlotPolygonAxis(object):
         xi = x[i]
         if np.isnan(xi):
           xi = x[i - 1]
-      self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = color)))
+      if len(label) > 0:
+        self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = color)))
       i0 = i
       if i < len(y):
         label = y[i0]
