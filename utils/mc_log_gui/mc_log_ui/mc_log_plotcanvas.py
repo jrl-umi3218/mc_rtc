@@ -179,7 +179,7 @@ class PlotPolygonAxis(object):
     i0 = 0
     label = y[i0]
     while i < len(y):
-      if y[i] == label and i + 1 != len(y):
+      if y[i] == label and i + 1 < len(y):
         # Continue if the y value is same as that of previous timestep
         i += 1
         continue
