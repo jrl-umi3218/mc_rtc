@@ -191,8 +191,8 @@ struct FormComboInput : public FormElement<FormComboInput, Elements::ComboInput>
                         const std::vector<std::string> & values,
                         bool send_index = false,
                         int def = -1)
-  : FormElement<FormComboInput, Elements::ComboInput>(name, required), values_(values), def_(def),
-    send_index_(send_index)
+  : FormElement<FormComboInput, Elements::ComboInput>(name, required), values_(values), send_index_(send_index),
+    def_(def)
   {
   }
 
