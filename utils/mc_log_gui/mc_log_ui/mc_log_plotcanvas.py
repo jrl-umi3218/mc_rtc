@@ -184,7 +184,9 @@ class PlotPolygonAxis(object):
         i += 1
         continue
       # Add new color if the y value is new
+      new_label = False
       if label not in self.colors[y_label]:
+        new_label = True
         self.colors[y_label][label] = self.figure._next_poly_color()
       color = self.colors[y_label][label]
       # Determine the last timestep of this label
@@ -193,6 +195,9 @@ class PlotPolygonAxis(object):
         xi = x[i - 1]
       # Make rectangle to draw
       if len(label) > 0:
+        if not new_label:
+          # Do not display labels in legends from the second time
+          label = "_" + label
         self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = color)))
       # Store the last value. This is the initial value for the next label.
       i0 = i
