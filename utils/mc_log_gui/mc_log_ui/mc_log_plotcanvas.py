@@ -179,25 +179,29 @@ class PlotPolygonAxis(object):
     i0 = 0
     label = y[i0]
     while i < len(y):
-      if y[i] == label and i + 1 != len(y):
+      if y[i] == label and i + 1 < len(y):
+        # Continue if the y value is same as that of previous timestep
         i += 1
         continue
-      if len(label) == 0:
-        i += 1
-        continue
+      # Add new color if the y value is new
+      new_label = False
       if label not in self.colors[y_label]:
+        new_label = True
         self.colors[y_label][label] = self.figure._next_poly_color()
       color = self.colors[y_label][label]
-      if i + 1 < len(y) and not np.isnan(x[i + 1]):
-        xi = x[i + 1]
-      else:
-        xi = x[i]
-        if np.isnan(xi):
-          xi = x[i - 1]
-      self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = color)))
+      # Determine the last timestep of this label
+      xi = x[i]
+      if np.isnan(xi):
+        xi = x[i - 1]
+      # Make rectangle to draw
+      if len(label) > 0:
+        if not new_label:
+          # Do not display labels in legends from the second time
+          label = "_" + label
+        self.plots[y_label].append(self._axis.add_patch(Rectangle((x[i0], 0), xi - x[i0], 1, label = label, facecolor = color)))
+      # Store the last value. This is the initial value for the next label.
       i0 = i
-      if i < len(y):
-        label = y[i0]
+      label = y[i0]
       i += 1
     return True
   def legend(self):
