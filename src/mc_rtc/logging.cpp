@@ -22,7 +22,7 @@ spdlog::logger & success()
 #ifndef WIN32
     sink->set_color(spdlog::level::info, "\033[01;32m"); // bold green
 #else
-    sink->set_color(spdlog::level::info, sink->BOLD | sink->GREEN);
+    sink->set_color(spdlog::level::info, FOREGROUND_INTENSITY | FOREGROUND_GREEN);
 #endif
     return success;
   }();
@@ -38,7 +38,7 @@ spdlog::logger & info()
 #ifndef WIN32
     sink->set_color(spdlog::level::info, "\033[01;34m"); // bold cyan
 #else
-    sink->set_color(spdlog::level::info, sink->BOLD | sink->CYAN);
+    sink->set_color(spdlog::level::info, FOREGROUND_INTENSITY | FOREGROUND_GREEN | FOREGROUND_BLUE);
 #endif
     return info;
   }();
