@@ -343,9 +343,9 @@
 <span class="c1">// In the reset function, reset the task to the current EF position</span>
 <span class="n">efTask</span><span class="o">-&gt;</span><span class="n">reset</span><span class="p">();</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -364,9 +364,9 @@
 <span class="c1"># In the reset callback, reset the task to the current EF position
 </span><span class="bp">self</span><span class="p">.</span><span class="n">efTask</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -404,9 +404,9 @@
 <span class="c1">// Update the rotation and position objective</span>
 <span class="n">efTask</span><span class="o">-&gt;</span><span class="n">set_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">{</span><span class="n">sva</span><span class="o">::</span><span class="n">RotY</span><span class="p">(</span><span class="o">-</span><span class="n">M_PI</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">{</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">}});</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -422,9 +422,9 @@
 <span class="c1"># Update the rotation and position objective
 </span><span class="n">efTask</span><span class="p">.</span><span class="n">set_ef_pose</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">RotY</span><span class="p">(</span><span class="o">-</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)))</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -473,9 +473,9 @@
   </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -491,9 +491,9 @@
 <span class="na">orientation</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.71</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">,</span> <span class="nv">0.71</span><span class="pi">,</span> <span class="nv">0</span><span class="pi">]</span>
 <span class="na">position</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">0.4</span><span class="pi">,</span> <span class="nv">0.4</span><span class="pi">,</span> <span class="nv">1.0</span><span class="pi">]</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -538,9 +538,9 @@
 <span class="c1">// requested</span>
 <span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="o">::</span><span class="n">MetaTaskLoader</span><span class="o">::</span><span class="n">load</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="n">config</span><span class="p">(</span><span class="s">"task"</span><span class="p">));</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -579,5 +579,12 @@
       </footer>
     </div>
   </body>
+
+  <script type="text/javascript">
+  $(document).ready(function()
+  {
+    new ClipboardJS('.copy-button');
+  });
+  </script>
 
 </html>

@@ -381,9 +381,9 @@
     <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">)</span> <span class="o">+</span> <span class="s">"/../mc_int_obj_description"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">"door"</span><span class="p">)),</span>
     <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotLoader</span><span class="o">::</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">mc_rtc</span><span class="o">::</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="s">"ground"</span><span class="p">))},</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -400,9 +400,9 @@
     <span class="n">ground</span> <span class="o">=</span> <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">get_robot_module</span><span class="p">(</span><span class="s">"env"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="p">.</span><span class="n">MC_ENV_DESCRIPTION_PATH</span><span class="p">,</span> <span class="s">"ground"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">MyFirstController</span><span class="p">([</span><span class="n">robot</span><span class="p">,</span> <span class="n">door</span><span class="p">,</span> <span class="n">ground</span><span class="p">],</span> <span class="n">dt</span><span class="p">)</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -443,9 +443,9 @@
   <span class="p">{</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">}</span>
 <span class="p">});</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -461,9 +461,9 @@
   <span class="n">mc_rbdyn</span><span class="p">.</span><span class="n">Contact</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
 <span class="p">])</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -502,9 +502,9 @@
 <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In the reset function</span>
 <span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">RotZ</span><span class="p">(</span><span class="n">M_PI</span><span class="p">),</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)));</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -518,9 +518,9 @@
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># In the reset callback
 </span><span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">posW</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">RotZ</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="p">),</span> <span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -565,9 +565,9 @@
 <span class="n">doorPosture</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">PostureTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">solver</span><span class="p">(),</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">);</span>
 <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">doorPosture</span><span class="p">)</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -585,9 +585,9 @@
 <span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span> <span class="o">=</span> <span class="n">mc_tasks</span><span class="p">.</span><span class="n">PostureTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
 <span class="bp">self</span><span class="p">.</span><span class="n">qpsolver</span><span class="p">.</span><span class="n">addTask</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">doorPosture</span><span class="p">)</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -663,9 +663,9 @@
   <span class="k">return</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="o">::</span><span class="n">run</span><span class="p">();</span>
 <span class="p">}</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -695,9 +695,9 @@
     <span class="bp">self</span><span class="p">.</span><span class="n">switch_phase</span><span class="p">()</span>
     <span class="k">return</span> <span class="bp">True</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -744,9 +744,9 @@
 <span class="c1">// Set a target relative to the handle position</span>
 <span class="n">handTask</span><span class="o">-&gt;</span><span class="n">target</span><span class="p">(</span><span class="n">sva</span><span class="o">::</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.025</span><span class="p">))</span> <span class="o">*</span> <span class="nf">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"Handle"</span><span class="p">));</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -764,9 +764,9 @@
 <span class="c1"># Set a target relative to the handle position
 </span><span class="bp">self</span><span class="p">.</span><span class="n">handTask</span><span class="p">.</span><span class="n">target</span><span class="p">(</span><span class="n">sva</span><span class="p">.</span><span class="n">PTransformd</span><span class="p">(</span><span class="n">eigen</span><span class="p">.</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.025</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">robots</span><span class="p">().</span><span class="n">robot</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">surfacePose</span><span class="p">(</span><span class="s">"Handle"</span><span class="p">))</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -827,9 +827,9 @@
   <span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -856,9 +856,9 @@
   <span class="c1"># Switch phase
 </span>  <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">HANDLE</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -902,9 +902,9 @@
   <span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -921,9 +921,9 @@
   <span class="c1"># Switch phase
 </span>  <span class="bp">self</span><span class="p">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">OPEN</span></code></pre></figure>
 
+  
   </div>
 </div>
-
 
     </div>
   
@@ -976,5 +976,12 @@
       </footer>
     </div>
   </body>
+
+  <script type="text/javascript">
+  $(document).ready(function()
+  {
+    new ClipboardJS('.copy-button');
+  });
+  </script>
 
 </html>
