@@ -1,6 +1,53 @@
 # Changelog
 
-## [Unreleased]
+## [1.8.0] - 2021-08-10
+
+### New distribution channels
+
+- Homebrew
+  - mc_rtc is now available via Homebrew using the [mc-rtc/mc-rtc tap](https://github.com/mc-rtc/homebrew-mc-rtc/)
+- vcpkg
+  - mc_rtc is now available via vcpkg using the [mc-rtc/vcpkg-registry registry](https://github.com/mc-rtc/vcpkg-registry/), see also [How to start using registries with vcpkg](https://devblogs.microsoft.com/cppblog/how-to-start-using-registries-with-vcpkg/)
+
+### Changes
+
+- [GUI] Improve handling of default values in form (#164 #178)
+- [mc_control] Change collision management for FSM controllers
+  - Work-around Tasks issue when adding a collision where the first robot is non-actuated and the second is
+  - Use the same manager for r1/r2 and r2/r1 collisions
+  - Throw an exception if a wildcard collision does not create actual collisions
+- [mc_solver] Always call `robot.forwardAcceleration()`
+- [mc_tasks] The `MetaTask::name(const std::string &)` method is now virtual, this allows to rename sub-tasks as needed
+- [plugins] Give finer control over plugin run behavior (#168)
+- [utils] Use ninja to build projects when possible (only affects new builds)
+
+### Added
+
+- [global] Add `MC_RTC_DEVELOPER_MODE` option
+- [GUI] Add the `Visual` element (#159)
+- [Logging] Add support for `Eigen::Ref`
+- [mc_rbdyn] Allow a `RobotModule` to specify extra collision objects from sch primitives (#163)
+- [mc_robots] objects now have a dummy `FloatingBase` sensor
+- [mc_solver] Add support for jerk bounds (#173)
+- [mc_tasks] Add holding strategy for `mc_tasks::ImpedanceTask` (#143)
+- [mc_tasks] PostureTask now supports `refVel` and `refAccel` (#165)
+- [mc_tasks] PostureTask now supports `dimWeight` (#174)
+
+### Fixes
+
+- [Logger] Emit a warning if the logger queue is outrun in threaded mode; under normal circumstances this would indicate a hardware issue
+- [mc_control] Correctly stop GUI sockets
+- [mc_observers] Fix orientation transform issue between IMU and base link
+- [mc_rbdyn] Avoid re-loading calibrator in `Robot::robotCopy`
+- [mc_rbdyn] Save/Load material from JSON for visual elements
+- [mc_rtc] Improve YAML -> JSON conversion
+- [mc_tasks] Renaming the stabilizer task correctly renames its managed tasks (#171)
+- [mc_tasks] Fix stabilizer disabling (#155)
+- [ROS] Prevent crash on restart
+- [utils] Fix string display in `mc_log_ui` (#180)
+- [utils] Fix branch selection
+
+
 
 ## [1.7.0] - 2021-03-30
 
@@ -268,7 +315,8 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.8.0...HEAD
+[1.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.0
 [1.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.7.0
 [1.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.6.0
 [1.5.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.5.1
