@@ -24,7 +24,7 @@ add_observer(KinematicInertialPoseObserver)
 add_observer(KinematicInertialObserver)
 if(NOT MC_RTC_BUILD_STATIC)
   target_link_libraries(KinematicInertialObserver PUBLIC KinematicInertialPoseObserver)
-  set_target_properties(KinematicInertialObserver PROPERTIES INSTALL_RPATH ${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX})
+  set_target_properties(KinematicInertialObserver PROPERTIES INSTALL_RPATH ${MC_OBSERVERS_RUNTIME_DESTINATION_PREFIX})
 endif()
 
 if(NOT MC_RTC_BUILD_STATIC)

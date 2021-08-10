@@ -2,6 +2,7 @@ add_subdirectory(src)
 
 mc_rtc_set_prefix(FSM_STATES mc_controller/fsm/states)
 set(MC_FSM_STATES_DATA_INSTALL_PREFIX "${MC_FSM_STATES_RUNTIME_INSTALL_PREFIX}/data")
+set(MC_FSM_STATES_DATA_DESTINATION_PREFIX "${MC_FSM_STATES_RUNTIME_DESTINATION_PREFIX}/data")
 configure_file(etc/FSM.in.conf ${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf)
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/etc/FSM.conf

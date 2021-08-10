@@ -11,12 +11,12 @@ StepByStep: false
 IdleKeepState: true
 # Where to look for state libraries
 StatesLibraries:
-- "@MC_STATES_RUNTIME_INSTALL_PREFIX@"
-- "@MC_ExternalForces_STATES_RUNTIME_INSTALL_PREFIX@"
+- "@MC_STATES_RUNTIME_DESTINATION_PREFIX@"
+- "@MC_ExternalForces_STATES_RUNTIME_DESTINATION_PREFIX@"
 # Where to look for state files
 StatesFiles:
-- "@MC_STATES_RUNTIME_INSTALL_PREFIX@/data"
-- "@MC_ExternalForces_STATES_RUNTIME_INSTALL_PREFIX@/data"
+- "@MC_STATES_RUNTIME_DESTINATION_PREFIX@/data"
+- "@MC_ExternalForces_STATES_RUNTIME_DESTINATION_PREFIX@/data"
 
 # Additional robots to load
 robots:

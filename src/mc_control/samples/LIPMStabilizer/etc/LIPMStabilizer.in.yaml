@@ -13,10 +13,10 @@ StepByStep: false
 IdleKeepState: true
 # Where to look for state libraries
 StatesLibraries:
-- "@LIPMStabilizer_STATES_INSTALL_PREFIX@"
+- "@LIPMStabilizer_STATES_DESTINATION_PREFIX@"
 # Where to look for state files
 StatesFiles:
-- "@LIPMStabilizer_STATES_DATA_INSTALL_PREFIX@"
+- "@LIPMStabilizer_STATES_DATA_DESTINATION_PREFIX@"
 # If true, state factory will be more verbose
 VerboseStateFactory: false
 
