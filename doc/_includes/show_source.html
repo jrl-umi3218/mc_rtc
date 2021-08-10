@@ -19,10 +19,12 @@
   {% endif %}
 {% highlight text %}{{ source }}{% endhighlight %}
 {% endif %}
+  {% if include.copy %}
+    {% capture id %}{{ include.id }}{{ include.lang }}CopySource{% endcapture %}
+    <div class="text-right">
+      <pre id="{{id}}" class="offscreen" aria-hidden=true>{{ source }}</pre>
+      <button class="btn btn-primary copy-button" data-clipboard-target="#{{id}}">{% octicon copy %}</button>
+    </div>
+  {% endif %}
   </div>
 </div>
-{% if include.copy %}
-  {% capture id %}{{ include.id }}{{ include.lang }}CopySource{% endcapture %}
-  <pre id="{{id}}" class="offscreen" aria-hidden=true>{{ source }}</pre>
-  <button class="btn btn-primary copy-button" data-clipboard-target="#{{id}}">Copy to clipboard</button>
-{% endif %}

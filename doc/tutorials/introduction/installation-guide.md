@@ -9,7 +9,7 @@ install_apt:
       # Install packages
       sudo apt install libmc-rtc-dev mc-rtc-utils
       # Assuming you have a ROS distribution mirror setup
-      sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin
+      sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
   - name: Install head version
     lang: bash
     source: |
@@ -18,7 +18,7 @@ install_apt:
       # Install packages
       sudo apt install libmc-rtc-dev mc-rtc-utils
       # Assuming you have a ROS distribution mirror setup
-      sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin
+      sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
 toc: true
 ---
 
@@ -30,13 +30,71 @@ mc\_rtc is an interface for simulation and robot control systems. These systems 
 
 ## Installation instruction
 
-We provide binary installation for current Ubuntu LTS releases. We also provide a source release using an easy-to-use script for Ubuntu, macOS and Windows.
+We provide binaries for the current Ubuntu LTS releases and macOS via [Homebrew](https://brew.sh/). We also provide a source release using an easy-to-use script for Ubuntu, macOS and Windows and a [vcpkg](https://vcpkg.io/en/index.html) registry.
+
+Binaries are recommended for Ubuntu users and macOS users. vcpkg is recommended for Windows users.
 
 ### Ubuntu LTS (16.04, 18.04, 20.04)
 
-{% include show_sources.html sources=page.install_apt copy=false id="install_apt" %}
+{% include show_sources.html sources=page.install_apt copy=false id="install_apt" copy=true %}
 
 *Note: the distributed version of mc\_rtc runs with the QLD QP solver through [eigen-qld](https://github.com/jrl-umi3218/eigen-qld). If you have access to the LSSOL solver and thus can install [eigen-lssol](https://gite.lirmm.fr/multi-contact/eigen-lssol) then you can build [Tasks](https://github.com/jrl-umi3218/Tasks) with LSSOL support and install it in `/usr`. The two versions are binary compatible.*
+
+### Homebrew (macOS)
+
+Follow the official instructions to install [Homebrew](https://brew.sh/). Then:
+
+{% capture source %}
+brew tap mc-rtc/mc-rtc
+brew install mc_rtc
+{% endcapture %}
+
+{% include show_source.html id="brew" lang="bash" source=source copy=true %}
+
+### vcpkg
+
+Follow [vcpkg](https://vcpkg.io/) instruction to install vcpkg on your system.
+
+You can then setup our registry by creating a `vcpkg-configuration.json` file either alongside the `vcpkg` binary or alongside your `vcpkg.json` manifest:
+
+{% capture source %}
+{
+  "registries": [
+    {
+      "kind": "git",
+      "baseline": "{see below}",
+      "repository": "https://github.com/mc-rtc/vcpkg-registry",
+      "packages": [ "spacevecalg", "rbdyn", "eigen-qld", "sch-core", "tasks",
+                    "mc-rbdyn-urdf", "mc-rtc-data", "eigen-quadprog", "state-observation",
+                    "hpp-spline", "mc-rtc" ]
+    }
+  ]
+}
+{% endcapture %}
+
+{% include show_source.html id="vcpkg-configuration" lang="json" source=source copy=true %}
+
+Where `baseline` should be the latest commit sha1 on [mc-rtc/vcpkg-registry](https://github.com/mc-rtc/vcpkg-registry/)
+
+You can then either:
+
+- install mc_rtc via the `vcpkg` command: `vcpkg install mc_rtc`
+- use the mc_rtc package in your manifest (`vcpkg.json` file), such as the following example:
+
+{% capture source %}
+{
+  "name": "my-package",
+  "version-string": "1.0.0",
+  "homepage": "https://my.home",
+  "description": "My package description",
+  "dependencies": [
+    "mc-rtc"
+  ]
+}
+{% endcapture %}
+
+{% include show_source.html id="vcpkg-json" lang="json" source=source copy=true %}
+
 
 ### Building from source (script)
 

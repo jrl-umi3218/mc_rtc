@@ -10,7 +10,6 @@ mkdir -p $doc_dir/assets/css
 mkdir -p $doc_dir/assets/js
 cd $doc_dir/assets/css
 wget -O bootstrap.min.css $BOOTSTRAP_CSS
-wget -O octicons.css https://cdnjs.cloudflare.com/ajax/libs/octicons/8.0.0/build.css
 cd $doc_dir/assets/js
 wget -O jquery.min.js    $JQUERY
 wget -O popper.min.js    $POPPER
