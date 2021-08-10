@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+## [1.8.1] - 2021-08-10
+
+### Fixes
+
+- Fix a unit test that prevent successfull packaging
+
 ## [1.8.0] - 2021-08-10
 
 ### New distribution channels
@@ -315,7 +323,8 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.8.0...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.8.1...HEAD
+[1.8.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.1
 [1.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.0
 [1.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.7.0
 [1.6.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.6.0
