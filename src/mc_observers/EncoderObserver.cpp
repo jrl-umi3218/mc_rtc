@@ -94,6 +94,12 @@ bool EncoderObserver::run(const mc_control::MCController & ctl)
   if(velUpdate_ == VelUpdate::EncoderFiniteDifferences)
   {
     const auto & enc = robot.encoderValues();
+    // In case the encoders' size grew
+    for(size_t i = encodersVelocity_.size(); i < enc.size(); ++i)
+    {
+      encodersVelocity_.push_back(0);
+      prevEncoders_.push_back(enc[i]);
+    }
     for(unsigned i = 0; i < enc.size(); ++i)
     {
       encodersVelocity_[i] = (enc[i] - prevEncoders_[i]) / ctl.timeStep;
@@ -155,10 +161,12 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
       logger.addLogEntry(category + "_controlValues", this,
                          [this, &ctl, qOut]() mutable -> const std::vector<double> &
                          {
+                           qOut.resize(ctl.robot(robot_).refJointOrder().size());
                            for(size_t i = 0; i < qOut.size(); ++i)
                            {
                              auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
                              if(jIdx != -1) { qOut[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0]; }
+                             else { qOut[i] = 0.0; }
                            }
                            return qOut;
                          });
@@ -182,10 +190,12 @@ void EncoderObserver::addToLogger(const mc_control::MCController & ctl,
       logger.addLogEntry(category + "_controlVelocities", this,
                          [this, &ctl, alpha]() mutable -> const std::vector<double> &
                          {
+                           alpha.resize(ctl.robot(robot_).refJointOrder().size());
                            for(size_t i = 0; i < alpha.size(); ++i)
                            {
                              auto jIdx = ctl.robot(robot_).jointIndexInMBC(i);
                              if(jIdx != -1) { alpha[i] = ctl.robot(robot_).mbc().alpha[static_cast<size_t>(jIdx)][0]; }
+                             else { alpha[i] = 0.0; }
                            }
                            return alpha;
                          });
