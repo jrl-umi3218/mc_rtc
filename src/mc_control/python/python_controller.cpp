@@ -50,6 +50,32 @@ extern "C"
 #pragma GCC diagnostic pop
     PySys_SetArgvEx(0, {}, 0);
 
+    auto signal_mod = PyImport_ImportModule("signal");
+    PyErr_Print();
+    auto signal_signal = PyObject_GetAttrString(signal_mod, "signal");
+    PyErr_Print();
+    auto signal_getsignal = PyObject_GetAttrString(signal_mod, "getsignal");
+    PyErr_Print();
+    auto signal_default_int_handler = PyObject_GetAttrString(signal_mod, "default_int_handler");
+    PyErr_Print();
+    auto signal_SIGINT = PyObject_GetAttrString(signal_mod, "SIGINT");
+    PyErr_Print();
+    auto signal_SIG_DFL = PyObject_GetAttrString(signal_mod, "SIG_DFL");
+    PyErr_Print();
+    if(signal_signal && signal_SIGINT && signal_SIG_DFL && signal_getsignal && signal_default_int_handler)
+    {
+      auto handler = PyObject_CallFunctionObjArgs(signal_getsignal, signal_SIGINT, NULL);
+      if(handler == signal_default_int_handler)
+      {
+        PyObject_CallFunctionObjArgs(signal_signal, signal_SIGINT, signal_SIG_DFL, NULL);
+      }
+    }
+    else
+    {
+      mc_rtc::log::error("Failed to get signal.signal, signal.getsignal, signal.default_int_handler, signal.SIGINT "
+                         "and/or signal.SIG_DFL");
+    }
+
     auto mc_rbdyn_mod = PyImport_ImportModule("mc_rbdyn");
     PyErr_Print();
 
