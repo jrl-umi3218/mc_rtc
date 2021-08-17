@@ -92,9 +92,10 @@ def read_csv(fpath, tmp = False):
 
 def read_log(fpath, tmp = False):
   if fpath.endswith('.bin'):
-    tmpf = tempfile.mkstemp(suffix = '.flat')[1]
-    os.system("mc_bin_to_flat {} {}".format(fpath, tmpf))
-    return read_log(tmpf, True)
+    tmpf = tempfile.mkstemp(suffix = '.flat')
+    os.close(tmpf[0])
+    os.system("mc_bin_to_flat {} {}".format(fpath, tmpf[1]))
+    return read_log(tmpf[1], True)
   elif fpath.endswith('.flat'):
     return read_flat(fpath, tmp)
   else:
