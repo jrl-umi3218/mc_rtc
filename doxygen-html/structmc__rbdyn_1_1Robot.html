@@ -457,10 +457,8 @@ Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a51de36111dee056232ab11ac45067d62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a51de36111dee056232ab11ac45067d62">Robot</a> (const std::string &amp;<a class="el" href="structmc__rbdyn_1_1Robot.html#a9f0c4c44861063b684d43d4ad78a995e">name</a>, <a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &amp;robots, unsigned int robots_idx, bool loadFiles, const sva::PTransformd *base=nullptr, const std::string &amp;baseName=&quot;&quot;)</td></tr>
 <tr class="separator:a51de36111dee056232ab11ac45067d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd1c0713e88cb71a2a9971868cc4fc8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#acd1c0713e88cb71a2a9971868cc4fc8d">copy</a> (<a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &amp;robots, const std::string &amp;copyName, unsigned int robots_idx, const <a class="el" href="structmc__rbdyn_1_1Base.html">Base</a> &amp;base) const</td></tr>
-<tr class="separator:acd1c0713e88cb71a2a9971868cc4fc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac91ec5960fce1e8f2a2466af047bcebb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ac91ec5960fce1e8f2a2466af047bcebb">copy</a> (<a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &amp;robots, const std::string &amp;copyName, unsigned int robots_idx) const</td></tr>
-<tr class="separator:ac91ec5960fce1e8f2a2466af047bcebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2c28ca834c5d81e66f581425c2d7f16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#ae2c28ca834c5d81e66f581425c2d7f16">copyLoadedData</a> (<a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a> &amp;destination) const</td></tr>
+<tr class="separator:ae2c28ca834c5d81e66f581425c2d7f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a218dfb7dbc50f94466e30871869b967d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a218dfb7dbc50f94466e30871869b967d">fixSurfaces</a> ()</td></tr>
 <tr class="separator:a218dfb7dbc50f94466e30871869b967d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a005d9859a7272ac6dbcab9c31aef8092"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rbdyn_1_1Robot.html#a005d9859a7272ac6dbcab9c31aef8092">fixCollisionTransforms</a> ()</td></tr>
@@ -1791,8 +1789,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="acd1c0713e88cb71a2a9971868cc4fc8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd1c0713e88cb71a2a9971868cc4fc8d">&#9670;&nbsp;</a></span>copy() <span class="overload">[1/2]</span></h2>
+<a id="ae2c28ca834c5d81e66f581425c2d7f16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2c28ca834c5d81e66f581425c2d7f16">&#9670;&nbsp;</a></span>copyLoadedData()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1801,33 +1799,11 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_rbdyn::Robot::copy </td>
+          <td class="memname">void mc_rbdyn::Robot::copyLoadedData </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &amp;&#160;</td>
-          <td class="paramname"><em>robots</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>copyName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>robots_idx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="structmc__rbdyn_1_1Base.html">Base</a> &amp;&#160;</td>
-          <td class="paramname"><em>base</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
+          <td class="paramtype"><a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a> &amp;&#160;</td>
+          <td class="paramname"><em>destination</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -1836,62 +1812,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Copy existing <a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a> with a new base</p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if a robot named &lt;copyName&gt; already exists </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ac91ec5960fce1e8f2a2466af047bcebb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac91ec5960fce1e8f2a2466af047bcebb">&#9670;&nbsp;</a></span>copy() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void mc_rbdyn::Robot::copy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structmc__rbdyn_1_1Robots.html">Robots</a> &amp;&#160;</td>
-          <td class="paramname"><em>robots</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>copyName</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>robots_idx</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Copy existing <a class="el" href="structmc__rbdyn_1_1Robot.html">Robot</a></p>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>if a robot named &lt;copyName&gt; already exists </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Copy loaded data from this robot to a new robot </p>
 
 </div>
 </div>

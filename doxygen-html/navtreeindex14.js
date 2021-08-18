@@ -1,6 +1,5 @@
 var NAVTREEINDEX14 =
 {
-"structmc__solver_1_1details_1_1CompoundJointConstraint.html#a652516c75f732ca1396233a447a75060":[3,0,8,0,0,2],
 "structmc__solver_1_1details_1_1CompoundJointConstraint.html#a6c4e91e2613fdeb3f7fc8120b46560e9":[3,0,8,0,0,7],
 "structmc__solver_1_1details_1_1CompoundJointConstraint.html#aa6b6d7c5a42e5233d89290cd75460dad":[3,0,8,0,0,3],
 "structmc__solver_1_1details_1_1CompoundJointConstraint.html#aab8f87d466ef7d494d1781854d5753db":[3,0,8,0,0,4],
@@ -249,5 +248,6 @@ var NAVTREEINDEX14 =
 "structmc__tasks_1_1PositionTask.html#ac499556b7d530acd382b95bc949036cb":[3,0,9,17,1],
 "structmc__tasks_1_1PositionTask.html#af67679b5190933536dbc6f20adc44aac":[3,0,9,17,0],
 "structmc__tasks_1_1PostureTask.html":[3,0,9,18],
-"structmc__tasks_1_1PostureTask.html#a0c8b2d553a214e9c07c1f51a4eaa4962":[3,0,9,18,30]
+"structmc__tasks_1_1PostureTask.html#a0c8b2d553a214e9c07c1f51a4eaa4962":[3,0,9,18,30],
+"structmc__tasks_1_1PostureTask.html#a0d4d5b303516826dac52c0177ac8f505":[3,0,9,18,5]
 };

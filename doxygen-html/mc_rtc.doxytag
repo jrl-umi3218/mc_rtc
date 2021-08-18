@@ -25456,17 +25456,10 @@
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
-      <name>copy</name>
+      <name>copyLoadedData</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>acd1c0713e88cb71a2a9971868cc4fc8d</anchor>
-      <arglist>(Robots &amp;robots, const std::string &amp;copyName, unsigned int robots_idx, const Base &amp;base) const</arglist>
-    </member>
-    <member kind="function" protection="protected">
-      <type>void</type>
-      <name>copy</name>
-      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
-      <anchor>ac91ec5960fce1e8f2a2466af047bcebb</anchor>
-      <arglist>(Robots &amp;robots, const std::string &amp;copyName, unsigned int robots_idx) const</arglist>
+      <anchor>ae2c28ca834c5d81e66f581425c2d7f16</anchor>
+      <arglist>(Robot &amp;destination) const</arglist>
     </member>
     <member kind="function" protection="protected">
       <type>void</type>
