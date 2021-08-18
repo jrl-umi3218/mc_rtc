@@ -385,17 +385,16 @@ Robot::Robot(const std::string & name,
         collisionTransforms_[o.first] = sva::PTransformd::Identity();
       }
     }
+    for(const auto & b : mb().bodies())
+    {
+      collisionTransforms_[b.name()] = sva::PTransformd::Identity();
+    }
+    for(const auto & p : module_.collisionTransforms())
+    {
+      collisionTransforms_[p.first] = p.second;
+    }
+    fixCollisionTransforms();
   }
-
-  for(const auto & b : mb().bodies())
-  {
-    collisionTransforms_[b.name()] = sva::PTransformd::Identity();
-  }
-  for(const auto & p : module_.collisionTransforms())
-  {
-    collisionTransforms_[p.first] = p.second;
-  }
-  fixCollisionTransforms();
 
   if(loadFiles)
   {
@@ -1368,10 +1367,8 @@ const sva::MotionVecd Robot::accW() const
   return sva::PTransformd{rot} * mbc().bodyAccB[0];
 }
 
-void Robot::copy(Robots & robots, const std::string & copyName, unsigned int robots_idx, const Base & base) const
+void Robot::copyLoadedData(Robot & robot) const
 {
-  robots.robots_.emplace_back(Robot(copyName, robots, robots_idx, false, &base.X_0_s, base.baseName));
-  auto & robot = robots.robots_.back();
   for(const auto & s : surfaces_)
   {
     robot.surfaces_[s.first] = s.second->copy();
@@ -1381,20 +1378,12 @@ void Robot::copy(Robots & robots, const std::string & copyName, unsigned int rob
   {
     robot.convexes_[cH.first] = {cH.second.first, S_ObjectPtr(cH.second.second->clone())};
   }
+  robot.collisionTransforms_ = collisionTransforms_;
+  robot.fixCollisionTransforms();
   fixSCH(robot, robot.convexes_, robot.collisionTransforms_);
   for(size_t i = 0; i < forceSensors_.size(); ++i)
   {
     robot.forceSensors_[i].copyCalibrator(forceSensors_[i]);
-  }
-}
-
-void Robot::copy(Robots & robots, const std::string & copyName, unsigned int robots_idx) const
-{
-  robots.robots_.emplace_back(Robot(copyName, robots, robots_idx, false));
-  auto & robot = robots.robots_.back();
-  for(const auto & s : surfaces_)
-  {
-    robot.surfaces_[s.first] = s.second->copy();
   }
 }
 
