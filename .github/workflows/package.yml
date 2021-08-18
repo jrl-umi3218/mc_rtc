@@ -268,4 +268,5 @@ jobs:
       run: |
         curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token ${{ secrets.GH_PAGES_TOKEN }}" --request POST --data "{\"event_type\": \"${PACKAGE_JOB}\"}" https://api.github.com/repos/jrl-umi3218/mc_rtc_ros/dispatches
         curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token ${{ secrets.GH_PAGES_TOKEN }}" --request POST --data "{\"event_type\": \"${PACKAGE_JOB}\"}" https://api.github.com/repos/jrl-umi3218/mc_openrtm/dispatches
+        curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token ${{ secrets.GH_PAGES_TOKEN }}" --request POST --data "{\"event_type\": \"${PACKAGE_JOB}\"}" https://api.github.com/repos/jrl-umi3218/mc_udp/dispatches
       if: env.PACKAGE_UPLOAD == 'true'
