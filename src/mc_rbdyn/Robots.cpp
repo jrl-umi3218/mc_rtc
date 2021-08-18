@@ -54,7 +54,8 @@ Robots::Robots(const Robots & rhs)
   for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
   {
     const Robot & robot = rhs.robots_[i];
-    robot.copy(*this, robot.name(), i);
+    robots_.emplace_back(Robot(robot.name(), *this, i, false));
+    robot.copyLoadedData(robots_.back());
   }
 }
 
@@ -74,7 +75,8 @@ Robots & Robots::operator=(const Robots & rhs)
   for(unsigned int i = 0; i < rhs.robots_.size(); ++i)
   {
     const Robot & robot = rhs.robots_[i];
-    robot.copy(*this, robot.name(), i);
+    robots_.emplace_back(Robot(robot.name(), *this, i, false));
+    robot.copyLoadedData(robots_.back());
   }
   return *this;
 }
@@ -182,7 +184,24 @@ void Robots::createRobotWithBase(const std::string & name,
                                  const Base & base,
                                  const Eigen::Vector3d & baseAxis)
 {
-  createRobotWithBase(name, robots.robot(robots_idx), base, baseAxis);
+  {
+    const auto & robot = robots.robots_[robots_idx];
+    if(hasRobot(name))
+    {
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "Cannot copy robot {} with a new base as a robot named {} already exists", robot.name(), name);
+    }
+    this->robot_modules_.push_back(robot.module());
+    this->mbs_.push_back(robot.mbg().makeMultiBody(base.baseName, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
+    this->mbcs_.emplace_back(this->mbs_.back());
+    this->mbgs_.push_back(robot.mbg());
+  }
+  auto robotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
+  robots_.emplace_back(Robot(name, *this, robotIndex, false));
+  // emplace_back might have invalidated the reference we formed before
+  const auto & robot = robots.robots_[robots_idx];
+  robot.copyLoadedData(robots_.back());
+  robotNameToIndex_[name] = robotIndex;
 }
 
 void Robots::createRobotWithBase(const std::string & name,
@@ -190,18 +209,7 @@ void Robots::createRobotWithBase(const std::string & name,
                                  const Base & base,
                                  const Eigen::Vector3d & baseAxis)
 {
-  if(hasRobot(name))
-  {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "Cannot copy robot {} with a new base as a robot named {} already exists", robot.name(), name);
-  }
-  this->robot_modules_.push_back(robot.module());
-  this->mbs_.push_back(robot.mbg().makeMultiBody(base.baseName, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
-  this->mbcs_.emplace_back(this->mbs_.back());
-  this->mbgs_.push_back(robot.mbg());
-  auto robotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
-  robot.copy(*this, name, robotIndex, base);
-  robotNameToIndex_[name] = robotIndex;
+  createRobotWithBase(name, *robot.robots_, robot.robots_idx_, base, baseAxis);
 }
 
 void Robots::removeRobot(const std::string & name)
@@ -246,8 +254,13 @@ void Robots::robotCopy(const Robot & robot, const std::string & copyName)
   this->mbs_.push_back(robot.mb());
   this->mbcs_.push_back(robot.mbc());
   this->mbgs_.push_back(robot.mbg());
+  auto referenceRobots = robot.robots_;
+  auto referenceIndex = robot.robots_idx_;
   auto copyRobotIndex = static_cast<unsigned int>(this->mbs_.size()) - 1;
-  robot.copy(*this, copyName, copyRobotIndex);
+  robots_.emplace_back(Robot(copyName, *this, copyRobotIndex, false));
+  // emplace_back might have invalidated the reference we were given
+  const auto & refRobot = referenceRobots->robots_[referenceIndex];
+  refRobot.copyLoadedData(robots_.back());
   robotNameToIndex_[copyName] = copyRobotIndex;
 }
 

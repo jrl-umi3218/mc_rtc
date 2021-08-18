@@ -949,16 +949,8 @@ protected:
         const sva::PTransformd * base = nullptr,
         const std::string & baseName = "");
 
-  /** Copy existing Robot with a new base
-   *
-   * \throws std::runtime_error if a robot named <copyName> already exists
-   **/
-  void copy(Robots & robots, const std::string & copyName, unsigned int robots_idx, const Base & base) const;
-  /** Copy existing Robot
-   *
-   * \throws std::runtime_error if a robot named <copyName> already exists
-   **/
-  void copy(Robots & robots, const std::string & copyName, unsigned int robots_idx) const;
+  /** Copy loaded data from this robot to a new robot **/
+  void copyLoadedData(Robot & destination) const;
 
   /** Used to set the surfaces' X_b_s correctly */
   void fixSurfaces();
