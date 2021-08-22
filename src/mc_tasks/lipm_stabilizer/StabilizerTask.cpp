@@ -344,9 +344,11 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
   // // Configure upper-body tasks
   pelvisTask->stiffness(c_.pelvisStiffness);
   pelvisTask->weight(c_.pelvisWeight);
+  pelvisTask->dimWeight(c_.pelvisDimWeight);
 
   torsoTask->stiffness(c_.torsoStiffness);
   torsoTask->weight(c_.torsoWeight);
+  torsoTask->dimWeight(c_.torsoDimWeight);
   torsoTask->orientation(mc_rbdyn::rpyToMat({0, c_.torsoPitch, 0}));
 
   zmpcc_.configure(c_.zmpcc);
@@ -357,6 +359,7 @@ void StabilizerTask::configure_(mc_solver::QPSolver & solver)
   }
   comTask->setGains(c_.comStiffness, 2 * c_.comStiffness.cwiseSqrt());
   comTask->weight(c_.comWeight);
+  comTask->dimWeight(c_.comDimWeight);
 
   for(const auto & footTask : footTasks)
   {

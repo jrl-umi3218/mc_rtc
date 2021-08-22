@@ -381,14 +381,17 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
   std::vector<std::string> comActiveJoints; /**< Joints used by CoM IK task */
   Eigen::Vector3d comStiffness = {1000., 1000., 100.}; /**< Stiffness of CoM IK task */
   double comWeight = 1000.; /**< Weight of CoM IK task */
+  Eigen::Vector3d comDimWeight = Eigen::Vector3d::Ones(); /**< Dimensional weight of CoM IK task */
   double comHeight = 0.84; /**< Desired height of the CoM */
 
   std::string torsoBodyName; /**< Name of the torso body */
   double torsoPitch = 0; /**< Target world pitch angle for the torso */
   double torsoStiffness = 10; /**< Stiffness of the torso task. */
   double torsoWeight = 100; /**< Weight of the torso task. Should be much lower than CoM and Contacts */
+  Eigen::Vector3d torsoDimWeight = Eigen::Vector3d::Ones(); /**< Dimensional weight of the torso task */
   double pelvisStiffness = 10; /**< Stiffness of the pelvis task. */
-  double pelvisWeight = 100; /**< Weight of the torso task. Should be much lower than CoM and Contacts */
+  double pelvisWeight = 100; /**< Weight of the pelvis task. Should be much lower than CoM and Contacts */
+  Eigen::Vector3d pelvisDimWeight = Eigen::Vector3d::Ones(); /**< Dimensional weight of the pelvis task */
 
   sva::MotionVecd contactDamping{{300, 300, 300},
                                  {300, 300, 300}}; /**< Damping coefficients of the contacts CoP tasks */
@@ -486,6 +489,7 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
         tasks("com")("active_joints", comActiveJoints);
         tasks("com")("stiffness", comStiffness);
         tasks("com")("weight", comWeight);
+        tasks("com")("dimWeight", comDimWeight);
         tasks("com")("height", comHeight);
       }
 
@@ -495,12 +499,14 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
         tasks("torso")("pitch", torsoPitch);
         tasks("torso")("stiffness", torsoStiffness);
         tasks("torso")("weight", torsoWeight);
+        tasks("torso")("dimWeight", torsoDimWeight);
       }
 
       if(tasks.has("pelvis"))
       {
         tasks("pelvis")("stiffness", pelvisStiffness);
         tasks("pelvis")("weight", pelvisWeight);
+        tasks("pelvis")("dimWeight", pelvisDimWeight);
       }
 
       if(tasks.has("contact"))
@@ -589,16 +595,19 @@ struct MC_RBDYN_DLLAPI StabilizerConfiguration
     conf("tasks")("com").add("active_joints", comActiveJoints);
     conf("tasks")("com").add("stiffness", comStiffness);
     conf("tasks")("com").add("weight", comWeight);
+    conf("tasks")("com").add("dimWeight", comDimWeight);
     conf("tasks")("com").add("height", comHeight);
 
     conf("tasks").add("torso");
     conf("tasks")("torso").add("pitch", torsoPitch);
     conf("tasks")("torso").add("stiffness", torsoStiffness);
     conf("tasks")("torso").add("weight", torsoWeight);
+    conf("tasks")("torso").add("dimWeight", torsoDimWeight);
 
     conf("tasks").add("pelvis");
     conf("tasks")("pelvis").add("stiffness", pelvisStiffness);
     conf("tasks")("pelvis").add("weight", pelvisWeight);
+    conf("tasks")("pelvis").add("dimWeight", pelvisDimWeight);
 
     conf("tasks").add("contact");
     conf("tasks")("contact").add("damping", contactDamping);
