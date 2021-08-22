@@ -6,6 +6,7 @@ var searchData=
   ['parent_5f',['parent_',['../structmc__rbdyn_1_1Device.html#aa24ec57cfee577ff0e85317ff4588c98',1,'mc_rbdyn::Device']]],
   ['path',['path',['../structmc__rbdyn_1_1RobotModule.html#a5de4bf236d1fa2f107fc27971009e979',1,'mc_rbdyn::RobotModule']]],
   ['paused_5f',['paused_',['../structmc__tasks_1_1SplineTrajectoryTask.html#af5a5ee124caa955429dbe83416c8b8d3',1,'mc_tasks::SplineTrajectoryTask']]],
+  ['pelvisdimweight',['pelvisDimWeight',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a3ef6a17956449ffdcfa8b02ea02b0cdc',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['pelvisstiffness',['pelvisStiffness',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a42b1aa4d6be73c7a9986292e8ca1e3e2',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['pelvistask',['pelvisTask',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a6476ed836d208897809eb8eb5e404689',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['pelvisweight',['pelvisWeight',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a8bc2c7d4a6964408929e7b23ff63667c',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],

@@ -77,6 +77,7 @@ var searchData=
   ['comddd_5f',['comddd_',['../structmc__planning_1_1Pendulum.html#ae21f70bd3ef4380e2ca61c176fa03d25',1,'mc_planning::Pendulum']]],
   ['comddtarget_5f',['comddTarget_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a1a9150a5ae2456a5943fef824a02febf',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['comderrorgain',['comdErrorGain',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#af22ce2c152009124ffa98a0e08fa898d',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
+  ['comdimweight',['comDimWeight',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a4bbb1e6748355a7ce51e2aa5328109e6',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['comdtarget_5f',['comdTarget_',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aa3aac681a66c5968dde54b17f47d27fd',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],
   ['comheight',['comHeight',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abd54fe3cf92a100a19f0a5bf408272d6',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['comheight_5f',['comHeight_',['../structmc__control_1_1fsm_1_1StabilizerStandingState.html#aef9d57338a8967af8f645abde17fe235',1,'mc_control::fsm::StabilizerStandingState']]],

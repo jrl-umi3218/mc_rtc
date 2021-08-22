@@ -24,6 +24,7 @@ var searchData=
   ['timestep_5f',['timestep_',['../structmc__tasks_1_1force_1_1AdmittanceTask.html#ae1d5d0caedd77b293454ad6209ff6617',1,'mc_tasks::force::AdmittanceTask']]],
   ['torque',['torque',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00563.html#adb675d8cc5e101e20a299ef868b02550',1,'mc_rbdyn_urdf::Limits']]],
   ['torsobodyname',['torsoBodyName',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#abaf5f231ddd92e45c3947448560a43ec',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
+  ['torsodimweight',['torsoDimWeight',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a0ea1c0769143dbeaa622e66c2340c730',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['torsopitch',['torsoPitch',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a4342762c90bd3857760f991d3424cf47',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['torsostiffness',['torsoStiffness',['../structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html#a4c91236b2c0d11ebfe65ab78668a873a',1,'mc_rbdyn::lipm_stabilizer::StabilizerConfiguration']]],
   ['torsotask',['torsoTask',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#a207abdb63fcc13968352a6c7fffd47fb',1,'mc_tasks::lipm_stabilizer::StabilizerTask']]],

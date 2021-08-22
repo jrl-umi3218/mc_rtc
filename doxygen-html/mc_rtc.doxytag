@@ -30778,6 +30778,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
+      <type>Eigen::Vector3d</type>
+      <name>comDimWeight</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>a4bbb1e6748355a7ce51e2aa5328109e6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
       <type>double</type>
       <name>comHeight</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
@@ -30813,6 +30820,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
+      <type>Eigen::Vector3d</type>
+      <name>torsoDimWeight</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>a0ea1c0769143dbeaa622e66c2340c730</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
       <type>double</type>
       <name>pelvisStiffness</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
@@ -30824,6 +30838,13 @@
       <name>pelvisWeight</name>
       <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
       <anchor>a8bc2c7d4a6964408929e7b23ff63667c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>Eigen::Vector3d</type>
+      <name>pelvisDimWeight</name>
+      <anchorfile>structmc__rbdyn_1_1lipm__stabilizer_1_1StabilizerConfiguration.html</anchorfile>
+      <anchor>a3ef6a17956449ffdcfa8b02ea02b0cdc</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
