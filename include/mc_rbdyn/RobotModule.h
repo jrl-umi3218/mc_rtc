@@ -315,6 +315,9 @@ struct MC_RBDYN_DLLAPI RobotModule
     /** Joint acceleration limits for the connection joint, can remain empty regardless of the joint type but throws if
      * the provided limits are not compatible with the connection joint otherwise */
     std::array<std::vector<double>, 2> jointAccelerationLimits = {};
+    /** Joint jerk limits for the connection joint, can remain empty regardless of the joint type but throws if
+     * the provided limits are not compatible with the connection joint otherwise */
+    std::array<std::vector<double>, 2> jointJerkLimits = {};
     /** Joint torque derivative limits for the connection joint, can remain empty regardless of the joint type but
      * throws if the provided limits are not compatible with the connection joint otherwise */
     std::array<std::vector<double>, 2> jointTorqueDerivativeLimits = {};
