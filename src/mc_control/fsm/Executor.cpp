@@ -196,7 +196,6 @@ void Executor::next(Controller & ctl)
   }
   ready_ = false;
   transition_triggered_ = false;
-  mc_rtc::log::success("Starting state {}", next_state_);
   if(state_)
   {
     auto state_teardown_start = clock::now();
@@ -204,6 +203,7 @@ void Executor::next(Controller & ctl)
     ctl.resetPostures();
     state_teardown_dt_ = clock::now() - state_teardown_start;
   }
+  mc_rtc::log::success("Starting state {}", next_state_);
   if(config_.has("configs") && config_("configs").has(next_state_))
   {
     auto state_create_start = clock::now();
