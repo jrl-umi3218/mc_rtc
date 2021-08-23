@@ -351,7 +351,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
     out._stance[jointName(jName)] = jConfig;
   }
 
-  /** Update convex/stpbv hulls */
+  /** Update convex/stpbv hulls/sch objects */
   auto updateHulls = [&](const std::map<std::string, std::pair<std::string, std::string>> & hullsIn,
                          std::map<std::string, std::pair<std::string, std::string>> & hullsOut) {
     for(const auto & h : hullsIn)
@@ -372,6 +372,19 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
   };
   updateHulls(other._convexHull, out._convexHull);
   updateHulls(other._stpbvHull, out._stpbvHull);
+  for(const auto & co : other._collisionObjects)
+  {
+    const auto & co_name = co.first;
+    const auto & new_name = convexName(co_name);
+    if(_collisionObjects.count(new_name))
+    {
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "Collision objects name collision during connection, would add {} but it already exists in the original "
+          "module, provide or change the convex mapping",
+          new_name);
+    }
+    out._collisionObjects[new_name] = {co.second.first, S_ObjectPtr(co.second.second->clone())};
+  }
 
   /** Update collision transforms */
   for(const auto & ct : other._collisionTransforms)
