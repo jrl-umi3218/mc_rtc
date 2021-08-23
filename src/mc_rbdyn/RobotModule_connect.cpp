@@ -268,6 +268,25 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
     }
     out._torqueDerivativeBounds[i][connectJointName] = params.jointTorqueDerivativeLimits[i];
   }
+  for(size_t i = 0; i < 2; ++i)
+  {
+    const auto & limit = params.jointJerkLimits[i];
+    if(limit.size() != 0 && limit.size() != static_cast<size_t>(connectJoint.dof()))
+    {
+      mc_rtc::log::error_and_throw<std::runtime_error>(
+          "You provided invalid joint jerk limits for the connection joint, expected {} but got {}", connectJoint.dof(),
+          limit.size());
+    }
+    if(params.jointJerkLimits[i].size() == 0)
+    {
+      continue;
+    }
+    if(out._jerkBounds.size() < 2)
+    {
+      out._jerkBounds.resize(2);
+    }
+    out._jerkBounds[i][connectJointName] = params.jointJerkLimits[i];
+  }
 
   /** Check the stance configuration for the connection joint */
   if(params.jointStance.size() != static_cast<size_t>(connectJoint.params()))
@@ -309,6 +328,14 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
         out._torqueDerivativeBounds.resize(2);
       }
       updateBounds(2, other._torqueDerivativeBounds, out._torqueDerivativeBounds);
+    }
+    if(other._jerkBounds.size())
+    {
+      if(!out._jerkBounds.size())
+      {
+        out._jerkBounds.resize(2);
+      }
+      updateBounds(2, other._jerkBounds, out._jerkBounds);
     }
   }
 
