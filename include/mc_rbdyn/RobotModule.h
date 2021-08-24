@@ -397,6 +397,35 @@ struct MC_RBDYN_DLLAPI RobotModule
                       const std::string & prefix,
                       const ConnectionParameters & params) const;
 
+  /** Create a new RobotModule by disconnecting the provided RobotModule from this one
+   *
+   * \param other The module that will be disconnected from this instance
+   *
+   * \param this_body Which body in this RobotModule was used to connect the two instances
+   *
+   * \param other_body Which body in the other RobotModule was used to connect the two instances
+   *
+   * \param prefix Prefix applied to every named entities in \p other before they were added to this module
+   *
+   * \param params Parameters that controlled how \p other was connected to this module, \see ConnectionParameters for
+   * details
+   *
+   * \note If you used connect(other, this_body, other_body, prefix, params) to create this module then using
+   * disconnect(other, this_body, other_body, prefix, params) will reverse the operation except:
+   * - if \p params.name is empty then `prefix`_`other.name` is removed from the name if present, otherwise \p
+   * params.name is used as the output name
+   * - \p params.useGripperSafetyFromThis cannot be reversed if it was false
+   * - \p params.useLIPMStabilizerConfigFromThis cannot be reversed if it was false
+   *
+   * \note You are responsible for handling force sensor calibration files, by default this function creates an empty
+   * calibration directory that you can populate with appropriate files
+   */
+  RobotModule disconnect(const mc_rbdyn::RobotModule & other,
+                         const std::string & this_body,
+                         const std::string & other_body,
+                         const std::string & prefix,
+                         const ConnectionParameters & params) const;
+
   /** Initialize the module from a parser result
    *
    * - Initialize mb, mbc and mbg
