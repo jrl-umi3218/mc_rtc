@@ -347,7 +347,7 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
     }
   };
   updateVisualMap(other._visual, out._visual);
-  updateVisualMap(other._collision, out._visual);
+  updateVisualMap(other._collision, out._collision);
 
   /** Save the URDF */
   {
@@ -589,6 +589,375 @@ RobotModule RobotModule::connect(const mc_rbdyn::RobotModule & other,
     yaml.save(module_yaml);
     out._parameters = {"json", module_yaml};
     mc_rtc::log::info("Connection done, result module in: {}", module_yaml);
+  }
+
+  return out;
+}
+
+RobotModule RobotModule::disconnect(const mc_rbdyn::RobotModule & other,
+                                    const std::string & this_body,
+                                    const std::string & other_body,
+                                    const std::string & prefix,
+                                    const ConnectionParameters & params) const
+{
+  mc_rtc::log::info("Disconnecting {} from {} RobotModule", other.name, name);
+
+  // A few helpers to handle name remapping
+  auto bodyName = [&](const std::string & body) { return prefixed_or_mapping(body, params.bodyMapping, prefix); };
+  auto jointName = [&](const std::string & joint) { return prefixed_or_mapping(joint, params.jointMapping, prefix); };
+  auto convexName = [&](const std::string & convex) {
+    return prefixed_or_mapping(convex, params.convexMapping, prefix);
+  };
+  auto gripperName = [&](const std::string & gripper) {
+    return prefixed_or_mapping(gripper, params.gripperMapping, prefix);
+  };
+  auto forceSensorName = [&](const std::string & forceSensor) {
+    return prefixed_or_mapping(forceSensor, params.forceSensorMapping, prefix);
+  };
+  auto bodySensorName = [&](const std::string & bodySensor) {
+    return prefixed_or_mapping(bodySensor, params.bodySensorMapping, prefix);
+  };
+  auto deviceName = [&](const std::string & device) {
+    return prefixed_or_mapping(device, params.deviceMapping, prefix);
+  };
+  std::string connection_joint = "";
+  {
+    const auto & bIndexByName = mb.bodyIndexByName();
+    auto this_it = bIndexByName.find(this_body);
+    auto other_it = bIndexByName.find(bodyName(other_body));
+    if(this_it == bIndexByName.end() || other_it == bIndexByName.end())
+    {
+      mc_rtc::log::error("Failed to disconnect {} from {} RobotModule, {} or {} is not in the module", other.name, name,
+                         this_body, bodyName(other_body));
+      return *this;
+    }
+    int this_body_idx = this_it->second;
+    int other_body_idx = other_it->second;
+    const auto & pred = mb.predecessors();
+    const auto & succ = mb.successors();
+    for(size_t i = 0; i < pred.size(); ++i)
+    {
+      if(pred[i] == this_body_idx && succ[i] == other_body_idx)
+      {
+        connection_joint = mb.joint(static_cast<int>(i)).name();
+        break;
+      }
+    }
+    if(connection_joint.size() == 0)
+    {
+      mc_rtc::log::error("Cannot disconnect {} from {} RobotModule, looks like they are not connected via {} and {}",
+                         other.name, name, this_body, other_body);
+    }
+    // TODO This should also check that there is nothing not belonging to \ref
+    // other that is connected under other_body, e.g. if I create the
+    // connection A -> B -> C and later remove only B, the current
+    // implementation would produce a broken module as it would remove things
+    // links and joints from C but keep some data around that refers to C.
+    // The correct approach would be to disconnect C and then B.
+  }
+
+  // We first copy this module and we will start the cleanup
+  auto out = *this;
+
+  // Name requires specific handling
+  if(params.name != "")
+  {
+    out.name = params.name;
+  }
+  else
+  {
+    std::string search = fmt::format("{}_{}", prefix, other.name);
+    auto idx = out.name.find(search);
+    if(idx != std::string::npos)
+    {
+      out.name.erase(idx, search.size());
+    }
+  }
+
+  // Handle other general options
+#define SET_OR_DEFAULT(NAME, CALLBACK) set_or_default<&RobotModule::NAME>(out, params.NAME, CALLBACK)
+#define SET_OR_DEFAULT_DIRECTORY(NAME, CALLBACK) \
+  SET_OR_DEFAULT(NAME, CALLBACK);                \
+  if(!bfs::exists(out.NAME))                     \
+  {                                              \
+    bfs::create_directories(out.NAME);           \
+  }
+  SET_OR_DEFAULT_DIRECTORY(path, ([&]() { return make_temporary_path(out.name); }));
+  SET_OR_DEFAULT(urdf_path, ([&]() { return (bfs::path(out.path) / "urdf" / (out.name + ".urdf")).string(); }));
+  auto urdf_dir = bfs::path(out.urdf_path).parent_path();
+  if(!bfs::exists(urdf_dir))
+  {
+    bfs::create_directories(urdf_dir);
+  }
+  SET_OR_DEFAULT_DIRECTORY(rsdf_dir, ([&]() { return (bfs::path(out.path) / "rsdf" / out.name).string(); }));
+  SET_OR_DEFAULT_DIRECTORY(calib_dir, ([&]() { return (bfs::path(out.path) / "calib").string(); }));
+#undef SET_OR_DEFAULT
+#undef SET_OR_DEFAULT_DIRECTORY
+
+  /** Remove the connection joint and all connected bodies/joints */
+  out.mbg.removeJoint(out.mb.body(0).name(), connection_joint);
+  /** Create a new MultiBodyGraph which has the same base as this */
+  const auto & X_0_b0 = mbc.bodyPosW[0];
+  const auto & X_0_j0 = mb.transform(0);
+  auto X_b0_j0 = mbc.jointConfig[0] * X_0_j0 * X_0_b0.inv();
+  out.mb = out.mbg.makeMultiBody(mb.body(0).name(), mb.joint(0).type(), axisFromJoint(mb.joint(0)), X_0_j0, X_b0_j0);
+  out.mbc = rbd::MultiBodyConfig(out.mb);
+  out.mbc.zero(out.mb);
+  rbd::forwardKinematics(out.mb, out.mbc);
+
+  /** Erase all extra bounds */
+  auto eraseBounds = [&](const std::string & jName) {
+    for(size_t i = 0; i < 2; ++i)
+    {
+      out._bounds[i].erase(jName);
+      if(out._accelerationBounds.size())
+      {
+        out._accelerationBounds[i].erase(jName);
+      }
+      if(out._torqueDerivativeBounds.size())
+      {
+        out._torqueDerivativeBounds[i].erase(jName);
+      }
+      if(out._jerkBounds.size())
+      {
+        out._jerkBounds[i].erase(jName);
+      }
+    }
+    for(size_t i = 2; i < 6; ++i)
+    {
+      out._bounds[i].erase(jName);
+    }
+    // Remove connection joint from stance
+    out._stance.erase(jName);
+  };
+  eraseBounds(connection_joint);
+  for(const auto & j : other.mb.joints())
+  {
+    eraseBounds(jointName(j.name()));
+  }
+
+  /** Update the visual and collision maps */
+  auto updateVisualMap = [&](const VisualMap & in, VisualMap & out) {
+    for(const auto & v : in)
+    {
+      out.erase(bodyName(v.first));
+    }
+  };
+  updateVisualMap(other._visual, out._visual);
+  updateVisualMap(other._collision, out._collision);
+
+  /** Save the URDF */
+  {
+    rbd::parsers::ParserResult result;
+    result.mb = out.mb;
+    result.mbc = out.mbc;
+    result.mbg = out.mbg;
+    result.visual = out._visual;
+    result.collision = out._collision;
+    result.limits.lower = out._bounds[0];
+    result.limits.upper = out._bounds[1];
+    result.limits.velocity = out._bounds[3];
+    result.limits.torque = out._bounds[5];
+    result.name = out.name;
+    std::ofstream ofs(out.urdf_path);
+    ofs << rbd::parsers::to_urdf(result);
+  }
+
+  /** Update stance */
+  for(const auto & s : other._stance)
+  {
+    const auto & jName = s.first;
+    if(jName == "Root")
+    {
+      continue;
+    }
+    out._stance.erase(jointName(jName));
+  }
+
+  /** Update convex/stpbv hulls/sch objects */
+  auto updateHulls = [&](const std::map<std::string, std::pair<std::string, std::string>> & hullsIn,
+                         std::map<std::string, std::pair<std::string, std::string>> & hullsOut) {
+    for(const auto & h : hullsIn)
+    {
+      hullsOut.erase(convexName(h.first));
+    }
+  };
+  updateHulls(other._convexHull, out._convexHull);
+  updateHulls(other._stpbvHull, out._stpbvHull);
+  for(const auto & co : other._collisionObjects)
+  {
+    out._collisionObjects.erase(convexName(co.first));
+  }
+
+  /** Update collision transforms */
+  for(const auto & ct : other._collisionTransforms)
+  {
+    out._collisionTransforms.erase(convexName(ct.first));
+  }
+
+  /** Update flexibilities */
+  for(const auto & flex : other._flexibility)
+  {
+    auto it = std::find_if(out._flexibility.begin(), out._flexibility.end(),
+                           [&](const Flexibility & f) { return f.jointName == jointName(flex.jointName); });
+    if(it != out._flexibility.end())
+    {
+      out._flexibility.erase(it);
+    }
+  }
+
+  /** Update force sensors */
+  for(const auto & fs : other._forceSensors)
+  {
+    for(auto it = out._forceSensors.begin(); it != out._forceSensors.end(); ++it)
+    {
+      if(it->name() == forceSensorName(fs.name()))
+      {
+        out._forceSensors.erase(it);
+        break;
+      }
+    }
+  }
+
+  /** Update body sensors */
+  for(const auto & fs : other._bodySensors)
+  {
+    for(auto it = out._bodySensors.begin(); it != out._bodySensors.end(); ++it)
+    {
+      if(it->name() == bodySensorName(fs.name()))
+      {
+        out._bodySensors.erase(it);
+        break;
+      }
+    }
+  }
+
+  /** Update springs */
+  for(size_t i = 0; i < other._springs.springsBodies.size(); ++i)
+  {
+    const auto & springBody = bodyName(other._springs.springsBodies[i]);
+    auto it = std::find_if(out._springs.springsBodies.begin(), out._springs.springsBodies.end(),
+                           [&](const std::string & b) { return b == springBody; });
+    if(it == out._springs.springsBodies.end())
+    {
+      continue;
+    }
+    auto idx = std::distance(out._springs.springsBodies.begin(), it);
+    out._springs.springsBodies.erase(it);
+    out._springs.springsJoints.erase(out._springs.springsJoints.begin() + idx);
+    out._springs.afterSpringsBodies.erase(out._springs.afterSpringsBodies.begin() + idx);
+  }
+
+  /** Update self-collisions set */
+  auto updateSelfCollisions = [&](const std::vector<mc_rbdyn::Collision> & colsIn,
+                                  std::vector<mc_rbdyn::Collision> & colsOut) {
+    for(const auto & c : colsIn)
+    {
+      auto it = std::find_if(colsOut.begin(), colsOut.end(), [&](const Collision & col) {
+        return col.body1 == convexName(c.body1) && col.body2 == convexName(c.body2);
+      });
+      if(it != colsOut.end())
+      {
+        colsOut.erase(it);
+      }
+    }
+  };
+  updateSelfCollisions(other._minimalSelfCollisions, out._minimalSelfCollisions);
+  updateSelfCollisions(other._commonSelfCollisions, out._commonSelfCollisions);
+
+  /** Update ref joint order */
+  auto removeFromRefJointOrder = [&](const std::string & jName) {
+    auto it = std::find(out._ref_joint_order.begin(), out._ref_joint_order.end(), jName);
+    if(it != out._ref_joint_order.end())
+    {
+      out._ref_joint_order.erase(it);
+    }
+  };
+  removeFromRefJointOrder(connection_joint);
+  for(const auto & j : other._ref_joint_order)
+  {
+    removeFromRefJointOrder(jointName(j));
+  }
+
+  /** Update grippers */
+  for(const auto & g : other._grippers)
+  {
+    const auto & name = gripperName(g.name);
+    auto it =
+        std::find_if(out._grippers.begin(), out._grippers.end(), [&name](const Gripper & g) { return g.name == name; });
+    if(it != out._grippers.end())
+    {
+      out._grippers.erase(it);
+    }
+  }
+
+  /** Update compound joint description */
+  for(const auto & cj : other._compoundJoints)
+  {
+    auto it = std::find_if(out._compoundJoints.begin(), out._compoundJoints.end(),
+                           [&](const CompoundJointConstraintDescription & cjIn) {
+                             return cjIn.j1 == jointName(cj.j1) && cjIn.j2 == jointName(cj.j2);
+                           });
+    if(it != out._compoundJoints.end())
+    {
+      out._compoundJoints.erase(it);
+    }
+  }
+
+  /** Update devices */
+  for(const auto & d : other._devices)
+  {
+    auto name = deviceName(d->name());
+    auto it = std::find_if(out._devices.begin(), out._devices.end(),
+                           [&name](const DevicePtr & d) { return d->name() == name; });
+    if(it != out._devices.end())
+    {
+      out._devices.erase(it);
+    }
+  }
+
+  /** Update surfaces we simply copy all files except those that are also in other.rsdf_dir */
+  auto copySurfaces = [&]() {
+    bfs::path this_rsdf_dir(rsdf_dir);
+    bfs::path other_rsdf_dir(other.rsdf_dir);
+    bfs::path out_rsdf_dir(out.rsdf_dir);
+    if(!bfs::exists(this_rsdf_dir) || !bfs::is_directory(this_rsdf_dir))
+    {
+      return;
+    }
+    std::vector<bfs::path> this_files;
+    std::copy(bfs::directory_iterator(this_rsdf_dir), bfs::directory_iterator(), std::back_inserter(this_files));
+    std::vector<bfs::path> other_files;
+    if(bfs::exists(other_rsdf_dir) && bfs::is_directory(other_rsdf_dir))
+    {
+      std::copy(bfs::directory_iterator(other_rsdf_dir), bfs::directory_iterator(), std::back_inserter(other_files));
+    }
+    for(const auto & f : this_files)
+    {
+      if(f.extension() != ".rsdf")
+      {
+        continue;
+      }
+      auto it = std::find_if(other_files.begin(), other_files.end(),
+                             [&](const bfs::path & other_f) { return f.leaf() == other_f.leaf(); });
+      // Skip the copy if the file is from other
+      if(it != other_files.end())
+      {
+        continue;
+      }
+      bfs::path out = out_rsdf_dir / f.leaf();
+      bfs::copy(f, out);
+    }
+  };
+  copySurfaces();
+
+  // Generate a module file so that the generated RobotModule can be re-used
+  {
+    std::string module_yaml = fmt::format("{}/{}.yaml", out.path, out.name);
+    auto yaml = mc_rtc::ConfigurationLoader<mc_rbdyn::RobotModule>::save(out, false, {}, out.mb.joint(0).dof() == 0);
+    yaml.save(module_yaml);
+    out._parameters = {"json", module_yaml};
+    mc_rtc::log::info("Disconnection done, result module in: {}", module_yaml);
   }
 
   return out;
