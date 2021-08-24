@@ -47,54 +47,45 @@ Eigen::VectorXd TasksQPSolver::lambdaVec(int cIndex) const
 
 void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Contact> & contacts)
 {
-  if(logger_)
+  for(const auto & contact : contacts_)
   {
-    for(const auto & contact : contacts_)
-    {
-      const std::string & r1 = robots().robot(contact.r1Index()).name();
-      const std::string & r1S = contact.r1Surface()->name();
-      const std::string & r2 = robots().robot(contact.r2Index()).name();
-      const std::string & r2S = contact.r2Surface()->name();
-      logger_->removeLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S);
-    }
-  }
-  if(gui_)
-  {
-    for(const auto & contact : contacts_)
-    {
-      const std::string & r1 = robots().robot(contact.r1Index()).name();
-      const std::string & r1S = contact.r1Surface()->name();
-      const std::string & r2 = robots().robot(contact.r2Index()).name();
-      const std::string & r2S = contact.r2Surface()->name();
-      gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S));
-    }
+    const std::string & r1 = robots().robot(contact.r1Index()).name();
+    const std::string & r1S = contact.r1Surface()->name();
+    const std::string & r2 = robots().robot(contact.r2Index()).name();
+    const std::string & r2S = contact.r2Surface()->name();
+    if(logger_) { logger_->removeLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S); }
+    if(gui_) { gui_->removeElement({"Contacts", "Forces"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S)); }
   }
   contacts_ = contacts;
-  for(auto & c : contacts_)
+  for(auto it = contacts_.begin(); it != contacts_.end();)
   {
+    auto & c = *it;
     const auto & r1 = robots().robot(c.r1Index());
-    if(r1.mb().nrDof() == 0) { c = c.swap(robots()); }
-  }
-  if(logger_)
-  {
-    for(const auto & contact : contacts_)
+    const auto & r2 = robots().robot(c.r2Index());
+    if(r1.mb().nrDof() == 0)
     {
-      const std::string & r1 = robots().robot(contact.r1Index()).name();
-      const std::string & r1S = contact.r1Surface()->name();
-      const std::string & r2 = robots().robot(contact.r2Index()).name();
-      const std::string & r2S = contact.r2Surface()->name();
+      if(r2.mb().nrDof() != 0) { c = c.swap(robots()); }
+      else
+      {
+        it = contacts_.erase(it);
+        continue;
+      }
+    }
+    ++it;
+  }
+  for(const auto & contact : contacts_)
+  {
+    const std::string & r1 = robots().robot(contact.r1Index()).name();
+    const std::string & r1S = contact.r1Surface()->name();
+    const std::string & r2 = robots().robot(contact.r2Index()).name();
+    const std::string & r2S = contact.r2Surface()->name();
+    if(logger_)
+    {
       logger_->addLogEntry("contact_" + r1 + "::" + r1S + "_" + r2 + "::" + r2S,
                            [this, &contact]() { return desiredContactForce(contact); });
     }
-  }
-  if(gui_)
-  {
-    for(const auto & contact : contacts_)
+    if(gui_)
     {
-      const std::string & r1 = robots().robot(contact.r1Index()).name();
-      const std::string & r1S = contact.r1Surface()->name();
-      const std::string & r2 = robots().robot(contact.r2Index()).name();
-      const std::string & r2S = contact.r2Surface()->name();
       gui_->addElement({"Contacts", "Forces"},
                        mc_rtc::gui::Force(
                            fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S),
@@ -114,7 +105,7 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
       delete qcptr.unilateralContact;
       qcptr.unilateralContact = 0;
     }
-    else
+    else if(qcptr.bilateralContact)
     {
       biContacts_.push_back(tasks::qp::BilateralContact(*qcptr.bilateralContact));
       delete qcptr.bilateralContact;
@@ -124,7 +115,7 @@ void TasksQPSolver::setContacts(ControllerToken, const std::vector<mc_rbdyn::Con
 
   solver_.nrVars(robots_p->mbs(), uniContacts_, biContacts_);
   updateConstrSize();
-}
+} // namespace mc_solver
 
 const sva::ForceVecd TasksQPSolver::desiredContactForce(const mc_rbdyn::Contact & contact) const
 {
