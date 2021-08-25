@@ -6,6 +6,7 @@
 
 #include <mc_rbdyn/Robot.h>
 
+#include <mc_rtc/SignalSlot.h>
 #include <mc_rtc/iterators.h>
 #include <mc_rtc/shared.h>
 
@@ -162,6 +163,44 @@ public:
   const_reverse_iterator crend() const noexcept;
   /** @} */
 
+  /** @name Signals
+   *
+   * These functions provide signals to events related to robot adding/removing
+   *
+   * @{
+   */
+
+  using onRobotAddedSigT = mc_rtc::Signal<std::string>;
+  using onRobotAddedSlotT = onRobotAddedSigT::SlotT;
+
+  /** This signal is emitted after a robot is added
+   *
+   * The payload has the name of the newly added robot.
+   *
+   * It is emitted after the robot has been added, i.e. robots(payload) has the newly
+   * added robot
+   */
+  inline onRobotAddedSigT::Proxy onRobotAdded() const noexcept
+  {
+    return onRobotAdded_;
+  }
+
+  using onRobotRemovedSigT = mc_rtc::Signal<std::string>;
+  using onRobotRemovedSlotT = onRobotRemovedSigT::SlotT;
+
+  /** This signal is emitted  when a robot is about to be removed
+   *
+   * The payload is the name of the robot that is about to be removed
+   *
+   * It is emitted before the robot is effectively removed, i.e. robots(payload)
+   * still has the robot about to be removed
+   */
+  inline onRobotRemovedSigT::Proxy onRobotRemoved() const noexcept
+  {
+    return onRobotRemoved_;
+  }
+  /** @} */
+
   /** Number of robots
    *
    * @return The number of robots
@@ -256,6 +295,8 @@ protected:
   unsigned int envIndex_;
   void updateIndexes();
   std::unordered_map<std::string, unsigned int> robotNameToIndex_; ///< Correspondance between robot name and index
+  mutable onRobotAddedSigT onRobotAdded_;
+  mutable onRobotRemovedSigT onRobotRemoved_;
 };
 
 /* Static pendant of the loader functions to create Robots directly */
