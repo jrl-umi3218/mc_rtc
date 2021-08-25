@@ -212,7 +212,8 @@ void PostureTask::target(const std::map<std::string, std::vector<double>> & join
             const auto & mimic = robots_.robot(rIndex_).mb().joint(ji);
             if(static_cast<size_t>(mimic.dof()) == j.second.size())
             {
-              for(unsigned i = 0; i < j.second.size(); i++){
+              for(unsigned i = 0; i < j.second.size(); i++)
+              {
                 q[static_cast<size_t>(ji)][i] = mimic.mimicMultiplier() * j.second[i] + mimic.mimicOffset();
               }
             }
