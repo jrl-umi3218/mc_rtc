@@ -41,7 +41,6 @@ struct MyController_DLLAPI MyController : public mc_control::MCController
     void reset(const mc_control::ControllerResetData & reset_data) override;
 
  protected:
-    // This is not a good practice
     std::shared_ptr<mc_tasks::CoMTask> comTask;
     std::shared_ptr<mc_tasks::SurfaceTransformTask> footTask;
     bool moved_com = false;
