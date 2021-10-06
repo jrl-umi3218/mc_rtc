@@ -349,7 +349,6 @@
     <span class="kt">void</span> <span class="n">reset</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">ControllerResetData</span> <span class="o">&amp;</span> <span class="n">reset_data</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
 
  <span class="nl">protected:</span>
-    <span class="c1">// This is not a good practice</span>
     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">CoMTask</span><span class="o">&gt;</span> <span class="n">comTask</span><span class="p">;</span>
     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">SurfaceTransformTask</span><span class="o">&gt;</span> <span class="n">footTask</span><span class="p">;</span>
     <span class="kt">bool</span> <span class="n">moved_com</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
