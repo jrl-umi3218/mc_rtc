@@ -15,33 +15,55 @@ Let's implement this simply.
 
 ## Simple implementation
 
-We will need the following elements in our controller:
+First create an empty controller:
 
-```cpp
-// In the header
-#include <mc_tasks/CoMTask.h>
-#include <mc_tasks/SurfaceTransformTask.h>
-// If we want to use elements in mc_tasks or mc_solver we first must include in header file
-
-std::shared_ptr<mc_tasks::CoMTask> comTask;
-std::shared_ptr<mc_tasks::SurfaceTransformTask> footTask;
-
-// This is not a good practice
-bool moved_com = false;
-bool moved_left_foot = false;
+```bash
+$ mc_rtc_new_controller MyController MyController
 ```
 
+Then we will need to modify following elements in our controller:
+
+- In `MyController.h`:
+
 ```cpp
-void MyController::reset(const ControllerResetData & data)
+// MyController.h
+#pragma once
+#include <mc_control/mc_controller.h>
+#include "api.h"
+// If we want to use elements in mc_tasks or mc_solver we first must include their header file
+#include <mc_tasks/CoMTask.h>
+#include <mc_tasks/SurfaceTransformTask.h>
+
+struct MyController_DLLAPI MyController : public mc_control::MCController
 {
-  MCController::reset(data);
-  /* Create the task */
-  comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
-  footTask = std::make_shared<mc_tasks::EndEffectorTask>("LeftFoot", robots(), 0);
-  /* Move the CoM above the right foot */
-  comTask->com(comTask->com() + Eigen::Vector3d(0, -1*footTask->get_ef_pose().translation().y(), 0));
-  /* Add the CoM task to the solver */
-  solver().addTask(comTask);
+    MyController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & config);
+    bool run() override;
+    void reset(const mc_control::ControllerResetData & reset_data) override;
+
+ protected:
+    // This is not a good practice
+    std::shared_ptr<mc_tasks::CoMTask> comTask;
+    std::shared_ptr<mc_tasks::SurfaceTransformTask> footTask;
+    bool moved_com = false;
+    bool moved_left_foot = false;
+
+};
+```
+
+- In `MyController.cpp`:
+
+```cpp
+#include "MyController.h"
+
+MyController::MyController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc::Configuration & /* config */)
+: mc_control::MCController(rm, dt)
+{
+  solver().addConstraintSet(contactConstraint);
+  solver().addConstraintSet(kinematicsConstraint);
+  solver().addTask(postureTask);
+  solver().setContacts({{}});
+
+  mc_rtc::log::success("MyController init done ");
 }
 
 bool MyController::run()
@@ -86,6 +108,20 @@ bool MyController::run()
   }
   return ret;
 }
+
+void MyController::reset(const mc_control::ControllerResetData & data)
+{
+  MCController::reset(data);
+  /* Create the task */
+  comTask = std::make_shared<mc_tasks::CoMTask>(robots(), 0);
+  footTask = std::make_shared<mc_tasks::SurfaceTransformTask>("LeftFoot", robots(), 0);
+  /* Move the CoM above the right foot */
+  comTask->com(comTask->com() + Eigen::Vector3d(0, -1*footTask->surfacePose().translation().y(), 0));
+  /* Add the CoM task to the solver */
+  solver().addTask(comTask);
+}
+
+CONTROLLER_CONSTRUCTOR("MyController", MyController)
 ```
 
 What you will notice is that the robot "slides" its feet along the floor. That's because this is the most direct way to go to the desired position. There is many ways this could be solved but we will now cover two useful `MetaTask` that take care of such scenarios:
