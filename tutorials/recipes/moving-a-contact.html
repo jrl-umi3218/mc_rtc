@@ -323,31 +323,56 @@
 
 <h2 id="simple-implementation">Simple implementation</h2>
 
-<p>We will need the following elements in our controller:</p>
+<p>First create an empty controller:</p>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In the header</span>
-<span class="cp">#include &lt;mc_tasks/CoMTask.h&gt;
-#include &lt;mc_tasks/SurfaceTransformTask.h&gt;
-</span><span class="c1">// If we want to use elements in mc_tasks or mc_solver we first must include in header file</span>
-
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">CoMTask</span><span class="o">&gt;</span> <span class="n">comTask</span><span class="p">;</span>
-<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">SurfaceTransformTask</span><span class="o">&gt;</span> <span class="n">footTask</span><span class="p">;</span>
-
-<span class="c1">// This is not a good practice</span>
-<span class="kt">bool</span> <span class="n">moved_com</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-<span class="kt">bool</span> <span class="n">moved_left_foot</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_rtc_new_controller MyController MyController
 </code></pre></div></div>
 
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">MyController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="k">const</span> <span class="n">ControllerResetData</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+<p>Then we will need to modify following elements in our controller:</p>
+
+<ul>
+  <li>In <code class="language-plaintext highlighter-rouge">MyController.h</code>:</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// MyController.h</span>
+<span class="cp">#pragma once
+#include &lt;mc_control/mc_controller.h&gt;
+#include "api.h"
+</span><span class="c1">// If we want to use elements in mc_tasks or mc_solver we first must include their header file</span>
+<span class="cp">#include &lt;mc_tasks/CoMTask.h&gt;
+#include &lt;mc_tasks/SurfaceTransformTask.h&gt;
+</span>
+<span class="k">struct</span> <span class="nc">MyController_DLLAPI</span> <span class="n">MyController</span> <span class="o">:</span> <span class="k">public</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span>
 <span class="p">{</span>
-  <span class="n">MCController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="cm">/* Create the task */</span>
-  <span class="n">comTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">CoMTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
-  <span class="n">footTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">EndEffectorTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
-  <span class="cm">/* Move the CoM above the right foot */</span>
-  <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">()</span> <span class="o">+</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">footTask</span><span class="o">-&gt;</span><span class="n">get_ef_pose</span><span class="p">().</span><span class="n">translation</span><span class="p">().</span><span class="n">y</span><span class="p">(),</span> <span class="mi">0</span><span class="p">));</span>
-  <span class="cm">/* Add the CoM task to the solver */</span>
-  <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">comTask</span><span class="p">);</span>
+    <span class="n">MyController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="n">config</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="n">run</span><span class="p">()</span> <span class="k">override</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">reset</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">ControllerResetData</span> <span class="o">&amp;</span> <span class="n">reset_data</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+
+ <span class="nl">protected:</span>
+    <span class="c1">// This is not a good practice</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">CoMTask</span><span class="o">&gt;</span> <span class="n">comTask</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">SurfaceTransformTask</span><span class="o">&gt;</span> <span class="n">footTask</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">moved_com</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">moved_left_foot</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+<span class="p">};</span>
+</code></pre></div></div>
+
+<ul>
+  <li>In <code class="language-plaintext highlighter-rouge">MyController.cpp</code>:</li>
+</ul>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include "MyController.h"
+</span>
+<span class="n">MyController</span><span class="o">::</span><span class="n">MyController</span><span class="p">(</span><span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">RobotModulePtr</span> <span class="n">rm</span><span class="p">,</span> <span class="kt">double</span> <span class="n">dt</span><span class="p">,</span> <span class="k">const</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">Configuration</span> <span class="o">&amp;</span> <span class="cm">/* config */</span><span class="p">)</span>
+<span class="o">:</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">MCController</span><span class="p">(</span><span class="n">rm</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">contactConstraint</span><span class="p">);</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">kinematicsConstraint</span><span class="p">);</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">postureTask</span><span class="p">);</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">();</span>
+
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">success</span><span class="p">(</span><span class="s">"MyController init done "</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kt">bool</span> <span class="n">MyController</span><span class="o">::</span><span class="n">run</span><span class="p">()</span>
@@ -392,6 +417,20 @@
   <span class="p">}</span>
   <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
 <span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">MyController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="k">const</span> <span class="n">mc_control</span><span class="o">::</span><span class="n">ControllerResetData</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">MCController</span><span class="o">::</span><span class="n">reset</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+  <span class="cm">/* Create the task */</span>
+  <span class="n">comTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">CoMTask</span><span class="o">&gt;</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="n">footTask</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">mc_tasks</span><span class="o">::</span><span class="n">SurfaceTransformTask</span><span class="o">&gt;</span><span class="p">(</span><span class="s">"LeftFoot"</span><span class="p">,</span> <span class="n">robots</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="cm">/* Move the CoM above the right foot */</span>
+  <span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">(</span><span class="n">comTask</span><span class="o">-&gt;</span><span class="n">com</span><span class="p">()</span> <span class="o">+</span> <span class="n">Eigen</span><span class="o">::</span><span class="n">Vector3d</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">footTask</span><span class="o">-&gt;</span><span class="n">surfacePose</span><span class="p">().</span><span class="n">translation</span><span class="p">().</span><span class="n">y</span><span class="p">(),</span> <span class="mi">0</span><span class="p">));</span>
+  <span class="cm">/* Add the CoM task to the solver */</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">comTask</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">CONTROLLER_CONSTRUCTOR</span><span class="p">(</span><span class="s">"MyController"</span><span class="p">,</span> <span class="n">MyController</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>What you will notice is that the robot “slides” its feet along the floor. That’s because this is the most direct way to go to the desired position. There is many ways this could be solved but we will now cover two useful <code class="language-plaintext highlighter-rouge">MetaTask</code> that take care of such scenarios:</p>
