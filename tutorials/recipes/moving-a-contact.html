@@ -370,7 +370,10 @@
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">contactConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addConstraintSet</span><span class="p">(</span><span class="n">kinematicsConstraint</span><span class="p">);</span>
   <span class="n">solver</span><span class="p">().</span><span class="n">addTask</span><span class="p">(</span><span class="n">postureTask</span><span class="p">);</span>
-  <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">();</span>
+  <span class="n">solver</span><span class="p">().</span><span class="n">setContacts</span><span class="p">({</span>
+      <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"LeftFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">),</span>
+      <span class="n">mc_rbdyn</span><span class="o">::</span><span class="n">Contact</span><span class="p">(</span><span class="n">robots</span><span class="p">(),</span> <span class="s">"RightFoot"</span><span class="p">,</span> <span class="s">"AllGround"</span><span class="p">)</span>
+  <span class="p">});</span>
 
   <span class="n">mc_rtc</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">success</span><span class="p">(</span><span class="s">"MyController init done "</span><span class="p">);</span>
 <span class="p">}</span>
