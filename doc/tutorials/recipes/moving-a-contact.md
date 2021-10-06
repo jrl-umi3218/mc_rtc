@@ -61,7 +61,10 @@ MyController::MyController(mc_rbdyn::RobotModulePtr rm, double dt, const mc_rtc:
   solver().addConstraintSet(contactConstraint);
   solver().addConstraintSet(kinematicsConstraint);
   solver().addTask(postureTask);
-  solver().setContacts({{}});
+  solver().setContacts({
+      mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"),
+      mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")
+  });
 
   mc_rtc::log::success("MyController init done ");
 }
