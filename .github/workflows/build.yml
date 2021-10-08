@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-16.04, ubuntu-18.04, macos-latest, windows-latest]
+        os: [ubuntu-18.04, macos-latest, windows-latest]
         build-type: [Debug, RelWithDebInfo, script]
         compiler: [gcc, clang]
         exclude:
@@ -33,9 +33,6 @@ jobs:
             compiler: clang
           # Script always use default compiler
           - build-type: script
-            compiler: clang
-          # FIXME Getting strange linking errors on Xenial with clang
-          - os: ubuntu-16.04
             compiler: clang
           # FIXME Windows Debug CI fails: tests are failing
           - os: windows-latest
@@ -131,15 +128,12 @@ jobs:
         build-type: ${{ matrix.build-type }}
         options: '-DENABLE_FAST_TESTS:BOOL=ON'
     - name: Build with ROS
-      if: (matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04') && matrix.build-type != 'script'
+      if: (matrix.os == 'ubuntu-18.04') && matrix.build-type != 'script'
       run: |
         set -e
         set -x
         pushd .
-        if [ "${{ matrix.os }}" = "ubuntu-16.04" ]
-        then
-          export ROS_DISTRO="kinetic"
-        elif [ "${{ matrix.os }}" = "ubuntu-18.04" ]
+        if [ "${{ matrix.os }}" = "ubuntu-18.04" ]
         then
           export ROS_DISTRO="melodic"
         else

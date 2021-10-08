@@ -273,6 +273,7 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
   {
     qpRes.contacts_lambda_begin.push_back(data.lambdaBegin(i) - data.lambdaBegin());
   }
+  qpRes.lambdaVec = solver.lambdaVec();
   updateConstrSize();
 }
 
