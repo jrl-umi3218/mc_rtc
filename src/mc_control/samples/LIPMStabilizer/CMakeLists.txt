@@ -1,8 +1,8 @@
 add_subdirectory(src)
 
 mc_rtc_set_prefix(STATES mc_controller/fsm/states)
-set(LIPMStabilizer_STATES_INSTALL_PREFIX "${MC_STATES_RUNTIME_INSTALL_PREFIX}")
-set(LIPMStabilizer_STATES_DATA_INSTALL_PREFIX "${MC_STATES_RUNTIME_INSTALL_PREFIX}/data")
+set(LIPMStabilizer_STATES_DESTINATION_PREFIX "${MC_STATES_RUNTIME_DESTINATION_PREFIX}")
+set(LIPMStabilizer_STATES_DATA_DESTINATION_PREFIX "${MC_STATES_RUNTIME_DESTINATION_PREFIX}/data")
 set(LIPMStabilizer_INIT_STATE "Pause_2s")
 configure_file(etc/LIPMStabilizer.in.yaml "${CMAKE_CURRENT_BINARY_DIR}/etc/LIPMStabilizer.yaml")
 
