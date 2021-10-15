@@ -80,7 +80,7 @@ void PostureTask::selectActiveJoints(mc_solver::QPSolver & solver,
   selectUnactiveJoints(solver, unactiveJoints);
 }
 
-void PostureTask::selectUnactiveJoints(mc_solver::QPSolver & solver,
+void PostureTask::selectUnactiveJoints(mc_solver::QPSolver &,
                                        const std::vector<std::string> & unactiveJointsName,
                                        const std::map<std::string, std::vector<std::array<int, 2>>> &)
 {
