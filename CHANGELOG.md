@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+## [1.8.2] - 2021-10-15
+
+### New package
+
+- Interface
+  - [mc_mujoco](https://github.com/rohanpsingh/mc_mujoco/) for MuJoCo simulation
+
+### Fixes
+
+- [mc_control] Fix message ordering in the FSM (#193)
+- [mc_rbdyn] Fix Robot::copy (#188)
+- [mc_solver] Prevent a crash when doing contacts manipulation after a solver run (#196)
+- [mc_tasks] Correctly set mimic joint target in PostureTask (#194)
+- [Python] Allow Python controllers to be interrupted
+- [utils] Fix a file descriptor leak that could occur in mc_log_ui
+
+### Added
+
+- [mc_rbdyn] Allow to iterate over all devices in a robot
+- [mc_tasks] Add dimWeight support in the stabilizer configuration (#191)
+
 ## [1.8.1] - 2021-08-10
 
 ### Fixes
@@ -323,7 +344,8 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.8.1...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.8.2...HEAD
+[1.8.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.2
 [1.8.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.1
 [1.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.0
 [1.7.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.7.0
