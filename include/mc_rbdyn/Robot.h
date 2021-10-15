@@ -661,6 +661,12 @@ public:
     return const_cast<T &>(const_cast<const Robot *>(this)->device<T>(name));
   }
 
+  /** Get all devices attached to a robot */
+  inline const DevicePtrVector & devices() const noexcept
+  {
+    return devices_;
+  }
+
   /** Alias for \see device */
   template<typename T>
   inline const T & sensor(const std::string & name) const
