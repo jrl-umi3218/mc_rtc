@@ -25420,6 +25420,13 @@
       <arglist>(const std::string &amp;name)</arglist>
     </member>
     <member kind="function">
+      <type>const DevicePtrVector &amp;</type>
+      <name>devices</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>ac554847320d3540e5e7ac9d58baafca0</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
       <type>const T &amp;</type>
       <name>sensor</name>
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
@@ -26266,6 +26273,13 @@
       <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
       <anchor>a6cff71ca3ef36a1f5b5a945d6e70b64b</anchor>
       <arglist>(const std::string &amp;name)</arglist>
+    </member>
+    <member kind="function">
+      <type>const DevicePtrVector &amp;</type>
+      <name>devices</name>
+      <anchorfile>structmc__rbdyn_1_1Robot.html</anchorfile>
+      <anchor>ac554847320d3540e5e7ac9d58baafca0</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>const T &amp;</type>

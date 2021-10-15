@@ -51,14 +51,14 @@ var NAVTREEINDEX =
 "structmc__filter_1_1ExponentialMovingAverage.html#a4fe8efb515654281aa77b87296449f89",
 "structmc__rbdyn_1_1BodySensor.html#aaf978a01b2013293156e3a825b58f868",
 "structmc__rbdyn_1_1Robot.html#a8353aa6a66630a85c9249298ed960c6a",
-"structmc__rbdyn_1_1Surface.html#a3f8d3cd62afe2e13709b86f5b027a699",
-"structmc__rtc_1_1ConfigurationArrayIterator.html#a5beff7f5439023c5c17f8a0008413c49",
-"structmc__rtc_1_1gui_1_1Element.html#ad2e559a17ad52901a5e726ca03f300c6",
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Polygons.html",
-"structmc__solver_1_1details_1_1CompoundJointConstraint.html#a55dffd4ce88a71b31224c2487a2156ad",
-"structmc__tasks_1_1PostureTask.html",
-"structmc__tasks_1_1force_1_1ComplianceTask.html#a1e2ffbb255464894b2254af872876957",
-"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aeca8ec3501161284eebe42d34b7433d3"
+"structmc__rbdyn_1_1Surface.html#a33acf44c62df472853a89de4d24b8c93",
+"structmc__rtc_1_1ConfigurationArrayIterator.html#a2d7d4ae76ac0313499089302504022cb",
+"structmc__rtc_1_1gui_1_1Element.html#ab8e71ecce7dab695777a1a11faf119f7",
+"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1Polygon.html#af7e96bad2cd93f2b0eaecbf94e8ce4c2",
+"structmc__solver_1_1details_1_1CompoundJointConstraint.html#a12500c0416901546eb4d77bf0a3d2c9e",
+"structmc__tasks_1_1PositionTask.html#af67679b5190933536dbc6f20adc44aac",
+"structmc__tasks_1_1force_1_1ComplianceTask.html#a044c1fedcaef27af30b4c40b3722cc8c",
+"structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html#aea4976e383f665df47a0396b85a2db32"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

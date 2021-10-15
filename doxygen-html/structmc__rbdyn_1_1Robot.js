@@ -61,6 +61,7 @@ var structmc__rbdyn_1_1Robot =
     [ "copySurface", "structmc__rbdyn_1_1Robot.html#a9eac94be22b1481eaae48d110d97c49e", null ],
     [ "device", "structmc__rbdyn_1_1Robot.html#a4e3272e412d22bf6d382117300c9ee42", null ],
     [ "device", "structmc__rbdyn_1_1Robot.html#a6cff71ca3ef36a1f5b5a945d6e70b64b", null ],
+    [ "devices", "structmc__rbdyn_1_1Robot.html#ac554847320d3540e5e7ac9d58baafca0", null ],
     [ "encoderValues", "structmc__rbdyn_1_1Robot.html#a1191c63affb21cb0e15698a48ee83355", null ],
     [ "encoderValues", "structmc__rbdyn_1_1Robot.html#ab757a9c9f2f1a0c2f6a2d0ce73a4c89f", null ],
     [ "encoderVelocities", "structmc__rbdyn_1_1Robot.html#ad88153372c03f393b45a9d7ac88df0c5", null ],
