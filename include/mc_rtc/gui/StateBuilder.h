@@ -220,6 +220,24 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
   template<typename T, typename... Args>
   void addPlot(const std::string & name, T abscissa, Args... args);
 
+  /** Add more data to an existing plot
+   *
+   * T must be a Y-axis or XY-axis data
+   *
+   * No-op if the plot has not been added yet
+   *
+   * No-op if T a Y-axis and the plot was added with \ref addXYPlot
+   *
+   * \param name Name of the plot, it must have been added via \ref addPlot or \ref addXYPlot before
+   *
+   * \param data Extra data to be added
+   *
+   * \return True if the data was added, false otherwise
+   *
+   */
+  template<typename T>
+  bool addPlotData(const std::string & name, T data);
+
   /** Remove a plot identified by the provided name */
   void removePlot(const std::string & name);
 
@@ -258,14 +276,20 @@ private:
   /** Holds static data for the GUI */
   mc_rtc::Configuration data_;
   /** Callback used to write plot data into the GUI message */
-  using plot_callback_t = std::function<void(mc_rtc::MessagePackBuilder &, const std::string &)>;
+  using plot_callback_function_t = std::function<void(mc_rtc::MessagePackBuilder &, const std::string &)>;
+  struct PlotCallback
+  {
+    plot::Plot type;
+    size_t msg_size;
+    plot_callback_function_t callback;
+  };
   /** A unique plot id used to identify plots with the same name
    *
    * This is mainly useful to restart a plot with the same name in a single iteration
    */
   uint64_t plot_id_ = 0;
   /** Holds all currently active plots */
-  std::unordered_map<std::string, plot_callback_t> plots_;
+  std::unordered_map<std::string, PlotCallback> plots_;
   /** True if data binary form needs to be generated again */
   bool update_data_ = true;
   /** Holds data's binary form */
@@ -327,16 +351,10 @@ private:
 
   std::string cat2str(const std::vector<std::string> & category);
 
-  inline plot_callback_t makePlotCallback(plot_callback_t callback)
-  {
-    return callback;
-  }
-
-  template<typename T>
-  plot_callback_t makePlotCallback(plot_callback_t callback, T plot);
+  void addPlotData(PlotCallback &) {}
 
   template<typename T, typename... Args>
-  plot_callback_t makePlotCallback(plot_callback_t callback, T plot, Args... args);
+  void addPlotData(PlotCallback & callback, T plot, Args... args);
 };
 
 } // namespace gui

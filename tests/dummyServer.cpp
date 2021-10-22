@@ -222,6 +222,9 @@ struct TestServer
   template<typename T>
   void add_demo_plot(const std::string & name, T callback);
 
+  template<typename T, typename U>
+  void add_demo_plot(const std::string & name, T callback, U dynamic_callback);
+
   void make_table(size_t s);
 
   void switch_visual(const std::string & visual);
@@ -264,6 +267,8 @@ struct TestServer
       std::make_tuple<std::string, double, int>("World", 0.2001, 4),
       std::make_tuple<std::string, double, int>("!", 0.0001, 42)};
   FakeZMPGraph graph_;
+  size_t n_dynamic_regular_plot = 0;
+  size_t n_dynamic_xy_plot = 0;
   std::vector<Eigen::Vector3d> trajectory_ = {Eigen::Vector3d::UnitX(), Eigen::Vector3d::UnitY(),
                                               -Eigen::Vector3d::UnitX(), -Eigen::Vector3d::UnitY()};
   std::vector<sva::PTransformd> poseTrajectory_ = {{sva::RotX<double>(0), {1, 1, 1}},
@@ -592,6 +597,21 @@ TestServer::TestServer() : xythetaz_(4)
   };
   add_demo_plot("Fake ZMP", fake_zmp_plot);
 
+  auto dynamic_plot = [this](const std::string & name) {
+    builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
+                    mc_rtc::gui::plot::Y(
+                        "t", [this]() { return t_; }, Color::Red));
+    n_dynamic_regular_plot = 0;
+  };
+  auto add_dynamic_plot = [this](const std::string & name) {
+    n_dynamic_regular_plot += 1;
+    double data = static_cast<double>(n_dynamic_regular_plot);
+    auto label = std::to_string(n_dynamic_regular_plot);
+    builder.addPlotData(name, mc_rtc::gui::plot::Y(
+                                  label, [data]() { return data; }, Color::Blue));
+  };
+  add_demo_plot("Dynamic Regular Plot", dynamic_plot, add_dynamic_plot);
+
   switch_visual("sphere");
 
   configureRobotLoader();
@@ -707,6 +727,26 @@ void TestServer::add_demo_plot(const std::string & name, T callback)
                          callback(name);
                        }
                      }));
+}
+
+template<typename T, typename U>
+void TestServer::add_demo_plot(const std::string & name, T callback, U dynamic_callback)
+{
+  bool has_plot = false;
+  builder.addElement({}, mc_rtc::gui::ElementsStacking::Horizontal,
+                     mc_rtc::gui::Button("Add " + name + " plot",
+                                         [has_plot, callback, name, this]() mutable {
+                                           if(has_plot)
+                                           {
+                                             builder.removePlot(name);
+                                           }
+                                           else
+                                           {
+                                             callback(name);
+                                           }
+                                           has_plot = !has_plot;
+                                         }),
+                     mc_rtc::gui::Button("Add data", [dynamic_callback, name]() { dynamic_callback(name); }));
 }
 
 void TestServer::publish()

@@ -136,12 +136,11 @@ void StateBuilder::addXYPlot(const std::string & name,
     log::warning("Discarding request to add this plot");
     return;
   }
-  // One entry for the type, the plot id, the name, the x and y axis configs, the data and one entry per plot
-  uint64_t sz = 7 + sizeof...(args);
+  // One entry for the type, the plot id, the name, the x and y axis configs and the data
+  uint64_t sz = 7;
   uint64_t id = ++plot_id_;
-  plot_callback_t cb = [data, id, sz, xConfig, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
-                                                                          const std::string & name) {
-    builder.start_array(sz);
+  plot_callback_function_t cb = [data, id, sz, xConfig, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
+                                                                                   const std::string & name) {
     builder.write(static_cast<uint64_t>(plot::Plot::XY));
     builder.write(id);
     builder.write(name);
@@ -150,7 +149,8 @@ void StateBuilder::addXYPlot(const std::string & name,
     yRightConfig.write(builder);
     data.write(builder);
   };
-  plots_[name] = makePlotCallback(cb, args...);
+  plots_[name] = {plot::Plot::XY, sz, cb};
+  addPlotData(plots_[name], args...);
 }
 
 template<typename T, typename... Args>
@@ -180,12 +180,11 @@ void StateBuilder::addPlot(const std::string & name,
     log::warning("Discarding request to add this plot");
     return;
   }
-  // One entry for the type, the plot id, the name, the abscissa and both axis configs plus one entry per plot
-  uint64_t sz = 6 + sizeof...(args);
+  // One entry for the type, the plot id, the name, the abscissa and both axis configs
+  uint64_t sz = 6;
   uint64_t id = ++plot_id_;
-  plot_callback_t cb = [abscissa, id, sz, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
-                                                                     const std::string & name) {
-    builder.start_array(sz);
+  plot_callback_function_t cb = [abscissa, id, sz, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
+                                                                              const std::string & name) {
     builder.write(static_cast<uint64_t>(plot::Plot::Standard));
     builder.write(id);
     builder.write(name);
@@ -193,27 +192,39 @@ void StateBuilder::addPlot(const std::string & name,
     yLeftConfig.write(builder);
     yRightConfig.write(builder);
   };
-  plots_[name] = makePlotCallback(cb, args...);
-}
-
-template<typename T>
-StateBuilder::plot_callback_t StateBuilder::makePlotCallback(plot_callback_t callback, T plot)
-{
-  return [callback, plot](mc_rtc::MessagePackBuilder & builder, const std::string & name) {
-    callback(builder, name);
-    plot.write(builder);
-    builder.finish_array();
-  };
+  plots_[name] = {plot::Plot::Standard, sz, cb};
+  addPlotData(plots_[name], args...);
 }
 
 template<typename T, typename... Args>
-StateBuilder::plot_callback_t StateBuilder::makePlotCallback(plot_callback_t callback, T plot, Args... args)
+void StateBuilder::addPlotData(PlotCallback & callback, T plot, Args... args)
 {
-  plot_callback_t cb = [callback, plot](mc_rtc::MessagePackBuilder & builder, const std::string & name) {
-    callback(builder, name);
+  callback.msg_size += 1;
+  auto prev_callback = callback.callback;
+  callback.callback = [prev_callback, plot](mc_rtc::MessagePackBuilder & builder, const std::string & name) {
+    prev_callback(builder, name);
     plot.write(builder);
   };
-  return makePlotCallback(cb, args...);
+  addPlotData(callback, args...);
+}
+
+template<typename T>
+bool StateBuilder::addPlotData(const std::string & name, T data)
+{
+  auto it = plots_.find(name);
+  if(it == plots_.end())
+  {
+    mc_rtc::log::error("Requested to add data to non-existing plot {}", name);
+    return false;
+  }
+  auto & callback = it->second;
+  if(callback.type == plot::Plot::XY && !plot::is_2d<T>())
+  {
+    mc_rtc::log::error("Requested to add non 2D data to XY plot {}", name);
+    return false;
+  }
+  addPlotData(callback, data);
+  return true;
 }
 
 } // namespace gui
