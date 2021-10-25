@@ -18,6 +18,14 @@
 
 #include "utils.h"
 
+template<typename Callback>
+void check_callback(Callback callback)
+{
+  using ReturnT = mc_rtc::gui::details::ReturnTypeT<Callback>;
+  static_assert(std::is_same<ReturnT, Eigen::Vector3d>::value, "FAIL");
+  static_assert(mc_rtc::gui::details::is_getter<Callback>(), "FAIL");
+}
+
 void setColor(rbd::parsers::Visual & visual, const mc_rtc::gui::Color & color)
 {
   rbd::parsers::Material mat;
@@ -446,18 +454,35 @@ TestServer::TestServer() : xythetaz_(4)
                          mc_rtc::gui::FormDataComboInput{"R1", false, {"robots"}},
                          mc_rtc::gui::FormDataComboInput{"R1 surface", false, {"surfaces", "$R1"}}));
   static double start_t = 0.0;
-  builder.addElement({"Forms", "Dynamic"}, mc_rtc::gui::Form(
-                                               "Set time start",
-                                               [](const mc_rtc::Configuration & data) {
-                                                 auto prev = start_t;
-                                                 start_t = data("Start");
-                                                 mc_rtc::log::info("start_t was {:.2f} and is now {:.2f}", prev,
-                                                                   start_t);
-                                               },
-                                               mc_rtc::gui::FormNumberInput("Start", true, []() {
-                                                 start_t += 0.05;
-                                                 return start_t;
-                                               })));
+  static Eigen::Vector3d start_v = Eigen::Vector3d::Zero();
+  auto cb = []() -> const Eigen::Vector3d & {
+    start_v += Eigen::Vector3d{0.5, 1.0, 2.0};
+    return start_v;
+  };
+  check_callback(cb);
+  builder.addElement({"Forms", "Dynamic"},
+                     mc_rtc::gui::Form(
+                         "Restart at given values",
+                         [](const mc_rtc::Configuration & data) {
+                           auto prev = start_t;
+                           start_t = data("Start");
+                           mc_rtc::log::info("start_t was {:.2f} and is now {:.2f}", prev, start_t);
+                           auto prev_v = start_v;
+                           start_v = data("StartVector");
+                           mc_rtc::log::info("start_v was {} and is now {}", prev_v.transpose(), start_v.transpose());
+                         },
+                         mc_rtc::gui::FormNumberInput("Start", true,
+                                                      []() {
+                                                        start_t += 0.05;
+                                                        return start_t;
+                                                      }),
+                         mc_rtc::gui::FormArrayInput(
+                             "StartVector", true,
+                             []() -> const Eigen::Vector3d & {
+                               start_v += Eigen::Vector3d{0.5, 1.0, 2.0};
+                               return start_v;
+                             },
+                             true)));
   builder.addElement(
       {"GUI Markers", "Transforms"}, mc_rtc::gui::Transform("ReadOnly Transform", [this]() { return static_; }),
       mc_rtc::gui::Transform(

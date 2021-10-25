@@ -17,11 +17,16 @@ namespace gui
 namespace details
 {
 
+/** Same as std::void_t */
+template<typename...>
+using void_t = void;
+
 /** Helper for \ref is_getter */
 template<typename GetT>
-constexpr bool is_getter_impl(decltype(std::declval<GetT>()()) *)
+constexpr bool is_getter_impl(void_t<decltype(std::declval<GetT>()())> *)
 {
-  return !std::is_same<decltype(std::declval<GetT>()()), void>::value;
+  using ReturnT = typename std::decay<decltype(std::declval<GetT>()())>::type;
+  return !std::is_pointer<ReturnT>::value && !std::is_same<ReturnT, void>::value;
 }
 
 template<typename GetT>
@@ -41,11 +46,29 @@ constexpr bool is_getter()
   return is_getter_impl<GetT>(nullptr);
 }
 
+/** Tag type for non-getter */
+struct NotAGetter
+{
+};
+
+/** Helper for \ref ReturnType */
+template<typename GetT, bool is_getter>
+struct ReturnTypeImpl
+{
+  using type = typename std::decay<decltype(std::declval<GetT>()())>::type;
+};
+
+template<typename GetT>
+struct ReturnTypeImpl<GetT, false>
+{
+  using type = NotAGetter;
+};
+
 /** Get the return type of a getter function */
 template<typename GetT>
 struct ReturnType
 {
-  using type = typename std::decay<decltype(std::declval<GetT>()())>::type;
+  using type = typename ReturnTypeImpl<GetT, is_getter<GetT>()>::type;
 };
 
 /** Helper */

@@ -293,7 +293,7 @@ inline internal::FormArrayInput<T> FormArrayInput(const std::string & name, bool
   return {name, required, fixed_size};
 }
 
-template<typename T>
+template<typename T, typename std::enable_if<!details::is_getter<T>(), int>::type = 0>
 inline internal::FormArrayInput<T> FormArrayInput(const std::string & name,
                                                   bool required,
                                                   const T & value,
@@ -303,10 +303,10 @@ inline internal::FormArrayInput<T> FormArrayInput(const std::string & name,
 }
 
 template<typename Callback, typename std::enable_if<details::is_getter<Callback>(), int>::type = 0>
-inline internal::FormArrayInput<details::ReturnTypeT<Callback>, Callback> FormArrayInpout(const std::string & name,
-                                                                                          bool required,
-                                                                                          Callback callback,
-                                                                                          bool fixed_size = true)
+inline internal::FormArrayInput<details::ReturnTypeT<Callback>, Callback> FormArrayInput(const std::string & name,
+                                                                                         bool required,
+                                                                                         Callback callback,
+                                                                                         bool fixed_size = true)
 {
   using ReturnT = details::ReturnTypeT<Callback>;
   return {name, required, internal::CallbackOrValue<ReturnT, Callback>{callback}, fixed_size};
