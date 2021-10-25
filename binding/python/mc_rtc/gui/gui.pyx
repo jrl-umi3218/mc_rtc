@@ -228,8 +228,8 @@ cdef class Transform(Element):
       self.impl = c_gui.Transform[c_gui.get_fn,c_gui.set_fn](name, c_gui.make_getter(python_to_conf, get_fn), c_gui.make_setter(conf_to_python_list, set_fn, self._cb_ret_type))
       self.base = &self.impl
 
-cdef class FormCheckbox(object):
-  def __cinit__(self, name, required, default = None):
+class FormCheckbox(object):
+  def __init__(self, name, required, default = None):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
     self.name = name
@@ -242,8 +242,8 @@ cdef class FormCheckbox(object):
       c_gui.add_form_checkbox(form.impl, self.name, self.required, self.default)
 
 
-cdef class FormIntegerInput(object):
-  def __cinit__(self, name, required, default = None):
+class FormIntegerInput(object):
+  def __init__(self, name, required, default = None):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
     self.name = name
@@ -255,8 +255,8 @@ cdef class FormIntegerInput(object):
     else:
       c_gui.add_form_integer(form.impl, self.name, self.required, self.default)
 
-cdef class FormNumberInput(object):
-  def __cinit__(self, name, required, default = None):
+class FormNumberInput(object):
+  def __init__(self, name, required, default = None):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
     self.name = name
@@ -268,12 +268,14 @@ cdef class FormNumberInput(object):
     else:
       c_gui.add_form_number(form.impl, self.name, self.required, self.default)
 
-cdef class FormStringInput(object):
-  def __cinit__(self, name, required, default = None):
+class FormStringInput(object):
+  def __init__(self, name, required, default = None):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
     self.name = name
     self.required = required
+    if isinstance(default, unicode):
+      default = default.encode(u'ascii')
     self.default = default
   def add_to_form(self, Form form):
     if self.default is None:
@@ -281,31 +283,33 @@ cdef class FormStringInput(object):
     else:
       c_gui.add_form_string(form.impl, self.name, self.required, self.default)
 
-cdef class FormNumberArrayInput(object):
-  def __cinit__(self, name, required, default = None, fixed_size = None):
+class FormNumberArrayInput(object):
+  def __init__(self, name, required, default = None, fixed_size = None):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
     self.name = name
     self.required = required
     self.default = default
-    if self.default is None and fixed_size is None:
+    self.fixed_size = fixed_size
+    if self.default is None and self.fixed_size is None:
         self.fixed_size = False
     elif self.default is not None and self.fixed_size is None:
         self.fixed_size = True
-    def add_to_form(self, Form form):
-      if self.default is None:
-        c_gui.add_form_number_array(form.impl, self.name, self.required, self.fixed_size)
-      else:
-        c_gui.add_form_number_array(form.impl, self.name, self.required, self.default, self.fixed_size)
+  def add_to_form(self, Form form):
+    if self.default is None:
+      c_gui.add_form_number_array(form.impl, self.name, self.required, self.fixed_size)
+    else:
+      c_gui.add_form_number_array(form.impl, self.name, self.required, self.default, self.fixed_size)
 
-cdef class FormStringArrayInput(object):
-  def __cinit__(self, name, required, default = None, fixed_size = None):
+class FormStringArrayInput(object):
+  def __init__(self, name, required, default = None, fixed_size = None):
     if isinstance(name, unicode):
       name = name.encode(u'ascii')
     self.name = name
     self.required = required
     self.default = default
-    if self.default is None and fixed_size is None:
+    self.fixed_size = fixed_size
+    if self.default is None and self.fixed_size is None:
         self.fixed_size = False
     elif self.default is not None and self.fixed_size is None:
         self.fixed_size = True
