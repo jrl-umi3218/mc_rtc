@@ -366,75 +366,69 @@ TestServer::TestServer() : xythetaz_(4)
   auto joints = data.add("joints");
   joints.add("Goldorak", std::vector<std::string>{"Goldo_J1", "Goldo_J2", "Goldo_J3"});
   joints.add("Astro", std::vector<std::string>{"Astro_J1", "Astro_J2", "Astro_J3"});
-  builder.addElement({}, mc_rtc::gui::Label("Test", []() { return 2; }));
-  builder.addElement({"Test"}, mc_rtc::gui::Button("Test", []() { std::cout << "Test::Test clicked!\n"; }));
-  builder.addElement({"Test", "data"},
-                     mc_rtc::gui::Button("Test", []() { std::cout << "Test::Test::Test clicked!\n"; }));
   builder.addElement(
-      {"dummy", "provider"}, mc_rtc::gui::Label("value", [this]() { return provider.value; }),
+      {"Labels"}, mc_rtc::gui::Label("value", [this]() { return provider.value; }),
       mc_rtc::gui::ArrayLabel("point", [this]() { return provider.point; }),
       mc_rtc::gui::ArrayLabel("point with labels", {"x", "y", "z"}, [this]() { return provider.point; }));
-  builder.addElement({"Button example"}, mc_rtc::gui::Button("Push me", []() { mc_rtc::log::info("Button pushed"); }));
-  builder.addElement({"Stacked buttons"}, mc_rtc::gui::ElementsStacking::Horizontal,
+  builder.addElement({"Buttons"}, mc_rtc::gui::Button("Push me", []() { mc_rtc::log::info("Button pushed"); }));
+  builder.addElement({"Buttons"}, mc_rtc::gui::ElementsStacking::Horizontal,
                      mc_rtc::gui::Button("Foo", []() { mc_rtc::log::info("Foo pushed"); }),
                      mc_rtc::gui::Button("Bar", []() { mc_rtc::log::info("Bar pushed"); }));
-  builder.addElement({"Checkbox example"},
-                     mc_rtc::gui::Checkbox(
-                         "Checkbox", [this]() { return check_; }, [this]() { check_ = !check_; }));
-  builder.addElement({"StringInput example"}, mc_rtc::gui::StringInput(
-                                                  "StringInput", [this]() { return string_; },
-                                                  [this](const std::string & data) {
-                                                    string_ = data;
-                                                    std::cout << "string_ changed to " << string_ << std::endl;
-                                                  }));
-  builder.addElement({"IntegerInput example"}, mc_rtc::gui::IntegerInput(
-                                                   "IntegerInput", [this]() { return int_; },
-                                                   [this](int data) {
-                                                     int_ = data;
-                                                     std::cout << "int_ changed to " << int_ << std::endl;
-                                                   }));
-  builder.addElement({"NumberInput example"}, mc_rtc::gui::NumberInput(
-                                                  "NumberInput", [this]() { return d_; },
-                                                  [this](double data) {
-                                                    d_ = data;
-                                                    std::cout << "d_ changed to " << d_ << std::endl;
-                                                  }));
-  builder.addElement({"NumberSlider example"}, mc_rtc::gui::NumberSlider(
-                                                   "NumberSlider", [this]() { return slide_; },
-                                                   [this](double s) {
-                                                     slide_ = s;
-                                                     std::cout << "slide_ changed to " << slide_ << std::endl;
-                                                   },
-                                                   -100.0, 100.0));
-  builder.addElement({"ArrayInput example"}, mc_rtc::gui::ArrayInput(
-                                                 "ArrayInput", [this]() { return v_; },
-                                                 [this](const Eigen::VectorXd & data) {
-                                                   v_ = data;
-                                                   std::cout << "v_ changed to " << v_.transpose() << std::endl;
-                                                 }));
-  builder.addElement({"ArrayInput with labels example"},
-                     mc_rtc::gui::ArrayInput(
-                         "ArrayInput with labels", {"x", "y", "z"}, [this]() { return v3_; },
-                         [this](const Eigen::Vector3d & data) {
-                           v3_ = data;
-                           std::cout << "v3_ changed to " << v3_.transpose() << std::endl;
-                         }));
-  builder.addElement({"ComboInput"}, mc_rtc::gui::ComboInput(
-                                         "ComboInput", {"a", "b", "c", "d"}, [this]() { return combo_; },
-                                         [this](const std::string & s) {
-                                           combo_ = s;
-                                           std::cout << "combo_ changed to " << combo_ << std::endl;
-                                         }));
-  builder.addElement({"DataComboInput"}, mc_rtc::gui::DataComboInput(
-                                             "DataComboInput", {"DataComboInput"}, [this]() { return data_combo_; },
-                                             [this](const std::string & s) {
-                                               data_combo_ = s;
-                                               std::cout << "data_combo_ changed to " << data_combo_ << std::endl;
-                                             }));
+  builder.addElement({"Checkbox"}, mc_rtc::gui::Checkbox(
+                                       "Checkbox", [this]() { return check_; }, [this]() { check_ = !check_; }));
+  builder.addElement({"Inputs"}, mc_rtc::gui::StringInput(
+                                     "StringInput", [this]() { return string_; },
+                                     [this](const std::string & data) {
+                                       string_ = data;
+                                       std::cout << "string_ changed to " << string_ << std::endl;
+                                     }));
+  builder.addElement({"Inputs"}, mc_rtc::gui::IntegerInput(
+                                     "IntegerInput", [this]() { return int_; },
+                                     [this](int data) {
+                                       int_ = data;
+                                       std::cout << "int_ changed to " << int_ << std::endl;
+                                     }));
+  builder.addElement({"Inputs"}, mc_rtc::gui::NumberInput(
+                                     "NumberInput", [this]() { return d_; },
+                                     [this](double data) {
+                                       d_ = data;
+                                       std::cout << "d_ changed to " << d_ << std::endl;
+                                     }));
+  builder.addElement({"Inputs"}, mc_rtc::gui::NumberSlider(
+                                     "NumberSlider", [this]() { return slide_; },
+                                     [this](double s) {
+                                       slide_ = s;
+                                       std::cout << "slide_ changed to " << slide_ << std::endl;
+                                     },
+                                     -100.0, 100.0));
+  builder.addElement({"Inputs"}, mc_rtc::gui::ArrayInput(
+                                     "ArrayInput", [this]() { return v_; },
+                                     [this](const Eigen::VectorXd & data) {
+                                       v_ = data;
+                                       std::cout << "v_ changed to " << v_.transpose() << std::endl;
+                                     }));
+  builder.addElement({"Inputs"}, mc_rtc::gui::ArrayInput(
+                                     "ArrayInput with labels", {"x", "y", "z"}, [this]() { return v3_; },
+                                     [this](const Eigen::Vector3d & data) {
+                                       v3_ = data;
+                                       std::cout << "v3_ changed to " << v3_.transpose() << std::endl;
+                                     }));
+  builder.addElement({"Inputs"}, mc_rtc::gui::ComboInput(
+                                     "ComboInput", {"a", "b", "c", "d"}, [this]() { return combo_; },
+                                     [this](const std::string & s) {
+                                       combo_ = s;
+                                       std::cout << "combo_ changed to " << combo_ << std::endl;
+                                     }));
+  builder.addElement({"Inputs"}, mc_rtc::gui::DataComboInput(
+                                     "DataComboInput", {"DataComboInput"}, [this]() { return data_combo_; },
+                                     [this](const std::string & s) {
+                                       data_combo_ = s;
+                                       std::cout << "data_combo_ changed to " << data_combo_ << std::endl;
+                                     }));
   builder.addElement({"Schema"}, mc_rtc::gui::Schema("Add metatask", "MetaTask", [](const mc_rtc::Configuration & c) {
                        std::cout << "Got schema request:\n" << c.dump(true) << std::endl;
                      }));
-  builder.addElement({"Contacts", "Add"},
+  builder.addElement({"Forms", "Static"},
                      mc_rtc::gui::Form(
                          "Add contact",
                          [](const mc_rtc::Configuration & data) {
@@ -451,6 +445,19 @@ TestServer::TestServer() : xythetaz_(4)
                          mc_rtc::gui::FormDataComboInput{"R0 surface", false, {"surfaces", "$R0"}},
                          mc_rtc::gui::FormDataComboInput{"R1", false, {"robots"}},
                          mc_rtc::gui::FormDataComboInput{"R1 surface", false, {"surfaces", "$R1"}}));
+  static double start_t = 0.0;
+  builder.addElement({"Forms", "Dynamic"}, mc_rtc::gui::Form(
+                                               "Set time start",
+                                               [](const mc_rtc::Configuration & data) {
+                                                 auto prev = start_t;
+                                                 start_t = data("Start");
+                                                 mc_rtc::log::info("start_t was {:.2f} and is now {:.2f}", prev,
+                                                                   start_t);
+                                               },
+                                               mc_rtc::gui::FormNumberInput("Start", true, []() {
+                                                 start_t += 0.05;
+                                                 return start_t;
+                                               })));
   builder.addElement(
       {"GUI Markers", "Transforms"}, mc_rtc::gui::Transform("ReadOnly Transform", [this]() { return static_; }),
       mc_rtc::gui::Transform(
