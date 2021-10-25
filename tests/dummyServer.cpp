@@ -440,12 +440,12 @@ TestServer::TestServer() : xythetaz_(4)
                          [](const mc_rtc::Configuration & data) {
                            std::cout << "Got data" << std::endl << data.dump(true) << std::endl;
                          },
-                         mc_rtc::gui::FormCheckbox{"Enabled", false, true},
-                         mc_rtc::gui::FormIntegerInput{"INT", false, 42},
-                         mc_rtc::gui::FormNumberInput{"NUMBER", false, 0.42},
-                         mc_rtc::gui::FormStringInput{"STRING", false, "a certain string"},
-                         mc_rtc::gui::FormArrayInput<Eigen::Vector3d>{"ARRAY_FIXED_SIZE", false, {1, 2, 3}},
-                         mc_rtc::gui::FormArrayInput<std::vector<double>>{"ARRAY_UNBOUNDED", false},
+                         mc_rtc::gui::FormCheckbox("Enabled", false, true),
+                         mc_rtc::gui::FormIntegerInput("INT", false, 42),
+                         mc_rtc::gui::FormNumberInput("NUMBER", false, 0.42),
+                         mc_rtc::gui::FormStringInput("STRING", false, "a certain string"),
+                         mc_rtc::gui::FormArrayInput<Eigen::Vector3d>("ARRAY_FIXED_SIZE", false, {1, 2, 3}),
+                         mc_rtc::gui::FormArrayInput<std::vector<double>>("ARRAY_UNBOUNDED", false),
                          mc_rtc::gui::FormComboInput{"CHOOSE WISELY", false, {"A", "B", "C", "D"}},
                          mc_rtc::gui::FormDataComboInput{"R0", false, {"robots"}},
                          mc_rtc::gui::FormDataComboInput{"R0 surface", false, {"surfaces", "$R0"}},

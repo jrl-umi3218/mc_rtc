@@ -699,7 +699,7 @@ void QPSolver::gui(std::shared_ptr<mc_rtc::gui::StateBuilder> gui)
                          mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
                          mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
                          mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}},
-                         mc_rtc::gui::FormNumberInput{"Friction", false, mc_rbdyn::Contact::defaultFriction}));
+                         mc_rtc::gui::FormNumberInput("Friction", false, mc_rbdyn::Contact::defaultFriction)));
   }
 }
 

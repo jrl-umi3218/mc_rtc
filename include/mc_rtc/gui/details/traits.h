@@ -17,6 +17,30 @@ namespace gui
 namespace details
 {
 
+/** Helper for \ref is_getter */
+template<typename GetT>
+constexpr bool is_getter_impl(decltype(std::declval<GetT>()()) *)
+{
+  return !std::is_same<decltype(std::declval<GetT>()()), void>::value;
+}
+
+template<typename GetT>
+constexpr bool is_getter_impl(...)
+{
+  return false;
+}
+
+/** This traits is true if:
+ *
+ * - \tparam GetT is a nullary functor
+ * - \tparam GetT functor returns a non-void value
+ */
+template<typename GetT>
+constexpr bool is_getter()
+{
+  return is_getter_impl<GetT>(nullptr);
+}
+
 /** Get the return type of a getter function */
 template<typename GetT>
 struct ReturnType
