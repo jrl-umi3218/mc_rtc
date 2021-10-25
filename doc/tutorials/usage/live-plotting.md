@@ -235,3 +235,32 @@ _Note: since `mc_rtc::gui::plot::Polygon` callback returns a `PolygonDescription
 ## `mc_rtc::gui::plot::Polygons`
 
 This is similar to `mc_rtc::gui::plot::Polygon` but the callback must return an `std::vector<PolygonDescription>`. This allows you to provide a changing set of polygons while the plot is active to create simple animations.
+
+## Building graphs at runtime
+
+The API presented in the introduction may give you trouble if you want to build a graph from a selection done at runtime. This can be achieved using the {% doxygen mc_rtc::gui::StateBuilder::addPlotData %} method as shown below:
+
+
+{% capture source %}
+// In this example we have a map of callbacks, the key gives us the label and the callback the data
+// This could be refined by picking different style options for each callback
+std::map<std::string, std::function<double()>> callbacks;
+
+// We create a plot with no Y-data
+gui()->addPlot(
+  "MyPlot",
+  mc_rtc::gui::plot::X("t", [this]() { return t; }));
+
+// Now we add some data based on the runtime inputs
+for(const auto & it : callbacks)
+{
+  const auto & label = it.first;
+  const auto & callback = it.second;
+  gui()->addPlotData("MyPlot", mc_rtc::gui::plot::Y(label, callback));
+}
+{% endcapture %}
+{% include show_source.html lang="cpp" source=source %}
+
+> Note: this makes some runtime checks
+1. If the provided plot does not exist, the call has no effect
+2. If the provided data is one dimensional but the graph is an XY plot, the call has no effect

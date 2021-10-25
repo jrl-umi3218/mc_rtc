@@ -259,6 +259,8 @@ The available elements are:
 
 In all those, `name` will be used to display the name of the element and to retrieve the data in the callback, `required` indicates whether the user must provide a value for this field or not and `default` is optional and provides a default value for the field.
 
+Instead of `default` you can also provide a callback that returns a compatible type.
+
 In `FormArrayInput`, `fixed_size` indicates whether the default value you are providing is of a fixed size or can be expanded/shrinked by the user.
 
 In `FormComboInput`, `values` is the list of values provided to the user in the combo box.
