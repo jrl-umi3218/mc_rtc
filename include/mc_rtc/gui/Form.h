@@ -39,7 +39,8 @@ struct FormImpl : public CallbackElement<Element, Callback>
   void addElement(T && element)
   {
     count_ += 1;
-    if(T::is_dynamic())
+    using ElementT = typename std::decay<T>::type;
+    if(ElementT::is_dynamic())
     {
       addDynamicElement(std::forward<T>(element));
     }
@@ -84,7 +85,8 @@ private:
   template<typename Arg, typename... Args>
   void write_elements(mc_rtc::MessagePackBuilder & builder, Arg && element, Args &&... args)
   {
-    if(Arg::is_dynamic())
+    using ElementT = typename std::decay<Arg>::type;
+    if(ElementT::is_dynamic())
     {
       addDynamicElement(std::forward<Arg>(element));
     }
