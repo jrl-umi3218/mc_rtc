@@ -117,7 +117,14 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   }
 }
 
-MCGlobalController::~MCGlobalController() {}
+MCGlobalController::~MCGlobalController()
+{
+  // We clear all datastore before (potentially) unloading any libraries
+  for(auto & ctl : controllers)
+  {
+    ctl.second->datastore().clear();
+  }
+}
 
 std::shared_ptr<mc_rbdyn::RobotModule> MCGlobalController::get_robot_module()
 {
