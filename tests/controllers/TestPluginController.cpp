@@ -76,7 +76,7 @@ extern "C"
   CONTROLLER_MODULE_API void MC_RTC_CONTROLLER(std::vector<std::string> & names)
   {
     CONTROLLER_CHECK_VERSION("TestPluginController")
-    names = {"TestPluginController::1_2", "TestPluginController::2_3"};
+    names = {"TestPluginController_1_2", "TestPluginController_2_3"};
   }
 
   CONTROLLER_MODULE_API void destroy(mc_control::MCController * ptr)
@@ -95,11 +95,11 @@ extern "C"
                                                           const mc_rtc::Configuration &)
   {
     auto out = new mc_control::TestPluginController(rm, dt);
-    if(name == "TestPluginController::1_2")
+    if(name == "TestPluginController_1_2")
     {
       out->expected_plugins_ = {"Plugin0", "Plugin1", "Plugin2"};
     }
-    else if(name == "TestPluginController::2_3")
+    else if(name == "TestPluginController_2_3")
     {
       out->expected_plugins_ = {"Plugin0", "Plugin2", "Plugin3"};
       out->common_plugins_ = {"Plugin0", "Plugin2"};
