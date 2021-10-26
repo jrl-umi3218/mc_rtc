@@ -387,12 +387,17 @@ void load_configs(const std::string & desc,
                   const std::vector<std::string> & search_path,
                   const bfs::path & user_path,
                   std::unordered_map<std::string, mc_rtc::Configuration> & configs,
-                  const mc_rtc::Configuration & default_config = {})
+                  const mc_rtc::Configuration & default_config = {},
+                  const std::initializer_list<const char *> & filter = {})
 {
   for(const auto & name : names)
   {
     mc_rtc::Configuration c;
     c.load(default_config);
+    for(const auto & k : filter)
+    {
+      c.remove(k);
+    }
     for(const auto & p : search_path)
     {
       bfs::path global = conf_or_yaml(bfs::path(p) / "etc" / (name + ".conf"));
@@ -424,13 +429,18 @@ void MCGlobalController::GlobalConfiguration::load_controllers_configs()
 #else
                bfs::path(std::getenv("APPDATA")) / "mc_rtc/controllers",
 #endif
-               controllers_configs, config);
+               controllers_configs, config, {"Plugins"});
 }
 
 void MCGlobalController::GlobalConfiguration::load_plugin_configs()
 {
+  load_plugin_configs(global_plugins);
+}
+
+void MCGlobalController::GlobalConfiguration::load_plugin_configs(const std::vector<std::string> & plugins)
+{
   // Load plugins configurations
-  load_configs("plugin", global_plugins, global_plugin_paths,
+  load_configs("plugin", plugins, global_plugin_paths,
 #ifndef WIN32
                bfs::path(std::getenv("HOME")) / ".config/mc_rtc/plugins",
 #else
