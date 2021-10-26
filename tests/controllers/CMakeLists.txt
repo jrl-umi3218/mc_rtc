@@ -279,6 +279,61 @@ set(ENABLED_OBSERVERS "")
 set(RUN_OBSERVERS "")
 set(UPDATE_OBSERVERS "")
 
+# Create a test plugin
+add_library(TestPlugin SHARED plugins/TestPlugin.cpp)
+set_target_properties(TestPlugin PROPERTIES FOLDER tests/controllers/plugins)
+target_link_libraries(TestPlugin PUBLIC mc_control)
+set_target_properties(TestPlugin PROPERTIES
+  COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
+  PREFIX ""
+  ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/TestPlugin"
+  LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/TestPlugin"
+  RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/TestPlugin"
+)
+
+# Test controller plugin, checks that
+# - a provided global plugin (Plugin0) is loaded for both controllers
+# - Plugin1 and Plugin2 are used in the first controller
+# - Plugin2 and Plugin3 are used in the second controller
+# - Plugin0 and Plugin2 are the same instance of the plugin
+add_library(TestPluginController SHARED TestPluginController.cpp)
+set_target_properties(TestPluginController PROPERTIES FOLDER tests/controllers/plugins)
+target_link_libraries(TestPluginController PUBLIC Boost::unit_test_framework mc_control)
+set_target_properties(TestPluginController PROPERTIES
+  COMPILE_FLAGS "-DMC_CONTROL_EXPORTS"
+  PREFIX ""
+  ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController"
+  LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController"
+  RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController"
+)
+set(TEST_CONTROLLER_NAME "TestPluginController::1_2\", \"TestPluginController::2_3")
+set(TEST_PLUGINS "Plugin0")
+set(PLUGINS_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}/TestPlugin")
+set(TEST_CONTROLLER_PATH "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController")
+if(CMAKE_CONFIGURATION_TYPES)
+  set(PLUGINS_MODULE_PATH "${PLUGINS_MODULE_PATH}/$<CONFIGURATION>")
+  set(TEST_CONTROLLER_PATH "${TEST_CONTROLLER_PATH}/$<CONFIGURATION>")
+endif()
+set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController/mc_rtc-TestPluginController.conf")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in" ${CONFIG_OUT})
+file(WRITE "${TEST_CONTROLLER_PATH}/etc/TestPluginController::1_2.yaml" "Plugins: [Plugin1, Plugin2]")
+file(WRITE "${TEST_CONTROLLER_PATH}/etc/TestPluginController::2_3.yaml" "Plugins: [Plugin2, Plugin3]")
+if(CMAKE_CONFIGURATION_TYPES)
+  set(CONFIG_IN "${CONFIG_OUT}")
+  set(CONFIG_FOLDER_OUT "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController/$<CONFIGURATION>")
+  set(CONFIG_OUT "${CONFIG_FOLDER_OUT}/mc_rtc-TestPluginController.conf")
+  file(GENERATE OUTPUT "${CONFIG_OUT}" INPUT "${CONFIG_IN}")
+  file(GENERATE
+    OUTPUT "${CONFIG_FOLDER_OUT}/etc/TestPluginController::1_2.yaml"
+    INPUT "${TEST_CONTROLLER_PATH}/etc/TestPluginController::1_2.yaml"
+  )
+  file(GENERATE
+    OUTPUT "${CONFIG_FOLDER_OUT}/etc/TestPluginController::2_3.yaml"
+    INPUT "${TEST_CONTROLLER_PATH}/etc/TestPluginController::2_3.yaml"
+  )
+endif()
+mc_rtc_add_test(NAME TestPluginController COMMAND test_controller_ticker --run_test=RUN -- "${CONFIG_OUT}" 5 TestPluginController::2_3)
+
 # Test Python bindings
 if(PYTHON_BINDING)
   file(READ "ObserverPipelinesPython.json" OBSERVER_PIPELINES)
