@@ -47,8 +47,7 @@ EndEffectorTask::EndEffectorTask(const std::string & bodyName,
 
   type_ = "body6d";
   name_ = "body6d_" + robot.name() + "_" + bodyName;
-  positionTask->name(name_ + "_position");
-  orientationTask->name(name_ + "_orientation");
+  name(name_);
 }
 
 void EndEffectorTask::reset()
@@ -243,6 +242,13 @@ void EndEffectorTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
       mc_rtc::gui::NumberInput(
           "weight", [this]() { return this->orientationTask->weight(); },
           [this](const double & w) { this->orientationTask->weight(w); }));
+}
+
+void EndEffectorTask::name(const std::string & name)
+{
+  MetaTask::name(name);
+  positionTask->name(name + "_position");
+  orientationTask->name(name + "_orientation");
 }
 
 } // namespace mc_tasks
