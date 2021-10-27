@@ -120,12 +120,11 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
    * \param yRightConfig Configuration for the right axis
    *
    */
-  template<typename T, typename... Args>
+  template<typename... Args>
   void addXYPlot(const std::string & name,
                  plot::AxisConfiguration xConfig,
                  plot::AxisConfiguration yLeftConfig,
                  plot::AxisConfiguration yRightConfig,
-                 T data,
                  Args... args);
 
   /** Add a plot identified by the provided name
@@ -139,11 +138,10 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
    * \param yLeftConfig Configuration for the left axis
    *
    */
-  template<typename T, typename... Args>
+  template<typename... Args>
   void addXYPlot(const std::string & name,
                  plot::AxisConfiguration xConfig,
                  plot::AxisConfiguration yLeftConfig,
-                 T data,
                  Args... args);
 
   /** Add a plot identified by the provided name
@@ -157,8 +155,8 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
    * \param yLeftConfig Configuration for the left axis
    *
    */
-  template<typename T, typename... Args>
-  void addXYPlot(const std::string & name, plot::AxisConfiguration xConfig, T data, Args... args);
+  template<typename... Args>
+  void addXYPlot(const std::string & name, plot::AxisConfiguration xConfig, Args... args);
 
   /** Add a plot identified by the provided name
    *
@@ -171,8 +169,8 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
    * \param yLeftConfig Configuration for the left axis
    *
    */
-  template<typename T, typename... Args>
-  void addXYPlot(const std::string & name, T data, Args... args);
+  template<typename... Args>
+  void addXYPlot(const std::string & name, Args... args);
 
   /** Add a plot identified by the provided name
    *

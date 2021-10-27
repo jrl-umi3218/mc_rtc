@@ -47,28 +47,28 @@ constexpr bool is_Abscissa()
   return T::type == Type::Abscissa;
 }
 
-template<typename T>
+template<bool = true>
 constexpr bool is_not_Abscissa()
 {
-  return T::type != Type::Abscissa;
+  return true;
 }
 
-template<typename T, typename T2, typename... Args>
+template<typename T, typename... Args>
 constexpr bool is_not_Abscissa()
 {
-  return is_not_Abscissa<T>() && is_not_Abscissa<T2, Args...>();
+  return (T::type != Type::Abscissa) && is_not_Abscissa<Args...>();
 }
 
-template<typename T>
+template<bool = true>
 constexpr bool is_2d()
 {
-  return T::type != Type::Abscissa && T::type != Type::Ordinate;
+  return true;
 }
 
-template<typename T, typename T2, typename... Args>
+template<typename T, typename... Args>
 constexpr bool is_2d()
 {
-  return is_2d<T>() && is_2d<T2, Args...>();
+  return T::type != Type::Abscissa && T::type != Type::Ordinate && is_2d<Args...>();
 }
 
 /** Range for abscissa or ordinate display

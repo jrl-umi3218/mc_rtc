@@ -99,55 +99,52 @@ StateBuilder::ElementStore::ElementStore(T self, const Category & category, Elem
   };
 }
 
-template<typename T, typename... Args>
-void StateBuilder::addXYPlot(const std::string & name, T data, Args... args)
+template<typename... Args>
+void StateBuilder::addXYPlot(const std::string & name, Args... args)
 {
-  addXYPlot(name, {}, {}, {}, data, args...);
+  addXYPlot(name, {}, {}, {}, args...);
 }
 
-template<typename T, typename... Args>
-void StateBuilder::addXYPlot(const std::string & name, plot::AxisConfiguration xConfig, T data, Args... args)
+template<typename... Args>
+void StateBuilder::addXYPlot(const std::string & name, plot::AxisConfiguration xConfig, Args... args)
 {
-  addXYPlot(name, xConfig, {}, {}, data, args...);
+  addXYPlot(name, xConfig, {}, {}, args...);
 }
 
-template<typename T, typename... Args>
+template<typename... Args>
 void StateBuilder::addXYPlot(const std::string & name,
                              plot::AxisConfiguration xConfig,
                              plot::AxisConfiguration yLeftConfig,
-                             T data,
                              Args... args)
 {
-  addXYPlot(name, xConfig, yLeftConfig, {}, data, args...);
+  addXYPlot(name, xConfig, yLeftConfig, {}, args...);
 }
 
-template<typename T, typename... Args>
+template<typename... Args>
 void StateBuilder::addXYPlot(const std::string & name,
                              plot::AxisConfiguration xConfig,
                              plot::AxisConfiguration yLeftConfig,
                              plot::AxisConfiguration yRightConfig,
-                             T data,
                              Args... args)
 {
-  static_assert(plot::is_2d<T, Args...>(), "All provided plots in an XY plot must provide 2d data");
+  static_assert(plot::is_2d<Args...>(), "All provided plots in an XY plot must provide 2d data");
   if(plots_.count(name) != 0)
   {
     log::error("A plot titled {} is still active", name);
     log::warning("Discarding request to add this plot");
     return;
   }
-  // One entry for the type, the plot id, the name, the x and y axis configs and the data
-  uint64_t sz = 7;
+  // One entry for the type, the plot id, the name, the x and y axis configs
+  uint64_t sz = 6;
   uint64_t id = ++plot_id_;
-  plot_callback_function_t cb = [data, id, sz, xConfig, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
-                                                                                   const std::string & name) {
+  plot_callback_function_t cb = [id, sz, xConfig, yLeftConfig, yRightConfig](mc_rtc::MessagePackBuilder & builder,
+                                                                             const std::string & name) {
     builder.write(static_cast<uint64_t>(plot::Plot::XY));
     builder.write(id);
     builder.write(name);
     xConfig.write(builder);
     yLeftConfig.write(builder);
     yRightConfig.write(builder);
-    data.write(builder);
   };
   plots_[name] = {plot::Plot::XY, sz, cb};
   addPlotData(plots_[name], args...);
