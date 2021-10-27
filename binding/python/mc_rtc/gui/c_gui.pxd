@@ -88,31 +88,6 @@ cdef extern from "<mc_rtc/gui.h>" namespace "mc_rtc::gui":
     pass
   cdef TransformImpl[GetT,SetT] Transform[GetT,SetT](const string&, GetT, SetT)
 
-  cdef cppclass FormCheckbox:
-    FormCheckbox()
-    FormCheckbox(const string&, cppbool)
-    FormCheckbox(const string&, cppbool, cppbool)
-
-  cdef cppclass FormIntegerInput:
-    FormIntegerInput()
-    FormIntegerInput(const string&, cppbool)
-    FormIntegerInput(const string&, cppbool, const int&)
-
-  cdef cppclass FormNumberInput:
-    FormNumberInput()
-    FormNumberInput(const string&, cppbool)
-    FormNumberInput(const string&, cppbool, const double&)
-
-  cdef cppclass FormStringInput:
-    FormStringInput()
-    FormStringInput(const string&, cppbool)
-    FormStringInput(const string&, cppbool, const string&)
-
-  cdef cppclass FormArrayInput[T]:
-    FormArrayInput()
-    FormArrayInput(const string&, cppbool, const T&, cppbool)
-    FormArrayInput(const string&, cppbool, cppbool)
-
   cdef cppclass FormComboInput:
     FormComboInput()
     FormComboInput(const string&, cppbool, const vector[string]&, cppbool)
@@ -144,3 +119,21 @@ cdef extern from "mc_rtc_gui_wrapper.hpp":
   get_fn make_getter[T,U](T,U)
   set_fn make_setter[T,Cb,t](T, Cb, t)
   void_cb make_void_cb[T, Cb](T, Cb)
+
+  void add_form_checkbox[Callback](FormImpl[Callback] & form, const string & name, cppbool required)
+  void add_form_checkbox[Callback](FormImpl[Callback] & form, const string & name, cppbool required, cppbool value)
+
+  void add_form_integer[Callback](FormImpl[Callback] & form, const string & name, cppbool required)
+  void add_form_integer[Callback](FormImpl[Callback] & form, const string & name, cppbool required, int value)
+
+  void add_form_number[Callback](FormImpl[Callback] & form, const string & name, cppbool required)
+  void add_form_number[Callback](FormImpl[Callback] & form, const string & name, cppbool required, double value)
+
+  void add_form_string[Callback](FormImpl[Callback] & form, const string & name, cppbool required)
+  void add_form_string[Callback](FormImpl[Callback] & form, const string & name, cppbool required, const string & value)
+
+  void add_form_number_array[Callback](FormImpl[Callback] & form, const string & name, cppbool required, cppbool fixed_size)
+  void add_form_number_array[Callback](FormImpl[Callback] & form, const string & name, cppbool required, const vector[double] & value, cppbool fixed_size)
+
+  void add_form_string_array[Callback](FormImpl[Callback] & form, const string & name, cppbool required, cppbool fixed_size)
+  void add_form_string_array[Callback](FormImpl[Callback] & form, const string & name, cppbool required, const vector[string] & value, cppbool fixed_size)

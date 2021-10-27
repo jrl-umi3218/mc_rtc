@@ -297,8 +297,8 @@ void Controller::reset(const ControllerResetData & data)
                          mc_rtc::gui::FormDataComboInput{"R0 surface", true, {"surfaces", "$R0"}},
                          mc_rtc::gui::FormDataComboInput{"R1", true, {"robots"}},
                          mc_rtc::gui::FormDataComboInput{"R1 surface", true, {"surfaces", "$R1"}},
-                         mc_rtc::gui::FormNumberInput{"Friction", false, mc_rbdyn::Contact::defaultFriction},
-                         mc_rtc::gui::FormArrayInput<Eigen::Vector6d>{"dof", false, Eigen::Vector6d::Ones()}));
+                         mc_rtc::gui::FormNumberInput("Friction", false, mc_rbdyn::Contact::defaultFriction),
+                         mc_rtc::gui::FormArrayInput<Eigen::Vector6d>("dof", false, Eigen::Vector6d::Ones())));
   }
   logger().addLogEntry("perf_FSM_UpdateContacts", [this]() { return updateContacts_dt_.count(); });
   startIdleState();

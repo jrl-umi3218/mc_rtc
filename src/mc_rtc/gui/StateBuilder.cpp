@@ -148,7 +148,9 @@ size_t StateBuilder::update(std::vector<char> & buffer)
   builder.start_array(plots_.size());
   for(auto & p : plots_)
   {
-    p.second(builder, p.first);
+    builder.start_array(p.second.msg_size);
+    p.second.callback(builder, p.first);
+    builder.finish_array();
   }
   builder.finish_array();
 
