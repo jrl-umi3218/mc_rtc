@@ -1,5 +1,7 @@
 var NAVTREEINDEX7 =
 {
+"structmc__filter_1_1ExponentialMovingAverage.html#a156a26de235d293b4e94cb1f269dd16c":[3,0,3,0,0],
+"structmc__filter_1_1ExponentialMovingAverage.html#a25e06aceff6cb86deaba24edc060ef8f":[3,0,3,0,5],
 "structmc__filter_1_1ExponentialMovingAverage.html#a4fe8efb515654281aa77b87296449f89":[3,0,3,0,3],
 "structmc__filter_1_1ExponentialMovingAverage.html#a59a37436a454f4caa5d9ba49ab85b2e8":[3,0,3,0,2],
 "structmc__filter_1_1ExponentialMovingAverage.html#a5e116fb401af8c027896173066d8b8ed":[3,0,3,0,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX7 =
 "structmc__rbdyn_1_1BodySensor.html#a57035ac9c86e2d085cce10e3013b2a5d":[3,0,6,3,7],
 "structmc__rbdyn_1_1BodySensor.html#a61147130274da6eda00b8d5a1ec0e5e7":[3,0,6,3,12],
 "structmc__rbdyn_1_1BodySensor.html#a636b6a07fb613352e458b6636fcf240f":[3,0,6,3,11],
-"structmc__rbdyn_1_1BodySensor.html#a644c0b250aaa8890d6b8f9ea26f2afb6":[3,0,6,3,22],
-"structmc__rbdyn_1_1BodySensor.html#a9544ac0b6bb997b65db638bf52b2d5a3":[3,0,6,3,19],
-"structmc__rbdyn_1_1BodySensor.html#aabbebc2c66352f66de68032c25bdaa1a":[3,0,6,3,8]
+"structmc__rbdyn_1_1BodySensor.html#a644c0b250aaa8890d6b8f9ea26f2afb6":[3,0,6,3,22]
 };

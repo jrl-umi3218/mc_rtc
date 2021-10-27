@@ -14,6 +14,5 @@ var searchData=
   ['bodyid',['bodyId',['../structmc__tasks_1_1AddRemoveContactTask.html#a8846f1a33c20ed70bf425b49027aba12',1,'mc_tasks::AddRemoveContactTask']]],
   ['bodyindex',['bodyIndex',['../structmc__tasks_1_1EndEffectorTask.html#aab6f5903d901833f87f887c1285e7f98',1,'mc_tasks::EndEffectorTask']]],
   ['bodyname',['bodyName',['../structmc__tasks_1_1EndEffectorTask.html#af41ef875b2819415282f6e416345e992',1,'mc_tasks::EndEffectorTask::bodyName()'],['../structmc__tasks_1_1OrientationTask.html#a97da00bdf087f04a99473553efaa6390',1,'mc_tasks::OrientationTask::bodyName()'],['../structmc__tasks_1_1PositionTask.html#ab5a74d25feb1e33ed9895903b23886fc',1,'mc_tasks::PositionTask::bodyName()'],['../structmc__tasks_1_1VectorOrientationTask.html#aff910f1c3ed3b698c50408dfb66eb7c0',1,'mc_tasks::VectorOrientationTask::bodyName()']]],
-  ['box',['BOX',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00567.html#a991c06d670537792e7834e72140c9730a45a2c7a3c24d93db15c6772f3c6448be',1,'mc_rbdyn_urdf::Geometry']]],
   ['bspline',['bspline',['../structmc__tasks_1_1BSplineTrajectoryTask.html#ac881b5b505b63c5e89bec2e598c767e0',1,'mc_tasks::BSplineTrajectoryTask::bspline()'],['../structmc__tasks_1_1ExactCubicTrajectoryTask.html#a825212a1055ad43955b8284562905f13',1,'mc_tasks::ExactCubicTrajectoryTask::bspline()']]]
 ];

@@ -331,6 +331,7 @@
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#mc_rtcguiplotpolygons">mc_rtc::gui::plot::Polygons</a></li>
+<li class="toc-entry toc-h2"><a href="#building-graphs-at-runtime">Building graphs at runtime</a></li>
 </ul>
             </div>
           </div>
@@ -635,6 +636,44 @@
 <h2 id="mc_rtcguiplotpolygons"><code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygons</code></h2>
 
 <p>This is similar to <code class="language-plaintext highlighter-rouge">mc_rtc::gui::plot::Polygon</code> but the callback must return an <code class="language-plaintext highlighter-rouge">std::vector&lt;PolygonDescription&gt;</code>. This allows you to provide a changing set of polygons while the plot is active to create simple animations.</p>
+
+<h2 id="building-graphs-at-runtime">Building graphs at runtime</h2>
+
+<p>The API presented in the introduction may give you trouble if you want to build a graph from a selection done at runtime. This can be achieved using the <a href="/mc_rtc/doxygen.html#structmc__rtc_1_1gui_1_1StateBuilder#a9b0cc50c6146449aaa359f2f8a346b44" target="blank_"><code>mc_rtc::gui::StateBuilder::addPlotData</code></a> method as shown below:</p>
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+
+
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="c1">// In this example we have a map of callbacks, the key gives us the label and the callback the data</span>
+<span class="c1">// This could be refined by picking different style options for each callback</span>
+<span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">()</span><span class="o">&gt;&gt;</span> <span class="n">callbacks</span><span class="p">;</span>
+
+<span class="c1">// We create a plot with no Y-data</span>
+<span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlot</span><span class="p">(</span>
+  <span class="s">"MyPlot"</span><span class="p">,</span>
+  <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">X</span><span class="p">(</span><span class="s">"t"</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}));</span>
+
+<span class="c1">// Now we add some data based on the runtime inputs</span>
+<span class="k">for</span><span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">it</span> <span class="o">:</span> <span class="n">callbacks</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">label</span> <span class="o">=</span> <span class="n">it</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+  <span class="k">const</span> <span class="k">auto</span> <span class="o">&amp;</span> <span class="n">callback</span> <span class="o">=</span> <span class="n">it</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+  <span class="n">gui</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addPlotData</span><span class="p">(</span><span class="s">"MyPlot"</span><span class="p">,</span> <span class="n">mc_rtc</span><span class="o">::</span><span class="n">gui</span><span class="o">::</span><span class="n">plot</span><span class="o">::</span><span class="n">Y</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">callback</span><span class="p">));</span>
+<span class="p">}</span></code></pre></figure>
+
+
+  
+  </div>
+</div>
+
+<blockquote>
+  <p>Note: this makes some runtime checks</p>
+  <ol>
+    <li>If the provided plot does not exist, the call has no effect</li>
+    <li>If the provided data is one dimensional but the graph is an XY plot, the call has no effect</li>
+  </ol>
+</blockquote>
 
 
         <hr/>

@@ -6,6 +6,5 @@ var searchData=
   ['updatenrvarsdata',['UpdateNrVarsData',['../structmc__solver_1_1utils_1_1UpdateNrVarsData.html',1,'mc_solver::utils']]],
   ['updatenrvarslambda',['UpdateNrVarsLambda',['../structmc__solver_1_1utils_1_1UpdateNrVarsLambda.html',1,'mc_solver::utils']]],
   ['updatenrvarsrobot',['UpdateNrVarsRobot',['../structmc__solver_1_1utils_1_1UpdateNrVarsRobot.html',1,'mc_solver::utils']]],
-  ['updatetag',['UpdateTag',['../structmc__solver_1_1utils_1_1UpdateTag.html',1,'mc_solver::utils']]],
-  ['urdfparserresult',['URDFParserResult',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00591.html',1,'mc_rbdyn_urdf']]]
+  ['updatetag',['UpdateTag',['../structmc__solver_1_1utils_1_1UpdateTag.html',1,'mc_solver::utils']]]
 ];

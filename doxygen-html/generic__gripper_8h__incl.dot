@@ -118,13 +118,11 @@ digraph "include/mc_control/generic_gripper.h"
   Node37 [label="mc_rtc/constants.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$constants_8h.html"];
   Node37 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node38 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node38 [label="mc_rbdyn_urdf/urdf.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag$a00005.html"];
-  Node38 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node39 [label="mc_rbdyn_urdf/api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/mc_rbdyn_urdf.doxytag$a00002.html"];
+  Node38 [label="mc_rbdyn_urdf/urdf.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node2 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 [label="RBDyn/parsers/common.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node2 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node40 [label="RBDyn/parsers/common.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node2 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node41 [label="sch/S_Object/S_Object.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node40 [label="sch/S_Object/S_Object.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node2 -> Node17 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node2 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

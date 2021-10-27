@@ -20,11 +20,14 @@ var hierarchy =
     [ "mc_rbdyn::Base", "structmc__rbdyn_1_1Base.html", null ],
     [ "mc_rtc::log::callback_is_serializable< T, typename >", "structmc__rtc_1_1log_1_1callback__is__serializable.html", null ],
     [ "mc_rtc::log::callback_is_serializable< T, void_t< typename std::result_of< T()>::type > >", "structmc__rtc_1_1log_1_1callback__is__serializable_3_01T_00_01void__t_3_01typename_01std_1_1resu4170dc16e1156e9ccfa8a0a7bb9a6205.html", null ],
+    [ "mc_rtc::gui::internal::CallbackOrValue< T, Callback >", "structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html", null ],
+    [ "mc_rtc::gui::internal::CallbackOrValue< T, DataCallback >", "structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html", null ],
+    [ "mc_rtc::gui::internal::CallbackOrValue< T, void >", "structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue_3_01T_00_01void_01_4.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, Args >", "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T >", "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType_3_01GetT_00_01T_01_4.html", null ],
     [ "mc_rtc::gui::details::CheckReturnType< GetT, T, Args... >", "structmc__rtc_1_1gui_1_1details_1_1CheckReturnType_3_01GetT_00_01T_00_01Args_8_8_8_01_4.html", null ],
-    [ "mc_rbdyn::Collision", "structmc__rbdyn_1_1Collision.html", null ],
     [ "Collision", "classCollision.html", null ],
+    [ "mc_rbdyn::Collision", "structmc__rbdyn_1_1Collision.html", null ],
     [ "mc_rtc::gui::Color", "structmc__rtc_1_1gui_1_1Color.html", null ],
     [ "mc_control::CompletionCriteria", "structmc__control_1_1CompletionCriteria.html", null ],
     [ "mc_rbdyn::CompoundJointConstraintDescription", "structmc__rbdyn_1_1CompoundJointConstraintDescription.html", null ],
@@ -119,8 +122,8 @@ var hierarchy =
       ] ],
       [ "mc_solver::RobotEnvCollisionsConstraint", "structmc__solver_1_1RobotEnvCollisionsConstraint.html", null ]
     ] ],
-    [ "mc_tasks::lipm_stabilizer::internal::Contact", "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html", null ],
     [ "mc_rbdyn::Contact", "structmc__rbdyn_1_1Contact.html", null ],
+    [ "mc_tasks::lipm_stabilizer::internal::Contact", "structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html", null ],
     [ "mc_control::fsm::Contact", "structmc__control_1_1fsm_1_1Contact.html", null ],
     [ "mc_tasks::lipm_stabilizer::ContactDescription", "structmc__tasks_1_1lipm__stabilizer_1_1ContactDescription.html", null ],
     [ "mc_solver::ContactMsg", "structmc__solver_1_1ContactMsg.html", null ],
@@ -209,8 +212,8 @@ var hierarchy =
       [ "fmt::formatter< mc_rtc::Configuration >", "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html", null ]
     ] ],
     [ "mc_rtc::gui::FormElement< Derived, element >", "structmc__rtc_1_1gui_1_1FormElement.html", null ],
-    [ "mc_rtc::gui::FormElement< FormArrayInput< T >, Elements::ArrayInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
-      [ "mc_rtc::gui::FormArrayInput< T >", "structmc__rtc_1_1gui_1_1FormArrayInput.html", null ]
+    [ "mc_rtc::gui::FormElement< FormArrayInput< T, DataCallback >, Elements::ArrayInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
+      [ "mc_rtc::gui::internal::FormArrayInput< T, DataCallback >", "structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html", null ]
     ] ],
     [ "mc_rtc::gui::FormElement< FormComboInput, Elements::ComboInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
       [ "mc_rtc::gui::FormComboInput", "structmc__rtc_1_1gui_1_1FormComboInput.html", null ]
@@ -218,8 +221,8 @@ var hierarchy =
     [ "mc_rtc::gui::FormElement< FormDataComboInput, Elements::DataComboInput >", "structmc__rtc_1_1gui_1_1FormElement.html", [
       [ "mc_rtc::gui::FormDataComboInput", "structmc__rtc_1_1gui_1_1FormDataComboInput.html", null ]
     ] ],
-    [ "mc_rtc::gui::FormElement< FormDataInput< T, element >, element >", "structmc__rtc_1_1gui_1_1FormElement.html", [
-      [ "mc_rtc::gui::FormDataInput< T, element >", "structmc__rtc_1_1gui_1_1FormDataInput.html", null ]
+    [ "mc_rtc::gui::FormElement< FormDataInput< T, element, DataCallback >, element >", "structmc__rtc_1_1gui_1_1FormElement.html", [
+      [ "mc_rtc::gui::internal::FormDataInput< T, element, DataCallback >", "structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html", null ]
     ] ],
     [ "mc_solver::GenericLoader< Derived, T >", "structmc__solver_1_1GenericLoader.html", null ],
     [ "mc_solver::GenericLoader< ConstraintSetLoader, ConstraintSet >", "structmc__solver_1_1GenericLoader.html", [
@@ -237,8 +240,8 @@ var hierarchy =
     [ "mc_control::GlobalPlugin", "structmc__control_1_1GlobalPlugin.html", null ],
     [ "mc_control::GlobalPlugin::GlobalPluginConfiguration", "structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html", null ],
     [ "mc_control::GlobalPluginLoader", "structmc__control_1_1GlobalPluginLoader.html", null ],
-    [ "mc_control::Gripper", "structmc__control_1_1Gripper.html", null ],
     [ "mc_rbdyn::RobotModule::Gripper", "structmc__rbdyn_1_1RobotModule_1_1Gripper.html", null ],
+    [ "mc_control::Gripper", "structmc__control_1_1Gripper.html", null ],
     [ "mc_solver::GenericLoader< Derived, T >::Handle", "structmc__solver_1_1GenericLoader_1_1Handle.html", null ],
     [ "std::hash< mc_control::fsm::Contact >", "structstd_1_1hash_3_01mc__control_1_1fsm_1_1Contact_01_4.html", null ],
     [ "mc_tasks::force::ImpedanceGains", "structmc__tasks_1_1force_1_1ImpedanceGains.html", null ],
@@ -352,6 +355,7 @@ var hierarchy =
         [ "mc_control::fsm::StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", null ]
       ] ]
     ] ],
+    [ "mc_rtc::gui::details::NotAGetter", "structmc__rtc_1_1gui_1_1details_1_1NotAGetter.html", null ],
     [ "mc_rtc::ObjectLoader< T >::ObjectDeleter", "structmc__rtc_1_1ObjectLoader_1_1ObjectDeleter.html", null ],
     [ "mc_observers::Observer", "structmc__observers_1_1Observer.html", [
       [ "mc_observers::BodySensorObserver", "structmc__observers_1_1BodySensorObserver.html", null ],
@@ -382,6 +386,8 @@ var hierarchy =
     [ "mc_rtc::gui::plot::Range", "structmc__rtc_1_1gui_1_1plot_1_1Range.html", null ],
     [ "mc_rtc::log::FlatLog::record", "structmc__rtc_1_1log_1_1FlatLog_1_1record.html", null ],
     [ "mc_rtc::gui::details::ReturnType< GetT >", "structmc__rtc_1_1gui_1_1details_1_1ReturnType.html", null ],
+    [ "mc_rtc::gui::details::ReturnTypeImpl< GetT, is_getter >", "structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl.html", null ],
+    [ "mc_rtc::gui::details::ReturnTypeImpl< GetT, false >", "structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl_3_01GetT_00_01false_01_4.html", null ],
     [ "mc_rbdyn::Robot", "structmc__rbdyn_1_1Robot.html", null ],
     [ "mc_rbdyn::RobotLoader", "structmc__rbdyn_1_1RobotLoader.html", null ],
     [ "mc_rbdyn::RobotModule", "structmc__rbdyn_1_1RobotModule.html", null ],

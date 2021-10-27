@@ -1,6 +1,7 @@
 var namespacemc__rtc_1_1gui =
 [
     [ "details", "namespacemc__rtc_1_1gui_1_1details.html", "namespacemc__rtc_1_1gui_1_1details" ],
+    [ "internal", "namespacemc__rtc_1_1gui_1_1internal.html", "namespacemc__rtc_1_1gui_1_1internal" ],
     [ "plot", "namespacemc__rtc_1_1gui_1_1plot.html", "namespacemc__rtc_1_1gui_1_1plot" ],
     [ "ArrayInputImpl", "structmc__rtc_1_1gui_1_1ArrayInputImpl.html", "structmc__rtc_1_1gui_1_1ArrayInputImpl" ],
     [ "ArrayLabelImpl", "structmc__rtc_1_1gui_1_1ArrayLabelImpl.html", "structmc__rtc_1_1gui_1_1ArrayLabelImpl" ],
@@ -19,10 +20,8 @@ var namespacemc__rtc_1_1gui =
     [ "ForceConfig", "structmc__rtc_1_1gui_1_1ForceConfig.html", "structmc__rtc_1_1gui_1_1ForceConfig" ],
     [ "ForceImpl", "structmc__rtc_1_1gui_1_1ForceImpl.html", "structmc__rtc_1_1gui_1_1ForceImpl" ],
     [ "ForceROImpl", "structmc__rtc_1_1gui_1_1ForceROImpl.html", "structmc__rtc_1_1gui_1_1ForceROImpl" ],
-    [ "FormArrayInput", "structmc__rtc_1_1gui_1_1FormArrayInput.html", "structmc__rtc_1_1gui_1_1FormArrayInput" ],
     [ "FormComboInput", "structmc__rtc_1_1gui_1_1FormComboInput.html", "structmc__rtc_1_1gui_1_1FormComboInput" ],
     [ "FormDataComboInput", "structmc__rtc_1_1gui_1_1FormDataComboInput.html", "structmc__rtc_1_1gui_1_1FormDataComboInput" ],
-    [ "FormDataInput", "structmc__rtc_1_1gui_1_1FormDataInput.html", "structmc__rtc_1_1gui_1_1FormDataInput" ],
     [ "FormElement", "structmc__rtc_1_1gui_1_1FormElement.html", "structmc__rtc_1_1gui_1_1FormElement" ],
     [ "FormImpl", "structmc__rtc_1_1gui_1_1FormImpl.html", "structmc__rtc_1_1gui_1_1FormImpl" ],
     [ "IntegerInputImpl", "structmc__rtc_1_1gui_1_1IntegerInputImpl.html", "structmc__rtc_1_1gui_1_1IntegerInputImpl" ],

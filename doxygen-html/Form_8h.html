@@ -72,13 +72,14 @@ $(document).ready(function(){initNavTree('Form_8h.html','');});
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Form.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="el" href="elements_8h_source.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="el" href="traits_8h_source.html">mc_rtc/gui/details/traits.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="elements_8h_source.html">mc_rtc/gui/elements.h</a>&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Form.h:</div>
 <div class="dyncontent">
@@ -102,9 +103,13 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1FormElement.html">mc_rtc::gui::FormElement&lt; Derived, element &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1FormDataInput.html">mc_rtc::gui::FormDataInput&lt; T, element &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html">mc_rtc::gui::internal::CallbackOrValue&lt; T, Callback &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1FormArrayInput.html">mc_rtc::gui::FormArrayInput&lt; T &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue_3_01T_00_01void_01_4.html">mc_rtc::gui::internal::CallbackOrValue&lt; T, void &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html">mc_rtc::gui::internal::FormDataInput&lt; T, element, DataCallback &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html">mc_rtc::gui::internal::FormArrayInput&lt; T, DataCallback &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1gui_1_1FormComboInput.html">mc_rtc::gui::FormComboInput</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -117,24 +122,64 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemc__rtc_1_1gui"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html">mc_rtc::gui</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemc__rtc_1_1gui_1_1internal"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui_1_1internal.html">mc_rtc::gui::internal</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a2683c87b0180a62bc5231a60c18aca7a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a2683c87b0180a62bc5231a60c18aca7a">mc_rtc::gui::FormCheckbox</a> = FormDataInput&lt; bool, Elements::Checkbox &gt;</td></tr>
-<tr class="separator:a2683c87b0180a62bc5231a60c18aca7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae145da8274a4c06981900ea890979eb9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#ae145da8274a4c06981900ea890979eb9">mc_rtc::gui::FormIntegerInput</a> = FormDataInput&lt; int, Elements::IntegerInput &gt;</td></tr>
-<tr class="separator:ae145da8274a4c06981900ea890979eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc4205d5b7c28257703d3c3c515c9741"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#afc4205d5b7c28257703d3c3c515c9741">mc_rtc::gui::FormNumberInput</a> = FormDataInput&lt; double, Elements::NumberInput &gt;</td></tr>
-<tr class="separator:afc4205d5b7c28257703d3c3c515c9741"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9c26bdeef8d098c11f4edb0f105fef9"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#ad9c26bdeef8d098c11f4edb0f105fef9">mc_rtc::gui::FormStringInput</a> = FormDataInput&lt; std::string, Elements::StringInput &gt;</td></tr>
-<tr class="separator:ad9c26bdeef8d098c11f4edb0f105fef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a062345796d2fda83f914c01ae308ae33"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Form_8h.html#a062345796d2fda83f914c01ae308ae33">MAKE_DATA_INPUT_HELPER</a>(DATAT,  ELEMENT,  FNAME)</td></tr>
+<tr class="separator:a062345796d2fda83f914c01ae308ae33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a7dfdb12d58d770f35ea3c3643d2ac95c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a7dfdb12d58d770f35ea3c3643d2ac95c"><td class="memTemplItemLeft" align="right" valign="top">internal::FormArrayInput&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a7dfdb12d58d770f35ea3c3643d2ac95c">mc_rtc::gui::FormArrayInput</a> (const std::string &amp;name, bool required, bool fixed_size=false)</td></tr>
+<tr class="separator:a7dfdb12d58d770f35ea3c3643d2ac95c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a373b1db44b534128d823f218885daaa4"><td class="memTemplParams" colspan="2">template&lt;typename T , typename std::enable_if&lt;!details::is_getter&lt; T &gt;(), int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:a373b1db44b534128d823f218885daaa4"><td class="memTemplItemLeft" align="right" valign="top">internal::FormArrayInput&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a373b1db44b534128d823f218885daaa4">mc_rtc::gui::FormArrayInput</a> (const std::string &amp;name, bool required, const T &amp;value, bool fixed_size=true)</td></tr>
+<tr class="separator:a373b1db44b534128d823f218885daaa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4362ee6c9e772360facce9dea5d1874"><td class="memTemplParams" colspan="2">template&lt;typename Callback , typename std::enable_if&lt; details::is_getter&lt; Callback &gt;(), int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:aa4362ee6c9e772360facce9dea5d1874"><td class="memTemplItemLeft" align="right" valign="top">internal::FormArrayInput&lt; details::ReturnTypeT&lt; Callback &gt;, Callback &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#aa4362ee6c9e772360facce9dea5d1874">mc_rtc::gui::FormArrayInput</a> (const std::string &amp;name, bool required, Callback callback, bool fixed_size=true)</td></tr>
+<tr class="separator:aa4362ee6c9e772360facce9dea5d1874"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94d2215e324dad2adb958327c16bf167"><td class="memTemplParams" colspan="2">template&lt;typename Callback , typename... Args&gt; </td></tr>
 <tr class="memitem:a94d2215e324dad2adb958327c16bf167"><td class="memTemplItemLeft" align="right" valign="top">FormImpl&lt; Callback &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc_1_1gui.html#a94d2215e324dad2adb958327c16bf167">mc_rtc::gui::Form</a> (const std::string &amp;name, Callback cb, Args &amp;&amp;... args)</td></tr>
 <tr class="separator:a94d2215e324dad2adb958327c16bf167"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a062345796d2fda83f914c01ae308ae33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a062345796d2fda83f914c01ae308ae33">&#9670;&nbsp;</a></span>MAKE_DATA_INPUT_HELPER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAKE_DATA_INPUT_HELPER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">DATAT, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ELEMENT, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">FNAME&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">inline</span> internal::FormDataInput&lt;DATAT, ELEMENT&gt; FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required)              \</div><div class="line">  {                                                                                                          \</div><div class="line">    return {name, required};                                                                                 \</div><div class="line">  }                                                                                                          \</div><div class="line">                                                                                                             \</div><div class="line">  inline internal::FormDataInput&lt;DATAT, ELEMENT&gt; FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required, DATAT value) \</div><div class="line">  {                                                                                                          \</div><div class="line">    return {name, required, internal::CallbackOrValue&lt;DATAT, void&gt;{value}};                                  \</div><div class="line">  }                                                                                                          \</div><div class="line">                                                                                                             \</div><div class="line">  template&lt;typename Callback, typename std::enable_if&lt;details::is_getter&lt;Callback&gt;(), <span class="keywordtype">int</span>&gt;::type = 0&gt;        \</div><div class="line">  <span class="keyword">inline</span> internal::FormDataInput&lt;DATAT, ELEMENT, Callback&gt; FNAME(<span class="keyword">const</span> std::string &amp; name, <span class="keywordtype">bool</span> required,    \</div><div class="line">                                                                 Callback callback)                          \</div><div class="line">  {                                                                                                          \</div><div class="line">    return {name, required, internal::CallbackOrValue&lt;DATAT, Callback&gt;{callback}};                           \</div><div class="line">  }</div></div><!-- fragment -->
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->

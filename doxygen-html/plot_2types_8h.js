@@ -15,10 +15,10 @@ var plot_2types_8h =
       [ "AbscissaOrdinate", "plot_2types_8h.html#a6e2b70125fa1d433838b9a8f2bf28c4dab83f39f54c4bd7f3a02f9a45fd996031", null ]
     ] ],
     [ "is_2d", "plot_2types_8h.html#a4670673e25f4957cc8b1d6933601fbb8", null ],
-    [ "is_2d", "plot_2types_8h.html#a37afa0ee1be4dc35f8b370b58cd05c8d", null ],
+    [ "is_2d", "plot_2types_8h.html#a1e919d3536d792111197f12de304db37", null ],
     [ "is_Abscissa", "plot_2types_8h.html#a73e5c8e2228efe9d85770fa3233df148", null ],
     [ "is_not_Abscissa", "plot_2types_8h.html#ad9dd006fddf621ad45bc2ed39819cb7b", null ],
-    [ "is_not_Abscissa", "plot_2types_8h.html#a4b35e42f9bdc831051bad630befc19d0", null ],
+    [ "is_not_Abscissa", "plot_2types_8h.html#a807bb49afba6fffd36b8eaeb1f305805", null ],
     [ "Dashed", "plot_2types_8h.html#a3aa6973802ff89463140e58e4978b222", null ],
     [ "Dotted", "plot_2types_8h.html#af050e39a625ecaa0d27537968bbeeaff", null ],
     [ "Left", "plot_2types_8h.html#aa149c1d1da2ae1c94f1ae91f4919625a", null ],

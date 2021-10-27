@@ -2443,6 +2443,9 @@
     <name>traits.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/details/</path>
     <filename>traits_8h</filename>
+    <class kind="struct">mc_rtc::gui::details::NotAGetter</class>
+    <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl&lt; GetT, false &gt;</class>
     <class kind="struct">mc_rtc::gui::details::ReturnType</class>
     <class kind="struct">mc_rtc::gui::details::CheckReturnType</class>
     <class kind="struct">mc_rtc::gui::details::CheckReturnType&lt; GetT, T &gt;</class>
@@ -2451,11 +2454,39 @@
     <namespace>mc_rtc::gui</namespace>
     <namespace>mc_rtc::gui::details</namespace>
     <member kind="typedef">
+      <type>void</type>
+      <name>void_t</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a437b4050328d7178f5872223cf9f7f35</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
       <type>typename ReturnType&lt; GetT &gt;::type</type>
       <name>ReturnTypeT</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
       <anchor>a62d70a1c5467de8404eceee15a80da68</anchor>
       <arglist></arglist>
+    </member>
+    <member kind="function">
+      <type>constexpr bool</type>
+      <name>is_getter_impl</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a8e445bc0e47af1ff42f00cec4cbacbf7</anchor>
+      <arglist>(void_t&lt; decltype(std::declval&lt; GetT &gt;()())&gt; *)</arglist>
+    </member>
+    <member kind="function">
+      <type>constexpr bool</type>
+      <name>is_getter_impl</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a664fd97ecf7ee798c1fcace58d4f8a21</anchor>
+      <arglist>(...)</arglist>
+    </member>
+    <member kind="function">
+      <type>constexpr bool</type>
+      <name>is_getter</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a3f24a46e2245c7951863c943009a6b3c</anchor>
+      <arglist>()</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2547,42 +2578,46 @@
     <name>Form.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/gui/</path>
     <filename>Form_8h</filename>
+    <includes id="traits_8h" name="traits.h" local="no" imported="no">mc_rtc/gui/details/traits.h</includes>
     <includes id="elements_8h" name="elements.h" local="no" imported="no">mc_rtc/gui/elements.h</includes>
     <class kind="struct">mc_rtc::gui::FormImpl</class>
     <class kind="struct">mc_rtc::gui::FormElement</class>
-    <class kind="struct">mc_rtc::gui::FormDataInput</class>
-    <class kind="struct">mc_rtc::gui::FormArrayInput</class>
+    <class kind="struct">mc_rtc::gui::internal::CallbackOrValue</class>
+    <class kind="struct">mc_rtc::gui::internal::CallbackOrValue&lt; T, void &gt;</class>
+    <class kind="struct">mc_rtc::gui::internal::FormDataInput</class>
+    <class kind="struct">mc_rtc::gui::internal::FormArrayInput</class>
     <class kind="struct">mc_rtc::gui::FormComboInput</class>
     <class kind="struct">mc_rtc::gui::FormDataComboInput</class>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::gui</namespace>
-    <member kind="typedef">
-      <type>FormDataInput&lt; bool, Elements::Checkbox &gt;</type>
-      <name>FormCheckbox</name>
-      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a2683c87b0180a62bc5231a60c18aca7a</anchor>
-      <arglist></arglist>
+    <namespace>mc_rtc::gui::internal</namespace>
+    <member kind="define">
+      <type>#define</type>
+      <name>MAKE_DATA_INPUT_HELPER</name>
+      <anchorfile>Form_8h.html</anchorfile>
+      <anchor>a062345796d2fda83f914c01ae308ae33</anchor>
+      <arglist>(DATAT, ELEMENT, FNAME)</arglist>
     </member>
-    <member kind="typedef">
-      <type>FormDataInput&lt; int, Elements::IntegerInput &gt;</type>
-      <name>FormIntegerInput</name>
+    <member kind="function">
+      <type>internal::FormArrayInput&lt; T &gt;</type>
+      <name>FormArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ae145da8274a4c06981900ea890979eb9</anchor>
-      <arglist></arglist>
+      <anchor>a7dfdb12d58d770f35ea3c3643d2ac95c</anchor>
+      <arglist>(const std::string &amp;name, bool required, bool fixed_size=false)</arglist>
     </member>
-    <member kind="typedef">
-      <type>FormDataInput&lt; double, Elements::NumberInput &gt;</type>
-      <name>FormNumberInput</name>
+    <member kind="function">
+      <type>internal::FormArrayInput&lt; T &gt;</type>
+      <name>FormArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>afc4205d5b7c28257703d3c3c515c9741</anchor>
-      <arglist></arglist>
+      <anchor>a373b1db44b534128d823f218885daaa4</anchor>
+      <arglist>(const std::string &amp;name, bool required, const T &amp;value, bool fixed_size=true)</arglist>
     </member>
-    <member kind="typedef">
-      <type>FormDataInput&lt; std::string, Elements::StringInput &gt;</type>
-      <name>FormStringInput</name>
+    <member kind="function">
+      <type>internal::FormArrayInput&lt; details::ReturnTypeT&lt; Callback &gt;, Callback &gt;</type>
+      <name>FormArrayInput</name>
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ad9c26bdeef8d098c11f4edb0f105fef9</anchor>
-      <arglist></arglist>
+      <anchor>aa4362ee6c9e772360facce9dea5d1874</anchor>
+      <arglist>(const std::string &amp;name, bool required, Callback callback, bool fixed_size=true)</arglist>
     </member>
     <member kind="function">
       <type>FormImpl&lt; Callback &gt;</type>
@@ -2873,7 +2908,7 @@
       <type>constexpr bool</type>
       <name>is_not_Abscissa</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>a4b35e42f9bdc831051bad630befc19d0</anchor>
+      <anchor>a807bb49afba6fffd36b8eaeb1f305805</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -2887,7 +2922,7 @@
       <type>constexpr bool</type>
       <name>is_2d</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>a37afa0ee1be4dc35f8b370b58cd05c8d</anchor>
+      <anchor>a1e919d3536d792111197f12de304db37</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable">
@@ -6781,6 +6816,63 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::gui::internal::CallbackOrValue</name>
+    <filename>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</filename>
+    <templarg>T</templarg>
+    <templarg>Callback</templarg>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</anchorfile>
+      <anchor>ab1c34352d195bd90bf1b79e629a7a1eb</anchor>
+      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
+    </member>
+    <member kind="variable">
+      <type>Callback</type>
+      <name>callback</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</anchorfile>
+      <anchor>a58ffa374d2a4923cc81fe2ba78cc5b91</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>CallbackOrValue&lt; T, DataCallback &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</filename>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</anchorfile>
+      <anchor>ab1c34352d195bd90bf1b79e629a7a1eb</anchor>
+      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
+    </member>
+    <member kind="variable">
+      <type>DataCallback</type>
+      <name>callback</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue.html</anchorfile>
+      <anchor>a58ffa374d2a4923cc81fe2ba78cc5b91</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::internal::CallbackOrValue&lt; T, void &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue_3_01T_00_01void_01_4.html</filename>
+    <templarg></templarg>
+    <member kind="function">
+      <type>void</type>
+      <name>write</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue_3_01T_00_01void_01_4.html</anchorfile>
+      <anchor>af20d46f3ac1c9449266272fd08cbec77</anchor>
+      <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
+    </member>
+    <member kind="variable">
+      <type>T</type>
+      <name>value</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1CallbackOrValue_3_01T_00_01void_01_4.html</anchorfile>
+      <anchor>a2a6873e05d8a167aa180ef97ad503ec2</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::gui::CheckboxImpl</name>
     <filename>structmc__rtc_1_1gui_1_1CheckboxImpl.html</filename>
     <templarg>GetT</templarg>
@@ -6847,6 +6939,10 @@
       <anchor>ae2a3213c436d7248322db80b601c9747</anchor>
       <arglist></arglist>
     </member>
+  </compound>
+  <compound kind="class">
+    <name>Collision</name>
+    <filename>classCollision.html</filename>
   </compound>
   <compound kind="struct">
     <name>mc_rbdyn::Collision</name>
@@ -6921,10 +7017,6 @@
       <anchor>affd388406c44197c32f6685e64d7bdb9</anchor>
       <arglist></arglist>
     </member>
-  </compound>
-  <compound kind="class">
-    <name>Collision</name>
-    <filename>classCollision.html</filename>
   </compound>
   <compound kind="class">
     <name>mc_solver::CollisionsConstraint</name>
@@ -9652,164 +9744,6 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_tasks::lipm_stabilizer::internal::Contact</name>
-    <filename>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</filename>
-    <member kind="function">
-      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
-      <name>Contact</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>ab56fecf3381766d1faa3ebc2754a9de8</anchor>
-      <arglist>()=default</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Contact</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a65934b1c7c1f5ba59139c2b2d4351971</anchor>
-      <arglist>(const mc_rbdyn::Robot &amp;robot, const std::string &amp;surfaceName, double friction)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Contact</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a326db6cb41cb9ee4d824d52a8ddbe0e1</anchor>
-      <arglist>(const mc_rbdyn::Robot &amp;robot, const std::string &amp;surfaceName, const sva::PTransformd &amp;surfacePose, double friction)</arglist>
-    </member>
-    <member kind="function">
-      <type>HrepXd</type>
-      <name>hrep</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a8f5506ed9550e264f73e26e6178b30e0</anchor>
-      <arglist>(const Eigen::Vector3d &amp;vertical) const</arglist>
-    </member>
-    <member kind="function">
-      <type>const Eigen::Matrix&lt; double, 16, 6 &gt; &amp;</type>
-      <name>wrenchFaceMatrix</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>aced5d5b44832c71dcdde1ebfe46f7c32</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>Eigen::Vector3d</type>
-      <name>sagittal</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a335b37445d20098b896931675aaedc34</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>Eigen::Vector3d</type>
-      <name>lateral</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a1a221647a888696d4d1837961e1b7a6d</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>Eigen::Vector3d</type>
-      <name>normal</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a5f40394e257213822ca9b73a581b2c10</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>const Eigen::Vector3d &amp;</type>
-      <name>position</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>ab1b330e62ef0cb3d0d1b4db0a8e886fb</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>double</type>
-      <name>halfWidth</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>ad9eaefdf3407007a4c8f3dab5220d45c</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>double</type>
-      <name>halfLength</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a2778ca298df3670ee48b9c2fb269e44c</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>const sva::PTransformd &amp;</type>
-      <name>anklePose</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a1ebec093bad160567aca2d5ea46dc679</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>Eigen::Vector3d</type>
-      <name>sagital</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>ac7880a19753e73389edd2b9ed0c120d8</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>Eigen::Vector3d</type>
-      <name>lateral</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a8e213b8f4786b25e7f84eb78132a3d4a</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>Eigen::Vector3d</type>
-      <name>vertical</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a58a17b848f5db25d422c17d56c82f6b0</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>const std::string &amp;</type>
-      <name>surfaceName</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a88df6c5efb4bf9e601ab5f3d82933cca</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>const sva::PTransformd &amp;</type>
-      <name>surfacePose</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a1c494354335f7d7aa16f0202b637ea98</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>const std::vector&lt; Eigen::Vector3d &gt; &amp;</type>
-      <name>polygon</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a5b6cfbb78cfb49c05589e1f861355853</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>double</type>
-      <name>xmin</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a2c628b2b87c83e06392028092bd89107</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>double</type>
-      <name>xmax</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>adee46fe7d5c7596d13f2288c92a7a0c8</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>double</type>
-      <name>ymin</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a16f8c6cb34189692495e7afafb0b2ced</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>double</type>
-      <name>ymax</name>
-      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
-      <anchor>a1ce5eeed46427c049da3050580e1456f</anchor>
-      <arglist>() const</arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
     <name>mc_rbdyn::Contact</name>
     <filename>structmc__rbdyn_1_1Contact.html</filename>
     <member kind="function">
@@ -10077,6 +10011,164 @@
       <anchorfile>structmc__rbdyn_1_1Contact.html</anchorfile>
       <anchor>a09ed33807af99b34743159c7ab72cb41</anchor>
       <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_tasks::lipm_stabilizer::internal::Contact</name>
+    <filename>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</filename>
+    <member kind="function">
+      <type>EIGEN_MAKE_ALIGNED_OPERATOR_NEW</type>
+      <name>Contact</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>ab56fecf3381766d1faa3ebc2754a9de8</anchor>
+      <arglist>()=default</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Contact</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a65934b1c7c1f5ba59139c2b2d4351971</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;robot, const std::string &amp;surfaceName, double friction)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Contact</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a326db6cb41cb9ee4d824d52a8ddbe0e1</anchor>
+      <arglist>(const mc_rbdyn::Robot &amp;robot, const std::string &amp;surfaceName, const sva::PTransformd &amp;surfacePose, double friction)</arglist>
+    </member>
+    <member kind="function">
+      <type>HrepXd</type>
+      <name>hrep</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a8f5506ed9550e264f73e26e6178b30e0</anchor>
+      <arglist>(const Eigen::Vector3d &amp;vertical) const</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Matrix&lt; double, 16, 6 &gt; &amp;</type>
+      <name>wrenchFaceMatrix</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>aced5d5b44832c71dcdde1ebfe46f7c32</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::Vector3d</type>
+      <name>sagittal</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a335b37445d20098b896931675aaedc34</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::Vector3d</type>
+      <name>lateral</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a1a221647a888696d4d1837961e1b7a6d</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::Vector3d</type>
+      <name>normal</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a5f40394e257213822ca9b73a581b2c10</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const Eigen::Vector3d &amp;</type>
+      <name>position</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>ab1b330e62ef0cb3d0d1b4db0a8e886fb</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>halfWidth</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>ad9eaefdf3407007a4c8f3dab5220d45c</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>halfLength</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a2778ca298df3670ee48b9c2fb269e44c</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::PTransformd &amp;</type>
+      <name>anklePose</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a1ebec093bad160567aca2d5ea46dc679</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::Vector3d</type>
+      <name>sagital</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>ac7880a19753e73389edd2b9ed0c120d8</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::Vector3d</type>
+      <name>lateral</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a8e213b8f4786b25e7f84eb78132a3d4a</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>Eigen::Vector3d</type>
+      <name>vertical</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a58a17b848f5db25d422c17d56c82f6b0</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::string &amp;</type>
+      <name>surfaceName</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a88df6c5efb4bf9e601ab5f3d82933cca</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const sva::PTransformd &amp;</type>
+      <name>surfacePose</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a1c494354335f7d7aa16f0202b637ea98</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; Eigen::Vector3d &gt; &amp;</type>
+      <name>polygon</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a5b6cfbb78cfb49c05589e1f861355853</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>xmin</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a2c628b2b87c83e06392028092bd89107</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>xmax</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>adee46fe7d5c7596d13f2288c92a7a0c8</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>ymin</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a16f8c6cb34189692495e7afafb0b2ced</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>double</type>
+      <name>ymax</name>
+      <anchorfile>structmc__tasks_1_1lipm__stabilizer_1_1internal_1_1Contact.html</anchorfile>
+      <anchor>a1ce5eeed46427c049da3050580e1456f</anchor>
+      <arglist>() const</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -14045,43 +14137,51 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::FormArrayInput</name>
-    <filename>structmc__rtc_1_1gui_1_1FormArrayInput.html</filename>
+    <name>mc_rtc::gui::internal::FormArrayInput</name>
+    <filename>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</filename>
     <templarg></templarg>
-    <base>FormElement&lt; FormArrayInput&lt; T &gt;, Elements::ArrayInput &gt;</base>
+    <templarg></templarg>
+    <base>FormElement&lt; FormArrayInput&lt; T, DataCallback &gt;, Elements::ArrayInput &gt;</base>
     <member kind="function">
       <type></type>
       <name>FormArrayInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormArrayInput.html</anchorfile>
-      <anchor>ac44ff19657b3b081eeca2d0d26d86de8</anchor>
-      <arglist>(const std::string &amp;name, bool required, const T &amp;def, bool fixed_size=true)</arglist>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
+      <anchor>af517a86e04b875b627267946781d8556</anchor>
+      <arglist>(const std::string &amp;name, bool required, CallbackOrValue&lt; T, DataCallback &gt; def, bool fixed_size=true)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>FormArrayInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormArrayInput.html</anchorfile>
-      <anchor>ab1cac61405d81079609b79e20b161e84</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
+      <anchor>a851d4d522cb326acd8c55394d3b84045</anchor>
       <arglist>(const std::string &amp;name, bool required, bool fixed_size=false)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write_</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormArrayInput.html</anchorfile>
-      <anchor>a8d28567b0f786205b0c8576bbe3e6fbe</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
+      <anchor>a83d0420bfef59b5241a90d4e9b237d59</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>FormArrayInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormArrayInput.html</anchorfile>
-      <anchor>a8135cc835db7f0042986ebdffdf1dcb4</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
+      <anchor>a0687cfd302655e5ba432ad1bd537c39c</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size_</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormArrayInput.html</anchorfile>
-      <anchor>a01110150f9466130d28ba25ef10c9db2</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
+      <anchor>a377487cbabe8532fe9a44f60cf12b511</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr bool</type>
+      <name>is_dynamic</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormArrayInput.html</anchorfile>
+      <anchor>a1868e72270b01246f6d53338c6724476</anchor>
       <arglist>()</arglist>
     </member>
   </compound>
@@ -14199,44 +14299,52 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>mc_rtc::gui::FormDataInput</name>
-    <filename>structmc__rtc_1_1gui_1_1FormDataInput.html</filename>
+    <name>mc_rtc::gui::internal::FormDataInput</name>
+    <filename>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</filename>
     <templarg></templarg>
     <templarg>element</templarg>
-    <base>FormElement&lt; FormDataInput&lt; T, element &gt;, element &gt;</base>
+    <templarg></templarg>
+    <base>FormElement&lt; FormDataInput&lt; T, element, DataCallback &gt;, element &gt;</base>
     <member kind="function">
       <type></type>
       <name>FormDataInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormDataInput.html</anchorfile>
-      <anchor>a45792576086cfc726477211c689f91fe</anchor>
-      <arglist>(const std::string &amp;name, bool required, const T &amp;def)</arglist>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
+      <anchor>ac223f2e4ec0a180c08c7c140ab9405f3</anchor>
+      <arglist>(const std::string &amp;name, bool required, CallbackOrValue&lt; T, DataCallback &gt; def)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>FormDataInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormDataInput.html</anchorfile>
-      <anchor>a21fef6dc43743e2ee23e4f7f9c17748c</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
+      <anchor>a184ed24b34fd350ca04c995556db1da4</anchor>
       <arglist>(const std::string &amp;name, bool required)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>write_</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormDataInput.html</anchorfile>
-      <anchor>a7099d1ab42cc99fe4f460b48d4750688</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
+      <anchor>af0e449bbcd40ba9f5b0891d997d3cb62</anchor>
       <arglist>(mc_rtc::MessagePackBuilder &amp;builder)</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>FormDataInput</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormDataInput.html</anchorfile>
-      <anchor>ae4775746b3e202b49af5f020f1a82fc6</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
+      <anchor>ac7750dd445ee8f13c96e40be241a7980</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr size_t</type>
       <name>write_size_</name>
-      <anchorfile>structmc__rtc_1_1gui_1_1FormDataInput.html</anchorfile>
-      <anchor>a42ef72cfde36a03cbd221f6372b6dfe9</anchor>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
+      <anchor>ab51fec44170fe661080cc755a059a949</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr bool</type>
+      <name>is_dynamic</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1internal_1_1FormDataInput.html</anchorfile>
+      <anchor>a47f140750a6a361b3e75df982b1c01f1</anchor>
       <arglist>()</arglist>
     </member>
   </compound>
@@ -14264,6 +14372,13 @@
       <name>write_size</name>
       <anchorfile>structmc__rtc_1_1gui_1_1FormElement.html</anchorfile>
       <anchor>a3bdb8faf108f06a63ad4f93508d9b1be</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr bool</type>
+      <name>is_dynamic</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1FormElement.html</anchorfile>
+      <anchor>ae1a360c963887beb4ccea6f109d57988</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
@@ -14296,7 +14411,7 @@
     </member>
   </compound>
   <compound kind="class">
-    <name>FormElement&lt; FormArrayInput&lt; T &gt;, Elements::ArrayInput &gt;</name>
+    <name>FormElement&lt; FormArrayInput&lt; T, DataCallback &gt;, Elements::ArrayInput &gt;</name>
     <filename>structmc__rtc_1_1gui_1_1FormElement.html</filename>
     <member kind="function">
       <type>void</type>
@@ -14317,6 +14432,13 @@
       <name>write_size</name>
       <anchorfile>structmc__rtc_1_1gui_1_1FormElement.html</anchorfile>
       <anchor>a3bdb8faf108f06a63ad4f93508d9b1be</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr bool</type>
+      <name>is_dynamic</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1FormElement.html</anchorfile>
+      <anchor>ae1a360c963887beb4ccea6f109d57988</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
@@ -14372,6 +14494,13 @@
       <anchor>a3bdb8faf108f06a63ad4f93508d9b1be</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function" static="yes">
+      <type>static constexpr bool</type>
+      <name>is_dynamic</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1FormElement.html</anchorfile>
+      <anchor>ae1a360c963887beb4ccea6f109d57988</anchor>
+      <arglist>()</arglist>
+    </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
@@ -14425,6 +14554,13 @@
       <anchor>a3bdb8faf108f06a63ad4f93508d9b1be</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function" static="yes">
+      <type>static constexpr bool</type>
+      <name>is_dynamic</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1FormElement.html</anchorfile>
+      <anchor>ae1a360c963887beb4ccea6f109d57988</anchor>
+      <arglist>()</arglist>
+    </member>
     <member kind="variable" static="yes">
       <type>static constexpr auto</type>
       <name>type</name>
@@ -14455,7 +14591,7 @@
     </member>
   </compound>
   <compound kind="class">
-    <name>FormElement&lt; FormDataInput&lt; T, element &gt;, element &gt;</name>
+    <name>FormElement&lt; FormDataInput&lt; T, element, DataCallback &gt;, element &gt;</name>
     <filename>structmc__rtc_1_1gui_1_1FormElement.html</filename>
     <member kind="function">
       <type>void</type>
@@ -14476,6 +14612,13 @@
       <name>write_size</name>
       <anchorfile>structmc__rtc_1_1gui_1_1FormElement.html</anchorfile>
       <anchor>a3bdb8faf108f06a63ad4f93508d9b1be</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static constexpr bool</type>
+      <name>is_dynamic</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1FormElement.html</anchorfile>
+      <anchor>ae1a360c963887beb4ccea6f109d57988</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="variable" static="yes">
@@ -15418,6 +15561,67 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rbdyn::RobotModule::Gripper</name>
+    <filename>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</filename>
+    <class kind="struct">mc_rbdyn::RobotModule::Gripper::Safety</class>
+    <member kind="function">
+      <type></type>
+      <name>Gripper</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
+      <anchor>a095ecf4ebd9b675117bf1c5b45f093ca</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Gripper</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
+      <anchor>a3fa8ce090be890c8fd518592fe65b25e</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits, const Safety &amp;safety)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>Gripper</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
+      <anchor>acbbf290bba17b0b3becaf8c84da9c066</anchor>
+      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits, const Safety &amp;safety, const std::vector&lt; Mimic &gt; &amp;mimics)</arglist>
+    </member>
+    <member kind="function">
+      <type>const Safety *</type>
+      <name>safety</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
+      <anchor>ae5dccc3ca07db76cec2cd0e70cc0bff5</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::vector&lt; Mimic &gt; *</type>
+      <name>mimics</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
+      <anchor>ada9b553ac4484e6920c981bf71a92368</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>name</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
+      <anchor>a4c63d69cf61ff0c5ae634a549eadecd1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>joints</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
+      <anchor>a8ed52bd8f3d7ce552f62843c352b3d9c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>reverse_limits</name>
+      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
+      <anchor>a61df660109da82ecf0cb5cb476525045</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>mc_control::Gripper</name>
     <filename>structmc__control_1_1Gripper.html</filename>
     <member kind="function">
@@ -15859,67 +16063,6 @@
       <name>reversed</name>
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
       <anchor>a7a77897e0cadfd9a41ec5a3500f77140</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>mc_rbdyn::RobotModule::Gripper</name>
-    <filename>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</filename>
-    <class kind="struct">mc_rbdyn::RobotModule::Gripper::Safety</class>
-    <member kind="function">
-      <type></type>
-      <name>Gripper</name>
-      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
-      <anchor>a095ecf4ebd9b675117bf1c5b45f093ca</anchor>
-      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Gripper</name>
-      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
-      <anchor>a3fa8ce090be890c8fd518592fe65b25e</anchor>
-      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits, const Safety &amp;safety)</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>Gripper</name>
-      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
-      <anchor>acbbf290bba17b0b3becaf8c84da9c066</anchor>
-      <arglist>(const std::string &amp;name, const std::vector&lt; std::string &gt; &amp;joints, bool reverse_limits, const Safety &amp;safety, const std::vector&lt; Mimic &gt; &amp;mimics)</arglist>
-    </member>
-    <member kind="function">
-      <type>const Safety *</type>
-      <name>safety</name>
-      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
-      <anchor>ae5dccc3ca07db76cec2cd0e70cc0bff5</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="function">
-      <type>const std::vector&lt; Mimic &gt; *</type>
-      <name>mimics</name>
-      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
-      <anchor>ada9b553ac4484e6920c981bf71a92368</anchor>
-      <arglist>() const</arglist>
-    </member>
-    <member kind="variable">
-      <type>std::string</type>
-      <name>name</name>
-      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
-      <anchor>a4c63d69cf61ff0c5ae634a549eadecd1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>std::vector&lt; std::string &gt;</type>
-      <name>joints</name>
-      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
-      <anchor>a8ed52bd8f3d7ce552f62843c352b3d9c</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>bool</type>
-      <name>reverse_limits</name>
-      <anchorfile>structmc__rbdyn_1_1RobotModule_1_1Gripper.html</anchorfile>
-      <anchor>a61df660109da82ecf0cb5cb476525045</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -21206,6 +21349,10 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>mc_rtc::gui::details::NotAGetter</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1NotAGetter.html</filename>
+  </compound>
+  <compound kind="struct">
     <name>mc_rtc::gui::NumberInputImpl</name>
     <filename>structmc__rtc_1_1gui_1_1NumberInputImpl.html</filename>
     <templarg>GetT</templarg>
@@ -24309,10 +24456,35 @@
     <filename>structmc__rtc_1_1gui_1_1details_1_1ReturnType.html</filename>
     <templarg>GetT</templarg>
     <member kind="typedef">
-      <type>typename std::decay&lt; decltype(std::declval&lt; GetT &gt;()())&gt;::type</type>
+      <type>typename ReturnTypeImpl&lt; GetT, is_getter&lt; GetT &gt;()&gt;::type</type>
       <name>type</name>
       <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ReturnType.html</anchorfile>
-      <anchor>a291be608e98513ddcf10a3131ba17974</anchor>
+      <anchor>ab6207cc1ecd0aadbee1ecaa1ef6539e0</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::ReturnTypeImpl</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl.html</filename>
+    <templarg></templarg>
+    <templarg>is_getter</templarg>
+    <member kind="typedef">
+      <type>typename std::decay&lt; decltype(std::declval&lt; GetT &gt;()())&gt;::type</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl.html</anchorfile>
+      <anchor>a5a3df0788be8eb6cd296e4917c0ec4e7</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::gui::details::ReturnTypeImpl&lt; GetT, false &gt;</name>
+    <filename>structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl_3_01GetT_00_01false_01_4.html</filename>
+    <templarg></templarg>
+    <member kind="typedef">
+      <type>NotAGetter</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1details_1_1ReturnTypeImpl_3_01GetT_00_01false_01_4.html</anchorfile>
+      <anchor>a97ff1728910e7c8d32a36cc9b50fe8bf</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -32431,29 +32603,29 @@
       <type>void</type>
       <name>addXYPlot</name>
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
-      <anchor>a400d3e9949fb4856b4e37ea8b9904210</anchor>
-      <arglist>(const std::string &amp;name, plot::AxisConfiguration xConfig, plot::AxisConfiguration yLeftConfig, plot::AxisConfiguration yRightConfig, T data, Args... args)</arglist>
+      <anchor>a284bf32be420948b57f1ab69f5fa4a62</anchor>
+      <arglist>(const std::string &amp;name, plot::AxisConfiguration xConfig, plot::AxisConfiguration yLeftConfig, plot::AxisConfiguration yRightConfig, Args... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>addXYPlot</name>
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
-      <anchor>a1b1094572270ec977ddbe805dd4a85b4</anchor>
-      <arglist>(const std::string &amp;name, plot::AxisConfiguration xConfig, plot::AxisConfiguration yLeftConfig, T data, Args... args)</arglist>
+      <anchor>a9d2f14dac31913f3f57809ec56512801</anchor>
+      <arglist>(const std::string &amp;name, plot::AxisConfiguration xConfig, plot::AxisConfiguration yLeftConfig, Args... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>addXYPlot</name>
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
-      <anchor>a0bb64442811706a8b932a6c5c53c39d0</anchor>
-      <arglist>(const std::string &amp;name, plot::AxisConfiguration xConfig, T data, Args... args)</arglist>
+      <anchor>aca332ace060011a3c0ebac4202fd2dd1</anchor>
+      <arglist>(const std::string &amp;name, plot::AxisConfiguration xConfig, Args... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>addXYPlot</name>
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
-      <anchor>a5244426886f56ab4589d19c9a237f488</anchor>
-      <arglist>(const std::string &amp;name, T data, Args... args)</arglist>
+      <anchor>a2ae3f8cb79109828cb658eade196835b</anchor>
+      <arglist>(const std::string &amp;name, Args... args)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -32475,6 +32647,13 @@
       <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
       <anchor>a03129def93d1437c326595686cba93ef</anchor>
       <arglist>(const std::string &amp;name, T abscissa, Args... args)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>addPlotData</name>
+      <anchorfile>structmc__rtc_1_1gui_1_1StateBuilder.html</anchorfile>
+      <anchor>a9b0cc50c6146449aaa359f2f8a346b44</anchor>
+      <arglist>(const std::string &amp;name, T data)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -38057,6 +38236,7 @@
     <name>mc_rtc::gui</name>
     <filename>namespacemc__rtc_1_1gui.html</filename>
     <namespace>mc_rtc::gui::details</namespace>
+    <namespace>mc_rtc::gui::internal</namespace>
     <namespace>mc_rtc::gui::plot</namespace>
     <class kind="struct">mc_rtc::gui::ArrayInputImpl</class>
     <class kind="struct">mc_rtc::gui::ArrayLabelImpl</class>
@@ -38075,10 +38255,8 @@
     <class kind="struct">mc_rtc::gui::ForceConfig</class>
     <class kind="struct">mc_rtc::gui::ForceImpl</class>
     <class kind="struct">mc_rtc::gui::ForceROImpl</class>
-    <class kind="struct">mc_rtc::gui::FormArrayInput</class>
     <class kind="struct">mc_rtc::gui::FormComboInput</class>
     <class kind="struct">mc_rtc::gui::FormDataComboInput</class>
-    <class kind="struct">mc_rtc::gui::FormDataInput</class>
     <class kind="struct">mc_rtc::gui::FormElement</class>
     <class kind="struct">mc_rtc::gui::FormImpl</class>
     <class kind="struct">mc_rtc::gui::IntegerInputImpl</class>
@@ -38101,34 +38279,6 @@
     <class kind="struct">mc_rtc::gui::VoidCallbackElement</class>
     <class kind="struct">mc_rtc::gui::XYThetaImpl</class>
     <class kind="struct">mc_rtc::gui::XYThetaROImpl</class>
-    <member kind="typedef">
-      <type>FormDataInput&lt; bool, Elements::Checkbox &gt;</type>
-      <name>FormCheckbox</name>
-      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>a2683c87b0180a62bc5231a60c18aca7a</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>FormDataInput&lt; int, Elements::IntegerInput &gt;</type>
-      <name>FormIntegerInput</name>
-      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ae145da8274a4c06981900ea890979eb9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>FormDataInput&lt; double, Elements::NumberInput &gt;</type>
-      <name>FormNumberInput</name>
-      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>afc4205d5b7c28257703d3c3c515c9741</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>FormDataInput&lt; std::string, Elements::StringInput &gt;</type>
-      <name>FormStringInput</name>
-      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
-      <anchor>ad9c26bdeef8d098c11f4edb0f105fef9</anchor>
-      <arglist></arglist>
-    </member>
     <member kind="enumeration">
       <type></type>
       <name>Elements</name>
@@ -38289,6 +38439,27 @@
       <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
       <anchor>af532dce0703aff08a435a2c53182de1b</anchor>
       <arglist>(const std::string &amp;name, const ForceConfig &amp;config, GetForce get_force_fn, SetForce set_force_fn, GetSurface get_surface_fn)</arglist>
+    </member>
+    <member kind="function">
+      <type>internal::FormArrayInput&lt; T &gt;</type>
+      <name>FormArrayInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a7dfdb12d58d770f35ea3c3643d2ac95c</anchor>
+      <arglist>(const std::string &amp;name, bool required, bool fixed_size=false)</arglist>
+    </member>
+    <member kind="function">
+      <type>internal::FormArrayInput&lt; T &gt;</type>
+      <name>FormArrayInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>a373b1db44b534128d823f218885daaa4</anchor>
+      <arglist>(const std::string &amp;name, bool required, const T &amp;value, bool fixed_size=true)</arglist>
+    </member>
+    <member kind="function">
+      <type>internal::FormArrayInput&lt; details::ReturnTypeT&lt; Callback &gt;, Callback &gt;</type>
+      <name>FormArrayInput</name>
+      <anchorfile>namespacemc__rtc_1_1gui.html</anchorfile>
+      <anchor>aa4362ee6c9e772360facce9dea5d1874</anchor>
+      <arglist>(const std::string &amp;name, bool required, Callback callback, bool fixed_size=true)</arglist>
     </member>
     <member kind="function">
       <type>FormImpl&lt; Callback &gt;</type>
@@ -38494,11 +38665,21 @@
     <class kind="struct">mc_rtc::gui::details::CheckReturnType&lt; GetT, T &gt;</class>
     <class kind="struct">mc_rtc::gui::details::CheckReturnType&lt; GetT, T, Args... &gt;</class>
     <class kind="struct">mc_rtc::gui::details::FormattedTableImpl</class>
+    <class kind="struct">mc_rtc::gui::details::NotAGetter</class>
     <class kind="struct">mc_rtc::gui::details::ReturnType</class>
+    <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl</class>
+    <class kind="struct">mc_rtc::gui::details::ReturnTypeImpl&lt; GetT, false &gt;</class>
     <class kind="struct">mc_rtc::gui::details::RobotImpl</class>
     <class kind="struct">mc_rtc::gui::details::StaticTableImpl</class>
     <class kind="struct">mc_rtc::gui::details::TableImpl</class>
     <class kind="struct">mc_rtc::gui::details::VisualImpl</class>
+    <member kind="typedef">
+      <type>void</type>
+      <name>void_t</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a437b4050328d7178f5872223cf9f7f35</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="typedef">
       <type>typename ReturnType&lt; GetT &gt;::type</type>
       <name>ReturnTypeT</name>
@@ -38506,6 +38687,35 @@
       <anchor>a62d70a1c5467de8404eceee15a80da68</anchor>
       <arglist></arglist>
     </member>
+    <member kind="function">
+      <type>constexpr bool</type>
+      <name>is_getter_impl</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a8e445bc0e47af1ff42f00cec4cbacbf7</anchor>
+      <arglist>(void_t&lt; decltype(std::declval&lt; GetT &gt;()())&gt; *)</arglist>
+    </member>
+    <member kind="function">
+      <type>constexpr bool</type>
+      <name>is_getter_impl</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a664fd97ecf7ee798c1fcace58d4f8a21</anchor>
+      <arglist>(...)</arglist>
+    </member>
+    <member kind="function">
+      <type>constexpr bool</type>
+      <name>is_getter</name>
+      <anchorfile>namespacemc__rtc_1_1gui_1_1details.html</anchorfile>
+      <anchor>a3f24a46e2245c7951863c943009a6b3c</anchor>
+      <arglist>()</arglist>
+    </member>
+  </compound>
+  <compound kind="namespace">
+    <name>mc_rtc::gui::internal</name>
+    <filename>namespacemc__rtc_1_1gui_1_1internal.html</filename>
+    <class kind="struct">mc_rtc::gui::internal::CallbackOrValue</class>
+    <class kind="struct">mc_rtc::gui::internal::CallbackOrValue&lt; T, void &gt;</class>
+    <class kind="struct">mc_rtc::gui::internal::FormArrayInput</class>
+    <class kind="struct">mc_rtc::gui::internal::FormDataInput</class>
   </compound>
   <compound kind="namespace">
     <name>mc_rtc::gui::plot</name>
@@ -38616,7 +38826,7 @@
       <type>constexpr bool</type>
       <name>is_not_Abscissa</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>a4b35e42f9bdc831051bad630befc19d0</anchor>
+      <anchor>a807bb49afba6fffd36b8eaeb1f305805</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -38630,7 +38840,7 @@
       <type>constexpr bool</type>
       <name>is_2d</name>
       <anchorfile>namespacemc__rtc_1_1gui_1_1plot.html</anchorfile>
-      <anchor>a37afa0ee1be4dc35f8b370b58cd05c8d</anchor>
+      <anchor>a1e919d3536d792111197f12de304db37</anchor>
       <arglist>()</arglist>
     </member>
   </compound>

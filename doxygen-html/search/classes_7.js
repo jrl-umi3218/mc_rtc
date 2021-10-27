@@ -11,7 +11,6 @@ var searchData=
   ['geninequalityconstraintforce',['GenInequalityConstraintForce',['../structmc__solver_1_1GenInequalityConstraintForce.html',1,'mc_solver']]],
   ['geninequalityconstraintlambda',['GenInequalityConstraintLambda',['../structmc__solver_1_1GenInequalityConstraintLambda.html',1,'mc_solver']]],
   ['geninequalityconstraintrobot',['GenInequalityConstraintRobot',['../structmc__solver_1_1GenInequalityConstraintRobot.html',1,'mc_solver']]],
-  ['geometry',['Geometry',['https://jrl-umi3218.github.io/mc_rbdyn_urdf/doxygen/HEAD/a00567.html',1,'mc_rbdyn_urdf']]],
   ['getlogtype',['GetLogType',['../structmc__rtc_1_1log_1_1GetLogType.html',1,'mc_rtc::log']]],
   ['getlogtype_3c_20eigen_3a_3aref_3c_20type_2c_20options_2c_20stridetype_20_3e_20_3e',['GetLogType&lt; Eigen::Ref&lt; Type, Options, StrideType &gt; &gt;',['../structmc__rtc_1_1log_1_1GetLogType_3_01Eigen_1_1Ref_3_01Type_00_01Options_00_01StrideType_01_4_01_4.html',1,'mc_rtc::log']]],
   ['getlogtype_3c_20std_3a_3aarray_3c_20double_2c_20n_20_3e_20_3e',['GetLogType&lt; std::array&lt; double, N &gt; &gt;',['../structmc__rtc_1_1log_1_1GetLogType_3_01std_1_1array_3_01double_00_01N_01_4_01_4.html',1,'mc_rtc::log']]],
@@ -21,7 +20,7 @@ var searchData=
   ['globalplugin',['GlobalPlugin',['../structmc__control_1_1GlobalPlugin.html',1,'mc_control']]],
   ['globalpluginconfiguration',['GlobalPluginConfiguration',['../structmc__control_1_1GlobalPlugin_1_1GlobalPluginConfiguration.html',1,'mc_control::GlobalPlugin']]],
   ['globalpluginloader',['GlobalPluginLoader',['../structmc__control_1_1GlobalPluginLoader.html',1,'mc_control']]],
-  ['gripper',['Gripper',['../structmc__control_1_1Gripper.html',1,'mc_control::Gripper'],['../structmc__rbdyn_1_1RobotModule_1_1Gripper.html',1,'mc_rbdyn::RobotModule::Gripper']]],
+  ['gripper',['Gripper',['../structmc__rbdyn_1_1RobotModule_1_1Gripper.html',1,'mc_rbdyn::RobotModule::Gripper'],['../structmc__control_1_1Gripper.html',1,'mc_control::Gripper']]],
   ['grippers',['Grippers',['../structmc__control_1_1fsm_1_1Grippers.html',1,'mc_control::fsm']]],
   ['grippersurface',['GripperSurface',['../structmc__rbdyn_1_1GripperSurface.html',1,'mc_rbdyn']]]
 ];
