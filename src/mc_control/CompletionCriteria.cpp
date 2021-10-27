@@ -30,12 +30,11 @@ std::function<bool(const mc_tasks::MetaTask &, std::string &)> CompletionCriteri
 {
   if(config.has("timeout"))
   {
-    double tick = 0;
     double goal = config("timeout");
     assert(goal > 0);
     goal = std::ceil(goal / dt);
-    return [tick, goal](const mc_tasks::MetaTask &, std::string & out) mutable {
-      if(++tick > goal)
+    return [goal](const mc_tasks::MetaTask & t, std::string & out) mutable {
+      if(t.iterInSolver() > goal)
       {
         out += "timeout";
         return true;
