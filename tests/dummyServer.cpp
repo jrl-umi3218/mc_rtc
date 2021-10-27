@@ -18,14 +18,6 @@
 
 #include "utils.h"
 
-template<typename Callback>
-void check_callback(Callback callback)
-{
-  using ReturnT = mc_rtc::gui::details::ReturnTypeT<Callback>;
-  static_assert(std::is_same<ReturnT, Eigen::Vector3d>::value, "FAIL");
-  static_assert(mc_rtc::gui::details::is_getter<Callback>(), "FAIL");
-}
-
 void setColor(rbd::parsers::Visual & visual, const mc_rtc::gui::Color & color)
 {
   rbd::parsers::Material mat;
@@ -231,7 +223,12 @@ struct TestServer
   void add_demo_plot(const std::string & name, T callback);
 
   template<typename T, typename U>
-  void add_demo_plot(const std::string & name, T callback, U dynamic_callback);
+  void add_demo_plot(const std::string & name,
+                     T callback,
+                     const std::string & dynamic_label,
+                     U dynamic_callback,
+                     size_t & n_plots,
+                     size_t mod);
 
   void make_table(size_t s);
 
@@ -455,11 +452,6 @@ TestServer::TestServer() : xythetaz_(4)
                          mc_rtc::gui::FormDataComboInput{"R1 surface", false, {"surfaces", "$R1"}}));
   static double start_t = 0.0;
   static Eigen::Vector3d start_v = Eigen::Vector3d::Zero();
-  auto cb = []() -> const Eigen::Vector3d & {
-    start_v += Eigen::Vector3d{0.5, 1.0, 2.0};
-    return start_v;
-  };
-  check_callback(cb);
   builder.addElement({"Forms", "Dynamic"},
                      mc_rtc::gui::Form(
                          "Restart at given values",
@@ -630,19 +622,58 @@ TestServer::TestServer() : xythetaz_(4)
   add_demo_plot("Fake ZMP", fake_zmp_plot);
 
   auto dynamic_plot = [this](const std::string & name) {
-    builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }),
-                    mc_rtc::gui::plot::Y(
-                        "t", [this]() { return t_; }, Color::Red));
+    builder.addPlot(name, mc_rtc::gui::plot::X("t", [this]() { return t_; }));
     n_dynamic_regular_plot = 0;
   };
-  auto add_dynamic_plot = [this](const std::string & name) {
-    n_dynamic_regular_plot += 1;
-    double data = static_cast<double>(n_dynamic_regular_plot);
-    auto label = std::to_string(n_dynamic_regular_plot);
-    builder.addPlotData(name, mc_rtc::gui::plot::Y(
-                                  label, [data]() { return data; }, Color::Blue));
+  auto dynamic_xy_plot = [this](const std::string & name) {
+    builder.addXYPlot(name);
+    n_dynamic_xy_plot = 0;
+    // Add an Y-plot, this should return false
+    bool added = builder.addPlotData(name, mc_rtc::gui::plot::Y(
+                                               "label", []() { return 0.0; }, Color::Blue));
+    assert(!added);
+    (void)added;
   };
-  add_demo_plot("Dynamic Regular Plot", dynamic_plot, add_dynamic_plot);
+  auto make_square = [](double x, double y, double size, const Color & color) {
+    return PolygonDescription(Points{Point{x - size, y - size}, Point{x - size, y + size}, Point{x + size, y + size},
+                                     Point{x + size, y - size}},
+                              color);
+  };
+  auto add_dynamic_plot = [&, this](const std::string & name, size_t & n_plots, size_t mod) {
+    double data = static_cast<double>(n_plots);
+    auto label = std::to_string(n_plots);
+    if(n_plots % mod == 0)
+    {
+      double center = static_cast<double>(n_plots);
+      builder.addPlotData(name, mc_rtc::gui::plot::XY(
+                                    label, [this, center]() { return center + 0.25 * cos(t_); },
+                                    [this, center]() { return center + 0.25 * sin(t_); }, Color::Red));
+    }
+    else if(n_plots % mod == 1)
+    {
+      auto center = static_cast<double>(n_plots);
+      auto poly = make_square(center, center, 0.25, Color::Green).fill(Color::Yellow);
+      builder.addPlotData(name, mc_rtc::gui::plot::Polygon(label, [poly]() { return poly; }));
+    }
+    else if(n_plots % mod == 2)
+    {
+      auto center = static_cast<double>(n_plots);
+      std::vector<PolygonDescription> polys;
+      polys.push_back(make_square(center - 0.5, center - 0.5, 0.125, Color::Black).fill(Color::Cyan));
+      polys.push_back(make_square(center - 0.5, center + 0.5, 0.125, Color::Black).fill(Color::Cyan));
+      polys.push_back(make_square(center + 0.5, center + 0.5, 0.125, Color::Black).fill(Color::Cyan));
+      polys.push_back(make_square(center + 0.5, center - 0.5, 0.125, Color::Black).fill(Color::Cyan));
+      builder.addPlotData(name, mc_rtc::gui::plot::Polygons(label, [polys]() { return polys; }));
+    }
+    else
+    {
+      builder.addPlotData(name, mc_rtc::gui::plot::Y(
+                                    label, [data]() { return data; }, Color::Blue));
+    }
+    n_plots += 1;
+  };
+  add_demo_plot("Dynamic Regular Plot", dynamic_plot, "Add data", add_dynamic_plot, n_dynamic_regular_plot, 4);
+  add_demo_plot("Dynamic XY Plot", dynamic_xy_plot, "Add XY data", add_dynamic_plot, n_dynamic_xy_plot, 3);
 
   switch_visual("sphere");
 
@@ -762,7 +793,12 @@ void TestServer::add_demo_plot(const std::string & name, T callback)
 }
 
 template<typename T, typename U>
-void TestServer::add_demo_plot(const std::string & name, T callback, U dynamic_callback)
+void TestServer::add_demo_plot(const std::string & name,
+                               T callback,
+                               const std::string & dynamic_label,
+                               U dynamic_callback,
+                               size_t & n_plots,
+                               size_t mod)
 {
   bool has_plot = false;
   builder.addElement({}, mc_rtc::gui::ElementsStacking::Horizontal,
@@ -778,7 +814,9 @@ void TestServer::add_demo_plot(const std::string & name, T callback, U dynamic_c
                                            }
                                            has_plot = !has_plot;
                                          }),
-                     mc_rtc::gui::Button("Add data", [dynamic_callback, name]() { dynamic_callback(name); }));
+                     mc_rtc::gui::Button(dynamic_label, [dynamic_callback, name, mod, &n_plots]() {
+                       dynamic_callback(name, n_plots, mod);
+                     }));
 }
 
 void TestServer::publish()
