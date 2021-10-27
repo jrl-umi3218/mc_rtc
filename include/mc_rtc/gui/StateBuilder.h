@@ -109,7 +109,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
 
   /** Add a plot identified by the provided name
    *
-   * In this form, T and other Args are expected to provide XY-data
+   * In this form, Args are expected to provide 2D data
    *
    * \param name Name of the plot
    *
@@ -130,7 +130,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
 
   /** Add a plot identified by the provided name
    *
-   * In this form, T and other Args are expected to provide XY-data
+   * In this form, Args are expected to provide 2D data
    *
    * \param name Name of the plot
    *
@@ -148,7 +148,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
 
   /** Add a plot identified by the provided name
    *
-   * In this form, T and other Args are expected to provide XY-data
+   * In this form, Args are expected to provide 2D data
    *
    * \param name Name of the plot
    *
@@ -162,7 +162,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
 
   /** Add a plot identified by the provided name
    *
-   * In this form, T and other Args are expected to provide XY-data
+   * In this form, Args are expected to provide 2D data
    *
    * \param name Name of the plot
    *
@@ -177,7 +177,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
   /** Add a plot identified by the provided name
    *
    * In this form, T is expected to provide an abscissa, the other parameters
-   * are expected to provide Y-axis or XY-axis data
+   * are expected to provide Y-axis or 2D data
    *
    * \param name Name of the plot, this is a unique identifier
    *
@@ -197,7 +197,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
   /** Add a plot identified by the provided name
    *
    * In this form, T is expected to provide an abscissa, the other parameters
-   * are expected to provide Y-axis or XY-axis data
+   * are expected to provide Y-axis or 2D data
    *
    * \param name Name of the plot, this is a unique identifier
    *
@@ -222,7 +222,7 @@ struct MC_RTC_GUI_DLLAPI StateBuilder
 
   /** Add more data to an existing plot
    *
-   * T must be a Y-axis or XY-axis data
+   * T must be a Y-axis or 2D data
    *
    * No-op if the plot has not been added yet
    *

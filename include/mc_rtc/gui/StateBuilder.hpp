@@ -211,6 +211,7 @@ void StateBuilder::addPlotData(PlotCallback & callback, T plot, Args... args)
 template<typename T>
 bool StateBuilder::addPlotData(const std::string & name, T data)
 {
+  static_assert(!plot::is_Abscissa<T>(), "Extra abscissa cannot be added to the plot");
   auto it = plots_.find(name);
   if(it == plots_.end())
   {
