@@ -139,6 +139,24 @@ public:
   /*! \brief Load parameters from a Configuration object */
   virtual void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config);
 
+  /*! \brief Get the number of iterations since the task was added to the solver */
+  inline int iterInSolver() const noexcept
+  {
+    return iterInSolver_;
+  }
+
+  /*! \brief Set the number of iterations since the task was added to the solver to zero */
+  inline void resetIterInSolver() noexcept
+  {
+    iterInSolver_ = 0;
+  }
+
+  /*! \brief Increment the number of iterations since the task was added to the solver */
+  inline void incrementIterInSolver() noexcept
+  {
+    iterInSolver_++;
+  }
+
 protected:
   /*! \brief Add the task to a solver
    *
@@ -286,6 +304,8 @@ protected:
 
   std::string type_;
   std::string name_;
+
+  size_t iterInSolver_ = 0;
 };
 
 using MetaTaskPtr = std::shared_ptr<MetaTask>;
