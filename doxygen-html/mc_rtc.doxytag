@@ -21047,6 +21047,27 @@
       <anchor>a27dbee0df32ae7f803184cb6222fc427</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config)</arglist>
     </member>
+    <member kind="function">
+      <type>size_t</type>
+      <name>iterInSolver</name>
+      <anchorfile>structmc__tasks_1_1MetaTask.html</anchorfile>
+      <anchor>a0cc220528fbda2fd29effb73dd45de71</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>resetIterInSolver</name>
+      <anchorfile>structmc__tasks_1_1MetaTask.html</anchorfile>
+      <anchor>ab514063e0b34773dd57aca57a39d9c8f</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>incrementIterInSolver</name>
+      <anchorfile>structmc__tasks_1_1MetaTask.html</anchorfile>
+      <anchor>add295cbec3ec53cebb64a5df13244bf7</anchor>
+      <arglist>() noexcept</arglist>
+    </member>
     <member kind="function" protection="protected" virtualness="pure">
       <type>virtual void</type>
       <name>addToSolver</name>
@@ -21171,6 +21192,13 @@
       <name>name_</name>
       <anchorfile>structmc__tasks_1_1MetaTask.html</anchorfile>
       <anchor>a6e55f0bff9a3d49ba0b92e0a4dff9a6f</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>size_t</type>
+      <name>iterInSolver_</name>
+      <anchorfile>structmc__tasks_1_1MetaTask.html</anchorfile>
+      <anchor>a5bf5a9f30f1497e15abc33faf7a97e5c</anchor>
       <arglist></arglist>
     </member>
     <member kind="friend">
