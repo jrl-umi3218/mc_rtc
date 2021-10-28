@@ -140,7 +140,7 @@ public:
   virtual void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config);
 
   /*! \brief Get the number of iterations since the task was added to the solver */
-  inline int iterInSolver() const noexcept
+  inline size_t iterInSolver() const noexcept
   {
     return iterInSolver_;
   }
