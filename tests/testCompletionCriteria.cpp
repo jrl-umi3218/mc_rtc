@@ -86,8 +86,10 @@ BOOST_AUTO_TEST_CASE(TestTimeout)
   unsigned int ticks = static_cast<unsigned int>(std::floor(timeout / dt));
   for(size_t i = 0; i < ticks; ++i)
   {
+    task.incrementIterInSolver();
     BOOST_REQUIRE(!criteria.completed(task));
   }
+  task.incrementIterInSolver();
   BOOST_REQUIRE(criteria.completed(task));
   BOOST_REQUIRE(criteria.output() == "timeout");
 }
@@ -222,11 +224,14 @@ BOOST_AUTO_TEST_CASE(TestEvalAndSpeedOrTimeout)
   // criteria <=> (eval().norm() < norm && speed().norm() < 1e-3) || timeout)
   task.eval_ = Eigen::Vector3d::UnitZ();
   task.speed_ = Eigen::Vector3d::UnitZ();
+  task.incrementIterInSolver();
   BOOST_REQUIRE(!criteria.completed(task)); // every condition false
   task.eval_.z() = norm * 1e-1;
+  task.incrementIterInSolver();
   BOOST_REQUIRE(!criteria.completed(task)); // eval true, speed false, timeout false
   task.eval_.z() = 1.0;
   task.speed_.z() = norm * 1e-1;
+  task.incrementIterInSolver();
   BOOST_REQUIRE(!criteria.completed(task)); // eval false, speed true, timeout false
   task.eval_.z() = norm * 1e-1;
   BOOST_REQUIRE(criteria.completed(task)); // eval true, speed true, timeout false
@@ -235,8 +240,10 @@ BOOST_AUTO_TEST_CASE(TestEvalAndSpeedOrTimeout)
   unsigned int ticks = static_cast<unsigned int>(std::floor(timeout / dt));
   for(size_t i = 3; i < ticks; ++i)
   {
+    task.incrementIterInSolver();
     BOOST_REQUIRE(!criteria.completed(task));
   }
+  task.incrementIterInSolver();
   BOOST_REQUIRE(criteria.completed(task));
   BOOST_REQUIRE(criteria.output() == "timeout");
 }
