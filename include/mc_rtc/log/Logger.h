@@ -86,8 +86,23 @@ public:
    *
    * \param resume If true, start the time entry at the current value,
    * otherwise, start at 0
+   *
+   * \param start_t Start at the specified time, only used if resume is false
    */
-  void start(const std::string & ctl_name, double timestep, bool resume = false);
+  void start(const std::string & ctl_name, double timestep, bool resume = false, double start_t = 0.0);
+
+  /*! \brief Open a new file for logging
+   *
+   * This is similar to \ref start but disregard the log directory and template. Instead the logging happens in the
+   * provided file: \p file.
+   *
+   * \param file File where data is going to be written
+   *
+   * \param timestep Time increment for the log time entry
+   *
+   * \param start_t Start the log at the specified time
+   */
+  void open(const std::string & file, double timestep, double start_t = 0.0);
 
   /*! \brief Log controller's data
    *
@@ -240,7 +255,7 @@ public:
 
   /** Access the file opened by this Logger
    *
-   * \note This is empty before \ref start has been called
+   * \note This is empty before \ref start or \ref open has been called
    */
   const std::string & path() const;
 

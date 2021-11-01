@@ -213,6 +213,22 @@ LogType FlatLog::type(const std::string & entry) const
   return mc_rtc::log::LogType::None;
 }
 
+LogType FlatLog::type(const std::string & entry, size_t i) const
+{
+  if(!has(entry))
+  {
+    log::error("No entry named {} in the loaded log", entry);
+    return LogType::None;
+  }
+  const auto & records = at(entry);
+  if(i >= records.size())
+  {
+    log::error("Requested data ({}) out of available range ({}, available: {})", entry, i, records.size());
+    return LogType::None;
+  }
+  return records[i].type;
+}
+
 const std::vector<FlatLog::record> & FlatLog::at(const std::string & entry) const
 {
   for(const auto & d : data_)

@@ -21,6 +21,8 @@ namespace po = boost::program_options;
 
 #include "mc_bin_to_flat.h"
 #include "mc_bin_to_log.h"
+
+#include <bitset>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -30,6 +32,58 @@ namespace po = boost::program_options;
 namespace
 {
 static bfs::path MC_BIN_TO_ROSBAG = "@CMAKE_INSTALL_PREFIX@/bin/mc_bin_to_rosbag@CMAKE_EXECUTABLE_SUFFIX@";
+
+struct TypedKey
+{
+  std::string key;
+  mc_rtc::log::LogType type;
+
+  friend inline bool operator==(const TypedKey & lhs, const TypedKey & rhs)
+  {
+    return lhs.type == rhs.type && lhs.key == rhs.key;
+  }
+
+  friend inline bool operator!=(const TypedKey & lhs, const TypedKey & rhs)
+  {
+    return !(lhs == rhs);
+  }
+};
+
+void addToLogger(const TypedKey & key, const mc_rtc::log::FlatLog & log, mc_rtc::Logger & logger, size_t & idx)
+{
+#define HANDLE_CASE(LOGT, CPPT)                                                                                   \
+  case mc_rtc::log::LogType::LOGT:                                                                                \
+    logger.addLogEntry(key.key, [&idx, &log, key]() -> const CPPT & { return *log.getRaw<CPPT>(key.key, idx); }); \
+    break
+  switch(key.type)
+  {
+    HANDLE_CASE(Bool, bool);
+    HANDLE_CASE(Int8_t, int8_t);
+    HANDLE_CASE(Int16_t, int16_t);
+    HANDLE_CASE(Int32_t, int32_t);
+    HANDLE_CASE(Int64_t, int64_t);
+    HANDLE_CASE(Uint8_t, uint8_t);
+    HANDLE_CASE(Uint16_t, uint16_t);
+    HANDLE_CASE(Uint32_t, uint32_t);
+    HANDLE_CASE(Uint64_t, uint64_t);
+    HANDLE_CASE(Float, float);
+    HANDLE_CASE(Double, double);
+    HANDLE_CASE(String, std::string);
+    HANDLE_CASE(Vector2d, Eigen::Vector2d);
+    HANDLE_CASE(Vector3d, Eigen::Vector3d);
+    HANDLE_CASE(Vector6d, Eigen::Vector6d);
+    HANDLE_CASE(VectorXd, Eigen::VectorXd);
+    HANDLE_CASE(Quaterniond, Eigen::Quaterniond);
+    HANDLE_CASE(PTransformd, sva::PTransformd);
+    HANDLE_CASE(ForceVecd, sva::ForceVecd);
+    HANDLE_CASE(MotionVecd, sva::MotionVecd);
+    HANDLE_CASE(VectorDouble, std::vector<double>);
+    default:
+      return;
+  }
+#undef HANDLE_CASE
+}
+
 } // namespace
 
 void usage()
@@ -216,6 +270,7 @@ int extract(int argc, char * argv[])
   std::string in = "";
   std::string out = "";
   std::string key = "";
+  std::vector<std::string> extract_keys = {};
   double from = 0;
   double to = std::numeric_limits<double>::infinity();
   po::variables_map vm;
@@ -225,7 +280,8 @@ int extract(int argc, char * argv[])
     ("help", "Produce this message")
     ("in", po::value<std::string>(&in), "Input file")
     ("out", po::value<std::string>(&out), "Output template")
-    ("key", po::value<std::string>(&key)->default_value(""), "Key to extract")
+    ("key", po::value<std::string>(&key)->default_value(""), "Extract parts of the log where the given key is present")
+    ("keys", po::value<std::vector<std::string>>(&extract_keys)->multitoken(), "Extract the given keys from the log")
     ("from", po::value<double>(&from)->default_value(0), "Start time")
     ("to", po::value<double>(&to)->default_value(std::numeric_limits<double>::infinity()), "End time");
   // clang-format on
@@ -238,20 +294,25 @@ int extract(int argc, char * argv[])
     std::cout << "Usage: mc_bin_utils extract [in] [out]\n\n";
     std::cout << tool << "\n\n";
     std::cout << "Examples:\n\n";
-    std::cout << "  #Extract 10 seconds of in.bin\n";
+    std::cout << "  # Extract 10 seconds of in.bin\n";
     std::cout << "  mc_bin_utils extract in.bin out --from 50 --to 60\n\n";
-    std::cout << "  #Extract parts of the log where MyKey appears\n";
-    std::cout << "  mc_bin_utils extract in.bin out --key MyKey\n";
+    std::cout << "  # Extract parts of the log where MyKey appears\n";
+    std::cout << "  mc_bin_utils extract in.bin out --key MyKey\n\n";
+    std::cout << "  # Extract the provided keys and create a new log\n";
+    std::cout << "  mc_bin_utils extract in.bin out --keys LeftFootForceSensor RightFootForceSensor\n";
   };
-  if(vm.count("help") || !vm.count("in") || !vm.count("out")
-     || (!key.size() && from == 0 && to == std::numeric_limits<double>::infinity()))
+  std::bitset<3> options;
+  options[0] = key.size() != 0;
+  options[1] = extract_keys.size() != 0;
+  options[2] = (from != 0 || to != std::numeric_limits<double>::infinity());
+  if(vm.count("help") || !vm.count("in") || !vm.count("out") || options.count() == 0)
   {
     extract_usage();
     return !vm.count("help");
   }
-  if(key.size() && (from != 0 || to != std::numeric_limits<double>::infinity()))
+  if(options.count() != 1)
   {
-    std::cout << "key options and from/to options are exclusive\n";
+    std::cout << "key, keys and from/to options are mutually exclusive\n";
     return 1;
   }
   if(from < 0)
@@ -397,6 +458,82 @@ int extract(int argc, char * argv[])
       std::cout << "Provided start time is higher than last time recorded: " << final_t << "\n";
     }
   }
+  if(extract_keys.size())
+  {
+    auto log = mc_rtc::log::FlatLog{in};
+    if(log.size() <= 1)
+    {
+      std::cout << in << " is empty or has only one entry\n";
+      return 1;
+    }
+    // Remove "t" from the extract_keys as we will implicitly extract it
+    {
+      auto it = std::find(extract_keys.begin(), extract_keys.end(), "t");
+      if(it != extract_keys.end())
+      {
+        extract_keys.erase(it);
+      }
+    }
+    for(auto it = extract_keys.begin(); it != extract_keys.end();)
+    {
+      if(!log.has(*it))
+      {
+        std::cout << *it << " is not in " << in << "\n";
+        it = extract_keys.erase(it);
+      }
+      else
+      {
+        ++it;
+      }
+    }
+    if(extract_keys.empty())
+    {
+      std::cout << "All the keys you asked to extract are not in this log (You cannot extract \"t\" only)\n";
+      return 1;
+    }
+    // Returns the keys in the log at iteration i
+    auto get_keys_in_log = [&](size_t i) {
+      std::vector<TypedKey> out;
+      for(const auto & k : extract_keys)
+      {
+        auto type = log.type(k, i);
+        if(type != mc_rtc::log::LogType::None)
+        {
+          out.push_back({k, type});
+        }
+      }
+      return out;
+    };
+    std::vector<TypedKey> prev_keys_in_log;
+    mc_rtc::Logger logger(mc_rtc::Logger::Policy::THREADED, "", "");
+    double timestep = *log.getRaw<double>("t", 1) - *log.getRaw<double>("t", 0);
+    for(size_t i = 0; i < log.size(); ++i)
+    {
+      auto keys_in_log = get_keys_in_log(i);
+      if(keys_in_log != prev_keys_in_log)
+      {
+        if(prev_keys_in_log.empty())
+        {
+          double start_t = *log.getRaw<double>("t", i);
+          std::string file = out_name(n++);
+          logger.open(file, timestep, start_t);
+        }
+        for(const auto & k : prev_keys_in_log)
+        {
+          logger.removeLogEntry(k.key);
+        }
+        for(const auto & k : keys_in_log)
+        {
+          addToLogger(k, log, logger, i);
+        }
+        prev_keys_in_log = keys_in_log;
+      }
+      if(keys_in_log.size())
+      {
+        logger.log();
+      }
+    }
+  }
   return 0;
 }
 
@@ -411,7 +548,7 @@ int convert(int argc, char * argv[])
     ("in", po::value<std::string>(), "Input file")
     ("out", po::value<std::string>(), "Output file or template")
     ("format", po::value<std::string>(), "Log format (csv|flat|bag), can be deduced from [out]")
-    ("entries", po::value<std::vector<std::string>>()->multitoken(), "Name of entries to log (all if ommitted)");
+    ("entries", po::value<std::vector<std::string>>()->multitoken(), "Name of entries to log (all if ommitted)")
     ("dt", po::value<double>(&dt), "Log timestep (only for bag conversion)");
   // clang-format on
   po::positional_options_description pos;
