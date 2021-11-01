@@ -88,7 +88,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: &package-matrix
-        dist: [xenial, bionic, focal]
+        dist: [bionic, focal]
         arch: [i386, amd64]
         exclude:
           - dist: focal
@@ -138,10 +138,6 @@ jobs:
         export MC_LOG_UI_PYTHON_EXECUTABLE=python
         export ROS_PYTHON=python2.7
         export ROS_DISTRO=""
-        if [ "${{ matrix.dist }}" = "xenial" ]
-        then
-          export ROS_DISTRO="kinetic"
-        fi
         if [ "${{ matrix.dist }}" = "bionic" -a "${{ matrix.arch }}" = "amd64" ]
         then
           export ROS_DISTRO="melodic"
