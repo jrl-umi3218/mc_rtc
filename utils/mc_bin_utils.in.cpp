@@ -14,6 +14,7 @@
 #include <mc_rtc/log/Logger.h>
 #include <mc_rtc/log/iterate_binary_log.h>
 
+#include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
 namespace bfs = boost::filesystem;
 #include <boost/program_options.hpp>
@@ -474,16 +475,45 @@ int extract(int argc, char * argv[])
         extract_keys.erase(it);
       }
     }
+    std::vector<std::string> wildcards;
     for(auto it = extract_keys.begin(); it != extract_keys.end();)
     {
-      if(!log.has(*it))
+      const auto & key = *it;
+      if(key.empty())
       {
-        std::cout << *it << " is not in " << in << "\n";
+        it = extract_keys.erase(it);
+        continue;
+      }
+      if(!log.has(key))
+      {
+        if(key.back() == '*')
+        {
+          wildcards.push_back(std::string{key, 0, key.size() - 1});
+        }
+        else
+        {
+          std::cout << *it << " is not in " << in << "\n";
+        }
         it = extract_keys.erase(it);
       }
       else
       {
         ++it;
+      }
+    }
+    for(const auto & key : wildcards)
+    {
+      auto size_before = extract_keys.size();
+      for(const auto & k : log.entries())
+      {
+        if(boost::algorithm::starts_with(k, key))
+        {
+          extract_keys.push_back(k);
+        }
+      }
+      if(extract_keys.size() == size_before)
+      {
+        std::cout << "No match for wildcard " << key << "* in " << in << "\n";
       }
     }
     if(extract_keys.empty())
