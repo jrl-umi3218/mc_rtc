@@ -65,6 +65,7 @@ jobs:
       fail-fast: false
       matrix:
         dist:
+        - xenial
         - bionic
         - focal
         arch:
@@ -117,6 +118,10 @@ jobs:
         export MC_LOG_UI_PYTHON_EXECUTABLE=python
         export ROS_PYTHON=python2.7
         export ROS_DISTRO=""
+        if [ "${{ matrix.dist }}" = "xenial" ]
+        then
+          export ROS_DISTRO="kinetic"
+        fi
         if [ "${{ matrix.dist }}" = "bionic" -a "${{ matrix.arch }}" = "amd64" ]
         then
           export ROS_DISTRO="melodic"
@@ -159,6 +164,7 @@ jobs:
       fail-fast: false
       matrix:
         dist:
+        - xenial
         - bionic
         - focal
         arch:
@@ -263,4 +269,5 @@ jobs:
         curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token ${{ secrets.GH_PAGES_TOKEN }}" --request POST --data "{\"event_type\": \"${PACKAGE_JOB}\"}" https://api.github.com/repos/jrl-umi3218/mc_rtc_ros/dispatches
         curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token ${{ secrets.GH_PAGES_TOKEN }}" --request POST --data "{\"event_type\": \"${PACKAGE_JOB}\"}" https://api.github.com/repos/jrl-umi3218/mc_openrtm/dispatches
         curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token ${{ secrets.GH_PAGES_TOKEN }}" --request POST --data "{\"event_type\": \"${PACKAGE_JOB}\"}" https://api.github.com/repos/jrl-umi3218/mc_udp/dispatches
+        curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token ${{ secrets.GH_PAGES_TOKEN }}" --request POST --data "{\"event_type\": \"${PACKAGE_JOB}\"}" https://api.github.com/repos/jrl-umi3218/mc_panda/dispatches
       if: env.PACKAGE_UPLOAD == 'true'
