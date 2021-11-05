@@ -54,8 +54,9 @@ void MCCoMController::reset(const ControllerResetData & reset_data)
   MCController::reset(reset_data);
   comTask->reset();
   solver().addTask(comTask);
-  solver().setContacts({mc_rbdyn::Contact(robots(), leftFootSurface_, "AllGround"),
-                        mc_rbdyn::Contact(robots(), rightFootSurface_, "AllGround")});
+  solver().setContacts(
+      {mc_rbdyn::Contact(robots(), env().robotIndex(), robot().robotIndex(), "AllGround", leftFootSurface_),
+       mc_rbdyn::Contact(robots(), env().robotIndex(), robot().robotIndex(), "AllGround", rightFootSurface_)});
 }
 
 } // namespace mc_control
