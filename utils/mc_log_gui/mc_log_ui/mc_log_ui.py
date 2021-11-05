@@ -15,6 +15,9 @@ import signal
 import sys
 import tempfile
 
+if sys.version_info.major == 3:
+    unicode = str
+
 from functools import partial
 
 from PyQt5 import QtCore, QtGui, QtWidgets
