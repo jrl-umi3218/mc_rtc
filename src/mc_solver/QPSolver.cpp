@@ -197,7 +197,29 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
       gui_->removeElement({"Contacts"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S));
     }
   }
-  contacts_ = contacts;
+  contacts_.clear();
+  for(const auto & c : contacts)
+  {
+    const auto & r1 = robots().robot(c.r1Index());
+    if(r1.mb().nrDof() == 0)
+    {
+      const auto & r2 = robots().robot(c.r2Index());
+      const auto & X_s1_s2 = c.X_r2s_r1s();
+      const auto & X_b1_s1 = c.X_b_s();
+      unsigned int r1BodyIndex = r1.bodyIndexByName(c.r1Surface()->bodyName());
+      unsigned int r2BodyIndex = r2.bodyIndexByName(c.r2Surface()->bodyName());
+      const auto & X_0_b1 = r1.mbc().bodyPosW[r1BodyIndex];
+      const auto & X_0_b2 = r2.mbc().bodyPosW[r2BodyIndex];
+      const auto & X_b2_b1 = X_0_b1 * (X_0_b2.inv());
+      sva::PTransformd X_b2_s2 = X_s1_s2 * X_b1_s1 * X_b2_b1;
+      contacts_.push_back({robots(), c.r2Index(), c.r1Index(), c.r2Surface()->name(), c.r1Surface()->name(),
+                           X_s1_s2.inv(), X_b2_s2, c.friction(), c.ambiguityId()});
+    }
+    else
+    {
+      contacts_.push_back(c);
+    }
+  }
   if(logger_)
   {
     for(const auto & contact : contacts_)
