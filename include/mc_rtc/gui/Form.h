@@ -70,6 +70,10 @@ struct FormImpl : public CallbackElement<Element, Callback>
       el(builder);
     }
     builder.write_object(data_.data(), data_size_);
+    for(size_t i = dynamic_elements_.size() + 1; i < count_; ++i)
+    {
+      builder.write_object(nullptr, 0);
+    }
     builder.finish_array();
   }
 
