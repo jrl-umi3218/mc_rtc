@@ -62,6 +62,18 @@ mc_rtc_extra_steps()
   true
 }
 
+fix_ninja_perms()
+{
+  if [ -f .ninja_deps ]
+  then
+    owner="$(stat --format '%U' .ninja_deps)"
+    if [ "x${owner}" != "x${USER}" ]
+    then
+      sudo chown -R $USER .ninja_deps .ninja_log
+    fi
+  fi
+}
+
 echo_log ""
 echo_log "========================================"
 echo_log "== mc_rtc build_and_install.sh script =="
@@ -1044,6 +1056,7 @@ build_project()
   fi
   exec_log ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE}
   exit_if_error "-- [ERROR] Installation failed for $1"
+  fix_ninja_perms
 }
 
 test_project()
@@ -1069,6 +1082,7 @@ test_project()
       fi
       exec_log cmake --build . --config ${BUILD_TYPE}
       exec_log ${SUDO_CMD} cmake --build . --target install --config ${BUILD_TYPE}
+      fix_ninja_perms
       exit_if_error "[ERROR] Build failed for $1"
       exit_if_error "-- [ERROR] Installation failed for $1"
       exec_log ctest -V -C ${BUILD_TYPE}
@@ -1111,17 +1125,18 @@ build_git_dependency_configure_and_build()
   then
     cmake_generator="-GNinja"
   fi
-    exec_log cmake $SOURCE_DIR/$git_dep -DCMAKE_INSTALL_PREFIX:STRING="$custom_install_prefix" \
-                    -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON \
-                    -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
-                    -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
-                    -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
-                    -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
-                    -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
-                    -DMC_LOG_UI_PYTHON_EXECUTABLE:STRING="${MC_LOG_UI_PYTHON_EXECUTABLE}" \
-                    -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
-                    ${cmake_generator} \
-                    ${CMAKE_ADDITIONAL_OPTIONS}
+  fix_ninja_perms
+  exec_log cmake $SOURCE_DIR/$git_dep -DCMAKE_INSTALL_PREFIX:STRING="$custom_install_prefix" \
+                  -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON \
+                  -DPYTHON_BINDING:BOOL=${WITH_PYTHON_SUPPORT} \
+                  -DPYTHON_BINDING_USER_INSTALL:BOOL=${PYTHON_USER_INSTALL} \
+                  -DPYTHON_BINDING_FORCE_PYTHON2:BOOL=${PYTHON_FORCE_PYTHON2} \
+                  -DPYTHON_BINDING_FORCE_PYTHON3:BOOL=${PYTHON_FORCE_PYTHON3} \
+                  -DPYTHON_BINDING_BUILD_PYTHON2_AND_PYTHON3:BOOL=${PYTHON_BUILD_PYTHON2_AND_PYTHON3} \
+                  -DMC_LOG_UI_PYTHON_EXECUTABLE:STRING="${MC_LOG_UI_PYTHON_EXECUTABLE}" \
+                  -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
+                  ${cmake_generator} \
+                  ${CMAKE_ADDITIONAL_OPTIONS}
   exit_if_error "-- [ERROR] CMake configuration failed for $git_dep"
   build_project $git_dep
   if [[ $OS == "Windows" ]]
@@ -1288,6 +1303,7 @@ if [ "x$SYSTEM_HAS_NINJA" == xON ] && [ "x$DISABLE_NINJA" != xON ] && [ ! -f Mak
 then
   cmake_generator="-GNinja"
 fi
+fix_ninja_perms
 exec_log cmake $mc_rtc_dir -DCMAKE_BUILD_TYPE:STRING="$BUILD_TYPE" \
                    -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON \
                    -DCMAKE_INSTALL_PREFIX:STRING="$INSTALL_PREFIX" \
