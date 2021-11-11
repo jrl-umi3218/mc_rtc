@@ -69,7 +69,15 @@ fix_ninja_perms()
     owner="$(stat --format '%U' .ninja_deps)"
     if [ "x${owner}" != "x${USER}" ]
     then
-      sudo chown -R $USER .ninja_deps .ninja_log
+      sudo chown -R $USER .ninja_deps
+    fi
+  fi
+  if [ -f .ninja_log ]
+  then
+    owner="$(stat --format '%U' .ninja_log)"
+    if [ "x${owner}" != "x${USER}" ]
+    then
+      sudo chown -R $USER .ninja_log
     fi
   fi
 }
