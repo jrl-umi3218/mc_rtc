@@ -23,6 +23,7 @@ var structmc__rbdyn_1_1Contact =
     [ "r2Points", "structmc__rbdyn_1_1Contact.html#ae54975018f368092660612bb3d8e1d5c", null ],
     [ "r2Surface", "structmc__rbdyn_1_1Contact.html#ab474bb24fbec7cda11deb827257970d2", null ],
     [ "surfaces", "structmc__rbdyn_1_1Contact.html#ac48329027fe1bacf94046d859ff4d282", null ],
+    [ "swap", "structmc__rbdyn_1_1Contact.html#a5bc25b8c72afd9a645b3de1f2cd05fcb", null ],
     [ "taskContact", "structmc__rbdyn_1_1Contact.html#a3bf02462e834e4f4c41e660a35cbb219", null ],
     [ "taskContactWPoints", "structmc__rbdyn_1_1Contact.html#a25167da185caf3c0766bf3d38662eaff", null ],
     [ "toStr", "structmc__rbdyn_1_1Contact.html#a588405ba6ef27ddbd5155f9923eb6ed2", null ],

@@ -9964,6 +9964,13 @@
       <arglist>() const</arglist>
     </member>
     <member kind="function">
+      <type>Contact</type>
+      <name>swap</name>
+      <anchorfile>structmc__rbdyn_1_1Contact.html</anchorfile>
+      <anchor>a5bc25b8c72afd9a645b3de1f2cd05fcb</anchor>
+      <arglist>(const mc_rbdyn::Robots &amp;robots) const</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>operator==</name>
       <anchorfile>structmc__rbdyn_1_1Contact.html</anchorfile>
@@ -10180,13 +10187,6 @@
       <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
       <anchor>a63c45626b5b52b6f6be29663c10a8613</anchor>
       <arglist>(const std::string &amp;r1, const std::string &amp;r2, const std::string &amp;r1Surface, const std::string &amp;r2Surface, double friction=mc_rbdyn::Contact::defaultFriction, const Eigen::Vector6d &amp;dof=Eigen::Vector6d::Ones())</arglist>
-    </member>
-    <member kind="function">
-      <type>bool</type>
-      <name>operator&lt;</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Contact.html</anchorfile>
-      <anchor>a63027fea5b27ea98fb1c39aa78c56fed</anchor>
-      <arglist>(const Contact &amp;rhs) const</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
