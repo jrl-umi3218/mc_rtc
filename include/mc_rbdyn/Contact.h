@@ -147,6 +147,9 @@ public:
 
   std::string toStr() const;
 
+  /** If this is a contact r1::s1/r2::s2, this returns r2::s2/r1::s1 */
+  Contact swap(const mc_rbdyn::Robots & robots) const;
+
   bool operator==(const Contact & rhs) const;
   bool operator!=(const Contact & rhs) const;
 

@@ -46,16 +46,10 @@ struct MC_CONTROL_FSM_DLLAPI Contact
   mutable double friction;
   mutable Eigen::Vector6d dof;
 
-  bool operator<(const Contact & rhs) const
-  {
-    return r1 < rhs.r1 || (r1 == rhs.r1 && r1Surface < rhs.r1Surface)
-           || (r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 < rhs.r2)
-           || (r1 == rhs.r1 && r1Surface == rhs.r1Surface && r2 == rhs.r2 && r2Surface < rhs.r2Surface);
-  }
-
   bool operator==(const Contact & rhs) const
   {
-    return r1 == rhs.r1 && r2 == rhs.r2 && r1Surface == rhs.r1Surface && r2Surface == rhs.r2Surface;
+    return (r1 == rhs.r1 && r2 == rhs.r2 && r1Surface == rhs.r1Surface && r2Surface == rhs.r2Surface)
+           || (r1 == rhs.r2 && r2 == rhs.r1 && r1Surface == rhs.r2Surface && r2Surface == rhs.r1Surface);
   }
 
   bool operator!=(const Contact & rhs) const
@@ -81,15 +75,13 @@ struct hash<mc_control::fsm::Contact>
 {
   std::size_t operator()(const mc_control::fsm::Contact & c) const noexcept
   {
-    auto h = std::hash<std::string>{}(c.r1);
     // Same as boost::hash_combine
-    auto hash_combine = [&h](const std::string & value) {
-      h ^= std::hash<std::string>{}(value) + 0x9e3779b9 + (h << 6) + (h >> 2);
+    auto hash_combine = [](const std::string & robot, const std::string & surface) {
+      auto h = std::hash<std::string>{}(robot);
+      h ^= std::hash<std::string>{}(surface) + 0x9e3779b9 + (h << 6) + (h >> 2);
+      return h;
     };
-    hash_combine(c.r1Surface);
-    hash_combine(c.r2);
-    hash_combine(c.r2Surface);
-    return h;
+    return hash_combine(c.r1, c.r1Surface) ^ hash_combine(c.r2, c.r2Surface);
   }
 };
 

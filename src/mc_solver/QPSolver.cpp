@@ -197,7 +197,19 @@ void QPSolver::setContacts(const std::vector<mc_rbdyn::Contact> & contacts)
       gui_->removeElement({"Contacts"}, fmt::format("{}::{}/{}::{}", r1, r1S, r2, r2S));
     }
   }
-  contacts_ = contacts;
+  contacts_.clear();
+  for(const auto & c : contacts)
+  {
+    const auto & r1 = robots().robot(c.r1Index());
+    if(r1.mb().nrDof() == 0)
+    {
+      contacts_.push_back(c.swap(robots()));
+    }
+    else
+    {
+      contacts_.push_back(c);
+    }
+  }
   if(logger_)
   {
     for(const auto & contact : contacts_)
