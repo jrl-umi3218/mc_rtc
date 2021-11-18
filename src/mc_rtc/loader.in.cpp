@@ -43,6 +43,8 @@ char * getPATH()
 namespace mc_rtc
 {
 
+std::mutex LTDLMutex::MTX;
+
 LTDLHandle::~LTDLHandle()
 {
   close();
@@ -95,6 +97,7 @@ bool LTDLHandle::open()
     {
       mc_rtc::log::info("Opening {} in global mode", path_);
     }
+    std::unique_lock<std::mutex> lock{LTDLMutex::MTX};
     lt_dladvise advise;
     lt_dladvise_init(&advise);
     lt_dladvise_global(&advise);
@@ -103,14 +106,19 @@ bool LTDLHandle::open()
   }
   else
   {
+    std::unique_lock<std::mutex> lock{LTDLMutex::MTX};
     handle_ = lt_dlopen(path_.c_str());
   }
 #  else
-  handle_ = lt_dlopen(path_.c_str());
+  {
+    std::unique_lock<std::mutex> lock{LTDLMutex::MTX};
+    handle_ = lt_dlopen(path_.c_str());
+  }
 #  endif
   open_ = handle_ != nullptr;
   if(!open_)
   {
+    std::unique_lock<std::mutex> lock{LTDLMutex::MTX};
     const char * error = lt_dlerror();
     /* Discard the "file not found" error as it only indicates that we tried to load something other than a library */
     if(strcmp(error, "file not found") != 0)
@@ -133,6 +141,7 @@ void LTDLHandle::close()
   if(open_)
   {
     open_ = false;
+    std::unique_lock<std::mutex> lock{LTDLMutex::MTX};
     lt_dlclose(handle_);
   }
 #endif
@@ -147,6 +156,7 @@ unsigned int Loader::init_count_ = 0;
 bool Loader::init()
 {
 #ifndef MC_RTC_BUILD_STATIC
+  std::unique_lock<std::mutex> lock{LTDLMutex::MTX};
   if(init_count_ == 0)
   {
     int err = lt_dlinit();
@@ -167,10 +177,12 @@ bool Loader::close()
   --init_count_;
   if(init_count_ == 0)
   {
+    std::unique_lock<std::mutex> lock{LTDLMutex::MTX};
     int err = lt_dlexit();
     if(err != 0)
     {
       std::string error = lt_dlerror();
+      lock.unlock();
       mc_rtc::log::error_and_throw<LoaderException>("Failed to close ltdl\n{}", error);
     }
   }

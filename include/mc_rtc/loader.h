@@ -26,6 +26,7 @@
 #include <functional>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <string>
 #include <vector>
 
@@ -50,6 +51,15 @@ public:
 
 private:
   std::string what_;
+};
+
+/*! \class LTDLMutex
+ *
+ * \brief Holds a global mutex for all LTDL operations
+ */
+struct MC_RTC_LOADER_DLLAPI LTDLMutex
+{
+  static std::mutex MTX;
 };
 
 /*! \class LTDLHandle
