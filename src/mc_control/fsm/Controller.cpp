@@ -207,6 +207,7 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
 Controller::~Controller()
 {
   executor_.teardown(*this);
+  datastore().clear();
 }
 
 bool Controller::run()
