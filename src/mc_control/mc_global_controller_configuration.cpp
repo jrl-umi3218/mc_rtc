@@ -416,6 +416,7 @@ void load_configs(const std::string & desc,
 
 void MCGlobalController::GlobalConfiguration::load_controllers_configs()
 {
+  controllers_configs.clear();
   // Load controller-specific configuration
   load_configs("controller", enabled_controllers, controller_module_paths,
 #ifndef WIN32

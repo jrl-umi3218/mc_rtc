@@ -308,6 +308,7 @@ void MCGlobalController::reset(const std::map<std::string, std::vector<double>> 
   controllers.erase(current_ctrl);
   setup_logger_.erase(current_ctrl);
   pre_gripper_mbcs_.clear();
+  config.load_controllers_configs();
   AddController(current_ctrl);
   controller_ = controllers[current_ctrl].get();
   init(initqs, initAttitudes, true);
