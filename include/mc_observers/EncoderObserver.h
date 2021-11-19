@@ -82,6 +82,8 @@ protected:
   bool computeFK_ = true; ///< Whether to compute forward kinematics
   bool computeFV_ = true; ///< Whether to compute forward velocity
 
+  bool initialized_ = false; ///< True if the observer's memory has been initialized
+
   std::string robot_ = ""; ///< Robot estimated by this observer
   std::string updateRobot_ = ""; ///< Robot to update (defaults to robot_)
 
