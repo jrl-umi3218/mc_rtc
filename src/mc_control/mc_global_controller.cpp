@@ -138,13 +138,6 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
     mc_rtc::log::error_and_throw<std::runtime_error>("No controller enabled");
   }
 
-  if(config.enable_log)
-  {
-    for(auto c : controllers)
-    {
-      c.second->logger().setup(config.log_policy, config.log_directory, config.log_template);
-    }
-  }
   if(config.enable_gui_server)
   {
     server_.reset(new mc_control::ControllerServer(config.timestep, config.gui_timestep, config.gui_server_pub_uris,
@@ -197,14 +190,22 @@ void MCGlobalController::init(const std::vector<double> & initq, const std::arra
 
 void MCGlobalController::init(const std::vector<double> & initq, const sva::PTransformd & initAttitude)
 {
-  initEncoders(initq);
+  initEncoders(robot(), initq);
   robot().posW(initAttitude);
+  for(auto & robot : robots())
+  {
+    if(robot.robotIndex() == robots().robotIndex())
+    {
+      continue;
+    }
+    initEncoders(robot);
+  }
   this->initController();
 }
 
 void MCGlobalController::init(const std::vector<double> & initq)
 {
-  initEncoders(initq);
+  initEncoders(robot(), initq);
 
   auto & q = robot().mbc().q;
   // Configure initial attitude (requires FK to be computed)
@@ -250,68 +251,129 @@ void MCGlobalController::init(const std::vector<double> & initq)
       robot().forwardKinematics();
     }
   }
+  for(auto & robot : robots())
+  {
+    if(robot.robotIndex() == robots().robotIndex())
+    {
+      continue;
+    }
+    initEncoders(robot);
+  }
   this->initController();
 }
 
-void MCGlobalController::initEncoders(const std::vector<double> & initq)
+void MCGlobalController::init(const std::map<std::string, std::vector<double>> & initqs,
+                              const std::map<std::string, sva::PTransformd> & initAttitudes)
 {
-  if(initq.size() != controller_->robot().refJointOrder().size())
+  init(initqs, initAttitudes, false);
+}
+
+void MCGlobalController::init(const std::map<std::string, std::vector<double>> & initqs,
+                              const std::map<std::string, sva::PTransformd> & initAttitudes,
+                              bool reset)
+{
+  for(auto & robot : robots())
+  {
+    auto initq_it = initqs.find(robot.name());
+    if(initq_it != initqs.end())
+    {
+      initEncoders(robot, initq_it->second);
+    }
+    else
+    {
+      initEncoders(robot);
+    }
+    auto initatt_it = initAttitudes.find(robot.name());
+    if(initatt_it != initAttitudes.end())
+    {
+      robot.posW(initatt_it->second);
+    }
+    else
+    {
+      auto & q = robot.mbc().q;
+      if(q[0].size() == 7)
+      {
+        const auto & initAttitude = robot.module().default_attitude();
+        q[0] = {std::begin(initAttitude), std::end(initAttitude)};
+        robot.forwardKinematics();
+      }
+    }
+  }
+  initController(reset);
+}
+
+void MCGlobalController::reset(const std::map<std::string, std::vector<double>> & initqs,
+                               const std::map<std::string, sva::PTransformd> & initAttitudes)
+{
+  controllers.erase(current_ctrl);
+  setup_logger_.erase(current_ctrl);
+  pre_gripper_mbcs_.clear();
+  AddController(current_ctrl);
+  controller_ = controllers[current_ctrl].get();
+  init(initqs, initAttitudes, true);
+}
+
+void MCGlobalController::initEncoders(mc_rbdyn::Robot & robot, const std::vector<double> & initq)
+{
+  const auto & rjo = robot.refJointOrder();
+  if(initq.size() != rjo.size())
   {
     mc_rtc::log::error_and_throw<std::domain_error>(
-        "Could not initialize the robot state from encoder sensors: got {} encoder values but the robot ({}) expects "
-        "{}.\nMake sure that the MainRobot is compatible with the real/simulated robot used by the interface.",
-        initq.size(), controller_->robot().name(), controller_->robot().refJointOrder().size());
+        "Could not initialize {} state from encoder sensors: got {} encoder values but {} values are expected\n"
+        "Make sure that the MainRobot is compatible with the real/simulated robot used by the interface.",
+        robot.name(), initq.size(), rjo.size());
   }
 
-  auto & q = robot().mbc().q;
-  const auto & rjo = ref_joint_order();
+  auto & q = robot.mbc().q;
   for(size_t i = 0; i < rjo.size(); ++i)
   {
     const auto & jn = rjo[i];
-    if(robot().hasJoint(jn))
+    if(robot.hasJoint(jn))
     {
-      q[robot().jointIndexByName(jn)][0] = initq[i];
+      q[robot.jointIndexByName(jn)][0] = initq[i];
     }
   }
   for(auto & g : controller_->robot().grippers())
   {
     g.get().reset(initq);
   }
-  for(size_t i = 1; i < controller_->robots().size(); ++i)
-  {
-    auto & robot = controller_->robots().robot(i);
-    if(robot.grippers().empty())
-    {
-      continue;
-    }
-    const auto & rjo = robot.refJointOrder();
-    std::vector<double> rinitq;
-    rinitq.reserve(rjo.size());
-    for(const auto & j : rjo)
-    {
-      if(robot.hasJoint(j))
-      {
-        auto jIndex = robot.jointIndexByName(j);
-        const auto & q = robot.mbc().q[jIndex];
-        for(const auto & qi : q)
-        {
-          rinitq.push_back(qi);
-        }
-      }
-      else
-      {
-        rinitq.push_back(0);
-      }
-    }
-    for(auto & g : robot.grippers())
-    {
-      g.get().reset(rinitq);
-    }
-  }
-  robot().forwardKinematics();
+  robot.forwardKinematics();
 }
 
-void MCGlobalController::initController()
+void MCGlobalController::initEncoders(mc_rbdyn::Robot & robot)
+{
+  // We only need to go through this to initialize the gripper, otherwise the robots are already initialized to the
+  // stance configuration
+  if(robot.grippers().empty())
+  {
+    return;
+  }
+  const auto & rjo = robot.refJointOrder();
+  std::vector<double> rinitq;
+  rinitq.reserve(rjo.size());
+  for(const auto & j : rjo)
+  {
+    if(robot.hasJoint(j))
+    {
+      auto jIndex = robot.jointIndexByName(j);
+      const auto & q = robot.mbc().q[jIndex];
+      for(const auto & qi : q)
+      {
+        rinitq.push_back(qi);
+      }
+    }
+    else
+    {
+      rinitq.push_back(0);
+    }
+  }
+  for(auto & g : robot.grippers())
+  {
+    g.get().reset(rinitq);
+  }
+}
+
+void MCGlobalController::initController(bool reset)
 {
   if(config.enable_log)
   {
@@ -321,9 +383,19 @@ void MCGlobalController::initController()
   controller_->reset({q});
   controller_->resetObserverPipelines();
   initGUI();
-  for(auto & plugin : plugins_)
+  if(reset)
   {
-    plugin.plugin->init(*this, config.global_plugin_configs[plugin.name]);
+    for(auto & plugin : plugins_)
+    {
+      plugin.plugin->reset(*this);
+    }
+  }
+  else
+  {
+    for(auto & plugin : plugins_)
+    {
+      plugin.plugin->init(*this, config.global_plugin_configs[plugin.name]);
+    }
   }
 }
 

@@ -138,13 +138,36 @@ public:
   void init(const std::vector<double> & initq, const sva::PTransformd & initAttitude);
 
   /**
-   * @brief Initializes controller, observers and plugins
+   * @brief Initialize multiple robots to the given configuration and attitude
    *
-   * Should only be called if init() has been called with initController=false.
+   * If some robots' configuration or position is not provided then the robot module data is used to initialize the
+   * robot.
    *
-   * The robot state must be properly initialized prior to calling this function.
+   * @param initqs Initial joints configuration for each robot, for each robot this data is expected in the
+   * corresponding ref_joint_order
+   *
+   * @param initAttitudes Initial world position for each robot
+   *
    */
-  void initController();
+  void init(const std::map<std::string, std::vector<double>> & initqs = {},
+            const std::map<std::string, sva::PTransformd> & initAttitudes = {});
+
+  /**
+   * @brief Fully reset the current controller to the given initial state
+   *
+   * This deletes then re-create the current controller so that it is started from scratch.
+   *
+   * If some robots' configuration or position is not provided then the robot module data is used to initialize the
+   * robot.
+   *
+   * @param initqs Initial joints configuration for each robot, for each robot this data is expected in the
+   * corresponding ref_joint_order
+   *
+   * @param initAttitudes Initial world position for each robot
+   *
+   */
+  void reset(const std::map<std::string, std::vector<double>> & resetqs = {},
+             const std::map<std::string, sva::PTransformd> & resetAttitudes = {});
 
   /** @name Sensing
    *
@@ -716,11 +739,35 @@ public:
   void refreshLog();
 
 private:
+  /** Initialize all robots */
+  void init(const std::map<std::string, std::vector<double>> & initqs,
+            const std::map<std::string, sva::PTransformd> & initAttitudes,
+            bool reset);
+
   /**
-   * @brief Initializes the robot from provided encoder values
+   * @brief Initializes a robot configuration from provided encoder values
+   *
+   * @param robot Robot that will be initialized
+   *
    * @param initq Encoder values for all actuated joints
    */
-  void initEncoders(const std::vector<double> & initq);
+  void initEncoders(mc_rbdyn::Robot & robot, const std::vector<double> & initq);
+
+  /**
+   * @brief Initializes a robot using its default configuration from the module
+   *
+   * @param robot Robot that will be initialized
+   */
+  void initEncoders(mc_rbdyn::Robot & robot);
+
+  /**
+   * @brief Initializes controller, observers and plugins
+   *
+   * The robot state must be properly initialized prior to calling this function.
+   *
+   * @param reset Should be true when called for reset
+   */
+  void initController(bool reset = false);
 
 public:
   /*! \brief Returns true if the controller is running
