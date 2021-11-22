@@ -118,6 +118,9 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                      "Enabled", [this]() { return c_.dcmBias.withDCMBias; },
                      [this]() { c_.dcmBias.withDCMBias = !c_.dcmBias.withDCMBias; }),
                  Checkbox(
+                     "Correct CoM Pos", [this]() { return c_.dcmBias.correctCoMPos; },
+                     [this]() { c_.dcmBias.correctCoMPos = !c_.dcmBias.correctCoMPos; }),
+                 Checkbox(
                      "Use Filtered DCM", [this]() { return c_.dcmBias.withDCMFilter; },
                      [this]() { c_.dcmBias.withDCMFilter = !c_.dcmBias.withDCMFilter; }));
   gui.addElement({"Tasks", name_, "Advanced", "DCM Bias"},
@@ -464,6 +467,7 @@ void StabilizerTask::addToLogger(mc_rtc::Logger & logger)
   MC_RTC_LOG_HELPER(name_ + "_realRobot_comd", measuredCoMd_);
   MC_RTC_LOG_HELPER(name_ + "_realRobot_dcm", measuredDCM_);
   MC_RTC_LOG_HELPER(name_ + "_realRobot_dcm_unbiased", measuredDCMUnbiased_);
+  MC_RTC_LOG_HELPER(name_ + "_realRobot_com_unbiased", measuredCoMUnbiased_);
   logger.addLogEntry(name_ + "_realRobot_posW", this,
                      [this]() -> const sva::PTransformd & { return realRobot().posW(); });
   logger.addLogEntry(name_ + "_realRobot_wrench", this,

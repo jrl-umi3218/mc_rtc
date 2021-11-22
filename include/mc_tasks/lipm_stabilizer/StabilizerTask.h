@@ -863,6 +863,7 @@ protected:
   Eigen::Vector3d measuredZMP_ = Eigen::Vector3d::Zero();
   Eigen::Vector3d measuredDCM_ = Eigen::Vector3d::Zero(); /// Measured DCM (only used for logging)
   Eigen::Vector3d measuredDCMUnbiased_ = Eigen::Vector3d::Zero(); /// DCM unbiased (only used for logging)
+  Eigen::Vector3d measuredCoMUnbiased_ = Eigen::Vector3d::Zero(); /// CoM unbiased (only used for logging)
   sva::ForceVecd measuredNetWrench_ = sva::ForceVecd::Zero();
 
   bool zmpccOnlyDS_ = true; /**< Only apply ZMPCC in double support */

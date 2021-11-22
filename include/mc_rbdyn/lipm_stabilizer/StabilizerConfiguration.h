@@ -136,6 +136,8 @@ struct DCMBiasEstimatorConfiguration
   bool withDCMBias = false;
   /// Whether the DCM filter is enabled
   bool withDCMFilter = false;
+  /// Whether the absolution CoM position gets unbiased
+  bool correctCoMPos = false;
 
   void load(const mc_rtc::Configuration & config)
   {
@@ -144,6 +146,7 @@ struct DCMBiasEstimatorConfiguration
     config("biasDriftPerSecondStd", biasDriftPerSecondStd);
     config("biasLimit", biasLimit);
     config("withDCMBias", withDCMBias);
+    config("correctCoMPos", correctCoMPos);
     config("withDCMFilter", withDCMFilter);
   }
 
@@ -155,6 +158,7 @@ struct DCMBiasEstimatorConfiguration
     config.add("biasDriftPerSecondStd", biasDriftPerSecondStd);
     config.add("biasLimit", biasLimit);
     config.add("withDCMBias", withDCMBias);
+    config.add("correctCoMPos", correctCoMPos);
     config.add("withDCMFilter", withDCMFilter);
     return config;
   }
