@@ -1,6 +1,5 @@
 var NAVTREEINDEX14 =
 {
-"structmc__solver_1_1RobotEnvCollisionsConstraint.html#a7da0970955748569829288d534c7d6c4":[3,0,8,26,9],
 "structmc__solver_1_1RobotEnvCollisionsConstraint.html#a8a12fce61aaa56f6d8d698ab7c925b6d":[3,0,8,26,10],
 "structmc__solver_1_1RobotEnvCollisionsConstraint.html#a958e2813a9368f8e2628e367aac46449":[3,0,8,26,3],
 "structmc__solver_1_1RobotEnvCollisionsConstraint.html#aa8ec417a8fe966ff8fd516ee32c2e029":[3,0,8,26,8],
@@ -249,5 +248,6 @@ var NAVTREEINDEX14 =
 "structmc__tasks_1_1OrientationTask.html#ab333c1b08462c2014c404b1b2b886246":[3,0,9,15,6],
 "structmc__tasks_1_1OrientationTask.html#abfd25888b1dc814b280d5443506fe258":[3,0,9,15,7],
 "structmc__tasks_1_1OrientationTask.html#ac5953577c61c0b6943106f08851f562c":[3,0,9,15,1],
-"structmc__tasks_1_1OrientationTask.html#ada80fbd5aaf53369618630495e92a175":[3,0,9,15,4]
+"structmc__tasks_1_1OrientationTask.html#ada80fbd5aaf53369618630495e92a175":[3,0,9,15,4],
+"structmc__tasks_1_1OrientationTask.html#ae68bb89e360bfbc1d9f2be05fcaad936":[3,0,9,15,5]
 };

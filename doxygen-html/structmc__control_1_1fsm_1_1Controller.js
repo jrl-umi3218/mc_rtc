@@ -32,7 +32,6 @@ var structmc__control_1_1fsm_1_1Controller =
     [ "ff_tasks_", "structmc__control_1_1fsm_1_1Controller.html#a72d332cebe24c4a81aa20ec2b911b0b4", null ],
     [ "idle_keep_state_", "structmc__control_1_1fsm_1_1Controller.html#a87e1854906c3b292131a1831529a6942", null ],
     [ "posture_tasks_", "structmc__control_1_1fsm_1_1Controller.html#a07013b382ce6e4247057217fa49a7c97", null ],
-    [ "robots_idx_", "structmc__control_1_1fsm_1_1Controller.html#a732b32c60a8ab57cfed2c752d311bcf5", null ],
     [ "running_", "structmc__control_1_1fsm_1_1Controller.html#a2f6a4cf37f59a88bfcd9e1a347921579", null ],
     [ "saved_posture_weights_", "structmc__control_1_1fsm_1_1Controller.html#a7d070ffb51aac7ef5d5b1b03ad215311", null ],
     [ "updateContacts_dt_", "structmc__control_1_1fsm_1_1Controller.html#abdab007e3ec3b8e2a097caee6a656b4e", null ]

@@ -242,8 +242,6 @@ Protected Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a732b32c60a8ab57cfed2c752d311bcf5"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Controller.html#a732b32c60a8ab57cfed2c752d311bcf5">robots_idx_</a></td></tr>
-<tr class="separator:a732b32c60a8ab57cfed2c752d311bcf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae65f1b863a94bfd159a9783ac46afb9f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespacemc__solver.html#a9bce96d8d352ebedfffce2e42e0300ab">mc_solver::ConstraintSetPtr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Controller.html#ae65f1b863a94bfd159a9783ac46afb9f">constraints_</a></td></tr>
 <tr class="separator:ae65f1b863a94bfd159a9783ac46afb9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a622f191e03407a8b93421523d8fed961"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="structmc__solver_1_1ContactConstraint.html">mc_solver::ContactConstraint</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1Controller.html#a622f191e03407a8b93421523d8fed961">contact_constraint_</a> = nullptr</td></tr>
@@ -1145,29 +1143,6 @@ The default implementation does the bare minimum (i.e. call run on QPSolver) It 
 </table>
 </div><div class="memdoc">
 <p>Creates a posture task for each actuated robots (i.e. robot.dof() - robot.joint(0).dof() &gt; 0 ) </p>
-
-</div>
-</div>
-<a id="a732b32c60a8ab57cfed2c752d311bcf5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a732b32c60a8ab57cfed2c752d311bcf5">&#9670;&nbsp;</a></span>robots_idx_</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::map&lt;std::string, size_t&gt; mc_control::fsm::Controller::robots_idx_</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Map robots' names to index </p>
 
 </div>
 </div>

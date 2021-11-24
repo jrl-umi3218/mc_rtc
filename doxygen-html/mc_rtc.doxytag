@@ -10619,13 +10619,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
-      <type>std::map&lt; std::string, size_t &gt;</type>
-      <name>robots_idx_</name>
-      <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
-      <anchor>a732b32c60a8ab57cfed2c752d311bcf5</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
       <type>std::vector&lt; mc_solver::ConstraintSetPtr &gt;</type>
       <name>constraints_</name>
       <anchorfile>structmc__control_1_1fsm_1_1Controller.html</anchorfile>
