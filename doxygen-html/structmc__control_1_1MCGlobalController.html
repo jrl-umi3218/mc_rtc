@@ -130,9 +130,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afa22752ce1130d6cc4fc7ab4fef53309"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#afa22752ce1130d6cc4fc7ab4fef53309">init</a> (const std::vector&lt; double &gt; &amp;initq, const sva::PTransformd &amp;initAttitude)</td></tr>
 <tr class="memdesc:afa22752ce1130d6cc4fc7ab4fef53309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize robot attitude from encoders and the floating base attitude.  <a href="#afa22752ce1130d6cc4fc7ab4fef53309">More...</a><br /></td></tr>
 <tr class="separator:afa22752ce1130d6cc4fc7ab4fef53309"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad620dc5bee15ce311cff8e3fcf010460"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#ad620dc5bee15ce311cff8e3fcf010460">initController</a> ()</td></tr>
-<tr class="memdesc:ad620dc5bee15ce311cff8e3fcf010460"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes controller, observers and plugins.  <a href="#ad620dc5bee15ce311cff8e3fcf010460">More...</a><br /></td></tr>
-<tr class="separator:ad620dc5bee15ce311cff8e3fcf010460"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5630e751af3e2ef1ea72f78b63744bd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#a5630e751af3e2ef1ea72f78b63744bd9">init</a> (const std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;initqs={}, const std::map&lt; std::string, sva::PTransformd &gt; &amp;initAttitudes={})</td></tr>
+<tr class="memdesc:a5630e751af3e2ef1ea72f78b63744bd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize multiple robots to the given configuration and attitude.  <a href="#a5630e751af3e2ef1ea72f78b63744bd9">More...</a><br /></td></tr>
+<tr class="separator:a5630e751af3e2ef1ea72f78b63744bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0b1e4eabca46ba58faef362b03dce49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#ae0b1e4eabca46ba58faef362b03dce49">reset</a> (const std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;resetqs={}, const std::map&lt; std::string, sva::PTransformd &gt; &amp;resetAttitudes={})</td></tr>
+<tr class="memdesc:ae0b1e4eabca46ba58faef362b03dce49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fully reset the current controller to the given initial state.  <a href="#ae0b1e4eabca46ba58faef362b03dce49">More...</a><br /></td></tr>
+<tr class="separator:ae0b1e4eabca46ba58faef362b03dce49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a153432b8c6ebfc4f9484deb1439ca3ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1MCGlobalController.html#a153432b8c6ebfc4f9484deb1439ca3ee">run</a> ()</td></tr>
 <tr class="memdesc:a153432b8c6ebfc4f9484deb1439ca3ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs one step of the controller.  <a href="#a153432b8c6ebfc4f9484deb1439ca3ee">More...</a><br /></td></tr>
 <tr class="separator:a153432b8c6ebfc4f9484deb1439ca3ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -759,7 +762,7 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac49cb563047d30361c781b96ec2a8e5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac49cb563047d30361c781b96ec2a8e5d">&#9670;&nbsp;</a></span>init() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac49cb563047d30361c781b96ec2a8e5d">&#9670;&nbsp;</a></span>init() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -796,7 +799,7 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad09a57645d0f72046484da7bfb4592c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad09a57645d0f72046484da7bfb4592c1">&#9670;&nbsp;</a></span>init() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad09a57645d0f72046484da7bfb4592c1">&#9670;&nbsp;</a></span>init() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -833,7 +836,7 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="afa22752ce1130d6cc4fc7ab4fef53309"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa22752ce1130d6cc4fc7ab4fef53309">&#9670;&nbsp;</a></span>init() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afa22752ce1130d6cc4fc7ab4fef53309">&#9670;&nbsp;</a></span>init() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -869,24 +872,41 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad620dc5bee15ce311cff8e3fcf010460"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad620dc5bee15ce311cff8e3fcf010460">&#9670;&nbsp;</a></span>initController()</h2>
+<a id="a5630e751af3e2ef1ea72f78b63744bd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5630e751af3e2ef1ea72f78b63744bd9">&#9670;&nbsp;</a></span>init() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void mc_control::MCGlobalController::initController </td>
+          <td class="memname">void mc_control::MCGlobalController::init </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>initqs</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const std::map&lt; std::string, sva::PTransformd &gt; &amp;&#160;</td>
+          <td class="paramname"><em>initAttitudes</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initializes controller, observers and plugins. </p>
-<p>Should only be called if <a class="el" href="structmc__control_1_1MCGlobalController.html#ac49cb563047d30361c781b96ec2a8e5d" title="Initialize the default controller with the given configuration. ">init()</a> has been called with initController=false.</p>
-<p>The robot state must be properly initialized prior to calling this function. </p>
+<p>Initialize multiple robots to the given configuration and attitude. </p>
+<p>If some robots' configuration or position is not provided then the robot module data is used to initialize the robot.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">initqs</td><td>Initial joints configuration for each robot, for each robot this data is expected in the corresponding ref_joint_order</td></tr>
+    <tr><td class="paramname">initAttitudes</td><td>Initial world position for each robot </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1093,6 +1113,45 @@ Protected Member Functions</h2></td></tr>
 
 <p>Create a new log file for the current controller. </p>
 <p>The purpose is to split the log file for long-running controller, therefore this does not restart the timer of the controller so multiple log files could be stitched together. </p>
+
+</div>
+</div>
+<a id="ae0b1e4eabca46ba58faef362b03dce49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0b1e4eabca46ba58faef362b03dce49">&#9670;&nbsp;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_control::MCGlobalController::reset </td>
+          <td>(</td>
+          <td class="paramtype">const std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;&#160;</td>
+          <td class="paramname"><em>resetqs</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::map&lt; std::string, sva::PTransformd &gt; &amp;&#160;</td>
+          <td class="paramname"><em>resetAttitudes</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fully reset the current controller to the given initial state. </p>
+<p>This deletes then re-create the current controller so that it is started from scratch.</p>
+<p>If some robots' configuration or position is not provided then the robot module data is used to initialize the robot.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">initqs</td><td>Initial joints configuration for each robot, for each robot this data is expected in the corresponding ref_joint_order</td></tr>
+    <tr><td class="paramname">initAttitudes</td><td>Initial world position for each robot </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

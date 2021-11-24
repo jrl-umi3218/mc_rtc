@@ -152,12 +152,13 @@ digraph "include/mc_rbdyn/RobotLoader.h"
   Node41 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node41 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node41 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 -> Node51 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node51 [label="mutex",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node41 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node41 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node41 -> Node51 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node51 [label="mc_rtc/loader.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node41 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node52 [label="mc_rtc/loader.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node52 [label="mutex",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node51 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

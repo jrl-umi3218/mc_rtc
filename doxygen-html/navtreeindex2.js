@@ -151,7 +151,7 @@ var NAVTREEINDEX2 =
 "iterate__binary__log_8h.html#ae939074ac3cce1fde0bb5e0ea7e90c86":[4,0,0,6,1,1,3],
 "iterate__binary__log_8h_source.html":[4,0,0,6,1,1],
 "loader_8h.html":[4,0,0,6,9],
-"loader_8h.html#a04f4430d990b320f494b3a21112c7e3a":[4,0,0,6,9,6],
+"loader_8h.html#a04f4430d990b320f494b3a21112c7e3a":[4,0,0,6,9,7],
 "loader_8h_source.html":[4,0,0,6,9],
 "loader__api_8h.html":[4,0,0,6,10],
 "loader__api_8h.html#a124acbd88de464891bac5a0d4753f3b1":[4,0,0,6,10,3],

@@ -2,6 +2,7 @@ var loader_8h =
 [
     [ "ObjectLoader", "structmc__rtc_1_1ObjectLoader.html", "structmc__rtc_1_1ObjectLoader" ],
     [ "LoaderException", "structmc__rtc_1_1LoaderException.html", "structmc__rtc_1_1LoaderException" ],
+    [ "LTDLMutex", "structmc__rtc_1_1LTDLMutex.html", null ],
     [ "LTDLHandle", "structmc__rtc_1_1LTDLHandle.html", "structmc__rtc_1_1LTDLHandle" ],
     [ "Loader", "structmc__rtc_1_1Loader.html", "structmc__rtc_1_1Loader" ],
     [ "ObjectLoader", "structmc__rtc_1_1ObjectLoader.html", "structmc__rtc_1_1ObjectLoader" ],

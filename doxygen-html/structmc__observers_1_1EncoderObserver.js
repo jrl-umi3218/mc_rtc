@@ -20,6 +20,7 @@ var structmc__observers_1_1EncoderObserver =
     [ "computeFK_", "structmc__observers_1_1EncoderObserver.html#a7f2b9fff6335475ffe98509249181e02", null ],
     [ "computeFV_", "structmc__observers_1_1EncoderObserver.html#a2186bef7a7415c523bd7930d2ab8de16", null ],
     [ "encodersVelocity_", "structmc__observers_1_1EncoderObserver.html#a836476dda18a176da54e14ede5f0eabd", null ],
+    [ "initialized_", "structmc__observers_1_1EncoderObserver.html#aebaac56395dd19dd58b32be3a3ec022d", null ],
     [ "logPosition_", "structmc__observers_1_1EncoderObserver.html#a2aded6c41596d4fdb15732a615b44307", null ],
     [ "logVelocity_", "structmc__observers_1_1EncoderObserver.html#a8a2ec1dcb1a36e2b0cef5c1e8f5a489d", null ],
     [ "posUpdate_", "structmc__observers_1_1EncoderObserver.html#a12831fe5df2163a7f517b95c3158a5ba", null ],

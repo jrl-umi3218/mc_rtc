@@ -281,6 +281,7 @@ var hierarchy =
     [ "mc_filter::LowPass< sva::ForceVecd >", "structmc__filter_1_1LowPass.html", null ],
     [ "mc_filter::LowPass< sva::MotionVecd >", "structmc__filter_1_1LowPass.html", null ],
     [ "mc_rtc::LTDLHandle", "structmc__rtc_1_1LTDLHandle.html", null ],
+    [ "mc_rtc::LTDLMutex", "structmc__rtc_1_1LTDLMutex.html", null ],
     [ "map", null, [
       [ "mc_rbdyn::VisualMap", "structmc__rbdyn_1_1VisualMap.html", null ]
     ] ],

@@ -31,6 +31,7 @@ var namespacemc__rtc =
     [ "LoaderSandboxData", "structmc__rtc_1_1LoaderSandboxData.html", "structmc__rtc_1_1LoaderSandboxData" ],
     [ "Logger", "structmc__rtc_1_1Logger.html", "structmc__rtc_1_1Logger" ],
     [ "LTDLHandle", "structmc__rtc_1_1LTDLHandle.html", "structmc__rtc_1_1LTDLHandle" ],
+    [ "LTDLMutex", "structmc__rtc_1_1LTDLMutex.html", null ],
     [ "MessagePackBuilder", "structmc__rtc_1_1MessagePackBuilder.html", "structmc__rtc_1_1MessagePackBuilder" ],
     [ "ObjectLoader", "structmc__rtc_1_1ObjectLoader.html", "structmc__rtc_1_1ObjectLoader" ],
     [ "RobotPublisher", "structmc__rtc_1_1RobotPublisher.html", "structmc__rtc_1_1RobotPublisher" ],

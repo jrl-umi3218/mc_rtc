@@ -92,11 +92,6 @@ digraph "include/mc_control/fsm/StateFactory.h"
   Node45 -> Node43 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node7 -> Node47 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 [label="mc_solver/QPSolver.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$QPSolver_8h.html"];
-  Node47 -> Node48 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node48 [label="mc_rbdyn/Contact.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$mc__rbdyn_2Contact_8h.html"];
-  Node48 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node48 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node48 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node47 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -140,8 +135,10 @@ digraph "include/mc_control/fsm/StateFactory.h"
   Node92 -> Node96 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node92 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node92 -> Node16 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 -> Node101 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="mutex",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node92 -> Node18 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node92 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node92 -> Node101 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node101 [label="mc_rtc/loader.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node92 -> Node102 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node102 [label="mc_rtc/loader.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

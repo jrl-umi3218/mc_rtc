@@ -3279,6 +3279,7 @@
     <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
     <class kind="class">mc_rtc::ObjectLoader</class>
     <class kind="class">mc_rtc::LoaderException</class>
+    <class kind="class">mc_rtc::LTDLMutex</class>
     <class kind="class">mc_rtc::LTDLHandle</class>
     <class kind="class">mc_rtc::Loader</class>
     <class kind="class">mc_rtc::ObjectLoader</class>
@@ -12421,6 +12422,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>initialized_</name>
+      <anchorfile>structmc__observers_1_1EncoderObserver.html</anchorfile>
+      <anchor>aebaac56395dd19dd58b32be3a3ec022d</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>std::string</type>
       <name>robot_</name>
       <anchorfile>structmc__observers_1_1EncoderObserver.html</anchorfile>
@@ -18803,6 +18811,17 @@
     </member>
   </compound>
   <compound kind="class">
+    <name>mc_rtc::LTDLMutex</name>
+    <filename>structmc__rtc_1_1LTDLMutex.html</filename>
+    <member kind="variable" static="yes">
+      <type>static std::mutex</type>
+      <name>MTX</name>
+      <anchorfile>structmc__rtc_1_1LTDLMutex.html</anchorfile>
+      <anchor>afcfeb223cb286a46632179f71671c26f</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="class">
     <name>mc_control::MCController</name>
     <filename>structmc__control_1_1MCController.html</filename>
     <class kind="struct">mc_control::MCController::DeprecatedAnchorFrame</class>
@@ -19381,10 +19400,17 @@
     </member>
     <member kind="function">
       <type>void</type>
-      <name>initController</name>
+      <name>init</name>
       <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
-      <anchor>ad620dc5bee15ce311cff8e3fcf010460</anchor>
-      <arglist>()</arglist>
+      <anchor>a5630e751af3e2ef1ea72f78b63744bd9</anchor>
+      <arglist>(const std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;initqs={}, const std::map&lt; std::string, sva::PTransformd &gt; &amp;initAttitudes={})</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reset</name>
+      <anchorfile>structmc__control_1_1MCGlobalController.html</anchorfile>
+      <anchor>ae0b1e4eabca46ba58faef362b03dce49</anchor>
+      <arglist>(const std::map&lt; std::string, std::vector&lt; double &gt;&gt; &amp;resetqs={}, const std::map&lt; std::string, sva::PTransformd &gt; &amp;resetAttitudes={})</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -38111,6 +38137,7 @@
     <class kind="struct">mc_rtc::LoaderSandboxData</class>
     <class kind="struct">mc_rtc::Logger</class>
     <class kind="class">mc_rtc::LTDLHandle</class>
+    <class kind="class">mc_rtc::LTDLMutex</class>
     <class kind="struct">mc_rtc::MessagePackBuilder</class>
     <class kind="class">mc_rtc::ObjectLoader</class>
     <class kind="struct">mc_rtc::RobotPublisher</class>

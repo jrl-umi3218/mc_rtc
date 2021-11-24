@@ -79,7 +79,7 @@ digraph "include/mc_control/mc_global_controller.h"
   Node0 -> Node138 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node138 [label="mc_control/GlobalPlugin\l_fwd.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GlobalPlugin__fwd_8h.html"];
   Node138 -> Node139 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node139 [label="mc_rtc/loader.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$loader_8h.html",tooltip="ltdl wrapper for mc_rtc purpose "];
+  Node139 [label="mc_rtc/loader.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$loader_8h.html",tooltip="ltdl wrapper for mc_rtc purpose "];
   Node139 -> Node77 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node139 -> Node140 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node140 [label="mc_rtc/loader_api.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$loader__api_8h.html"];
@@ -92,10 +92,10 @@ digraph "include/mc_control/mc_global_controller.h"
   Node139 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node11 [label="map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node139 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node139 -> Node143 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node143 [label="mutex",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node139 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node139 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node139 -> Node143 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node143 [label="mc_rtc/loader.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node73 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node53 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
@@ -143,8 +143,8 @@ digraph "include/mc_control/mc_global_controller.h"
   Node0 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node115 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node115 [label="fstream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node144 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node144 [label="sstream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node145 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node145 [label="thread",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node145 [label="sstream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node146 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node146 [label="thread",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

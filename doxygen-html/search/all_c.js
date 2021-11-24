@@ -96,5 +96,6 @@ var searchData=
   ['lowpassfinitedifferences_2eh',['LowPassFiniteDifferences.h',['../LowPassFiniteDifferences_8h.html',1,'']]],
   ['lowpasst',['LowPassT',['../structmc__filter_1_1LowPassFiniteDifferences.html#aaac75c58b8f9680abe5bd377c9701253',1,'mc_filter::LowPassFiniteDifferences']]],
   ['ltdlhandle',['LTDLHandle',['../structmc__rtc_1_1LTDLHandle.html',1,'mc_rtc::LTDLHandle'],['../structmc__rtc_1_1LTDLHandle.html#a1d2ebbcff7e52decbb18a9dc96b7671b',1,'mc_rtc::LTDLHandle::LTDLHandle(const std::string &amp;class_name, const std::string &amp;path, const std::string &amp;rpath, bool verbose)'],['../structmc__rtc_1_1LTDLHandle.html#aeb254d88dad0c357ba003eb2ef458556',1,'mc_rtc::LTDLHandle::LTDLHandle(const LTDLHandle &amp;)=delete']]],
-  ['ltdlhandleptr',['LTDLHandlePtr',['../namespacemc__rtc.html#a04f4430d990b320f494b3a21112c7e3a',1,'mc_rtc']]]
+  ['ltdlhandleptr',['LTDLHandlePtr',['../namespacemc__rtc.html#a04f4430d990b320f494b3a21112c7e3a',1,'mc_rtc']]],
+  ['ltdlmutex',['LTDLMutex',['../structmc__rtc_1_1LTDLMutex.html',1,'mc_rtc']]]
 ];

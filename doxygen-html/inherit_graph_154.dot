@@ -4,11 +4,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node120 [label="noncopyable",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node120 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="mc_rtc::ObjectLoader\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1ObjectLoader.html",tooltip="ltdl wrapper for factory-like classes "];
-  Node120 -> Node122 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node122 [label="mc_rtc::ObjectLoader\l\< State \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1ObjectLoader.html"];
-  Node122 -> Node123 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node123 [label="mc_control::fsm::StateFactory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__control_1_1fsm_1_1StateFactory.html"];
+  Node0 [label="mc_rtc::MessagePackBuilder",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rtc_1_1MessagePackBuilder.html"];
 }
