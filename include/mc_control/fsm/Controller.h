@@ -261,9 +261,6 @@ private:
   void teardownIdleState();
 
 protected:
-  /** Map robots' names to index */
-  std::map<std::string, size_t> robots_idx_;
-
   /** Holds dynamics, kinematics and contact constraints that are added
    * from the start by the controller */
   std::vector<mc_solver::ConstraintSetPtr> constraints_;

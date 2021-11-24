@@ -67,17 +67,12 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
   factory_.set_verbosity(config("VerboseStateFactory", false));
 #endif
   idle_keep_state_ = config("IdleKeepState", false);
-  robots_idx_[robot().name()] = 0;
   /** Load additional robots from the configuration */
   {
     auto config_robots = config("robots", std::map<std::string, mc_rtc::Configuration>{});
     for(const auto & cr : config_robots)
     {
       const auto & name = cr.first;
-      if(robots_idx_.count(name))
-      {
-        mc_rtc::log::error_and_throw<std::runtime_error>("FSM controller cannot have two robots with the same name");
-      }
       std::string module = cr.second("module");
       auto params = cr.second("params", std::vector<std::string>{});
       mc_rbdyn::RobotModulePtr rm = nullptr;
@@ -105,7 +100,6 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
       loadRobot(rm, name);
       auto & r = robots().robot(name);
       auto & realRobot = realRobots().robot(name);
-      robots_idx_[name] = r.robotIndex();
       r.posW(cr.second("init_pos", sva::PTransformd::Identity()));
       realRobot.posW(r.posW());
     }
@@ -217,13 +211,6 @@ bool Controller::run()
 
 bool Controller::run(mc_solver::FeedbackType fType)
 {
-  if(robots().size() != robots_idx_.size())
-  {
-    for(const auto & r : robots())
-    {
-      robots_idx_[r.name()] = r.robotIndex();
-    }
-  }
   auto startUpdateContacts = clock::now();
   updateContacts();
   updateContacts_dt_ = clock::now() - startUpdateContacts;
@@ -370,8 +357,9 @@ void Controller::updateContacts()
     {
       ensureValidContact(c.r1, c.r1Surface);
       ensureValidContact(c.r2, c.r2Surface);
-      contacts.emplace_back(robots(), static_cast<unsigned int>(robots_idx_.at(c.r1)),
-                            static_cast<unsigned int>(robots_idx_.at(c.r2)), c.r1Surface, c.r2Surface, c.friction);
+      auto r1Index = robot(c.r1).robotIndex();
+      auto r2Index = robot(c.r2).robotIndex();
+      contacts.emplace_back(robots(), r1Index, r2Index, c.r1Surface, c.r2Surface, c.friction);
       auto cId = contacts.back().contactId(robots());
       contact_constraint_->contactConstr->addDofContact(cId, c.dof.asDiagonal());
     }
@@ -407,14 +395,15 @@ void Controller::addCollisions(const std::string & r1,
   }
   if(!collision_constraints_.count({r1, r2}))
   {
-    if(robots_idx_.count(r1) * robots_idx_.count(r2) == 0)
+    if(!hasRobot(r1) || !hasRobot(r2))
     {
       mc_rtc::log::error("Try to add collision for robot {} and {} which are not involved in this FSM", r1, r2);
       return;
     }
+    auto r1Index = robot(r1).robotIndex();
+    auto r2Index = robot(r2).robotIndex();
     collision_constraints_[{r1, r2}] =
-        std::make_shared<mc_solver::CollisionsConstraint>(robots(), static_cast<unsigned int>(robots_idx_[r1]),
-                                                          static_cast<unsigned int>(robots_idx_[r2]), solver().dt());
+        std::make_shared<mc_solver::CollisionsConstraint>(robots(), r1Index, r2Index, solver().dt());
     solver().addConstraintSet(*collision_constraints_[{r1, r2}]);
   }
   auto & cc = collision_constraints_[{r1, r2}];
@@ -456,12 +445,12 @@ void Controller::removeCollisions(const std::string & r1, const std::string & r2
 
 bool Controller::hasRobot(const std::string & robot) const
 {
-  return robots_idx_.count(robot) != 0;
+  return robots().hasRobot(robot);
 }
 
 mc_rbdyn::Robot & Controller::robot(const std::string & name)
 {
-  return solver().robot(static_cast<unsigned int>(robots_idx_.at(name)));
+  return robots().robot(name);
 }
 
 std::shared_ptr<mc_tasks::PostureTask> Controller::getPostureTask(const std::string & robot)
