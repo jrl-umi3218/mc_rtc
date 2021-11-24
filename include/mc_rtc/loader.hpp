@@ -20,6 +20,7 @@ SymT LTDLHandle::get_symbol(const std::string & name)
   {
     return nullptr;
   }
+  std::unique_lock<std::mutex> lock(LTDLMutex::MTX);
   SymT ret = (SymT)(lt_dlsym(handle_, name.c_str()));
   if(ret == nullptr)
   {

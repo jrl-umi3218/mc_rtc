@@ -35,7 +35,7 @@ struct MC_RBDYN_DLLAPI FDQPWeights
     }
     if(config.has("net_wrench"))
     {
-      netWrenchSqrt = std::sqrt(static_cast<double>(config.has("net_wrench")));
+      netWrenchSqrt = std::sqrt(static_cast<double>(config("net_wrench")));
     }
     if(config.has("pressure"))
     {

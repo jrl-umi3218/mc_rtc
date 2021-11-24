@@ -85,7 +85,10 @@ MCController::MCController(const std::vector<std::shared_ptr<mc_rbdyn::RobotModu
   mc_rtc::log::info("MCController(base) ready");
 }
 
-MCController::~MCController() {}
+MCController::~MCController()
+{
+  datastore().clear();
+}
 
 mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm, const std::string & name)
 {
