@@ -143,6 +143,17 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
 void MCController::removeRobot(const std::string & name)
 {
   robots().removeRobot(name);
+  realRobots().removeRobot(name);
+  if(gui_)
+  {
+    gui_->removeElement({"Robots"}, name);
+    auto data = gui_->data();
+    std::vector<std::string> robots = data("robots");
+    robots.erase(std::find(robots.begin(), robots.end(), name));
+    data.add("robots", robots);
+    data("bodies").remove(name);
+    data("surfaces").remove(name);
+  }
   solver().updateNrVars();
 }
 

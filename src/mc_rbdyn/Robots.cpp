@@ -217,6 +217,7 @@ void Robots::removeRobot(const std::string & name)
   if(!hasRobot(name))
   {
     mc_rtc::log::error("Did not find a robot named {} to remove", name);
+    return;
   }
   removeRobot(robotNameToIndex_.at(name));
 }
