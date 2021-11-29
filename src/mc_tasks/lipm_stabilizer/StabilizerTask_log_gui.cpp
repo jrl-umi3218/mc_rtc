@@ -149,6 +149,10 @@ void StabilizerTask::addToGUI(mc_rtc::gui::StateBuilder & gui)
                        c_.dcmBias.biasLimit = v;
                        dcmEstimator_.setBiasLimit(v);
                      }),
+                 ArrayInput(
+                     "CoM bias Limit [m]", {"sagital", "lateral"},
+                     [this]() -> const Eigen::Vector2d & { return c_.dcmBias.comBiasLimit; },
+                     [this](const Eigen::Vector2d & v) { c_.dcmBias.comBiasLimit = v; }),
                  ArrayLabel("Local Bias", [this]() { return dcmEstimator_.getLocalBias(); }));
   gui.addElement({"Tasks", name_, "Advanced", "Ext Wrench"},
                  Checkbox(

@@ -22,6 +22,7 @@ namespace lipm_stabilizer
 
 using internal::Contact;
 using ::mc_filter::utils::clamp;
+using ::mc_filter::utils::clampInPlace;
 using ::mc_filter::utils::clampInPlaceAndWarn;
 namespace constants = ::mc_rtc::constants;
 
@@ -839,7 +840,10 @@ sva::ForceVecd StabilizerTask::computeDesiredWrench()
       /// the unbiased dcm allows also to get the velocity of the CoM
       comdError.head<2>() = omega_ * (dcmError_.head<2>() - comError.head<2>());
 
-      measuredCoMUnbiased_.head<2>() = measuredCoM_.head<2>() + dcmEstimator_.getBias();
+      Eigen::Vector2d comBias = dcmEstimator_.getBias();
+      clampInPlace(comBias, (-c_.dcmBias.comBiasLimit).eval(), c_.dcmBias.comBiasLimit);
+
+      measuredCoMUnbiased_.head<2>() = measuredCoM_.head<2>() + comBias;
       measuredCoMUnbiased_.z() = measuredCoM_.z();
 
       if(c_.dcmBias.correctCoMPos)
