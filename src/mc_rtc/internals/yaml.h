@@ -33,6 +33,22 @@ bool try_convert(const YAML::Node & node, T & out)
   return YAML::convert<T>::decode(node, out);
 }
 
+template<>
+inline bool try_convert<bool>(const YAML::Node & node, bool & out)
+{
+  if(YAML::convert<bool>::decode(node, out))
+  {
+    // yaml-cpp accepts y, Y, n and N as valid bool representations we check if this was the case here
+    if(node.Scalar().size() != 1)
+    {
+      return true;
+    }
+    char scalar = node.Scalar()[0];
+    return scalar != 'y' && scalar != 'Y' && scalar != 'n' && scalar != 'N';
+  }
+  return false;
+}
+
 /** Attempt to convert a YAML node to the provided type and push it in a provided Configuration
  *
  * \param node YAML node containing a scalar
@@ -122,9 +138,24 @@ inline bool fromYAMLSequence(const YAML::Node & node, Configuration out)
 
 inline bool fromYAMLMap(const YAML::Node & node, Configuration out)
 {
+  // yaml-cpp does not handle YAML merge so we do it "manually"
+  // we handle the merge node first (if any) so that the values it provides can be overwritten
+  auto merge_it = std::find_if(node.begin(), node.end(),
+                               [](const YAML::detail::iterator_value & it) { return it.first.Scalar() == "<<"; });
+  if(merge_it != node.end())
+  {
+    if(!fromYAMLMap(merge_it->second, out))
+    {
+      return false;
+    }
+  }
   for(const auto & it : node)
   {
-    const auto & key = it.first.as<std::string>();
+    const auto & key = it.first.Scalar();
+    if(key == "<<")
+    {
+      continue;
+    }
     const YAML::Node & n = it.second;
     if(n.IsScalar())
     {
@@ -145,7 +176,7 @@ inline bool fromYAMLMap(const YAML::Node & node, Configuration out)
     }
     else if(n.IsMap())
     {
-      if(!fromYAMLMap(n, out.add(key)))
+      if(!fromYAMLMap(n, key == "<<" ? out : out.add(key)))
       {
         return false;
       }
@@ -246,7 +277,7 @@ inline bool loadYAMLDocument(const std::string & path, Configuration & out)
 namespace
 {
 
-void dumpYAML(const mc_rtc::Configuration & in, YAML::Emitter & out)
+inline void dumpYAML(const mc_rtc::Configuration & in, YAML::Emitter & out)
 {
   if(in.size())
   {
