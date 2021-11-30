@@ -309,19 +309,35 @@ set_target_properties(TestPluginController PROPERTIES
 set(TEST_CONTROLLER_NAME "TestPluginController_1_2\", \"TestPluginController_2_3")
 set(TEST_PLUGINS "Plugin0")
 set(PLUGINS_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}/TestPlugin")
+foreach(I RANGE 0 3)
+  file(WRITE "${PLUGINS_MODULE_PATH}/etc/Plugin${I}.yaml" "common: Plugin${I}")
+  if(CMAKE_CONFIGURATION_TYPES)
+    file(GENERATE OUTPUT "${PLUGINS_MODULE_PATH}/$<CONFIG>/etc/Plugin${I}.yaml"
+                  INPUT  "${PLUGINS_MODULE_PATH}/etc/Plugin${I}.yaml")
+  endif()
+endforeach()
 set(TEST_CONTROLLER_PATH "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController")
 set(TEST_CONTROLLER_PATH_BASE "${TEST_CONTROLLER_PATH}")
 if(CMAKE_CONFIGURATION_TYPES)
-  set(PLUGINS_MODULE_PATH "${PLUGINS_MODULE_PATH}/$<CONFIGURATION>")
-  set(TEST_CONTROLLER_PATH "${TEST_CONTROLLER_PATH}/$<CONFIGURATION>")
+  set(PLUGINS_MODULE_PATH "${PLUGINS_MODULE_PATH}/$<CONFIG>")
+  set(TEST_CONTROLLER_PATH "${TEST_CONTROLLER_PATH}/$<CONFIG>")
 endif()
 set(CONFIG_OUT "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController/mc_rtc-TestPluginController.conf")
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/mc_rtc.conf.in" ${CONFIG_OUT})
 file(WRITE "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_1_2.yaml" "Plugins: [Plugin1, Plugin2]")
+# We generate controller-level configuration for every plugins, this checks
+# that this configuration is only loaded if the plugin is enabled at the global
+# or controller level
+foreach(I RANGE 0 3)
+  file(WRITE "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_1_2/plugins/Plugin${I}.yaml" "TestPluginController_1_2: true\nexclusive_to_TestPluginController_1_2: true")
+endforeach()
 file(WRITE "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_2_3.yaml" "Plugins: [Plugin2, Plugin3]")
+foreach(I RANGE 0 3)
+  file(WRITE "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_2_3/plugins/Plugin${I}.yaml" "TestPluginController_2_3: true\nexclusive_to_TestPluginController_1_2: false")
+endforeach()
 if(CMAKE_CONFIGURATION_TYPES)
   set(CONFIG_IN "${CONFIG_OUT}")
-  set(CONFIG_FOLDER_OUT "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController/$<CONFIGURATION>")
+  set(CONFIG_FOLDER_OUT "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController/$<CONFIG>")
   set(CONFIG_OUT "${CONFIG_FOLDER_OUT}/mc_rtc-TestPluginController.conf")
   file(GENERATE OUTPUT "${CONFIG_OUT}" INPUT "${CONFIG_IN}")
   file(GENERATE
@@ -332,8 +348,16 @@ if(CMAKE_CONFIGURATION_TYPES)
     OUTPUT "${CONFIG_FOLDER_OUT}/etc/TestPluginController_2_3.yaml"
     INPUT "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_2_3.yaml"
   )
+  foreach(I RANGE 0 3)
+    file(GENERATE
+      OUTPUT "${CONFIG_FOLDER_OUT}/etc/TestPluginController_1_2/plugins/Plugin${I}.yaml"
+      INTPUT "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_1_2/plugins/Plugin${I}.yaml")
+    file(GENERATE
+      OUTPUT "${CONFIG_FOLDER_OUT}/etc/TestPluginController_2_3/plugins/Plugin${I}.yaml"
+      INTPUT "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_2_3/plugins/Plugin${I}.yaml")
+  endforeach()
 endif()
-mc_rtc_add_test(NAME TestPluginController COMMAND test_controller_ticker --run_test=RUN -- "${CONFIG_OUT}" 5 TestPluginController::2_3)
+mc_rtc_add_test(NAME TestPluginController COMMAND test_controller_ticker --run_test=RUN -- "${CONFIG_OUT}" 5 TestPluginController_2_3)
 
 # Test Python bindings
 if(PYTHON_BINDING)

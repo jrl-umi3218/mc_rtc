@@ -11,8 +11,9 @@ struct MC_CONTROL_DLLAPI TestPlugin : public mc_control::GlobalPlugin
 {
   TestPlugin(const std::string & name) : name_(name) {}
 
-  void init(mc_control::MCGlobalController & controller, const mc_rtc::Configuration &) override
+  void init(mc_control::MCGlobalController & controller, const mc_rtc::Configuration & config) override
   {
+    config_.load(config);
     reset(controller);
   }
 
@@ -24,6 +25,7 @@ struct MC_CONTROL_DLLAPI TestPlugin : public mc_control::GlobalPlugin
     ds.make<size_t>(name_ + "::iter_before", iter_before);
     ds.make<size_t>(name_ + "::iter_after", iter_after);
     ds.make<void *>(name_ + "::address", this);
+    ds.make<mc_rtc::Configuration>(name_ + "::config", config_);
   }
 
   void before(mc_control::MCGlobalController & controller) override
@@ -41,6 +43,7 @@ struct MC_CONTROL_DLLAPI TestPlugin : public mc_control::GlobalPlugin
   }
 
 private:
+  mc_rtc::Configuration config_;
   std::string name_;
   size_t iter_before = 0;
   size_t iter_after = 0;

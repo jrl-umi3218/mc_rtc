@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE(RUN)
   }
   if(nextController != "")
   {
-    controller.EnableController(nextController);
+    BOOST_REQUIRE(controller.EnableController(nextController));
     for(size_t i = 0; i < nrIter; ++i)
     {
       simulateSensors();

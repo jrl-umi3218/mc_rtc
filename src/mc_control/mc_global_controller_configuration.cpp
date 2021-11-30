@@ -381,39 +381,52 @@ bfs::path conf_or_yaml(bfs::path in)
   return in;
 }
 
+/** Load a single configuration */
+inline void load_config(const std::string & desc,
+                        const std::string name,
+                        const std::vector<std::string> & search_path,
+                        const bfs::path & user_path,
+                        std::unordered_map<std::string, mc_rtc::Configuration> & configs,
+                        const mc_rtc::Configuration & default_config = {},
+                        const std::initializer_list<const char *> & filter = {},
+                        const bfs::path & search_path_suffix = bfs::path("etc"))
+{
+  mc_rtc::Configuration c;
+  c.load(default_config);
+  for(const auto & k : filter)
+  {
+    c.remove(k);
+  }
+  for(const auto & p : search_path)
+  {
+    bfs::path global = conf_or_yaml(bfs::path(p) / search_path_suffix / (name + ".conf"));
+    if(bfs::exists(global))
+    {
+      mc_rtc::log::info("Loading additional {} configuration: {}", desc, global);
+      c.load(global.string());
+    }
+  }
+  bfs::path local = conf_or_yaml(user_path / (name + ".conf"));
+  if(bfs::exists(local))
+  {
+    mc_rtc::log::info("Loading additional {} configuration: {}", desc, local);
+    c.load(local.string());
+  }
+  configs[name] = c;
+}
+
 /** Load configurations */
-void load_configs(const std::string & desc,
-                  const std::vector<std::string> & names,
-                  const std::vector<std::string> & search_path,
-                  const bfs::path & user_path,
-                  std::unordered_map<std::string, mc_rtc::Configuration> & configs,
-                  const mc_rtc::Configuration & default_config = {},
-                  const std::initializer_list<const char *> & filter = {})
+inline void load_configs(const std::string & desc,
+                         const std::vector<std::string> & names,
+                         const std::vector<std::string> & search_path,
+                         const bfs::path & user_path,
+                         std::unordered_map<std::string, mc_rtc::Configuration> & configs,
+                         const mc_rtc::Configuration & default_config = {},
+                         const std::initializer_list<const char *> & filter = {})
 {
   for(const auto & name : names)
   {
-    mc_rtc::Configuration c;
-    c.load(default_config);
-    for(const auto & k : filter)
-    {
-      c.remove(k);
-    }
-    for(const auto & p : search_path)
-    {
-      bfs::path global = conf_or_yaml(bfs::path(p) / "etc" / (name + ".conf"));
-      if(bfs::exists(global))
-      {
-        mc_rtc::log::info("Loading additional {} configuration: {}", desc, global);
-        c.load(global.string());
-      }
-    }
-    bfs::path local = conf_or_yaml(user_path / (name + ".conf"));
-    if(bfs::exists(local))
-    {
-      mc_rtc::log::info("Loading additional {} configuration: {}", desc, local);
-      c.load(local.string());
-    }
-    configs[name] = c;
+    load_config(desc, name, search_path, user_path, configs, default_config, filter);
   }
 }
 
@@ -434,19 +447,34 @@ void MCGlobalController::GlobalConfiguration::load_controllers_configs()
 
 void MCGlobalController::GlobalConfiguration::load_plugin_configs()
 {
-  load_plugin_configs(global_plugins);
+  load_controller_plugin_configs("", global_plugins);
 }
 
-void MCGlobalController::GlobalConfiguration::load_plugin_configs(const std::vector<std::string> & plugins)
+void MCGlobalController::GlobalConfiguration::load_controller_plugin_configs(const std::string & controller,
+                                                                             const std::vector<std::string> & plugins)
 {
-  // Load plugins configurations
-  load_configs("plugin", plugins, global_plugin_paths,
 #ifndef WIN32
-               bfs::path(std::getenv("HOME")) / ".config/mc_rtc/plugins",
+  bfs::path user_config = bfs::path(std::getenv("HOME")) / ".config" / "mc_rtc";
 #else
-               bfs::path(std::getenv("APPDATA")) / "mc_rtc/plugins",
+  bfs::path user_config = bfs::path(std::getenv("APPDATA")) / "mc_rtc";
 #endif
-               global_plugin_configs);
+  for(const auto & plugin : plugins)
+  {
+    auto plugin_c = global_plugin_configs.find(plugin);
+    if(plugin_c == global_plugin_configs.end())
+    {
+      // Global configuration for this plugin has not been loaded yet
+      load_config("plugin", plugin, global_plugin_paths, user_config / "plugins", global_plugin_configs);
+      plugin_c = global_plugin_configs.find(plugin);
+      assert(plugin_c != global_plugin_configs.end());
+    }
+    if(controller.empty())
+    {
+      continue;
+    }
+    load_config("plugin", plugin, controller_module_paths, user_config / "controllers" / controller / "plugins",
+                global_plugin_configs, plugin_c->second, {}, bfs::path("etc") / controller / "plugins");
+  }
 }
 
 bool MCGlobalController::GlobalConfiguration::enabled(const std::string & ctrl)

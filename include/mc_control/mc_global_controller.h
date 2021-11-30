@@ -833,7 +833,7 @@ public:
 
     void load_plugin_configs();
 
-    void load_plugin_configs(const std::vector<std::string> & plugins);
+    void load_controller_plugin_configs(const std::string & controller, const std::vector<std::string> & plugins);
   };
 
 private:
@@ -901,6 +901,7 @@ private:
   /** Reset controller-specific plugins
    *
    * When switching controllers, plugins that are enabled in both controllers are reset, new plugins are init
+   *
    */
   void resetControllerPlugins();
 

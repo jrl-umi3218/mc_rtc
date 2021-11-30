@@ -95,6 +95,9 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
       current_ctrl = c;
       controller_ = controllers[c].get();
     }
+    config.load_controller_plugin_configs(c, config.global_plugins);
+    auto ctrl_plugins = mc_rtc::fromVectorOrElement<std::string>(config.controllers_configs[c], "Plugins", {});
+    config.load_controller_plugin_configs(c, ctrl_plugins);
   }
   next_ctrl = current_ctrl;
   next_controller_ = nullptr;
@@ -1297,7 +1300,6 @@ void MCGlobalController::resetControllerPlugins()
     }
   }
   // At this point, next_ctrl_plugins only contains plugins that are required by this controller and not already loaded
-  config.load_plugin_configs(next_ctrl_plugins);
   for(const auto & name : next_ctrl_plugins)
   {
     auto plugin = loadPlugin(name, next_ctrl.c_str());

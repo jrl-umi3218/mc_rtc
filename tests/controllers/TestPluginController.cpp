@@ -17,14 +17,15 @@ namespace mc_control
 struct MC_CONTROL_DLLAPI TestPluginController : public MCController
 {
 public:
-  TestPluginController(mc_rbdyn::RobotModulePtr rm, double dt) : MCController(rm, dt)
+  TestPluginController(const std::string & name, mc_rbdyn::RobotModulePtr rm, double dt)
+  : MCController(rm, dt), name_(name)
   {
     solver().addConstraintSet(contactConstraint);
     solver().addConstraintSet(dynamicsConstraint);
     solver().addTask(postureTask.get());
     solver().setContacts(
         {mc_rbdyn::Contact(robots(), "LeftFoot", "AllGround"), mc_rbdyn::Contact(robots(), "RightFoot", "AllGround")});
-    mc_rtc::log::success("Created TestPluginController");
+    mc_rtc::log::success("Created {}", name_);
   }
 
   bool run() override
@@ -45,6 +46,23 @@ public:
         BOOST_REQUIRE(datastore().has(plugin + "::address"));
         void * p_addr = datastore().get<void *>(plugin + "::address");
         plugin_addresses[plugin] = p_addr;
+        BOOST_REQUIRE(datastore().has(plugin + "::config"));
+        auto plugin_c = datastore().get<mc_rtc::Configuration>(plugin + "::config");
+        BOOST_REQUIRE(plugin_c.has("common"));
+        std::string plugin_c_common = plugin_c("common");
+        BOOST_REQUIRE_EQUAL(plugin_c_common, plugin);
+        BOOST_REQUIRE(plugin_c.has(name_));
+        BOOST_REQUIRE(plugin_c(name_));
+        BOOST_REQUIRE(plugin_c.has("exclusive_to_TestPluginController_1_2"));
+        bool exclusive = plugin_c("exclusive_to_TestPluginController_1_2");
+        if(name_ == "TestPluginController_1_2")
+        {
+          BOOST_REQUIRE_EQUAL(exclusive, plugin == "Plugin1");
+        }
+        else
+        {
+          BOOST_REQUIRE_EQUAL(exclusive, false);
+        }
       }
     }
     bool ret = MCController::run();
@@ -65,6 +83,7 @@ public:
   std::vector<std::string> common_plugins_ = {};
 
 private:
+  std::string name_;
   size_t nrIter = 0;
 };
 
@@ -94,7 +113,7 @@ extern "C"
                                                           const double & dt,
                                                           const mc_rtc::Configuration &)
   {
-    auto out = new mc_control::TestPluginController(rm, dt);
+    auto out = new mc_control::TestPluginController(name, rm, dt);
     if(name == "TestPluginController_1_2")
     {
       out->expected_plugins_ = {"Plugin0", "Plugin1", "Plugin2"};
