@@ -535,7 +535,7 @@ int extract(int argc, char * argv[])
       return out;
     };
     std::vector<TypedKey> prev_keys_in_log;
-    mc_rtc::Logger logger(mc_rtc::Logger::Policy::THREADED, "", "");
+    mc_rtc::Logger logger(mc_rtc::Logger::Policy::NON_THREADED, "", "");
     double timestep = *log.getRaw<double>("t", 1) - *log.getRaw<double>("t", 0);
     for(size_t i = 0; i < log.size(); ++i)
     {
