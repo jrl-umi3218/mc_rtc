@@ -351,10 +351,10 @@ if(CMAKE_CONFIGURATION_TYPES)
   foreach(I RANGE 0 3)
     file(GENERATE
       OUTPUT "${CONFIG_FOLDER_OUT}/etc/TestPluginController_1_2/plugins/Plugin${I}.yaml"
-      INTPUT "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_1_2/plugins/Plugin${I}.yaml")
+      INPUT "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_1_2/plugins/Plugin${I}.yaml")
     file(GENERATE
       OUTPUT "${CONFIG_FOLDER_OUT}/etc/TestPluginController_2_3/plugins/Plugin${I}.yaml"
-      INTPUT "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_2_3/plugins/Plugin${I}.yaml")
+      INPUT "${TEST_CONTROLLER_PATH_BASE}/etc/TestPluginController_2_3/plugins/Plugin${I}.yaml")
   endforeach()
 endif()
 mc_rtc_add_test(NAME TestPluginController COMMAND test_controller_ticker --run_test=RUN -- "${CONFIG_OUT}" 5 TestPluginController_2_3)
