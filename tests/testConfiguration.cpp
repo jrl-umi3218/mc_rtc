@@ -1063,3 +1063,65 @@ BOOST_AUTO_TEST_CASE(TestConfigurationErrorMessage)
       Eigen::Vector6d v = config("deep")[2]("object1")("key2")[1]("object2")("v3d"));
   MC_RTC_diagnostic_pop
 }
+
+static std::string YAML_TEST_TWEAKS = R"(
+col-default: &col-default
+  iDist: 0.05
+  sDist: 0.01
+  damping: 0
+collisions:
+- b1: body1
+  b2: body2
+  <<: *col-default
+- b1: body1
+  b2: body3
+  <<: *col-default
+special:
+  b1: body1
+  b2: body2
+  <<: *col-default
+  sDist: 0.04
+Y_is_string: Y
+N_is_string: N
+)";
+
+BOOST_AUTO_TEST_CASE(TestConfigurationYAMLTweaks)
+{
+  auto config = mc_rtc::Configuration::fromYAMLData(YAML_TEST_TWEAKS);
+  BOOST_REQUIRE(config.has("collisions"));
+  auto collisions = config("collisions");
+  BOOST_REQUIRE(collisions.size() == 2);
+  for(const auto & col : collisions)
+  {
+    BOOST_REQUIRE(col.has("b1"));
+    BOOST_REQUIRE(col.has("b2"));
+    BOOST_REQUIRE(col.has("iDist"));
+    double iDist = col("iDist");
+    BOOST_REQUIRE_EQUAL(iDist, 0.05);
+    BOOST_REQUIRE(col.has("sDist"));
+    double sDist = col("sDist");
+    BOOST_REQUIRE_EQUAL(sDist, 0.01);
+    BOOST_REQUIRE(col.has("damping"));
+    double damping = col("damping");
+    BOOST_REQUIRE_EQUAL(damping, 0.0);
+  }
+  BOOST_REQUIRE(config.has("special"));
+  {
+    auto special = config("special");
+    BOOST_REQUIRE(special.has("iDist"));
+    double iDist = special("iDist");
+    BOOST_REQUIRE_EQUAL(iDist, 0.05);
+    BOOST_REQUIRE(special.has("sDist"));
+    double sDist = special("sDist");
+    BOOST_REQUIRE_EQUAL(sDist, 0.04);
+    BOOST_REQUIRE(special.has("damping"));
+    double damping = special("damping");
+    BOOST_REQUIRE_EQUAL(damping, 0.0);
+  }
+  BOOST_REQUIRE(config.has("Y_is_string"));
+  std::string Y = config("Y_is_string");
+  BOOST_REQUIRE_EQUAL(Y, "Y");
+  BOOST_REQUIRE(config.has("N_is_string"));
+  std::string N = config("N_is_string");
+  BOOST_REQUIRE_EQUAL(N, "N");
+}
