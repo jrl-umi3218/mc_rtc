@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"structmc__control_1_1fsm_1_1Controller.html#af043ec138ea3eaa88da2bb920de0777e":[3,0,2,0,2,27],
 "structmc__control_1_1fsm_1_1Controller.html#af8027a5c80b5f9b0d45616517299f3c3":[3,0,2,0,2,15],
 "structmc__control_1_1fsm_1_1Controller.html#af87858917b432bbd4a9c728a4e344d1e":[3,0,2,0,2,18],
 "structmc__control_1_1fsm_1_1Controller.html#afc0ff4e1c1bec2352684291698b467dd":[3,0,2,0,2,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "structmc__control_1_1fsm_1_1TransitionMap.html#ae22a9f786f98b01fe50849d23d690c93":[3,0,2,0,18,4],
 "structmc__control_1_1fsm_1_1TransitionMap.html#ae92ec157ad130676dc1caff84eebae94":[3,0,2,0,18,0],
 "structmc__filter_1_1ExponentialMovingAverage.html":[3,0,3,0],
-"structmc__filter_1_1ExponentialMovingAverage.html#a08b8eaf1a64cf2abc37a27311db4923e":[3,0,3,0,11],
-"structmc__filter_1_1ExponentialMovingAverage.html#a156a26de235d293b4e94cb1f269dd16c":[3,0,3,0,0]
+"structmc__filter_1_1ExponentialMovingAverage.html#a08b8eaf1a64cf2abc37a27311db4923e":[3,0,3,0,11]
 };

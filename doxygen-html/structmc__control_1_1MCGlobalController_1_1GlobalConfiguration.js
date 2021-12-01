@@ -2,6 +2,7 @@ var structmc__control_1_1MCGlobalController_1_1GlobalConfiguration =
 [
     [ "GlobalConfiguration", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a987a966351ac8bc6f17d94cc8103a408", null ],
     [ "enabled", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#ac2d357671c1f2ba1c316a128a6bf6549", null ],
+    [ "load_controller_plugin_configs", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aab0038f60606738d6567df31a6a0fa8e", null ],
     [ "load_controllers_configs", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a25be914af3f8f7543109624e44f820f2", null ],
     [ "load_plugin_configs", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a4a03b269639f6f50e2b43ecfb7434c6d", null ],
     [ "config", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aa22943a039c650dcc7f6b338506380a7", null ],

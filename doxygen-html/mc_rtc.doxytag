@@ -12566,6 +12566,13 @@
       <anchor>ad54a271a90a4ac60b338e5f50d24b743</anchor>
       <arglist>(mc_solver::QPSolver &amp;solver, const mc_rtc::Configuration &amp;config) override</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>name</name>
+      <anchorfile>structmc__tasks_1_1EndEffectorTask.html</anchorfile>
+      <anchor>ad666274c6712c5362271417f8b030ec4</anchor>
+      <arglist>(const std::string &amp;name) override</arglist>
+    </member>
     <member kind="variable">
       <type>const mc_rbdyn::Robots &amp;</type>
       <name>robots</name>
@@ -15294,6 +15301,13 @@
       <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
       <anchor>a4a03b269639f6f50e2b43ecfb7434c6d</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>load_controller_plugin_configs</name>
+      <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
+      <anchor>aab0038f60606738d6567df31a6a0fa8e</anchor>
+      <arglist>(const std::string &amp;controller, const std::vector&lt; std::string &gt; &amp;plugins)</arglist>
     </member>
     <member kind="variable">
       <type>bool</type>

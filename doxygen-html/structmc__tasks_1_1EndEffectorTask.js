@@ -11,6 +11,7 @@ var structmc__tasks_1_1EndEffectorTask =
     [ "eval", "structmc__tasks_1_1EndEffectorTask.html#afd9eb745f23f22752530d3b86329ac61", null ],
     [ "get_ef_pose", "structmc__tasks_1_1EndEffectorTask.html#a849f1bb907b638b0a2d3513630095155", null ],
     [ "load", "structmc__tasks_1_1EndEffectorTask.html#ad54a271a90a4ac60b338e5f50d24b743", null ],
+    [ "name", "structmc__tasks_1_1EndEffectorTask.html#ad666274c6712c5362271417f8b030ec4", null ],
     [ "removeFromLogger", "structmc__tasks_1_1EndEffectorTask.html#ac22521542e7b290629884352f9014f78", null ],
     [ "removeFromSolver", "structmc__tasks_1_1EndEffectorTask.html#a945db27954f59e4d0c5c3a12728077d9", null ],
     [ "reset", "structmc__tasks_1_1EndEffectorTask.html#a4ae325b8848afaae12051f1e02462e8b", null ],
