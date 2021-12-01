@@ -47,6 +47,9 @@
     -
       id: ros
       title: ROS integration
+    -
+      id: global-plugins
+      title: Using global plugins
 -
   id: tools
   title: Framework tools
