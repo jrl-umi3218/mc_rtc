@@ -12,6 +12,7 @@ import numpy as np
 import os
 import re
 import signal
+import subprocess
 import sys
 import tempfile
 
@@ -454,6 +455,97 @@ class AllLineStyleDialog(QtWidgets.QDialog):
     super(AllLineStyleDialog, self).accept()
     self.apply()
 
+class ExtractSelectionDialog(QtWidgets.QDialog):
+  @InitDialogWithOkCancel(Layout = QtWidgets.QGridLayout, apply_ = False)
+  def __init__(self, parent):
+    self._rejected = False
+    self.setWindowTitle("Extract selected keys")
+    if len(parent.loaded_files) == 0:
+      QtWidgets.QMessageBox.critical(self, "No log opened", "Load a log file before using this function")
+      self._rejected = True
+      super(ExtractSelectionDialog, self).reject()
+      return
+    self.fin = parent.loaded_files[0]
+    if not self.fin.endswith('.bin'):
+      QtWidgets.QMessageBox.critical(self, "Invalid log format", "Extraction is only supported with .bin files")
+      self._rejected = True
+      super(ExtractSelectionDialog, self).reject()
+      return
+    if(len(parent.loaded_files) > 1):
+      QtWidgets.QMessageBox.warning(self, "Extract from multiple logs not supported", "Multiple logs are open, only data from {} will be extract".format)
+
+    self.available_keys = []
+    # Call mc_bin_utils show to extract the available keys
+    show_out = subprocess.check_output('mc_bin_utils show {}'.format(self.fin).split()).decode(u'ascii')
+    show_out = show_out.split('\n')
+    show_out = show_out[show_out.index('Available entries:') + 1:]
+    show_out = list(filter(lambda x: len(x) != 0, show_out))
+    key_re = re.compile('^- (.*) \(.*\)$')
+    self.available_keys = [key_re.match(s).groups()[0] for s in show_out]
+    self.available_keys.sort()
+
+    def find_key(selection):
+      key = ''
+      for k in self.available_keys:
+        if selection.startswith(k) and len(k) > len(key):
+          key = k
+      return key
+
+    selection = set()
+    for k in parent.getCanvas()._left().plots.keys():
+      selection.add(find_key(k))
+    for k in parent.getCanvas()._right().plots.keys():
+      selection.add(find_key(k))
+
+    row = 0
+
+    row += 1
+    self.selectionListWidget = QtWidgets.QListWidget()
+    self.selectionListWidget.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
+    for k in self.available_keys:
+      self.selectionListWidget.addItem(k)
+      if k in selection:
+        item = self.selectionListWidget.item(self.selectionListWidget.count() - 1)
+        item.setSelected(True)
+    self.selectionListWidget.setMinimumWidth(self.selectionListWidget.sizeHintForColumn(0) + 30)
+    self.layout.addWidget(self.selectionListWidget, row, 0, 1, 2)
+
+    row += 1
+    filedialogButton = QtWidgets.QPushButton("Browse...")
+    filedialogButton.clicked.connect(self.filedialogButton)
+    self.layout.addWidget(filedialogButton, row, 0)
+    self.fileLineEdit = QtWidgets.QLineEdit("out.bin")
+    self.layout.addWidget(self.fileLineEdit, row, 1)
+
+    self.adjustSize()
+
+  def exec_(self):
+    if not self._rejected:
+        return super(ExtractSelectionDialog, self).exec_()
+    return self.result()
+
+  def accept(self):
+    fout = self.fileLineEdit.text()
+    if fout.endswith('.bin'):
+      fout = fout[:-4]
+    selection = [item.text() for item in self.selectionListWidget.selectedItems()]
+    if len(selection) == 0:
+      QtWidgets.QMessageBox.critical(self, "No entries have been selected", "You must select log entries before extracting")
+      return
+    if os.path.exists(fout):
+      overwrite = QtWidgets.QMessageBox.question(self, "Overwrite existing file", "{} already exists, do you want to overwrite it?".format(fout), QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
+      if overwrite == QtWidgets.QMessageBox.No:
+        return
+    cmd = "mc_bin_utils extract {} {} --keys {}".format(self.fin, fout, ' '.join(selection))
+    print("Executing extract command: {}".format(cmd))
+    os.system(cmd)
+    super(ExtractSelectionDialog, self).accept()
+
+  def filedialogButton(self):
+    fpath = QtWidgets.QFileDialog.getSaveFileName(self, "Output file")[0]
+    if len(fpath):
+      self.fileLineEdit.setText(fpath)
+
 class DumpSeqPlayDialog(QtWidgets.QDialog):
   @InitDialogWithOkCancel(Layout = QtWidgets.QGridLayout, apply_ = False)
   def __init__(self, parent):
@@ -774,6 +866,9 @@ class MCLogUI(QtWidgets.QMainWindow):
     self.ui.menubar.addMenu(self.styleMenu)
 
     self.toolsMenu = QtWidgets.QMenu("Tools", self.ui.menubar)
+    act = QtWidgets.QAction("Extract keys...", self.toolsMenu)
+    act.triggered.connect(lambda: ExtractSelectionDialog(self).exec_())
+    self.toolsMenu.addAction(act)
     act = QtWidgets.QAction("Dump qOut to seqplay", self.toolsMenu)
     act.triggered.connect(DumpSeqPlayDialog(self).exec_)
     self.toolsMenu.addAction(act)

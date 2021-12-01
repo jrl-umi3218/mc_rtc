@@ -179,7 +179,7 @@ void Logger::setup(const Policy & policy, const std::string & directory, const s
   };
 }
 
-void Logger::start(const std::string & ctl_name, double timestep, bool resume)
+void Logger::start(const std::string & ctl_name, double timestep, bool resume, double start_t)
 {
   auto get_log_path = [this, &ctl_name]() {
     std::stringstream ss;
@@ -233,7 +233,7 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume)
     }
     if(!resume)
     {
-      impl_->log_iter_ = 0;
+      impl_->log_iter_ = start_t;
     }
     impl_->valid_ = true;
   }
@@ -244,6 +244,28 @@ void Logger::start(const std::string & ctl_name, double timestep, bool resume)
   }
   // Force rewrite of the log header
   log_entries_changed_ = true;
+}
+
+void Logger::open(const std::string & file, double timestep, double start_t)
+{
+  impl_->initialize(file);
+  if(impl_->log_.is_open())
+  {
+    if(!log_entries_.count("t"))
+    {
+      addLogEntry("t", this, [this, timestep]() {
+        impl_->log_iter_ += timestep;
+        return impl_->log_iter_ - timestep;
+      });
+    }
+    impl_->log_iter_ = start_t;
+    impl_->valid_ = true;
+  }
+  else
+  {
+    impl_->valid_ = false;
+    log::error("Failed to open log file {}", file);
+  }
 }
 
 void Logger::log()

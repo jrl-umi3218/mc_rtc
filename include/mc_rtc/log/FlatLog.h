@@ -28,11 +28,11 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
   /** Load a file into the log */
   FlatLog(const std::string & fpath);
 
-  /** Delete copy constructor */
   FlatLog(const FlatLog &) = delete;
-
-  /** Delete copy assignment */
   FlatLog & operator=(const FlatLog &) = delete;
+
+  FlatLog(FlatLog &&) = default;
+  FlatLog & operator=(FlatLog &&) = default;
 
   /** Load a file into the log, erase the current content of the flat log */
   void load(const std::string & fpath);
@@ -54,6 +54,9 @@ struct MC_RTC_UTILS_DLLAPI FlatLog
 
   /** Get the first non None type for an entry */
   LogType type(const std::string & entry) const;
+
+  /** Get the type at index i */
+  LogType type(const std::string & entry, size_t i) const;
 
   /** Get a type record entry.
    *
