@@ -94,6 +94,13 @@ The style menu lets you set many styling options for your graph, it has several 
 
 _Note: style options are also saved when you save a user plot_
 
+### Tools menu
+
+The tools menu lets you access some tools to work with the log:
+
+- `Extract keys...` is a front-end for the `mc_bin_utils extract --keys` command introduced in the [log manipulation tutorial](mc_log_utils.html);
+- `Dump qOut to seqplay` can output a file compatible with the seqplay component of [hrprys-base](https://github.com/fkanehiro/hrpsys-base) based on the `qOut` entry in the log;
+
 ### Shortcuts
 
 The following keyboard shortcuts can be used within the interface:
