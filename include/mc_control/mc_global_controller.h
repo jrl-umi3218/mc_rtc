@@ -832,6 +832,8 @@ public:
     void load_controllers_configs();
 
     void load_plugin_configs();
+
+    void load_controller_plugin_configs(const std::string & controller, const std::vector<std::string> & plugins);
   };
 
 private:
@@ -861,6 +863,7 @@ private:
     GlobalPluginPtr plugin;
   };
   std::vector<PluginHandle> plugins_;
+  std::vector<PluginHandle> controller_plugins_;
   struct PluginBefore
   {
     GlobalPlugin * plugin;
@@ -894,6 +897,21 @@ private:
 
   /** Keep track of controller outputs before applying gripper control */
   std::vector<rbd::MultiBodyConfig> pre_gripper_mbcs_;
+
+  /** Reset controller-specific plugins
+   *
+   * When switching controllers, plugins that are enabled in both controllers are reset, new plugins are init
+   *
+   */
+  void resetControllerPlugins();
+
+  /** Load a plugin
+   *
+   * \param name Name of the plugin
+   *
+   * \returns nullptr if the loading fails
+   */
+  GlobalPlugin * loadPlugin(const std::string & name, const char * requiredBy);
 };
 
 } // namespace mc_control

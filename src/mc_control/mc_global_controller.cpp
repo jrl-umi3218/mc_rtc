@@ -13,6 +13,7 @@
 
 #include <mc_rbdyn/RobotLoader.h>
 
+#include <mc_rtc/ConfigurationHelpers.h>
 #include <mc_rtc/config.h>
 #include <mc_rtc/gui/Button.h>
 #include <mc_rtc/gui/Form.h>
@@ -59,39 +60,10 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
 #ifdef MC_RTC_BUILD_STATIC
   GlobalPluginLoader::loader().enable_sandboxing(config.use_sandbox);
   GlobalPluginLoader::loader().set_verbosity(config.verbose_loader);
-  auto * plugin_loader = &GlobalPluginLoader::loader();
-#else
-  auto * plugin_loader = plugin_loader_.get();
 #endif
   for(const auto & plugin : config.global_plugins)
   {
-    try
-    {
-      plugins_.emplace_back(plugin, plugin_loader->create_unique_object(plugin));
-      GlobalPlugin * plugin = plugins_.back().plugin.get();
-      const auto & plugin_config = plugins_.back().plugin->configuration();
-      if(plugin_config.should_run_before)
-      {
-        plugins_before_.push_back({plugin, duration_ms{0}});
-        if(plugin_config.should_always_run)
-        {
-          plugins_before_always_.push_back(plugin);
-        }
-      }
-      if(plugin_config.should_run_after)
-      {
-        plugins_after_.push_back({plugin, duration_ms{0}});
-        if(plugin_config.should_always_run)
-        {
-          plugins_after_always_.push_back(plugin);
-        }
-      }
-    }
-    catch(mc_rtc::LoaderException & exc)
-    {
-      mc_rtc::log::error("Global plugin {} failed to load, functions provided by this plugin will not be available",
-                         plugin);
-    }
+    loadPlugin(plugin, "global configuration");
   }
 
   // Loading controller modules
@@ -123,6 +95,9 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
       current_ctrl = c;
       controller_ = controllers[c].get();
     }
+    config.load_controller_plugin_configs(c, config.global_plugins);
+    auto ctrl_plugins = mc_rtc::fromVectorOrElement<std::string>(config.controllers_configs[c], "Plugins", {});
+    config.load_controller_plugin_configs(c, ctrl_plugins);
   }
   next_ctrl = current_ctrl;
   next_controller_ = nullptr;
@@ -145,7 +120,14 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   }
 }
 
-MCGlobalController::~MCGlobalController() {}
+MCGlobalController::~MCGlobalController()
+{
+  // We clear all datastore before (potentially) unloading any libraries
+  for(auto & ctl : controllers)
+  {
+    ctl.second->datastore().clear();
+  }
+}
 
 std::shared_ptr<mc_rbdyn::RobotModule> MCGlobalController::get_robot_module()
 {
@@ -398,6 +380,7 @@ void MCGlobalController::initController(bool reset)
       plugin.plugin->init(*this, config.global_plugin_configs[plugin.name]);
     }
   }
+  resetControllerPlugins();
 }
 
 void MCGlobalController::setSensorPosition(const Eigen::Vector3d & pos)
@@ -751,8 +734,9 @@ bool MCGlobalController::run()
       {
         plugin.plugin->reset(*this);
       }
+      resetControllerPlugins();
     }
-    next_controller_ = 0;
+    next_controller_ = nullptr;
     current_ctrl = next_ctrl;
     if(config.enable_log)
     {
@@ -1220,6 +1204,110 @@ void MCGlobalController::setup_log()
     return nanoseconds_since_epoch;
   });
   setup_logger_[current_ctrl] = true;
+}
+
+GlobalPlugin * MCGlobalController::loadPlugin(const std::string & name, const char * requiredBy)
+{
+#ifdef MC_RTC_BUILD_STATIC
+  auto * plugin_loader = &GlobalPluginLoader::loader();
+#else
+  auto * plugin_loader = plugin_loader_.get();
+#endif
+  try
+  {
+    plugins_.emplace_back(name, plugin_loader->create_unique_object(name));
+    GlobalPlugin * plugin = plugins_.back().plugin.get();
+    const auto & plugin_config = plugins_.back().plugin->configuration();
+    if(plugin_config.should_run_before)
+    {
+      plugins_before_.push_back({plugin, duration_ms{0}});
+      if(plugin_config.should_always_run)
+      {
+        plugins_before_always_.push_back(plugin);
+      }
+    }
+    if(plugin_config.should_run_after)
+    {
+      plugins_after_.push_back({plugin, duration_ms{0}});
+      if(plugin_config.should_always_run)
+      {
+        plugins_after_always_.push_back(plugin);
+      }
+    }
+    return plugin;
+  }
+  catch(mc_rtc::LoaderException & exc)
+  {
+    mc_rtc::log::error(
+        "Plugin {} (required by {}) failed to load, functions provided by this plugin will not be available", name,
+        requiredBy);
+  }
+  return nullptr;
+}
+
+void MCGlobalController::resetControllerPlugins()
+{
+  auto next_ctrl_plugins =
+      mc_rtc::fromVectorOrElement<std::string>(config.controllers_configs[next_ctrl], "Plugins", {});
+  // Remove the plugins that are loaded at the global level
+  for(const auto & p : plugins_)
+  {
+    auto it = std::find(next_ctrl_plugins.begin(), next_ctrl_plugins.end(), p.name);
+    if(it != next_ctrl_plugins.end())
+    {
+      next_ctrl_plugins.erase(it);
+    }
+  }
+  // Go over controller plugins that are already loaded
+  for(auto it = controller_plugins_.begin(); it != controller_plugins_.end();)
+  {
+    // The plugin is removed if it was loaded by another controller and not needed by this one
+    auto next_plugin_it = std::find(next_ctrl_plugins.begin(), next_ctrl_plugins.end(), it->name);
+    bool should_remove = (next_plugin_it == next_ctrl_plugins.end());
+    if(should_remove)
+    {
+      // First we remove the plugin from the before/always lists as needed
+      auto it_before = std::find_if(plugins_before_.begin(), plugins_before_.end(),
+                                    [&](const PluginBefore & p) { return p.plugin == it->plugin.get(); });
+      if(it_before != plugins_before_.end())
+      {
+        plugins_before_.erase(it_before);
+      }
+      auto it_before_always = std::find(plugins_before_always_.begin(), plugins_before_always_.end(), it->plugin.get());
+      if(it_before_always != plugins_before_always_.end())
+      {
+        plugins_before_always_.erase(it_before_always);
+      }
+      auto it_after = std::find_if(plugins_after_.begin(), plugins_after_.end(),
+                                   [&](const PluginAfter & p) { return p.plugin == it->plugin.get(); });
+      if(it_after != plugins_after_.end())
+      {
+        plugins_after_.erase(it_after);
+      }
+      auto it_after_always = std::find(plugins_after_always_.begin(), plugins_after_always_.end(), it->plugin.get());
+      if(it_after_always != plugins_after_always_.end())
+      {
+        plugins_after_always_.erase(it_after_always);
+      }
+      // Finally we can remove the handle
+      it = controller_plugins_.erase(it);
+    }
+    else
+    {
+      next_ctrl_plugins.erase(next_plugin_it);
+      it->plugin->reset(*this);
+      ++it;
+    }
+  }
+  // At this point, next_ctrl_plugins only contains plugins that are required by this controller and not already loaded
+  for(const auto & name : next_ctrl_plugins)
+  {
+    auto plugin = loadPlugin(name, next_ctrl.c_str());
+    if(plugin)
+    {
+      plugin->init(*this, config.global_plugin_configs[name]);
+    }
+  }
 }
 
 } // namespace mc_control

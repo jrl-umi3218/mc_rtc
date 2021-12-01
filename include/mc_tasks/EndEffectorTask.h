@@ -99,6 +99,10 @@ public:
 
   void load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & config) override;
 
+  using MetaTask::name;
+
+  void name(const std::string & name) override;
+
 public:
   const mc_rbdyn::Robots & robots;
   unsigned int robotIndex;
