@@ -1,5 +1,6 @@
 var NAVTREEINDEX12 =
 {
+"structmc__rtc_1_1gui_1_1Element.html#a00f7fa6be59c8cc61304d35e7dd2a914":[3,0,7,0,16,2],
 "structmc__rtc_1_1gui_1_1Element.html#a086e5b72ef29fb83ebba494135f0f579":[3,0,7,0,16,0],
 "structmc__rtc_1_1gui_1_1Element.html#a208ba439700a31e9ff94abc76a466472":[3,0,7,0,16,7],
 "structmc__rtc_1_1gui_1_1Element.html#a4f1f84cbf9bafb94cd41824712565f5a":[3,0,7,0,16,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX12 =
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ade656f6138f2fd579ad5670c5afac13b":[3,0,7,0,2,0,1,6],
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ae33beeb0efca412dd64fcbad5e984c48":[3,0,7,0,2,0,1,8],
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#af7bfde3739ae017ceb6db526762ca6aa":[3,0,7,0,2,0,1,7],
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html":[3,0,7,0,2,0,2],
-"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html#a3d6f033510ac8d8a5a05b56adf3c19e2":[3,0,7,0,2,0,2,1]
+"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinateWithColor.html":[3,0,7,0,2,0,2]
 };

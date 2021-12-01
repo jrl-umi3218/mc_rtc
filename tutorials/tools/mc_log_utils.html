@@ -301,14 +301,21 @@
                 </div>
               </div>
               <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h3"><a href="#mc_bin_utils-a-general-manipulation-tool">mc_bin_utils: a general manipulation tool</a>
+<li class="toc-entry toc-h2"><a href="#general-manipulation-tool-mc_bin_utils">General manipulation tool mc_bin_utils</a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#mc_bin_utils-extract">mc_bin_utils extract</a></li>
-<li class="toc-entry toc-h4"><a href="#mc_bin_utils-convert">mc_bin_utils convert</a></li>
+<li class="toc-entry toc-h3"><a href="#mc_bin_utils-extract">mc_bin_utils extract</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#extract-based-on-key-presence---key">Extract based on key presence --key</a></li>
+<li class="toc-entry toc-h4"><a href="#extract-based-on-a-time-range---from---to">Extract based on a time range --from --to</a></li>
+<li class="toc-entry toc-h4"><a href="#extract-a-selection-of-keys---keys">Extract a selection of keys --keys</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h3"><a href="#opening-the-log-in-python">Opening the log in Python</a></li>
-<li class="toc-entry toc-h3"><a href="#the-mc_rtcflatlog-class">The mc_rtc::FlatLog class</a></li>
+<li class="toc-entry toc-h3"><a href="#mc_bin_utils-convert">mc_bin_utils convert</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#performance-at-a-glance-mc_bin_perf">Performance at a glance mc_bin_perf</a></li>
+<li class="toc-entry toc-h2"><a href="#opening-the-log-in-python">Opening the log in Python</a></li>
+<li class="toc-entry toc-h2"><a href="#the-mc_rtclogflatlog-class">The mc_rtc::log::FlatLog class</a></li>
 </ul>
             </div>
           </div>
@@ -319,7 +326,7 @@
 
         <p>In this document we will assume you have a log at <code class="language-plaintext highlighter-rouge">~/my_log.bin</code>.</p>
 
-<h3 id="mc_bin_utils-a-general-manipulation-tool"><code class="language-plaintext highlighter-rouge">mc_bin_utils</code>: a general manipulation tool</h3>
+<h2 id="general-manipulation-tool-mc_bin_utils">General manipulation tool <code class="language-plaintext highlighter-rouge">mc_bin_utils</code></h2>
 
 <p><code class="language-plaintext highlighter-rouge">mc_bin_utils</code> lets you perform a number of operations on a binary log:</p>
 
@@ -337,25 +344,45 @@ Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> 
 
 <p>We will covert the <code class="language-plaintext highlighter-rouge">extract</code> and <code class="language-plaintext highlighter-rouge">convert</code> commands. <code class="language-plaintext highlighter-rouge">show</code> and <code class="language-plaintext highlighter-rouge">split</code> are self-explanatory.</p>
 
-<h4 id="mc_bin_utils-extract"><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code></h4>
+<h3 id="mc_bin_utils-extract"><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code></h3>
 
-<p><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code> has two operation mode.</p>
+<p><code class="language-plaintext highlighter-rouge">mc_bin_utils extract</code> has three operation modes.</p>
 
-<p>The first one extract all parts of a log where a given key is present:</p>
+<h4 id="extract-based-on-key-presence---key">Extract based on key presence <code class="language-plaintext highlighter-rouge">--key</code></h4>
+
+<p>The first mode extracts all parts of a log where a given key is present:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--key</span> com_task_target
 </code></pre></div></div>
 
 <p>This will generate one log for each section where the key <code class="language-plaintext highlighter-rouge">com_task_target</code> was present. For example, if the key was present at the 5 seconds mark until the 15 seconds mark and again from the 30 seconds mark to the 60 seconds mark you will get <code class="language-plaintext highlighter-rouge">my_log_out_1.bin</code> and <code class="language-plaintext highlighter-rouge">my_log_out_2.bin</code>.</p>
 
-<p>The second form lets directly extract a time-range based on the <code class="language-plaintext highlighter-rouge">t</code> entry:</p>
+<h4 id="extract-based-on-a-time-range---from---to">Extract based on a time range <code class="language-plaintext highlighter-rouge">--from --to</code></h4>
+
+<p>The second mode extracts a time-range based on the <code class="language-plaintext highlighter-rouge">t</code> entry:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--from</span> 50 <span class="nt">--to</span> 100
 </code></pre></div></div>
 
 <p>This example will generate <code class="language-plaintext highlighter-rouge">my_log_out.bin</code> with time <code class="language-plaintext highlighter-rouge">t</code> ranging from 50 seconds to 100 seconds. You can omit either <code class="language-plaintext highlighter-rouge">from</code> or <code class="language-plaintext highlighter-rouge">to</code> in which case the output log will start at 0 second and end at the end of the log respectively.</p>
 
-<h4 id="mc_bin_utils-convert"><code class="language-plaintext highlighter-rouge">mc_bin_utils convert</code></h4>
+<h4 id="extract-a-selection-of-keys---keys">Extract a selection of keys <code class="language-plaintext highlighter-rouge">--keys</code></h4>
+
+<p>The third mode extracts a set of selected keys from the log:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--keys</span> RightFootForceSensor com_target com_eval
+</code></pre></div></div>
+
+<p>This example will generate a <code class="language-plaintext highlighter-rouge">.bin</code> file which only contains data for the specified keys – as well as the <code class="language-plaintext highlighter-rouge">t</code> key which is always added. It will create multiple files if there is a range in the provided log file that does not have any of the provided key.</p>
+
+<p>The command also supports wildcards:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_utils extract ~/my_log.bin my_log_out <span class="nt">--keys</span> com_<span class="k">*</span>
+</code></pre></div></div>
+
+<p>This example will extract every key that starts with <code class="language-plaintext highlighter-rouge">com_</code>.</p>
+
+<h3 id="mc_bin_utils-convert"><code class="language-plaintext highlighter-rouge">mc_bin_utils convert</code></h3>
 
 <p>This tool will let you convert a <code class="language-plaintext highlighter-rouge">.bin</code> log to one of three formats (two without ROS support)</p>
 
@@ -365,7 +392,48 @@ Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> 
   <li><code class="language-plaintext highlighter-rouge">.bag</code> is the format expected by the <code class="language-plaintext highlighter-rouge">rosbag</code> tool;</li>
 </ul>
 
-<h3 id="opening-the-log-in-python">Opening the log in Python</h3>
+<p>Stand-alone tools are also always to perform the same conversions:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mc_bin_to_flat</code> converts a <code class="language-plaintext highlighter-rouge">.bin</code> file to a <code class="language-plaintext highlighter-rouge">.flat</code> file;</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_bin_to_log</code> converts a <code class="language-plaintext highlighter-rouge">.bin</code> file to a <code class="language-plaintext highlighter-rouge">.csv</code> file;</li>
+  <li><code class="language-plaintext highlighter-rouge">mc_bin_to_rosbag</code> converts a <code class="language-plaintext highlighter-rouge">.bin</code> file to a <code class="language-plaintext highlighter-rouge">.bag</code> file;</li>
+</ul>
+
+<h2 id="performance-at-a-glance-mc_bin_perf">Performance at a glance <code class="language-plaintext highlighter-rouge">mc_bin_perf</code></h2>
+
+<p><code class="language-plaintext highlighter-rouge">mc_bin_perf</code> can be used to quickly grab statistics about mc_rtc performances. It will look at all the entries starting with <code class="language-plaintext highlighter-rouge">perf_</code> in the log and output their average value and its standard deviation as well as the minimum and maximum values.</p>
+
+<p>For example:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mc_bin_perf /tmp/mc-control-CoM-latest.bin
+<span class="nt">----------------------------------------------------------------</span>
+|                     |  Average |    StdEv |      Min |   Max |
+<span class="nt">----------------------------------------------------------------</span>
+|       ControllerRun |    0.451 |   0.0639 |    0.378 |  1.14 |
+|       FrameworkCost |     7.64 |     2.81 |     2.55 |  52.8 |
+|           GlobalRun |    0.488 |   0.0703 |    0.401 |  1.18 |
+|                 Gui |   0.0035 |  0.00941 | 0.000543 | 0.322 |
+|                 Log |  0.00732 |  0.00476 |  0.00563 | 0.163 |
+|        ObserversRun | 6.79e-05 | 0.000215 |  2.4e-05 | 0.014 |
+|   Plugins_ROS_after |   0.0137 |   0.0124 |  0.00202 | 0.172 |
+| SolverBuildAndSolve |    0.422 |   0.0607 |    0.354 |  1.11 |
+|         SolverSolve |     0.32 |   0.0498 |    0.268 |     1 |
+<span class="nt">----------------------------------------------------------------</span>
+</code></pre></div></div>
+
+<p>All times are presented in milliseconds – except <code class="language-plaintext highlighter-rouge">FrameworkCost</code> as explained below.</p>
+
+<p>Of the entries presented by default the following should be more interesting to the regular user of mc_rtc:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">GlobalRun</code> is the total time spent in <code class="language-plaintext highlighter-rouge">mc_control::MCGlobalController::run()</code>, i.e. the time to run everything in mc_rtc: global plugins, observer pipelines, controller, logging and GUI. It is roughly equal to <code class="language-plaintext highlighter-rouge">Plugins_* + ObserversRun + ControllerRun + Gui + Log</code>;</li>
+  <li><code class="language-plaintext highlighter-rouge">ControllerRun</code> is the time spent in the controller run function. It is roughly equal to <code class="language-plaintext highlighter-rouge">SolverBuildAndSolve + (time spent in controller code)</code>;</li>
+  <li><code class="language-plaintext highlighter-rouge">SolverBuildAndSolve</code> and <code class="language-plaintext highlighter-rouge">SolverSolve</code> are the time spent in <code class="language-plaintext highlighter-rouge">Tasks</code> – <code class="language-plaintext highlighter-rouge">SolverSolve</code> is included in <code class="language-plaintext highlighter-rouge">SolverBuildAndSolve</code> it is measuring the time spent solving the underlying QP problem;</li>
+  <li><code class="language-plaintext highlighter-rouge">FrameworkCost</code> is the ratio of time spent outside of <code class="language-plaintext highlighter-rouge">Tasks</code>, i.e. <code class="language-plaintext highlighter-rouge">(GlobalRun - SolverBuildAndSolve) / GlobalRun</code>;</li>
+</ul>
+
+<h2 id="opening-the-log-in-python">Opening the log in Python</h2>
 
 <p>You can also open the log in Python:</p>
 
@@ -375,9 +443,9 @@ Use mc_bin_utils &lt;<span class="nb">command</span><span class="o">&gt;</span> 
 
 <p>Then <code class="language-plaintext highlighter-rouge">log</code> is a Python dictionary where the keys are the entries you see in the tree of mc_log_ui (e.g. if you logged an <code class="language-plaintext highlighter-rouge">Eigen::Vector3d</code> called <code class="language-plaintext highlighter-rouge">v3d</code> then you get <code class="language-plaintext highlighter-rouge">v3d_x</code>, <code class="language-plaintext highlighter-rouge">v3d_y</code> and <code class="language-plaintext highlighter-rouge">v3d_z</code>) and the values are numpy arrays so you can do anything with it.</p>
 
-<h3 id="the-mc_rtcflatlog-class">The <code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code> class</h3>
+<h2 id="the-mc_rtclogflatlog-class">The <code class="language-plaintext highlighter-rouge">mc_rtc::log::FlatLog</code> class</h2>
 
-<p>The <code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code> class is part of the <code class="language-plaintext highlighter-rouge">mc_rtc_utils</code> library. It lets you open a log and iterate through the data using their original type. For example, if you have logged a force sensor’s reading as an <code class="language-plaintext highlighter-rouge">sva::ForceVecd</code> object you can retrieve it as-is through the <code class="language-plaintext highlighter-rouge">mc_rtc::FlatLog</code>. See the class documentation for more details on the usage and API. This is only available in C++.</p>
+<p>The <a href="/mc_rtc/doxygen.html#structmc__rtc_1_1log_1_1FlatLog" target="blank_"><code>mc_rtc::log::FlatLog</code></a> class is part of the <code class="language-plaintext highlighter-rouge">mc_rtc_utils</code> library. It lets you open a log and iterate through the data using their original type. For example, if you have logged a force sensor’s reading as an <code class="language-plaintext highlighter-rouge">sva::ForceVecd</code> object you can retrieve it as-is through the <code class="language-plaintext highlighter-rouge">mc_rtc::log::FlatLog</code>. See the class documentation for more details on the usage and API. This is only available in C++.</p>
 
 
         <hr/>

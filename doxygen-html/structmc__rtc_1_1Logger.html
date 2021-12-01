@@ -106,9 +106,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a986b2719c1337aa9d1e84e2b0b34481c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a986b2719c1337aa9d1e84e2b0b34481c">setup</a> (const <a class="el" href="structmc__rtc_1_1Logger.html#a0fefb36635930cf5a9db966442756b9b">Policy</a> &amp;policy, const std::string &amp;directory, const std::string &amp;tmpl)</td></tr>
 <tr class="memdesc:a986b2719c1337aa9d1e84e2b0b34481c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup the constructor configuration.  <a href="#a986b2719c1337aa9d1e84e2b0b34481c">More...</a><br /></td></tr>
 <tr class="separator:a986b2719c1337aa9d1e84e2b0b34481c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a6f0685999b14f4bf67cd30dce03413"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a7a6f0685999b14f4bf67cd30dce03413">start</a> (const std::string &amp;ctl_name, double timestep, bool resume=false)</td></tr>
-<tr class="memdesc:a7a6f0685999b14f4bf67cd30dce03413"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start logging.  <a href="#a7a6f0685999b14f4bf67cd30dce03413">More...</a><br /></td></tr>
-<tr class="separator:a7a6f0685999b14f4bf67cd30dce03413"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93a57921c9019097a0903b86d0ba7571"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#a93a57921c9019097a0903b86d0ba7571">start</a> (const std::string &amp;ctl_name, double timestep, bool resume=false, double start_t=0.0)</td></tr>
+<tr class="memdesc:a93a57921c9019097a0903b86d0ba7571"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start logging.  <a href="#a93a57921c9019097a0903b86d0ba7571">More...</a><br /></td></tr>
+<tr class="separator:a93a57921c9019097a0903b86d0ba7571"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf6c621790b393b717c9a6b0c0ec0394"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#acf6c621790b393b717c9a6b0c0ec0394">open</a> (const std::string &amp;file, double timestep, double start_t=0.0)</td></tr>
+<tr class="memdesc:acf6c621790b393b717c9a6b0c0ec0394"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open a new file for logging.  <a href="#acf6c621790b393b717c9a6b0c0ec0394">More...</a><br /></td></tr>
+<tr class="separator:acf6c621790b393b717c9a6b0c0ec0394"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec88caf27ebb9c9615ed4fd51d9ccd98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html#aec88caf27ebb9c9615ed4fd51d9ccd98">log</a> ()</td></tr>
 <tr class="memdesc:aec88caf27ebb9c9615ed4fd51d9ccd98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log controller's data.  <a href="#aec88caf27ebb9c9615ed4fd51d9ccd98">More...</a><br /></td></tr>
 <tr class="separator:aec88caf27ebb9c9615ed4fd51d9ccd98"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -561,6 +564,51 @@ template&lt;typename T , typename std::enable_if&lt; mc_rtc::log::callback_is_se
 
 </div>
 </div>
+<a id="acf6c621790b393b717c9a6b0c0ec0394"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf6c621790b393b717c9a6b0c0ec0394">&#9670;&nbsp;</a></span>open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mc_rtc::Logger::open </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>timestep</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>start_t</em> = <code>0.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Open a new file for logging. </p>
+<p>This is similar to <a class="el" href="structmc__rtc_1_1Logger.html#a93a57921c9019097a0903b86d0ba7571">start</a> but disregard the log directory and template. Instead the logging happens in the provided file: <code>file</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">file</td><td>File where data is going to be written</td></tr>
+    <tr><td class="paramname">timestep</td><td>Time increment for the log time entry</td></tr>
+    <tr><td class="paramname">start_t</td><td>Start the log at the specified time </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a89fb05a7430fab3ebe3ccb5061dddc60"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a89fb05a7430fab3ebe3ccb5061dddc60">&#9670;&nbsp;</a></span>path()</h2>
 
@@ -576,7 +624,7 @@ template&lt;typename T , typename std::enable_if&lt; mc_rtc::log::callback_is_se
       </table>
 </div><div class="memdoc">
 <p>Access the file opened by this <a class="el" href="structmc__rtc_1_1Logger.html" title="Logs controller data to disk. ">Logger</a></p>
-<dl class="section note"><dt>Note</dt><dd>This is empty before <a class="el" href="structmc__rtc_1_1Logger.html#a7a6f0685999b14f4bf67cd30dce03413">start</a> has been called </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This is empty before <a class="el" href="structmc__rtc_1_1Logger.html#a93a57921c9019097a0903b86d0ba7571">start</a> or <a class="el" href="structmc__rtc_1_1Logger.html#acf6c621790b393b717c9a6b0c0ec0394">open</a> has been called </dd></dl>
 
 </div>
 </div>
@@ -702,8 +750,8 @@ template&lt;typename T , typename std::enable_if&lt; mc_rtc::log::callback_is_se
 
 </div>
 </div>
-<a id="a7a6f0685999b14f4bf67cd30dce03413"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a6f0685999b14f4bf67cd30dce03413">&#9670;&nbsp;</a></span>start()</h2>
+<a id="a93a57921c9019097a0903b86d0ba7571"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93a57921c9019097a0903b86d0ba7571">&#9670;&nbsp;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -724,7 +772,13 @@ template&lt;typename T , typename std::enable_if&lt; mc_rtc::log::callback_is_se
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>resume</em> = <code>false</code>&#160;</td>
+          <td class="paramname"><em>resume</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>start_t</em> = <code>0.0</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -740,7 +794,8 @@ template&lt;typename T , typename std::enable_if&lt; mc_rtc::log::callback_is_se
   <table class="params">
     <tr><td class="paramname">ctl_name</td><td>Name of the running controller</td></tr>
     <tr><td class="paramname">timestep</td><td>Time increment for the log time entry</td></tr>
-    <tr><td class="paramname">resume</td><td>If true, start the time entry at the current value, otherwise, start at 0 </td></tr>
+    <tr><td class="paramname">resume</td><td>If true, start the time entry at the current value, otherwise, start at 0</td></tr>
+    <tr><td class="paramname">start_t</td><td>Start at the specified time, only used if resume is false </td></tr>
   </table>
   </dd>
 </dl>

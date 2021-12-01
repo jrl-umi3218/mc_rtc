@@ -13653,6 +13653,20 @@
       <arglist>(const FlatLog &amp;)=delete</arglist>
     </member>
     <member kind="function">
+      <type></type>
+      <name>FlatLog</name>
+      <anchorfile>structmc__rtc_1_1log_1_1FlatLog.html</anchorfile>
+      <anchor>a4b5e22bfdbf82d2cbf7d98f5f6979d76</anchor>
+      <arglist>(FlatLog &amp;&amp;)=default</arglist>
+    </member>
+    <member kind="function">
+      <type>FlatLog &amp;</type>
+      <name>operator=</name>
+      <anchorfile>structmc__rtc_1_1log_1_1FlatLog.html</anchorfile>
+      <anchor>aa0fad213fcaf514450b79d1710e78bbe</anchor>
+      <arglist>(FlatLog &amp;&amp;)=default</arglist>
+    </member>
+    <member kind="function">
       <type>void</type>
       <name>load</name>
       <anchorfile>structmc__rtc_1_1log_1_1FlatLog.html</anchorfile>
@@ -13700,6 +13714,13 @@
       <anchorfile>structmc__rtc_1_1log_1_1FlatLog.html</anchorfile>
       <anchor>adce27a288263487f7d87a6ed76db3f48</anchor>
       <arglist>(const std::string &amp;entry) const</arglist>
+    </member>
+    <member kind="function">
+      <type>LogType</type>
+      <name>type</name>
+      <anchorfile>structmc__rtc_1_1log_1_1FlatLog.html</anchorfile>
+      <anchor>a9a306a5082bbe5eeef9e6aeb6ecf0fe8</anchor>
+      <arglist>(const std::string &amp;entry, size_t i) const</arglist>
     </member>
     <member kind="function">
       <type>std::vector&lt; const T * &gt;</type>
@@ -18241,8 +18262,15 @@
       <type>void</type>
       <name>start</name>
       <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
-      <anchor>a7a6f0685999b14f4bf67cd30dce03413</anchor>
-      <arglist>(const std::string &amp;ctl_name, double timestep, bool resume=false)</arglist>
+      <anchor>a93a57921c9019097a0903b86d0ba7571</anchor>
+      <arglist>(const std::string &amp;ctl_name, double timestep, bool resume=false, double start_t=0.0)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>open</name>
+      <anchorfile>structmc__rtc_1_1Logger.html</anchorfile>
+      <anchor>acf6c621790b393b717c9a6b0c0ec0394</anchor>
+      <arglist>(const std::string &amp;file, double timestep, double start_t=0.0)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
