@@ -92,6 +92,16 @@ BOOST_AUTO_TEST_CASE(TestTimeout)
   task.incrementIterInSolver();
   BOOST_REQUIRE(criteria.completed(task));
   BOOST_REQUIRE(criteria.output() == "timeout");
+  // Reset the criteria, timeout should resume from the current iteration count
+  criteria.configure(task, dt, config);
+  for(size_t i = 0; i < ticks; ++i)
+  {
+    task.incrementIterInSolver();
+    BOOST_REQUIRE(!criteria.completed(task));
+  }
+  task.incrementIterInSolver();
+  BOOST_REQUIRE(criteria.completed(task));
+  BOOST_REQUIRE(criteria.output() == "timeout");
 }
 
 BOOST_AUTO_TEST_CASE(TestEval)
