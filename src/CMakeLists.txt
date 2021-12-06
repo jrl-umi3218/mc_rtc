@@ -343,7 +343,7 @@ set(mc_trajectory_HDR
 
 add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})
 set_target_properties(mc_trajectory PROPERTIES COMPILE_FLAGS "-DMC_TRAJECTORY_EXPORTS")
-target_link_libraries(mc_trajectory PUBLIC mc_rtc_3rd_party::hpp-spline mc_rtc::mc_rtc_gui)
+target_link_libraries(mc_trajectory PUBLIC mc_rtc_3rd_party::ndcurves mc_rtc_3rd_party::hpp-spline mc_rtc::mc_rtc_gui)
 install_mc_rtc_lib(mc_trajectory)
 
 set(mc_tasks_SRC
@@ -357,7 +357,7 @@ mc_tasks/RelativeEndEffectorTask.cpp
 mc_tasks/CoMTask.cpp
 mc_tasks/AddRemoveContactTask.cpp
 mc_tasks/BSplineTrajectoryTask.cpp
-mc_tasks/ExactCubicTrajectoryTask.cpp
+#mc_tasks/ExactCubicTrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/AdmittanceTask.cpp
 mc_tasks/ImpedanceTask.cpp
@@ -391,7 +391,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/SplineTrajectoryTask.h
 ../include/mc_tasks/SplineTrajectoryTask.hpp
 ../include/mc_tasks/BSplineTrajectoryTask.h
-../include/mc_tasks/ExactCubicTrajectoryTask.h
+#../include/mc_tasks/ExactCubicTrajectoryTask.h
 ../include/mc_tasks/TrajectoryTaskGeneric.h
 ../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h
