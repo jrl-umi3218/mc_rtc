@@ -73,8 +73,6 @@ add_project_dependency(state-observation REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
-# hpp-spline (defines target: mc_rtc_3rd_party::hpp-spline)
-find_package(mc_rtc_3rd_party_hpp-spline REQUIRED)
 find_package(mc_rtc_3rd_party_ndcurves REQUIRED)
 
 if(NOT MC_RTC_BUILD_STATIC)
