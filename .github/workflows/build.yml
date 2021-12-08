@@ -99,7 +99,7 @@ jobs:
           - path: gabime/spdlog
             ref: v1.6.1
             options: -DSPDLOG_BUILD_EXAMPLE:BOOL=OFF -DSPDLOG_BUILD_SHARED:BOOL=ON
-          - path: loco-3d/hpp-spline
+          - path: loco-3d/ndcurves
             options: -DBUILD_PYTHON_INTERFACE:BOOL=OFF
           - path: jrl-umi3218/Eigen3ToPython
           - path: jrl-umi3218/SpaceVecAlg
