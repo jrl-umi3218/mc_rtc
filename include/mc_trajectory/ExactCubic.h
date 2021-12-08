@@ -8,9 +8,8 @@
 #include <mc_trajectory/Spline.h>
 #include <mc_trajectory/api.h>
 
-#include <hpp/spline/exact_cubic.h>
-#include <hpp/spline/spline_deriv_constraint.h>
 #include <memory>
+#include <ndcurves/exact_cubic.h>
 #include <vector>
 
 namespace mc_trajectory
@@ -25,9 +24,8 @@ struct MC_TRAJECTORY_DLLAPI ExactCubic : public Spline<Eigen::Vector3d, std::vec
 public:
   using point_t = Eigen::Vector3d;
   using waypoint_t = std::pair<double, point_t>;
-  using exact_cubic_t = spline::exact_cubic<double, double, 3, false, point_t>;
-  using spline_deriv_constraint_t = spline::spline_deriv_constraint<double, double, 3, false, point_t>;
-  using spline_constraints_t = spline_deriv_constraint_t::spline_constraints;
+  using exact_cubic_t = ndcurves::exact_cubic<double, double, false, point_t>;
+  using spline_constraints_t = ndcurves::curve_constraints<point_t>;
 
 public:
   /* \brief Construct a curve passing through the specified optional waypoints
@@ -145,7 +143,7 @@ public:
 
 private:
   spline_constraints_t constraints_;
-  std::unique_ptr<spline_deriv_constraint_t> spline_ = nullptr;
+  std::unique_ptr<exact_cubic_t> spline_ = nullptr;
 };
 
 } // namespace mc_trajectory

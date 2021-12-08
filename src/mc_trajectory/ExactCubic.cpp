@@ -14,7 +14,6 @@ namespace mc_trajectory
 using point_t = ExactCubic::point_t;
 using exact_cubic_t = ExactCubic::exact_cubic_t;
 using waypoint_t = ExactCubic::waypoint_t;
-using spline_deriv_constraint_t = ExactCubic::spline_deriv_constraint_t;
 using spline_constraints_t = ExactCubic::spline_constraints_t;
 
 ExactCubic::ExactCubic(double duration,
@@ -43,7 +42,7 @@ void ExactCubic::update()
       waypoints.push_back(wp);
     }
     waypoints.push_back(std::make_pair(duration_, target_));
-    spline_.reset(new spline_deriv_constraint_t(waypoints.begin(), waypoints.end(), constraints_));
+    spline_.reset(new exact_cubic_t(waypoints.begin(), waypoints.end(), constraints_));
     samples_ = this->sampleTrajectory();
     needsUpdate_ = false;
   }

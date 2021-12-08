@@ -357,7 +357,7 @@ mc_tasks/RelativeEndEffectorTask.cpp
 mc_tasks/CoMTask.cpp
 mc_tasks/AddRemoveContactTask.cpp
 mc_tasks/BSplineTrajectoryTask.cpp
-#mc_tasks/ExactCubicTrajectoryTask.cpp
+mc_tasks/ExactCubicTrajectoryTask.cpp
 mc_tasks/ComplianceTask.cpp
 mc_tasks/AdmittanceTask.cpp
 mc_tasks/ImpedanceTask.cpp
@@ -391,7 +391,7 @@ set(mc_tasks_HDR
 ../include/mc_tasks/SplineTrajectoryTask.h
 ../include/mc_tasks/SplineTrajectoryTask.hpp
 ../include/mc_tasks/BSplineTrajectoryTask.h
-#../include/mc_tasks/ExactCubicTrajectoryTask.h
+../include/mc_tasks/ExactCubicTrajectoryTask.h
 ../include/mc_tasks/TrajectoryTaskGeneric.h
 ../include/mc_tasks/TrajectoryTaskGeneric.hpp
 ../include/mc_tasks/ComplianceTask.h
@@ -404,7 +404,6 @@ set(mc_tasks_HDR
 ../include/mc_tasks/PositionBasedVisServoTask.h
 ../include/mc_tasks/PostureTask.h
 ../include/mc_tasks/LookAtTask.h
-../include/mc_tasks/ExactCubicTrajectoryTask.h
 ../include/mc_tasks/lipm_stabilizer/StabilizerTask.h
 ../include/mc_tasks/lipm_stabilizer/Contact.h
 ../include/mc_tasks/lipm_stabilizer/ZMPCC.h

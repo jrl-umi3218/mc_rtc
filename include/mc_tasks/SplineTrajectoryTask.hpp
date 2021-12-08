@@ -401,7 +401,6 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
 {
   TrajectoryTask::addToGUI(gui);
 
-  auto & spline = static_cast<Derived &>(*this).spline();
   gui.addElement({"Tasks", name_}, mc_rtc::gui::Checkbox(
                                        "Paused", [this]() { return paused_; }, [this]() { paused_ = !paused_; }));
   gui.addElement({"Tasks", name_}, mc_rtc::gui::Transform("Surface pose", [this]() {
@@ -417,6 +416,7 @@ void SplineTrajectoryTask<Derived>::addToGUI(mc_rtc::gui::StateBuilder & gui)
                                        }));
 
   // Target rotation is handled independently
+  auto & spline = static_cast<Derived &>(*this).spline();
   for(unsigned i = 0; i < oriSpline_.waypoints().size(); ++i)
   {
     gui.addElement(
