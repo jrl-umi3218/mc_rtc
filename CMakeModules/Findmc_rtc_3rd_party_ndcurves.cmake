@@ -1,11 +1,11 @@
 #
-# Copyright 2015-2019 CNRS-UM LIRMM, CNRS-AIST JRL
+# Copyright 2015-2021 CNRS-UM LIRMM, CNRS-AIST JRL
 #
 
 # Findndcurves.cmake
 #
 # Finds the ndcurves library
-# https://github.com/humanoid-path-planner/ndcurves
+# https://github.com/loco-3d/ndcurves
 #
 # The following variables will be set
 #
@@ -25,7 +25,7 @@ if(NOT ndcurves_FOUND)
     set(ndcurves_PREFIX "${CMAKE_INSTALL_PREFIX}")
   endif()
   find_path(ndcurves_INCLUDE_DIRS
-    NAMES hpp/spline/exact_cubic.h
+    NAMES ndcurves/exact_cubic.h
     HINTS ${ndcurves_PREFIX})
   include(FindPackageHandleStandardArgs)
   find_package_handle_standard_args(ndcurves DEFAULT_MSG ndcurves_INCLUDE_DIRS)
