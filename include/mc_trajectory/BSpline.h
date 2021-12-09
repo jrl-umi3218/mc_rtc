@@ -8,7 +8,6 @@
 #include <mc_trajectory/Spline.h>
 #include <mc_trajectory/api.h>
 
-//#include <hpp/spline/bezier_curve.h>
 #include <ndcurves/bezier_curve.h>
 #include <vector>
 

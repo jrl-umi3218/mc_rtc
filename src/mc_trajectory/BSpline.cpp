@@ -34,7 +34,7 @@ void BSpline::update()
       waypoints.push_back(wp);
     }
     waypoints.push_back(target_);
-    spline.reset(new BSpline::bezier_curve_t(waypoints.begin(), waypoints.end(), 0., duration_));
+    spline.reset(new BSpline::bezier_curve_t(waypoints.begin(), waypoints.end(), 0.0, duration_));
     samples_ = this->sampleTrajectory();
     needsUpdate_ = false;
   }

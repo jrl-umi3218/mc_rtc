@@ -895,7 +895,7 @@ check_and_clone_git_dependency()
 }
 
 # If the dependencies have already been cloned, check if the local state of the repository is clean before upgrading
-GIT_DEPENDENCIES="loco-3d/ndcurves jrl-umi3218/SpaceVecAlg jrl-umi3218/state-observation jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
+GIT_DEPENDENCIES="loco-3d/ndcurves#v1.1.0 jrl-umi3218/SpaceVecAlg jrl-umi3218/state-observation jrl-umi3218/sch-core jrl-umi3218/RBDyn jrl-umi3218/eigen-qld jrl-umi3218/eigen-quadprog jrl-umi3218/Tasks jrl-umi3218/mc_rbdyn_urdf"
 if [ "x$SYSTEM_HAS_SPDLOG" == xOFF ]
 then
   GIT_DEPENDENCIES="gabime/spdlog#v1.6.1 $GIT_DEPENDENCIES"
