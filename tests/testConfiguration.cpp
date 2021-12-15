@@ -1083,6 +1083,10 @@ special:
   sDist: 0.04
 Y_is_string: Y
 N_is_string: N
+yes_is_string: yes
+no_is_string: no
+Yes_is_string: Yes
+No_is_string: No
 )";
 
 BOOST_AUTO_TEST_CASE(TestConfigurationYAMLTweaks)
@@ -1118,10 +1122,11 @@ BOOST_AUTO_TEST_CASE(TestConfigurationYAMLTweaks)
     double damping = special("damping");
     BOOST_REQUIRE_EQUAL(damping, 0.0);
   }
-  BOOST_REQUIRE(config.has("Y_is_string"));
-  std::string Y = config("Y_is_string");
-  BOOST_REQUIRE_EQUAL(Y, "Y");
-  BOOST_REQUIRE(config.has("N_is_string"));
-  std::string N = config("N_is_string");
-  BOOST_REQUIRE_EQUAL(N, "N");
+  for(const auto & k : {"Y", "N", "yes", "no", "Yes", "No"})
+  {
+    std::string key = fmt::format("{}_is_string", k);
+    BOOST_REQUIRE(config.has(key));
+    std::string value = config(key);
+    BOOST_REQUIRE_EQUAL(value, k);
+  }
 }

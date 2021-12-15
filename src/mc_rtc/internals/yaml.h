@@ -38,11 +38,7 @@ inline bool try_convert<bool>(const YAML::Node & node, bool & out)
 {
   if(YAML::convert<bool>::decode(node, out))
   {
-    // yaml-cpp accepts y, Y, n and N as valid bool representations we check if this was the case here
-    if(node.Scalar().size() != 1)
-    {
-      return true;
-    }
+    // yaml-cpp treats y, yes, n and no as valid bool (case insensitive) we check if this was the case here
     char scalar = node.Scalar()[0];
     return scalar != 'y' && scalar != 'Y' && scalar != 'n' && scalar != 'N';
   }
