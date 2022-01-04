@@ -133,13 +133,13 @@ find_description_package(mc_env_description)
 find_description_package(mc_int_obj_description)
 
 macro(mc_rtc_set_prefix NAME FOLDER)
-  set(MC_${NAME}_LIBRARY_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/${FOLDER})
+  set(MC_${NAME}_LIBRARY_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_LIBDIR}/${FOLDER})
   if(WIN32)
-    set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/bin/${FOLDER})
-    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX ${MC_RTC_INSTALL_PREFIX}/bin/${FOLDER})
+    set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_BINDIR}/${FOLDER})
+    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX ${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${FOLDER})
   else()
-    set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lib/${FOLDER})
-    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX ${MC_RTC_INSTALL_PREFIX}/lib/${FOLDER})
+    set(MC_${NAME}_RUNTIME_INSTALL_PREFIX ${CMAKE_INSTALL_FULL_LIBDIR}/${FOLDER})
+    set(MC_${NAME}_RUNTIME_DESTINATION_PREFIX ${MC_RTC_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${FOLDER})
   endif()
   # For backward compatibility
   set(MC_${NAME}_INSTALL_PREFIX "${MC_${NAME}_LIBRARY_INSTALL_PREFIX}")
@@ -176,8 +176,8 @@ if(${PYTHON_BINDING})
  add_subdirectory(binding/python)
 endif()
 
-set(MC_RTC_BINDIR "${CMAKE_INSTALL_PREFIX}/bin")
-set(MC_RTC_LIBDIR "${CMAKE_INSTALL_PREFIX}/lib")
+set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
+set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
 
 add_subdirectory(robots)
 add_subdirectory(observers)
@@ -200,7 +200,8 @@ install(
 )
 
 # Extra macros for mc_rtc
-install(FILES "src/mc_rtcMacros.cmake"
+configure_file(src/mc_rtcMacros.in.cmake "${CMAKE_CURRENT_BINARY_DIR}/src/mc_rtcMacros.cmake" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/src/mc_rtcMacros.cmake"
         DESTINATION "${CONFIG_INSTALL_DIR}")
 set(PACKAGE_EXTRA_MACROS "${PACKAGE_EXTRA_MACROS}
 include(\"\${CMAKE_CURRENT_LIST_DIR}/mc_rtcMacros.cmake\")")

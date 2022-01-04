@@ -1,8 +1,8 @@
 get_filename_component(PACKAGE_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # -- Library install directory --
-set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/bin")
-set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/lib")
+set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_BINDIR@")
+set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@")
 
 # -- Helper to set the components install prefix --
 macro(mc_rtc_set_prefix NAME FOLDER)
