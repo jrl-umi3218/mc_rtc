@@ -305,7 +305,7 @@ set_target_properties(TestPluginController PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController"
 )
 set(TEST_CONTROLLER_NAME "TestPluginController_1_2\", \"TestPluginController_2_3")
-set(TEST_PLUGINS "Plugin0")
+set(TEST_PLUGINS "\"Plugin0\"")
 set(PLUGINS_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}/TestPlugin")
 foreach(I RANGE 0 3)
   file(WRITE "${PLUGINS_MODULE_PATH}/etc/Plugin${I}.yaml" "common: Plugin${I}")
