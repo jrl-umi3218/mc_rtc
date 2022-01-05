@@ -5,7 +5,6 @@
 #pragma once
 
 #include <mc_rtc/loader.h>
-#include <mc_rtc/loader_sandbox.h>
 
 #include <sstream>
 
@@ -53,10 +52,9 @@ void ObjectLoader<T>::ObjectDeleter::operator()(T * ptr)
 template<typename T>
 ObjectLoader<T>::ObjectLoader(const std::string & class_name,
                               const std::vector<std::string> & paths,
-                              bool enable_sandbox,
                               bool verbose,
                               Loader::callback_t cb)
-: class_name(class_name), enable_sandbox(enable_sandbox), verbose(verbose)
+: class_name(class_name), verbose(verbose)
 {
   Loader::init();
   load_libraries(paths, cb);
@@ -96,12 +94,6 @@ void ObjectLoader<T>::clear()
 {
   handles_.clear();
   callbacks_.clear();
-}
-
-template<typename T>
-void ObjectLoader<T>::enable_sandboxing(bool enable_sandbox)
-{
-  this->enable_sandbox = enable_sandbox;
 }
 
 template<typename T>
@@ -152,15 +144,7 @@ T * ObjectLoader<T>::create_from_handles(const std::string & name, Args... args)
   {
     mc_rtc::log::error_and_throw<LoaderException>("Failed to resolve create symbol in {}", handles_[name]->path());
   }
-  T * ptr = nullptr;
-  if(enable_sandbox)
-  {
-    ptr = sandbox_function_call<T>(create_fn, name, args...);
-  }
-  else
-  {
-    ptr = no_sandbox_function_call<T>(create_fn, name, args...);
-  }
+  T * ptr = create_fn(name, args...);
   if(ptr == nullptr)
   {
     mc_rtc::log::error_and_throw<LoaderException>("Call to create for object {} failed", name);

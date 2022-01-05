@@ -53,7 +53,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   //  General options  //
   ///////////////////////
   config("VerboseLoader", verbose_loader);
-  config("UseSandbox", use_sandbox);
   config("Timestep", timestep);
 
   //////////////
@@ -61,7 +60,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   //////////////
   mc_rbdyn::RobotLoader::set_verbosity(verbose_loader);
   config("RobotModulePaths", robot_module_paths);
-  mc_rbdyn::RobotLoader::enable_sandboxing(use_sandbox);
   if(config("ClearRobotModulePath", false))
   {
     mc_rbdyn::RobotLoader::clear();
@@ -149,7 +147,6 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   /////////////////
   //  Observers  //
   /////////////////
-  mc_observers::ObserverLoader::enable_sandboxing(use_sandbox);
   mc_observers::ObserverLoader::set_verbosity(verbose_loader);
   config("ObserverModulePaths", observer_module_paths);
   if(config("ClearObserverModulePath", false))

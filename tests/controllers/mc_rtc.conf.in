@@ -8,8 +8,6 @@
 
   "Timestep" : 0.005,
 
-  "UseSandbox" : @USE_SANDBOX@,
-
   "Log" : @LOG_ENABLED@,
   "LogPolicy" : "@LOG_POLICY@",
   "LogDirectory": "@LOG_DIRECTORY@",

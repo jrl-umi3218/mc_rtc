@@ -201,10 +201,6 @@ public:
    *
    * \param paths directories searched for libraries
    *
-   * \param enable_sandbox If true, creation function called from the
-   * loaded modules are sandboxed allowing to recover from otherwise
-   * fatal crashes
-   *
    * \param verbose If true, output some warning information
    *
    * \param cb Function called when a new object is loaded
@@ -212,7 +208,6 @@ public:
    */
   ObjectLoader(const std::string & class_name,
                const std::vector<std::string> & paths,
-               bool enable_sandbox,
                bool verbose,
                Loader::callback_t cb = Loader::default_cb);
 
@@ -237,14 +232,6 @@ public:
 
   /** Remove all loaded libraries */
   void clear();
-
-  /** Enable/disable sandboxing
-   *
-   * \param enable_sandbox If true, object's creation is done in a
-   * sandbox environment
-   *
-   */
-  void enable_sandboxing(bool enable_sandbox);
 
   /** Set the verbosity
    *
@@ -302,7 +289,6 @@ public:
 
 protected:
   std::string class_name;
-  bool enable_sandbox;
   bool verbose;
   Loader::handle_map_t handles_;
   mc_rtc::DataStore callbacks_;

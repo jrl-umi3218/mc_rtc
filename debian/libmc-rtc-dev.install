@@ -16,7 +16,6 @@ usr/include/mc_rtc/io_utils.h
 usr/include/mc_rtc/loader.h
 usr/include/mc_rtc/loader.hpp
 usr/include/mc_rtc/loader_api.h
-usr/include/mc_rtc/loader_sandbox.h
 usr/include/mc_rtc/logging.h
 usr/include/mc_rtc/MessagePackBuilder.h
 usr/include/mc_rtc/pragma.h

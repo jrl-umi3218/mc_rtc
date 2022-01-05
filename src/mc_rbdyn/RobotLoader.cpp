@@ -11,7 +11,6 @@
 namespace bfs = boost::filesystem;
 
 std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> mc_rbdyn::RobotLoader::robot_loader;
-bool mc_rbdyn::RobotLoader::enable_sandbox_ = false;
 bool mc_rbdyn::RobotLoader::verbose_ = false;
 std::mutex mc_rbdyn::RobotLoader::mtx{};
 std::map<std::string, std::vector<std::string>> mc_rbdyn::RobotLoader::aliases{};
@@ -118,8 +117,8 @@ void mc_rbdyn::RobotLoader::init(bool skip_default_path)
       {
         default_path.push_back(mc_rtc::MC_ROBOTS_INSTALL_PREFIX);
       }
-      robot_loader.reset(new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>("MC_RTC_ROBOT_MODULE", default_path,
-                                                                         enable_sandbox_, verbose_));
+      robot_loader.reset(
+          new mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>("MC_RTC_ROBOT_MODULE", default_path, verbose_));
       for(const auto & p : default_path)
       {
         handle_aliases_dir(bfs::path(p) / "aliases");
