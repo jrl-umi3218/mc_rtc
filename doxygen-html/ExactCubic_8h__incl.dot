@@ -109,10 +109,8 @@ digraph "include/mc_trajectory/ExactCubic.h"
   Node38 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node40 [label="mc_trajectory/Spline.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node41 [label="hpp/spline/exact_cubic.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node42 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node42 [label="hpp/spline/spline_deriv\l_constraint.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 [label="ndcurves/exact_cubic.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

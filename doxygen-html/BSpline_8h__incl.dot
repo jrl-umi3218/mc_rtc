@@ -110,6 +110,6 @@ digraph "include/mc_trajectory/BSpline.h"
   Node40 [label="mc_trajectory/Spline.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node41 [label="hpp/spline/bezier_curve.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node41 [label="ndcurves/bezier_curve.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

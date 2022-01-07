@@ -103,12 +103,10 @@ Public Types</h2></td></tr>
 <tr class="separator:a696e4cd6c5ac9fda37888ac9b2c7a955"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e665c15b2b296658f1ec80caf0499e0"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__trajectory_1_1ExactCubic.html#a5e665c15b2b296658f1ec80caf0499e0">waypoint_t</a> = std::pair&lt; double, <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955">point_t</a> &gt;</td></tr>
 <tr class="separator:a5e665c15b2b296658f1ec80caf0499e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa722aab6305bf5e4f1ae6f0007202f48"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__trajectory_1_1ExactCubic.html#aa722aab6305bf5e4f1ae6f0007202f48">exact_cubic_t</a> = spline::exact_cubic&lt; double, double, 3, false, <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955">point_t</a> &gt;</td></tr>
-<tr class="separator:aa722aab6305bf5e4f1ae6f0007202f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fffcee3002474517dd513904de9ea77"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__trajectory_1_1ExactCubic.html#a1fffcee3002474517dd513904de9ea77">spline_deriv_constraint_t</a> = spline::spline_deriv_constraint&lt; double, double, 3, false, <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955">point_t</a> &gt;</td></tr>
-<tr class="separator:a1fffcee3002474517dd513904de9ea77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3fc53f8154ef0226149e69b9bfd8485"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__trajectory_1_1ExactCubic.html#af3fc53f8154ef0226149e69b9bfd8485">spline_constraints_t</a> = spline_deriv_constraint_t::spline_constraints</td></tr>
-<tr class="separator:af3fc53f8154ef0226149e69b9bfd8485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a289fb02c8988a89607844624d0e3d3c2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__trajectory_1_1ExactCubic.html#a289fb02c8988a89607844624d0e3d3c2">exact_cubic_t</a> = ndcurves::exact_cubic&lt; double, double, false, <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955">point_t</a> &gt;</td></tr>
+<tr class="separator:a289fb02c8988a89607844624d0e3d3c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a808079084680fabc35d41f2fcd2918fa"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__trajectory_1_1ExactCubic.html#a808079084680fabc35d41f2fcd2918fa">spline_constraints_t</a> = ndcurves::curve_constraints&lt; <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955">point_t</a> &gt;</td></tr>
+<tr class="separator:a808079084680fabc35d41f2fcd2918fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -202,14 +200,14 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents an Exact Cubic spline : a curve that passes exactly through waypoints in position, while respecting optional constraints on its initial and final velocity and acceleration. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="aa722aab6305bf5e4f1ae6f0007202f48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa722aab6305bf5e4f1ae6f0007202f48">&#9670;&nbsp;</a></span>exact_cubic_t</h2>
+<a id="a289fb02c8988a89607844624d0e3d3c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a289fb02c8988a89607844624d0e3d3c2">&#9670;&nbsp;</a></span>exact_cubic_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="structmc__trajectory_1_1ExactCubic.html#aa722aab6305bf5e4f1ae6f0007202f48">mc_trajectory::ExactCubic::exact_cubic_t</a> =  spline::exact_cubic&lt;double, double, 3, false, <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955">point_t</a>&gt;</td>
+          <td class="memname">using <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a289fb02c8988a89607844624d0e3d3c2">mc_trajectory::ExactCubic::exact_cubic_t</a> =  ndcurves::exact_cubic&lt;double, double, false, <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955">point_t</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -230,28 +228,14 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="af3fc53f8154ef0226149e69b9bfd8485"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3fc53f8154ef0226149e69b9bfd8485">&#9670;&nbsp;</a></span>spline_constraints_t</h2>
+<a id="a808079084680fabc35d41f2fcd2918fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a808079084680fabc35d41f2fcd2918fa">&#9670;&nbsp;</a></span>spline_constraints_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="structmc__trajectory_1_1ExactCubic.html#af3fc53f8154ef0226149e69b9bfd8485">mc_trajectory::ExactCubic::spline_constraints_t</a> =  spline_deriv_constraint_t::spline_constraints</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1fffcee3002474517dd513904de9ea77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fffcee3002474517dd513904de9ea77">&#9670;&nbsp;</a></span>spline_deriv_constraint_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a1fffcee3002474517dd513904de9ea77">mc_trajectory::ExactCubic::spline_deriv_constraint_t</a> =  spline::spline_deriv_constraint&lt;double, double, 3, false, <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955">point_t</a>&gt;</td>
+          <td class="memname">using <a class="el" href="structmc__trajectory_1_1ExactCubic.html#a808079084680fabc35d41f2fcd2918fa">mc_trajectory::ExactCubic::spline_constraints_t</a> =  ndcurves::curve_constraints&lt;<a class="el" href="structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955">point_t</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -1,9 +1,8 @@
 var structmc__trajectory_1_1ExactCubic =
 [
-    [ "exact_cubic_t", "structmc__trajectory_1_1ExactCubic.html#aa722aab6305bf5e4f1ae6f0007202f48", null ],
+    [ "exact_cubic_t", "structmc__trajectory_1_1ExactCubic.html#a289fb02c8988a89607844624d0e3d3c2", null ],
     [ "point_t", "structmc__trajectory_1_1ExactCubic.html#a696e4cd6c5ac9fda37888ac9b2c7a955", null ],
-    [ "spline_constraints_t", "structmc__trajectory_1_1ExactCubic.html#af3fc53f8154ef0226149e69b9bfd8485", null ],
-    [ "spline_deriv_constraint_t", "structmc__trajectory_1_1ExactCubic.html#a1fffcee3002474517dd513904de9ea77", null ],
+    [ "spline_constraints_t", "structmc__trajectory_1_1ExactCubic.html#a808079084680fabc35d41f2fcd2918fa", null ],
     [ "waypoint_t", "structmc__trajectory_1_1ExactCubic.html#a5e665c15b2b296658f1ec80caf0499e0", null ],
     [ "ExactCubic", "structmc__trajectory_1_1ExactCubic.html#a1c4b7078a6df6537dc27a7b678d254c2", null ],
     [ "addToGUI", "structmc__trajectory_1_1ExactCubic.html#ae734960f82442e523fe5fa1077588e75", null ],

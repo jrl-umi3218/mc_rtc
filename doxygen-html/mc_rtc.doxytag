@@ -6486,10 +6486,10 @@
     <filename>structmc__trajectory_1_1BSpline.html</filename>
     <base>Spline&lt; Eigen::Vector3d, std::vector&lt; Eigen::Vector3d &gt; &gt;</base>
     <member kind="typedef">
-      <type>spline::bezier_curve&lt; double, double, 3, false, Eigen::Vector3d &gt;</type>
+      <type>ndcurves::bezier_curve&lt; double, double, false, Eigen::Vector3d &gt;</type>
       <name>bezier_curve_t</name>
       <anchorfile>structmc__trajectory_1_1BSpline.html</anchorfile>
-      <anchor>a58fe236423f0abd51af3cdcb50017a47</anchor>
+      <anchor>abf063597c5e31654040e77dfdd09e545</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -12938,24 +12938,17 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>spline::exact_cubic&lt; double, double, 3, false, point_t &gt;</type>
+      <type>ndcurves::exact_cubic&lt; double, double, false, point_t &gt;</type>
       <name>exact_cubic_t</name>
       <anchorfile>structmc__trajectory_1_1ExactCubic.html</anchorfile>
-      <anchor>aa722aab6305bf5e4f1ae6f0007202f48</anchor>
+      <anchor>a289fb02c8988a89607844624d0e3d3c2</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>spline::spline_deriv_constraint&lt; double, double, 3, false, point_t &gt;</type>
-      <name>spline_deriv_constraint_t</name>
-      <anchorfile>structmc__trajectory_1_1ExactCubic.html</anchorfile>
-      <anchor>a1fffcee3002474517dd513904de9ea77</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>spline_deriv_constraint_t::spline_constraints</type>
+      <type>ndcurves::curve_constraints&lt; point_t &gt;</type>
       <name>spline_constraints_t</name>
       <anchorfile>structmc__trajectory_1_1ExactCubic.html</anchorfile>
-      <anchor>af3fc53f8154ef0226149e69b9bfd8485</anchor>
+      <anchor>a808079084680fabc35d41f2fcd2918fa</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">

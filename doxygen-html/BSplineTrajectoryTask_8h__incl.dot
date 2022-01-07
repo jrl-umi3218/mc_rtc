@@ -134,6 +134,6 @@ digraph "include/mc_tasks/BSplineTrajectoryTask.h"
   Node104 -> Node92 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node104 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node104 -> Node105 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node105 [label="hpp/spline/bezier_curve.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node105 [label="ndcurves/bezier_curve.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node104 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
 }

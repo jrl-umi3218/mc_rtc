@@ -1,6 +1,6 @@
 var structmc__trajectory_1_1BSpline =
 [
-    [ "bezier_curve_t", "structmc__trajectory_1_1BSpline.html#a58fe236423f0abd51af3cdcb50017a47", null ],
+    [ "bezier_curve_t", "structmc__trajectory_1_1BSpline.html#abf063597c5e31654040e77dfdd09e545", null ],
     [ "waypoints_t", "structmc__trajectory_1_1BSpline.html#ada383daeac50ae7ac8b720c6096289f5", null ],
     [ "BSpline", "structmc__trajectory_1_1BSpline.html#a905828c45debcac32ddbd35718a138a1", null ],
     [ "addToGUI", "structmc__trajectory_1_1BSpline.html#a206f674c4f9e666083f9aa96b27b7628", null ],
