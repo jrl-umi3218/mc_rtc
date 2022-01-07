@@ -69,11 +69,9 @@ if(NOT TARGET RBDyn::Parsers)
 endif()
 add_project_dependency(eigen-quadprog REQUIRED)
 add_project_dependency(state-observation REQUIRED)
-
+add_project_dependency(ndcurves REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
-
-find_package(ndcurves REQUIRED)
 
 if(NOT MC_RTC_BUILD_STATIC)
   # LTDL (defines target: mc_rtc_3rd_party::ltdl)
