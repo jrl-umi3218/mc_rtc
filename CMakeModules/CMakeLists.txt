@@ -4,7 +4,6 @@
 
 set(MODULE_FILES
   Findmc_rtc_3rd_party_geos.cmake
-  Findmc_rtc_3rd_party_hpp-spline.cmake
 )
 
 if(NOT MC_RTC_DISABLE_NETWORK)

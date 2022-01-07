@@ -69,12 +69,9 @@ if(NOT TARGET RBDyn::Parsers)
 endif()
 add_project_dependency(eigen-quadprog REQUIRED)
 add_project_dependency(state-observation REQUIRED)
-
+add_project_dependency(ndcurves REQUIRED)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
-
-# hpp-spline (defines target: mc_rtc_3rd_party::hpp-spline)
-find_package(mc_rtc_3rd_party_hpp-spline REQUIRED)
 
 if(NOT MC_RTC_BUILD_STATIC)
   # LTDL (defines target: mc_rtc_3rd_party::ltdl)

@@ -8,7 +8,7 @@
 #include <mc_trajectory/Spline.h>
 #include <mc_trajectory/api.h>
 
-#include <hpp/spline/bezier_curve.h>
+#include <ndcurves/bezier_curve.h>
 #include <vector>
 
 namespace mc_trajectory
@@ -16,7 +16,7 @@ namespace mc_trajectory
 
 struct MC_TRAJECTORY_DLLAPI BSpline : public Spline<Eigen::Vector3d, std::vector<Eigen::Vector3d>>
 {
-  using bezier_curve_t = spline::bezier_curve<double, double, 3, false, Eigen::Vector3d>;
+  using bezier_curve_t = ndcurves::bezier_curve<double, double, false, Eigen::Vector3d>;
   using waypoints_t = std::vector<Eigen::Vector3d>;
 
 public:

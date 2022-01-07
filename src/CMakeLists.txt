@@ -343,7 +343,7 @@ set(mc_trajectory_HDR
 
 add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})
 set_target_properties(mc_trajectory PROPERTIES COMPILE_FLAGS "-DMC_TRAJECTORY_EXPORTS")
-target_link_libraries(mc_trajectory PUBLIC mc_rtc_3rd_party::hpp-spline mc_rtc::mc_rtc_gui)
+target_link_libraries(mc_trajectory PUBLIC ndcurves::ndcurves mc_rtc::mc_rtc_gui)
 install_mc_rtc_lib(mc_trajectory)
 
 set(mc_tasks_SRC
@@ -404,7 +404,6 @@ set(mc_tasks_HDR
 ../include/mc_tasks/PositionBasedVisServoTask.h
 ../include/mc_tasks/PostureTask.h
 ../include/mc_tasks/LookAtTask.h
-../include/mc_tasks/ExactCubicTrajectoryTask.h
 ../include/mc_tasks/lipm_stabilizer/StabilizerTask.h
 ../include/mc_tasks/lipm_stabilizer/Contact.h
 ../include/mc_tasks/lipm_stabilizer/ZMPCC.h
