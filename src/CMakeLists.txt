@@ -343,7 +343,7 @@ set(mc_trajectory_HDR
 
 add_library(mc_trajectory SHARED ${mc_trajectory_SRC} ${mc_trajectory_HDR})
 set_target_properties(mc_trajectory PROPERTIES COMPILE_FLAGS "-DMC_TRAJECTORY_EXPORTS")
-target_link_libraries(mc_trajectory PUBLIC mc_rtc_3rd_party::ndcurves mc_rtc::mc_rtc_gui)
+target_link_libraries(mc_trajectory PUBLIC ndcurves::ndcurves mc_rtc::mc_rtc_gui)
 install_mc_rtc_lib(mc_trajectory)
 
 set(mc_tasks_SRC
