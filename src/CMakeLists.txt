@@ -61,9 +61,9 @@ macro(install_mc_rtc_lib MC_LIB)
   add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
   install(TARGETS ${MC_LIB}
     EXPORT "${TARGETS_EXPORT_NAME}"
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION "${MC_RTC_BINDIR}"
+    LIBRARY DESTINATION "${MC_RTC_LIBDIR}"
+    ARCHIVE DESTINATION "${MC_RTC_LIBDIR}"
   )
 endmacro()
 
