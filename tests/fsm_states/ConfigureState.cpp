@@ -4,8 +4,13 @@
 
 #include "ConfigureState.h"
 
+#include <boost/test/unit_test.hpp>
+
+std::string ConfigureState::ExpectedStateName = "";
+
 void ConfigureState::configure(const mc_rtc::Configuration & config)
 {
+  BOOST_CHECK_EQUAL(this->name(), ExpectedStateName);
   config("value", value_);
 }
 

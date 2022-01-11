@@ -98,6 +98,7 @@ BOOST_AUTO_TEST_CASE(TestConfigureState)
   auto & ctl = get_default_controller();
   auto test_state = [&factory, &ctl](const std::string & name, unsigned int value,
                                      const mc_rtc::Configuration & config) {
+    ConfigureState::ExpectedStateName = name;
     auto state_base = factory.create(name, ctl, config);
     auto state = std::dynamic_pointer_cast<ConfigureState>(state_base);
     BOOST_REQUIRE(state != nullptr);
