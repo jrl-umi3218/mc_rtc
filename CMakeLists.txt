@@ -150,6 +150,9 @@ mc_rtc_set_prefix(ROBOTS mc_robots)
 mc_rtc_set_prefix(OBSERVERS mc_observers)
 mc_rtc_set_prefix(CONTROLLER mc_controller)
 
+set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
+set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
+
 configure_file(${PROJECT_SOURCE_DIR}/include/mc_rtc/config.h.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/include/mc_rtc/config.h)
 
 # For MSVC, set local environment variable to enable finding the built dll
@@ -175,9 +178,6 @@ add_subdirectory(utils)
 if(${PYTHON_BINDING})
  add_subdirectory(binding/python)
 endif()
-
-set(MC_RTC_BINDIR "${CMAKE_INSTALL_FULL_BINDIR}")
-set(MC_RTC_LIBDIR "${CMAKE_INSTALL_FULL_LIBDIR}")
 
 add_subdirectory(robots)
 add_subdirectory(observers)
