@@ -28,7 +28,6 @@ var namespacemc__rtc =
     [ "DataStore", "structmc__rtc_1_1DataStore.html", "structmc__rtc_1_1DataStore" ],
     [ "Loader", "structmc__rtc_1_1Loader.html", "structmc__rtc_1_1Loader" ],
     [ "LoaderException", "structmc__rtc_1_1LoaderException.html", "structmc__rtc_1_1LoaderException" ],
-    [ "LoaderSandboxData", "structmc__rtc_1_1LoaderSandboxData.html", "structmc__rtc_1_1LoaderSandboxData" ],
     [ "Logger", "structmc__rtc_1_1Logger.html", "structmc__rtc_1_1Logger" ],
     [ "LTDLHandle", "structmc__rtc_1_1LTDLHandle.html", "structmc__rtc_1_1LTDLHandle" ],
     [ "LTDLMutex", "structmc__rtc_1_1LTDLMutex.html", null ],

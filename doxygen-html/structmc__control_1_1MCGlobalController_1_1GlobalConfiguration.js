@@ -29,6 +29,5 @@ var structmc__control_1_1MCGlobalController_1_1GlobalConfiguration =
     [ "observer_module_paths", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#aa294a1ad2731835821d3669f7bd770ed", null ],
     [ "robot_module_paths", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#ac21e4689082d5955c94ec95eadfc9479", null ],
     [ "timestep", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a570a304a795594860cfd5733a04588c6", null ],
-    [ "use_sandbox", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a5832a5143cdcc747a8936a509d04113f", null ],
     [ "verbose_loader", "structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a02a37bf8e560cc576b7fd7579aeeaf64", null ]
 ];

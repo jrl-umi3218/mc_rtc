@@ -9,6 +9,5 @@ var searchData=
   ['updaterobot_5f',['updateRobot_',['../structmc__observers_1_1BodySensorObserver.html#aa8d9c4d70016890242f717cdd06ff224',1,'mc_observers::BodySensorObserver::updateRobot_()'],['../structmc__observers_1_1EncoderObserver.html#a705080a654010c5928bb8f76225f6218',1,'mc_observers::EncoderObserver::updateRobot_()']]],
   ['updatevel_5f',['updateVel_',['../structmc__observers_1_1BodySensorObserver.html#ae2a3a769d0449616911ee977ccb1a3cb',1,'mc_observers::BodySensorObserver']]],
   ['urdf_5fpath',['urdf_path',['../structmc__rbdyn_1_1RobotModule.html#a7ba5a2868d56f57573de6baac60ce05f',1,'mc_rbdyn::RobotModule']]],
-  ['use_5foutput',['use_output',['../structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html#abc76ec57de7ebd6ad839c05d4d391cde',1,'mc_control::fsm::MetaTasksState::TaskCriteria']]],
-  ['use_5fsandbox',['use_sandbox',['../structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html#a5832a5143cdcc747a8936a509d04113f',1,'mc_control::MCGlobalController::GlobalConfiguration']]]
+  ['use_5foutput',['use_output',['../structmc__control_1_1fsm_1_1MetaTasksState_1_1TaskCriteria.html#abc76ec57de7ebd6ad839c05d4d391cde',1,'mc_control::fsm::MetaTasksState::TaskCriteria']]]
 ];

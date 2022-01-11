@@ -11,7 +11,6 @@ var dir_379a22462e4fb075f5428ea3ff528930 =
     [ "io_utils.h", "io__utils_8h.html", "io__utils_8h" ],
     [ "loader.h", "loader_8h.html", "loader_8h" ],
     [ "loader_api.h", "loader__api_8h.html", "loader__api_8h" ],
-    [ "loader_sandbox.h", "loader__sandbox_8h.html", "loader__sandbox_8h" ],
     [ "logging.h", "logging_8h.html", "logging_8h" ],
     [ "MessagePackBuilder.h", "MessagePackBuilder_8h.html", [
       [ "MessagePackBuilder", "structmc__rtc_1_1MessagePackBuilder.html", "structmc__rtc_1_1MessagePackBuilder" ]

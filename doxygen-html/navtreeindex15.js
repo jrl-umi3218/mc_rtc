@@ -1,16 +1,5 @@
 var NAVTREEINDEX15 =
 {
-"structmc__tasks_1_1OrientationTask.html#a97da00bdf087f04a99473553efaa6390":[3,0,9,15,8],
-"structmc__tasks_1_1OrientationTask.html#ab333c1b08462c2014c404b1b2b886246":[3,0,9,15,6],
-"structmc__tasks_1_1OrientationTask.html#abfd25888b1dc814b280d5443506fe258":[3,0,9,15,7],
-"structmc__tasks_1_1OrientationTask.html#ac5953577c61c0b6943106f08851f562c":[3,0,9,15,1],
-"structmc__tasks_1_1OrientationTask.html#ada80fbd5aaf53369618630495e92a175":[3,0,9,15,4],
-"structmc__tasks_1_1OrientationTask.html#ae68bb89e360bfbc1d9f2be05fcaad936":[3,0,9,15,5],
-"structmc__tasks_1_1OrientationTask.html#aed570ad6882e85529777864cc33d58ed":[3,0,9,15,0],
-"structmc__tasks_1_1PositionBasedVisServoTask.html":[3,0,9,16],
-"structmc__tasks_1_1PositionBasedVisServoTask.html#a1c5a2a63cff774edab49e058c63344d6":[3,0,9,16,2],
-"structmc__tasks_1_1PositionBasedVisServoTask.html#a560ab2d140d96dc63db722bcbb9c5bb0":[3,0,9,16,4],
-"structmc__tasks_1_1PositionBasedVisServoTask.html#aa2e8c33c6432ee68e91a59ed396fdd2a":[3,0,9,16,3],
 "structmc__tasks_1_1PositionBasedVisServoTask.html#ab210ce2c552242965b7bd04b02d91517":[3,0,9,16,1],
 "structmc__tasks_1_1PositionBasedVisServoTask.html#ae2cab369aedb3678ebd9b4687faa8ba9":[3,0,9,16,0],
 "structmc__tasks_1_1PositionTask.html":[3,0,9,17],
@@ -249,5 +238,16 @@ var NAVTREEINDEX15 =
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#adbd26fcf85307988eedde6314fa066b9":[3,0,9,0,1,34],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#ae1d5d0caedd77b293454ad6209ff6617":[3,0,9,0,1,33],
 "structmc__tasks_1_1force_1_1AdmittanceTask.html#ae394a1ad7aa50fc7d7f4e395ce0f0a86":[3,0,9,0,1,10],
-"structmc__tasks_1_1force_1_1AdmittanceTask.html#ae8a55ef8c9d0173de5004c2dc8c3f1d3":[3,0,9,0,1,18]
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#ae8a55ef8c9d0173de5004c2dc8c3f1d3":[3,0,9,0,1,18],
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#aebc49ae7f9bf32ddfc48b8c64b238ff2":[3,0,9,0,1,21],
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#aef645fa9420f6fbef7e29b6bf3d15888":[3,0,9,0,1,20],
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#af29e748101d2e7dad31dec1da2a3763f":[3,0,9,0,1,8],
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#af4e15b0d348fae4b9f335f30e2a077b9":[3,0,9,0,1,27],
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#af5601de3a1b4f06b0a5dad6a249465a6":[3,0,9,0,1,23],
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#af66ad4d439b2cdfd9b6dc8bf7603cef3":[3,0,9,0,1,35],
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#afad98878cf6e7f64980a3b743ed76a7c":[3,0,9,0,1,26],
+"structmc__tasks_1_1force_1_1AdmittanceTask.html#afec1507c00f7ab6e535c856c4e6c258e":[3,0,9,0,1,24],
+"structmc__tasks_1_1force_1_1CoPTask.html":[3,0,9,0,3],
+"structmc__tasks_1_1force_1_1CoPTask.html#a08e79c703fb2f70db56a7c64e27acd02":[3,0,9,0,3,6],
+"structmc__tasks_1_1force_1_1CoPTask.html#a16f95e7ea6a037950ea6b8eb5e57b58d":[3,0,9,0,3,5]
 };

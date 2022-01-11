@@ -5,7 +5,6 @@ var searchData=
   ['linearinterpolation_2eh',['LinearInterpolation.h',['../LinearInterpolation_8h.html',1,'']]],
   ['loader_2eh',['loader.h',['../loader_8h.html',1,'']]],
   ['loader_5fapi_2eh',['loader_api.h',['../loader__api_8h.html',1,'']]],
-  ['loader_5fsandbox_2eh',['loader_sandbox.h',['../loader__sandbox_8h.html',1,'']]],
   ['logger_2eh',['Logger.h',['../Logger_8h.html',1,'']]],
   ['logging_2eh',['logging.h',['../logging_8h.html',1,'']]],
   ['lookatsurfacetask_2eh',['LookAtSurfaceTask.h',['../LookAtSurfaceTask_8h.html',1,'']]],

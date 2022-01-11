@@ -3341,28 +3341,6 @@
     </member>
   </compound>
   <compound kind="file">
-    <name>loader_sandbox.h</name>
-    <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/</path>
-    <filename>loader__sandbox_8h</filename>
-    <includes id="logging_8h" name="logging.h" local="no" imported="no">mc_rtc/logging.h</includes>
-    <class kind="struct">mc_rtc::LoaderSandboxData</class>
-    <namespace>mc_rtc</namespace>
-    <member kind="function">
-      <type>T *</type>
-      <name>no_sandbox_function_call</name>
-      <anchorfile>namespacemc__rtc.html</anchorfile>
-      <anchor>a299e6b1f00e482f61b89988dc5b395fb</anchor>
-      <arglist>(FunT create_fn, const Args &amp;... args)</arglist>
-    </member>
-    <member kind="function">
-      <type>T *</type>
-      <name>sandbox_function_call</name>
-      <anchorfile>namespacemc__rtc.html</anchorfile>
-      <anchor>a810352dfb9fa4299b85fa19ac258a308</anchor>
-      <arglist>(FunT create_fn, const Args &amp;... args)</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
     <name>FlatLog.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_rtc/log/</path>
     <filename>FlatLog_8h</filename>
@@ -15325,13 +15303,6 @@
     </member>
     <member kind="variable">
       <type>bool</type>
-      <name>use_sandbox</name>
-      <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
-      <anchor>a5832a5143cdcc747a8936a509d04113f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>bool</type>
       <name>verbose_loader</name>
       <anchorfile>structmc__control_1_1MCGlobalController_1_1GlobalConfiguration.html</anchorfile>
       <anchor>a02a37bf8e560cc576b7fd7579aeeaf64</anchor>
@@ -18183,32 +18154,6 @@
       <anchorfile>structmc__rtc_1_1LoaderException.html</anchorfile>
       <anchor>a2db77040caace4fc6f15e231a328a608</anchor>
       <arglist>() const noexcept override</arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>mc_rtc::LoaderSandboxData</name>
-    <filename>structmc__rtc_1_1LoaderSandboxData.html</filename>
-    <templarg>T</templarg>
-    <member kind="variable">
-      <type>std::function&lt; T *(void)&gt;</type>
-      <name>fn</name>
-      <anchorfile>structmc__rtc_1_1LoaderSandboxData.html</anchorfile>
-      <anchor>adf4719d80846e018c3de0290164048ac</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>T *</type>
-      <name>ret</name>
-      <anchorfile>structmc__rtc_1_1LoaderSandboxData.html</anchorfile>
-      <anchor>a0bd1edac4d08d70b609b18efb6942d44</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>bool</type>
-      <name>complete</name>
-      <anchorfile>structmc__rtc_1_1LoaderSandboxData.html</anchorfile>
-      <anchor>aecb02006f5f0cd5aeabf7965973d3542</anchor>
-      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -21545,8 +21490,8 @@
       <type></type>
       <name>ObjectLoader</name>
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
-      <anchor>af60c459a8ffc58fb8329669bd3967bcb</anchor>
-      <arglist>(const std::string &amp;class_name, const std::vector&lt; std::string &gt; &amp;paths, bool enable_sandbox, bool verbose, Loader::callback_t cb=Loader::default_cb)</arglist>
+      <anchor>aeaf25529680235b9456cd013ee2596b2</anchor>
+      <arglist>(const std::string &amp;class_name, const std::vector&lt; std::string &gt; &amp;paths, bool verbose, Loader::callback_t cb=Loader::default_cb)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -21582,13 +21527,6 @@
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
       <anchor>a33bbdbec8644e9b0e09077f076c88b0b</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>enable_sandboxing</name>
-      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
-      <anchor>ae6747e5d8a42e424da0e89f2f2ed8363</anchor>
-      <arglist>(bool enable_sandbox)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -21648,13 +21586,6 @@
     </member>
     <member kind="variable" protection="protected">
       <type>bool</type>
-      <name>enable_sandbox</name>
-      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
-      <anchor>a2ed489dea742157c337ac078e99f6dc3</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>bool</type>
       <name>verbose</name>
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
       <anchor>ac2b5e003d3ccd4958a32a83f1981754c</anchor>
@@ -21696,8 +21627,8 @@
       <type></type>
       <name>ObjectLoader</name>
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
-      <anchor>af60c459a8ffc58fb8329669bd3967bcb</anchor>
-      <arglist>(const std::string &amp;class_name, const std::vector&lt; std::string &gt; &amp;paths, bool enable_sandbox, bool verbose, Loader::callback_t cb=Loader::default_cb)</arglist>
+      <anchor>aeaf25529680235b9456cd013ee2596b2</anchor>
+      <arglist>(const std::string &amp;class_name, const std::vector&lt; std::string &gt; &amp;paths, bool verbose, Loader::callback_t cb=Loader::default_cb)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -21733,13 +21664,6 @@
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
       <anchor>a33bbdbec8644e9b0e09077f076c88b0b</anchor>
       <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>enable_sandboxing</name>
-      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
-      <anchor>ae6747e5d8a42e424da0e89f2f2ed8363</anchor>
-      <arglist>(bool enable_sandbox)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -21795,13 +21719,6 @@
       <name>class_name</name>
       <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
       <anchor>aab1c409baa5b97ec1e5b58242c572fbe</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" protection="protected">
-      <type>bool</type>
-      <name>enable_sandbox</name>
-      <anchorfile>structmc__rtc_1_1ObjectLoader.html</anchorfile>
-      <anchor>a2ed489dea742157c337ac078e99f6dc3</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
@@ -22049,13 +21966,6 @@
       <anchorfile>structmc__observers_1_1ObserverLoader.html</anchorfile>
       <anchor>aac203ca60191fa7e4041339a52baf625</anchor>
       <arglist>(const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static void</type>
-      <name>enable_sandboxing</name>
-      <anchorfile>structmc__observers_1_1ObserverLoader.html</anchorfile>
-      <anchor>a8182bc3bc5952e68b6dd9d7ea8435478</anchor>
-      <arglist>(bool enable_sandbox)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static void</type>
@@ -26724,13 +26634,6 @@
       <anchorfile>structmc__rbdyn_1_1RobotLoader.html</anchorfile>
       <anchor>a3edda7983edda591b3664eef5c450144</anchor>
       <arglist>(const std::string &amp;name)</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static void</type>
-      <name>enable_sandboxing</name>
-      <anchorfile>structmc__rbdyn_1_1RobotLoader.html</anchorfile>
-      <anchor>a730c3f67a0bc12f73633c42b121b219e</anchor>
-      <arglist>(bool enable_sandbox)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static void</type>
@@ -38162,7 +38065,6 @@
     <class kind="struct">mc_rtc::DataStore</class>
     <class kind="class">mc_rtc::Loader</class>
     <class kind="class">mc_rtc::LoaderException</class>
-    <class kind="struct">mc_rtc::LoaderSandboxData</class>
     <class kind="struct">mc_rtc::Logger</class>
     <class kind="class">mc_rtc::LTDLHandle</class>
     <class kind="class">mc_rtc::LTDLMutex</class>
@@ -38197,20 +38099,6 @@
       <anchorfile>namespacemc__rtc.html</anchorfile>
       <anchor>a0bd63387904206fef1971ac84987b3bc</anchor>
       <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>T *</type>
-      <name>no_sandbox_function_call</name>
-      <anchorfile>namespacemc__rtc.html</anchorfile>
-      <anchor>a299e6b1f00e482f61b89988dc5b395fb</anchor>
-      <arglist>(FunT create_fn, const Args &amp;... args)</arglist>
-    </member>
-    <member kind="function">
-      <type>T *</type>
-      <name>sandbox_function_call</name>
-      <anchorfile>namespacemc__rtc.html</anchorfile>
-      <anchor>a810352dfb9fa4299b85fa19ac258a308</anchor>
-      <arglist>(FunT create_fn, const Args &amp;... args)</arglist>
     </member>
     <member kind="function">
       <type>std::string</type>

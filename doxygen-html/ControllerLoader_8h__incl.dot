@@ -86,6 +86,8 @@ digraph "include/mc_control/ControllerLoader.h"
   Node86 [label="mc_rtc/gui/ComboInput.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$ComboInput_8h.html"];
   Node79 -> Node87 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node87 [label="mc_rtc/gui/DataComboInput.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$DataComboInput_8h.html"];
+  Node79 -> Node88 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node88 [label="mc_rtc/gui/Force.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$Force_8h.html"];
   Node1 -> Node43 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node116 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node116 [label="mc_solver/CollisionsConstraint.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$CollisionsConstraint_8h.html"];
@@ -137,9 +139,7 @@ digraph "include/mc_control/ControllerLoader.h"
   Node138 -> Node143 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node143 [label="mc_rtc/loader.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node144 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node144 [label="/home/runner/work/mc\l_rtc/mc_rtc/include/mc\l_rtc/loader_sandbox.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node145 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node145 [label="sstream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node144 [label="sstream",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node0 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node0 -> Node142 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

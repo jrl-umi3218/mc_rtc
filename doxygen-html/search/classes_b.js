@@ -11,7 +11,6 @@ var searchData=
   ['lineconfig',['LineConfig',['../structmc__rtc_1_1gui_1_1LineConfig.html',1,'mc_rtc::gui']]],
   ['loader',['Loader',['../structmc__rtc_1_1Loader.html',1,'mc_rtc']]],
   ['loaderexception',['LoaderException',['../structmc__rtc_1_1LoaderException.html',1,'mc_rtc']]],
-  ['loadersandboxdata',['LoaderSandboxData',['../structmc__rtc_1_1LoaderSandboxData.html',1,'mc_rtc']]],
   ['logger',['Logger',['../structmc__rtc_1_1Logger.html',1,'mc_rtc']]],
   ['logwriter',['LogWriter',['../structmc__rtc_1_1log_1_1LogWriter.html',1,'mc_rtc::log']]],
   ['lookatsurfacetask',['LookAtSurfaceTask',['../structmc__tasks_1_1LookAtSurfaceTask.html',1,'mc_tasks']]],

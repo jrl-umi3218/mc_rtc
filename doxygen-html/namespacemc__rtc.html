@@ -154,9 +154,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1LoaderException.html">LoaderException</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception thrown by loader interface.  <a href="structmc__rtc_1_1LoaderException.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1LoaderSandboxData.html">LoaderSandboxData</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds sandbox data.  <a href="structmc__rtc_1_1LoaderSandboxData.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1Logger.html">Logger</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs controller data to disk.  <a href="structmc__rtc_1_1Logger.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -193,14 +190,6 @@ Functions</h2></td></tr>
 <tr class="separator:a9c308b4400fb83031251be1f6ab0adb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bd63387904206fef1971ac84987b3bc"><td class="memItemLeft" align="right" valign="top">bool <a class="el" href="utils__api_8h.html#a797d67eb3213978212928ed90cf0dff2">MC_RTC_UTILS_DLLAPI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a0bd63387904206fef1971ac84987b3bc">debug</a> () noexcept</td></tr>
 <tr class="separator:a0bd63387904206fef1971ac84987b3bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a299e6b1f00e482f61b89988dc5b395fb"><td class="memTemplParams" colspan="2">template&lt;typename T , typename FunT , typename... Args&gt; </td></tr>
-<tr class="memitem:a299e6b1f00e482f61b89988dc5b395fb"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a299e6b1f00e482f61b89988dc5b395fb">no_sandbox_function_call</a> (FunT create_fn, const Args &amp;... args)</td></tr>
-<tr class="memdesc:a299e6b1f00e482f61b89988dc5b395fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls a function without sandboxing.  <a href="#a299e6b1f00e482f61b89988dc5b395fb">More...</a><br /></td></tr>
-<tr class="separator:a299e6b1f00e482f61b89988dc5b395fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a810352dfb9fa4299b85fa19ac258a308"><td class="memTemplParams" colspan="2">template&lt;typename T , typename FunT , typename... Args&gt; </td></tr>
-<tr class="memitem:a810352dfb9fa4299b85fa19ac258a308"><td class="memTemplItemLeft" align="right" valign="top">T *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a810352dfb9fa4299b85fa19ac258a308">sandbox_function_call</a> (FunT create_fn, const Args &amp;... args)</td></tr>
-<tr class="memdesc:a810352dfb9fa4299b85fa19ac258a308"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls a function in a sandbox.  <a href="#a810352dfb9fa4299b85fa19ac258a308">More...</a><br /></td></tr>
-<tr class="separator:a810352dfb9fa4299b85fa19ac258a308"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemc__rtc.html#a8fb61bc6391bc9cd0ef2aa0efff2d641">type_name</a> ()</td></tr>
 <tr class="separator:a8fb61bc6391bc9cd0ef2aa0efff2d641"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -352,89 +341,6 @@ template&lt;typename T &gt; </div>
 <p>Variant of fromVectorOrElement(const <a class="el" href="structmc__rtc_1_1Configuration.html" title="Simplify access to values hold within a JSON file. ">mc_rtc::Configuration</a> &amp; config, const std::string &amp; key, const std::vector&lt;T&gt; &amp; defaultVec) </p><dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname"><a class="el" href="structmc__rtc_1_1Configuration_1_1Exception.html" title="Exception thrown by this class when something bad occurs. ">mc_rtc::Configuration::Exception</a></td><td>If the key is not found or the configuration is neither convertible as std::vector&lt;T&gt; or T. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a299e6b1f00e482f61b89988dc5b395fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a299e6b1f00e482f61b89988dc5b395fb">&#9670;&nbsp;</a></span>no_sandbox_function_call()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename FunT , typename... Args&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T * mc_rtc::no_sandbox_function_call </td>
-          <td>(</td>
-          <td class="paramtype">FunT&#160;</td>
-          <td class="paramname"><em>create_fn</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Args &amp;...&#160;</td>
-          <td class="paramname"><em>args</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calls a function without sandboxing. </p>
-<p>Only catches exceptions</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>Return type of the function</td></tr>
-    <tr><td class="paramname">FunT</td><td>Type of the create function</td></tr>
-    <tr><td class="paramname">Args</td><td>Arguments passed to the creation function </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a810352dfb9fa4299b85fa19ac258a308"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a810352dfb9fa4299b85fa19ac258a308">&#9670;&nbsp;</a></span>sandbox_function_call()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename FunT , typename... Args&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T* mc_rtc::sandbox_function_call </td>
-          <td>(</td>
-          <td class="paramtype">FunT&#160;</td>
-          <td class="paramname"><em>create_fn</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const Args &amp;...&#160;</td>
-          <td class="paramname"><em>args</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calls a function in a sandbox. </p>
-<p>Allows a function call to fail horribly without crashing the main program, allowing us to survive the event, report and throw.</p>
-<p>Only works on Linux.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>Return type of the function</td></tr>
-    <tr><td class="paramname">FunT</td><td>Type of the create function</td></tr>
-    <tr><td class="paramname">Args</td><td>Arguments passed to the creation function </td></tr>
   </table>
   </dd>
 </dl>

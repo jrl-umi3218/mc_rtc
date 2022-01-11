@@ -271,7 +271,6 @@ var hierarchy =
     [ "mc_trajectory::LinearInterpolation< Eigen::Vector6d >", "structmc__trajectory_1_1LinearInterpolation.html", null ],
     [ "mc_rtc::gui::LineConfig", "structmc__rtc_1_1gui_1_1LineConfig.html", null ],
     [ "mc_rtc::Loader", "structmc__rtc_1_1Loader.html", null ],
-    [ "mc_rtc::LoaderSandboxData< T >", "structmc__rtc_1_1LoaderSandboxData.html", null ],
     [ "mc_rtc::Logger", "structmc__rtc_1_1Logger.html", null ],
     [ "mc_rtc::log::LogWriter< T >", "structmc__rtc_1_1log_1_1LogWriter.html", null ],
     [ "mc_filter::LowPass< T >", "structmc__filter_1_1LowPass.html", [
