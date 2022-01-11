@@ -38,13 +38,4 @@ endmacro()
 robot_test_construction_failure(NotARobot)
 robot_test_construction_failure(NoDestroyRobot)
 robot_test_construction_failure(NoCreateRobot)
-# To run properly this test requires controller creation sandboxing
-# which is only enabled on Linux
-if(UNIX AND NOT APPLE)
-  robot_test_construction_failure(UnresolvedSymbolRobot)
-  robot_test_construction_failure(SegfaultRobot)
-  if(NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    robot_test_construction_failure(FPERobot)
-  endif()
-endif()
 robot_test_construction_failure(ThrowingRobot)

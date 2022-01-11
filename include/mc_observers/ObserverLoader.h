@@ -74,19 +74,6 @@ public:
     return observer_loader->has_object(name);
   }
 
-  /** Enable robot's creation sandboxing
-   * \param enable_sandbox If true, robot's create call are sandboxed
-   */
-  static void enable_sandboxing(bool enable_sandbox)
-  {
-    std::lock_guard<std::mutex> guard{mtx};
-    enable_sandbox_ = enable_sandbox;
-    if(observer_loader)
-    {
-      observer_loader->enable_sandboxing(enable_sandbox_);
-    }
-  }
-
   static void set_verbosity(bool verbose)
   {
     std::lock_guard<std::mutex> guard{mtx};
@@ -117,8 +104,8 @@ private:
         {
           default_path.push_back(mc_rtc::MC_OBSERVERS_INSTALL_PREFIX);
         }
-        observer_loader.reset(new mc_rtc::ObjectLoader<mc_observers::Observer>("MC_RTC_OBSERVER_MODULE", default_path,
-                                                                               enable_sandbox_, verbose_));
+        observer_loader.reset(
+            new mc_rtc::ObjectLoader<mc_observers::Observer>("MC_RTC_OBSERVER_MODULE", default_path, verbose_));
       }
       catch(const mc_rtc::LoaderException & exc)
       {
@@ -128,7 +115,6 @@ private:
     }
   }
   static std::unique_ptr<mc_rtc::ObjectLoader<mc_observers::Observer>> observer_loader;
-  static bool enable_sandbox_;
   static bool verbose_;
   static std::mutex mtx;
 };

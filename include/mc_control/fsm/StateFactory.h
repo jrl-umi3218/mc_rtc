@@ -31,9 +31,6 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
 {
   /** Constructor
    *
-   * Note: this class is based on mc_rtc::ObjectLoader but sandboxed
-   * creation is systematically disabled
-   *
    * \param paths List of paths to load states libraries from
    *
    * \param states List of states files (json/yaml) to read states from

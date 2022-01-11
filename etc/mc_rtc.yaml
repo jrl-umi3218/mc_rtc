@@ -130,10 +130,6 @@ GUIServer:
 # The following option change the verbosity of the controller and robot loader
 VerboseLoader: false
 
-# The following option is used to disable controller/robot creation sandboxing
-# This option only affects Linux
-# UseSandbox: true
-
 # The following options are used to control the location of the
 # controllers', robots' and observers' modules (libraries)
 # The paths added by this option are added to the default path

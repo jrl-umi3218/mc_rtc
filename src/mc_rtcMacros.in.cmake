@@ -1,8 +1,8 @@
 get_filename_component(PACKAGE_PREFIX_DIR "${CMAKE_CURRENT_LIST_DIR}/../../../" ABSOLUTE)
 
 # -- Library install directory --
-set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/bin")
-set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/lib")
+set(MC_RTC_BINDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_BINDIR@")
+set(MC_RTC_LIBDIR "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@")
 
 # -- Helper to set the components install prefix --
 macro(mc_rtc_set_prefix NAME FOLDER)
@@ -20,8 +20,8 @@ endmacro()
 
 mc_rtc_set_prefix(CONTROLLER mc_controller)
 
-macro(add_controller controller_name controller_SRC controller_HDR)
-  add_library(${controller_name} SHARED ${controller_SRC} ${controller_HDR})
+macro(add_controller controller_name)
+  add_library(${controller_name} SHARED ${ARGN})
 
   set_target_properties(${controller_name} PROPERTIES PREFIX "")
   if(DEFINED CATKIN_DEVEL_PREFIX)
@@ -41,8 +41,8 @@ endmacro()
 
 mc_rtc_set_prefix(ROBOTS mc_robots)
 
-macro(add_robot robot_name robot_SRC robot_HDR)
-  add_library(${robot_name} SHARED ${robot_SRC} ${robot_HDR})
+macro(add_robot robot_name)
+  add_library(${robot_name} SHARED ${ARGN})
 
   set_target_properties(${robot_name} PROPERTIES COMPILE_FLAGS "-DMC_ROBOTS_EXPORTS" PREFIX "")
 
@@ -69,8 +69,8 @@ endif()
 # -- Observers --
 mc_rtc_set_prefix(OBSERVERS mc_observers)
 
-macro(add_observer observer_name observer_SRC observer_HDR)
-  add_library(${observer_name} SHARED ${observer_SRC} ${observer_HDR})
+macro(add_observer observer_name)
+  add_library(${observer_name} SHARED ${ARGN})
   set_target_properties(${observer_name} PROPERTIES COMPILE_FLAGS "-DMC_OBSERVER_EXPORTS" PREFIX "")
   set_target_properties(${observer_name} PROPERTIES INSTALL_RPATH ${MC_OBSERVERS_RUNTIME_INSTALL_PREFIX})
   target_link_libraries(${observer_name} PUBLIC mc_rtc::mc_observers)
@@ -90,8 +90,8 @@ endmacro()
 mc_rtc_set_prefix(STATES_DEFAULT mc_controller/fsm/states)
 mc_rtc_set_prefix(STATES mc_controller/${PROJECT_NAME}/states)
 
-macro(add_fsm_state state_name state_SRC state_HDR)
-  add_library(${state_name} SHARED ${state_SRC} ${state_HDR})
+macro(add_fsm_state state_name)
+  add_library(${state_name} SHARED ${ARGN})
 
   set_target_properties(${state_name} PROPERTIES PREFIX "")
   set_target_properties(${state_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_FSM_STATE_EXPORTS")
@@ -144,9 +144,9 @@ endmacro()
 
 mc_rtc_set_prefix(PLUGINS mc_plugins)
 
-macro(add_plugin plugin plugin_SRC plugin_HDR)
+macro(add_plugin plugin)
   option(AUTOLOAD_${plugin}_PLUGIN "Automatically load ${plugin} plugin" ON)
-  add_library(${plugin} SHARED ${plugin_SRC} ${plugin_HDR})
+  add_library(${plugin} SHARED ${ARGN})
   set_target_properties(${plugin} PROPERTIES PREFIX "")
   target_link_libraries(${plugin} PUBLIC mc_rtc::mc_control)
   install(TARGETS ${plugin}

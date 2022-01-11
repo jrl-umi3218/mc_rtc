@@ -8,8 +8,6 @@
 
   "Log" : false,
 
-  "UseSandbox" : true,
-
   "ClearControllerModulePath" : true,
   "ControllerModulePaths" : ["@PROJECT_BINARY_DIR@/src/mc_control"],
   "ClearRobotModulePath" : true,

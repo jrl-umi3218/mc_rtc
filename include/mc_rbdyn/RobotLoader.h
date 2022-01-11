@@ -156,19 +156,6 @@ public:
     return robot_loader->has_object(name) || aliases.count(name) != 0;
   }
 
-  /** Enable robot's creation sandboxing
-   * \param enable_sandbox If true, robot's create call are sandboxed
-   */
-  static inline void enable_sandboxing(bool enable_sandbox)
-  {
-    std::lock_guard<std::mutex> guard{mtx};
-    enable_sandbox_ = enable_sandbox;
-    if(robot_loader)
-    {
-      robot_loader->enable_sandboxing(enable_sandbox_);
-    }
-  }
-
   static inline void set_verbosity(bool verbose)
   {
     std::lock_guard<std::mutex> guard{mtx};
@@ -204,7 +191,6 @@ private:
   static inline void fill_rm_parameters(mc_rbdyn::RobotModulePtr &) {}
 
   static std::unique_ptr<mc_rtc::ObjectLoader<mc_rbdyn::RobotModule>> robot_loader;
-  static bool enable_sandbox_;
   static bool verbose_;
   static std::mutex mtx;
   static std::map<std::string, std::vector<std::string>> aliases;

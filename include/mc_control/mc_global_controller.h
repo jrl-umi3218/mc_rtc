@@ -792,8 +792,6 @@ public:
 
     inline bool enabled(const std::string & ctrl);
 
-    bool use_sandbox = false;
-
     bool verbose_loader = true;
 
     bool init_attitude_from_sensor = false;

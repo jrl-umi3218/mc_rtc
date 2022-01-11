@@ -4,7 +4,6 @@
 
 set(LOG_ENABLED "false")
 set(LOG_POLICY "non-threaded")
-set(USE_SANDBOX "true")
 set(ENABLED_OBSERVERS "")
 set(RUN_OBSERVERS "")
 set(UPDATE_OBSERVERS "")
@@ -179,7 +178,6 @@ if(NOT DEFINED PYTHON_DEB_ROOT)
   add_test(NAME TestPostureController2ControllerSwitchThreadedLog COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/check_log.py" "TestPostureController2" ${NRITER} "${UTILS_BIN_DIR}")
 endif()
 
-set(USE_SANDBOX "false")
 set(LOG_ENABLED "false")
 set(LOG_POLICY "non-threaded")
 # mc_task test controllers
@@ -307,7 +305,7 @@ set_target_properties(TestPluginController PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/TestPluginController"
 )
 set(TEST_CONTROLLER_NAME "TestPluginController_1_2\", \"TestPluginController_2_3")
-set(TEST_PLUGINS "Plugin0")
+set(TEST_PLUGINS "\"Plugin0\"")
 set(PLUGINS_MODULE_PATH "${CMAKE_CURRENT_BINARY_DIR}/TestPlugin")
 foreach(I RANGE 0 3)
   file(WRITE "${PLUGINS_MODULE_PATH}/etc/Plugin${I}.yaml" "common: Plugin${I}")
@@ -362,7 +360,6 @@ mc_rtc_add_test(NAME TestPluginController COMMAND test_controller_ticker --run_t
 # Test Python bindings
 if(PYTHON_BINDING)
   file(READ "ObserverPipelinesPython.json" OBSERVER_PIPELINES)
-  set(USE_SANDBOX "false")
   set(LOG_ENABLED "true")
   get_python_names(python_names)
   foreach(PYTHON ${python_names})
@@ -401,7 +398,7 @@ if(PYTHON_BINDING)
     else()
       set(NRITER 400)
     endif()
-    add_test(NAME "Test${PYTHON}Controller" COMMAND ${CMAKE_COMMAND} -E env "PYTHONPATH=${PYTHONPATH}${PATH_SEP}$ENV{PYTHONPATH}" ${CMAKE_COMMAND} -E env "${LDPATH_VAR}=${LDPATH}${PATH_SEP}${LDPATH_VAR}=${LDPATH_CONTROL}${PATH_SEP}$ENV{${LDPATH_VAR}}" $<TARGET_FILE:test_controller_ticker> --run_test=RUN -- "${CONFIG_OUT}" ${NRITER} "")
+    add_test(NAME "Test${PYTHON}Controller" COMMAND ${CMAKE_COMMAND} -E env "PYTHONPATH=${PYTHONPATH}${PATH_SEP}$ENV{PYTHONPATH}" ${CMAKE_COMMAND} -E env "${LDPATH_VAR}=${LDPATH}${PATH_SEP}${LDPATH_CONTROL}${PATH_SEP}$ENV{${LDPATH_VAR}}" $<TARGET_FILE:test_controller_ticker> --run_test=RUN -- "${CONFIG_OUT}" ${NRITER} "")
     if(NOT DEFINED PYTHON_DEB_ROOT)
       add_test(NAME Test${PYTHON}Log COMMAND python "${CMAKE_CURRENT_SOURCE_DIR}/check_log.py" "${TEST_CONTROLLER_NAME}" ${NRITER} "${UTILS_BIN_DIR}")
     endif()

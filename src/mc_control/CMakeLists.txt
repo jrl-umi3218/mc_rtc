@@ -27,9 +27,9 @@ macro(add_fsm_controller controller_name controller_SRC controller_HDR)
     set_target_properties(${controller_name} PROPERTIES COMPILE_FLAGS "-DMC_CONTROL_EXPORTS")
     target_link_libraries(${controller_name} PUBLIC mc_control_fsm)
     install(TARGETS ${controller_name}
-      ARCHIVE DESTINATION lib
-      LIBRARY DESTINATION lib
-      RUNTIME DESTINATION bin
+      RUNTIME DESTINATION "${MC_RTC_BINDIR}"
+      LIBRARY DESTINATION "${MC_RTC_LIBDIR}"
+      ARCHIVE DESTINATION "${MC_RTC_LIBDIR}"
     )
 
     add_controller(${controller_name}_controller ${CMAKE_CURRENT_SOURCE_DIR}/lib.cpp "")

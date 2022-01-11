@@ -6,13 +6,20 @@ set(MC_RTC_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../include")
 
 set(VERSION_SCRIPT_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/version-script.lds")
 
+if(UNIX AND NOT EMSCRIPTEN)
+  include(CheckCXXSourceCompiles)
+  check_cxx_compiler_flag("-msse2" SSE2_SUPPORTED)
+endif()
+
 macro(install_mc_rtc_lib_common MC_LIB KWD)
   target_include_directories(${MC_LIB} INTERFACE $<INSTALL_INTERFACE:include> $<BUILD_INTERFACE:${MC_RTC_INCLUDE_DIR}>)
   if(NOT EMSCRIPTEN)
     if(WIN32)
       target_compile_definitions(${MC_LIB} ${KWD} "-DNOMINMAX"  "-D_ENABLE_EXTENDED_ALIGNED_STORAGE")
     else()
-      target_compile_options(${MC_LIB} ${KWD} "-mfpmath=sse" "-msse2")
+      if(SSE2_SUPPORTED)
+        target_compile_options(${MC_LIB} ${KWD} "-mfpmath=sse" "-msse2")
+      endif()
     endif()
   else()
     target_compile_options(${MC_LIB} ${KWD} -matomics -s USE_PTHREADS=1)
@@ -54,9 +61,9 @@ macro(install_mc_rtc_lib MC_LIB)
   add_library(mc_rtc::${MC_LIB} ALIAS ${MC_LIB})
   install(TARGETS ${MC_LIB}
     EXPORT "${TARGETS_EXPORT_NAME}"
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION "${MC_RTC_BINDIR}"
+    LIBRARY DESTINATION "${MC_RTC_LIBDIR}"
+    ARCHIVE DESTINATION "${MC_RTC_LIBDIR}"
   )
 endmacro()
 

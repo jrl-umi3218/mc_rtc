@@ -3,9 +3,9 @@ usr/include/mc_rtc/ros.h
 usr/include/mc_rtc/ros_api.h
 usr/include/mc_tasks/LookAtTFTask.h
 usr/include/mc_tasks/ros_api.h
-usr/lib/libmc_rtc_ros.so*
-usr/lib/libmc_tasks_ros.so*
-usr/lib/cmake/mc_rtc/plugins/*ros*.cmake
-usr/lib/mc_plugins/ROS.so
-usr/lib/mc_plugins/autoload/ROS.yaml
-usr/lib/mc_plugins/etc/ROS.yaml
+usr/lib/*/libmc_rtc_ros.so*
+usr/lib/*/libmc_tasks_ros.so*
+usr/lib/*/cmake/mc_rtc/plugins/*ros*.cmake
+usr/lib/*/mc_plugins/ROS.so
+usr/lib/*/mc_plugins/autoload/ROS.yaml
+usr/lib/*/mc_plugins/etc/ROS.yaml

@@ -15,7 +15,7 @@ namespace fsm
 {
 
 StateFactory::StateFactory(const std::vector<std::string> & paths, const std::vector<std::string> & files, bool verbose)
-: mc_rtc::ObjectLoader<State>("MC_RTC_FSM_STATE", {}, false, verbose)
+: mc_rtc::ObjectLoader<State>("MC_RTC_FSM_STATE", {}, verbose)
 {
   load_libraries(paths);
   load_files(files);
