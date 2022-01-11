@@ -197,6 +197,7 @@ install(
 )
 
 # Extra macros for mc_rtc
+file(RELATIVE_PATH mc_rtc_macros_RELATIVE_PATH "${CMAKE_INSTALL_PREFIX}/${CONFIG_INSTALL_DIR}" "${CMAKE_INSTALL_PREFIX}")
 configure_file(src/mc_rtcMacros.in.cmake "${CMAKE_CURRENT_BINARY_DIR}/src/mc_rtcMacros.cmake" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/src/mc_rtcMacros.cmake"
         DESTINATION "${CONFIG_INSTALL_DIR}")
