@@ -15,7 +15,7 @@ macro(add_fsm_test_state state_name)
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${state_name}
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${state_name}
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${state_name})
-  target_link_libraries(${state_name} PUBLIC mc_control_fsm)
+  target_link_libraries(${state_name} PUBLIC Boost::unit_test_framework Boost::disable_autolinking mc_control_fsm)
 endmacro()
 
 add_fsm_test_state(SingleState)
