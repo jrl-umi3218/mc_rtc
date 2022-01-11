@@ -101,7 +101,7 @@ struct MC_CONTROL_FSM_DLLAPI StateFactory : public mc_rtc::ObjectLoader<State>
 
 private:
   /** Create a state from libraries or factory */
-  StatePtr create(const std::string & state);
+  StatePtr create(const std::string & state, const std::string & final_name);
   /** Implementation for create */
   StatePtr create(const std::string & state,
                   Controller & ctl,
@@ -112,7 +112,7 @@ private:
 
 private:
   std::vector<std::string> states_;
-  using state_factory_fn = std::function<StatePtr(StateFactory &)>;
+  using state_factory_fn = std::function<StatePtr(StateFactory &, const std::string &)>;
   std::map<std::string, state_factory_fn> states_factories_;
 };
 
