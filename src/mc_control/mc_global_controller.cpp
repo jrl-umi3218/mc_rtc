@@ -1117,6 +1117,29 @@ void MCGlobalController::setup_log()
     }
     return qOut;
   });
+  std::vector<double> alphaOut(controller->robot().refJointOrder().size(), 0);
+  controller->logger().addLogEntry("alphaOut", [controller, refToQ, alphaOut]() mutable -> const std::vector<double> & {
+    for(size_t i = 0; i < alphaOut.size(); ++i)
+    {
+      if(refToQ[i] != -1)
+      {
+        alphaOut[i] = controller->robot().mbc().alpha[static_cast<size_t>(refToQ[i])][0];
+      }
+    }
+    return alphaOut;
+  });
+  std::vector<double> alphaDOut(controller->robot().refJointOrder().size(), 0);
+  controller->logger().addLogEntry(
+      "alphaDOut", [controller, refToQ, alphaDOut]() mutable -> const std::vector<double> & {
+        for(size_t i = 0; i < alphaDOut.size(); ++i)
+        {
+          if(refToQ[i] != -1)
+          {
+            alphaDOut[i] = controller->robot().mbc().alphaD[static_cast<size_t>(refToQ[i])][0];
+          }
+        }
+        return alphaDOut;
+      });
   controller->logger().addLogEntry(
       "tauIn", [controller]() -> const std::vector<double> & { return controller->robot().jointTorques(); });
   for(const auto & fs : controller->robot().forceSensors())
