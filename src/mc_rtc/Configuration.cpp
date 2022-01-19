@@ -1027,6 +1027,18 @@ const Configuration ConfigurationArrayIterator::operator*() const
   return conf[i];
 }
 
+ConfigurationFile::ConfigurationFile(const std::string & path) : Configuration(path), path_(path) {}
+
+void ConfigurationFile::reload()
+{
+  static_cast<mc_rtc::Configuration &>(*this) = Configuration(path_);
+}
+
+void ConfigurationFile::save() const
+{
+  save(path_);
+}
+
 } // namespace mc_rtc
 
 std::ostream & operator<<(std::ostream & os, const mc_rtc::Configuration & c)
