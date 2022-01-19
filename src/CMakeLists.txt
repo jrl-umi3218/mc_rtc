@@ -221,6 +221,7 @@ set(mc_rbdyn_HDR
 add_library(mc_rbdyn SHARED ${mc_rbdyn_SRC} ${mc_rbdyn_HDR})
 set_target_properties(mc_rbdyn PROPERTIES COMPILE_FLAGS "-DMC_RBDYN_EXPORTS")
 target_link_libraries(mc_rbdyn PUBLIC mc_rbdyn_urdf::mc_rbdyn_urdf RBDyn::Parsers Tasks::Tasks mc_rtc_loader mc_rtc_utils mc_filter GEOS::geos)
+target_compile_definitions(mc_rbdyn PUBLIC -DUSE_UNSTABLE_GEOS_CPP_API)
 # qhull
 if(MC_RTC_BUILD_STATIC)
   target_link_libraries(mc_rbdyn PRIVATE "-Wl,--no-whole-archive" qhullstatic_r "-Wl,--no-whole-archive" qhullcpp)
