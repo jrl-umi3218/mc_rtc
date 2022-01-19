@@ -14,6 +14,8 @@ cimport sva.sva as sva
 
 cimport rbdyn.c_rbdyn as c_rbdyn
 cimport rbdyn.rbdyn as rbdyn
+cimport rbdyn.parsers.c_parsers as c_rbdyn_parsers
+cimport rbdyn.parsers.parsers as rbdyn_parsers
 
 cimport sch.sch as sch
 cimport tasks.qp.qp
@@ -416,6 +418,22 @@ cdef class RobotModule(object):
     def __get__(self):
       assert(self.impl.get())
       return rbdyn.MultiBodyGraphFromC(deref(self.impl).mbg, copy = False)
+  property _visual:
+    def __get__(self):
+      res = {}
+      for it in deref(self.impl)._visual:
+        res[it.first] = []
+        for v in it.second:
+          res[it.first].append(rbdyn_parsers.VisualFromC(v))
+      return res
+  property _collision:
+    def __get__(self):
+      res = {}
+      for it in deref(self.impl)._collision:
+        res[it.first] = []
+        for c in it.second:
+          res[it.first].append(rbdyn_parsers.VisualFromC(c))
+      return res
 
 cdef RobotModule RobotModuleFromC(const c_mc_rbdyn.RobotModulePtr v):
   cdef RobotModule ret = RobotModule()

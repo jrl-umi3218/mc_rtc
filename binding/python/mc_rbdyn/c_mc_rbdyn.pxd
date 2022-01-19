@@ -5,6 +5,7 @@
 from eigen.c_eigen cimport *
 from sva.c_sva cimport *
 from rbdyn.c_rbdyn cimport *
+from rbdyn.parsers.c_parsers cimport Visual as Visual
 cimport sch.c_sch as sch
 cimport tasks.qp.c_qp
 
@@ -108,6 +109,8 @@ cdef extern from "<mc_rbdyn/RobotModule.h>" namespace "mc_rbdyn":
     vector[Collision] _minimalSelfCollisions
     vector[Collision] _commonSelfCollisions
     const vector[string]& ref_joint_order()
+    map[string, vector[Visual]] _visual
+    map[string, vector[Visual]] _collision
 
     string path
     string name
