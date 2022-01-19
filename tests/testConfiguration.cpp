@@ -1140,3 +1140,34 @@ BOOST_AUTO_TEST_CASE(TestConfigurationYAMLTweaks)
     BOOST_REQUIRE_EQUAL(value, k);
   }
 }
+
+BOOST_AUTO_TEST_CASE(TestFileConfiguration)
+{
+  auto file = sampleConfig2(true, false);
+  {
+    mc_rtc::ConfigurationFile config(file);
+    BOOST_REQUIRE_EQUAL(config.path(), file);
+    BOOST_REQUIRE(config.has("int"));
+    int i = config("int");
+    BOOST_REQUIRE_EQUAL(i, 12);
+    config.remove("int");
+    BOOST_REQUIRE(!config.has("int"));
+    config.reload();
+    BOOST_REQUIRE(config.has("int"));
+    i = config("int");
+    BOOST_REQUIRE_EQUAL(i, 12);
+    config.add("int", 42);
+    config.add("string", "Hello world");
+    config.save();
+  }
+  {
+    mc_rtc::Configuration config(file);
+    BOOST_REQUIRE(config.has("int"));
+    int i = config("int");
+    BOOST_REQUIRE(config.has("string"));
+    std::string s = config("string");
+    BOOST_REQUIRE_EQUAL(s, "Hello world");
+    BOOST_REQUIRE_EQUAL(i, 42);
+  }
+  bfs::remove(file);
+}

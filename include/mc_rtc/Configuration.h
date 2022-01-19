@@ -1355,6 +1355,48 @@ struct MC_RTC_UTILS_DLLAPI ConfigurationArrayIterator
 template<>
 void MC_RTC_UTILS_DLLAPI Configuration::operator()(const std::string & key, std::string & v) const;
 
+/*! \brief \ref Configuration object that keeps track of the file it comes from
+ *
+ * This utility saves you from keeping track of the loaded file, i.e. insteaf of
+ *
+ * ```cpp
+ * std::string path = "...";
+ * mc_rtc::Configuration config(path);
+ * // Work with config
+ * config.save(path);
+ * ```
+ *
+ * You can simply do:
+ *
+ * ```cpp
+ * mc_rtc::Configuration config(path);
+ * // Work with config
+ * config.save();
+ * ```
+ */
+struct MC_RTC_UTILS_DLLAPI ConfigurationFile : public Configuration
+{
+  /** Same as \ref Configuration::Configuration(const std::string &) but the path is saved */
+  ConfigurationFile(const std::string & path);
+
+  /** Reload from the original file, discard unsaved work */
+  void reload();
+
+  /** Save to the original file */
+  void save() const;
+
+  using Configuration::save;
+
+  /** Access the path where this configuration is stored */
+  inline const std::string & path() const noexcept
+  {
+    return path_;
+  }
+
+private:
+  std::string path_;
+};
+
 } // namespace mc_rtc
 
 /*! \brief Ostream operator */
