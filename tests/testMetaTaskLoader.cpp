@@ -686,4 +686,5 @@ BOOST_AUTO_TEST_CASE_TEMPLATE(TestMetaTaskLoader, T, test_types)
   auto conf = tester.json();
   auto loaded = mc_tasks::MetaTaskLoader::load(solver, conf);
   tester.check(ref, loaded);
+  bfs::remove(conf);
 }
