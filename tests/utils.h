@@ -9,6 +9,10 @@
 #include <SpaceVecAlg/SpaceVecAlg>
 #include <Eigen/Core>
 
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/operations.hpp>
+namespace bfs = boost::filesystem;
+
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
@@ -42,47 +46,17 @@ bool configureRobotLoader()
 
 /** This file contains various functions that are useful in unit tests */
 
-#ifdef WIN32
-#  include <Windows.h>
-/** WIN32 port of mkstemp */
-inline int mkstemp(char * out)
-{
-  char tmp_dir[MAX_PATH + 1];
-  GetTempPath(MAX_PATH + 1, tmp_dir);
-  int ret = GetTempFileName(tmp_dir, "mkstemp", 0, out);
-  if(ret == 0)
-  {
-    return -1;
-  }
-  else
-  {
-    return 0;
-  }
-}
-#endif
-
 /** Return a temporary file */
-std::string getTmpFile()
+std::string getTmpFile(const std::string & ext = "")
 {
-#ifndef WIN32
-  char fIn[17] = "/tmp/tConfXXXXXX";
-#else
-  char fIn[MAX_PATH + 1];
-  memset(fIn, 0, MAX_PATH + 1);
-#endif
-  int err = mkstemp(fIn);
-  if(err < 0)
-  {
-    std::cerr << "Failed to create temporary file, abort test" << std::endl;
-    throw std::runtime_error("Failed to create file");
-  }
-  return fIn;
+  bfs::path out = bfs::temp_directory_path() / bfs::unique_path("mcTmpFile-%%%%-%%%%-%%%%-%%%%");
+  return out.string() + ext;
 }
 
 /** Make a temporary configuration file from the content provided */
 std::string makeConfigFile(const std::string & data, const std::string & ext = ".json")
 {
-  std::string fIn = getTmpFile() + ext;
+  std::string fIn = getTmpFile(ext);
   std::ofstream ofs(fIn);
   ofs << data;
   return fIn;

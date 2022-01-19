@@ -8,6 +8,7 @@ import mc_rbdyn
 import eigen
 import sva
 
+import os
 import tempfile
 
 from nose.tools import *
@@ -195,7 +196,9 @@ def test_configuration_reading(config, fromDisk2):
   assert([c[0].to(float), c[1].to(str)] == ref)
 
   if fromDisk2:
-    config.load(sampleConfig2(True))
+    file = sampleConfig2(True)
+    config.load(file)
+    os.remove(file)
   else:
     config.loadData(sampleConfig2(False))
 
@@ -206,11 +209,15 @@ def test_configuration_reading(config, fromDisk2):
   assert([c.to(str) for c in config("stringV")] == ref)
 
 def test_configuration_reading_disk_disk():
-  config = mc_rtc.Configuration(sampleConfig(True))
+  file = sampleConfig(True)
+  config = mc_rtc.Configuration(file)
+  os.remove(file)
   test_configuration_reading(config, True)
 
 def test_configuration_reading_disk_data():
-  config = mc_rtc.Configuration(sampleConfig(True))
+  file = sampleConfig(True)
+  config = mc_rtc.Configuration(file)
+  os.remove(file)
   test_configuration_reading(config, False)
 
 def test_configuration_reading_data_disk():
@@ -277,3 +284,5 @@ def test_configuration_writing():
 
   config_test("dict2")("double_v").save(tmpF)
   assert(mc_rtc.Configuration(tmpF).to([float]) == ref_double_v)
+
+  os.remove(tmpF)

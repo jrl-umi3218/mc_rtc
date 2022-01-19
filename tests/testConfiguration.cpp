@@ -5,6 +5,9 @@
 #include <mc_rtc/Configuration.h>
 #include <mc_rtc/pragma.h>
 
+#include <boost/filesystem.hpp>
+namespace bfs = boost::filesystem;
+
 #include <boost/test/unit_test.hpp>
 
 #include "utils.h"
@@ -636,7 +639,9 @@ void testConfigurationReading(mc_rtc::Configuration & config, bool fromDisk2, bo
   {
     if(fromDisk2)
     {
-      config.load(sampleConfig2(true, json2));
+      std::string path = sampleConfig2(true, json2);
+      config.load(path);
+      bfs::remove(path);
     }
     else
     {
@@ -667,7 +672,10 @@ mc_rtc::Configuration makeConfig(bool fromDisk, bool json)
 {
   if(fromDisk)
   {
-    return mc_rtc::Configuration(sampleConfig(fromDisk, json));
+    auto path = sampleConfig(fromDisk, json);
+    auto out = mc_rtc::Configuration(path);
+    bfs::remove(path);
+    return out;
   }
   else
   {
@@ -799,6 +807,8 @@ BOOST_AUTO_TEST_CASE(TestConfigurationWriting)
 
   mc_rtc::Configuration config_partial(tmpF);
   BOOST_CHECK(config_partial == ref_double_v);
+
+  bfs::remove(tmpF);
 }
 
 BOOST_AUTO_TEST_CASE(TestConfigurationCeption)
