@@ -325,6 +325,8 @@ class PlotYAxis(object):
   def getLimits(self, frame0, frame, idx):
     if not len(self):
       return None
+    if frame0 is None:
+      frame0, frame = self.getFrameRange()
     values = iter(self.data.values())
     value0 = next(values)
     if np.all(np.isnan(value0[idx][frame0:frame])):
@@ -337,10 +339,31 @@ class PlotYAxis(object):
       max_ = max(np.nanmax(data), max_)
     return min_, max_
 
+  def getFrameRange(self):
+    if not len(self):
+      return None, None
+    def getRange(value, i0 = None, iN = None):
+      first = 0
+      if self._3D:
+        check = np.nonzero(np.isfinite(value[0] + value[1] + value[2]))
+      else:
+        check = np.nonzero(np.isfinite(value[0] + value[1]))
+      first = check[0][0]
+      last = check[0][-1]
+      if i0 is None:
+        return first, last
+      return min(i0, first), max(iN, last)
+    values = iter(self.data.values())
+    i0, iN = getRange(next(values))
+    for value in values:
+      i0, iN = getRange(value, i0, iN)
+    return i0, iN
 
   def setLimits(self, xlim = None, ylim = None, frame0 = None, frame = None, zlim = None):
     if not len(self):
       return xlim
+    if frame is None:
+      frame0, frame = self.getFrameRange()
     dataLim = self._axis.dataLim.get_points()
     setMargin = lambda min_, max_: [min_ - 0.01 * (max_-min_), max_ + 0.01 * (max_-min_)]
     def setLimit(lim, idx, set_lim):
