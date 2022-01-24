@@ -205,8 +205,8 @@ void StateFactory::load(const std::string & name, const std::string & base, cons
     mc_rtc::log::info("New state from file: {} (base: {})", name, base);
   }
   states_.push_back(name);
-  states_factories_[name] = [config, base](StateFactory & f) {
-    auto ret = f.create(base);
+  states_factories_[name] = [config, base](StateFactory & f, const std::string & final_name) {
+    auto ret = f.create(base, final_name);
     ret->configure_(config);
     return ret;
   };
@@ -227,13 +227,12 @@ StatePtr StateFactory::create(const std::string & state,
                               bool configure,
                               const mc_rtc::Configuration & config)
 {
-  StatePtr ret = create(state);
+  StatePtr ret = create(state, state);
   if(!ret)
   {
     mc_rtc::log::error("Creation of {} state failed", state);
     return nullptr;
   }
-  ret->name(state);
   if(configure)
   {
     ret->configure_(config);
@@ -242,7 +241,7 @@ StatePtr StateFactory::create(const std::string & state,
   return ret;
 }
 
-StatePtr StateFactory::create(const std::string & state)
+StatePtr StateFactory::create(const std::string & state, const std::string & final_name)
 {
   if(!hasState(state))
   {
@@ -251,11 +250,13 @@ StatePtr StateFactory::create(const std::string & state)
   }
   if(has_object(state))
   {
-    return create_object(state);
+    auto object = create_object(state);
+    object->name(final_name);
+    return object;
   }
   else
   {
-    return states_factories_[state](*this);
+    return states_factories_[state](*this, final_name);
   }
 }
 
@@ -283,7 +284,11 @@ bool StateFactory::load_with_loader(const std::string & state)
     mc_rtc::log::info("New state: {} provided by loader: {}", state, loader);
   }
   states_.push_back(state);
-  states_factories_[state] = [loader, arg](StateFactory & factory) { return factory.create_object(loader, arg); };
+  states_factories_[state] = [loader, arg](StateFactory & factory, const std::string & final_name) {
+    auto object = factory.create_object(loader, arg);
+    object->name(final_name);
+    return object;
+  };
   return true;
 }
 

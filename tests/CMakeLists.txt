@@ -62,7 +62,7 @@ MACRO(mc_rtc_test NAME)
   target_include_directories(${NAME} PRIVATE ${CONFIG_HEADER_INCLUDE_DIR})
   target_include_directories(${NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
   set_target_properties(${NAME} PROPERTIES FOLDER tests/framework)
-  add_test(${NAME} ${NAME})
+  add_test(NAME ${NAME} COMMAND ${NAME})
   # Adding a project configuration file (for MSVC only)
   generate_msvc_dot_user_file(${NAME})
 ENDMACRO()
@@ -90,6 +90,10 @@ mc_rtc_test(testLogger mc_rbdyn)
 add_subdirectory(fsm_states)
 
 mc_rtc_test(testFSMStateFactory mc_control_fsm ConfigureState)
+# Run in ConfigureState dir to find the DLL on Windows
+set_tests_properties(testFSMStateFactory PROPERTIES WORKING_DIRECTORY "$<TARGET_FILE_DIR:ConfigureState>")
+# Generate an MSVC .user file with the right path
+generate_msvc_dot_user_file(testFSMStateFactory "$(SolutionDir)/tests/fsm_states/ConfigureState/$(Configuration)")
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/testFSMStateFactoryConfig.in.h"
                "${CMAKE_CURRENT_BINARY_DIR}/testFSMStateFactoryConfig.cmake.h")
 file(GENERATE

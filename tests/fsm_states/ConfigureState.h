@@ -24,6 +24,8 @@ struct MC_CONTROL_FSM_STATE_DLLAPI ConfigureState : mc_control::fsm::State
     return value_;
   }
 
+  static std::string ExpectedStateName;
+
 protected:
   unsigned int value_ = 0;
 };
