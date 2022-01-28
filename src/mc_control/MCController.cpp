@@ -121,6 +121,10 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
     {
       data.add("surfaces");
     }
+    if(!data.has("joints"))
+    {
+      data.add("joints");
+    }
     data("robots").push(r.name());
     auto bs = data("bodies").array(r.name());
     for(const auto & b : r.mb().bodies())
@@ -128,6 +132,7 @@ mc_rbdyn::Robot & MCController::loadRobot(mc_rbdyn::RobotModulePtr rm,
       bs.push(b.name());
     }
     data("surfaces").add(r.name(), r.availableSurfaces());
+    data("joints").add(r.name(), r.module().ref_joint_order());
     auto name = r.name();
     gui()->addElement({"Robots"}, mc_rtc::gui::Robot(r.name(), [name, this]() -> const mc_rbdyn::Robot & {
                         return this->robot(name);
