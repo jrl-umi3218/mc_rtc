@@ -50,7 +50,7 @@ class GenerateRangeDialog(QtWidgets.QDialog):
     self.setWindowTitle("Generate time-range(s) based on data range")
     self.data = parent.data
     self.selectedData = QtWidgets.QComboBox(self)
-    keys = self.data.keys()
+    keys = list(self.data.keys())
     keys.sort()
     for k in keys:
       self.selectedData.addItem(k)
