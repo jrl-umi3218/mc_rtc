@@ -95,6 +95,7 @@ jobs:
             - path: jbeder/yaml-cpp
               ref: 29dcf92f870ee51cce8d68f8fcfe228942e8dfe1
               options: -DYAML_CPP_BUILD_TESTS:BOOL=OFF
+        windows-options: -DPYTHON_BINDING:BOOL=OFF
         github: |
           - path: gabime/spdlog
             ref: v1.6.1
@@ -120,6 +121,7 @@ jobs:
       with:
         compiler: ${{ matrix.compiler }}
         build-type: ${{ matrix.build-type }}
+        windows-options: -DPYTHON_BINDING:BOOL=OFF
     - name: Build and test (Debug/Fast tests)
       if: matrix.build-type == 'Debug' && github.ref != 'refs/heads/master'
       uses: jrl-umi3218/github-actions/build-cmake-project@master
