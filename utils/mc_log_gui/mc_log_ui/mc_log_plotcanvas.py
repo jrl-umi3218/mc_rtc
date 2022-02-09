@@ -361,7 +361,7 @@ class PlotYAxis(object):
 
   def setLimits(self, xlim = None, ylim = None, frame0 = None, frame = None, zlim = None):
     if not len(self):
-      return xlim
+      return xlim, ylim
     if frame is None:
       frame0, frame = self.getFrameRange()
     dataLim = self._axis.dataLim.get_points()
@@ -379,11 +379,10 @@ class PlotYAxis(object):
         min_, max_ = setMargin(dataLim[0][idx], dataLim[1][idx])
       set_lim([min_, max_])
       return min_, max_
-    setLimit(ylim, 1, self._axis.set_ylim)
     if self._3D:
       frame = -1
       setLimit(zlim, 2, self._axis.set_zlim)
-    return setLimit(xlim, 0, self._x_axis.set_xlim)
+    return setLimit(xlim, 0, self._x_axis.set_xlim), setLimit(ylim, 1, self._axis.set_ylim)
 
   def _label(self, get_label, set_label, l, size):
     if l is None:
@@ -671,10 +670,20 @@ class PlotFigure(object):
         x_limits = [x_limits[0] - range_ * 0.01, x_limits[1] + range_ * 0.01]
 
     if self._3D:
-      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame, zlim = y2_limits)
+      x_limits, _ = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame, zlim = y2_limits)
     else:
-      x_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame)
-      x_limits = self._right().setLimits(x_limits, y2_limits, frame0 = frame0, frame = frame)
+      x_limits, y1_new_limits = self._left().setLimits(x_limits, y1_limits, frame0 = frame0, frame = frame)
+      x_limits, y2_new_limits = self._right().setLimits(x_limits, y2_limits, frame0 = frame0, frame = frame)
+      # Limits are not pre-set and there is actual data on both axis
+      if y1_limits is None and y2_limits is None and y1_new_limits is not None and y2_new_limits is not None:
+        y1_mid = (y1_new_limits[0] + y1_new_limits[1]) / 2
+        y2_mid = (y2_new_limits[0] + y2_new_limits[1]) / 2
+        y1_y2_ratio = y1_mid / y2_mid
+        if y1_y2_ratio > 0.2 and y1_y2_ratio < 5:
+          y_min = min(y1_new_limits[0], y2_new_limits[0])
+          y_max = max(y1_new_limits[1], y2_new_limits[1])
+          self._left()._axis.set_ylim(y_min, y_max)
+          self._right()._axis.set_ylim(y_min, y_max)
 
     self._legend()
     self._drawGrid()
