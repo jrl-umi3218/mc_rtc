@@ -975,30 +975,48 @@ class SimpleAxesDialog(QtWidgets.QDialog):
     applyButton = QtWidgets.QPushButton("Apply", self)
     confirmLayout.addWidget(applyButton)
     applyButton.clicked.connect(self.apply)
+    if not parent._3D:
+      alignButton = QtWidgets.QPushButton("Align left/right", self)
+      confirmLayout.addWidget(alignButton)
+      alignButton.clicked.connect(self.align)
     cancelButton = QtWidgets.QPushButton("Cancel", self)
     confirmLayout.addWidget(cancelButton)
     cancelButton.clicked.connect(self.reject)
     self.layout.addLayout(confirmLayout, 4, 0, 1, 3)
 
+  def get_limits(self):
+    x_limits = [float(self.x_min.text()), float(self.x_max.text())]
+    y1_limits = [float(self.y1_min.text()), float(self.y1_max.text())]
+    y2_limits = [float(self.y2_min.text()), float(self.y2_max.text())]
+    return x_limits, y1_limits, y2_limits
+
   def apply(self):
     changed = False
-    x_limits = [float(self.x_min.text()), float(self.x_max.text())]
+    x_limits, y1_limits, y2_limits = self.get_limits()
     if x_limits != self.x_init:
       changed = True
       self.parent().x_locked.setChecked(True)
       self.parent().x_limits = x_limits
-    y1_limits = [float(self.y1_min.text()), float(self.y1_max.text())]
     if y1_limits != self.y1_init:
       changed = True
       self.parent().y1_locked.setChecked(True)
       self.parent().y1_limits = y1_limits
-    y2_limits = [float(self.y2_min.text()), float(self.y2_max.text())]
     if y2_limits != self.y2_init:
       changed = True
       self.parent().y2_locked.setChecked(True)
       self.parent().y2_limits = y2_limits
     if changed:
       self.parent().draw()
+
+  def align(self):
+    _, y1_limits, y2_limits = self.get_limits()
+    y1_limits[0] = min(y1_limits[0], y2_limits[0])
+    y1_limits[1] = max(y1_limits[1], y2_limits[1])
+    self.parent().y1_locked.setChecked(True)
+    self.parent().y1_limits = y1_limits
+    self.parent().y2_locked.setChecked(True)
+    self.parent().y2_limits = y1_limits
+    self.parent().draw()
 
   def accept(self):
     QtWidgets.QDialog.accept(self)
@@ -1052,25 +1070,30 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     self.genRangeButton.released.connect(lambda: GenerateRangeDialog(self).exec_())
     layout.addWidget(self.genRangeButton)
 
-    self.x_locked = QtWidgets.QPushButton(u"🔒X", self)
+    self.x_locked = QtWidgets.QPushButton(u"Lock X", self)
     self.x_locked.setCheckable(True)
     layout.addWidget(self.x_locked)
     self.x_locked.toggled.connect(self.x_locked_changed)
     self.x_limits = None
 
-    self.y1_locked = QtWidgets.QPushButton(u"🔒 Y1", self)
+    self.y1_locked = QtWidgets.QPushButton(u"Lock Y1", self)
     self.y1_locked.setCheckable(True)
     layout.addWidget(self.y1_locked)
     self.y1_locked.toggled.connect(self.y1_locked_changed)
     self.y1_limits = None
 
-    self.y2_locked = QtWidgets.QPushButton(u"🔒 Y2", self)
+    self.y2_locked = QtWidgets.QPushButton(u"Lock Y2", self)
     if self._3D:
-      self.y2_locked.setText(u"🔒 Z")
+      self.y2_locked.setText(u"Lock Z")
     self.y2_locked.setCheckable(True)
     layout.addWidget(self.y2_locked)
     self.y2_locked.toggled.connect(self.y2_locked_changed)
     self.y2_limits = None
+
+    if not self._3D:
+      self.align_y1_y2 = QtWidgets.QPushButton(u"Align Y1/Y2", self)
+      layout.addWidget(self.align_y1_y2)
+      self.align_y1_y2.released.connect(self.align_y1_y2_released)
 
     self.layout.addLayout(layout)
 
@@ -1280,10 +1303,10 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
 
   def _y_lock_changed(self, name, cbox, get_lim):
     if cbox.isChecked():
-      cbox.setText(u"🔓 {}".format(name))
+      cbox.setText(u"Unlock {}".format(name))
       return get_lim()
     else:
-      cbox.setText(u"🔒{}".format(name))
+      cbox.setText(u"Lock {}".format(name))
       return None
 
   def x_locked_changed(self, status):
@@ -1302,6 +1325,21 @@ class PlotCanvasWithToolbar(PlotFigure, QWidget):
     else:
       self.y2_limits = self._y_lock_changed("Y2", self.y2_locked, self._right().axis().get_ylim)
     if self.y2_limits is None:
+      self.draw()
+
+  def align_y1_y2_released(self):
+    i0, iN = self.getFrameRange()
+    if i0 == iN:
+      return
+    if self.y1_limits is None:
+      self.y1_limits = self._left().getLimits(i0, iN, 1)
+    if self.y2_limits is None:
+      self.y2_limits = self._right().getLimits(i0, iN, 1)
+    if self.y1_limits is not None and self.y2_limits is not None:
+      self.y1_locked.setChecked(True)
+      self.y2_locked.setChecked(True)
+      self.y1_limits = (min(self.y1_limits[0], self.y2_limits[0]), max(self.y1_limits[1], self.y2_limits[1]))
+      self.y2_limits = self.y1_limits
       self.draw()
 
   def show(self):
