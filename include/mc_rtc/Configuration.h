@@ -1369,7 +1369,7 @@ void MC_RTC_UTILS_DLLAPI Configuration::operator()(const std::string & key, std:
  * You can simply do:
  *
  * ```cpp
- * mc_rtc::Configuration config(path);
+ * mc_rtc::ConfigurationFile config(path);
  * // Work with config
  * config.save();
  * ```
