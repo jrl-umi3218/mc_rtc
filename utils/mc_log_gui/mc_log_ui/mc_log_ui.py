@@ -984,7 +984,7 @@ class MCLogUI(QtWidgets.QMainWindow):
         grid2 = grid
       found = False
       extra = { p: getattr(self.getCanvas(), p)() for p in ["tick_fontsize", "legend_fontsize", "labelpad", "top_offset", "bottom_offset", "y1_legend_ncol", "y2_legend_ncol"] }
-      up = UserPlot(title, tab.x_data, y1, y1d, y2, y2d, grid, grid2, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())), extra, type_)
+      up = UserPlot(title, tab.x_data, y1, list(y1d), y2, list(y2d), grid, grid2, style, style2, GraphLabels(title = TextWithFontSize(canvas.title(), canvas.title_fontsize()), x_label = TextWithFontSize(canvas.x_label(), canvas.x_label_fontsize()), y1_label = TextWithFontSize(canvas.y1_label(), canvas.y1_label_fontsize()), y2_label = TextWithFontSize(canvas.y2_label(), canvas.y2_label_fontsize())), extra, type_)
       for i in range(len(self.userPlotList)):
         if self.userPlotList[i].title == title:
           self.userPlotList[i] = up
