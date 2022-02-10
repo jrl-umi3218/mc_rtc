@@ -66,7 +66,7 @@ You can then setup our registry by creating a `vcpkg-configuration.json` file ei
       "repository": "https://github.com/mc-rtc/vcpkg-registry",
       "packages": [ "spacevecalg", "rbdyn", "eigen-qld", "sch-core", "tasks",
                     "mc-rbdyn-urdf", "mc-rtc-data", "eigen-quadprog", "state-observation",
-                    "hpp-spline", "mc-rtc" ]
+                    "hpp-spline", "ndcurves", "mc-rtc" ]
     }
   ]
 }
@@ -95,85 +95,18 @@ You can then either:
 
 {% include show_source.html id="vcpkg-json" lang="json" source=source copy=true %}
 
+### Using mc-rtc-superbuild
 
-### Building from source (script)
+[mc-rtc-superbuild](https://github.com/mc-rtc/mc-rtc-superbuild/) is a CMake-based option to build mc_rtc and its dependencies. It also provides an extension mechanism to that you can build projects that require mc_rtc.
 
-If you are building on Linux or macOS you can skip to the Building section. However, Windows users have to follow extra-instructions.
+Please refer to the project's homepage for usage instructions.
 
-#### Windows pre-requisites
+### Deprecated options
 
-If you are building on Windows, you need to have the following tools installed before starting:
-- [Visual Studio 2019](https://visualstudio.microsoft.com/vs/) - when installing, ensure that you select the Python extension if you wish to build the Python bindings. Furthermore, you should make sure that Visual Studio's `python` and `pip` executables are in your `PATH` environment variable;
-- [Git Bash](https://git-scm.com/download/win) - we will use this tool to clone mc\_rtc and start the installation script;
-- [CMake](https://cmake.org/download/) - install the latest version available;
-- [Boost](https://www.boost.org/) - install the latest binaries avaible from [sourceforce](https://sourceforge.net/projects/boost/files/boost-binaries/). Make sure to select the right version for your computer and Visual Studio version, for example, for Boost 1.72 and Visual Studio 2019 on a 64 bits computer it should be: [boost_1_72_0-msvc-14.2-64.exe](https://sourceforge.net/projects/boost/files/boost-binaries/1.72.0/boost_1_72_0-msvc-14.2-64.exe/download). After installing, make sure to set the environment variable `BOOST_ROOT` to the location where you installed Boost and add Boost DLLs path to your `PATH` environment. For example, if you installed into `C:\local\boost_1_72_0` then `BOOST_ROOT` should be `C:\local\boost_1_72_0` and `%BOOST_ROOT%\lib64-msvc-14.2` should be in your `PATH`;
-- [mingw-w64](https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download) - this will be used to compile Fortran code on Windows. After downloading, you can run the executable. At one point, it will ask you to select several options: Version, Architecture, Threads, Exception and Build revision. For Version you can choose the most recent one (default), for Architecture you should choose x86\_64 if you are building on a 64 bits Windows (likely), for Threads you should choose win32, for Exceptions you should choose seh (default). After installing, you should make sure the `bin` folder of the installation is in your `PATH` environment, e.g. `C:\mingw-w64\x86_64-8.1.0-release-win32-seh-rt_v6-rev0\mingw64\bin`
+The following options are also available but are deprecated:
+- [Building from source using the build_and_install.sh script]({{site.baseurl}}/tutorials/introduction/installation-build-and-install.html)
+- [Building from source (no script)]({{site.baseurl}}/tutorials/introduction/installation-build-no-script.html)
 
-Note: it should also work and compile with Visual Studio 2017. However, only Visual Studio 2019 is regularly tested
+## Getting started
 
-#### Building
-
-1. Clone the [mc\_rtc](https://github.com/jrl-umi3218/mc_rtc) repository;
-2. Go into the mc\_rtc directory and update submodules `git submodule update --init`;
-3. Go into the `utils` directory and locate the file named `build_and_install.sh`;
-4. [optional] Create a custom configuration file `build_and_install_user_config.sh` (overrides the corresponding variables from the default configuration `build_and_install_default_config.sh`)
-```sh
-cp build_and_install_user_config.sample.sh build_and_install_user_config.sh
-```
-5. [optional] Edit the `build_and_install_user_config.sh` and edit the options to your liking: `INSTALL_PREFIX`, `WITH_ROS_SUPPORT`, `ROS_DISTRO`. On Ubuntu, ROS will be installed if you enable ROS support and it was not already installed. Otherwise, you are required to install ROS by yourself before attempting to install mc\_rtc with ROS support;
-5. Run `./build_and_install.sh`
-
-The script will take care of installing the required dependencies, clone all required source codes, build and install them. This may take a while.
-
-If the script fails, please open up an issue on mc\_rtc issue tracker, providing the following information:
-- System (compiler, distribution/OSX version)
-- Script output
-- Any detail you might think relevant
-
-Once the script has succeeded, you are finished. You can jump to the next [section]({{site.baseurl}}/tutorials/introduction/configuration.html).
-
-### Building from source (no script)
-
-Building from sources on other platforms is not well documented at the moment. If you wish to embark on this adventure, the following packages are required to build mc\_rtc:
-- [CMake](https://cmake.org/) >= 3.1
-- [Boost](https://www.boost.org/) >= 1.49
-- [Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page) >= 3.2
-- [tinyxml2](https://github.com/leethomason/tinyxml2)
-- [GEOS](https://trac.osgeo.org/geos) (With C++ bindings)
-- [LTDL](https://www.gnu.org/software/libtool/manual/html_node/Libltdl-interface.html) (Not required for Windows users)
-- [nanomsg](https://github.com/nanomsg/nanomsg)
-- [yaml-cpp](https://github.com/jbeder/yaml-cpp)
-- [spdlog](https://github.com/gabime/spdlog/) >= 1.6.1
-- [hpp-spline](https://github.com/humanoid-path-planner/hpp-spline)
-- [SpaceVecAlg](https://github.com/jrl-umi3218/SpaceVecAlg)
-- [RBDyn](https://github.com/jrl-umi3218/RBDyn)
-- [eigen-qld](https://github.com/jrl-umi3218/eigen-qld)
-- [eigen-quadprog](https://github.com/jrl-umi3218/eigen-quadprog)
-- [eigen-lssol](https://gite.lirmm.fr/multi-contact/eigen-lssol) (Optional)
-- [sch-core](https://github.com/jrl-umi3218/sch-core)
-- [Tasks](https://github.com/jrl-umi3218/Tasks)
-- [mc_rtc_data](https://github.com/jrl-umi3218/mc_rtc_data)
-- [state-observation](https://github.com/jrl-umi3218/state-observation)
-
-mc\_rtc also has a ROS plugin that enables automated robot's status publication as ROS topics and facilitate the integration with ROS tools (e.g. RViZ), to build this you will need:
-
- * [mc_rtc_msgs](https://github.com/jrl-umi3218/mc_rtc_msgs)
-
-If you wish to get Python bindings you will also need the following:
- * [Cython](http://cython.org/) >= 0.2
- * [python-pip]()
- * [python-numpy]()
- * [python-nose]()
- * [python-coverage]()
- * [Eigen3ToPython](https://github.com/jrl-umi3218/Eigen3ToPython)
- * [sch-core-python](https://github.com/jrl-umi3218/sch-core-python)
-
-Additional Python libraries are required to run mc\_rtc tools:
- * [python-git]() (pip name: `GitPython`)
- * [python-pyqt5]()
-
-The following packages are not required but bring additionnal features:
-- [ROS](http://www.ros.org/)
-- [mc\_rtc\_ros](https://github.com/jrl-umi3218/mc_rtc_ros)
-
-If `roscpp` is available during build then `tf2_ros` and `sensor_msgs` are also required. This will add some integration between the `ROS` framework and `mc_rtc` (e.g. robot's state publication) and allow controllers to use ROS functionnalities (provides a `ros::NodeHandle` instance that can be used anywhere in `mc_rtc`).
+Once mc_rtc has been installed, you can jump to the next [section]({{site.baseurl}}/tutorials/introduction/configuration.html).
