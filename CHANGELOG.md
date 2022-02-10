@@ -2,6 +2,53 @@
 
 ## [Unreleased]
 
+## [1.9.0] - 2022-02-10
+
+### New build tool
+
+- Introduce [mc-rtc-superbuild](https://github.com/mc-rtc/mc-rtc-superbuild) a new tool to replaced the build_and_install script
+  - See #221 for a list of benefits of mc-rtc-superbuild over build_and_install
+  - build_and_install will be maintained and should keep working for a while but new users are advised to use the superbuild tool instead
+  - You can start using mc-rtc-superbuild if you are using build_and_install already but this will require a full rebuild
+
+### Changes
+
+- hpp-spline has been dropped in favor of the actively maintained [ndcurves](https://github.com/loco-3d/ndcurves) (#210)
+- Ubuntu Xenial (16.04) is no longer actively supported
+- [mc_control] Allow plugin loaded at the controller level (#198)
+  - See the global plugins tutorial for caveats and details regarding configuration
+- [mc_control_fsm] A state final name is now correctly state when it enters `::configure` for the first time (#218)
+- [mc_log_ui] Autoscaling has been improved (#222)
+- [mc_rbdyn/mc_control_fsm] Contacts now compare equal regardless of the robots' order (i.e. `r1::s1/r2::s2 == r2::s2/r1::s1`) (#202)
+- [mc_rtc] YAML improvments (#208/#213)
+  - Allow to use the merge key from YAML 1.1
+  - Disable y/n and yes/no bool conversion
+- [mc_rtc] ObjectLoader sandboxing has been removed (#217)
+
+### Fixes
+
+- [build_and_install] Fix permissions issues on ninja logs
+- [cmake] Handle building on aarch64 (#217)
+- [cmake] Honor GNUInstallDirs (#217)
+- [mc_control] Fix crash on controller restart/reset (#206)
+- [mc_control] Fix issues with `removeRobot` (#207)
+- [mc_log_ui] Fix many functionalities when running in Python 3 (#222)
+- [mc_rbdyn] Fix stabilizer configuration loading (#206)
+- [mc_solver] Automatically swap contact order if the first robot has no dof (#202)
+- [mc_tasks] Correct name setting for `EndEffectorTask`
+
+### Added
+
+- [GUI] Forms can now have dynamic elements (#197)
+- [GUI] New plots can be added to a plot after it has been added (#197)
+- [mc_bin_utils/mc_log_ui] It is now possible to extract some keys from a log (#209)
+- [mc_control] Added a multi-robot aware init method for `mc_control::MCGlobalController` (#206)
+- [mc_control] Added a reset method for `mc_control::MCGlobalController` (#206)
+- [mc_control] alphaOut (command velocity) and alphaDOut (command acceleration) are now logged by default (#222)
+- [mc_control_fsm] API have been added to allow writing FSM tools (#222)
+- [mc_rtc] Added `mc_rtc::ConfigurationFile` to simplify save/reload of configuration files (#222)
+- [mc_tasks] MetaTask now has an `iterInSolver` method (#200)
+
 ## [1.8.2] - 2021-10-15
 
 ### New package
@@ -344,7 +391,8 @@
 
 Initial release
 
-[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.8.2...HEAD
+[Unreleased]: https://github.com/jrl-umi3218/mc_rtc/compare/v1.9.0...HEAD
+[1.9.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.9.0
 [1.8.2]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.2
 [1.8.1]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.1
 [1.8.0]: https://github.com/jrl-umi3218/mc_rtc/releases/tag/v1.8.0
