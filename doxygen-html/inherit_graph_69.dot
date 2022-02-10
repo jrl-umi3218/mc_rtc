@@ -4,7 +4,11 @@ digraph "Graphical Class Hierarchy"
   edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
   node [fontname="Helvetica",fontsize="10",shape=record];
   rankdir="LR";
-  Node169 [label="map",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node169 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node0 [label="mc_rbdyn::VisualMap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1VisualMap.html"];
+  Node0 [label="mc_rbdyn::Surface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1Surface.html"];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="mc_rbdyn::CylindricalSurface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1CylindricalSurface.html"];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="mc_rbdyn::GripperSurface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1GripperSurface.html"];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="mc_rbdyn::PlanarSurface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structmc__rbdyn_1_1PlanarSurface.html"];
 }

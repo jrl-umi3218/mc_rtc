@@ -5,6 +5,7 @@ var namespacemc__rtc =
     [ "log", "namespacemc__rtc_1_1log.html", "namespacemc__rtc_1_1log" ],
     [ "Configuration", "structmc__rtc_1_1Configuration.html", "structmc__rtc_1_1Configuration" ],
     [ "ConfigurationArrayIterator", "structmc__rtc_1_1ConfigurationArrayIterator.html", "structmc__rtc_1_1ConfigurationArrayIterator" ],
+    [ "ConfigurationFile", "structmc__rtc_1_1ConfigurationFile.html", "structmc__rtc_1_1ConfigurationFile" ],
     [ "ConfigurationLoader", "structmc__rtc_1_1ConfigurationLoader.html", null ],
     [ "ConfigurationLoader< mc_control::fsm::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html", null ],
     [ "ConfigurationLoader< mc_rbdyn::CompoundJointConstraintDescription >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html", null ],

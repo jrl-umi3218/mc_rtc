@@ -26,6 +26,7 @@ var searchData=
   ['comtask',['CoMTask',['../structmc__tasks_1_1CoMTask.html',1,'mc_tasks']]],
   ['configuration',['Configuration',['../structmc__rtc_1_1Configuration.html',1,'mc_rtc']]],
   ['configurationarrayiterator',['ConfigurationArrayIterator',['../structmc__rtc_1_1ConfigurationArrayIterator.html',1,'mc_rtc']]],
+  ['configurationfile',['ConfigurationFile',['../structmc__rtc_1_1ConfigurationFile.html',1,'mc_rtc']]],
   ['configurationloader',['ConfigurationLoader',['../structmc__rtc_1_1ConfigurationLoader.html',1,'mc_rtc']]],
   ['configurationloader_3c_20mc_5fcontrol_3a_3afsm_3a_3acontact_20_3e',['ConfigurationLoader&lt; mc_control::fsm::Contact &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html',1,'mc_rtc']]],
   ['configurationloader_3c_20mc_5frbdyn_3a_3acompoundjointconstraintdescription_20_3e',['ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;',['../structmc__rtc_1_1ConfigurationLoader_3_01mc__rbdyn_1_1CompoundJointConstraintDescription_01_4.html',1,'mc_rtc']]],

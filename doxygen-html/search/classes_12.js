@@ -21,6 +21,7 @@ var searchData=
   ['stabilizertask',['StabilizerTask',['../structmc__tasks_1_1lipm__stabilizer_1_1StabilizerTask.html',1,'mc_tasks::lipm_stabilizer']]],
   ['state',['State',['../structmc__control_1_1fsm_1_1State.html',1,'mc_control::fsm']]],
   ['statebuilder',['StateBuilder',['../structmc__rtc_1_1gui_1_1StateBuilder.html',1,'mc_rtc::gui']]],
+  ['stateconfiguration',['StateConfiguration',['../structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html',1,'mc_control::fsm::StateFactory']]],
   ['statefactory',['StateFactory',['../structmc__control_1_1fsm_1_1StateFactory.html',1,'mc_control::fsm']]],
   ['statictableimpl',['StaticTableImpl',['../structmc__rtc_1_1gui_1_1details_1_1StaticTableImpl.html',1,'mc_rtc::gui::details']]],
   ['stationaryoffset',['StationaryOffset',['../structmc__filter_1_1StationaryOffset.html',1,'mc_filter']]],

@@ -31,7 +31,9 @@ var hierarchy =
     [ "mc_rtc::gui::Color", "structmc__rtc_1_1gui_1_1Color.html", null ],
     [ "mc_control::CompletionCriteria", "structmc__control_1_1CompletionCriteria.html", null ],
     [ "mc_rbdyn::CompoundJointConstraintDescription", "structmc__rbdyn_1_1CompoundJointConstraintDescription.html", null ],
-    [ "mc_rtc::Configuration", "structmc__rtc_1_1Configuration.html", null ],
+    [ "mc_rtc::Configuration", "structmc__rtc_1_1Configuration.html", [
+      [ "mc_rtc::ConfigurationFile", "structmc__rtc_1_1ConfigurationFile.html", null ]
+    ] ],
     [ "mc_rtc::ConfigurationArrayIterator", "structmc__rtc_1_1ConfigurationArrayIterator.html", null ],
     [ "mc_rtc::ConfigurationLoader< T >", "structmc__rtc_1_1ConfigurationLoader.html", null ],
     [ "mc_rtc::ConfigurationLoader< mc_control::fsm::Contact >", "structmc__rtc_1_1ConfigurationLoader_3_01mc__control_1_1fsm_1_1Contact_01_4.html", null ],
@@ -428,6 +430,7 @@ var hierarchy =
       [ "mc_control::fsm::StabilizerStandingState", "structmc__control_1_1fsm_1_1StabilizerStandingState.html", null ]
     ] ],
     [ "mc_rtc::gui::StateBuilder", "structmc__rtc_1_1gui_1_1StateBuilder.html", null ],
+    [ "mc_control::fsm::StateFactory::StateConfiguration", "structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html", null ],
     [ "mc_filter::StationaryOffset< VectorT >", "structmc__filter_1_1StationaryOffset.html", null ],
     [ "mc_filter::StationaryOffset< Eigen::Vector3d >", "structmc__filter_1_1StationaryOffset.html", null ],
     [ "mc_rbdyn::Surface", "structmc__rbdyn_1_1Surface.html", [

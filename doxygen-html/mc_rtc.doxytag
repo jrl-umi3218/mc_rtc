@@ -630,6 +630,7 @@
     <class kind="struct">mc_rtc::Configuration</class>
     <class kind="struct">mc_rtc::Configuration::Exception</class>
     <class kind="struct">mc_rtc::ConfigurationArrayIterator</class>
+    <class kind="struct">mc_rtc::ConfigurationFile</class>
     <class kind="struct">fmt::formatter&lt; mc_rtc::Configuration &gt;</class>
     <namespace>mc_rtc</namespace>
     <namespace>mc_rtc::internal</namespace>
@@ -781,6 +782,7 @@
     <includes id="State_8h" name="State.h" local="no" imported="no">mc_control/fsm/State.h</includes>
     <includes id="loader_8h" name="loader.h" local="no" imported="no">mc_rtc/loader.h</includes>
     <class kind="class">mc_control::fsm::StateFactory</class>
+    <class kind="struct">mc_control::fsm::StateFactory::StateConfiguration</class>
     <namespace>mc_rtc</namespace>
     <namespace>mc_control</namespace>
     <namespace>mc_control::fsm</namespace>
@@ -912,7 +914,7 @@
     <name>Transition.h</name>
     <path>/home/runner/work/mc_rtc/mc_rtc/include/mc_control/fsm/</path>
     <filename>Transition_8h</filename>
-    <includes id="mc__control_2api_8h" name="api.h" local="no" imported="no">mc_control/api.h</includes>
+    <includes id="mc__control_2fsm_2api_8h" name="api.h" local="no" imported="no">mc_control/fsm/api.h</includes>
     <class kind="class">mc_control::fsm::Transition</class>
     <namespace>mc_control</namespace>
     <namespace>mc_control::fsm</namespace>
@@ -923,7 +925,6 @@
     <filename>TransitionMap_8h</filename>
     <includes id="StateFactory_8h" name="StateFactory.h" local="no" imported="no">mc_control/fsm/StateFactory.h</includes>
     <includes id="Transition_8h" name="Transition.h" local="no" imported="no">mc_control/fsm/Transition.h</includes>
-    <includes id="mc__control_2fsm_2api_8h" name="api.h" local="no" imported="no">mc_control/fsm/api.h</includes>
     <class kind="class">mc_control::fsm::TransitionMap</class>
     <namespace>mc_control</namespace>
     <namespace>mc_control::fsm</namespace>
@@ -8720,6 +8721,39 @@
       <anchorfile>structmc__rtc_1_1ConfigurationArrayIterator.html</anchorfile>
       <anchor>a27c3d2c9bb03ebd34bc1055b134da339</anchor>
       <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>mc_rtc::ConfigurationFile</name>
+    <filename>structmc__rtc_1_1ConfigurationFile.html</filename>
+    <base>mc_rtc::Configuration</base>
+    <member kind="function">
+      <type></type>
+      <name>ConfigurationFile</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationFile.html</anchorfile>
+      <anchor>a0b946bd23086a372ba34e451f3a873f6</anchor>
+      <arglist>(const std::string &amp;path)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>reload</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationFile.html</anchorfile>
+      <anchor>a027caf22014bccdc7f2aeaa24b497076</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>save</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationFile.html</anchorfile>
+      <anchor>ab9f446d0840427276a387da69e79bad0</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>const std::string &amp;</type>
+      <name>path</name>
+      <anchorfile>structmc__rtc_1_1ConfigurationFile.html</anchorfile>
+      <anchor>a6a71afd9f666acaf1f3407ce9c534a31</anchor>
+      <arglist>() const noexcept</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -20937,6 +20971,20 @@
       <anchor>a92a3be690dc783cb7f77f7fd39ec1cdf</anchor>
       <arglist>(std::string &amp;msg) override</arglist>
     </member>
+    <member kind="function">
+      <type>std::vector&lt; std::vector&lt; std::string &gt; &gt;</type>
+      <name>transitions</name>
+      <anchorfile>structmc__control_1_1fsm_1_1MetaState.html</anchorfile>
+      <anchor>a497aed9c6a7dfc6477ab04ba76ada7c2</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>std::map&lt; std::string, mc_rtc::Configuration &gt;</type>
+      <name>configs</name>
+      <anchorfile>structmc__control_1_1fsm_1_1MetaState.html</anchorfile>
+      <anchor>ade4cc463d4a5a20bbd32b642e81831f2</anchor>
+      <arglist>() const</arglist>
+    </member>
     <member kind="variable" protection="protected">
       <type>mc_rtc::Configuration</type>
       <name>config_</name>
@@ -22414,6 +22462,20 @@
       <anchorfile>structmc__control_1_1fsm_1_1ParallelState.html</anchorfile>
       <anchor>aaede3f89f6f75af9446e21c7f8bf499c</anchor>
       <arglist>(std::string &amp;msg, std::string &amp;out) override</arglist>
+    </member>
+    <member kind="function">
+      <type>std::vector&lt; std::string &gt;</type>
+      <name>states</name>
+      <anchorfile>structmc__control_1_1fsm_1_1ParallelState.html</anchorfile>
+      <anchor>a70d2ba1fa9b14c6dc926b90d52eff1c6</anchor>
+      <arglist>() const</arglist>
+    </member>
+    <member kind="function">
+      <type>std::map&lt; std::string, mc_rtc::Configuration &gt;</type>
+      <name>configs</name>
+      <anchorfile>structmc__control_1_1fsm_1_1ParallelState.html</anchorfile>
+      <anchor>a34b8736a576a150109c9bbd8234ca8d7</anchor>
+      <arglist>() const</arglist>
     </member>
     <member kind="variable" protection="protected">
       <type>mc_rtc::Configuration</type>
@@ -32683,10 +32745,36 @@
       <arglist></arglist>
     </member>
   </compound>
+  <compound kind="struct">
+    <name>mc_control::fsm::StateFactory::StateConfiguration</name>
+    <filename>structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html</filename>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>base</name>
+      <anchorfile>structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html</anchorfile>
+      <anchor>a879847502b21f11a0827f06e90776ba6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>std::string</type>
+      <name>arg</name>
+      <anchorfile>structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html</anchorfile>
+      <anchor>ab5bac5f10b2f603cb0354d0fcaef22c9</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>mc_rtc::Configuration</type>
+      <name>config</name>
+      <anchorfile>structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html</anchorfile>
+      <anchor>a7abaa51726b1ebe2a43e495e98efb7ac</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
   <compound kind="class">
     <name>mc_control::fsm::StateFactory</name>
     <filename>structmc__control_1_1fsm_1_1StateFactory.html</filename>
     <base>ObjectLoader&lt; State &gt;</base>
+    <class kind="struct">mc_control::fsm::StateFactory::StateConfiguration</class>
     <member kind="function">
       <type></type>
       <name>StateFactory</name>
@@ -32737,6 +32825,20 @@
       <arglist>(const std::string &amp;state, Controller &amp;ctl)</arglist>
     </member>
     <member kind="function">
+      <type>StatePtr</type>
+      <name>create</name>
+      <anchorfile>structmc__control_1_1fsm_1_1StateFactory.html</anchorfile>
+      <anchor>aeaf208a61f76ffd7aa7ea2023734326b</anchor>
+      <arglist>(const std::string &amp;state, const mc_rtc::Configuration &amp;config)</arglist>
+    </member>
+    <member kind="function">
+      <type>StatePtr</type>
+      <name>create</name>
+      <anchorfile>structmc__control_1_1fsm_1_1StateFactory.html</anchorfile>
+      <anchor>a40cbcb48b1c4a3efd06b51cb12a5c363</anchor>
+      <arglist>(const std::string &amp;state)</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>hasState</name>
       <anchorfile>structmc__control_1_1fsm_1_1StateFactory.html</anchorfile>
@@ -32763,6 +32865,13 @@
       <anchorfile>structmc__control_1_1fsm_1_1StateFactory.html</anchorfile>
       <anchor>a51a55b568355289e40c8a77222f533f3</anchor>
       <arglist>(const std::string &amp;name, std::function&lt; RetT *(const Args &amp;...)&gt; callback)</arglist>
+    </member>
+    <member kind="function">
+      <type>const StateConfiguration &amp;</type>
+      <name>configuration</name>
+      <anchorfile>structmc__control_1_1fsm_1_1StateFactory.html</anchorfile>
+      <anchor>a9fb2412a3db4e1dd2e333864bcfc73bc</anchor>
+      <arglist>(const std::string &amp;state) const</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -38042,6 +38151,7 @@
     <namespace>mc_rtc::log</namespace>
     <class kind="struct">mc_rtc::Configuration</class>
     <class kind="struct">mc_rtc::ConfigurationArrayIterator</class>
+    <class kind="struct">mc_rtc::ConfigurationFile</class>
     <class kind="struct">mc_rtc::ConfigurationLoader</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_control::fsm::Contact &gt;</class>
     <class kind="struct">mc_rtc::ConfigurationLoader&lt; mc_rbdyn::CompoundJointConstraintDescription &gt;</class>

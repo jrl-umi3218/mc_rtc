@@ -101,7 +101,7 @@ var searchData=
   ['transition_2eh',['Transition.h',['../Transition_8h.html',1,'']]],
   ['transitionmap',['TransitionMap',['../structmc__control_1_1fsm_1_1TransitionMap.html',1,'mc_control::fsm']]],
   ['transitionmap_2eh',['TransitionMap.h',['../TransitionMap_8h.html',1,'']]],
-  ['transitions',['transitions',['../structmc__control_1_1fsm_1_1TransitionMap.html#a604c23080c7e278d843ec3d0452ee599',1,'mc_control::fsm::TransitionMap']]],
+  ['transitions',['transitions',['../structmc__control_1_1fsm_1_1MetaState.html#a497aed9c6a7dfc6477ab04ba76ada7c2',1,'mc_control::fsm::MetaState::transitions()'],['../structmc__control_1_1fsm_1_1TransitionMap.html#a604c23080c7e278d843ec3d0452ee599',1,'mc_control::fsm::TransitionMap::transitions()']]],
   ['tu',['tu',['../structmc__rbdyn_1_1Robot.html#a74f8c3970a3aff460fc5abad5b493eb6',1,'mc_rbdyn::Robot::tu() const'],['../structmc__rbdyn_1_1Robot.html#afe854537bd0f1fb8ab64ce91f5f6105d',1,'mc_rbdyn::Robot::tu()']]],
   ['tuple_5fpair_5ft',['tuple_pair_t',['../structmc__rbdyn_1_1PolygonInterpolator.html#adda7bb6a81b142d132c7772fe7b1672c',1,'mc_rbdyn::PolygonInterpolator']]],
   ['tuple_5fpairs',['tuple_pairs',['../structmc__rbdyn_1_1PolygonInterpolator.html#a8c6e2f6234920055ea5c7ab8e32434ee',1,'mc_rbdyn::PolygonInterpolator']]],

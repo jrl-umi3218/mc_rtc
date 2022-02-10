@@ -36,6 +36,10 @@ digraph "include/mc_control/api.h"
   Node44 [label="include/mc_tasks/Surface\lTransformTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$SurfaceTransformTask_8h.html"];
   Node36 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node49 [label="include/mc_tasks/SplineTrajectory\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$SplineTrajectoryTask_8h.html"];
+  Node36 -> Node52 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node52 [label="include/mc_tasks/GazeTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$GazeTask_8h.html"];
+  Node36 -> Node53 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node53 [label="include/mc_tasks/VectorOrientation\lTask.h",height=0.2,width=0.4,color="red", fillcolor="white", style="filled",URL="$VectorOrientationTask_8h.html"];
   Node9 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node9 -> Node59 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node59 [label="include/mc_tasks/AddRemove\lContactTask.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$AddRemoveContactTask_8h.html"];
@@ -117,11 +121,6 @@ digraph "include/mc_control/api.h"
   Node23 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node23 -> Node24 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node24 [label="include/mc_control\l/fsm/states/Meta.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Meta_8h.html"];
-  Node1 -> Node83 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node83 [label="include/mc_control\l/fsm/Transition.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$Transition_8h.html"];
-  Node83 -> Node26 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node26 [label="include/mc_control\l/fsm/TransitionMap.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$TransitionMap_8h.html"];
-  Node26 -> Node23 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node21 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node1 -> Node78 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];

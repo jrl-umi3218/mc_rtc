@@ -70,6 +70,7 @@ $(document).ready(function(){initNavTree('structmc__control_1_1fsm_1_1StateFacto
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="structmc__control_1_1fsm_1_1StateFactory-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -93,6 +94,11 @@ Collaboration diagram for mc_control::fsm::StateFactory:</div>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html">StateConfiguration</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8617d64660e701cd57508cff626c673b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1StateFactory.html#a8617d64660e701cd57508cff626c673b">StateFactory</a> (const std::vector&lt; std::string &gt; &amp;paths, const std::vector&lt; std::string &gt; &amp;files, bool <a class="el" href="structmc__rtc_1_1ObjectLoader.html#ac2b5e003d3ccd4958a32a83f1981754c">verbose</a>)</td></tr>
@@ -109,6 +115,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a482d7fc90e58abcb0ab8390e54be3ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd6942d6b9061d9c1c7de1b6a7ff33d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemc__control_1_1fsm.html#a4c42d903de4c4a1e5ad50c37bc2d547a">StatePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1StateFactory.html#abd6942d6b9061d9c1c7de1b6a7ff33d2">create</a> (const std::string &amp;state, <a class="el" href="structmc__control_1_1fsm_1_1Controller.html">Controller</a> &amp;ctl)</td></tr>
 <tr class="separator:abd6942d6b9061d9c1c7de1b6a7ff33d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaf208a61f76ffd7aa7ea2023734326b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemc__control_1_1fsm.html#a4c42d903de4c4a1e5ad50c37bc2d547a">StatePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1StateFactory.html#aeaf208a61f76ffd7aa7ea2023734326b">create</a> (const std::string &amp;state, const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;config)</td></tr>
+<tr class="separator:aeaf208a61f76ffd7aa7ea2023734326b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40cbcb48b1c4a3efd06b51cb12a5c363"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemc__control_1_1fsm.html#a4c42d903de4c4a1e5ad50c37bc2d547a">StatePtr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1StateFactory.html#a40cbcb48b1c4a3efd06b51cb12a5c363">create</a> (const std::string &amp;state)</td></tr>
+<tr class="separator:a40cbcb48b1c4a3efd06b51cb12a5c363"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1302d798bbbbe79d0d5c9df9a1cdc506"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1StateFactory.html#a1302d798bbbbe79d0d5c9df9a1cdc506">hasState</a> (const std::string &amp;state) const</td></tr>
 <tr class="separator:a1302d798bbbbe79d0d5c9df9a1cdc506"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f07722fb8e17b4711973ff782face63"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1StateFactory.html#a5f07722fb8e17b4711973ff782face63">states</a> () const</td></tr>
@@ -118,6 +128,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a51a55b568355289e40c8a77222f533f3"><td class="memTemplParams" colspan="2">template&lt;typename RetT , typename... Args&gt; </td></tr>
 <tr class="memitem:a51a55b568355289e40c8a77222f533f3"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1StateFactory.html#a51a55b568355289e40c8a77222f533f3">register_object</a> (const std::string &amp;name, std::function&lt; RetT *(const Args &amp;...)&gt; callback)</td></tr>
 <tr class="separator:a51a55b568355289e40c8a77222f533f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fb2412a3db4e1dd2e333864bcfc73bc"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html">StateConfiguration</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__control_1_1fsm_1_1StateFactory.html#a9fb2412a3db4e1dd2e333864bcfc73bc">configuration</a> (const std::string &amp;state) const</td></tr>
+<tr class="separator:a9fb2412a3db4e1dd2e333864bcfc73bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_structmc__rtc_1_1ObjectLoader"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_structmc__rtc_1_1ObjectLoader')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="structmc__rtc_1_1ObjectLoader.html">mc_rtc::ObjectLoader&lt; State &gt;</a></td></tr>
 <tr class="memitem:aeaf25529680235b9456cd013ee2596b2 inherit pub_methods_structmc__rtc_1_1ObjectLoader"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmc__rtc_1_1ObjectLoader.html#aeaf25529680235b9456cd013ee2596b2">ObjectLoader</a> (const std::string &amp;<a class="el" href="structmc__rtc_1_1ObjectLoader.html#aab1c409baa5b97ec1e5b58242c572fbe">class_name</a>, const std::vector&lt; std::string &gt; &amp;paths, bool <a class="el" href="structmc__rtc_1_1ObjectLoader.html#ac2b5e003d3ccd4958a32a83f1981754c">verbose</a>, <a class="el" href="structmc__rtc_1_1Loader.html#ae88a2f28e5fa458257316949fd08a539">Loader::callback_t</a> cb=Loader::default_cb)</td></tr>
 <tr class="separator:aeaf25529680235b9456cd013ee2596b2 inherit pub_methods_structmc__rtc_1_1ObjectLoader"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,8 +224,35 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9fb2412a3db4e1dd2e333864bcfc73bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fb2412a3db4e1dd2e333864bcfc73bc">&#9670;&nbsp;</a></span>configuration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html">StateConfiguration</a>&amp; mc_control::fsm::StateFactory::configuration </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the configuration of a specific state </p>
+
+</div>
+</div>
 <a id="a482d7fc90e58abcb0ab8390e54be3ed8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a482d7fc90e58abcb0ab8390e54be3ed8">&#9670;&nbsp;</a></span>create() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a482d7fc90e58abcb0ab8390e54be3ed8">&#9670;&nbsp;</a></span>create() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -249,7 +288,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <a id="abd6942d6b9061d9c1c7de1b6a7ff33d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd6942d6b9061d9c1c7de1b6a7ff33d2">&#9670;&nbsp;</a></span>create() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abd6942d6b9061d9c1c7de1b6a7ff33d2">&#9670;&nbsp;</a></span>create() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -274,6 +313,56 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Creates a state without extra configuration </p>
+
+</div>
+</div>
+<a id="aeaf208a61f76ffd7aa7ea2023734326b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaf208a61f76ffd7aa7ea2023734326b">&#9670;&nbsp;</a></span>create() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacemc__control_1_1fsm.html#a4c42d903de4c4a1e5ad50c37bc2d547a">StatePtr</a> mc_control::fsm::StateFactory::create </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>state</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmc__rtc_1_1Configuration.html">mc_rtc::Configuration</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a and configures a state but does not start it</p>
+<p>This is meant for tools working with the FSM </p>
+
+</div>
+</div>
+<a id="a40cbcb48b1c4a3efd06b51cb12a5c363"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40cbcb48b1c4a3efd06b51cb12a5c363">&#9670;&nbsp;</a></span>create() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacemc__control_1_1fsm.html#a4c42d903de4c4a1e5ad50c37bc2d547a">StatePtr</a> mc_control::fsm::StateFactory::create </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>state</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Creates a state but does not start it</p>
+<p>This is meant for tools working with the FSM </p>
 
 </div>
 </div>

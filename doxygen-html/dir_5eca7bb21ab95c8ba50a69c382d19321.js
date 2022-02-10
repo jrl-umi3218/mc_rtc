@@ -11,7 +11,8 @@ var dir_5eca7bb21ab95c8ba50a69c382d19321 =
     ] ],
     [ "State.h", "State_8h.html", "State_8h" ],
     [ "StateFactory.h", "StateFactory_8h.html", [
-      [ "StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", "structmc__control_1_1fsm_1_1StateFactory" ]
+      [ "StateFactory", "structmc__control_1_1fsm_1_1StateFactory.html", "structmc__control_1_1fsm_1_1StateFactory" ],
+      [ "StateConfiguration", "structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration.html", "structmc__control_1_1fsm_1_1StateFactory_1_1StateConfiguration" ]
     ] ],
     [ "Transition.h", "Transition_8h.html", [
       [ "Transition", "structmc__control_1_1fsm_1_1Transition.html", "structmc__control_1_1fsm_1_1Transition" ]

@@ -9,6 +9,7 @@ var mc__rtc_2Configuration_8h =
     [ "Configuration", "structmc__rtc_1_1Configuration.html", "structmc__rtc_1_1Configuration" ],
     [ "Exception", "structmc__rtc_1_1Configuration_1_1Exception.html", "structmc__rtc_1_1Configuration_1_1Exception" ],
     [ "ConfigurationArrayIterator", "structmc__rtc_1_1ConfigurationArrayIterator.html", "structmc__rtc_1_1ConfigurationArrayIterator" ],
+    [ "ConfigurationFile", "structmc__rtc_1_1ConfigurationFile.html", "structmc__rtc_1_1ConfigurationFile" ],
     [ "formatter< mc_rtc::Configuration >", "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4.html", "structfmt_1_1formatter_3_01mc__rtc_1_1Configuration_01_4" ],
     [ "operator<<", "mc__rtc_2Configuration_8h.html#a24679a5c44564f7b7426cca4533300bf", null ],
     [ "Configuration", "mc__rtc_2Configuration_8h.html#a9b620c9005d103e65363b518ba6dca23", null ],
