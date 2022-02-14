@@ -245,7 +245,7 @@ struct MC_RBDYN_DLLAPI Gripper
   /** Offset by which the gripper is released if overCommandDiffTrigger is
    * trigger for more than overCommandLimitIterN
    *
-   * @param offset offset angle in [rad]
+   * @param offset offset angle in [rad] or distance in [meter]
    **/
   void releaseSafetyOffset(double offset)
   {
@@ -269,6 +269,15 @@ struct MC_RBDYN_DLLAPI Gripper
    * \return True if gripper is not moving, False if it is moving
    */
   bool complete() const;
+
+  /*! \brief Returns true if a gripper is metric, i.e. all active joints are prismatic rather than revolute
+   *
+   * This only affects safety settings in the GUI
+   */
+  inline bool is_metric() const noexcept
+  {
+    return is_metric_;
+  }
 
 protected:
   /*! \brief Set the target opening of a single gripper joint by index
@@ -314,6 +323,9 @@ protected:
   /*! All joint indexes in mbc, -1 if absent */
   std::vector<int> joints_mbc_idx;
 
+  /*! True if all joints are primatic */
+  bool is_metric_;
+
   /*! Lower limits of active joints in the gripper (closed-gripper values) */
   std::vector<double> closeP;
   /*! Upper limits of active joints in the gripper (open-gripper values) */
@@ -332,6 +344,9 @@ protected:
   std::vector<double> targetQIn;
   /*! Current gripper target: NULL if target has been reached or safety was triggered */
   std::vector<double> * targetQ;
+
+  /*! Target reached threshold per-joint (0.001 rad for revolute and 0.0001 for prismatic joints) */
+  std::vector<double> reached_threshold_;
 
   /*! Joints' values from the encoders */
   std::vector<double> actualQ;
