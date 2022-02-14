@@ -15889,6 +15889,13 @@
       <anchor>a1f9ced059d4998dab6150b7796e974af</anchor>
       <arglist>() const</arglist>
     </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>is_metric</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>a7f7b4fa1ac249a3f4f5682ec32064dc9</anchor>
+      <arglist>() const noexcept</arglist>
+    </member>
     <member kind="typedef" protection="protected">
       <type>mc_rbdyn::RobotModule::Gripper::Safety</type>
       <name>Config</name>
@@ -15988,6 +15995,13 @@
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>bool</type>
+      <name>is_metric_</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>ae91facfa1c3c3a58e72f6bf75dd42fd8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>std::vector&lt; double &gt;</type>
       <name>closeP</name>
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
@@ -16041,6 +16055,13 @@
       <name>targetQ</name>
       <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
       <anchor>a95690e9746ea4f736d5cae7372e20f01</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>std::vector&lt; double &gt;</type>
+      <name>reached_threshold_</name>
+      <anchorfile>structmc__control_1_1Gripper.html</anchorfile>
+      <anchor>ad84f25b2a67860816c5e86957f928bff</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">
