@@ -51,18 +51,35 @@ void MCGlobalController::initGUI()
         }
 
         category.push_back("Safety");
-        gui->addElement(
-            category,
-            mc_rtc::gui::NumberInput(
-                "Actual command diff threshold [deg]",
-                [g_ptr]() { return mc_rtc::constants::toDeg(g_ptr->actualCommandDiffTrigger()); },
-                [g_ptr](double deg) { g_ptr->actualCommandDiffTrigger(mc_rtc::constants::toRad(deg)); }),
-            mc_rtc::gui::NumberInput(
-                "Over command limiter iterations", [g_ptr]() -> double { return g_ptr->overCommandLimitIterN(); },
-                [g_ptr](double N) { g_ptr->overCommandLimitIterN(static_cast<unsigned int>(N)); }),
-            mc_rtc::gui::NumberInput(
-                "Release offset [deg]", [g_ptr]() { return mc_rtc::constants::toDeg(g_ptr->releaseSafetyOffset()); },
-                [g_ptr](double deg) { g_ptr->releaseSafetyOffset(mc_rtc::constants::toRad(deg)); }));
+        if(g_ptr->is_metric())
+        {
+          gui->addElement(
+              category,
+              mc_rtc::gui::NumberInput(
+                  "Actual command diff threshold [m]", [g_ptr]() { return g_ptr->actualCommandDiffTrigger(); },
+                  [g_ptr](double m) { g_ptr->actualCommandDiffTrigger(m); }),
+              mc_rtc::gui::NumberInput(
+                  "Over command limiter iterations", [g_ptr]() -> double { return g_ptr->overCommandLimitIterN(); },
+                  [g_ptr](double N) { g_ptr->overCommandLimitIterN(static_cast<unsigned int>(N)); }),
+              mc_rtc::gui::NumberInput(
+                  "Release offset [m]", [g_ptr]() { return g_ptr->releaseSafetyOffset(); },
+                  [g_ptr](double m) { g_ptr->releaseSafetyOffset(m); }));
+        }
+        else
+        {
+          gui->addElement(
+              category,
+              mc_rtc::gui::NumberInput(
+                  "Actual command diff threshold [deg]",
+                  [g_ptr]() { return mc_rtc::constants::toDeg(g_ptr->actualCommandDiffTrigger()); },
+                  [g_ptr](double deg) { g_ptr->actualCommandDiffTrigger(mc_rtc::constants::toRad(deg)); }),
+              mc_rtc::gui::NumberInput(
+                  "Over command limiter iterations", [g_ptr]() -> double { return g_ptr->overCommandLimitIterN(); },
+                  [g_ptr](double N) { g_ptr->overCommandLimitIterN(static_cast<unsigned int>(N)); }),
+              mc_rtc::gui::NumberInput(
+                  "Release offset [deg]", [g_ptr]() { return mc_rtc::constants::toDeg(g_ptr->releaseSafetyOffset()); },
+                  [g_ptr](double deg) { g_ptr->releaseSafetyOffset(mc_rtc::constants::toRad(deg)); }));
+        }
       }
     }
     gui->removeCategory({"Global", "Change controller"});

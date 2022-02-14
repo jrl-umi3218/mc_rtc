@@ -120,6 +120,7 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
     mc_rtc::log::error_and_throw<std::runtime_error>("Active joint {} for {} is not part of the reference joint order",
                                                      joint, robot.name());
   };
+  is_metric_ = true;
   for(size_t i = 0; i < jointNames.size(); ++i)
   {
     const auto & name = jointNames[i];
@@ -138,6 +139,9 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
       }
       vmax.push_back(std::min(std::abs(robot.vl()[jointIndex][0]), robot.vu()[jointIndex][0]));
       _q.push_back(actualQ[i]);
+      bool j_is_metric = robot.mb().joint(static_cast<int>(jointIndex)).type() == rbd::Joint::Type::Prism;
+      is_metric_ = is_metric_ && j_is_metric;
+      reached_threshold_.push_back(j_is_metric ? 0.0001 : 0.001);
     }
     else
     {
@@ -146,6 +150,8 @@ Gripper::Gripper(const mc_rbdyn::Robot & robot,
       openP.push_back(0.01);
       vmax.push_back(0);
       _q.push_back(0);
+      is_metric_ = false;
+      reached_threshold_.push_back(0.001);
     }
     active_joints_idx.push_back(getReferenceIdx(name));
     mult.push_back({i, 1.0});
@@ -472,7 +478,7 @@ void Gripper::run(double timeStep, mc_rbdyn::Robot & robot, std::map<std::string
     bool reached = true;
     for(size_t i = 0; i < cur.size(); ++i)
     {
-      bool i_reached = std::abs(cur[i] - targetQIn[i]) < 0.001;
+      bool i_reached = std::abs(cur[i] - targetQIn[i]) < reached_threshold_[i];
       if(!i_reached)
       {
         if(targetQIn[i] > cur[i])
