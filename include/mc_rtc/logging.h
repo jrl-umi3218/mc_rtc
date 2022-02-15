@@ -12,6 +12,10 @@
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/logger.h>
 
+#define BOOST_STACKTRACE_LINK
+#define BOOST_STACKTRACE_USE_BACKTRACE
+#include <boost/stacktrace.hpp>
+
 namespace mc_rtc
 {
 
@@ -34,6 +38,7 @@ void error_and_throw [[noreturn]] (Args &&... args)
 {
   auto message = fmt::format(std::forward<Args>(args)...);
   details::cerr().critical(message);
+  details::cerr().critical(boost::stacktrace::stacktrace());
   throw ExceptionT(message);
 }
 

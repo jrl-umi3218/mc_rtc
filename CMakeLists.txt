@@ -61,7 +61,7 @@ option(MC_RTC_DEVELOPER_MODE "Disable exact version embedding to speed up recomp
 
 option(DISABLE_ROS "Build without ROS support (even if ROS was found)" OFF)
 
-add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer)
+add_project_dependency(Boost REQUIRED COMPONENTS filesystem timer stacktrace_backtrace)
 add_project_dependency(Tasks REQUIRED)
 add_project_dependency(mc_rbdyn_urdf REQUIRED)
 if(NOT TARGET RBDyn::Parsers)
