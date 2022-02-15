@@ -256,7 +256,7 @@ struct DataStore
     auto & data = datas_[name];
     if(data.buffer)
     {
-      log::error_and_throw<std::runtime_error>("[{}] An object named {} already exists on the datastore.", name_, name);
+      log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name);
     }
     data.allocate<T>(name_, name);
     new(data.buffer.get()) T(std::forward<Args>(args)...);
@@ -294,7 +294,7 @@ struct DataStore
     auto & data = datas_[name];
     if(data.buffer)
     {
-      log::error_and_throw<std::runtime_error>("[{}] An object named {} already exists on the datastore.", name_, name);
+      log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name);
     }
     data.allocate<T>(name_, name);
     new(data.buffer.get()) T{std::forward<Args>(args)...};
@@ -427,8 +427,7 @@ private:
     {
       if(buffer)
       {
-        log::error_and_throw<std::runtime_error>("[{}] An object named {} already exists on the datastore.", name_,
-                                                 name);
+        log::error_and_throw("[{}] An object named {} already exists on the datastore.", name_, name);
       }
       buffer.reset(reinterpret_cast<uint8_t *>(internal::Allocator<T>().allocate(1)));
     }
@@ -453,7 +452,7 @@ private:
   {
     if(!data.same(typeid(T).hash_code()) && !data.same_name(type_name<T>()))
     {
-      log::error_and_throw<std::runtime_error>(
+      log::error_and_throw(
           "[{} Object for key \"{}\" does not have the same type as the stored type. Stored {} but requested {}.",
           name_, name, data.type(), type_name<T>());
     }
@@ -467,9 +466,9 @@ private:
     using fn_t = std::function<RetT(FuncArgsT...)>;
     if(!data.same(typeid(fn_t).hash_code()) && !data.same_name(type_name<fn_t>()))
     {
-      log::error_and_throw<std::runtime_error>("[{}] Function for key \"{}\" does not have the same signature as the "
-                                               "requested one. Stored {} but requested {}",
-                                               name_, name, data.type(), type_name<fn_t>());
+      log::error_and_throw("[{}] Function for key \"{}\" does not have the same signature as the "
+                           "requested one. Stored {} but requested {}",
+                           name_, name, data.type(), type_name<fn_t>());
     }
     auto & fn = *(reinterpret_cast<fn_t *>(data.buffer.get()));
     return fn(std::forward<ArgsT>(args)...);
@@ -486,7 +485,7 @@ private:
     const auto it = datas_.find(name);
     if(it == datas_.end())
     {
-      log::error_and_throw<std::runtime_error>("[{}] No key \"{}\"", name_, name);
+      log::error_and_throw("[{}] No key \"{}\"", name_, name);
     }
     return it->second;
   }

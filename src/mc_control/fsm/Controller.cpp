@@ -90,12 +90,11 @@ Controller::Controller(std::shared_ptr<mc_rbdyn::RobotModule> rm, double dt, con
       }
       else
       {
-        mc_rtc::log::error_and_throw<std::runtime_error>(
-            "FSM controller only handles robot modules that require two parameters at most");
+        mc_rtc::log::error_and_throw("FSM controller only handles robot modules that require two parameters at most");
       }
       if(!rm)
       {
-        mc_rtc::log::error_and_throw<std::runtime_error>("Failed to load {} as specified in configuration", name);
+        mc_rtc::log::error_and_throw("Failed to load {} as specified in configuration", name);
       }
       loadRobot(rm, name);
       auto & r = robots().robot(name);
@@ -344,13 +343,12 @@ void Controller::updateContacts()
       {
         const auto availableRobots =
             mc_rtc::io::to_string(robots(), [](const mc_rbdyn::Robot & r) { return r.name(); });
-        mc_rtc::log::error_and_throw<std::runtime_error>(
-            "Failed to add contact: no robot named {} (available robots: {})", robotName, availableRobots);
+        mc_rtc::log::error_and_throw("Failed to add contact: no robot named {} (available robots: {})", robotName,
+                                     availableRobots);
       }
       if(!robot(robotName).hasSurface(surfaceName))
       {
-        mc_rtc::log::error_and_throw<std::runtime_error>("Failed to add contact: no surface named {} in robot {}",
-                                                         surfaceName, robotName);
+        mc_rtc::log::error_and_throw("Failed to add contact: no surface named {} in robot {}", surfaceName, robotName);
       }
     };
     for(const auto & c : contacts_)

@@ -15,26 +15,26 @@ void UpdateWall::start(mc_control::fsm::Controller & ctl)
 {
   if(!config_.has("body"))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] Missing required configuration for \"body\"", name());
+    mc_rtc::log::error_and_throw("[{}] Missing required configuration for \"body\"", name());
   }
   if(!config_.has("moveRobot"))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] Missing required configuration for \"moveRobot\"", name());
+    mc_rtc::log::error_and_throw("[{}] Missing required configuration for \"moveRobot\"", name());
   }
   const auto rName = config_("robot", ctl.robot().name());
   const auto bName = config_("body");
   const auto moveRobotName = config_("moveRobot");
   if(!ctl.realRobots().hasRobot(rName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No robot named {}", name(), rName);
+    mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), rName);
   }
   if(!ctl.realRobots().robot(rName).hasBody(bName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No body named {} in robot {}", name(), bName, rName);
+    mc_rtc::log::error_and_throw("[{}] No body named {} in robot {}", name(), bName, rName);
   }
   if(!ctl.robots().hasRobot(moveRobotName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No robot named {}", name(), moveRobotName);
+    mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), moveRobotName);
   }
 
   const auto & bodyPose = ctl.realRobots().robot(rName).bodyPosW(bName);

@@ -85,8 +85,7 @@ struct SequenceInterpolator
     if(!std::is_sorted(values.begin(), values.end(),
                        [](const TimedValue & a, const TimedValue & b) { return a.first < b.first; }))
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
-          "SequenceInterpolator values must be ordered by strictly ascending time");
+      mc_rtc::log::error_and_throw("SequenceInterpolator values must be ordered by strictly ascending time");
     }
     values_ = values;
     prevIndex_ = 0;
@@ -135,7 +134,7 @@ struct SequenceInterpolator
   {
     if(values_.empty())
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("SequenceInterpolator requires at least one value");
+      mc_rtc::log::error_and_throw("SequenceInterpolator requires at least one value");
     }
 
     // Check for out-of-bound access

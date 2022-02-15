@@ -55,7 +55,7 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   }
   catch(mc_rtc::LoaderException & exc)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize plugin loader");
+    mc_rtc::log::error_and_throw("Failed to initialize plugin loader");
   }
 #ifdef MC_RTC_BUILD_STATIC
   GlobalPluginLoader::loader().set_verbosity(config.verbose_loader);
@@ -74,7 +74,7 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
   }
   catch(mc_rtc::LoaderException & exc)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize controller loader");
+    mc_rtc::log::error_and_throw("Failed to initialize controller loader");
   }
 #ifdef MC_RTC_BUILD_STATIC
   ControllerLoader::loader().set_verbosity(config.verbose_loader);
@@ -108,7 +108,7 @@ MCGlobalController::MCGlobalController(const GlobalConfiguration & conf)
                       "\t- The controller library is not in a path read by mc_rtc\n"
                       "\t- The controller constuctor segfaults\n"
                       "\t- The controller library hasn't been properly linked");
-    mc_rtc::log::error_and_throw<std::runtime_error>("No controller enabled");
+    mc_rtc::log::error_and_throw("No controller enabled");
   }
 
   if(config.enable_gui_server)
@@ -1204,7 +1204,7 @@ void MCGlobalController::setup_log()
         return p.name;
       }
     }
-    mc_rtc::log::error_and_throw<std::runtime_error>(
+    mc_rtc::log::error_and_throw(
         "Impossible error, searched for a plugin name from a pointer to a plugin that was not loaded");
   };
   for(const auto & plugin : plugins_before_)

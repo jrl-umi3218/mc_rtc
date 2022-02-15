@@ -302,7 +302,7 @@ tasks::qp::ContactId SlidingFootContactState::getContactId(Controller & ctl, con
       return c.contactId(ctl.robots());
     }
   }
-  mc_rtc::log::error_and_throw<std::runtime_error>("Failed to find contact id for {}", s);
+  mc_rtc::log::error_and_throw("Failed to find contact id for {}", s);
 }
 
 void SlidingFootContactState::setHandDofContact(Controller & ctl)

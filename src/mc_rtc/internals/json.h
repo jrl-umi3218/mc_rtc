@@ -240,7 +240,7 @@ void fromMessagePack(mc_rtc::Configuration config, const std::string & key, mpac
       fromMessagePackMap(config.add(key), node);
       break;
     default:
-      log::error_and_throw<std::runtime_error>("Unsupported type in MessagePack");
+      log::error_and_throw("Unsupported type in MessagePack");
   }
 }
 
@@ -279,7 +279,7 @@ void fromMessagePack(mc_rtc::Configuration config, mpack_node_t node)
       fromMessagePackMap(config.object(), node);
       break;
     default:
-      log::error_and_throw<std::runtime_error>("Unsupported type in MessagePack");
+      log::error_and_throw("Unsupported type in MessagePack");
   }
 }
 

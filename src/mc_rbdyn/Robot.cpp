@@ -59,9 +59,8 @@ bound_t fill_bound(const rbd::MultiBody & mb,
       auto & b = res.back();
       if(b_ref.size() != b.size())
       {
-        mc_rtc::log::error_and_throw<std::runtime_error>(
-            "{} provided bound size ({}) different from expected size ({}) for joint {}", name, b_ref.size(), b.size(),
-            j.name());
+        mc_rtc::log::error_and_throw("{} provided bound size ({}) different from expected size ({}) for joint {}", name,
+                                     b_ref.size(), b.size(), j.name());
       }
       res.back() = bound_in.at(j.name());
     }
@@ -284,7 +283,7 @@ Robot::Robot(const std::string & name,
         const auto & jQ = stance.at(j.name());
         if(initQ[i].size() != jQ.size())
         {
-          mc_rtc::log::error_and_throw<std::runtime_error>(
+          mc_rtc::log::error_and_throw(
               "Missmatch between RobotModule stance for joint {}\nStance provides {} values but should be {}", j.name(),
               jQ.size(), initQ[i].size());
         }
@@ -488,7 +487,7 @@ Robot::Robot(const std::string & name,
       return urdf;
     }
     mc_rtc::log::error("Could not open urdf file {} for robot {}, cannot initialize grippers", urdfPath, module_.name);
-    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize grippers");
+    mc_rtc::log::error_and_throw("Failed to initialize grippers");
   };
   for(const auto & gripper : module_.grippers())
   {
@@ -1051,8 +1050,7 @@ const ForceSensor & Robot::indirectBodyForceSensor(const std::string & body) con
   const auto bodyName = findIndirectForceSensorBodyName(body);
   if(bodyName.empty())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No force sensor (directly or indirectly) attached to body {}",
-                                                     body);
+    mc_rtc::log::error_and_throw("No force sensor (directly or indirectly) attached to body {}", body);
   }
   return bodyForceSensor(bodyName);
 }
@@ -1101,7 +1099,7 @@ const mc_rbdyn::Surface & Robot::surface(const std::string & sName) const
 {
   if(!hasSurface(sName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No surface named {} found in robot {}", sName, this->name());
+    mc_rtc::log::error_and_throw("No surface named {} found in robot {}", sName, this->name());
   }
   return *(surfaces_.at(sName));
 }
@@ -1135,7 +1133,7 @@ const Robot::convex_pair_t & Robot::convex(const std::string & cName) const
 {
   if(convexes_.count(cName) == 0)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No convex named {} found in robot {}", cName, this->name_);
+    mc_rtc::log::error_and_throw("No convex named {} found in robot {}", cName, this->name_);
   }
   return convexes_.at(cName);
 }
@@ -1173,7 +1171,7 @@ const sva::PTransformd & Robot::bodyTransform(const std::string & bName) const
 {
   if(!hasBody(bName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No body transform with name {} found in this robot", bName);
+    mc_rtc::log::error_and_throw("No body transform with name {} found in this robot", bName);
   }
   return bodyTransforms_[bodyIndexByName(bName)];
 }
@@ -1192,7 +1190,7 @@ const sva::PTransformd & Robot::collisionTransform(const std::string & cName) co
 {
   if(collisionTransforms_.count(cName) == 0)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No collision transform with name {} found in this robot", cName);
+    mc_rtc::log::error_and_throw("No collision transform with name {} found in this robot", cName);
   }
   return collisionTransforms_.at(cName);
 }
@@ -1391,8 +1389,8 @@ mc_rbdyn::Surface & Robot::copySurface(const std::string & sName, const std::str
 {
   if(hasSurface(name))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "{} already exists within robot {}. Cannot overwrite an existing surface", name, this->name_);
+    mc_rtc::log::error_and_throw("{} already exists within robot {}. Cannot overwrite an existing surface", name,
+                                 this->name_);
   }
   const Surface & surf = surface(sName);
   SurfacePtr nSurf = surf.copy();
@@ -1443,7 +1441,7 @@ mc_control::Gripper & Robot::gripper(const std::string & gripper)
 {
   if(!grippers_.count(gripper))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No gripper named {} in robot {}", gripper, name());
+    mc_rtc::log::error_and_throw("No gripper named {} in robot {}", gripper, name());
   }
   return *grippers_.at(gripper);
 }
@@ -1499,7 +1497,7 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
     }
     else
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("{} No robot named {} in this controller", p, robotName);
+      mc_rtc::log::error_and_throw("{} No robot named {} in this controller", p, robotName);
     }
   }
   else if(config.has(robotIndexKey))
@@ -1514,8 +1512,8 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
     }
     else
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("{}No robot with index {} in this controller ({} robots loaded)",
-                                                       p, robotIndex, robots.size());
+      mc_rtc::log::error_and_throw("{}No robot with index {} in this controller ({} robots loaded)", p, robotIndex,
+                                   robots.size());
     }
   }
   else
@@ -1526,7 +1524,7 @@ const mc_rbdyn::Robot & robotFromConfig(const mc_rtc::Configuration & config,
     }
     else
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("{} \"robotName\" is required.", p);
+      mc_rtc::log::error_and_throw("{} \"robotName\" is required.", p);
     }
   }
 }
@@ -1535,8 +1533,7 @@ void Robot::addDevice(DevicePtr device)
 {
   if(devicesIndex_.count(device->name()))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "You cannot have multiple generic sensor with the same name in a robot");
+    mc_rtc::log::error_and_throw("You cannot have multiple generic sensor with the same name in a robot");
   }
   devices_.push_back(std::move(device));
   auto & d = devices_.back();

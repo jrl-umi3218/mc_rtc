@@ -65,9 +65,9 @@ typename GenericLoader<Derived, T>::T_ptr GenericLoader<Derived, T>::load(mc_sol
     {
       return fns[type](solver, config);
     }
-    mc_rtc::log::error_and_throw<std::runtime_error>("GenericLoader cannot handle object type \"{}\"", type);
+    mc_rtc::log::error_and_throw("GenericLoader cannot handle object type \"{}\"", type);
   }
-  mc_rtc::log::error_and_throw<std::runtime_error>("Attempted to load an object without a type property");
+  mc_rtc::log::error_and_throw("Attempted to load an object without a type property");
 }
 
 template<typename Derived, typename T>
@@ -104,8 +104,7 @@ std::shared_ptr<U> GenericLoader<Derived, T>::cast(const GenericLoader<Derived, 
   auto ret = std::dynamic_pointer_cast<U>(mt);
   if(!ret)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "The object stored in the JSON object is not of the requested type");
+    mc_rtc::log::error_and_throw("The object stored in the JSON object is not of the requested type");
   }
   return ret;
 }
@@ -120,7 +119,7 @@ typename GenericLoader<Derived, T>::Handle GenericLoader<Derived, T>::register_l
     fns[type] = fn;
     return Handle(type);
   }
-  mc_rtc::log::error_and_throw<std::runtime_error>("{} is already handled by another loading function", type);
+  mc_rtc::log::error_and_throw("{} is already handled by another loading function", type);
 }
 
 template<typename Derived, typename T>

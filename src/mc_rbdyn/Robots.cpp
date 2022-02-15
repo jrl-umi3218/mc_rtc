@@ -122,7 +122,7 @@ unsigned int Robots::robotIndex(const std::string & name) const
   auto key = robotNameToIndex_.find(name);
   if(key == robotNameToIndex_.end())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No robot named {}", name);
+    mc_rtc::log::error_and_throw("No robot named {}", name);
   }
   return key->second;
 }
@@ -158,7 +158,7 @@ const Robot & Robots::robot(size_t idx) const
 {
   if(idx >= robots_.size())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No robot with index {} ({} robots loaded)", idx, robots_.size());
+    mc_rtc::log::error_and_throw("No robot with index {} ({} robots loaded)", idx, robots_.size());
   }
   return robots_[idx];
 }
@@ -173,7 +173,7 @@ const Robot & Robots::robot(const std::string & name) const
   auto key = robotNameToIndex_.find(name);
   if(key == robotNameToIndex_.end())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No robot named {}", name);
+    mc_rtc::log::error_and_throw("No robot named {}", name);
   }
   return robots_[key->second];
 }
@@ -188,8 +188,8 @@ void Robots::createRobotWithBase(const std::string & name,
     const auto & robot = robots.robots_[robots_idx];
     if(hasRobot(name))
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
-          "Cannot copy robot {} with a new base as a robot named {} already exists", robot.name(), name);
+      mc_rtc::log::error_and_throw("Cannot copy robot {} with a new base as a robot named {} already exists",
+                                   robot.name(), name);
     }
     this->robot_modules_.push_back(robot.module());
     this->mbs_.push_back(robot.mbg().makeMultiBody(base.baseName, base.baseType, baseAxis, base.X_0_s, base.X_b0_s));
@@ -248,8 +248,8 @@ void Robots::robotCopy(const Robot & robot, const std::string & copyName)
 {
   if(hasRobot(copyName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot copy robot {} to {}: a robot named {} already exists",
-                                                     robot.name(), copyName, copyName);
+    mc_rtc::log::error_and_throw("Cannot copy robot {} to {}: a robot named {} already exists", robot.name(), copyName,
+                                 copyName);
   }
   this->robot_modules_.push_back(robot.module());
   this->mbs_.push_back(robot.mb());
@@ -286,8 +286,7 @@ Robot & Robots::load(const std::string & name,
 {
   if(hasRobot(name))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "Robot names are required to be unique but a robot named {} already exists.", name);
+    mc_rtc::log::error_and_throw("Robot names are required to be unique but a robot named {} already exists.", name);
   }
   robot_modules_.emplace_back(module);
   mbs_.emplace_back(module.mb);
@@ -418,11 +417,11 @@ void Robots::rename(const std::string & oldName, const std::string & newName)
 {
   if(!hasRobot(oldName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot rename robot: no robot named {}", oldName);
+    mc_rtc::log::error_and_throw("Cannot rename robot: no robot named {}", oldName);
   }
   if(robotNameToIndex_.count(newName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot rename robot: a robot named {} already exist", newName);
+    mc_rtc::log::error_and_throw("Cannot rename robot: a robot named {} already exist", newName);
   }
   auto index = robotNameToIndex_[oldName];
   robotNameToIndex_.erase(oldName);

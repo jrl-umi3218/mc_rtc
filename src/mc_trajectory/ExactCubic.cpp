@@ -52,7 +52,7 @@ void ExactCubic::waypoint(size_t idx, const point_t & waypoint)
 {
   if(idx >= waypoints_.size())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot modify waypoint with index {}", idx);
+    mc_rtc::log::error_and_throw("Cannot modify waypoint with index {}", idx);
   }
   waypoints_[idx].second = waypoint;
   needsUpdate_ = true;
@@ -62,7 +62,7 @@ void ExactCubic::waypoint(size_t idx, double t)
 {
   if(idx >= waypoints_.size())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot modify waypoint with index {}", idx);
+    mc_rtc::log::error_and_throw("Cannot modify waypoint with index {}", idx);
   }
   waypoints_[idx].first = t;
   needsUpdate_ = true;
@@ -72,7 +72,7 @@ double ExactCubic::waypointTime(size_t idx) const
 {
   if(idx >= waypoints_.size())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No waypoint with index {}", idx);
+    mc_rtc::log::error_and_throw("No waypoint with index {}", idx);
   }
   return waypoints_[idx].first;
 }
@@ -81,7 +81,7 @@ const waypoint_t & ExactCubic::waypoint(size_t idx) const
 {
   if(idx >= waypoints_.size())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("No waypoint with index {}", idx);
+    mc_rtc::log::error_and_throw("No waypoint with index {}", idx);
   }
   return waypoints_[idx];
 }

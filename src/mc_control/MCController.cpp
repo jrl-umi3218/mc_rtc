@@ -166,7 +166,7 @@ void MCController::createObserverPipelines(const mc_rtc::Configuration & config)
 {
   if(config.has("EnabledObservers") || config.has("RunObservers") || config.has("UpdateObservers"))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
+    mc_rtc::log::error_and_throw(
         "[{}] The observer pipeline can no longer be configured by \"EnabledObservers\", \"RunObservers\" and "
         "\"UpdateObservers\".\nMultiple "
         "pipelines are now supported, allowing for estimation of multiple robots and/or multiple observations of the "
@@ -256,7 +256,7 @@ const mc_observers::ObserverPipeline & MCController::observerPipeline(const std:
   }
   else
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Observer pipeline {} does not exist", name);
+    mc_rtc::log::error_and_throw("Observer pipeline {} does not exist", name);
   }
 }
 
@@ -274,7 +274,7 @@ const mc_observers::ObserverPipeline & MCController::observerPipeline() const
 {
   if(!hasObserverPipeline())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Controller {} does not have a default observer pipeline", name_);
+    mc_rtc::log::error_and_throw("Controller {} does not have a default observer pipeline", name_);
   }
   return observerPipeline(observerPipelines_.front().name());
 }
@@ -310,7 +310,7 @@ void MCController::reset(const ControllerResetData & reset_data)
   supported_robots(supported);
   if(supported.size() && std::find(supported.cbegin(), supported.cend(), robot().name()) == supported.end())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
+    mc_rtc::log::error_and_throw(
         "[MCController] The main robot {} is not supported by this controller. Supported robots are: [{}]",
         robot().name(), mc_rtc::io::to_string(supported));
   }

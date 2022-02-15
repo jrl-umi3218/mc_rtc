@@ -42,8 +42,8 @@ void TransitionMap::init(const StateFactory & factory, const mc_rtc::Configurati
   auto transitions = config("transitions", std::vector<std::vector<std::string>>{});
   if(!transitions.size())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot load TransitionMap if the configuration does not hold a "
-                                                     "transitions entry or the transitions entry is empty.");
+    mc_rtc::log::error_and_throw("Cannot load TransitionMap if the configuration does not hold a "
+                                 "transitions entry or the transitions entry is empty.");
   }
   bool valid_init_state = false;
   std::string first_valid_state = "";
@@ -51,7 +51,7 @@ void TransitionMap::init(const StateFactory & factory, const mc_rtc::Configurati
   {
     if(t.size() < 3 || t.size() > 4)
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("One of the transition entry is not valid");
+      mc_rtc::log::error_and_throw("One of the transition entry is not valid");
     }
     auto str2type = [](const std::string & in) {
       if(in == "StepByStep")
@@ -105,8 +105,7 @@ void TransitionMap::init(const StateFactory & factory, const mc_rtc::Configurati
   }
   if(map_.size() == 0)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "None of the transitions you attempted to load in this TransitionMap are valid.");
+    mc_rtc::log::error_and_throw("None of the transitions you attempted to load in this TransitionMap are valid.");
   }
   if(!valid_init_state)
   {

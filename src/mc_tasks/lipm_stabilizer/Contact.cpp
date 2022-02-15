@@ -29,7 +29,7 @@ Contact::Contact(const mc_rbdyn::Robot & robot,
   const auto & surface = robot.surface(surfaceName);
   if(surface.type() != "planar")
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
+    mc_rtc::log::error_and_throw(
         "LIPMStabilizer contact expects a planar surface attached to the robot's ankle. Surface {} "
         "with type {} not supported",
         surfaceName, surface.type());

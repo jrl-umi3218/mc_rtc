@@ -176,7 +176,7 @@ std::unordered_map<std::string, std::shared_ptr<LogLine>> readLog(const std::str
   std::ifstream ifs(file, std::ifstream::binary);
   if(!ifs.is_open())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("{} could not be opened!", file);
+    mc_rtc::log::error_and_throw("{} could not be opened!", file);
   }
   std::vector<std::string> current_keys;
   std::vector<std::string> empty_keys;

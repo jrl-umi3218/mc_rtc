@@ -36,8 +36,7 @@ void UpdateNrVarsLambda::updateNrVarsImpl(const std::vector<rbd::MultiBody> &, c
   }
   if(ABegin_ == -1)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "Generic InequalityConstraint added for a contact that is not in the solver");
+    mc_rtc::log::error_and_throw("Generic InequalityConstraint added for a contact that is not in the solver");
   }
 }
 

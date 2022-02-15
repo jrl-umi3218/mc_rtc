@@ -331,7 +331,7 @@ void mc_bin_to_log(const std::string & in, const std::string & out, const std::v
   std::ofstream ofs(out);
   if(!ofs.is_open())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to open {} for conversion from bin to log", out);
+    mc_rtc::log::error_and_throw("Failed to open {} for conversion from bin to log", out);
   }
   auto entries = write_header(ofs, log, entriesFilter);
   for(size_t i = 0; i < log.size(); ++i)

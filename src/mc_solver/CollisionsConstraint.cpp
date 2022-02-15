@@ -135,8 +135,7 @@ void CollisionsConstraint::__addCollision(const mc_solver::QPSolver & solver, co
     }
     if(!match)
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("No match found for collision wildcard {} in {}", body,
-                                                       robot.name());
+      mc_rtc::log::error_and_throw("No match found for collision wildcard {} in {}", body, robot.name());
     }
     return true;
   };
@@ -201,8 +200,7 @@ void CollisionsConstraint::toggleCollisionMonitor(int collId)
         return c.second.second;
       }
     }
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[CollisionConstraint] Attempted to toggleCollisionMonitor on non-existent collision");
+    mc_rtc::log::error_and_throw("[CollisionConstraint] Attempted to toggleCollisionMonitor on non-existent collision");
   };
   const auto & col = findCollisionById();
   auto & gui = *gui_;

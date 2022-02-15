@@ -313,13 +313,13 @@ const sva::ForceVecd QPSolver::desiredContactForce(const mc_rbdyn::Contact & con
     }
     else
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("QPSolver - cannot compute desired contact force for surface {}",
-                                                       contact.r1Surface()->name());
+      mc_rtc::log::error_and_throw("QPSolver - cannot compute desired contact force for surface {}",
+                                   contact.r1Surface()->name());
     }
   }
   else
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("QPSolver - cannot handle cases where qp_contact.first != -1");
+    mc_rtc::log::error_and_throw("QPSolver - cannot handle cases where qp_contact.first != -1");
   }
 }
 

@@ -40,7 +40,7 @@ void MetaTasksState::start(Controller & ctl)
   {
     if(!tasks_config_.has(tName))
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
+      mc_rtc::log::error_and_throw(
           "[{}] Invalid output task name {}: should be one of the following tasks: {}. Check your \"outputs\" "
           "configuration.",
           name(), tName, mc_rtc::io::to_string(tasks_config_.keys()));

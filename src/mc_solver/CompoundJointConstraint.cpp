@@ -34,17 +34,17 @@ void CompoundJointConstraint::addConstraint(const mc_rbdyn::Robots & robots,
   const auto & robot = robots.robot(rIndex);
   if(rIndex != rIndex_)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("You must create one CompoundJointConstraint per robot");
+    mc_rtc::log::error_and_throw("You must create one CompoundJointConstraint per robot");
   }
   auto check_joint = [&](const std::string & jname) {
     if(!robot.hasJoint(jname))
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("No joint named {} in {}", jname, robot.name());
+      mc_rtc::log::error_and_throw("No joint named {} in {}", jname, robot.name());
     }
     auto qIdx = robot.jointIndexByName(jname);
     if(robot.mb().joint(static_cast<int>(qIdx)).dof() != 1)
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("Joint {} does not have exactly one dof", jname);
+      mc_rtc::log::error_and_throw("Joint {} does not have exactly one dof", jname);
     }
     return qIdx;
   };

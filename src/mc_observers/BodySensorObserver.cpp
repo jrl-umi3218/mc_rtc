@@ -21,16 +21,15 @@ void BodySensorObserver::configure(const mc_control::MCController & ctl, const m
   fbSensorName_ = config("bodySensor", ctl.robot(robot_).bodySensor().name());
   if(!ctl.robots().hasRobot(robot_))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No robot named {}", name(), robot_);
+    mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), robot_);
   }
   if(!ctl.robots().hasRobot(updateRobot_))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No robot named {}", name(), updateRobot_);
+    mc_rtc::log::error_and_throw("[{}] No robot named {}", name(), updateRobot_);
   }
   if(updateFrom_ == Update::Sensor && !ctl.robot(robot_).hasBodySensor(fbSensorName_))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] No sensor named {} in robot {}", name(), fbSensorName_,
-                                                     robot_);
+    mc_rtc::log::error_and_throw("[{}] No sensor named {} in robot {}", name(), fbSensorName_, robot_);
   }
   auto updateConfig = config("method", std::string{"sensor"});
   if(!updateConfig.empty())

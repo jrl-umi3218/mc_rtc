@@ -25,8 +25,7 @@ ContactConstraint::ContactConstraint(double timeStep, ContactType contactType, b
   }
   else
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "Trying to create a contact constraint from an unknown contact constraint type");
+    mc_rtc::log::error_and_throw("Trying to create a contact constraint from an unknown contact constraint type");
   }
   if(dynamics)
   {

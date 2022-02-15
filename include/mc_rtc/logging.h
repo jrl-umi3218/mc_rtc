@@ -29,7 +29,7 @@ MC_RTC_UTILS_DLLAPI spdlog::logger & cerr();
 
 } // namespace details
 
-template<typename ExceptionT, typename... Args>
+template<typename ExceptionT = std::runtime_error, typename... Args>
 void error_and_throw [[noreturn]] (Args &&... args)
 {
   auto message = fmt::format(std::forward<Args>(args)...);

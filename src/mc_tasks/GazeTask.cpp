@@ -16,13 +16,13 @@ void check_parameters(const mc_rbdyn::Robots & robots, unsigned int robotIndex, 
 {
   if(robotIndex >= robots.size())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[mc_tasks::GazeTask] No robot with index {}, robots.size() {}",
-                                                     robotIndex, robots.size());
+    mc_rtc::log::error_and_throw("[mc_tasks::GazeTask] No robot with index {}, robots.size() {}", robotIndex,
+                                 robots.size());
   }
   if(!robots.robot(robotIndex).hasBody(bodyName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[mc_tasks::GazeTask] No body named {} in {}", bodyName,
-                                                     robots.robot(robotIndex).name());
+    mc_rtc::log::error_and_throw("[mc_tasks::GazeTask] No body named {} in {}", bodyName,
+                                 robots.robot(robotIndex).name());
   }
 }
 
