@@ -62,6 +62,8 @@ digraph "include/mc_rtc/gui/plot/types.h"
   Node22 [label="spdlog/fmt/ostr.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
   Node20 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
   Node23 [label="spdlog/logger.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
-  Node0 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node24 [label="limits",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node20 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 [label="boost/stacktrace.hpp",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node0 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 [label="limits",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
 }

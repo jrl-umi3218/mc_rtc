@@ -3661,6 +3661,13 @@
     <namespace>mc_rtc::log::details</namespace>
     <member kind="define">
       <type>#define</type>
+      <name>BOOST_STACKTRACE_LINK</name>
+      <anchorfile>logging_8h.html</anchorfile>
+      <anchor>a25cda0d096362eae64cebfb4843453ba</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
       <name>LOG_ERROR</name>
       <anchorfile>logging_8h.html</anchorfile>
       <anchor>ac6c926a2075cbaa39c4e9d12a2cac7e2</anchor>

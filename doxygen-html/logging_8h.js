@@ -1,5 +1,6 @@
 var logging_8h =
 [
+    [ "BOOST_STACKTRACE_LINK", "logging_8h.html#a25cda0d096362eae64cebfb4843453ba", null ],
     [ "LOG_ERROR", "logging_8h.html#ac6c926a2075cbaa39c4e9d12a2cac7e2", null ],
     [ "LOG_ERROR_AND_THROW", "logging_8h.html#ae0e43eaf4d638a83e59084a107b3b62f", null ],
     [ "LOG_INFO", "logging_8h.html#a63a6359b81688166256710bf0ea161df", null ],

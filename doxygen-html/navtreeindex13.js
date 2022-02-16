@@ -1,5 +1,6 @@
 var NAVTREEINDEX13 =
 {
+"structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a59782a8bb1c04dbaf888856985d7273d":[3,0,7,0,2,0,1,0],
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a86c83c91843a11a26a3404ddb7b4437b":[3,0,7,0,2,0,1,4],
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#a9298450fcf5a9549db2df14dc6223e4a":[3,0,7,0,2,0,1,2],
 "structmc__rtc_1_1gui_1_1plot_1_1impl_1_1AbscissaOrdinate.html#ac412c96504ea09d32b3f19e18e0fca0b":[3,0,7,0,2,0,1,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX13 =
 "structmc__solver_1_1QPSolver.html#aba37f50ba476a2701c05b8aa737d9362":[3,0,8,25,18],
 "structmc__solver_1_1QPSolver.html#ac015f44b8b157dafe8303dd295e10e8d":[3,0,8,25,16],
 "structmc__solver_1_1QPSolver.html#acac203b080dfbd7dbc680e4d9e8aaa3c":[3,0,8,25,22],
-"structmc__solver_1_1QPSolver.html#acd57fb80048c2f364bc216334ed148a8":[3,0,8,25,43],
-"structmc__solver_1_1QPSolver.html#adb5af970ec8d5b46ddcf8af19bd205be":[3,0,8,25,1]
+"structmc__solver_1_1QPSolver.html#acd57fb80048c2f364bc216334ed148a8":[3,0,8,25,43]
 };

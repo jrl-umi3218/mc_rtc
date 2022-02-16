@@ -1,5 +1,6 @@
 var NAVTREEINDEX7 =
 {
+"structmc__control_1_1fsm_1_1Transition.html#aeb7c3f9f5d60af38b50cbd0caa1b2b65":[3,0,2,0,17,2],
 "structmc__control_1_1fsm_1_1TransitionMap.html":[3,0,2,0,18],
 "structmc__control_1_1fsm_1_1TransitionMap.html#a0e247cf49772c5bade453bd823a75923":[3,0,2,0,18,3],
 "structmc__control_1_1fsm_1_1TransitionMap.html#a604c23080c7e278d843ec3d0452ee599":[3,0,2,0,18,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX7 =
 "structmc__rbdyn_1_1BodySensor.html":[3,0,6,3],
 "structmc__rbdyn_1_1BodySensor.html#a0a4ae01169db62588ed207fa0b60b117":[3,0,6,3,9],
 "structmc__rbdyn_1_1BodySensor.html#a0ccd7feb3cb52abec8d65b3da9df4989":[3,0,6,3,0],
-"structmc__rbdyn_1_1BodySensor.html#a0df07b5cdfd86d18be2227182bb2aec2":[3,0,6,3,15],
-"structmc__rbdyn_1_1BodySensor.html#a1632edbff87a11e1210cf34cfbf6b884":[3,0,6,3,6]
+"structmc__rbdyn_1_1BodySensor.html#a0df07b5cdfd86d18be2227182bb2aec2":[3,0,6,3,15]
 };

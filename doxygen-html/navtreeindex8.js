@@ -1,5 +1,6 @@
 var NAVTREEINDEX8 =
 {
+"structmc__rbdyn_1_1BodySensor.html#a1632edbff87a11e1210cf34cfbf6b884":[3,0,6,3,6],
 "structmc__rbdyn_1_1BodySensor.html#a2be6a3b9c958d75d4c4310418356e014":[3,0,6,3,21],
 "structmc__rbdyn_1_1BodySensor.html#a3fd7e69c281f765b383df5c8adfcc69e":[3,0,6,3,5],
 "structmc__rbdyn_1_1BodySensor.html#a44f050d481291a6015f3a5423e5098fe":[3,0,6,3,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX8 =
 "structmc__rbdyn_1_1Robot.html#a6cff71ca3ef36a1f5b5a945d6e70b64b":[3,0,6,18,60],
 "structmc__rbdyn_1_1Robot.html#a6e04286463ae6f91105c0b83ef370da8":[3,0,6,18,35],
 "structmc__rbdyn_1_1Robot.html#a72a8bd2c7daead0016449a6056fd2035":[3,0,6,18,135],
-"structmc__rbdyn_1_1Robot.html#a73998aca81be7062371f39ce5d60756a":[3,0,6,18,84],
-"structmc__rbdyn_1_1Robot.html#a74f8c3970a3aff460fc5abad5b493eb6":[3,0,6,18,152]
+"structmc__rbdyn_1_1Robot.html#a73998aca81be7062371f39ce5d60756a":[3,0,6,18,84]
 };
