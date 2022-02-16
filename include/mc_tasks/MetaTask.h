@@ -274,8 +274,7 @@ protected:
     {
       if(!robot.hasJoint(jName))
       {
-        mc_rtc::log::error_and_throw<std::runtime_error>("{} No joint named {} in robot {}", prefix, jName,
-                                                         robot.name());
+        mc_rtc::log::error_and_throw("{} No joint named {} in robot {}", prefix, jName, robot.name());
       }
     }
   }

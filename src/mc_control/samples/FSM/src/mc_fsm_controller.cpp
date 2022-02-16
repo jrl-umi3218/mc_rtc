@@ -16,11 +16,11 @@ void FSMController::reset(const mc_control::ControllerResetData & data)
                               const std::string & s2) {
     if(!hasContact({r1, r2, s1, s2}))
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("[FSM] Expected to find {}::{}/{}::{} contact", r1, s1, r2, s2);
+      mc_rtc::log::error_and_throw("[FSM] Expected to find {}::{}/{}::{} contact", r1, s1, r2, s2);
     }
     if(!hasContact({r2, r1, s2, s1}))
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("[FSM] Expected to find {}::{}/{}::{} contact", r2, s2, r1, s1);
+      mc_rtc::log::error_and_throw("[FSM] Expected to find {}::{}/{}::{} contact", r2, s2, r1, s1);
     }
   };
   check_contact("jvrc1", "ground", "LeftFoot", "AllGround");

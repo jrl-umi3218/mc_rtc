@@ -38,8 +38,7 @@ void PostureState::start(Controller & ctl)
   }
   else if(!ctl.hasRobot(robot_))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] Requested robot {} but this robot is not available", name(),
-                                                     robot_);
+    mc_rtc::log::error_and_throw("[{}] Requested robot {} but this robot is not available", name(), robot_);
   }
 
   auto postureTask = ctl.getPostureTask(robot_);

@@ -239,7 +239,7 @@ void SplineTrajectoryTask<Derived>::dimWeight(const Eigen::VectorXd & dimW)
 {
   if(dimW.size() != 6)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("SplineTrajectoryTask dimWeight must be a Vector6d!");
+    mc_rtc::log::error_and_throw("SplineTrajectoryTask dimWeight must be a Vector6d!");
   }
 
   dimWeightInterpolator_.clear();
@@ -295,7 +295,7 @@ void SplineTrajectoryTask<Derived>::damping(const Eigen::VectorXd & damping)
 {
   if(damping.size() != 6)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] dimensional damping must be a Vector6d!", name());
+    mc_rtc::log::error_and_throw("[{}] dimensional damping must be a Vector6d!", name());
   }
 
   dampingInterpolator_.clear();
@@ -313,11 +313,11 @@ void SplineTrajectoryTask<Derived>::setGains(const Eigen::VectorXd & stiffness, 
 {
   if(stiffness.size() != 6)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] dimensional stiffness must be a Vector6d!", name());
+    mc_rtc::log::error_and_throw("[{}] dimensional stiffness must be a Vector6d!", name());
   }
   else if(damping.size() != 6)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] dimensional damping must be a Vector6d!", name());
+    mc_rtc::log::error_and_throw("[{}] dimensional damping must be a Vector6d!", name());
   }
   stiffnessInterpolator_.clear();
   dampingInterpolator_.clear();

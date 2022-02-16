@@ -81,8 +81,8 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
       auto ptr = dynamic_cast<T *>(observer_.get());
       if(!ptr)
       {
-        mc_rtc::log::error_and_throw<std::runtime_error>("{} observer type did not match the requested one: {}",
-                                                         observer_->type(), mc_rtc::type_name<T>());
+        mc_rtc::log::error_and_throw("{} observer type did not match the requested one: {}", observer_->type(),
+                                     mc_rtc::type_name<T>());
       }
       return *ptr;
     }
@@ -209,8 +209,7 @@ struct MC_OBSERVERS_DLLAPI ObserverPipeline
                            [&name](const PipelineObserver & obs) { return obs.observer().name() == name; });
     if(it == pipelineObservers_.end())
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
-          "Observer pipeline \"{}\" does not have any observer named \"{}\"", name_, name);
+      mc_rtc::log::error_and_throw("Observer pipeline \"{}\" does not have any observer named \"{}\"", name_, name);
     }
     return *it;
   }

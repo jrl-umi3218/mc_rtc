@@ -271,7 +271,7 @@ struct ConfigurationLoader<mc_tasks::lipm_stabilizer::ContactState>
     }
     else
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("ContactState should be one of [Left, Right], {} requested.", s);
+      mc_rtc::log::error_and_throw("ContactState should be one of [Left, Right], {} requested.", s);
     }
   }
 

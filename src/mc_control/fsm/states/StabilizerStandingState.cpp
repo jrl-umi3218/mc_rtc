@@ -85,7 +85,7 @@ void StabilizerStandingState::start(Controller & ctl)
     }
     else
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
+      mc_rtc::log::error_and_throw(
           "[StabilizerStandingState] Requested standing above {} but this is neither one of the state target "
           "(LeftAnkle, RightAnkle, CenterAnkles, LeftSurface, RightSurface, CenterSurfaces), nor a valid robot surface "
           "name",

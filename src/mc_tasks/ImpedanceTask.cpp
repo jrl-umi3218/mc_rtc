@@ -29,8 +29,7 @@ ImpedanceTask::ImpedanceTask(const std::string & surfaceName,
 
   if(!robot.surfaceHasIndirectForceSensor(surfaceName))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[{}] Surface {} does not have a force sensor attached", name_,
-                                                     surfaceName);
+    mc_rtc::log::error_and_throw("[{}] Surface {} does not have a force sensor attached", name_, surfaceName);
   }
 }
 

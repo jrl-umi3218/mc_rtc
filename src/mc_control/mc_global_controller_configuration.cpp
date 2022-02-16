@@ -72,7 +72,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
     catch(const mc_rtc::LoaderException & exc)
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("Failed to update robot module path(s)");
+      mc_rtc::log::error_and_throw("Failed to update robot module path(s)");
     }
   }
   if(rm)
@@ -92,13 +92,12 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         }
         catch(const mc_rtc::LoaderException & exc)
         {
-          mc_rtc::log::error_and_throw<std::runtime_error>("Failed to create {} to use as a main robot", robot_name);
+          mc_rtc::log::error_and_throw("Failed to create {} to use as a main robot", robot_name);
         }
       }
       else
       {
-        mc_rtc::log::error_and_throw<std::runtime_error>(
-            "Trying to use {} as main robot but this robot cannot be loaded", robot_name);
+        mc_rtc::log::error_and_throw("Trying to use {} as main robot but this robot cannot be loaded", robot_name);
       }
     }
     else
@@ -127,14 +126,12 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
         }
         catch(const mc_rtc::LoaderException &)
         {
-          mc_rtc::log::error_and_throw<std::runtime_error>("Failed to create main robot using parameters {}",
-                                                           config("MainRobot").dump());
+          mc_rtc::log::error_and_throw("Failed to create main robot using parameters {}", config("MainRobot").dump());
         }
       }
       else
       {
-        mc_rtc::log::error_and_throw<std::runtime_error>(
-            "Trying to use {} as main robot but this robot cannot be loaded", params[0]);
+        mc_rtc::log::error_and_throw("Trying to use {} as main robot but this robot cannot be loaded", params[0]);
       }
     }
   }
@@ -161,7 +158,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
     }
     catch(const mc_rtc::LoaderException & exc)
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("Failed to update observer module path(s)");
+      mc_rtc::log::error_and_throw("Failed to update observer module path(s)");
     }
   }
 
@@ -233,8 +230,7 @@ MCGlobalController::GlobalConfiguration::GlobalConfiguration(const std::string &
   }
   else
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "Enabled entry in mc_rtc must contain at least one controller name");
+    mc_rtc::log::error_and_throw("Enabled entry in mc_rtc must contain at least one controller name");
   }
   config("Default", initial_controller);
   config("IncludeHalfSitController", include_halfsit_controller);

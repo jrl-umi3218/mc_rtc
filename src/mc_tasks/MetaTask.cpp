@@ -26,8 +26,8 @@ void MetaTask::load(mc_solver::QPSolver & solver, const mc_rtc::Configuration & 
     Eigen::VectorXd dimW = config("dimWeight");
     if(dimW.size() != dimWeight().size())
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("Stored dimWeight has the wrong dimension (is {} should be {})",
-                                                       dimW.size(), dimWeight().size());
+      mc_rtc::log::error_and_throw("Stored dimWeight has the wrong dimension (is {} should be {})", dimW.size(),
+                                   dimWeight().size());
     }
     dimWeight(dimW);
   }

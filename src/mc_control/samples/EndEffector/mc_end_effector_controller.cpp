@@ -37,7 +37,7 @@ MCEndEffectorController::MCEndEffectorController(std::shared_ptr<mc_rbdyn::Robot
   }
   else
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("EndEffector sample does not support robot {}", robot().name());
+    mc_rtc::log::error_and_throw("EndEffector sample does not support robot {}", robot().name());
   }
 
   std::string body = robot().mb().bodies().back().name();

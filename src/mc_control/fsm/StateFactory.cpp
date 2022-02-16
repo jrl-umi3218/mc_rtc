@@ -190,12 +190,12 @@ void StateFactory::load(const std::string & name, const std::string & base, cons
 {
   if(!hasState(base) && !load_with_loader(base))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Cannot create a state using a base {} that does not exist", base);
+    mc_rtc::log::error_and_throw("Cannot create a state using a base {} that does not exist", base);
   }
   if(hasState(name))
   {
 #ifndef MC_RTC_BUILD_STATIC
-    mc_rtc::log::error_and_throw<std::runtime_error>("State {} already exists", name);
+    mc_rtc::log::error_and_throw("State {} already exists", name);
 #else
     states_.erase(std::find(states_.begin(), states_.end(), name));
 #endif

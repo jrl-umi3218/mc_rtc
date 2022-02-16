@@ -24,14 +24,14 @@ MCImpedanceController::MCImpedanceController(std::shared_ptr<mc_rbdyn::RobotModu
 
   if(!robot().hasSurface("LeftGripper"))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
+    mc_rtc::log::error_and_throw(
         "The Impedance sample controller requires the main robot to have a LeftGripper surface");
   }
   if(robot().mb().joint(0).type() != rbd::Joint::Type::Fixed)
   {
     if(!(robot().hasSurface("LeftFoot") && robot().hasSurface("RightFoot")))
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
+      mc_rtc::log::error_and_throw(
           "The Impedance sample controller cannot handle this robot as it has no Left|RightFoot surfaces");
     }
     comTask_ = std::make_shared<mc_tasks::CoMTask>(robots(), robots().robotIndex());

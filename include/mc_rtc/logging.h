@@ -12,6 +12,9 @@
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/logger.h>
 
+#define BOOST_STACKTRACE_LINK
+#include <boost/stacktrace.hpp>
+
 namespace mc_rtc
 {
 
@@ -29,11 +32,12 @@ MC_RTC_UTILS_DLLAPI spdlog::logger & cerr();
 
 } // namespace details
 
-template<typename ExceptionT, typename... Args>
+template<typename ExceptionT = std::runtime_error, typename... Args>
 void error_and_throw [[noreturn]] (Args &&... args)
 {
   auto message = fmt::format(std::forward<Args>(args)...);
   details::cerr().critical(message);
+  details::cerr().critical("=== Backtrace ===\n{}", boost::stacktrace::stacktrace());
   throw ExceptionT(message);
 }
 

@@ -41,7 +41,7 @@ MCCoMController::MCCoMController(std::shared_ptr<mc_rbdyn::RobotModule> robot_mo
   }
   else
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("MCCoMController does not support robot {}", robot().name());
+    mc_rtc::log::error_and_throw("MCCoMController does not support robot {}", robot().name());
   }
 
   datastore().make_call("KinematicAnchorFrame::" + robot().name(), [this](const mc_rbdyn::Robot & robot) {

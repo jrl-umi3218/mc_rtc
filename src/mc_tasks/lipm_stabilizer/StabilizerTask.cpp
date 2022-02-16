@@ -126,21 +126,21 @@ void StabilizerTask::reset()
 
 void StabilizerTask::dimWeight(const Eigen::VectorXd & /* dim */)
 {
-  mc_rtc::log::error_and_throw<std::runtime_error>("dimWeight not implemented for task {}", type_);
+  mc_rtc::log::error_and_throw("dimWeight not implemented for task {}", type_);
 }
 
 Eigen::VectorXd StabilizerTask::dimWeight() const
 {
-  mc_rtc::log::error_and_throw<std::runtime_error>("dimWeight not implemented for task {}", type_);
+  mc_rtc::log::error_and_throw("dimWeight not implemented for task {}", type_);
 }
 
 void StabilizerTask::selectActiveJoints(mc_solver::QPSolver & /* solver */,
                                         const std::vector<std::string> & /* activeJointsName */,
                                         const std::map<std::string, std::vector<std::array<int, 2>>> & /* activeDofs */)
 {
-  mc_rtc::log::error_and_throw<std::runtime_error>("Task {} does not implement selectActiveJoints. Please configure it "
-                                                   "through the stabilizer configuration instead",
-                                                   name_);
+  mc_rtc::log::error_and_throw("Task {} does not implement selectActiveJoints. Please configure it "
+                               "through the stabilizer configuration instead",
+                               name_);
 }
 
 void StabilizerTask::selectUnactiveJoints(
@@ -148,18 +148,16 @@ void StabilizerTask::selectUnactiveJoints(
     const std::vector<std::string> & /* unactiveJointsName */,
     const std::map<std::string, std::vector<std::array<int, 2>>> & /* unactiveDofs */)
 {
-  mc_rtc::log::error_and_throw<std::runtime_error>(
-      "Task {} does not implement selectUnactiveJoints. Please configure it "
-      "through the stabilizer configuration instead.",
-      name_);
+  mc_rtc::log::error_and_throw("Task {} does not implement selectUnactiveJoints. Please configure it "
+                               "through the stabilizer configuration instead.",
+                               name_);
 }
 
 void StabilizerTask::resetJointsSelector(mc_solver::QPSolver & /* solver */)
 {
-  mc_rtc::log::error_and_throw<std::runtime_error>(
-      "Task {} does not implement resetJointsSelector. Please configure it "
-      "through the stabilizer configuration instead.",
-      name_);
+  mc_rtc::log::error_and_throw("Task {} does not implement resetJointsSelector. Please configure it "
+                               "through the stabilizer configuration instead.",
+                               name_);
 }
 
 Eigen::VectorXd StabilizerTask::eval() const
@@ -378,13 +376,11 @@ void StabilizerTask::checkConfiguration(const StabilizerConfiguration & config)
   auto checkSurface = [&](const std::string & surfaceName) {
     if(!robot().hasSurface(surfaceName))
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("[{}] requires a surface named {} in robot {}", name(),
-                                                       surfaceName, robot().name());
+      mc_rtc::log::error_and_throw("[{}] requires a surface named {} in robot {}", name(), surfaceName, robot().name());
     }
     if(!robot().surfaceHasIndirectForceSensor(surfaceName))
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("[{}] Surface {} must have an associated force sensor.", name(),
-                                                       surfaceName);
+      mc_rtc::log::error_and_throw("[{}] Surface {} must have an associated force sensor.", name(), surfaceName);
     }
   };
   checkSurface(config.rightFootSurface);
@@ -485,9 +481,8 @@ void StabilizerTask::setContacts(const ContactDescriptionVector & contacts)
 {
   if(contacts.empty())
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>(
-        "[StabilizerTask] Cannot set contacts from an empty list, the stabilizer "
-        "requires at least one contact to be set.");
+    mc_rtc::log::error_and_throw("[StabilizerTask] Cannot set contacts from an empty list, the stabilizer "
+                                 "requires at least one contact to be set.");
   }
   contacts_.clear();
 

@@ -13,7 +13,7 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
 {
   if(!config.has("name"))
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("[ObserverPipeline] \"name\" entry is required", name_);
+    mc_rtc::log::error_and_throw("[ObserverPipeline] \"name\" entry is required", name_);
   }
   name_ = static_cast<std::string>(config("name"));
   config("run", runObservers_);
@@ -23,8 +23,7 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
   {
     if(!observerConf.has("type"))
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
-          "[ObserverPipeline::{}] Observer {} requires a \"type\" configuration entry");
+      mc_rtc::log::error_and_throw("[ObserverPipeline::{}] Observer {} requires a \"type\" configuration entry");
     }
     const std::string & observerType = observerConf("type");
     auto observerName = observerConf("name", observerType);
@@ -33,7 +32,7 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
     {
       if(hasObserver(observerName))
       {
-        mc_rtc::log::error_and_throw<std::runtime_error>(
+        mc_rtc::log::error_and_throw(
             "[ObserverPipeline::{}] An observer named {} already exists (type: {}). Please make sure that observer "
             "names within a pipeline are unique, use the \"name\" configuration entry.",
             name_, observerName, observerType);
@@ -52,7 +51,7 @@ void ObserverPipeline::create(const mc_rtc::Configuration & config, double dt)
     }
     else
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>(
+      mc_rtc::log::error_and_throw(
           "[ObserverPipeline::{}] requires observer \"{}\" but it is not available (available: [{}])\n"
           "Common reasons for this error include:\n"
           "  - The observer library hasn't been properly linked\n"

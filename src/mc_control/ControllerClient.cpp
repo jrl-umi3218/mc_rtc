@@ -51,12 +51,12 @@ void init_socket(int & socket, int proto, const std::string & uri, const std::st
   socket = nn_socket(AF_SP, proto);
   if(socket < 0)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to initialize {}", name);
+    mc_rtc::log::error_and_throw("Failed to initialize {}", name);
   }
   int ret = nn_connect(socket, uri.c_str());
   if(ret < 0)
   {
-    mc_rtc::log::error_and_throw<std::runtime_error>("Failed to connect {} to uri: {}", name, uri);
+    mc_rtc::log::error_and_throw("Failed to connect {} to uri: {}", name, uri);
   }
   else
   {
@@ -67,7 +67,7 @@ void init_socket(int & socket, int proto, const std::string & uri, const std::st
     int err = nn_setsockopt(socket, NN_SUB, NN_SUB_SUBSCRIBE, "", 0);
     if(err < 0)
     {
-      mc_rtc::log::error_and_throw<std::runtime_error>("Failed to set subscribe option on SUB socket");
+      mc_rtc::log::error_and_throw("Failed to set subscribe option on SUB socket");
     }
   }
 }
