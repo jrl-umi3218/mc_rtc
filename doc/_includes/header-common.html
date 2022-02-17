@@ -1,0 +1,21 @@
+<header class="navbar navbar-expand-lg navbar-light bg-light sticky-top" role="navigation">
+  <a class="navbar-brand" href="{{site.baseurl}}/index.html"><img src="{{site.baseurl}}/assets/logo.png" alt="logo" width="30" height="30"/> mc_rtc</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <div class="navbar-nav mr-auto">
+      {% for itm in site.data.nav %}
+        {% capture page_name %}{{itm}}.html{% endcapture %}
+        {% if page.name == page_name or itm == include.active %}
+          {% assign active = "active" %}
+        {% else %}
+          {% assign active = "" %}
+        {% endif %}
+        <a class="nav-item nav-link {{active}}" href="{{site.baseurl}}/{{itm}}.html">{% t nav.{{itm}} %}</a>
+      {% endfor %}
+      <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">{% t nav.demo %}</a>
+    </div>
+    <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_">{% octicon mark-github height:25 width:25 %}</a>
+  </div>
+</header>

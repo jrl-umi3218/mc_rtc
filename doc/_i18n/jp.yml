@@ -2,6 +2,8 @@ langs:
   en: 英語
 global:
   credits: クレジット
+  next_tutorial: 次のチュートリアル
+  back_to_tutorial: チュートリアルに戻る
 nav:
   interfaces: インタフェース
   robots: ロボット

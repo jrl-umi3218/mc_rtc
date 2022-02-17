@@ -2,6 +2,8 @@ langs:
   jp: Japanese
 global:
   credits: Credits
+  next_tutorial: Next tutorial
+  back_to_tutorial: Back to tutorial
 nav:
   interfaces: Interfaces
   robots: Robots
