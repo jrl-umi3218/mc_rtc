@@ -1,0 +1,96 @@
+<p>mc_rtcで用意されている<code>mc_rtc_new_fsm_controller</code>を使用して新しい有限オートマトンコントローラープロジェクトをセットアップします。</p>
+
+{% highlight bash %}
+$ mc_rtc_new_fsm_controller --help
+usage: mc_rtc_new_fsm_controller [-h]
+                             [プロジェクトディレクトリ] [コントローラークラス名]
+                             [[コントローラー名]]
+
+新しいmc_rtcコントローラープロジェクトを作成します。 
+
+位置指定引数:
+  [プロジェクトディレクトリ]   プロジェクトのパス
+  [コントローラークラス名]
+                        コントローラークラスの名前
+  [コントローラー名]     コントローラーの名前。デフォルトではコントローラークラス名が使用されます。
+
+オプションの引数:
+  -h, --help            このヘルプメッセージを表示して終了します。
+{% endhighlight %}
+
+<p><em>注: このツールを使用するには、Debian系のシステムで用意されているGit for PythonとpipのGitPythonが必要です。</em></p>
+
+<p>このチュートリアルでは、以下のコマンドを実行し、<code>MyFirstFSMController</code>という名前のチュートリアル用コントローラーを作成します。</p>
+
+{% highlight bash %}
+$ mc_rtc_new_fsm_controller my_first_fsm_controller MyFirstFSMController
+{% endhighlight %}
+
+<p>新たに作成された<code>my_first_fsm_controller</code>フォルダーに移動します。このフォルダーには以下のファイルが自動生成されています。</p>
+
+<dl class="row">
+  <dt class="col-3">CMakeLists.txt</dt>
+  <dd class="col-9">コントローラーをビルドするのに必要な最低限のCMakeファイル</dd>
+
+  <dt class="col-3">etc/MyFirstFSMController.in.yaml</dt>
+  <dd class="col-9">コントローラーの有限オートマトン設定ファイル</dd>
+
+  <dt class="col-3">src/CMakeLists.txt</dt>
+  <dd class="col-9">コントローラーをビルドするのに必要なソースファイルの説明</dd>
+
+  <dt class="col-3">src/api.h</dt>
+  <dd class="col-9">コントローラーを各プラットフォームに読み込めるようにするための宣言</dd>
+
+  <dt class="col-3">src/MyFirstFSMController.h</dt>
+  <dd class="col-9">コントローラークラスの宣言。{% doxygen mc_control::fsm::Controller %}から継承する必要があります。また、少なくともrun関数とreset関数を置き換える必要があります。</dd>
+
+  <dt class="col-3">src/MyFirstFSMController.cpp</dt>
+  <dd class="col-9">独自に作成したコントローラーを実装します。これについては次のセクションで詳しく説明します。</dd>
+
+  <dt class="col-3">src/states/</dt>
+  <dd class="col-9">コントローラーの状態を定義する（C++またはYAML）</dd>
+
+  <dt class="col-3">src/states/CMakeLists.txt</dt>
+  <dd class="col-9">コントローラーの状態をビルドしてエクスポートする</dd>
+
+  <dt class="col-3">src/states/Door_Initial.h</dt>
+  <dd class="col-9">新しいC++状態の宣言</dd>
+
+  <dt class="col-3">src/states/Door_Initial.cpp</dt>
+  <dd class="col-9">状態の実装。このチュートリアルでは、「ドアを開く」という状態遷移をトリガーするボタンを追加するシンプルな状態を実装します。</dd>
+
+  <dt class="col-3">src/states/data</dt>
+  <dd class="col-9">有限オートマトンの状態に関する追加のYAML設定。状態を宣言するには、このフォルダーにあるYAML/JSONファイルにその宣言を追加します。</dd>
+</dl>
+
+<h4>コントローラーをビルドする</h4>
+
+<p>コントローラーをビルドするには、CMakeといつものツールを使用してCMakeを実行し、コードをビルドしてインストールします。LinuxまたはMacOSの場合、一般に以下のように実行します。</p>
+
+{% highlight bash %}
+$ mkdir -p build
+$ cd build
+# このビルドタイプは、デバッグ可能かつパフォーマンスに優れたコードを生成します
+$ cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo
+$ make
+$ sudo make install
+{% endhighlight %}
+
+<p><em>注: <code>sudo</code>は、mc_rtcが特権ディレクトリにインストールされている場合のみ実行する必要があります。</em></p>
+
+<h4>コントローラーを実行する</h4>
+
+<p>JVRC1ロボットと新たにインストールされたコントローラーを使用できるように、mc_rtcの設定ファイルを編集します。</p>
+
+{% highlight yaml %}
+MainRobot: JVRC1
+Enabled: MyFirstFSMController
+{% endhighlight %}
+
+<p>さらに、<a href="{{site.baseurl}}/tutorials/introduction/running-a-controller.html">Running a controller</a> コントローラーを実行する</a>セクションの説明に従ってコントローラーを実行します。お疲れ様でした。これで、有限オートマトンコントローラーのビルドと実行ができました。</p>
+
+{% highlight bash %}
+$ roslaunch mc_rtc_ticker display.launch
+$ rosrun mc_rtc_ticker mc_rtc_ticker
+{% endhighlight %}
+

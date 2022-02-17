@@ -1,0 +1,61 @@
+<p>There is three ways to integrate your robot to mc_rtc:</p>
+
+<ol>
+  <li>Using the <code>env</code>/<code>object</code> loader</li>
+  <li>Using a JSON/YAML file and the <code>json</code> loader</li>
+  <li>Write a C++ <code>RobotModule</code> implementation</li>
+</ol>
+
+<p>The first approach is well suited for simple robots that don't have sensors attached to them (i.e. objects and environments as the name suggest). The requirements for such robots are provided in the following section.</p>
+
+<p>The second approach allow you to provide more information about the robot.</p>
+
+<p>The last option has the most flexibility. The main benefits are that your robot will be extremely easy to load and you can easily provide several variants of your robot with minimal efforts.</p>
+
+{% include h2.html title="Using the <code>env</code>/<code>object</code> loader" %}
+
+<p>When loading the robot, use the following invokation:</p>
+
+{% include show_sources.html sources=page.env_object_example copy=false id="env_object_example" %}
+
+{% include h3.html title="Organization of your robot description package" %}
+
+<p>Given a robot's description folder located at <code>LOCATION</code> and a robot named <code>NAME</code>, mc_rtc expects your data to be organized as follows:</p>
+
+<ul>
+  <li>the URDF is located at <code>$LOCATION/urdf/$NAME.urdf</code></li>
+  <li>the RSDF files are in the folder <code>$LOCATION/rsdf/$NAME/</code></li>
+  <li>the convex files are in the folder <code>$LOCATION/convex/$NAME/</code> and for a given body: <code>BODY</code>, it's collision convex is in <code>$BODY-ch.txt</code></li>
+</ul>
+
+<p>Furthermore:</p>
+
+<ul>
+  <li>the RSDF folder can be empty or not exist</li>
+  <li>some (or all) bodies don't have to have an associated convex file</li>
+  <li>convex files that cannot be associated to a body automatically will be ignored</li>
+</ul>
+
+{% include h2.html title="Using the <code>json</code> loader" %}
+
+<p>When loading the robot, use the following invokation:</p>
+
+{% include show_sources.html sources=page.json_example copy=false id="json_example" %}
+
+{% include h3.html title="Data expected in the JSON/YAML file" %}
+
+<p>The <code>json</code> module expects your data to be organized as the <code>env</code> module. However, you can override some expectations by providing the data yourself. Furthermore, you can provide data for force sensors, body sensors, minimal self-collisions set and so-on.</p>
+
+<p>See the <a href="{{site.baseurl}}/json.html#mc_rbdyn/RobotModule" target="blank_">JSON/YAML documentation</a> for details on the data expected by the <code>json</code> loader.</p>
+
+{% include h2.html title="Implementing your own <code>RobotModule</code>" %}
+
+<p>In this approach, we will write a C++ class to provide a <code>RobotModule</code> for our robot and overwrite the data members that we wish to provide. As in the minimal example below:</p>
+
+{% include show_sources.html sources=page.robot_module_example copy=false id="robot_module_example" %}
+
+<p>See {% doxygen mc_rbdyn::RobotModule %} documentation for all members that can be provided.</p>
+
+{% include h2.html title="Get started" %}
+
+<p>Use the <a href="https://github.com/mc-rtc/new-robot-module/">mc-rtc/new-robot-module</a> template project to get started quickly. This template provides the barebone structure for a C++ <code>RobotModule</code> or a YAML <code>RobotModule</code></p>

@@ -1,0 +1,43 @@
+<p>mc_rtcでは、どのインターフェイスでも、{% doxygen mc_control::MCGlobalController %}クラスを使用して本フレームワークのコントローラーが初期化されて実行されます。特に、反復実行時には{% doxygen mc_control::MCGlobalController::run() %}関数が実行されます。</p>
+
+<p>本フレームワークではプラグインシステムが採用されており、このrun関数の開始時と終了時に実行されるコンポーネントを記述できます。</p>
+
+<p>このプラグインはさまざまな用途に使用できます。</p>
+
+<ul>
+  <li>サードパーティ製のミドルウェア（ROSプラグインなど）を使用してデータをパブリッシュする</li>
+  <li>mc_rtcが実行されているのとは異なるインターフェイスで取得されたセンサーデータを提供する</li>
+  <li>単一のコントローラーの守備範囲を超えた上位機能を提供する</li>
+</ul>
+
+{% include h2.html title="独自のプラグインを記述する" %}
+
+<p>プラグインを記述するには、{% doxygen mc_control::GlobalPlugin %}クラスから継承したクラスを記述します。さらに、以下の関数を実装します。</p>
+
+<ul>
+  <li>{% doxygen mc_control::GlobalPlugin::init() %}は、{% doxygen mc_control::MCGlobalController::init() %}が呼び出されたときにmc_rtcによって呼び出されます。</li>
+  <li>{% doxygen mc_control::GlobalPlugin::reset() %}は、コントローラーが変更されたときにmc_rtcによって呼び出されます。</li>
+  <li>{% doxygen mc_control::GlobalPlugin::before() %}は、実行関数の開始時に呼び出されます。</li>
+  <li>{% doxygen mc_control::GlobalPlugin::after() %}は、実行関数の終了時に呼び出されます。</li>
+</ul>
+
+<div class="alert alert-warning">最初のコントローラーの起動時、mc_rtcによってresetメソッドは呼び出されません。この場合、initメソッドのみが呼び出されます。必要であれば、initメソッドからresetメソッドを呼び出すことができます。</div>
+
+<p>最後に、mc_rtcに読み込み可能な共有ライブラリに、作成したクラスをエクスポートします。これを実現するには、mc_rtcで用意されている<code>EXPORT_MC_RTC_PLUGIN</code>マクロを使用するのが最も簡単です。これは、コントローラー、状態、ロボットモジュール用のマクロと似ています。</p>
+
+{% include h3.html title="Customize what runs and when" %}
+
+<p>{% doxygen mc_cotrol::GlobalPlugin::configuration() %}メソッドを置き換えることもできます。これにより、実行ループの前後でプラグインを実行させないようにmc_rtcに指示したり、コントローラーが実行されていないときにプラグインを実行するかどうかをmc_rtcに指示することが可能です。</p>
+
+<p>デフォルトでは、<code>before</code>メソッドと<code>after</code>メソッドは常に呼び出されます。</p>
+
+<div class="alert alert-info">さらに、全く実行されないプラグインを読み込ませることもできます。データストアやタスクにメソッドを登録しておき、メタタスクや制約条件ローダーで実行を抑制する場合に便利です。</div>
+
+{% include h3.html title="自動読み込み" %}
+
+<p>CMakeマクロ<code>add_plugin</code>によって、<code>AUTOLOAD_${PLUGIN}_PLUGIN</code>. という名前のCMakeオプションが自動的に作成されます。このオプションが<code>ON</code>の場合、特殊なファイルが<code>${MC_RTC_INSTALL_PREFIX}/lib/mc_plugins/autoload</code>にインストールされます。このファイルが存在する場合、<code>Plugins</code>設定エントリの内容にかかわらず、プラグインが自動的に読み込まれます。</p>
+
+{% include h2.html title="さあ始めましょう" %}
+
+<p><a href="https://github.com/mc-rtc/new-plugin/">mc-rtc/new-plugin</a>テンプレートプロジェクトを使用すると、すぐに始められます。このテンプレートには、C++<code>GlobalPlugin</code>用の必要最小限の構造が記述されています。</p>
+
