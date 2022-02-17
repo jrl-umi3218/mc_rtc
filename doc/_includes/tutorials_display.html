@@ -1,0 +1,24 @@
+{% for cat in site.data.tutorials %}
+  {% cycle '<div class="row justify-content-center">', "" %}
+  <div class="col-12 col-lg-4">
+
+    <h3 id="tutorials-{{cat.id}}">{%t tutorials.{{cat.id}}.title %}</h3>
+
+    <p>{%t tutorials.{{cat.id}}.desc %}</p>
+
+    <ul>
+      {% for tuto in cat.tutorials %}
+      <li><a href="{{site.baseurl}}/tutorials/{{cat.id}}/{{tuto.id}}.html">{%t tutorials.{{cat.id}}.{{tuto.id}}.title %}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% if forloop.last == true %}
+    {% assign parity = forloop.index0 | modulo: 2 %}
+    {% if parity == 0 %}
+      <div class="col-lg-4"></div>
+    {% endif %}
+    </div>
+  {% else %}
+  {% cycle "", "</div>" %}
+  {% endif %}
+{% endfor %}

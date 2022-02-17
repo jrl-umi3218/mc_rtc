@@ -1,153 +1,100 @@
 -
   id: introduction
-  title : Introduction
-  desc: The following tutorials will help you with the installation of the framework, learning to run controllers in the interface of your choice and start programming your own controllers.
   tutorials:
     -
       id: installation-guide
-      title: Installation guide
     -
       id: configuration
-      title: Configuring mc_rtc
     -
       id: running-a-controller
-      title: Running a controller
     -
       id: first-controller
-      title: Your first controller with mc_rtc
     -
       id: com-controller
-      title: Controlling the CoM
     -
       id: ef-controller
-      title: Controlling an end-effector (and loading)
     -
       id: multi-robot-controller
-      title: Multi-robot controller
 -
   id: usage
-  title: Framework usage
-  desc: The following tutorials cover broad topics concerning the framework that are not specifically related to a controller's implementation
   tutorials:
     -
       id: mc_rtc_configuration
-      title: <code>mc_rtc::Configuration</code> general purpose configuration
     -
       id: logging
-      title: Logging data
     -
       id: console-logging
-      title: Printing information to the screen
     -
       id: gui
-      title: Graphical User Interface (GUI)
     -
       id: live-plotting
-      title: Display plots live from the controller
     -
       id: ros
-      title: ROS integration
     -
       id: global-plugins
-      title: Using global plugins
 -
   id: tools
-  title: Framework tools
-  desc: These tutorials introduce useful tools developed around mc_rtc
   tutorials:
     -
       id: mc_log_utils
-      title: Log manipulation
     -
       id: mc_log_ui
-      title: Log plotting
     -
       id: mc_log_visualization
-      title: Replay visualization
     -
       id: mc_surfaces_visualization
-      title: Visualizing surfaces
     -
       id: mc_convex_visualization
-      title: Visualizing convexes
 -
   id: recipes
-  title: Control recipes
-  desc: The following tutorials introduce recipes useful in complex controllers. Either methodology (e.g. FSM) or behaviours (e.g free a contact degree-of-freedom)
   tutorials:
     -
       id: fsm
-      title: Using the FSM facilities
     -
       id: fsm-main-states
-      title: Main FSM states
     -
       id: fsm-example
-      title: FSM controller in practice
     -
       id: derived-fsm
-      title: Deriving the FSM controller
     -
       id: datastore
-      title: "DataStore: Sharing Objects"
     -
       id: observers
-      title: State Observation Pipelines
     -
       id: lipm-stabilizer
-      title: Using the LIPM Stabilizer
     -
       id: speed-constraint
-      title: Constraint the speed of a body
     -
       id: moving-a-contact
-      title: Moving a contact
     -
       id: contact-dof
-      title: Change the DoF constraints on a contact
     -
       id: joint-select
-      title: Select specific joints for a task
     -
       id: dim-weight
-      title: Affect different weight to different axis in the task space
     -
       id: joint-stiffness
-      title: Joints Stiffness
     -
       id: com-constraint
-      title: Constraining the accessible region of the CoM
 -
   id: samples
-  title: Samples
-  desc: This section explains the sample controllers
   tutorials:
     -
       id: list-of-samples 
-      title: Available sample controllers 
     -
       id: sample-admittance
-      title: Admittance sample controller
 -
   id: advanced
-  title: Advanced topics
-  desc: These tutorials cover specific topics that most user should not have to deal with.
   tutorials:
     -
       id: new-plugin
-      title: Implement a new plugin for mc_rtc
     -
       id: new-interface
-      title: Implement a new mc_rtc interface
     -
       id: new-environment
-      title: Environment creation for mc_rtc
     -
       id: new-robot
-      title: Integrate a new robot in mc_rtc
     -
       id: support-mc-rtc-build-static
-      title: Supporting MC_RTC_BUILD_STATIC in your code
     -
       id: debug-lssol-output-6
-      title: Debugging LSSOL output 6

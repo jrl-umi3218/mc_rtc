@@ -1,10 +1,5 @@
-- name: "Interfaces"
-  page: "interfaces.html"
-- name: "Robots"
-  page: "robots.html"
-- name: "Tutorials"
-  page: "tutorials.html"
-- name: "API documentation"
-  page: "doxygen.html"
-- name: "JSON/YAML documentation"
-  page: "json.html"
+- interfaces
+- robots
+- tutorials
+- doxygen
+- json

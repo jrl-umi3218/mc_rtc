@@ -1,0 +1,152 @@
+langs:
+  en: 英語
+global:
+  credits: クレジット
+nav:
+  interfaces: インタフェース
+  robots: ロボット
+  tutorials: チュートリアル
+  doxygen: API ドキュメンテーション
+  json: JSON/YAML ドキュメンテーション
+  demo: オンラインデモ
+titles:
+  tutorials: チュートリアル
+  credits: クレジット
+  doxygen: Doxygen
+  index: 概要
+  interfaces: インターフェイス
+  robots: ロボット
+  # FIXME TRANSLATE
+  json: Schema documentation
+interfaces:
+  package: インターフェイスパッケージ
+  OpenRTM: OpenRTMは、コンポーネントベースでロボットシステムを開発するためのソフトウェアプラットフォームです。HRPロボットやChoreonoidシミュレータで使用されています。インターフェースはOpenRTMのコンポーネントであり、制御システムに組み込むことができます。
+  ROS: ROS（Robot Operating System）は、ロボットアプリケーションの構築を支援するソフトウェアライブラリおよびツール群です。mc_rtc_rosは、ROS環境と統合し、シミュレーション不要のインターフェースと各種GUIツールを提供するツール群です。
+  NAOqi: NAOqiは、ソフトバンクロボティクスのロボットをプログラミングするために使用されるプログラミングフレームワークです。mc_naoqiインターフェースは、NAOとPepperロボットの全身制御にmc_rtcを使用することを可能にしています。
+  V-REP: V-REPは、Coppelia Robotics社のロボットシミュレータです。mc_vrepは、V-REPシミュレータ環境において、mc_rtcをロボットのコントローラとして使用することができます。
+  libfranka: libfrankaはFranka Emikaのロボットを制御するためのインタフェースです。mc_franka インターフェースにより、mc_rtc を使用してこれらのロボットを制御することができます。全ての動作モード（位置、速度、トルク）に対して複数のロボットをサポートし、パンダポンプデバイスとの統合も可能です。
+  UDP Communication: UDPベースのクライアント/サーバーインターフェースの汎用実装。クライアントは通常のmc_rtcインターフェースで、UDPソケットを通してデータを取得します。サーバーは独自のロボットとのインターフェイスとして簡単に実装することができます。<br />現在、以下のサーバー実装が利用可能です。<ul><li>OpenRTMサーバーが提供され、HRPロボットで使用することができます。</li><li>また、<a href="https://hal.archives-ouvertes.fr/hal-02101562">BAZAR</a>ロボット用のサーバー実装も用意されています。</li></ul>
+robots:
+  description: 説明
+  module: モジュール
+  link: リンク
+tutorials:
+  introduction:
+    title : イントロダクション
+    desc: 以下のチュートリアルは、フレームワークのインストール方法、お好みのインターフェイスでのコントローラの実行方法、独自のコントローラのプログラミング方法の学習を手助けするものです。
+    installation-guide:
+      title: インストールガイド
+      install_apt:
+        - name: 安定版のインストール
+          lang: bash
+          source: |
+            # ミラーをセットアップする
+            curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/stable/setup.deb.sh' | sudo -E bash
+            # パッケージをインストールする
+            sudo apt install libmc-rtc-dev mc-rtc-utils
+            # ROSディストリビューションのミラーがセットアップされているものと仮定
+            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
+        - name: 最新版のインストール
+          lang: bash
+          source: |
+            # ミラーをセットアップする
+            curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/head/setup.deb.sh' | sudo -E bash
+            # パッケージをインストールする
+            sudo apt install libmc-rtc-dev mc-rtc-utils
+            # ROSディストリビューションのミラーがセットアップされているものと仮定
+            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
+    configuration:
+      title: 設定
+    running-a-controller:
+      title: コントローラの実行
+    first-controller:
+      title: mc_rtcを用いた最初のコントローラ
+    com-controller:
+      title: 重心の制御
+    ef-controller:
+      title: エンドエフェクタの制御方法 (及びロードの方法)
+    multi-robot-controller:
+      title: マルチロボットコントローラ
+  usage:
+    title: フレームワークの利用法
+    desc: 以下のチュートリアルは、コントローラの実装に特に関連しない、フレームワークに関する幅広いトピックをカバーしています。
+    mc_rtc_configuration:
+      title: <code>mc_rtc::Configuration</code> 設定
+    logging:
+      title: データのロギング
+    console-logging:
+      title: 画面への情報の表示
+    gui:
+      title: グラフィカルユーザインタフェース (GUI)
+    live-plotting:
+      title: コントローラからの情報のオンライン表示
+    ros:
+      title: ROS統合
+    global-plugins:
+      title: グローバルプラグインの利用
+  tools:
+    title: ツール
+    desc: これらのチュートリアルはmc_rtc関連の便利なツールを紹介します。
+    mc_log_utils:
+      title: ログの操作
+    mc_log_ui:
+      title: ログの可視化
+    mc_log_visualization:
+      title: ログの再生
+    mc_surfaces_visualization:
+      title: サーフェスの可視化
+    mc_convex_visualization:
+      title: 凸形状の可視化
+  recipes:
+    title: コントローラ実装の方法
+    desc: 以下のチュートリアルでは、複雑なコントローラを実装する際に有用なレシピを紹介します。
+    fsm:
+      title: FSM機能の利用
+    fsm-main-states:
+      title: 主なFSMの状態
+    fsm-example:
+      title: FSMコントローラの例
+    derived-fsm:
+      title: FSMコントローラの継承
+    datastore:
+      title: データ共有機能"DataStore"
+    observers:
+      title: ステートオブザベーションパイプライン
+    lipm-stabilizer:
+      title: LIPMスタビライザの利用
+    speed-constraint:
+      title: 物体速度の拘束
+    moving-a-contact:
+      title: 接触の移動
+    contact-dof:
+      title: 接触の拘束自由度の変更
+    joint-select:
+      title: タスクで特定の関節を利用する方法
+    dim-weight:
+      title: 作業空間の座標軸方向に異なる重み付けを行う方法
+    joint-stiffness:
+      title: 関節の重み付け
+    com-constraint:
+      title: 重心位置の存在可能な領域の拘束
+  samples:
+    title: サンプル
+    desc: コントローラのサンプルを紹介します。
+    list-of-samples :
+      title: コントローラのリスト
+    sample-admittance:
+      title: アドミッタンスコントローラ
+  advanced:
+    title: 上級者向けのトピック
+    desc: こちらのチュートリアルではそれほど一般的ではないやや特殊なトピックについて触れます。
+    new-plugin:
+      title: mc_rtc用の新しいプラグインの実装方法
+    new-interface:
+      title: 新しいmc_rtcインタフェースの実装方法
+    new-environment:
+      title: mc_rtcにおける環境データの作成
+    new-robot:
+      title: 新たなロボットをmc_rtcでサポートする方法
+    support-mc-rtc-build-static:
+      title: MC_RTC_BUILD_STATICをプログラムでサポートする方法
+    debug-lssol-output-6:
+      title: Debugging LSSOL output 6

@@ -1,44 +1,8 @@
 ---
 layout: default
-title: Tutorials
+title: titles.tutorials
 ---
 
-<div class="row">
-  <div class="col-12 offset-lg-2 col-lg-8">
+{% translate_file tutorials.html %}
 
-  <h1>Tutorials</h1>
-
-  <p>Welcome to mc_rtc tutorials. You will hopefully find useful information on this page to get started with the framework and use it to its full extent.</p>
-
-  <p>mc_rtc is a super-set of the {% link SpaceVecAlg %}, {% link RBDyn %} and {% link Tasks %} libraries which provides a friendlier and easier interface for the user. You can write your controller code either in C++ or Python. When applicable, examples will be provided in both languages.</p>
-
-  <p>The tutorials presented here assume some familiarity with the {% link SpaceVecAlg %} and {% link RBDyn %} libraries as well as a basic understanding of QP-based control such as implemented in {% link Tasks %}. Unfamiliar users can refer to the {% link SpaceVecAlg and RBDyn presentations %} and the {% link SpaceVecAlg and RBDyn tutorials %} by Joris Vaillant.</p>
-
-  </div>
-
-</div>
-
-{% for cat in site.data.tutorials %}
-  {% cycle '<div class="row justify-content-center">', "" %}
-  <div class="col-12 col-lg-4">
-
-    <h3 id="tutorials-{{cat.id}}">{{ cat.title }}</h3>
-
-    <p>{{ cat.desc }}</p>
-
-    <ul>
-      {% for tuto in cat.tutorials %}
-      <li><a href="{{site.baseurl}}/tutorials/{{cat.id}}/{{tuto.id}}.html">{{tuto.title}}</a></li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% if forloop.last == true %}
-    {% assign parity = forloop.index0 | modulo: 2 %}
-    {% if parity == 0 %}
-      <div class="col-lg-4"></div>
-    {% endif %}
-    </div>
-  {% else %}
-  {% cycle "", "</div>" %}
-  {% endif %}
-{% endfor %}
+{% include tutorials_display.html %}

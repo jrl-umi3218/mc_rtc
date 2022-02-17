@@ -1,40 +1,34 @@
 - name: OpenRTM
-  desc: OpenRTM is a software platform for component based development of robot systems. It is used in the HRP robots and in the Choreonoid simulator. The interface is an OpenRTM component that can be integrated in a control system.
   url: https://openrtm.org/openrtm/
   icon: openrtm.png
   pkg:
     name: mc_openrtm
     url: https://github.com/jrl-umi3218/mc_openrtm
 - name: ROS
-  desc: ROS, the Robot Operating System, is a set of software libraries and tools to help you build robot applications. mc_rtc_ros is a set of tools integrated with the ROS environment to provide a simulation-free interface and various GUI tools
   icon: ros.png
   url: https://www.ros.org/
   pkg:
     name: mc_rtc_ros
     url: https://github.com/jrl-umi3218/mc_rtc_ros
 - name: V-REP
-  desc: V-REP is a robot simulator by Coppelia Robotics. mc_vrep allows to use mc_rtc as a controller for your robot(s) inside the V-REP simulator environment.
   url: http://coppeliarobotics.com/
   icon: vrep.png
   pkg:
     name: mc_vrep
     url: https://github.com/jrl-umi3218/mc_vrep
 - name: NAOqi
-  desc: NAOqi is the programming framework used to program SoftBank Robotics robots. The mc_naoqi interface allows to use mc_rtc for the whole-body control of the NAO and Pepper robots.
   url: http://doc.aldebaran.com/2-5/index_dev_guide.html
   icon: naoqi.png
   pkg:
     name: mc_naoqi
     url: https://github.com/jrl-umi3218/mc_naoqi
 - name: libfranka
-  desc: libfranka is the interface used to control Franka Emika robots. The mc_franka interface allows to use mc_rtc to control these robots. It provides multiple robot support for all operation modes (position, velocity and torques) as well as integration with the panda pump device.
   url: https://github.com/frankaemika/libfranka
   icon: mc_franka.png
   pkg:
     name: mc_franka
     url: https://github.com/jrl-umi3218/mc_franka
 - name: UDP Communication
-  desc: A generic UDP-based client/server interface implementation. The client is a regular mc_rtc interface that gets data through UDP sockets. The server can easily be implemented to interface with your own robot.<br />The following server implementations are currently available&#58; <ul><li>An OpenRTM server is provided and may be used with HRP robots.</li><li>A server implementation is also available for the <a href="https://hal.archives-ouvertes.fr/hal-02101562">BAZAR</a> robot.</li></ul>
   url: https://openrtm.org/openrtm/
   icon: mc_udp.png
   pkg:

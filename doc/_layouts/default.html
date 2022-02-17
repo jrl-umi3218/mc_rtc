@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% if page.title %}{{page.title}} - {% else if layout.title %}{{layout.title}} - {% endif %}mc_rtc</title>
+    <title>{% if page.title %}{% t page.title %} - {% else if layout.title %}{%t layout.title %} - {% endif %}mc_rtc</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{site.baseurl}}/assets/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="{{site.baseurl}}/assets/favicons/favicon-32x32.png">
@@ -52,27 +52,15 @@
       <div class="collapse navbar-collapse" id="navbarText">
         <div class="navbar-nav mr-auto">
           {% for itm in site.data.nav %}
-          {% if page.name == itm.page %}
-            {% assign active = "active" %}
-          {% else %}
-            {% assign active = "" %}
-          {% endif %}
-          {% if itm.items %}
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle {{active}}" href="#" id="{{itm.id}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{itm.name}}</a>
-            <div class="dropdown-menu" arial-labelledby="{{itm.id}}">
-              <a class="dropdown-item" href="{{site.baseurl}}/{{itm.page}}">{{itm.name}}</a>
-              <div class="dropdown-divider"></div>
-              {% for subitm in itm.items %}
-                <a class="dropdown-item" href="{{site.baseurl}}/{{subitm.page}}">{{subitm.name}}</a>
-              {% endfor %}
-            </div>
-          </div>
-          {% else %}
-          <a class="nav-item nav-link {{active}}" href="{{site.baseurl}}/{{itm.page}}">{{itm.name}}</a>
-          {% endif %}
+            {% capture page_name %}{{itm}}.html{% endcapture %}
+            {% if page.name == page_name %}
+              {% assign active = "active" %}
+            {% else %}
+              {% assign active = "" %}
+            {% endif %}
+            <a class="nav-item nav-link {{active}}" href="{{site.baseurl}}/{{itm}}.html">{% t nav.{{itm}} %}</a>
           {% endfor %}
-          <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">Online demonstration</a>
+          <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">{% t nav.demo %}</a>
         </div>
         <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_">{% octicon mark-github height:25 width:25 %}</a>
       </div>
@@ -90,7 +78,7 @@
             Copyright &copy; CNRS-AIST JRL, CNRS LIRMM 2015-2020
           </div>
           <div class="col-4 col-lg-2 text-right">
-            <a href="{{site.baseurl}}/credits.html">Credits</a>
+            <a href="{{site.baseurl}}/credits.html">{% t global.credits %}</a>
           </div>
         </div>
       </footer>

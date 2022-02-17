@@ -1,19 +1,26 @@
 ---
 layout: default
-title: Doxygen
+title: titles.doxygen
 ---
 
+{% if site.lang == "en" %}
+  {% assign doxygen_loc="doxygen-html" %}
+{% else %}
+  {% assign doxygen_loc="../doxygen-html" %}
+{% endif %}
+
 <div class="embed-responsive embed-responsive-1by1">
-  <iframe id="doxygen" class="embed-responsive-item" src="doxygen-html/index.html"></iframe>
+  <iframe id="doxygen" class="embed-responsive-item" src="{{doxygen_loc}}/index.html"></iframe>
 </div>
 
 <script type="text/javascript">
 var baseURI = new String(window.location);
-baseURI = baseURI.replace(window.location.hash, '').substring(0, baseURI.lastIndexOf('/') + 1) + 'doxygen-html/';
+baseURI = baseURI.replace(window.location.hash, '');
+baseURI = new URL(baseURI.substring(0, baseURI.lastIndexOf('/') + 1) + '{{doxygen_loc}}/').href;
 var param = window.location.hash.substring(1);
 if(param.length > 0)
 {
-  $('#doxygen').attr('src', 'doxygen-html/' + param + '.html');
+  $('#doxygen').attr('src', '{{doxygen_loc}}/' + param + '.html');
 }
 $('#doxygen').on("load", function()
   {
