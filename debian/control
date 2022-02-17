@@ -58,6 +58,7 @@ Section: libdevel
 Architecture: any
 Depends: cmake,
          libboost-filesystem-dev,
+         libboost-stacktrace-dev,
          libboost-system-dev,
          libboost-thread-dev,
          libboost-timer-dev,
