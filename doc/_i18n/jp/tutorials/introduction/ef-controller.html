@@ -1,0 +1,31 @@
+{% include h3.html title="概要" %}
+
+<p>エンドエフェクタータスクを作成してその目標を操作できます。</p>
+
+{% include show_sources.html sources=page.create_ef_task_sources copy=false id="create_ef_task" %}
+
+<p>これにより、メインロボットの<code>l_wrist</code>という名前のボディに作用するタスクが作成されます。タスクを作成した後に、その目標を変更することができます。</p>
+
+{% include show_sources.html sources=page.update_ef_task_sources copy=false id="update_ef_task" %}
+
+<p>このチュートリアルでは、先のチュートリアルと同様の作業を繰り返す代わりに、JSON形式またはYAML形式で記述された設定ファイルからタスクを読み込む方法について説明します。この方法は、本フレームワーク内のどのタスクについても使用できます。</p>
+
+{% include h3.html title="ディスクからタスクを読み込む" %}
+
+<p><em>注: 現在、これはC++側でのみ使用できます。</em></p>
+
+<p>ここでは、説明を簡単にするため、<code>task.json</code>（YAML形式の場合は<code>task.yaml</code>）というファイルが<code>/my/path/</code>ディレクトリに作成されているものとします。実際には、CMakeを使用してファイルをインストールし、インストールディレクトリをコントローラーに指定することもできますが、チュートリアルが複雑になるため、ここではその方法は使用しません。</p>
+
+<p>以下のタスク記述ファイルを使用します。</p>
+
+{% include show_sources.html sources=page.description_task_sources copy=false id="description_task" %}
+
+<p>以下のようにしてタスクの目標を取得します。</p>
+
+{% include show_sources.html sources=page.get_task_sources copy=false id="get_task" %}
+
+<p>手作業でタスクを作成した場合と同じように、このタスクを使用できます。この方法は、タスクの設定を試すのに非常に便利です。</p>
+
+{% include h3.html title="さらにタスクを読み込む" %}
+
+<p>このWebサイトの<a href="{{site.baseurl}}/json.html">JSON/YAMLのドキュメント</a>に、本フレームワークで読み込み可能なすべてのタスクと、それらのタスクを正しく読み込むためのJSON/YAML形式のサンプルが掲載されています。</p>

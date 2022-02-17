@@ -18,8 +18,7 @@ titles:
   index: 概要
   interfaces: インターフェイス
   robots: ロボット
-  # FIXME TRANSLATE
-  json: Schema documentation
+  json: Schema ドキュメンテーション
 interfaces:
   package: インターフェイスパッケージ
   OpenRTM: OpenRTMは、コンポーネントベースでロボットシステムを開発するためのソフトウェアプラットフォームです。HRPロボットやChoreonoidシミュレータで使用されています。インターフェースはOpenRTMのコンポーネントであり、制御システムに組み込むことができます。

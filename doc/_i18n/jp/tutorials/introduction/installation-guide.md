@@ -74,6 +74,8 @@ brew install mc_rtc
 {% include show_source.html id="vcpkg-json" lang="json" source=source copy=true %}
 
 
+{% comment %} FIXME Translation out-of-date from this point {% endcomment %}
+
 ### ソースからビルドする（スクリプトを使用する場合）
 
 LinuxまたはmacOSでビルドする場合は、「ビルド」のセクションに進んでください。Windowsユーザーの場合は以下に示す追加の指示に従ってください。

@@ -1,0 +1,25 @@
+<h4>前提条件</h4>
+
+<p>mc_rtc_tickerを使用してROS内でコントローラーを実行するには、ROSのサポート付きでmc_rtcをビルドする必要があります。また、{% link mc_rtc_ros %}も必要です。</p>
+
+<p>ここでは、<span class="text-monospace">roscore</span>が既に実行されているか、<span class="text-monospace">ROS_MASTER_URI</span>がアクティブなマスターを指していることを前提に説明します。</p>
+
+<h4>表示インターフェイスを実行する</h4>
+
+<p>以下のコマンドを実行します。すると、mc_rtcの専用パネルと使用するロボットのモデルが読み込まれた状態でRVizが起動します。</p>
+
+{% highlight bash %}
+$ roslaunch mc_rtc_ticker display.launch
+{% endhighlight %}
+
+<p>2台以上のロボットをシミュレートする場合は、新しいロボットモデルをシーンに追加する必要があります。ロボットに関する記述は、パラメーター<code>/control/env_N</code>にパブリッシュされます。ここで、Nはロボットのインデックスです。</p>
+
+<h4>コントローラーを実行する</h4>
+
+<p>コントローラーを実行するには、以下のコマンドを実行します。</p>
+
+{% highlight bash %}
+$ rosrun mc_rtc_ticker mc_rtc_ticker
+{% endhighlight %}
+
+<p>なお、表示インターフェイスを再起動せずにコントローラーを再起動することができます。</p>

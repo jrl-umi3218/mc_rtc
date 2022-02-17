@@ -1,0 +1,122 @@
+<p>Regardless of the interface you use, general options for mc_rtc are provided through the configuration files present on your system. Morever, some interfaces will let you specify another configuration file (often on the command line).</p>
+
+<p>This section covers both the different location where it might be loaded from as well as the main options that can be used in the file.</p>
+
+{% include h2.html title="Possible locations for mc_rtc configuration" %}
+
+<p>The following two files will be systematically read by mc_rtc (if they exist):</p>
+
+<ol>
+  <li>{% ihighlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endihighlight %}</li>
+  <li><ul><li>Linux/MacOS: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}</li><li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/mc_rtc.yaml{% endihighlight %}</li></ul></li>
+</ol>
+
+<p>The interface might load additional configuration file(s). Please refer to the interface documentation to find out about that.</p>
+
+{% include h2.html title="Configuration entries" %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Entry</th>
+      <th scope="col">Description</th>
+      <th scope="col">Example/Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">
+        {% include h6.html title="Main&nbsp;entries" %}
+      </th>
+      <td colspan="2">These entries cover most needs you might have</td>
+    </tr>
+    {% include mc_rtc_configuration_row.html entry="MainRobot" desc="This entry dictates the main robot used by all controllers. Most interface cannot infer the correct module to use based on the simulation environment so this is the user's responsibility to make sure the two match." example="MainRobot: JVRC1" %}
+    <tr>
+      <th scope="row">Enabled</th>
+      <td>Provides a list of enabled controllers. See the <a href="{{site.baseurl}}/tutorials/samples/list-of-samples.html">list of all available sample controllers</a>.</td>
+      <td>{% highlight yaml %}Enabled: [Posture, EndEffector, CoM]{% endhighlight %}</td>
+    </tr>
+    {% include mc_rtc_configuration_row.html entry="Default" desc="Select which of the enabled controllers will be started first. Note that if the default controller is not enabled or if no default entry is provided then the first enabled controller in the list is chosen as a default controller." example="Default: Posture" %}
+    {% include mc_rtc_configuration_row.html entry="Timestep" desc="The controller's timestep." example="Timestep: 0.005" %}
+    {% include mc_rtc_configuration_row.html entry="Log" desc="Dictate whether or not controllers will log their output." example="Log: true" %}
+    {% include mc_rtc_configuration_row.html entry="InitAttitudeFromSensor" desc="Intialize the robot's attitude from sensor or the robot module" example="InitAttitudeFromSensor: false" %}
+    {% include mc_rtc_configuration_row.html entry="InitAttitudeSensor" desc="Name of the BodySensor used for initialization of the robot's attitude. An empty name uses the default body sensor. Only used when <pre>InitAttitudeFromSensor=true</pre>" example="InitAttitudeSensor: \"\"" %}
+    <tr class="table-active">
+      <th scope="row">
+        {% include h6.html title="Logging&nbsp;options" %}
+      </th>
+      <td colspan="2">The following options affect the way mc_rtc deals with controller activity logging. They have no effect if logging is disabled.</td>
+    </tr>
+    {% include mc_rtc_configuration_row.html entry="LogDirectory" desc="This option dictates where the log files will be stored, defaults to a system temporary directory" example="LogDirectory: \"/tmp\"" %}
+    {% include mc_rtc_configuration_row.html entry="LogTemplate" desc="This option dictates the prefix of the log. The log file will then have the name: <pre>[LogTemplate]-[ControllerName]-[date].log</pre>" example="LogTemplate: \"mc-control\"" %}
+    {% include mc_rtc_configuration_row.html entry="LogPolicy" desc="This option dictates whether logging-related disk operations happen in a separate thread (\"threaded\") or in the same thread as the run() loop (\"non-threaded\"). This defaults to the non-threaded policy. On real-time systems, the threaded policy is strongly advised." example="LogPolicy: \"non-threaded\"" %}
+    <tr class="table-active">
+      <th scope="row">
+        {% include h6.html title="Module loading options" %}
+      </th>
+      <td colspan="2">
+The following options control the way mc_rtc loads additional modules from libraries (controllers, robot modules, observers, plugins).
+      </td>
+    </tr>
+    {% include mc_rtc_configuration_row.html entry="ControllerModulePaths" desc="This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for controller modules." example="ControllerModulePaths: [\"/one/path/to/controller/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="RobotModulePaths" desc="This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for robot modules." example="RobotModulePaths: [\"/one/path/to/robot/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="ObserverModulePaths" desc="This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for state observation modules." example="ObserverModulePaths: [\"/one/path/to/observer/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="GlobalPluginPaths" desc="This option allow you to specify <strong>additional</strong> directories where mc_rtc will look for global plugins." example="GlobalPluginPaths: [\"/one/path/to/global/plugin/\", \"/another/path/\"]" %}
+  </tbody>
+</table>
+
+{% include h2.html title="ROS plugin configuration" %}
+
+{% include h4.html title="Possible locations" %}
+
+<p>The following two files will be systematically read by mc_rtc (if they exist):</p>
+
+<ol>
+  <li>{% ihighlight bash %}${MC_PLUGINS_RUNTIME_INSTALL_PREFIX}/etc/ROS.yaml{% endihighlight %}</li>
+  <li><ul><li>Linux/MacOS: {% ihighlight bash %}$HOME/.config/mc_rtc/plugins/ROS.yaml{% endihighlight %}</li><li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/plugins/ROS.yaml{% endihighlight %}</li></ul></li>
+</ol>
+
+{% include h4.html title="Configuration entries" %}
+
+<p>The following table describes each possible sections in the ROS plugin configuration and their possible entries.</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Entry</th>
+      <th scope="col">Description</th>
+      <th scope="col">Example/Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">
+        {% include h6.html title="publish&nbsp;entries" %}
+      </th>
+      <td colspan="2">The following options only affect the publication of the robot's state in ROS.</td>
+    </tr>
+    {% include mc_rtc_configuration_row.html entry="control" desc="Publish the robot's control state (mc_rtc controller output)." example="control: true" %}
+    {% include mc_rtc_configuration_row.html entry="env" desc="Publish other robots control state (mc_rtc controller output for the non-main robot)." example="env: true" %}
+    {% include mc_rtc_configuration_row.html entry="real" desc="Publish the robot's observed state (i.e. the robot's state obtained from the observer pipeline)." example="real: true" %}
+    {% include mc_rtc_configuration_row.html entry="timestep" desc="Control the publication rate of the robot's controlled and real state." example="timestep: 0.01" %}
+  </tbody>
+</table>
+
+{% include h4.html title="Sample configuration" %}
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+{% highlight yaml %}
+# Control which data we publish and publishing rate
+publish:
+  # Publish the state of the controlled robot (ROS)
+  control: true
+  # Publish the state of the other robots (ROS)
+  env: true
+  # Publish the state of the real robot (ROS)
+  real: true
+  # Timestep of publication (ROS)
+  timestep: 0.01
+{% endhighlight %}
+  </div>
+</div>

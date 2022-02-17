@@ -1,23 +1,32 @@
-{% capture source %}{{ include.source | strip }}{% endcapture %}
+{% if include.translate %}
+  {% capture source %}{% translate_file {{ include.translate }} %}{% endcapture %}
+{% elsif include.include %}
+  {% capture source %}{% include {{ include.include }} %}{% endcapture %}
+{% else %}
+  {% capture source %}{{ include.source }}{% endcapture %}
+{% endif %}
+{% capture source %}{{ source | strip }}{% endcapture %}
 <div class="card bg-light card-source">
   <div class="card-body">
 {% if include.lang == "json" %}
-{% highlight json %}{{ source }}{% endhighlight %}
+  {% highlight json %}{{ source }}{% endhighlight %}
 {% elsif include.lang == "yaml" %}
-{% highlight yaml %}{{ source }}{% endhighlight %}
+  {% highlight yaml %}{{ source }}{% endhighlight %}
 {% elsif include.lang == "cpp" %}
-{% highlight cpp %}{{ source }}{% endhighlight %}
+  {% highlight cpp %}{{ source }}{% endhighlight %}
 {% elsif include.lang == "cmake" %}
-{% highlight cmake %}{{ source }}{% endhighlight %}
+  {% highlight cmake %}{{ source }}{% endhighlight %}
 {% elsif include.lang == "python" %}
-{% highlight python %}{{ source }}{% endhighlight %}
+  {% highlight python %}{{ source }}{% endhighlight %}
 {% elsif include.lang == "bash" %}
-{% highlight bash %}{{ source }}{% endhighlight %}
+  {% highlight bash %}{{ source }}{% endhighlight %}
+{% elsif include.lang == "raw" %}
+  {{ source }}
 {% else %}
   {% if include.lang %}
     <div class="text-danger">Cannot handle requested lang: {{include.lang}}</div>
   {% endif %}
-{% highlight text %}{{ source }}{% endhighlight %}
+  {% highlight text %}{{ source }}{% endhighlight %}
 {% endif %}
   {% if include.copy %}
     {% capture id %}{{ include.id }}{{ include.lang }}CopySource{% endcapture %}

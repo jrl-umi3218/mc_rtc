@@ -70,7 +70,15 @@
                   </ul>
                 </div>
               </div>
-              {{ content | toc_only }}
+              {% if is_sources %}
+                <ul id="toc" class="section-nav">
+                  <li class="toc-entry toc-h1">
+                    <a href="{{site.baseurl}}/tutorials/{{category.id}}/{{tutorial.id}}.html">{% t global.back_to_tutorial %}</a>
+                  </li>
+                </ul>
+              {% else %}
+                {{ content | toc_only }}
+              {% endif %}
             </div>
           </div>
         </div>
