@@ -16,6 +16,26 @@
       {% endfor %}
       <a class="nav-item nav-link" href="https://mc-rtc-demo.netlify.app/" target="blank_">{% t nav.demo %}</a>
     </div>
+    {% for lang in site.languages %}
+      {% if lang == "en" %}
+        {% assign lang_folder = "" %}
+      {% else %}
+        {% capture lang_folder %}/{{lang}}{% endcapture %}
+      {% endif %}
+      {% capture LANG %}{{ lang | upcase }}{% endcapture %}
+      {% if site.lang != lang %}
+        <a href="{{site.baseurl_root}}{{lang_folder}}{{page.url}}">
+      {% endif %}
+      {{LANG}}
+      {% if site.lang != lang %}
+        </a>
+      {% endif%}
+      {% if forloop.last %}
+        &nbsp;&nbsp;&nbsp;
+      {% else %}
+        &nbsp;|&nbsp;
+      {% endif %}
+    {% endfor %}
     <a href="https://github.com/jrl-umi3218/mc_rtc" target="blank_">{% octicon mark-github height:25 width:25 %}</a>
   </div>
 </header>
