@@ -1,5 +1,26 @@
 langs:
   en: 英語
+carousel:
+  previous: 前に戻る
+  next: 次に進む
+  SYHI2JmJ-lk: HRP-2改による自動運転
+  vFCFKAunsYM: HRP-4による階段の移動
+  C3Y2Xc6sEY4: 航空機製造現場におけるブレーカ操作のヒューマノイドによる実現
+  qzEnCGlT93s: 人-ロボットインタラクション
+  FT2CD1UiExs: HRP-5Pによるビジュアルサーボを用いたボルト締結作業の実行
+features:
+  easy:
+    heading: 複雑な問題を解決するシンプルなツール群
+    desc: 複雑なロボットによる複雑なロボットアプリケーションをシンプルな<a href="tutorials.html#tutorials-tools">グラフィカルツール群</a>を用いて実現することができます。
+  extensible:
+    heading: 拡張可能なインタフェース
+    desc: 特定の問題を解決するための新しいコンポーネントをC++/Python <a href="doxygen.html">API</a>を用いて少ないコード量で記述し、mc_rtcと統合することができます。
+  universal:
+    heading: 一度記述すれば、どこでも実行可能
+    desc: 同じプログラムをシミュレーションと実機の両方で利用可能です。既存の<a href="interfaces.html">インタフェース</a>に加え独自のインタフェースを利用することもできます。
+  robot:
+    heading: あなたのロボットも利用可能
+    desc: URDFファイルがあればあなたのロボットをmc_rtcフレームワークで動かし始めることができます。これらの<a href="robots.html">ロボット</a>はすでにサポートされており、すぐに利用可能です。
 global:
   credits: クレジット
   next_tutorial: 次のチュートリアル
@@ -149,5 +170,6 @@ tutorials:
       title: 新たなロボットをmc_rtcでサポートする方法
     support-mc-rtc-build-static:
       title: MC_RTC_BUILD_STATICをプログラムでサポートする方法
+    # FIXME Missing translation
     debug-lssol-output-6:
       title: Debugging LSSOL output 6

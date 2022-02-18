@@ -1,5 +1,26 @@
 langs:
   jp: Japanese
+carousel:
+  previous: Previous
+  next: Next
+  SYHI2JmJ-lk: Autonomous car driving by a humanoid robot
+  vFCFKAunsYM: HRP-4 climbing up stairs
+  C3Y2Xc6sEY4: "Humanoid in aircraft manufacturing: operating a circuit-breaker"
+  qzEnCGlT93s: "Human-Robot Interaction Applications"
+  FT2CD1UiExs: "HRP-5P performing bolt fastening with visual servoing"
+features:
+  easy:
+    heading: Simple tools for complex problems
+    desc: Design a complex robotic applications on complex robots using simple graphical <a href="tutorials.html#tutorials-tools">tools</a>.
+  extensible:
+    heading: Extensible interface
+    desc: Write new components to solve your specific problem and integrate with mc_rtc using our lean C++/Python <a href="doxygen.html">API</a>.
+  universal:
+    heading: Write once, run everywhere
+    desc: Run the same code in simulator(s) or on the robot. Use one of the existing <a href="interfaces.html">interface</a> or create your own.
+  robot:
+    heading: Use your bot
+    desc: Use your own robot in the framework, a single URDF file is enough to get you started. You can also use one of the available <a href="robots.html">robots</a>.
 global:
   credits: Credits
   next_tutorial: Next tutorial

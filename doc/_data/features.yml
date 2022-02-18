@@ -1,12 +1,4 @@
-- heading: Simple tools for complex problems
-  desc: Design a complex robotic applications on complex robots using simple graphical <a href="tutorials.html#tutorials-tools">tools</a>.
-  icon: easy.svg
-- heading: Extensible interface
-  desc: Write new components to solve your specific problem and integrate with mc_rtc using our lean C++/Python <a href="doxygen.html">API</a>.
-  icon: extensible.svg
-- heading: Write once, run everywhere
-  desc: Run the same code in simulator(s) or on the robot. Use one of the existing <a href="interfaces.html">interface</a> or create your own.
-  icon: universal.svg
-- heading: Use your bot
-  desc: Use your own robot in the framework, a single URDF file is enough to get you started. You can also use one of the available <a href="robots.html">robots</a>.
-  icon: robot.svg
+- easy
+- extensible
+- universal
+- robot
