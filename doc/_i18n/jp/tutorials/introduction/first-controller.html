@@ -1,0 +1,76 @@
+<p>このチュートリアルでは、mc_rtc用の新しいコントローラを作成する方法について説明します。今回の例では、JVRC1ロボットの首を左右に振るという簡単な動作にトライします。</p>
+
+{% include h3.html title="コントローラーのスケルトンを作成して実行する" %}
+
+<p><em>注:</em> mc_rtcのコントローラーは、すべて<code>MCController</code>クラスから派生しています。シンプルなコントローラーを記述する場合も、このクラスから派生させて必要な機能を記述してください。このチュートリアルでもその方法を使用します。ただし、より複雑なコントローラーを作成する場合は、<a href="{{site.baseurl}}/tutorials/recipes/fsm.html">有限オートマトン機能</a>を使用することを推奨します。</p>
+
+<div class="no_toc_section">
+
+{% include show_sources.html sources=page.make_new_controller copy=false id="make_new_controller" %}
+
+</div>
+
+{% include h3.html title="スケルトンコードをひとつずつ理解する" %}
+
+<p>まず、コンストラクターを見てみましょう。</p>
+
+{% include show_sources.html sources=page.constructor_sources copy=false id="constructor" %}
+
+<p>これらは非常に似ています。ここでは、基底クラスの既存のオブジェクトを使用して、基本的なコントローラーをセットアップします。</p>
+
+<ol>
+  <li>接触面制約条件を追加します。これで、接触面を設定した後にその接触面が動かなくなります。</li>
+  <li>キネマティクス制約条件を追加します。これで、関節の位置と速度の制限に従ってロボットが動くようになります。</li>
+  <li>ロボットの姿勢を制御するための姿勢制御タスクを追加します。</li>
+  <li>接触面を設定します。今回は力学的制御は行わないため、空の接触面セットを設定します。</li>
+</ol>
+
+<p>次に、<code>reset</code>関数を見てみましょう。この関数は、コントローラーの起動時（インターフェイスによって起動されたときや、コントローラーがオンラインになったとき）に呼び出されます。</p>
+
+{% include show_sources.html sources=page.reset_sources copy=false id="reset" %}
+
+<p>ここでは、単純に<code>MCController</code>クラスにデリゲートします（Pythonの場合は暗黙的にデリゲートされます）。 <code>reset_data</code> reset_dataには、インターフェイスによって与えられたロボットの初期状態が格納されています。デフォルトの実装では、ロボットが正しく初期化されたかどうかが確認され、姿勢制御タスクの目標として現在のロボットの姿勢が正しく設定されたかどうかが確認されます。</p>
+
+<p>次に、<code>run</code>関数が定義されています。この関数は、コントローラーのループ処理が実行されるたびに呼び出されます。</p>
+
+{% include show_sources.html sources=page.run_sources copy=false id="run" %}
+
+<p>ここでも、<code>MCController</code>クラスにデリゲートしています（先ほどと同じく、Pythonの場合は暗黙的にデリゲートされます）。この関数は、すべての処理が正しく実行された場合はtrueを返し、制御が中断された場合はfalseを返します。デフォルトの実装では、ユーザーのプログラムによって指定されたタスクと制約条件と共に二次計画法ソルバーが実行され、処理の結果得られた加速度を使用してロボットの目標状態が更新されます。</p>
+
+<p>そして、コードの最後でコントローラーがmc_rtcに読み込まれます。</p>
+
+{% include show_sources.html sources=page.create_sources copy=false id="createController" %}
+
+<p>この部分を修正する必要はおそらくありませんが、コメントに記載された点に注意してください。</p>
+
+{% include h3.html title="首を左右に振る" %}
+
+<p>まず、2つのプロパティをコントローラーに追加します。一つは、動かそうとしている首関節のインデックスを保持するプロパティ、もう一つは、首をどの方向に動かそうとしているかを示すプロパティです。</p>
+
+{% include show_sources.html sources=page.properties_sources copy=false id="properties" %}
+
+<p>関節のインデックスを初期化するには、ロボットのクラスを調べる必要があります。JVRC1では、首のヨー方向の関節名は<code>NECK_Y</code>となっています。そこで、コントローラーのコンストラクターで以下のコードを実行します。</p>
+
+{% include show_sources.html sources=page.init_jindex_sources copy=false id="init_jindex" %}
+
+<p>次に、ロボットの顔を左と右のどちらに向かせるかに応じて目標を更新する関数を記述します。</p>
+
+{% include show_sources.html sources=page.switch_target_sources copy=false id="switch_target" %}
+
+<p><em>注: <code>postureTask->posture()</code>で現在の目標を取得し、<code>postureTask->posture(new_posture)</code>でその目標を変更して全身の姿勢の目標を更新することもできます。ただし、ここでは人間にとってより読みやすいバージョンを使用しました。</em></p>
+
+<p最後に、現在のタスクの誤差に応じてロボットの動作が更新されるように、<code>run</code>関数を編集します。</p>
+
+{% include show_sources.html sources=page.update_target_sources copy=false id="update_target" %}
+
+<p><em>注: <code>postureTask->eval().norm()</code>を監視して、タスクのトータルの誤差を取得することもできます。ただし、今回は首のヨー方向の関節のみに着目します。</em></p>
+
+<p>このコントローラーを実行すると、ロボットが首を左右に振るのが分かります。次のチュートリアルでも、引き続きこのコントローラーを使用します。ただし、次回のサンプルコードでは、首を左右に振る今回のコードは使用しません。</p>
+
+<p>このコントローラーの完全なソースは、<a href="sources/first-controller.html">こちら</a>から入手できます。</p>
+
+{% include h4.html title="ロボット内の使用可能な関節を見つける" %}
+
+<p>このコントローラーを別のロボットで使いたくなったものの、ロボットのどの関節を使用できるかが分からない場合があると思います。そのような場合は、以下のスニペットにより、今回のサンプルコード内で<code>NECK_Y</code>の代わりに使用できる自由度1の関節のリストが出力されます。</p>
+
+{% include show_sources.html sources=page.show_joints_sources copy=false id="show_joints" %}

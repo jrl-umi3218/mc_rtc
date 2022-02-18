@@ -1,0 +1,4 @@
+["env", "/path/to/description", "name"]
+
+// object will load the robot with a floating base
+["object", "/path/to/description", "name"]

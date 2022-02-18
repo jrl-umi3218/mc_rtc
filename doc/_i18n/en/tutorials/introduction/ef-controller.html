@@ -1,0 +1,31 @@
+{% include h3.html title="The short story" %}
+
+<p>You can create an end-effector task and manipulate its objective:</p>
+
+{% include show_sources.html sources=page.create_ef_task_sources copy=false id="create_ef_task" %}
+
+<p>This will create a task on the body named <code>l_wrist</code> for the main robot. You can then modify its objective:</p>
+
+{% include show_sources.html sources=page.update_ef_task_sources copy=false id="update_ef_task" %}
+
+<p>Instead of repeating a similar experience as in the previous tutorials, this tutorial will show how we can load the task from a configuration file written in JSON or YAML. In fact, this will be applicable to any task in the framework.</p>
+
+{% include h3.html title="Loading the task from disk" %}
+
+<p><em>Note: for now, this is only available on the C++ side.</em></p>
+
+<p>To simplify this tutorial, we will consider that you have created a file <code>task.json</code> (resp. <code>task.yaml</code>) that is available in the directory <code>/my/path/</code>. In real-life, you could use CMake to install the file and provide the installation directory to your controller but this would make the tutorial more complex that it needs to be.</p>
+
+<p>The taks description file we will use will look like this:</p>
+
+{% include show_sources.html sources=page.description_task_sources copy=false id="description_task" %}
+
+<p>You can then obtain the task object this way:</p>
+
+{% include show_sources.html sources=page.get_task_sources copy=false id="get_task" %}
+
+<p>You can use this task as if you had created it manually, this is a great way to experiment with task settings.</p>
+
+{% include h3.html title="Give me more tasks" %}
+
+<p>The <a href="{{site.baseurl}}/json.html">JSON/YAML documentation</a> on this website shows all the tasks that can be loaded by the framework and what is expected in their JSON/YAML representation to be loaded correctly.</p>

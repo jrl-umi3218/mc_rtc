@@ -1,0 +1,43 @@
+<p>In mc_rtc, every interface uses the {% doxygen mc_control::MCGlobalController %} class to initialize and run the controllers in the framework. In particular, they will run the {% doxygen mc_control::MCGlobalController::run() %} function on every iteration.</p>
+
+<p>The plugin system allows one to write a component that will run at the start and/or end of this run function.</p>
+
+<p>These plugins can be used for a variety of purpose:</p>
+
+<ul>
+  <li>Publish data using a 3rd-party middleware (for example, the ROS plugin)</li>
+  <li>Provide sensor data that is obtained with a different interface than the one where mc_rtc is running</li>
+  <li>Provide high-level functionalities that are above a single controller scope</li>
+</ul>
+
+{% include h2.html title="Writing your own plugin" %}
+
+<p>To write a plugin you should write a class that derives from the {% doxygen mc_control::GlobalPlugin %} class. Then you must implement the following functions:</p>
+
+<ul>
+  <li>{% doxygen mc_control::GlobalPlugin::init() %} is called by mc_rtc when {% doxygen mc_control::MCGlobalController::init() %} is called</li>
+  <li>{% doxygen mc_control::GlobalPlugin::reset() %} is called by mc_rtc when the controller is changed</li>
+  <li>{% doxygen mc_control::GlobalPlugin::before() %} is called by mc_rtc at the beginning of the run function</li>
+  <li>{% doxygen mc_control::GlobalPlugin::after() %} is called by mc_rtc at the end of the run function</li>
+</ul>
+
+<div class="alert alert-warning">mc_rtc will not call the reset method when the first controller is started &mdash; only the init method is called in that case. If needed, you can call the reset method from the init method.</div>
+
+<p>Finally, your class must be exported in a shared library that can be loaded by mc_rtc. The simplest way to achieve this is to use the <code>EXPORT_MC_RTC_PLUGIN</code> macro in mc_rtc, similar to its counterpart for controllers, states and robot modules.</p>
+
+{% include h3.html title="Customize what runs and when" %}
+
+<p>Optionally, you can override the {% doxygen mc_cotrol::GlobalPlugin::configuration() %} method. This lets you inform mc_rtc that your plugin does not to run before or after the run loop or whether your plugin should run when the controller is not running.</p>
+
+<p>By default, a plugin's <code>before</code> and <code>after</code> method is always called.</p>
+
+<div class="alert alert-info">It is even possible to load a plugin that does not run at all. This can be useful to register methods in the datastore or tasks and constraints in the meta task and constraint loaders.</div>
+
+{% include h3.html title="Autoload" %}
+
+<p>The CMake macro <code>add_plugin</code> automatically creates a CMake option named <code>AUTOLOAD_${PLUGIN}_PLUGIN</code>. When this option is <code>ON</code>, a special file will be installed in <code>${MC_RTC_INSTALL_PREFIX}/lib/mc_plugins/autoload</code>. When this file is present, the plugin will be automatically loaded regardless of the <code>Plugins</code> configuration entry.</p>
+
+{% include h2.html title="Get started" %}
+
+<p>Use the <a href="https://github.com/mc-rtc/new-plugin/">mc-rtc/new-plugin</a> template project to get started quickly. This template provides the barebone structure for a C++ <code>GlobalPlugin</code></p>
+

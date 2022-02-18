@@ -1,0 +1,29 @@
+<div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    {% for itm in site.data.carousel %}
+    <li data-target="#carouselIndicators" data-slide-to="{{forloop.index0}}" {% if forloop.index0 == 0 %}class="active"{% endif %}></li>
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner">
+    {% for itm in site.data.carousel %}
+    <div class="carousel-item {% if forloop.index0 == 0 %}active{% endif %}">
+      <div class="mx-auto w-75">
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{itm.youtube}}?rel=0"></iframe>
+        </div>
+      <div class="carousel-caption d-none d-md-block">
+        <h3>{% t carousel.{{itm.youtube}} %}</h3>
+      </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">{% t carousel.previous %}</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">{% t carousel.next %}</span>
+  </a>
+</div>

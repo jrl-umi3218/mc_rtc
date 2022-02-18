@@ -1,0 +1,4 @@
+["env", "/path/to/description", "name"]
+
+// オブジェクトによってロボットと浮遊ベースが読み込まれる
+["object", "/path/to/description", "name"]

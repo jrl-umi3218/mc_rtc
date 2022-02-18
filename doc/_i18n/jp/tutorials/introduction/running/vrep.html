@@ -1,0 +1,19 @@
+<h4>前提条件</h4>
+
+<p>このインターフェイスを実行するには、お使いのシステムに{% link mc_vrep %}と{% link V-REP %}がインストールされている必要があります。</p>
+
+<h4>コントローラーを実行する</h4>
+
+<p>まず、V-REPを起動し、制御したいロボットと共にシーンを読み込みます。このとき、mc_rtcが制御対象ロボットに合わせて設定されていることを確認してください。</p>
+
+<p>シミュレーションを開始してコントローラーを実行するには、以下のコマンドを実行します。</p>
+
+{% highlight bash %}
+$ mc_vrep
+{% endhighlight %}
+
+<p>シミュレーションを停止するには、mc_vrepのコマンドシェルで<span class="text-monospace">stop</span>と入力します。</p>
+
+{% translate_file tutorials/introduction/running/feedback.html %}
+
+<p>注: V-REPで実現可能な範囲でのみ3次元表示できます。</p>

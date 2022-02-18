@@ -10,7 +10,9 @@ interfaces:
     name: V-REP (mc_vrep)
 ---
 
-<p>This tutorial explains how to run a controller for some of the interfaces available with mc_rtc. This is meant as a starting point. Please refer to each interface documentation for details regarding the available options.</p>
+{% translate_file tutorials/introduction/running-a-controller.html %}
+
+<div class="no_toc_section">
 
 <ul class="nav nav-tabs" id="interfaceTab" role="tablist">
   {% for itf in page.interfaces %}
@@ -24,9 +26,11 @@ interfaces:
     <div class="tab-pane{% if forloop.index0 == 0 %} show active{% endif %}" id="{{itf.id}}TabContent" role="tabpanel" arial-labelledby="{{itf.id}}Tab">
       <div class="card bg-light">
         <div class="card-body">
-        {% include tutorials/introduction/running/{{itf.id}}.html %}
+          {% translate_file tutorials/introduction/running/{{itf.id}}.html %}
         </div>
       </div>
     </div>
   {% endfor %}
+</div>
+
 </div>

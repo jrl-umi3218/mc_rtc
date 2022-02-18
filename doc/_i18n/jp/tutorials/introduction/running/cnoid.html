@@ -1,0 +1,24 @@
+<h4>前提条件</h4>
+
+<p>このインターフェイスを実行するには、お使いのシステムに{% link mc_openrtm %}がインストールされている必要があります。さらに、{% link Choreonoid %}と、使用するロボットのシミュレーションファイルが必要です。JVRC-1用のサンプルが用意されています。</p>
+
+<h4>コントローラーを実行する</h4>
+
+<p>Choreonoidでシミュレーションファイルを開きます。例えば、JVRCのサンプルに付属している{% link mc_openrtm %}を使用します。</p>
+
+{% highlight bash %}
+# シミュレーションファイルがインストールされているディレクトリに移動する
+$ cd /usr/local/share/hrpsys/samples/JVRC1
+# シミュレーションファイルを開く
+$ choreonoid sim_mc.cnoid
+{% endhighlight %}
+
+<p>ボタンをクリックし、Choreonoidによるシミュレーションを開始します。このとき、コントローラーも起動されます。以下のようにしてコマンドラインからシミュレーションを直接開始できます。</p>
+
+{% highlight bash %}
+$ choreonoid sim_mc.cnoid --start-simulation
+{% endhighlight %}
+
+{% translate_file tutorials/introduction/running/feedback.html %}
+
+<p>注: Choreonoidで実現可能な範囲でのみ3次元表示が行えます。</p>

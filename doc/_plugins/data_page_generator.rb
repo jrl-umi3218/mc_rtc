@@ -49,7 +49,7 @@ module Jekyll
 
       self.process(@name)
       self.read_yaml(File.join(base, '_layouts'), "json.html")
-      self.data['title'] = 'Schema documentation'
+      self.data['title'] = 'titles.json'
       self.data['menu'] = menu
       self.data['all_schemas'] = {}
       self.data['links'] = links

@@ -1,0 +1,123 @@
+<p>mc_rtcの全般オプションは、使用するインターフェイスにかかわらず、お使いのシステム内にある設定ファイルで定義されています。また、インターフェイスによっては、別の設定ファイルを指定することもできます（通常、コマンドラインで指定）。</p>
+
+<p>このセクションでは、設定ファイルの読み込み元と、このファイルで使用可能な主なオプションについて説明します。</p>
+
+<!-- FIXME Translate title -->
+{% include h2.html title="Possible locations for mc_rtc configuration" %}
+
+<p>mc_rtcによって、以下の2つのファイルが系統的に読み取られます（ファイルが存在する場合）。</p>
+
+<ol>
+  <li>{% ihighlight bash %}$INSTALL_PREFIX/etc/mc_rtc.yaml{% endihighlight %}</li>
+  <li><ul><li>Linux/MacOS: {% ihighlight bash %}$HOME/.config/mc_rtc/mc_rtc.yaml{% endihighlight %}</li><li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/mc_rtc.yaml{% endihighlight %}</li></ul></li>
+</ol>
+
+<p>インターフェイスによっては、追加の設定ファイルが読み込まれる場合があります。詳細については、インターフェイスのドキュメントを参照してください。</p>
+
+<!-- FIXME Translate title -->
+{% include h2.html title="Configuration entries" %}
+
+<table class="table">
+  <thead>
+    <tr>
+       <th scope="col">エントリ</th>
+      <th scope="col">説明</th>
+      <th scope="col">例/デフォルト</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">
+        {% include h6.html title="Main&nbsp;entries" %}
+      </th>
+      <td colspan="2">このエントリは、通常考えられるほとんどのニーズをカバーします。</td>
+    </tr>
+    {% include mc_rtc_configuration_row.html entry="MainRobot" desc="このエントリは、すべてのコントローラーで使用されるメインロボットを指定します。ほとんどのインターフェイスは、どのモジュールを使用すべきかをシミュレーション環境に基づいて推測することはできません。そのため、シミュレーション環境に応じてユーザーがモジュールを指定する必要があります。" example="MainRobot: JVRC1" %}
+    <tr>
+      <th scope="row">Enabled</th>
+      <td>有効なコントローラーのリストを提供します。<a href="{{site.baseurl}}/tutorials/samples/list-of-samples.html">利用可能なサンプルコントローラーのリスト</a>を参照してください。</a>.</td>
+      <td>{% highlight yaml %}Enabled: [Posture, EndEffector, CoM]{% endhighlight %}</td>
+    </tr>
+    {% include mc_rtc_configuration_row.html entry="Default" desc="有効なコントローラーのうちどれを最初に起動するかを選択します。なお、デフォルトとして指定されたコントローラーが有効になっていない場合や、デフォルトのコントローラーが指定されていない場合は、リスト内で最初に登場する有効なコントローラーがデフォルトコントローラーとして選択されます。" example="Default: Posture" %}
+    {% include mc_rtc_configuration_row.html entry="Timestep" desc="コントローラーのタイムステップ" example="Timestep: 0.005" %}
+    {% include mc_rtc_configuration_row.html entry="Log" desc="コントローラーの出力をログに記録するかどうかを指定します。" example="Log: true" %}
+    {% include mc_rtc_configuration_row.html entry="InitAttitudeFromSensor" desc="センサーとロボットモジュールのどちらでロボットの姿勢を初期化するかを指定します。" example="InitAttitudeFromSensor: false" %}
+    {% include mc_rtc_configuration_row.html entry="InitAttitudeSensor" desc="ロボットの姿勢の初期化に使用されるボディセンサーの名前。名前が空の場合、デフォルトのボディセンサーが使用されます。このエントリは、<pre>InitAttitudeFromSensor=true</pre>の場合にだけ使用されます。" example="InitAttitudeSensor: \"\"" %}
+    <tr class="table-active">
+      <th scope="row">
+        {% include h6.html title="ロギングオプション" %}
+      </th>
+      <td colspan="2">T以下のオプションは、mc_rtcによってコントローラーのアクティビティがどのようにログに記録されるかを規定します。ロギングが無効の場合は効果がありません。</td>
+    </tr>
+    {% include mc_rtc_configuration_row.html entry="LogDirectory" desc="このオプションは、ログファイルをどこに保存するかを指定します。デフォルトではシステムの一時ディレクトリに保存されます。" example="LogDirectory: \"/tmp\"" %}
+    {% include mc_rtc_configuration_row.html entry="LogTemplate" desc="このオプションは、ログのプレフィックスを指定します。ログファイルには以下のように名前が付けられます。 <pre>[LogTemplate]-[ControllerName]-[date].log</pre>" example="LogTemplate: \"mc-control\"" %}
+    {% include mc_rtc_configuration_row.html entry="LogPolicy" desc="このオプションは、ロギング関連のディスク操作を別スレッドで実行するか(\"threaded\")）、run()ループと同じスレッドで実行するか(\"non-threaded\")を指定します。デフォルトではnon-threadedポリシーが使用されます。リアルタイムシステムではthreadedポリシーの使用を強く推奨します。" example="LogPolicy: \"non-threaded\"" %}
+    <tr class="table-active">
+      <th scope="row">
+        {% include h6.html title="モジュール読み込みオプション" %}
+      </th>
+      <td colspan="2">
+以下のオプションは、mc_rtcによって追加モジュール（コントローラー、ロボットモジュール、観測器、プラグインの追加モジュール）がライブラリからどのように読み込まれるかを規定します。
+      </td>
+    </tr>
+    {% include mc_rtc_configuration_row.html entry="ControllerModulePaths" desc="このオプションは、mc_rtcにコントローラーモジュールを検索させる<strong>追加の</strong>ディレクトリを指定します。" example="ControllerModulePaths: [\"/one/path/to/controller/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="RobotModulePaths" desc="このオプションは、mc_rtcにロボットモジュールを検索させる<strong>追加の</strong>ディレクトリを指定します。" example="RobotModulePaths: [\"/one/path/to/robot/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="ObserverModulePaths" desc="このオプションは、mc_rtcに状態観測モジュールを検索させる<strong>追加の</strong>ディレクトリを指定します。" example="ObserverModulePaths: [\"/one/path/to/observer/\", \"/another/path/\"]" %}
+    {% include mc_rtc_configuration_row.html entry="GlobalPluginPaths" desc="このオプションは、mc_rtcにグローバルプラグインを検索させる<strong>追加の</strong>ディレクトリを指定します。" example="GlobalPluginPaths: [\"/one/path/to/global/plugin/\", \"/another/path/\"]" %}
+  </tbody>
+</table>
+
+{% include h2.html title="ROSプラグインの設定" %}
+
+{% include h4.html title="設定の読み取り元" %}
+
+<p>mc_rtcによって、以下の2つのファイルが系統的に読み取られます（ファイルが存在する場合）。</p>
+
+<ol>
+  <li>{% ihighlight bash %}${MC_PLUGINS_RUNTIME_INSTALL_PREFIX}/etc/ROS.yaml{% endihighlight %}</li>
+  <li><ul><li>Linux/MacOS: {% ihighlight bash %}$HOME/.config/mc_rtc/plugins/ROS.yaml{% endihighlight %}</li><li>Windows: {% ihighlight msshell %}%APPDATA%/mc_rtc/plugins/ROS.yaml{% endihighlight %}</li></ul></li>
+</ol>
+
+{% include h4.html title="設定エントリ" %}
+
+<p>ROSプラグインの設定の各セクションとそのエントリを以下の表に示します。</p>
+
+<table class="table">
+  <thead>
+    <tr>
+     <th scope="col">エントリ</th>
+      <th scope="col">説明</th>
+      <th scope="col">例/デフォルト</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="table-active">
+      <th scope="row">
+        {% include h6.html title="パブリッシュに関するエントリ" %}
+      </th>
+      <td colspan="2">以下のオプションは、ROS内におけるロボットの状態のパブリッシュにのみ影響します。</td>
+    </tr>
+    {% include mc_rtc_configuration_row.html entry="control" desc="ロボットの制御状態（mc_rtcのコントローラー出力）をパブリッシュするかどうか" example="control: true" %}
+    {% include mc_rtc_configuration_row.html entry="env" desc="他のロボットの制御状態（メインロボット以外のロボットに関するmc_rtcのコントローラー出力）をパブリッシュするかどうか" example="env: true" %}
+    {% include mc_rtc_configuration_row.html entry="real" desc="ロボットの観測状態（観測器パイプラインから得られたロボットの状態）をパブリッシュするかどうか" example="real: true" %}
+    {% include mc_rtc_configuration_row.html entry="timestep" desc="ロボットの制御状態と実際の状態をパブリッシュする頻度" example="timestep: 0.01" %}
+  </tbody>
+</table>
+
+{% include h4.html title="設定例" %}
+
+<div class="card bg-light card-source">
+  <div class="card-body">
+{% highlight yaml %}
+# パブリッシュするデータと頻度を制御する:
+  # 制御対象ロボットの状態をパブリッシュする（ROS）
+  control: true
+  # 他のロボットの状態をパブリッシュする（ROS）
+  env: true
+  # ロボットの実際の状態をパブリッシュする（ROS）
+  real: true
+  # パブリッシュのタイムステップ（ROS）
+  timestep: 0.01
+{% endhighlight %}
+  </div>
+</div>

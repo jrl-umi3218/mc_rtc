@@ -1,0 +1,174 @@
+langs:
+  jp: Japanese
+carousel:
+  previous: Previous
+  next: Next
+  SYHI2JmJ-lk: Autonomous car driving by a humanoid robot
+  vFCFKAunsYM: HRP-4 climbing up stairs
+  C3Y2Xc6sEY4: "Humanoid in aircraft manufacturing: operating a circuit-breaker"
+  qzEnCGlT93s: "Human-Robot Interaction Applications"
+  FT2CD1UiExs: "HRP-5P performing bolt fastening with visual servoing"
+features:
+  easy:
+    heading: Simple tools for complex problems
+    desc: Design a complex robotic applications on complex robots using simple graphical <a href="tutorials.html#tutorials-tools">tools</a>.
+  extensible:
+    heading: Extensible interface
+    desc: Write new components to solve your specific problem and integrate with mc_rtc using our lean C++/Python <a href="doxygen.html">API</a>.
+  universal:
+    heading: Write once, run everywhere
+    desc: Run the same code in simulator(s) or on the robot. Use one of the existing <a href="interfaces.html">interface</a> or create your own.
+  robot:
+    heading: Use your bot
+    desc: Use your own robot in the framework, a single URDF file is enough to get you started. You can also use one of the available <a href="robots.html">robots</a>.
+global:
+  credits: Credits
+  next_tutorial: Next tutorial
+  back_to_tutorial: Back to tutorial
+nav:
+  interfaces: Interfaces
+  robots: Robots
+  tutorials: Tutorials
+  doxygen: API documentation
+  json: JSON/YAML documentation
+  demo: Online demonstration
+titles:
+  tutorials: Tutorials
+  credits: Credits
+  doxygen: Doxygen
+  index: Overview
+  interfaces: Interfaces
+  robots: Robots
+  json: Schema documentation
+interfaces:
+  package: Interface package
+  OpenRTM: OpenRTM is a software platform for component based development of robot systems. It is used in the HRP robots and in the Choreonoid simulator. The interface is an OpenRTM component that can be integrated in a control system.
+  ROS: ROS, the Robot Operating System, is a set of software libraries and tools to help you build robot applications. mc_rtc_ros is a set of tools integrated with the ROS environment to provide a simulation-free interface and various GUI tools
+  V-REP: V-REP is a robot simulator by Coppelia Robotics. mc_vrep allows to use mc_rtc as a controller for your robot(s) inside the V-REP simulator environment.
+  NAOqi: NAOqi is the programming framework used to program SoftBank Robotics robots. The mc_naoqi interface allows to use mc_rtc for the whole-body control of the NAO and Pepper robots.
+  libfranka: libfranka is the interface used to control Franka Emika robots. The mc_franka interface allows to use mc_rtc to control these robots. It provides multiple robot support for all operation modes (position, velocity and torques) as well as integration with the panda pump device.
+  UDP Communication: A generic UDP-based client/server interface implementation. The client is a regular mc_rtc interface that gets data through UDP sockets. The server can easily be implemented to interface with your own robot.<br />The following server implementations are currently available&#58; <ul><li>An OpenRTM server is provided and may be used with HRP robots.</li><li>A server implementation is also available for the <a href="https://hal.archives-ouvertes.fr/hal-02101562">BAZAR</a> robot.</li></ul>
+robots:
+  description: Description
+  module: Module
+  link: Link
+tutorials:
+  introduction:
+    title : Introduction
+    desc: The following tutorials will help you with the installation of the framework, learning to run controllers in the interface of your choice and start programming your own controllers.
+    installation-guide:
+      title: Installation guide
+      install_apt:
+        - name: Install stable version
+          lang: bash
+          source: |
+            # Setup the mirror
+            curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/stable/setup.deb.sh' | sudo -E bash
+            # Install packages
+            sudo apt install libmc-rtc-dev mc-rtc-utils
+            # Assuming you have a ROS distribution mirror setup
+            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
+        - name: Install head version
+          lang: bash
+          source: |
+            # Setup the mirror
+            curl -1sLf 'https://dl.cloudsmith.io/public/mc-rtc/head/setup.deb.sh' | sudo -E bash
+            # Install packages
+            sudo apt install libmc-rtc-dev mc-rtc-utils
+            # Assuming you have a ROS distribution mirror setup
+            sudo apt install ros-${ROS_DISTRO}-mc-rtc-plugin ros-${ROS_DISTRO}-mc-rtc-tools
+    configuration:
+      title: Configuring mc_rtc
+    running-a-controller:
+      title: Running a controller
+    first-controller:
+      title: Your first controller with mc_rtc
+    com-controller:
+      title: Controlling the CoM
+    ef-controller:
+      title: Controlling an end-effector (and loading)
+    multi-robot-controller:
+      title: Multi-robot controller
+  usage:
+    title: Framework usage
+    desc: The following tutorials cover broad topics concerning the framework that are not specifically related to a controller's implementation
+    mc_rtc_configuration:
+      title: <code>mc_rtc::Configuration</code> general purpose configuration
+    logging:
+      title: Logging data
+    console-logging:
+      title: Printing information to the screen
+    gui:
+      title: Graphical User Interface (GUI)
+    live-plotting:
+      title: Display plots live from the controller
+    ros:
+      title: ROS integration
+    global-plugins:
+      title: Using global plugins
+  tools:
+    title: Framework tools
+    desc: These tutorials introduce useful tools developed around mc_rtc
+    mc_log_utils:
+      title: Log manipulation
+    mc_log_ui:
+      title: Log plotting
+    mc_log_visualization:
+      title: Replay visualization
+    mc_surfaces_visualization:
+      title: Visualizing surfaces
+    mc_convex_visualization:
+      title: Visualizing convexes
+  recipes:
+    title: Control recipes
+    desc: The following tutorials introduce recipes useful in complex controllers. Either methodology (e.g. FSM) or behaviours (e.g free a contact degree-of-freedom)
+    fsm:
+      title: Using the FSM facilities
+    fsm-main-states:
+      title: Main FSM states
+    fsm-example:
+      title: FSM controller in practice
+    derived-fsm:
+      title: Deriving the FSM controller
+    datastore:
+      title: "DataStore: Sharing Objects"
+    observers:
+      title: State Observation Pipelines
+    lipm-stabilizer:
+      title: Using the LIPM Stabilizer
+    speed-constraint:
+      title: Constraint the speed of a body
+    moving-a-contact:
+      title: Moving a contact
+    contact-dof:
+      title: Change the DoF constraints on a contact
+    joint-select:
+      title: Select specific joints for a task
+    dim-weight:
+      title: Affect different weight to different axis in the task space
+    joint-stiffness:
+      title: Joints Stiffness
+    com-constraint:
+      title: Constraining the accessible region of the CoM
+  samples:
+    title: Samples
+    desc: This section explains the sample controllers
+    list-of-samples :
+      title: Available sample controllers 
+    sample-admittance:
+      title: Admittance sample controller
+  advanced:
+    title: Advanced topics
+    desc: These tutorials cover specific topics that most user should not have to deal with.
+    new-plugin:
+      title: Implement a new plugin for mc_rtc
+    new-interface:
+      title: Implement a new mc_rtc interface
+    new-environment:
+      title: Environment creation for mc_rtc
+    new-robot:
+      title: Integrate a new robot in mc_rtc
+    support-mc-rtc-build-static:
+      title: Supporting MC_RTC_BUILD_STATIC in your code
+    debug-lssol-output-6:
+      title: Debugging LSSOL output 6

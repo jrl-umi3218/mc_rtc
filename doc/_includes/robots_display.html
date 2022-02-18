@@ -1,0 +1,36 @@
+{% for bot in site.data.robots %}
+  {% cycle '<div class="row justify-content-center">', "" %}
+  <div class="col-12 col-lg-4">
+    <div class="media features">
+      {% if bot.desc != nil %}
+        {% capture tooltip %}data-toggle="tooltip" title="{{bot.desc}}"{% endcapture %}
+      {% else %}
+        {% capture tooltip %}{% endcapture %}
+      {% endif %}
+      <img class="mr-3 img-fluid rounded-circle" src="{{site.baseurl_root}}/assets/robots/{{bot.icon}}" alt="{{bot.name}}" width="75" height="75" {{tooltip}}/>
+      <div class="media-body">
+        <h5 class="mt-0">{{bot.name}}</h5>
+        <dl class="row">
+          {% if bot.pkg.desc %}
+          <dt class="col-12">{% t robots.description %}</dt>
+          <dd class="col-12"><a href="{{bot.pkg.desc.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.desc.name}}</span><span class="d-inline d-sm-none">{% t robots.link %}</span></a></dd>
+          {% endif %}
+          {% if bot.pkg.module %}
+          <dt class="col-12">{% t robots.module %}</dt>
+          <dd class="col-12"><a href="{{bot.pkg.module.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{bot.pkg.module.name}}</span><span class="d-inline d-sm-none">{% t robots.link %}</span></a></dd>
+          {% endif %}
+        </dl>
+      </div>
+    </div>
+  </div>
+  {% if forloop.last == true %}
+    {% assign parity = forloop.index0 | modulo: 2 %}
+    {% if parity == 0 %}
+      <div class="col-lg-4"></div>
+    {% endif %}
+    </div>
+  {% else %}
+  {% cycle "", "</div>" %}
+  {% endif %}
+{% endfor %}
+

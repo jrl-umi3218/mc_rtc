@@ -1,0 +1,13 @@
+{% for itf in site.data.interfaces %}
+<div class="media features">
+  <a href="{{itf.url}}" target="blank_"><img class="mr-3 img-fluid" src="{{site.baseurl_root}}/assets/interfaces/{{itf.icon}}" alt="{{itf.name}}" width="75" height="75"/></a>
+  <div class="media-body">
+    <h5 class="mt-0">{{itf.name}}</h5>
+    <p>{% t interfaces.{{itf.name}} %}</p>
+    <dl class="row">
+      <dt class="col">{% t interfaces.package %}</dt>
+      <dd class="col-8"><a href="{{itf.pkg.url}}" target="blank_">{% octicon globe %} <span class="d-none d-sm-inline">{{itf.pkg.name}}</span><span class="d-inline d-sm-none">Link</span></a></dd>
+    </dl>
+  </div>
+</div>
+{% endfor %}

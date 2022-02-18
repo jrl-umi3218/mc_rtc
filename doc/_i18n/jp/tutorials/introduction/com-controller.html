@@ -1,0 +1,59 @@
+<p>このチュートリアルでは、ロボットの質量中心（CoM: Center of Mass）を制御します。先のチュートリアルと同じく、質量中心を20cm下げてから元の位置に戻す関数を記述します。</p>
+
+{% include h3.html title="接触面" %}
+
+<p>質量中心を動かす前に、接触面を考慮する必要があります。先のコントローラーでは、接触面のセットは空のままでしたが、何も問題は起こりませんでした。しかし、質量中心を制御する場合、そのコマンドをそのまま使用すると、ロボットが地面の下に沈んだり空中に浮いたりしてしまいます。これは、単に接触面がないためです（姿勢の誤差を最小限に抑えつつ質量中心を動かしたい場合は、接触面を空にするのが最もよい方法です）。</p>
+
+<p>そこで、ロボットの足と地面との間に接触面を追加します。</p>
+
+{% include show_sources.html sources=page.add_contact_sources copy=false id="add_contact" %}
+
+<p><em>注: ロボットの現在の表面を「見つける」方法については、<a href="{{site.baseurl}}/tutorials/tools/mc_surfaces_visualization.html">表面の可視化に関するチュートリアル</a>を参照してください。</em></p>
+
+{% include h3.html title="力学的制約条件" %}
+
+<p>ここまでは、キネマティクスモードでコントローラーを実行してきました。次に力学モードに切り替えると、以下のことが行えるようになります。</p>
+
+<ul>
+  <li>外力とそれに伴うトルクを計算する</li>
+  <li>外力を接触面の摩擦円錐内に収める</li>
+  <li>トルクをロボットのトルク限界内に収める</li>
+</ul>
+
+<p>モードを切り替えるには、コード内の<code>kinematicsConstraint</code>を<code>dynamicsConstraint</code>に変更します。<code>kinematicsConstraints</code>によって適用されていた制約条件は、<code>dynamicsConstraint</code>でも適用されます。</p>
+
+{% include h3.html title="質量中心タスクを作成して問題に追加する" %}
+
+<p>以下の作業を行います。</p>
+
+<ol>
+  <li>質量中心タスクを作成する</li>
+  <li>作成したタスクを最適化問題に追加する</li>
+  <li>目標が正しく設定されているか確認する</li>
+</ol>
+
+{% include show_sources.html sources=page.create_com_task_sources copy=false id="create_com_task" %}
+
+<p>今回の例では、以下の点を考慮してタスクを作成します。</p>
+
+<ol>
+  <li><code>robots()</code>を使用する</li>
+  <li>インデックスが0のロボットに適用する。インデックス0は常に、mc_rtcで読み込まれるメインロボットを指します。</li>
+  <li>目標に向かって剛性<code>10.0</code>で引っ張る。このパラメーターは、ロボットを目標に向かって引っ張る「ばね」の強さを規定します。</li>
+  <li>重み<code>1000</code>を割り当てる。この重みは、最適化問題におけるタスクの優先度を表します。今回の場合、デフォルトの姿勢の重みは<code>5.0</code>であるため、質量中心タスクのほうが優先されます。なお、タスクの誤差は正規化されないため、状況に応じて重みを調節する必要があります。</li>
+  <li>質量中心タスクと干渉しないように、姿勢制御タスクの剛性を下げる。</li>
+</ol>
+
+{% include h3.html title="質量中心を上下に動かす" %}
+
+<p><code>switch_com_target()</code>関数を使用して、先のチュートリアルと同様のメソッドを実装します。ここでは、bool型変数<code>comDown</code>と質量中心の初期位置を表す<code>Eigen::Vector3d</code>変数<code>comZero</code>が追加されていると仮定します。</p>
+
+{% include show_sources.html sources=page.switch_com_sources copy=false id="switch_com" %}
+
+<p>最後に、質量中心タスクの誤差を監視して目標を変更します。</p>
+
+{% include show_sources.html sources=page.run_sources copy=false id="run" %}
+
+<p>このコントローラーを実行すると、ロボットが上下に動くのが分かります。次のチュートリアルでは、エンドエフェクターを動かす方法と、タスクの構成をディスクから読み込む方法について見ていきます。</p>
+
+<p>このコントローラーの完全なソースは、<a href="sources/com-controller.html">こちら</a>から入手できます。</p>

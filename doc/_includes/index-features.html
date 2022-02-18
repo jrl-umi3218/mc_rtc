@@ -1,0 +1,10 @@
+{% for itm in site.data.features %}
+<div class="media features">
+  <img class="mr-3" src="{{site.baseurl_root}}/assets/icons/{{itm}}.svg" alt="{% t features.{{itm}}.heading %}" width="64" height="64"/>
+  <div class="media-body">
+    <h5 class="mt-0">{% t features.{{itm}}.heading %}</h5>
+    {%t features.{{itm}}.desc %}
+  </div>
+</div>
+{% endfor %}
+
