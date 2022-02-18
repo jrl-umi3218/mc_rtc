@@ -2,7 +2,7 @@
 
 mc\_rtc is an interface for simulation and robot control systems. These systems should provide the state of a given robot (joints' values, sensor readings...) and in return mc\_rtc will provide the desired robot's state (command). This is done through the `mc_control::MCGlobalController` class. This class does not perform control by itself but rather delegates this task to the `mc_control::MCController` derived objects that it holds. Writing a controller within the mc\_rtc framework is done by writing a class that inherits from the `mc_control::MCController` base class and implements the required functionnality. We implement such a controller in the following tutorials. The present tutorial simply explains how to build/install the framework on your machine.
 
-<img src="img/mc_rtc_architecture.jpg" alt="architecture_overview" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/mc_rtc_architecture.jpg" alt="architecture_overview" class="img-fluid" />
 
 ## Installation instruction
 

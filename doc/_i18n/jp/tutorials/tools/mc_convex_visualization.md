@@ -21,6 +21,6 @@ $ roslaunch mc_convex_visualization display.launch robot:=env/ground
 
 このツールを起動すると、以下のように表示されます。
 
-<img src="img/mc_convex_visualization.png" alt="mc_convex_visualization in action" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_convex_visualization.png" alt="mc_convex_visualization in action" class="img-fluid" />
 
 赤い枠で囲まれた領域にあるチェックボックスをオン・オフすることで、選択した凸領域の表示・非表示を切り替えられます。

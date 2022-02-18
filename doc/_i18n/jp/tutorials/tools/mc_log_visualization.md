@@ -18,7 +18,7 @@ $ roslaunch mc_rtc_ticker display.launch
 
 以下のようにインターフェイスが表示されます。
 
-<img src="img/mc_log_visualization.png" alt="mc_log_visualization in action" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_log_visualization.png" alt="mc_log_visualization in action" class="img-fluid" />
 
 ### 時間範囲セレクター
 

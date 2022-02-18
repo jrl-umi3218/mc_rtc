@@ -19,6 +19,6 @@ $ roslaunch mc_convex_visualization display.launch robot:=env/ground
 
 After launching it should look like this:
 
-<img src="img/mc_convex_visualization.png" alt="mc_convex_visualization in action" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_convex_visualization.png" alt="mc_convex_visualization in action" class="img-fluid" />
 
 By enabling/disabling the checkboxes in the highlighted area you can show/hide selected convexes.

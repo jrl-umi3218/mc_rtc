@@ -19,7 +19,7 @@ $ roslaunch mc_surfaces_visualization display.launch robot:=env/ground
 
 After launching it should look like this:
 
-<img src="img/mc_surfaces_visualization.png" alt="mc_surfaces_visualization in action" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_surfaces_visualization.png" alt="mc_surfaces_visualization in action" class="img-fluid" />
 
 In the 3D display:
 

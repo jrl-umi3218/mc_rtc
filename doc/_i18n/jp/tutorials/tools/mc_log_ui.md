@@ -8,7 +8,7 @@ $ mc_log_ui ~/my_log.bin
 
 以下のように表示されます。
 
-<img src="img/mc_log_ui.png" class="img-fluid" alt="mc_log_ui default" />
+<img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_log_ui.png" class="img-fluid" alt="mc_log_ui default" />
 
 <em>注: 以下のセクションで説明する一部のメニューと操作は、mc_rtcのPythonバインディングがインストールされている場合にのみ使用できます。</em>
 
@@ -102,7 +102,7 @@ _注: プロットを保存すると、スタイルのオプションも保存�
 
 表示したいデータ項目を選択し、グラフの表示方法を設定した後に、[Save（保存）]ボタンをクリックして図をエクスポートできます。
 
-<img src="img/mc_log_ui_save.png" class="img-fluid" alt="mc_log_ui save button" />
+<img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_log_ui_save.png" class="img-fluid" alt="mc_log_ui save button" />
 その際、各種形式で図を保存できます。SVG（Scalable Vector Graphics: スケーラブルベクターグラフィックス）形式で保存した場合、[Inkscape](https://inkscape.org)などのベクター画像エディターを使用して、保存したファイルをさらに編集できます。
 
 ### 図の自動プロット

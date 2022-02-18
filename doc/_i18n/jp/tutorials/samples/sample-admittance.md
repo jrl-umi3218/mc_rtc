@@ -16,7 +16,7 @@
 
 このサンプルのソースは[src/mc_control/samples/Admittance](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance)にあります。ここには、主に以下のファイルが格納されています。
 - [etc/AdmittanceSample.in.yaml](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/etc/AdmittanceSample.in.yaml): YAMLで記述された有限オートマトンの設定（こちらの[チュートリアル]({{site.baseurl}}/tutorials/recipes/fsm.html)を参照）
-- [src/states/UpdateWall.h](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpcdateWall.h), [src/states/UpdateWall.cpp](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpcdateWall.cpp): ロボットのグリッパーの位置に基づいて壁の位置を更新するC++状態
+- [src/states/UpdateWall.h](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpdateWall.h), [src/states/UpdateWall.cpp](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpdateWall.cpp): ロボットのグリッパーの位置に基づいて壁の位置を更新するC++状態
 
 このサンプルを実行するには、力覚センサーをシミュレート可能な動力学的シミュレーターが必要です。このチュートリアルは、{% link mc_openrtm %}、{% link Choreonoid %}、それに本フレームワークで用意されたシミュレーションファイル`sim_mc_wall.cnoid`を使用することを前提としています。他のシミュレーターを使用する場合は、必要に応じて命令を変更し、ロボットと壁が`55cm`離れて配置されているシーンを作成してください。
 
@@ -46,7 +46,7 @@ $ roslaunch mc_rtc_ticker controler_display.launch
 
 グリッパーの`z`軸に沿って力がどのように加えられたかを以下のグラフに示します。`t=6s`の場所にあるスパイクは、グリッパーと壁が衝突したタイミングに対応します。その`1s`後、力の目標値が`-20N`に変更され、その後数秒間この状態が維持されます。その後、圧力が解放されます。
 
-<img src="img/admittance.svg" alt="admittance results" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/samples/img/admittance.svg" alt="admittance results" class="img-fluid" />
 
 ## 説明
 

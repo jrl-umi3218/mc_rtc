@@ -14,7 +14,7 @@ This controller follows the following steps:
 
 Sources for this sample are located in [src/mc_control/samples/Admittance](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance) with the following main files:
 - [etc/AdmittanceSample.in.yaml](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/etc/AdmittanceSample.in.yaml): FSM YAML Configuration (see this [tutorial]({{site.baseurl}}/tutorials/recipes/fsm.html))
-- [src/states/UpdateWall.h](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpcdateWall.h), [src/states/UpdateWall.cpp](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpcdateWall.cpp): C++ state that updates the wall position according to the robot's gripper position
+- [src/states/UpdateWall.h](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpdateWall.h), [src/states/UpdateWall.cpp](https://github.com/jrl-umi3218/mc_rtc/tree/master/src/mc_control/samples/Admittance/src/states/UpdateWall.cpp): C++ state that updates the wall position according to the robot's gripper position
 
 To run the sample, you need a dynamic simulator in order to simulate the force sensors. This tutorial is intended to be used with {% link mc_openrtm %} and {% link Choreonoid %}, and the provided simulation file `sim_mc_wall.cnoid`. If you use another simulator, you will need to adapt the instructions, and create a scene with a wall `55cm` away from the robot.
 
@@ -44,7 +44,7 @@ Then start the simulation by clicking on the green arrow in Choreonoid's interfa
 
 The following graph depicts the results of the force tracking along the gripper's `z` axis. Note the spike at `t=6s` corresponding to an impact between the gripper and the wall. About `1s` later, the force target of `-20N` is realized, and tracked for a few seconds. Then the pressure is released.
 
-<img src="img/admittance.svg" alt="admittance results" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/samples/img/admittance.svg" alt="admittance results" class="img-fluid" />
 
 ## Explanations
 

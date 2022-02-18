@@ -9,7 +9,7 @@ $ mc_log_ui ~/my_log.bin
 
 It should look like this:
 
-<img src="img/mc_log_ui.png" class="img-fluid" alt="mc_log_ui default" />
+<img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_log_ui.png" class="img-fluid" alt="mc_log_ui default" />
 
 <em>Note: some menus and operations described in the next sections are only available if you have mc\_rtc Python bindings</em>
 
@@ -110,7 +110,7 @@ The following keyboard shortcuts can be used within the interface:
 
 After choosing the fields you want and setting up the graph as you wish you can export by clicking the save button:
 
-<img src="img/mc_log_ui_save.png" class="img-fluid" alt="mc_log_ui save button" />
+<img src="{{site.baseurl_root}}/assets/tutorials/tools/img/mc_log_ui_save.png" class="img-fluid" alt="mc_log_ui save button" />
 
 You can choose to save as a variety of formats. If you save to SVG (Scalable Vector Graphics) you can further edit the file in a vector graphics editor such as [Inkscape](https://inkscape.org).
 

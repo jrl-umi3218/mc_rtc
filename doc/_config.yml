@@ -20,4 +20,4 @@ exclude:
     - _examples
     - .gitignore
 languages: ["en", "jp"]
-exclude_from_localization: ["assets", "css"]
+exclude_from_localizations: ["assets", "css"]

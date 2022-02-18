@@ -21,15 +21,15 @@ BlenderをUbuntuシステムにインストールする場合、Blenderの機能
 4. Blenderを起動します。
 5. 以下の図のように、 "Import-Export: qconvex cloud format（インポートとエクスポート: qconvex点群形式）"チェックボックスをオンにし、アドオンを有効にします。
 
-<img src="img/blender_addon_activation.gif" alt="blender_addon_activation" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/advanced/img/blender_addon_activation.gif" alt="blender_addon_activation" class="img-fluid" />
 
 手順1で、アドオンを格納する空のフォルダーが作成され、手順3で、アドオンがそのフォルダーにコピーされます。
 
 # 環境モデルを取得する
 
-ここでは、3次元環境のモデリングについて詳しく説明します。このページの残りの部分では、[こちら](data/blender_model_start.blend)で用意されているモデルを使用して作業します。このモデルをBlenderで開くと、"ground"（地面）という名前の大きな平面が表示され、その中央に"pole"（柱）という名前の円筒が垂直に立っているのが見えます。
+ここでは、3次元環境のモデリングについて詳しく説明します。このページの残りの部分では、[こちら]({{site.baseurl_root}}/assets/tutorials/advanced/data/blender_model_start.blend)で用意されているモデルを使用して作業します。このモデルをBlenderで開くと、"ground"（地面）という名前の大きな平面が表示され、その中央に"pole"（柱）という名前の円筒が垂直に立っているのが見えます。
 
-<img src="img/blender_model_start.png" alt="blender_model_start" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/advanced/img/blender_model_start.png" alt="blender_model_start" class="img-fluid" />
 
 ## スケールに関する注記
 
@@ -120,7 +120,7 @@ mc_rtc内のほとんどの環境では、以下の命名規則に基づいて�
 
 モデル内の各ボディについては、生成スクリプトによって凸メッシュが作成されるため、それらについてはメッシュを作成する必要はありません。
 
-次の手順に移る前に、[こちら](data/blender_model_final.blend)からチュートリアルの結果を入手できます。
+次の手順に移る前に、[こちら]({{site.baseurl_root}}/assets/tutorials/advanced/data/blender_model_final.blend)からチュートリアルの結果を入手できます。
 
 # 環境を作成する
 

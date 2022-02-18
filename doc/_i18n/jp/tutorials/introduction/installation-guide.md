@@ -2,7 +2,7 @@
 
 mc\_rtcは、シミュレーションシステムやロボット制御システムとデータをやり取りするインターフェイスです。これらのシステムは、指定されたロボットの状態（関節の値やセンサーの測定値など）を出力します。一方、mc\_rtcは、ロボットの目標状態（コマンド）を出力します。この処理は、`mc_control::MCGlobalController`クラスを通じて実行されます。このクラス自体は制御を行わず、このタスクを`mc_control::MCController`クラスの派生オブジェクトにデリゲートします。mc\_rtcフレームワーク内でコントローラーを記述するには、`mc_control::MCController`基底クラスから派生したクラスを記述し、必要な機能をそのクラスに実装します。後で説明するチュートリアルでは、そうしたコントローラーを実装します。このページのチュートリアルでは、お使いのマシンに本フレームワークをビルド・インストールする方法について説明します。
 
-<img src="img/mc_rtc_architecture.jpg" alt="architecture_overview" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/introduction/img/mc_rtc_architecture.jpg" alt="architecture_overview" class="img-fluid" />
 
 ## インストール手順
 

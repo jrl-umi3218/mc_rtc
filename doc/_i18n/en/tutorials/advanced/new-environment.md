@@ -21,15 +21,15 @@ Concerning Blender, on Ubuntu systems, it is advised to use [Thomas Schiex's PPA
 4. Start Blender
 5. Activate the addon: "Import-Export: qconvex cloud format" as shown in the image below
 
-<img src="img/blender_addon_activation.gif" alt="blender_addon_activation" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/advanced/img/blender_addon_activation.gif" alt="blender_addon_activation" class="img-fluid" />
 
 Step 1 creates an empty folder to put our addon in while Step 3 simply copy that addon to that folder.
 
 # Obtain your environment model
 
-We will not go into the detail of modeling a 3D environment here. For the remainder of this documentation we will be working on the model provided [here](data/blender_model_start.blend). When you open this in Blender you should see a large flat surface (named "ground") with a vertical cylinder in the middle (named "pole").
+We will not go into the detail of modeling a 3D environment here. For the remainder of this documentation we will be working on the model provided [here]({{site.baseurl_root}}/assets/tutorials/advanced/data/blender_model_start.blend). When you open this in Blender you should see a large flat surface (named "ground") with a vertical cylinder in the middle (named "pole").
 
-<img src="img/blender_model_start.png" alt="blender_model_start" class="img-fluid" />
+<img src="{{site.baseurl_root}}/assets/tutorials/advanced/img/blender_model_start.png" alt="blender_model_start" class="img-fluid" />
 
 ## A note on scale
 
@@ -120,7 +120,7 @@ To add a collision hull simply add a new mesh and add an empty property named "h
 
 Note that the generation script will create convex hulls for each body in the model, you don't need to create specific hulls for those.
 
-Before going into the next step, you can get the result of the tutorial [here](data/blender_model_final.blend).
+Before going into the next step, you can get the result of the tutorial [here]({{site.baseurl_root}}/assets/tutorials/advanced/data/blender_model_final.blend).
 
 # Generate the environment
 
